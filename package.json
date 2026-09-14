@@ -43,7 +43,11 @@
     "test": "node scripts/run-unit-tests.mjs",
     "test:track": "node scripts/track-regression.mjs",
     "qa:map-source-tray": "node scripts/qa-map-source-tray.mjs",
-    "check:boundaries": "node scripts/check-package-boundaries.mjs"
+    "check:boundaries": "node scripts/check-package-boundaries.mjs",
+    "spec:gates": "node scripts/spec/gates.mjs check",
+    "spec:ci": "node scripts/spec/gates.mjs ci",
+    "spec:ratchet": "node scripts/spec/gates.mjs ratchet",
+    "spec:lint": "node scripts/spec/gates.mjs lint"
   },
   "dependencies": {
     "@mapbox/vector-tile": "^3.0.0",
@@ -54,6 +58,7 @@
     "satellite.js": "^6.0.2"
   },
   "devDependencies": {
+    "@fission-ai/openspec": "1.3.1",
     "prettier": "3.9.6",
     "puppeteer": "^25.10.0",
     "sharp": "^0.35.4",
