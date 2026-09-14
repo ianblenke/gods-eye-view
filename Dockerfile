@@ -1,6 +1,13 @@
 # God's Eye View runs as the Vite dev server: the API proxies are Vite
 # middleware and client keys are injected when the config loads.
-FROM node:24-bookworm-slim
+# The Node version must match .node-version: the spec gates stop on any other
+# version because V8 versions give different coverage counts.
+FROM node:24.21.0-bookworm-slim
+
+# The spec gates read the Git history.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git \
+    && rm -rf /var/lib/apt/lists/*
 
 # Puppeteer is a QA-only devDependency; skip its Chrome download.
 ENV PUPPETEER_SKIP_DOWNLOAD=1 \

@@ -54,6 +54,31 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
+  spec-gates:
+    name: Spec gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PUPPETEER_SKIP_DOWNLOAD: '1'
+    steps:
+      - name: Check out source with history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Use the pinned Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Run the spec gates
+        run: node scripts/spec/gates.mjs ci --base origin/${{ github.base_ref || 'main' }}
+
   windows-onboarding:
     name: Windows onboarding
     runs-on: windows-latest

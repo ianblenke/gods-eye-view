@@ -1,0 +1,15 @@
+Verdict: FAIL
+- [ ] S129 openspec/changes/archive/2026-09-14-establish-spec-governance/specs/gap-ledger/spec.md:117 "the ratchet command keeps an entry with each low count at 0 for a file at 100% with the content of the entry" One word, one meaning; articles. Everywhere else in the change, "content" means the content of a file: "a file with the same content" (spec.md:127, :134), "its content in the base commit" (spec.md:160, :186, :241) and "a file with the base content" (design.md:111). "The content of X" also means what X holds: "the content of that file" (coverage-gate spec.md:121) and "the content of `.gev-cache/spec/inventory.json`" (coverage-gate spec.md:191). An entry holds a content hash and counts, not the content of the file. So "the content of the entry" gives "content" a second meaning. The line also has two "with" phrases, so a reader cannot tell what "with the content of the entry" is attached to. The entry is already known from the WHEN line ("a ledger entry"), so the text must say "the entry", not "an entry". The AND line before it (spec.md:115) already says that the content hash did not change, so this line does not have to say it again. The test (src/tooling/spec/ledger.test.mjs:408–409) checks that the ratchet command keeps the entry of `src/flaky.js` with the same hash when the file is at 0/0/0. Write: "the ratchet command keeps the entry when the file is at 100% and each low count in the entry is 0". Make the same change in openspec/specs/gap-ledger/spec.md:121.
+
+Notes for the caller:
+- **S127 is fixed.** proposal.md:66 (`range-slack`) now says "The number that it removes can be at most the width of the range." "Up to" does not occur anywhere in the prose in scope.
+- **S128 is fixed.** The gap-ledger-064 title is now "Close the gap of a changed unstable file at 100%" in the delta spec (spec.md:206) and in the merged spec (openspec/specs/gap-ledger/spec.md:210). The test name (gov-tests-r14.txt line 158) is "[gap-ledger-064] closes the gap of a changed unstable file at 100%". "Close the range" and "closes the range" do not occur anywhere in the prose in scope.
+- **Gate output:** "STE: 0 errors, 0 warnings." There are no STE-PASSIVE or STE-ING warnings to examine.
+- **Merged spec:** the scenario titles and the WHEN, THEN and AND lines of openspec/specs/gap-ledger/spec.md match the delta spec.
+- **Changed prose with no findings:**
+  - `branch-identity` (proposal.md:68). "stores", "location", "become larger" and "removed or changed test" are acceptable. "Become larger" matches proposal.md:10, spec.md:30 and AGENTS.md:32.
+  - `range-slack` (proposal.md:66).
+  - The gap-ledger-064 title and its test name.
+  - The gap-ledger-033 test name did not change, and it still matches the scenario title.
+- **Not reported:** in `branch-identity`, "a change ... can then cover ... lines" uses "cover" with "a change" as its subject. The change uses "cover" for test coverage everywhere, and earlier rounds accepted it.
+- I did not read .env. I did not change any file in the repository.

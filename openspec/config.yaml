@@ -1,0 +1,65 @@
+schema: spec-driven
+
+context: |
+  Project: God's Eye View (GEV). GEV is a browser 3D globe. It shows live
+  aircraft, ships, satellites, fires, traffic, cameras and radio. A Vite dev
+  server supplies the page and the server-side provider proxies.
+
+  Software:
+  - JavaScript ES modules. No TypeScript. No test framework other than node:test.
+  - Browser: CesiumJS, WebGL, DOM. Server: Vite middleware in server/providers.
+  - Node 24 is the calibrated runtime. Run the gates in the Docker image (make gates).
+  - The unit tests are the files src/**/*.test.mjs. The tests use node:test and node:assert.
+
+  Spec-first process. This process is for each change:
+  1. Write or change the spec before you write or change code.
+  2. Write the tests from the scenarios. Then write the code until the tests pass.
+  3. Each scenario has a stable ID. Each test names one or more scenario IDs.
+  4. All JS code has 100% line, branch and function coverage. This includes
+     src, server, build, scripts, tools and pinokio.
+  5. The gates record each open gap in openspec/trace. A gap can close. A gap
+     cannot open. A new gap stops the build.
+  6. Two adversarial review agents review each change after the archive
+     command. The change folder contains the review result in review.md.
+
+  Scenario IDs:
+  - Format: <capability>-<NNN>. <capability> is the spec folder name. <NNN> is
+    three digits. Example: spec-trace-004.
+  - Put the ID at the end of the scenario heading, in backticks:
+    #### Scenario: Stop the build for an untraced test `spec-trace-004`
+  - Do not change an ID or use it again. If you remove a scenario, retire its ID.
+
+  Test tags:
+  - Put the scenario IDs at the start of the test name, in square brackets:
+    test('[spec-trace-004] stops the build for an untraced test', ...)
+  - Put one space between two IDs: [spec-trace-004 spec-trace-005].
+  - A subtest does not get the tags of its parent test. Put the tags on each
+    leaf test. A tag can have at most three IDs.
+
+  Prose standard: ASD-STE100 Simplified Technical English (STE) for all new
+  prose. This includes specs, proposals, designs, tasks, review files and
+  test names.
+
+rules:
+  proposal:
+    - 'Write in STE. Use sentences of 20 words or fewer for instructions and 25 words or fewer for descriptions.'
+    - 'Use the active voice. Use the simple present, the simple past or the simple future tense.'
+    - 'Do not use contractions, phrasal verbs or -ing forms as nouns or adjectives.'
+    - 'Put one topic in one sentence. Put 6 sentences or fewer in one paragraph.'
+    - 'In Impact, list each gap that this change opens or closes in openspec/trace.'
+    - 'Mark a change that only adds specs and tests for old code as a backfill change. Name it backfill-<capability>.'
+  specs:
+    - 'Write in STE. Use MUST for requirements. Do not use SHALL, SHOULD or MAY.'
+    - 'Give each scenario a stable ID at the end of its heading, in backticks, in the format <capability>-<NNN>.'
+    - 'Do not change a scenario ID or use it again. Retire the ID of a removed scenario.'
+    - 'Each scenario MUST have one WHEN line and one or more THEN lines. Use AND lines for more conditions or results.'
+    - 'Write each scenario so that one automatic test can check it. Do not write a scenario that no test can check.'
+    - 'Start the requirement text with a sentence that contains MUST. OpenSpec reads only that first line as the requirement.'
+    - 'Record the origin of each requirement on the last line of its text, before the first scenario. Use "Origin: spec-first" or "Origin: backfill".'
+  design:
+    - 'Write in STE. Use sentences of 25 words or fewer.'
+    - 'Tell how each gate measures the requirement. Name the files that the change adds or changes.'
+  tasks:
+    - 'Write in STE. Start each task with a verb in the imperative.'
+    - 'For each scenario, add one task to write the test before the task that writes the code.'
+    - 'Add a last task group for the gates and the adversarial review. Include make gates, the run of the review agents and review.md.'
