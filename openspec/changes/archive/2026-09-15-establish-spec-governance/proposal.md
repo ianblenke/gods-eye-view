@@ -1,6 +1,6 @@
 ## Why
 
-GEV has 2,920 unit tests, but no test refers to a written requirement. Line coverage is 54.0% across the 306 JS files, and no gate stops coverage loss. This change adds the gates and the review process for a spec-first project. It records each current gap so that later backfill changes can close the gaps.
+GEV has 3,527 unit tests, but no test refers to a written requirement. Only 121 of the 580 code files have 100% coverage, and no gate stops coverage loss. This change adds the gates and the review process for a spec-first project. It records each current gap so that later backfill changes can close the gaps.
 
 ## What Changes
 
@@ -30,23 +30,19 @@ None. `openspec/specs/` is empty before this change.
 
 ## Impact
 
-- The branch starts from the commit that adds the Docker files (`5d470ae`), which is not in `origin/main`. Thus the diff also adds `Dockerfile`, `compose.yaml`, `.dockerignore` and `Makefile`.
+- The branch starts from the commit `27e251e`, which adds the Docker files to the base `3ca81fb`. The commit `27e251e` is not in `origin/main`. Thus the diff also adds `Dockerfile`, `compose.yaml`, `.dockerignore` and `Makefile`.
 - New files for the gates: `scripts/spec/`, `src/tooling/spec/`, `openspec/config.yaml`, `openspec/trace/`, `openspec/ste/`, `.node-version` and `AGENTS.md`.
 - New files for the agents: `.claude/agents/`, `.claude/commands/opsx/`, which has the four OpenSpec commands and the review command, and `.claude/skills/`, which has the four OpenSpec skills.
 - Changed files: `package.json`, `package-lock.json` and `.github/workflows/ci.yml`. This change adds the development dependency `@fission-ai/openspec` at the version `1.3.1` to `package.json`. This change also changes the Docker files above to pin the Node version and to add Git.
 - This change does not change the code of the app.
 - New process: each pull request that changes code, tests, specs or process files must contain one archived change with a passed review.
 - Gaps that this change opens: none. The first ledger records the gaps in the base commit, with the origin `pre-spec`.
-- Unstable coverage: six old files have coverage that changes between runs. The table gives the lowest count and the highest count that the runs gave. The ledger records a range for the not-covered counts. It does not record a range for the total counts. For the two files with unstable total counts, the ledger records a range with equal low and high counts and the highest total branch count:
+- Unstable coverage: two old files have coverage that changes between runs on the base `3ca81fb`. The table gives the lowest count and the highest count that the runs gave. The ledger records a range for the not-covered counts:
 
 | File | Counts |
 |---|---|
 | `server/providers/vessels/ais-store.js` | not-covered lines 40 to 44 |
-| `src/keylessGeocoder.js` | total branch count 117 to 118 |
-| `src/search/placeSearch.js` | total branch count 22 to 23 |
-| `src/annotations/annotationResolver.js` | not-covered lines 562 to 567, not-covered branches 137 to 138 |
 | `src/data/labelArbiter.js` | not-covered branches 50 to 52 |
-| `src/voice/gevActions.js` | not-covered lines 1302 to 1304, not-covered branches 219 to 221 |
 
 - Gaps that this change closes: none in old code. All new code starts at 100% coverage, and all new tests have scenario IDs.
 
@@ -54,9 +50,11 @@ None. `openspec/specs/` is empty before this change.
 
 These limits stay open after this change. Each one has a later change.
 
-- `browser-coverage`: node:test cannot load code that needs a browser, such as `src/ui.js`. The ledger records this code until the later change measures browser coverage.
+- `browser-coverage`: node:test cannot load code that needs a browser, such as `src/standalone/ui.js`. The ledger records this code until the later change measures browser coverage.
 - `script-coverage`: node:test cannot measure shell files or inline scripts in HTML files. The ledger records the four shell files in `scripts/` and the inline scripts of `tools/cesium-render.html` as gaps. The gate stops for a new or longer `.sh` file. The later change moves this code into JS modules or measures it in another way.
 - `capability-coverage`: The coverage gate measures all tests together. It does not show that the tests of one capability cover the code of that capability.
+- `sample-identity`: The stability command selects the kept samples of a file only by the content hash of the file. The samples do not record the test files of their run. Thus samples from runs with other test files can make a range too wide. Only the archived design tells the author to remove the kept samples before a stability run on a new base. A later change can add the test files to each sample.
+- `unfound-instability`: Runs on 2026-09-13 and 2026-09-14 found unstable coverage in four more files: `src/annotations/annotationResolver.js`, `src/voice/gevActions.js`, `src/keylessGeocoder.js` and `src/search/placeSearch.js`. The runs on the base `3ca81fb` did not find it, so the ledger has no range for these files. Thus the gate can stop a later pull request for these files with `LEDGER-LARGER-GAP`, `LEDGER-LOST-COVERAGE` or `LEDGER-STALE`. A backfill change must change the tests of these files so that each run gives the same counts.
 - `deterministic-tests`: Some old tests read the clock, so their coverage changes between runs. A backfill change must change these tests so that each run gives the same counts. Until then, the kept samples are local files that an author can change. A new or wider range needs an `unstable` history line from the checked change, and the diff must change only files in `openspec/`. Each range can be at most 5 wide, or 2% of its low count when that is more. Each high count can be at most the base count plus 5, or plus 2% of the base count when that is more.
 - `review-attestation`: The agent that does the work can write the output of the review agents. The tree hash stops an old review, but it does not show that a review agent wrote the output. After a PASS, the author can change the proposal and the design for minor findings, and the tree hash includes these changes. The gate does not compare the severities in an agent output with its verdict. It also does not check that `review.md` names each finding of the agent outputs. A person must check the review and the agent outputs in the pull request.
 - `guard-results`: A test runs as the same user as the gate, and in the same process as the test guard. Thus a test can write its own guard results, hide an error from the guard or write files to the coverage folder. A test can also find the result folder, for example from `/proc/<ppid>/cmdline`. It can write an entry that agrees with the rules for entries, or change the entries of other tests. A process that continues after the run can also change the lcov file. The spec adversary tries to find tests that do this.

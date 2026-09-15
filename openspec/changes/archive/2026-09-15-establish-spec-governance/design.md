@@ -1,6 +1,6 @@
 ## Context
 
-GEV uses node:test. `npm test` runs `scripts/run-unit-tests.mjs`, which finds the test files in `src/` only. All 200 test files are in `src/`. The tests for scripts are also in `src/`, for example `src/setupDoctor.test.mjs`. Node 24 is the calibrated runtime for two allocation tests.
+GEV uses node:test. `npm test` runs `scripts/run-unit-tests.mjs`, which finds the test files in `src/` only. All 248 test files are in `src/`. The tests for scripts are also in `src/`, for example `src/setupDoctor.test.mjs`. Node 24 is the calibrated runtime for two allocation tests.
 
 The baseline run on 2026-09-13 gave these results for the 306 tracked JS files:
 
@@ -10,6 +10,15 @@ The baseline run on 2026-09-13 gave these results for the 306 tracked JS files:
 | Files at 100% | 44 |
 | Files that no test loads | 70 (44,341 lines) |
 | Tests with a scenario ID | 0 of 2,920 |
+
+On 2026-09-15, the branch moved to the base `3ca81fb`. The first ledger on that base has these results for the 580 code files, which include HTML and shell files:
+
+| Item | Result |
+|---|---|
+| Files at 100% | 121 |
+| Files that no test loads | 107 |
+| Files with untrue coverage | 25 |
+| Tests with a scenario ID | 283 of 3,527 |
 
 An adversarial review of the first version of this design found 29 problems. The review of the second version found 62 more problems. This version corrects these problems. The section "Known limits and later changes" in the proposal lists the problems that stay open.
 
@@ -66,7 +75,7 @@ A process that collects coverage without an inspector writes an error, and the g
 
 A worker thread gets no source check. When the worker thread has the environment of its process, the guard gives the gate values to its child processes. A worker thread with its own `env` or `execArgv` options, and a child process without `NODE_V8_COVERAGE`, get no gate values. The proposal records this as the limit `guard-processes`. The gate gives 0% coverage to a file with coverage that no guard checked. This includes code that only a worker thread loads.
 
-The source check also finds a module hook that loads other source for a code file. A run of the guard on the old tests found one test file that does this. `src/data/trafficTiming.test.mjs` uses the Vite SSR loader, which runs transformed copies of 10 files under their real paths. The gate gives 0% coverage to each file with untrue coverage. The first ledger records these files with `untrue: true` and the origin `pre-spec`.
+The source check also finds a module hook that loads other source for a code file. A run of the guard on the old tests found one test file that does this. `src/data/trafficTiming.test.mjs` uses the Vite SSR loader, which runs transformed copies of 25 files under their real paths. The gate gives 0% coverage to each file with untrue coverage. The first ledger records these files with `untrue: true` and the origin `pre-spec`.
 
 ### Test names contain the scenario IDs
 
@@ -112,9 +121,9 @@ For tests, the ledger stores the name of each untraced test. A new untraced name
 
 ### Unstable coverage
 
-Some old tests read the clock, so two runs on the same tree can give different counts. Runs on 2026-09-13 and 2026-09-14 found this for six files. In two of these files, only the total branch count changes.
+Some old tests read the clock, so two runs on the same tree can give different counts. Runs on 2026-09-13 and 2026-09-14 found this for six files. Runs on the base `3ca81fb` found it for two files.
 
-Each gate run keeps the counts and the content hash of each code file in `.gev-cache/spec-samples.jsonl`.
+Each gate run keeps the counts and the content hash of each code file in `.gev-cache/spec-samples.jsonl`. A sample does not record the test files of its run. Thus the author removes the kept samples before the stability command runs on a new base.
 
 The command `stability --change <name>` runs the tests two times, with the allocation tests, because the other test runs at the same time change the result. The samples are the kept samples, the two runs and the ledger entry of each file with the same content hash. The command compares the not-covered counts and the total counts. For each file below 100% with different counts, the command writes a high count and a low count to the ledger entry. The history line records the low count and the high count of each metric.
 
