@@ -122,9 +122,11 @@
 - [x] 3.34 Write the test for `coverage-gate-038`.
 - [x] 3.35 Write the test for `coverage-gate-039`.
 - [x] 3.36 Write the test for `coverage-gate-040`.
-- [x] 3.37 Write `scripts/spec/lib/test-guard.mjs` until its tests pass.
-- [x] 3.38 Write the test for `coverage-gate-022`.
-- [x] 3.39 Write `scripts/spec/lib/run-parallel.mjs` until its tests pass.
+- [x] 3.37 Write the test for `coverage-gate-045`.
+- [x] 3.38 Write the test for `coverage-gate-046`.
+- [x] 3.39 Write `scripts/spec/lib/test-guard.mjs` until its tests pass.
+- [x] 3.40 Write the test for `coverage-gate-022`.
+- [x] 3.41 Write `scripts/spec/lib/run-parallel.mjs` until its tests pass.
 
 ## 4. Gap ledger and base comparison
 
@@ -191,7 +193,11 @@
 - [x] 4.61 Write the test for `gap-ledger-062`.
 - [x] 4.62 Write the test for `gap-ledger-063`.
 - [x] 4.63 Write the test for `gap-ledger-064`.
-- [x] 4.64 Write `scripts/spec/lib/ledger.mjs` until its tests pass.
+- [x] 4.64 Write the test for `gap-ledger-065`.
+- [x] 4.65 Write the test for `gap-ledger-066`.
+- [x] 4.66 Write the test for `gap-ledger-067`.
+- [x] 4.67 Write the test for `gap-ledger-068`.
+- [x] 4.68 Write `scripts/spec/lib/ledger.mjs` until its tests pass.
 
 ## 5. STE lint
 
@@ -271,8 +277,9 @@
 - [x] 7.21 Write the test for `coverage-gate-035`.
 - [x] 7.22 Write the test for `spec-lint-021`.
 - [x] 7.23 Write the test for `spec-lint-022`.
-- [x] 7.24 Write `scripts/spec/gates.mjs` until its tests pass.
-- [x] 7.25 Write `Makefile`, `Dockerfile` and `.node-version` until their tests pass.
+- [x] 7.24 Write the test for `coverage-gate-047`.
+- [x] 7.25 Write `scripts/spec/gates.mjs` until its tests pass.
+- [x] 7.26 Write `Makefile`, `Dockerfile` and `.node-version` until their tests pass.
 
 ## 8. Process files
 

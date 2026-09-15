@@ -258,6 +258,15 @@
   "coverage-gate-044": [
     "src/tooling/spec/coverage.test.mjs › [coverage-gate-044] uses the entry with the most not-covered items for a file with two coverage report entries"
   ],
+  "coverage-gate-045": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-045] keeps the assertion results and writes an error on a Node version without getTestContext"
+  ],
+  "coverage-gate-046": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-046] gives a skip reason on a Node version without getTestContext to each test that needs the guard to count assertions"
+  ],
+  "coverage-gate-047": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-047] stops for a local dotenv file that is not empty before the gate starts the test runs"
+  ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec"
@@ -462,6 +471,20 @@
   ],
   "gap-ledger-064": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-064] closes the gap of a changed unstable file at 100%"
+  ],
+  "gap-ledger-065": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-065 gap-ledger-068] uses the count bands of a band file in the check and in the ratchet command",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-065] does not stop for counts in the band of a band file"
+  ],
+  "gap-ledger-066": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-066] stops for a larger gap outside the band of a band file, but not for a smaller gap"
+  ],
+  "gap-ledger-067": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-067] does not use the band for a changed file, a file that no test loads or a file with untrue coverage"
+  ],
+  "gap-ledger-068": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-065 gap-ledger-068] uses the count bands of a band file in the check and in the ratchet command",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-068] writes the smaller not-covered line count of a band file and keeps the entry counts for a smaller covered count"
   ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"

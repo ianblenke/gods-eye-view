@@ -2,27 +2,47 @@ Verdict: PASS
 Findings: none
 
 Notes:
-- **S174 and F2 (design.md:78):** "25 files" is correct.
-  - `openspec/trace/gaps.json` has 25 entries with `untrue: true`.
-  - The guard result `.gev-cache/spec/guard-1057.jsonl` has 25 `COVERAGE-FAKE` violations. `src/data/trafficTiming.test.mjs` causes all of them.
-  - The last 580 samples also have 25 files with `untrue: true`.
-  - The number agrees with the table at design.md:14-22 and with the gate output "25 untrue".
-- **S179 (design.md:126):** The text agrees with the code. `coverageSample` (scripts/spec/lib/ledger.mjs:461-472) records no test files. `stabilityLedger` selects samples only by `sample.sha === sha` (ledger.mjs:516).
-- **F3 (proposal.md:53):** `src/standalone/ui.js` has 153 lines. It imports the HUD, orbit, overlay and detection modules. Its ledger entry has `loaded: false` and 153 lines. `src/ui.js` has 2 lines.
-- **S178 (proposal.md:33):** The parent of `27e251e` is `3ca81fb`. The merge base of HEAD and `origin/main` is `3ca81fb`. No remote branch contains `27e251e`. `git diff --stat 3ca81fb 27e251e` gives only `.dockerignore`, `Dockerfile`, `Makefile` and `compose.yaml`. These four files are also in `gov-diff-r28.txt`.
-- **S175 to S177 and F5 (the `sample-identity` limit, proposal.md:56):**
-  - The statement about the content hash agrees with ledger.mjs:516.
-  - "Only the archived design tells the author to remove the kept samples" is correct. `AGENTS.md`, `Makefile`, `.claude/commands/opsx/` and `openspec/config.yaml` do not say it. The only other files that name `spec-samples` are the code, the tests, the spec `gap-ledger` and `links.json`, and none of them gives this step.
-- **F1 (the `unfound-instability` limit, proposal.md:57):** The four file names are correct. The three stop codes agree with `compareCoverageEntry` and `compareLedger`, and with the ledger entries:
-  - `annotationResolver.js` has the entry 562 lines and 138 branches. A run with 567 lines gives `LEDGER-LARGER-GAP`. A run with 137 branches gives `LEDGER-STALE`.
-  - `gevActions.js` has the high counts 1304 lines and 221 branches. A lower run gives `LEDGER-STALE`.
-  - `keylessGeocoder.js` has 118 total branches and `placeSearch.js` has 23. A run with a lower total and the same not-covered count gives `LEDGER-LOST-COVERAGE`.
-  - None of the four entries has `low`.
-  - The limit says that a backfill change must make the tests deterministic. It does not name the other way: an author can record a range with the stability command in a change that changes only files in `openspec/`. Each needed width is 5 or less, so the width limit allows it. The limit is not wrong, so I did not record this as a finding.
-- **Samples:** `.gev-cache/spec-samples.jsonl` now has 6 runs, 3,480 lines, all on the new base. Only `ais-store.js` (40 or 44 lines not covered) and `labelArbiter.js` (50 or 52 branches not covered) have different counts. The ledger ranges and the two history lines agree. The four files of `unfound-instability` did not change in the 6 runs. This agrees with the limit text.
-- **Other text:** "six files" (design.md:124) is the count on the earlier base, and six is two files plus four files. The limit `range-totals` that design.md:142 names is at proposal.md:65. I found no stale "10 files", `src/ui.js` example, `5d470ae` or `2,920` in proposal.md or tasks.md. In design.md, `2,920`, 306 files and 54.0% are the historical 2026-09-13 table at lines 5-12, which is correct. The `src/ui.js` in `specs/coverage-gate/spec.md` is a test input for the gate, not an example of the base. `tasks.md`, `README.md`, the seven spec deltas and `review.md` are the same as the 2026-09-14 copies in HEAD. No file outside `openspec/` changed.
-- **F4:** The history lines name `0685c58`. If the author commits the working tree as a child commit of `0685c58`, design.md:146 stays correct. If the author amends `0685c58`, the text becomes incorrect.
-- **Index state:** The Git index has a staged deletion of `openspec/trace/gaps.json` and `openspec/trace/history.jsonl`. The new files are untracked. Add these files (and the new archive folder) before the commit. If the author commits only what is staged, the commit deletes the ledger. The gates stop such a commit, so I did not record this as a finding.
-- **Gate output:** There are three expected errors: two `REVIEW-AGENT-OUTPUT` and one `REVIEW-TREE`. `review.md` and the agent outputs for this round are not written yet. `MaxListenersExceededWarning` is a Node warning, not a gate warning. Trace, coverage, ledger and STE have 0 errors and 0 warnings.
-
-I did not change a file in the repository, I did not run a git command that changes state, and I did not read `.env`. I wrote no experiment files for this round.
+- **1. Only wording changed since round 31: confirmed.**
+  - I compared the round-31 copy (`scratchpad/review-spec-r31/m0`, the unchanged control copy) with the current working tree. I left out `node_modules`, `.git`, `.gev-cache` and `.env*`.
+  - Only these files differ:
+    - `Makefile`: comment line 3 only.
+    - `scripts/spec/gates.mjs:330`: only the `GATES-LOCAL-ENV` message ("changes" became "can change").
+    - `src/tooling/spec/gates.test.mjs`: the name of the band test at :408, and the two expected message strings at :453-454.
+    - `src/tooling/spec/ledger.test.mjs:781`: the gap-ledger-068 test name only.
+    - `src/tooling/spec/testGuard.test.mjs:427`: the same new band test name in the coverage-gate-046 list.
+    - The gap-ledger and coverage-gate specs, both the delta and the main copy.
+    - `design.md:130` and `proposal.md:65-66`.
+    - `openspec/trace/ids.json`: 4 hashes, for coverage-gate-046, gap-ledger-013, -054 and -068.
+    - `openspec/trace/links.json`: only the renamed tests.
+    - The new folder `review/round-31/`.
+  - These files did not change: `scripts/spec/lib/*`, `.github/workflows/`, `.claude/`, `gaps.json`, `history.jsonl` and the other 5 main specs.
+  - No test body, assertion, Makefile command or workflow step changed. No file changed after the gate run ended at 14:42:11.
+- **2. The scenario text agrees with the code and the tests.**
+  - The delta specs and the main specs have the same requirement and scenario lines.
+  - **gap-ledger-054, "its covered count is outside the limit in `gap-ledger-066`":** this agrees with `compareCoverageEntry`, which stops for `now < before - band(before)` (ledger.mjs:214).
+  - **gap-ledger-013, "not a band file, or a count … outside the limits in `gap-ledger-066`":** the ratchet stops only when the check finds errors. For a band file, the check finds errors only outside the band. A smaller gap is never outside the 066 limits, so this agrees with the 066 AND line.
+  - **gap-ledger-068:**
+    - The new title and the WHEN/AND lines agree with `bandFileCounts` (ledger.mjs:174-185) and with the `!entry.low` condition (:445).
+    - The test name agrees with its assertions (`mixed`, `backfill`, `drift`).
+  - **coverage-gate-046, "the skip option of each test that needs the guard is false":** this agrees with `GUARDED_RUN = { skip: missingTestContext() }` and with the assertion `missingTestContext({ getTestContext() {} }) === false`. The line before it already covers the other tests ("no skip reason").
+  - **gap-ledger Purpose:** the new sentence that defines a band file agrees with `isBandFile` (:165).
+  - **`GATES-LOCAL-ENV`:** the new message agrees with the Makefile comment and with gates.mjs:64. No spec quotes the old text.
+- **3. `range-band-ratchet` states round-31 F1 and F2 correctly.**
+  - **F1:** "keeps the high count and writes the current total counts. Thus a new test that shows more branches can make the next check stop for a correct change."
+  - **F2:** "A small covered loss can also add up over changes."
+  - "Only two ledger entries have a range" is true: `gaps.json` has ranges only for `server/providers/vessels/ais-store.js` and `src/data/labelArbiter.js`.
+  - The `unchanged-band` sentence is now limited to "a band file with no range", which corrects the untrue part that F2 named. `design.md:130` has the same limit.
+  - The limit does not name `gap-ledger-050`, whose THEN line the code does not do for a band file with a range. The limit describes that behavior, so this is not a new gap.
+  - `harden-gate-ledger` has no change folder yet. That is acceptable for a later change.
+- **4. The gate output, the ledger, the IDs and the links agree after the ratchet run.**
+  - **Trace:** 240 scenarios, 240 verified, 0 open. There are 3,535 tests and 291 traced tests, the same counts as round 31.
+  - **Ledger and STE:** 0 entries do not match the current gaps, and STE has 0 errors. The round-31 `STE-SENTENCE` error for the Purpose is gone.
+  - **Expected errors:** only the 3 expected review errors remain, `REVIEW-AGENT-OUTPUT` twice and `REVIEW-TREE`. `MaxListenersExceededWarning` is a Node warning, not a gate warning.
+  - **Ledger files:** the ratchet run wrote `gaps.json` again with the same content, and it added no history lines.
+  - **IDs:** only the 4 IDs with changed scenario text have new hashes.
+  - **Links:** I checked every tagged test name in `gates.test.mjs`, `ledger.test.mjs` and `testGuard.test.mjs` against `links.json`. No link is missing and no link is extra.
+- **Out of scope (no finding):** `design.md:44` still says "that file changes the coverage of the tests". The message now says "can change". This is a wording question only.
+- **Files and commands.**
+  - I did not change a file in the repository, and I ran only read-only git commands. The `git status --porcelain` hash is `3bd181f2…`.
+  - I did not read `.env`.
+  - I did not need experiments, so I wrote no files in `scratchpad/review-spec-r32/`.

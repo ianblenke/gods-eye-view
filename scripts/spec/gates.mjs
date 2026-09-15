@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -39,6 +39,7 @@ const REPORTER = fileURLToPath(new URL('./lib/trace-reporter.mjs', import.meta.u
 const RUNNER = fileURLToPath(new URL('./lib/run-parallel.mjs', import.meta.url));
 const OUT_DIR = '.gev-cache/spec';
 const DEFAULT_BASE = 'origin/main';
+const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
 const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'stability', 'lint', 'tree']);
 const OPTIONS = new Set(['--change', '--base', '--root']);
 const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|stability|lint|tree> [--change <name>] [--base <ref>] [--root <dir>]';
@@ -55,6 +56,23 @@ export function parseArgs(argv) {
     options[key.slice(2)] = value;
   }
   return options;
+}
+
+/**
+ * The dotenv files in the project root that Git does not track and that are not empty. A link to
+ * a file that does not exist is not in the result, because a test cannot read it.
+ * Vite and the key setup can read these files, so they can change the coverage of the tests.
+ * A tracked file is the same in each checkout, so it is not in the result.
+ *
+ * @param {string} root - Project root.
+ * @param {Set<string>} tracked - The tracked files.
+ * @returns {string[]} File names.
+ */
+export function localEnvFiles(root, tracked) {
+  return readdirSync(root)
+    .filter((name) => LOCAL_ENV_FILE.test(name) && !tracked.has(name))
+    .filter((name) => existsSync(path.join(root, name)) && statSync(path.join(root, name)).isFile() && statSync(path.join(root, name)).size > 0)
+    .sort();
 }
 
 /** Make the node:test runs for the gates. */
@@ -305,6 +323,13 @@ export function runGates({
   if (pinned.trim().replace(/^v/, '') !== nodeVersion) {
     return report(log, [{ code: 'GATES-RUNTIME', file: '.node-version', message: `Coverage counts differ between V8 versions. Run the gates on Node ${pinned.trim()} (make gates), not Node ${nodeVersion}.` }]);
   }
+  const envFiles = localEnvFiles(root, new Set(listTrackedFiles(root)));
+  if (envFiles.length > 0) {
+    return report(
+      log,
+      envFiles.map((name) => ({ code: 'GATES-LOCAL-ENV', file: name, message: `The file ${name} can change the coverage of the tests. Make the file empty. When Git ignores the file, you can also run the gates with make.` })),
+    );
+  }
   if (command === 'ratchet' && !change) {
     return report(log, [{ code: 'GATES-USAGE', file: '', message: 'The ratchet command needs --change <name>' }]);
   }
@@ -382,6 +407,7 @@ export function runGates({
     let result;
     try {
       result = ratchetLedger({
+        sameAsBase,
         ledger,
         current: measured.current,
         inventory: measured.inventory,
@@ -402,7 +428,7 @@ export function runGates({
     return report(log, []);
   }
 
-  const comparison = compareLedger({ ledger, current: measured.current });
+  const comparison = compareLedger({ ledger, current: measured.current, sameAsBase });
   const baseErrors = compareWithBase({
     ledger,
     baseLedger: parseLedger(readFileAt(root, base, LEDGER_FILE)),

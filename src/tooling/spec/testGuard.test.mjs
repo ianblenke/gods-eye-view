@@ -16,11 +16,14 @@ import {
   installGuard,
   isChildProcessRunner,
   lockGuardEnv,
+  missingTestContext,
   withGuardEnv,
   wrapAssertModules,
   wrapChildProcess,
 } from '../../../scripts/spec/lib/test-guard.mjs';
 
+// A test that needs the guard to count assertions needs getTestContext in node:test.
+const GUARDED_RUN = { skip: missingTestContext() };
 const sha256 = (text) => createHash('sha256').update(text).digest('hex');
 const ROOT = mkdtempSync(path.join(tmpdir(), 'gev-guard-'));
 const OUT = path.join(ROOT, '.gev-cache/spec');
@@ -116,7 +119,7 @@ test('[coverage-gate-018] reads the relative file of a script URL', () => {
   assert.equal(fileOfScriptUrl('/other/a.js', '/repo'), null);
 });
 
-test('[spec-trace-027] counts the assertions of each test', () => {
+test('[spec-trace-027] counts the assertions of each test', GUARDED_RUN, () => {
   assert.equal(1, 1);
   assert.ok(true);
   const file = path.relative(ROOT, fileURLToPath(import.meta.url)).split(path.sep).join('/');
@@ -242,7 +245,7 @@ test('[coverage-gate-033] stops a process with an inventory.json file that is no
   assert.equal(existsSync(path.join(out, `guard-${result.pid}.jsonl`)), false);
 });
 
-test('[coverage-gate-028] writes the checked files, the errors and the assertion counts of a child process at the end of the process', () => {
+test('[coverage-gate-028] writes the checked files, the errors and the assertion counts of a child process at the end of the process', GUARDED_RUN, () => {
   const script = `import(${JSON.stringify(pathToFileURL(path.join(ROOT, 'src/real.mjs')).href)}).then(() => import('node:assert/strict'));`;
   const result = spawnSync(process.execPath, ['--input-type=module', '-e', script], {
     env: { ...process.env, ...ENV, NODE_V8_COVERAGE: OWN_COVERAGE, NODE_OPTIONS: '' },
@@ -255,7 +258,7 @@ test('[coverage-gate-028] writes the checked files, the errors and the assertion
   assert.deepEqual(line, { violations: [], checked: ['src/real.mjs'], assertions: [] });
 });
 
-test('[coverage-gate-036] loads the guard before the other preloads of a child process', async () => {
+test('[coverage-gate-036] loads the guard before the other preloads of a child process', GUARDED_RUN, async () => {
   const strip = path.join(ROOT, 'strip.cjs');
   writeFileSync(strip, 'delete process.env.GEV_SPEC_OUT;\n');
   const { spawnSync: guardedSpawnSync } = await import('node:child_process');
@@ -376,3 +379,65 @@ test('[coverage-gate-040] keeps the gate values in the environment of a test run
   assert.equal(runnerProcess.env.GEV_SPEC_OUT, OUT);
 });
 
+
+test('[coverage-gate-045] keeps the assertion results and writes an error on a Node version without getTestContext', () => {
+  // The guard writes its results in an exit listener, so a later exit listener removes this folder.
+  const out = mkdtempSync(path.join(tmpdir(), 'gev-guard-no-context-'));
+  writeFileSync(path.join(out, 'inventory.json'), INVENTORY);
+  const session = { connect() {}, on() {}, post() {} };
+  const oldGuard = installGuard({ env: { ...ENV, GEV_SPEC_OUT: out }, createSession: () => session, execArgv: [], childProcess: fakeChildProcess([]), nodeTest: {} });
+  process.on('exit', () => rmSync(out, { recursive: true, force: true }));
+  assert.equal(typeof oldGuard.countAssertion, 'function');
+  assert.equal(oldGuard.countAssertion(), undefined);
+  assert.throws(() => assert.equal(1, 2), assert.AssertionError);
+  assert.deepEqual(oldGuard.results().assertions, []);
+  const [line] = readFileSync(path.join(out, `guard-${process.pid}.jsonl`), 'utf8').trim().split('\n').map(JSON.parse);
+  assert.deepEqual(line, {
+    violations: [{ code: 'COVERAGE-NO-TEST-CONTEXT', file: '', message: `The test guard cannot count assertions: Node ${process.version} has no getTestContext function in node:test` }],
+    checked: [],
+    assertions: [],
+  });
+});
+
+test('[coverage-gate-046] gives a skip reason on a Node version without getTestContext to each test that needs the guard to count assertions', async () => {
+  assert.equal(missingTestContext({}), `Node ${process.version} has no getTestContext function in node:test`);
+  assert.equal(missingTestContext({ getTestContext() {} }), false);
+  assert.equal(missingTestContext(), missingTestContext(await import('node:test')));
+  const skipped = (file) => [...readFileSync(fileURLToPath(new URL(file, import.meta.url)), 'utf8').matchAll(/^test\('([^']*)', GUARDED_RUN, /gm)].map((match) => match[1]);
+  assert.deepEqual(skipped('./testGuard.test.mjs'), [
+      "[spec-trace-027] counts the assertions of each test",
+      "[coverage-gate-028] writes the checked files, the errors and the assertion counts of a child process at the end of the process",
+      "[coverage-gate-036] loads the guard before the other preloads of a child process"
+  ]);
+  assert.deepEqual(skipped('./gates.test.mjs'), [
+      "[coverage-gate-003] runs each tracked test file with coverage and the trace reporter",
+      "[coverage-gate-007] runs the allocation tests alone with --expose-gc and no coverage",
+      "[gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
+      "[gap-ledger-003 spec-trace-016 coverage-gate-010] stops the check for a new gap, a failed test and an untracked file",
+      "[coverage-gate-018 coverage-gate-021 spec-trace-027] stops the check for untrue coverage and a test without an assertion",
+      "[gap-ledger-008 change-review-006 change-review-015] runs the ratchet command for a change, checks its review and its tree hash",
+      "[gap-ledger-021] stops the check for a ledger entry that the base does not have",
+      "[spec-trace-032 spec-trace-036 spec-trace-037] stops for changed scenario text and a changed registry without a changed test",
+      "[gap-ledger-013 gap-ledger-014 gap-ledger-027] stops the ratchet command for a larger gap, without a change name or for a change that is not active",
+      "[gap-ledger-002 gap-ledger-015 gap-ledger-016] stops the init command for a ledger, a base ledger or a new file with a gap",
+      "[change-review-007] reports an archived change without a review in the check",
+      "[spec-trace-026] stops the check for an unknown change name",
+      "[ci-gates-001 ci-gates-003 ci-gates-004] finds the change of a CI diff and checks it",
+      "[spec-lint-021 spec-lint-022] checks the tasks and the requirement format of the archived change that the gates check",
+      "[gap-ledger-065 gap-ledger-068] uses the count bands of a band file in the check and in the ratchet command",
+      "[ci-gates-005] checks a diff that changes no code, without a change name",
+      "[gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage from the kept samples and does not stop for it in the check against a base ledger",
+      "[gap-ledger-036] stops the stability command for a changed file with unstable coverage",
+      "[coverage-gate-023] stops for a code file that changes during the run",
+      "[coverage-gate-024] gives 0% coverage to a file that only a worker thread loads",
+      "[change-review-019 change-review-020] shows the tree hash of a change and stops for a change name that two folders use",
+      "[spec-trace-039 spec-trace-040] stops for a result entry that a test writes in the result folder",
+      "[coverage-gate-031] stops for untrue coverage from a child process that a test starts with other values for the gate variables",
+      "[coverage-gate-034] stops for an inventory.json file that changes during the run",
+      "[coverage-gate-037] stops for a guard error that names no file",
+      "[coverage-gate-040] stops for untrue coverage from a test runner that a test starts, with a preload that removes the gate values",
+      "[coverage-gate-039] stops for untrue coverage from a child process that a worker thread starts",
+      "[spec-trace-045] stops for changed scenario text when a test only moved to a renamed test file",
+      "[coverage-gate-043] stops the check for a code file that imports a test file"
+  ]);
+});
