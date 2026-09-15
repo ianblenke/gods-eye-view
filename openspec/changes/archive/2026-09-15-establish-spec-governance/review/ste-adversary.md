@@ -1,0 +1,20 @@
+Verdict: PASS
+- [ ] S180 minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:33 "The branch starts from the commit `27e251e`, which adds the Docker files to the base `3ca81fb`. This commit is not in `origin/main`." Articles and nouns. The first sentence names two commits, so "This commit" could refer to `27e251e` or to `3ca81fb`. The meaning is still clear. The base is the merge base with `origin/main` (design.md:150), and the next sentence ("Thus the diff also adds ...") only makes sense for `27e251e`. The facts agree with Git: the parent of `27e251e` is `3ca81fb`, `27e251e` adds only `.dockerignore`, `Dockerfile`, `Makefile` and `compose.yaml`, `27e251e` is not an ancestor of `origin/main`, and `3ca81fb` is the merge base. Write: "The commit `27e251e` is not in `origin/main`."
+- [ ] S181 minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:57 "A backfill change for these files must make their tests deterministic." Approved words. "deterministic" is not an approved STE word. `review.md` records the same word as finding S20 in round 1 ("A backfill change must make the tests deterministic."), and the author corrected it then. The limit `deterministic-tests` at proposal.md:58 now says "so that each run gives the same counts". Write: "A backfill change must change the tests of these files so that each run gives the same counts."
+- [ ] S182 minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:57 "Runs on the earlier base ... The runs on the current base did not find it" One word, one meaning. The proposal uses two names for the same commit: "the base `3ca81fb`" at proposal.md:33 and 40, and "the current base" here. It also says "the earlier base" but never names that commit. design.md:124 names those runs by their dates. The context makes the meaning clear. Write: "Runs on 2026-09-13 and 2026-09-14 found unstable coverage in four more files: ... The runs on the base `3ca81fb` did not find it, so ..."
+
+Notes:
+- **Round 27 corrections:** All six are in the text.
+  - S174: design.md:78 now says "25 files". `openspec/trace/gaps.json` has 25 entries with `untrue: true`, and design.md:20 also gives 25.
+  - S175, S176 and S177: proposal.md:56 now uses the text from these findings.
+  - S178: proposal.md:33 now uses the text from this finding (see S180 for a small remaining point).
+  - S179: design.md:126 now uses the text from this finding.
+- **Changed prose checked, no finding:**
+  - proposal.md:53: `src/standalone/ui.js` has a ledger entry with `loaded: false` and 153 lines.
+  - proposal.md:56 "Only the archived design tells the author": this is correct. `AGENTS.md`, `.claude/`, `Makefile` and `scripts/spec/gates.mjs` say nothing about the kept samples. design.md:126 describes the step ("the author removes"), in the same way as design.md:146 ("The author runs the ratchet command"). So "tells" agrees with the design.
+  - proposal.md:56 "selects ... only by the content hash": this agrees with `stabilityLedger`, which filters with `sample.sha === sha` (scripts/spec/lib/ledger.mjs:516).
+  - proposal.md:57, the four files: each file has a ledger entry with no `low` or high range. The three stop codes exist in ledger.mjs (lines 176/183, 192 and 249), and the old counts of these files show how each code can occur. "four more files" agrees with design.md:124 (six files on the earlier runs, two on `3ca81fb`).
+  - design.md:124 and design.md:126 agree with proposal.md:40 and proposal.md:56.
+- **Unchanged files:** Only `proposal.md` and `design.md` changed from the copy in HEAD. `tasks.md`, `README.md`, `review.md` and the seven spec deltas are the same.
+- **Gate output:** "STE: 0 errors, 0 warnings.", so there are no STE-PASSIVE or STE-ING warnings to examine. The REVIEW errors are expected. The traced test names are unchanged, so there are no new names to check.
+- **Safety:** I did not read `.env`. I did not change any repository file, and I ran only read-only git commands. The only scratchpad file is a temporary file from a `cmp` comparison, outside `review-ste-r28/`.

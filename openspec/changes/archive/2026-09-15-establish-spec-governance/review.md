@@ -2,11 +2,13 @@
 
 Verdict: PASS
 Reviewers: spec-adversary, ste-adversary
-Date: 2026-09-14
+Date: 2026-09-15
 Gates: make gates CHANGE=establish-spec-governance passed
-Reviewed-Tree: 2d9be4f69866403c3f328ee9a807efa787dc0018451b81d7dd0f8bbcc257810c
+Reviewed-Tree: 7fd0bd9a12bcead844a039996842dafde85593c78fa9a63dff1544fec351ecf3
 
-Rounds: 26. Round 26 gave PASS from the two agents. The spec adversary had no findings. The STE adversary had three minor findings. The output of rounds 1 to 25 is in `review/round-<n>/`. The output of round 26 is in `review/`.
+Rounds: 28. Round 28 gave PASS from the two agents. The spec adversary had no findings. The STE adversary had three minor findings. The output of rounds 1 to 27 is in `review/round-<n>/`. The output of round 28 is in `review/`.
+
+Round 26 passed on the base `d5b09ef`. The branch then moved to the base `3ca81fb`, and the ledger was made again on that base. Rounds 27 and 28 reviewed the new ledger and the changed text.
 
 From round 24, the agents use severities. A round gives FAIL only for a critical or a major finding.
 
@@ -281,3 +283,17 @@ From round 24, the agents use severities. A round gives FAIL only for a critical
 - [x] R26 S171 (ste-adversary) minor openspec/changes/archive/2026-09-14-establish-spec-governance/design.md:87 "When the hash of a registered scenario changes" Approved words. Decision: Minor. Corrected in design.md after the PASS of round 26 (step 10).
 - [x] R26 S172 (ste-adversary) minor openspec/changes/archive/2026-09-14-establish-spec-governance/proposal.md:73 "The files in `.claude/` set the review checks" One word, one meaning. Decision: Minor. Corrected in proposal.md after the PASS of round 26 (step 10).
 - [x] R26 S173 (ste-adversary) minor openspec/changes/archive/2026-09-14-establish-spec-governance/tasks.md:294 "9.10 Record a decision for each minor finding in `review.md`." Instructions. Decision: Minor. Kept. After a PASS, step 10 lets the author correct only the proposal and the design. The task order is the same as steps 10 and 12 of the review command.
+- [x] R27 F1 (spec-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:56 The limit `sample-identity` does not name the four files. Decision: Minor. Recorded in the new known limit `unfound-instability` before round 28.
+- [x] R27 F2 (spec-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/design.md:78 The text says that the Vite SSR loader runs "transformed copies of 10 files". Decision: Minor. Corrected in design.md before round 28 (same correction as S174).
+- [x] R27 F3 (spec-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:53 The limit `browser-coverage` gives `src/ui.js` as an example of code that needs a browser. Decision: Minor. Corrected in proposal.md before round 28.
+- [x] R27 F4 (spec-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/design.md:146 The text says that the commit in a history line "is the parent of the commit that contains the line". Decision: Minor. No text change. The rebuilt ledger is committed as a child commit of `0685c58`, so design.md stays correct.
+- [x] R27 F5 (spec-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/design.md:126 The instruction "before the stability command runs on a new base, remove the kept samples" is only in this archived design. Decision: Minor. Recorded in the known limit `sample-identity` before round 28.
+- [x] R27 S174 (ste-adversary) major openspec/changes/archive/2026-09-15-establish-spec-governance/design.md:78 "which runs transformed copies of 10 files under their real paths. Decision: Corrected, or recorded as a known limit, before round 28. Round 28 checked the result.
+- [x] R27 S175 (ste-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:56 "so a later run can stop for them" Approved words. Decision: Corrected, or recorded as a known limit, before round 28. Round 28 checked the result.
+- [x] R27 S176 (ste-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:56 "samples from an earlier test set" One word, one meaning. Decision: Corrected, or recorded as a known limit, before round 28. Round 28 checked the result.
+- [x] R27 S177 (ste-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:56 "The kept samples use only the content hash of each code file." Approved words. Decision: Corrected, or recorded as a known limit, before round 28. Round 28 checked the result.
+- [x] R27 S178 (ste-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:33 "The branch starts from the commit that adds the Docker files (`27e251e`)" One word, one meaning. Decision: Corrected, or recorded as a known limit, before round 28. Round 28 checked the result.
+- [x] R27 S179 (ste-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/design.md:126 "Thus, before the stability command runs on a new base, remove the kept samples." Instructions. Decision: Corrected, or recorded as a known limit, before round 28. Round 28 checked the result.
+- [x] R28 S180 (ste-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:33 "The branch starts from the commit `27e251e`, which adds the Docker files to the base `3ca81fb`. Decision: Minor. Corrected in proposal.md after the PASS of round 28 (step 10).
+- [x] R28 S181 (ste-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:57 "A backfill change for these files must make their tests deterministic." Approved words. Decision: Minor. Corrected in proposal.md after the PASS of round 28 (step 10).
+- [x] R28 S182 (ste-adversary) minor openspec/changes/archive/2026-09-15-establish-spec-governance/proposal.md:57 "Runs on the earlier base ... Decision: Minor. Corrected in proposal.md after the PASS of round 28 (step 10).
