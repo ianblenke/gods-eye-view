@@ -161,7 +161,30 @@ function sameGap(entry, gap) {
   );
 }
 
-function compareCoverageEntry(file, entry, gap) {
+/** True for a band file: a loaded code file with true coverage and the content of the base commit and of its entry. */
+function isBandFile(file, entry, gap, sameAsBase) {
+  return sameAsBase(file) && gap.sha === entry.sha && entry.loaded && gap.loaded && !entry.untrue && !gap.untrue;
+}
+
+/**
+ * The counts that the ratchet command writes for a band file with no range. It writes the smaller
+ * not-covered line count. For branches and functions, it writes the current counts when the covered
+ * count is not smaller than in the entry, and it keeps the entry counts when the covered count is smaller.
+ */
+function bandFileCounts(entry, gap) {
+  const next = { ...gap, lines: Math.min(entry.lines, gap.lines), totals: { ...gap.totals } };
+  for (const metric of ['branches', 'functions']) {
+    const before = coveredCount(entry, metric);
+    const now = coveredCount(gap, metric);
+    const keep = before === null || now === null ? gap[metric] > entry[metric] : now < before;
+    if (!keep) continue;
+    next[metric] = entry[metric];
+    next.totals[metric] = entry.totals ? entry.totals[metric] : gap.totals[metric];
+  }
+  return next;
+}
+
+function compareCoverageEntry(file, entry, gap, band = () => 0) {
   const errors = [];
   const error = (code, message) => errors.push({ code, file, message });
   if (gap.untrue && !entry.untrue) {
@@ -172,8 +195,8 @@ function compareCoverageEntry(file, entry, gap) {
   }
   const changed = gap.sha !== entry.sha;
   const allowed = (metric) => (changed && entry.low ? entry.low[metric] : entry[metric]);
-  if (gap.lines > allowed('lines')) {
-    error('LEDGER-LARGER-GAP', `${file} has ${gap.lines} lines not covered. The ledger allows ${allowed('lines')}.`);
+  if (gap.lines > allowed('lines') + band(allowed('lines'))) {
+    error('LEDGER-LARGER-GAP', `${file} has ${gap.lines} lines not covered. The ledger allows ${allowed('lines') + band(allowed('lines'))}.`);
   }
   if (changed && !entry.loaded && gap.loaded) {
     error('LEDGER-NO-BASELINE', `${file} changed in the same change that first loads it. Load it in one change and edit it in a later change.`);
@@ -188,7 +211,7 @@ function compareCoverageEntry(file, entry, gap) {
       if (entry.low && gap[metric] <= entry[metric]) continue;
       const before = coveredCount(entry, metric);
       const now = coveredCount(gap, metric);
-      if (before !== null && now !== null && now < before) {
+      if (before !== null && now !== null && now < before - band(before)) {
         error('LEDGER-LOST-COVERAGE', `${file} has ${now} covered ${metric}. The ledger records ${before}.`);
       }
     }
@@ -197,11 +220,17 @@ function compareCoverageEntry(file, entry, gap) {
 }
 
 /**
- * Compare the current gaps with the ledger.
+ * Compare the current gaps with the ledger. A band file is a loaded code file with true coverage
+ * that has the content of the base commit and of its entry. Its not-covered line count can be
+ * above the entry by at most the band of the entry count. Its covered branch and function counts
+ * can be below the entry by at most the band of the covered count in the entry. The gate does not
+ * record the entry of a band file as not current for a smaller gap.
  *
+ * @param {object} input
+ * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
  * @returns {{errors: object[], stale: object[]}}
  */
-export function compareLedger({ ledger, current }) {
+export function compareLedger({ ledger, current, sameAsBase = () => false }) {
   const errors = [];
   const stale = [];
   for (const [file, entry] of Object.entries(ledger.coverage)) {
@@ -219,12 +248,16 @@ export function compareLedger({ ledger, current }) {
       }
       continue;
     }
-    const entryErrors = compareCoverageEntry(file, entry, gap);
+    // The counts of a band file can be different in each run, so they can move in a band.
+    const band = isBandFile(file, entry, gap, sameAsBase);
+    const entryErrors = compareCoverageEntry(file, entry, gap, band ? rangeLimit : undefined);
     errors.push(...entryErrors);
-    if (entryErrors.length === 0 && !sameGap(entry, gap)) stale.push({ kind: 'coverage', file });
+    if (entryErrors.length === 0 && !sameGap(entry, gap) && !band) stale.push({ kind: 'coverage', file });
   }
   for (const [file, entry] of Object.entries(ledger.coverage)) {
-    if (!current.coverage.has(file) && !completeInRange(entry, current.hashes.get(file))) stale.push({ kind: 'coverage', file });
+    if (current.coverage.has(file) || completeInRange(entry, current.hashes.get(file))) continue;
+    const complete = { loaded: true, untrue: false, sha: current.hashes.get(file) };
+    if (!isBandFile(file, entry, complete, sameAsBase)) stale.push({ kind: 'coverage', file });
   }
 
   for (const [file, names] of current.untraced) {
@@ -376,10 +409,10 @@ function sum(names) {
  *
  * @returns {{ledger: object, history: object[]}}
  */
-export function ratchetLedger({ ledger, current, inventory, testFiles, change, changeActive, date, commit }) {
+export function ratchetLedger({ ledger, current, inventory, testFiles, change, changeActive, date, commit, sameAsBase = () => false }) {
   if (!change) throw new Error('The ratchet command needs --change <name>');
   if (!changeActive) throw new Error(`Change "${change}" has no folder with a proposal.md file in openspec/changes`);
-  const blocking = compareLedger({ ledger, current }).errors.filter((error) => error.code !== 'LEDGER-STALE');
+  const blocking = compareLedger({ ledger, current, sameAsBase }).errors.filter((error) => error.code !== 'LEDGER-STALE');
   if (blocking.length > 0) {
     throw new Error(`The ratchet command cannot run while gaps are larger:\n${blocking.map((error) => `${error.code} ${error.message}`).join('\n')}`);
   }
@@ -408,7 +441,8 @@ export function ratchetLedger({ ledger, current, inventory, testFiles, change, c
       coverage[file] = entry;
       continue;
     }
-    const next = { ...gap, origin: entry.origin, since: entry.since };
+    const band = isBandFile(file, entry, gap, sameAsBase);
+    const next = { ...(band && !entry.low ? bandFileCounts(entry, gap) : gap), origin: entry.origin, since: entry.since };
     const keepRange = Boolean(entry.low) && gap.sha === entry.sha;
     if (keepRange) next.low = {};
     for (const metric of METRICS.filter(() => keepRange)) {
@@ -418,7 +452,7 @@ export function ratchetLedger({ ledger, current, inventory, testFiles, change, c
       } else if (gap[metric] < low) {
         next.low[metric] = gap[metric];
         next[metric] = gap[metric] + width(entry, metric);
-      } else if (gap[metric] > entry[metric]) {
+      } else if (gap[metric] > entry[metric] && !band) {
         next.low[metric] = gap[metric] - width(entry, metric);
       } else {
         next.low[metric] = low;

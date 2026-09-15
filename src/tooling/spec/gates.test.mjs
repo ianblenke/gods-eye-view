@@ -1,13 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { buildTestRuns, childEnv, parseArgs, runGates } from '../../../scripts/spec/gates.mjs';
-import { GUARD_PRELOAD } from '../../../scripts/spec/lib/test-guard.mjs';
+import { GUARD_PRELOAD, missingTestContext } from '../../../scripts/spec/lib/test-guard.mjs';
 
+// A test that needs the guard to count assertions needs getTestContext in node:test.
+const GUARDED_RUN = { skip: missingTestContext() };
 const PROJECT_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 const GATES = path.join(PROJECT_ROOT, 'scripts/spec/gates.mjs');
 const DATE = new Date('2026-09-13T12:00:00Z');
@@ -89,7 +91,7 @@ function reviewFor(root, change, folder = `openspec/changes/${change}`) {
   });
 }
 
-test('[coverage-gate-003] runs each tracked test file with coverage and the trace reporter', () => {
+test('[coverage-gate-003] runs each tracked test file with coverage and the trace reporter', GUARDED_RUN, () => {
   const [main] = buildTestRuns({ testFiles: ['src/a.test.mjs', 'tools/b.test.mjs'], allocationFiles: [], outDir: '/out' });
   assert.deepEqual(main.args.slice(0, 2), ['--test', '--experimental-test-coverage']);
   assert.ok(main.args.includes('--test-reporter-destination=/out/lcov.info'));
@@ -102,7 +104,7 @@ test('[coverage-gate-003] runs each tracked test file with coverage and the trac
   });
 });
 
-test('[coverage-gate-007] runs the allocation tests alone with --expose-gc and no coverage', () => {
+test('[coverage-gate-007] runs the allocation tests alone with --expose-gc and no coverage', GUARDED_RUN, () => {
   const runs = buildTestRuns({ testFiles: ['src/a.test.mjs', 'src/alloc.test.mjs'], allocationFiles: ['src/alloc.test.mjs', 'src/other.test.mjs'], outDir: '/out' });
   assert.deepEqual(runs.map((item) => item.kind), ['main', 'allocation']);
   assert.equal(runs[0].args.includes('src/alloc.test.mjs'), false);
@@ -146,7 +148,7 @@ test('[gap-ledger-030] stops for a base branch that Git cannot find', () => {
   });
 });
 
-test('[gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check', () => {
+test('[gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const ledger = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8'));
@@ -166,7 +168,7 @@ test('[gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, run
   });
 });
 
-test('[gap-ledger-003 spec-trace-016 coverage-gate-010] stops the check for a new gap, a failed test and an untracked file', () => {
+test('[gap-ledger-003 spec-trace-016 coverage-gate-010] stops the check for a new gap, a failed test and an untracked file', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     write(root, {
@@ -183,7 +185,7 @@ test('[gap-ledger-003 spec-trace-016 coverage-gate-010] stops the check for a ne
   });
 });
 
-test('[coverage-gate-018 coverage-gate-021 spec-trace-027] stops the check for untrue coverage and a test without an assertion', () => {
+test('[coverage-gate-018 coverage-gate-021 spec-trace-027] stops the check for untrue coverage and a test without an assertion', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const fake = `test('[demo-001] fakes the coverage', () => {\n  new Function('return 1;\\n//# sourceURL=${pathToFileURL(path.join(root, 'src/math.js')).href}')();\n});`;
@@ -196,7 +198,7 @@ test('[coverage-gate-018 coverage-gate-021 spec-trace-027] stops the check for u
   });
 });
 
-test('[gap-ledger-008 change-review-006 change-review-015] runs the ratchet command for a change, checks its review and its tree hash', () => {
+test('[gap-ledger-008 change-review-006 change-review-015] runs the ratchet command for a change, checks its review and its tree hash', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     write(root, { ...CHANGE, 'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers') });
@@ -218,7 +220,7 @@ test('[gap-ledger-008 change-review-006 change-review-015] runs the ratchet comm
   });
 });
 
-test('[gap-ledger-021] stops the check for a ledger entry that the base does not have', () => {
+test('[gap-ledger-021] stops the check for a ledger entry that the base does not have', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     commitAll(root, 'ledger');
@@ -234,7 +236,7 @@ test('[gap-ledger-021] stops the check for a ledger entry that the base does not
   });
 });
 
-test('[spec-trace-032 spec-trace-036 spec-trace-037] stops for changed scenario text and a changed registry without a changed test', () => {
+test('[spec-trace-032 spec-trace-036 spec-trace-037] stops for changed scenario text and a changed registry without a changed test', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     write(root, { ...CHANGE, 'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers') });
@@ -264,7 +266,7 @@ test('[spec-trace-032 spec-trace-036 spec-trace-037] stops for changed scenario 
   });
 });
 
-test('[gap-ledger-013 gap-ledger-014 gap-ledger-027] stops the ratchet command for a larger gap, without a change name or for a change that is not active', () => {
+test('[gap-ledger-013 gap-ledger-014 gap-ledger-027] stops the ratchet command for a larger gap, without a change name or for a change that is not active', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     write(root, { 'src/math.test.mjs': MATH_TEST('adds two numbers', "test('breaks', () => {\n  assert.equal(1, 2);\n});") });
@@ -280,7 +282,7 @@ test('[gap-ledger-013 gap-ledger-014 gap-ledger-027] stops the ratchet command f
   });
 });
 
-test('[gap-ledger-002 gap-ledger-015 gap-ledger-016] stops the init command for a ledger, a base ledger or a new file with a gap', () => {
+test('[gap-ledger-002 gap-ledger-015 gap-ledger-016] stops the init command for a ledger, a base ledger or a new file with a gap', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     assert.match(run(root, ['init']).output, /ERROR GATES-INIT .*gaps\.json exists/);
@@ -326,7 +328,7 @@ test('[spec-trace-002 coverage-gate-008 coverage-gate-017] reports spec, comment
   });
 });
 
-test('[change-review-007] reports an archived change without a review in the check', () => {
+test('[change-review-007] reports an archived change without a review in the check', GUARDED_RUN, () => {
   withFixture((root) => {
     write(root, { 'openspec/changes/archive/2026-09-01-old/proposal.md': '## Why\n\nOld.\n' });
     passes(root, ['init']);
@@ -334,7 +336,7 @@ test('[change-review-007] reports an archived change without a review in the che
   });
 });
 
-test('[spec-trace-026] stops the check for an unknown change name', () => {
+test('[spec-trace-026] stops the check for an unknown change name', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     assert.match(run(root, ['check', '--change', 'nope']).output, /ERROR TRACE-UNKNOWN-CHANGE openspec\/changes No active or archived change has the name nope/);
@@ -356,7 +358,7 @@ test('[ste-lint-011 ste-lint-012 ste-lint-016] checks only Markdown with the lin
   });
 });
 
-test('[ci-gates-001 ci-gates-003 ci-gates-004] finds the change of a CI diff and checks it', () => {
+test('[ci-gates-001 ci-gates-003 ci-gates-004] finds the change of a CI diff and checks it', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     commitAll(root, 'ledger');
@@ -383,7 +385,7 @@ test('[ci-gates-001 ci-gates-003 ci-gates-004] finds the change of a CI diff and
   });
 });
 
-test('[spec-lint-021 spec-lint-022] checks the tasks and the requirement format of the archived change that the gates check', () => {
+test('[spec-lint-021 spec-lint-022] checks the tasks and the requirement format of the archived change that the gates check', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const archived = 'openspec/changes/archive/2026-09-13-add-demo';
@@ -400,7 +402,28 @@ test('[spec-lint-021 spec-lint-022] checks the tasks and the requirement format 
   });
 });
 
-test('[ci-gates-005] checks a diff that changes no code, without a change name', () => {
+const SHAPES = 'export function area(w, h) {\n  return w * h;\n}\nexport function perimeter(w, h) {\n  return 2 * (w + h);\n}\nexport function unused() {\n  return 0;\n}\n';
+const SHAPES_TEST = (calls) => ["import test from 'node:test';", "import assert from 'node:assert/strict';", "import { area, perimeter } from './shapes.js';", "test('measures shapes', () => {", ...calls, '});', ''].join('\n');
+
+test('[gap-ledger-065 gap-ledger-068] uses the count bands of a band file in the check and in the ratchet command', GUARDED_RUN, () => {
+  const base = { 'src/shapes.js': SHAPES, 'src/shapes.test.mjs': SHAPES_TEST(['  assert.equal(area(2, 3), 6);', '  assert.equal(perimeter(2, 3), 10);']) };
+  withFixture(
+    (root) => {
+      passes(root, ['init']);
+      const entry = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/shapes.js'];
+      assert.equal(entry.functions, 1);
+      write(root, { 'src/shapes.test.mjs': SHAPES_TEST(['  assert.equal(area(2, 3), 6);', '  assert.equal(typeof perimeter, "function");']) });
+      const check = passes(root, ['check']);
+      assert.match(check.output, /Ledger: 0 entries do not match the current gaps\./);
+      write(root, { ...CHANGE, 'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers') });
+      passes(root, ['ratchet', '--change', 'add-demo']);
+      assert.deepEqual(JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/shapes.js'], entry);
+    },
+    { base },
+  );
+});
+
+test('[ci-gates-005] checks a diff that changes no code, without a change name', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     commitAll(root, 'ledger');
@@ -409,6 +432,30 @@ test('[ci-gates-005] checks a diff that changes no code, without a change name',
     git(root, 'checkout', '-q', '-b', 'docs');
     write(root, { 'README.md': '# Readme\n' });
     assert.match(passes(root, ['ci']).output, /CI: check without a change\./);
+  });
+});
+
+test('[coverage-gate-047] stops for a local dotenv file that is not empty before the gate starts the test runs', () => {
+  withFixture((root) => {
+    const spawned = [];
+    const spawn = (...args) => {
+      spawned.push(args);
+      return { status: 9, error: new Error('spawn failed') };
+    };
+    write(root, { '.env': 'GOOGLE_MAPS_API_KEY=local\n', '.env.local': 'A=1\n', '.env.example': 'A=\n', '.env.empty': '' });
+    mkdirSync(path.join(root, '.env.d'));
+    symlinkSync(path.join(root, 'no-such-file'), path.join(root, '.env.link'));
+    git(root, 'add', '-f', '.env.example');
+    const stopped = run(root, ['check'], { spawn });
+    assert.equal(stopped.status, 1);
+    assert.deepEqual(spawned, []);
+    assert.deepEqual(stopped.output.split('\n').filter((line) => line.startsWith('ERROR')), [
+      'ERROR GATES-LOCAL-ENV .env The file .env can change the coverage of the tests. Make the file empty. When Git ignores the file, you can also run the gates with make.',
+      'ERROR GATES-LOCAL-ENV .env.local The file .env.local can change the coverage of the tests. Make the file empty. When Git ignores the file, you can also run the gates with make.',
+    ]);
+    write(root, { '.env': '', '.env.local': '' });
+    assert.match(run(root, ['check'], { spawn }).output, /ERROR GATES-TEST-RUN The test runner stopped with status 9: spawn failed/);
+    assert.equal(spawned.length, 1);
   });
 });
 
@@ -489,7 +536,7 @@ function mergeToMain(root, branch) {
   git(root, 'checkout', '-q', '-b', branch);
 }
 
-test('[gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage from the kept samples and does not stop for it in the check against a base ledger', () => {
+test('[gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage from the kept samples and does not stop for it in the check against a base ledger', GUARDED_RUN, () => {
   withFixture(
     (root) => {
       passes(root, ['init']);
@@ -512,7 +559,7 @@ test('[gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage f
   );
 });
 
-test('[gap-ledger-036] stops the stability command for a changed file with unstable coverage', () => {
+test('[gap-ledger-036] stops the stability command for a changed file with unstable coverage', GUARDED_RUN, () => {
   withFixture(
     (root) => {
       passes(root, ['init']);
@@ -548,7 +595,7 @@ test('[coverage-gate-030] stops for a result file that the gate did not name', (
   });
 });
 
-test('[coverage-gate-023] stops for a code file that changes during the run', () => {
+test('[coverage-gate-023] stops for a code file that changes during the run', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const change = "test('changes the code', () => {\n  appendFileSync(new URL('./math.js', import.meta.url), '// changed\\n');\n  assert.ok(true);\n});";
@@ -559,7 +606,7 @@ test('[coverage-gate-023] stops for a code file that changes during the run', ()
   });
 });
 
-test('[coverage-gate-024] gives 0% coverage to a file that only a worker thread loads', () => {
+test('[coverage-gate-024] gives 0% coverage to a file that only a worker thread loads', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const workerTest = [
@@ -583,7 +630,7 @@ test('[coverage-gate-024] gives 0% coverage to a file that only a worker thread 
   });
 });
 
-test('[change-review-019 change-review-020] shows the tree hash of a change and stops for a change name that two folders use', () => {
+test('[change-review-019 change-review-020] shows the tree hash of a change and stops for a change name that two folders use', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     write(root, CHANGE);
@@ -595,7 +642,7 @@ test('[change-review-019 change-review-020] shows the tree hash of a change and 
   });
 });
 
-test('[spec-trace-039 spec-trace-040] stops for a result entry that a test writes in the result folder', () => {
+test('[spec-trace-039 spec-trace-040] stops for a result entry that a test writes in the result folder', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const forge = [
@@ -617,7 +664,7 @@ test('[spec-trace-039 spec-trace-040] stops for a result entry that a test write
   });
 });
 
-test('[coverage-gate-031] stops for untrue coverage from a child process that a test starts with other values for the gate variables', () => {
+test('[coverage-gate-031] stops for untrue coverage from a child process that a test starts with other values for the gate variables', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const hide = [
@@ -640,7 +687,7 @@ test('[coverage-gate-031] stops for untrue coverage from a child process that a 
   });
 });
 
-test('[coverage-gate-034] stops for an inventory.json file that changes during the run', () => {
+test('[coverage-gate-034] stops for an inventory.json file that changes during the run', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const change = "test('changes the inventory', () => {\n  writeFileSync(path.join(process.env.GEV_SPEC_OUT, 'inventory.json'), '{}');\n  assert.ok(true);\n});";
@@ -663,7 +710,7 @@ test('[gap-ledger-053] stops the check, the ratchet command and the stability co
   });
 });
 
-test('[coverage-gate-037] stops for a guard error that names no file', () => {
+test('[coverage-gate-037] stops for a guard error that names no file', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const report = "test('reports a process without an inspector', () => {\n  const violation = { code: 'COVERAGE-NO-INSPECTOR', file: '', message: 'Process 1 collects coverage, but the test guard cannot start an inspector session' };\n  writeFileSync(path.join(process.env.GEV_SPEC_OUT, 'guard-1.jsonl'), `${JSON.stringify({ violations: [violation], checked: [], assertions: [] })}\\n`);\n  assert.ok(true);\n});";
@@ -675,7 +722,7 @@ test('[coverage-gate-037] stops for a guard error that names no file', () => {
   });
 });
 
-test('[coverage-gate-040] stops for untrue coverage from a test runner that a test starts, with a preload that removes the gate values', () => {
+test('[coverage-gate-040] stops for untrue coverage from a test runner that a test starts, with a preload that removes the gate values', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const nested = [
@@ -698,7 +745,7 @@ test('[coverage-gate-040] stops for untrue coverage from a test runner that a te
   });
 });
 
-test('[coverage-gate-039] stops for untrue coverage from a child process that a worker thread starts', () => {
+test('[coverage-gate-039] stops for untrue coverage from a child process that a worker thread starts', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const workerSpawn = [
@@ -720,7 +767,7 @@ test('[coverage-gate-039] stops for untrue coverage from a child process that a 
   });
 });
 
-test('[spec-trace-045] stops for changed scenario text when a test only moved to a renamed test file', () => {
+test('[spec-trace-045] stops for changed scenario text when a test only moved to a renamed test file', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     write(root, { ...CHANGE, 'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers') });
@@ -736,7 +783,7 @@ test('[spec-trace-045] stops for changed scenario text when a test only moved to
   });
 });
 
-test('[coverage-gate-043] stops the check for a code file that imports a test file', () => {
+test('[coverage-gate-043] stops the check for a code file that imports a test file', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     write(root, { 'src/helper.test.mjs': "import test from 'node:test';\nimport assert from 'node:assert/strict';\nexport const helper = 1;\ntest('helper', () => {\n  assert.ok(true);\n});\n", 'src/uses.js': "import { helper } from './helper.test.mjs';\nexport const uses = helper;\n" });

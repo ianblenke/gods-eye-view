@@ -108,6 +108,12 @@ Origin: spec-first
 - **WHEN** the Node version is not equal to the version in `.node-version`
 - **THEN** the coverage gate stops the build
 
+#### Scenario: Stop for a local dotenv file that is not empty `coverage-gate-047`
+- **WHEN** the project root has a file `.env` or a file with a name that starts with `.env.`
+- **AND** Git does not track the file, and the file is not empty
+- **THEN** the coverage gate stops the build before the gate starts the test runs
+- **AND** the gate shows the file and tells you to make the file empty, or to run `make gates` when Git ignores the file
+
 ### Requirement: Test results
 The coverage gate MUST read test results only from the result files that it named for its test runs. It makes a new result folder for each measurement.
 Origin: spec-first
@@ -230,4 +236,16 @@ Origin: spec-first
 - **AND** the process is a node:test runner that runs its tests in child processes, or it has no `NODE_V8_COVERAGE`
 - **THEN** the guard does not check the sources, does not count the assertions and writes no results
 - **AND** the guard gives the gate values to the child processes that collect coverage
+
+#### Scenario: Keep the assertion results on a Node version without the test context function `coverage-gate-045`
+- **WHEN** the test guard starts in the main thread of a process with an inspector session and `GEV_SPEC_OUT`
+- **AND** `node:test` has no function `getTestContext`
+- **THEN** the guard does not count the assertions, and each assertion gives its usual result
+- **AND** the guard writes an error that names no file to the guard folder, so the coverage gate stops the build
+
+#### Scenario: Skip the tests that need assertion counts on a Node version without the test context function `coverage-gate-046`
+- **WHEN** the tests of the gates run on a Node version with a `node:test` module without the function `getTestContext`
+- **THEN** each test that needs the guard to count assertions has a skip reason that names the Node version and the function
+- **AND** the other tests of the gates have no skip reason
+- **AND** on a Node version with the function, the skip option of each test that needs the guard is false
 

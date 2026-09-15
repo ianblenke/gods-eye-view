@@ -213,6 +213,18 @@ export function lockGuardEnv(processObject) {
 }
 
 /**
+ * The skip reason for a test that needs the guard to count assertions, or false. On a Node
+ * version without the function `getTestContext` in `node:test`, the guard cannot count the
+ * assertions of a test.
+ *
+ * @param {object} [nodeTest] - The `node:test` module.
+ * @returns {string|false}
+ */
+export function missingTestContext(nodeTest = require('node:test')) {
+  return typeof nodeTest.getTestContext === 'function' ? false : `Node ${process.version} has no getTestContext function in node:test`;
+}
+
+/**
  * Install the guard in this process when GEV_SPEC_OUT is set. Throws when the hash
  * of the inventory file is not the hash in GEV_SPEC_INVENTORY. A process without an
  * inspector gets no guard. When that process collects coverage, the guard writes an
@@ -220,7 +232,7 @@ export function lockGuardEnv(processObject) {
  * coverage to a file that only a worker loads. In each case, the child processes of the
  * process or the worker get the gate values.
  *
- * @param {{env?: Record<string, string>, createSession?: () => Session, execArgv?: string[], mainThread?: boolean}} [options]
+ * @param {{env?: Record<string, string>, createSession?: () => Session, execArgv?: string[], mainThread?: boolean, nodeTest?: object}} [options]
  * @returns {object|null} The guard, or null when the environment has no GEV_SPEC_OUT, the thread is a worker or the process has no inspector.
  */
 export function installGuard({
@@ -230,6 +242,7 @@ export function installGuard({
   mainThread = isMainThread,
   childProcess = require('node:child_process'),
   processObject = process,
+  nodeTest = require('node:test'),
 } = {}) {
   if (!env.GEV_SPEC_OUT) return null;
   const guards = (globalThis[GUARDS] ||= new Map());
@@ -260,9 +273,13 @@ export function installGuard({
     return null;
   }
   const inventory = new Map(Object.entries(JSON.parse(inventoryText)));
-  const { getTestContext } = require('node:test');
-  const guard = createGuard({ root, inventory, getContext: getTestContext });
+  const noContext = missingTestContext(nodeTest);
+  const guard = createGuard({ root, inventory, getContext: noContext ? () => undefined : nodeTest.getTestContext });
   guards.set(outDir, guard);
+  if (noContext) {
+    const violation = { code: 'COVERAGE-NO-TEST-CONTEXT', file: '', message: `The test guard cannot count assertions: ${noContext}` };
+    appendFileSync(path.join(outDir, `guard-${process.pid}.jsonl`), `${JSON.stringify({ violations: [violation], checked: [], assertions: [] })}\n`);
+  }
 
   session.on('Debugger.scriptParsed', ({ params }) => {
     const file = fileOfScriptUrl(params.url, root);

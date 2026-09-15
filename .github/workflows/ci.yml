@@ -79,6 +79,14 @@ jobs:
       - name: Run the spec gates
         run: node scripts/spec/gates.mjs ci --base origin/${{ github.base_ref || 'main' }}
 
+      - name: Keep the gate results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spec-gate-results
+          path: .gev-cache/spec/
+          retention-days: 7
+
   windows-onboarding:
     name: Windows onboarding
     runs-on: windows-latest

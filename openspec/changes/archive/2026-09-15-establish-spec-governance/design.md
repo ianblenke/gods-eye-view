@@ -15,10 +15,10 @@ On 2026-09-15, the branch moved to the base `3ca81fb`. The first ledger on that 
 
 | Item | Result |
 |---|---|
-| Files at 100% | 121 |
+| Files at 100% | 120 |
 | Files that no test loads | 107 |
 | Files with untrue coverage | 25 |
-| Tests with a scenario ID | 283 of 3,527 |
+| Tests with a scenario ID | 291 of 3,535 |
 
 An adversarial review of the first version of this design found 29 problems. The review of the second version found 62 more problems. This version corrects these problems. The section "Known limits and later changes" in the proposal lists the problems that stay open.
 
@@ -40,6 +40,10 @@ An adversarial review of the first version of this design found 29 problems. The
 ### Pinned runtime
 
 The file `.node-version` contains `24.21.0`. The Docker image uses `node:24.21.0-bookworm-slim` and installs Git. The gates stop on each other Node version, because V8 versions give different coverage counts. `make gates` runs the gates in the image.
+
+Vite and the key setup read the local `.env` file, so that file changes the coverage of the tests. Other ignored local files can do the same. Thus `make gates` copies the files that Git tracks or does not ignore, the `.git` folder and the kept samples to a folder in the container. The gates run in that copy, without the `NODE_ENV`, `HOST` and `PORT` values of the image, as in CI. Then the target copies `openspec/trace/` and `.gev-cache/` back.
+
+The gates also stop for a dotenv file in the project root that Git does not track and that is not empty. A direct run of `gates.mjs` can still read other ignored files, for example `pinokio/ENVIRONMENT`.
 
 ### Test runs
 
@@ -65,7 +69,7 @@ A file that the tests load under two URLs, for example with a query string, has 
 Before the runs, the gate writes the content hash of each file in the inventory to `.gev-cache/spec/inventory.json`. The guard stops its process when the hash of that file is not the hash in `GEV_SPEC_INVENTORY`. The guard does these tasks:
 - It compares the hash of each script that has the URL of a file in the inventory with the hash in `inventory.json`. A difference is an error. The hashes are from the start of the run. Thus a code file that changes during the run cannot hide this.
 - It records each file in the inventory that it checked.
-- It counts the assertions for each test. It uses `getTestContext()` for the file and the full name of the test.
+- It counts the assertions for each test. It uses `getTestContext()` for the file and the full name of the test. Node 24.14.0 has no `getTestContext()`. On such a Node version, the guard counts no assertions and writes an error. The 32 tests that need the guard to count assertions skip on such a Node version. The CI workflow also runs `npm test` on Node 24.14.0.
 - It adds itself as the first preload to the `NODE_OPTIONS` of a child process that collects coverage.
 - It gives the gate values of `GEV_SPEC_OUT`, `GEV_SPEC_ROOT` and `GEV_SPEC_INVENTORY` to a child process that writes coverage to the coverage folder of the test process. A child process with its own coverage folder keeps the values from the test.
 
@@ -112,12 +116,20 @@ The gates run the OpenSpec CLI from the `@fission-ai/openspec` development depen
 The ledger stores the not-covered counts, the total branch and function counts and the SHA-256 hash of each file with a gap. The experiments showed that V8 does not count the branches of a function that no test calls. Thus a new test can make the not-covered branch count larger. A removed test can also make the total branch count smaller.
 
 The gate uses the content hash and the covered count to find the cause. The covered count is the total minus the not-covered count:
-- For an unchanged file, the gate compares the not-covered lines. It also stops when the covered branch count or the covered function count becomes smaller.
+- For an unchanged file, the gate compares the not-covered lines. It also stops when the covered branch count or the covered function count becomes smaller. For a band file, each comparison has the band that the section "Count band for band files" tells.
 - For a changed file, the gate compares the not-covered lines, branches and functions. For an entry with a range, it uses the low counts.
 
 A file that no test loaded has no branch count. If the author changes the file in the same change that first loads it, the gate stops. The author must load the file in one change and change it in a later change.
 
 For tests, the ledger stores the name of each untraced test. A new untraced name is a new gap.
+
+### Count band for band files
+
+CI runs on 2026-09-15 gave other counts than the local runs for files that no change touched. The files and the counts were different in each CI run. The differences were small, for example one branch or eight lines. Thus the gate allows a band for a band file. A band file is a loaded file with true coverage, the content of the base commit and the content hash of its entry.
+
+The band of a count is the same as the range width limit: 5, or 2% of that count when that is more. The not-covered lines use the band of the entry count. The covered branches and functions use the band of the covered count in the entry. For a band file with no range, the ratchet command writes the smaller not-covered line count. It writes the branch and function counts only when the covered count is not smaller.
+
+The gate uses no band for a changed file, a new gap, a file that no test loads or a file with untrue coverage. A smaller gap in a band file does not stop the build.
 
 ### Unstable coverage
 

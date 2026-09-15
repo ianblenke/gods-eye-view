@@ -337,6 +337,8 @@ test('[gap-ledger-028] records branches that a new test shows', () => {
   const shown = { branches: 104, functions: 10 };
   const result = ratchet(ledger, gaps([loaded('src/orbit.js', 4, 7, 1, 'same', shown), loaded('src/ui.js', 20, 15, 9)]));
   assert.deepEqual([result.ledger.coverage['src/orbit.js'].branches, result.ledger.coverage['src/orbit.js'].totals], [7, shown]);
+  const band = ratchet(ledger, gaps([loaded('src/orbit.js', 4, 7, 1, 'same', shown), loaded('src/ui.js', 20, 15, 9)]), { sameAsBase: () => true });
+  assert.deepEqual(band.ledger, result.ledger);
   assert.deepEqual(result.ledger.coverage['src/ui.js'], { loaded: true, lines: 20, branches: 15, functions: 9, totals: TOTALS, sha: 'same', untrue: false, origin: 'pre-spec', since: '2026-01-01' });
   assert.deepEqual(result.history.map((line) => [line.file, line.metric, line.before, line.after, line.reason]), [
     ['src/orbit.js', 'lines', 5, 4, 'smaller'],
@@ -724,4 +726,88 @@ test('[gap-ledger-038] stops for an unstable range without a history line from t
     'The unstable range for src/flaky.js is wider than the base, but the history has no unstable line for it from the change record-flaky',
   ]);
   assert.deepEqual(codes(compareRange({ change: undefined })), ['LEDGER-UNSTABLE-NO-HISTORY', 'LEDGER-UNSTABLE-NO-HISTORY']);
+});
+
+const SAME = () => true;
+
+test('[gap-ledger-065] does not stop for counts in the band of a band file', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1), 'src/big.js': LOADED(400, 50, 1), 'src/small.js': LOADED(0, 2, 0) } });
+  const noisy = gaps([loaded('src/orbit.js', 10, 8, 6, 'same', { branches: 105, functions: 15 }), loaded('src/big.js', 392, 55, 0, 'same', { branches: 103, functions: 10 }), loaded('src/small.js', 0, 0, 0)]);
+  assert.deepEqual(compareLedger({ ledger, current: noisy, sameAsBase: SAME }), { errors: [], stale: [] });
+  const strict = compareLedger({ ledger, current: noisy });
+  assert.deepEqual(codes(strict), ['LEDGER-LARGER-GAP', 'LEDGER-LOST-COVERAGE', 'LEDGER-STALE']);
+  const old = ledgerWith({ coverage: { 'src/old.js': { loaded: true, lines: 5, branches: 3, functions: 1 } } });
+  assert.deepEqual(compareLedger({ ledger: old, current: gaps([loaded('src/old.js', 6, 3, 1)]), sameAsBase: SAME }), { errors: [], stale: [] });
+  const ranged = ledgerWith({ coverage: { 'src/orbit.js': RANGE(5, 3, 1, { lines: 2, branches: 3, functions: 1 }) } });
+  assert.deepEqual(compareLedger({ ledger: ranged, current: gaps([loaded('src/orbit.js', 0, 3, 1)]), sameAsBase: SAME }), { errors: [], stale: [] });
+});
+
+test('[gap-ledger-066] stops for a larger gap outside the band of a band file, but not for a smaller gap', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1), 'src/big.js': LOADED(400, 50, 1), 'src/done.js': LOADED(0, 6, 0) } });
+  const larger = compareLedger({ ledger, current: gaps([loaded('src/orbit.js', 11, 3, 1), loaded('src/big.js', 400, 50, 1), loaded('src/done.js', 0, 6, 0)]), sameAsBase: SAME });
+  assert.deepEqual(larger.errors, [{ code: 'LEDGER-LARGER-GAP', file: 'src/orbit.js', message: 'src/orbit.js has 11 lines not covered. The ledger allows 10.' }]);
+  const lost = compareLedger({ ledger, current: gaps([loaded('src/orbit.js', 5, 3, 1, 'same', { branches: 91, functions: 10 }), loaded('src/big.js', 400, 50, 1), loaded('src/done.js', 0, 6, 0)]), sameAsBase: SAME });
+  assert.deepEqual(lost.errors, [{ code: 'LEDGER-LOST-COVERAGE', file: 'src/orbit.js', message: 'src/orbit.js has 88 covered branches. The ledger records 97.' }]);
+  // The band of a covered count is 2% of the covered count, not of the not-covered count: 12 for 600 covered branches, not 8 for 400.
+  const wide = ledgerWith({ coverage: { 'src/wide.js': LOADED(5, 400, 1, { totals: { branches: 1000, functions: 10 } }) } });
+  const within = compareLedger({ ledger: wide, current: gaps([loaded('src/wide.js', 5, 410, 1, 'same', { branches: 1000, functions: 10 })]), sameAsBase: SAME });
+  assert.deepEqual(within, { errors: [], stale: [] });
+  const beyond = compareLedger({ ledger: wide, current: gaps([loaded('src/wide.js', 5, 413, 1, 'same', { branches: 1000, functions: 10 })]), sameAsBase: SAME });
+  assert.deepEqual(beyond.errors, [{ code: 'LEDGER-LOST-COVERAGE', file: 'src/wide.js', message: 'src/wide.js has 587 covered branches. The ledger records 600.' }]);
+  const smaller = compareLedger({ ledger, current: gaps([loaded('src/orbit.js', 5, 3, 1), loaded('src/big.js', 300, 20, 0), loaded('src/done.js', 0, 0, 0)]), sameAsBase: SAME });
+  assert.deepEqual(smaller, { errors: [], stale: [] });
+  assert.deepEqual(compareLedger({ ledger, current: gaps([loaded('src/orbit.js', 5, 3, 1), loaded('src/big.js', 300, 20, 0), loaded('src/done.js', 0, 0, 0)]) }).stale, [
+    { kind: 'coverage', file: 'src/big.js' },
+    { kind: 'coverage', file: 'src/done.js' },
+  ]);
+});
+
+test('[gap-ledger-067] does not use the band for a changed file, a file that no test loads or a file with untrue coverage', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1), 'src/ui.js': UNLOADED(40), 'src/traffic.js': LOADED(5, 3, 1, { untrue: true }) } });
+  const current = gaps([loaded('src/orbit.js', 6, 3, 1), unloaded('src/ui.js', 40), unloaded('src/traffic.js', 5, 'same', true)]);
+  assert.deepEqual(codes(compareLedger({ ledger, current, sameAsBase: (file) => file !== 'src/orbit.js' })), ['LEDGER-LARGER-GAP', 'LEDGER-STALE']);
+  const edited = gaps([loaded('src/orbit.js', 6, 3, 1, 'edited'), unloaded('src/ui.js', 40), unloaded('src/traffic.js', 5, 'same', true)]);
+  assert.deepEqual(codes(compareLedger({ ledger, current: edited, sameAsBase: SAME })).slice(0, 1), ['LEDGER-LARGER-GAP']);
+  const unloadedEntry = compareLedger({ ledger: ledgerWith({ coverage: { 'src/ui.js': UNLOADED(40) } }), current: gaps([]), sameAsBase: SAME });
+  assert.deepEqual(codes(unloadedEntry), ['LEDGER-STALE']);
+  const nowLoaded = compareLedger({ ledger: ledgerWith({ coverage: { 'src/ui.js': UNLOADED(40) } }), current: gaps([loaded('src/ui.js', 38, 2, 0)]), sameAsBase: SAME });
+  assert.deepEqual(nowLoaded.stale, [{ kind: 'coverage', file: 'src/ui.js' }]);
+  const nowTrue = compareLedger({ ledger: ledgerWith({ coverage: { 'src/traffic.js': LOADED(5, 3, 1, { untrue: true }) } }), current: gaps([loaded('src/traffic.js', 6, 3, 1)]), sameAsBase: SAME });
+  assert.deepEqual(codes(nowTrue), ['LEDGER-LARGER-GAP']);
+  const nowComplete = compareLedger({ ledger: ledgerWith({ coverage: { 'src/ui.js': UNLOADED(4) } }), current: gaps([loaded('src/ui.js', 0, 0, 0)]), sameAsBase: SAME });
+  assert.deepEqual(nowComplete.stale, [{ kind: 'coverage', file: 'src/ui.js' }]);
+});
+
+test('[gap-ledger-068] writes the smaller not-covered line count of a band file and keeps the entry counts for a smaller covered count', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1), 'src/edited.js': LOADED(5, 3, 1), 'src/big.js': LOADED(400, 3, 1) } });
+  const at = (orbit, big = loaded('src/big.js', 400, 3, 1)) => gaps([orbit, loaded('src/edited.js', 5, 3, 1), big]);
+  const noisy = ratchet(ledger, at(loaded('src/orbit.js', 9, 4, 1)), { sameAsBase: SAME });
+  assert.deepEqual(noisy.ledger.coverage['src/orbit.js'], ledger.coverage['src/orbit.js']);
+  assert.deepEqual(noisy.history, []);
+  assert.throws(() => ratchet(ledger, at(loaded('src/orbit.js', 9, 4, 1))), /LEDGER-LARGER-GAP src\/orbit\.js has 9 lines not covered\. The ledger allows 5\./);
+  const mixed = ratchet(ledger, at(loaded('src/orbit.js', 2, 4, 1)), { sameAsBase: SAME });
+  assert.deepEqual([mixed.ledger.coverage['src/orbit.js'].lines, mixed.ledger.coverage['src/orbit.js'].branches, mixed.ledger.coverage['src/orbit.js'].totals], [2, 3, TOTALS]);
+  assert.deepEqual(mixed.history.map((line) => [line.file, line.metric, line.reason]), [['src/orbit.js', 'lines', 'smaller']]);
+  // A backfill test for a band file can show more branches: the covered count is larger, so the command writes the new counts.
+  const backfill = ratchet(ledgerWith({ coverage: { 'src/orbit.js': LOADED(20, 3, 2) } }), gaps([loaded('src/orbit.js', 10, 4, 1, 'same', { branches: 104, functions: 10 })]), { sameAsBase: SAME });
+  assert.deepEqual(backfill.history.map((line) => [line.metric, line.before, line.after, line.reason]), [
+    ['lines', 20, 10, 'smaller'],
+    ['branches', 3, 4, 'shown by test'],
+    ['functions', 2, 1, 'smaller'],
+    ['totals', TOTALS, { branches: 104, functions: 10 }, 'totals changed'],
+  ]);
+  // A smaller covered count in the band stays at the entry, so small losses do not add up in later changes.
+  const drift = ratchet(ledger, at(loaded('src/orbit.js', 5, 5, 1, 'same', { branches: 98, functions: 10 })), { sameAsBase: SAME });
+  assert.deepEqual(drift.ledger.coverage['src/orbit.js'], { ...ledger.coverage['src/orbit.js'], totals: TOTALS });
+  assert.deepEqual(drift.history, []);
+  const large = ratchet(ledger, at(loaded('src/orbit.js', 5, 3, 1), loaded('src/big.js', 407, 3, 1)), { sameAsBase: SAME });
+  assert.equal(large.ledger.coverage['src/big.js'].lines, 400);
+  assert.throws(() => ratchet(ledger, at(loaded('src/orbit.js', 5, 3, 1), loaded('src/big.js', 409, 3, 1)), { sameAsBase: SAME }), /src\/big\.js has 409 lines not covered\. The ledger allows 408\./);
+  const old = ratchet(ledgerWith({ coverage: { 'src/old.js': { loaded: true, lines: 5, branches: 3, functions: 1 } } }), gaps([loaded('src/old.js', 5, 4, 0)]), { sameAsBase: SAME });
+  assert.deepEqual([old.ledger.coverage['src/old.js'].branches, old.ledger.coverage['src/old.js'].functions], [3, 0]);
+  const ranged = ledgerWith({ coverage: { 'src/range.js': RANGE(44, 3, 1, { lines: 40, branches: 3, functions: 1 }) } });
+  const inRange = ratchet(ranged, gaps([loaded('src/range.js', 47, 3, 1)]), { sameAsBase: SAME });
+  assert.deepEqual([inRange.ledger.coverage['src/range.js'].lines, inRange.ledger.coverage['src/range.js'].low.lines], [44, 40]);
+  const edited = gaps([loaded('src/orbit.js', 5, 3, 1), loaded('src/edited.js', 5, 4, 1, 'edited'), loaded('src/big.js', 400, 3, 1)]);
+  assert.throws(() => ratchet(ledger, edited, { sameAsBase: SAME }), /LEDGER-LARGER-GAP src\/edited\.js has 4 branches not covered/);
 });

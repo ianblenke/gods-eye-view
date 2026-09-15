@@ -1646,14 +1646,28 @@
     },
     "server/standalone/key-setup.js": {
       "loaded": true,
-      "lines": 45,
-      "branches": 24,
+      "lines": 51,
+      "branches": 25,
       "functions": 1,
       "totals": {
-        "branches": 52,
+        "branches": 53,
         "functions": 23
       },
       "sha": "641a6b75d4811bdd838279d7d6d4ffb552caeca5b12afc2c2cb73ad5cae2da65",
+      "untrue": false,
+      "origin": "pre-spec",
+      "since": "2026-09-15"
+    },
+    "server/standalone/vite.config.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "branches": 4,
+        "functions": 1
+      },
+      "sha": "5cd57063ba4973ab3f4d6582d1028a337543d1326f6783435d30fc163fd495a0",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"

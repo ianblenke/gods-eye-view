@@ -27,7 +27,7 @@ Origin: spec-first
 - **THEN** the coverage map, the map of untraced tests and the name map of each test file have their keys in sorted order
 
 ### Requirement: Ratchet rule
-The gates MUST stop the build when a gap opens, when a gap becomes larger, or when the ledger does not show the current gaps.
+The gates MUST stop the build when a gap opens, when a gap becomes larger, or when the ledger does not show the current gaps. A band file with counts in its band, or with a smaller gap, is an exception, as the requirement "Count band for band files" tells.
 Origin: spec-first
 
 #### Scenario: Stop for a new code file below 100% `gap-ledger-003`
@@ -37,6 +37,7 @@ Origin: spec-first
 
 #### Scenario: Stop for more lines that are not covered `gap-ledger-004`
 - **WHEN** a code file has more not-covered lines than its ledger entry
+- **AND** the file is not a band file, or its not-covered line count is above the entry count plus the band of the entry count
 - **THEN** the gate stops the build
 - **AND** the gate shows the file, the count in the ledger and the current count
 
@@ -55,6 +56,7 @@ Origin: spec-first
 - **WHEN** the content hash of a code file is equal to the hash in its ledger entry
 - **AND** the entry has no range, or a not-covered count is above the high count of its range
 - **AND** the covered branch count or the covered function count is smaller than in its entry
+- **AND** the file is not a band file, or its covered count is outside the limit in `gap-ledger-066`
 - **THEN** the gate stops the build
 
 #### Scenario: Stop for a ledger entry without the total counts `gap-ledger-055`
@@ -97,7 +99,7 @@ Origin: spec-first
 
 #### Scenario: Stop for a ledger that does not show a closed gap `gap-ledger-008`
 - **WHEN** a current gap is smaller than its ledger entry, or a content hash is not equal to its entry
-- **AND** no other rule stops the build for that entry
+- **AND** no other rule stops the build for that entry, and the file is not a band file
 - **THEN** the gate stops the build
 - **AND** the gate tells you to run the ratchet command
 
@@ -105,6 +107,34 @@ Origin: spec-first
 - **WHEN** you run the gates, the ratchet command or the stability command
 - **AND** `openspec/trace/gaps.json` is not there
 - **THEN** the command stops and tells you to run the ledger command `init`
+
+### Requirement: Count band for band files
+The gates and the ratchet command MUST allow a small count difference and each smaller gap for a band file. A band file is a loaded code file with true coverage. It has the content of the base commit and the content hash of its ledger entry. The band of a count is 5, or 2% of that count when that is more.
+Origin: spec-first
+
+#### Scenario: Do not stop for counts in the band of a band file `gap-ledger-065`
+- **WHEN** a code file is a band file
+- **AND** its not-covered line count is not above the entry count plus the band of the entry count
+- **AND** each covered branch count and covered function count is not below the entry count minus the band of the entry count
+- **THEN** the gate does not stop the build for that file
+- **AND** the gate does not record the entry as not current
+
+#### Scenario: Stop for a larger gap outside the band of a band file, but not for a smaller gap `gap-ledger-066`
+- **WHEN** a code file is a band file
+- **AND** its not-covered line count is above the entry count plus the band, or a covered count is below the entry count minus the band
+- **THEN** the gate stops the build
+- **AND** the gate does not stop the build for a smaller gap in a band file, also when the gap is outside the band
+
+#### Scenario: Use no band for a file that is not a band file `gap-ledger-067`
+- **WHEN** a code file has other content than the base commit or its ledger entry, or no test loads it, or it has untrue coverage
+- **THEN** the gate compares the counts of the file with its entry with no band
+
+#### Scenario: Write the smaller line count of a band file and keep the entry counts for a smaller covered count `gap-ledger-068`
+- **WHEN** you run the ratchet command for a band file with no range
+- **AND** no count of the file is outside the limits in `gap-ledger-066`
+- **THEN** the command writes the smaller of the not-covered line count in the entry and the current count
+- **AND** for branches and for functions, the command writes the current counts when the covered count is not smaller than in the entry
+- **AND** for branches and for functions, the command keeps the entry counts when the covered count is smaller than in the entry
 
 ### Requirement: Unstable coverage
 The stability command MUST record a range of counts only from test runs of a file with the same content. The samples are the kept samples of earlier runs, two new test runs and the ledger entry. A ledger entry for a file with unstable coverage has this range.
@@ -309,6 +339,7 @@ Origin: spec-first
 
 #### Scenario: Stop the ratchet command when a gap is larger `gap-ledger-013`
 - **WHEN** you run the ratchet command and a current gap is larger than its entry
+- **AND** the file is not a band file, or a count of the file is outside the limits in `gap-ledger-066`
 - **THEN** the command stops and does not change the ledger
 
 #### Scenario: Stop the ratchet command without a change name `gap-ledger-014`
