@@ -62,6 +62,8 @@ function withFixture(body, { base = {} } = {}) {
       mkdirSync(path.join(root, '.claude/agents'), { recursive: true });
       copyFileSync(path.join(PROJECT_ROOT, `.claude/agents/${agent}.md`), path.join(root, `.claude/agents/${agent}.md`));
     }
+    mkdirSync(path.join(root, '.claude/commands/opsx'), { recursive: true });
+    copyFileSync(path.join(PROJECT_ROOT, '.claude/commands/opsx/review.md'), path.join(root, '.claude/commands/opsx/review.md'));
     commitAll(root, 'base');
     git(root, 'checkout', '-q', '-b', 'work');
     return body(root);
@@ -85,7 +87,7 @@ function passes(root, argv, options) {
 function reviewFor(root, change, folder = `openspec/changes/${change}`) {
   const tree = run(root, ['tree', '--change', change]).output.trim();
   write(root, {
-    [`${folder}/review.md`]: `Verdict: PASS\nReviewers: spec-adversary, ste-adversary\nDate: 2026-09-13\nGates: passed\nReviewed-Tree: ${tree}\n`,
+    [`${folder}/review.md`]: `Verdict: PASS\nReviewers: spec-adversary, ste-adversary\nDate: 2026-09-13\nGates: passed\nRounds: 1\nScope: full\nReviewed-Tree: ${tree}\n`,
     [`${folder}/review/spec-adversary.md`]: 'Verdict: PASS\nFindings: none\n',
     [`${folder}/review/ste-adversary.md`]: 'Verdict: PASS\nFindings: none\n',
   });

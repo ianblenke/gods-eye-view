@@ -74,6 +74,33 @@
   "change-review-023": [
     "src/tooling/spec/review.test.mjs › [change-review-023] stops for a review agent file with other front matter lines"
   ],
+  "change-review-024": [
+    "src/tooling/spec/review.test.mjs › [change-review-024] stops for a review file without a rounds line or a scope line"
+  ],
+  "change-review-025": [
+    "src/tooling/spec/review.test.mjs › [change-review-025] does not stop for a correct scope line"
+  ],
+  "change-review-026": [
+    "src/tooling/spec/review.test.mjs › [change-review-026] does not stop for an open finding that a person accepts after three rounds"
+  ],
+  "change-review-027": [
+    "src/tooling/spec/review.test.mjs › [change-review-027] stops for an agent file without the scope rules"
+  ],
+  "change-review-028": [
+    "src/tooling/spec/review.test.mjs › [change-review-028] stops for an open finding that a person accepts before three rounds or without the severity minor"
+  ],
+  "change-review-029": [
+    "src/tooling/spec/review.test.mjs › [change-review-029] stops for a scope line that the gate does not accept"
+  ],
+  "change-review-030": [
+    "src/tooling/spec/review.test.mjs › [change-review-030] stops for a first round with a scope that is not the full change"
+  ],
+  "change-review-031": [
+    "src/tooling/spec/review.test.mjs › [change-review-031] stops for a rounds line with a number less than 1"
+  ],
+  "change-review-032": [
+    "src/tooling/spec/review.test.mjs › [change-review-032] stops for a review command without the scope rules"
+  ],
   "ci-gates-001": [
     "src/tooling/spec/ci.test.mjs › [ci-gates-001] stops for a code diff without an archived change",
     "src/tooling/spec/gates.test.mjs › [ci-gates-001 ci-gates-003 ci-gates-004] finds the change of a CI diff and checks it"

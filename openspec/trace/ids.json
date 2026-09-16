@@ -114,6 +114,51 @@
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
+  "change-review-024": {
+    "hash": "79bceff39ed33a4611b0e17d0ce4d29d8813a5a6ff2847bab353485a0de27939",
+    "since": "2026-09-16",
+    "change": "review-scope-diff"
+  },
+  "change-review-025": {
+    "hash": "b153c0f53660651f95de60b31fda45be54734115b0d6653e29c525020b79af86",
+    "since": "2026-09-16",
+    "change": "review-scope-diff"
+  },
+  "change-review-026": {
+    "hash": "e2c37a894e9a5ae4ad060991217cef760e8b93bfa1e602c9a3df73437ab65dd6",
+    "since": "2026-09-16",
+    "change": "review-scope-diff"
+  },
+  "change-review-027": {
+    "hash": "4e86d94d35f97d17b05ed7bdf3648b1f2853a885ca4e82adc89ab5c801ba9659",
+    "since": "2026-09-16",
+    "change": "review-scope-diff"
+  },
+  "change-review-028": {
+    "hash": "edfbfd387c331205017192f08a83684e959f651f9e00620c99ecdcac113eea09",
+    "since": "2026-09-16",
+    "change": "review-scope-diff"
+  },
+  "change-review-029": {
+    "hash": "de037d80e671f51f544347bc785d1dd40c0a0c391ca7f658e4294f1b0dabd874",
+    "since": "2026-09-16",
+    "change": "review-scope-diff"
+  },
+  "change-review-030": {
+    "hash": "38f7b8412049802abbe1da32481d5132744d426238800dbeab34d0c953183a6a",
+    "since": "2026-09-16",
+    "change": "review-scope-diff"
+  },
+  "change-review-031": {
+    "hash": "0189f1adf0b8e79785bb2fb1f0c1ccdba3bfc984ee09ad8071850a6576de1b47",
+    "since": "2026-09-16",
+    "change": "review-scope-diff"
+  },
+  "change-review-032": {
+    "hash": "98cba3e5a412d06693c9e495d6b5c3e00d3cef5637df5defca563417f9feb256",
+    "since": "2026-09-16",
+    "change": "review-scope-diff"
+  },
   "ci-gates-001": {
     "hash": "6344005c90cfdf7d391ff0ddfd31bff01cde4a3ddb729ba5741cb6740be7d202",
     "since": "2026-09-14",
