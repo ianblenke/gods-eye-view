@@ -1,9 +1,59 @@
-# gap-ledger Specification
+## ADDED Requirements
 
-## Purpose
-Record each open gap in coverage and in test links. Stop the build when a gap opens, becomes larger or closes and the ledger does not show it. A loaded code file with true coverage, the content of the base commit and the content hash of its entry has the tolerance conditions. Such a file can differ from its entry by at most the tolerance and can have a smaller gap.
+### Requirement: Count tolerance
+The gates and the ratchet command MUST allow a count difference of at most the tolerance for a file with the tolerance conditions. The tolerance of a metric is 8, or 4% of the total of that metric when that is less. A file has the tolerance conditions when a test loads it and its coverage is true. That file must also have the content of the base commit and the content hash of its ledger entry.
+Origin: spec-first
 
-## Requirements
+#### Scenario: Do not stop for counts inside the tolerance `gap-ledger-069`
+- **WHEN** a code file has the tolerance conditions
+- **AND** its not-covered line count is not above the entry count plus the tolerance
+- **AND** the covered branch count and the covered function count are not below the covered counts of its entry minus the tolerance
+- **THEN** the gate does not stop the build for that file
+- **AND** the gate does not record the entry as not current
+
+#### Scenario: Stop for a count outside the tolerance `gap-ledger-070`
+- **WHEN** a code file has the tolerance conditions
+- **AND** its not-covered line count is above the entry count plus the tolerance
+- **THEN** the gate stops the build
+- **AND** a covered count below the covered count of its entry minus the tolerance also stops the build
+
+#### Scenario: Make the tolerance from the total of the metric `gap-ledger-071`
+- **WHEN** the gate reads the tolerance of a metric of a file
+- **THEN** the tolerance is 8 for a total of 200 or more
+- **AND** the tolerance is 4% of the total, without the fraction, for a total below 200
+- **AND** the tolerance is 0 for a total below 25
+
+#### Scenario: Compare the covered counts with the tolerance `gap-ledger-072`
+- **WHEN** a code file has the tolerance conditions
+- **AND** its covered branch count is below the covered branch count of its entry minus the tolerance
+- **THEN** the gate stops the build, also when the not-covered count is not larger
+
+#### Scenario: Do not write a worse count for a file with the tolerance conditions `gap-ledger-073`
+- **WHEN** you run the ratchet command for a file with the tolerance conditions
+- **AND** its not-covered line count is larger than the entry count, or a covered count is smaller than in the entry
+- **THEN** the command keeps the entry count of each metric with a worse current count
+- **AND** the command writes the current count of a metric that is not worse than the entry count
+
+#### Scenario: Use no tolerance for a file without the tolerance conditions `gap-ledger-074`
+- **WHEN** a code file has other content than the base commit or its ledger entry
+- **THEN** the gate compares the counts of the file with its entry with no tolerance
+- **AND** a file that no test loads, or a file with untrue coverage, also gets no tolerance
+
+### Requirement: Total counts of the ledger
+Each ledger entry of a loaded code file MUST record the total lines, the total branches and the total functions. The version of the ledger file MUST be 4.
+Origin: spec-first
+
+#### Scenario: Stop for a ledger entry without the total line count `gap-ledger-075`
+- **WHEN** the total line count of a ledger entry of a loaded file is not a number
+- **THEN** the gate stops the build
+- **AND** the gate tells you to run the ratchet command
+
+#### Scenario: Stop for a ledger file with another version `gap-ledger-076`
+- **WHEN** `openspec/trace/gaps.json` does not have the version 4
+- **THEN** the gate stops the build
+
+## MODIFIED Requirements
+
 ### Requirement: Ledger file
 The gap ledger MUST be the file `openspec/trace/gaps.json`. For each code file below 100%, it records the content hash and untrue coverage. It also records the not-covered lines, branches and functions, and the total counts of each loaded file. For each test file with untraced tests, it records the name of each untraced test. Each entry records its origin and the date that it opened.
 Origin: spec-first
@@ -111,6 +161,58 @@ Origin: spec-first
 - **AND** `openspec/trace/gaps.json` is not there
 - **THEN** the command stops and tells you to run the ledger command `init`
 
+### Requirement: Ratchet command
+The ledger command `ratchet` MUST record the current gaps when no gap is larger. It MUST record each changed entry in `openspec/trace/history.jsonl` with the change name and the commit that the command ran on.
+Origin: spec-first
+
+#### Scenario: Make ledger entries smaller `gap-ledger-010`
+- **WHEN** you run `ratchet --change backfill-orbit` and `src/orbit.js` has fewer not-covered lines than its entry
+- **THEN** the command writes the smaller count to the ledger
+- **AND** the command adds a history line with the date, the change name, the commit, the file, the old count and the new count
+
+#### Scenario: Remove an entry that is at zero `gap-ledger-011`
+- **WHEN** you run the ratchet command and a gap is at zero
+- **THEN** the command removes the entry from the ledger
+- **AND** the command adds a history line for the closed gap
+
+#### Scenario: Remove the entry of a deleted file `gap-ledger-012`
+- **WHEN** you run the ratchet command and Git does not track the file of an entry
+- **THEN** the command removes the entry
+- **AND** the command adds a history line with the reason `file removed`
+
+#### Scenario: Stop the ratchet command when a gap is larger `gap-ledger-013`
+- **WHEN** you run the ratchet command and a current gap is larger than its entry
+- **AND** the file does not have the tolerance conditions, or a count of the file is outside the tolerance
+- **THEN** the command stops and does not change the ledger
+
+#### Scenario: Stop the ratchet command without a change name `gap-ledger-014`
+- **WHEN** you run the ratchet command without `--change`
+- **THEN** the command stops and does not change the ledger
+
+#### Scenario: Stop the ratchet command for a change that is not active `gap-ledger-027`
+- **WHEN** you run the ratchet command with a name that has no folder with a `proposal.md` file in `openspec/changes`
+- **THEN** the command stops and does not change the ledger
+
+#### Scenario: Run the ratchet command for an archived change `gap-ledger-077`
+- **WHEN** you run the ratchet command with the name of an archived change
+- **THEN** the command writes the ledger, the ID registry and the scenario links
+- **AND** the command does not stop the build, because the archive command can remove a requirement
+
+#### Scenario: Record branches that a new test shows `gap-ledger-028`
+- **WHEN** you run the ratchet command for an unchanged file with more not-covered branches and a covered branch count that is not smaller
+- **THEN** the command writes the larger branch count and the larger total branch count
+- **AND** the history line has the reason `shown by test`
+
+#### Scenario: Record the hash of a changed file `gap-ledger-029`
+- **WHEN** you run the ratchet command for a changed file with counts that are equal to or smaller than its entry
+- **THEN** the command writes the new content hash and the counts
+
+#### Scenario: Record changed total counts `gap-ledger-057`
+- **WHEN** you run the ratchet command for an entry of a file without the tolerance conditions
+- **AND** the total branch count or the total function count of a file is not equal to the count in its entry
+- **THEN** the command writes the new total counts
+- **AND** the command adds a history line with the metric `totals`, the old total counts, the new total counts and the reason `totals changed`
+
 ### Requirement: Comparison with the base commit
 The gates MUST compare the ledger files with the same files in the merge base of the current commit and the base branch. The default base branch is `origin/main`.
 Origin: spec-first
@@ -175,107 +277,10 @@ Origin: spec-first
 - **WHEN** Git cannot find the base branch
 - **THEN** the gate stops the build
 
-### Requirement: Ratchet command
-The ledger command `ratchet` MUST record the current gaps when no gap is larger. It MUST record each changed entry in `openspec/trace/history.jsonl` with the change name and the commit that the command ran on.
-Origin: spec-first
+## REMOVED Requirements
 
-#### Scenario: Make ledger entries smaller `gap-ledger-010`
-- **WHEN** you run `ratchet --change backfill-orbit` and `src/orbit.js` has fewer not-covered lines than its entry
-- **THEN** the command writes the smaller count to the ledger
-- **AND** the command adds a history line with the date, the change name, the commit, the file, the old count and the new count
+### Requirement: Count band for band files
+**Reason**: One tolerance replaces the band. This change retires the scenarios `gap-ledger-065` to `gap-ledger-068`.
 
-#### Scenario: Remove an entry that is at zero `gap-ledger-011`
-- **WHEN** you run the ratchet command and a gap is at zero
-- **THEN** the command removes the entry from the ledger
-- **AND** the command adds a history line for the closed gap
-
-#### Scenario: Remove the entry of a deleted file `gap-ledger-012`
-- **WHEN** you run the ratchet command and Git does not track the file of an entry
-- **THEN** the command removes the entry
-- **AND** the command adds a history line with the reason `file removed`
-
-#### Scenario: Stop the ratchet command when a gap is larger `gap-ledger-013`
-- **WHEN** you run the ratchet command and a current gap is larger than its entry
-- **AND** the file does not have the tolerance conditions, or a count of the file is outside the tolerance
-- **THEN** the command stops and does not change the ledger
-
-#### Scenario: Stop the ratchet command without a change name `gap-ledger-014`
-- **WHEN** you run the ratchet command without `--change`
-- **THEN** the command stops and does not change the ledger
-
-#### Scenario: Stop the ratchet command for a change that is not active `gap-ledger-027`
-- **WHEN** you run the ratchet command with a name that has no folder with a `proposal.md` file in `openspec/changes`
-- **THEN** the command stops and does not change the ledger
-
-#### Scenario: Run the ratchet command for an archived change `gap-ledger-077`
-- **WHEN** you run the ratchet command with the name of an archived change
-- **THEN** the command writes the ledger, the ID registry and the scenario links
-- **AND** the command does not stop the build, because the archive command can remove a requirement
-
-#### Scenario: Record branches that a new test shows `gap-ledger-028`
-- **WHEN** you run the ratchet command for an unchanged file with more not-covered branches and a covered branch count that is not smaller
-- **THEN** the command writes the larger branch count and the larger total branch count
-- **AND** the history line has the reason `shown by test`
-
-#### Scenario: Record the hash of a changed file `gap-ledger-029`
-- **WHEN** you run the ratchet command for a changed file with counts that are equal to or smaller than its entry
-- **THEN** the command writes the new content hash and the counts
-
-#### Scenario: Record changed total counts `gap-ledger-057`
-- **WHEN** you run the ratchet command for an entry of a file without the tolerance conditions
-- **AND** the total branch count or the total function count of a file is not equal to the count in its entry
-- **THEN** the command writes the new total counts
-- **AND** the command adds a history line with the metric `totals`, the old total counts, the new total counts and the reason `totals changed`
-
-### Requirement: Count tolerance
-The gates and the ratchet command MUST allow a count difference of at most the tolerance for a file with the tolerance conditions. The tolerance of a metric is 8, or 4% of the total of that metric when that is less. A file has the tolerance conditions when a test loads it and its coverage is true. That file must also have the content of the base commit and the content hash of its ledger entry.
-Origin: spec-first
-
-#### Scenario: Do not stop for counts inside the tolerance `gap-ledger-069`
-- **WHEN** a code file has the tolerance conditions
-- **AND** its not-covered line count is not above the entry count plus the tolerance
-- **AND** the covered branch count and the covered function count are not below the covered counts of its entry minus the tolerance
-- **THEN** the gate does not stop the build for that file
-- **AND** the gate does not record the entry as not current
-
-#### Scenario: Stop for a count outside the tolerance `gap-ledger-070`
-- **WHEN** a code file has the tolerance conditions
-- **AND** its not-covered line count is above the entry count plus the tolerance
-- **THEN** the gate stops the build
-- **AND** a covered count below the covered count of its entry minus the tolerance also stops the build
-
-#### Scenario: Make the tolerance from the total of the metric `gap-ledger-071`
-- **WHEN** the gate reads the tolerance of a metric of a file
-- **THEN** the tolerance is 8 for a total of 200 or more
-- **AND** the tolerance is 4% of the total, without the fraction, for a total below 200
-- **AND** the tolerance is 0 for a total below 25
-
-#### Scenario: Compare the covered counts with the tolerance `gap-ledger-072`
-- **WHEN** a code file has the tolerance conditions
-- **AND** its covered branch count is below the covered branch count of its entry minus the tolerance
-- **THEN** the gate stops the build, also when the not-covered count is not larger
-
-#### Scenario: Do not write a worse count for a file with the tolerance conditions `gap-ledger-073`
-- **WHEN** you run the ratchet command for a file with the tolerance conditions
-- **AND** its not-covered line count is larger than the entry count, or a covered count is smaller than in the entry
-- **THEN** the command keeps the entry count of each metric with a worse current count
-- **AND** the command writes the current count of a metric that is not worse than the entry count
-
-#### Scenario: Use no tolerance for a file without the tolerance conditions `gap-ledger-074`
-- **WHEN** a code file has other content than the base commit or its ledger entry
-- **THEN** the gate compares the counts of the file with its entry with no tolerance
-- **AND** a file that no test loads, or a file with untrue coverage, also gets no tolerance
-
-### Requirement: Total counts of the ledger
-Each ledger entry of a loaded code file MUST record the total lines, the total branches and the total functions. The version of the ledger file MUST be 4.
-Origin: spec-first
-
-#### Scenario: Stop for a ledger entry without the total line count `gap-ledger-075`
-- **WHEN** the total line count of a ledger entry of a loaded file is not a number
-- **THEN** the gate stops the build
-- **AND** the gate tells you to run the ratchet command
-
-#### Scenario: Stop for a ledger file with another version `gap-ledger-076`
-- **WHEN** `openspec/trace/gaps.json` does not have the version 4
-- **THEN** the gate stops the build
-
+### Requirement: Unstable coverage
+**Reason**: One tolerance replaces the ranges. This change also removes the stability command and the kept samples. This change retires the scenarios `gap-ledger-033` to `gap-ledger-039`, `gap-ledger-042`, `gap-ledger-043`, `gap-ledger-045`, `gap-ledger-049` to `gap-ledger-052` and `gap-ledger-058` to `gap-ledger-064`.

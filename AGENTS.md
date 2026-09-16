@@ -23,7 +23,6 @@ The gates run on the Node version in `.node-version`. Use the Docker image, beca
 | `make gates` | Run all gates for the current tree |
 | `make gates CHANGE=<name>` | Run all gates. The named change must be complete. |
 | `make ratchet CHANGE=<name>` | Record the closed gaps, the new scenario IDs and the test links |
-| `make stability CHANGE=<name>` | Run the tests two times and record the files with unstable coverage, in a change that changes only files in `openspec/` |
 | `make lint` | Run the STE lint on the prose files |
 | `make tree CHANGE=<name>` | Show the tree hash for `review.md` |
 

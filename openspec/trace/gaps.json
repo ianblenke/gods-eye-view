@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "coverage": {
     "build/vite.js": {
       "loaded": true,
@@ -7,6 +7,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 35,
         "branches": 7,
         "functions": 1
       },
@@ -21,6 +22,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 39,
         "branches": null,
         "functions": null
       },
@@ -35,6 +37,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 11,
         "branches": null,
         "functions": null
       },
@@ -49,6 +52,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 145,
         "branches": null,
         "functions": null
       },
@@ -63,6 +67,7 @@
       "branches": 10,
       "functions": 0,
       "totals": {
+        "lines": 146,
         "branches": 28,
         "functions": 5
       },
@@ -77,6 +82,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 13,
         "branches": null,
         "functions": null
       },
@@ -91,6 +97,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 384,
         "branches": null,
         "functions": null
       },
@@ -105,6 +112,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 202,
         "branches": null,
         "functions": null
       },
@@ -119,6 +127,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 139,
         "branches": null,
         "functions": null
       },
@@ -133,6 +142,7 @@
       "branches": 3,
       "functions": 0,
       "totals": {
+        "lines": 101,
         "branches": 25,
         "functions": 3
       },
@@ -147,6 +157,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 47,
         "branches": null,
         "functions": null
       },
@@ -161,6 +172,7 @@
       "branches": 12,
       "functions": 0,
       "totals": {
+        "lines": 141,
         "branches": 37,
         "functions": 6
       },
@@ -175,6 +187,7 @@
       "branches": 2,
       "functions": 2,
       "totals": {
+        "lines": 64,
         "branches": 8,
         "functions": 3
       },
@@ -189,6 +202,7 @@
       "branches": 2,
       "functions": 1,
       "totals": {
+        "lines": 36,
         "branches": 11,
         "functions": 3
       },
@@ -203,6 +217,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 10,
         "branches": null,
         "functions": null
       },
@@ -217,6 +232,7 @@
       "branches": 1,
       "functions": 4,
       "totals": {
+        "lines": 67,
         "branches": 3,
         "functions": 5
       },
@@ -231,6 +247,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 5,
         "branches": null,
         "functions": null
       },
@@ -245,6 +262,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 116,
         "branches": null,
         "functions": null
       },
@@ -259,6 +277,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 406,
         "branches": null,
         "functions": null
       },
@@ -273,6 +292,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 238,
         "branches": null,
         "functions": null
       },
@@ -287,6 +307,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 116,
         "branches": null,
         "functions": null
       },
@@ -301,6 +322,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 74,
         "branches": null,
         "functions": null
       },
@@ -315,6 +337,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 413,
         "branches": null,
         "functions": null
       },
@@ -329,6 +352,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 1508,
         "branches": null,
         "functions": null
       },
@@ -343,6 +367,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 557,
         "branches": null,
         "functions": null
       },
@@ -357,6 +382,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 2252,
         "branches": null,
         "functions": null
       },
@@ -371,6 +397,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 582,
         "branches": null,
         "functions": null
       },
@@ -385,6 +412,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 570,
         "branches": null,
         "functions": null
       },
@@ -399,6 +427,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 521,
         "branches": null,
         "functions": null
       },
@@ -413,6 +442,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 521,
         "branches": null,
         "functions": null
       },
@@ -427,6 +457,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 902,
         "branches": null,
         "functions": null
       },
@@ -441,6 +472,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 274,
         "branches": null,
         "functions": null
       },
@@ -455,6 +487,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 163,
         "branches": null,
         "functions": null
       },
@@ -469,6 +502,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 322,
         "branches": null,
         "functions": null
       },
@@ -483,6 +517,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 62,
         "branches": null,
         "functions": null
       },
@@ -497,6 +532,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 145,
         "branches": null,
         "functions": null
       },
@@ -511,6 +547,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 605,
         "branches": null,
         "functions": null
       },
@@ -525,6 +562,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 163,
         "branches": null,
         "functions": null
       },
@@ -539,6 +577,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 721,
         "branches": null,
         "functions": null
       },
@@ -553,6 +592,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 1115,
         "branches": null,
         "functions": null
       },
@@ -567,6 +607,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 727,
         "branches": null,
         "functions": null
       },
@@ -581,6 +622,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 343,
         "branches": null,
         "functions": null
       },
@@ -595,6 +637,7 @@
       "branches": 18,
       "functions": 50,
       "totals": {
+        "lines": 2336,
         "branches": 143,
         "functions": 87
       },
@@ -609,6 +652,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 422,
         "branches": null,
         "functions": null
       },
@@ -623,6 +667,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 600,
         "branches": null,
         "functions": null
       },
@@ -637,6 +682,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 129,
         "branches": null,
         "functions": null
       },
@@ -651,6 +697,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 262,
         "branches": null,
         "functions": null
       },
@@ -665,6 +712,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 202,
         "branches": null,
         "functions": null
       },
@@ -679,6 +727,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 1650,
         "branches": null,
         "functions": null
       },
@@ -693,6 +742,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 943,
         "branches": null,
         "functions": null
       },
@@ -707,6 +757,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 413,
         "branches": null,
         "functions": null
       },
@@ -721,6 +772,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 4724,
         "branches": null,
         "functions": null
       },
@@ -735,6 +787,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 393,
         "branches": null,
         "functions": null
       },
@@ -749,6 +802,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 578,
         "branches": null,
         "functions": null
       },
@@ -763,6 +817,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 477,
         "branches": null,
         "functions": null
       },
@@ -777,6 +832,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 254,
         "branches": null,
         "functions": null
       },
@@ -791,6 +847,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 125,
         "branches": null,
         "functions": null
       },
@@ -805,6 +862,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 284,
         "branches": null,
         "functions": null
       },
@@ -819,6 +877,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 331,
         "branches": null,
         "functions": null
       },
@@ -833,6 +892,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 289,
         "branches": null,
         "functions": null
       },
@@ -847,6 +907,7 @@
       "branches": 14,
       "functions": 5,
       "totals": {
+        "lines": 423,
         "branches": 30,
         "functions": 14
       },
@@ -861,6 +922,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 282,
         "branches": null,
         "functions": null
       },
@@ -875,6 +937,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 355,
         "branches": null,
         "functions": null
       },
@@ -889,6 +952,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 239,
         "branches": null,
         "functions": null
       },
@@ -903,6 +967,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 251,
         "branches": null,
         "functions": null
       },
@@ -917,6 +982,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 1010,
         "branches": null,
         "functions": null
       },
@@ -931,6 +997,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 132,
         "branches": null,
         "functions": null
       },
@@ -945,6 +1012,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 33,
         "branches": 11,
         "functions": 1
       },
@@ -959,6 +1027,7 @@
       "branches": 3,
       "functions": 3,
       "totals": {
+        "lines": 102,
         "branches": 14,
         "functions": 9
       },
@@ -973,6 +1042,7 @@
       "branches": 15,
       "functions": 2,
       "totals": {
+        "lines": 227,
         "branches": 88,
         "functions": 20
       },
@@ -987,6 +1057,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 43,
         "branches": null,
         "functions": null
       },
@@ -1001,6 +1072,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 4084,
         "branches": null,
         "functions": null
       },
@@ -1015,6 +1087,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 56,
         "branches": null,
         "functions": null
       },
@@ -1029,6 +1102,7 @@
       "branches": 1,
       "functions": 1,
       "totals": {
+        "lines": 158,
         "branches": 36,
         "functions": 7
       },
@@ -1043,6 +1117,7 @@
       "branches": 9,
       "functions": 5,
       "totals": {
+        "lines": 147,
         "branches": 15,
         "functions": 10
       },
@@ -1057,6 +1132,7 @@
       "branches": 51,
       "functions": 5,
       "totals": {
+        "lines": 701,
         "branches": 88,
         "functions": 14
       },
@@ -1071,6 +1147,7 @@
       "branches": 11,
       "functions": 1,
       "totals": {
+        "lines": 128,
         "branches": 24,
         "functions": 9
       },
@@ -1085,6 +1162,7 @@
       "branches": 54,
       "functions": 0,
       "totals": {
+        "lines": 407,
         "branches": 100,
         "functions": 9
       },
@@ -1099,6 +1177,7 @@
       "branches": 14,
       "functions": 0,
       "totals": {
+        "lines": 181,
         "branches": 27,
         "functions": 6
       },
@@ -1113,6 +1192,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 48,
         "branches": 1,
         "functions": 1
       },
@@ -1127,6 +1207,7 @@
       "branches": 7,
       "functions": 2,
       "totals": {
+        "lines": 289,
         "branches": 44,
         "functions": 9
       },
@@ -1141,6 +1222,7 @@
       "branches": 10,
       "functions": 11,
       "totals": {
+        "lines": 421,
         "branches": 30,
         "functions": 17
       },
@@ -1155,6 +1237,7 @@
       "branches": 0,
       "functions": 3,
       "totals": {
+        "lines": 336,
         "branches": 1,
         "functions": 3
       },
@@ -1169,6 +1252,7 @@
       "branches": 4,
       "functions": 2,
       "totals": {
+        "lines": 118,
         "branches": 32,
         "functions": 9
       },
@@ -1183,6 +1267,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 12,
         "branches": 8,
         "functions": 2
       },
@@ -1197,6 +1282,7 @@
       "branches": 4,
       "functions": 0,
       "totals": {
+        "lines": 67,
         "branches": 15,
         "functions": 6
       },
@@ -1211,6 +1297,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 35,
         "branches": 8,
         "functions": 5
       },
@@ -1225,6 +1312,7 @@
       "branches": 20,
       "functions": 0,
       "totals": {
+        "lines": 261,
         "branches": 63,
         "functions": 18
       },
@@ -1239,6 +1327,7 @@
       "branches": 8,
       "functions": 2,
       "totals": {
+        "lines": 249,
         "branches": 45,
         "functions": 8
       },
@@ -1253,6 +1342,7 @@
       "branches": 8,
       "functions": 3,
       "totals": {
+        "lines": 215,
         "branches": 16,
         "functions": 8
       },
@@ -1267,6 +1357,7 @@
       "branches": 2,
       "functions": 1,
       "totals": {
+        "lines": 171,
         "branches": 32,
         "functions": 8
       },
@@ -1281,6 +1372,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 85,
         "branches": 14,
         "functions": 6
       },
@@ -1295,6 +1387,7 @@
       "branches": 3,
       "functions": 0,
       "totals": {
+        "lines": 47,
         "branches": 6,
         "functions": 2
       },
@@ -1309,6 +1402,7 @@
       "branches": 10,
       "functions": 3,
       "totals": {
+        "lines": 100,
         "branches": 12,
         "functions": 4
       },
@@ -1323,6 +1417,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 152,
         "branches": 10,
         "functions": 3
       },
@@ -1337,6 +1432,7 @@
       "branches": 8,
       "functions": 0,
       "totals": {
+        "lines": 219,
         "branches": 22,
         "functions": 8
       },
@@ -1351,6 +1447,7 @@
       "branches": 3,
       "functions": 2,
       "totals": {
+        "lines": 137,
         "branches": 28,
         "functions": 7
       },
@@ -1365,6 +1462,7 @@
       "branches": 4,
       "functions": 0,
       "totals": {
+        "lines": 101,
         "branches": 27,
         "functions": 3
       },
@@ -1379,6 +1477,7 @@
       "branches": 21,
       "functions": 3,
       "totals": {
+        "lines": 198,
         "branches": 43,
         "functions": 7
       },
@@ -1393,6 +1492,7 @@
       "branches": 4,
       "functions": 1,
       "totals": {
+        "lines": 158,
         "branches": 36,
         "functions": 5
       },
@@ -1407,6 +1507,7 @@
       "branches": 10,
       "functions": 2,
       "totals": {
+        "lines": 282,
         "branches": 62,
         "functions": 10
       },
@@ -1421,6 +1522,7 @@
       "branches": 8,
       "functions": 1,
       "totals": {
+        "lines": 133,
         "branches": 42,
         "functions": 5
       },
@@ -1435,6 +1537,7 @@
       "branches": 12,
       "functions": 2,
       "totals": {
+        "lines": 394,
         "branches": 108,
         "functions": 26
       },
@@ -1449,6 +1552,7 @@
       "branches": 13,
       "functions": 0,
       "totals": {
+        "lines": 155,
         "branches": 91,
         "functions": 10
       },
@@ -1463,6 +1567,7 @@
       "branches": 13,
       "functions": 1,
       "totals": {
+        "lines": 145,
         "branches": 52,
         "functions": 15
       },
@@ -1477,6 +1582,7 @@
       "branches": 6,
       "functions": 3,
       "totals": {
+        "lines": 155,
         "branches": 18,
         "functions": 9
       },
@@ -1491,6 +1597,7 @@
       "branches": 1,
       "functions": 2,
       "totals": {
+        "lines": 46,
         "branches": 5,
         "functions": 3
       },
@@ -1505,6 +1612,7 @@
       "branches": 0,
       "functions": 4,
       "totals": {
+        "lines": 112,
         "branches": 1,
         "functions": 4
       },
@@ -1519,6 +1627,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 37,
         "branches": 1,
         "functions": 1
       },
@@ -1533,6 +1642,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 12,
         "branches": 10,
         "functions": 1
       },
@@ -1547,6 +1657,7 @@
       "branches": 4,
       "functions": 0,
       "totals": {
+        "lines": 128,
         "branches": 26,
         "functions": 8
       },
@@ -1561,6 +1672,7 @@
       "branches": 6,
       "functions": 0,
       "totals": {
+        "lines": 139,
         "branches": 35,
         "functions": 11
       },
@@ -1575,6 +1687,7 @@
       "branches": 8,
       "functions": 0,
       "totals": {
+        "lines": 144,
         "branches": 31,
         "functions": 10
       },
@@ -1589,6 +1702,7 @@
       "branches": 11,
       "functions": 1,
       "totals": {
+        "lines": 219,
         "branches": 46,
         "functions": 10
       },
@@ -1603,6 +1717,7 @@
       "branches": 16,
       "functions": 1,
       "totals": {
+        "lines": 266,
         "branches": 53,
         "functions": 18
       },
@@ -1617,6 +1732,7 @@
       "branches": 20,
       "functions": 4,
       "totals": {
+        "lines": 406,
         "branches": 58,
         "functions": 24
       },
@@ -1627,22 +1743,18 @@
     },
     "server/providers/vessels/ais-store.js": {
       "loaded": true,
-      "lines": 44,
+      "lines": 40,
       "branches": 35,
       "functions": 3,
       "totals": {
+        "lines": 288,
         "branches": 64,
         "functions": 19
       },
       "sha": "e32e818bc2b72d22f671500e3c359f7a5182279a025fd2c863f93b5288730d63",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15",
-      "low": {
-        "lines": 40,
-        "branches": 35,
-        "functions": 3
-      }
+      "since": "2026-09-15"
     },
     "server/standalone/key-setup.js": {
       "loaded": true,
@@ -1650,6 +1762,7 @@
       "branches": 25,
       "functions": 1,
       "totals": {
+        "lines": 344,
         "branches": 53,
         "functions": 23
       },
@@ -1664,6 +1777,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 22,
         "branches": 4,
         "functions": 1
       },
@@ -1678,6 +1792,7 @@
       "branches": 85,
       "functions": 25,
       "totals": {
+        "lines": 1159,
         "branches": 238,
         "functions": 66
       },
@@ -1692,6 +1807,7 @@
       "branches": 24,
       "functions": 1,
       "totals": {
+        "lines": 213,
         "branches": 95,
         "functions": 8
       },
@@ -1706,6 +1822,7 @@
       "branches": 138,
       "functions": 28,
       "totals": {
+        "lines": 1906,
         "branches": 429,
         "functions": 86
       },
@@ -1720,6 +1837,7 @@
       "branches": 8,
       "functions": 1,
       "totals": {
+        "lines": 150,
         "branches": 29,
         "functions": 7
       },
@@ -1734,6 +1852,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 22,
         "branches": null,
         "functions": null
       },
@@ -1748,6 +1867,7 @@
       "branches": 51,
       "functions": 9,
       "totals": {
+        "lines": 674,
         "branches": 129,
         "functions": 30
       },
@@ -1762,6 +1882,7 @@
       "branches": 9,
       "functions": 16,
       "totals": {
+        "lines": 435,
         "branches": 21,
         "functions": 24
       },
@@ -1776,6 +1897,7 @@
       "branches": 5,
       "functions": 2,
       "totals": {
+        "lines": 152,
         "branches": 46,
         "functions": 16
       },
@@ -1790,6 +1912,7 @@
       "branches": 4,
       "functions": 1,
       "totals": {
+        "lines": 111,
         "branches": 52,
         "functions": 11
       },
@@ -1804,6 +1927,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 36,
         "branches": 4,
         "functions": 1
       },
@@ -1818,6 +1942,7 @@
       "branches": 3,
       "functions": 1,
       "totals": {
+        "lines": 89,
         "branches": 8,
         "functions": 5
       },
@@ -1832,6 +1957,7 @@
       "branches": 0,
       "functions": 2,
       "totals": {
+        "lines": 82,
         "branches": 3,
         "functions": 4
       },
@@ -1846,6 +1972,7 @@
       "branches": 49,
       "functions": 3,
       "totals": {
+        "lines": 1157,
         "branches": 262,
         "functions": 40
       },
@@ -1860,6 +1987,7 @@
       "branches": 6,
       "functions": 0,
       "totals": {
+        "lines": 81,
         "branches": 20,
         "functions": 3
       },
@@ -1874,6 +2002,7 @@
       "branches": 2,
       "functions": 1,
       "totals": {
+        "lines": 67,
         "branches": 16,
         "functions": 7
       },
@@ -1888,6 +2017,7 @@
       "branches": 3,
       "functions": 19,
       "totals": {
+        "lines": 714,
         "branches": 41,
         "functions": 31
       },
@@ -1902,6 +2032,7 @@
       "branches": 2,
       "functions": 19,
       "totals": {
+        "lines": 530,
         "branches": 13,
         "functions": 23
       },
@@ -1916,6 +2047,7 @@
       "branches": 13,
       "functions": 0,
       "totals": {
+        "lines": 326,
         "branches": 100,
         "functions": 25
       },
@@ -1930,6 +2062,7 @@
       "branches": 6,
       "functions": 0,
       "totals": {
+        "lines": 92,
         "branches": 36,
         "functions": 4
       },
@@ -1944,6 +2077,7 @@
       "branches": 8,
       "functions": 0,
       "totals": {
+        "lines": 81,
         "branches": 15,
         "functions": 2
       },
@@ -1958,6 +2092,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 50,
         "branches": 17,
         "functions": 3
       },
@@ -1972,6 +2107,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 173,
         "branches": 32,
         "functions": 6
       },
@@ -1986,6 +2122,7 @@
       "branches": 15,
       "functions": 0,
       "totals": {
+        "lines": 384,
         "branches": 128,
         "functions": 24
       },
@@ -2000,6 +2137,7 @@
       "branches": 3,
       "functions": 0,
       "totals": {
+        "lines": 70,
         "branches": 29,
         "functions": 9
       },
@@ -2014,6 +2152,7 @@
       "branches": 4,
       "functions": 0,
       "totals": {
+        "lines": 101,
         "branches": 46,
         "functions": 5
       },
@@ -2028,6 +2167,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 270,
         "branches": 7,
         "functions": 2
       },
@@ -2042,6 +2182,7 @@
       "branches": 4,
       "functions": 3,
       "totals": {
+        "lines": 238,
         "branches": 20,
         "functions": 10
       },
@@ -2056,6 +2197,7 @@
       "branches": 3,
       "functions": 0,
       "totals": {
+        "lines": 70,
         "branches": 4,
         "functions": 0
       },
@@ -2070,6 +2212,7 @@
       "branches": 16,
       "functions": 1,
       "totals": {
+        "lines": 580,
         "branches": 150,
         "functions": 36
       },
@@ -2084,6 +2227,7 @@
       "branches": 5,
       "functions": 2,
       "totals": {
+        "lines": 511,
         "branches": 117,
         "functions": 23
       },
@@ -2098,6 +2242,7 @@
       "branches": 15,
       "functions": 2,
       "totals": {
+        "lines": 247,
         "branches": 101,
         "functions": 15
       },
@@ -2112,6 +2257,7 @@
       "branches": 9,
       "functions": 0,
       "totals": {
+        "lines": 379,
         "branches": 73,
         "functions": 15
       },
@@ -2126,6 +2272,7 @@
       "branches": 0,
       "functions": 7,
       "totals": {
+        "lines": 569,
         "branches": 13,
         "functions": 11
       },
@@ -2140,6 +2287,7 @@
       "branches": 32,
       "functions": 0,
       "totals": {
+        "lines": 447,
         "branches": 147,
         "functions": 23
       },
@@ -2154,6 +2302,7 @@
       "branches": 1,
       "functions": 1,
       "totals": {
+        "lines": 129,
         "branches": 6,
         "functions": 5
       },
@@ -2168,6 +2317,7 @@
       "branches": 4,
       "functions": 0,
       "totals": {
+        "lines": 35,
         "branches": 14,
         "functions": 1
       },
@@ -2182,6 +2332,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 110,
         "branches": 34,
         "functions": 3
       },
@@ -2196,6 +2347,7 @@
       "branches": 7,
       "functions": 0,
       "totals": {
+        "lines": 185,
         "branches": 59,
         "functions": 12
       },
@@ -2210,6 +2362,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 251,
         "branches": null,
         "functions": null
       },
@@ -2224,6 +2377,7 @@
       "branches": 97,
       "functions": 1,
       "totals": {
+        "lines": 1434,
         "branches": 280,
         "functions": 44
       },
@@ -2238,6 +2392,7 @@
       "branches": 7,
       "functions": 0,
       "totals": {
+        "lines": 96,
         "branches": 47,
         "functions": 9
       },
@@ -2252,6 +2407,7 @@
       "branches": 3,
       "functions": 0,
       "totals": {
+        "lines": 239,
         "branches": 66,
         "functions": 14
       },
@@ -2266,6 +2422,7 @@
       "branches": 14,
       "functions": 0,
       "totals": {
+        "lines": 207,
         "branches": 99,
         "functions": 11
       },
@@ -2280,6 +2437,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 47,
         "branches": 30,
         "functions": 1
       },
@@ -2294,6 +2452,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 108,
         "branches": 50,
         "functions": 6
       },
@@ -2308,6 +2467,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 188,
         "branches": 50,
         "functions": 11
       },
@@ -2322,6 +2482,7 @@
       "branches": 1,
       "functions": 1,
       "totals": {
+        "lines": 50,
         "branches": 4,
         "functions": 2
       },
@@ -2336,6 +2497,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 75,
         "branches": 3,
         "functions": 1
       },
@@ -2350,6 +2512,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 231,
         "branches": null,
         "functions": null
       },
@@ -2364,6 +2527,7 @@
       "branches": 19,
       "functions": 6,
       "totals": {
+        "lines": 512,
         "branches": 82,
         "functions": 22
       },
@@ -2378,6 +2542,7 @@
       "branches": 4,
       "functions": 0,
       "totals": {
+        "lines": 54,
         "branches": 11,
         "functions": 3
       },
@@ -2392,6 +2557,7 @@
       "branches": 1,
       "functions": 3,
       "totals": {
+        "lines": 99,
         "branches": 3,
         "functions": 4
       },
@@ -2406,6 +2572,7 @@
       "branches": 15,
       "functions": 2,
       "totals": {
+        "lines": 580,
         "branches": 135,
         "functions": 25
       },
@@ -2420,6 +2587,7 @@
       "branches": 8,
       "functions": 1,
       "totals": {
+        "lines": 352,
         "branches": 53,
         "functions": 9
       },
@@ -2434,6 +2602,7 @@
       "branches": 3,
       "functions": 0,
       "totals": {
+        "lines": 241,
         "branches": 24,
         "functions": 5
       },
@@ -2448,6 +2617,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 22,
         "branches": 19,
         "functions": 1
       },
@@ -2462,6 +2632,7 @@
       "branches": 3,
       "functions": 0,
       "totals": {
+        "lines": 66,
         "branches": 18,
         "functions": 3
       },
@@ -2473,21 +2644,17 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 18,
-      "branches": 52,
+      "branches": 50,
       "functions": 0,
       "totals": {
+        "lines": 1125,
         "branches": 405,
         "functions": 58
       },
       "sha": "86cc0fab84963a9f0ab168cf0d9f3e44ac00401d2650f91f883cec1f97ce5275",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15",
-      "low": {
-        "lines": 18,
-        "branches": 50,
-        "functions": 0
-      }
+      "since": "2026-09-15"
     },
     "src/data/layerState.js": {
       "loaded": true,
@@ -2495,6 +2662,7 @@
       "branches": 75,
       "functions": 5,
       "totals": {
+        "lines": 1090,
         "branches": 362,
         "functions": 91
       },
@@ -2509,6 +2677,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 49,
         "branches": 6,
         "functions": 2
       },
@@ -2523,18 +2692,14 @@
       "branches": 39,
       "functions": 6,
       "totals": {
+        "lines": 1230,
         "branches": 296,
         "functions": 52
       },
       "sha": "16085ee95156cb19e53509a47effb0ed09649df8d29e78be8c66541c38209a66",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15",
-      "low": {
-        "lines": 18,
-        "branches": 38,
-        "functions": 6
-      }
+      "since": "2026-09-15"
     },
     "src/data/localGeojsonLod.js": {
       "loaded": true,
@@ -2542,6 +2707,7 @@
       "branches": 13,
       "functions": 0,
       "totals": {
+        "lines": 416,
         "branches": 92,
         "functions": 11
       },
@@ -2556,6 +2722,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 23,
         "branches": null,
         "functions": null
       },
@@ -2566,22 +2733,18 @@
     },
     "src/data/manager.js": {
       "loaded": true,
-      "lines": 139,
-      "branches": 107,
+      "lines": 134,
+      "branches": 105,
       "functions": 15,
       "totals": {
+        "lines": 2002,
         "branches": 588,
         "functions": 127
       },
       "sha": "c32c2d1a0cf2caf6bcac8fec2ede72a18493286548117ee42974c29de96e4abd",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15",
-      "low": {
-        "lines": 134,
-        "branches": 105,
-        "functions": 15
-      }
+      "since": "2026-09-15"
     },
     "src/data/meshFloorSampler.js": {
       "loaded": true,
@@ -2589,6 +2752,7 @@
       "branches": 8,
       "functions": 1,
       "totals": {
+        "lines": 165,
         "branches": 26,
         "functions": 4
       },
@@ -2603,6 +2767,7 @@
       "branches": 10,
       "functions": 0,
       "totals": {
+        "lines": 116,
         "branches": 72,
         "functions": 9
       },
@@ -2617,6 +2782,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 67,
         "branches": 3,
         "functions": 1
       },
@@ -2631,6 +2797,7 @@
       "branches": 6,
       "functions": 0,
       "totals": {
+        "lines": 157,
         "branches": 68,
         "functions": 8
       },
@@ -2645,6 +2812,7 @@
       "branches": 11,
       "functions": 0,
       "totals": {
+        "lines": 259,
         "branches": 28,
         "functions": 5
       },
@@ -2659,6 +2827,7 @@
       "branches": 20,
       "functions": 0,
       "totals": {
+        "lines": 427,
         "branches": 104,
         "functions": 16
       },
@@ -2673,6 +2842,7 @@
       "branches": 12,
       "functions": 0,
       "totals": {
+        "lines": 297,
         "branches": 74,
         "functions": 15
       },
@@ -2687,6 +2857,7 @@
       "branches": 14,
       "functions": 0,
       "totals": {
+        "lines": 165,
         "branches": 55,
         "functions": 12
       },
@@ -2701,6 +2872,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 84,
         "branches": 37,
         "functions": 5
       },
@@ -2715,6 +2887,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 135,
         "branches": 67,
         "functions": 12
       },
@@ -2729,6 +2902,7 @@
       "branches": 237,
       "functions": 43,
       "totals": {
+        "lines": 2790,
         "branches": 797,
         "functions": 216
       },
@@ -2743,6 +2917,7 @@
       "branches": 4,
       "functions": 1,
       "totals": {
+        "lines": 115,
         "branches": 27,
         "functions": 4
       },
@@ -2757,6 +2932,7 @@
       "branches": 20,
       "functions": 1,
       "totals": {
+        "lines": 131,
         "branches": 69,
         "functions": 10
       },
@@ -2771,6 +2947,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 85,
         "branches": 11,
         "functions": 6
       },
@@ -2785,6 +2962,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 85,
         "branches": 27,
         "functions": 5
       },
@@ -2799,18 +2977,14 @@
       "branches": 4,
       "functions": 0,
       "totals": {
+        "lines": 73,
         "branches": 25,
         "functions": 4
       },
       "sha": "30f65fef022d6f6433e93b38bafb6f42d83fd088a39f88534ba190af5eacfd9b",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15",
-      "low": {
-        "lines": 0,
-        "branches": 3,
-        "functions": 0
-      }
+      "since": "2026-09-15"
     },
     "src/data/telegeographySubmarineCables.js": {
       "loaded": true,
@@ -2818,6 +2992,7 @@
       "branches": 57,
       "functions": 5,
       "totals": {
+        "lines": 1177,
         "branches": 246,
         "functions": 59
       },
@@ -2832,6 +3007,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 245,
         "branches": 49,
         "functions": 9
       },
@@ -2846,6 +3022,7 @@
       "branches": 10,
       "functions": 1,
       "totals": {
+        "lines": 278,
         "branches": 79,
         "functions": 14
       },
@@ -2860,6 +3037,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 158,
         "branches": null,
         "functions": null
       },
@@ -2874,6 +3052,7 @@
       "branches": 10,
       "functions": 1,
       "totals": {
+        "lines": 218,
         "branches": 26,
         "functions": 9
       },
@@ -2888,6 +3067,7 @@
       "branches": 16,
       "functions": 0,
       "totals": {
+        "lines": 261,
         "branches": 75,
         "functions": 21
       },
@@ -2902,6 +3082,7 @@
       "branches": 10,
       "functions": 1,
       "totals": {
+        "lines": 100,
         "branches": 23,
         "functions": 10
       },
@@ -2916,6 +3097,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 13,
         "branches": null,
         "functions": null
       },
@@ -2930,6 +3112,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 138,
         "branches": null,
         "functions": null
       },
@@ -2944,6 +3127,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 80,
         "branches": null,
         "functions": null
       },
@@ -2958,6 +3142,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 129,
         "branches": null,
         "functions": null
       },
@@ -2972,6 +3157,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 92,
         "branches": null,
         "functions": null
       },
@@ -2986,6 +3172,7 @@
       "branches": 3,
       "functions": 0,
       "totals": {
+        "lines": 130,
         "branches": 20,
         "functions": 8
       },
@@ -3000,6 +3187,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 118,
         "branches": 27,
         "functions": 7
       },
@@ -3014,6 +3202,7 @@
       "branches": 1,
       "functions": 1,
       "totals": {
+        "lines": 607,
         "branches": 59,
         "functions": 17
       },
@@ -3028,6 +3217,7 @@
       "branches": 33,
       "functions": 20,
       "totals": {
+        "lines": 857,
         "branches": 75,
         "functions": 41
       },
@@ -3042,6 +3232,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 35,
         "branches": 12,
         "functions": 2
       },
@@ -3056,6 +3247,7 @@
       "branches": 16,
       "functions": 13,
       "totals": {
+        "lines": 343,
         "branches": 41,
         "functions": 19
       },
@@ -3070,6 +3262,7 @@
       "branches": 8,
       "functions": 0,
       "totals": {
+        "lines": 428,
         "branches": 145,
         "functions": 22
       },
@@ -3084,6 +3277,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 163,
         "branches": 53,
         "functions": 8
       },
@@ -3098,6 +3292,7 @@
       "branches": 5,
       "functions": 1,
       "totals": {
+        "lines": 405,
         "branches": 118,
         "functions": 16
       },
@@ -3112,6 +3307,7 @@
       "branches": 7,
       "functions": 0,
       "totals": {
+        "lines": 167,
         "branches": 49,
         "functions": 13
       },
@@ -3126,6 +3322,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 17,
         "branches": null,
         "functions": null
       },
@@ -3140,6 +3337,7 @@
       "branches": 3,
       "functions": 1,
       "totals": {
+        "lines": 126,
         "branches": 20,
         "functions": 11
       },
@@ -3154,6 +3352,7 @@
       "branches": 8,
       "functions": 2,
       "totals": {
+        "lines": 118,
         "branches": 43,
         "functions": 11
       },
@@ -3168,6 +3367,7 @@
       "branches": 9,
       "functions": 1,
       "totals": {
+        "lines": 198,
         "branches": 47,
         "functions": 12
       },
@@ -3182,6 +3382,7 @@
       "branches": 5,
       "functions": 1,
       "totals": {
+        "lines": 239,
         "branches": 77,
         "functions": 13
       },
@@ -3196,6 +3397,7 @@
       "branches": 6,
       "functions": 1,
       "totals": {
+        "lines": 263,
         "branches": 50,
         "functions": 14
       },
@@ -3210,6 +3412,7 @@
       "branches": 5,
       "functions": 1,
       "totals": {
+        "lines": 251,
         "branches": 45,
         "functions": 14
       },
@@ -3224,6 +3427,7 @@
       "branches": 16,
       "functions": 2,
       "totals": {
+        "lines": 274,
         "branches": 73,
         "functions": 29
       },
@@ -3238,6 +3442,7 @@
       "branches": 8,
       "functions": 3,
       "totals": {
+        "lines": 249,
         "branches": 69,
         "functions": 20
       },
@@ -3252,6 +3457,7 @@
       "branches": 6,
       "functions": 0,
       "totals": {
+        "lines": 164,
         "branches": 37,
         "functions": 12
       },
@@ -3266,6 +3472,7 @@
       "branches": 3,
       "functions": 3,
       "totals": {
+        "lines": 288,
         "branches": 23,
         "functions": 8
       },
@@ -3280,6 +3487,7 @@
       "branches": 13,
       "functions": 1,
       "totals": {
+        "lines": 447,
         "branches": 81,
         "functions": 21
       },
@@ -3294,6 +3502,7 @@
       "branches": 0,
       "functions": 2,
       "totals": {
+        "lines": 46,
         "branches": 2,
         "functions": 3
       },
@@ -3308,6 +3517,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 50,
         "branches": 3,
         "functions": 1
       },
@@ -3322,6 +3532,7 @@
       "branches": 0,
       "functions": 9,
       "totals": {
+        "lines": 212,
         "branches": 2,
         "functions": 10
       },
@@ -3336,6 +3547,7 @@
       "branches": 0,
       "functions": 4,
       "totals": {
+        "lines": 171,
         "branches": 2,
         "functions": 5
       },
@@ -3350,6 +3562,7 @@
       "branches": 0,
       "functions": 7,
       "totals": {
+        "lines": 162,
         "branches": 2,
         "functions": 8
       },
@@ -3364,6 +3577,7 @@
       "branches": 0,
       "functions": 2,
       "totals": {
+        "lines": 75,
         "branches": 2,
         "functions": 3
       },
@@ -3378,6 +3592,7 @@
       "branches": 14,
       "functions": 0,
       "totals": {
+        "lines": 394,
         "branches": 21,
         "functions": 6
       },
@@ -3392,6 +3607,7 @@
       "branches": 0,
       "functions": 8,
       "totals": {
+        "lines": 282,
         "branches": 2,
         "functions": 9
       },
@@ -3406,6 +3622,7 @@
       "branches": 9,
       "functions": 2,
       "totals": {
+        "lines": 206,
         "branches": 18,
         "functions": 7
       },
@@ -3420,6 +3637,7 @@
       "branches": 2,
       "functions": 1,
       "totals": {
+        "lines": 23,
         "branches": 16,
         "functions": 3
       },
@@ -3434,6 +3652,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 34,
         "branches": 6,
         "functions": 4
       },
@@ -3448,6 +3667,7 @@
       "branches": 0,
       "functions": 10,
       "totals": {
+        "lines": 257,
         "branches": 2,
         "functions": 11
       },
@@ -3462,6 +3682,7 @@
       "branches": 5,
       "functions": 4,
       "totals": {
+        "lines": 309,
         "branches": 31,
         "functions": 11
       },
@@ -3476,6 +3697,7 @@
       "branches": 29,
       "functions": 6,
       "totals": {
+        "lines": 404,
         "branches": 41,
         "functions": 14
       },
@@ -3490,6 +3712,7 @@
       "branches": 3,
       "functions": 3,
       "totals": {
+        "lines": 210,
         "branches": 6,
         "functions": 5
       },
@@ -3504,6 +3727,7 @@
       "branches": 11,
       "functions": 7,
       "totals": {
+        "lines": 352,
         "branches": 22,
         "functions": 14
       },
@@ -3518,6 +3742,7 @@
       "branches": 0,
       "functions": 7,
       "totals": {
+        "lines": 368,
         "branches": 11,
         "functions": 11
       },
@@ -3532,6 +3757,7 @@
       "branches": 17,
       "functions": 5,
       "totals": {
+        "lines": 719,
         "branches": 64,
         "functions": 31
       },
@@ -3546,6 +3772,7 @@
       "branches": 9,
       "functions": 3,
       "totals": {
+        "lines": 339,
         "branches": 28,
         "functions": 12
       },
@@ -3560,6 +3787,7 @@
       "branches": 5,
       "functions": 6,
       "totals": {
+        "lines": 283,
         "branches": 14,
         "functions": 11
       },
@@ -3574,6 +3802,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 41,
         "branches": 2,
         "functions": 2
       },
@@ -3588,6 +3817,7 @@
       "branches": 1,
       "functions": 3,
       "totals": {
+        "lines": 127,
         "branches": 5,
         "functions": 6
       },
@@ -3602,6 +3832,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 130,
         "branches": 4,
         "functions": 2
       },
@@ -3616,6 +3847,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 48,
         "branches": 2,
         "functions": 2
       },
@@ -3630,6 +3862,7 @@
       "branches": 17,
       "functions": 11,
       "totals": {
+        "lines": 461,
         "branches": 23,
         "functions": 16
       },
@@ -3644,6 +3877,7 @@
       "branches": 9,
       "functions": 9,
       "totals": {
+        "lines": 566,
         "branches": 35,
         "functions": 24
       },
@@ -3658,6 +3892,7 @@
       "branches": 7,
       "functions": 3,
       "totals": {
+        "lines": 157,
         "branches": 22,
         "functions": 7
       },
@@ -3672,6 +3907,7 @@
       "branches": 17,
       "functions": 1,
       "totals": {
+        "lines": 207,
         "branches": 44,
         "functions": 7
       },
@@ -3686,6 +3922,7 @@
       "branches": 12,
       "functions": 4,
       "totals": {
+        "lines": 385,
         "branches": 30,
         "functions": 14
       },
@@ -3700,6 +3937,7 @@
       "branches": 23,
       "functions": 2,
       "totals": {
+        "lines": 312,
         "branches": 70,
         "functions": 7
       },
@@ -3714,6 +3952,7 @@
       "branches": 11,
       "functions": 2,
       "totals": {
+        "lines": 258,
         "branches": 45,
         "functions": 10
       },
@@ -3728,6 +3967,7 @@
       "branches": 2,
       "functions": 1,
       "totals": {
+        "lines": 55,
         "branches": 16,
         "functions": 8
       },
@@ -3742,6 +3982,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 120,
         "branches": 13,
         "functions": 9
       },
@@ -3756,6 +3997,7 @@
       "branches": 9,
       "functions": 1,
       "totals": {
+        "lines": 233,
         "branches": 36,
         "functions": 8
       },
@@ -3770,6 +4012,7 @@
       "branches": 10,
       "functions": 0,
       "totals": {
+        "lines": 150,
         "branches": 64,
         "functions": 8
       },
@@ -3784,6 +4027,7 @@
       "branches": 4,
       "functions": 1,
       "totals": {
+        "lines": 98,
         "branches": 24,
         "functions": 11
       },
@@ -3798,6 +4042,7 @@
       "branches": 8,
       "functions": 0,
       "totals": {
+        "lines": 135,
         "branches": 28,
         "functions": 5
       },
@@ -3812,6 +4057,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 42,
         "branches": 4,
         "functions": 2
       },
@@ -3826,6 +4072,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 111,
         "branches": 24,
         "functions": 6
       },
@@ -3840,6 +4087,7 @@
       "branches": 4,
       "functions": 1,
       "totals": {
+        "lines": 119,
         "branches": 20,
         "functions": 6
       },
@@ -3854,6 +4102,7 @@
       "branches": 15,
       "functions": 8,
       "totals": {
+        "lines": 532,
         "branches": 98,
         "functions": 28
       },
@@ -3868,6 +4117,7 @@
       "branches": 8,
       "functions": 4,
       "totals": {
+        "lines": 174,
         "branches": 13,
         "functions": 8
       },
@@ -3882,6 +4132,7 @@
       "branches": 14,
       "functions": 2,
       "totals": {
+        "lines": 355,
         "branches": 36,
         "functions": 11
       },
@@ -3896,6 +4147,7 @@
       "branches": 10,
       "functions": 1,
       "totals": {
+        "lines": 251,
         "branches": 42,
         "functions": 12
       },
@@ -3910,6 +4162,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 29,
         "branches": 13,
         "functions": 3
       },
@@ -3924,6 +4177,7 @@
       "branches": 16,
       "functions": 0,
       "totals": {
+        "lines": 216,
         "branches": 38,
         "functions": 15
       },
@@ -3938,6 +4192,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 26,
         "branches": 6,
         "functions": 3
       },
@@ -3952,18 +4207,14 @@
       "branches": 21,
       "functions": 4,
       "totals": {
+        "lines": 240,
         "branches": 40,
         "functions": 16
       },
       "sha": "78ee87cf2d13a6967b6a1091ea9aad01d2a86e18c358839aeb92cdd5eeb06d98",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15",
-      "low": {
-        "lines": 83,
-        "branches": 20,
-        "functions": 3
-      }
+      "since": "2026-09-15"
     },
     "src/layers/flights/evidence.js": {
       "loaded": true,
@@ -3971,6 +4222,7 @@
       "branches": 0,
       "functions": 4,
       "totals": {
+        "lines": 170,
         "branches": 2,
         "functions": 5
       },
@@ -3985,6 +4237,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 41,
         "branches": 2,
         "functions": 2
       },
@@ -3999,6 +4252,7 @@
       "branches": 35,
       "functions": 0,
       "totals": {
+        "lines": 661,
         "branches": 66,
         "functions": 2
       },
@@ -4013,6 +4267,7 @@
       "branches": 14,
       "functions": 6,
       "totals": {
+        "lines": 336,
         "branches": 18,
         "functions": 9
       },
@@ -4027,6 +4282,7 @@
       "branches": 37,
       "functions": 4,
       "totals": {
+        "lines": 1108,
         "branches": 122,
         "functions": 21
       },
@@ -4041,6 +4297,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 447,
         "branches": 2,
         "functions": 0
       },
@@ -4055,6 +4312,7 @@
       "branches": 54,
       "functions": 9,
       "totals": {
+        "lines": 954,
         "branches": 192,
         "functions": 33
       },
@@ -4069,6 +4327,7 @@
       "branches": 42,
       "functions": 6,
       "totals": {
+        "lines": 1216,
         "branches": 126,
         "functions": 33
       },
@@ -4083,6 +4342,7 @@
       "branches": 43,
       "functions": 9,
       "totals": {
+        "lines": 1262,
         "branches": 148,
         "functions": 38
       },
@@ -4097,6 +4357,7 @@
       "branches": 5,
       "functions": 1,
       "totals": {
+        "lines": 126,
         "branches": 16,
         "functions": 6
       },
@@ -4111,6 +4372,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 43,
         "branches": 3,
         "functions": 1
       },
@@ -4125,6 +4387,7 @@
       "branches": 10,
       "functions": 1,
       "totals": {
+        "lines": 214,
         "branches": 42,
         "functions": 9
       },
@@ -4139,6 +4402,7 @@
       "branches": 1,
       "functions": 1,
       "totals": {
+        "lines": 62,
         "branches": 7,
         "functions": 6
       },
@@ -4153,6 +4417,7 @@
       "branches": 4,
       "functions": 0,
       "totals": {
+        "lines": 165,
         "branches": 44,
         "functions": 10
       },
@@ -4167,6 +4432,7 @@
       "branches": 7,
       "functions": 2,
       "totals": {
+        "lines": 195,
         "branches": 44,
         "functions": 13
       },
@@ -4181,6 +4447,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 43,
         "branches": 16,
         "functions": 4
       },
@@ -4195,6 +4462,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 78,
         "branches": 31,
         "functions": 5
       },
@@ -4209,6 +4477,7 @@
       "branches": 2,
       "functions": 2,
       "totals": {
+        "lines": 84,
         "branches": 16,
         "functions": 7
       },
@@ -4223,6 +4492,7 @@
       "branches": 25,
       "functions": 0,
       "totals": {
+        "lines": 375,
         "branches": 43,
         "functions": 12
       },
@@ -4237,6 +4507,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 35,
         "branches": 4,
         "functions": 4
       },
@@ -4251,6 +4522,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 118,
         "branches": 3,
         "functions": 1
       },
@@ -4265,6 +4537,7 @@
       "branches": 11,
       "functions": 2,
       "totals": {
+        "lines": 268,
         "branches": 51,
         "functions": 19
       },
@@ -4279,6 +4552,7 @@
       "branches": 9,
       "functions": 1,
       "totals": {
+        "lines": 158,
         "branches": 18,
         "functions": 8
       },
@@ -4293,6 +4567,7 @@
       "branches": 5,
       "functions": 2,
       "totals": {
+        "lines": 172,
         "branches": 20,
         "functions": 8
       },
@@ -4307,6 +4582,7 @@
       "branches": 42,
       "functions": 1,
       "totals": {
+        "lines": 241,
         "branches": 145,
         "functions": 14
       },
@@ -4321,6 +4597,7 @@
       "branches": 5,
       "functions": 6,
       "totals": {
+        "lines": 183,
         "branches": 15,
         "functions": 14
       },
@@ -4335,6 +4612,7 @@
       "branches": 36,
       "functions": 1,
       "totals": {
+        "lines": 616,
         "branches": 84,
         "functions": 21
       },
@@ -4349,6 +4627,7 @@
       "branches": 38,
       "functions": 20,
       "totals": {
+        "lines": 543,
         "branches": 85,
         "functions": 44
       },
@@ -4363,6 +4642,7 @@
       "branches": 32,
       "functions": 2,
       "totals": {
+        "lines": 588,
         "branches": 86,
         "functions": 27
       },
@@ -4377,6 +4657,7 @@
       "branches": 11,
       "functions": 1,
       "totals": {
+        "lines": 256,
         "branches": 75,
         "functions": 16
       },
@@ -4391,6 +4672,7 @@
       "branches": 40,
       "functions": 10,
       "totals": {
+        "lines": 573,
         "branches": 67,
         "functions": 23
       },
@@ -4405,6 +4687,7 @@
       "branches": 15,
       "functions": 7,
       "totals": {
+        "lines": 557,
         "branches": 47,
         "functions": 17
       },
@@ -4419,6 +4702,7 @@
       "branches": 19,
       "functions": 3,
       "totals": {
+        "lines": 239,
         "branches": 50,
         "functions": 10
       },
@@ -4433,6 +4717,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 25,
         "branches": 11,
         "functions": 4
       },
@@ -4447,6 +4732,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 14,
         "branches": 4,
         "functions": 2
       },
@@ -4461,6 +4747,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 37,
         "branches": 2,
         "functions": 2
       },
@@ -4475,6 +4762,7 @@
       "branches": 14,
       "functions": 0,
       "totals": {
+        "lines": 547,
         "branches": 53,
         "functions": 2
       },
@@ -4489,6 +4777,7 @@
       "branches": 11,
       "functions": 6,
       "totals": {
+        "lines": 301,
         "branches": 15,
         "functions": 9
       },
@@ -4503,6 +4792,7 @@
       "branches": 28,
       "functions": 4,
       "totals": {
+        "lines": 528,
         "branches": 57,
         "functions": 13
       },
@@ -4517,6 +4807,7 @@
       "branches": 61,
       "functions": 7,
       "totals": {
+        "lines": 819,
         "branches": 189,
         "functions": 30
       },
@@ -4531,6 +4822,7 @@
       "branches": 37,
       "functions": 6,
       "totals": {
+        "lines": 1118,
         "branches": 122,
         "functions": 32
       },
@@ -4545,6 +4837,7 @@
       "branches": 47,
       "functions": 8,
       "totals": {
+        "lines": 1172,
         "branches": 137,
         "functions": 36
       },
@@ -4559,6 +4852,7 @@
       "branches": 13,
       "functions": 2,
       "totals": {
+        "lines": 239,
         "branches": 25,
         "functions": 7
       },
@@ -4573,6 +4867,7 @@
       "branches": 28,
       "functions": 5,
       "totals": {
+        "lines": 562,
         "branches": 102,
         "functions": 21
       },
@@ -4587,6 +4882,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 73,
         "branches": 3,
         "functions": 1
       },
@@ -4601,6 +4897,7 @@
       "branches": 14,
       "functions": 0,
       "totals": {
+        "lines": 193,
         "branches": 25,
         "functions": 7
       },
@@ -4615,6 +4912,7 @@
       "branches": 0,
       "functions": 2,
       "totals": {
+        "lines": 86,
         "branches": 2,
         "functions": 3
       },
@@ -4629,6 +4927,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 125,
         "branches": 28,
         "functions": 6
       },
@@ -4643,6 +4942,7 @@
       "branches": 0,
       "functions": 4,
       "totals": {
+        "lines": 179,
         "branches": 2,
         "functions": 5
       },
@@ -4657,6 +4957,7 @@
       "branches": 25,
       "functions": 3,
       "totals": {
+        "lines": 327,
         "branches": 51,
         "functions": 19
       },
@@ -4671,6 +4972,7 @@
       "branches": 17,
       "functions": 6,
       "totals": {
+        "lines": 320,
         "branches": 29,
         "functions": 11
       },
@@ -4685,6 +4987,7 @@
       "branches": 0,
       "functions": 3,
       "totals": {
+        "lines": 251,
         "branches": 26,
         "functions": 22
       },
@@ -4699,6 +5002,7 @@
       "branches": 32,
       "functions": 1,
       "totals": {
+        "lines": 479,
         "branches": 72,
         "functions": 15
       },
@@ -4713,6 +5017,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 314,
         "branches": null,
         "functions": null
       },
@@ -4727,6 +5032,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 189,
         "branches": null,
         "functions": null
       },
@@ -4741,6 +5047,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 215,
         "branches": null,
         "functions": null
       },
@@ -4755,6 +5062,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 70,
         "branches": null,
         "functions": null
       },
@@ -4769,6 +5077,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 97,
         "branches": null,
         "functions": null
       },
@@ -4783,6 +5092,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 63,
         "branches": null,
         "functions": null
       },
@@ -4797,6 +5107,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 354,
         "branches": null,
         "functions": null
       },
@@ -4811,6 +5122,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 202,
         "branches": null,
         "functions": null
       },
@@ -4825,6 +5137,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 417,
         "branches": null,
         "functions": null
       },
@@ -4839,6 +5152,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 215,
         "branches": null,
         "functions": null
       },
@@ -4853,6 +5167,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 318,
         "branches": null,
         "functions": null
       },
@@ -4867,6 +5182,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 76,
         "branches": null,
         "functions": null
       },
@@ -4881,6 +5197,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 280,
         "branches": null,
         "functions": null
       },
@@ -4895,6 +5212,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 156,
         "branches": null,
         "functions": null
       },
@@ -4909,6 +5227,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 479,
         "branches": null,
         "functions": null
       },
@@ -4923,6 +5242,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 249,
         "branches": null,
         "functions": null
       },
@@ -4937,6 +5257,7 @@
       "branches": 15,
       "functions": 0,
       "totals": {
+        "lines": 181,
         "branches": 68,
         "functions": 13
       },
@@ -4951,6 +5272,7 @@
       "branches": 0,
       "functions": 2,
       "totals": {
+        "lines": 58,
         "branches": 2,
         "functions": 3
       },
@@ -4965,6 +5287,7 @@
       "branches": 6,
       "functions": 0,
       "totals": {
+        "lines": 184,
         "branches": 50,
         "functions": 6
       },
@@ -4979,6 +5302,7 @@
       "branches": 10,
       "functions": 2,
       "totals": {
+        "lines": 253,
         "branches": 45,
         "functions": 19
       },
@@ -4993,6 +5317,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 105,
         "branches": 5,
         "functions": 3
       },
@@ -5007,6 +5332,7 @@
       "branches": 21,
       "functions": 4,
       "totals": {
+        "lines": 527,
         "branches": 117,
         "functions": 23
       },
@@ -5021,6 +5347,7 @@
       "branches": 37,
       "functions": 4,
       "totals": {
+        "lines": 472,
         "branches": 116,
         "functions": 24
       },
@@ -5035,6 +5362,7 @@
       "branches": 12,
       "functions": 0,
       "totals": {
+        "lines": 247,
         "branches": 75,
         "functions": 12
       },
@@ -5049,6 +5377,7 @@
       "branches": 14,
       "functions": 0,
       "totals": {
+        "lines": 212,
         "branches": 40,
         "functions": 5
       },
@@ -5063,6 +5392,7 @@
       "branches": 2,
       "functions": 1,
       "totals": {
+        "lines": 179,
         "branches": 37,
         "functions": 15
       },
@@ -5077,6 +5407,7 @@
       "branches": 13,
       "functions": 0,
       "totals": {
+        "lines": 214,
         "branches": 33,
         "functions": 9
       },
@@ -5091,6 +5422,7 @@
       "branches": 22,
       "functions": 0,
       "totals": {
+        "lines": 442,
         "branches": 224,
         "functions": 24
       },
@@ -5105,6 +5437,7 @@
       "branches": 2,
       "functions": 0,
       "totals": {
+        "lines": 68,
         "branches": 16,
         "functions": 3
       },
@@ -5119,6 +5452,7 @@
       "branches": 45,
       "functions": 19,
       "totals": {
+        "lines": 1005,
         "branches": 139,
         "functions": 40
       },
@@ -5133,6 +5467,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 151,
         "branches": 9,
         "functions": 2
       },
@@ -5147,6 +5482,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 17,
         "branches": null,
         "functions": null
       },
@@ -5161,6 +5497,7 @@
       "branches": 6,
       "functions": 0,
       "totals": {
+        "lines": 165,
         "branches": 48,
         "functions": 9
       },
@@ -5175,6 +5512,7 @@
       "branches": 20,
       "functions": 9,
       "totals": {
+        "lines": 494,
         "branches": 54,
         "functions": 24
       },
@@ -5189,6 +5527,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 51,
         "branches": 16,
         "functions": 3
       },
@@ -5203,6 +5542,7 @@
       "branches": 3,
       "functions": 1,
       "totals": {
+        "lines": 135,
         "branches": 26,
         "functions": 6
       },
@@ -5217,6 +5557,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 91,
         "branches": null,
         "functions": null
       },
@@ -5231,6 +5572,7 @@
       "branches": 81,
       "functions": 3,
       "totals": {
+        "lines": 2364,
         "branches": 653,
         "functions": 92
       },
@@ -5245,6 +5587,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 1134,
         "branches": null,
         "functions": null
       },
@@ -5259,6 +5602,7 @@
       "branches": 62,
       "functions": 2,
       "totals": {
+        "lines": 800,
         "branches": 261,
         "functions": 36
       },
@@ -5273,6 +5617,7 @@
       "branches": 15,
       "functions": 1,
       "totals": {
+        "lines": 158,
         "branches": 47,
         "functions": 13
       },
@@ -5287,6 +5632,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 146,
         "branches": null,
         "functions": null
       },
@@ -5301,6 +5647,7 @@
       "branches": 81,
       "functions": 27,
       "totals": {
+        "lines": 1301,
         "branches": 216,
         "functions": 99
       },
@@ -5315,6 +5662,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 166,
         "branches": 1,
         "functions": 1
       },
@@ -5329,6 +5677,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 161,
         "branches": 29,
         "functions": 4
       },
@@ -5343,6 +5692,7 @@
       "branches": 17,
       "functions": 2,
       "totals": {
+        "lines": 529,
         "branches": 105,
         "functions": 30
       },
@@ -5357,6 +5707,7 @@
       "branches": 4,
       "functions": 0,
       "totals": {
+        "lines": 66,
         "branches": 29,
         "functions": 6
       },
@@ -5371,6 +5722,7 @@
       "branches": 3,
       "functions": 1,
       "totals": {
+        "lines": 65,
         "branches": 23,
         "functions": 3
       },
@@ -5385,6 +5737,7 @@
       "branches": 44,
       "functions": 3,
       "totals": {
+        "lines": 617,
         "branches": 235,
         "functions": 36
       },
@@ -5399,6 +5752,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 180,
         "branches": 62,
         "functions": 10
       },
@@ -5413,6 +5767,7 @@
       "branches": 10,
       "functions": 0,
       "totals": {
+        "lines": 212,
         "branches": 52,
         "functions": 17
       },
@@ -5427,6 +5782,7 @@
       "branches": 8,
       "functions": 0,
       "totals": {
+        "lines": 96,
         "branches": 41,
         "functions": 6
       },
@@ -5441,6 +5797,7 @@
       "branches": 3,
       "functions": 12,
       "totals": {
+        "lines": 546,
         "branches": 42,
         "functions": 17
       },
@@ -5455,6 +5812,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 43,
         "branches": null,
         "functions": null
       },
@@ -5469,6 +5827,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 36,
         "branches": null,
         "functions": null
       },
@@ -5483,6 +5842,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 78,
         "branches": null,
         "functions": null
       },
@@ -5497,6 +5857,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 25,
         "branches": null,
         "functions": null
       },
@@ -5511,6 +5872,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 32,
         "branches": 9,
         "functions": 3
       },
@@ -5525,6 +5887,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 105,
         "branches": null,
         "functions": null
       },
@@ -5539,6 +5902,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 51,
         "branches": null,
         "functions": null
       },
@@ -5553,6 +5917,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 117,
         "branches": null,
         "functions": null
       },
@@ -5567,6 +5932,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 153,
         "branches": null,
         "functions": null
       },
@@ -5581,6 +5947,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 16,
         "branches": 6,
         "functions": 2
       },
@@ -5595,6 +5962,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 2,
         "branches": null,
         "functions": null
       },
@@ -5609,6 +5977,7 @@
       "branches": 0,
       "functions": 184,
       "totals": {
+        "lines": 5406,
         "branches": 1,
         "functions": 184
       },
@@ -5623,6 +5992,7 @@
       "branches": 6,
       "functions": 14,
       "totals": {
+        "lines": 155,
         "branches": 11,
         "functions": 16
       },
@@ -5637,6 +6007,7 @@
       "branches": 14,
       "functions": 15,
       "totals": {
+        "lines": 185,
         "branches": 35,
         "functions": 23
       },
@@ -5651,6 +6022,7 @@
       "branches": 2,
       "functions": 4,
       "totals": {
+        "lines": 114,
         "branches": 26,
         "functions": 19
       },
@@ -5665,6 +6037,7 @@
       "branches": 12,
       "functions": 0,
       "totals": {
+        "lines": 111,
         "branches": 38,
         "functions": 7
       },
@@ -5679,6 +6052,7 @@
       "branches": 32,
       "functions": 5,
       "totals": {
+        "lines": 254,
         "branches": 59,
         "functions": 8
       },
@@ -5693,6 +6067,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 23,
         "branches": 1,
         "functions": 1
       },
@@ -5707,6 +6082,7 @@
       "branches": 30,
       "functions": 3,
       "totals": {
+        "lines": 260,
         "branches": 54,
         "functions": 12
       },
@@ -5721,6 +6097,7 @@
       "branches": 9,
       "functions": 0,
       "totals": {
+        "lines": 360,
         "branches": 11,
         "functions": 1
       },
@@ -5735,6 +6112,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 157,
         "branches": 1,
         "functions": 1
       },
@@ -5749,6 +6127,7 @@
       "branches": 4,
       "functions": 40,
       "totals": {
+        "lines": 432,
         "branches": 42,
         "functions": 66
       },
@@ -5763,6 +6142,7 @@
       "branches": 5,
       "functions": 2,
       "totals": {
+        "lines": 128,
         "branches": 42,
         "functions": 15
       },
@@ -5777,6 +6157,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 70,
         "branches": 1,
         "functions": 1
       },
@@ -5791,6 +6172,7 @@
       "branches": 5,
       "functions": 4,
       "totals": {
+        "lines": 260,
         "branches": 8,
         "functions": 6
       },
@@ -5805,6 +6187,7 @@
       "branches": 0,
       "functions": 5,
       "totals": {
+        "lines": 213,
         "branches": 1,
         "functions": 5
       },
@@ -5819,6 +6202,7 @@
       "branches": 0,
       "functions": 4,
       "totals": {
+        "lines": 188,
         "branches": 1,
         "functions": 4
       },
@@ -5833,6 +6217,7 @@
       "branches": 19,
       "functions": 2,
       "totals": {
+        "lines": 198,
         "branches": 66,
         "functions": 12
       },
@@ -5847,6 +6232,7 @@
       "branches": 49,
       "functions": 2,
       "totals": {
+        "lines": 254,
         "branches": 70,
         "functions": 9
       },
@@ -5861,6 +6247,7 @@
       "branches": 4,
       "functions": 2,
       "totals": {
+        "lines": 261,
         "branches": 10,
         "functions": 7
       },
@@ -5875,6 +6262,7 @@
       "branches": 12,
       "functions": 2,
       "totals": {
+        "lines": 121,
         "branches": 26,
         "functions": 10
       },
@@ -5889,6 +6277,7 @@
       "branches": 0,
       "functions": 12,
       "totals": {
+        "lines": 138,
         "branches": 19,
         "functions": 25
       },
@@ -5903,6 +6292,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 227,
         "branches": 1,
         "functions": 1
       },
@@ -5917,6 +6307,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 44,
         "branches": 5,
         "functions": 1
       },
@@ -5931,6 +6322,7 @@
       "branches": 1,
       "functions": 4,
       "totals": {
+        "lines": 180,
         "branches": 5,
         "functions": 7
       },
@@ -5945,6 +6337,7 @@
       "branches": 1,
       "functions": 4,
       "totals": {
+        "lines": 155,
         "branches": 10,
         "functions": 5
       },
@@ -5959,6 +6352,7 @@
       "branches": 0,
       "functions": 3,
       "totals": {
+        "lines": 272,
         "branches": 1,
         "functions": 3
       },
@@ -5973,6 +6367,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 50,
         "branches": 28,
         "functions": 11
       },
@@ -5987,6 +6382,7 @@
       "branches": 2,
       "functions": 1,
       "totals": {
+        "lines": 81,
         "branches": 30,
         "functions": 8
       },
@@ -6001,6 +6397,7 @@
       "branches": 21,
       "functions": 1,
       "totals": {
+        "lines": 432,
         "branches": 180,
         "functions": 20
       },
@@ -6015,6 +6412,7 @@
       "branches": 14,
       "functions": 0,
       "totals": {
+        "lines": 306,
         "branches": 79,
         "functions": 10
       },
@@ -6029,6 +6427,7 @@
       "branches": 7,
       "functions": 8,
       "totals": {
+        "lines": 163,
         "branches": 34,
         "functions": 21
       },
@@ -6043,6 +6442,7 @@
       "branches": 6,
       "functions": 0,
       "totals": {
+        "lines": 145,
         "branches": 57,
         "functions": 9
       },
@@ -6057,6 +6457,7 @@
       "branches": 5,
       "functions": 4,
       "totals": {
+        "lines": 88,
         "branches": 37,
         "functions": 12
       },
@@ -6071,6 +6472,7 @@
       "branches": 17,
       "functions": 4,
       "totals": {
+        "lines": 303,
         "branches": 102,
         "functions": 33
       },
@@ -6085,6 +6487,7 @@
       "branches": 10,
       "functions": 6,
       "totals": {
+        "lines": 485,
         "branches": 32,
         "functions": 14
       },
@@ -6099,6 +6502,7 @@
       "branches": 7,
       "functions": 0,
       "totals": {
+        "lines": 44,
         "branches": 17,
         "functions": 2
       },
@@ -6113,6 +6517,7 @@
       "branches": 13,
       "functions": 15,
       "totals": {
+        "lines": 294,
         "branches": 28,
         "functions": 26
       },
@@ -6127,6 +6532,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 78,
         "branches": 13,
         "functions": 2
       },
@@ -6141,6 +6547,7 @@
       "branches": 28,
       "functions": 46,
       "totals": {
+        "lines": 810,
         "branches": 37,
         "functions": 54
       },
@@ -6155,6 +6562,7 @@
       "branches": 3,
       "functions": 3,
       "totals": {
+        "lines": 225,
         "branches": 18,
         "functions": 9
       },
@@ -6169,6 +6577,7 @@
       "branches": 26,
       "functions": 4,
       "totals": {
+        "lines": 367,
         "branches": 28,
         "functions": 5
       },
@@ -6183,6 +6592,7 @@
       "branches": 10,
       "functions": 0,
       "totals": {
+        "lines": 135,
         "branches": 38,
         "functions": 4
       },
@@ -6197,6 +6607,7 @@
       "branches": 4,
       "functions": 1,
       "totals": {
+        "lines": 97,
         "branches": 20,
         "functions": 4
       },
@@ -6211,6 +6622,7 @@
       "branches": 13,
       "functions": 0,
       "totals": {
+        "lines": 265,
         "branches": 76,
         "functions": 15
       },
@@ -6225,6 +6637,7 @@
       "branches": 10,
       "functions": 4,
       "totals": {
+        "lines": 239,
         "branches": 97,
         "functions": 38
       },
@@ -6239,6 +6652,7 @@
       "branches": 6,
       "functions": 1,
       "totals": {
+        "lines": 130,
         "branches": 22,
         "functions": 13
       },
@@ -6253,6 +6667,7 @@
       "branches": 0,
       "functions": 1,
       "totals": {
+        "lines": 177,
         "branches": 1,
         "functions": 1
       },
@@ -6267,6 +6682,7 @@
       "branches": 5,
       "functions": 6,
       "totals": {
+        "lines": 208,
         "branches": 16,
         "functions": 13
       },
@@ -6281,6 +6697,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 2,
         "branches": null,
         "functions": null
       },
@@ -6295,6 +6712,7 @@
       "branches": 2,
       "functions": 2,
       "totals": {
+        "lines": 54,
         "branches": 23,
         "functions": 11
       },
@@ -6309,6 +6727,7 @@
       "branches": 7,
       "functions": 5,
       "totals": {
+        "lines": 235,
         "branches": 75,
         "functions": 21
       },
@@ -6323,18 +6742,14 @@
       "branches": 221,
       "functions": 65,
       "totals": {
+        "lines": 3445,
         "branches": 798,
         "functions": 157
       },
       "sha": "709d9841dcb3581fef061fd8b71a12bb48e1abf80817f5dbe6d8aa2f97fae014",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15",
-      "low": {
-        "lines": 1302,
-        "branches": 219,
-        "functions": 65
-      }
+      "since": "2026-09-15"
     },
     "src/voice/gevRealtime.js": {
       "loaded": true,
@@ -6342,6 +6757,7 @@
       "branches": 126,
       "functions": 25,
       "totals": {
+        "lines": 2734,
         "branches": 618,
         "functions": 133
       },
@@ -6356,6 +6772,7 @@
       "branches": 1,
       "functions": 0,
       "totals": {
+        "lines": 463,
         "branches": 93,
         "functions": 19
       },
@@ -6370,6 +6787,7 @@
       "branches": 5,
       "functions": 0,
       "totals": {
+        "lines": 78,
         "branches": 48,
         "functions": 4
       },
@@ -6384,6 +6802,7 @@
       "branches": 6,
       "functions": 1,
       "totals": {
+        "lines": 83,
         "branches": 38,
         "functions": 8
       },
@@ -6398,6 +6817,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 221,
         "branches": null,
         "functions": null
       },
@@ -6412,6 +6832,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 377,
         "branches": null,
         "functions": null
       },
@@ -6426,6 +6847,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 373,
         "branches": null,
         "functions": null
       },
@@ -6440,6 +6862,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 355,
         "branches": null,
         "functions": null
       },
@@ -6454,6 +6877,7 @@
       "branches": 2,
       "functions": 5,
       "totals": {
+        "lines": 263,
         "branches": 11,
         "functions": 6
       },
@@ -6468,6 +6892,7 @@
       "branches": null,
       "functions": null,
       "totals": {
+        "lines": 377,
         "branches": null,
         "functions": null
       },

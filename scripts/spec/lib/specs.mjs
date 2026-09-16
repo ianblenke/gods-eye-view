@@ -370,6 +370,8 @@ export function loadSpecs(root) {
   const orphans = [];
   const removed = [];
   const changeIds = new Map();
+  // The scenarios of a main requirement that an active change removes. The archive command removes them.
+  const removedIds = new Set();
 
   const collect = (results) => {
     const found = [];
@@ -430,5 +432,17 @@ export function loadSpecs(root) {
     });
   }
 
-  return { scenarios, mainIds, retired, requirements, orphans, changeIds, errors };
+  for (const change of listActiveChanges(root)) {
+    for (const capability of listDirectories(path.join(root, 'openspec/changes', change, 'specs'))) {
+      const file = path.join(root, 'openspec/changes', change, 'specs', capability, 'spec.md');
+      if (!existsSync(file)) continue;
+      const mainFile = `openspec/specs/${capability}/spec.md`;
+      for (const name of readDeltaNames(readFileSync(file, 'utf8')).removed) {
+        for (const item of requirements.filter((entry) => entry.file === mainFile && !entry.removed && entry.name === name)) {
+          for (const scenario of item.scenarios) removedIds.add(scenario.id);
+        }
+      }
+    }
+  }
+  return { scenarios, mainIds, retired, requirements, orphans, changeIds, removedIds, errors };
 }
