@@ -2529,7 +2529,12 @@
       "sha": "16085ee95156cb19e53509a47effb0ed09649df8d29e78be8c66541c38209a66",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15"
+      "since": "2026-09-15",
+      "low": {
+        "lines": 18,
+        "branches": 38,
+        "functions": 6
+      }
     },
     "src/data/localGeojsonLod.js": {
       "loaded": true,
@@ -2561,8 +2566,8 @@
     },
     "src/data/manager.js": {
       "loaded": true,
-      "lines": 134,
-      "branches": 105,
+      "lines": 139,
+      "branches": 107,
       "functions": 15,
       "totals": {
         "branches": 588,
@@ -2571,7 +2576,12 @@
       "sha": "c32c2d1a0cf2caf6bcac8fec2ede72a18493286548117ee42974c29de96e4abd",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15"
+      "since": "2026-09-15",
+      "low": {
+        "lines": 134,
+        "branches": 105,
+        "functions": 15
+      }
     },
     "src/data/meshFloorSampler.js": {
       "loaded": true,
@@ -2795,7 +2805,12 @@
       "sha": "30f65fef022d6f6433e93b38bafb6f42d83fd088a39f88534ba190af5eacfd9b",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15"
+      "since": "2026-09-15",
+      "low": {
+        "lines": 0,
+        "branches": 3,
+        "functions": 0
+      }
     },
     "src/data/telegeographySubmarineCables.js": {
       "loaded": true,
@@ -3933,7 +3948,7 @@
     },
     "src/layers/flights/enrichment.js": {
       "loaded": true,
-      "lines": 91,
+      "lines": 88,
       "branches": 21,
       "functions": 4,
       "totals": {
@@ -3943,7 +3958,12 @@
       "sha": "78ee87cf2d13a6967b6a1091ea9aad01d2a86e18c358839aeb92cdd5eeb06d98",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15"
+      "since": "2026-09-15",
+      "low": {
+        "lines": 83,
+        "branches": 20,
+        "functions": 3
+      }
     },
     "src/layers/flights/evidence.js": {
       "loaded": true,
@@ -6309,7 +6329,12 @@
       "sha": "709d9841dcb3581fef061fd8b71a12bb48e1abf80817f5dbe6d8aa2f97fae014",
       "untrue": false,
       "origin": "pre-spec",
-      "since": "2026-09-15"
+      "since": "2026-09-15",
+      "low": {
+        "lines": 1302,
+        "branches": 219,
+        "functions": 65
+      }
     },
     "src/voice/gevRealtime.js": {
       "loaded": true,
