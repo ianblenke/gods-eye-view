@@ -6,7 +6,20 @@ const FIELDS = [
   ['reviewers', 'Reviewers', /^Reviewers:[ \t]*(\S.*)$/m],
   ['date', 'Date', /^Date:[ \t]*(\d{4}-\d{2}-\d{2})[ \t]*$/m],
   ['gates', 'Gates', /^Gates:[ \t]*(\S.*)$/m],
+  ['rounds', 'Rounds', /^Rounds:[ \t]*(\d+)[ \t]*$/m],
+  ['scope', 'Scope', /^Scope:[ \t]*(\S.*)$/m],
 ];
+// The scope of the last round: the full change, or the diff against the Git commit of the round before.
+const SCOPE_VALUE = /^(full|diff [0-9a-f]{7,40})$/;
+// After three rounds, a person can accept an open finding with the severity minor.
+// The severity is the second word of the finding text, for example "F4 minor The gate ...".
+const ACCEPTED = /\bAccepted by [A-Za-z]/;
+const SEVERITY = /^\S+[ \t]+(\S+)/;
+const SIGN_OFF_ROUNDS = 3;
+const AGENT_SCOPE = [/^## Scope of a round$/m, /limit of three rounds/, /diff since the round/];
+// The review command must name the scope of a round and the round limit in its steps.
+export const REVIEW_COMMAND = '.claude/commands/opsx/review.md';
+const COMMAND_SCOPE = [/^Scope:/m, /^Rounds:/m, /limit of three rounds/, /scope of the round|Find the scope/];
 const TREE = /^Reviewed-Tree:[ \t]*([0-9a-f]{64})[ \t]*$/m;
 const VERDICT = /^Verdict:[ \t]*(\S+)[ \t]*$/gm;
 const AGENT_VERDICT = /^[ \t]*Verdict:.*$/gim;
@@ -118,8 +131,18 @@ function checkReviewFolder(root, directory, change, treeHash) {
   if (review.reviewers && !AGENTS.every((agent) => review.reviewers.split(/[\s,]+/).includes(agent))) {
     error('REVIEW-REVIEWERS', `The "Reviewers:" line must name ${AGENTS.join(' and ')}`);
   }
+  const rounds = Number(review.rounds);
+  if (review.rounds && rounds < 1) error('REVIEW-ROUNDS', 'The "Rounds:" line must have a number of 1 or more');
+  if (review.scope && !SCOPE_VALUE.test(review.scope)) {
+    error('REVIEW-SCOPE', `The "Scope:" line must be "full" or "diff <commit>" with 7 to 40 lowercase hexadecimal characters, not "${review.scope}"`);
+  } else if (rounds === 1 && review.scope !== 'full') {
+    error('REVIEW-SCOPE', 'The first round reads the whole change, so its "Scope:" line must be "full"');
+  }
   for (const finding of review.findings) {
-    if (!finding.checked) error('REVIEW-OPEN-FINDING', `Open finding: ${finding.text}`, { line: finding.line });
+    if (finding.checked) continue;
+    const severity = finding.text.match(SEVERITY)?.[1]?.toLowerCase();
+    if (ACCEPTED.test(finding.text) && severity === 'minor' && rounds >= SIGN_OFF_ROUNDS) continue;
+    error('REVIEW-OPEN-FINDING', `Open finding: ${finding.text}`, { line: finding.line });
   }
   for (const agent of AGENTS) {
     const output = `${directory}/review/${agent}.md`;
@@ -201,6 +224,20 @@ export function checkAgents(root) {
     for (const line of agent.others) {
       error(`${name} has the front matter line "${line}". Use only the keys name, description, tools, model and color.`);
     }
+    if (!AGENT_SCOPE.every((pattern) => pattern.test(agent.prompt))) {
+      error(`${name} does not name the scope of a round and the limit of three rounds`);
+    }
   }
   return errors;
+}
+
+/** Check that the review command names the scope of a round, the two review.md lines and the round limit. */
+export function checkReviewCommand(root) {
+  const command = path.join(root, REVIEW_COMMAND);
+  const error = (message) => [{ code: 'REVIEW-COMMAND', file: REVIEW_COMMAND, message }];
+  if (!existsSync(command)) return error('The review command file is not there');
+  if (!COMMAND_SCOPE.every((pattern) => pattern.test(readFileSync(command, 'utf8')))) {
+    return error('The review command does not name the scope of a round, the two review.md lines and the limit of three rounds');
+  }
+  return [];
 }

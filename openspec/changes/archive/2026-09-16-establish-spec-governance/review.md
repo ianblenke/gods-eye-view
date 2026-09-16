@@ -4,9 +4,11 @@ Verdict: PASS
 Reviewers: spec-adversary, ste-adversary
 Date: 2026-09-16
 Gates: make gates CHANGE=establish-spec-governance passed
+Rounds: 38
+Scope: full
 Reviewed-Tree: cfb2b66b5736c1bf01220330e92cad1f3b6b8cc6c960456436928e54eeb4aa55
 
-Rounds: 38. The output of each round is in `review/round-<n>/`. The output in `review/` is the spec adversary output of round 36 (PASS) and the STE adversary output of round 38 (PASS).
+The output of each round is in `review/round-<n>/`. The output in `review/` is the spec adversary output of round 36 (PASS) and the STE adversary output of round 38 (PASS).
 
 Round 26 passed on the base `d5b09ef`. The branch then moved to the base `3ca81fb`, and the ledger was made again. CI on pull request 1 found a Node 24.14.0 problem, an effect of the local `.env` file, and coverage counts that are different in each CI run. Rounds 29 to 33 reviewed the corrections: the guard skip, the clean copy of `make gates` and the count band. Rounds 34 to 38 reviewed the ranges that the samples of a CI run gave.
 

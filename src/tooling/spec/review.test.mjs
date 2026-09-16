@@ -5,17 +5,21 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  REVIEW_COMMAND,
   changeFolder,
   checkAgents,
   checkChangeNames,
   checkArchivedReviews,
   checkChangeReview,
+  checkReviewCommand,
   computeTreeHash,
   parseReview,
   readAgentDefinition,
 } from '../../../scripts/spec/lib/review.mjs';
 
 const PROJECT_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
+// Each agent file must name the scope of a round and the limit of three rounds.
+const SCOPE_PROMPT = '## Scope of a round\n\nRead the diff since the round before. The review has a limit of three rounds.\n';
 const TREE = 'a'.repeat(64);
 
 const PASSED = [
@@ -25,6 +29,8 @@ const PASSED = [
   'Reviewers: spec-adversary, ste-adversary',
   'Date: 2026-09-13',
   'Gates: make gates CHANGE=add-radio passed',
+  'Rounds: 3',
+  'Scope: diff 1a2b3c4',
   `Reviewed-Tree: ${TREE}`,
   '',
   '## Findings',
@@ -65,10 +71,12 @@ test('[change-review-001] does not stop for a passed review with all the fields,
     reviewers: 'spec-adversary, ste-adversary',
     date: '2026-09-13',
     gates: 'make gates CHANGE=add-radio passed',
+    rounds: '3',
+    scope: 'diff 1a2b3c4',
     tree: TREE,
     findings: [
-      { line: 11, checked: true, text: 'F1 The test for radio-002 did not check the THEN line. Fixed.' },
-      { line: 12, checked: true, text: 'S1 A sentence had 27 words. Fixed.' },
+      { line: 13, checked: true, text: 'F1 The test for radio-002 did not check the THEN line. Fixed.' },
+      { line: 14, checked: true, text: 'S1 A sentence had 27 words. Fixed.' },
     ],
   });
   assert.deepEqual(check(PASSED, undefined, { treeHash: TREE }), []);
@@ -97,15 +105,15 @@ test('[change-review-011] stops for two verdict lines', () => {
 
 test('[change-review-004] stops for an open finding and shows it', () => {
   assert.deepEqual(check(PASSED.replace('- [X] S1', '- [ ] S1')), [
-    { code: 'REVIEW-OPEN-FINDING', file: `${ACTIVE}/review.md`, line: 12, message: 'Open finding: S1 A sentence had 27 words. Fixed.' },
+    { code: 'REVIEW-OPEN-FINDING', file: `${ACTIVE}/review.md`, line: 14, message: 'Open finding: S1 A sentence had 27 words. Fixed.' },
   ]);
 });
 
 test('[change-review-004] stops for an open finding in a list with another list marker', () => {
   const review = PASSED.replace('- [X] S1', '* [ ] S1').replace('- [x] F1', '  2. [ ] F1');
   assert.deepEqual(check(review).map((error) => [error.code, error.line]), [
-    ['REVIEW-OPEN-FINDING', 11],
-    ['REVIEW-OPEN-FINDING', 12],
+    ['REVIEW-OPEN-FINDING', 13],
+    ['REVIEW-OPEN-FINDING', 14],
   ]);
   assert.deepEqual(codes(check(PASSED.replace('- [X] S1', '+ [ ] S1').replace('- [x] F1', '3) [ ] F1'))), ['REVIEW-OPEN-FINDING', 'REVIEW-OPEN-FINDING']);
 });
@@ -246,8 +254,8 @@ test('[change-review-009] does not stop for the STE adversary with read tools', 
 test('[change-review-017] stops for an agent with another tool', () => {
   withRoot(
     {
-      '.claude/agents/spec-adversary.md': '---\nname: spec-adversary\ndescription: Finds gaps\ntools: Read, Bash, *\n---\nReview.\n',
-      '.claude/agents/ste-adversary.md': '---\nname: ste-adversary\ndescription: Checks prose\ntools: Read, Grep, Glob\n---\nReview.\n',
+      '.claude/agents/spec-adversary.md': `---\nname: spec-adversary\ndescription: Finds gaps\ntools: Read, Bash, *\n---\n${SCOPE_PROMPT}`,
+      '.claude/agents/ste-adversary.md': `---\nname: ste-adversary\ndescription: Checks prose\ntools: Read, Grep, Glob\n---\n${SCOPE_PROMPT}`,
     },
     (root) => {
       assert.deepEqual(checkAgents(root).map((error) => error.message), [
@@ -261,7 +269,7 @@ test('[change-review-017] stops for an agent with another tool', () => {
 test('[change-review-021] stops for a review agent file that is not complete', () => {
   withRoot(
     {
-      '.claude/agents/spec-adversary.md': '---\nname: spec-adversary\ndescription: Finds gaps\n---\nReview with all tools.\n',
+      '.claude/agents/spec-adversary.md': `---\nname: spec-adversary\ndescription: Finds gaps\n---\n${SCOPE_PROMPT}`,
       '.claude/agents/ste-adversary.md': 'No front matter here.\n',
     },
     (root) => {
@@ -270,6 +278,7 @@ test('[change-review-021] stops for a review agent file that is not complete', (
         ['REVIEW-AGENT', '.claude/agents/ste-adversary.md', 'ste-adversary has no name'],
         ['REVIEW-AGENT', '.claude/agents/ste-adversary.md', 'ste-adversary has no description'],
         ['REVIEW-AGENT', '.claude/agents/ste-adversary.md', 'ste-adversary has no tools'],
+        ['REVIEW-AGENT', '.claude/agents/ste-adversary.md', 'ste-adversary does not name the scope of a round and the limit of three rounds'],
       ]);
       assert.equal(readAgentDefinition(path.join(root, '.claude/agents/ste-adversary.md')).prompt, '');
     },
@@ -281,8 +290,8 @@ test('[change-review-023] stops for a review agent file with other front matter 
   const hooks = ['hooks:', '  PreToolUse:', '    - matcher: Read', 'mcpServers:', '  - files', 'skills: review'].join('\n');
   withRoot(
     {
-      '.claude/agents/spec-adversary.md': `---\nname: spec-adversary\ndescription: Finds gaps\ntools: Read, Grep, Glob\n${hooks}\n---\nReview.\n`,
-      '.claude/agents/ste-adversary.md': '---\nname: ste-adversary\ndescription: Checks prose\ntools: Read, Grep, Glob\nmodel: opus\ncolor: blue\n\n---\nReview.\n',
+      '.claude/agents/spec-adversary.md': `---\nname: spec-adversary\ndescription: Finds gaps\ntools: Read, Grep, Glob\n${hooks}\n---\n${SCOPE_PROMPT}`,
+      '.claude/agents/ste-adversary.md': `---\nname: ste-adversary\ndescription: Checks prose\ntools: Read, Grep, Glob\nmodel: opus\ncolor: blue\n\n---\n${SCOPE_PROMPT}`,
     },
     (root) => {
       assert.deepEqual(checkAgents(root).map((error) => [error.file, error.message]), [
@@ -296,4 +305,105 @@ test('[change-review-023] stops for a review agent file with other front matter 
       assert.deepEqual(readAgentDefinition(path.join(root, '.claude/agents/ste-adversary.md')).others, []);
     },
   );
+});
+
+test('[change-review-024] stops for a review file without a rounds line or a scope line', () => {
+  assert.deepEqual(check(PASSED.replace(/^Rounds:.*\n/m, '')).map((error) => [error.code, error.message]), [['REVIEW-FIELD', 'review.md has no "Rounds:" line']]);
+  assert.deepEqual(check(PASSED.replace(/^Scope:.*\n/m, '')).map((error) => [error.code, error.message]), [['REVIEW-FIELD', 'review.md has no "Scope:" line']]);
+});
+
+test('[change-review-025] does not stop for a correct scope line', () => {
+  assert.deepEqual(parseReview(PASSED).scope, 'diff 1a2b3c4');
+  assert.deepEqual(parseReview(PASSED.replace('Scope: diff 1a2b3c4', 'Scope: full')).scope, 'full');
+  assert.deepEqual(check(PASSED.replace('Scope: diff 1a2b3c4', 'Scope: full')), []);
+  assert.deepEqual(check(PASSED.replace('Scope: diff 1a2b3c4', `Scope: diff ${'0'.repeat(40)}`)), []);
+});
+
+test('[change-review-029] stops for a scope line that the gate does not accept', () => {
+  for (const bad of ['Scope: diff 12345', 'Scope: diff zzzzzzz', 'Scope: diff A1B2C3D', 'Scope: partial', 'Scope: diff', `Scope: diff ${'0'.repeat(41)}`]) {
+    assert.deepEqual(
+      check(PASSED.replace('Scope: diff 1a2b3c4', bad)).map((error) => [error.code, error.message]),
+      [['REVIEW-SCOPE', `The "Scope:" line must be "full" or "diff <commit>" with 7 to 40 lowercase hexadecimal characters, not "${bad.slice('Scope: '.length)}"`]],
+      bad,
+    );
+  }
+});
+
+test('[change-review-030] stops for a first round with a scope that is not the full change', () => {
+  const first = PASSED.replace('Rounds: 3', 'Rounds: 1');
+  assert.deepEqual(check(first).map((error) => [error.code, error.message]), [
+    ['REVIEW-SCOPE', 'The first round reads the whole change, so its "Scope:" line must be "full"'],
+  ]);
+  assert.deepEqual(check(first.replace('Scope: diff 1a2b3c4', 'Scope: full')), []);
+  assert.deepEqual(check(PASSED.replace('Rounds: 3', 'Rounds: 2')), []);
+});
+
+test('[change-review-031] stops for a rounds line with a number less than 1', () => {
+  assert.deepEqual(check(PASSED.replace('Rounds: 3', 'Rounds: 0')).map((error) => [error.code, error.message]), [
+    ['REVIEW-ROUNDS', 'The "Rounds:" line must have a number of 1 or more'],
+  ]);
+});
+
+test('[change-review-026] does not stop for an open finding that a person accepts after three rounds', () => {
+  const accepted = PASSED.replace('- [x] F1 The test for radio-002 did not check the THEN line. Fixed.', '- [ ] F1 minor The gate reads no worker thread. Accepted by Ian Blenke.');
+  assert.deepEqual(check(accepted), []);
+  assert.deepEqual(parseReview(accepted).findings[0], { line: 13, checked: false, text: 'F1 minor The gate reads no worker thread. Accepted by Ian Blenke.' });
+  assert.deepEqual(check(accepted.replace('Rounds: 3', 'Rounds: 4')), []);
+});
+
+test('[change-review-028] stops for an open finding that a person accepts before three rounds or without the severity minor', () => {
+  const accepted = PASSED.replace('- [x] F1 The test for radio-002 did not check the THEN line. Fixed.', '- [ ] F1 minor The gate reads no worker thread. Accepted by Ian Blenke.');
+  assert.deepEqual(check(accepted.replace('Rounds: 3', 'Rounds: 2')).map((error) => [error.code, error.message]), [
+    ['REVIEW-OPEN-FINDING', 'Open finding: F1 minor The gate reads no worker thread. Accepted by Ian Blenke.'],
+  ]);
+  const major = PASSED.replace('- [x] F1 The test for radio-002 did not check the THEN line. Fixed.', '- [ ] F1 major A test hides a gap. Accepted by Ian Blenke.');
+  assert.deepEqual(codes(check(major)), ['REVIEW-OPEN-FINDING']);
+  const critical = PASSED.replace('- [x] F1 The test for radio-002 did not check the THEN line. Fixed.', '- [ ] F1 critical A test hides a gap. This is not a minor problem. Accepted by Ian Blenke.');
+  assert.deepEqual(codes(check(critical)), ['REVIEW-OPEN-FINDING']);
+  const noSeverity = PASSED.replace('- [x] F1 The test for radio-002 did not check the THEN line. Fixed.', '- [ ] A test hides a gap. Accepted by Ian Blenke.');
+  assert.deepEqual(codes(check(noSeverity)), ['REVIEW-OPEN-FINDING']);
+  const upper = PASSED.replace('- [x] F1 The test for radio-002 did not check the THEN line. Fixed.', '- [ ] F1 Minor The gate reads no worker thread. Accepted by Ian Blenke.');
+  assert.deepEqual(check(upper), []);
+  const noName = PASSED.replace('- [x] F1 The test for radio-002 did not check the THEN line. Fixed.', '- [ ] F1 minor The gate reads no worker thread. Accepted by .');
+  assert.deepEqual(codes(check(noName)), ['REVIEW-OPEN-FINDING']);
+  const first = accepted.replace('Rounds: 3', 'Rounds: 1').replace('Scope: diff 1a2b3c4', 'Scope: full');
+  assert.deepEqual(codes(check(first)), ['REVIEW-OPEN-FINDING']);
+});
+
+test('[change-review-027] stops for an agent file without the scope rules', () => {
+  const full = (name, extra) => `---\nname: ${name}\ndescription: Finds gaps\ntools: Read, Grep, Glob\n---\nReview.\n${extra}`;
+  withRoot(
+    {
+      '.claude/agents/spec-adversary.md': full('spec-adversary', SCOPE_PROMPT),
+      '.claude/agents/ste-adversary.md': full('ste-adversary', '## Scope\n\nRead the diff since the round before. The review has a limit of three rounds.\n'),
+    },
+    (root) => {
+      assert.deepEqual(checkAgents(root).map((error) => error.message), ['ste-adversary does not name the scope of a round and the limit of three rounds']);
+    },
+  );
+  withRoot(
+    {
+      '.claude/agents/spec-adversary.md': full('spec-adversary', '## Scope of a round\n\nRead the diff since the round before.\n'),
+      '.claude/agents/ste-adversary.md': full('ste-adversary', '## Scope of a round\n\nThe review has a limit of three rounds.\n'),
+    },
+    (root) => {
+      assert.deepEqual(checkAgents(root).map((error) => error.file), ['.claude/agents/spec-adversary.md', '.claude/agents/ste-adversary.md']);
+    },
+  );
+  assert.deepEqual(checkAgents(PROJECT_ROOT), []);
+});
+
+test('[change-review-032] stops for a review command without the scope rules', () => {
+  withRoot({}, (root) => {
+    assert.deepEqual(checkReviewCommand(root), [{ code: 'REVIEW-COMMAND', file: REVIEW_COMMAND, message: 'The review command file is not there' }]);
+  });
+  const message = 'The review command does not name the scope of a round, the two review.md lines and the limit of three rounds';
+  const good = '5. Find the scope of the round.\n\n```\nRounds: <n>\nScope: full\n```\n\nThe review has a limit of three rounds.\n';
+  withRoot({ [REVIEW_COMMAND]: good }, (root) => assert.deepEqual(checkReviewCommand(root), []));
+  for (const bad of [good.replace('5. Find the scope of the round.\n', ''), good.replace('Rounds: <n>\n', ''), good.replace('Scope: full\n', ''), good.replace('The review has a limit of three rounds.\n', '')]) {
+    withRoot({ [REVIEW_COMMAND]: bad }, (root) => {
+      assert.deepEqual(checkReviewCommand(root).map((error) => [error.code, error.message]), [['REVIEW-COMMAND', message]], bad);
+    });
+  }
+  assert.deepEqual(checkReviewCommand(PROJECT_ROOT), []);
 });
