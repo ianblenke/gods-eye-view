@@ -133,7 +133,7 @@ The gate uses no band for a changed file, a new gap, a file that no test loads o
 
 ### Unstable coverage
 
-Some old tests read the clock, so two runs on the same tree can give different counts. Runs on 2026-09-13 and 2026-09-14 found this for six files. Runs on the base `3ca81fb` found it for two files.
+Some old tests read the clock, so two runs on the same tree can give different counts. Runs on 2026-09-13 and 2026-09-14 found this for six files. Runs on the current tree, with samples from the local runs and from one CI run, found it for seven files. For two of them, the range of the runs was above the width limit. The author wrote a lower high count for each of them and corrected the two history lines by hand. The CI job does not keep samples, so the author made them from the lcov report and the guard results of the CI run.
 
 Each gate run keeps the counts and the content hash of each code file in `.gev-cache/spec-samples.jsonl`. A sample does not record the test files of its run. Thus the author removes the kept samples before the stability command runs on a new base.
 
