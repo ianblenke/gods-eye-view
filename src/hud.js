@@ -3,7 +3,7 @@
  * @description Intelligence HUD Overlay — NRO/NGA Satellite Aesthetic.
  *
  * Renders authentic reconnaissance metadata over the Cesium canvas:
- * classification banners, live MGRS/lat-lon coordinates, sensor metrics
+ * live MGRS/lat-lon coordinates, sensor metrics
  * (GSD, NIIRS, ONA), timestamps, and orbital data — all updating in
  * real-time at configurable cadences.
  *
@@ -56,7 +56,7 @@ const NEARBY_POINTS = Object.values(CITY_POIS)
 /**
  * Full-screen intelligence HUD overlay rendered on top of the Cesium canvas.
  *
- * Displays classification banners, MGRS/lat-lon readouts, sensor metrics
+ * Displays MGRS/lat-lon readouts, sensor metrics
  * (GSD, NIIRS, off-nadir angle), sun elevation, orbital metadata, and a
  * rolling semantic summary line. All values derive from the live camera
  * position and update on independent timer cadences.
@@ -137,8 +137,8 @@ export class IntelHUD {
 
   /**
    * Construct the HUD DOM structure inside the existing `#intel-hud` element.
-   * Populates corner brackets, classification banners, sensor readouts,
-   * edge metadata strips, and the bottom summary bar.
+   * Populates corner brackets, sensor readouts, edge metadata strips,
+   * and the bottom summary bar.
    */
   _buildDOM() {
     this._el = document.getElementById('intel-hud');
@@ -146,7 +146,7 @@ export class IntelHUD {
 
     this._el.innerHTML = `
       <div class="hud-top-bar">
-        <span class="hud-top-bar-left">TOP SECRET // SI-TK // NOFORN</span>
+        <span class="hud-top-bar-left"></span>
         <span class="hud-top-bar-center">${this._missionId}</span>
         <span class="hud-top-bar-right">PAGE 1/1</span>
       </div>
@@ -154,7 +154,6 @@ export class IntelHUD {
       <div class="hud-corner hud-top-left">
         <div class="hud-bracket">┌</div>
         <div class="hud-content">
-          <div class="hud-classification">TOP SECRET // SI-TK // NOFORN</div>
           <div class="hud-system">${this._missionId}  ${this._sensorId}</div>
           <div class="hud-mode" id="hud-mode">NORMAL</div>
           <div class="hud-summary-wrap">
