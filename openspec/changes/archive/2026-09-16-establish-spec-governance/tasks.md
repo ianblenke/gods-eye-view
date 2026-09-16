@@ -1,0 +1,303 @@
+## 1. Spec parser and spec lint
+
+- [x] 1.1 Write the test for `spec-trace-001`.
+- [x] 1.2 Write the test for `spec-trace-002`.
+- [x] 1.3 Write the test for `spec-trace-003`.
+- [x] 1.4 Write the test for `spec-trace-004`.
+- [x] 1.5 Write the test for `spec-trace-005`.
+- [x] 1.6 Write the test for `spec-trace-006`.
+- [x] 1.7 Write the test for `spec-trace-018`.
+- [x] 1.8 Write the test for `spec-trace-019`.
+- [x] 1.9 Write the test for `spec-trace-038`.
+- [x] 1.10 Write the test for `spec-lint-010`.
+- [x] 1.11 Write the test for `spec-lint-012`.
+- [x] 1.12 Write the test for `spec-lint-013`.
+- [x] 1.13 Write the test for `spec-lint-014`.
+- [x] 1.14 Write the test for `spec-lint-015`.
+- [x] 1.15 Write the test for `spec-lint-016`.
+- [x] 1.16 Write the test for `spec-lint-017`.
+- [x] 1.17 Write the test for `spec-trace-047`.
+- [x] 1.18 Write the test for `spec-trace-048`.
+- [x] 1.19 Write the test for `spec-trace-049`.
+- [x] 1.20 Write the test for `spec-trace-050`.
+- [x] 1.21 Write the test for `spec-trace-051`.
+- [x] 1.22 Write the test for `spec-trace-052`.
+- [x] 1.23 Write the test for `spec-trace-053`.
+- [x] 1.24 Write `scripts/spec/lib/specs.mjs` until its tests pass.
+- [x] 1.25 Write the test for `spec-lint-001`.
+- [x] 1.26 Write the test for `spec-lint-002`.
+- [x] 1.27 Write the test for `spec-lint-003`.
+- [x] 1.28 Write the test for `spec-lint-004`.
+- [x] 1.29 Write the test for `spec-lint-005`.
+- [x] 1.30 Write the test for `spec-lint-006`.
+- [x] 1.31 Write the test for `spec-lint-007`.
+- [x] 1.32 Write the test for `spec-lint-008`.
+- [x] 1.33 Write the test for `spec-lint-009`.
+- [x] 1.34 Write the test for `spec-lint-011`.
+- [x] 1.35 Write `scripts/spec/lib/spec-lint.mjs` until its tests pass.
+- [x] 1.36 Write the test for `spec-lint-018`.
+- [x] 1.37 Write the test for `spec-lint-019`.
+- [x] 1.38 Write the test for `spec-lint-020`.
+- [x] 1.39 Add `@fission-ai/openspec` to `package.json`.
+- [x] 1.40 Write `scripts/spec/lib/openspec.mjs` until its tests pass.
+
+## 2. Trace reporter, trace gate and ID registry
+
+- [x] 2.1 Write the test for `spec-trace-007`.
+- [x] 2.2 Write the test for `spec-trace-008`.
+- [x] 2.3 Write the test for `spec-trace-020`.
+- [x] 2.4 Write the test for `spec-trace-021`.
+- [x] 2.5 Write the test for `spec-trace-044`.
+- [x] 2.6 Write `scripts/spec/lib/trace-reporter.mjs` until its tests pass.
+- [x] 2.7 Write the test for `spec-trace-009`.
+- [x] 2.8 Write the test for `spec-trace-010`.
+- [x] 2.9 Write the test for `spec-trace-011`.
+- [x] 2.10 Write the test for `spec-trace-012`.
+- [x] 2.11 Write the test for `spec-trace-013`.
+- [x] 2.12 Write the test for `spec-trace-014`.
+- [x] 2.13 Write the test for `spec-trace-015`.
+- [x] 2.14 Write the test for `spec-trace-016`.
+- [x] 2.15 Write the test for `spec-trace-017`.
+- [x] 2.16 Write the test for `spec-trace-022`.
+- [x] 2.17 Write the test for `spec-trace-023`.
+- [x] 2.18 Write the test for `spec-trace-024`.
+- [x] 2.19 Write the test for `spec-trace-025`.
+- [x] 2.20 Write the test for `spec-trace-026`.
+- [x] 2.21 Write the test for `spec-trace-027`.
+- [x] 2.22 Write the test for `spec-trace-028`.
+- [x] 2.23 Write the test for `spec-trace-034`.
+- [x] 2.24 Write the test for `spec-trace-039`.
+- [x] 2.25 Write the test for `spec-trace-040`.
+- [x] 2.26 Write `scripts/spec/lib/trace.mjs` until its tests pass.
+- [x] 2.27 Write the test for `spec-trace-029`.
+- [x] 2.28 Write the test for `spec-trace-030`.
+- [x] 2.29 Write the test for `spec-trace-031`.
+- [x] 2.30 Write the test for `spec-trace-032`.
+- [x] 2.31 Write the test for `spec-trace-033`.
+- [x] 2.32 Write the test for `spec-trace-035`.
+- [x] 2.33 Write the test for `spec-trace-036`.
+- [x] 2.34 Write the test for `spec-trace-037`.
+- [x] 2.35 Write the test for `spec-trace-041`.
+- [x] 2.36 Write the test for `spec-trace-042`.
+- [x] 2.37 Write the test for `spec-trace-043`.
+- [x] 2.38 Write the test for `spec-trace-045`.
+- [x] 2.39 Write the test for `spec-trace-046`.
+- [x] 2.40 Write `scripts/spec/lib/registry.mjs` until its tests pass.
+
+## 3. Inventory, coverage, test guard and test runs
+
+- [x] 3.1 Write the test for `coverage-gate-001`.
+- [x] 3.2 Write the test for `coverage-gate-002`.
+- [x] 3.3 Write the test for `coverage-gate-010`.
+- [x] 3.4 Write the test for `coverage-gate-011`.
+- [x] 3.5 Write the test for `coverage-gate-029`.
+- [x] 3.6 Write `scripts/spec/lib/inventory.mjs` until its tests pass.
+- [x] 3.7 Write the test for `coverage-gate-004`.
+- [x] 3.8 Write the test for `coverage-gate-005`.
+- [x] 3.9 Write the test for `coverage-gate-006`.
+- [x] 3.10 Write the test for `coverage-gate-008`.
+- [x] 3.11 Write the test for `coverage-gate-012`.
+- [x] 3.12 Write the test for `coverage-gate-013`.
+- [x] 3.13 Write the test for `coverage-gate-014`.
+- [x] 3.14 Write the test for `coverage-gate-017`.
+- [x] 3.15 Write the test for `coverage-gate-021`.
+- [x] 3.16 Write the test for `coverage-gate-024`.
+- [x] 3.17 Write the test for `coverage-gate-041`.
+- [x] 3.18 Write the test for `coverage-gate-042`.
+- [x] 3.19 Write the test for `coverage-gate-043`.
+- [x] 3.20 Write the test for `coverage-gate-044`.
+- [x] 3.21 Write `scripts/spec/lib/coverage.mjs` until its tests pass.
+- [x] 3.22 Write the test for `coverage-gate-015`.
+- [x] 3.23 Write the test for `coverage-gate-018`.
+- [x] 3.24 Write the test for `coverage-gate-019`.
+- [x] 3.25 Write the test for `coverage-gate-020`.
+- [x] 3.26 Write the test for `coverage-gate-025`.
+- [x] 3.27 Write the test for `coverage-gate-027`.
+- [x] 3.28 Write the test for `coverage-gate-028`.
+- [x] 3.29 Write the test for `coverage-gate-031`.
+- [x] 3.30 Write the test for `coverage-gate-032`.
+- [x] 3.31 Write the test for `coverage-gate-033`.
+- [x] 3.32 Write the test for `coverage-gate-036`.
+- [x] 3.33 Write the test for `coverage-gate-037`.
+- [x] 3.34 Write the test for `coverage-gate-038`.
+- [x] 3.35 Write the test for `coverage-gate-039`.
+- [x] 3.36 Write the test for `coverage-gate-040`.
+- [x] 3.37 Write the test for `coverage-gate-045`.
+- [x] 3.38 Write the test for `coverage-gate-046`.
+- [x] 3.39 Write `scripts/spec/lib/test-guard.mjs` until its tests pass.
+- [x] 3.40 Write the test for `coverage-gate-022`.
+- [x] 3.41 Write `scripts/spec/lib/run-parallel.mjs` until its tests pass.
+
+## 4. Gap ledger and base comparison
+
+- [x] 4.1 Write the test for `gap-ledger-030`.
+- [x] 4.2 Write the test for `gap-ledger-046`.
+- [x] 4.3 Write `scripts/spec/lib/git.mjs` until its tests pass.
+- [x] 4.4 Write the test for `gap-ledger-001`.
+- [x] 4.5 Write the test for `gap-ledger-002`.
+- [x] 4.6 Write the test for `gap-ledger-003`.
+- [x] 4.7 Write the test for `gap-ledger-004`.
+- [x] 4.8 Write the test for `gap-ledger-005`.
+- [x] 4.9 Write the test for `gap-ledger-006`.
+- [x] 4.10 Write the test for `gap-ledger-007`.
+- [x] 4.11 Write the test for `gap-ledger-008`.
+- [x] 4.12 Write the test for `gap-ledger-009`.
+- [x] 4.13 Write the test for `gap-ledger-010`.
+- [x] 4.14 Write the test for `gap-ledger-011`.
+- [x] 4.15 Write the test for `gap-ledger-012`.
+- [x] 4.16 Write the test for `gap-ledger-013`.
+- [x] 4.17 Write the test for `gap-ledger-014`.
+- [x] 4.18 Write the test for `gap-ledger-015`.
+- [x] 4.19 Write the test for `gap-ledger-016`.
+- [x] 4.20 Write the test for `gap-ledger-017`.
+- [x] 4.21 Write the test for `gap-ledger-018`.
+- [x] 4.22 Write the test for `gap-ledger-019`.
+- [x] 4.23 Write the test for `gap-ledger-020`.
+- [x] 4.24 Write the test for `gap-ledger-021`.
+- [x] 4.25 Write the test for `gap-ledger-022`.
+- [x] 4.26 Write the test for `gap-ledger-023`.
+- [x] 4.27 Write the test for `gap-ledger-024`.
+- [x] 4.28 Write the test for `gap-ledger-025`.
+- [x] 4.29 Write the test for `gap-ledger-026`.
+- [x] 4.30 Write the test for `gap-ledger-027`.
+- [x] 4.31 Write the test for `gap-ledger-028`.
+- [x] 4.32 Write the test for `gap-ledger-029`.
+- [x] 4.33 Write the test for `gap-ledger-031`.
+- [x] 4.34 Write the test for `gap-ledger-032`.
+- [x] 4.35 Write the test for `gap-ledger-033`.
+- [x] 4.36 Write the test for `gap-ledger-034`.
+- [x] 4.37 Write the test for `gap-ledger-035`.
+- [x] 4.38 Write the test for `gap-ledger-036`.
+- [x] 4.39 Write the test for `gap-ledger-037`.
+- [x] 4.40 Write the test for `gap-ledger-038`.
+- [x] 4.41 Write the test for `gap-ledger-039`.
+- [x] 4.42 Write the test for `gap-ledger-040`.
+- [x] 4.43 Write the test for `gap-ledger-041`.
+- [x] 4.44 Write the test for `gap-ledger-042`.
+- [x] 4.45 Write the test for `gap-ledger-043`.
+- [x] 4.46 Write the test for `gap-ledger-045`.
+- [x] 4.47 Write the test for `gap-ledger-047`.
+- [x] 4.48 Write the test for `gap-ledger-048`.
+- [x] 4.49 Write the test for `gap-ledger-049`.
+- [x] 4.50 Write the test for `gap-ledger-050`.
+- [x] 4.51 Write the test for `gap-ledger-051`.
+- [x] 4.52 Write the test for `gap-ledger-052`.
+- [x] 4.53 Write the test for `gap-ledger-054`.
+- [x] 4.54 Write the test for `gap-ledger-055`.
+- [x] 4.55 Write the test for `gap-ledger-056`.
+- [x] 4.56 Write the test for `gap-ledger-057`.
+- [x] 4.57 Write the test for `gap-ledger-058`.
+- [x] 4.58 Write the test for `gap-ledger-059`.
+- [x] 4.59 Write the test for `gap-ledger-060`.
+- [x] 4.60 Write the test for `gap-ledger-061`.
+- [x] 4.61 Write the test for `gap-ledger-062`.
+- [x] 4.62 Write the test for `gap-ledger-063`.
+- [x] 4.63 Write the test for `gap-ledger-064`.
+- [x] 4.64 Write the test for `gap-ledger-065`.
+- [x] 4.65 Write the test for `gap-ledger-066`.
+- [x] 4.66 Write the test for `gap-ledger-067`.
+- [x] 4.67 Write the test for `gap-ledger-068`.
+- [x] 4.68 Write `scripts/spec/lib/ledger.mjs` until its tests pass.
+
+## 5. STE lint
+
+- [x] 5.1 Write the test for `ste-lint-001`.
+- [x] 5.2 Write the test for `ste-lint-002`.
+- [x] 5.3 Write the test for `ste-lint-003`.
+- [x] 5.4 Write the test for `ste-lint-004`.
+- [x] 5.5 Write the test for `ste-lint-005`.
+- [x] 5.6 Write the test for `ste-lint-006`.
+- [x] 5.7 Write the test for `ste-lint-007`.
+- [x] 5.8 Write the test for `ste-lint-008`.
+- [x] 5.9 Write the test for `ste-lint-009`.
+- [x] 5.10 Write the test for `ste-lint-010`.
+- [x] 5.11 Write the test for `ste-lint-011`.
+- [x] 5.12 Write the test for `ste-lint-012`.
+- [x] 5.13 Write the test for `ste-lint-013`.
+- [x] 5.14 Write the test for `ste-lint-014`.
+- [x] 5.15 Write the test for `ste-lint-015`.
+- [x] 5.16 Write the test for `ste-lint-016`.
+- [x] 5.17 Write the test for `ste-lint-017`.
+- [x] 5.18 Write the test for `ste-lint-018`.
+- [x] 5.19 Write the test for `ste-lint-019`.
+- [x] 5.20 Write `scripts/spec/lib/ste.mjs` until its tests pass.
+- [x] 5.21 Write `openspec/ste/words.json` until its tests pass.
+
+## 6. Review gate and agents
+
+- [x] 6.1 Write the test for `change-review-001`.
+- [x] 6.2 Write the test for `change-review-002`.
+- [x] 6.3 Write the test for `change-review-003`.
+- [x] 6.4 Write the test for `change-review-004`.
+- [x] 6.5 Write the test for `change-review-005`.
+- [x] 6.6 Write the test for `change-review-006`.
+- [x] 6.7 Write the test for `change-review-007`.
+- [x] 6.8 Write the test for `change-review-008`.
+- [x] 6.9 Write the test for `change-review-009`.
+- [x] 6.10 Write the test for `change-review-010`.
+- [x] 6.11 Write the test for `change-review-011`.
+- [x] 6.12 Write the test for `change-review-012`.
+- [x] 6.13 Write the test for `change-review-013`.
+- [x] 6.14 Write the test for `change-review-014`.
+- [x] 6.15 Write the test for `change-review-015`.
+- [x] 6.16 Write the test for `change-review-016`.
+- [x] 6.17 Write the test for `change-review-017`.
+- [x] 6.18 Write the test for `change-review-018`.
+- [x] 6.19 Write the test for `change-review-019`.
+- [x] 6.20 Write the test for `change-review-020`.
+- [x] 6.21 Write the test for `change-review-021`.
+- [x] 6.22 Write the test for `change-review-022`.
+- [x] 6.23 Write the test for `change-review-023`.
+- [x] 6.24 Write `scripts/spec/lib/review.mjs` until its tests pass.
+- [x] 6.25 Write `.claude/agents/spec-adversary.md` until its tests pass.
+- [x] 6.26 Write `.claude/agents/ste-adversary.md` until its tests pass.
+
+## 7. CI command, gate command and build files
+
+- [x] 7.1 Write the test for `ci-gates-001`.
+- [x] 7.2 Write the test for `ci-gates-002`.
+- [x] 7.3 Write the test for `ci-gates-003`.
+- [x] 7.4 Write the test for `ci-gates-004`.
+- [x] 7.5 Write the test for `ci-gates-005`.
+- [x] 7.6 Write the test for `ci-gates-010`.
+- [x] 7.7 Write `scripts/spec/lib/ci.mjs` until its tests pass.
+- [x] 7.8 Write the test for `ci-gates-006`.
+- [x] 7.9 Write the test for `ci-gates-007`.
+- [x] 7.10 Write the test for `ci-gates-008`.
+- [x] 7.11 Write `.github/workflows/ci.yml` until its tests pass.
+- [x] 7.12 Write the test for `coverage-gate-003`.
+- [x] 7.13 Write the test for `coverage-gate-007`.
+- [x] 7.14 Write the test for `coverage-gate-016`.
+- [x] 7.15 Write the test for `coverage-gate-023`.
+- [x] 7.16 Write the test for `coverage-gate-026`.
+- [x] 7.17 Write the test for `coverage-gate-030`.
+- [x] 7.18 Write the test for `ci-gates-009`.
+- [x] 7.19 Write the test for `coverage-gate-034`.
+- [x] 7.20 Write the test for `gap-ledger-053`.
+- [x] 7.21 Write the test for `coverage-gate-035`.
+- [x] 7.22 Write the test for `spec-lint-021`.
+- [x] 7.23 Write the test for `spec-lint-022`.
+- [x] 7.24 Write the test for `coverage-gate-047`.
+- [x] 7.25 Write `scripts/spec/gates.mjs` until its tests pass.
+- [x] 7.26 Write `Makefile`, `Dockerfile` and `.node-version` until their tests pass.
+
+## 8. Process files
+
+- [x] 8.1 Write `AGENTS.md` with the spec-first process.
+- [x] 8.2 Write `.claude/commands/opsx/review.md`.
+- [x] 8.3 Add the gate scripts to `package.json`.
+
+## 9. Gates and adversarial review
+
+- [x] 9.1 Run `make gates-init` to make the first ledger.
+- [x] 9.2 Run `make stability CHANGE=establish-spec-governance` to record the files with unstable coverage.
+- [x] 9.3 Run `make ratchet CHANGE=establish-spec-governance` to write the registry and the links.
+- [x] 9.4 Run `make gates CHANGE=establish-spec-governance` until the only errors are review errors.
+- [x] 9.5 Run `openspec archive establish-spec-governance`.
+- [x] 9.6 Replace each TBD purpose line.
+- [x] 9.7 Run the spec adversary and the STE adversary on the archived change.
+- [x] 9.8 Save the agent output in the `review` folder.
+- [x] 9.9 Correct each critical finding and each major finding.
+- [x] 9.10 Record a decision for each minor finding in `review.md`.
+- [x] 9.11 Write `review.md` with the verdict, the reviewers, the date, the gate result and the tree hash.
+- [x] 9.12 Run `make gates CHANGE=establish-spec-governance` until all gates pass.

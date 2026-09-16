@@ -1,0 +1,20 @@
+Verdict: FAIL
+- [ ] S132 openspec/changes/archive/2026-09-14-establish-spec-governance/proposal.md:70 "HTML code with a less common syntax gets no count." Approved words. As I know it, the approved STE meaning of "common" is "that two or more things have or use", as in "a common return line". Here it means "frequent" or "usual", which is not that meaning. I am not fully sure of this dictionary entry. The sentence also compares with "less", but it does not say what the syntax is less common than. Write: "The gate counts no lines for HTML code with a syntax that the patterns do not find."
+- [ ] S133 openspec/changes/archive/2026-09-14-establish-spec-governance/proposal.md:70 "A code file can also load a test file in a form that the patterns do not find." One word, one meaning. The bullet calls the way someone writes code "syntax" in the sentence before, and here it calls the same thing "form". The change also uses "form" with a different meaning: "a form of `be`" (design.md:148, specs/ste-lint/spec.md:79). Write: "A code file can also load a test file with a syntax that the patterns do not find."
+- [ ] S134 openspec/changes/archive/2026-09-14-establish-spec-governance/proposal.md:69 "The gate counts a file that no test loads by its physical lines, and each event handler attribute as one line." One word, one meaning. S130 had the same problem. The specs give this result with "records": coverage-gate-005 and -014 say "records each physical line of the file as not covered", and coverage-gate-042 says "records one not-covered line for each attribute". design.md:134 calls it "measures an HTML file by the lines". So "counts ... by" is a third verb for the same thing. The sentence is also hard to read: "by its physical lines" can attach to "loads", and the second part leaves out its verb. Write: "The gate records each physical line of a file that no test loads as not covered, and it records one not-covered line for each event handler attribute."
+- [ ] S135 openspec/changes/archive/2026-09-14-establish-spec-governance/design.md:134 "These checks use text patterns, so the proposal records the limit `pattern-checks`. It measures a shell file as not loaded, because node:test cannot run it." Articles and clarity (round 5 reported the same kind of problem as S107). The new sentence comes just before "It measures". So "It" now refers to "the proposal", not to "the gate". Write: "The gate measures a shell file as not loaded, because node:test cannot run it."
+
+Notes for the caller:
+- **S130 is fixed.** coverage-gate-041 now says "the gate records each line of the code in that script element as not covered". The delta spec has it at spec.md:75 and the merged spec at openspec/specs/coverage-gate/spec.md:79.
+- **S131 is fixed.** coverage-gate-043 now says "loads a file with a name that ends with `.test.mjs` with `import` or `require`". The delta spec has it at spec.md:116 and the merged spec at openspec/specs/coverage-gate/spec.md:120. "through" is gone.
+- **Merged spec:** openspec/specs/coverage-gate/spec.md is the same as the delta spec, except for the header, the Purpose line and one blank line.
+- **Gate output:** "STE: 0 errors, 0 warnings." There are no STE-PASSIVE or STE-ING warnings to examine.
+- **Changed prose with no findings:**
+  - The title of coverage-gate-041 and its WHEN line.
+  - The title of coverage-gate-043, and its THEN and AND lines.
+  - The first and third sentences of `pattern-checks`, and the last sentence of `uncalled-code`.
+  - The new test name "[coverage-gate-043] stops the check for a code file that imports a test file" (gov-tests-r16.txt:91). "Stops the check for" is the same wording as five other test names, for example gap-ledger-021 and spec-trace-026.
+- **Not reported:**
+  - "gets" and "current". `words.json` gives "get" as the word to use, and earlier rounds accepted "current" (proposal.md:3).
+  - The two uses of "with" in the coverage-gate-043 WHEN line. One means "that has" and one means "by means of". Both are usual prepositional uses.
+- I did not read .env. I did not change any file in the repository.

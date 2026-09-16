@@ -1,0 +1,25 @@
+services:
+  gods-eye-view:
+    build: .
+    image: gods-eye-view:local
+    restart: unless-stopped
+    # Keys come from .env (copy .env.example). The in-app Provider Settings
+    # panel only answers loopback requests, so it cannot save keys from
+    # inside a container; edit .env and restart instead.
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4173
+    ports:
+      # Published on all interfaces (LAN). The server brokers your API keys,
+      # so anyone on the network can spend them. See SECURITY.md.
+      - "${GEV_PORT:-4173}:4173"
+    volumes:
+      - gev-cache:/app/.gev-cache
+      - gev-logs:/app/.gev-logs
+
+volumes:
+  gev-cache:
+  gev-logs:

@@ -1,0 +1,804 @@
+{
+  "change-review-001": [
+    "src/tooling/spec/review.test.mjs › [change-review-001] does not stop for a passed review with all the fields, the closed findings and the agent outputs"
+  ],
+  "change-review-002": [
+    "src/tooling/spec/review.test.mjs › [change-review-002] stops when the review.md file is not there"
+  ],
+  "change-review-003": [
+    "src/tooling/spec/review.test.mjs › [change-review-003] stops for a failed review"
+  ],
+  "change-review-004": [
+    "src/tooling/spec/review.test.mjs › [change-review-004] stops for an open finding and shows it",
+    "src/tooling/spec/review.test.mjs › [change-review-004] stops for an open finding in a list with another list marker"
+  ],
+  "change-review-005": [
+    "src/tooling/spec/review.test.mjs › [change-review-005] stops when the reviewers line is not there"
+  ],
+  "change-review-006": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-008 change-review-006 change-review-015] runs the ratchet command for a change, checks its review and its tree hash",
+    "src/tooling/spec/review.test.mjs › [change-review-006] checks the review of the named change, active or archived"
+  ],
+  "change-review-007": [
+    "src/tooling/spec/gates.test.mjs › [change-review-007] reports an archived change without a review in the check",
+    "src/tooling/spec/review.test.mjs › [change-review-007] checks the review.md file of each archived change"
+  ],
+  "change-review-008": [
+    "src/tooling/spec/review.test.mjs › [change-review-008] does not stop for the spec adversary with read tools"
+  ],
+  "change-review-009": [
+    "src/tooling/spec/review.test.mjs › [change-review-009] does not stop for the STE adversary with read tools"
+  ],
+  "change-review-010": [
+    "src/tooling/spec/review.test.mjs › [change-review-010] stops for a review without a verdict"
+  ],
+  "change-review-011": [
+    "src/tooling/spec/review.test.mjs › [change-review-011] stops for two verdict lines"
+  ],
+  "change-review-012": [
+    "src/tooling/spec/review.test.mjs › [change-review-012] stops when the date line is not there"
+  ],
+  "change-review-013": [
+    "src/tooling/spec/review.test.mjs › [change-review-013] stops when the gates line is not there"
+  ],
+  "change-review-014": [
+    "src/tooling/spec/review.test.mjs › [change-review-014] stops for a reviewers line without the two agents"
+  ],
+  "change-review-015": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-008 change-review-006 change-review-015] runs the ratchet command for a change, checks its review and its tree hash",
+    "src/tooling/spec/review.test.mjs › [change-review-015] calculates the tree hash from the change files and the diff files",
+    "src/tooling/spec/review.test.mjs › [change-review-015] stops for a tree hash that is not equal to the current hash"
+  ],
+  "change-review-016": [
+    "src/tooling/spec/review.test.mjs › [change-review-016] stops when an agent output is not there"
+  ],
+  "change-review-017": [
+    "src/tooling/spec/review.test.mjs › [change-review-017] stops for an agent with another tool"
+  ],
+  "change-review-018": [
+    "src/tooling/spec/review.test.mjs › [change-review-018] stops for an agent output without the verdict PASS"
+  ],
+  "change-review-019": [
+    "src/tooling/spec/gates.test.mjs › [change-review-019 change-review-020] shows the tree hash of a change and stops for a change name that two folders use"
+  ],
+  "change-review-020": [
+    "src/tooling/spec/gates.test.mjs › [change-review-019 change-review-020] shows the tree hash of a change and stops for a change name that two folders use",
+    "src/tooling/spec/review.test.mjs › [change-review-020] stops for a change name that two change folders use"
+  ],
+  "change-review-021": [
+    "src/tooling/spec/review.test.mjs › [change-review-021] stops for a review agent file that is not complete"
+  ],
+  "change-review-022": [
+    "src/tooling/spec/review.test.mjs › [change-review-022] stops for an agent output with more than one verdict line"
+  ],
+  "change-review-023": [
+    "src/tooling/spec/review.test.mjs › [change-review-023] stops for a review agent file with other front matter lines"
+  ],
+  "ci-gates-001": [
+    "src/tooling/spec/ci.test.mjs › [ci-gates-001] stops for a code diff without an archived change",
+    "src/tooling/spec/gates.test.mjs › [ci-gates-001 ci-gates-003 ci-gates-004] finds the change of a CI diff and checks it"
+  ],
+  "ci-gates-002": [
+    "src/tooling/spec/ci.test.mjs › [ci-gates-002] stops for a diff with two archived changes"
+  ],
+  "ci-gates-003": [
+    "src/tooling/spec/ci.test.mjs › [ci-gates-003] stops for an active change",
+    "src/tooling/spec/gates.test.mjs › [ci-gates-001 ci-gates-003 ci-gates-004] finds the change of a CI diff and checks it"
+  ],
+  "ci-gates-004": [
+    "src/tooling/spec/ci.test.mjs › [ci-gates-004] checks the archived change of the diff",
+    "src/tooling/spec/gates.test.mjs › [ci-gates-001 ci-gates-003 ci-gates-004] finds the change of a CI diff and checks it"
+  ],
+  "ci-gates-005": [
+    "src/tooling/spec/ci.test.mjs › [ci-gates-005] checks a diff that changes no code, without a change name",
+    "src/tooling/spec/gates.test.mjs › [ci-gates-005] checks a diff that changes no code, without a change name"
+  ],
+  "ci-gates-006": [
+    "src/tooling/spec/ciFiles.test.mjs › [ci-gates-006] runs the CI command in the workflow with the pinned Node version and the full history"
+  ],
+  "ci-gates-007": [
+    "src/tooling/spec/ciFiles.test.mjs › [ci-gates-007] runs the gates with make in the Docker image"
+  ],
+  "ci-gates-008": [
+    "src/tooling/spec/ciFiles.test.mjs › [ci-gates-008] pins the Node version of the image and installs Git"
+  ],
+  "ci-gates-009": [
+    "src/tooling/spec/gates.test.mjs › [ci-gates-009] shows the usage for a bad command line and reads the root option"
+  ],
+  "ci-gates-010": [
+    "src/tooling/spec/ci.test.mjs › [ci-gates-010] stops for a process file diff without an archived change"
+  ],
+  "coverage-gate-001": [
+    "src/tooling/spec/inventory.test.mjs › [coverage-gate-001] includes each tracked JS and TypeScript file in the inventory"
+  ],
+  "coverage-gate-002": [
+    "src/tooling/spec/inventory.test.mjs › [coverage-gate-002] does not include test files in the inventory"
+  ],
+  "coverage-gate-003": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-003] runs each tracked test file with coverage and the trace reporter"
+  ],
+  "coverage-gate-004": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-004] reads the total and the covered counts for each loaded file",
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-004] records the not-covered counts and the content hash of a loaded file"
+  ],
+  "coverage-gate-005": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-005] gives 0% coverage to a JS file that no test loads"
+  ],
+  "coverage-gate-006": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-006] marks a file with all counts covered as complete"
+  ],
+  "coverage-gate-007": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-007] runs the allocation tests alone with --expose-gc and no coverage"
+  ],
+  "coverage-gate-008": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-008] stops for each coverage ignore comment",
+    "src/tooling/spec/gates.test.mjs › [spec-trace-002 coverage-gate-008 coverage-gate-017] reports spec, comment, option and ledger errors"
+  ],
+  "coverage-gate-010": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-003 spec-trace-016 coverage-gate-010] stops the check for a new gap, a failed test and an untracked file",
+    "src/tooling/spec/inventory.test.mjs › [coverage-gate-010] stops for an untracked code file that Git does not ignore"
+  ],
+  "coverage-gate-011": [
+    "src/tooling/spec/inventory.test.mjs › [coverage-gate-011] includes HTML files and shell files in the inventory"
+  ],
+  "coverage-gate-012": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-012] marks an HTML file without inline scripts as complete"
+  ],
+  "coverage-gate-013": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-013] gives 0% coverage to the inline scripts of an HTML file"
+  ],
+  "coverage-gate-014": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-014] gives 0% coverage to a shell file"
+  ],
+  "coverage-gate-015": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-015] runs the tests without the Node options of the gate environment and with the test guard"
+  ],
+  "coverage-gate-016": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-016] stops for a Node version that is not the pinned version"
+  ],
+  "coverage-gate-017": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-017] stops for a coverage filter option outside the gate command",
+    "src/tooling/spec/gates.test.mjs › [spec-trace-002 coverage-gate-008 coverage-gate-017] reports spec, comment, option and ledger errors"
+  ],
+  "coverage-gate-018": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-018 coverage-gate-021 spec-trace-027] stops the check for untrue coverage and a test without an assertion",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-018] checks only the files in the inventory inside the root and does not stop for a byte order mark",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-018] compares the source with the content hash at the start of the run",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-018] reads the relative file of a script URL",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-018] records code that runs under the name of a code file with other source"
+  ],
+  "coverage-gate-019": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-019] does not stop for code that a test imports from a code file"
+  ],
+  "coverage-gate-020": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-020] records a module hook that loads other source for a code file"
+  ],
+  "coverage-gate-021": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-021] gives 0% coverage to a file with untrue coverage",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-018 coverage-gate-021 spec-trace-027] stops the check for untrue coverage and a test without an assertion"
+  ],
+  "coverage-gate-022": [
+    "src/tooling/spec/runParallel.test.mjs › [coverage-gate-022] runs real processes from a runs file and writes the results file",
+    "src/tooling/spec/runParallel.test.mjs › [coverage-gate-022] starts the runs at the same time and waits until each run is complete"
+  ],
+  "coverage-gate-023": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-023] stops for a code file that changes during the run"
+  ],
+  "coverage-gate-024": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-024] records a file in the coverage report that no guard checked as not loaded and as untrue",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-024] gives 0% coverage to a file that only a worker thread loads"
+  ],
+  "coverage-gate-025": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-025] gives the guard to a child process that collects coverage",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-025] keeps the result of util.promisify for the real execFile",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-025] wraps each child_process function and keeps its properties and its promisify result"
+  ],
+  "coverage-gate-026": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-026] stops when the test runner or a test run cannot start"
+  ],
+  "coverage-gate-027": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-027] does nothing in a process without GEV_SPEC_OUT and returns the same guard for the same folder"
+  ],
+  "coverage-gate-028": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-028] writes the checked files, the errors and the assertion counts of a child process at the end of the process"
+  ],
+  "coverage-gate-029": [
+    "src/tooling/spec/inventory.test.mjs › [coverage-gate-029] stops when Git cannot list the files"
+  ],
+  "coverage-gate-030": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-030] stops for a result file that the gate did not name"
+  ],
+  "coverage-gate-031": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-031] stops for untrue coverage from a child process that a test starts with other values for the gate variables",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-031] gives the gate values to a child process that writes coverage to the coverage folder of the test process"
+  ],
+  "coverage-gate-032": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-032] keeps the values from the test in a child process with its own coverage folder"
+  ],
+  "coverage-gate-033": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-033] stops a process with an inventory.json file that is not the file of the gate"
+  ],
+  "coverage-gate-034": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-034] stops for an inventory.json file that changes during the run"
+  ],
+  "coverage-gate-035": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-035] stops for a failed test run without a failed test in its result file"
+  ],
+  "coverage-gate-036": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-036] loads the guard before the other preloads of a child process"
+  ],
+  "coverage-gate-037": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-037] stops for a guard error that names no file",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-037] writes an error for a process that collects coverage without an inspector"
+  ],
+  "coverage-gate-038": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-038] does not check the sources in a test runner or a process without coverage that has no inspector"
+  ],
+  "coverage-gate-039": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-039] stops for untrue coverage from a child process that a worker thread starts",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-039 coverage-gate-040] gives the gate values to a child process of a worker thread or of a test runner without an inspector",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-039] does not check the sources in a worker thread and gives the gate values to its child processes"
+  ],
+  "coverage-gate-040": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-040] stops for untrue coverage from a test runner that a test starts, with a preload that removes the gate values",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-039 coverage-gate-040] gives the gate values to a child process of a worker thread or of a test runner without an inspector",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-040] keeps the gate values in the environment of a test runner"
+  ],
+  "coverage-gate-041": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-041] measures a script element with a src text that is not the src attribute"
+  ],
+  "coverage-gate-042": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-042] gives 0% coverage to event handler attributes and javascript URLs"
+  ],
+  "coverage-gate-043": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-043] stops for a code file that imports a test file",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-043] stops the check for a code file that imports a test file"
+  ],
+  "coverage-gate-044": [
+    "src/tooling/spec/coverage.test.mjs › [coverage-gate-044] uses the entry with the most not-covered items for a file with two coverage report entries"
+  ],
+  "coverage-gate-045": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-045] keeps the assertion results and writes an error on a Node version without getTestContext"
+  ],
+  "coverage-gate-046": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-046] gives a skip reason on a Node version without getTestContext to each test that needs the guard to count assertions"
+  ],
+  "coverage-gate-047": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-047] stops for a local dotenv file that is not empty before the gate starts the test runs"
+  ],
+  "gap-ledger-001": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec"
+  ],
+  "gap-ledger-002": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-002 gap-ledger-015 gap-ledger-016] stops the init command for a ledger, a base ledger or a new file with a gap",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-002] does not replace the current ledger"
+  ],
+  "gap-ledger-003": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-003 spec-trace-016 coverage-gate-010] stops the check for a new gap, a failed test and an untracked file",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-003] stops for a new code file below 100%"
+  ],
+  "gap-ledger-004": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-004] stops for more lines that are not covered and shows both counts"
+  ],
+  "gap-ledger-005": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-005] stops for a new test file with untraced tests"
+  ],
+  "gap-ledger-006": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-006] stops for a new untraced test name"
+  ],
+  "gap-ledger-007": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-007] does not stop for gaps that are equal to the ledger"
+  ],
+  "gap-ledger-008": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-008 change-review-006 change-review-015] runs the ratchet command for a change, checks its review and its tree hash",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+  ],
+  "gap-ledger-009": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-009] does not stop for a file that no test loaded and a test now loads with the same content"
+  ],
+  "gap-ledger-010": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+  ],
+  "gap-ledger-011": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-011] removes an entry that is at zero and records the closed gap"
+  ],
+  "gap-ledger-012": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-012] removes the entry of a deleted file with the reason file removed"
+  ],
+  "gap-ledger-013": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-013 gap-ledger-014 gap-ledger-027] stops the ratchet command for a larger gap, without a change name or for a change that is not active",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-013] stops the ratchet command when a gap is larger"
+  ],
+  "gap-ledger-014": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-013 gap-ledger-014 gap-ledger-027] stops the ratchet command for a larger gap, without a change name or for a change that is not active",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-014] stops the ratchet command without a change name"
+  ],
+  "gap-ledger-015": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-002 gap-ledger-015 gap-ledger-016] stops the init command for a ledger, a base ledger or a new file with a gap",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-015] does not make a ledger when the base has a ledger"
+  ],
+  "gap-ledger-016": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-002 gap-ledger-015 gap-ledger-016] stops the init command for a ledger, a base ledger or a new file with a gap",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-016] does not record a new file as pre-spec"
+  ],
+  "gap-ledger-017": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-017] stops for more branches or functions that are not covered in a changed file"
+  ],
+  "gap-ledger-018": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+  ],
+  "gap-ledger-019": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-019] stops for a changed file that has no branch count"
+  ],
+  "gap-ledger-020": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-020] stops for a loaded file that no test loads now"
+  ],
+  "gap-ledger-021": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-021] stops the check for a ledger entry that the base does not have",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-021] stops for a ledger entry that the base does not have"
+  ],
+  "gap-ledger-022": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-022] stops for a ledger entry that is larger than the base"
+  ],
+  "gap-ledger-023": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-023] stops for a removed ledger"
+  ],
+  "gap-ledger-024": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-024] stops for a removed retired ID"
+  ],
+  "gap-ledger-025": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-025] stops for a changed history"
+  ],
+  "gap-ledger-026": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-026] does not compare with the base when the base has no ledger"
+  ],
+  "gap-ledger-027": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-013 gap-ledger-014 gap-ledger-027] stops the ratchet command for a larger gap, without a change name or for a change that is not active",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-027] stops the ratchet command for a change that is not active"
+  ],
+  "gap-ledger-028": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-028] records branches that a new test shows"
+  ],
+  "gap-ledger-029": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-029] records the hash of a changed file and the end of untrue coverage"
+  ],
+  "gap-ledger-030": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-030] stops for a base branch that Git cannot find",
+    "src/tooling/spec/git.test.mjs › [gap-ledger-030 gap-ledger-046] reads the merge base, the base files and the diff with Git"
+  ],
+  "gap-ledger-031": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage"
+  ],
+  "gap-ledger-032": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-032] stops for untrue coverage that the base does not record"
+  ],
+  "gap-ledger-033": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-033] does not stop for counts in the range of an unstable file"
+  ],
+  "gap-ledger-034": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-034] stops for counts below the range of an unstable file"
+  ],
+  "gap-ledger-035": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage from the kept samples and does not stop for it in the check against a base ledger",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-035] records the range of a file with unstable coverage"
+  ],
+  "gap-ledger-036": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-036] stops the stability command for a changed file with unstable coverage",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-036] does not record a changed file as unstable"
+  ],
+  "gap-ledger-037": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage from the kept samples and does not stop for it in the check against a base ledger",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-037] does not stop for an unstable range that the history of the checked change records"
+  ],
+  "gap-ledger-038": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-038] stops for an unstable range without a history line from the checked change"
+  ],
+  "gap-ledger-039": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage from the kept samples and does not stop for it in the check against a base ledger",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-039] keeps a coverage sample of each code file and reads the samples by file"
+  ],
+  "gap-ledger-040": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-040] stops for more branches than the base in a changed file"
+  ],
+  "gap-ledger-041": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-041] stops for a ledger hash that is not equal to the base hash for an unchanged file"
+  ],
+  "gap-ledger-042": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-042] stops for an unstable range in a diff that changes a file outside openspec"
+  ],
+  "gap-ledger-043": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-043] stops for an unstable range that is too wide"
+  ],
+  "gap-ledger-045": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-045] moves the range of each metric with a smaller count, keeps its width and records it"
+  ],
+  "gap-ledger-046": [
+    "src/tooling/spec/git.test.mjs › [gap-ledger-030 gap-ledger-046] reads the merge base, the base files and the diff with Git"
+  ],
+  "gap-ledger-047": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-047] writes the maps of the ledger with sorted keys and adds history lines"
+  ],
+  "gap-ledger-048": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-048] stops for more branches than the base with fewer covered branches"
+  ],
+  "gap-ledger-049": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-049] keeps the range of a metric with a count in its range"
+  ],
+  "gap-ledger-050": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-050] moves the range of an unstable file up for branches that a new test shows"
+  ],
+  "gap-ledger-051": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-051] stops for a wider unstable range of a changed file"
+  ],
+  "gap-ledger-052": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-052] stops for an unstable high count that is too far above the base"
+  ],
+  "gap-ledger-053": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-053] stops the check, the ratchet command and the stability command when the ledger file is not there"
+  ],
+  "gap-ledger-054": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-054] stops for fewer covered branches or functions in an unchanged file"
+  ],
+  "gap-ledger-055": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-055] stops for a ledger entry without the total counts"
+  ],
+  "gap-ledger-056": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-056] stops for changed total counts of an unchanged file without a history line"
+  ],
+  "gap-ledger-057": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-057] records changed total counts"
+  ],
+  "gap-ledger-058": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-058] records a file with unstable total counts as unstable"
+  ],
+  "gap-ledger-059": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-059] uses the rules of a wider range for a new range with equal low and high counts"
+  ],
+  "gap-ledger-060": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-060] stops for an unstable range that moves above the base range"
+  ],
+  "gap-ledger-061": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-061] stops for a range that is not correct"
+  ],
+  "gap-ledger-062": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-062] uses the low counts for a changed file with a range and removes the range in the ratchet command"
+  ],
+  "gap-ledger-063": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-063] uses the base low counts for a changed unstable file"
+  ],
+  "gap-ledger-064": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-064] closes the gap of a changed unstable file at 100%"
+  ],
+  "gap-ledger-065": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-065 gap-ledger-068] uses the count bands of a band file in the check and in the ratchet command",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-065] does not stop for counts in the band of a band file"
+  ],
+  "gap-ledger-066": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-066] stops for a larger gap outside the band of a band file, but not for a smaller gap"
+  ],
+  "gap-ledger-067": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-067] does not use the band for a changed file, a file that no test loads or a file with untrue coverage"
+  ],
+  "gap-ledger-068": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-065 gap-ledger-068] uses the count bands of a band file in the check and in the ratchet command",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-068] writes the smaller not-covered line count of a band file and keeps the entry counts for a smaller covered count"
+  ],
+  "spec-lint-001": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
+  ],
+  "spec-lint-002": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-002] stops for a scenario with two WHEN lines"
+  ],
+  "spec-lint-003": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-003] stops for a scenario without a THEN line"
+  ],
+  "spec-lint-004": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-004] stops for a requirement without MUST in its first line"
+  ],
+  "spec-lint-005": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-005] stops for a requirement without an origin line"
+  ],
+  "spec-lint-006": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-006] stops for a scenario that no task names"
+  ],
+  "spec-lint-007": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-007] does not stop for a change with a task for each scenario"
+  ],
+  "spec-lint-008": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-008] does not check removed requirements"
+  ],
+  "spec-lint-009": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-009] stops for a scenario outside a requirement"
+  ],
+  "spec-lint-010": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-010] stops for a scenario under a renamed requirement"
+  ],
+  "spec-lint-011": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-011] stops for a requirement without a scenario"
+  ],
+  "spec-lint-012": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-012] stops for a change section in a main spec"
+  ],
+  "spec-lint-013": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-013] stops for a requirement outside the requirements section of a main spec"
+  ],
+  "spec-lint-014": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-014] reads the requirement headings and the scenario headings in upper case and lower case"
+  ],
+  "spec-lint-015": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-015] ends a fenced code block only at its end fence"
+  ],
+  "spec-lint-016": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-016] stops for a heading that is not a known heading"
+  ],
+  "spec-lint-017": [
+    "src/tooling/spec/specLint.test.mjs › [spec-lint-017] reads the lines of a spec file with each line end"
+  ],
+  "spec-lint-018": [
+    "src/tooling/spec/openspec.test.mjs › [spec-lint-018] stops for a spec that OpenSpec does not accept in strict mode"
+  ],
+  "spec-lint-019": [
+    "src/tooling/spec/openspec.test.mjs › [spec-lint-019] stops when OpenSpec and the gates read a different number of requirements or scenarios"
+  ],
+  "spec-lint-020": [
+    "src/tooling/spec/openspec.test.mjs › [spec-lint-020] runs the OpenSpec CLI from the development dependency",
+    "src/tooling/spec/openspec.test.mjs › [spec-lint-020] stops when the OpenSpec CLI does not have the pinned version"
+  ],
+  "spec-lint-021": [
+    "src/tooling/spec/gates.test.mjs › [spec-lint-021 spec-lint-022] checks the tasks and the requirement format of the archived change that the gates check"
+  ],
+  "spec-lint-022": [
+    "src/tooling/spec/gates.test.mjs › [spec-lint-021 spec-lint-022] checks the tasks and the requirement format of the archived change that the gates check"
+  ],
+  "spec-trace-001": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-001] does not read the scenario headings in fenced code and keeps the code lines in the hash",
+    "src/tooling/spec/specs.test.mjs › [spec-trace-001] reads the ID, the requirement, the scenario, the origin, the file, the line and the hash",
+    "src/tooling/spec/specs.test.mjs › [spec-trace-001] reads the first line, the origin and the scenario format of each requirement",
+    "src/tooling/spec/specs.test.mjs › [spec-trace-001] records an unknown origin and no requirement when the spec has none"
+  ],
+  "spec-trace-002": [
+    "src/tooling/spec/gates.test.mjs › [spec-trace-002 coverage-gate-008 coverage-gate-017] reports spec, comment, option and ledger errors",
+    "src/tooling/spec/specs.test.mjs › [spec-trace-002] stops for a scenario heading without an ID"
+  ],
+  "spec-trace-003": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-003] stops for an ID with the wrong capability"
+  ],
+  "spec-trace-004": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-004] stops for the same ID in two scenarios of the main specs"
+  ],
+  "spec-trace-005": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-005] does not stop for the same ID in a change delta and uses the change scenario"
+  ],
+  "spec-trace-006": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-006] stops for a retired ID in a spec"
+  ],
+  "spec-trace-007": [
+    "src/tooling/spec/traceReporter.test.mjs › [spec-trace-007] reads the tags from a test name",
+    "src/tooling/spec/traceReporter.test.mjs › [spec-trace-007] writes one entry for each test with its tags, its status, its leaf flag and its full name"
+  ],
+  "spec-trace-008": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-008] records a subtest without a tag under a parent with a tag as untraced",
+    "src/tooling/spec/traceReporter.test.mjs › [spec-trace-008 spec-trace-044] records the subtests and their lines from a real node:test run",
+    "src/tooling/spec/traceReporter.test.mjs › [spec-trace-008] does not give the parent tags to subtests",
+    "src/tooling/spec/traceReporter.test.mjs › [spec-trace-008] keeps the subtests of each file separate"
+  ],
+  "spec-trace-009": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-009] records a leaf test without a tag as untraced and does not stop for it"
+  ],
+  "spec-trace-010": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-010] stops for a tag with an unknown ID and shows the file and the test name"
+  ],
+  "spec-trace-011": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-011] stops for a tag with a retired ID"
+  ],
+  "spec-trace-012": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-012] stops for a main scenario that an active change replaces without a test",
+    "src/tooling/spec/trace.test.mjs › [spec-trace-012] stops for a main scenario without a test that passes"
+  ],
+  "spec-trace-013": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-013] does not count a skipped test"
+  ],
+  "spec-trace-014": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-014] shows the untested scenarios of an active change as open"
+  ],
+  "spec-trace-015": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-015] stops for an untested scenario of the named change"
+  ],
+  "spec-trace-016": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-003 spec-trace-016 coverage-gate-010] stops the check for a new gap, a failed test and an untracked file",
+    "src/tooling/spec/trace.test.mjs › [spec-trace-016] stops for a failed test"
+  ],
+  "spec-trace-017": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-017] writes the scenario links, the origins and the untraced tests to the report"
+  ],
+  "spec-trace-018": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-018] stops for the same new ID in two active changes"
+  ],
+  "spec-trace-019": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-019] stops for a removed scenario that is not retired"
+  ],
+  "spec-trace-020": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-020] stops for a tag with a bad format and does not count the test as untraced",
+    "src/tooling/spec/traceReporter.test.mjs › [spec-trace-020] marks a tag with a bad format"
+  ],
+  "spec-trace-021": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-021] stops for a tag with more than three IDs",
+    "src/tooling/spec/traceReporter.test.mjs › [spec-trace-021] marks a tag with more than three IDs"
+  ],
+  "spec-trace-022": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-022] stops for a tag on a parent test"
+  ],
+  "spec-trace-023": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-023] stops for a test outside a test file"
+  ],
+  "spec-trace-024": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-024] does not count a todo test"
+  ],
+  "spec-trace-025": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-025] stops for a skipped test with a tag"
+  ],
+  "spec-trace-026": [
+    "src/tooling/spec/gates.test.mjs › [spec-trace-026] stops the check for an unknown change name",
+    "src/tooling/spec/trace.test.mjs › [spec-trace-026] stops for an unknown change name"
+  ],
+  "spec-trace-027": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-018 coverage-gate-021 spec-trace-027] stops the check for untrue coverage and a test without an assertion",
+    "src/tooling/spec/testGuard.test.mjs › [spec-trace-027] counts the assertions of each test",
+    "src/tooling/spec/testGuard.test.mjs › [spec-trace-027] wraps the assert methods and does not count calls outside a test",
+    "src/tooling/spec/trace.test.mjs › [spec-trace-027] stops for a traced test without an assertion"
+  ],
+  "spec-trace-028": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-028] stops for a test file without tests"
+  ],
+  "spec-trace-029": [
+    "src/tooling/spec/registry.test.mjs › [spec-trace-029] stops for a links file that is not current"
+  ],
+  "spec-trace-030": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
+    "src/tooling/spec/registry.test.mjs › [spec-trace-030 spec-trace-041] writes the links and the registry with sorted keys"
+  ],
+  "spec-trace-031": [
+    "src/tooling/spec/registry.test.mjs › [spec-trace-031] stops for an ID that is not in the registry"
+  ],
+  "spec-trace-032": [
+    "src/tooling/spec/gates.test.mjs › [spec-trace-032 spec-trace-036 spec-trace-037] stops for changed scenario text and a changed registry without a changed test",
+    "src/tooling/spec/registry.test.mjs › [spec-trace-032] stops the ratchet command for changed text without a changed test that names the ID"
+  ],
+  "spec-trace-033": [
+    "src/tooling/spec/registry.test.mjs › [spec-trace-033] stops for an ID without a scenario that is not retired"
+  ],
+  "spec-trace-034": [
+    "src/tooling/spec/trace.test.mjs › [spec-trace-034] stops for a tag on a suite"
+  ],
+  "spec-trace-035": [
+    "src/tooling/spec/registry.test.mjs › [spec-trace-035] stops for scenario text with a hash that is not equal to the registry hash"
+  ],
+  "spec-trace-036": [
+    "src/tooling/spec/gates.test.mjs › [spec-trace-032 spec-trace-036 spec-trace-037] stops for changed scenario text and a changed registry without a changed test",
+    "src/tooling/spec/registry.test.mjs › [spec-trace-036] stops for a base ID that the registry does not contain"
+  ],
+  "spec-trace-037": [
+    "src/tooling/spec/gates.test.mjs › [spec-trace-032 spec-trace-036 spec-trace-037] stops for changed scenario text and a changed registry without a changed test",
+    "src/tooling/spec/registry.test.mjs › [spec-trace-037] stops for a changed registry hash when no test changed"
+  ],
+  "spec-trace-038": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-038] reads no retired IDs, specs or changes from an empty project"
+  ],
+  "spec-trace-039": [
+    "src/tooling/spec/gates.test.mjs › [spec-trace-039 spec-trace-040] stops for a result entry that a test writes in the result folder",
+    "src/tooling/spec/trace.test.mjs › [spec-trace-039] stops for a test entry with a full name that does not end with its name",
+    "src/tooling/spec/trace.test.mjs › [spec-trace-039] stops for a test entry with tags that do not agree with its name"
+  ],
+  "spec-trace-040": [
+    "src/tooling/spec/gates.test.mjs › [spec-trace-039 spec-trace-040] stops for a result entry that a test writes in the result folder",
+    "src/tooling/spec/trace.test.mjs › [spec-trace-040] stops for two traced tests with the same full name in one file"
+  ],
+  "spec-trace-041": [
+    "src/tooling/spec/registry.test.mjs › [spec-trace-030 spec-trace-041] writes the links and the registry with sorted keys"
+  ],
+  "spec-trace-042": [
+    "src/tooling/spec/registry.test.mjs › [spec-trace-042] does not use a test as changed for a comment after the line that closes the test call",
+    "src/tooling/spec/registry.test.mjs › [spec-trace-042] does not use a test as changed when only another test in its file changed",
+    "src/tooling/spec/registry.test.mjs › [spec-trace-042] finds the line that closes a test call after strings, comments and regular expressions",
+    "src/tooling/spec/registry.test.mjs › [spec-trace-042] uses a test as changed when a line inside the test changed"
+  ],
+  "spec-trace-043": [
+    "src/tooling/spec/registry.test.mjs › [spec-trace-043] uses a test with new text as a changed test"
+  ],
+  "spec-trace-044": [
+    "src/tooling/spec/traceReporter.test.mjs › [spec-trace-008 spec-trace-044] records the subtests and their lines from a real node:test run",
+    "src/tooling/spec/traceReporter.test.mjs › [spec-trace-044] writes the line and the column of the definition of each test"
+  ],
+  "spec-trace-045": [
+    "src/tooling/spec/gates.test.mjs › [spec-trace-045] stops for changed scenario text when a test only moved to a renamed test file",
+    "src/tooling/spec/registry.test.mjs › [spec-trace-045] does not use a moved test as changed"
+  ],
+  "spec-trace-046": [
+    "src/tooling/spec/registry.test.mjs › [spec-trace-046] uses the next test when the gate cannot find the line that closes a test call"
+  ],
+  "spec-trace-047": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-047] changes the hash of each scenario when the name or the text of its requirement changes"
+  ],
+  "spec-trace-048": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-048] stops for an archived added or modified scenario that is not in the main specs with the same hash"
+  ],
+  "spec-trace-049": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-049] stops for an archived removed scenario that is still in the main specs or is not retired"
+  ],
+  "spec-trace-050": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-050] stops for an archived change without a proposal"
+  ],
+  "spec-trace-051": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-051] stops for an archived requirement that the main spec does not have with the same name, the same text and the same scenario IDs"
+  ],
+  "spec-trace-052": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-052] stops for an archived removed requirement that the main spec still has"
+  ],
+  "spec-trace-053": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-053] stops for an archived renamed requirement that the main spec has with the old name or does not have with the new name"
+  ],
+  "ste-lint-001": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-001] checks each Markdown file in openspec"
+  ],
+  "ste-lint-002": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-002] checks the names of traced tests without the tag"
+  ],
+  "ste-lint-003": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-003] does not check fenced code, inline code, URLs or scenario IDs"
+  ],
+  "ste-lint-004": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-004] finds the line where a long sentence starts",
+    "src/tooling/spec/ste.test.mjs › [ste-lint-004] records STE-SENTENCE for a sentence with more than 25 words"
+  ],
+  "ste-lint-005": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-005] records STE-INSTRUCTION for a task line with more than 20 words"
+  ],
+  "ste-lint-006": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-006] records STE-PARAGRAPH for a paragraph with more than 6 sentences"
+  ],
+  "ste-lint-007": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-007] records STE-CONTRACTION for a contraction"
+  ],
+  "ste-lint-008": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-008] records STE-WORD with the word to use"
+  ],
+  "ste-lint-009": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-009] records the warning STE-PASSIVE for possible passive voice"
+  ],
+  "ste-lint-010": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-010] records the warning STE-ING for an -ing word that the allowed list does not contain"
+  ],
+  "ste-lint-011": [
+    "src/tooling/spec/gates.test.mjs › [ste-lint-011 ste-lint-012 ste-lint-016] checks only Markdown with the lint command",
+    "src/tooling/spec/ste.test.mjs › [ste-lint-011] gives a failure status when there are errors"
+  ],
+  "ste-lint-012": [
+    "src/tooling/spec/gates.test.mjs › [ste-lint-011 ste-lint-012 ste-lint-016] checks only Markdown with the lint command",
+    "src/tooling/spec/ste.test.mjs › [ste-lint-012] gives a success status for warnings only"
+  ],
+  "ste-lint-013": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-013] checks AGENTS.md, the agent files and the review command"
+  ],
+  "ste-lint-014": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-014] ends a sentence at a period after inline code or a URL"
+  ],
+  "ste-lint-015": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-015] records STE-CODE-SPAN for inline code with more than 4 words"
+  ],
+  "ste-lint-016": [
+    "src/tooling/spec/gates.test.mjs › [ste-lint-011 ste-lint-012 ste-lint-016] checks only Markdown with the lint command"
+  ],
+  "ste-lint-017": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-017] checks only the process files in a project without an openspec folder"
+  ],
+  "ste-lint-018": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-018] does not check the review files",
+    "src/tooling/spec/ste.test.mjs › [ste-lint-018] does not check the review files of an archived change"
+  ],
+  "ste-lint-019": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-019] checks a review file that is not directly in a change folder"
+  ]
+}

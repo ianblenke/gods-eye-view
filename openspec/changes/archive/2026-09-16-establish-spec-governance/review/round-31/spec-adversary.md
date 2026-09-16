@@ -1,0 +1,29 @@
+Verdict: PASS
+- [ ] F1 minor scripts/spec/lib/ledger.mjs:455 For a band file with a range, the new condition `&& !band` keeps the high count also when a new test shows more branches. This does not agree with `gap-ledger-050` (spec.md:186, delta :182): "for an unchanged unstable file with a branch count above the high count THEN the command writes the new count as the high count". Design.md:130 has the same problem: "It writes the branch and function counts only when the covered count is not smaller." I gave `sameAsBase: () => true` to the `ratchet` helper in a copy of `ledger.test.mjs`. Four tests failed: 013, 054 and 068 (these have a band exception) and 050 (no band exception). The 050 test does not give `sameAsBase`, so it passes. The line also writes the current total counts. Thus the new ledger can record a covered count that is larger than the true count. I used the 050 input with 60 not-covered branches and a total of 108. The ratchet command kept 52 and wrote the total 108. Then the check stopped for the ledger that the ratchet command wrote: "has 48 covered branches. The ledger records 56." The ratchet command cannot run again, because its own check stops it. The r30 code moved the range up to 60. The base comparison then stopped with `LEDGER-UNSTABLE-MOVED-UP` (060), so a stop occurred before this change too. This gap stops a correct change and does not hide a gap. For a band file with a range and a larger covered count, keep the entry totals with the kept high count, or move the range up. Add a band exception to 050, and give `sameAsBase` in its test.
+  Can wait: yes. The stop is clear and safe. Only 2 ledger entries have a range (`server/providers/vessels/ais-store.js`, `src/data/labelArbiter.js`). `harden-gate-ledger` can make 050 and 060 agree for band files.
+- [ ] F2 minor scripts/spec/lib/ledger.mjs:445 and :455 For a band file with a range, the ratchet command does not use `bandFileCounts`. It writes the current total counts next to the kept high count. Thus the r30 F2 loss can still add up for these files. I used an entry with a range of 8 to 10 branches and a total of 100. In each run, the total was 3 lower and 12 branches were not covered. I ran 6 ratchet runs in a row, each against the ledger of the run before. The covered count in the ledger went from 90 to 72, and the true count went from 85 to 70. The check gave no error. `compareWithBase` also gave no error, because each run wrote a `totals changed` line. The r30 code kept the entry and stopped at run 1 with `LEDGER-LOST-COVERAGE`. The limit `unchanged-band` (proposal.md:65) now says "The ratchet command keeps a smaller covered count out of the ledger", but this is not true for a band file with a range. Each change must remove calls to a function, which lowers the total, and also make a count go above its high count. For a band file with a range, keep the entry totals when the covered count is smaller, as `bandFileCounts` does. Or name this case in `unchanged-band` or `range-totals`.
+  Can wait: yes. Only 2 files have a range, each change can lose at most the band, and the spec adversary already checks each removed test for band files. `harden-gate-ledger` can use the `bandFileCounts` rule for totals in ranges.
+
+Notes:
+- **Corrections that I checked:**
+  - **F1/F2/S196/S197 (no-range band files): correct.**
+    - The backfill case from r30 (20/3/2 to 10/4/1, totals 104/10) now writes 10/4/1 and 4 history lines.
+    - A smaller covered count keeps the entry counts and totals, so the loss does not add up for a file with no range.
+    - A backfill with 3 to 30 not-covered branches and a larger covered count writes 30 (agrees with 028), and the check after the ratchet passes.
+    - The 028 test with `sameAsBase` passes. 013 has the band exception. 057 and 010 agree for band files.
+  - **F3: correct.** In a copy, in the image, the new gates test passes. It fails when I remove `sameAsBase` from the `ratchetLedger` call (`GATES-RATCHET`). It also fails when I remove `sameAsBase` from the `compareLedger` call of the check (`LEDGER-LARGER-GAP`, `LEDGER-LOST-COVERAGE`). The test is in the coverage-gate-046 list. 29 + 3 `GUARDED_RUN` tests agree with "32 tests" in design.md.
+  - **F4: correct.** In the image, I ran the new copy steps on a Git repository with these files:
+    - Tracked: `--exclude=src`, a name with a tab, `"q"` and `src/a.js`.
+    - A deleted tracked file, an ignored file and an untracked file.
+
+    The copy had each tracked and untracked file. It did not have the deleted file or the ignored file, and the status was 0. The ci-gates-007 test compares the exact list of steps joined by ` && `. The `|| true` filter is gone, so S208 is also correct.
+  - **S198–S208: the text changed as the findings asked.** The delta specs and the main specs have the same requirement text. `links.json` and `ids.json` agree with the new and renamed tests. `gaps.json`, `history.jsonl` and `tasks.md` did not change after round 30.
+- **Gate output.**
+  - The `STE-SENTENCE` error for the gap-ledger Purpose is for the old text. The new text has 2 sentences of 18 words or fewer.
+  - The 3 review errors (`REVIEW-AGENT-OUTPUT` twice, `REVIEW-TREE`) are expected before this review is written.
+  - `MaxListenersExceededWarning` is a Node warning, not a gate warning.
+  - 3,535 tests and 291 traced tests agree with the proposal and the design.
+- **Files and commands.**
+  - I did not change a file in the repository, and I ran only read-only git commands. The `git status --porcelain` hash was the same at the start and at the end (`3bd181f2…`).
+  - I did not read `.env`, and the copies do not have `.env` files.
+  - I wrote files only in `/tmp/claude-1000/-home-ianblenke-docker-gods-eye-view/bdb4f5c7-182e-45ee-82b1-3e3b1892873d/scratchpad/review-spec-r31/`: `exp1.mjs`, `exp2.mjs`, `lib/`, `r30/`, `mut/`, `m0/`, `m1/`, `m2/`, the `*.out` files and `status-start.md5`.
