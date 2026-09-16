@@ -3024,14 +3024,14 @@
     },
     "src/hud.js": {
       "loaded": true,
-      "lines": 293,
+      "lines": 292,
       "branches": 33,
       "functions": 20,
       "totals": {
         "branches": 75,
         "functions": 41
       },
-      "sha": "b678c5a4bf9d2d2a61881d28409f8d5673d366533e5558d36d67bba45cf2ad16",
+      "sha": "e57a5f931133d60c1a59b07a15d8e0f82f9e0c05c1b028bb50917765cfd32a89",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
