@@ -1,0 +1,1202 @@
+{
+  "change-review-001": {
+    "hash": "21c5b8e200f5c036a2697637ba12b6943b5e0217d7fe5c8a0e2ab9e31d62e28e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-002": {
+    "hash": "392dbc710f97551019ae90243cd3fa16579c471bacf0cd3721c5273b0fc1b9c3",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-003": {
+    "hash": "e366f801ff790a2b504304e8feb2f2e08ee7b12a4abd4ef8f71be78a51e2cdb5",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-004": {
+    "hash": "3bba0375ad75a183063908ce17571870ebff110f112f94136eb449c9f9612e8d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-005": {
+    "hash": "7941fca424951f0c63a852dc750205c3d9692e1606cd68e3ca5acea092998a24",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-006": {
+    "hash": "3f7b3fd3307ff5d703f87a5c2f460c9a686390a7d01de0edebbfd09321a316d6",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-007": {
+    "hash": "f399f537152be8087ea5520bfa9c35a7769d7b7a67e932a7dccb7ab1812f7dd4",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-008": {
+    "hash": "f45cc343cbfc3df51cdb2fb785535928b04c63a9c381f6313d96daa803ef9c8c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-009": {
+    "hash": "03c1e23c7803b5dd641d333cc72c7e36f44784256ada916315fa849758f77923",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-010": {
+    "hash": "a4fe7264141f68079339917f52a8320e314d7394bc3f488b8fa4f86f493eb11c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-011": {
+    "hash": "461957453daed32217040081a3f1eec7ed6c369e43a848a92a7991f756f8469d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-012": {
+    "hash": "bc1cd0822815ec911d0038e226241fe9c430c1b6d2d812f444d3c8ced799a5b0",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-013": {
+    "hash": "50ca96c12b3323422ae0ead54c3b58ac753fc2ee7aff383d15a17b1a763b04e9",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-014": {
+    "hash": "fbc2fa08939cb67fb98bfab546dbede543aba080ecddcfc705808a068cff82d8",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-015": {
+    "hash": "c479272119f5f8e5a174ec36206c6b9c53fa09080f9c453f9cf9ead283a8db5e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-016": {
+    "hash": "824abdd62c6bdb4bd9305cdb793b690a293e6cf1699143bf0067184c9c934743",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-017": {
+    "hash": "537d2f2979b61f5deaae49480a75cd992931d4327fdbff0634ce59cbad663ef1",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-018": {
+    "hash": "9abed29f2ae97a8ca08ca9105528628705edcc1ddace3ee158f8574d8b3b71e7",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-019": {
+    "hash": "037589a18dbe9b8a1272642cb76aa6dfa7590ec29a2df0d251417d5a42e8ebd3",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-020": {
+    "hash": "34d5d126d5d11746be1e18460bab4c1866c5226a1090633dedd6a9aa613e945d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-021": {
+    "hash": "a305af9c5bacddf84ad9ebb8b7641cee27b242877d606c5ed8871de94b01b02d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-022": {
+    "hash": "c0b8808798f7579fb6a6d719955b9def8354ba792c220abbb5a62441578ce14e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "change-review-023": {
+    "hash": "c66718b67ab325da909405edb00786e4d42a2df40257f946cedef5a5d1a75e7d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ci-gates-001": {
+    "hash": "6344005c90cfdf7d391ff0ddfd31bff01cde4a3ddb729ba5741cb6740be7d202",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ci-gates-002": {
+    "hash": "2f9231a9c81ed392bd13d5cf2eceb1f7e2c79d92e7c2f4630a04571ec7bbcd09",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ci-gates-003": {
+    "hash": "fbba5b799645c7123b32f50ec98dd02c87db40dca2ab179c0904acf10118b68d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ci-gates-004": {
+    "hash": "d739097e88fa312dda99665c975db368a1e860ecc53b5dfc6981c73b2cb8676f",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ci-gates-005": {
+    "hash": "c4f45f9548bfe49af48d3a5eb959c91828e85103b9e002e68ce9ee6fc0be16fe",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ci-gates-006": {
+    "hash": "e0f1c2bfb311afaec71325e378436a2b615727c296f0bcca1feaf6aa96fc4b82",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ci-gates-007": {
+    "hash": "f079317d051a331b3620cc0220eba590e2292cb58d8d9883a2c8137f6c9e5bfa",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ci-gates-008": {
+    "hash": "3c4acd6bbfbed326d8cd17b5ebd7d06eeaaa6118e6c915eb0f4e32deb4fb51b9",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ci-gates-009": {
+    "hash": "c2dcad02c1ceea1761680905a3f83f6c42b0ed87c52638b53bd61f8aa73b4714",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ci-gates-010": {
+    "hash": "af3d4781e4ed6caf8f63a0be6fa946573f46a167f243029aa13bfa5001bb9849",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-001": {
+    "hash": "22565bebf0824c441282127bbb46b08ae6f67a08a29b7661d1e2ae231ca0366a",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-002": {
+    "hash": "a0dc144eec23994fd5e73f411a41fde30c36823276853be46fbdaf2b9603226f",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-003": {
+    "hash": "2f03afc5c79c83137b1e4172a0e6583e682caa21cbaa7bcc113058d5f14b3285",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-004": {
+    "hash": "4fafc83a3cdc185f7311c39176d8b268e14d80e189652169b322cb2cac561542",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-005": {
+    "hash": "5f240fdad02d617ebb6064c886432b80ad2e50d97bf972b1f02a8190423ca22a",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-006": {
+    "hash": "69bacd28d4a5872677556b777928abc7e55aae8d74de632d551aab8b1c9d9b52",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-007": {
+    "hash": "82cfec3b01283e2d1ce1a3b143fb2cc56cd48e891791b3dd418970a59fb32b3a",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-008": {
+    "hash": "5280e54e9e2227b45ef023570aa3c609bae73f1428178db1348f727ff6e78a88",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-010": {
+    "hash": "8b8e1035e46c7107efe0c63827bb9ce2773a2a491c30fb852d134e1ddfabb4e9",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-011": {
+    "hash": "95613647879f150bb6a128044063da8e45d749bf7da5f2501c024da27fd90185",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-012": {
+    "hash": "325889b9ff06842e4baccc80e1b72c6fe54c53ad8f4c7a15fc6d46f8d1fe4bce",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-013": {
+    "hash": "25c7e49364234cd6e6fa34854a5e00f6d5e810f1ab681d1cb139fe59686e283d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-014": {
+    "hash": "5b6ae9688e0b7d1e18da3276218f5973d1bdbb76fe59eef33c1a155103ad7a40",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-015": {
+    "hash": "1f10692a23d12ec43954a514cdddbd2b420396ec052ddc34147290894892c53e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-016": {
+    "hash": "8d365528aadb6bc8432694e68faaae598e095f30d5c776e6a895bafa2d281e07",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-017": {
+    "hash": "7e484140bf0b15084154fff29b8905e72281751ed6d994d5eaa8c5e933e51015",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-018": {
+    "hash": "4481eaf7adf4aeb7374baf72567ce0e945d42fd0072267bf9d033663662a634f",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-019": {
+    "hash": "f0b0987e9b5ce41364db9ebdf5cce29c04bc20971b7b9c3031aa8299bb745f72",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-020": {
+    "hash": "d01a9e443a10340bd36d4b4a22ba42de6e695559af9710f5cb3e7f855c840959",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-021": {
+    "hash": "a6ce62af79178d3974b8cc5698a16b934bb66818a250ba362fe827479936c1dc",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-022": {
+    "hash": "354d5a9e780b3ec2f5a472a87fdef5abcb32fa8d921b242596d58b9c193164bf",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-023": {
+    "hash": "026cc3e6d7c2af497a2e79dcb261be91ddfab26c91671e3b3e786cccadf12025",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-024": {
+    "hash": "f746c471cd24e43378c64d7ce4fad3ca8e0bb562d2c71a03d6cd56908a98c01f",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-025": {
+    "hash": "8ef1a1e9b372c05e99124f0ddfc86e27ebeb76110bff56748aeb02d33adae6c6",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-026": {
+    "hash": "7ebadc685de12e4c0551c791bfa16d9ea8f95acc43b13dcb1f59e32eebabf360",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-027": {
+    "hash": "9c1950e7622f62ee3ac74f8b8b04578166dab424f1c32066cac9dd64f4bf27c5",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-028": {
+    "hash": "fe2736dbc892ea72910a1514586380f70acd932362d6ca746941dd83b36a28a5",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-029": {
+    "hash": "0ccfdec24d217338dd75f098ebbe8f904d6252e1a2911063b5bcad9a01a2d8df",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-030": {
+    "hash": "0f411d6123481c111bf667830ea693d85a13679a848667d39bcbfa22e54badaf",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-031": {
+    "hash": "f79360da3714ec297e54eb94cea279ef914acc2ac18281fdcc4d565136920724",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-032": {
+    "hash": "589b082d2b2a388baa37a3fdfedf616c4df7fa2c9bfd2880be155adf4fd19a38",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-033": {
+    "hash": "268e2f0098e0ff47170251cb763e2e4e60901c00853721029c3096dace4838c3",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-034": {
+    "hash": "ee158a1b11c41c05259af983326f796ce831ca9f22e5a393f5956db474bfa4ca",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-035": {
+    "hash": "dc9eb47dd8cf4d1ad48013bff9660502f37bb62ef01798d66f47cc4f8c78bc11",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-036": {
+    "hash": "8ebb456bfe6dc95b1e1f19973fa55f30dd5a78100516ec3884153be22b6379aa",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-037": {
+    "hash": "cf3f2df63330d29ba9a848933fc3c6b8268a30a81434dfeacdf12aedd4f6a227",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-038": {
+    "hash": "b91e1f0047cf2270754f4185c0014b0045454cfabfc38e1517e07c3b1c874b69",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-039": {
+    "hash": "70b6a7d3947f6f69863a1148cdb92183e020c46ac5116ceae2cef306e9499958",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-040": {
+    "hash": "3484720b27555c4975609b5d0df9ce4b505b6f0f663dd4578c8abe8529c7077c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-041": {
+    "hash": "9b7726255173cd7d11e7767bcdd5b4671ed686e62fccac188ca15999c59ea2f8",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-042": {
+    "hash": "7b9100cb87fd176e376a4efcaa8742a31e0d5363981ba8b7a34a6237c6cf9220",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-043": {
+    "hash": "38e9090a57b48061a1da6d714ad2559a2dfeb321c6c5dc145f8e9db960434c85",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-044": {
+    "hash": "6636ab7518d1278b49a5ab9ce759560e90e35be53585526b0dafb128e8eefb74",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-045": {
+    "hash": "eec219114f26fe36a094ecd4ec924669344ec9b72adc079ef7aa27bcb08b13af",
+    "since": "2026-09-15",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-046": {
+    "hash": "32fb40c28502f06f75376cbaf1aa67d6ec96f54f460cd1b1d47667df5b16210b",
+    "since": "2026-09-15",
+    "change": "establish-spec-governance"
+  },
+  "coverage-gate-047": {
+    "hash": "7dd85bda8bb689d5cd65ad47ae742dcd671fe4cc030fc8a9b0128aa3a2385868",
+    "since": "2026-09-15",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-001": {
+    "hash": "6855a8540986c67eec67f1333d8c7931005ecd327c91c963ca49d0eee1e9a50b",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-002": {
+    "hash": "41421027db58267d52a438a2f8cb4dd1d7697e9e5d7cb5f7f33cc75eb7f7a4bc",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-003": {
+    "hash": "1129ce50128c03f8efc4e9c5f211b3ed63d3e57674af49abd124b771134c01e5",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-004": {
+    "hash": "84de8b77ce568470d1dc756e4ec8fe5ce139039cfdc454a237e1a70c5d2820aa",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-005": {
+    "hash": "618f2769d0cf2235abf85d54870dfcfbeab711bcdeed029c4893857813a9f51c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-006": {
+    "hash": "7d38ee9791af7ea6166f41c24ead752b6fa0afa689b49f455a471abee57dfbdf",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-007": {
+    "hash": "0dd2aedd2cc237dcece509b49431f399253f34e67515a5abd9e8b523b1230886",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-008": {
+    "hash": "f25d6ac19f1075d2b0b458eb04ec3b6294b48176f8a5acddd37bb32f9fe158e2",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-009": {
+    "hash": "bf28957188b95c67f00f1137a41e87a86a4f9965089fda2f3efeac51e0fa830f",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-010": {
+    "hash": "59ee87ede772371681d55abdc915179ac8b1391861ceb0a48669c05b3bba0cff",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-011": {
+    "hash": "f9daddb1aa2d72a9d2caac1e9dedde711dcd2e38b3ecda9e33ed2ba909716f0c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-012": {
+    "hash": "05c36665e21ff0ae5218b0dd22628b82dcf4e50a63096f3f5c4961d407de192f",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-013": {
+    "hash": "800ccb66c3d35ab786436a335032fd0e9977122e0817d57ef002972649022bda",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-014": {
+    "hash": "4514e4e2ec445b81c02c71dbb25778ed73d341fb23f7922209345d2a1fdfe6f5",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-015": {
+    "hash": "9208ddf31218a8614f4c05f08c0a3d9656ff653420f4c90b41f3d73ba7f81f5c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-016": {
+    "hash": "7a4969ba082f7718dec083a7f8b0869bcb8a016f05e80b23a3b410407b5343bd",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-017": {
+    "hash": "a00d9ba40e0e23dc5e70935618eb045d970cf0ca97ec87d2d157cdea18f2ae91",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-018": {
+    "hash": "381f1c0bf6bfff13b2cf731fe24e118383e37b83c38ef41f9ad98b73236bb947",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-019": {
+    "hash": "2ac55e4b053fb8707a5db84d1011e06e60fcaf5b175b9389cf4604db7c017d37",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-020": {
+    "hash": "276b3c1df98ad40babd5e1124ed116d17326adedb2a858ce87a6bb0de703c927",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-021": {
+    "hash": "2ae8c6db86f7a7cd23b2312125191952c8e0cbc894780209fab3e251b787ae91",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-022": {
+    "hash": "6579a6fb106bf53e0b4f62680a621822dada0a638680426ea60545572a01baa5",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-023": {
+    "hash": "8bc2626e8d0c89d88f0491c210998e170e7b0cf112cff93b9298950871e3910b",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-024": {
+    "hash": "ce823a16c5aeb96a20f203a2ab3929dde87fb882242e863a6fed7d7ab4562a5a",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-025": {
+    "hash": "33243edf18a79889304ac41bdb134f9f679c4330c805396cd0aee50885f06ce1",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-026": {
+    "hash": "595bb05e83e82a7c98ee171dfb37e0cf678e0ca8f800d416f00eb54c7b9d41f5",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-027": {
+    "hash": "bed92ae8617adca346bfa56710e5e18a52788540b84022d29670f32707d29f2e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-028": {
+    "hash": "535e3aaba4433195623df3b91bbe23c04a1c1199f5fbc39434bf6e2fdba22dd1",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-029": {
+    "hash": "57468dfc0504e56ebf2347530ef2b0775d380dc47ea9ae0e1716457ead80c4cc",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-030": {
+    "hash": "b904aa55179ad6cf2eb3bbefbf51c6bdd779f28b5830bb33986c864f664334ee",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-031": {
+    "hash": "31be9f2f48ad5096af49a4f0e56e2644dc12d5e79d8396db945fc309ad87b5ee",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-032": {
+    "hash": "a6c518ffd332db95cb889b3088da8be242dc659f93a7ae27d6f06c388fc3e2ac",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-033": {
+    "hash": "8e4659a52b9ae1fa5b2ae86a74fc52a7d3610fdaa130eebf77727cb6ee0b91d5",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-034": {
+    "hash": "fc78bb36cc8fe788079ff4df4addad094803aeeb864fa764d3da699929517d4e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-035": {
+    "hash": "cebf6800e310f21a2b41f739fa8f2f5ead784dea9bfaed5fca1bf56ae6db02bd",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-036": {
+    "hash": "36e3f3f967029b6c5e51425388ff38912b083cfd8fa565138039b9aa7e50e8a4",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-037": {
+    "hash": "1b38c1b9ca4a5b5135e99f4ee30967b073efc36796196517a8e1e44ed827f0ba",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-038": {
+    "hash": "580dc060e9e834106dc98d7f484de15cf5f9be389f0c87025101351489db4dc3",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-039": {
+    "hash": "4399b47c4f20eff44edcbba8aa293d77b5bed63aab37f30ef3d8d22ecaf18d6f",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-040": {
+    "hash": "cfd11db30b0551c6c6dce50cef4a7bb238ede5d59476ef657fc86439eb734f5d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-041": {
+    "hash": "15bd224ce9de6c46c24e22878c8c110799b892f28ec48a4982bbba1b5a0cc273",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-042": {
+    "hash": "5d9775ded8bde15d41b53c435df687f81cf20473435b5a22a07002d58503a012",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-043": {
+    "hash": "c35a9b5f71adb8b59c0f66ad02522255efc9bfaa5ef9ae8cb471f5e11a2977e6",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-045": {
+    "hash": "a62feed4fd39e16ddf484f3323d57525a124e2380f60797d3d489e40b36d6a97",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-046": {
+    "hash": "f7e5db7c3ecc3b4174d2a7308229bdda50a9b8c8ebef4c4f7fba90add715f387",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-047": {
+    "hash": "f26db79ad3b2f6242e5e33ffdd28aa2ef31110b1f9fd4ad6f8e6235738eb850b",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-048": {
+    "hash": "d012d8e04953538f8870ce1792152196aa4904ddd1f8e3b0c03acdbb39931356",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-049": {
+    "hash": "c86b213a0b2a747941a215472ecfa08007adba602251979485823af6ecb6acc2",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-050": {
+    "hash": "6a175ad76bc13cfa3276511c6fbcce87f6bb1b09970832b55746501a2273a78e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-051": {
+    "hash": "5b7fc5c1a49ea226dafe1c64a6b0857d72e45d4386083030d94390e2cf1d579c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-052": {
+    "hash": "bbb0a801d63e7281b1f3564ee9b3cfbe55572d5f83ffb19828f2bead1aceb1f4",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-053": {
+    "hash": "de5ff490c2fe5618948920cb99da340a0d7d9ed9dcaaeed5d10edf8eee594992",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-054": {
+    "hash": "c46c534f0530cdd1506a678efb1fb6107490e473511c8229bf5a53c46f84236d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-055": {
+    "hash": "6de311af6897f3e6b5c45ed58fb9fa3d9256c20c4b1ce1dafec34002dfeb1571",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-056": {
+    "hash": "d6bd8c9307b3ff621ea9e91a61905abbe7a22ad8124d9ab7eab2b21c3c97503a",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-057": {
+    "hash": "f3e4a7e7cdadf0be3e1d5bbbb3632c1309010e9f9bbc4cb2903588ba1aa08c8b",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-058": {
+    "hash": "f6799f651c3978098fa334c200bdc31cdf2fa6f6b9a009cc0452404023607647",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-059": {
+    "hash": "cde88625fa90c83a93714f22ccdf5d9fe841420456849ecb818f105c38353496",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-060": {
+    "hash": "f99d68293b9801ef8f9ffe23a3dd2a89b9ea55572d44f25ec571989071603819",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-061": {
+    "hash": "9742af4c741edd4812b8a3296d3cfec840b4553a4718a750408a3532d8b00d66",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-062": {
+    "hash": "68b4caed7e3c8ce410fdea1dd6f754ad193bd10acf10ad0f13113476284a0935",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-063": {
+    "hash": "edb6a273f00a18b3cfbb2467b41698833bc0ace35985a1d6c58dc4ce611bf082",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-064": {
+    "hash": "6b458f153366e97643570a8535405f4d99bf0a94a23c21f161c3bd56fb7ee633",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-065": {
+    "hash": "053eea69a67ba970c723c2932eb1cf6f6b0d9f5fb9f6c1caa5cd82da78bc81a2",
+    "since": "2026-09-15",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-066": {
+    "hash": "920f01997cd6985f81cf2efba009a3e97f6501fedfb39fa4852a5061d82b3e6c",
+    "since": "2026-09-15",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-067": {
+    "hash": "fb30340d5e35c124321daccb73c3b0908911708c72454b9b7e6c0526d5db3167",
+    "since": "2026-09-15",
+    "change": "establish-spec-governance"
+  },
+  "gap-ledger-068": {
+    "hash": "6933f10f9e2fcef1313110b50801c7ccbc80703b6a354345efe20ad1067f204d",
+    "since": "2026-09-15",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-001": {
+    "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-002": {
+    "hash": "b75eafc1ea0674263ff2cd092dbbf795a1a4015c265f5db811b0f3d90e6537c4",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-003": {
+    "hash": "c2afcec503b5f71340b268487b3a8d0ba31606be2dedd126463ee99176b70ee7",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-004": {
+    "hash": "bbd708a39833e31e319544c8a587cc678b59e62e504c361b9bf60165026989dd",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-005": {
+    "hash": "595770707d58c157b667abb17324aca2a1802b82e1116f2b2986e39d9c3a2487",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-006": {
+    "hash": "5625bbba5417387d2b75d964554bfcf5447a9b0e7cbd03cd0dd2d8a027f7ef59",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-007": {
+    "hash": "67d41a3ef828d36e8554f1404e82ad16a2cc0172cf27b1a3e4b7bbd480e7a4ae",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-008": {
+    "hash": "77e6c4f9332cd00f5caa8f2803176d451fc43e721ddede32786166cf771c4d4c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-009": {
+    "hash": "97a59503ff6ceaf9bdb770e8e76f8c7cf9ae3589f6daec1979ce5cc763dacbf5",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-010": {
+    "hash": "7a95e918f9c8fdc5a10331876f1847f1548528d532b78607407d83a351242906",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-011": {
+    "hash": "c9b8554d3fb31a49810f4d9087743952ffabc14d5c25ab955e20a92776ee6953",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-012": {
+    "hash": "fdb36b10cf54e8fbe71c6dc7cb118b4189a61dd9c2e973b9f495c2c11845f627",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-013": {
+    "hash": "cfc5f72dcbe9100bec07541a1cd8d07e256f07d1f26d8a1a12d5863b373ef8ce",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-014": {
+    "hash": "09ec75526614b1d5cb7514d14178f37361a4123945a890ec31b4638e0ad49889",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-015": {
+    "hash": "a0dc31593f8bb7c07657e841b5eb7f3bcb122c02717ae5499f1f3979da362d01",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-016": {
+    "hash": "ffec84781908998eb06d06766d597d11e1b5b31bd4c18dd633b47d80863acd77",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-017": {
+    "hash": "3d0516be79bf759e8a945111c5f8ea94545688cf6ddfadf069e3511a75d68b63",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-018": {
+    "hash": "a06551d96e669a9fe7812571303bb80f1c29ee15dfeb46591528afd417acd69e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-019": {
+    "hash": "9a4c1e8c12a17edab972fd68e016b42234866b408ddde5e0ca947c612c34087c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-020": {
+    "hash": "c5a9938432c13ce5d3f9003da9a3e3519e17ae59e097ab14ea2cd1b482aedaca",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-021": {
+    "hash": "ca981c4dc13840df4f26c239da3f24b29fdb69bd36d858de58eb754ad5e5cadb",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-lint-022": {
+    "hash": "1c7c0ca5a2cb59341b281aad798fecff71973d14aa3ccef561ae6a7748d69a2c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-001": {
+    "hash": "dc53b71e3108c5f4f2486956cb86d35e8241107f07f0dcc34cd997cab53ac553",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-002": {
+    "hash": "e063b439a8a3d3885737de181d57e9b9fca50d3e369bd70538f9e98b74d8699e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-003": {
+    "hash": "b33a39bd00588c7d161afae5d0b6b47fb30427c1bc4b5de31f9e56514ffdee42",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-004": {
+    "hash": "184a1788c462902340788a39195e6762ada8ecc1d268f8cf33576ed60817a48b",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-005": {
+    "hash": "a5aa6bb88fdc6ba19c16292ab65a4d5d7a697df404910a3aa72f7b9156aedc2d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-006": {
+    "hash": "a1c240612c1c51d9be2f3f8c72a17bc1b12e852cf3a644881455487b32f85903",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-007": {
+    "hash": "303ddbc8379b31983d82c2ceb11e091918a47adda7d01e044344c4d7b9fd5a17",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-008": {
+    "hash": "c00c4083eb96a4a085c509cf7b0359750bb28732d428c8e6536ee8c84edbc976",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-009": {
+    "hash": "a3133f3c22ec4cb39c54b1063fd3a93df3c69fcdd65680519675a54c4e0a1fed",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-010": {
+    "hash": "15faa6c17cb52f3f17daa0aa7b32c8a6a4208808dd5489ed94457d141b98a9f8",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-011": {
+    "hash": "b49003c1f4408149754c81f39af97e3cc0a210795797671619f33cf2eb7bebee",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-012": {
+    "hash": "d4b536eba2f9efa687df61a62602167d3a3f1c6c1614c578613b309491f6d8f1",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-013": {
+    "hash": "ac3e95b8a88682e07152c4676d5619ed3c255e7f4a46ccd86a76b76c82c50f79",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-014": {
+    "hash": "edd6c541f319e2daf8625222f0dcd98b3a42c0bf66f072a63911bbbe5ea1be22",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-015": {
+    "hash": "e1a1e237fb672db2dae9fd4993bde1d735fb18ac3d803c853d4404eba32b30f2",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-016": {
+    "hash": "8d653738a4a04c15527ebd948fe05bd04725baca33bf7bc7deca58179c245440",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-017": {
+    "hash": "3d8d5da4fb4cb5bf691e7ffa3db56bf7090dcbf6b7a0e42a3ed9a7b4858fa797",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-018": {
+    "hash": "58763e5008298b92ff3a706c7a698d3e31e7ebd9c451f46aa7a42d683a1deaed",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-019": {
+    "hash": "9df96e64d76153ab0a3e6c36a5d9f6856f5c43416b292723e6b0c804b43d8c70",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-020": {
+    "hash": "1917138dfdd28c97aedbc4acef3a566c8df02d58b93e779af1092b197583f676",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-021": {
+    "hash": "dae8a5628822d653c9267d4e37e9b00630f6e6a888f98c671088b8083d1bb267",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-022": {
+    "hash": "0a99a0e43a003760814a7a5388e2cf13528f53b6c212043dca16b6eba67a5492",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-023": {
+    "hash": "b8a5d2578fc410b059aa4a5ecb41e447f36b3719a97f6dd83043bc9be732f527",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-024": {
+    "hash": "927de98a71080e05b0f62c058d2bc3de917cd63dcaa0eab46f6ae48e6fa98138",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-025": {
+    "hash": "a19ecd551d28ae1610ea394f602f78a148225573f0eb53f88eb22a65f437115f",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-026": {
+    "hash": "9d013f8cbed5b6577f821e4400900766c9795226b5bdcba8ebc29ba464943eae",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-027": {
+    "hash": "949aa26761cba74cdbe7aabef6c6f03c85115a788d4c7271a328a235b080c773",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-028": {
+    "hash": "cb3a1133ebafbdc662eb55563e7967ae50ae99d17728219939e08db78f28eadc",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-029": {
+    "hash": "7c27c66550ee653fca4160d051a22802ec00972045f1f652c5e8319830450029",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-030": {
+    "hash": "587129590dd93cf89caaf49c7edf3d0a9118278dfa30e59750091cd1a4dfe74b",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-031": {
+    "hash": "38d320db4a23e7954eacd424e0274575db42801f03c749b687a6256ee739a8f8",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-032": {
+    "hash": "587c3efbdb189f0dd2551214abe9afff8d95802ab21cf82185426d95a084974d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-033": {
+    "hash": "6a61b7dadd3b8229df298b732ad6ed307099aa9ff69973acfa1ff44b2a442d9d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-034": {
+    "hash": "e84fb77f9fcc6bf9888002c397a75c651544fbb690db95003ad29b9d8093fcfb",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-035": {
+    "hash": "be19cd67313f00b7fcdc349298ad911c8b3b9be9bfd77000b68ba22f8c88a948",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-036": {
+    "hash": "1db0bf8e5da03de4b0d69893cf72fb7e2701dd739ccdab0f9be3d1b461dc942c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-037": {
+    "hash": "6516e42a4af9f75a71baca0d7e9f4a3399f2b15746d5996ec3399e67662eb1a0",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-038": {
+    "hash": "36398bdd7deac98cb210655d7b5e81e682c9049707156ecfb914e2830b74902d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-039": {
+    "hash": "2933e077b17977d4e3d19ac1f64f0fb83a94516fa3dd884bbb4589cc8395f3ee",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-040": {
+    "hash": "e446a8e1ff98fc9a53b9b9b33f474db1c8e0aa10def7d8bfad8e6a21483fa7c5",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-041": {
+    "hash": "df205b1dcf7076919934764f46795194a17a93042ed37c6a452c0057683d4d1f",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-042": {
+    "hash": "049c47127628967bac3e26103297bf3460e60dfab311551aba0610bec39eb7c2",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-043": {
+    "hash": "07fff0d4f832eb40d695dd2233a8b41011492544299cb2d111aa47803b071b0e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-044": {
+    "hash": "a3fc39294e427c59a2e758e102a0a94783d494a6b74ab2b138979178ce1379a4",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-045": {
+    "hash": "a28af7a158f1e3f759b9c7ad0766ab4146e28691b736ff7b128498fab0e75eb6",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-046": {
+    "hash": "28ed0e9056ec42ee4e1f597b49ccb8482379fe1bf053fc8dd3ccfc0df47be7b6",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-047": {
+    "hash": "b865aef57845ebe9fa90bc46cc46943c152f408b995babe4cc637663a4e01ec9",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-048": {
+    "hash": "820a67ceef41bd407ebca4610c86e8f0ec6dce4c6d2df28e825299e99aa2cea9",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-049": {
+    "hash": "34e9dd50f3d6f8cbf17cc04eb034bb2b2c93ca21c2c47386c31ff86b7211d02b",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-050": {
+    "hash": "45591d7881e9133ed955bf2d9d292d3f8074e5c50a6628f3def6dfe5e51bba79",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-051": {
+    "hash": "ccc88f069b9d84c5a9db7aa8b5a84a14a45cac7995436474731b124381f19a96",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-052": {
+    "hash": "d49a22db8ce8cde343ae9cfc96eaf2cd1046476f4aef68f9b9b4978eb030381c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "spec-trace-053": {
+    "hash": "ec22065caadc65b205183284a45509ad1d005a0399661ebf8c6ff7b8c1022c66",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-001": {
+    "hash": "6cf27754c7f72012bb06e5ce4e6db5767612760d487b71d51aa7a7f4fb4a933d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-002": {
+    "hash": "8bd93b5db17c5e8273f5b247066ae3dfa92a10c07aea80b6cd9518815771155c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-003": {
+    "hash": "3e74b3aa38630750840c02cbf3a688fb7064db8072aacf3534df9a6641d2b8b4",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-004": {
+    "hash": "e328fe231f1450049d5d74ef3d67aeeb05c7f33fba36376fb6f064686e81145a",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-005": {
+    "hash": "11d82c671ed8c213ebcc9f8216936d01109744adf71c7e08a4b670d72196ce6d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-006": {
+    "hash": "a83cd96df3bb89fb52eeb10cd022a6c37650b70b0449118a109498477ed07861",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-007": {
+    "hash": "d37abc249c382c69a65256d8651e76cc5660d7ba66969b4817c8ff883263e90a",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-008": {
+    "hash": "afb71d52309ca7ad89e6129a9f5ddf53b2a8fa8c225330eabae66ddda95f963c",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-009": {
+    "hash": "32b2c4ee7e57426c70a3e124a49bf88a7f944a69eba38da01fe1f094e84b2faa",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-010": {
+    "hash": "171d595a28fefdaf590e7f49aff322d4aa81432d044f5cd23b49dead26ea008a",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-011": {
+    "hash": "974668a8ff7aef2833334377a2ff4ba225165b016d8890a0acf382fd4cf22390",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-012": {
+    "hash": "b00400750fba49ba8891dffe8676dc5f1fcc1eaae7512c3ef92fb9fa3c15fa9e",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-013": {
+    "hash": "0aa443977fa224402347690a4643ba2aaa89f35fed6dc8f7c87a958d4026da57",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-014": {
+    "hash": "4c31ef120f7c65a05470736153797f3e154d020ea9bc2ff6e7de9727a9b2d83d",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-015": {
+    "hash": "3165e5d4195af089f3e2bb9ba63b46566cb1595e7939ffa797d9e69a4d315078",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-016": {
+    "hash": "6785d556cc41a308e4434ae0a6e32cce58cd97da8faa4fedba4a702b4cce3645",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-017": {
+    "hash": "bd9c453532f902bec0a7a34baf4232a3e7e04d936e60183430fb5597c1050b73",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-018": {
+    "hash": "f3c422485dae7eb94b4b794bac53edb8e52a87ee2d0478a3180d2f2baa018995",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  },
+  "ste-lint-019": {
+    "hash": "e5a686414fba01f923780624df61d0a45cf711332983d47c18fbe1b98cf1fffb",
+    "since": "2026-09-14",
+    "change": "establish-spec-governance"
+  }
+}

@@ -1,0 +1,14 @@
+Verdict: FAIL
+- [ ] S127 openspec/changes/archive/2026-09-14-establish-spec-governance/proposal.md:66 "a change can remove the coverage of lines, branches or functions up to the width of the range" One word, one meaning. This is the only place in the prose in scope that uses "up to" for a largest amount. Every other place says "at most": proposal.md:60, design.md:71, design.md:109, design.md:111 and openspec/config.yaml:37. The word "up" also has a second meaning here. In gap-ledger-050 (specs/gap-ledger/spec.md:152, and test name line 144, "moves the range ... up") it gives a direction. I am not sure that STE approves "up to" as a word for a limit. Write: "In a file with a range, a change can remove the coverage of some lines, branches or functions. The number of lines, branches or functions that it removes can be at most the width of the range. The spec adversary checks each changed test for these files."
+- [ ] S128 openspec/changes/archive/2026-09-14-establish-spec-governance/specs/gap-ledger/spec.md:205 "Close the range of a changed file at 100%" One word, one meaning. In this change a gap closes: the gap goes away and the ratchet command removes its entry (design.md:21, design.md:119, proposal.md:10, gap-ledger-008, and the history reason `closed` at spec.md:209). Nothing else in the change "closes" a range. When the ratchet command takes only the range away, gap-ledger-062 (spec.md:198) says "removes the range". The THEN and AND lines of this scenario remove the entry, which closes the gap. A reader can also take "close the range" to mean "make the range 0 wide". Write: "Close the gap of a changed unstable file at 100%". Make the same change in openspec/specs/gap-ledger/spec.md:209. In test name line 158, change "[gap-ledger-064] closes the range of a changed file at 100%" to "[gap-ledger-064] closes the gap of a changed unstable file at 100%".
+
+Notes for the caller:
+- **Gate output:** "STE: 0 errors, 0 warnings". There are no STE-PASSIVE or STE-ING warnings to examine.
+- **Merged specs:** openspec/specs/gap-ledger/spec.md matches the delta spec. The only differences are the Purpose line, the headings and the blank lines.
+- **Prose that changed and has no findings:**
+  - design.md:105: "Thus the base comparison uses these rules for a new range, and for a range that is wider than the range of the base entry:"
+  - design.md:108: "use a new or wider range to hide the lost coverage". Round 12 accepted "caller" and "lost coverage".
+  - The WHEN, AND, THEN and AND lines of gap-ledger-064 at spec.md:206–209. "tells you to run the ratchet command" matches spec.md:63, :102 and :122.
+  - Tasks 4.62, 4.63 and 4.64.
+- **Not reported:** the second sentence of `range-slack` says "these files" after a singular "a file with a range". `range-totals` uses the same form, and earlier rounds accepted it.
+- I did not read .env. I did not change any file in the repository.

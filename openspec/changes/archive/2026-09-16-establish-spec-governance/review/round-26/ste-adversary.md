@@ -1,0 +1,21 @@
+Verdict: PASS
+- [ ] S171 minor openspec/changes/archive/2026-09-14-establish-spec-governance/design.md:87 "When the hash of a registered scenario changes" Approved words. I am not sure that REGISTER is an approved STE verb. If it is not, the past participle "registered" also cannot be an adjective. The change uses "registry" as a technical name, but it uses "registered" nowhere else. The meaning is clear and agrees with `updateRegistry` (scripts/spec/lib/registry.mjs:73-86). Write: "When the hash of a scenario that is in the registry changes".
+- [ ] S172 minor openspec/changes/archive/2026-09-14-establish-spec-governance/proposal.md:73 "The files in `.claude/` set the review checks" One word, one meaning. Everywhere else in the change, "set" means "give a value to a variable" (design.md:39 "sets `NODE_OPTIONS`", design.md:99 "set `OPENSPEC_TELEMETRY=0`"). Here it means "tell what the checks are". The sentence also says that all files in `.claude/` do this, but `.claude/skills/` and the `apply`, `archive`, `explore` and `propose` commands do not contain review checks. The meaning is still clear. Write: "The agent files and the review command in `.claude/` contain the review checks and the review steps, so a change to them can make a review weaker."
+- [ ] S173 minor openspec/changes/archive/2026-09-14-establish-spec-governance/tasks.md:294 "9.10 Record a decision for each minor finding in `review.md`." Instructions. Task 9.10 records decisions in `review.md`, but task 9.11 is the task that writes `review.md`. The reader can still do the tasks. This order came from the text that I gave in S170. `.claude/commands/opsx/review.md` step 10 (record the decision in `review.md`) and step 12 (write `review.md`) have the same old order. Write task 9.10 as "Write `review.md` with the verdict, the reviewers, the date, the gate result and the tree hash." and task 9.11 as "Record a decision for each minor finding in `review.md`."
+
+Notes:
+- **Gate output:** It says "STE: 0 errors, 0 warnings.", so there were no STE-PASSIVE or STE-ING warnings to examine. REVIEW-MISSING is expected. `gov-tests-r26.txt` is the same as `gov-tests-r25.txt`. I compared the files with the round-24 copy (`scratchpad/review-spec-r24/repo`). Only the round-25 and round-26 items changed. `openspec/specs/`, `openspec/ste/`, `openspec/trace/`, `scripts/`, AGENTS.md, `ste-adversary.md` and the spec deltas of the change did not change.
+- **S165:** Corrected. design.md:87 now agrees with the code:
+  - `updateRegistry` writes the hash of a new ID with no condition (registry.mjs:73-74).
+  - When a registered hash changes and no changed test has the tag, it returns `TRACE-ID-CHANGED-NO-TEST` (registry.mjs:77-86). The ratchet command then returns before `writeRegistry` (gates.mjs:381).
+  - `compareRegistryWithBase` checks only the base IDs (registry.mjs:108-113), so "in the same way" is correct.
+- **S166:** Corrected. Step 9 now makes one decision for all the corrections of the round, and it tells which findings to correct on the in-place path.
+- **S167, S168, S169 and S170:** Corrected.
+- **Also checked, no finding:**
+  - Step 9 "If one or the two agents give the verdict FAIL" and step 10 "If the two agents give the verdict PASS" cover all cases and do not overlap.
+  - The new `gate-code` text agrees with design.md:183, where `.claude/` is a process folder.
+  - design.md:175 "Each other correction needs a new review round." agrees with step 9, where each correction after a FAIL starts again at step 3 or step 1. Step 10 does not let the author start a new round for minor findings, so after a PASS a minor STE finding in `tasks.md` or `.claude/` is kept. This is narrower than design.md:175, but the two texts do not conflict.
+- **Not reported:**
+  - In `gate-code`, "change" means a file change in "each change to" and "a change to them". It means an OpenSpec change in "A later change". The change has used "change" in both ways since early rounds, and earlier rounds accepted this.
+  - A correction to the README.md of the change folder is not on the in-place list in step 9, so it needs a move. This is a rule, not an ambiguity.
+- **Safety:** I did not read `.env`. I did not change any repository file, and I wrote no notes.
