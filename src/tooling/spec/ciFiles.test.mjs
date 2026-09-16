@@ -38,7 +38,6 @@ test('[ci-gates-007] runs the gates with make in the Docker image', () => {
       "cp -a /src/.git /tmp/work/.git",
       "ln -s /app/node_modules /tmp/work/node_modules",
       "mkdir -p /tmp/work/.gev-cache",
-      "if [ -f /src/.gev-cache/spec-samples.jsonl ]; then cp /src/.gev-cache/spec-samples.jsonl /tmp/work/.gev-cache/; fi",
       "cd /tmp/work"
   ]);
   assert.match(makefile, /^GATES_BACK := rm -rf \/src\/\.gev-cache\/spec && cp -a \/tmp\/work\/openspec\/trace\/\. \/src\/openspec\/trace\/ && mkdir -p \/src\/\.gev-cache && cp -a \/tmp\/work\/\.gev-cache\/\. \/src\/\.gev-cache\/$/m);
@@ -47,7 +46,7 @@ test('[ci-gates-007] runs the gates with make in the Docker image', () => {
   assert.match(makefile, /^gates: ensure-image\n\t\$\(GATES\) check \$\(CHANGE_ARG\) \$\(BASE_ARG\)$/m);
   assert.match(makefile, /^CHANGE_ARG := \$\(if \$\(CHANGE\),--change \$\(CHANGE\),\)$/m);
   assert.match(makefile, /^BASE_ARG := \$\(if \$\(BASE\),--base \$\(BASE\),\)$/m);
-  for (const [target, command] of [['gates-init', 'init $(BASE_ARG)'], ['ratchet', 'ratchet $(CHANGE_ARG) $(BASE_ARG)'], ['stability', 'stability $(CHANGE_ARG) $(BASE_ARG)'], ['lint', 'lint'], ['tree', 'tree $(CHANGE_ARG) $(BASE_ARG)']]) {
+  for (const [target, command] of [['gates-init', 'init $(BASE_ARG)'], ['ratchet', 'ratchet $(CHANGE_ARG) $(BASE_ARG)'], ['lint', 'lint'], ['tree', 'tree $(CHANGE_ARG) $(BASE_ARG)']]) {
     assert.ok(makefile.includes(`\n${target}: ensure-image\n\t$(GATES) ${command}\n`), target);
   }
 });

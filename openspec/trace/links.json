@@ -402,45 +402,11 @@
   "gap-ledger-032": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-032] stops for untrue coverage that the base does not record"
   ],
-  "gap-ledger-033": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-033] does not stop for counts in the range of an unstable file"
-  ],
-  "gap-ledger-034": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-034] stops for counts below the range of an unstable file"
-  ],
-  "gap-ledger-035": [
-    "src/tooling/spec/gates.test.mjs › [gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage from the kept samples and does not stop for it in the check against a base ledger",
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-035] records the range of a file with unstable coverage"
-  ],
-  "gap-ledger-036": [
-    "src/tooling/spec/gates.test.mjs › [gap-ledger-036] stops the stability command for a changed file with unstable coverage",
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-036] does not record a changed file as unstable"
-  ],
-  "gap-ledger-037": [
-    "src/tooling/spec/gates.test.mjs › [gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage from the kept samples and does not stop for it in the check against a base ledger",
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-037] does not stop for an unstable range that the history of the checked change records"
-  ],
-  "gap-ledger-038": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-038] stops for an unstable range without a history line from the checked change"
-  ],
-  "gap-ledger-039": [
-    "src/tooling/spec/gates.test.mjs › [gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage from the kept samples and does not stop for it in the check against a base ledger",
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-039] keeps a coverage sample of each code file and reads the samples by file"
-  ],
   "gap-ledger-040": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-040] stops for more branches than the base in a changed file"
   ],
   "gap-ledger-041": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-041] stops for a ledger hash that is not equal to the base hash for an unchanged file"
-  ],
-  "gap-ledger-042": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-042] stops for an unstable range in a diff that changes a file outside openspec"
-  ],
-  "gap-ledger-043": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-043] stops for an unstable range that is too wide"
-  ],
-  "gap-ledger-045": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-045] moves the range of each metric with a smaller count, keeps its width and records it"
   ],
   "gap-ledger-046": [
     "src/tooling/spec/git.test.mjs › [gap-ledger-030 gap-ledger-046] reads the merge base, the base files and the diff with Git"
@@ -451,20 +417,8 @@
   "gap-ledger-048": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-048] stops for more branches than the base with fewer covered branches"
   ],
-  "gap-ledger-049": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-049] keeps the range of a metric with a count in its range"
-  ],
-  "gap-ledger-050": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-050] moves the range of an unstable file up for branches that a new test shows"
-  ],
-  "gap-ledger-051": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-051] stops for a wider unstable range of a changed file"
-  ],
-  "gap-ledger-052": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-052] stops for an unstable high count that is too far above the base"
-  ],
   "gap-ledger-053": [
-    "src/tooling/spec/gates.test.mjs › [gap-ledger-053] stops the check, the ratchet command and the stability command when the ledger file is not there"
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-053] stops the check and the ratchet command when the ledger file is not there"
   ],
   "gap-ledger-054": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-054] stops for fewer covered branches or functions in an unchanged file"
@@ -478,40 +432,34 @@
   "gap-ledger-057": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-057] records changed total counts"
   ],
-  "gap-ledger-058": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-058] records a file with unstable total counts as unstable"
+  "gap-ledger-069": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-069 gap-ledger-073] uses the tolerance of a file in the check and in the ratchet command",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-069] does not stop for counts inside the tolerance and does not record the entry as not current"
   ],
-  "gap-ledger-059": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-059] uses the rules of a wider range for a new range with equal low and high counts"
+  "gap-ledger-070": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-070] stops for a count outside the tolerance"
   ],
-  "gap-ledger-060": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-060] stops for an unstable range that moves above the base range"
+  "gap-ledger-071": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-071] makes the tolerance from the total of the metric"
   ],
-  "gap-ledger-061": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-061] stops for a range that is not correct"
+  "gap-ledger-072": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-072] compares the covered counts with the tolerance, also without a larger gap"
   ],
-  "gap-ledger-062": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-062] uses the low counts for a changed file with a range and removes the range in the ratchet command"
+  "gap-ledger-073": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-069 gap-ledger-073] uses the tolerance of a file in the check and in the ratchet command",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-073] does not write a worse count for a file with the tolerance conditions"
   ],
-  "gap-ledger-063": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-063] uses the base low counts for a changed unstable file"
+  "gap-ledger-074": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-074] uses no tolerance for a file without the tolerance conditions"
   ],
-  "gap-ledger-064": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-064] closes the gap of a changed unstable file at 100%"
+  "gap-ledger-075": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-075] stops for a ledger entry without the total line count"
   ],
-  "gap-ledger-065": [
-    "src/tooling/spec/gates.test.mjs › [gap-ledger-065 gap-ledger-068] uses the count bands of a band file in the check and in the ratchet command",
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-065] does not stop for counts in the band of a band file"
+  "gap-ledger-076": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-076] stops for a ledger file with another version"
   ],
-  "gap-ledger-066": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-066] stops for a larger gap outside the band of a band file, but not for a smaller gap"
-  ],
-  "gap-ledger-067": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-067] does not use the band for a changed file, a file that no test loads or a file with untrue coverage"
-  ],
-  "gap-ledger-068": [
-    "src/tooling/spec/gates.test.mjs › [gap-ledger-065 gap-ledger-068] uses the count bands of a band file in the check and in the ratchet command",
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-068] writes the smaller not-covered line count of a band file and keeps the entry counts for a smaller covered count"
+  "gap-ledger-077": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-077] runs the ratchet command for an archived change"
   ],
   "hud-markings-001": [
     "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"
@@ -778,6 +726,10 @@
   ],
   "spec-trace-053": [
     "src/tooling/spec/specs.test.mjs › [spec-trace-053] stops for an archived renamed requirement that the main spec has with the old name or does not have with the new name"
+  ],
+  "spec-trace-054": [
+    "src/tooling/spec/specs.test.mjs › [spec-trace-054] gives the scenarios of a main requirement that an active change removes",
+    "src/tooling/spec/trace.test.mjs › [spec-trace-054] does not stop for a main scenario that an active change removes"
   ],
   "ste-lint-001": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-001] checks each Markdown file in openspec"
