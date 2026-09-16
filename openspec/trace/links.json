@@ -513,6 +513,18 @@
     "src/tooling/spec/gates.test.mjs › [gap-ledger-065 gap-ledger-068] uses the count bands of a band file in the check and in the ratchet command",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-068] writes the smaller not-covered line count of a band file and keeps the entry counts for a smaller covered count"
   ],
+  "hud-markings-001": [
+    "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"
+  ],
+  "hud-markings-002": [
+    "src/hudMarkings.test.mjs › [hud-markings-002] has no classification element in the HUD code"
+  ],
+  "hud-markings-003": [
+    "src/hudMarkings.test.mjs › [hud-markings-003] keeps the three parts of the top bar and gives the left part and the right part the same width"
+  ],
+  "hud-markings-004": [
+    "src/hudMarkings.test.mjs › [hud-markings-004] has no style rule for the removed element"
+  ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
   ],
