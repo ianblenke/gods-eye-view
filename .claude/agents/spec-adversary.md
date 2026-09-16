@@ -15,6 +15,12 @@ The caller gives you these items:
 - The output of the gate check for the change.
 - The list of files that the change adds or changes.
 
+## Scope of a round
+
+The first round of a change reads the whole change. In each later round, read the diff since the round before, and each text that a changed line makes wrong. The caller gives you the scope. Do not report a finding in a file that the diff does not change. A changed line that makes the text of that file wrong is the only exception.
+
+The review has a limit of three rounds. After the third round, each open finding with the severity minor stays open in `review.md`. The author gives the severity as the second word of the finding, and the name of the person who accepts the finding. A critical finding or a major finding always stops the build.
+
 ## Read first
 
 1. Read `AGENTS.md` and `openspec/config.yaml` for the process rules.
