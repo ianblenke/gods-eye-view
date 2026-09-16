@@ -774,6 +774,26 @@
     "since": "2026-09-15",
     "change": "establish-spec-governance"
   },
+  "hud-markings-001": {
+    "hash": "bf07f3ac338e3fd2d2154e6b57509df6157b73411cd9031a3d84856c0ef48c0a",
+    "since": "2026-09-16",
+    "change": "remove-classification-banner"
+  },
+  "hud-markings-002": {
+    "hash": "81fe5a156dc44744408311b3bc63cdba835ff2a121bbb3bb6afa1e93b2981916",
+    "since": "2026-09-16",
+    "change": "remove-classification-banner"
+  },
+  "hud-markings-003": {
+    "hash": "3c6d553240c6733ad98ed66346eae9100f6739eada374a75a79b5d76f6c730a1",
+    "since": "2026-09-16",
+    "change": "remove-classification-banner"
+  },
+  "hud-markings-004": {
+    "hash": "53a95b97bc9d928e6f9c0a4f30917b9d247c5c6cdc35365970ff152976396c47",
+    "since": "2026-09-16",
+    "change": "remove-classification-banner"
+  },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
     "since": "2026-09-14",

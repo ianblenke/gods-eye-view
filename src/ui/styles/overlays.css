@@ -157,6 +157,11 @@
 .hud-top-bar-left,
 .hud-top-bar-right {
   opacity: 0.6;
+  flex: 1 1 0;
+}
+
+.hud-top-bar-right {
+  text-align: right;
 }
 
 /* Corner blocks */
@@ -209,13 +214,6 @@
 
 .hud-ais-vessel.active {
   opacity: 0.95;
-}
-
-.hud-classification {
-  font-size: 12px;
-  letter-spacing: 2.5px;
-  font-weight: 600;
-  margin-bottom: 3px;
 }
 
 .hud-system {
@@ -350,7 +348,6 @@
 #intel-hud[data-variant='minimal'] .hud-bottom-right,
 #intel-hud[data-variant='minimal'] .hud-left-edge,
 #intel-hud[data-variant='minimal'] .hud-right-edge,
-#intel-hud[data-variant='minimal'] .hud-classification,
 #intel-hud[data-variant='minimal'] .hud-system {
   display: none;
 }
