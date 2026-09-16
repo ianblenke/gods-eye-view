@@ -358,3 +358,35 @@ test('[spec-trace-053] stops for an archived renamed requirement that the main s
     assert.deepEqual(checkArchivedChange(root, ARCHIVE, loadSpecs(root)).errors, []);
   });
 });
+
+
+test('[spec-trace-054] gives the scenarios of a main requirement that an active change removes', () => {
+  const removal = ['## REMOVED Requirements', '### Requirement: Labels', '**Reason**: Not needed'].join('\n');
+  withRoot(
+    {
+      'openspec/specs/flights/spec.md': SPEC,
+      'openspec/changes/drop-labels/specs/flights/spec.md': removal,
+      'openspec/trace/retired-ids.json': JSON.stringify(['flights-004']),
+    },
+    (root) => {
+      const result = loadSpecs(root);
+      assert.deepEqual([...result.removedIds], ['flights-004']);
+      assert.ok(result.mainIds.has('flights-004'));
+    },
+  );
+  withRoot({ 'openspec/specs/flights/spec.md': SPEC }, (root) => assert.deepEqual([...loadSpecs(root).removedIds], []));
+  withRoot(
+    {
+      'openspec/specs/flights/spec.md': SPEC,
+      'openspec/changes/empty/specs/flights/notes.md': 'No spec file here.\n',
+    },
+    (root) => assert.deepEqual([...loadSpecs(root).removedIds], []),
+  );
+  withRoot(
+    {
+      'openspec/specs/flights/spec.md': SPEC,
+      'openspec/changes/other/specs/radio/spec.md': removal,
+    },
+    (root) => assert.deepEqual([...loadSpecs(root).removedIds], []),
+  );
+});

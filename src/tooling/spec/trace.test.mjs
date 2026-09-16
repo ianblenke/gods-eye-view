@@ -10,11 +10,12 @@ function scenario(id, source = 'main') {
   return { id, capability, requirement: 'Labels', name: `Scenario ${id}`, origin: 'spec-first', file: `openspec/specs/${capability}/spec.md`, line: 7, source };
 }
 
-function specs(list, { retired = [], main } = {}) {
+function specs(list, { retired = [], main, removedIds = [] } = {}) {
   return {
     scenarios: new Map(list.map((item) => [item.id, item])),
     mainIds: new Set(main || list.filter((item) => item.source === 'main').map((item) => item.id)),
     retired: new Set(retired),
+    removedIds: new Set(removedIds),
   };
 }
 
@@ -211,4 +212,21 @@ test('[spec-trace-017] writes the scenario links, the origins and the untraced t
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
+});
+
+test('[spec-trace-054] does not stop for a main scenario that an active change removes', () => {
+  const list = [scenario('flights-004'), scenario('flights-005')];
+  const records = [record('[flights-005] keeps working', ['flights-005'])];
+  const stopped = evaluate({ specs: specs(list), records });
+  assert.deepEqual(
+    stopped.errors.filter((error) => error.code === 'TRACE-UNVERIFIED').map((error) => error.message),
+    ['Scenario flights-004 has no passing test with an assertion'],
+  );
+  const removed = evaluate({ specs: specs(list, { removedIds: ['flights-004'] }), records });
+  assert.deepEqual(removed.errors.filter((error) => error.code === 'TRACE-UNVERIFIED'), []);
+  assert.deepEqual([removed.report.counts.pending, removed.report.counts.verified], [1, 1]);
+  // A scenario of the checked change stays required, also when a delta removes its name.
+  const ofChange = [scenario('flights-004', 'change:drop-labels')];
+  const inChange = evaluate({ specs: specs(ofChange, { removedIds: ['flights-004'] }), records: [], change: 'drop-labels' });
+  assert.deepEqual(codes(inChange), ['TRACE-UNVERIFIED']);
 });

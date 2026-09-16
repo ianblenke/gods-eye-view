@@ -5,15 +5,31 @@ export const LEDGER_FILE = 'openspec/trace/gaps.json';
 export const HISTORY_FILE = 'openspec/trace/history.jsonl';
 export const RETIRED_FILE = 'openspec/trace/retired-ids.json';
 const METRICS = ['lines', 'branches', 'functions'];
-const VERSION = 3;
+const VERSION = 4;
+// The tolerance of a metric: 8, or 4% of the total of that metric when that is less.
+const TOLERANCE_MAX = 8;
+const TOLERANCE_PART = 0.04;
 
 function sortedObject(object) {
   return Object.fromEntries(Object.keys(object).sort().map((key) => [key, object[key]]));
 }
 
-/** The total branch count and the total function count of a coverage record. */
+/** The total line, branch and function counts of a coverage record. */
 function totalsOf(record) {
-  return { branches: record.branches ? record.branches.total : null, functions: record.functions ? record.functions.total : null };
+  return { lines: record.lines.total, branches: record.branches ? record.branches.total : null, functions: record.functions ? record.functions.total : null };
+}
+
+/**
+ * The tolerance of one metric: 8, or 4% of the total of that metric when that is less.
+ * The fraction of the percent goes away, so a file below 25 of a metric gets no tolerance.
+ * A total that is not a number gives no tolerance.
+ *
+ * @param {number|null|undefined} total - The total count of the metric.
+ * @returns {number}
+ */
+export function toleranceOf(total) {
+  if (!Number.isInteger(total) || total < 0) return 0;
+  return Math.min(TOLERANCE_MAX, Math.floor(total * TOLERANCE_PART));
 }
 
 /** The covered count of a metric: the total minus the not-covered count. Null without a total. */
@@ -121,34 +137,8 @@ function describeGap(file, gap) {
   return `${file} is not at 100%: ${gap.lines} lines, ${gap.branches} branches, ${gap.functions} functions not covered`;
 }
 
-/** True for an entry with a range at 0 for a file at 100% with the content of the entry. */
-function completeInRange(entry, hash) {
-  return Boolean(entry.low) && METRICS.every((metric) => entry.low[metric] === 0) && hash === entry.sha;
-}
-
-function inRange(entry, gap, metric) {
-  if (!entry.low) return entry[metric] === gap[metric];
-  if (entry[metric] === null || gap[metric] === null) return entry[metric] === gap[metric];
-  return gap[metric] >= entry.low[metric] && gap[metric] <= entry[metric];
-}
-
-/** True when each low count is an integer from 0 to its high count, and null only with a null high count. */
-function correctRange(entry) {
-  if (typeof entry.low !== 'object') return false;
-  return METRICS.every((metric) => {
-    const low = entry.low[metric];
-    if (entry[metric] === null) return low === null;
-    return Number.isInteger(low) && low >= 0 && low <= entry[metric];
-  });
-}
-
 function hasTotals(entry) {
-  return Boolean(entry.totals) && Number.isInteger(entry.totals.branches) && Number.isInteger(entry.totals.functions);
-}
-
-function sameTotals(entry, gap) {
-  if (entry.low) return !entry.loaded || hasTotals(entry);
-  return JSON.stringify(entry.totals ?? null) === JSON.stringify(gap.totals);
+  return Boolean(entry.totals) && METRICS.every((metric) => Number.isInteger(entry.totals[metric]));
 }
 
 function sameGap(entry, gap) {
@@ -156,22 +146,33 @@ function sameGap(entry, gap) {
     entry.loaded === gap.loaded &&
     entry.sha === gap.sha &&
     Boolean(entry.untrue) === gap.untrue &&
-    sameTotals(entry, gap) &&
-    METRICS.every((metric) => inRange(entry, gap, metric))
+    JSON.stringify(entry.totals ?? null) === JSON.stringify(gap.totals) &&
+    METRICS.every((metric) => entry[metric] === gap[metric])
   );
 }
 
-/** True for a band file: a loaded code file with true coverage and the content of the base commit and of its entry. */
-function isBandFile(file, entry, gap, sameAsBase) {
+/**
+ * True for a file with the tolerance conditions: a loaded code file with true coverage,
+ * the content of the base commit and the content hash of its ledger entry.
+ */
+function hasTolerance(file, entry, gap, sameAsBase) {
   return sameAsBase(file) && gap.sha === entry.sha && entry.loaded && gap.loaded && !entry.untrue && !gap.untrue;
 }
 
 /**
- * The counts that the ratchet command writes for a band file with no range. It writes the smaller
- * not-covered line count. For branches and functions, it writes the current counts when the covered
- * count is not smaller than in the entry, and it keeps the entry counts when the covered count is smaller.
+ * The tolerance of each metric, from the measured total counts of the file. The measurement
+ * gives the real total, and the entry records the same number for a file that no change edits.
  */
-function bandFileCounts(entry, gap) {
+function gapTolerance(gap) {
+  return (metric) => toleranceOf(gap.totals[metric]);
+}
+
+/**
+ * The counts that the ratchet command writes for a file with the tolerance conditions. It never
+ * writes a worse count: it writes the smaller not-covered line count, and for branches and
+ * functions it keeps the entry counts when the covered count is smaller than in the entry.
+ */
+function toleranceCounts(entry, gap) {
   const next = { ...gap, lines: Math.min(entry.lines, gap.lines), totals: { ...gap.totals } };
   for (const metric of ['branches', 'functions']) {
     const before = coveredCount(entry, metric);
@@ -184,7 +185,7 @@ function bandFileCounts(entry, gap) {
   return next;
 }
 
-function compareCoverageEntry(file, entry, gap, band = () => 0) {
+function compareCoverageEntry(file, entry, gap, tolerance = () => 0) {
   const errors = [];
   const error = (code, message) => errors.push({ code, file, message });
   if (gap.untrue && !entry.untrue) {
@@ -194,9 +195,9 @@ function compareCoverageEntry(file, entry, gap, band = () => 0) {
     error('LEDGER-UNLOADED', `No test loads ${file} now. The ledger records it as loaded.`);
   }
   const changed = gap.sha !== entry.sha;
-  const allowed = (metric) => (changed && entry.low ? entry.low[metric] : entry[metric]);
-  if (gap.lines > allowed('lines') + band(allowed('lines'))) {
-    error('LEDGER-LARGER-GAP', `${file} has ${gap.lines} lines not covered. The ledger allows ${allowed('lines') + band(allowed('lines'))}.`);
+  const allowed = (metric) => entry[metric];
+  if (gap.lines > allowed('lines') + tolerance('lines')) {
+    error('LEDGER-LARGER-GAP', `${file} has ${gap.lines} lines not covered. The ledger allows ${allowed('lines') + tolerance('lines')}.`);
   }
   if (changed && !entry.loaded && gap.loaded) {
     error('LEDGER-NO-BASELINE', `${file} changed in the same change that first loads it. Load it in one change and edit it in a later change.`);
@@ -208,10 +209,9 @@ function compareCoverageEntry(file, entry, gap, band = () => 0) {
     }
   } else if (entry.loaded && gap.loaded) {
     for (const metric of ['branches', 'functions']) {
-      if (entry.low && gap[metric] <= entry[metric]) continue;
       const before = coveredCount(entry, metric);
       const now = coveredCount(gap, metric);
-      if (before !== null && now !== null && now < before - band(before)) {
+      if (before !== null && now !== null && now < before - tolerance(metric)) {
         error('LEDGER-LOST-COVERAGE', `${file} has ${now} covered ${metric}. The ledger records ${before}.`);
       }
     }
@@ -220,11 +220,11 @@ function compareCoverageEntry(file, entry, gap, band = () => 0) {
 }
 
 /**
- * Compare the current gaps with the ledger. A band file is a loaded code file with true coverage
- * that has the content of the base commit and of its entry. Its not-covered line count can be
- * above the entry by at most the band of the entry count. Its covered branch and function counts
- * can be below the entry by at most the band of the covered count in the entry. The gate does not
- * record the entry of a band file as not current for a smaller gap.
+ * Compare the current gaps with the ledger. A file with the tolerance conditions is a loaded code
+ * file with true coverage that has the content of the base commit and of its entry. Its not-covered
+ * line count can be above the entry by at most the tolerance, and its covered branch and function
+ * counts can be below the entry by at most the tolerance. The gate does not record the entry of
+ * such a file as not current for a smaller gap. See the requirement "Count tolerance".
  *
  * @param {object} input
  * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
@@ -233,12 +233,14 @@ function compareCoverageEntry(file, entry, gap, band = () => 0) {
 export function compareLedger({ ledger, current, sameAsBase = () => false }) {
   const errors = [];
   const stale = [];
+  if (ledger.version !== VERSION) {
+    errors.push({ code: 'LEDGER-VERSION', file: LEDGER_FILE, message: `${LEDGER_FILE} has the version ${ledger.version}. The gates need the version ${VERSION}.` });
+  }
   for (const [file, entry] of Object.entries(ledger.coverage)) {
-    if (entry.low && !correctRange(entry)) {
-      errors.push({ code: 'LEDGER-BAD-RANGE', file, message: `The range of ${file} has a low count that is not an integer from 0 to its high count` });
+    if (entry.loaded && !hasTotals(entry)) {
+      errors.push({ code: 'LEDGER-NO-TOTALS', file, message: `The ledger entry for ${file} has no total line, branch and function counts. Run the ratchet command.` });
     }
   }
-
   for (const [file, gap] of current.coverage) {
     const entry = ledger.coverage[file];
     if (!entry) {
@@ -248,16 +250,16 @@ export function compareLedger({ ledger, current, sameAsBase = () => false }) {
       }
       continue;
     }
-    // The counts of a band file can be different in each run, so they can move in a band.
-    const band = isBandFile(file, entry, gap, sameAsBase);
-    const entryErrors = compareCoverageEntry(file, entry, gap, band ? rangeLimit : undefined);
+    // The counts of a file can be different in each run, so they can move inside the tolerance.
+    const tolerant = hasTolerance(file, entry, gap, sameAsBase);
+    const entryErrors = compareCoverageEntry(file, entry, gap, tolerant ? gapTolerance(gap) : undefined);
     errors.push(...entryErrors);
-    if (entryErrors.length === 0 && !sameGap(entry, gap) && !band) stale.push({ kind: 'coverage', file });
+    if (entryErrors.length === 0 && !sameGap(entry, gap) && !tolerant) stale.push({ kind: 'coverage', file });
   }
   for (const [file, entry] of Object.entries(ledger.coverage)) {
-    if (current.coverage.has(file) || completeInRange(entry, current.hashes.get(file))) continue;
+    if (current.coverage.has(file)) continue;
     const complete = { loaded: true, untrue: false, sha: current.hashes.get(file) };
-    if (!isBandFile(file, entry, complete, sameAsBase)) stale.push({ kind: 'coverage', file });
+    if (!hasTolerance(file, entry, complete, sameAsBase)) stale.push({ kind: 'coverage', file });
   }
 
   for (const [file, names] of current.untraced) {
@@ -287,24 +289,14 @@ export function compareLedger({ ledger, current, sameAsBase = () => false }) {
   return { errors, stale };
 }
 
-function width(entry, metric) {
-  if (!entry || !entry.low || entry[metric] === null || entry.low[metric] === null) return 0;
-  return entry[metric] - entry.low[metric];
-}
-
-function rangeLimit(count) {
-  return Math.max(5, Math.ceil(count * 0.02));
-}
-
 /**
  * Compare the ledger files with the same files in the base commit.
  *
  * @param {object} input
- * @param {string} [input.change] - The checked change. A wider range needs an `unstable` history line with this name.
- * @param {boolean} [input.outsideChanged] - True when the diff changes a file that is not in `openspec/`.
+ * @param {string} [input.change] - The checked change. A changed total count needs a history line with this name.
  * @returns {object[]} Errors.
  */
-export function compareWithBase({ ledger, baseLedger, retired, baseRetired, history, baseHistory, sameAsBase = () => false, change, outsideChanged = false }) {
+export function compareWithBase({ ledger, baseLedger, retired, baseRetired, history, baseHistory, sameAsBase = () => false, change }) {
   if (baseLedger === null) return [];
   if (ledger === null) {
     return [{ code: 'LEDGER-REMOVED', file: LEDGER_FILE, message: `The base commit has ${LEDGER_FILE}, but the current tree does not` }];
@@ -316,50 +308,16 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
     .filter((line) => line.startsWith('{'))
     .map((line) => JSON.parse(line))
     .filter((line) => Boolean(change) && line.change === change);
-  const unstableHistory = new Set(changeLines.filter((line) => line.reason === 'unstable').map((line) => line.file));
   const totalsHistory = new Set(changeLines.filter((line) => line.metric === 'totals').map((line) => line.file));
   const moreThan = (entry, base, metric) => entry[metric] !== null && base[metric] !== null && entry[metric] > base[metric];
   for (const [file, entry] of Object.entries(ledger.coverage)) {
     const base = baseLedger.coverage[file];
-    for (const metric of METRICS.filter((item) => entry.low && width(entry, item) > rangeLimit(entry.low[item]))) {
-      error('LEDGER-UNSTABLE-TOO-WIDE', file, `The unstable range for ${file} is ${width(entry, metric)} ${metric} wide. The limit is ${rangeLimit(entry.low[metric])}.`);
-    }
-    const newRange = Boolean(entry.low) && !(base && base.low);
-    const wider = newRange || METRICS.some((metric) => width(entry, metric) > width(base, metric));
-    if (wider) {
-      if (!unstableHistory.has(file)) {
-        error('LEDGER-UNSTABLE-NO-HISTORY', file, `The unstable range for ${file} is wider than the base, but the history has no unstable line for it from the change ${change}`);
-      }
-      if (!sameAsBase(file)) {
-        error('LEDGER-UNSTABLE-CHANGED', file, `The unstable range for ${file} is wider than the base, but the file content is not the base content`);
-      }
-      if (outsideChanged) {
-        error('LEDGER-UNSTABLE-FILE-CHANGE', file, `The unstable range for ${file} is wider than the base, and the diff changes a file that is not in openspec/`);
-      }
-      for (const metric of METRICS) {
-        const baseCount = base ? base[metric] : 0;
-        if (entry[metric] === null || baseCount === null) continue;
-        const limit = baseCount + rangeLimit(baseCount);
-        if (entry[metric] > limit) {
-          error('LEDGER-UNSTABLE-ABOVE-BASE', file, `The unstable range for ${file} allows ${entry[metric]} ${metric}. The limit is ${limit}.`);
-        }
-      }
-      continue;
-    }
     if (!base) {
       error('LEDGER-NOT-IN-BASE', file, `The ledger entry for ${file} is not in the base ledger`);
       continue;
     }
     const unchanged = sameAsBase(file);
-    if (entry.low && unchanged) {
-      for (const metric of METRICS.filter((item) => moreThan(entry, base, item))) {
-        error('LEDGER-UNSTABLE-MOVED-UP', file, `The unstable range for ${file} allows ${entry[metric]} ${metric}. The base range allows ${base[metric]}.`);
-      }
-    }
-    if (entry.low && !unchanged) {
-      error('LEDGER-UNSTABLE-CHANGED', file, `The ledger entry for ${file} has a range, but the file content is not the base content`);
-    }
-    const baseAllowed = !unchanged && base.low ? { ...base, ...base.low } : base;
+    const baseAllowed = base;
     if (entry.lines > baseAllowed.lines) {
       error('LEDGER-LARGER-THAN-BASE', file, `The ledger allows ${entry.lines} lines for ${file}. The base ledger allows ${baseAllowed.lines}.`);
     }
@@ -412,7 +370,9 @@ function sum(names) {
 export function ratchetLedger({ ledger, current, inventory, testFiles, change, changeActive, date, commit, sameAsBase = () => false }) {
   if (!change) throw new Error('The ratchet command needs --change <name>');
   if (!changeActive) throw new Error(`Change "${change}" has no folder with a proposal.md file in openspec/changes`);
-  const blocking = compareLedger({ ledger, current, sameAsBase }).errors.filter((error) => error.code !== 'LEDGER-STALE');
+  // The ratchet command writes the version and the total counts again, so these are not blocking.
+  const RATCHET_FIXES = new Set(['LEDGER-STALE', 'LEDGER-NO-TOTALS', 'LEDGER-VERSION']);
+  const blocking = compareLedger({ ledger, current, sameAsBase }).errors.filter((error) => !RATCHET_FIXES.has(error.code));
   if (blocking.length > 0) {
     throw new Error(`The ratchet command cannot run while gaps are larger:\n${blocking.map((error) => `${error.code} ${error.message}`).join('\n')}`);
   }
@@ -429,36 +389,12 @@ export function ratchetLedger({ ledger, current, inventory, testFiles, change, c
       record('coverage', file, 'lines', entry.lines, 0, 'file removed');
       continue;
     }
-    if (!gap && completeInRange(entry, current.hashes.get(file))) {
-      coverage[file] = entry;
-      continue;
-    }
     if (!gap) {
       record('coverage', file, 'lines', entry.lines, 0, 'closed');
       continue;
     }
-    if (entry.low && sameGap(entry, gap)) {
-      coverage[file] = entry;
-      continue;
-    }
-    const band = isBandFile(file, entry, gap, sameAsBase);
-    const next = { ...(band && !entry.low ? bandFileCounts(entry, gap) : gap), origin: entry.origin, since: entry.since };
-    const keepRange = Boolean(entry.low) && gap.sha === entry.sha;
-    if (keepRange) next.low = {};
-    for (const metric of METRICS.filter(() => keepRange)) {
-      const low = entry.low[metric];
-      if (gap[metric] === null || entry[metric] === null || low === null) {
-        next.low[metric] = gap[metric];
-      } else if (gap[metric] < low) {
-        next.low[metric] = gap[metric];
-        next[metric] = gap[metric] + width(entry, metric);
-      } else if (gap[metric] > entry[metric] && !band) {
-        next.low[metric] = gap[metric] - width(entry, metric);
-      } else {
-        next.low[metric] = low;
-        next[metric] = entry[metric];
-      }
-    }
+    const tolerant = hasTolerance(file, entry, gap, sameAsBase);
+    const next = { ...(tolerant ? toleranceCounts(entry, gap) : gap), origin: entry.origin, since: entry.since };
     if (next.lines < entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'smaller');
     if (!entry.loaded && gap.loaded) record('coverage', file, 'loaded', false, true, 'loaded');
     if (entry.untrue && !gap.untrue) record('coverage', file, 'untrue', true, false, 'true coverage');
@@ -467,7 +403,6 @@ export function ratchetLedger({ ledger, current, inventory, testFiles, change, c
       record('coverage', file, metric, entry[metric], next[metric], next[metric] > entry[metric] ? 'shown by test' : 'smaller');
     }
     if (gap.sha !== entry.sha) record('coverage', file, 'hash', entry.sha, gap.sha, 'content changed');
-    if (entry.low && !keepRange) record('coverage', file, 'range', entry.low, null, 'content changed');
     if (JSON.stringify(entry.totals ?? null) !== JSON.stringify(next.totals)) record('coverage', file, 'totals', entry.totals ?? null, next.totals, 'totals changed');
     coverage[file] = next;
   }
@@ -487,97 +422,4 @@ export function ratchetLedger({ ledger, current, inventory, testFiles, change, c
   }
 
   return { ledger: { coverage, untracedTests }, history };
-}
-
-export const SAMPLES_FILE = '.gev-cache/spec-samples.jsonl';
-
-/** The counts of one coverage record as a sample. A complete file has zero counts. */
-export function coverageSample(record) {
-  return {
-    file: record.file,
-    sha: record.sha,
-    loaded: record.loaded,
-    lines: record.lines.uncovered,
-    branches: record.branches ? record.branches.uncovered : null,
-    functions: record.functions ? record.functions.uncovered : null,
-    totals: totalsOf(record),
-    untrue: Boolean(record.untrue),
-  };
-}
-
-/** Add one sample for each coverage record to `.gev-cache/spec-samples.jsonl`. */
-export function appendSamples(root, records) {
-  const file = path.join(root, SAMPLES_FILE);
-  mkdirSync(path.dirname(file), { recursive: true });
-  appendFileSync(file, records.map((record) => `${JSON.stringify(coverageSample(record))}\n`).join(''));
-}
-
-/** Read the kept samples, grouped by file. */
-export function readSamples(root) {
-  const file = path.join(root, SAMPLES_FILE);
-  const samples = new Map();
-  if (!existsSync(file)) return samples;
-  for (const line of readFileSync(file, 'utf8').split('\n').filter(Boolean)) {
-    const sample = JSON.parse(line);
-    samples.set(sample.file, [...(samples.get(sample.file) || []), sample]);
-  }
-  return samples;
-}
-
-function extreme(values, pick) {
-  if (values.some((value) => value === null)) return null;
-  return pick(...values);
-}
-
-/**
- * Record a range for each file with coverage that changes between runs of the same content.
- *
- * @param {object} input
- * @param {Map<string, {sha: string, list: object[]}>} input.samples - The current content hash and the samples of each file.
- * @param {(file: string) => boolean} input.sameAsBase - True when the file content is the base content.
- * @returns {{ledger: object, history: object[]}}
- */
-export function stabilityLedger({ ledger, samples, sameAsBase, change, changeActive, date, commit }) {
-  if (!change) throw new Error('The stability command needs --change <name>');
-  if (!changeActive) throw new Error(`Change "${change}" has no folder with a proposal.md file in openspec/changes`);
-  const changed = [];
-  const coverage = { ...ledger.coverage };
-  const history = [];
-  const equalTotals = (x, y) => !x.totals || !y.totals || JSON.stringify(x.totals) === JSON.stringify(y.totals);
-  const sameCounts = (x, y) => x.loaded === y.loaded && METRICS.every((metric) => x[metric] === y[metric]) && equalTotals(x, y);
-  for (const file of [...samples.keys()].sort()) {
-    const { sha, list } = samples.get(file);
-    const current = list.filter((sample) => sample.sha === sha);
-    const entry = ledger.coverage[file];
-    const unchanged = Boolean(entry) && entry.sha === sha;
-    if (unchanged && entry.low && current.every((sample) => sameGap(entry, { ...sample, sha: entry.sha, untrue: Boolean(entry.untrue) }))) continue;
-    if (!entry && current.every((sample) => METRICS.every((metric) => !sample[metric]))) continue;
-    const values = unchanged ? [entry, ...current] : current;
-    if (values.every((value) => sameCounts(value, values[0]))) continue;
-    if (!sameAsBase(file)) {
-      changed.push(file);
-      continue;
-    }
-    const lows = unchanged && entry.low ? [entry.low, ...current] : values;
-    const next = {
-      loaded: values.some((value) => value.loaded),
-      lines: extreme(values.map((item) => item.lines), Math.max),
-      branches: extreme(values.map((item) => item.branches), Math.max),
-      functions: extreme(values.map((item) => item.functions), Math.max),
-      totals: unchanged && entry.totals ? entry.totals : (current[current.length - 1].totals ?? null),
-      sha,
-      untrue: values.some((value) => Boolean(value.untrue)),
-      origin: entry ? entry.origin : 'unstable',
-      since: entry ? entry.since : date,
-      low: Object.fromEntries(METRICS.map((metric) => [metric, extreme(lows.map((item) => item[metric]), Math.min)])),
-    };
-    coverage[file] = next;
-    const before = entry ? Object.fromEntries(METRICS.map((metric) => [metric, entry[metric]])) : null;
-    const after = Object.fromEntries(METRICS.map((metric) => [metric, [next.low[metric], next[metric]]]));
-    history.push({ date, change, commit, kind: 'coverage', file, metric: 'range', before, after, reason: 'unstable' });
-  }
-  if (changed.length > 0) {
-    throw new Error(`These files have coverage that changed between runs, but their content is not the base content: ${changed.join(', ')}`);
-  }
-  return { ledger: { coverage, untracedTests: ledger.untracedTests }, history };
 }

@@ -57,9 +57,9 @@ Origin: spec-first
 #### Scenario: Run the gates with make `ci-gates-007`
 - **WHEN** a test reads `Makefile`
 - **THEN** the `gates` target runs `scripts/spec/gates.mjs` in the Docker image on a copy of the files that Git tracks or does not ignore
-- **AND** the copy also gets `.git` and the kept coverage samples, and the container command removes `NODE_ENV`, `HOST` and `PORT`
+- **AND** the copy also gets `.git`, and the container command removes `NODE_ENV`, `HOST` and `PORT`
 - **AND** each copy step stops the target when it fails, and the target copies `openspec/trace/` and `.gev-cache/` back to the project
-- **AND** the targets `gates-init`, `ratchet`, `stability`, `lint` and `tree` run their gate commands with the `CHANGE` and `BASE` options that the command uses
+- **AND** the targets `gates-init`, `ratchet`, `lint` and `tree` run their gate commands with the `CHANGE` and `BASE` options that the command uses
 
 #### Scenario: Pin the Node version of the image `ci-gates-008`
 - **WHEN** a test reads `Dockerfile` and `.node-version`

@@ -268,6 +268,27 @@ test('[spec-trace-032 spec-trace-036 spec-trace-037] stops for changed scenario 
   });
 });
 
+test('[gap-ledger-077] runs the ratchet command for an archived change', GUARDED_RUN, () => {
+  withFixture((root) => {
+    passes(root, ['init']);
+    write(root, {
+      'openspec/changes/archive/2026-09-16-add-demo/proposal.md': CHANGE['openspec/changes/add-demo/proposal.md'],
+      'openspec/changes/archive/2026-09-16-add-demo/tasks.md': CHANGE['openspec/changes/add-demo/tasks.md'],
+      'openspec/changes/archive/2026-09-16-add-demo/specs/demo/spec.md': CHANGE['openspec/changes/add-demo/specs/demo/spec.md'],
+      'openspec/specs/demo/spec.md': `# demo Specification\n\n## Purpose\nAdd two numbers and give the result, so that the gates have a demo capability to check.\n\n${SPEC.replace('## ADDED Requirements', '## Requirements')}`,
+      'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers'),
+    });
+    // The init run recorded the test of src/math.test.mjs as untraced. The tag above removes it.
+    const ledgerFile = path.join(root, 'openspec/trace/gaps.json');
+    assert.ok(JSON.parse(readFileSync(ledgerFile, 'utf8')).untracedTests['src/math.test.mjs'], 'the first ledger has the untraced test');
+    const result = passes(root, ['ratchet', '--change', 'add-demo']);
+    assert.match(result.output, /Ratchet: \d+ history lines for add-demo\./);
+    assert.ok(JSON.parse(readFileSync(path.join(root, 'openspec/trace/links.json'), 'utf8'))['demo-001']);
+    assert.ok(JSON.parse(readFileSync(path.join(root, 'openspec/trace/ids.json'), 'utf8'))['demo-001']);
+    assert.equal(JSON.parse(readFileSync(ledgerFile, 'utf8')).untracedTests['src/math.test.mjs'], undefined, 'the command writes the ledger again');
+  });
+});
+
 test('[gap-ledger-013 gap-ledger-014 gap-ledger-027] stops the ratchet command for a larger gap, without a change name or for a change that is not active', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
@@ -404,17 +425,30 @@ test('[spec-lint-021 spec-lint-022] checks the tasks and the requirement format 
   });
 });
 
-const SHAPES = 'export function area(w, h) {\n  return w * h;\n}\nexport function perimeter(w, h) {\n  return 2 * (w + h);\n}\nexport function unused() {\n  return 0;\n}\n';
-const SHAPES_TEST = (calls) => ["import test from 'node:test';", "import assert from 'node:assert/strict';", "import { area, perimeter } from './shapes.js';", "test('measures shapes', () => {", ...calls, '});', ''].join('\n');
+// 30 one-line functions, so the total of each metric is above 25 and the tolerance is 1.
+const SHAPE_NAMES = Array.from({ length: 30 }, (unused, index) => `f${index}`);
+const SHAPES = `${SHAPE_NAMES.map((name, index) => `export function ${name}() { return ${index}; }`).join('\n')}\n`;
+const SHAPES_TEST = (called) =>
+  [
+    "import test from 'node:test';",
+    "import assert from 'node:assert/strict';",
+    `import { ${SHAPE_NAMES.join(', ')} } from './shapes.js';`,
+    "test('measures shapes', () => {",
+    ...SHAPE_NAMES.slice(0, called).map((name, index) => `  assert.equal(${name}(), ${index});`),
+    ...SHAPE_NAMES.slice(called).map((name) => `  assert.equal(typeof ${name}, 'function');`),
+    '});',
+    '',
+  ].join('\n');
 
-test('[gap-ledger-065 gap-ledger-068] uses the count bands of a band file in the check and in the ratchet command', GUARDED_RUN, () => {
-  const base = { 'src/shapes.js': SHAPES, 'src/shapes.test.mjs': SHAPES_TEST(['  assert.equal(area(2, 3), 6);', '  assert.equal(perimeter(2, 3), 10);']) };
+test('[gap-ledger-069 gap-ledger-073] uses the tolerance of a file in the check and in the ratchet command', GUARDED_RUN, () => {
+  const base = { 'src/shapes.js': SHAPES, 'src/shapes.test.mjs': SHAPES_TEST(29) };
   withFixture(
     (root) => {
       passes(root, ['init']);
       const entry = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/shapes.js'];
-      assert.equal(entry.functions, 1);
-      write(root, { 'src/shapes.test.mjs': SHAPES_TEST(['  assert.equal(area(2, 3), 6);', '  assert.equal(typeof perimeter, "function");']) });
+      assert.deepEqual([entry.functions, entry.totals.functions], [1, 30]);
+      // One more function that no test calls: inside the tolerance of 1, so the gate does not stop.
+      write(root, { 'src/shapes.test.mjs': SHAPES_TEST(28) });
       const check = passes(root, ['check']);
       assert.match(check.output, /Ledger: 0 entries do not match the current gaps\./);
       write(root, { ...CHANGE, 'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers') });
@@ -538,51 +572,6 @@ function mergeToMain(root, branch) {
   git(root, 'checkout', '-q', '-b', branch);
 }
 
-test('[gap-ledger-035 gap-ledger-037 gap-ledger-039] records unstable coverage from the kept samples and does not stop for it in the check against a base ledger', GUARDED_RUN, () => {
-  withFixture(
-    (root) => {
-      passes(root, ['init']);
-      mergeToMain(root, 'stable');
-      write(root, { 'openspec/changes/record-flip/proposal.md': '## Why\n\nThe flip test has unstable coverage, so the ledger records a range.\n\n## What Changes\n\n- Record the range of the flip file.\n' });
-      assert.match(run(root, ['stability']).output, /ERROR GATES-USAGE The stability command needs --change <name>/);
-      const stability = passes(root, ['stability', '--change', 'record-flip']);
-      assert.match(stability.output, /Stability: 1 files with unstable coverage for record-flip\./);
-      const kept = readFileSync(path.join(root, '.gev-cache/spec-samples.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
-      assert.deepEqual(kept.filter((sample) => sample.file === 'src/flip.js').length, 3);
-      const entry = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/flip.js'];
-      assert.deepEqual([entry.low.lines, entry.lines], [1, 3]);
-      assert.match(readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8'), /"change":"record-flip".*"reason":"unstable"/);
-      reviewFor(root, 'record-flip');
-      passes(root, ['check', '--change', 'record-flip']);
-      passes(root, ['check', '--change', 'record-flip']);
-      assert.match(run(root, ['check']).output, /ERROR LEDGER-UNSTABLE-NO-HISTORY src\/flip\.js/);
-    },
-    { base: FLIP },
-  );
-});
-
-test('[gap-ledger-036] stops the stability command for a changed file with unstable coverage', GUARDED_RUN, () => {
-  withFixture(
-    (root) => {
-      passes(root, ['init']);
-      write(root, { ...CHANGE, 'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers'), 'src/flip.js': FLIP['src/flip.js'].replace('"b"', '"c"'), 'src/flip.test.mjs': FLIP['src/flip.test.mjs'].replace("'b'", "'c'") });
-      const ledgerBefore = readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8');
-      const result = run(root, ['stability', '--change', 'add-demo']);
-      assert.equal(result.status, 1);
-      assert.match(result.output, /ERROR GATES-STABILITY .*content is not the base content: src\/flip\.js/);
-      assert.equal(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8'), ledgerBefore);
-    },
-    { base: FLIP },
-  );
-  withFixture((root) => {
-    write(root, CHANGE);
-    assert.match(run(root, ['stability', '--change', 'add-demo']).output, /ERROR GATES-NO-LEDGER/);
-    passes(root, ['init']);
-    write(root, { 'src/math.test.mjs': MATH_TEST('adds two numbers', "test('breaks', () => {\n  assert.equal(1, 2);\n});") });
-    assert.match(run(root, ['stability', '--change', 'add-demo']).output, /ERROR TRACE-FAILED-TEST/);
-  });
-});
-
 test('[coverage-gate-030] stops for a result file that the gate did not name', () => {
   withFixture((root) => {
     const forger = (command, args, options) => {
@@ -701,10 +690,10 @@ test('[coverage-gate-034] stops for an inventory.json file that changes during t
   });
 });
 
-test('[gap-ledger-053] stops the check, the ratchet command and the stability command when the ledger file is not there', () => {
+test('[gap-ledger-053] stops the check and the ratchet command when the ledger file is not there', () => {
   withFixture((root) => {
     write(root, CHANGE);
-    for (const argv of [['check'], ['ratchet', '--change', 'add-demo'], ['stability', '--change', 'add-demo']]) {
+    for (const argv of [['check'], ['ratchet', '--change', 'add-demo']]) {
       const result = run(root, argv);
       assert.equal(result.status, 1);
       assert.match(result.output, /ERROR GATES-NO-LEDGER openspec\/trace\/gaps\.json Run: node scripts\/spec\/gates\.mjs init/);
