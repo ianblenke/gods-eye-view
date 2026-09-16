@@ -14,7 +14,6 @@ import {
   LEDGER_FILE,
   RETIRED_FILE,
   appendHistory,
-  appendSamples,
   compareLedger,
   compareWithBase,
   currentGaps,
@@ -22,8 +21,6 @@ import {
   parseLedger,
   ratchetLedger,
   readLedger,
-  readSamples,
-  stabilityLedger,
   writeLedger,
 } from './lib/ledger.mjs';
 import { buildLinks, checkLinks, checkRegistry, compareRegistryWithBase, idsOfChangedTests, readLinks, readRegistry, updateRegistry, writeLinks, writeRegistry } from './lib/registry.mjs';
@@ -40,9 +37,9 @@ const RUNNER = fileURLToPath(new URL('./lib/run-parallel.mjs', import.meta.url))
 const OUT_DIR = '.gev-cache/spec';
 const DEFAULT_BASE = 'origin/main';
 const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
-const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'stability', 'lint', 'tree']);
+const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree']);
 const OPTIONS = new Set(['--change', '--base', '--root']);
-const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|stability|lint|tree> [--change <name>] [--base <ref>] [--root <dir>]';
+const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree> [--change <name>] [--base <ref>] [--root <dir>]';
 
 /** Read the command line. Throws the usage text for a bad command line. */
 export function parseArgs(argv) {
@@ -216,7 +213,6 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
     violations: new Set(guardResults.flatMap((result) => result.violations.map((item) => item.file))),
   });
   const coverage = measureCoverage({ inventory, entries, readFile: read, untrue });
-  if (lcovText !== null) appendSamples(root, coverage);
 
   const specs = loadSpecs(root);
   errors.push(...specs.errors);
@@ -341,30 +337,11 @@ export function runGates({
   const changedTestIds = (records) =>
     idsOfChangedTests({ records, files: changedTests, readFile: (file) => readFileSync(path.join(root, file), 'utf8'), readBaseTests });
   const sameAsBase = (file) => existsSync(path.join(root, file)) && readFileAt(root, base, file) === readFileSync(path.join(root, file), 'utf8');
-  const changeActive = Boolean(change) && change !== 'archive' && existsSync(path.join(root, 'openspec/changes', change, 'proposal.md'));
+  // The ratchet command also runs for an archived change, because the archive command can remove
+  // a requirement, and the trace files then need the scenarios and the links of the new specs.
+  const changeFolderOf = changeFolder(root, change);
+  const changeActive = Boolean(change) && change !== 'archive' && Boolean(changeFolderOf) && existsSync(path.join(root, changeFolderOf, 'proposal.md'));
 
-  if (command === 'stability') {
-    if (!change) return report(log, [{ code: 'GATES-USAGE', file: '', message: 'The stability command needs --change <name>' }]);
-    const ledger = readLedger(root);
-    if (!ledger) return report(log, [{ code: 'GATES-NO-LEDGER', file: LEDGER_FILE, message: 'Run: node scripts/spec/gates.mjs init' }]);
-    let latest;
-    for (let index = 0; index < 2; index += 1) {
-      latest = measure({ root, spawn, env, allocationFiles, change, openSpec });
-      if (latest.errors.length > 0) return report(log, latest.errors);
-    }
-    const kept = readSamples(root);
-    const samples = new Map(latest.coverage.map((record) => [record.file, { sha: record.sha, list: kept.get(record.file) }]));
-    let result;
-    try {
-      result = stabilityLedger({ ledger, samples, sameAsBase, change, changeActive, date, commit: headCommit(root) });
-    } catch (error) {
-      return report(log, [{ code: 'GATES-STABILITY', file: LEDGER_FILE, message: error.message }]);
-    }
-    writeLedger(root, result.ledger);
-    appendHistory(root, result.history);
-    log(`Stability: ${result.history.length} files with unstable coverage for ${change}.`);
-    return report(log, []);
-  }
   if (command === 'ci') {
     const plan = planCi({ activeChanges: listActiveChanges(root), diffFiles, baseFiles });
     if (plan.errors.length > 0) return report(log, plan.errors);
@@ -438,7 +415,6 @@ export function runGates({
     baseHistory: readFileAt(root, base, HISTORY_FILE) ?? '',
     sameAsBase,
     change,
-    outsideChanged: diffFiles.some((file) => !file.startsWith('openspec/')),
   });
   const registry = readRegistry(root);
   const registryErrors = [

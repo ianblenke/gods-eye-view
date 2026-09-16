@@ -94,7 +94,8 @@ export function evaluateTrace({ specs, records, assertions, testFiles = [], chan
   const scenarios = [...specs.scenarios.values()].sort((a, b) => a.id.localeCompare(b.id));
   for (const scenario of scenarios) {
     if (verified.has(scenario.id)) continue;
-    const required = specs.mainIds.has(scenario.id) || scenario.source === `change:${change}`;
+    // loadSpecs gives removedIds: the scenarios of a main requirement that an active change removes.
+    const required = (specs.mainIds.has(scenario.id) && !specs.removedIds.has(scenario.id)) || scenario.source === `change:${change}`;
     if (!required) {
       pending.push(scenario.id);
       continue;
