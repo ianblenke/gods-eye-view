@@ -27,7 +27,7 @@ import {
   writeLedger,
 } from './lib/ledger.mjs';
 import { buildLinks, checkLinks, checkRegistry, compareRegistryWithBase, idsOfChangedTests, readLinks, readRegistry, updateRegistry, writeLinks, writeRegistry } from './lib/registry.mjs';
-import { changeFolder, checkAgents, checkArchivedReviews, checkChangeNames, checkChangeReview, computeTreeHash } from './lib/review.mjs';
+import { changeFolder, checkAgents, checkArchivedReviews, checkChangeNames, checkChangeReview, checkReviewCommand, computeTreeHash } from './lib/review.mjs';
 import { lintSpecs, tasksReader } from './lib/spec-lint.mjs';
 import { checkOpenSpec, runOpenSpec } from './lib/openspec.mjs';
 import { checkArchivedChange, listActiveChanges, loadSpecs } from './lib/specs.mjs';
@@ -453,6 +453,7 @@ export function runGates({
     ...(folder ? checkChangeReview(root, change, { treeHash: computeTreeHash({ root, changeDir: folder, diffFiles }) }) : []),
     ...checkChangeNames(root),
     ...checkAgents(root),
+    ...checkReviewCommand(root),
   ];
   log(`Ledger: ${comparison.stale.length} entries do not match the current gaps.`);
   log(`STE: ${lint.errors.length} errors, ${lint.warnings.length} warnings.`);

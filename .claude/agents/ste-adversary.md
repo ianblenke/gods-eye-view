@@ -13,11 +13,10 @@ The caller gives you these items:
 - The output of the STE lint, with its warnings.
 - The names of the tests that the change adds or renames.
 
-## Scope
+## Texts to check
 
 Check these texts:
-- Each Markdown file in the change folder.
-- Each new line in `openspec/specs/`.
+- Each Markdown file in the change folder. This includes the delta specs, which give the new lines of `openspec/specs/`.
 - Each new line in `AGENTS.md`, `.claude/agents/` and `.claude/commands/opsx/review.md`.
 - Each test name, without its tag.
 
@@ -36,6 +35,12 @@ The lint stops for long sentences, long tasks, long paragraphs, contractions, lo
 7. **Instructions.** Each task must start with a verb in the imperative. Each task must give one instruction, except for actions at the same time.
 8. **Test names.** A test name is a description without a subject. Do checks 1 to 6 on each test name.
 9. **OpenSpec words.** OpenSpec needs `MUST`, `WHEN`, `THEN` and `AND`. These words are correct. `SHALL`, `SHOULD` and `MAY` are not correct.
+
+## Scope of a round
+
+The first round of a change reads the whole change. In each later round, read the diff since the round before, and each text that a changed line makes wrong. The caller gives you the scope. Do not report a finding in a file that the diff does not change. A changed line that makes the text of that file wrong is the only exception.
+
+The review has a limit of three rounds. After the third round, each open finding with the severity minor stays open in `review.md`. The author gives the severity as the second word of the finding, and the name of the person who accepts the finding. A critical finding or a major finding always stops the build.
 
 ## Output
 
