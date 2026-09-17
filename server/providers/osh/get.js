@@ -76,11 +76,73 @@ export async function oshGet(
   }
 }
 
+/** Query keys a next-page link may carry. Any other key stops the walk. */
+export const OSH_PAGE_LINK_QUERY_KEYS = Object.freeze([
+  'limit',
+  'offset',
+  'cursor',
+  'page',
+  'startIndex',
+  'f',
+]);
+
+/**
+ * True when `candidate` names only a later page of the same request: the
+ * same origin as the resolved root, the same path as the current page, no
+ * username and no password, no fragment, and a query with no key outside
+ * the fixed allowlist. This is not a redirect check or a resource check —
+ * it checks that the link cannot name a different request than the one
+ * already sent, so a destructive path, a foreign origin, or a
+ * method-override key such as `_method=DELETE` cannot become part of the
+ * request.
+ * @param {URL} candidate
+ * @param {URL} root - Resolved API root.
+ * @param {URL} current - URL of the page that named this candidate.
+ * @returns {boolean}
+ */
+export function isSamePageWalk(candidate, root, current) {
+  if (candidate.origin !== root.origin) return false;
+  if (candidate.pathname !== current.pathname) return false;
+  if (candidate.username !== '' || candidate.password !== '') return false;
+  if (candidate.hash !== '') return false;
+  for (const key of candidate.searchParams.keys()) {
+    if (!OSH_PAGE_LINK_QUERY_KEYS.includes(key)) return false;
+  }
+  return true;
+}
+
+/**
+ * Build the URL this provider actually requests for a next-page link, or
+ * null when `isSamePageWalk` refuses the candidate. The origin comes from
+ * `root` and the path from `current`, never from the candidate, and the
+ * query is rebuilt one allowlisted key at a time from the candidate's own
+ * parsed values.
+ * The rebuild does not use the candidate's URL. So a separator that the
+ * check does not know about cannot hide a second key inside the value of
+ * an allowed key. Some servers read `;` as a second query separator. The
+ * rebuilt query writes that value as one text string.
+ * @param {URL} candidate
+ * @param {URL} root
+ * @param {URL} current
+ * @returns {?URL}
+ */
+export function buildNextPageUrl(candidate, root, current) {
+  if (!isSamePageWalk(candidate, root, current)) return null;
+  const query = new URLSearchParams();
+  for (const [key, value] of candidate.searchParams) query.append(key, value);
+  const next = new URL(current.pathname, root);
+  next.search = query.toString();
+  return next;
+}
+
 /**
  * Walk a `links[].rel === 'next'` chain from a list payload, following a
- * link only on the same origin as `root`, and stopping after 20 pages.
+ * link only when the link names a later page of the same request (see
+ * `buildNextPageUrl`), and stopping after 20 pages. A link that fails that
+ * check, or an unparsable `href`, stops the walk — it is not an error, so
+ * the function still gives the items it collected.
  * @param {typeof fetch} fetchImpl
- * @param {URL} root - Resolved API root (the origin check).
+ * @param {URL} root - Resolved API root (the origin every page must share).
  * @param {URL} firstUrl - URL of the first page.
  * @param {object} options
  * @param {Record<string,string>} [options.headers]
@@ -111,8 +173,9 @@ export async function oshPages(fetchImpl, root, firstUrl, { headers = {}, listOf
     } catch {
       break;
     }
-    if (candidate.origin !== root.origin) break;
-    url = candidate;
+    const nextUrl = buildNextPageUrl(candidate, root, url);
+    if (!nextUrl) break;
+    url = nextUrl;
   }
   return items;
 }

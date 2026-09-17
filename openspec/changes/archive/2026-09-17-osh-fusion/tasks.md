@@ -20,7 +20,8 @@
 - [x] 3.2 Write the test for `osh-013`, the redirect refusal.
 - [x] 3.3 Write the test for `osh-014`, the page walk.
 - [x] 3.4 Write the test for `osh-015`, the body cap and the timeout.
-- [x] 3.5 Write `server/providers/osh/get.js` until 3.1 to 3.4 pass.
+- [x] 3.5 Write the test for `osh-036`, the check for a page link of the same request.
+- [x] 3.6 Write `server/providers/osh/get.js` until 3.1 to 3.5 pass.
 
 ## 4. API root resolution
 
@@ -74,4 +75,4 @@
 
 - [x] 9.1 Run `make lint` until no STE error remains.
 - [x] 9.2 Run `make ratchet CHANGE=osh-fusion` until all gates pass.
-- [ ] 9.3 Run the review agents and record the result in `review.md`.
+- [x] 9.3 Run the review agents and record the result in `review.md`.

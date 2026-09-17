@@ -1,6 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { OSH_MAX_BODY_BYTES, oshGet, oshPages } from '../../server/providers/osh/get.js';
+import {
+  OSH_MAX_BODY_BYTES,
+  buildNextPageUrl,
+  isSamePageWalk,
+  oshGet,
+  oshPages,
+} from '../../server/providers/osh/get.js';
 
 test('[osh-004] sends one GET request with no body and an abort signal', async () => {
   let observedUrl;
@@ -176,6 +182,237 @@ test('[osh-014] a non-2xx page status stops the walk with an error, and does not
     ),
     (error) => error.status === 401,
   );
+});
+
+test('[osh-036] isSamePageWalk() accepts a candidate that differs only in the allowed query keys', () => {
+  const root = new URL('https://osh.example/api/');
+  const current = new URL('https://osh.example/api/systems?limit=100');
+  assert.equal(
+    isSamePageWalk(new URL('https://osh.example/api/systems?limit=100&offset=100'), root, current),
+    true,
+  );
+  assert.equal(
+    isSamePageWalk(new URL('https://osh.example/api/systems?cursor=abc&page=2&startIndex=3&f=json'), root, current),
+    true,
+  );
+});
+
+test('[osh-036] isSamePageWalk() refuses a candidate on another path, even the same origin', () => {
+  const root = new URL('https://osh.example/api/');
+  const current = new URL('https://osh.example/api/systems');
+  assert.equal(isSamePageWalk(new URL('https://osh.example/api/datastreams'), root, current), false);
+  assert.equal(isSamePageWalk(new URL('https://osh.example/api/systems/delete-all'), root, current), false);
+});
+
+test('[osh-036] isSamePageWalk() refuses a candidate on another origin, even the same path', () => {
+  const root = new URL('https://osh.example/api/');
+  const current = new URL('https://osh.example/api/systems');
+  assert.equal(
+    isSamePageWalk(new URL('https://attacker.example/api/systems'), root, current),
+    false,
+  );
+});
+
+test('[osh-036] isSamePageWalk() refuses a candidate that carries a username or a password', () => {
+  const root = new URL('https://osh.example/api/');
+  const current = new URL('https://osh.example/api/systems?limit=100');
+  assert.equal(
+    isSamePageWalk(
+      new URL('https://user:pass@osh.example/api/systems?limit=100'),
+      root,
+      current,
+    ),
+    false,
+  );
+  // Each half of the check needs its own case. A link with only a username,
+  // or only a password, must fail as well.
+  assert.equal(
+    isSamePageWalk(new URL('https://user@osh.example/api/systems?limit=100'), root, current),
+    false,
+  );
+  assert.equal(
+    isSamePageWalk(new URL('https://:pass@osh.example/api/systems?limit=100'), root, current),
+    false,
+  );
+});
+
+test('[osh-036] isSamePageWalk() refuses a candidate with a query key outside the allowlist, such as a method override', () => {
+  const root = new URL('https://osh.example/api/');
+  const current = new URL('https://osh.example/api/systems?limit=100');
+  assert.equal(isSamePageWalk(new URL('https://osh.example/api/systems?_method=DELETE'), root, current), false);
+  assert.equal(isSamePageWalk(new URL('https://osh.example/api/systems?method=delete'), root, current), false);
+  assert.equal(isSamePageWalk(new URL('https://osh.example/api/systems?action=purge'), root, current), false);
+  assert.equal(isSamePageWalk(new URL('https://osh.example/api/systems?limit=100&extra=1'), root, current), false);
+});
+
+test('[osh-036] isSamePageWalk() refuses a candidate with a fragment', () => {
+  const root = new URL('https://osh.example/api/');
+  const current = new URL('https://osh.example/api/systems');
+  assert.equal(isSamePageWalk(new URL('https://osh.example/api/systems#frag'), root, current), false);
+});
+
+test('[osh-036] a next link that the check refuses stops the walk, keeps the earlier items, and does not throw an error', async () => {
+  const root = new URL('https://osh.example/api/');
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return new Response(
+      JSON.stringify({
+        items: [{ id: 'p1' }],
+        links: [{ rel: 'next', href: 'systems?_method=DELETE' }],
+      }),
+      { status: 200 },
+    );
+  };
+  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+    listOf: (payload) => payload.items,
+  });
+  assert.deepEqual(items, [{ id: 'p1' }]);
+  assert.equal(calls, 1, 'the rejected next link is never requested');
+});
+
+test('[osh-036] buildNextPageUrl() rebuilds the query so a `;` inside an allowed value cannot hide a second key', () => {
+  const root = new URL('https://osh.example/api/');
+  const current = new URL('https://osh.example/api/systems?limit=100');
+  // URLSearchParams splits only on `&`, so this candidate's one key is
+  // `limit`, with the value `1;_method=DELETE` — the check alone would
+  // accept it, since `limit` is allowed. The rebuild must still make the
+  // separator harmless.
+  const candidate = new URL('https://osh.example/api/systems?limit=1;_method=DELETE');
+  assert.deepEqual([...candidate.searchParams.keys()], ['limit']);
+  const built = buildNextPageUrl(candidate, root, current);
+  assert.ok(built);
+  assert.equal(built.origin, root.origin);
+  assert.equal(built.pathname, current.pathname);
+  // `_method` is not a live key: it only ever appears as text inside the
+  // one opaque `limit` value, never as its own `&`-separated key.
+  assert.equal(built.searchParams.has('_method'), false);
+  assert.equal([...built.searchParams.keys()].length, 1);
+  assert.equal(built.searchParams.get('limit'), '1;_method=DELETE');
+  assert.equal(built.search.includes(';'), false, 'a raw, unescaped `;` must not reach the wire');
+});
+
+test('[osh-036] buildNextPageUrl() returns null for a refused candidate, and a URL for an accepted one', () => {
+  const root = new URL('https://osh.example/api/');
+  const current = new URL('https://osh.example/api/systems?limit=100');
+  assert.equal(
+    buildNextPageUrl(new URL('https://attacker.example/api/systems'), root, current),
+    null,
+  );
+  const built = buildNextPageUrl(
+    new URL('https://osh.example/api/systems?limit=100&offset=100'),
+    root,
+    current,
+  );
+  assert.equal(built.search, '?limit=100&offset=100');
+});
+
+test('[osh-036] oshPages() never requests a next link on a different origin, even a protocol-relative one with the same path', async () => {
+  const root = new URL('https://osh.example/api/');
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return new Response(
+      JSON.stringify({
+        items: [{ id: 'p1' }],
+        links: [{ rel: 'next', href: '//attacker.example/api/systems?limit=1' }],
+      }),
+      { status: 200 },
+    );
+  };
+  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+    listOf: (payload) => payload.items,
+  });
+  assert.deepEqual(items, [{ id: 'p1' }]);
+  assert.equal(calls, 1, 'the foreign-origin link, even with a matching path, is never requested');
+});
+
+test('[osh-036] oshPages() never requests a next link on a different path', async () => {
+  const root = new URL('https://osh.example/api/');
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return new Response(
+      JSON.stringify({
+        items: [{ id: 'p1' }],
+        links: [{ rel: 'next', href: 'datastreams?limit=1' }],
+      }),
+      { status: 200 },
+    );
+  };
+  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+    listOf: (payload) => payload.items,
+  });
+  assert.deepEqual(items, [{ id: 'p1' }]);
+  assert.equal(calls, 1);
+});
+
+test('[osh-036] oshPages() never requests a next link with a fragment', async () => {
+  const root = new URL('https://osh.example/api/');
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return new Response(
+      JSON.stringify({
+        items: [{ id: 'p1' }],
+        links: [{ rel: 'next', href: 'systems?limit=1#frag' }],
+      }),
+      { status: 200 },
+    );
+  };
+  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+    listOf: (payload) => payload.items,
+  });
+  assert.deepEqual(items, [{ id: 'p1' }]);
+  assert.equal(calls, 1);
+});
+
+test('[osh-036] oshPages() never requests a next link that carries a username or a password', async () => {
+  const root = new URL('https://osh.example/api/');
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return new Response(
+      JSON.stringify({
+        items: [{ id: 'p1' }],
+        links: [{ rel: 'next', href: 'https://attacker:x@osh.example/api/systems?limit=1' }],
+      }),
+      { status: 200 },
+    );
+  };
+  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+    listOf: (payload) => payload.items,
+  });
+  assert.deepEqual(items, [{ id: 'p1' }]);
+  assert.equal(calls, 1);
+});
+
+test('[osh-036] oshPages() follows an accepted next link with the query that the provider built again', async () => {
+  const root = new URL('https://osh.example/api/');
+  const requestedUrls = [];
+  const fetchImpl = async (url) => {
+    requestedUrls.push(String(url));
+    const page = requestedUrls.length;
+    if (page === 1) {
+      return new Response(
+        JSON.stringify({
+          items: [{ id: 'p1' }],
+          links: [{ rel: 'next', href: 'systems?limit=1;_method=DELETE' }],
+        }),
+        { status: 200 },
+      );
+    }
+    return new Response(JSON.stringify({ items: [{ id: 'p2' }] }), { status: 200 });
+  };
+  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+    listOf: (payload) => payload.items,
+  });
+  assert.deepEqual(items, [{ id: 'p1' }, { id: 'p2' }]);
+  assert.equal(requestedUrls.length, 2);
+  const secondUrl = new URL(requestedUrls[1]);
+  assert.equal(secondUrl.searchParams.has('_method'), false);
+  assert.equal([...secondUrl.searchParams.keys()].length, 1);
+  assert.equal(requestedUrls[1].includes(';'), false, 'a raw, unescaped `;` must not reach the wire');
 });
 
 test('[osh-015] fails a request whose declared body exceeds the cap, with no parse', async () => {

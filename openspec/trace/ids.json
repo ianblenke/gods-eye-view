@@ -775,17 +775,17 @@
     "change": "osh-fusion"
   },
   "osh-013": {
-    "hash": "962f8f1019ad99b0d11301bc1d5e7ac18f5143611aa0fe2a2674b7cf85b1b3f9",
+    "hash": "61e230ca82a34e41e365e37d8ae282e5571bcc905784afc32f2414af461da2bd",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
   "osh-014": {
-    "hash": "71b7b829e87be81c71a9f4b6699932bcef5bf4d809aa3bad88cd13db5cd1beda",
+    "hash": "2b69fd44105317e755914465bc28795e24bccef851de0378d1d82b2dd04180cd",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
   "osh-015": {
-    "hash": "5928a605ed1e0a55d016070bac5cc7f30572e6ffbaba2b24b4a41abd3a67df9b",
+    "hash": "de06de4c174937f193f9f16e873184738ba052c36fb349a1151094cc042cf3bc",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -886,6 +886,11 @@
   },
   "osh-035": {
     "hash": "47fc05db2649cbef490115bfc86b44e4950e88beac137a160dc6c0c0925259ca",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-036": {
+    "hash": "3bc08ae212751c0ca2089215863b90698ad810cfaabac16b6fef3643aad807b4",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },

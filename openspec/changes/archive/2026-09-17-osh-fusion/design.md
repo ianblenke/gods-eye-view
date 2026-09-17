@@ -52,6 +52,15 @@ The provider never follows a redirect, because a redirect could carry the Basic 
 ### D10 Page walk
 The page walk follows a next-page link only when its origin matches the resolved root, and it stops after 20 pages. A page status outside 200 to 299 stops the whole walk with an error, the same as `observations.js` does for one datastream.
 
+### D10a A next link is a later page of the same request
+`isSamePageWalk()` in `get.js` makes sure that a next link is only a later page of the request already sent. It is not a rule against one specific danger. It checks the origin and the path. It checks that the link carries no username and no password. It checks each query key against a fixed list (`limit`, `offset`, `cursor`, `page`, `startIndex`, `f`). It checks that the fragment is empty.
+
+A link that fails any of these stops the walk, with no error and no lost items. A server that gives its next pages in an unfamiliar way is not a failure to report. Its next link is a link this provider does not follow. The fixed list, not a denylist of dangerous keys such as `_method`, stops an unknown key. The check enforces one property: the same request. So the check also refuses a key that no person named before today.
+
+`buildNextPageUrl()` then builds the request from parts it already trusts: the resolved root's origin and the current page's path. It rebuilds the query one allowlisted key at a time from the candidate's own values, never from the candidate's raw query string.
+
+`URLSearchParams` splits a query on `&` only. A server could write a `;` inside an allowed key's value, such as `limit=1;_method=DELETE`. The check alone would accept it, since `limit` is on the list. The rebuild re-encodes that value as one opaque string, so the hidden key never reaches the wire as a key.
+
 ### D11 Limits
 Each upstream request carries a timeout, and its body is read under a fixed byte cap.
 
