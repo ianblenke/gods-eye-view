@@ -421,7 +421,7 @@
     "src/tooling/spec/gates.test.mjs › [gap-ledger-053] stops the check and the ratchet command when the ledger file is not there"
   ],
   "gap-ledger-054": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-054] stops for fewer covered branches or functions in an unchanged file"
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-054] stops for a loss of covered branches or functions in an unchanged file"
   ],
   "gap-ledger-055": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-055] stops for a ledger entry without the total counts"
@@ -443,7 +443,7 @@
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-071] makes the tolerance from the total of the metric"
   ],
   "gap-ledger-072": [
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-072] compares the covered counts with the tolerance, also without a larger gap"
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-072] compares the loss of covered branches with the tolerance, also when the total moves"
   ],
   "gap-ledger-073": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-069 gap-ledger-073] uses the tolerance of a file in the check and in the ratchet command",
@@ -460,6 +460,9 @@
   ],
   "gap-ledger-077": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-077] runs the ratchet command for an archived change"
+  ],
+  "gap-ledger-078": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
   ],
   "hud-markings-001": [
     "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"

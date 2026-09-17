@@ -56,11 +56,21 @@ Origin: spec-first
 - **AND** the covered branch count, which is the total minus the not-covered count, is not smaller than in its entry
 - **THEN** the gate does not stop the build for the branches
 
-#### Scenario: Stop for fewer covered branches or functions in an unchanged file `gap-ledger-054`
+#### Scenario: Do not stop for a smaller total with the same not-covered count in an unchanged file `gap-ledger-078`
 - **WHEN** the content hash of a code file is equal to the hash in its ledger entry
-- **AND** the covered branch count or the covered function count is smaller than in its entry
-- **AND** the file does not have the tolerance conditions, or a covered count is below the covered count of its entry minus the tolerance
+- **AND** the total branch count or the total function count is smaller than in its entry
+- **AND** the not-covered count of that metric is equal to the count in its entry
+- **THEN** the gate does not stop the build for that metric
+- **AND** with the tolerance conditions, the gate does not record the entry as not current
+- **AND** without the tolerance conditions, the gate records the entry as not current, with no error for that metric
+
+#### Scenario: Stop for a loss of covered branches or functions in an unchanged file `gap-ledger-054`
+- **WHEN** the content hash of a code file is equal to the hash in its ledger entry
+- **AND** for the branches or the functions, the loss is the smaller of the not-covered rise and the covered fall
+- **AND** the loss is the fall alone when the not-covered count falls
+- **AND** the loss of that metric is above the tolerance, which is 0 without the tolerance conditions
 - **THEN** the gate stops the build
+- **AND** the gate shows the file, the two current counts and the two counts of the entry
 
 #### Scenario: Stop for a ledger entry without the total counts `gap-ledger-055`
 - **WHEN** the total branch count or the total function count of a ledger entry of a loaded file is not a number
@@ -242,7 +252,7 @@ Origin: spec-first
 - **WHEN** a code file has the tolerance conditions
 - **AND** its not-covered line count is above the entry count plus the tolerance
 - **THEN** the gate stops the build
-- **AND** a covered count below the covered count of its entry minus the tolerance also stops the build
+- **AND** a loss of branches or functions above the tolerance also stops the build
 
 #### Scenario: Make the tolerance from the total of the metric `gap-ledger-071`
 - **WHEN** the gate reads the tolerance of a metric of a file
@@ -250,10 +260,12 @@ Origin: spec-first
 - **AND** the tolerance is 4% of the total, without the fraction, for a total below 200
 - **AND** the tolerance is 0 for a total below 25
 
-#### Scenario: Compare the covered counts with the tolerance `gap-ledger-072`
+#### Scenario: Compare the loss of covered branches with the tolerance `gap-ledger-072`
 - **WHEN** a code file has the tolerance conditions
+- **AND** its not-covered branch count is above the entry count plus the tolerance
 - **AND** its covered branch count is below the covered branch count of its entry minus the tolerance
-- **THEN** the gate stops the build, also when the not-covered count is not larger
+- **THEN** the gate stops the build, also when the total branch count is not equal to the total of its entry
+- **AND** the gate does not stop the build when only one of the two differences is above the tolerance
 
 #### Scenario: Do not write a worse count for a file with the tolerance conditions `gap-ledger-073`
 - **WHEN** you run the ratchet command for a file with the tolerance conditions
