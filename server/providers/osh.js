@@ -1,5 +1,5 @@
 import { coalesceProxyRequest } from './common/http.js';
-import { oshPages } from './osh/get.js';
+import { OSH_LIST_FORMAT, oshListUrl, oshPages } from './osh/get.js';
 import { baseErrorCode, createOshBase } from './osh/base.js';
 import {
   assertObservationUrl,
@@ -106,7 +106,7 @@ export function oshProxy({
   }
 
   async function fetchSystemsUpstream(root, headers) {
-    const firstUrl = new URL('systems?limit=100&f=application/geo+json', root);
+    const firstUrl = oshListUrl(root, 'systems', { limit: '100', f: OSH_LIST_FORMAT });
     const raw = await oshPages(fetchImpl, root, firstUrl, {
       headers,
       listOf: listOfSystems,
@@ -115,7 +115,7 @@ export function oshProxy({
   }
 
   async function fetchDatastreamsUpstream(root, headers) {
-    const firstUrl = new URL('datastreams?limit=100', root);
+    const firstUrl = oshListUrl(root, 'datastreams', { limit: '100' });
     const raw = await oshPages(fetchImpl, root, firstUrl, {
       headers,
       listOf: listOfDatastreams,

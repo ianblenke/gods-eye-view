@@ -1,10 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  OSH_LIST_FORMAT,
   OSH_MAX_BODY_BYTES,
   buildNextPageUrl,
   isSamePageWalk,
   oshGet,
+  oshListUrl,
   oshPages,
 } from '../../server/providers/osh/get.js';
 
@@ -307,6 +309,14 @@ test('[osh-036] buildNextPageUrl() returns null for a refused candidate, and a U
   assert.equal(built.search, '?limit=100&offset=100');
 });
 
+test('[osh-040] buildNextPageUrl() writes f exactly once, even when the candidate carries it twice', () => {
+  const root = new URL('https://osh.example/api/');
+  const currentWithFormat = new URL('https://osh.example/api/systems?limit=1&f=application/geo+json');
+  const candidate = new URL('https://osh.example/api/systems?f=json&page=2&f=xml');
+  const built = buildNextPageUrl(candidate, root, currentWithFormat);
+  assert.deepEqual(built.searchParams.getAll('f'), ['application/geo+json']);
+});
+
 test('[osh-036] oshPages() never requests a next link on a different origin, even a protocol-relative one with the same path', async () => {
   const root = new URL('https://osh.example/api/');
   let calls = 0;
@@ -451,4 +461,34 @@ test('[osh-015] fails a request past its timeout', async () => {
     { name: 'TimeoutError' },
   );
   assert.ok(Date.now() - startedAt < 500);
+});
+
+test('[osh-037] OSH_LIST_FORMAT names the GeoJSON format, and oshListUrl builds a query from named parts', () => {
+  assert.equal(OSH_LIST_FORMAT, 'application/geo+json');
+
+  const root = new URL('https://osh.example/api/');
+  const url = oshListUrl(root, 'systems', { limit: '1', f: OSH_LIST_FORMAT });
+  assert.equal(url.origin, root.origin);
+  assert.equal(url.pathname, '/api/systems');
+  assert.equal(url.search, '?limit=1&f=application%2Fgeo%2Bjson');
+
+  assert.equal(
+    oshListUrl(root, 'datastreams', { limit: '100' }).href,
+    'https://osh.example/api/datastreams?limit=100',
+  );
+
+  const encoded = oshListUrl(root, 'systems', { q: 'a+b/c&d#e f' });
+  assert.equal(encoded.search, '?q=a%2Bb%2Fc%26d%23e+f');
+});
+
+test('[osh-037] oshListUrl throws when the built URL leaves the root\'s origin or path', () => {
+  const root = new URL('https://osh.example/api/');
+  assert.throws(
+    () => oshListUrl(root, 'https://attacker.example/systems', {}),
+    { message: 'OSH list URL failed the safety check' },
+  );
+  assert.throws(
+    () => oshListUrl(root, '../systems', {}),
+    { message: 'OSH list URL failed the safety check' },
+  );
 });
