@@ -630,7 +630,7 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-054": {
-    "hash": "0704b0b2231167013aabeae617f12307560a51b878f5ccad157723161f2d9cbf",
+    "hash": "ab27e6aa36ab13395be6aa344a6cf010da5c17ce3fb606a57d012d5944237e93",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -655,7 +655,7 @@
     "change": "simplify-ledger"
   },
   "gap-ledger-070": {
-    "hash": "9806fb16ec47fb872ba22ebfa263f2d90d297cb95829510d5590a68a29a8265d",
+    "hash": "56474a86ade516f59609f85d1e1333a5ee50aac1de3e4330d2d106ee17bea96e",
     "since": "2026-09-16",
     "change": "simplify-ledger"
   },
@@ -665,7 +665,7 @@
     "change": "simplify-ledger"
   },
   "gap-ledger-072": {
-    "hash": "1a3e618a4e89ff3c0d4ebb1ced4f3bc3e07b767d9c59b35f1054c1e087d6a874",
+    "hash": "b6649c18a0ecaf57f5b358efebe9ef6ca0b891c3e32f41c70eb4a4282412dcfa",
     "since": "2026-09-16",
     "change": "simplify-ledger"
   },
@@ -693,6 +693,11 @@
     "hash": "bafe9cdbae0c7381f2529497a7e5022a002b69b9b69d4cef04db2b5e2f50e98b",
     "since": "2026-09-16",
     "change": "simplify-ledger"
+  },
+  "gap-ledger-078": {
+    "hash": "5332b7c028287aa2308d097b76dcb6fd9ff3fb6aaee9df2d7dcda9cabfaef9bd",
+    "since": "2026-09-17",
+    "change": "fix-covered-count"
   },
   "hud-markings-001": {
     "hash": "bf07f3ac338e3fd2d2154e6b57509df6157b73411cd9031a3d84856c0ef48c0a",
