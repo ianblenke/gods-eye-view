@@ -1,4 +1,4 @@
-import { oshGet } from './get.js';
+import { OSH_LIST_FORMAT, oshGet, oshListUrl } from './get.js';
 
 /**
  * Resolve the OpenSensorHub API root from a fixed candidate list, once per
@@ -8,7 +8,7 @@ import { oshGet } from './get.js';
 /** Wait this long after a full miss before the next probe pass. */
 export const BASE_HOLD_MS = 60_000;
 
-const PROBE_PATH = 'systems?limit=1&f=application/geo+json';
+const PROBE_QUERY = Object.freeze({ limit: '1', f: OSH_LIST_FORMAT });
 
 const CANDIDATE_SUFFIXES = [
   { name: 'root', suffix: '' },
@@ -61,8 +61,8 @@ export function createOshBase({ fetchImpl, now = Date.now }) {
   async function probeOnce(configuredUrl, headers) {
     const failures = [];
     for (const { name, url } of candidateRoots(configuredUrl)) {
-      const probeUrl = new URL(PROBE_PATH, url);
       try {
+        const probeUrl = oshListUrl(url, 'systems', PROBE_QUERY);
         const { status, json } = await oshGet(fetchImpl, probeUrl, { headers });
         if (status === 200 && isListPayload(json)) {
           return { root: url, candidate: name, failures };

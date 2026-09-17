@@ -18,7 +18,8 @@ test('[osh-009] uses the configured value when it answers with a system list', a
   assert.equal(state.root.href, 'https://osh.example/api/');
   assert.deepEqual(state.failures, []);
   assert.equal(calls.length, 1);
-  assert.equal(calls[0], 'https://osh.example/api/systems?limit=1&f=application/geo+json');
+  assert.equal(calls[0], 'https://osh.example/api/systems?limit=1&f=application%2Fgeo%2Bjson');
+  assert.equal(new URLSearchParams(new URL(calls[0]).search).get('f'), 'application/geo+json');
 });
 
 test('[osh-010] tries the next candidate after a miss, in a fixed order', async () => {
