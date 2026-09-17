@@ -715,6 +715,25 @@
     "src/data/oshGet.test.mjs › [osh-036] oshPages() never requests a next link that carries a username or a password",
     "src/data/oshGet.test.mjs › [osh-036] oshPages() never requests a next link with a fragment"
   ],
+  "osh-037": [
+    "src/data/oshGet.test.mjs › [osh-037] OSH_LIST_FORMAT names the GeoJSON format, and oshListUrl builds a query from named parts",
+    "src/data/oshGet.test.mjs › [osh-037] oshListUrl throws when the built URL leaves the root's origin or path",
+    "src/data/oshProxy.test.mjs › [osh-037] the probe, the systems list and the datastreams list send the queries that oshListUrl builds"
+  ],
+  "osh-038": [
+    "src/data/oshProxy.test.mjs › [osh-038] each recorded upstream query round-trips through URLSearchParams, decodes f to the GeoJSON format and holds no space"
+  ],
+  "osh-039": [
+    "src/data/oshProxy.test.mjs › [osh-039] the provider files write no query as a literal string, and no query value as a hand-encoded byte"
+  ],
+  "osh-040": [
+    "src/data/oshGet.test.mjs › [osh-040] buildNextPageUrl() writes f exactly once, even when the candidate carries it twice",
+    "src/data/oshProxy.test.mjs › [osh-040] a systems next link that omits f entirely still gets the provider's own format",
+    "src/data/oshProxy.test.mjs › [osh-040] the datastreams walk keeps no f key, even when a next link writes one",
+    "src/data/oshProxy.test.mjs › [osh-040] the format stays on every page of a multi-page systems walk",
+    "src/data/oshProxy.test.mjs › [osh-040] the next-page walk keeps the provider's own format, even when a server writes a different f value",
+    "src/data/oshProxy.test.mjs › [osh-040] the walk still ends at the provider's own format, even when a next link's f value is different but valid"
+  ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
   ],

@@ -1,0 +1,19 @@
+Verdict: FAIL
+- [ ] S1 major `openspec/changes/archive/2026-09-17-fix-osh-probe-format/design.md:74` "Round 3 found two more bugs in the fix above." The same paragraph then names three: "First," the omitted `f`, "Second," the latch, "Third," the doubled key. `design.md:76` and `tasks.md:16` each name three faults and three new tests. Write: "Round 3 found three more bugs in the fix above."
+- [ ] S2 minor `design.md:76`, `tasks.md:16` "a three-page latch" Verbs. The text uses "latch" as a verb elsewhere, so this is a verb used as a noun. Write: "a walk of three pages that loses the format".
+- [ ] S3 minor `design.md:76`, `proposal.md:23`, `src/data/oshProxy.test.mjs:807` "latch off", "latches off", "does not latch off partway through" Verbs. "latch off" is a phrasal verb, and "partway" is not an approved word. Write: "so the provider cannot lose the format", "the provider never loses the format", and the test name "the format stays on every page of a multi-page systems walk".
+- [ ] S4 minor `proposal.md:23` "a format-omitting middle link" Words that end in -ing. Write: "a middle link that omits the format".
+- [ ] S5 minor `design.md:74` "so that page's items were silently dropped" Voice. The active voice is possible, and "silently" is not an approved word. Write: "so `mapOshSystems()` dropped that page's items, with no log line".
+- [ ] S6 minor `design.md:74` "a candidate with two `f` keys" One word, one meaning. D24 uses "candidate" for an API root candidate, this paragraph for a next-page link. Write: "a next-page link with two `f` keys".
+- [ ] S7 minor `server/providers/osh/get.js:160` "A server can repeat the format this provider sent back into a next link, in a way this provider did not choose, such as a raw `+`, or write an `f` key onto a list that never asked for one, such as the datastreams list, or write the key twice." Instructions. One sentence carries three faults, and "repeat ... back into" is a phrasal verb. Write three sentences: "A server can write the format this provider sent into a next link with a raw `+`. It can write an `f` key onto a list that never asks for a format, such as the datastreams list. It can write the key twice."
+- [ ] S8 minor `openspec/specs/osh/spec.md:296` and the delta at `specs/osh/spec.md:57` "never taken from a link" Voice. Write: "and the walk never takes that format from a link".
+
+Truth checks that passed, read against the code and not against the prose:
+
+- `design.md:76` and the `get.js:153-159` docstring both say the rebuild drops every `f` the candidate carries, then appends `OSH_LIST_FORMAT` once, only when `current` has one. `server/providers/osh/get.js:169-180` does exactly that.
+- "Page 3 then reads that from page 2's own URL, never from a link in between" is true: `oshPages()` assigns `url = nextUrl` and passes that same `url` as `current` on the next turn (`server/providers/osh/get.js:221-223`), so `current` is always a URL this provider built.
+- The round-3 paragraph's three faults each match the round-2 rebuild the paragraph above it describes, and `src/data/oshSystems.js:29-44` keeps a record only for a `Point` geometry, so the dropped-items claim holds.
+- `osh-040` in both spec copies matches the five tests: an `f` key, a different valid value, a datastreams link, an omitted key and a doubled key.
+- `design.md:3` "eleven tagged tests" is right: three `osh-037`, one `osh-038`, one `osh-039`, six `osh-040`. D28's counts agree.
+- Impact: `openspec/trace/gaps.json` records `src/data/labelArbiter.js` at 52 not-covered branches with a total of 407, so the bullet is exact; 407 − 52 and 405 − 50 both give 355; `banked-branch-count` is in `2026-09-17-harden-gate-ledger/proposal.md:29`.
+- No host name, system id, datastream id, count or place name entered the repository. Every URL in the change folder and in the three test files is `osh.example`, `other.example` or `attacker.example`, and every id is a `*-fixture-*` name.

@@ -13,6 +13,11 @@ const OBSERVATION_BODY = {
   items: [{ id: 'obs-fixture-1', phenomenonTime: 't1', resultTime: 't2', result: { temperature: 21 } }],
 };
 
+// Strip comments first: a JSDoc line describing the one call site, such as
+// "The only fetch() call site", is prose, not a second call in the code.
+const stripComments = (text) =>
+  text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|\s)\/\/.*$/gm, '$1');
+
 /** Drive the middleware once, like a real request, and capture the response. */
 async function callOsh(proxy, { method = 'GET', url = '/status', hook = 'configureServer' } = {}) {
   let handler;
@@ -163,10 +168,6 @@ test('[osh-005] only osh/get.js calls fetch; no other scanned file calls it, nam
   const BAD_METHOD_TOKEN = /['"](post|put|patch|delete)['"]/i;
   const BODY_TOKEN = /\bbody\s*:|['"]body['"]\s*:/;
   const RAW_TRANSPORT_TOKEN = /['"](node:http|node:https|undici|ws)['"]/;
-  // Strip comments first: a JSDoc line describing the one call site, such as
-  // "The only fetch() call site", is prose, not a second call in the code.
-  const stripComments = (text) =>
-    text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|\s)\/\/.*$/gm, '$1');
   const source = new Map(
     files.map((file) => [
       file,
@@ -637,4 +638,202 @@ test('[osh-008] an unexpected internal error answers 500 and is logged without t
   assert.equal(status, 500);
   assert.deepEqual(json, { error: 'osh proxy error' });
   assert.ok(warnCalls.some((line) => line.includes('now is broken')));
+});
+
+test('[osh-037] the probe, the systems list and the datastreams list send the queries that oshListUrl builds', async () => {
+  const calls = [];
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl: fixtureFetch({ calls }) });
+  await callOsh(proxy, { url: '/systems' });
+  await callOsh(proxy, { url: '/datastreams' });
+  const queries = calls.map((call) => new URL(call.url).search.slice(1));
+  assert.equal(queries[0], 'limit=1&f=application%2Fgeo%2Bjson', 'the base probe');
+  assert.equal(queries[1], 'limit=100&f=application%2Fgeo%2Bjson', 'the systems list');
+  assert.equal(queries[2], 'limit=100', 'the datastreams list');
+});
+
+test('[osh-038] each recorded upstream query round-trips through URLSearchParams, decodes f to the GeoJSON format and holds no space', async () => {
+  const calls = [];
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl: fixtureFetch({ calls }) });
+  await callOsh(proxy, { url: '/systems' });
+  await callOsh(proxy, { url: '/datastreams' });
+  await callOsh(proxy, { url: '/observations?datastream=ds-fixture-1' });
+  assert.ok(calls.length >= 4, 'expected at least a probe, a systems, a datastreams and one observation call');
+  for (const call of calls) {
+    const url = new URL(call.url);
+    const params = new URLSearchParams(url.search);
+    const expected = params.size === 0 ? '' : `?${params.toString()}`;
+    assert.equal(url.search, expected, `${call.url} must round-trip through URLSearchParams byte for byte`);
+    for (const value of params.values()) {
+      assert.doesNotMatch(value, / /, `${call.url} must decode to no space in any query value`);
+    }
+    if (params.has('f')) {
+      assert.equal(params.get('f'), 'application/geo+json', `${call.url} must decode f to the GeoJSON format`);
+    }
+  }
+});
+
+test('[osh-039] the provider files write no query as a literal string, and no query value as a hand-encoded byte', () => {
+  const providerDir = new URL('../../server/providers/osh/', import.meta.url);
+  const discovered = readdirSync(providerDir)
+    .filter((name) => name.endsWith('.js'))
+    .sort()
+    .map((name) => `server/providers/osh/${name}`);
+  assert.deepEqual(
+    discovered,
+    [
+      'server/providers/osh/base.js',
+      'server/providers/osh/get.js',
+      'server/providers/osh/ids.js',
+      'server/providers/osh/observations.js',
+    ],
+    'the file list changed; a new file under server/providers/osh/ must be scanned too',
+  );
+  const files = ['server/providers/osh.js', ...discovered];
+  const QUOTED_STRING = /'(?:[^'\\\n]|\\.)*'|"(?:[^"\\\n]|\\.)*"|`[^`]*`/g;
+  const PAIR_TOKEN = /(?:^|[?&])[^&=\s]+=([^&]*)/g;
+  const BAD_BYTE = /[+%# ]/;
+  const LITERAL_QUERY = /\?[^&=\s]+=/;
+  for (const file of files) {
+    const text = stripComments(readFileSync(new URL(`../../${file}`, import.meta.url), 'utf8'));
+    for (const literal of text.match(QUOTED_STRING) || []) {
+      const body = literal.slice(1, -1);
+      assert.doesNotMatch(body, LITERAL_QUERY, `${file} must not write a URL with a literal query: ${literal}`);
+      for (const pair of body.matchAll(PAIR_TOKEN)) {
+        assert.doesNotMatch(pair[1], BAD_BYTE, `${file} must not write a hand-encoded query value: ${literal}`);
+      }
+    }
+  }
+});
+
+test('[osh-040] the next-page walk keeps the provider\'s own format, even when a server writes a different f value', async () => {
+  const calls = [];
+  const fetchImpl = async (url) => {
+    calls.push(String(url));
+    const parsed = new URL(String(url));
+    if (parsed.pathname === '/api/systems' && !parsed.searchParams.has('page')) {
+      return jsonResponse(200, {
+        features: [{ id: 'sys-fixture-1', geometry: { type: 'Point', coordinates: [1, 2] } }],
+        links: [{ rel: 'next', href: 'systems?page=2&f=application/geo+json' }],
+      });
+    }
+    return jsonResponse(200, {
+      features: [{ id: 'sys-fixture-2', geometry: { type: 'Point', coordinates: [3, 4] } }],
+    });
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { json } = await callOsh(proxy, { url: '/systems' });
+  assert.equal(json.systems.length, 2);
+  const page2 = calls.find((call) => new URL(call).searchParams.get('page') === '2');
+  assert.ok(page2, 'expected a second page request');
+  assert.match(new URL(page2).search, /f=application%2Fgeo%2Bjson/, 'page 2 must carry the provider\'s own encoded format');
+  assert.equal(new URL(page2).searchParams.get('f'), 'application/geo+json', 'page 2 must decode f to the GeoJSON format, not the value the server wrote');
+});
+
+test('[osh-040] the walk still ends at the provider\'s own format, even when a next link\'s f value is different but valid', async () => {
+  const calls = [];
+  const fetchImpl = async (url) => {
+    calls.push(String(url));
+    const parsed = new URL(String(url));
+    if (parsed.pathname === '/api/systems' && !parsed.searchParams.has('page')) {
+      return jsonResponse(200, {
+        features: [{ id: 'sys-fixture-1', geometry: { type: 'Point', coordinates: [1, 2] } }],
+        links: [{ rel: 'next', href: 'systems?page=2&f=json' }],
+      });
+    }
+    return jsonResponse(200, {
+      features: [{ id: 'sys-fixture-2', geometry: { type: 'Point', coordinates: [3, 4] } }],
+    });
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { json } = await callOsh(proxy, { url: '/systems' });
+  assert.equal(json.systems.length, 2);
+  const page2 = calls.find((call) => new URL(call).searchParams.get('page') === '2');
+  assert.ok(page2, 'expected a second page request');
+  assert.equal(
+    new URL(page2).searchParams.get('f'),
+    'application/geo+json',
+    'page 2 must replace a legitimately different f value, not repair it in place',
+  );
+});
+
+test('[osh-040] the datastreams walk keeps no f key, even when a next link writes one', async () => {
+  const calls = [];
+  const fetchImpl = async (url) => {
+    calls.push(String(url));
+    const parsed = new URL(String(url));
+    if (parsed.pathname === '/api/datastreams' && !parsed.searchParams.has('page')) {
+      return jsonResponse(200, {
+        items: [{ id: 'ds-fixture-1', 'system@id': 'sys-fixture-1' }],
+        links: [{ rel: 'next', href: 'datastreams?page=2&f=application/geo+json' }],
+      });
+    }
+    return jsonResponse(200, { items: [{ id: 'ds-fixture-2', 'system@id': 'sys-fixture-1' }] });
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { json } = await callOsh(proxy, { url: '/datastreams' });
+  assert.equal(json.datastreams.length, 2);
+  const page2 = calls.find((call) => new URL(call).searchParams.get('page') === '2');
+  assert.ok(page2, 'expected a second page request');
+  assert.equal(new URL(page2).searchParams.has('f'), false, 'the datastreams list never asks for a format, so page 2 must carry no f key');
+});
+
+test('[osh-040] a systems next link that omits f entirely still gets the provider\'s own format', async () => {
+  const calls = [];
+  const fetchImpl = async (url) => {
+    calls.push(String(url));
+    const parsed = new URL(String(url));
+    if (parsed.pathname === '/api/systems' && !parsed.searchParams.has('page')) {
+      return jsonResponse(200, {
+        features: [{ id: 'sys-fixture-1', geometry: { type: 'Point', coordinates: [1, 2] } }],
+        links: [{ rel: 'next', href: 'systems?page=2' }],
+      });
+    }
+    return jsonResponse(200, {
+      features: [{ id: 'sys-fixture-2', geometry: { type: 'Point', coordinates: [3, 4] } }],
+    });
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { json } = await callOsh(proxy, { url: '/systems' });
+  assert.equal(json.systems.length, 2);
+  const page2 = calls.find((call) => new URL(call).searchParams.get('page') === '2');
+  assert.ok(page2, 'expected a second page request');
+  assert.equal(
+    new URL(page2).searchParams.get('f'),
+    'application/geo+json',
+    'page 1 asked for a format, so page 2 must carry ours even when the link omits the key entirely',
+  );
+});
+
+test('[osh-040] the format stays on every page of a multi-page systems walk', async () => {
+  const calls = [];
+  const fetchImpl = async (url) => {
+    calls.push(String(url));
+    const parsed = new URL(String(url));
+    const page = parsed.searchParams.get('page');
+    if (!page) {
+      return jsonResponse(200, {
+        features: [{ id: 'sys-fixture-1', geometry: { type: 'Point', coordinates: [1, 2] } }],
+        links: [{ rel: 'next', href: 'systems?page=2' }],
+      });
+    }
+    if (page === '2') {
+      return jsonResponse(200, {
+        features: [{ id: 'sys-fixture-2', geometry: { type: 'Point', coordinates: [3, 4] } }],
+        links: [{ rel: 'next', href: 'systems?page=3' }],
+      });
+    }
+    return jsonResponse(200, {
+      features: [{ id: 'sys-fixture-3', geometry: { type: 'Point', coordinates: [5, 6] } }],
+    });
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { json } = await callOsh(proxy, { url: '/systems' });
+  assert.equal(json.systems.length, 3);
+  const page3 = calls.find((call) => new URL(call).searchParams.get('page') === '3');
+  assert.ok(page3, 'expected a third page request');
+  assert.equal(
+    new URL(page3).searchParams.get('f'),
+    'application/geo+json',
+    'page 1 asked for a format, so page 3 must still carry ours even though the page 2 link omitted it',
+  );
 });
