@@ -1,0 +1,22 @@
+{
+  "features": [
+    {
+      "id": "sys-fixture-1",
+      "geometry": { "type": "Point", "coordinates": [10.5, 45.2, 120] },
+      "properties": {
+        "uid": "urn:osh:sys-fixture-1",
+        "name": "Fixture System One",
+        "description": "A synthetic system used for tests.",
+        "validTime": ["2026-01-01T00:00:00Z", "now"]
+      }
+    },
+    {
+      "id": "sys-fixture-2",
+      "geometry": null,
+      "properties": {
+        "uid": "urn:osh:sys-fixture-2",
+        "name": "Fixture System Two"
+      }
+    }
+  ]
+}

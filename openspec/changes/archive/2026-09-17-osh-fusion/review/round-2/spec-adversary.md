@@ -1,0 +1,13 @@
+Round-1 findings: F1 closed. F2 closed. F3 closed. F4 closed for the scenario as written. F5 closed. F6 closed. F7 closed. F8 not closed (carried as F5). F9 closed, and closed honestly — both options are gone from `oshProxy()`, the route calls the fixed `ids.js` imports, and design D13 records that the guard branch cannot run for an accepted id. No replacement seam was added. F10 closed. F11 not closed (carried as F6). F12 closed and genuinely on the production path. F13 closed. F14 closed.
+
+```
+Verdict: PASS
+
+- [ ] F1 minor server/providers/osh/get.js:97 The new non-2xx throw has no scenario line. Scenario osh-014 has no THEN about a page status, so the test carries a tag whose scenario does not describe it, and a later edit that drops the check breaks no spec sentence. Correction: add an AND line for a non-2xx page to osh-014 or osh-018.
+- [ ] F2 minor src/data/oshProxy.test.mjs:145 The count guard covers only server/providers/osh/. The four other scanned files are a fixed list with no count, so a new module such as src/data/oshEvents.js that osh.js imports is never scanned, and osh-004 does not catch a globalThis.fetch call because it records only the injected fetch. Correction: derive the list from the imports of osh.js, or pin the count of src/data/osh*.js as the provider folder is pinned.
+- [ ] F3 minor src/data/oshProxy.test.mjs:548 The test for the osh-021 line "no way for a caller to replace either one" tries two option names. A seam re-added under another name passes it. Correction: assert that oshProxy() reads only env, fetchImpl, now and warn, or assert that osh.js calls observationUrl() and assertObservationUrl() directly in its text.
+- [ ] F4 minor openspec/specs/osh/spec.md:236 The osh-034 WHEN line still says "each osh* test file", but the corrected test also reads every *.test.mjs under an osh/ directory. Correction: name both rules in the WHEN line.
+- [ ] F5 minor src/data/oshRepositoryHygiene.test.mjs:60 (round-1 F8, still open) The address match needs a scheme, so a bare host or a host:port pair passes. Correction: also refuse a dotted host that is not a *.example name.
+- [ ] F6 minor openspec/trace/history.jsonl:490 (round-1 F11, still open) The change still writes src/data/labelArbiter.js branches 50 to 52 "shown by test" and 52 to 50 "smaller", for a file it does not touch. The net is zero and the ledger gate passes, but proposal.md:43 says the change opens no gap. Correction: record the count instability as a known limit.
+- [ ] F7 minor src/data/oshGet.test.mjs:168 The corrections add two STE warnings to the gate output: the -ing word "returning" here, and "mutating" in the osh-005 test name. Correction: rewrite the two new names.
+```

@@ -714,6 +714,181 @@
     "since": "2026-09-16",
     "change": "remove-classification-banner"
   },
+  "osh-001": {
+    "hash": "f03ccb41a7a278d75f8d994cf5005dcc4d6660b42d2d42420c6824c0c4814255",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-002": {
+    "hash": "b56c4fc0ddc41377633f85fc820657c42a11f8eef70b27b04c893a060e0beaa2",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-003": {
+    "hash": "7497db650a19be0c20d8689b2f5fb5f1706b7477cf4cd40e73430ecb15a00c7d",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-004": {
+    "hash": "78c30e981837d8ebbe985b9a70939eeab5512f1e4d4fc06e87a128416d8531cf",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-005": {
+    "hash": "d869b11baa4c87e897263d8c3051d380baa01d09d21a4eb3dc503707dfc1db38",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-006": {
+    "hash": "295595465686d3e38e583163b797d0dd13c787e7abdfd645fc250ff5be701d65",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-007": {
+    "hash": "9fd7a71d1346e0bbc11a0b5d1235cf4611bb751316f93855182683edfe655369",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-008": {
+    "hash": "282680650bbafc791b5edf4bf7c8799d0c439f557b17caa7804cfab23cac55d3",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-009": {
+    "hash": "8bd174cd17154af07b97764d2e71b5ae98f34fdd718b44856e5c6578e7aaf8df",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-010": {
+    "hash": "47203375498edd83652f80aebb47970c8a154ea51863e36e9812f69da6dbc104",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-011": {
+    "hash": "c48e99468a49aaed7d1ec893c17fff108402ce2703059c87bccabea4a514b5f9",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-012": {
+    "hash": "f2fd2f8afda530a33ecd49dafafce5decfcf8fd79a6df369a4a7edfc5a10774e",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-013": {
+    "hash": "962f8f1019ad99b0d11301bc1d5e7ac18f5143611aa0fe2a2674b7cf85b1b3f9",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-014": {
+    "hash": "71b7b829e87be81c71a9f4b6699932bcef5bf4d809aa3bad88cd13db5cd1beda",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-015": {
+    "hash": "5928a605ed1e0a55d016070bac5cc7f30572e6ffbaba2b24b4a41abd3a67df9b",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-016": {
+    "hash": "2e1451a4908cc17bac69916d1ae199835608f3092e2c1503563eb4daf81a5ba2",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-017": {
+    "hash": "8750dc17d5eb68989036798b34434a768ecac918e2ef2da0ca32154757fb336f",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-018": {
+    "hash": "893e203154c981a37be5b3b7b6c0dd27769aaa0d22e716b6f94012c652ab4637",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-019": {
+    "hash": "dede7a4f09a1538f5c63d795ac01699cd22c42c1c168bca149ef08b16d2d3bea",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-020": {
+    "hash": "eb1ba1cb42e996aaa7fa8e2cd34db4224feb6e1038d4dafca28c44eb0b2a3a77",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-021": {
+    "hash": "9341f0c53c0b6b69a5fe7de07a79084d8607c2182736b7590ab89b1aca0708c1",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-022": {
+    "hash": "c8c6419fa99bd8e6f0b533857f9bf177d47785face7736f5c5fa997d3c1652fd",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-023": {
+    "hash": "975966d2e926b5f6ea7efaa98725e640b447e537ccd0555447c72118d4b2a93a",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-024": {
+    "hash": "6e273927c471ed75c3b7d309619ad86950a4d09bde22fd2bea392af302ed1435",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-025": {
+    "hash": "883338804a4f490adc70ff44cd5b50a87f3484d6b10ae06c3731c1d9999b09d9",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-026": {
+    "hash": "44274f6d2a94a1b1e80769f21ef46b46a0017e0bc871d318afe15487a2d3be52",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-027": {
+    "hash": "6b30730da3c03657e215d0024cc2efe3305b8630bc3528baeb33f771a879c755",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-028": {
+    "hash": "932a32757d8436b1ec6fca5cf21ae9e56e5a8a874c6f158a0892b1c0d51c8c3a",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-029": {
+    "hash": "799ec158ea1b18c077fb3e14fdcff3a27a4bc305dd066aeb0a8dbe22ed543c6c",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-030": {
+    "hash": "853f4b4b92739bf2c69658f61fae7d66471aa4d70cfccd473bed9f8fe3a2f8af",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-031": {
+    "hash": "ca99ca9f82092142c432b0657b4b40ce008d43d35d86317cd117fd522492ffb5",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-032": {
+    "hash": "8f6d0d6f43cd37e0e964061748e583da542d9b7671000acbf92d8b9bd5c49ddd",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-033": {
+    "hash": "8b59360b33079573f3534ca08f0bdb138aad62169d941f668144c19ad1673415",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-034": {
+    "hash": "9c493cd06b33a2bf1f233be275f7bd7bebd3a5dbcfd5cda178812f3ae5ca6f0c",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
+  "osh-035": {
+    "hash": "47fc05db2649cbef490115bfc86b44e4950e88beac137a160dc6c0c0925259ca",
+    "since": "2026-09-17",
+    "change": "osh-fusion"
+  },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
     "since": "2026-09-14",

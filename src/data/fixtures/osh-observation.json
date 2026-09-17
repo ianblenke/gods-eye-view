@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "id": "obs-fixture-1",
+      "phenomenonTime": "2026-01-01T00:05:00Z",
+      "resultTime": "2026-01-01T00:05:01Z",
+      "result": {
+        "location": { "lat": 45.21, "lon": 10.53, "alt": 121 },
+        "temperature": 21.4,
+        "status": { "code": "ok", "battery": 92 }
+      }
+    }
+  ]
+}

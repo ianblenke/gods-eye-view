@@ -120,6 +120,9 @@
     "./server/providers/openai": {
       "node": "./server/providers/openai.js"
     },
+    "./server/providers/osh": {
+      "node": "./server/providers/osh.js"
+    },
     "./server/standalone/key-setup": {
       "node": "./server/standalone/key-setup.js"
     },
@@ -160,6 +163,7 @@
     "./layers/awareness": "./src/layers/awareness/index.js",
     "./layers/traffic": "./src/layers/traffic/index.js",
     "./layers/bikeshare": "./src/layers/bikeshare/index.js",
-    "./layers/cctv": "./src/layers/cctv/index.js"
+    "./layers/cctv": "./src/layers/cctv/index.js",
+    "./layers/osh": "./src/layers/osh/index.js"
   }
 }
