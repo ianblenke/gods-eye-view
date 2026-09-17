@@ -1,0 +1,18 @@
+Read everything in scope: the change's proposal, design, tasks, both delta specs, the two main specs, the known limits and review record of `establish-spec-governance`, the code of `compareCoverageEntry`, the trace diff, and the new prose in both test files.
+
+Round-1 findings, all eleven: S1 closed. S2 closed (`range-totals` recorded as closed; `range-slack`, `unchanged-band`, `range-band-ratchet` in the simple past; `deterministic-tests` records the part that stays). S3 closed. S4 closed. S5 closed. S6 closed (active voice). S7 closed. S8 closed. S9 closed. S10 closed. S11 closed.
+
+The new findings come from the seven corrections of the spec adversary, which added work in `gap-ledger` and a complete file list that the older prose does not follow.
+
+```
+Verdict: FAIL
+- [ ] S1 major proposal.md:16 "- `coverage-gate`: the words of the scenario `coverage-gate-046`." The change also has a delta spec for `gap-ledger` and changes `openspec/specs/gap-ledger/spec.md`, and the What Changes names that work. Add: "- `gap-ledger`: the words of the scenario `gap-ledger-054`."
+- [ ] S2 major proposal.md:20 "the three files of `openspec/trace/`" The folder has five files, the change changes two of them, and the next bullet says that `openspec/trace/gaps.json` is the same as the base. Write: "`openspec/trace/history.jsonl`, `openspec/trace/ids.json`".
+- [ ] S3 major design.md:7 "`...establish-spec-governance/proposal.md` and `src/tooling/spec/testGuard.test.mjs`." The Impact of the proposal now names ten files. Write the same list here, or write: "The Impact of the proposal names the changed files."
+- [ ] S4 major design.md:48 "the body of one scenario, so `coverage-gate-046` gets a new hash. The test of that scenario in `src/tooling/spec/testGuard.test.mjs`" The change also changes `gap-ledger-054`, which has a new hash in `ids.json` and a new assertion in `ledger.test.mjs`. Write: "the body of two scenarios, so `coverage-gate-046` and `gap-ledger-054` get a new hash. The test of each scenario, in `src/tooling/spec/testGuard.test.mjs` and in `src/tooling/spec/ledger.test.mjs`, gets the new words."
+- [ ] S5 minor design.md:36 "The change gives the second line the plural form, "a covered count"." "a covered count" is singular, and "the second line" can be line 2 of the scenario. Write: "The change gives the last **AND** line the words "a covered count"."
+- [ ] S6 minor proposal.md:29 "The review of `establish-spec-governance` gave this change a tool that makes samples from a CI run." Two meanings: the review gave a tool, or the review gave the work. No such tool exists. Write: "The review of `establish-spec-governance` told this change to make a tool that makes samples from a CI run. The kept samples are not in the project now, so such a tool has no purpose."
+- [ ] S7 minor proposal.md:28 "The known limit `branch-identity` gives the same effect for each file." One word, one meaning. "give" has other meanings in this bullet. Write: "The known limit `branch-identity` records the same effect for each file."
+- [ ] S8 minor src/tooling/spec/ledger.test.mjs:154 "Each covered count of the file gets the comparison, not only the branch count." Voice, and a verb as a noun. Write: "The gate compares each covered count of the file, not only the branch count."
+- [ ] S9 minor src/tooling/spec/testGuard.test.mjs:442 "The skip option that each test that needs the guard to count assertions uses comes from the real node:test module, so it is false on a Node version with the function." Articles and nouns. "it" can be the skip option or the module. Write: "Each test that needs the guard to count assertions gets its skip option from the real node:test module. So the skip option is false on a Node version with the function."
+```

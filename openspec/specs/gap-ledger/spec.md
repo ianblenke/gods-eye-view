@@ -59,7 +59,7 @@ Origin: spec-first
 #### Scenario: Stop for fewer covered branches or functions in an unchanged file `gap-ledger-054`
 - **WHEN** the content hash of a code file is equal to the hash in its ledger entry
 - **AND** the covered branch count or the covered function count is smaller than in its entry
-- **AND** the file does not have the tolerance conditions, or its covered count is below the covered count of its entry minus the tolerance
+- **AND** the file does not have the tolerance conditions, or a covered count is below the covered count of its entry minus the tolerance
 - **THEN** the gate stops the build
 
 #### Scenario: Stop for a ledger entry without the total counts `gap-ledger-055`
