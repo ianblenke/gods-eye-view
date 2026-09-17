@@ -39,6 +39,21 @@ function coveredCount(item, metric) {
 }
 
 /**
+ * The loss of a metric of an unchanged file: the smaller of the increase of the not-covered
+ * count and the decrease of the covered count. A run can give another total for the same
+ * file, and that moves one of the two counts only. A fall of the not-covered count never
+ * hides a fall of the covered count, so the loss is then only the fall of the covered count.
+ * Null without a covered count.
+ */
+function lossOf(entry, gap, metric) {
+  const before = coveredCount(entry, metric);
+  const now = coveredCount(gap, metric);
+  if (before === null || now === null) return null;
+  const fall = before - now;
+  return gap[metric] >= entry[metric] ? Math.min(gap[metric] - entry[metric], fall) : fall;
+}
+
+/**
  * Reduce the measurements to the current gaps.
  *
  * @param {{coverage: object[], untraced: {file: string, name: string}[]}} input
@@ -209,10 +224,9 @@ function compareCoverageEntry(file, entry, gap, tolerance = () => 0) {
     }
   } else if (entry.loaded && gap.loaded) {
     for (const metric of ['branches', 'functions']) {
-      const before = coveredCount(entry, metric);
-      const now = coveredCount(gap, metric);
-      if (before !== null && now !== null && now < before - tolerance(metric)) {
-        error('LEDGER-LOST-COVERAGE', `${file} has ${now} covered ${metric}. The ledger records ${before}.`);
+      const loss = lossOf(entry, gap, metric);
+      if (loss !== null && loss > tolerance(metric)) {
+        error('LEDGER-LOST-COVERAGE', `${file} has ${gap[metric]} ${metric} not covered and ${coveredCount(gap, metric)} covered. The ledger records ${entry[metric]} and ${coveredCount(entry, metric)}.`);
       }
     }
   }
@@ -222,8 +236,8 @@ function compareCoverageEntry(file, entry, gap, tolerance = () => 0) {
 /**
  * Compare the current gaps with the ledger. A file with the tolerance conditions is a loaded code
  * file with true coverage that has the content of the base commit and of its entry. Its not-covered
- * line count can be above the entry by at most the tolerance, and its covered branch and function
- * counts can be below the entry by at most the tolerance. The gate does not record the entry of
+ * line count can be above the entry by at most the tolerance. The loss of its covered branches and
+ * of its covered functions can be at most the tolerance. The gate does not record the entry of
  * such a file as not current for a smaller gap. See the requirement "Count tolerance".
  *
  * @param {object} input

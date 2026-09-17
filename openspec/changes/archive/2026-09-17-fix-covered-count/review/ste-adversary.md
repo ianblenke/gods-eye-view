@@ -1,0 +1,16 @@
+Verdict: PASS
+Findings: none
+
+I checked each correction against `scripts/spec/lib/ledger.mjs`, not against the other prose.
+
+S1, `design.md:43`. "In the first case, without the tolerance conditions, the gate records the entry as not current." True. In the first case the not-covered count is equal, so `lossOf` (`ledger.mjs:48`) gives `Math.min(0, fall)` = 0, which is never above the tolerance of 0. `compareCoverageEntry` returns no error, `sameGap` is false because the totals differ, and `compareLedger:271` pushes the stale entry only when `!tolerant`. I also tested the other routes into the first case: a file with another content hash takes the `changed` branch at `ledger.mjs:219`, where an equal not-covered count also gives no error and the stale entry still follows. The sentence holds for each route. It agrees with `gap-ledger-078` in the live spec at `openspec/specs/gap-ledger/spec.md:64-65` and with the test at `src/tooling/spec/ledger.test.mjs:162`.
+
+S2, `design.md:31`. The qualifier is gone, and the sentence is correct without it: "When a caller in another file no longer calls a function, V8 removes the nested functions of that function too." The next sentence keeps "can fall", which round 2 F5 asked for. `proposal.md:34` keeps its own qualifier, "with covered branches of its own", which names the branch shape. The two qualifiers are now for different shapes, so neither file contradicts the other. The round 3 S5 ambiguity of "its" is also gone, because the text says "of that function".
+
+S3, `src/tooling/spec/ledger.test.mjs:186-188`. The comment now carries the same first sentence, word for word. Its second clause, "so the not-covered count can fall while the covered count also falls", is a merge of the two design sentences with the same meaning. The numbers below it agree: 10 functions with 3 not covered move to 7 with 1 not covered, so the covered count falls from 7 to 6.
+
+`design.md:51`, the count sentence. The singular form is now correct. Only the `fewerNested` assertion at `ledger.test.mjs:191` matches "a not-covered count that falls", because `measuredLoss` at line 184 has a not-covered count that rises from 3 to 5. I measured `fewerNested` against three forms. The old rule stops it, because 6 is below 7 minus 0. The shipped code stops it, because the not-covered count falls and the loss is the fall of 1. The middle form gives `Math.min(-2, 1)` = -2 and does not stop it, so the assertion fails there alone. The sentence before it, "Most new assertions fail against the code before this change", also holds: I counted 11 new or changed assertions that fail against the old code and 6 that pass.
+
+Neighbour scan. I searched the repo for each corrected sentence and for the phrases near it. No second copy of any of the three carries the old text. The claims of `design.md:47` about `lossOf`, the comparison and the message all agree with `ledger.mjs:48-54` and `ledger.mjs:229`. The tolerance numbers at `design.md:5`, 8 for 405 branches and 0 for 23, agree with `toleranceOf`.
+
+The prose is sound. I report no finding.

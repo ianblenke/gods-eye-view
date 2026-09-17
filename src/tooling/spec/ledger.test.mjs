@@ -150,7 +150,21 @@ test('[gap-ledger-018] does not stop for branches that a new test shows in an un
   assert.deepEqual(tolerant, { errors: [], stale: [] }, 'the tolerance conditions also give no error');
 });
 
-test('[gap-ledger-054] stops for fewer covered branches or functions in an unchanged file', () => {
+test('[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file', () => {
+  // The measured fault: src/search/placeSearch.js reads 23 branches in one run and 22 in the next,
+  // with the same 3 branches not covered. The gate must not read that move as a lost branch.
+  const file = 'src/search/placeSearch.js';
+  const ledger = ledgerWith({ coverage: { [file]: LOADED(2, 3, 1, { totals: { lines: 65, branches: 23, functions: 3 } }) } });
+  const current = gaps([loaded(file, 2, 3, 1, 'same', { lines: 65, branches: 22, functions: 3 })]);
+  const tolerant = compareLedger({ ledger, current, sameAsBase: () => true });
+  assert.deepEqual(tolerant, { errors: [], stale: [] }, 'a smaller total with the same not-covered count is not a loss');
+  const result = compareLedger({ ledger, current });
+  assert.deepEqual(codes(result), ['LEDGER-STALE'], 'without the tolerance conditions, the entry is not current, and no other error');
+  const functionsForm = gaps([loaded(file, 2, 3, 1, 'same', { lines: 65, branches: 23, functions: 2 })]);
+  assert.deepEqual(compareLedger({ ledger, current: functionsForm, sameAsBase: () => true }).errors, [], 'the same rule applies to the total function count');
+});
+
+test('[gap-ledger-054] stops for a loss of covered branches or functions in an unchanged file', () => {
   // The gate compares each covered count of the file, not only the branch count.
   const both = ledgerWith({ coverage: { 'src/y.js': LOADED(10, 0, 0, { totals: { lines: 100, branches: 5, functions: 9 } }) } });
   const lostFunctions = compareLedger({ ledger: both, current: gaps([loaded('src/y.js', 10, 0, 3, 'same', { lines: 100, branches: 5, functions: 9 })]) });
@@ -158,13 +172,23 @@ test('[gap-ledger-054] stops for fewer covered branches or functions in an uncha
   const ledger = ledgerWith({ coverage: { 'src/x.js': LOADED(10, 0, 0, { totals: { lines: 100, branches: 5, functions: 2 } }) } });
   const lost = compareLedger({ ledger, current: gaps([loaded('src/x.js', 9, 2, 1, 'same', { lines: 100, branches: 4, functions: 2 })]) });
   assert.deepEqual(lost.errors, [
-    { code: 'LEDGER-LOST-COVERAGE', file: 'src/x.js', message: 'src/x.js has 2 covered branches. The ledger records 5.' },
-    { code: 'LEDGER-LOST-COVERAGE', file: 'src/x.js', message: 'src/x.js has 1 covered functions. The ledger records 2.' },
+    { code: 'LEDGER-LOST-COVERAGE', file: 'src/x.js', message: 'src/x.js has 2 branches not covered and 2 covered. The ledger records 0 and 5.' },
+    { code: 'LEDGER-LOST-COVERAGE', file: 'src/x.js', message: 'src/x.js has 1 functions not covered and 1 covered. The ledger records 0 and 2.' },
   ]);
   assert.throws(() => ratchet(ledger, gaps([loaded('src/x.js', 9, 2, 1, 'same', { branches: 4, functions: 2 })])), /LEDGER-LOST-COVERAGE src\/x\.js/);
   const base = ledgerWith({ coverage: { 'src/x.js': LOADED(10, 0, 0, { totals: { lines: 100, branches: 5, functions: 2 } }) } });
   const hidden = ledgerWith({ coverage: { 'src/x.js': LOADED(9, 2, 0, { totals: { lines: 100, branches: 4, functions: 2 } }) } });
   assert.deepEqual(codes(compareWithBase({ ledger: hidden, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true })), ['LEDGER-TOTALS-NOT-BASE', 'LEDGER-MORE-THAN-BASE']);
+  // The measured fault: a smaller branch total with a real loss of covered branches still stops the build.
+  const measured = ledgerWith({ coverage: { 'src/search/placeSearch.js': LOADED(2, 3, 1, { totals: { lines: 65, branches: 23, functions: 3 } }) } });
+  const measuredLoss = compareLedger({ ledger: measured, current: gaps([loaded('src/search/placeSearch.js', 2, 5, 1, 'same', { lines: 65, branches: 22, functions: 3 })]) });
+  assert.deepEqual(codes(measuredLoss), ['LEDGER-LOST-COVERAGE'], 'a real loss of two branches stops the build with no tolerance conditions');
+  // When a caller in another file no longer calls a function, V8 removes the nested functions of
+  // that function too, so the not-covered count can fall while the covered count also falls.
+  // The loss must not go negative.
+  const nested = ledgerWith({ coverage: { 'src/f.js': LOADED(0, 0, 3, { totals: { lines: 100, branches: 10, functions: 10 } }) } });
+  const fewerNested = compareLedger({ ledger: nested, current: gaps([loaded('src/f.js', 0, 0, 1, 'same', { lines: 100, branches: 10, functions: 7 })]), sameAsBase: () => true });
+  assert.deepEqual(codes(fewerNested), ['LEDGER-LOST-COVERAGE'], 'a fall of the not-covered count does not hide a fall of the covered count');
 });
 
 test('[gap-ledger-055] stops for a ledger entry without the total counts', () => {
@@ -484,6 +508,9 @@ test('[gap-ledger-069] does not stop for counts inside the tolerance and does no
   assert.deepEqual([inside.errors, inside.stale], [[], []]);
   const smaller = compareLedger({ ledger, current: gaps([loaded('src/orbit.js', 1, 2, 0, 'same', BIG)]), ...TOLERANT });
   assert.deepEqual([smaller.errors, smaller.stale], [[], []]);
+  // A moved total still gives a covered count at the edge of the tolerance, so the loss stays inside it.
+  const movedTotal = compareLedger({ ledger, current: gaps([loaded('src/orbit.js', 20, 33, 4, 'same', { lines: 400, branches: 395, functions: 400 })]), ...TOLERANT });
+  assert.deepEqual([movedTotal.errors, movedTotal.stale], [[], []], 'a smaller total at the edge of the tolerance does not stop the build');
 });
 
 test('[gap-ledger-070] stops for a count outside the tolerance', () => {
@@ -491,7 +518,7 @@ test('[gap-ledger-070] stops for a count outside the tolerance', () => {
   const lines = compareLedger({ ledger, current: gaps([loaded('src/orbit.js', 29, 30, 4, 'same', BIG)]), ...TOLERANT });
   assert.deepEqual(lines.errors, [{ code: 'LEDGER-LARGER-GAP', file: 'src/orbit.js', message: 'src/orbit.js has 29 lines not covered. The ledger allows 28.' }]);
   const covered = compareLedger({ ledger, current: gaps([loaded('src/orbit.js', 20, 39, 4, 'same', BIG)]), ...TOLERANT });
-  assert.deepEqual(covered.errors, [{ code: 'LEDGER-LOST-COVERAGE', file: 'src/orbit.js', message: 'src/orbit.js has 361 covered branches. The ledger records 370.' }]);
+  assert.deepEqual(covered.errors, [{ code: 'LEDGER-LOST-COVERAGE', file: 'src/orbit.js', message: 'src/orbit.js has 39 branches not covered and 361 covered. The ledger records 30 and 370.' }]);
 });
 
 test('[gap-ledger-071] makes the tolerance from the total of the metric', () => {
@@ -504,12 +531,23 @@ test('[gap-ledger-071] makes the tolerance from the total of the metric', () => 
   assert.deepEqual(codes(compareLedger({ ledger: small, current: current(4), ...TOLERANT })), ['LEDGER-LARGER-GAP']);
 });
 
-test('[gap-ledger-072] compares the covered counts with the tolerance, also without a larger gap', () => {
+test('[gap-ledger-072] compares the loss of covered branches with the tolerance, also when the total moves', () => {
   const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(20, 30, 4, { totals: BIG }) } });
-  const more = gaps([loaded('src/orbit.js', 20, 30, 4, 'same', { lines: 400, branches: 391, functions: 400 })]);
-  const result = compareLedger({ ledger, current: more, ...TOLERANT });
-  assert.deepEqual(result.errors, [{ code: 'LEDGER-LOST-COVERAGE', file: 'src/orbit.js', message: 'src/orbit.js has 361 covered branches. The ledger records 370.' }]);
-  const edge = gaps([loaded('src/orbit.js', 20, 30, 4, 'same', { lines: 400, branches: 392, functions: 400 })]);
+  // A total that does not move: both differences agree, so the loss is exact and above the tolerance of 8.
+  const stable = gaps([loaded('src/orbit.js', 20, 39, 4, 'same', { lines: 400, branches: 400, functions: 400 })]);
+  const result = compareLedger({ ledger, current: stable, ...TOLERANT });
+  assert.deepEqual(result.errors, [{ code: 'LEDGER-LOST-COVERAGE', file: 'src/orbit.js', message: 'src/orbit.js has 39 branches not covered and 361 covered. The ledger records 30 and 370.' }]);
+  // A total that is not equal to the entry total still stops the build, because the loss is above the tolerance.
+  const totalNotEqual = gaps([loaded('src/orbit.js', 20, 39, 4, 'same', { lines: 400, branches: 399, functions: 400 })]);
+  assert.deepEqual(codes(compareLedger({ ledger, current: totalNotEqual, ...TOLERANT })), ['LEDGER-LOST-COVERAGE']);
+  // A smaller total with the same not-covered count hides no real loss, so the gate does not stop.
+  const noLoss = gaps([loaded('src/orbit.js', 20, 30, 4, 'same', { lines: 400, branches: 391, functions: 400 })]);
+  assert.deepEqual(compareLedger({ ledger, current: noLoss, ...TOLERANT }).errors, [], 'a smaller total with the same not-covered count is not a loss');
+  // A larger total with more not-covered branches also hides no real loss.
+  const largerTotal = gaps([loaded('src/orbit.js', 20, 39, 4, 'same', { lines: 400, branches: 409, functions: 400 })]);
+  assert.deepEqual(compareLedger({ ledger, current: largerTotal, ...TOLERANT }).errors, []);
+  // The loss is the smaller of the two differences: 9 and 8. The gate uses 8, so this is inside the tolerance.
+  const edge = gaps([loaded('src/orbit.js', 20, 39, 4, 'same', { lines: 400, branches: 401, functions: 400 })]);
   assert.deepEqual(compareLedger({ ledger, current: edge, ...TOLERANT }).errors, []);
 });
 
@@ -524,6 +562,13 @@ test('[gap-ledger-073] does not write a worse count for a file with the toleranc
   const older = ledgerWith({ coverage: { 'src/orbit.js': LOADED(20, 30, 4, { totals: undefined }) } });
   const filled = ratchet(older, gaps([loaded('src/orbit.js', 26, 35, 6, 'same', BIG)]), TOLERANT);
   assert.deepEqual(filled.ledger.coverage['src/orbit.js'].totals, BIG);
+  // The measured fault: the command keeps the larger total and the entry counts for a smaller total
+  // with the same not-covered count, so the entry does not move between the two branch totals.
+  const measured = ledgerWith({ coverage: { 'src/search/placeSearch.js': LOADED(2, 3, 1, { totals: { lines: 65, branches: 23, functions: 3 } }) } });
+  const kept = ratchet(measured, gaps([loaded('src/search/placeSearch.js', 2, 3, 1, 'same', { lines: 65, branches: 22, functions: 3 })]), TOLERANT);
+  assert.deepEqual(kept.ledger.coverage['src/search/placeSearch.js'].totals.branches, 23);
+  assert.deepEqual(kept.ledger.coverage['src/search/placeSearch.js'].branches, 3);
+  assert.deepEqual(kept.history, []);
 });
 
 test('[gap-ledger-074] uses no tolerance for a file without the tolerance conditions', () => {
@@ -537,6 +582,11 @@ test('[gap-ledger-074] uses no tolerance for a file without the tolerance condit
   const untrue = ledgerWith({ coverage: { 'src/orbit.js': LOADED(20, 30, 4, { totals: BIG, untrue: true }) } });
   const fake = gaps([{ ...loaded('src/orbit.js', 24, 30, 4, 'same', BIG), untrue: true }]);
   assert.deepEqual(codes(compareLedger({ ledger: untrue, current: fake, ...TOLERANT })), ['LEDGER-LARGER-GAP']);
+  // The measured fault, with no tolerance conditions: a smaller total with the same not-covered
+  // count is still not a loss, so the gate gives no LEDGER-LOST-COVERAGE, only LEDGER-STALE.
+  const measured = ledgerWith({ coverage: { 'src/search/placeSearch.js': LOADED(2, 3, 1, { totals: { lines: 65, branches: 23, functions: 3 } }) } });
+  const smallerTotal = gaps([loaded('src/search/placeSearch.js', 2, 3, 1, 'same', { lines: 65, branches: 22, functions: 3 })]);
+  assert.deepEqual(codes(compareLedger({ ledger: measured, current: smallerTotal })), ['LEDGER-STALE']);
 });
 
 test('[gap-ledger-075] stops for a ledger entry without the total line count', () => {
