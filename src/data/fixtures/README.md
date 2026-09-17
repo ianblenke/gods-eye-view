@@ -7,3 +7,7 @@
   (22,980 bytes). Used by offline decode/source tests and the explicit `qa-traffic --fixtures`
   browser mode — it is a point-in-time congestion snapshot, not a bundled
   data layer, and is never loaded by ordinary application startup. © TomTom.
+- `osh-systems.json`, `osh-datastreams.json`, `osh-observation.json` — synthetic
+  OpenSensorHub payloads for the `osh` provider and adapter tests. The host
+  `https://osh.example` is not a real server. The ids `sys-fixture-*` and
+  `ds-fixture-*` are not real system or datastream ids.
