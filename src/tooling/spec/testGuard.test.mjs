@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -439,4 +439,14 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
       "[spec-trace-045] stops for changed scenario text when a test only moved to a renamed test file",
       "[coverage-gate-043] stops the check for a code file that imports a test file"
   ]);
+  // Each test that needs the guard to count assertions gets its skip option from the real
+  // node:test module. So the skip option is false on a Node version with the function.
+  const nodeTest = await import('node:test');
+  const expected = typeof nodeTest.getTestContext === 'function' ? false : `Node ${process.version} has no getTestContext function in node:test`;
+  assert.equal(GUARDED_RUN.skip, expected);
+  // No other test file of the gates gives a test the skip option of the guard.
+  const others = readdirSync(fileURLToPath(new URL('.', import.meta.url))).filter((name) => name.endsWith('.test.mjs') && name !== 'testGuard.test.mjs' && name !== 'gates.test.mjs');
+  for (const name of others) {
+    assert.equal(skipped(`./${name}`).length, 0, `${name} has a test with the skip option of the guard`);
+  }
 });
