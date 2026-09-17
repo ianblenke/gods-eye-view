@@ -154,10 +154,24 @@ function encode(state) {
   return params.toString();
 }
 
+test('[osh-033] registers the OSH systems layer with the token o, and localLayers.js exports it', async () => {
+  assert.deepEqual(
+    LAYER_STATE_REGISTRY.find((entry) => entry.id === 'osh-systems'),
+    { id: 'osh-systems', token: 'o', disposition: 'enabled-only' },
+  );
+  assert.equal(REGISTERED_LAYER_IDS.length, 17);
+  assert.deepEqual(REGISTERED_LAYER_IDS, [...REGISTERED_LAYER_IDS].sort());
+  const localLayers = (await import('./localLayers.js')).default;
+  assert.ok(
+    localLayers.some((layer) => layer.id === 'osh-systems'),
+    'src/data/localLayers.js must export the OSH systems layer',
+  );
+});
+
 test('production registry is exact, canonical, and rejects incomplete contracts', async () => {
   assert.equal(validateLayerStateRegistry(), true);
-  assert.equal(REGISTERED_LAYER_IDS.length, 16);
-  assert.equal(new Set(REGISTERED_LAYER_IDS).size, 16);
+  assert.equal(REGISTERED_LAYER_IDS.length, 17);
+  assert.equal(new Set(REGISTERED_LAYER_IDS).size, 17);
   assert.deepEqual(REGISTERED_LAYER_IDS, [...REGISTERED_LAYER_IDS].sort());
   assert.throws(
     () => validateLayerStateRegistry([...LAYER_STATE_REGISTRY, LAYER_STATE_REGISTRY[0]]),

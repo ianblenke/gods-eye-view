@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "id": "ds-fixture-1",
+      "name": "Fixture Datastream One",
+      "outputName": "weather",
+      "validTime": ["2026-01-01T00:00:00Z", "now"],
+      "system@id": "sys-fixture-1"
+    },
+    {
+      "id": "ds-fixture-2",
+      "name": "Fixture Datastream Two",
+      "outputName": "location",
+      "system@link": { "href": "https://osh.example/api/systems/sys-fixture-1" }
+    }
+  ]
+}

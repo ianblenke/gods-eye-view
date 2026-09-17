@@ -242,6 +242,22 @@
     ],
     "external": []
   },
+  "osh-provider": {
+    "runtime": "node",
+    "exports": ["./server/providers/osh"],
+    "modules": [
+      "server/providers/common/http.js",
+      "server/providers/osh.js",
+      "server/providers/osh/base.js",
+      "server/providers/osh/get.js",
+      "server/providers/osh/ids.js",
+      "server/providers/osh/observations.js",
+      "src/data/oshDatastreams.js",
+      "src/data/oshObservations.js",
+      "src/data/oshSystems.js"
+    ],
+    "external": []
+  },
   "standalone-key-setup": {
     "runtime": "node",
     "exports": ["./server/standalone/key-setup"],
@@ -891,6 +907,15 @@
       "src/layers/cctv/state.js",
       "src/layers/cctv/testing.js",
       "src/overlays/worldOverlayTokens.js"
+    ],
+    "external": ["cesium"]
+  },
+  "osh-layer": {
+    "exports": ["./layers/osh"],
+    "modules": [
+      "src/layers/osh/detail.js",
+      "src/layers/osh/index.js",
+      "src/layers/osh/source.js"
     ],
     "external": ["cesium"]
   }

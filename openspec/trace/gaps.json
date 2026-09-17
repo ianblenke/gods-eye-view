@@ -1253,7 +1253,7 @@
       "functions": 2,
       "totals": {
         "lines": 118,
-        "branches": 32,
+        "branches": 35,
         "functions": 9
       },
       "sha": "568c15600c1c2903e447862ee7da80556cb66c2cec32dd234116807b03618eb5",
@@ -2662,11 +2662,11 @@
       "branches": 75,
       "functions": 5,
       "totals": {
-        "lines": 1090,
+        "lines": 1091,
         "branches": 362,
         "functions": 91
       },
-      "sha": "c37dc1eef89ba9f3eea7a29245fb421516a51db560fda35431195822272deaf2",
+      "sha": "2c051d5a6262c008fa0ae6c927e0dd029eb17f13230c8c4a32b319511477f6b7",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2712,21 +2712,6 @@
         "functions": 11
       },
       "sha": "cdc4f1734711816d161bee4cb000947fcc4d30ca0e819cd202e7a0e1289573fc",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
-    "src/data/localLayers.js": {
-      "loaded": false,
-      "lines": 23,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 23,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "0271d9b48e13cfc79bcdce64fc7b697b3200c7c209c2816197269b9f87514080",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"

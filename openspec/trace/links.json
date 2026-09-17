@@ -473,6 +473,248 @@
   "hud-markings-004": [
     "src/hudMarkings.test.mjs › [hud-markings-004] has no style rule for the removed element"
   ],
+  "osh-001": [
+    "src/data/oshProxy.test.mjs › [osh-001] reports no key on the status route when OSH_URL is not set"
+  ],
+  "osh-002": [
+    "src/data/oshProxy.test.mjs › [osh-002] a malformed OSH_URL is also treated as no key",
+    "src/data/oshProxy.test.mjs › [osh-002] refuses every data route when OSH_URL is not set"
+  ],
+  "osh-003": [
+    "src/data/oshProxy.test.mjs › [osh-003] reads the three keys at request time, not at plugin build"
+  ],
+  "osh-004": [
+    "src/data/oshGet.test.mjs › [osh-004] a non-JSON body is treated as no body",
+    "src/data/oshGet.test.mjs › [osh-004] aborts through an external caller signal",
+    "src/data/oshGet.test.mjs › [osh-004] accepts a URL object and a 204 with no body",
+    "src/data/oshGet.test.mjs › [osh-004] an already-aborted caller signal aborts immediately, before any request",
+    "src/data/oshGet.test.mjs › [osh-004] sends one GET request with no body and an abort signal",
+    "src/data/oshProxy.test.mjs › [osh-004] the probe, the systems, the datastreams and the observations calls are each a recorded GET with no body and an abort signal"
+  ],
+  "osh-005": [
+    "src/data/oshProxy.test.mjs › [osh-005] only osh/get.js calls fetch; no other scanned file calls it, names POST, PUT, PATCH or DELETE, sends a body, or imports a raw transport"
+  ],
+  "osh-006": [
+    "src/data/oshProxy.test.mjs › [osh-006] refuses a browser request whose method is not GET, on every sub-path"
+  ],
+  "osh-007": [
+    "src/data/oshProxy.test.mjs › [osh-007] sends Basic authentication only when the username and the password are both set"
+  ],
+  "osh-008": [
+    "src/data/oshProxy.test.mjs › [osh-008] an internal error with no message still logs and answers 500",
+    "src/data/oshProxy.test.mjs › [osh-008] an unexpected internal error answers 500 and is logged without the request URL",
+    "src/data/oshProxy.test.mjs › [osh-008] keeps the URL, the username and the password out of every response and every log line"
+  ],
+  "osh-009": [
+    "src/data/oshBase.test.mjs › [osh-009] adds a slash at the end of a configured value that has none, and exposes getState()",
+    "src/data/oshBase.test.mjs › [osh-009] uses the configured value when it answers with a system list",
+    "src/data/oshProxy.test.mjs › [osh-009] the status route reports no probe time when the constant clock reads zero"
+  ],
+  "osh-010": [
+    "src/data/oshBase.test.mjs › [osh-010] a redirect, a timeout and an oversized body during the probe each count as a miss",
+    "src/data/oshBase.test.mjs › [osh-010] an AbortError and a TimeoutError during the probe both count as a timeout miss",
+    "src/data/oshBase.test.mjs › [osh-010] tries the next candidate after a miss, in a fixed order"
+  ],
+  "osh-011": [
+    "src/data/oshBase.test.mjs › [osh-011] probes again after OSH_URL changes",
+    "src/data/oshBase.test.mjs › [osh-011] probes once per process and shares one pass between concurrent callers"
+  ],
+  "osh-012": [
+    "src/data/oshBase.test.mjs › [osh-012] base_unresolved when no failure carries 401 or 403",
+    "src/data/oshBase.test.mjs › [osh-012] reports failure with candidate:null when every candidate misses, and holds before a retry",
+    "src/data/oshProxy.test.mjs › [osh-012] the datastreams route answers base_unresolved and auth_failed as appropriate",
+    "src/data/oshProxy.test.mjs › [osh-012] the observations route reports base_unresolved when the root cannot be resolved"
+  ],
+  "osh-013": [
+    "src/data/oshGet.test.mjs › [osh-013] cancels the body of a redirected response, and ignores a cancel failure",
+    "src/data/oshGet.test.mjs › [osh-013] refuses every redirect status with one upstream call",
+    "src/data/oshProxy.test.mjs › [osh-013] refuses a redirect from a list route, and a 3xx during the probe counts as a miss"
+  ],
+  "osh-014": [
+    "src/data/oshGet.test.mjs › [osh-014] a non-2xx page status stops the walk with an error, and does not give an empty list",
+    "src/data/oshGet.test.mjs › [osh-014] follows a next link only on the same origin, up to 20 pages",
+    "src/data/oshGet.test.mjs › [osh-014] stops the walk at a foreign-origin next link",
+    "src/data/oshGet.test.mjs › [osh-014] stops when there is no next link, an unparsable href, or no links array",
+    "src/data/oshProxy.test.mjs › [osh-014] a malformed page payload with no known list key contributes no records",
+    "src/data/oshProxy.test.mjs › [osh-014] the systems and datastreams page readers also accept their secondary list key",
+    "src/data/oshProxy.test.mjs › [osh-014] walks a same-origin next link across the systems and datastreams routes"
+  ],
+  "osh-015": [
+    "src/data/oshGet.test.mjs › [osh-015] fails a request past its timeout",
+    "src/data/oshGet.test.mjs › [osh-015] fails a request whose declared body exceeds the cap, with no parse",
+    "src/data/oshProxy.test.mjs › [osh-015] a body over the cap or a timed-out probe surfaces as a base resolution failure"
+  ],
+  "osh-016": [
+    "src/data/oshProxy.test.mjs › [osh-016] serves the list cache inside the TTL, with separate caches for systems and datastreams",
+    "src/data/oshProxy.test.mjs › [osh-016] the status route reports the systems and datastreams cache once each has been fetched"
+  ],
+  "osh-017": [
+    "src/data/oshProxy.test.mjs › [osh-017] shares one refresh between concurrent list requests"
+  ],
+  "osh-018": [
+    "src/data/oshProxy.test.mjs › [osh-018] serves the stale list when the server fails, and 502 when there is no cache"
+  ],
+  "osh-019": [
+    "src/data/oshProxy.test.mjs › [osh-019] a request with no url falls back to the empty sub-path and answers 404",
+    "src/data/oshProxy.test.mjs › [osh-019] answers 404 for an unknown sub-path"
+  ],
+  "osh-020": [
+    "src/data/oshIds.test.mjs › [osh-020] refuses a repeated datastream parameter",
+    "src/data/oshIds.test.mjs › [osh-020] refuses an absent datastream parameter",
+    "src/data/oshIds.test.mjs › [osh-020] refuses an empty datastream value",
+    "src/data/oshIds.test.mjs › [osh-020] refuses every value outside the id pattern",
+    "src/data/oshProxy.test.mjs › [osh-020] the observations route rejects a bad datastream id with no upstream call"
+  ],
+  "osh-021": [
+    "src/data/oshIds.test.mjs › [osh-021] accepts a valid id and builds the fixed observations URL",
+    "src/data/oshIds.test.mjs › [osh-021] the guard throws for a URL with another origin, prefix, segment or query",
+    "src/data/oshProxy.test.mjs › [osh-021] a caller cannot replace the URL builder or its safety check"
+  ],
+  "osh-022": [
+    "src/data/oshObservations.test.mjs › [osh-022] a non-string phenomenonTime or resultTime becomes null",
+    "src/data/oshObservations.test.mjs › [osh-022] an absent phenomenonTime, resultTime or result becomes null or empty rows",
+    "src/data/oshObservations.test.mjs › [osh-022] an empty or malformed item list maps to a null observation",
+    "src/data/oshObservations.test.mjs › [osh-022] maps the observation envelope from the fixture",
+    "src/data/oshObservationsProxy.test.mjs › [osh-022] an empty item list maps to observation:null",
+    "src/data/oshObservationsProxy.test.mjs › [osh-022] an upstream non-2xx status throws with the upstream status attached",
+    "src/data/oshObservationsProxy.test.mjs › [osh-022] serves the newest observation of a datastream",
+    "src/data/oshProxy.test.mjs › [osh-022] an empty upstream item list gives observation:null",
+    "src/data/oshProxy.test.mjs › [osh-022] an observation failure with no numeric status reports upstreamStatus:null",
+    "src/data/oshProxy.test.mjs › [osh-022] the observations route answers 502 with the upstream status on an upstream failure",
+    "src/data/oshProxy.test.mjs › [osh-022] the observations route answers the full 200 payload for a datastream"
+  ],
+  "osh-023": [
+    "src/data/oshObservationsProxy.test.mjs › [osh-023] caches the newest observation for 15 seconds",
+    "src/data/oshObservationsProxy.test.mjs › [osh-023] keeps at most 256 ids and drops the oldest",
+    "src/data/oshObservationsProxy.test.mjs › [osh-023] serves the stale value when a refresh fails, and rethrows with no cache",
+    "src/data/oshObservationsProxy.test.mjs › [osh-023] shares one call between concurrent requests for one id, and makes two for two ids"
+  ],
+  "osh-024": [
+    "src/data/oshSystems.test.mjs › [osh-024] accepts the items key and the features key",
+    "src/data/oshSystems.test.mjs › [osh-024] ignores non-string property values",
+    "src/data/oshSystems.test.mjs › [osh-024] maps a feature list to system records and skips a system without a point",
+    "src/data/oshSystems.test.mjs › [osh-024] returns an empty list for a malformed payload",
+    "src/data/oshSystems.test.mjs › [osh-024] skips a feature with a non-finite coordinate",
+    "src/data/oshSystems.test.mjs › [osh-024] skips a feature with a non-string id and tolerates absent or non-object properties",
+    "src/data/oshSystems.test.mjs › [osh-024] skips a feature with no id, a non-object entry, or a non-Point geometry"
+  ],
+  "osh-025": [
+    "src/data/oshDatastreams.test.mjs › [osh-025] accepts the datastreams key and the items key",
+    "src/data/oshDatastreams.test.mjs › [osh-025] falls back to null when system@link has no usable href",
+    "src/data/oshDatastreams.test.mjs › [osh-025] ignores a non-string or empty system@id and falls back",
+    "src/data/oshDatastreams.test.mjs › [osh-025] ignores a non-string or empty systemId and a malformed system object",
+    "src/data/oshDatastreams.test.mjs › [osh-025] ignores non-string name, outputName and non-array validTime",
+    "src/data/oshDatastreams.test.mjs › [osh-025] maps a datastream list, and reads the system id from every known key",
+    "src/data/oshDatastreams.test.mjs › [osh-025] prefers system@id over systemId and system.id",
+    "src/data/oshDatastreams.test.mjs › [osh-025] prefers systemId over system.id when system@id is absent",
+    "src/data/oshDatastreams.test.mjs › [osh-025] reads the system.id key and falls back to null with no known key",
+    "src/data/oshDatastreams.test.mjs › [osh-025] returns an empty list for a malformed payload",
+    "src/data/oshDatastreams.test.mjs › [osh-025] skips an entry without an id, with a non-string id, or with an id outside the pattern"
+  ],
+  "osh-026": [
+    "src/data/oshObservations.test.mjs › [osh-026] a primitive at the depth cap still reports its own value",
+    "src/data/oshObservations.test.mjs › [osh-026] flattens a nested object to dotted paths and an array to index paths",
+    "src/data/oshObservations.test.mjs › [osh-026] flattens a primitive result to one row",
+    "src/data/oshObservations.test.mjs › [osh-026] keeps an empty object or array as its own row",
+    "src/data/oshObservations.test.mjs › [osh-026] keeps exactly 64 rows unmarked and truncates row 65 onward with a marker",
+    "src/data/oshObservations.test.mjs › [osh-026] returns an empty list for a null or undefined result",
+    "src/data/oshObservations.test.mjs › [osh-026] turns a non-primitive leaf past the depth cap into \"[object]\""
+  ],
+  "osh-027": [
+    "src/data/oshObservations.test.mjs › [osh-027] does not search past depth 4",
+    "src/data/oshObservations.test.mjs › [osh-027] extracts a location from lat/lon keys, case-insensitive, with an optional alt",
+    "src/data/oshObservations.test.mjs › [osh-027] falls back to geometry.coordinates as [lon, lat, alt]",
+    "src/data/oshObservations.test.mjs › [osh-027] finds a location object nested up to depth 4",
+    "src/data/oshObservations.test.mjs › [osh-027] ignores a non-finite alt value",
+    "src/data/oshObservations.test.mjs › [osh-027] rejects an out-of-range latitude or longitude",
+    "src/data/oshObservations.test.mjs › [osh-027] returns null when there is no location anywhere"
+  ],
+  "osh-028": [
+    "src/layers/osh/source.test.mjs › [osh-028] a 503 whose body does not confirm no_key still throws",
+    "src/layers/osh/source.test.mjs › [osh-028] a 503 with another error body still throws",
+    "src/layers/osh/source.test.mjs › [osh-028] a cancelled observation read never publishes the response",
+    "src/layers/osh/source.test.mjs › [osh-028] a payload without the expected array throws",
+    "src/layers/osh/source.test.mjs › [osh-028] another non-ok status throws",
+    "src/layers/osh/source.test.mjs › [osh-028] reports key required on the systems, datastreams and observation getters",
+    "src/layers/osh/source.test.mjs › [osh-028] returns the systems and datastreams records unchanged",
+    "src/layers/osh/source.test.mjs › [osh-028] the default fetch implementation calls the global fetch",
+    "src/layers/osh/source.test.mjs › [osh-028] the observations getter passes the id as a query parameter"
+  ],
+  "osh-029": [
+    "src/data/osh.test.mjs › [osh-029] createOshLayer() accepts an injected source and detail host",
+    "src/data/osh.test.mjs › [osh-029] createOshLayer() wires a real source and a null detail host outside the browser",
+    "src/data/osh.test.mjs › [osh-029] the default export is a wired OSH layer",
+    "src/data/oshLayer.test.mjs › [osh-029] a failed fetch sets the error and does not change the entities",
+    "src/data/oshLayer.test.mjs › [osh-029] a second update aborts the first, whose late result is discarded even without a thrown AbortError",
+    "src/data/oshLayer.test.mjs › [osh-029] a superseded update that throws a real error still lets the newer request finish",
+    "src/data/oshLayer.test.mjs › [osh-029] a system with no name gets a point marker and no label",
+    "src/data/oshLayer.test.mjs › [osh-029] a thrown non-Error still sets a fallback error message",
+    "src/data/oshLayer.test.mjs › [osh-029] aborts an update in flight on destroy",
+    "src/data/oshLayer.test.mjs › [osh-029] aborts an update in flight on disable, with no error recorded",
+    "src/data/oshLayer.test.mjs › [osh-029] disable hides the data source, destroy removes it, and disable stops more updates",
+    "src/data/oshLayer.test.mjs › [osh-029] init cannot run twice",
+    "src/data/oshLayer.test.mjs › [osh-029] keyRequired clears the entities and reports keyRequired:true",
+    "src/data/oshLayer.test.mjs › [osh-029] reports getStats().stale from a stale systems fetch",
+    "src/data/oshLayer.test.mjs › [osh-029] shows one entity per system and reports stats",
+    "src/data/oshLayer.test.mjs › [osh-029] throws without a systems source",
+    "src/data/oshLayer.test.mjs › [osh-029] update does nothing before init and while disabled"
+  ],
+  "osh-030": [
+    "src/data/oshLayer.test.mjs › [osh-030] a failed datastreams or observation fetch during a poll does not throw, and the next poll still runs",
+    "src/data/oshLayer.test.mjs › [osh-030] a keyRequired datastreams response during a poll stops that poll cycle",
+    "src/data/oshLayer.test.mjs › [osh-030] a picked entity whose id is a plain string is also read",
+    "src/data/oshLayer.test.mjs › [osh-030] a poll superseded mid-loop while it waits for an observation stops the detail rows",
+    "src/data/oshLayer.test.mjs › [osh-030] a poll superseded while it waits for the datastreams is discarded, and the newer poll still runs",
+    "src/data/oshLayer.test.mjs › [osh-030] a second click handler install does nothing, and a second click on the same system does not restart the poll",
+    "src/data/oshLayer.test.mjs › [osh-030] deselects on a click on empty space or on a non-osh entity",
+    "src/data/oshLayer.test.mjs › [osh-030] polls the datastreams of a selected system, again every 15 seconds",
+    "src/data/oshLayer.test.mjs › [osh-030] stops the poll of the selected system when the layer disables"
+  ],
+  "osh-031": [
+    "src/data/oshLayer.test.mjs › [osh-031] a moved marker with no altitude in the newest result defaults to zero",
+    "src/data/oshLayer.test.mjs › [osh-031] a newest result with a location moves the entity, and a systems refresh keeps the moved position",
+    "src/data/oshLayer.test.mjs › [osh-031] a newest result without a location leaves the marker where it was",
+    "src/data/oshLayer.test.mjs › [osh-031] a system dropped from a later systems fetch clears the selection"
+  ],
+  "osh-032": [
+    "src/layers/osh/detail.test.mjs › [osh-032] a system with no datastreams still renders the system header",
+    "src/layers/osh/detail.test.mjs › [osh-032] renders \"No data\" for a datastream with no rows, and falls back to the id",
+    "src/layers/osh/detail.test.mjs › [osh-032] renders a null row value as an empty string",
+    "src/layers/osh/detail.test.mjs › [osh-032] renders an empty string for no selection",
+    "src/layers/osh/detail.test.mjs › [osh-032] renders no rows and no time when there is no observation yet",
+    "src/layers/osh/detail.test.mjs › [osh-032] renders the system and its datastreams with escaped values",
+    "src/layers/osh/detail.test.mjs › [osh-032] the function does nothing when there is no host",
+    "src/layers/osh/detail.test.mjs › [osh-032] the host innerHTML receives the rendered detail, and an empty selection clears it"
+  ],
+  "osh-033": [
+    "src/data/layerState.test.mjs › [osh-033] registers the OSH systems layer with the token o, and localLayers.js exports it"
+  ],
+  "osh-034": [
+    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] .env.example has the three OSH keys, each with an empty value",
+    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] every system and datastream fixture id starts with sys-fixture- or ds-fixture-",
+    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] no OSH test file has a real address",
+    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the bare-host check catches a real-looking host pasted with no scheme",
+    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the provider, adapter and layer files have no real address"
+  ],
+  "osh-035": [
+    "src/data/oshProxy.test.mjs › [osh-035] both configureServer and configurePreviewServer install the same middleware"
+  ],
+  "osh-036": [
+    "src/data/oshGet.test.mjs › [osh-036] a next link that the check refuses stops the walk, keeps the earlier items, and does not throw an error",
+    "src/data/oshGet.test.mjs › [osh-036] buildNextPageUrl() rebuilds the query so a `;` inside an allowed value cannot hide a second key",
+    "src/data/oshGet.test.mjs › [osh-036] buildNextPageUrl() returns null for a refused candidate, and a URL for an accepted one",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() accepts a candidate that differs only in the allowed query keys",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() refuses a candidate on another origin, even the same path",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() refuses a candidate on another path, even the same origin",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() refuses a candidate that carries a username or a password",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() refuses a candidate with a fragment",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() refuses a candidate with a query key outside the allowlist, such as a method override",
+    "src/data/oshGet.test.mjs › [osh-036] oshPages() follows an accepted next link with the query that the provider built again",
+    "src/data/oshGet.test.mjs › [osh-036] oshPages() never requests a next link on a different origin, even a protocol-relative one with the same path",
+    "src/data/oshGet.test.mjs › [osh-036] oshPages() never requests a next link on a different path",
+    "src/data/oshGet.test.mjs › [osh-036] oshPages() never requests a next link that carries a username or a password",
+    "src/data/oshGet.test.mjs › [osh-036] oshPages() never requests a next link with a fragment"
+  ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
   ],
