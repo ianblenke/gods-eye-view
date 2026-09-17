@@ -699,6 +699,22 @@
   "osh-035": [
     "src/data/oshProxy.test.mjs › [osh-035] both configureServer and configurePreviewServer install the same middleware"
   ],
+  "osh-036": [
+    "src/data/oshGet.test.mjs › [osh-036] a next link that the check refuses stops the walk, keeps the earlier items, and does not throw an error",
+    "src/data/oshGet.test.mjs › [osh-036] buildNextPageUrl() rebuilds the query so a `;` inside an allowed value cannot hide a second key",
+    "src/data/oshGet.test.mjs › [osh-036] buildNextPageUrl() returns null for a refused candidate, and a URL for an accepted one",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() accepts a candidate that differs only in the allowed query keys",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() refuses a candidate on another origin, even the same path",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() refuses a candidate on another path, even the same origin",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() refuses a candidate that carries a username or a password",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() refuses a candidate with a fragment",
+    "src/data/oshGet.test.mjs › [osh-036] isSamePageWalk() refuses a candidate with a query key outside the allowlist, such as a method override",
+    "src/data/oshGet.test.mjs › [osh-036] oshPages() follows an accepted next link with the query that the provider built again",
+    "src/data/oshGet.test.mjs › [osh-036] oshPages() never requests a next link on a different origin, even a protocol-relative one with the same path",
+    "src/data/oshGet.test.mjs › [osh-036] oshPages() never requests a next link on a different path",
+    "src/data/oshGet.test.mjs › [osh-036] oshPages() never requests a next link that carries a username or a password",
+    "src/data/oshGet.test.mjs › [osh-036] oshPages() never requests a next link with a fragment"
+  ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
   ],

@@ -1,7 +1,7 @@
 # osh Specification
 
 ## Purpose
-Show the sensor systems of an OpenSensorHub server on the globe, with the newest observation of each datastream of the selected system. Send only GET requests to that server, because the account can create and delete streams.
+Show the systems of a private OpenSensorHub server on the globe, with the newest observation of each datastream of the selected system. Let the browser read the server only through same-origin routes, so it never receives the credentials. Send only GET requests, because the account can create and delete streams.
 
 ## Requirements
 ### Requirement: Keyless behaviour
@@ -85,7 +85,7 @@ Origin: spec-first
 - **AND** no new probe runs inside the 60-second hold, and one runs after it
 
 ### Requirement: Upstream safety
-The provider MUST NOT follow a redirect, and MUST stay on the resolved root's origin when it walks a page link. It MUST cap the response body size and the request time of each upstream call.
+The provider MUST NOT follow a redirect, and MUST stay on the resolved root's origin when it walks a page link. A next link MUST name a later page of the same request, never a different request. It MUST cap the response body size and the request time of each upstream call.
 Origin: spec-first
 
 #### Scenario: Refuse a redirect `osh-013`
@@ -99,6 +99,18 @@ Origin: spec-first
 - **AND** it follows at most 20 pages, so it never requests a 21st page
 - **AND** it stops when there is no next link, or the link's `href` fails to parse
 - **AND** a page with a status outside 200 to 299 stops the walk with an error
+
+#### Scenario: Follow a next link only as a later page of the same request `osh-036`
+- **WHEN** a page names a next link
+- **THEN** the provider follows it only when its origin equals the resolved root's origin, even when the link is protocol-relative with the same path
+- **AND** it follows the link only when its path equals the current page's path
+- **AND** it refuses the link when it carries a username or a password
+- **AND** it follows the link only when its query has no key outside `limit`, `offset`, `cursor`, `page`, `startIndex` and `f`
+- **AND** it refuses the link when it carries a fragment
+- **AND** the provider refuses a link with a query key such as `_method` the same way, because that key is outside the list
+- **AND** a refused link stops the walk without an error, and keeps the items the walk already gathered
+- **AND** the request for an accepted link carries a query that the provider builds from the values of the candidate's allowed keys
+- **AND** the query that the provider builds keeps a separator such as `;` inside one value as text, and never as a second key
 
 #### Scenario: Stop for a body over the cap or a request past the timeout `osh-015`
 - **WHEN** an upstream response declares a `Content-Length` above the byte cap, or a request runs past its timeout
