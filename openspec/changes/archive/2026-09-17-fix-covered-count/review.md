@@ -6,9 +6,11 @@ Date: 2026-09-17
 Gates: make gates CHANGE=fix-covered-count passed
 Rounds: 5
 Scope: diff 7659531
-Reviewed-Tree: 47ec74c069c28380fe08868c0f3b7b4b1beaba2abf71fc6c84b71150b71d6754
+Reviewed-Tree: d4e26d2bf899894857eb5bba98dcc98884faadfecb454a5f6d8cbc45700c91fb
 
 The output of each round is in `review/round-<n>/`. The output in `review/` is the spec adversary of round 4, which gave PASS, and the STE adversary of round 5, which gave PASS with no finding. The STE adversary of round 5 read every correction that the spec adversary asked for in round 4, so the later round confirms the earlier one.
+
+The five rounds read the tree at the hash `47ec74c069c2`. The change `fix-osh-probe-format` then merged to the main branch, and this branch merged the main branch to take it. That merge moved the tree to the hash above. It changed no file of this change: it added the files of the other change, which its own review of five rounds had already read. The two branches both wrote lines to `openspec/trace/history.jsonl` for the same V8 instability, and the merge keeps every line of both, because that file is a log that only grows.
 
 The `Scope` line gives the commit `7659531`, the merge of the change `osh-fusion`, which is the one commit this branch has for its base. Each round read the diff since that commit.
 
