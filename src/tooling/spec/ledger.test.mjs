@@ -151,6 +151,10 @@ test('[gap-ledger-018] does not stop for branches that a new test shows in an un
 });
 
 test('[gap-ledger-054] stops for fewer covered branches or functions in an unchanged file', () => {
+  // The gate compares each covered count of the file, not only the branch count.
+  const both = ledgerWith({ coverage: { 'src/y.js': LOADED(10, 0, 0, { totals: { lines: 100, branches: 5, functions: 9 } }) } });
+  const lostFunctions = compareLedger({ ledger: both, current: gaps([loaded('src/y.js', 10, 0, 3, 'same', { lines: 100, branches: 5, functions: 9 })]) });
+  assert.deepEqual(codes(lostFunctions), ['LEDGER-LOST-COVERAGE']);
   const ledger = ledgerWith({ coverage: { 'src/x.js': LOADED(10, 0, 0, { totals: { lines: 100, branches: 5, functions: 2 } }) } });
   const lost = compareLedger({ ledger, current: gaps([loaded('src/x.js', 9, 2, 1, 'same', { lines: 100, branches: 4, functions: 2 })]) });
   assert.deepEqual(lost.errors, [
