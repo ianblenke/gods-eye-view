@@ -247,5 +247,5 @@ Origin: spec-first
 - **WHEN** the tests of the gates run on a Node version with a `node:test` module without the function `getTestContext`
 - **THEN** each test that needs the guard to count assertions has a skip reason that names the Node version and the function
 - **AND** the other tests of the gates have no skip reason
-- **AND** on a Node version with the function, the skip option of each test that needs the guard is false
+- **AND** on a Node version with the function, the skip option of each test that needs the guard to count assertions is false
 

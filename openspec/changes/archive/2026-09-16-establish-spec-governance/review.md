@@ -15,7 +15,7 @@ Round 26 passed on the base `d5b09ef`. The branch then moved to the base `3ca81f
 Owner decision: after an analysis of the review loop, the project owner decided on 2026-09-15 that round 31 was the last full review round. Rounds 32 to 38 were narrow checks of single corrections. The owner accepts the change with the open items below.
 
 Open items for the later changes:
-- `harden-gate-ledger`: the known limits `range-band-ratchet` and `ci-samples`, the minor findings S220 and S221, and a tool that makes samples from the results of a CI run.
+- `harden-gate-ledger`: the known limits `range-band-ratchet` and `ci-samples`, the minor findings S220 and S221, and a tool that makes samples from the results of a CI run. The change `simplify-ledger` closed the two known limits and removed the kept samples, so the tool has no purpose. The change `harden-gate-ledger` corrected S220 and S221.
 - `simplify-ledger`: one tolerance rule in place of the counts, the ranges and the band.
 - `review-scope-diff`: a review round for the diff only, one place for each rule, and a limit for the number of rounds.
 

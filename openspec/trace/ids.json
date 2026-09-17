@@ -430,7 +430,7 @@
     "change": "establish-spec-governance"
   },
   "coverage-gate-046": {
-    "hash": "32fb40c28502f06f75376cbaf1aa67d6ec96f54f460cd1b1d47667df5b16210b",
+    "hash": "c422d1a5c5c03a82bc76a0783061041a4ee5fd6ddf7e2e754d47ca108967c651",
     "since": "2026-09-15",
     "change": "establish-spec-governance"
   },
@@ -630,7 +630,7 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-054": {
-    "hash": "6119d46c2bbd0ab88a280ee91721db5ac481b12b25b51e66c7558ad52aa2b0d1",
+    "hash": "0704b0b2231167013aabeae617f12307560a51b878f5ccad157723161f2d9cbf",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
