@@ -7,6 +7,35 @@ import { readResponseJsonCapped } from '../common/http.js';
  * body and the request time.
  */
 
+/** The list format this provider asks for. Measured against the owner's server on 2026-09-17. */
+export const OSH_LIST_FORMAT = 'application/geo+json';
+
+/**
+ * Build the URL of the first page of a list request. `query` maps each key
+ * to one value. The serializer encodes each value, so a `+`, a `/` or a
+ * space in a value reaches the server as that byte and never as a space or
+ * a path separator.
+ * A safety check re-reads the built URL and throws when it does not keep
+ * the root's origin and start with the root's path, the same shape of
+ * check `assertObservationUrl()` runs in `ids.js`. `path` is a fixed
+ * literal at every call site today, so the check cannot fail; it holds
+ * even if a later call site names a path built some other way.
+ * @param {URL} root - Resolved API root, or a candidate root.
+ * @param {string} path
+ * @param {Record<string,string>} query
+ * @returns {URL}
+ */
+export function oshListUrl(root, path, query) {
+  const url = new URL(path, root);
+  if (url.origin !== root.origin || !url.pathname.startsWith(root.pathname)) {
+    throw new Error('OSH list URL failed the safety check');
+  }
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(query)) params.set(key, value);
+  url.search = params.toString();
+  return url;
+}
+
 /** Hard byte cap on any OpenSensorHub response body. */
 export const OSH_MAX_BODY_BYTES = 8 * 1024 * 1024;
 /** Per-request upstream timeout. */
@@ -121,6 +150,19 @@ export function isSamePageWalk(candidate, root, current) {
  * check does not know about cannot hide a second key inside the value of
  * an allowed key. Some servers read `;` as a second query separator. The
  * rebuilt query writes that value as one text string.
+ *
+ * An `f` key never carries the candidate's own value. `current` is the URL
+ * this provider actually sent for the page it just read, so its own `f`
+ * key says whether this list asks for a format at all. The rebuild drops
+ * every `f` key the candidate carries, then appends the provider's own
+ * format once, only when `current` already had one. This holds the format
+ * across the whole walk: page 2 gets `f` only when page 1 did, and page 3
+ * then reads that from page 2's own URL, never from a link in between.
+ *
+ * A server can write the format this provider sent into a next link with a
+ * raw `+`. It can write an `f` key onto a list that never asks for a
+ * format, such as the datastreams list. It can write the key twice. None
+ * of those bytes ever reach the wire.
  * @param {URL} candidate
  * @param {URL} root
  * @param {URL} current
@@ -128,8 +170,13 @@ export function isSamePageWalk(candidate, root, current) {
  */
 export function buildNextPageUrl(candidate, root, current) {
   if (!isSamePageWalk(candidate, root, current)) return null;
+  const keepsFormat = current.searchParams.has('f');
   const query = new URLSearchParams();
-  for (const [key, value] of candidate.searchParams) query.append(key, value);
+  for (const [key, value] of candidate.searchParams) {
+    if (key === 'f') continue;
+    query.append(key, value);
+  }
+  if (keepsFormat) query.append('f', OSH_LIST_FORMAT);
   const next = new URL(current.pathname, root);
   next.search = query.toString();
   return next;
