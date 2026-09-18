@@ -851,6 +851,26 @@ test('[osh-012] the observations route reports base_unresolved when the root can
   assert.deepEqual(json, { error: 'base_unresolved' });
 });
 
+test('[osh-012] the per-system datastreams route reports base_unresolved when the root cannot be resolved', async () => {
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: async () => jsonResponse(404),
+  });
+  const { status, json } = await callOsh(proxy, { url: '/datastreams?system=sys-fixture-1' });
+  assert.equal(status, 502);
+  assert.deepEqual(json, { error: 'base_unresolved' });
+});
+
+test('[osh-012] the fois route reports base_unresolved when the root cannot be resolved', async () => {
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: async () => jsonResponse(404),
+  });
+  const { status, json } = await callOsh(proxy, { url: '/fois' });
+  assert.equal(status, 502);
+  assert.deepEqual(json, { error: 'base_unresolved' });
+});
+
 test('[osh-035] both configureServer and configurePreviewServer install the same middleware', async () => {
   for (const hook of ['configureServer', 'configurePreviewServer']) {
     const proxy = oshProxy({ env: {}, fetchImpl: fixtureFetch() });

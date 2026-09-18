@@ -248,6 +248,21 @@ test('[osh-048] createOshSystemDatastreamsCache() shares one walk per id inside 
   assert.equal(callsById.get('sys-fixture-2'), 1);
 });
 
+test('[osh-048] createOshSystemDatastreamsCache() also accepts the secondary datastreams list key', async () => {
+  const fetchImpl = async () =>
+    new Response(JSON.stringify({ datastreams: datastreamsFixture.items }), { status: 200 });
+  const cache = createOshSystemDatastreamsCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
+  const result = await cache.get('sys-fixture-1', ROOT, systemDatastreamsUrlFor('sys-fixture-1'), {});
+  assert.equal(result.datastreams.length, 2);
+});
+
+test('[osh-048] createOshSystemDatastreamsCache() maps an empty body to an empty list', async () => {
+  const fetchImpl = async () => new Response(null, { status: 204 });
+  const cache = createOshSystemDatastreamsCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
+  const result = await cache.get('sys-fixture-1', ROOT, systemDatastreamsUrlFor('sys-fixture-1'), {});
+  assert.deepEqual(result.datastreams, []);
+});
+
 test('[osh-048] createOshSystemDatastreamsCache() serves the stale snapshot on a failed walk, and rethrows with none', async () => {
   let now = 0;
   let succeed = true;
