@@ -5,7 +5,7 @@ import { createBrowserViteConfig } from '../../build/vite.js';
 import standaloneConfig, * as compatibility from '../../vite.config.js';
 import * as providers from '../../server/providers/local.js';
 
-test('explicit build inputs preserve browser-only defines, plugin order and loopback protections', () => {
+test('[credential-boundary-003] explicit build inputs preserve browser-only defines, plugin order and loopback protections', () => {
   const plugin = { name: 'fixture-provider' };
   const config = createBrowserViteConfig({
     plugins: [plugin],
@@ -31,6 +31,11 @@ test('explicit build inputs preserve browser-only defines, plugin order and loop
     'import.meta.env.GOOGLE_MAPS_API_KEY': '"browser-fixture"',
     'import.meta.env.CESIUM_ION_TOKEN': '"ion-fixture"',
   });
+  assert.deepEqual(Object.keys(config.define), [
+    'import.meta.env.GOOGLE_MAPS_API_KEY',
+    'import.meta.env.CESIUM_ION_TOKEN',
+  ]);
+  assert.equal(config.envPrefix, 'VITE_AIS_LIVE_');
   assert.equal(
     createBrowserViteConfig({ host: '0.0.0.0', port: '4800' }).server
       .allowedHosts,
@@ -42,7 +47,7 @@ test('explicit build inputs preserve browser-only defines, plugin order and loop
   );
 });
 
-test('build helper does not discover environment values or construct local providers', () => {
+test('[credential-boundary-003] build helper does not discover environment values or construct local providers', () => {
   const before = process.env.GOOGLE_MAPS_API_KEY;
   process.env.GOOGLE_MAPS_API_KEY = 'environment-fixture';
   try {
@@ -51,6 +56,11 @@ test('build helper does not discover environment values or construct local provi
       config.define['import.meta.env.GOOGLE_MAPS_API_KEY'],
       undefined,
     );
+    assert.equal(config.define['import.meta.env.CESIUM_ION_TOKEN'], undefined);
+    assert.deepEqual(Object.keys(config.define), [
+      'import.meta.env.GOOGLE_MAPS_API_KEY',
+      'import.meta.env.CESIUM_ION_TOKEN',
+    ]);
     assert.equal(config.plugins.length, 1);
   } finally {
     if (before === undefined) delete process.env.GOOGLE_MAPS_API_KEY;
