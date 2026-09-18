@@ -133,7 +133,7 @@ test('[osh-014] follows a next link only on the same origin, up to 20 pages', as
       { status: 200 },
     );
   };
-  const items = await oshPages(fetchImpl, root, new URL('systems?page=1', root), {
+  const { items } = await oshPages(fetchImpl, root, new URL('systems?page=1', root), {
     listOf: (payload) => payload.items,
   });
   assert.equal(items.length, 20);
@@ -153,7 +153,7 @@ test('[osh-014] stops the walk at a foreign-origin next link', async () => {
       { status: 200 },
     );
   };
-  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+  const { items } = await oshPages(fetchImpl, root, new URL('systems', root), {
     listOf: (payload) => payload.items,
   });
   assert.equal(items.length, 1);
@@ -163,7 +163,7 @@ test('[osh-014] stops the walk at a foreign-origin next link', async () => {
 test('[osh-014] stops when there is no next link, an unparsable href, or no links array', async () => {
   const root = new URL('https://osh.example/api/');
   for (const links of [undefined, [], [{ rel: 'next', href: 'http://[::' }], [{ rel: 'other' }]]) {
-    const items = await oshPages(
+    const { items } = await oshPages(
       async () => new Response(JSON.stringify({ items: [{ id: 'x' }], links }), { status: 200 }),
       root,
       new URL('systems', root),
@@ -184,6 +184,96 @@ test('[osh-014] a non-2xx page status stops the walk with an error, and does not
     ),
     (error) => error.status === 401,
   );
+});
+
+test('[osh-044] the default page cap is 20, and the walk reports truncated when a next link remains at the cap', async () => {
+  const root = new URL('https://osh.example/api/');
+  let calls = 0;
+  const fetchImpl = async (url) => {
+    calls += 1;
+    const page = Number(new URL(String(url)).searchParams.get('page') || '1');
+    return new Response(
+      JSON.stringify({
+        items: [{ id: `p${page}` }],
+        links: [{ rel: 'next', href: `systems?page=${page + 1}` }],
+      }),
+      { status: 200 },
+    );
+  };
+  const { items, truncated } = await oshPages(fetchImpl, root, new URL('systems?page=1', root), {
+    listOf: (payload) => payload.items,
+  });
+  assert.equal(items.length, 20);
+  assert.equal(calls, 20);
+  assert.equal(truncated, true);
+});
+
+test('[osh-044] a maxPages option raises the cap, and the walk never requests a page past it', async () => {
+  const root = new URL('https://osh.example/api/');
+  let calls = 0;
+  const fetchImpl = async (url) => {
+    calls += 1;
+    const page = Number(new URL(String(url)).searchParams.get('page') || '1');
+    if (page >= 61) throw new Error('page 61 must not be requested');
+    return new Response(
+      JSON.stringify({
+        items: [{ id: `p${page}` }],
+        links: [{ rel: 'next', href: `systems?page=${page + 1}` }],
+      }),
+      { status: 200 },
+    );
+  };
+  const { items, truncated } = await oshPages(fetchImpl, root, new URL('systems?page=1', root), {
+    listOf: (payload) => payload.items,
+    maxPages: 60,
+  });
+  assert.equal(items.length, 60);
+  assert.equal(calls, 60);
+  assert.equal(truncated, true);
+});
+
+test('[osh-044] truncated is false when the walk stops for a refused link, or for no next link', async () => {
+  const root = new URL('https://osh.example/api/');
+  const noNext = await oshPages(
+    async () => new Response(JSON.stringify({ items: [{ id: 'p1' }] }), { status: 200 }),
+    root,
+    new URL('systems', root),
+    { listOf: (payload) => payload.items },
+  );
+  assert.equal(noNext.truncated, false);
+
+  const refusedLink = await oshPages(
+    async () =>
+      new Response(
+        JSON.stringify({
+          items: [{ id: 'p1' }],
+          links: [{ rel: 'next', href: 'https://attacker.example/systems' }],
+        }),
+        { status: 200 },
+      ),
+    root,
+    new URL('systems', root),
+    { listOf: (payload) => payload.items },
+  );
+  assert.equal(refusedLink.truncated, false);
+});
+
+test('[osh-044] a walk that ends exactly at the cap with no further next link reports truncated:false', async () => {
+  const root = new URL('https://osh.example/api/');
+  let calls = 0;
+  const fetchImpl = async (url) => {
+    calls += 1;
+    const page = Number(new URL(String(url)).searchParams.get('page') || '1');
+    const links = page < 3 ? [{ rel: 'next', href: `systems?page=${page + 1}` }] : [];
+    return new Response(JSON.stringify({ items: [{ id: `p${page}` }], links }), { status: 200 });
+  };
+  const { items, truncated } = await oshPages(fetchImpl, root, new URL('systems?page=1', root), {
+    listOf: (payload) => payload.items,
+    maxPages: 3,
+  });
+  assert.equal(items.length, 3);
+  assert.equal(calls, 3);
+  assert.equal(truncated, false);
 });
 
 test('[osh-036] isSamePageWalk() accepts a candidate that differs only in the allowed query keys', () => {
@@ -266,7 +356,7 @@ test('[osh-036] a next link that the check refuses stops the walk, keeps the ear
       { status: 200 },
     );
   };
-  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+  const { items } = await oshPages(fetchImpl, root, new URL('systems', root), {
     listOf: (payload) => payload.items,
   });
   assert.deepEqual(items, [{ id: 'p1' }]);
@@ -330,7 +420,7 @@ test('[osh-036] oshPages() never requests a next link on a different origin, eve
       { status: 200 },
     );
   };
-  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+  const { items } = await oshPages(fetchImpl, root, new URL('systems', root), {
     listOf: (payload) => payload.items,
   });
   assert.deepEqual(items, [{ id: 'p1' }]);
@@ -350,7 +440,7 @@ test('[osh-036] oshPages() never requests a next link on a different path', asyn
       { status: 200 },
     );
   };
-  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+  const { items } = await oshPages(fetchImpl, root, new URL('systems', root), {
     listOf: (payload) => payload.items,
   });
   assert.deepEqual(items, [{ id: 'p1' }]);
@@ -370,7 +460,7 @@ test('[osh-036] oshPages() never requests a next link with a fragment', async ()
       { status: 200 },
     );
   };
-  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+  const { items } = await oshPages(fetchImpl, root, new URL('systems', root), {
     listOf: (payload) => payload.items,
   });
   assert.deepEqual(items, [{ id: 'p1' }]);
@@ -390,7 +480,7 @@ test('[osh-036] oshPages() never requests a next link that carries a username or
       { status: 200 },
     );
   };
-  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+  const { items } = await oshPages(fetchImpl, root, new URL('systems', root), {
     listOf: (payload) => payload.items,
   });
   assert.deepEqual(items, [{ id: 'p1' }]);
@@ -414,7 +504,7 @@ test('[osh-036] oshPages() follows an accepted next link with the query that the
     }
     return new Response(JSON.stringify({ items: [{ id: 'p2' }] }), { status: 200 });
   };
-  const items = await oshPages(fetchImpl, root, new URL('systems', root), {
+  const { items } = await oshPages(fetchImpl, root, new URL('systems', root), {
     listOf: (payload) => payload.items,
   });
   assert.deepEqual(items, [{ id: 'p1' }, { id: 'p2' }]);

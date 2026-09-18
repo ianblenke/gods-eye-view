@@ -33,18 +33,36 @@ function renderDatastream(datastream) {
   </div>`;
 }
 
-/**
- * @param {?{system: object, datastreams: Array}} detail
- * @returns {string} HTML, or an empty string for no selection.
- */
-export function renderOshDetail(detail) {
-  if (!detail || !detail.system) return '';
-  const { system, datastreams = [] } = detail;
-  const header = `<div class="osh-detail-system">
+function renderSystemHeader(system) {
+  return `<div class="osh-detail-system">
     <h3>${escapeHtml(system.name || system.id)}</h3>
     <div class="osh-detail-field">UID: ${escapeHtml(system.uid || '—')}</div>
     <div class="osh-detail-field">${escapeHtml(system.description || '')}</div>
   </div>`;
+}
+
+/**
+ * The feature's own name, above its host's name — or the host's id when the
+ * host has no record, or an em dash when the feature has no host.
+ */
+function renderFeatureHeader(feature, hostId, system) {
+  const hostLabel = system ? system.name || system.id : hostId || '—';
+  return `<div class="osh-detail-feature">
+    <h3>${escapeHtml(feature.name || feature.id)}</h3>
+    <div class="osh-detail-field">Host: ${escapeHtml(hostLabel)}</div>
+  </div>`;
+}
+
+/**
+ * @param {?{feature: ?object, hostId: ?string, system: ?object, datastreams: Array}} detail
+ * @returns {string} HTML, or an empty string for no selection.
+ */
+export function renderOshDetail(detail) {
+  if (!detail || (!detail.system && !detail.feature)) return '';
+  const { feature = null, hostId = null, system = null, datastreams = [] } = detail;
+  const header = feature
+    ? renderFeatureHeader(feature, hostId, system)
+    : renderSystemHeader(system);
   return header + datastreams.map(renderDatastream).join('');
 }
 

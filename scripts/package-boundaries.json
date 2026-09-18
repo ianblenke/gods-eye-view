@@ -253,6 +253,7 @@
       "server/providers/osh/ids.js",
       "server/providers/osh/observations.js",
       "src/data/oshDatastreams.js",
+      "src/data/oshFois.js",
       "src/data/oshObservations.js",
       "src/data/oshSystems.js"
     ],

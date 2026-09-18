@@ -80,6 +80,66 @@ test('[osh-032] a system with no datastreams still renders the system header', (
   );
 });
 
+test('[osh-032] shows the feature name above the host name, when the selection came from a feature with a known host', () => {
+  const html = renderOshDetail({
+    feature: { id: 'foi-fixture-1', name: 'Fixture <Node>' },
+    hostId: 'sys-fixture-1',
+    system: { id: 'sys-fixture-1', name: 'Fixture Host', uid: null, description: null },
+    datastreams: [],
+  });
+  assert.match(html, /Fixture &lt;Node&gt;/);
+  assert.match(html, /Host: Fixture Host/);
+  const featureIndex = html.indexOf('Fixture &lt;Node&gt;');
+  const hostIndex = html.indexOf('Fixture Host');
+  assert.ok(featureIndex < hostIndex, 'the feature name must render above the host name');
+});
+
+test('[osh-032] shows the host id when the host has no record', () => {
+  const html = renderOshDetail({
+    feature: { id: 'foi-fixture-2', name: 'Fixture Node Two' },
+    hostId: 'sys-fixture-9',
+    system: null,
+    datastreams: [],
+  });
+  assert.match(html, /Host: sys-fixture-9/);
+});
+
+test('[osh-032] shows Host: — when the feature has no host', () => {
+  const html = renderOshDetail({
+    feature: { id: 'foi-fixture-3', name: 'Fixture Node Three' },
+    hostId: null,
+    system: null,
+    datastreams: [],
+  });
+  assert.match(html, /Host: —/);
+});
+
+test('[osh-032] falls back to the feature id when the feature has no name', () => {
+  const html = renderOshDetail({
+    feature: { id: 'foi-fixture-9', name: null },
+    hostId: null,
+    system: null,
+    datastreams: [],
+  });
+  assert.match(html, /foi-fixture-9/);
+});
+
+test('[osh-032] falls back to the host system id when the host record has no name', () => {
+  const html = renderOshDetail({
+    feature: { id: 'foi-fixture-10', name: 'Fixture Node Ten' },
+    hostId: 'sys-fixture-10',
+    system: { id: 'sys-fixture-10', name: null, uid: null, description: null },
+    datastreams: [],
+  });
+  assert.match(html, /Host: sys-fixture-10/);
+});
+
+test('[osh-032] a system-only selection still renders the plain system header, with no feature block', () => {
+  const html = renderOshDetail(DETAIL);
+  assert.doesNotMatch(html, /osh-detail-feature/);
+  assert.match(html, /osh-detail-system/);
+});
+
 test('[osh-032] the host innerHTML receives the rendered detail, and an empty selection clears it', () => {
   const host = { innerHTML: '' };
   writeOshDetail(host, DETAIL);
