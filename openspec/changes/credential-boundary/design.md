@@ -159,3 +159,11 @@ Changed prose: `.env.example`, `SECURITY.md`, `pinokio/_ENVIRONMENT`,
 4. **The `VITE_` narrowing breaks a knob nobody remembered.** Guard: the
    ratchet's untraced-test coverage plus the fixture's positive control on
    `VITE_AIS_LIVE_MAX_ROWS` catch a broken prefix immediately.
+5. **The fixture only probes one of the three AIS knobs by name.** The
+   test excludes all three from the "must be absent" list, by a fixed
+   name list, but only asserts `VITE_AIS_LIVE_MAX_ROWS` as present. A
+   change that broke only `VITE_AIS_LIVE_API_URL` or
+   `VITE_AIS_LIVE_LABEL_MAX_ROWS` would pass this test. The fixed list
+   cuts the other way for safety. A future `VITE_AIS_LIVE_*` name that
+   is genuinely secret is not on it, so it stays on the "must be
+   absent" side. It fails loudly if the prefix match exposes it.
