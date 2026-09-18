@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test, { before, after } from 'node:test';
 import * as Cesium from 'cesium';
 import { createOshLayer } from '../layers/osh/index.js';
+import { OSH_FRESH_MAX_AGE_MS } from './oshObservations.js';
 
 let _originalDocument;
 before(() => {
@@ -546,7 +547,7 @@ test('[osh-031] a newest result with a location moves the entity, and a systems 
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
     observations: {
-      'ds-fixture-1': { rows: [], location: { lat: 9, lon: 8, alt: 7 }, resultTime: 't' },
+      'ds-fixture-1': { rows: [], location: { lat: 9, lon: 8, alt: 7 }, resultTime: 't', ageMs: 1000 },
     },
   });
   const layer = createOshLayer({ source });
@@ -576,7 +577,94 @@ test('[osh-031] a newest result without a location leaves the entity where it wa
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
-    observations: { 'ds-fixture-1': { rows: [], location: null, resultTime: 't' } },
+    observations: { 'ds-fixture-1': { rows: [], location: null, resultTime: 't', ageMs: 1000 } },
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-1');
+    getClick()({ position: {} });
+    await flush();
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
+    const position = entity.position.getValue(Cesium.JulianDate.now());
+    const expected = Cesium.Cartesian3.fromDegrees(SYSTEM_A.lon, SYSTEM_A.lat, 0);
+    assert.ok(Cesium.Cartesian3.equalsEpsilon(position, expected, Cesium.Math.EPSILON6));
+  });
+  layer.destroy(viewer);
+});
+
+// The owner's OSH server runs a few seconds ahead of the provider, so a live
+// reading's phenomenonTime lands after the injected "now" and its age comes
+// out negative. A negative age is as fresh as it gets, and motion must not
+// refuse it.
+test('[osh-031] a newest result with a negative ageMs still moves the entity', async () => {
+  const source = fakeSource({
+    systems: [SYSTEM_A],
+    datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
+    observations: {
+      'ds-fixture-1': { rows: [], location: { lat: 9, lon: 8, alt: 7 }, resultTime: 't', ageMs: -5000 },
+    },
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-1');
+    getClick()({ position: {} });
+    await flush();
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
+    const moved = entity.position.getValue(Cesium.JulianDate.now());
+    const expected = Cesium.Cartesian3.fromDegrees(8, 9, 7);
+    assert.ok(Cesium.Cartesian3.equalsEpsilon(moved, expected, Cesium.Math.EPSILON6));
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-031] a newest result one millisecond past the freshness threshold leaves the entity where it was', async () => {
+  const source = fakeSource({
+    systems: [SYSTEM_A],
+    datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
+    observations: {
+      'ds-fixture-1': {
+        rows: [],
+        location: { lat: 9, lon: 8, alt: 7 },
+        resultTime: 't',
+        ageMs: OSH_FRESH_MAX_AGE_MS + 1,
+      },
+    },
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-1');
+    getClick()({ position: {} });
+    await flush();
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
+    const position = entity.position.getValue(Cesium.JulianDate.now());
+    const expected = Cesium.Cartesian3.fromDegrees(SYSTEM_A.lon, SYSTEM_A.lat, 0);
+    assert.ok(Cesium.Cartesian3.equalsEpsilon(position, expected, Cesium.Math.EPSILON6));
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-031] a newest result with ageMs:null leaves the entity where it was', async () => {
+  const source = fakeSource({
+    systems: [SYSTEM_A],
+    datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
+    observations: {
+      'ds-fixture-1': { rows: [], location: { lat: 9, lon: 8, alt: 7 }, resultTime: 't', ageMs: null },
+    },
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
@@ -1365,7 +1453,7 @@ test('[osh-031] a moved entity with no altitude in the newest result defaults to
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
     observations: {
-      'ds-fixture-1': { rows: [], location: { lat: 9, lon: 8 }, resultTime: 't' },
+      'ds-fixture-1': { rows: [], location: { lat: 9, lon: 8 }, resultTime: 't', ageMs: 1000 },
     },
   });
   const layer = createOshLayer({ source });

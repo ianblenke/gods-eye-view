@@ -750,6 +750,68 @@ test('[osh-022] an empty upstream item list gives observation:null', async () =>
   assert.equal(json.observation, null);
 });
 
+test('[osh-050] the observations route adds ageMs computed from the injected now', async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.pathname.endsWith('/observations')) {
+      return jsonResponse(200, {
+        items: [{ phenomenonTime: '2026-01-01T00:05:00Z', resultTime: 't2', result: { temperature: 21 } }],
+      });
+    }
+    return jsonResponse(200, SYSTEMS_BODY);
+  };
+  const now = () => Date.parse('2026-01-01T00:05:12Z');
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl, now });
+  const { json } = await callOsh(proxy, { url: '/observations?datastream=ds-fixture-1' });
+  assert.equal(json.observation.ageMs, 12_000);
+});
+
+test('[osh-050] a second answer served from the same cached snapshot carries a larger ageMs', async () => {
+  const calls = [];
+  const fetchImpl = async (url) => {
+    calls.push(String(url));
+    const parsed = new URL(String(url));
+    if (parsed.pathname.endsWith('/observations')) {
+      return jsonResponse(200, {
+        items: [{ phenomenonTime: '2026-01-01T00:05:00Z', resultTime: 't2', result: {} }],
+      });
+    }
+    return jsonResponse(200, SYSTEMS_BODY);
+  };
+  let nowMs = Date.parse('2026-01-01T00:05:05Z');
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl,
+    now: () => nowMs,
+  });
+  const first = await callOsh(proxy, { url: '/observations?datastream=ds-fixture-1' });
+  nowMs += 1000;
+  const second = await callOsh(proxy, { url: '/observations?datastream=ds-fixture-1' });
+  const observationCalls = calls.filter((url) => new URL(url).pathname.endsWith('/observations'));
+  assert.equal(observationCalls.length, 1, 'the second answer must be served from the cached snapshot');
+  assert.ok(second.json.observation.ageMs > first.json.observation.ageMs);
+  assert.equal(second.json.observation.ageMs - first.json.observation.ageMs, 1000);
+});
+
+test('[osh-050] an item with no phenomenonTime gives ageMs:null, and a null observation stays null', async () => {
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: fixtureFetch(),
+    now: () => 5000,
+  });
+  const withTime = await callOsh(proxy, { url: '/observations?datastream=ds-fixture-1' });
+  assert.equal(withTime.json.observation.ageMs, null, 'the fixture phenomenonTime "t1" does not parse');
+
+  const emptyFetch = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.pathname.endsWith('/observations')) return jsonResponse(200, { items: [] });
+    return jsonResponse(200, SYSTEMS_BODY);
+  };
+  const emptyProxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl: emptyFetch });
+  const { json } = await callOsh(emptyProxy, { url: '/observations?datastream=ds-fixture-2' });
+  assert.equal(json.observation, null);
+});
+
 test('[osh-022] an observation failure with no numeric status reports upstreamStatus:null', async () => {
   const fetchImpl = async (url) => {
     const parsed = new URL(String(url));

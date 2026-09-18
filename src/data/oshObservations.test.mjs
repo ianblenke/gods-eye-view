@@ -2,10 +2,13 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
+  OSH_FRESH_MAX_AGE_MS,
   extractOshLocation,
   flattenOshResult,
+  isOshObservationFresh,
   mapOshLocationPage,
   mapOshObservation,
+  oshObservationAgeMs,
   readOshSchemaLocation,
 } from './oshObservations.js';
 
@@ -424,4 +427,43 @@ test('[osh-022] a non-string phenomenonTime or resultTime becomes null', () => {
   });
   assert.equal(observation.phenomenonTime, null);
   assert.equal(observation.resultTime, null);
+});
+
+test('[osh-050] computes the age as nowMs minus the parsed phenomenonTime', () => {
+  const nowMs = Date.parse('2026-01-01T00:05:12Z');
+  assert.equal(oshObservationAgeMs('2026-01-01T00:05:00Z', nowMs), 12_000);
+});
+
+test('[osh-050] an absent or non-string phenomenonTime gives a null age', () => {
+  assert.equal(oshObservationAgeMs(null, 1000), null);
+  assert.equal(oshObservationAgeMs(undefined, 1000), null);
+  assert.equal(oshObservationAgeMs(5, 1000), null);
+});
+
+test('[osh-050] a phenomenonTime that does not parse gives a null age', () => {
+  assert.equal(oshObservationAgeMs('NaN', 1000), null);
+  assert.equal(oshObservationAgeMs('not a time', 1000), null);
+});
+
+test('[osh-050] fresh holds at the threshold and fails one millisecond past it', () => {
+  assert.equal(isOshObservationFresh(OSH_FRESH_MAX_AGE_MS), true);
+  assert.equal(isOshObservationFresh(OSH_FRESH_MAX_AGE_MS + 1), false);
+});
+
+test('[osh-050] a null or non-finite age is never fresh', () => {
+  assert.equal(isOshObservationFresh(null), false);
+  assert.equal(isOshObservationFresh(undefined), false);
+  assert.equal(isOshObservationFresh(NaN), false);
+});
+
+test('[osh-050] a phenomenonTime ahead of nowMs gives a negative age, and a negative age is fresh', () => {
+  // The owner's OSH server runs a few seconds ahead of the provider, so a
+  // live reading's phenomenonTime lands after the provider's own clock and
+  // the age comes out negative. A guard that rejects a negative age, or
+  // that treats it as unknown, would reject every live reading from that
+  // server; this is the case that rules such a guard out.
+  const nowMs = Date.parse('2026-01-01T00:05:00Z');
+  const ageMs = oshObservationAgeMs('2026-01-01T00:05:05Z', nowMs);
+  assert.equal(ageMs, -5000);
+  assert.equal(isOshObservationFresh(ageMs), true);
 });
