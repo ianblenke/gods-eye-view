@@ -17,6 +17,8 @@ import {
   formatTrackedEntityLabel,
   knownRadioLocation,
   normalizeStackId,
+  _reverseGeocodeForTest,
+  _resetReverseGeocodeForTest,
 } from './gevActions.js';
 import { MAP_STACKS } from '../mapStackController.js';
 import { GEV_REALTIME_TOOLS } from '../../server/providers/openai/tools.js';
@@ -3063,27 +3065,23 @@ function radioSelectionHarness() {
   };
 }
 
-/** Install a Google key plus a fetch stub, restoring both afterwards. */
-function installKeyedFetch(t, handler) {
+/** Install a fetch stub for the server geocode route and Photon, restoring it after. */
+function installGeocodeFetch(t, handler) {
   globalThis.window = globalThis.window || { clearTimeout, setTimeout, requestIdleCallback: null };
-  const priorKey = globalThis.window.__GOOGLE_MAPS_API_KEY__;
   const priorFetch = globalThis.fetch;
-  globalThis.window.__GOOGLE_MAPS_API_KEY__ = 'unit-test-key';
   globalThis.fetch = handler;
   t.after(() => {
     globalThis.fetch = priorFetch;
-    if (priorKey === undefined) delete globalThis.window.__GOOGLE_MAPS_API_KEY__;
-    else globalThis.window.__GOOGLE_MAPS_API_KEY__ = priorKey;
   });
 }
 
-test('voice Radio: a key that geocodes to nothing still places the station, keylessly', async (t) => {
+test('voice Radio: a server that geocodes to nothing still places the station, keylessly', async (t) => {
   const { calls, dataManager } = radioSelectionHarness();
   const requests = [];
-  installKeyedFetch(t, async (url) => {
+  installGeocodeFetch(t, async (url) => {
     requests.push(String(url));
-    if (String(url).startsWith('https://maps.googleapis.com/')) {
-      return { ok: true, json: async () => ({ status: 'ZERO_RESULTS', results: [] }) };
+    if (String(url).startsWith('/api/google/geocode')) {
+      return { ok: true, json: async () => ({ configured: true, status: 'ZERO_RESULTS', results: [] }) };
     }
     assert.match(String(url), /^https:\/\/photon\.komoot\.io\/api\/\?/);
     return {
@@ -3106,8 +3104,9 @@ test('voice Radio: a key that geocodes to nothing still places the station, keyl
   assert.equal(calls.length, 1);
   assert.ok(Math.abs(calls[0].criteria.anchor.lat - 20.9101) < 1e-9);
   assert.ok(Math.abs(calls[0].criteria.anchor.lon - 107.1839) < 1e-9);
-  // Google is asked first and exactly once; Photon answers unbiased, in one call.
-  assert.equal(requests.filter((url) => url.includes('maps.googleapis.com')).length, 1);
+  // The server geocode route is asked first and exactly once; Photon answers
+  // unbiased, in one call.
+  assert.equal(requests.filter((url) => url.startsWith('/api/google/geocode')).length, 1);
   assert.equal(requests.filter((url) => url.includes('photon.komoot.io')).length, 1);
   assert.match(requests.at(-1), /[?&]q=H%E1%BA%A1\+Long\+Bay/);
   assert.doesNotMatch(requests.at(-1), /[?&](lat|lon|bbox)=/, 'a named radio location is not viewport-biased');
@@ -3120,8 +3119,8 @@ test('voice Radio: the keyless path applies no country filter the keyed path wou
   // "No Radio station matched" for exactly the places it just resolved, while a
   // keyed install placed a station. The label may carry it; the filter may not.
   const { calls, dataManager } = radioSelectionHarness();
-  installKeyedFetch(t, async (url) => (String(url).startsWith('https://maps.googleapis.com/')
-    ? { ok: true, json: async () => ({ status: 'ZERO_RESULTS', results: [] }) }
+  installGeocodeFetch(t, async (url) => (String(url).startsWith('/api/google/geocode')
+    ? { ok: true, json: async () => ({ configured: true, status: 'ZERO_RESULTS', results: [] }) }
     : {
       ok: true,
       json: async () => ({
@@ -3137,6 +3136,87 @@ test('voice Radio: the keyless path applies no country filter the keyed path wou
   assert.equal(result.requestedLocation, 'Kraków, Polska', 'the label still names the country honestly');
 });
 
-const testPlaceSearch = () => createStandalonePlaceSearch({ resolveApiKey: () => globalThis.window?.__GOOGLE_MAPS_API_KEY__ });
+const testPlaceSearch = () => createStandalonePlaceSearch();
 function createGevActionRunner(options) { return createActionRunner({ placeSearch: testPlaceSearch(), ...options }); }
 function controlRadio(viewer, manager, args, options) { return runControlRadio(viewer, manager, args, { placeSearch: testPlaceSearch(), ...options }); }
+
+/** Install a window (for fetchWithTimeout) and a fetch stub for reverseGeocode. */
+function installReverseGeocodeFetch(t, handler) {
+  const originalWindow = globalThis.window;
+  const originalFetch = globalThis.fetch;
+  globalThis.window = { setTimeout, clearTimeout };
+  globalThis.fetch = handler;
+  _resetReverseGeocodeForTest();
+  t.after(() => {
+    if (originalWindow === undefined) delete globalThis.window;
+    else globalThis.window = originalWindow;
+    globalThis.fetch = originalFetch;
+    _resetReverseGeocodeForTest();
+  });
+}
+
+test('[credential-boundary-014] reverseGeocode fetches the server route, with no key', async (t) => {
+  let requestUrl;
+  installReverseGeocodeFetch(t, async (url) => {
+    requestUrl = new URL(String(url), 'http://localhost');
+    return {
+      json: async () => ({ configured: true, status: 'OK', results: [{
+        formatted_address: 'Austin, TX, USA',
+        types: ['locality'],
+        address_components: [{ long_name: 'Austin', types: ['locality'] }],
+      }] }),
+    };
+  });
+
+  await _reverseGeocodeForTest(30.2672, -97.7431);
+
+  assert.equal(requestUrl.pathname, '/api/google/geocode');
+  assert.equal(requestUrl.searchParams.get('lat'), '30.2672');
+  assert.equal(requestUrl.searchParams.get('lon'), '-97.7431');
+  assert.equal(requestUrl.searchParams.has('key'), false);
+});
+
+test('[credential-boundary-014] a configured:false answer is remembered for the page life', async (t) => {
+  let calls = 0;
+  installReverseGeocodeFetch(t, async () => {
+    calls += 1;
+    return { json: async () => ({ configured: false, status: null, results: [] }) };
+  });
+
+  const first = await _reverseGeocodeForTest(30.2672, -97.7431);
+  assert.equal(first, null);
+  assert.equal(calls, 1);
+
+  const second = await _reverseGeocodeForTest(51.5074, -0.1278);
+  assert.equal(second, null);
+  assert.equal(calls, 1, 'a remembered keyless server takes no second fetch');
+});
+
+test('[credential-boundary-014] a configured answer gives the established place shape', async (t) => {
+  installReverseGeocodeFetch(t, async () => ({
+    json: async () => ({
+      configured: true,
+      status: 'OK',
+      results: [{
+        formatted_address: 'Austin, TX, USA',
+        types: ['locality', 'political'],
+        address_components: [
+          { long_name: 'Austin', types: ['locality'] },
+          { long_name: 'Texas', types: ['administrative_area_level_1'] },
+          { long_name: 'United States', types: ['country'] },
+        ],
+      }],
+    }),
+  }));
+
+  const place = await _reverseGeocodeForTest(30.2672, -97.7431);
+  assert.deepEqual(place, {
+    formattedAddress: 'Austin, TX, USA',
+    locality: 'Austin',
+    region: 'Texas',
+    country: 'United States',
+    types: ['locality', 'political'],
+    labels: ['Austin, TX, USA'],
+    streetLabels: [],
+  });
+});

@@ -16,11 +16,11 @@ test('malformed successful Photon responses remain retryable', async () => {
   }
 });
 
-test('standalone geocoding falls back after Google connection, JSON and refusal failures', async () => {
-  for (const fail of [() => { throw new Error('offline'); }, () => new Response('invalid json'), () => Response.json({ status: 'REQUEST_DENIED' })]) {
+test('standalone geocoding falls back after server connection, JSON and refusal failures', async () => {
+  for (const fail of [() => { throw new Error('offline'); }, () => new Response('invalid json'), () => Response.json({ configured: true, status: 'REQUEST_DENIED', results: [] })]) {
     const urls = [];
-    const service = createStandalonePlaceSearch({ resolveApiKey: () => 'fixture', fetchImpl: async (url) => {
-      urls.push(url); return url.includes('maps.googleapis.com') ? fail() : hit();
+    const service = createStandalonePlaceSearch({ fetchImpl: async (url) => {
+      urls.push(url); return String(url).startsWith('/api/google/geocode') ? fail() : hit();
     } });
     const result = await service.geocode('Hanoi');
     assert.equal(result.place.name, 'Hà Nội');
@@ -29,11 +29,31 @@ test('standalone geocoding falls back after Google connection, JSON and refusal 
   }
 });
 
-test('a keyless service does not issue any Google request', async () => {
+test('[credential-boundary-013] a keyless server answers configured:false and the search falls back to Photon', async () => {
   const service = createStandalonePlaceSearch({ fetchImpl: async (url) => {
-    assert.equal(new URL(url).hostname, 'photon.komoot.io'); return hit();
+    if (String(url).startsWith('/api/google/geocode')) {
+      return Response.json({ configured: false, status: null, results: [] });
+    }
+    assert.equal(new URL(url, 'http://localhost').hostname, 'photon.komoot.io');
+    return hit();
   } });
   assert.equal((await service.geocode('Hanoi')).place.lat, 21.03);
+});
+
+test('[credential-boundary-013] the geocode request URL is same-origin, with address and bounds, and no key', async () => {
+  let captured;
+  const service = createStandalonePlaceSearch({ fetchImpl: async (url) => {
+    if (String(url).startsWith('/api/google/geocode')) {
+      captured = new URL(url, 'http://localhost');
+      return Response.json({ configured: true, status: 'ZERO_RESULTS', results: [] });
+    }
+    return hit();
+  } });
+  await service.geocode('Hanoi', { bias: '1,1|2,2' });
+  assert.equal(captured.pathname, '/api/google/geocode');
+  assert.equal(captured.searchParams.get('address'), 'Hanoi');
+  assert.equal(captured.searchParams.get('bounds'), '1,1|2,2');
+  assert.equal(captured.searchParams.has('key'), false);
 });
 
 test('cancellation before lookup makes no request', async () => {
