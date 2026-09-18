@@ -40,6 +40,22 @@ test('[credential-boundary-013] a keyless server answers configured:false and th
   assert.equal((await service.geocode('Hanoi')).place.lat, 21.03);
 });
 
+test('[credential-boundary-013] a configured:false answer contributes no verdict, not a negative one', async () => {
+  // Both providers come back with no place. Photon's is a confirmed miss
+  // (an empty feature list), so the combined answer must stay a confident
+  // "no place", not the "inconclusive" shape an unconfigured provider would
+  // cause if it were treated as a refusal instead of a non-answer.
+  const service = createStandalonePlaceSearch({ fetchImpl: async (url) => {
+    if (String(url).startsWith('/api/google/geocode')) {
+      return Response.json({ configured: false, status: null, results: [] });
+    }
+    return Response.json({ features: [] });
+  } });
+  const result = await service.geocode('nowhere at all');
+  assert.equal(result.place, null);
+  assert.equal(result.answered, true);
+});
+
 test('[credential-boundary-013] the geocode request URL is same-origin, with address and bounds, and no key', async () => {
   let captured;
   const service = createStandalonePlaceSearch({ fetchImpl: async (url) => {

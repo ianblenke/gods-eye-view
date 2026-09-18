@@ -17,9 +17,14 @@ function envExampleNames() {
   return names;
 }
 
+/** The AIS live knobs. Not credentials; allowed to reach the bundle by design. */
+const AIS_KNOB_NAMES = ['VITE_AIS_LIVE_API_URL', 'VITE_AIS_LIVE_MAX_ROWS', 'VITE_AIS_LIVE_LABEL_MAX_ROWS'];
+
 /** Every credential name the build must keep out of the browser bundle. */
 function combinedCredentialNames() {
-  return new Set([...knownKeySetupEnvVars(), ...envExampleNames()]);
+  const names = new Set([...knownKeySetupEnvVars(), ...envExampleNames()]);
+  for (const name of AIS_KNOB_NAMES) names.delete(name);
+  return names;
 }
 
 /** The names the build is allowed to expose, by design. */
@@ -50,7 +55,9 @@ async function listFiles(directory) {
  */
 async function buildFixture(t) {
   const names = [...combinedCredentialNames()];
-  const extraNames = ['VITE_GEV_PROBE_SECRET'];
+  // VITE_AIS_LIVE_MAX_ROWS stands for the whole AIS prefix, as a positive
+  // control; VITE_GEV_PROBE_SECRET proves an unrelated VITE_ name does not.
+  const extraNames = ['VITE_GEV_PROBE_SECRET', 'VITE_AIS_LIVE_MAX_ROWS'];
   const previous = new Map();
   for (const name of [...names, ...extraNames]) {
     previous.set(name, process.env[name]);
