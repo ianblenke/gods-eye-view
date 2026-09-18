@@ -9,7 +9,7 @@ shape: every other Google call already goes through our server first.
 
 A second gap sits in the build config. Vite's default `VITE_` prefix
 exposes any matching `.env` line to the bundle, with no code change and no
-review. The AIS live knobs need three such names. Nothing else should use
+review. The AIS live knobs need three such names. Nothing else must use
 that channel.
 
 ## Goals / Non-Goals
