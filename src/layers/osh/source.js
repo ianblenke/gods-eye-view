@@ -36,16 +36,24 @@ export function createOshSource({
       return { keyRequired: false, systems: payload.systems, stale: Boolean(payload.stale) };
     },
 
-    async getDatastreams({ signal } = {}) {
-      const { keyRequired, payload } = await readOshResponse(
-        fetchImpl,
-        '/api/osh/datastreams',
-        { signal },
-      );
+    async getDatastreams({ system, signal } = {}) {
+      const path = system
+        ? `/api/osh/datastreams?system=${encodeURIComponent(system)}`
+        : '/api/osh/datastreams';
+      const { keyRequired, payload } = await readOshResponse(fetchImpl, path, { signal });
       if (keyRequired) return { keyRequired: true, datastreams: [] };
       if (!Array.isArray(payload?.datastreams))
         throw new Error('Malformed OSH datastreams payload');
       return { keyRequired: false, datastreams: payload.datastreams };
+    },
+
+    async getFois({ signal } = {}) {
+      const { keyRequired, payload } = await readOshResponse(fetchImpl, '/api/osh/fois', {
+        signal,
+      });
+      if (keyRequired) return { keyRequired: true, fois: [], truncated: false };
+      if (!Array.isArray(payload?.fois)) throw new Error('Malformed OSH fois payload');
+      return { keyRequired: false, fois: payload.fois, truncated: Boolean(payload.truncated) };
     },
 
     async getObservation(datastreamId, { signal } = {}) {
