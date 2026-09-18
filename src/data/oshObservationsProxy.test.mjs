@@ -4,16 +4,25 @@ import { readFileSync } from 'node:fs';
 import {
   OBS_MAX_ENTRIES,
   OBS_TTL_MS,
+  createOshKeyedCache,
   createOshObservationsCache,
+  createOshSystemDatastreamsCache,
 } from '../../server/providers/osh/observations.js';
 
 const fixture = JSON.parse(
   readFileSync(new URL('./fixtures/osh-observation.json', import.meta.url), 'utf8'),
 );
+const datastreamsFixture = JSON.parse(
+  readFileSync(new URL('./fixtures/osh-datastreams.json', import.meta.url), 'utf8'),
+);
 const ROOT = new URL('https://osh.example/api/');
 
 function urlFor(id) {
   return new URL(`https://osh.example/api/datastreams/${id}/observations?limit=1&resultTime=latest`);
+}
+
+function systemDatastreamsUrlFor(id) {
+  return new URL(`https://osh.example/api/systems/${id}/datastreams?limit=100`);
 }
 
 test('[osh-022] serves the newest observation of a datastream', async () => {
@@ -129,5 +138,131 @@ test('[osh-023] keeps at most 256 ids and drops the oldest', async () => {
     callsById.get(`ds-fixture-${OBS_MAX_ENTRIES}`),
     1,
     'the newest id must still be cached, with no second fetch',
+  );
+});
+
+test('[osh-048] createOshKeyedCache() never shares one entry between two different keys', async () => {
+  const callsById = new Map();
+  const cache = createOshKeyedCache({
+    fetchImpl: async () => {},
+    ttlMs: 1000,
+    refresh: async (_fetchImpl, id) => {
+      callsById.set(id, (callsById.get(id) || 0) + 1);
+      return `value-for-${id}`;
+    },
+  });
+  const [a, b] = await Promise.all([cache.get('a'), cache.get('b')]);
+  assert.equal(a.value, 'value-for-a');
+  assert.equal(b.value, 'value-for-b');
+  assert.equal(callsById.get('a'), 1);
+  assert.equal(callsById.get('b'), 1);
+});
+
+test('[osh-048] createOshKeyedCache() does not refetch inside the TTL', async () => {
+  let now = 0;
+  let calls = 0;
+  const cache = createOshKeyedCache({
+    fetchImpl: async () => {},
+    now: () => now,
+    ttlMs: 1000,
+    refresh: async () => {
+      calls += 1;
+      return 'v';
+    },
+  });
+  await cache.get('a');
+  now += 999;
+  await cache.get('a');
+  assert.equal(calls, 1);
+  now += 2;
+  await cache.get('a');
+  assert.equal(calls, 2);
+});
+
+test('[osh-048] createOshKeyedCache() serves the stale value on a failed refresh, and never throws with a snapshot in hand', async () => {
+  let now = 0;
+  let succeed = true;
+  const cache = createOshKeyedCache({
+    fetchImpl: async () => {},
+    now: () => now,
+    ttlMs: 1000,
+    refresh: async () => {
+      if (!succeed) throw new Error('upstream down');
+      return 'v';
+    },
+  });
+  await cache.get('a');
+  succeed = false;
+  now += 1001;
+  const result = await cache.get('a');
+  assert.equal(result.stale, true);
+  assert.equal(result.value, 'v');
+});
+
+test('[osh-048] createOshKeyedCache() keeps at most maxEntries ids', async () => {
+  const cache = createOshKeyedCache({
+    fetchImpl: async () => {},
+    ttlMs: 1000,
+    maxEntries: 3,
+    refresh: async (_fetchImpl, id) => id,
+  });
+  for (const id of ['a', 'b', 'c', 'd']) await cache.get(id);
+  assert.equal(cache.size(), 3);
+});
+
+test('[osh-048] createOshSystemDatastreamsCache() serves the datastreams of one system, built from mapOshDatastreams()', async () => {
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return new Response(JSON.stringify(datastreamsFixture), { status: 200 });
+  };
+  const cache = createOshSystemDatastreamsCache({ fetchImpl, now: () => 1000, ttlMs: 5000 });
+  const result = await cache.get('sys-fixture-1', ROOT, systemDatastreamsUrlFor('sys-fixture-1'), {});
+  assert.equal(calls, 1);
+  assert.equal(result.stale, false);
+  assert.equal(result.fetchedAt, 1000);
+  assert.equal(result.datastreams.length, 2);
+  assert.equal(result.datastreams[0].id, 'ds-fixture-1');
+});
+
+test('[osh-048] createOshSystemDatastreamsCache() shares one walk per id inside the TTL, and gives a second id its own', async () => {
+  let now = 0;
+  const callsById = new Map();
+  const fetchImpl = async (url) => {
+    const id = String(url).match(/systems\/([^/]+)\//)[1];
+    callsById.set(id, (callsById.get(id) || 0) + 1);
+    return new Response(JSON.stringify({ items: [] }), { status: 200 });
+  };
+  const cache = createOshSystemDatastreamsCache({ fetchImpl, now: () => now, ttlMs: 1000 });
+  await Promise.all([
+    cache.get('sys-fixture-1', ROOT, systemDatastreamsUrlFor('sys-fixture-1'), {}),
+    cache.get('sys-fixture-1', ROOT, systemDatastreamsUrlFor('sys-fixture-1'), {}),
+  ]);
+  assert.equal(callsById.get('sys-fixture-1'), 1);
+  await cache.get('sys-fixture-1', ROOT, systemDatastreamsUrlFor('sys-fixture-1'), {});
+  assert.equal(callsById.get('sys-fixture-1'), 1, 'a request inside the TTL sends no new call');
+  now += 1001;
+  await cache.get('sys-fixture-1', ROOT, systemDatastreamsUrlFor('sys-fixture-1'), {});
+  assert.equal(callsById.get('sys-fixture-1'), 2);
+  await cache.get('sys-fixture-2', ROOT, systemDatastreamsUrlFor('sys-fixture-2'), {});
+  assert.equal(callsById.get('sys-fixture-2'), 1);
+});
+
+test('[osh-048] createOshSystemDatastreamsCache() serves the stale snapshot on a failed walk, and rethrows with none', async () => {
+  let now = 0;
+  let succeed = true;
+  const fetchImpl = async () => {
+    if (succeed) return new Response(JSON.stringify({ items: [] }), { status: 200 });
+    return new Response(null, { status: 500 });
+  };
+  const cache = createOshSystemDatastreamsCache({ fetchImpl, now: () => now, ttlMs: 1000 });
+  await cache.get('sys-fixture-1', ROOT, systemDatastreamsUrlFor('sys-fixture-1'), {});
+  succeed = false;
+  now += 1001;
+  const result = await cache.get('sys-fixture-1', ROOT, systemDatastreamsUrlFor('sys-fixture-1'), {});
+  assert.equal(result.stale, true);
+
+  await assert.rejects(
+    cache.get('sys-fixture-new', ROOT, systemDatastreamsUrlFor('sys-fixture-new'), {}),
   );
 });

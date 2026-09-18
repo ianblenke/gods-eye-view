@@ -182,25 +182,38 @@ export function buildNextPageUrl(candidate, root, current) {
   return next;
 }
 
+/** Default page cap for a walk that names no `maxPages` option. */
+export const OSH_DEFAULT_MAX_PAGES = 20;
+
 /**
  * Walk a `links[].rel === 'next'` chain from a list payload, following a
  * link only when the link names a later page of the same request (see
- * `buildNextPageUrl`), and stopping after 20 pages. A link that fails that
- * check, or an unparsable `href`, stops the walk — it is not an error, so
- * the function still gives the items it collected.
+ * `buildNextPageUrl`), and stopping after `maxPages` pages (default 20). A
+ * link that fails that check, or an unparsable `href`, stops the walk — it
+ * is not an error, so the function still gives the items it collected, with
+ * `truncated:false`. Reaching the page cap while the last page read still
+ * named a next link gives `truncated:true`, so a loss at the cap is never
+ * silent.
  * @param {typeof fetch} fetchImpl
  * @param {URL} root - Resolved API root (the origin every page must share).
  * @param {URL} firstUrl - URL of the first page.
  * @param {object} options
  * @param {Record<string,string>} [options.headers]
  * @param {(payload:*) => any[]} options.listOf - Reads the item array of a page.
- * @returns {Promise<any[]>}
+ * @param {number} [options.maxPages] - Page cap for this walk.
+ * @returns {Promise<{items: any[], truncated: boolean}>}
  */
-export async function oshPages(fetchImpl, root, firstUrl, { headers = {}, listOf }) {
+export async function oshPages(
+  fetchImpl,
+  root,
+  firstUrl,
+  { headers = {}, listOf, maxPages = OSH_DEFAULT_MAX_PAGES },
+) {
   const items = [];
   let url = firstUrl;
   let page = 0;
-  while (url && page < 20) {
+  let truncated = false;
+  while (url && page < maxPages) {
     page += 1;
     const { status, json } = await oshGet(fetchImpl, url, { headers });
     if (status < 200 || status >= 300) {
@@ -213,16 +226,24 @@ export async function oshPages(fetchImpl, root, firstUrl, { headers = {}, listOf
     const next = links.find(
       (link) => link && link.rel === 'next' && typeof link.href === 'string',
     );
-    if (!next) break;
+    if (!next) {
+      url = null;
+      break;
+    }
     let candidate;
     try {
       candidate = new URL(next.href, url);
     } catch {
+      url = null;
       break;
     }
     const nextUrl = buildNextPageUrl(candidate, root, url);
-    if (!nextUrl) break;
+    if (!nextUrl) {
+      url = null;
+      break;
+    }
     url = nextUrl;
+    if (page >= maxPages) truncated = true;
   }
-  return items;
+  return { items, truncated };
 }
