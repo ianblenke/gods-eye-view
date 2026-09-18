@@ -114,6 +114,26 @@ test('[osh-032] shows Host: — when the feature has no host', () => {
   assert.match(html, /Host: —/);
 });
 
+test('[osh-032] falls back to the feature id when the feature has no name', () => {
+  const html = renderOshDetail({
+    feature: { id: 'foi-fixture-9', name: null },
+    hostId: null,
+    system: null,
+    datastreams: [],
+  });
+  assert.match(html, /foi-fixture-9/);
+});
+
+test('[osh-032] falls back to the host system id when the host record has no name', () => {
+  const html = renderOshDetail({
+    feature: { id: 'foi-fixture-10', name: 'Fixture Node Ten' },
+    hostId: 'sys-fixture-10',
+    system: { id: 'sys-fixture-10', name: null, uid: null, description: null },
+    datastreams: [],
+  });
+  assert.match(html, /Host: sys-fixture-10/);
+});
+
 test('[osh-032] a system-only selection still renders the plain system header, with no feature block', () => {
   const html = renderOshDetail(DETAIL);
   assert.doesNotMatch(html, /osh-detail-feature/);

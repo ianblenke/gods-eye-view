@@ -61,6 +61,7 @@ test('[osh-041] skips a feature with no Point, or a coordinate that is not finit
       { id: 'no-coords', geometry: { type: 'Point' } },
       { id: 'bad-lon', geometry: { type: 'Point', coordinates: [Infinity, 2] } },
       { id: 'bad-lat', geometry: { type: 'Point', coordinates: [1, 'x'] } },
+      { id: 'empty-lon', geometry: { type: 'Point', coordinates: ['', 2] } },
     ],
   });
   assert.deepEqual(records, []);

@@ -717,6 +717,101 @@ test('[osh-045] finds a feature record by id and by uid, with no per-feature fet
   layer.destroy(viewer);
 });
 
+test('[osh-045] a click on a picked feature id that is no longer in the feature map selects it with no host and no name', async () => {
+  const source = fakeSource({ fois: [] });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    // No feature was ever placed, so this picked id has no record — a
+    // stale or synthetic pick the click handler must still handle safely.
+    viewer.scene.pick = () => ({ id: { id: 'osh-foi:gone' } });
+    getClick()({ position: {} });
+    await flush();
+    assert.equal(layer.getStats().selectedFeatureId, 'gone');
+    assert.equal(layer.getStats().selectedId, null);
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-030] a fresh observation with a location does not throw when the selected system has no entity', async () => {
+  const source = fakeSource({
+    systems: [SYSTEM_A],
+    fois: [FEATURE_ORPHAN],
+    datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-unknown', name: 'D1' }],
+    observations: {
+      'ds-fixture-1': { rows: [], location: { lat: 9, lon: 8, alt: 7 }, resultTime: 't' },
+    },
+  });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh-foi:foi-fixture-2');
+    assert.doesNotThrow(() => getClick()({ position: {} }));
+    await flush();
+    assert.equal(layer.getStats().selectedId, 'sys-fixture-unknown');
+    assert.deepEqual(source.calls.observations, ['ds-fixture-1']);
+
+    // A later refresh, with the selected host still not on the map, must
+    // not throw while it looks up that host's (absent) entity.
+    await layer.update(viewer);
+    assert.equal(layer.getStats().selectedId, 'sys-fixture-unknown');
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-045] a selected feature that is still present after a later refresh keeps its selection', async () => {
+  const source = fakeSource({ fois: [FEATURE_A] });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh-foi:foi-fixture-1');
+    getClick()({ position: {} });
+    await flush();
+    assert.equal(layer.getStats().selectedFeatureId, 'foi-fixture-1');
+
+    await layer.update(viewer);
+    assert.equal(
+      layer.getStats().selectedFeatureId,
+      'foi-fixture-1',
+      'the feature is still in the list, so the selection must stay',
+    );
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-046] a fois getter that resolves keyRequired:true, while the systems getter does not, gives an empty feature list', async () => {
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: true, fois: [], truncated: false };
+    },
+    async getDatastreams() {
+      return { keyRequired: false, datastreams: [] };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.equal(layer.getStats().features, 0);
+  assert.equal(layer.getStats().partial, false);
+  layer.destroy(viewer);
+});
+
 test('[osh-046] the features getter throwing sets partial:true and no error, and the systems still place', async () => {
   const source = {
     async getSystems() {
