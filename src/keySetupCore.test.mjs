@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 import {
   KEY_SETUP_APPEND_HEADER,
   KEY_SETUP_KEYS,
@@ -361,4 +363,52 @@ test('server Google key remains supported without appearing in setup or its miss
   assert.deepEqual(complete, keySetupStatus({ ...allVisibleConfigured, GOOGLE_MAPS_SERVER_API_KEY: secret }));
   assert.ok(!JSON.stringify(status).includes('GOOGLE_MAPS_SERVER_API_KEY'));
   assert.ok(!JSON.stringify(status).includes(secret));
+});
+
+test('[credential-boundary-005] the client-exposed registry names equal the browser build define names', async () => {
+  const { createBrowserViteConfig } = await import('../build/vite.js');
+  const clientExposed = new Set(
+    KEY_SETUP_KEYS.filter((entry) => entry.clientExposed).flatMap((entry) => entry.envVars),
+  );
+  const defineNames = new Set(
+    Object.keys(createBrowserViteConfig().define).map((key) => key.replace('import.meta.env.', '')),
+  );
+  assert.deepEqual(clientExposed, defineNames);
+});
+
+/** Every `NAME=` (commented or not) named in `.env.example`. */
+function envExampleNames() {
+  const text = readFileSync(new URL('../.env.example', import.meta.url), 'utf8');
+  const names = new Set();
+  for (const match of text.matchAll(/^#?\s*([A-Z][A-Z0-9_]*)=/gm)) names.add(match[1]);
+  return names;
+}
+
+/** Every `.js`/`.mjs` file directly under a directory, recursively. */
+function scriptFilesUnder(directory) {
+  const files = [];
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const full = path.join(directory, entry.name);
+    if (entry.isDirectory()) files.push(...scriptFilesUnder(full));
+    else if (/\.m?js$/.test(entry.name)) files.push(full);
+  }
+  return files;
+}
+
+test('[credential-boundary-006] every server read of a credential name is documented', () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  const files = ['server', 'scripts', 'tools']
+    .map((name) => path.join(root, name))
+    .flatMap((directory) => scriptFilesUnder(directory));
+  const documented = new Set([...knownKeySetupEnvVars(), ...envExampleNames()]);
+  const undocumented = new Set();
+  for (const file of files) {
+    const text = readFileSync(file, 'utf8');
+    for (const match of text.matchAll(/\bprocess\.env\.([A-Z][A-Z0-9_]*)\b|\benv\.([A-Z][A-Z0-9_]*)\b/g)) {
+      const name = match[1] || match[2];
+      if (!/_(KEY|TOKEN|SECRET|PASSWORD)$/.test(name)) continue;
+      if (!documented.has(name)) undocumented.add(name);
+    }
+  }
+  assert.deepEqual([...undocumented], []);
 });
