@@ -51,11 +51,26 @@ const SYSTEM_AND_DATASTREAM_FIXTURE_FILES = [
   'src/data/fixtures/osh-systems.json',
   'src/data/fixtures/osh-datastreams.json',
   'src/data/fixtures/osh-fois.json',
+  'src/data/fixtures/osh-datastreams-filtered.json',
 ];
 
-/** True for a synthetic fixture host: localhost, or a reserved *.example domain (RFC 2606). */
+/** The two public vocabulary hosts a location schema's definitions may name (design decision D46). */
+const VOCABULARY_HOSTS = new Set(['www.opengis.net', 'sensorml.com']);
+
+/**
+ * True for a synthetic fixture host — localhost, or a reserved *.example
+ * domain (RFC 2606) — or one of the two public vocabulary hosts a schema
+ * definition may name. Neither vocabulary host is a fixture: a location
+ * schema fixture cites a real OGC or SensorML term deliberately, because
+ * the reader binds by that term, not by a synthetic stand-in.
+ */
 function isFixtureHost(hostname) {
-  return hostname === 'localhost' || hostname === 'example' || hostname.endsWith('.example');
+  return (
+    hostname === 'localhost' ||
+    hostname === 'example' ||
+    hostname.endsWith('.example') ||
+    VOCABULARY_HOSTS.has(hostname)
+  );
 }
 
 // A dotted token whose last label is one of these is a file reference, such
@@ -94,6 +109,29 @@ function findBareHost(text) {
     if (lastLabel !== 'example' && !CODE_FILE_EXTENSIONS.has(lastLabel)) return match[0];
   }
   return null;
+}
+
+const SCHEMA_FIXTURE_FILES = [
+  'src/data/fixtures/osh-schema-vector.json',
+  'src/data/fixtures/osh-schema-flat.json',
+  'src/data/fixtures/osh-schema-noframe.json',
+];
+
+// Built from parts, the same trick this file's other checks use: a literal
+// match here would trip this file's own scan below, since this file's
+// prose talks about the pattern it looks for.
+const URN_PREFIX = ['urn', 'osh', 'def'].join(':') + ':';
+const URN_VENDOR_PATTERN = new RegExp(`\\b${URN_PREFIX}([^:]+):`);
+
+/** Every definition URN naming the "osh:def" scheme MUST carry the synthetic vendor segment. */
+function assertVendorUrnIsFixture(text, file) {
+  for (const match of text.matchAll(new RegExp(URN_VENDOR_PATTERN, 'g'))) {
+    assert.equal(
+      match[1],
+      'fixture',
+      `${file} has a definition URN whose vendor segment is not synthetic: ${match[0]}`,
+    );
+  }
 }
 
 /** Every `osh*` file MUST use a scheme-qualified, fixture-only address. */
@@ -152,6 +190,7 @@ test('[osh-034] the provider, adapter and layer files have no real address', () 
     const text = readFileSync(repoPath(relative), 'utf8');
     assertOnlyFixtureAddress(text, relative);
     assertNoBareHost(text, relative);
+    assertVendorUrnIsFixture(text, relative);
   }
 });
 
@@ -163,8 +202,36 @@ test('[osh-034] no OSH test file has a real address', () => {
     'the discovered OSH test file count changed; update this number and check the new file too',
   );
   for (const file of files) {
-    assertOnlyFixtureAddress(readFileSync(file, 'utf8'), file.pathname);
+    const text = readFileSync(file, 'utf8');
+    assertOnlyFixtureAddress(text, file.pathname);
+    assertVendorUrnIsFixture(text, file.pathname);
   }
+});
+
+test('[osh-034] every definition URN in a location schema fixture has the synthetic vendor segment', () => {
+  // osh-schema-noframe.json carries no definition URN at all — it exists
+  // to prove the no-referenceFrame case, and names only the two public
+  // vocabulary terms — so only the other two fixtures are required to
+  // carry one.
+  const mustCarryOne = [
+    'src/data/fixtures/osh-schema-vector.json',
+    'src/data/fixtures/osh-schema-flat.json',
+  ];
+  for (const relative of SCHEMA_FIXTURE_FILES) {
+    const text = readFileSync(repoPath(relative), 'utf8');
+    const matches = [...text.matchAll(new RegExp(URN_VENDOR_PATTERN, 'g'))];
+    if (mustCarryOne.includes(relative)) {
+      assert.ok(matches.length > 0, `${relative} is expected to carry a definition URN`);
+    }
+    assertVendorUrnIsFixture(text, relative);
+  }
+});
+
+test('[osh-034] the vendor-urn check catches a real-looking vendor segment', () => {
+  const realLooking = URN_PREFIX + 'acme:position:1#latitude';
+  const syntheticOne = URN_PREFIX + 'fixture:position:1#latitude';
+  assert.throws(() => assertVendorUrnIsFixture(realLooking, 'synthetic'), /not synthetic/);
+  assert.doesNotThrow(() => assertVendorUrnIsFixture(syntheticOne, 'synthetic'));
 });
 
 test('[osh-034] every system, datastream and feature fixture id starts with sys-fixture-, ds-fixture- or foi-fixture-', () => {
@@ -183,9 +250,9 @@ test('[osh-034] every system, datastream and feature fixture id starts with sys-
   }
 });
 
-test('[osh-034] .env.example has the three OSH keys, each with an empty value', () => {
+test('[osh-034] .env.example has the three OSH keys and OSH_LOCATION_PROPERTIES, each with an empty value', () => {
   const text = readFileSync(repoPath('.env.example'), 'utf8');
-  for (const key of ['OSH_URL', 'OSH_USERNAME', 'OSH_PASSWORD']) {
+  for (const key of ['OSH_URL', 'OSH_USERNAME', 'OSH_PASSWORD', 'OSH_LOCATION_PROPERTIES']) {
     assert.match(
       text,
       new RegExp(`^# ${key}=$`, 'm'),
