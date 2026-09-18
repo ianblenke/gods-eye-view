@@ -13,7 +13,7 @@ The owner's OSH server runs a few seconds ahead of the provider. This shows up i
 **Goals:**
 - State the age of every observation the provider serves, computed at serve time from the provider's own injected clock, never stored in a cache.
 - Move an entity only from a fresh record. Name the freshness threshold in the spec, not only in the code.
-- Show the age of every datastream in the detail panel. Mark a stale one, so a viewer never mistakes an old reading for a current one.
+- Show the age of every datastream in the detail panel. Mark one that is not fresh, so a viewer never reads an old observation as a fresh one. The word `stale` keeps its shipped meaning in this project, which is the cache flag of `osh-022` and `osh-023`. The condition this change adds is *not fresh*, and `old` is only the word the panel shows.
 - Treat a negative age as fresh. A guard that needs a non-negative age must fail against this server's own clock skew.
 
 **Non-Goals:**

@@ -77,13 +77,25 @@ test('[osh-032] a negative age is fresh and renders as a plain age, not old', ()
   assert.match(html, /0 s/);
 });
 
-test('[osh-032] a null ageMs renders "age unknown" and is marked old', () => {
+test('[osh-032] a null ageMs reads "age unknown", takes the class, and never takes the word old', () => {
   const html = renderOshDetail({
     system: { id: 'sys-fixture-1' },
     datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: null } }],
   });
   assert.match(html, /age unknown/);
   assert.match(html, /osh-detail-old/);
+  // An unknown age must not read as an old one. The panel showed
+  // `age unknown old` before this assertion existed.
+  assert.doesNotMatch(html, /age unknown old/);
+});
+
+test('[osh-032] an age past the threshold does take the word old', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: 7_200_000 } }],
+  });
+  assert.match(html, /osh-detail-old/);
+  assert.match(html, /2 h old/);
 });
 
 test('[osh-032] renders "No data" for a datastream with no rows, and falls back to the id', () => {
