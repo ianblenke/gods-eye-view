@@ -6,7 +6,7 @@ In the morning, against a broken database, it gave the oldest record. In the eve
 
 A guard on the query's meaning is a guard on a fact this project cannot see and cannot fix. A guard on the record's own age is a guard on a fact the record itself carries, whatever the query means. This change builds that guard.
 
-The owner's OSH server runs a few seconds ahead of the provider. This shows up in several live streams read on the evening of 2026-09-18. A live reading's `phenomenonTime` sits two to five seconds ahead of the provider's clock at serve time. So a live reading's age is negative. Negative is the freshest age on this server.
+The owner's OSH server runs two to five seconds ahead of the provider. This shows up in several live streams read on the evening of 2026-09-18. A live reading's `phenomenonTime` sits two to five seconds ahead of the provider's clock at serve time. So a live reading's age is negative. Negative is the freshest age on this server.
 
 ## Goals / Non-Goals
 
@@ -26,7 +26,7 @@ The owner's OSH server runs a few seconds ahead of the provider. This shows up i
 
 `oshObservationAgeMs(phenomenonTime, nowMs)` in `src/data/oshObservations.js` is pure: `nowMs` minus `Date.parse(phenomenonTime)`, or null when the time is absent or does not parse. The observations route calls it with the provider's injected `now()` when it answers, and adds `ageMs` to the observation it serves. The cache never stores an age, so a stale snapshot served twice carries a larger age the second time. The browser source passes `ageMs` through and computes nothing; the browser clock is never part of an age.
 
-The age compares two clocks, the provider's and the server's, so it carries their difference. The owner's server runs a few seconds ahead of the provider. So a live record has an age of about minus two to minus five seconds. A negative age is fresh.
+The age compares two clocks, the provider's and the server's, so it carries their difference. The owner's server runs two to five seconds ahead of the provider. So a live record has an age of about minus two to minus five seconds. A negative age is fresh.
 
 A guard that needs a non-negative age, or that treats a negative one as unknown, rejects every live reading from that server. No marker ever moves. A test names that broken guard, so it is ruled out.
 
@@ -42,9 +42,9 @@ One hour is a statement about this project's confidence in a position, not about
 
 ### D42 The detail shows the age in words
 
-`formatOshAge(ageMs)` in `src/layers/osh/detail.js` is pure: `12 s`, `5 min`, `3 h`, `6 d`, or `age unknown` for a null or otherwise non-finite age. A negative age reads as `0 s`, not as a negative amount. Each datastream block shows the age beside its time. This holds whether or not that datastream has an observation yet.
+`formatOshAge(ageMs)` in `src/layers/osh/detail.js` is pure: `12 s`, `5 min`, `3 h`, `6 d`, or `age unknown` for a null or otherwise non-finite age. A negative age reads as `0 s`, not as a negative amount. Each datastream block shows the age below its time. This holds whether or not that datastream has an observation yet.
 
-One with none reads `age unknown`, the same words a null `phenomenonTime` gives. A block whose observation is not fresh carries the text `old` and the class `osh-detail-old`. The mark reads as text, in any theme and in a test, not by colour alone.
+One with none reads `age unknown`, the same words a null `phenomenonTime` gives. A block whose observation is not fresh carries the class `osh-detail-old`. A block whose age is a number past the threshold also carries the text `old`. An unknown age never carries that word, because the age is not known to be large. The mark reads as text, in any theme and in a test, not by colour alone.
 
 ### D43 How the gates measure this change
 

@@ -587,7 +587,7 @@ test('[osh-031] a newest result without a location leaves the entity where it wa
 // reading's phenomenonTime lands after the injected "now" and its age comes
 // out negative. A negative age is as fresh as it gets, and motion must not
 // refuse it.
-test('[osh-031] a newest result with a negative ageMs still moves the entity', async () => {
+test('[osh-031] the layer moves the entity from a newest result with a negative ageMs', async () => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],

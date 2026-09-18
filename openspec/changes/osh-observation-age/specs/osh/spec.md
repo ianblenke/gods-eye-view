@@ -69,7 +69,8 @@ Origin: spec-first
 - **THEN** it escapes the characters `<`, `>`, `&` and `"` in every name and value
 - **AND** when the selection came from a feature, the header shows the feature's name above the host's name
 - **AND** the header shows the host's id when the host has no record, or `Host: —` when the feature has no host
-- **AND** each datastream block shows the observation's age beside its time, in words such as `12 s`, `5 min`, `3 h` or `6 d`
+- **AND** each datastream block shows the observation's age below its time, in words such as `12 s`, `5 min`, `3 h` or `6 d`
+- **AND** an `ageMs` below zero reads `0 s`, which is the usual reading from a server whose clock leads
 - **AND** a block whose observation is not fresh carries the class `osh-detail-old`
 - **AND** a block whose age is a number past the threshold also carries the text `old`
 - **AND** a block with `ageMs:null` reads `age unknown`, and never reads `old`, because an unknown age is not a large one
