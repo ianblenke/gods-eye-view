@@ -46,6 +46,16 @@ const FEATURE_NO_HOST = {
   lat: 8,
   alt: 0,
 };
+const FEATURE_NO_NAME = {
+  id: 'foi-fixture-4',
+  uid: 'urn:foi-no-name',
+  systemId: 'sys-fixture-1',
+  name: null,
+  description: null,
+  lon: 11,
+  lat: 12,
+  alt: 0,
+};
 
 function fakeSource({
   systems = [SYSTEM_A, SYSTEM_B],
@@ -724,6 +734,19 @@ test('[osh-045] shows one entity per feature, with a label distance condition, a
   layer.destroy(viewer);
 });
 
+test('[osh-045] a feature with no name gets a point entity and no label', async () => {
+  const source = fakeSource({ fois: [FEATURE_NO_NAME] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-4');
+  assert.ok(entity);
+  assert.equal(entity.label, undefined);
+  layer.destroy(viewer);
+});
+
 test('[osh-045] a click on a feature selects and polls its host, whether or not the host is in the systems list', async () => {
   const source = fakeSource({ systems: [SYSTEM_A], fois: [FEATURE_A, FEATURE_ORPHAN] });
   const layer = createOshLayer({ source });
@@ -1252,6 +1275,63 @@ test('[osh-029] a synchronous throw does not stick: a later, successful update c
   throwSync = false;
   await layer.update(viewer);
   assert.equal(layer.getStats().error, null, 'a later successful update must clear the earlier error');
+  layer.destroy(viewer);
+});
+
+test('[osh-029] a synchronous throw on a superseded update does not overwrite the newer call\'s own error', async () => {
+  // getFois() is called once per update(). Its first call, for the outer
+  // (older) update, synchronously starts a second, reentrant update()
+  // before it throws. That reentrant update makes its own getFois() call
+  // straight away — the second call below — which throws its own,
+  // distinct error and is caught first, entirely inside the first call's
+  // stack, because nothing here is asynchronous. By the time the older
+  // call's own throw reaches its catch, the reentrant call already owns
+  // _request and has aborted the older call's signal — so the older call
+  // is stale, and its throw must not overwrite the reentrant call's
+  // already-recorded error.
+  let reentered = false;
+  let layer;
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
+    },
+    getFois() {
+      if (!reentered) {
+        reentered = true;
+        void layer.update(viewer);
+        throw new Error('the older, now-superseded call throws this');
+      }
+      throw new Error('the newer, current call throws this');
+    },
+  };
+  const { viewer } = fakeViewer();
+  layer = createOshLayer({ source });
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.equal(
+    layer.getStats().error,
+    'the newer, current call throws this',
+    'the superseded call\'s throw must not overwrite the newer call\'s own error',
+  );
+  layer.destroy(viewer);
+});
+
+test('[osh-029] a synchronous throw of a non-Error still sets the fallback error message', async () => {
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
+    },
+    getFois() {
+      throw { not: 'an Error instance' };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.equal(layer.getStats().error, 'OSH source unavailable');
   layer.destroy(viewer);
 });
 
