@@ -173,7 +173,7 @@ test('[osh-022] a non-string phenomenonTime or resultTime becomes null', () => {
   assert.equal(observation.resultTime, null);
 });
 
-test('[osh-050] computes the age as nowMs minus the parsed phenomenonTime', () => {
+test('[osh-050] oshObservationAgeMs() returns nowMs minus the parsed phenomenonTime', () => {
   const nowMs = Date.parse('2026-01-01T00:05:12Z');
   assert.equal(oshObservationAgeMs('2026-01-01T00:05:00Z', nowMs), 12_000);
 });
@@ -189,7 +189,7 @@ test('[osh-050] a phenomenonTime that does not parse gives a null age', () => {
   assert.equal(oshObservationAgeMs('not a time', 1000), null);
 });
 
-test('[osh-050] fresh holds at the threshold and fails one millisecond past it', () => {
+test('[osh-050] isOshObservationFresh() is true at the threshold and false one millisecond past it', () => {
   assert.equal(isOshObservationFresh(OSH_FRESH_MAX_AGE_MS), true);
   assert.equal(isOshObservationFresh(OSH_FRESH_MAX_AGE_MS + 1), false);
 });

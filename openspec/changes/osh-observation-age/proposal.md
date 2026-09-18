@@ -6,7 +6,7 @@ What that query means changed under this project in one day. On the morning of 2
 
 So this change makes age data. The provider states the age of every observation it serves. The panel shows it and says when a record is old. A marker moves only from a fresh record, and the threshold is named in the spec. A record with no readable time has an unknown age, which is not fresh.
 
-The owner's OSH server runs a few seconds ahead of the provider, measured across several live streams on the evening of 2026-09-18. A live reading's age is therefore negative. A negative age is the freshest reading there is. Treating it as unknown, or refusing it, would reject every live reading from that server. No marker would ever move again.
+The owner's OSH server runs two to five seconds ahead of the provider, measured across several live streams on the evening of 2026-09-18. A live reading's age is therefore negative. A negative age is the freshest reading there is. Treating it as unknown, or refusing it, would reject every live reading from that server. No marker would ever move again.
 
 Measured on the evening of 2026-09-18 against the restored database, `resultTime=latest&limit=300` gave the newest records of three hundred distinct nodes. Those records already span more than five days. An old newest record is the normal case for a mesh station, not an error. The panel states an old record without alarm; only motion refuses it.
 
@@ -21,7 +21,7 @@ Measured on the evening of 2026-09-18 against the restored database, `resultTime
 ## Impact
 
 - Changed files, each at 100% coverage after the edit: `src/data/oshObservations.js`, `server/providers/osh.js`, `src/layers/osh/index.js`, `src/layers/osh/detail.js`. `src/layers/osh/source.js` needs no code change; one test confirms the age passes through unchanged.
-- Five changed test files, one for each file above.
+- Five changed test files: one for each file above, and one for `source.js`, which needs no code change.
 - No requirement text changes. Two requirements are MODIFIED for their scenario set only, one requirement gains one ADDED scenario.
 - No change to the request shape, the query, or the fixtures. The age is arithmetic on a record the provider already holds.
 
@@ -34,6 +34,6 @@ Measured on the evening of 2026-09-18 against the restored database, `resultTime
 
 - `osh-query-semantics-unstable`: the meaning of `resultTime=latest` differed between two database states of one server on 2026-09-18, oldest in the morning, newest in the evening, both `200`. This change keeps the query and acts on the age instead. Any later query change must rest on a measurement taken after the last restart of that server.
 - `osh-fresh-threshold-one-hour`: one hour is this project's confidence in a position, not a fact about the server. Most mesh stations never move from an observation under it, because their newest record is often days old. Only the selected system polls. So the visible effect is one marker at most.
-- `osh-age-from-server-clock`: the age compares two clocks and carries their difference. A provider clock that is wrong makes every age wrong by the same amount. On the evening of 2026-09-18 the owner's server ran a few seconds ahead of the reading machine. So a live record has a small negative age. That is why a negative age is fresh, and only a null age is unknown.
+- `osh-age-from-server-clock`: the age compares two clocks and carries their difference. A provider clock that is wrong makes every age wrong by the same amount. On the evening of 2026-09-18 the owner's server ran two to five seconds ahead of the reading machine. So a live record has a small negative age. That is why a negative age is fresh, and only a null age is unknown.
 - `osh-closed-intervals-only`: on the evening of 2026-09-18, against the restored database, an open-ended `phenomenonTime` interval returned zero records as `200`. An explicit end, and an open-ended `resultTime`, both worked. This change sends no interval.
 - `osh-selected-only-motion`: unchanged. Only the selected system's poll can move an entity.
