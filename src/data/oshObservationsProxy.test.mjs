@@ -179,7 +179,7 @@ test('[osh-048] createOshKeyedCache() does not refetch inside the TTL', async ()
   assert.equal(calls, 2);
 });
 
-test('[osh-048] createOshKeyedCache() serves the stale value on a failed refresh, and never throws with a snapshot in hand', async () => {
+test('[osh-048] createOshKeyedCache() serves the stale value on a failed refresh, when an earlier snapshot exists', async () => {
   let now = 0;
   let succeed = true;
   const cache = createOshKeyedCache({

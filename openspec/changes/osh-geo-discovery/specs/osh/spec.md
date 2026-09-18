@@ -10,7 +10,8 @@ Origin: spec-first
 
 #### Scenario: Keep one upstream call site `osh-005`
 - **WHEN** the test discovers every file that matches `server/providers/osh/*.js` and every file that matches `src/data/osh*.js`
-- **AND** it fails when the first set is not four files, or the second set is not five files, its pinned sizes
+- **AND** the test fails when the first set is not four files, or when the second set is not five files
+- **AND** these two counts are pinned
 - **AND** it reads, as text, `server/providers/osh.js`, the discovered files, and `server/providers/common/http.js`
 - **THEN** only `server/providers/osh/get.js` contains a call to `fetch` or `fetchImpl`
 - **AND** `get.js` sets `method: 'GET'` and `redirect: 'manual'` on that call
@@ -56,7 +57,7 @@ Origin: spec-first
 - **AND** a result with neither gives null
 
 #### Scenario: Map a feature-of-interest list to feature records `osh-041`
-- **WHEN** a payload carries a list under `features` or `items`
+- **WHEN** `mapOshFois()` reads a payload with a list under `features` or `items`
 - **THEN** each record keeps `id`, `uid`, `systemId`, `name`, `description`, `validTime`, `lon`, `lat` and `alt`
 - **AND** `systemId` is the last path segment of `hostedProcedure@link.href` only when the segment before it is `systems`, else null
 - **AND** the mapper skips a feature with no string id, with no `Point`, or with a coordinate that is not finite
@@ -123,6 +124,7 @@ Origin: spec-first
 - **THEN** the layer places the systems it has, sets `partial:true`, and sets no `error`
 - **AND** a server with no `Point` and no feature gives `count:0`, `features:0`, `error:null` and `partial:false`
 - **AND** `truncated` is true when the features payload says so
+- **AND** a features getter that resolves `keyRequired:true` alone gives an empty feature list, with `partial:false` and no `error`
 - **AND** an update aborted before the two reads settle draws nothing from them
 
 #### Scenario: Keep every system once seen, because the list samples `osh-049`
@@ -130,7 +132,7 @@ Origin: spec-first
 - **THEN** that system's record and its entity stay, and `getStats().count` does not fall
 - **AND** a selection of that system, and its poll, stay across that refresh
 - **AND** a refresh that names a system again with new fields updates its record in place
-- **AND** only a `keyRequired` answer, `disable()` or `destroy()` empties the system map
+- **AND** only a `keyRequired` answer or `destroy()` empties the system map; `disable()` does not
 - **AND** a feature absent from a refresh is removed, with its entity and any selection of it, because the feature list is stable
 
 ### Requirement: Synthetic fixtures
@@ -166,12 +168,13 @@ Origin: spec-first
 
 #### Scenario: Walk the feature list to its own page cap `osh-044`
 - **WHEN** `oshPages()` walks a list with a `maxPages` option, or with none
-- **THEN** it follows at most `maxPages` pages, with a default of 20, so the systems and the datastreams walks never request a 21st page
+- **THEN** it follows at most `maxPages` pages, with a default of 20
+- **AND** the systems and the datastreams walks pass no `maxPages` value, so neither ever requests a 21st page
 - **AND** the feature walk passes 60, so it never requests a 61st page
 - **AND** the walk answers `{items, truncated}`, with `truncated:true` only when the page at the cap still named a next link
 - **AND** a walk that stops for a refused link, or for no next link, answers `truncated:false`
 
-### Requirement: Feature markers
+### Requirement: Feature entities
 The browser layer MUST show one entity for each feature of interest with a point. It MUST select the feature's host system when a click picks that entity.
 Origin: spec-first
 
@@ -183,7 +186,8 @@ Origin: spec-first
 - **AND** a click on a feature entity sets `selectedFeatureId` to the feature and `selectedId` to its host id
 - **AND** that click starts the host's datastream poll, whether or not the host is in the systems list
 - **AND** a click on a feature with a null host sets `selectedFeatureId`, leaves `selectedId` null, and starts no poll
-- **AND** a click on empty space clears both, and a later refresh that drops the feature clears both
+- **AND** a click on empty space clears `selectedFeatureId` and `selectedId`
+- **AND** a later refresh that drops the feature also clears `selectedFeatureId` and `selectedId`
 - **AND** the layer finds a feature record by id and by uid, and never fetches a feature by id
 - **AND** the detail names the feature and its host
 
@@ -192,7 +196,7 @@ The provider MUST serve the datastreams of one system from the per-system route 
 Origin: spec-first
 
 #### Scenario: Keep the system id to the pattern and the URL to its shape `osh-047`
-- **WHEN** the `system` query value is absent with another key present, empty or repeated
+- **WHEN** the `system` query key is present, with a value that is empty, repeated, or outside the id pattern
 - **AND** the test sends, on its own, one value from the rejection sets of `osh-020`
 - **THEN** the response is `400` with `{error:'bad_system'}`, and the provider sends zero upstream requests
 - **AND** for an accepted id such as `sys-fixture-1`, the built URL origin equals the resolved root's origin

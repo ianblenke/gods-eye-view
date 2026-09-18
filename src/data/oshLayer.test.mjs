@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test, { before, after } from 'node:test';
 import * as Cesium from 'cesium';
-import { createOshLayer } from '../layers/osh/index.js';
+import { FEATURE_LABEL_DISTANCE_METERS, createOshLayer } from '../layers/osh/index.js';
 
 let _originalDocument;
 before(() => {
@@ -252,6 +252,23 @@ test('[osh-029] disable hides the data source, destroy removes it, and disable s
   assert.equal(await layer.update(viewer), false);
   layer.destroy(viewer);
   assert.equal(dataSources.length, 0);
+});
+
+test('[osh-049] disable() does not clear the system union: a keyRequired answer and destroy() are the only ways to empty it', async () => {
+  const source = fakeSource();
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.equal(layer.getStats().count, 2);
+  layer.disable(viewer);
+  assert.equal(layer.getStats().count, 2, 'disable() must not have cleared the union');
+  assert.equal(dataSources[0].entities.values.length, 2, 'disable() only hides the data source, it does not remove entities');
+  layer.enable(viewer);
+  assert.equal(dataSources[0].show, true);
+  assert.equal(dataSources[0].entities.values.length, 2, 'the same union is visible again after re-enabling');
+  layer.destroy(viewer);
 });
 
 test('[osh-029] update does nothing before init and while disabled', async () => {
@@ -555,10 +572,12 @@ test('[osh-031] a newest result without a location leaves the marker where it wa
   layer.destroy(viewer);
 });
 
-test('[osh-049] the system map is a union: an omitted system keeps its entity, selection and poll; a renamed system updates; keyRequired empties the map; an omitted feature goes', async () => {
+test('[osh-049] the system map is a union across refreshes', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
   let systems = [SYSTEM_A, SYSTEM_B];
   let fois = [FEATURE_A];
   let keyRequired = false;
+  const datastreamsCalls = [];
   const source = {
     async getSystems() {
       if (keyRequired) return { keyRequired: true, systems: [], stale: false };
@@ -567,7 +586,8 @@ test('[osh-049] the system map is a union: an omitted system keeps its entity, s
     async getFois() {
       return { keyRequired: false, fois, truncated: false };
     },
-    async getDatastreams() {
+    async getDatastreams({ system } = {}) {
+      datastreamsCalls.push(system);
       return { keyRequired: false, datastreams: [] };
     },
     async getObservation() {
@@ -586,10 +606,11 @@ test('[osh-049] the system map is a union: an omitted system keeps its entity, s
     getClick()({ position: {} });
     await flush();
     assert.equal(layer.getStats().selectedId, 'sys-fixture-1');
+    const callsBeforeOmission = datastreamsCalls.length;
 
     // Refresh #2: the systems list omits sys-fixture-1 (the list samples).
-    // The union keeps it, count does not fall, and the selection and its
-    // poll stay. The feature list also drops FEATURE_A, and it must go.
+    // The union keeps it, count does not fall, and the selection stays.
+    // The feature list also drops FEATURE_A, and it must go.
     systems = [SYSTEM_B];
     fois = [];
     await layer.update(viewer);
@@ -604,6 +625,14 @@ test('[osh-049] the system map is a union: an omitted system keeps its entity, s
       dataSources[0].entities.getById('osh-foi:foi-fixture-1'),
       undefined,
       'the dropped feature loses its entity',
+    );
+
+    // The poll of the omitted, still-selected system must keep running.
+    t.mock.timers.tick(15_000);
+    await flush();
+    assert.ok(
+      datastreamsCalls.length > callsBeforeOmission,
+      'the poll of the omitted system must still be running',
     );
 
     // Refresh #3: sys-fixture-1 reappears with a new name; its record updates in place.
@@ -628,6 +657,56 @@ test('[osh-049] the system map is a union: an omitted system keeps its entity, s
   layer.destroy(viewer);
 });
 
+test('[osh-049] a selected feature dropped from the next refresh clears the feature and its host, and stops the poll', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  let fois = [FEATURE_A];
+  const datastreamsCalls = [];
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois, truncated: false };
+    },
+    async getDatastreams({ system } = {}) {
+      datastreamsCalls.push(system);
+      return { keyRequired: false, datastreams: [] };
+    },
+    async getObservation() {
+      return { keyRequired: false, observation: null };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh-foi:foi-fixture-1');
+    getClick()({ position: {} });
+    await flush();
+    assert.equal(layer.getStats().selectedFeatureId, 'foi-fixture-1');
+    assert.equal(layer.getStats().selectedId, 'sys-fixture-1');
+    assert.equal(datastreamsCalls.length, 1);
+
+    fois = [];
+    await layer.update(viewer);
+    assert.equal(layer.getStats().selectedFeatureId, null, 'the dropped feature clears its own selection');
+    assert.equal(layer.getStats().selectedId, null, 'and clears its host selection too');
+
+    const callsBeforeTick = datastreamsCalls.length;
+    t.mock.timers.tick(15_000);
+    await flush();
+    assert.equal(
+      datastreamsCalls.length,
+      callsBeforeTick,
+      'the poll of the dropped feature\'s host must have stopped',
+    );
+  });
+  layer.destroy(viewer);
+});
+
 test('[osh-045] shows one entity per feature, with a label distance condition, and getStats().features counts them', async () => {
   const source = fakeSource({ fois: [FEATURE_A, FEATURE_NO_HOST] });
   const layer = createOshLayer({ source });
@@ -638,12 +717,14 @@ test('[osh-045] shows one entity per feature, with a label distance condition, a
   const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-1');
   assert.ok(entity);
   assert.equal(entity.label.text.getValue(Cesium.JulianDate.now()), 'Feature A');
-  assert.ok(entity.label.distanceDisplayCondition, 'a feature label must carry a distance condition');
+  const condition = entity.label.distanceDisplayCondition.getValue(Cesium.JulianDate.now());
+  assert.equal(condition.near, 0);
+  assert.equal(condition.far, FEATURE_LABEL_DISTANCE_METERS);
   assert.equal(layer.getStats().features, 2);
   layer.destroy(viewer);
 });
 
-test('[osh-045] a click on a feature selects the feature and its host, and starts the host poll, even when the host is not in the systems list', async () => {
+test('[osh-045] a click on a feature selects and polls its host, whether or not the host is in the systems list', async () => {
   const source = fakeSource({ systems: [SYSTEM_A], fois: [FEATURE_A, FEATURE_ORPHAN] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
@@ -717,7 +798,7 @@ test('[osh-045] finds a feature record by id and by uid, with no per-feature fet
   layer.destroy(viewer);
 });
 
-test('[osh-045] a click on a picked feature id that is no longer in the feature map selects it with no host and no name', async () => {
+test('[osh-045] a click on a stale feature entity selects that feature id, with no host and no name', async () => {
   const source = fakeSource({ fois: [] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
@@ -1125,6 +1206,52 @@ test('[osh-029] a superseded update that throws a real error still lets the newe
   assert.equal(secondResult, true);
   assert.equal(layer.getStats().error, null, 'the superseded failure must not overwrite the newer result');
   assert.equal(dataSources[0].entities.values.length, 2);
+  layer.destroy(viewer);
+});
+
+test('[osh-029] a source whose features getter throws synchronously, not a rejected promise, still sets the error', async () => {
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
+    },
+    getFois() {
+      // Not async: this throws while the update's argument array is built,
+      // before Promise.allSettled ever runs — the update's catch, not its
+      // rejected-getter branch, must handle this.
+      throw new Error('fois threw synchronously');
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  const updated = await layer.update(viewer);
+  assert.equal(updated, false);
+  assert.equal(layer.getStats().error, 'fois threw synchronously');
+  assert.equal(layer.getStats().partial, false);
+  layer.destroy(viewer);
+});
+
+test('[osh-029] a synchronous throw does not stick: a later, successful update clears the error', async () => {
+  let throwSync = true;
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
+    },
+    getFois() {
+      if (throwSync) throw new Error('fois threw synchronously');
+      return Promise.resolve({ keyRequired: false, fois: [], truncated: false });
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.equal(layer.getStats().error, 'fois threw synchronously');
+  throwSync = false;
+  await layer.update(viewer);
+  assert.equal(layer.getStats().error, null, 'a later successful update must clear the earlier error');
   layer.destroy(viewer);
 });
 

@@ -110,7 +110,7 @@
 | Synthetic fixtures | `osh-034` | MODIFIED | the feature fixture, its id prefix, the test-file count off the directory |
 | Features of interest | `osh-043` | ADDED | the route, its cache, its recorded GETs |
 | Features of interest | `osh-044` | ADDED | the page cap option and its truncated answer |
-| Feature markers | `osh-045` | ADDED | feature entities, selection, the uid map |
+| Feature entities | `osh-045` | ADDED | feature entities, selection, the uid map |
 | Datastreams of one system | `osh-047` | ADDED | the system-id boundary |
 | Datastreams of one system | `osh-048` | ADDED | the per-system route and cache |
 

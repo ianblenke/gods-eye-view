@@ -1,18 +1,18 @@
 ## Why
 
-The layer reads `/systems` and keeps a marker only for a system with a top-level `Point`. Almost no system carries one, so the layer draws almost nothing.
+The layer reads `/systems` and keeps an entity only for a system with a top-level `Point`. A system with a top-level `Point` is rare on the owner's server, so the layer draws almost nothing.
 
-The places the owner wants are feature markers. These are nodes of a mesh. Each node is a feature of interest with a `Point`. One system hosts each node, through a link. A client that reads only `/systems` never sees a node.
+The places the owner wants are feature entities. These are the nodes of a mesh. Each node is a feature of interest with a `Point`. One system hosts each feature, through a link. A client that reads only `/systems` never sees a feature.
 
 A client reaches a feature only through the feature list. The server refuses a feature fetched by id with a redirect.
 
-The systems list also samples. Two full walks of it share few ids. A walk can repeat one of its own items. A layer that treats an absent system as gone loses and regains markers, with nothing changed on the server. The feature list has no such fault. Two full walks give the same ids, none repeated.
+The systems list also samples. A walk of the systems list returns a different, arbitrary subset each time. A walk can repeat one of its own items. A layer that treats an absent system as gone loses and regains entities, with nothing changed on the server. The feature list has no such fault. Two full walks give the same ids, none repeated.
 
-A marker must open something. The datastream poll of a selected system today walks a global list to a cap, then filters it. A system whose datastreams sit past that cap gets an empty panel. The server has a route for the datastreams of one system. This change reads the selected system through that route instead.
+A click on an entity must show the datastreams of its host system. The datastream poll of a selected system today walks a global list to a cap, then filters it. A system whose datastreams sit past that cap gets an empty panel. The server has a route for the datastreams of one system. This change reads the selected system through that route instead.
 
-This change reads the feature list. It draws one marker per feature. It ties each feature to its host, for the detail and the poll. It keeps every system once seen, instead of rebuilding the set from each refresh.
+This change reads the feature list. It draws one entity per feature. It ties each feature to its host, for the detail and the poll. It keeps every system once seen, instead of rebuilding the set from each refresh.
 
-It reads no datastream schema. It moves no marker from an observation. A later change adds that.
+It reads no datastream schema. It moves no entity from an observation. A later change reads the datastream schema and moves an entity from an observation's location.
 
 ## What Changes
 
@@ -40,21 +40,21 @@ It reads no datastream schema. It moves no marker from an observation. A later c
 
 ## Known limits closed
 
-- `osh-point-only`: closed. The layer reads the systems and the features. A node with only a feature geometry now draws.
+- `osh-point-only`: closed. The layer reads the systems and the features. A feature with only its own geometry now draws.
 
 ## Known limits left open
 
 - `osh-latest-is-oldest`: the shipped observation query returns the oldest stored record on a server with a long history, not the newest. A later change replaces the query with a time window.
 - `osh-location-keys-inferred`: the guessed result keys for a location stay unchanged in this change. A later change reads the datastream schema instead.
-- `osh-selected-only-motion`: only the selected system's poll can move a marker.
+- `osh-selected-only-motion`: only the selected system's poll can move an entity.
 - `osh-no-live-test`: no test proves the server accepts the feature walk. Every fixture is synthetic.
-- `osh-systems-list-samples`: the systems list has no stable order and no stable membership between walks. The union rule in this change keeps every system once seen, so the marker set can only grow inside one session. A feature marker is not a sample. The feature list is stable, and each record resolves its host by id.
+- `osh-systems-list-samples`: the systems list has no stable order and no stable membership between walks. The union rule in this change keeps every system once seen, so the system entity set can only grow inside one session. A feature entity is not a sample. The feature list is stable, and each record resolves its host by id.
 - `osh-system-records-accumulate`: the system union has no eviction. A long session holds a growing set of small records. A reload empties it.
 - `osh-datastream-list-partial`: the global datastreams walk still stops at its page cap. The selected system's poll no longer reads that list, so the cap no longer touches it. The cap still applies wherever a later change surveys datastreams across every system.
 - `osh-system-id-pattern-shared`: a system id must match the datastream id pattern to reach the per-system route. A host id outside the pattern gives a feature with no host and no poll, never a `400` from a click.
 - `osh-foi-by-id-redirects`: the server answers a redirect for a feature fetched by id. This provider refuses a redirect by design. A client reaches a feature only through the list.
 - `osh-foi-walk-cap`: the feature walk stops at its own page cap, wider than the systems and datastreams caps. The route and the layer report a loss at that cap.
 - `osh-walk-not-a-snapshot`: a page walk of a list is not one atomic snapshot. A walk can serve one item twice. Both adapters keep the first record of a repeated id.
-- `osh-node-info-not-read`: a node's own descriptive stream, if it has one, is not read for the marker. A feature marker shows only the feature's own name.
-- `osh-cold-start-latency`: on a cold cache the feature walk can run many sequential pages before the layer draws its first marker.
+- `osh-node-info-not-read`: the layer does not read a feature's descriptive datastream. A feature entity shows only the feature's own name.
+- `osh-cold-start-latency`: on a cold cache the feature walk can run many sequential pages before the layer draws its first feature entity.
 - `osh-feature-labels-near-only`: a feature label shows only within 200 km, so a distant view shows unlabeled points.

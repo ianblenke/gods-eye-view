@@ -4,14 +4,14 @@
  * page walk, and by the browser layer, which places each record with
  * placeOshEntities() below.
  *
- * Accepts a GeoJSON FeatureCollection (`features`) or a plain list
- * (`items`). Keeps a record for every feature with a string id, and keeps
- * the first record of a repeated id, because one walk can serve a system
- * twice. A feature with no Point geometry, or with a coordinate that is not
- * finite, keeps a record with `lon`, `lat` and `alt` null: a gateway system
- * with no geometry still needs its name for the detail of every node it
- * hosts. Every other field is optional, so a missing property becomes null
- * instead of a thrown error.
+ * `mapOshSystems()` reads a GeoJSON `FeatureCollection` (`features`) or a
+ * plain list (`items`). It keeps a record for every entry with a string id,
+ * and keeps the first record of a repeated id, because one walk can serve a
+ * system twice. An entry with no Point geometry, or with a coordinate that
+ * is not finite, keeps a record with `lon`, `lat` and `alt` null: a host
+ * system with no geometry still needs its name for the detail of every
+ * feature it hosts. Every other field is optional, so a missing property
+ * becomes null instead of a thrown error.
  */
 
 function finiteNumber(value) {
