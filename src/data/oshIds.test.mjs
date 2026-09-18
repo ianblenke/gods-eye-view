@@ -2,14 +2,22 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   OSH_ID_PATTERN,
+  OSH_LATEST_LIMIT,
+  OSH_LATEST_QUERY,
   OSH_OBSERVATIONS_QUERY,
   OSH_SYSTEM_DATASTREAMS_QUERY,
   assertObservationUrl,
+  assertObservationsLatestUrl,
+  assertSchemaUrl,
   assertSystemDatastreamsUrl,
+  assertSystemUrl,
   observationUrl,
+  observationsLatestUrl,
   readDatastreamId,
   readSystemId,
+  schemaUrl,
   systemDatastreamsUrl,
+  systemUrl,
 } from '../../server/providers/osh/ids.js';
 
 function paramsFor(rawQuery) {
@@ -158,4 +166,119 @@ test('[osh-047] assertSystemDatastreamsUrl() throws for another origin, prefix, 
   const withHash = new URL(goodUrl.href);
   withHash.hash = 'f';
   assert.throws(() => assertSystemDatastreamsUrl(withHash, root, id));
+});
+
+test('[osh-053] schemaUrl() and systemUrl() build fixed URLs with an empty query', () => {
+  const root = new URL('https://osh.example/api/');
+
+  const dsId = 'ds-fixture-1';
+  const schema = schemaUrl(root, dsId);
+  assert.equal(schema.origin, root.origin);
+  assert.equal(schema.pathname, `${root.pathname}datastreams/${dsId}/schema`);
+  assert.equal(schema.search, '');
+  assert.doesNotThrow(() => assertSchemaUrl(schema, root, dsId));
+
+  const sysId = 'sys-fixture-1';
+  const system = systemUrl(root, sysId);
+  assert.equal(system.origin, root.origin);
+  assert.equal(system.pathname, `${root.pathname}systems/${sysId}`);
+  assert.equal(system.search, '');
+  assert.doesNotThrow(() => assertSystemUrl(system, root, sysId));
+});
+
+test('[osh-053] assertSchemaUrl() and assertSystemUrl() throw for another origin, prefix, segment or query', () => {
+  const root = new URL('https://osh.example/api/');
+  const dsId = 'ds-fixture-1';
+  const sysId = 'sys-fixture-1';
+
+  const goodSchema = schemaUrl(root, dsId);
+  const otherOriginSchema = new URL(goodSchema.href);
+  otherOriginSchema.host = 'attacker.example';
+  assert.throws(() => assertSchemaUrl(otherOriginSchema, root, dsId));
+  assert.throws(() =>
+    assertSchemaUrl(
+      new URL(`https://osh.example/other/datastreams/${dsId}/schema`),
+      root,
+      dsId,
+    ),
+  );
+  assert.throws(() =>
+    assertSchemaUrl(
+      new URL(`https://osh.example/api/datastreams/${dsId}/schema/extra`),
+      root,
+      dsId,
+    ),
+  );
+  assert.throws(() =>
+    assertSchemaUrl(new URL(`https://osh.example/api/datastreams/${dsId}/schema?limit=1`), root, dsId),
+  );
+
+  const goodSystem = systemUrl(root, sysId);
+  const otherOriginSystem = new URL(goodSystem.href);
+  otherOriginSystem.host = 'attacker.example';
+  assert.throws(() => assertSystemUrl(otherOriginSystem, root, sysId));
+  assert.throws(() =>
+    assertSystemUrl(new URL(`https://osh.example/other/systems/${sysId}`), root, sysId),
+  );
+  assert.throws(() =>
+    assertSystemUrl(new URL(`https://osh.example/api/systems/${sysId}/datastreams`), root, sysId),
+  );
+  assert.throws(() =>
+    assertSystemUrl(new URL(`https://osh.example/api/systems/${sysId}?limit=1`), root, sysId),
+  );
+});
+
+test('[osh-053] the schema and system URL pairs are the only functions the route may call — no argument replaces either', () => {
+  // schemaUrl/assertSchemaUrl and systemUrl/assertSystemUrl take no
+  // function argument at all: there is no seam for a caller to swap in a
+  // different builder or checker, so this is a static fact of the
+  // signatures rather than a runtime assertion.
+  assert.equal(schemaUrl.length, 2);
+  assert.equal(assertSchemaUrl.length, 3);
+  assert.equal(systemUrl.length, 2);
+  assert.equal(assertSystemUrl.length, 3);
+});
+
+test('[osh-054] observationsLatestUrl() builds the fixed newest-per-feature URL', () => {
+  const root = new URL('https://osh.example/api/');
+  const id = 'ds-fixture-1';
+  assert.equal(OSH_LATEST_LIMIT, 300);
+  assert.equal(OSH_LATEST_QUERY, 'limit=300&resultTime=latest');
+  const url = observationsLatestUrl(root, id);
+  assert.equal(url.origin, root.origin);
+  assert.equal(url.pathname, `${root.pathname}datastreams/${id}/observations`);
+  assert.equal(url.search, `?${OSH_LATEST_QUERY}`);
+  assert.doesNotThrow(() => assertObservationsLatestUrl(url, root, id));
+});
+
+test('[osh-054] assertObservationsLatestUrl() throws for another origin, prefix, segment or query', () => {
+  const root = new URL('https://osh.example/api/');
+  const id = 'ds-fixture-1';
+  const goodUrl = observationsLatestUrl(root, id);
+
+  const otherOrigin = new URL(goodUrl.href);
+  otherOrigin.host = 'attacker.example';
+  assert.throws(() => assertObservationsLatestUrl(otherOrigin, root, id));
+
+  assert.throws(() =>
+    assertObservationsLatestUrl(
+      new URL(`https://osh.example/other/datastreams/${id}/observations?${OSH_LATEST_QUERY}`),
+      root,
+      id,
+    ),
+  );
+  assert.throws(() =>
+    assertObservationsLatestUrl(
+      new URL(`https://osh.example/api/datastreams/${id}/observations/extra?${OSH_LATEST_QUERY}`),
+      root,
+      id,
+    ),
+  );
+  assert.throws(() =>
+    assertObservationsLatestUrl(
+      new URL(`https://osh.example/api/datastreams/${id}/observations?limit=1`),
+      root,
+      id,
+    ),
+  );
 });
