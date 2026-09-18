@@ -81,10 +81,10 @@
 
 ## 6. Gates and review
 
-- [ ] 6.1 Run the lint gate until no STE error remains.
-- [ ] 6.2 Run the ratchet gate for this change.
-- [ ] 6.3 Run the coverage gate for this change. Confirm every OSH file stays at 100%.
-- [ ] 6.4 Run the review agents. Record the result in `review.md`.
+- [x] 6.1 Run the lint gate until no STE error remains.
+- [x] 6.2 Run the ratchet gate for this change.
+- [x] 6.3 Run the coverage gate for this change. Confirm every OSH file stays at 100%.
+- [x] 6.4 Run the review agents. Record the result in `review.md`.
 
 ## Scenario ledger
 
