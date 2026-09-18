@@ -25,6 +25,11 @@ test('[osh-028] reports key required on the systems, datastreams, fois and obser
     keyRequired: true,
     observation: null,
   });
+  assert.deepEqual(await source.getLocations(), {
+    keyRequired: true,
+    locations: [],
+    failed: 0,
+  });
 });
 
 test('[osh-028] a 503 with another error body still throws', async () => {
@@ -53,6 +58,7 @@ test('[osh-028] another non-ok status throws', async () => {
   await assert.rejects(source.getDatastreams(), /OSH HTTP 502/);
   await assert.rejects(source.getFois(), /OSH HTTP 502/);
   await assert.rejects(source.getObservation('ds-fixture-1'), /OSH HTTP 502/);
+  await assert.rejects(source.getLocations(), /OSH HTTP 502/);
 });
 
 test('[osh-028] a payload without the expected array throws', async () => {
@@ -61,6 +67,31 @@ test('[osh-028] a payload without the expected array throws', async () => {
   await assert.rejects(source.getDatastreams(), /Malformed OSH datastreams payload/);
   await assert.rejects(source.getFois(), /Malformed OSH fois payload/);
   await assert.rejects(source.getObservation('ds-fixture-1'), /Malformed OSH observation payload/);
+  await assert.rejects(source.getLocations(), /Malformed OSH locations payload/);
+});
+
+test('[osh-028] the locations getter passes locations and failed through, and sends no query', async () => {
+  let observedPath;
+  const source = createOshSource({
+    fetchImpl: async (path) => {
+      observedPath = path;
+      return jsonResponse(200, { locations: [{ systemId: 'sys-fixture-1' }], failed: 2 });
+    },
+  });
+  const result = await source.getLocations();
+  assert.equal(observedPath, '/api/osh/locations', 'the locations getter sends no query');
+  assert.deepEqual(result, {
+    keyRequired: false,
+    locations: [{ systemId: 'sys-fixture-1' }],
+    failed: 2,
+  });
+});
+
+test('[osh-028] the locations getter defaults failed to 0 when the payload omits it', async () => {
+  const source = createOshSource({
+    fetchImpl: async () => jsonResponse(200, { locations: [] }),
+  });
+  assert.equal((await source.getLocations()).failed, 0);
 });
 
 test('[osh-028] returns the systems and datastreams records unchanged', async () => {
