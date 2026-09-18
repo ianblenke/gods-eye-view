@@ -1,0 +1,44 @@
+{
+  "resultSchema": {
+    "type": "DataRecord",
+    "label": "Position",
+    "fields": [
+      {
+        "type": "Time",
+        "name": "time",
+        "definition": "http://www.opengis.net/def/property/OGC/0/SamplingTime"
+      },
+      {
+        "type": "Vector",
+        "name": "location",
+        "definition": "http://www.opengis.net/def/property/OGC/0/SensorLocation",
+        "referenceFrame": "http://www.opengis.net/def/crs/EPSG/0/4979",
+        "coordinates": [
+          {
+            "type": "Quantity",
+            "name": "lat",
+            "axisID": "Lat",
+            "uom": { "code": "deg" }
+          },
+          {
+            "type": "Quantity",
+            "name": "lon",
+            "axisID": "Lon",
+            "uom": { "code": "deg" }
+          },
+          {
+            "type": "Quantity",
+            "name": "h",
+            "axisID": "h",
+            "uom": { "code": "m" }
+          }
+        ]
+      },
+      {
+        "type": "Text",
+        "name": "featureUid",
+        "definition": "urn:osh:def:fixture:position:3.0.0#samplingFeatureUid"
+      }
+    ]
+  }
+}
