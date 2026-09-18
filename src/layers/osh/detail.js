@@ -3,6 +3,37 @@
  * block per datastream with its newest result as key/value rows.
  */
 
+import { isOshObservationFresh } from '../../data/oshObservations.js';
+
+const AGE_SECOND_MS = 1000;
+const AGE_MINUTE_MS = 60 * AGE_SECOND_MS;
+const AGE_HOUR_MS = 60 * AGE_MINUTE_MS;
+const AGE_DAY_MS = 24 * AGE_HOUR_MS;
+
+/**
+ * The age in words: `12 s`, `5 min`, `3 h`, `6 d`. `age unknown` for a null
+ * or otherwise non-finite age. A negative age — the record's own time is
+ * ahead of the provider's clock — reads as `0 s`, not as a negative amount.
+ * @param {*} ageMs
+ * @returns {string}
+ */
+export function formatOshAge(ageMs) {
+  if (!Number.isFinite(ageMs)) return 'age unknown';
+  const clamped = ageMs < 0 ? 0 : ageMs;
+  if (clamped < AGE_MINUTE_MS) return `${Math.round(clamped / AGE_SECOND_MS)} s`;
+  if (clamped < AGE_HOUR_MS) return `${Math.round(clamped / AGE_MINUTE_MS)} min`;
+  if (clamped < AGE_DAY_MS) return `${Math.round(clamped / AGE_HOUR_MS)} h`;
+  return `${Math.round(clamped / AGE_DAY_MS)} d`;
+}
+
+function renderAge(ageMs) {
+  const text = formatOshAge(ageMs);
+  if (isOshObservationFresh(ageMs)) {
+    return `<div class="osh-detail-age">${escapeHtml(text)}</div>`;
+  }
+  return `<div class="osh-detail-age osh-detail-old">${escapeHtml(text)} old</div>`;
+}
+
 function escapeHtml(value) {
   return String(value ?? '')
     .replace(/&/g, '&amp;')
@@ -24,11 +55,13 @@ function renderRows(rows) {
 }
 
 function renderDatastream(datastream) {
-  const rows = datastream.observation?.rows;
-  const time = datastream.observation?.resultTime;
+  const observation = datastream.observation;
+  const rows = observation?.rows;
+  const time = observation?.resultTime;
   return `<div class="osh-detail-datastream">
     <h4>${escapeHtml(datastream.name || datastream.id)}</h4>
     <div class="osh-detail-time">${time ? escapeHtml(time) : '—'}</div>
+    ${renderAge(observation ? (observation.ageMs ?? null) : null)}
     ${renderRows(rows)}
   </div>`;
 }
