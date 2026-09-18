@@ -16,6 +16,7 @@ const PROVIDER_FILES = [
   'server/providers/osh/observations.js',
   'src/data/oshSystems.js',
   'src/data/oshDatastreams.js',
+  'src/data/oshFois.js',
   'src/data/oshObservations.js',
   'src/data/osh.js',
   'src/layers/osh/index.js',
@@ -49,6 +50,7 @@ function oshTestFiles() {
 const SYSTEM_AND_DATASTREAM_FIXTURE_FILES = [
   'src/data/fixtures/osh-systems.json',
   'src/data/fixtures/osh-datastreams.json',
+  'src/data/fixtures/osh-fois.json',
 ];
 
 /** True for a synthetic fixture host: localhost, or a reserved *.example domain (RFC 2606). */
@@ -157,7 +159,7 @@ test('[osh-034] no OSH test file has a real address', () => {
   const files = oshTestFiles();
   assert.equal(
     files.length,
-    13,
+    14,
     'the discovered OSH test file count changed; update this number and check the new file too',
   );
   for (const file of files) {
@@ -165,7 +167,7 @@ test('[osh-034] no OSH test file has a real address', () => {
   }
 });
 
-test('[osh-034] every system and datastream fixture id starts with sys-fixture- or ds-fixture-', () => {
+test('[osh-034] every system, datastream and feature fixture id starts with sys-fixture-, ds-fixture- or foi-fixture-', () => {
   for (const relative of SYSTEM_AND_DATASTREAM_FIXTURE_FILES) {
     const payload = JSON.parse(readFileSync(repoPath(relative), 'utf8'));
     const ids = [];
@@ -174,7 +176,7 @@ test('[osh-034] every system and datastream fixture id starts with sys-fixture- 
     assert.ok(ids.length > 0, `${relative} has no ids to check`);
     for (const id of ids) {
       assert.ok(
-        id.startsWith('sys-fixture-') || id.startsWith('ds-fixture-'),
+        id.startsWith('sys-fixture-') || id.startsWith('ds-fixture-') || id.startsWith('foi-fixture-'),
         `${relative} has a fixture id that is not synthetic: ${id}`,
       );
     }

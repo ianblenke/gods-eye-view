@@ -3,15 +3,24 @@ import { OSH_LIST_FORMAT, oshListUrl, oshPages } from './osh/get.js';
 import { baseErrorCode, createOshBase } from './osh/base.js';
 import {
   assertObservationUrl,
+  assertSystemDatastreamsUrl,
   observationUrl,
   readDatastreamId,
+  readSystemId,
+  systemDatastreamsUrl,
 } from './osh/ids.js';
-import { OBS_TTL_MS, createOshObservationsCache } from './osh/observations.js';
+import {
+  OBS_TTL_MS,
+  createOshObservationsCache,
+  createOshSystemDatastreamsCache,
+} from './osh/observations.js';
 import { mapOshSystems } from '../../src/data/oshSystems.js';
 import { mapOshDatastreams } from '../../src/data/oshDatastreams.js';
+import { mapOshFois } from '../../src/data/oshFois.js';
 
 /**
- * OpenSensorHub systems, datastreams and newest-observation proxy.
+ * OpenSensorHub systems, datastreams, features-of-interest and
+ * newest-observation proxy.
  *
  * The account behind OSH_URL/OSH_USERNAME/OSH_PASSWORD has create and
  * delete rights on a real server, so every upstream call goes through
@@ -20,9 +29,11 @@ import { mapOshDatastreams } from '../../src/data/oshDatastreams.js';
  * fixed candidate list (osh/base.js) with GET probes only.
  *
  * Routes:
- *   GET /api/osh/status       → {hasKey, base, systems, datastreams, observations, ttlMs}
+ *   GET /api/osh/status       → {hasKey, base, systems, datastreams, fois, observations, ttlMs}
  *   GET /api/osh/systems      → {fetchedAt, stale, ttlMs, count, systems}
  *   GET /api/osh/datastreams  → {fetchedAt, stale, ttlMs, count, datastreams}
+ *   GET /api/osh/datastreams?system=<id> → {system, fetchedAt, stale, ttlMs, count, datastreams}
+ *   GET /api/osh/fois          → {fetchedAt, stale, ttlMs, count, truncated, fois}
  *   GET /api/osh/observations?datastream=<id> → {datastream, fetchedAt, stale, ttlMs, observation}
  *
  * Keyless (no OSH_URL, or a value that does not parse as a URL): every
@@ -33,6 +44,8 @@ import { mapOshDatastreams } from '../../src/data/oshDatastreams.js';
  */
 
 export const OSH_LIST_TTL_MS = 5 * 60_000;
+/** The feature-of-interest walk needs more pages than the other two lists. */
+export const OSH_FOI_MAX_PAGES = 60;
 
 function listOfSystems(payload) {
   if (Array.isArray(payload?.features)) return payload.features;
@@ -75,6 +88,52 @@ function createOshListCache({ ttlMs, now }) {
   return { load, status };
 }
 
+/**
+ * A memory cache for the feature-of-interest route: the same shape as
+ * createOshListCache(), plus the `truncated` flag of the walk that filled
+ * the snapshot, so a loss at the feature walk's own page cap is never
+ * silent (see design decision D30).
+ */
+function createOshFoisCache({ ttlMs, now }) {
+  let entry = null;
+  const inFlight = new Map();
+
+  async function load(refresh) {
+    const nowMs = now();
+    if (entry && nowMs - entry.at < ttlMs) {
+      return {
+        records: entry.records,
+        truncated: entry.truncated,
+        stale: false,
+        fetchedAt: entry.at,
+      };
+    }
+    const { promise } = coalesceProxyRequest(inFlight, 'list', refresh);
+    try {
+      const { records, truncated } = await promise;
+      entry = { at: now(), records, truncated };
+      return { records, truncated, stale: false, fetchedAt: entry.at };
+    } catch (error) {
+      if (entry)
+        return {
+          records: entry.records,
+          truncated: entry.truncated,
+          stale: true,
+          fetchedAt: entry.at,
+          error,
+        };
+      throw error;
+    }
+  }
+
+  function status() {
+    if (!entry) return { lastFetch: null, count: null, stale: false };
+    return { lastFetch: entry.at, count: entry.records.length, stale: now() - entry.at >= ttlMs };
+  }
+
+  return { load, status };
+}
+
 export function oshProxy({
   env = process.env,
   fetchImpl = globalThis.fetch,
@@ -84,7 +143,13 @@ export function oshProxy({
   const base = createOshBase({ fetchImpl, now });
   const systemsCache = createOshListCache({ ttlMs: OSH_LIST_TTL_MS, now });
   const datastreamsCache = createOshListCache({ ttlMs: OSH_LIST_TTL_MS, now });
+  const foisCache = createOshFoisCache({ ttlMs: OSH_LIST_TTL_MS, now });
   const observationsCache = createOshObservationsCache({ fetchImpl, now });
+  const systemDatastreamsCache = createOshSystemDatastreamsCache({
+    fetchImpl,
+    now,
+    ttlMs: OSH_LIST_TTL_MS,
+  });
 
   function credentials() {
     const rawUrl = String(env.OSH_URL || '').trim();
@@ -107,20 +172,30 @@ export function oshProxy({
 
   async function fetchSystemsUpstream(root, headers) {
     const firstUrl = oshListUrl(root, 'systems', { limit: '100', f: OSH_LIST_FORMAT });
-    const raw = await oshPages(fetchImpl, root, firstUrl, {
+    const { items } = await oshPages(fetchImpl, root, firstUrl, {
       headers,
       listOf: listOfSystems,
     });
-    return mapOshSystems({ features: raw });
+    return mapOshSystems({ features: items });
   }
 
   async function fetchDatastreamsUpstream(root, headers) {
     const firstUrl = oshListUrl(root, 'datastreams', { limit: '100' });
-    const raw = await oshPages(fetchImpl, root, firstUrl, {
+    const { items } = await oshPages(fetchImpl, root, firstUrl, {
       headers,
       listOf: listOfDatastreams,
     });
-    return mapOshDatastreams({ items: raw });
+    return mapOshDatastreams({ items });
+  }
+
+  async function fetchFoisUpstream(root, headers) {
+    const firstUrl = oshListUrl(root, 'fois', { limit: '200', f: OSH_LIST_FORMAT });
+    const { items, truncated } = await oshPages(fetchImpl, root, firstUrl, {
+      headers,
+      listOf: listOfSystems,
+      maxPages: OSH_FOI_MAX_PAGES,
+    });
+    return { records: mapOshFois({ features: items }), truncated };
   }
 
   const installMiddleware = (server) => {
@@ -153,7 +228,9 @@ export function oshProxy({
               base: { candidate: null, failures: [], probedAt: null },
               systems: { lastFetch: null, count: null, stale: false },
               datastreams: { lastFetch: null, count: null, stale: false },
+              fois: { lastFetch: null, count: null, stale: false },
               observations: { cached: 0 },
+              datastreamsBySystem: { cached: 0 },
               ttlMs: OSH_LIST_TTL_MS,
             });
             return;
@@ -168,7 +245,9 @@ export function oshProxy({
             },
             systems: systemsCache.status(),
             datastreams: datastreamsCache.status(),
+            fois: foisCache.status(),
             observations: { cached: observationsCache.size() },
+            datastreamsBySystem: { cached: systemDatastreamsCache.size() },
             ttlMs: OSH_LIST_TTL_MS,
           });
           return;
@@ -176,6 +255,40 @@ export function oshProxy({
 
         if (!configuredUrl) {
           sendJson(503, { error: 'no_key' });
+          return;
+        }
+
+        const requestUrl = new URL(req.url, 'http://localhost');
+
+        if (subPath === '/datastreams' && requestUrl.searchParams.has('system')) {
+          const id = readSystemId(requestUrl.searchParams);
+          if (!id) {
+            sendJson(400, { error: 'bad_system' });
+            return;
+          }
+          const state = await base.resolveRoot(configuredUrl, headers);
+          if (!state.root) {
+            sendJson(502, { error: baseErrorCode(state.failures) });
+            return;
+          }
+          // No injectable seam here: systemDatastreamsUrl() and
+          // assertSystemDatastreamsUrl() are the fixed imports from
+          // ids.js, mirroring the observation route below.
+          const target = systemDatastreamsUrl(state.root, id);
+          assertSystemDatastreamsUrl(target, state.root, id);
+          try {
+            const result = await systemDatastreamsCache.get(id, state.root, target, headers);
+            sendJson(200, {
+              system: id,
+              fetchedAt: result.fetchedAt,
+              stale: result.stale,
+              ttlMs: OSH_LIST_TTL_MS,
+              count: result.datastreams.length,
+              datastreams: result.datastreams,
+            });
+          } catch {
+            sendJson(502, { error: 'upstream_failed' });
+          }
           return;
         }
 
@@ -206,8 +319,31 @@ export function oshProxy({
           return;
         }
 
+        if (subPath === '/fois') {
+          const state = await base.resolveRoot(configuredUrl, headers);
+          if (!state.root) {
+            sendJson(502, { error: baseErrorCode(state.failures) });
+            return;
+          }
+          try {
+            const { records, truncated, stale, fetchedAt } = await foisCache.load(() =>
+              fetchFoisUpstream(state.root, headers),
+            );
+            sendJson(200, {
+              fetchedAt,
+              stale,
+              ttlMs: OSH_LIST_TTL_MS,
+              count: records.length,
+              truncated,
+              fois: records,
+            });
+          } catch {
+            sendJson(502, { error: 'upstream_failed' });
+          }
+          return;
+        }
+
         if (subPath === '/observations') {
-          const requestUrl = new URL(req.url, 'http://localhost');
           const id = readDatastreamId(requestUrl.searchParams);
           if (!id) {
             sendJson(400, { error: 'bad_datastream' });
