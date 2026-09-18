@@ -61,6 +61,8 @@ export function createOshLayer({ source, detailHost = null } = {}) {
    * stale, the one refresh it is still known.
    */
   let _placeholderStreamIds = new Set();
+  /** The last update's placed system records, by id — for the detail's "Placed by" line. */
+  let _placedSystemById = new Map();
 
   function writeDetail(detail) {
     writeOshDetail(detailHost, detail);
@@ -128,18 +130,29 @@ export function createOshLayer({ source, detailHost = null } = {}) {
       }
     }
     const systemRecord = _systemRecords.get(systemId) || null;
+    const placedRecord = _placedSystemById.get(systemId) || null;
     const featureRecord = featureId ? _featureRecordsById.get(featureId) : null;
+    // A held record's own name wins; with none, the location pass's own
+    // name for a stream-placed system stands in (osh-032, mirroring the
+    // entity label rule of osh-057). The header still falls back to the
+    // id when both are null.
+    const effectiveName = systemRecord?.name ?? placedRecord?.streamSystemName ?? null;
+    const placedByStream = placedRecord?.locationSource === 'stream';
     writeDetail({
       feature: featureRecord ? { id: featureRecord.id, name: featureRecord.name } : null,
       hostId: featureRecord ? systemId : null,
-      system: systemRecord
-        ? {
-            id: systemId,
-            uid: systemRecord.uid,
-            name: systemRecord.name,
-            description: systemRecord.description,
-          }
-        : null,
+      system:
+        systemRecord || placedRecord
+          ? {
+              id: systemId,
+              uid: systemRecord?.uid ?? null,
+              name: effectiveName,
+              description: systemRecord?.description ?? null,
+              placedBy: placedByStream
+                ? { datastreamName: placedRecord.datastreamName, ageMs: placedRecord.ageMs }
+                : null,
+            }
+          : null,
       datastreams: detailDatastreams,
     });
   }
@@ -204,6 +217,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
     _featureRecordsById = new Map();
     _featureRecordsByUid = new Map();
     _placeholderStreamIds = new Set();
+    _placedSystemById = new Map();
     _count = 0;
     _featuresCount = 0;
     _placedStreamCount = 0;
@@ -338,6 +352,10 @@ export function createOshLayer({ source, detailHost = null } = {}) {
           fois: featureRecords,
           locations: locationRecords,
         });
+        // Kept for pollSelected(), which needs a stream-placed system's
+        // datastream and age for the detail's "Placed by" line even when
+        // the union map holds no record for it at all (osh-032, osh-057).
+        _placedSystemById = new Map(placed.systems.map((record) => [record.id, record]));
 
         const now = Cesium.JulianDate.now();
         const selectedSystemEntity = _selectedId

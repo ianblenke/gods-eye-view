@@ -150,6 +150,24 @@ Origin: spec-first
 - **AND** a click that selects another system stops the first poll and starts a new one
 - **AND** a click on empty space or on a non-OSH entity clears the selection and stops the poll
 
+#### Scenario: Move the entity for the selected system's newest location `osh-031`
+- **WHEN** a poll's newest observation for the selected system carries a location
+- **THEN** the entity moves to that location only when the observation is fresh, with `ageMs` finite and at or under `OSH_FRESH_MAX_AGE_MS`
+- **AND** an observation with an `ageMs` above the threshold, or with `ageMs:null`, leaves the entity where it was
+- **AND** an observation with no location leaves the entity where it was
+- **AND** a later systems refresh does not move the entity back while that system stays selected
+
+#### Scenario: Render the detail with escaped values `osh-032`
+- **WHEN** `renderOshDetail(detail)` builds the system and datastream HTML
+- **THEN** it escapes the characters `<`, `>`, `&` and `"` in every name and value
+- **AND** when the selection came from a feature, the header shows the feature's name above the host's name
+- **AND** the header shows the host's id when the host has no record, or `Host: —` when the feature has no host
+- **AND** each datastream block shows the observation's age beside its time, in words such as `12 s`, `5 min`, `3 h` or `6 d`
+- **AND** a block whose observation is not fresh carries the text `old` and the class `osh-detail-old`, and one with `ageMs:null` carries the text `age unknown`
+- **AND** when the system is placed by a stream, the header shows `Placed by` with the datastream's name and the age in the same words, and shows the system's id as its name when it has none
+- **AND** a host element given to the layer receives that HTML in `innerHTML`
+- **AND** an empty selection clears the host
+
 #### Scenario: Register the layer with a stable token `osh-033`
 - **WHEN** the test reads the production layer registry
 - **THEN** it has an entry `{id:'osh-systems', token:'o', disposition:'enabled-only'}`
