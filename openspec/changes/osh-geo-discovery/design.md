@@ -1,6 +1,6 @@
 ## Context
 
-The systems layer draws an entity only for a system with a top-level `Point`. A system with a top-level `Point` is rare on the owner's server. The places the owner wants are the points of a radio mesh. Each is a feature of interest with a `Point`. One host system hosts each feature, through a link.
+The systems layer draws an entity only for a system with a top-level `Point`. A system with a top-level `Point` is rare on the owner's server. The places the owner wants are the stations of a radio mesh. Each station is a feature of interest with a `Point`. One host system hosts each feature, through a link.
 
 A client reaches a feature only through the feature list. The server answers a redirect for a feature fetched by id. This provider refuses a redirect by design.
 

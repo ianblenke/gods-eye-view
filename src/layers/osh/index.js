@@ -19,7 +19,7 @@ function featureEntityId(featureId) {
 
 /**
  * Own the OSH systems and features-of-interest display, the selected
- * system's datastream poll and the marker it moves when a newest result
+ * system's datastream poll and the entity it moves when a newest result
  * carries a location.
  * @param {object} options
  * @param {{getSystems: Function, getDatastreams: Function, getObservation: Function, getFois?: Function}} options.source
@@ -403,13 +403,13 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         release();
         return true;
       } catch (error) {
-        // Both getters now fail through Promise.allSettled, so nothing
-        // before this point can throw. By the time the code below can
-        // throw — placeOshEntities(), or Cesium building an entity — the
-        // explicit staleness check above has already run and passed, and
-        // nothing async happens between that check and here. So a stale
-        // update never reaches this catch; there is no staleness left to
-        // re-check.
+        // Promise.allSettled receives every failure of both getters. So
+        // nothing before the staleness check can throw. The code that can
+        // throw — placeOshEntities(), or Cesium building an entity — runs
+        // after that check. Nothing async happens in between. A
+        // production record is parsed JSON data. So nothing in that
+        // region re-enters the layer, and a stale update does not reach
+        // this catch.
         release();
         _lastError = error?.message || 'OSH source unavailable';
         return false;
