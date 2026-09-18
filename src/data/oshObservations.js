@@ -136,3 +136,36 @@ export function mapOshObservation(payload) {
     location: extractOshLocation(result),
   };
 }
+
+/** An observation at or under this age counts as fresh. One hour. */
+export const OSH_FRESH_MAX_AGE_MS = 60 * 60_000;
+
+/**
+ * The age of an observation at a given instant: `nowMs` minus the parsed
+ * `phenomenonTime`. Null when the time is absent or does not parse. The
+ * caller supplies `nowMs`; this function never reads a clock of its own, so
+ * an observation whose `phenomenonTime` sits ahead of `nowMs` gives a
+ * negative age rather than an unknown one — the owner's OSH server runs a
+ * few seconds ahead of the provider, and a live reading is exactly this
+ * case.
+ * @param {*} phenomenonTime
+ * @param {number} nowMs
+ * @returns {?number}
+ */
+export function oshObservationAgeMs(phenomenonTime, nowMs) {
+  if (typeof phenomenonTime !== 'string') return null;
+  const parsed = Date.parse(phenomenonTime);
+  if (!Number.isFinite(parsed)) return null;
+  return nowMs - parsed;
+}
+
+/**
+ * True only for a finite age at or under `OSH_FRESH_MAX_AGE_MS`. A negative
+ * age — the record's time is ahead of `nowMs` — is fresh. Null, or any
+ * other non-finite value, is never fresh.
+ * @param {*} ageMs
+ * @returns {boolean}
+ */
+export function isOshObservationFresh(ageMs) {
+  return Number.isFinite(ageMs) && ageMs <= OSH_FRESH_MAX_AGE_MS;
+}

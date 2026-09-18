@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { renderOshDetail, writeOshDetail } from './detail.js';
+import { OSH_FRESH_MAX_AGE_MS } from '../../data/oshObservations.js';
 
 const DETAIL = {
   system: {
@@ -16,6 +17,7 @@ const DETAIL = {
       observation: {
         resultTime: '2026-01-01T00:05:01Z',
         rows: [{ path: 'temp<eratur>e', value: '21 & "cold"' }],
+        ageMs: 12_000,
       },
     },
   ],
@@ -28,7 +30,60 @@ test('[osh-032] renders the system and its datastreams with escaped values', () 
   assert.match(html, /temp&lt;eratur&gt;e/);
   assert.match(html, /21 &amp; &quot;cold&quot;/);
   assert.match(html, /2026-01-01T00:05:01Z/);
+  assert.match(html, /12 s/);
+  assert.doesNotMatch(html, /osh-detail-old/);
   assert.doesNotMatch(html, /<System>/);
+});
+
+test('[osh-032] shows the observation age in words: seconds, minutes, hours and days', () => {
+  const html = (ageMs) =>
+    renderOshDetail({
+      system: { id: 'sys-fixture-1' },
+      datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs } }],
+    });
+  assert.match(html(12_000), /12 s/);
+  assert.match(html(5 * 60_000), /5 min/);
+  assert.match(html(3 * 60 * 60_000), /3 h/);
+  assert.match(html(6 * 24 * 60 * 60_000), /6 d/);
+});
+
+test('[osh-032] marks a datastream past the freshness threshold old, with the osh-detail-old class', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [
+      { id: 'ds-fixture-1', observation: { rows: [], ageMs: OSH_FRESH_MAX_AGE_MS + 1 } },
+    ],
+  });
+  assert.match(html, /osh-detail-old/);
+  // Not just the class name: the rendered text itself must carry the word
+  // "old" as content, past the closing quote of the class attribute.
+  assert.match(html, /osh-detail-old">[^<]*\bold\b/);
+});
+
+test('[osh-032] a datastream at the freshness threshold is not marked old', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: OSH_FRESH_MAX_AGE_MS } }],
+  });
+  assert.doesNotMatch(html, /osh-detail-old/);
+});
+
+test('[osh-032] a negative age is fresh and renders as a plain age, not old', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: -5000 } }],
+  });
+  assert.doesNotMatch(html, /osh-detail-old/);
+  assert.match(html, /0 s/);
+});
+
+test('[osh-032] a null ageMs renders "age unknown" and is marked old', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: null } }],
+  });
+  assert.match(html, /age unknown/);
+  assert.match(html, /osh-detail-old/);
 });
 
 test('[osh-032] renders "No data" for a datastream with no rows, and falls back to the id', () => {
@@ -42,12 +97,13 @@ test('[osh-032] renders "No data" for a datastream with no rows, and falls back 
   assert.match(html, /—/);
 });
 
-test('[osh-032] renders no rows and no time when there is no observation yet', () => {
+test('[osh-032] renders no rows and no time when there is no observation yet, and marks the age unknown', () => {
   const html = renderOshDetail({
     system: { id: 'sys-fixture-3' },
     datastreams: [{ id: 'ds-fixture-3' }],
   });
   assert.match(html, /No data/);
+  assert.match(html, /age unknown/);
 });
 
 test('[osh-032] renders a null row value as an empty string', () => {

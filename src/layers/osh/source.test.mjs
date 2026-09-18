@@ -132,6 +132,14 @@ test('[osh-028] the observations getter passes the id as a query parameter', asy
   assert.deepEqual(result, { keyRequired: false, observation: { rows: [] } });
 });
 
+test('[osh-050] the observation getter returns ageMs as served, computing nothing of its own', async () => {
+  const source = createOshSource({
+    fetchImpl: async () => jsonResponse(200, { observation: { rows: [], ageMs: -5000 } }),
+  });
+  const result = await source.getObservation('ds-fixture-1');
+  assert.deepEqual(result, { keyRequired: false, observation: { rows: [], ageMs: -5000 } });
+});
+
 test('[osh-028] the default fetch implementation calls the global fetch', async () => {
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async () => jsonResponse(200, { systems: [], stale: false });
