@@ -12,6 +12,17 @@ const DATASTREAMS_BODY = { items: [{ id: 'ds-fixture-1', 'system@id': 'sys-fixtu
 const OBSERVATION_BODY = {
   items: [{ id: 'obs-fixture-1', phenomenonTime: 't1', resultTime: 't2', result: { temperature: 21 } }],
 };
+const FOIS_BODY = {
+  features: [
+    {
+      id: 'foi-fixture-1',
+      geometry: { type: 'Point', coordinates: [3, 4] },
+      properties: {
+        'hostedProcedure@link': { href: 'https://osh.example/api/systems/sys-fixture-1' },
+      },
+    },
+  ],
+};
 
 // Strip comments first: a JSDoc line describing the one call site, such as
 // "The only fetch() call site", is prose, not a second call in the code.
@@ -58,6 +69,7 @@ function fixtureFetch({ calls = [] } = {}) {
     calls.push({ url: String(url), options });
     const parsed = new URL(String(url));
     if (parsed.pathname.endsWith('/systems')) return jsonResponse(200, SYSTEMS_BODY);
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(200, FOIS_BODY);
     if (parsed.pathname.endsWith('/datastreams')) return jsonResponse(200, DATASTREAMS_BODY);
     if (parsed.pathname.endsWith('/observations')) return jsonResponse(200, OBSERVATION_BODY);
     return jsonResponse(404);
@@ -424,6 +436,223 @@ test('[osh-016] the status route reports the systems and datastreams cache once 
   assert.equal(json.systems.count, 1);
   assert.equal(json.systems.stale, false);
   assert.equal(typeof json.systems.lastFetch, 'number');
+});
+
+test('[osh-043] serves the feature list, shaped and cached like the other lists', async () => {
+  const calls = [];
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: fixtureFetch({ calls }),
+  });
+  const first = await callOsh(proxy, { url: '/fois' });
+  assert.equal(first.status, 200);
+  assert.deepEqual(Object.keys(first.json).sort(), [
+    'count',
+    'fetchedAt',
+    'fois',
+    'stale',
+    'truncated',
+    'ttlMs',
+  ]);
+  assert.equal(first.json.count, 1);
+  assert.equal(first.json.truncated, false);
+  assert.equal(first.json.fois[0].id, 'foi-fixture-1');
+  assert.equal(first.json.fois[0].systemId, 'sys-fixture-1');
+
+  const callsAfterFirst = calls.length;
+  await callOsh(proxy, { url: '/fois' });
+  assert.equal(calls.length, callsAfterFirst, 'a second request inside the TTL makes no new call');
+
+  const foisCall = calls.find((call) => call.url.includes('/fois'));
+  assert.equal(foisCall.options.method, 'GET');
+  assert.equal(foisCall.options.body, undefined);
+  assert.ok(foisCall.options.signal instanceof AbortSignal);
+  const foisUrl = new URL(foisCall.url);
+  assert.equal(foisUrl.search, '?limit=200&f=application%2Fgeo%2Bjson');
+  const params = new URLSearchParams(foisUrl.search);
+  assert.equal(foisUrl.search, `?${params.toString()}`);
+
+  const { json: statusJson } = await callOsh(proxy, { url: '/status' });
+  assert.equal(statusJson.fois.count, 1);
+  assert.equal(statusJson.fois.stale, false);
+  assert.equal(typeof statusJson.fois.lastFetch, 'number');
+});
+
+test('[osh-043] shares one walk between concurrent requests, and serves the stale snapshot on failure', async () => {
+  let succeed = true;
+  let calls = 0;
+  const fetchImpl = async (url) => {
+    calls += 1;
+    if (String(url).includes('/fois')) {
+      if (!succeed) return jsonResponse(500);
+      return jsonResponse(200, FOIS_BODY);
+    }
+    return jsonResponse(200, SYSTEMS_BODY);
+  };
+  let now = 0;
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl, now: () => now });
+  const [a, b] = await Promise.all([callOsh(proxy, { url: '/fois' }), callOsh(proxy, { url: '/fois' })]);
+  assert.equal(a.json.count, 1);
+  assert.equal(b.json.count, 1);
+
+  succeed = false;
+  now += 5 * 60_000 + 1;
+  const stale = await callOsh(proxy, { url: '/fois' });
+  assert.equal(stale.json.stale, true);
+  assert.equal(stale.json.count, 1);
+});
+
+test('[osh-043] a failed walk with no earlier snapshot answers 502 with upstream_failed', async () => {
+  const fetchImpl = async (url) => {
+    if (String(url).includes('/fois')) return jsonResponse(500);
+    return jsonResponse(200, SYSTEMS_BODY);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { status, json } = await callOsh(proxy, { url: '/fois' });
+  assert.equal(status, 502);
+  assert.deepEqual(json, { error: 'upstream_failed' });
+});
+
+test('[osh-044] the fois route reports truncated when the walk stopped with a next link still named', async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (!parsed.pathname.endsWith('/fois')) return jsonResponse(200, SYSTEMS_BODY);
+    const page = Number(parsed.searchParams.get('page') || '1');
+    return jsonResponse(200, {
+      features: [{ id: `foi-fixture-${page}`, geometry: { type: 'Point', coordinates: [1, 2] } }],
+      links: [{ rel: 'next', href: `fois?limit=200&page=${page + 1}` }],
+    });
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { json } = await callOsh(proxy, { url: '/fois' });
+  assert.equal(json.truncated, true);
+  assert.equal(json.count, 60, 'the feature walk stops at its own cap of 60 pages');
+});
+
+const SYSTEM_ID_REJECTED_VALUES = [
+  '../systems',
+  '..%2Fsystems',
+  'https://osh.example/x',
+  '//osh.example/x',
+  'http:x',
+  'javascript:x',
+  'a?limit=1',
+  'a&limit=1',
+  'a#f',
+  'a/b',
+  'a%2Fb',
+  'a.b',
+  'a b',
+  'a'.repeat(65),
+];
+
+test('[osh-047] the datastreams route rejects an empty, repeated or malformed system id with no upstream call', async () => {
+  const calls = [];
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: fixtureFetch({ calls }),
+  });
+  for (const url of [
+    '/datastreams?system=',
+    '/datastreams?system=sys-fixture-1&system=sys-fixture-2',
+    ...SYSTEM_ID_REJECTED_VALUES.map((value) => `/datastreams?system=${encodeURIComponent(value)}`),
+  ]) {
+    const { status, json } = await callOsh(proxy, { url });
+    assert.equal(status, 400, `${url} must be refused`);
+    assert.deepEqual(json, { error: 'bad_system' });
+  }
+  assert.equal(calls.length, 0, 'a refused system id must cause zero upstream requests');
+});
+
+test('[osh-047] a request with no system key at all serves the global datastreams list, as osh-016 says', async () => {
+  const calls = [];
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: fixtureFetch({ calls }),
+  });
+  const { status, json } = await callOsh(proxy, { url: '/datastreams' });
+  assert.equal(status, 200);
+  assert.ok(Array.isArray(json.datastreams));
+  assert.equal(json.system, undefined, 'the global list response carries no system field');
+});
+
+test('[osh-048] the per-system datastreams route records the fixed URL, with no f key', async () => {
+  const calls = [];
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: fixtureFetch({ calls }),
+  });
+  const { status, json } = await callOsh(proxy, { url: '/datastreams?system=sys-fixture-1' });
+  assert.equal(status, 200);
+  assert.deepEqual(Object.keys(json).sort(), [
+    'count',
+    'datastreams',
+    'fetchedAt',
+    'stale',
+    'system',
+    'ttlMs',
+  ]);
+  assert.equal(json.system, 'sys-fixture-1');
+  assert.equal(json.count, 1);
+
+  const call = calls.find((c) => c.url.includes('/systems/sys-fixture-1/datastreams'));
+  assert.ok(call, 'expected a recorded call to the per-system route');
+  assert.equal(call.options.method, 'GET');
+  assert.equal(call.options.body, undefined);
+  assert.ok(call.options.signal instanceof AbortSignal);
+  const calledUrl = new URL(call.url);
+  assert.equal(calledUrl.pathname, '/api/systems/sys-fixture-1/datastreams');
+  assert.equal(calledUrl.search, '?limit=100');
+  assert.equal(calledUrl.searchParams.has('f'), false, 'the per-system list must send no f key');
+  const params = new URLSearchParams(calledUrl.search);
+  assert.equal(calledUrl.search, `?${params.toString()}`);
+});
+
+test('[osh-048] caches the per-system datastreams per id, and the status route reports the cache size', async () => {
+  const callsById = new Map();
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    const match = parsed.pathname.match(/systems\/([^/]+)\/datastreams/);
+    if (match) {
+      callsById.set(match[1], (callsById.get(match[1]) || 0) + 1);
+      return jsonResponse(200, DATASTREAMS_BODY);
+    }
+    return jsonResponse(200, SYSTEMS_BODY);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  await Promise.all([
+    callOsh(proxy, { url: '/datastreams?system=sys-fixture-1' }),
+    callOsh(proxy, { url: '/datastreams?system=sys-fixture-1' }),
+  ]);
+  assert.equal(callsById.get('sys-fixture-1'), 1);
+  await callOsh(proxy, { url: '/datastreams?system=sys-fixture-2' });
+  assert.equal(callsById.get('sys-fixture-2'), 1);
+
+  const { json: statusJson } = await callOsh(proxy, { url: '/status' });
+  assert.equal(statusJson.datastreamsBySystem.cached, 2);
+});
+
+test('[osh-048] serves the stale snapshot for a system on a failed walk, and 502 with none', async () => {
+  let succeed = true;
+  let now = 0;
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.pathname.includes('/systems/') && parsed.pathname.endsWith('/datastreams')) {
+      if (!succeed) return jsonResponse(500);
+      return jsonResponse(200, DATASTREAMS_BODY);
+    }
+    return jsonResponse(200, SYSTEMS_BODY);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl, now: () => now });
+  await callOsh(proxy, { url: '/datastreams?system=sys-fixture-1' });
+  succeed = false;
+  now += 5 * 60_000 + 1;
+  const stale = await callOsh(proxy, { url: '/datastreams?system=sys-fixture-1' });
+  assert.equal(stale.json.stale, true);
+
+  const failed = await callOsh(proxy, { url: '/datastreams?system=sys-fixture-new' });
+  assert.equal(failed.status, 502);
+  assert.deepEqual(failed.json, { error: 'upstream_failed' });
 });
 
 test('[osh-014] a malformed page payload with no known list key contributes no records', async () => {
