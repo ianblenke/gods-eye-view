@@ -27,7 +27,7 @@ import {
 import { mapOshSystems } from '../../src/data/oshSystems.js';
 import { mapOshDatastreams } from '../../src/data/oshDatastreams.js';
 import { mapOshFois } from '../../src/data/oshFois.js';
-import { mapOshLocationPage } from '../../src/data/oshObservations.js';
+import { mapOshLocationPage, oshObservationAgeMs } from '../../src/data/oshObservations.js';
 
 /**
  * OpenSensorHub systems, datastreams, features-of-interest and
@@ -617,12 +617,19 @@ export function oshProxy({
           }
           try {
             const result = await observationsCache.get(id, target, headers, reader);
+            // The age is arithmetic on the cached observation's phenomenonTime
+            // against the current instant, computed fresh on every answer;
+            // the cache itself never stores an age, so a stale snapshot
+            // served twice reports a larger age the second time.
+            const observation = result.observation
+              ? { ...result.observation, ageMs: oshObservationAgeMs(result.observation.phenomenonTime, now()) }
+              : null;
             sendJson(200, {
               datastream: id,
               fetchedAt: result.fetchedAt,
               stale: result.stale,
               ttlMs: OBS_TTL_MS,
-              observation: result.observation,
+              observation,
             });
           } catch (error) {
             sendJson(502, {
@@ -642,14 +649,24 @@ export function oshProxy({
           try {
             const result = await locationsPass.load(() => runLocationsPass(state.root, headers));
             lastLocationsResult = result;
+            // The pass cache can serve the same fold more than once, and a
+            // stale one longer than that: age is arithmetic on
+            // phenomenonTime against the current instant, so it is
+            // recomputed here at serve time, never trusted from the fold
+            // (the same reason the observations route above recomputes it).
+            const nowMs = now();
+            const locations = result.value.locations.map((location) => ({
+              ...location,
+              ageMs: oshObservationAgeMs(location.phenomenonTime, nowMs),
+            }));
             sendJson(200, {
               fetchedAt: result.fetchedAt,
               stale: result.stale,
               ttlMs: OBS_TTL_MS,
-              count: result.value.locations.length,
+              count: locations.length,
               streams: result.value.streams,
               failed: result.value.failed,
-              locations: result.value.locations,
+              locations,
             });
           } catch {
             sendJson(502, { error: 'upstream_failed' });

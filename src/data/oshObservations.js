@@ -259,6 +259,39 @@ export function mapOshObservation(payload, reader = null) {
   };
 }
 
+/** An observation at or under this age counts as fresh. One hour. */
+export const OSH_FRESH_MAX_AGE_MS = 60 * 60_000;
+
+/**
+ * The age of an observation at a given instant: `nowMs` minus the parsed
+ * `phenomenonTime`. Null when the time is absent or does not parse. The
+ * caller supplies `nowMs`; this function never reads a clock of its own, so
+ * an observation whose `phenomenonTime` sits ahead of `nowMs` gives a
+ * negative age rather than an unknown one — the owner's OSH server runs a
+ * few seconds ahead of the provider, and a live reading is exactly this
+ * case.
+ * @param {*} phenomenonTime
+ * @param {number} nowMs
+ * @returns {?number}
+ */
+export function oshObservationAgeMs(phenomenonTime, nowMs) {
+  if (typeof phenomenonTime !== 'string') return null;
+  const parsed = Date.parse(phenomenonTime);
+  if (!Number.isFinite(parsed)) return null;
+  return nowMs - parsed;
+}
+
+/**
+ * True only for a finite age at or under `OSH_FRESH_MAX_AGE_MS`. A negative
+ * age — the record's time is ahead of `nowMs` — is fresh. Null, or any
+ * other non-finite value, is never fresh.
+ * @param {*} ageMs
+ * @returns {boolean}
+ */
+export function isOshObservationFresh(ageMs) {
+  return Number.isFinite(ageMs) && ageMs <= OSH_FRESH_MAX_AGE_MS;
+}
+
 function readFeatureUid(result, reader) {
   if (!reader?.featureUid) return null;
   const raw = readPath(result, reader.featureUid);
@@ -268,9 +301,8 @@ function readFeatureUid(result, reader) {
 /**
  * Map a page of `resultTime=latest` items — the newest record of each
  * feature of interest a stream reports, newest first — to location
- * records. `ageMs` comes from `oshObservationAgeMs()`, Part B's pure age
- * function in this same file (design decision D39); `nowMs` is the
- * caller's injected clock reading, never the wall clock read here. An
+ * records. `ageMs` comes from `oshObservationAgeMs()` above; `nowMs` is
+ * the caller's injected clock reading, never the wall clock read here. An
  * item with no location is kept with `location:null`, so a caller can
  * count it. A malformed payload gives an empty list. The order of the
  * page is kept.
@@ -293,9 +325,6 @@ export function mapOshLocationPage(payload, reader, nowMs) {
       phenomenonTime,
       resultTime: typeof item.resultTime === 'string' ? item.resultTime : null,
       location: extractOshLocation(result, reader),
-      // oshObservationAgeMs() arrives with osh-observation-age (Part B);
-      // this call is written against that export and cannot run until
-      // that change is merged into this branch.
       ageMs: oshObservationAgeMs(phenomenonTime, nowMs),
     });
   }
