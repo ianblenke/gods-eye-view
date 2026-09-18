@@ -3,43 +3,26 @@ import {
   keylessGooglePlacesResponse,
 } from './google-key.js';
 import { makeOptInRateLimiter, clientKey } from '../common/rate-limit.js';
+import { validatePlacesCoordinates } from './coordinates.js';
+import { installGoogleGeocodeRoute } from './geocode.js';
 import {
   projectNearbyPlaces,
   projectTextSearchPlaces,
 } from '../../../src/data/placeProviderPayloads.js';
 
+export { validatePlacesCoordinates } from './coordinates.js';
+
 // Construct lazily after the standalone environment has loaded.
 // undefined = not built yet; null = unlimited; fn = active limiter
 let _googleRateLimiter;
 
-/** Google cost endpoint (nearby-places). Null = unlimited (default). */
+/** Google cost endpoint (nearby-places, text-search, geocode). Null = unlimited (default). */
 function googleRateLimiter() {
   if (_googleRateLimiter === undefined)
     _googleRateLimiter = makeOptInRateLimiter(
       process.env.GEV_RATELIMIT_GOOGLE_PER_MIN,
     );
   return _googleRateLimiter;
-}
-
-/** Validate raw lat/lon presence and WGS84 bounds before consuming request quota. */
-export function validatePlacesCoordinates(searchParams) {
-  const rawLat = searchParams.get('lat');
-  const rawLon = searchParams.get('lon');
-  if (rawLat === null || rawLon === null || !rawLat.trim() || !rawLon.trim()) {
-    return { ok: false, error: 'lat and lon are required' };
-  }
-  const latitude = Number(rawLat);
-  const longitude = Number(rawLon);
-  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
-    return { ok: false, error: 'Valid lat and lon are required' };
-  }
-  if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
-    return {
-      ok: false,
-      error: 'lat must be within [-90, 90] and lon within [-180, 180]',
-    };
-  }
-  return { ok: true, latitude, longitude };
 }
 
 /** Nearby place labels and view-biased text search, with request-time key resolution. */
@@ -267,6 +250,11 @@ export function googlePlacesContextProxy({
           }),
         );
       }
+    });
+
+    installGoogleGeocodeRoute(middlewares, {
+      resolveApiKey,
+      rateLimiter: googleRateLimiter(),
     });
   }
 
