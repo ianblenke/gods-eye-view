@@ -653,16 +653,14 @@
     "src/data/osh.test.mjs › [osh-029] createOshLayer() accepts an injected source and detail host",
     "src/data/osh.test.mjs › [osh-029] createOshLayer() wires a real source and a null detail host outside the browser",
     "src/data/osh.test.mjs › [osh-029] the default export is a wired OSH layer",
+    "src/data/oshLayer.test.mjs › [osh-029] a duplicate feature id makes the draw loop throw, and the update reports that failure",
     "src/data/oshLayer.test.mjs › [osh-029] a failed fetch sets the error and does not change the entities",
     "src/data/oshLayer.test.mjs › [osh-029] a second update aborts the first, whose late result is discarded even without a thrown AbortError",
-    "src/data/oshLayer.test.mjs › [osh-029] a source whose features getter throws synchronously, not a rejected promise, still sets the error",
     "src/data/oshLayer.test.mjs › [osh-029] a superseded update that throws a real error still lets the newer request finish",
-    "src/data/oshLayer.test.mjs › [osh-029] a synchronous throw does not stick: a later, successful update clears the error",
-    "src/data/oshLayer.test.mjs › [osh-029] a synchronous throw of a non-Error still sets the fallback error message",
-    "src/data/oshLayer.test.mjs › [osh-029] a synchronous throw on a superseded update does not overwrite the newer call's own error",
     "src/data/oshLayer.test.mjs › [osh-029] a system with no Point gets no entity, and counts toward unplaced",
-    "src/data/oshLayer.test.mjs › [osh-029] a system with no name gets a point marker and no label",
+    "src/data/oshLayer.test.mjs › [osh-029] a system with no name gets a point entity and no label",
     "src/data/oshLayer.test.mjs › [osh-029] a thrown non-Error still sets a fallback error message",
+    "src/data/oshLayer.test.mjs › [osh-029] a thrown non-Error while placing the entities still sets the fallback error message",
     "src/data/oshLayer.test.mjs › [osh-029] aborts an update in flight on destroy",
     "src/data/oshLayer.test.mjs › [osh-029] aborts an update in flight on disable, with no error recorded",
     "src/data/oshLayer.test.mjs › [osh-029] disable hides the data source, destroy removes it, and disable stops more updates",
@@ -687,9 +685,9 @@
     "src/data/oshLayer.test.mjs › [osh-030] the poll passes the selected system id to the datastreams getter, and drops a record naming another system"
   ],
   "osh-031": [
-    "src/data/oshLayer.test.mjs › [osh-031] a moved marker with no altitude in the newest result defaults to zero",
+    "src/data/oshLayer.test.mjs › [osh-031] a moved entity with no altitude in the newest result defaults to zero",
     "src/data/oshLayer.test.mjs › [osh-031] a newest result with a location moves the entity, and a systems refresh keeps the moved position",
-    "src/data/oshLayer.test.mjs › [osh-031] a newest result without a location leaves the marker where it was"
+    "src/data/oshLayer.test.mjs › [osh-031] a newest result without a location leaves the entity where it was"
   ],
   "osh-032": [
     "src/layers/osh/detail.test.mjs › [osh-032] a system with no datastreams still renders the system header",
@@ -793,6 +791,7 @@
     "src/data/oshLayer.test.mjs › [osh-045] shows one entity per feature, with a label distance condition, and getStats().features counts them"
   ],
   "osh-046": [
+    "src/data/oshLayer.test.mjs › [osh-046] a features getter that throws synchronously behaves exactly like one that rejects",
     "src/data/oshLayer.test.mjs › [osh-046] a fois getter that resolves keyRequired:true, while the systems getter does not, gives an empty feature list",
     "src/data/oshLayer.test.mjs › [osh-046] a server with no Point and no feature gives count:0, features:0, error:null and partial:false",
     "src/data/oshLayer.test.mjs › [osh-046] an update aborted before both reads settle draws nothing from them",
@@ -824,7 +823,7 @@
   ],
   "osh-049": [
     "src/data/oshLayer.test.mjs › [osh-049] a selected feature dropped from the next refresh clears the feature and its host, and stops the poll",
-    "src/data/oshLayer.test.mjs › [osh-049] disable() does not clear the system union: a keyRequired answer and destroy() are the only ways to empty it",
+    "src/data/oshLayer.test.mjs › [osh-049] disable() does not clear the system union",
     "src/data/oshLayer.test.mjs › [osh-049] the system map is a union across refreshes"
   ],
   "spec-lint-001": [
