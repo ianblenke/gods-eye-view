@@ -21,9 +21,11 @@ Origin: spec-first
 - **THEN** the observation carries `ageMs`, the provider's clock at serve time minus the parsed `phenomenonTime`, computed by the route and never stored in the cache
 - **AND** a second answer served from the same cached snapshot later carries a larger `ageMs`
 - **AND** an absent or unparsed `phenomenonTime` gives `ageMs:null`
-- **AND** `oshObservationAgeMs()` and `isOshObservationFresh()` are pure, and fresh is a finite `ageMs` at or under `OSH_FRESH_MAX_AGE_MS`, one hour; null is never fresh
-- **AND** an `ageMs` below zero is fresh, because the two clocks differ
-- **AND** a record whose `phenomenonTime` is ahead of the injected `now` keeps its negative age and moves an entity
+- **AND** `oshObservationAgeMs()` and `isOshObservationFresh()` read no clock of their own and hold no state
+- **AND** an observation is fresh when `ageMs` is a finite number at or under `OSH_FRESH_MAX_AGE_MS`, which is one hour
+- **AND** `ageMs:null` is an unknown age, and an unknown age is never fresh
+- **AND** an `ageMs` below zero is fresh, because the OpenSensorHub server's clock leads the provider's clock
+- **AND** the route serves a negative `ageMs` when the `phenomenonTime` is ahead of the injected `now`
 - **AND** the browser source passes `ageMs` through unchanged and computes no age
 
 ### Requirement: Systems layer
@@ -68,7 +70,9 @@ Origin: spec-first
 - **AND** when the selection came from a feature, the header shows the feature's name above the host's name
 - **AND** the header shows the host's id when the host has no record, or `Host: —` when the feature has no host
 - **AND** each datastream block shows the observation's age beside its time, in words such as `12 s`, `5 min`, `3 h` or `6 d`
-- **AND** a block whose observation is not fresh carries the text `old` and the class `osh-detail-old`, and one with `ageMs:null` carries the text `age unknown`
+- **AND** a block whose observation is not fresh carries the class `osh-detail-old`
+- **AND** a block whose age is a number past the threshold also carries the text `old`
+- **AND** a block with `ageMs:null` reads `age unknown`, and never reads `old`, because an unknown age is not a large one
 - **AND** a host element given to the layer receives that HTML in `innerHTML`
 - **AND** an empty selection clears the host
 

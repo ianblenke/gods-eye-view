@@ -31,6 +31,11 @@ function renderAge(ageMs) {
   if (isOshObservationFresh(ageMs)) {
     return `<div class="osh-detail-age">${escapeHtml(text)}</div>`;
   }
+  // An unknown age is not fresh, so it keeps the class. It does not take the
+  // word `old`, because the age is not known to be large. It is not known.
+  if (!Number.isFinite(ageMs)) {
+    return `<div class="osh-detail-age osh-detail-old">${escapeHtml(text)}</div>`;
+  }
   return `<div class="osh-detail-age osh-detail-old">${escapeHtml(text)} old</div>`;
 }
 
