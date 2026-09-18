@@ -210,3 +210,120 @@ test('[osh-042] a feature never places its host system, and a system never place
 test('[osh-042] defaults both lists to empty', () => {
   assert.deepEqual(placeOshEntities(), { systems: [], features: [], unplaced: [] });
 });
+
+// --- osh-042 (MODIFIED): placeOshEntities() with a locations input -------
+// ageMs values below are chosen well inside/outside any plausible
+// freshness threshold (design decision D40, osh-observation-age): 5_000 ms
+// is fresh under any reasonable window, 7_200_000 ms (two hours) is stale
+// under a one-hour one.
+const FRESH_AGE_MS = 5_000;
+const STALE_AGE_MS = 7_200_000;
+
+test('[osh-042] a location whose ageMs is not fresh is dropped before any other rule', () => {
+  const { systems, features, unplaced } = placeOshEntities({
+    systems: [{ id: 'sys-fixture-1', lon: null, lat: null, alt: null }],
+    fois: [{ id: 'foi-fixture-1', systemId: null, lon: 1, lat: 1, alt: null }],
+    locations: [
+      { systemId: 'sys-fixture-1', foiId: null, foiUid: null, lon: 9, lat: 9, alt: 9, ageMs: STALE_AGE_MS },
+      { systemId: null, foiId: 'foi-fixture-1', foiUid: null, lon: 9, lat: 9, alt: 9, ageMs: null },
+    ],
+  });
+  assert.equal(systems.length, 0);
+  assert.deepEqual(unplaced, ['sys-fixture-1']);
+  assert.equal(features[0].lon, 1, 'the stale feature-referencing location never moved the feature');
+});
+
+test('[osh-042] a fresh location moves a feature it finds by foiId or by foiUid, and is dropped for an unknown feature', () => {
+  const { features } = placeOshEntities({
+    systems: [],
+    fois: [
+      { id: 'foi-fixture-1', uid: 'urn:foi-1', systemId: null, lon: 1, lat: 1, alt: null },
+      { id: 'foi-fixture-2', uid: 'urn:foi-2', systemId: null, lon: 2, lat: 2, alt: null },
+    ],
+    locations: [
+      { foiId: 'foi-fixture-1', foiUid: null, lon: 11, lat: 12, alt: 13, ageMs: FRESH_AGE_MS },
+      { foiId: null, foiUid: 'urn:foi-2', lon: 21, lat: 22, alt: 23, ageMs: FRESH_AGE_MS },
+      { foiId: 'foi-fixture-unknown', foiUid: null, lon: 99, lat: 99, alt: 99, ageMs: FRESH_AGE_MS },
+    ],
+  });
+  const byId = Object.fromEntries(features.map((f) => [f.id, f]));
+  assert.deepEqual([byId['foi-fixture-1'].lon, byId['foi-fixture-1'].lat, byId['foi-fixture-1'].alt], [11, 12, 13]);
+  assert.equal(byId['foi-fixture-1'].locationSource, 'stream');
+  assert.deepEqual([byId['foi-fixture-2'].lon, byId['foi-fixture-2'].lat], [21, 22]);
+});
+
+test('[osh-042] a fresh location with no feature reference places its system above a Point, and the newer of two wins', () => {
+  const { systems } = placeOshEntities({
+    systems: [{ id: 'sys-fixture-1', uid: 'urn:sys-1', name: 'Gateway', lon: 1, lat: 1, alt: 1 }],
+    fois: [],
+    locations: [
+      {
+        systemId: 'sys-fixture-1',
+        foiId: null,
+        foiUid: null,
+        lon: 50,
+        lat: 51,
+        alt: 52,
+        datastreamId: 'ds-fixture-old',
+        datastreamName: 'Old',
+        phenomenonTime: '2026-01-01T00:00:00Z',
+        ageMs: FRESH_AGE_MS,
+      },
+      {
+        systemId: 'sys-fixture-1',
+        foiId: null,
+        foiUid: null,
+        lon: 60,
+        lat: 61,
+        alt: 62,
+        datastreamId: 'ds-fixture-new',
+        datastreamName: 'New',
+        phenomenonTime: '2026-01-01T01:00:00Z',
+        ageMs: FRESH_AGE_MS,
+      },
+    ],
+  });
+  assert.equal(systems.length, 1);
+  assert.equal(systems[0].locationSource, 'stream');
+  assert.equal(systems[0].lon, 60, 'the newer of the two stream locations wins');
+  assert.equal(systems[0].datastreamId, 'ds-fixture-new');
+  assert.equal(systems[0].name, 'Gateway', 'the held record\'s name is kept above a stream placement');
+});
+
+test('[osh-042] a fresh location whose system has no record still gives a placed system with name:null', () => {
+  const { systems, unplaced } = placeOshEntities({
+    systems: [],
+    fois: [],
+    locations: [
+      {
+        systemId: 'sys-fixture-unseen',
+        foiId: null,
+        foiUid: null,
+        lon: 5,
+        lat: 6,
+        alt: null,
+        datastreamId: 'ds-fixture-1',
+        datastreamName: 'Aircraft Position',
+        phenomenonTime: '2026-01-01T00:00:00Z',
+        ageMs: FRESH_AGE_MS,
+        systemName: 'Fixture Aircraft',
+      },
+    ],
+  });
+  assert.equal(systems.length, 1);
+  assert.equal(systems[0].id, 'sys-fixture-unseen');
+  assert.equal(systems[0].name, null);
+  assert.equal(systems[0].locationSource, 'stream');
+  assert.equal(systems[0].streamSystemName, 'Fixture Aircraft');
+  assert.deepEqual(unplaced, []);
+});
+
+test('[osh-042] a location naming neither a feature nor a systemId is ignored', () => {
+  const { systems, unplaced } = placeOshEntities({
+    systems: [{ id: 'sys-fixture-1', lon: null, lat: null, alt: null }],
+    fois: [],
+    locations: [{ systemId: null, foiId: null, foiUid: null, lon: 1, lat: 1, alt: 1, ageMs: FRESH_AGE_MS }],
+  });
+  assert.deepEqual(unplaced, ['sys-fixture-1']);
+  assert.equal(systems.length, 0);
+});
