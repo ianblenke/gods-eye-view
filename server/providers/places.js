@@ -4,6 +4,8 @@ export {
   googleServerApiKey,
   keylessGooglePlacesResponse,
 } from './places/google-key.js';
+export { validatePlacesCoordinates } from './places/coordinates.js';
+export { installGoogleGeocodeRoute } from './places/geocode.js';
 export { installRouteMiddleware } from './places/routes.js';
 export {
   makeRateLimiter,

@@ -114,6 +114,37 @@ export function projectTextSearchPlaces(data, latitude, longitude) {
   return places;
 }
 
+/**
+ * Project a Google geocoding response to the fields the browser parsers use,
+ * with Google's own field names, so only the transport changes at the call
+ * site. Caps every list so one malformed upstream answer cannot grow the
+ * response without bound. A malformed input gives an empty answer.
+ */
+export function projectGeocodeResults(data) {
+  const status = typeof data?.status === 'string' ? data.status : null;
+  const rawResults = Array.isArray(data?.results) ? data.results : [];
+  const results = rawResults.slice(0, 12).map((result) => {
+    const types = Array.isArray(result?.types) ? result.types.slice(0, 8) : [];
+    const addressComponents = Array.isArray(result?.address_components)
+      ? result.address_components.slice(0, 20).map((component) => ({
+          long_name: component?.long_name ?? null,
+          types: Array.isArray(component?.types) ? component.types : [],
+        }))
+      : [];
+    return {
+      formatted_address: result?.formatted_address ?? null,
+      address_components: addressComponents,
+      types,
+      geometry: {
+        location: result?.geometry?.location ?? null,
+        bounds: result?.geometry?.bounds ?? null,
+        viewport: result?.geometry?.viewport ?? null,
+      },
+    };
+  });
+  return { status, results };
+}
+
 export function normalizeRouteProfile(raw) {
   return raw === 'car' || raw === 'driving'
     ? 'car'

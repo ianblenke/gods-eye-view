@@ -57,6 +57,8 @@
     "exports": ["./server/providers/places"],
     "modules": [
       "server/providers/places.js",
+      "server/providers/places/coordinates.js",
+      "server/providers/places/geocode.js",
       "server/providers/places/google.js",
       "server/providers/places/google-key.js",
       "server/providers/places/routes.js",
