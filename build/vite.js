@@ -26,6 +26,10 @@ export function createBrowserViteConfig({
         'Content-Security-Policy': "frame-ancestors 'none'",
       },
     },
+    // Narrow Vite's automatic `import.meta.env.VITE_*` exposure to the AIS
+    // live knobs only. Without this, ANY `.env` line named `VITE_<name>`
+    // reaches the browser bundle with no code change at all.
+    envPrefix: 'VITE_AIS_LIVE_',
     define: {
       'import.meta.env.GOOGLE_MAPS_API_KEY': JSON.stringify(googleApiKey),
       'import.meta.env.CESIUM_ION_TOKEN': JSON.stringify(cesiumToken),

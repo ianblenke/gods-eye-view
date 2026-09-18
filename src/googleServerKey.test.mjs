@@ -71,7 +71,9 @@ test('both Places routes select the intended key and keep it out of responses', 
   const original = { server: process.env.GOOGLE_MAPS_SERVER_API_KEY, browser: process.env.GOOGLE_MAPS_API_KEY, limit: process.env.GEV_RATELIMIT_GOOGLE_PER_MIN };
   const calls = [];
   t.mock.method(globalThis, 'fetch', async (url, options) => {
-    calls.push({ url, key: options.headers['X-Goog-Api-Key'] });
+    // Places sends the key as a header; the geocode route sends it in the query.
+    const key = options?.headers?.['X-Goog-Api-Key'] ?? new URL(url).searchParams.get('key');
+    calls.push({ url, key });
     return Response.json({ places: [] });
   });
   try {
@@ -88,7 +90,7 @@ test('both Places routes select the intended key and keep it out of responses', 
       for (const install of ['configureServer', 'configurePreviewServer']) {
         const routes = new Map();
         googlePlacesContextProxy()[install]({ middlewares: { use: (name, handler) => routes.set(name, handler) } });
-        assert.equal(routes.size, 2);
+        assert.equal(routes.size, 3);
         for (const handler of routes.values()) {
           const before = calls.length;
           let body;
@@ -114,11 +116,15 @@ test('both Places routes select the intended key and keep it out of responses', 
   }
 });
 
-test('browser defines contain the browser key and exclude the server key', () => {
+test('[credential-boundary-003] browser defines contain the browser key and exclude the server key', () => {
   withKeys({ server: 'server-secret', browser: 'browser-public' }, () => {
     const defines = config({ mode: 'test' }).define;
     assert.equal(defines['import.meta.env.GOOGLE_MAPS_API_KEY'], '"browser-public"');
     assert.ok(!JSON.stringify(defines).includes('server-secret'));
     assert.ok(!Object.keys(defines).some((key) => key.includes('SERVER_API_KEY')));
+    assert.deepEqual(Object.keys(defines), [
+      'import.meta.env.GOOGLE_MAPS_API_KEY',
+      'import.meta.env.CESIUM_ION_TOKEN',
+    ]);
   });
 });
