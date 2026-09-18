@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test, { before, after } from 'node:test';
 import * as Cesium from 'cesium';
-import { FEATURE_LABEL_DISTANCE_METERS, createOshLayer } from '../layers/osh/index.js';
+import { createOshLayer } from '../layers/osh/index.js';
 
 let _originalDocument;
 before(() => {
@@ -264,7 +264,7 @@ test('[osh-029] disable hides the data source, destroy removes it, and disable s
   assert.equal(dataSources.length, 0);
 });
 
-test('[osh-049] disable() does not clear the system union: a keyRequired answer and destroy() are the only ways to empty it', async () => {
+test('[osh-049] disable() does not clear the system union', async () => {
   const source = fakeSource();
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
@@ -558,7 +558,7 @@ test('[osh-031] a newest result with a location moves the entity, and a systems 
   layer.destroy(viewer);
 });
 
-test('[osh-031] a newest result without a location leaves the marker where it was', async () => {
+test('[osh-031] a newest result without a location leaves the entity where it was', async () => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
@@ -729,7 +729,7 @@ test('[osh-045] shows one entity per feature, with a label distance condition, a
   assert.equal(entity.label.text.getValue(Cesium.JulianDate.now()), 'Feature A');
   const condition = entity.label.distanceDisplayCondition.getValue(Cesium.JulianDate.now());
   assert.equal(condition.near, 0);
-  assert.equal(condition.far, FEATURE_LABEL_DISTANCE_METERS);
+  assert.equal(condition.far, 200_000, 'the spec fixes this at 200 km');
   assert.equal(layer.getStats().features, 2);
   layer.destroy(viewer);
 });
@@ -1110,7 +1110,7 @@ test('[osh-030] a poll superseded mid-loop while it waits for an observation sto
   layer.destroy(viewer);
 });
 
-test('[osh-029] a system with no name gets a point marker and no label', async () => {
+test('[osh-029] a system with no name gets a point entity and no label', async () => {
   const unnamed = { id: 'sys-fixture-3', uid: null, name: null, description: null, lon: 5, lat: 6, alt: 0 };
   const source = fakeSource({ systems: [unnamed] });
   const layer = createOshLayer({ source });
@@ -1232,100 +1232,67 @@ test('[osh-029] a superseded update that throws a real error still lets the newe
   layer.destroy(viewer);
 });
 
-test('[osh-029] a source whose features getter throws synchronously, not a rejected promise, still sets the error', async () => {
+test('[osh-046] a features getter that throws synchronously behaves exactly like one that rejects', async () => {
   const source = {
     async getSystems() {
       return { keyRequired: false, systems: [SYSTEM_A], stale: false };
     },
     getFois() {
-      // Not async: this throws while the update's argument array is built,
-      // before Promise.allSettled ever runs — the update's catch, not its
-      // rejected-getter branch, must handle this.
-      throw new Error('fois threw synchronously');
+      // Not async: calling this throws immediately, in the same tick,
+      // rather than returning a rejected promise. The layer must still
+      // treat this as the features read failing, not as a fatal error
+      // that discards the successful systems read.
+      throw new Error('fois threw synchronously, not a rejection');
     },
   };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  const updated = await layer.update(viewer);
+  assert.equal(updated, true);
+  assert.equal(layer.getStats().count, 1, 'the systems read must still be drawn');
+  assert.equal(dataSources[0].entities.values.length, 1);
+  assert.equal(layer.getStats().partial, true);
+  assert.equal(layer.getStats().error, null);
+  layer.destroy(viewer);
+});
+
+test('[osh-029] a duplicate feature id makes the draw loop throw, and the update reports that failure', async () => {
+  // placeOshEntities() does not dedupe by id; only the server-side adapter
+  // does. Two fois records sharing an id are a malformed features read
+  // that reaches the draw loop, where Cesium refuses a second entity with
+  // an id already in the collection — a failure this layer does not
+  // control, arising after both reads already succeeded.
+  const source = fakeSource({ fois: [FEATURE_A, { ...FEATURE_A }] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
   layer.init(viewer);
   layer.enable(viewer);
   const updated = await layer.update(viewer);
   assert.equal(updated, false);
-  assert.equal(layer.getStats().error, 'fois threw synchronously');
-  assert.equal(layer.getStats().partial, false);
+  assert.equal(typeof layer.getStats().error, 'string');
+  assert.notEqual(layer.getStats().error, null);
   layer.destroy(viewer);
 });
 
-test('[osh-029] a synchronous throw does not stick: a later, successful update clears the error', async () => {
-  let throwSync = true;
-  const source = {
-    async getSystems() {
-      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
+test('[osh-029] a thrown non-Error while placing the entities still sets the fallback error message', async () => {
+  // A getter, not a mocked getter/source call: this throws from inside
+  // placeOshEntities()'s own read of the record, still after both reads
+  // already settled, so it lands in the same catch as the duplicate-id
+  // case above, but with a thrown value that carries no .message.
+  const evilSystem = {
+    id: 'sys-fixture-evil',
+    uid: null,
+    name: null,
+    description: null,
+    get lon() {
+      throw 'not an Error instance';
     },
-    getFois() {
-      if (throwSync) throw new Error('fois threw synchronously');
-      return Promise.resolve({ keyRequired: false, fois: [], truncated: false });
-    },
+    lat: 1,
+    alt: 0,
   };
-  const layer = createOshLayer({ source });
-  const { viewer } = fakeViewer();
-  layer.init(viewer);
-  layer.enable(viewer);
-  await layer.update(viewer);
-  assert.equal(layer.getStats().error, 'fois threw synchronously');
-  throwSync = false;
-  await layer.update(viewer);
-  assert.equal(layer.getStats().error, null, 'a later successful update must clear the earlier error');
-  layer.destroy(viewer);
-});
-
-test('[osh-029] a synchronous throw on a superseded update does not overwrite the newer call\'s own error', async () => {
-  // getFois() is called once per update(). Its first call, for the outer
-  // (older) update, synchronously starts a second, reentrant update()
-  // before it throws. That reentrant update makes its own getFois() call
-  // straight away — the second call below — which throws its own,
-  // distinct error and is caught first, entirely inside the first call's
-  // stack, because nothing here is asynchronous. By the time the older
-  // call's own throw reaches its catch, the reentrant call already owns
-  // _request and has aborted the older call's signal — so the older call
-  // is stale, and its throw must not overwrite the reentrant call's
-  // already-recorded error.
-  let reentered = false;
-  let layer;
-  const source = {
-    async getSystems() {
-      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
-    },
-    getFois() {
-      if (!reentered) {
-        reentered = true;
-        void layer.update(viewer);
-        throw new Error('the older, now-superseded call throws this');
-      }
-      throw new Error('the newer, current call throws this');
-    },
-  };
-  const { viewer } = fakeViewer();
-  layer = createOshLayer({ source });
-  layer.init(viewer);
-  layer.enable(viewer);
-  await layer.update(viewer);
-  assert.equal(
-    layer.getStats().error,
-    'the newer, current call throws this',
-    'the superseded call\'s throw must not overwrite the newer call\'s own error',
-  );
-  layer.destroy(viewer);
-});
-
-test('[osh-029] a synchronous throw of a non-Error still sets the fallback error message', async () => {
-  const source = {
-    async getSystems() {
-      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
-    },
-    getFois() {
-      throw { not: 'an Error instance' };
-    },
-  };
+  const source = fakeSource({ systems: [evilSystem] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
   layer.init(viewer);
@@ -1335,7 +1302,7 @@ test('[osh-029] a synchronous throw of a non-Error still sets the fallback error
   layer.destroy(viewer);
 });
 
-test('[osh-031] a moved marker with no altitude in the newest result defaults to zero', async () => {
+test('[osh-031] a moved entity with no altitude in the newest result defaults to zero', async () => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],

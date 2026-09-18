@@ -10,10 +10,9 @@ Origin: spec-first
 
 #### Scenario: Keep one upstream call site `osh-005`
 - **WHEN** the test discovers every file that matches `server/providers/osh/*.js` and every file that matches `src/data/osh*.js`
-- **AND** the test fails when the first set is not four files, or when the second set is not five files
-- **AND** these two counts are pinned
 - **AND** it reads, as text, `server/providers/osh.js`, the discovered files, and `server/providers/common/http.js`
-- **THEN** only `server/providers/osh/get.js` contains a call to `fetch` or `fetchImpl`
+- **THEN** the first discovered set is four files and the second is five files, both pinned counts
+- **AND** only `server/providers/osh/get.js` contains a call to `fetch` or `fetchImpl`
 - **AND** `get.js` sets `method: 'GET'` and `redirect: 'manual'` on that call
 - **AND** no file has `post`, `put`, `patch` or `delete` as a quoted string, in any letter case, and no file has a `body:` key
 - **AND** no file imports `node:http`, `node:https`, `undici` or `ws`
@@ -88,6 +87,7 @@ Origin: spec-first
 - **THEN** the map holds one entity with the id `osh:<id>` for each placed system, and none for a system with no `Point`
 - **AND** `getStats()` reports `count`, `features`, `lastUpdate`, `error`, `keyRequired`, `stale`, `unplaced`, `truncated`, `partial`, `selectedId` and `selectedFeatureId`
 - **AND** a failed systems fetch sets `error` and leaves the entities unchanged
+- **AND** a failure while the layer places or draws the entities also sets `error`, and the update resolves to `false`
 - **AND** a `keyRequired` answer clears the entities
 - **AND** `disable()` hides the data source, and only `destroy()` removes it
 
@@ -182,6 +182,7 @@ Origin: spec-first
 - **WHEN** the layer updates with feature records
 - **THEN** the map holds one entity with the id `osh-foi:<id>` for each feature, with a point
 - **AND** the entity's label shows only within 200 km
+- **AND** a feature with no name gets no label
 - **AND** `getStats().features` counts the feature entities
 - **AND** a click on a feature entity sets `selectedFeatureId` to the feature and `selectedId` to its host id
 - **AND** that click starts the host's datastream poll, whether or not the host is in the systems list
@@ -204,6 +205,7 @@ Origin: spec-first
 - **AND** `assertSystemDatastreamsUrl()` throws for another origin, another prefix, an extra path segment or another query
 - **AND** the route calls this fixed pair of functions directly, with no way for a caller to replace either one
 - **AND** `mapOshFois()` keeps a `systemId` outside the pattern as null
+- **AND** an absent `system` key is not a refusal: the route serves the global list and `readSystemId()` answers null
 
 #### Scenario: Serve the datastreams of one system, cached per id `osh-048`
 - **WHEN** a client sends `GET /api/osh/datastreams?system=sys-fixture-1` and the upstream page walk succeeds

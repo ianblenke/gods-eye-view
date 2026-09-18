@@ -7,7 +7,7 @@ export { renderOshDetail, writeOshDetail } from './detail.js';
 /** Poll interval for the datastreams and observations of a selected system. */
 const POLL_INTERVAL_MS = 15_000;
 /** A feature label shows only within this distance of the camera. */
-export const FEATURE_LABEL_DISTANCE_METERS = 200_000;
+const FEATURE_LABEL_DISTANCE_METERS = 200_000;
 
 function systemEntityId(systemId) {
   return `osh:${systemId}`;
@@ -204,6 +204,25 @@ export function createOshLayer({ source, detailHost = null } = {}) {
     _partial = false;
   }
 
+  /**
+   * Calling an async function always returns a promise: a synchronous
+   * throw inside it becomes a rejection, never a throw the caller sees.
+   * This keeps a source that throws instead of rejecting from escaping
+   * `Promise.allSettled` and killing the whole refresh — the required
+   * systems read and the optional features read must fail the same way
+   * whether the source rejects or throws.
+   */
+  async function callSourceGetSystems(signal) {
+    return source.getSystems({ signal });
+  }
+
+  async function callSourceGetFois(signal) {
+    if (typeof source.getFois !== 'function') {
+      return { keyRequired: false, fois: [], truncated: false };
+    }
+    return source.getFois({ signal });
+  }
+
   const layer = {
     id: 'osh-systems',
     name: 'OSH SYSTEMS',
@@ -245,10 +264,8 @@ export function createOshLayer({ source, detailHost = null } = {}) {
       };
       try {
         const [systemsSettled, foisSettled] = await Promise.allSettled([
-          source.getSystems({ signal: request.signal }),
-          typeof source.getFois === 'function'
-            ? source.getFois({ signal: request.signal })
-            : Promise.resolve({ keyRequired: false, fois: [], truncated: false }),
+          callSourceGetSystems(request.signal),
+          callSourceGetFois(request.signal),
         ]);
         if (request.signal.aborted || _request !== request || !_enabled) {
           release();
@@ -386,9 +403,14 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         release();
         return true;
       } catch (error) {
-        const stale = request.signal.aborted || _request !== request || !_enabled;
+        // Both getters now fail through Promise.allSettled, so nothing
+        // before this point can throw. By the time the code below can
+        // throw — placeOshEntities(), or Cesium building an entity — the
+        // explicit staleness check above has already run and passed, and
+        // nothing async happens between that check and here. So a stale
+        // update never reaches this catch; there is no staleness left to
+        // re-check.
         release();
-        if (stale) return false;
         _lastError = error?.message || 'OSH source unavailable';
         return false;
       }
