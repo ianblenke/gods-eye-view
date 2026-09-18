@@ -916,6 +916,7 @@
   "osh-layer": {
     "exports": ["./layers/osh"],
     "modules": [
+      "src/data/oshSystems.js",
       "src/layers/osh/detail.js",
       "src/layers/osh/index.js",
       "src/layers/osh/source.js"
