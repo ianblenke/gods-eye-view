@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "id": "ds-fixture-3",
+      "name": "Fixture Datastream Three",
+      "outputName": "location",
+      "system@id": "sys-fixture-4"
+    },
+    {
+      "id": "ds-fixture-4",
+      "name": "Fixture Datastream Four",
+      "outputName": "location",
+      "system@id": "sys-fixture-1"
+    }
+  ]
+}
