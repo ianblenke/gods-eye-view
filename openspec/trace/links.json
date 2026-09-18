@@ -526,7 +526,9 @@
     "src/data/oshBase.test.mjs › [osh-012] base_unresolved when no failure carries 401 or 403",
     "src/data/oshBase.test.mjs › [osh-012] reports failure with candidate:null when every candidate misses, and holds before a retry",
     "src/data/oshProxy.test.mjs › [osh-012] the datastreams route answers base_unresolved and auth_failed as appropriate",
-    "src/data/oshProxy.test.mjs › [osh-012] the observations route reports base_unresolved when the root cannot be resolved"
+    "src/data/oshProxy.test.mjs › [osh-012] the fois route reports base_unresolved when the root cannot be resolved",
+    "src/data/oshProxy.test.mjs › [osh-012] the observations route reports base_unresolved when the root cannot be resolved",
+    "src/data/oshProxy.test.mjs › [osh-012] the per-system datastreams route reports base_unresolved when the root cannot be resolved"
   ],
   "osh-013": [
     "src/data/oshGet.test.mjs › [osh-013] cancels the body of a redirected response, and ignores a cancel failure",
@@ -594,12 +596,14 @@
   ],
   "osh-024": [
     "src/data/oshSystems.test.mjs › [osh-024] accepts the items key and the features key",
+    "src/data/oshSystems.test.mjs › [osh-024] gives null lon, lat and alt for a non-finite coordinate",
+    "src/data/oshSystems.test.mjs › [osh-024] gives null lon, lat and alt for no geometry, a non-Point geometry, or no coordinates",
     "src/data/oshSystems.test.mjs › [osh-024] ignores non-string property values",
-    "src/data/oshSystems.test.mjs › [osh-024] maps a feature list to system records and skips a system without a point",
+    "src/data/oshSystems.test.mjs › [osh-024] keeps the first record of a repeated id",
+    "src/data/oshSystems.test.mjs › [osh-024] maps a feature list to system records, keeping a system with no point",
     "src/data/oshSystems.test.mjs › [osh-024] returns an empty list for a malformed payload",
-    "src/data/oshSystems.test.mjs › [osh-024] skips a feature with a non-finite coordinate",
-    "src/data/oshSystems.test.mjs › [osh-024] skips a feature with a non-string id and tolerates absent or non-object properties",
-    "src/data/oshSystems.test.mjs › [osh-024] skips a feature with no id, a non-object entry, or a non-Point geometry"
+    "src/data/oshSystems.test.mjs › [osh-024] skips a feature with no id, a non-object entry, or a non-string id",
+    "src/data/oshSystems.test.mjs › [osh-024] tolerates absent or non-object properties"
   ],
   "osh-025": [
     "src/data/oshDatastreams.test.mjs › [osh-025] accepts the datastreams key and the items key",
@@ -638,9 +642,11 @@
     "src/layers/osh/source.test.mjs › [osh-028] a cancelled observation read never publishes the response",
     "src/layers/osh/source.test.mjs › [osh-028] a payload without the expected array throws",
     "src/layers/osh/source.test.mjs › [osh-028] another non-ok status throws",
-    "src/layers/osh/source.test.mjs › [osh-028] reports key required on the systems, datastreams and observation getters",
+    "src/layers/osh/source.test.mjs › [osh-028] reports key required on the systems, datastreams, fois and observation getters",
     "src/layers/osh/source.test.mjs › [osh-028] returns the systems and datastreams records unchanged",
+    "src/layers/osh/source.test.mjs › [osh-028] the datastreams getter sends a given system id as the system query parameter, and sends no such key when none is given",
     "src/layers/osh/source.test.mjs › [osh-028] the default fetch implementation calls the global fetch",
+    "src/layers/osh/source.test.mjs › [osh-028] the fois getter passes truncated through, and defaults it to false",
     "src/layers/osh/source.test.mjs › [osh-028] the observations getter passes the id as a query parameter"
   ],
   "osh-029": [
@@ -649,7 +655,12 @@
     "src/data/osh.test.mjs › [osh-029] the default export is a wired OSH layer",
     "src/data/oshLayer.test.mjs › [osh-029] a failed fetch sets the error and does not change the entities",
     "src/data/oshLayer.test.mjs › [osh-029] a second update aborts the first, whose late result is discarded even without a thrown AbortError",
+    "src/data/oshLayer.test.mjs › [osh-029] a source whose features getter throws synchronously, not a rejected promise, still sets the error",
     "src/data/oshLayer.test.mjs › [osh-029] a superseded update that throws a real error still lets the newer request finish",
+    "src/data/oshLayer.test.mjs › [osh-029] a synchronous throw does not stick: a later, successful update clears the error",
+    "src/data/oshLayer.test.mjs › [osh-029] a synchronous throw of a non-Error still sets the fallback error message",
+    "src/data/oshLayer.test.mjs › [osh-029] a synchronous throw on a superseded update does not overwrite the newer call's own error",
+    "src/data/oshLayer.test.mjs › [osh-029] a system with no Point gets no entity, and counts toward unplaced",
     "src/data/oshLayer.test.mjs › [osh-029] a system with no name gets a point marker and no label",
     "src/data/oshLayer.test.mjs › [osh-029] a thrown non-Error still sets a fallback error message",
     "src/data/oshLayer.test.mjs › [osh-029] aborts an update in flight on destroy",
@@ -658,12 +669,13 @@
     "src/data/oshLayer.test.mjs › [osh-029] init cannot run twice",
     "src/data/oshLayer.test.mjs › [osh-029] keyRequired clears the entities and reports keyRequired:true",
     "src/data/oshLayer.test.mjs › [osh-029] reports getStats().stale from a stale systems fetch",
-    "src/data/oshLayer.test.mjs › [osh-029] shows one entity per system and reports stats",
+    "src/data/oshLayer.test.mjs › [osh-029] shows one entity per system and reports stats, including the new fields",
     "src/data/oshLayer.test.mjs › [osh-029] throws without a systems source",
     "src/data/oshLayer.test.mjs › [osh-029] update does nothing before init and while disabled"
   ],
   "osh-030": [
     "src/data/oshLayer.test.mjs › [osh-030] a failed datastreams or observation fetch during a poll does not throw, and the next poll still runs",
+    "src/data/oshLayer.test.mjs › [osh-030] a fresh observation with a location does not throw when the selected system has no entity",
     "src/data/oshLayer.test.mjs › [osh-030] a keyRequired datastreams response during a poll stops that poll cycle",
     "src/data/oshLayer.test.mjs › [osh-030] a picked entity whose id is a plain string is also read",
     "src/data/oshLayer.test.mjs › [osh-030] a poll superseded mid-loop while it waits for an observation stops the detail rows",
@@ -671,21 +683,27 @@
     "src/data/oshLayer.test.mjs › [osh-030] a second click handler install does nothing, and a second click on the same system does not restart the poll",
     "src/data/oshLayer.test.mjs › [osh-030] deselects on a click on empty space or on a non-osh entity",
     "src/data/oshLayer.test.mjs › [osh-030] polls the datastreams of a selected system, again every 15 seconds",
-    "src/data/oshLayer.test.mjs › [osh-030] stops the poll of the selected system when the layer disables"
+    "src/data/oshLayer.test.mjs › [osh-030] stops the poll of the selected system when the layer disables",
+    "src/data/oshLayer.test.mjs › [osh-030] the poll passes the selected system id to the datastreams getter, and drops a record naming another system"
   ],
   "osh-031": [
     "src/data/oshLayer.test.mjs › [osh-031] a moved marker with no altitude in the newest result defaults to zero",
     "src/data/oshLayer.test.mjs › [osh-031] a newest result with a location moves the entity, and a systems refresh keeps the moved position",
-    "src/data/oshLayer.test.mjs › [osh-031] a newest result without a location leaves the marker where it was",
-    "src/data/oshLayer.test.mjs › [osh-031] a system dropped from a later systems fetch clears the selection"
+    "src/data/oshLayer.test.mjs › [osh-031] a newest result without a location leaves the marker where it was"
   ],
   "osh-032": [
     "src/layers/osh/detail.test.mjs › [osh-032] a system with no datastreams still renders the system header",
+    "src/layers/osh/detail.test.mjs › [osh-032] a system-only selection still renders the plain system header, with no feature block",
+    "src/layers/osh/detail.test.mjs › [osh-032] falls back to the feature id when the feature has no name",
+    "src/layers/osh/detail.test.mjs › [osh-032] falls back to the host system id when the host record has no name",
     "src/layers/osh/detail.test.mjs › [osh-032] renders \"No data\" for a datastream with no rows, and falls back to the id",
     "src/layers/osh/detail.test.mjs › [osh-032] renders a null row value as an empty string",
     "src/layers/osh/detail.test.mjs › [osh-032] renders an empty string for no selection",
     "src/layers/osh/detail.test.mjs › [osh-032] renders no rows and no time when there is no observation yet",
     "src/layers/osh/detail.test.mjs › [osh-032] renders the system and its datastreams with escaped values",
+    "src/layers/osh/detail.test.mjs › [osh-032] shows Host: — when the feature has no host",
+    "src/layers/osh/detail.test.mjs › [osh-032] shows the feature name above the host name, when the selection came from a feature with a known host",
+    "src/layers/osh/detail.test.mjs › [osh-032] shows the host id when the host has no record",
     "src/layers/osh/detail.test.mjs › [osh-032] the function does nothing when there is no host",
     "src/layers/osh/detail.test.mjs › [osh-032] the host innerHTML receives the rendered detail, and an empty selection clears it"
   ],
@@ -694,7 +712,7 @@
   ],
   "osh-034": [
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] .env.example has the three OSH keys, each with an empty value",
-    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] every system and datastream fixture id starts with sys-fixture- or ds-fixture-",
+    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] every system, datastream and feature fixture id starts with sys-fixture-, ds-fixture- or foi-fixture-",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] no OSH test file has a real address",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the bare-host check catches a real-looking host pasted with no scheme",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the provider, adapter and layer files have no real address"
@@ -736,6 +754,78 @@
     "src/data/oshProxy.test.mjs › [osh-040] the format stays on every page of a multi-page systems walk",
     "src/data/oshProxy.test.mjs › [osh-040] the next-page walk keeps the provider's own format, even when a server writes a different f value",
     "src/data/oshProxy.test.mjs › [osh-040] the walk still ends at the provider's own format, even when a next link's f value is different but valid"
+  ],
+  "osh-041": [
+    "src/data/oshFois.test.mjs › [osh-041] a malformed payload maps to an empty list",
+    "src/data/oshFois.test.mjs › [osh-041] accepts the items key, and tolerates absent or non-object properties",
+    "src/data/oshFois.test.mjs › [osh-041] gives a null systemId for a link that is not systems/<id>",
+    "src/data/oshFois.test.mjs › [osh-041] ignores non-string property values",
+    "src/data/oshFois.test.mjs › [osh-041] keeps the first record of a repeated id",
+    "src/data/oshFois.test.mjs › [osh-041] maps the fixture feature list, dropping the null-geometry node",
+    "src/data/oshFois.test.mjs › [osh-041] skips a feature with no Point, or a coordinate that is not finite",
+    "src/data/oshFois.test.mjs › [osh-041] skips a feature with no string id"
+  ],
+  "osh-042": [
+    "src/data/oshSystems.test.mjs › [osh-042] a feature never places its host system, and a system never places a feature",
+    "src/data/oshSystems.test.mjs › [osh-042] defaults both lists to empty",
+    "src/data/oshSystems.test.mjs › [osh-042] places a system with a Point, and adds a system with no Point to unplaced",
+    "src/data/oshSystems.test.mjs › [osh-042] places every feature record at its own point, with its systemId"
+  ],
+  "osh-043": [
+    "src/data/oshProxy.test.mjs › [osh-043] a failed walk with no earlier snapshot answers 502 with upstream_failed",
+    "src/data/oshProxy.test.mjs › [osh-043] serves the feature list, shaped and cached like the other lists",
+    "src/data/oshProxy.test.mjs › [osh-043] shares one walk between concurrent requests, and serves the stale snapshot on failure"
+  ],
+  "osh-044": [
+    "src/data/oshGet.test.mjs › [osh-044] a maxPages option raises the cap, and the walk never requests a page past it",
+    "src/data/oshGet.test.mjs › [osh-044] a walk that ends exactly at the cap with no further next link reports truncated:false",
+    "src/data/oshGet.test.mjs › [osh-044] the default page cap is 20, and the walk reports truncated when a next link remains at the cap",
+    "src/data/oshGet.test.mjs › [osh-044] truncated is false when the walk stops for a refused link, or for no next link",
+    "src/data/oshProxy.test.mjs › [osh-044] the fois route reports truncated when the walk stopped with a next link still named"
+  ],
+  "osh-045": [
+    "src/data/oshLayer.test.mjs › [osh-045] a click on a feature selects and polls its host, whether or not the host is in the systems list",
+    "src/data/oshLayer.test.mjs › [osh-045] a click on a feature with a null host selects the feature, leaves selectedId null, and starts no poll",
+    "src/data/oshLayer.test.mjs › [osh-045] a click on a stale feature entity selects that feature id, with no host and no name",
+    "src/data/oshLayer.test.mjs › [osh-045] a feature with no name gets a point entity and no label",
+    "src/data/oshLayer.test.mjs › [osh-045] a selected feature that is still present after a later refresh keeps its selection",
+    "src/data/oshLayer.test.mjs › [osh-045] finds a feature record by id and by uid, with no per-feature fetch method on the source",
+    "src/data/oshLayer.test.mjs › [osh-045] shows one entity per feature, with a label distance condition, and getStats().features counts them"
+  ],
+  "osh-046": [
+    "src/data/oshLayer.test.mjs › [osh-046] a fois getter that resolves keyRequired:true, while the systems getter does not, gives an empty feature list",
+    "src/data/oshLayer.test.mjs › [osh-046] a server with no Point and no feature gives count:0, features:0, error:null and partial:false",
+    "src/data/oshLayer.test.mjs › [osh-046] an update aborted before both reads settle draws nothing from them",
+    "src/data/oshLayer.test.mjs › [osh-046] the features getter throwing sets partial:true and no error, and the systems still place",
+    "src/data/oshLayer.test.mjs › [osh-046] truncated is true when the features payload says so"
+  ],
+  "osh-047": [
+    "src/data/oshFois.test.mjs › [osh-047] mapOshFois() keeps a systemId outside the id pattern as null",
+    "src/data/oshIds.test.mjs › [osh-047] assertSystemDatastreamsUrl() throws for another origin, prefix, segment or query",
+    "src/data/oshIds.test.mjs › [osh-047] readSystemId() accepts a value that matches the id pattern",
+    "src/data/oshIds.test.mjs › [osh-047] readSystemId() refuses an absent, empty or repeated system parameter, and every rejected value",
+    "src/data/oshIds.test.mjs › [osh-047] systemDatastreamsUrl() builds the fixed systems/<id>/datastreams URL, with the id never in the query",
+    "src/data/oshProxy.test.mjs › [osh-047] a request with no system key at all serves the global datastreams list, as osh-016 says",
+    "src/data/oshProxy.test.mjs › [osh-047] the datastreams route rejects an empty, repeated or malformed system id with no upstream call"
+  ],
+  "osh-048": [
+    "src/data/oshObservationsProxy.test.mjs › [osh-048] createOshKeyedCache() does not refetch inside the TTL",
+    "src/data/oshObservationsProxy.test.mjs › [osh-048] createOshKeyedCache() keeps at most maxEntries ids",
+    "src/data/oshObservationsProxy.test.mjs › [osh-048] createOshKeyedCache() never shares one entry between two different keys",
+    "src/data/oshObservationsProxy.test.mjs › [osh-048] createOshKeyedCache() serves the stale value on a failed refresh, when an earlier snapshot exists",
+    "src/data/oshObservationsProxy.test.mjs › [osh-048] createOshSystemDatastreamsCache() also accepts the secondary datastreams list key",
+    "src/data/oshObservationsProxy.test.mjs › [osh-048] createOshSystemDatastreamsCache() maps an empty body to an empty list",
+    "src/data/oshObservationsProxy.test.mjs › [osh-048] createOshSystemDatastreamsCache() serves the datastreams of one system, built from mapOshDatastreams()",
+    "src/data/oshObservationsProxy.test.mjs › [osh-048] createOshSystemDatastreamsCache() serves the stale snapshot on a failed walk, and rethrows with none",
+    "src/data/oshObservationsProxy.test.mjs › [osh-048] createOshSystemDatastreamsCache() shares one walk per id inside the TTL, and gives a second id its own",
+    "src/data/oshProxy.test.mjs › [osh-048] caches the per-system datastreams per id, and the status route reports the cache size",
+    "src/data/oshProxy.test.mjs › [osh-048] serves the stale snapshot for a system on a failed walk, and 502 with none",
+    "src/data/oshProxy.test.mjs › [osh-048] the per-system datastreams route records the fixed URL, with no f key"
+  ],
+  "osh-049": [
+    "src/data/oshLayer.test.mjs › [osh-049] a selected feature dropped from the next refresh clears the feature and its host, and stops the poll",
+    "src/data/oshLayer.test.mjs › [osh-049] disable() does not clear the system union: a keyRequired answer and destroy() are the only ways to empty it",
+    "src/data/oshLayer.test.mjs › [osh-049] the system map is a union across refreshes"
   ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
