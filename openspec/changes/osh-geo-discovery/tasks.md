@@ -2,7 +2,7 @@
 
 - [x] 1.1 Write `specs/osh/spec.md` with the ledger's MODIFIED, ADDED and carried scenarios.
   - Name each carried id: `osh-004`, `osh-006`, `osh-025`, `osh-026`, `osh-027`, `osh-031`, `osh-033`.
-- [x] 1.2 Write `proposal.md`: the Why as a mechanism, the two marker kinds, the Impact, the known limits.
+- [x] 1.2 Write `proposal.md`: the Why as a mechanism, the two entity kinds, the Impact, the known limits.
   - No count from the owner's server.
 - [x] 1.3 Write `design.md` with D29 to D34 and the request shape.
 - [x] 1.4 Write `tasks.md` from this list, with a rules-out line under each test task.

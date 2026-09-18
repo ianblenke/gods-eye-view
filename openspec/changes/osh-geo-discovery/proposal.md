@@ -1,8 +1,8 @@
 ## Why
 
-The layer reads `/systems` and keeps an entity only for a system with a top-level `Point`. A system with a top-level `Point` is rare on the owner's server, so the layer draws almost nothing.
+The layer reads `/systems` and keeps an entity only for a system with a top-level `Point`. A system with a top-level `Point` is rare on the owner's server, so most refreshes place no system entity at all.
 
-The places the owner wants are feature entities. These are the nodes of a mesh. Each node is a feature of interest with a `Point`. One system hosts each feature, through a link. A client that reads only `/systems` never sees a feature.
+The places the owner wants are feature entities: the points of a radio mesh. Each is a feature of interest with a `Point`. One system hosts each feature, through a link. A client that reads only `/systems` never sees a feature.
 
 A client reaches a feature only through the feature list. The server refuses a feature fetched by id with a redirect.
 

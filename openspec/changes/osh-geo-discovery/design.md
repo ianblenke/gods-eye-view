@@ -1,6 +1,6 @@
 ## Context
 
-The systems layer draws an entity only for a system with a top-level `Point`. A system with a top-level `Point` is rare on the owner's server. The places the owner wants are the nodes of a radio mesh. Each node is a feature of interest with a `Point`. One host system hosts each feature, through a link.
+The systems layer draws an entity only for a system with a top-level `Point`. A system with a top-level `Point` is rare on the owner's server. The places the owner wants are the points of a radio mesh. Each is a feature of interest with a `Point`. One host system hosts each feature, through a link.
 
 A client reaches a feature only through the feature list. The server answers a redirect for a feature fetched by id. This provider refuses a redirect by design.
 
@@ -43,7 +43,7 @@ The walk answers an item list and a truncated flag. The route and the layer stat
 - **The system map is a union:** each refresh adds the systems it sampled. It removes none, because the list samples. A system seen once keeps its record and its entity for the life of the layer. Only a key-required answer and `destroy()` clear the map; `disable()` hides the entities but does not clear it. A refresh that omits the selected system does not clear the selection. The shipped layer does clear it, and on a sampling server that ends nearly every poll at the next refresh.
 - **The feature map is not a union:** the feature list is stable, so a feature absent from a refresh is gone. Its entity, and any selection of it, go with it. Both maps hold only features with a `Point`, because `mapOshFois()` keeps only those. A feature with no `Point` is known to the server and unplaced here. A later observation that names it moves nothing.
 - **Selection:** a click on a feature selects the feature and its host together, as a feature id and a system id. The host's datastream poll runs as today. A feature whose host is not in the systems list still selects that host id, and the detail shows the id. A click on empty space clears both.
-- **Motion:** unchanged in this change. The poll moves the selected system's entity as `osh-031` says today. A host system with no entity of its own has nothing to move. A later change replaces this rule.
+- **Motion:** the poll's motion rule does not change here. The poll moves the selected system's entity as `osh-031` says today. A host system with no entity of its own has nothing to move. A later change replaces this rule.
 
 ### D32 The merge runs in the browser, in a pure function
 
@@ -55,7 +55,7 @@ The layer reads the systems and the features per refresh together, with `Promise
 
 `mapOshSystems()` reads a GeoJSON `FeatureCollection`. It keeps a record for every entry with a string id. It keeps the first record of a repeated id, because one walk can serve a system twice. No `Point`, or a coordinate that is not finite, gives a null position. A host system with no `Point` still needs its name, for the detail of every feature it hosts.
 
-An entry with no geometry is the common case in the feature-of-interest list, not an error. `mapOshFois()` drops such an entry with no log line. Most entries in that list carry no `Point`; the entity count reflects only the ones that do.
+An entry with no geometry is the common case in the feature-of-interest list, not an error. `mapOshFois()` drops such an entry with no log line. The entity count reflects only the entries that carry a `Point`, never the size of the list itself.
 
 ### D33a The selected system reads its own datastreams
 
