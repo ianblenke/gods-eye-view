@@ -46,6 +46,9 @@ export function createGoogleGeocoder({ request }) {
         if (response.ok === false) return { place: null, answered: false };
         const data = await response.json();
         signal?.throwIfAborted();
+        // The server holds the key; a keyless server answers this shape
+        // instead of a Google result, and did not contribute a verdict.
+        if (data?.configured === false) return { place: null, answered: true };
         if (
           data?.status === 'ZERO_RESULTS' &&
           Array.isArray(data.results) &&
