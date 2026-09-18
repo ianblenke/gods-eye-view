@@ -22,7 +22,7 @@ function featureEntityId(featureId) {
  * system's datastream poll and the entity it moves when a newest result
  * carries a location.
  * @param {object} options
- * @param {{getSystems: Function, getDatastreams: Function, getObservation: Function, getFois?: Function}} options.source
+ * @param {{getSystems: Function, getDatastreams: Function, getObservation: Function, getFois?: Function, getLocations?: Function}} options.source
  * @param {?{innerHTML: string}} [options.detailHost]
  */
 export function createOshLayer({ source, detailHost = null } = {}) {
@@ -46,11 +46,20 @@ export function createOshLayer({ source, detailHost = null } = {}) {
   let _clickHandler = null;
   let _pollTimer = null;
   let _pollGeneration = 0;
+  let _placedStreamCount = 0;
   /** Union across refreshes: a system seen once keeps its record. */
   const _systemRecords = new Map();
   /** Replaced whole on every refresh: the feature list is stable, not sampled. */
   let _featureRecordsById = new Map();
   let _featureRecordsByUid = new Map();
+  /**
+   * Ids of systems placed only by a fresh stream location, with no record
+   * in `_systemRecords` — a placeholder that never enters the union map
+   * (design decision D48). Tracked here, not in `_systemRecords`, so the
+   * layer can count one under `unplaced` at the refresh its stream goes
+   * stale, the one refresh it is still known.
+   */
+  let _placeholderStreamIds = new Set();
 
   function writeDetail(detail) {
     writeOshDetail(detailHost, detail);
@@ -193,8 +202,10 @@ export function createOshLayer({ source, detailHost = null } = {}) {
     _systemRecords.clear();
     _featureRecordsById = new Map();
     _featureRecordsByUid = new Map();
+    _placeholderStreamIds = new Set();
     _count = 0;
     _featuresCount = 0;
+    _placedStreamCount = 0;
     _lastUpdate = null;
     _lastError = null;
     _keyRequired = false;
@@ -221,6 +232,18 @@ export function createOshLayer({ source, detailHost = null } = {}) {
       return { keyRequired: false, fois: [], truncated: false };
     }
     return source.getFois({ signal });
+  }
+
+  /**
+   * The locations read carries no candidate of the layer's own choosing —
+   * source.getLocations() takes no argument but `signal`, and the server
+   * finds every candidate itself (design decision D46). See osh-046.
+   */
+  async function callSourceGetLocations(signal) {
+    if (typeof source.getLocations !== 'function') {
+      return { keyRequired: false, locations: [], failed: 0 };
+    }
+    return source.getLocations({ signal });
   }
 
   const layer = {
@@ -263,9 +286,10 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         if (_request === request) _request = null;
       };
       try {
-        const [systemsSettled, foisSettled] = await Promise.allSettled([
+        const [systemsSettled, foisSettled, locationsSettled] = await Promise.allSettled([
           callSourceGetSystems(request.signal),
           callSourceGetFois(request.signal),
+          callSourceGetLocations(request.signal),
         ]);
         if (request.signal.aborted || _request !== request || !_enabled) {
           release();
@@ -290,7 +314,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
 
         for (const record of result.systems) _systemRecords.set(record.id, record);
 
-        const partial = foisSettled.status === 'rejected';
+        const partial = foisSettled.status === 'rejected' || locationsSettled.status === 'rejected';
         let featureRecords = [];
         let truncated = false;
         if (foisSettled.status === 'fulfilled' && !foisSettled.value.keyRequired) {
@@ -303,17 +327,43 @@ export function createOshLayer({ source, detailHost = null } = {}) {
           if (record.uid) _featureRecordsByUid.set(record.uid, record);
         }
 
+        let locationRecords = [];
+        if (locationsSettled.status === 'fulfilled' && !locationsSettled.value.keyRequired) {
+          locationRecords = locationsSettled.value.locations;
+        }
+
         const placed = placeOshEntities({
           systems: [..._systemRecords.values()],
           fois: featureRecords,
+          locations: locationRecords,
         });
-        _unplaced = placed.unplaced.length;
 
         const now = Cesium.JulianDate.now();
         const selectedSystemEntity = _selectedId
           ? _dataSource.entities.getById(systemEntityId(_selectedId))
           : null;
         const selectedPosition = selectedSystemEntity?.position?.getValue(now) ?? null;
+
+        // The lifecycle of a stream-placed placeholder (design decision
+        // D48, osh-057): a system with no record in the union map, placed
+        // only from a fresh location. When its next refresh has no fresh
+        // location for it, it is gone from placed.systems, and this
+        // refresh — not any later one — is the one that counts it under
+        // unplaced, unless it is the current selection.
+        const placedIds = new Set(placed.systems.map((record) => record.id));
+        const newPlaceholderIds = new Set(
+          placed.systems
+            .filter((record) => record.locationSource === 'stream' && !_systemRecords.has(record.id))
+            .map((record) => record.id),
+        );
+        let retiredPlaceholders = 0;
+        for (const id of _placeholderStreamIds) {
+          if (newPlaceholderIds.has(id) || placedIds.has(id) || id === _selectedId) continue;
+          retiredPlaceholders += 1;
+        }
+        _placeholderStreamIds = newPlaceholderIds;
+        _unplaced = placed.unplaced.length + retiredPlaceholders;
+        _placedStreamCount = placed.systems.filter((record) => record.locationSource === 'stream').length;
 
         _dataSource.entities.removeAll();
 
@@ -323,6 +373,11 @@ export function createOshLayer({ source, detailHost = null } = {}) {
             isSelected && selectedPosition
               ? selectedPosition
               : Cesium.Cartesian3.fromDegrees(record.lon, record.lat, record.alt || 0);
+          const isPlaceholder = record.locationSource === 'stream' && !_systemRecords.has(record.id);
+          // A held record's own name wins; a placeholder falls back to
+          // the pass's own name for the system; with neither, the id is
+          // the label — a degraded, visible state, not the design.
+          const labelText = record.name || (isPlaceholder ? record.streamSystemName || record.id : null);
           _dataSource.entities.add(
             new Cesium.Entity({
               id: systemEntityId(record.id),
@@ -333,9 +388,9 @@ export function createOshLayer({ source, detailHost = null } = {}) {
                 outlineColor: Cesium.Color.BLACK,
                 outlineWidth: 1,
               },
-              label: record.name
+              label: labelText
                 ? {
-                    text: record.name,
+                    text: labelText,
                     font: '12px sans-serif',
                     pixelOffset: new Cesium.Cartesian2(0, -16),
                   }
@@ -344,7 +399,29 @@ export function createOshLayer({ source, detailHost = null } = {}) {
                 uid: record.uid,
                 name: record.name,
                 description: record.description,
+                locationSource: record.locationSource,
               },
+            }),
+          );
+        }
+
+        // The selected system's entity stays at its last position while
+        // it drops out of this refresh's placement entirely — a stale
+        // stream, or a placeholder whose stream went quiet — until it is
+        // deselected (osh-057, mirroring osh-031's rule for the union).
+        if (_selectedId && !placedIds.has(_selectedId) && selectedSystemEntity && selectedPosition) {
+          _dataSource.entities.add(
+            new Cesium.Entity({
+              id: systemEntityId(_selectedId),
+              position: selectedPosition,
+              point: {
+                pixelSize: 10,
+                color: Cesium.Color.LIME,
+                outlineColor: Cesium.Color.BLACK,
+                outlineWidth: 1,
+              },
+              label: selectedSystemEntity.label,
+              properties: selectedSystemEntity.properties,
             }),
           );
         }
@@ -441,6 +518,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         partial: _partial,
         selectedId: _selectedId,
         selectedFeatureId: _selectedFeatureId,
+        placed: { stream: _placedStreamCount },
       };
     },
   };
