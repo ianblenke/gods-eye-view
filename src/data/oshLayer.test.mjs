@@ -1658,3 +1658,22 @@ test('[osh-057] a click on a stream-placed entity selects it and starts its data
   });
   layer.destroy(viewer);
 });
+
+test('[osh-057] the detail for a selected stream-placed placeholder shows Placed by, with the name the location carries', async () => {
+  const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-9');
+    getClick()({ position: {} });
+    await flush();
+    assert.match(detailHost.innerHTML, /Fixture Aircraft/, 'the header falls back to the location\'s own systemName');
+    assert.match(detailHost.innerHTML, /Placed by Aircraft Position/);
+  });
+  layer.destroy(viewer);
+});

@@ -56,14 +56,16 @@
 - [x] 5.4 Write the stream-placement tests: placement and its stat, the label from the pass's own name, the raw-id label only with no name at all, the placeholder kept outside the layer's own union, retirement on staleness, the selected exception, the feature move taking priority over any system placement, the click and the poll on a stream-placed entity.
   - Rules out: a layer that places from geometry only; one that labels every unheld system with its raw id; one that keeps a stale stream's entity; one that puts the placeholder into the union; one that removes a selected entity.
 - [x] 5.5 Change `update()` and the record bookkeeping in `layers/osh/index.js` until 5.3 and 5.4 pass.
-- [x] 5.6 Run the motion and the detail tests already shipped, with no edit — a keep-test, pending the two scenarios `osh-observation-age` still owns.
+- [x] 5.6 Re-run this change's own layer and source tests before the merge below, against a temporary local stub of the freshness function `osh-observation-age` had not yet merged, then revert the stub — a stand-in, not proof, and re-run for real once merged.
 
 ## 6. The two scenarios `osh-observation-age` owns
 
-- [ ] 6.1 Merge `osh-observation-age` into this branch.
-- [ ] 6.2 Quote its base text for the motion scenario and the detail-rendering scenario from the merged tree, and add this change's own line to each: the detail's `Placed by` header for a stream-placed system, and nothing new for motion — the selected system's own poll is unchanged.
-- [ ] 6.3 Change the detail renderer's tests and its code for the `Placed by` line.
-- [ ] 6.4 Confirm the motion tests already shipped need no change.
+- [x] 6.1 Merge `osh-observation-age` into this branch. Three files conflicted; each resolved by keeping both sides' additions.
+- [x] 6.2 Quote `osh-031` and `osh-032`'s base text for this branch's delta with `git show` on the merged tree, verbatim: `osh-031` carried with no change, `osh-032` gaining one line for the `Placed by` header.
+- [x] 6.3 Write the `[osh-032]` detail tests for the `Placed by` line: the name and the age, the em-dash fallback, no line for a geometry-placed system, the id standing in for the name with neither. Change `renderSystemHeader()` in `detail.js` until they pass.
+  - Rules out: a renderer that always shows the line; one that shows the raw age instead of the formatted words; one that omits the id fallback.
+- [x] 6.4 Re-run `[osh-031]`'s own tests with no edit — a keep-test, since motion is unchanged by this branch. Carry the detail-only fields `pollSelected()` now builds (the stream-placed name fallback and the `placedBy` field) with a layer-level test.
+- [x] 6.5 Fix a staleness bug this merge exposed: `/api/osh/locations`' pass cache can serve one fold more than once, so each location's `ageMs` is now recomputed at serve time from its `phenomenonTime`, never trusted from the fold — the same reason `osh-050`'s own route recomputes the single-observation age. New route test proves the age grows between two answers from one cached pass.
 
 ## 7. Gates and review
 

@@ -1159,8 +1159,12 @@ test('[osh-040] the format stays on every page of a multi-page systems walk', as
 // --- osh-055 / osh-056: location discovery and the /locations route ------
 
 const SCHEMA_NO_LOCATION = { resultSchema: { type: 'DataRecord', fields: [] } };
-const SCHEMA_VECTOR = JSON.parse(
-  readFileSync(new URL('./fixtures/osh-schema-vector.json', import.meta.url), 'utf8'),
+// osh-latest-page.json's result rows are the flat shape (`lat`, `lon`,
+// `height` at the result's own top level, no wrapping field), matching
+// osh-schema-flat.json's reader — not osh-schema-vector.json's, which
+// expects those under a `location` field.
+const SCHEMA_FLAT = JSON.parse(
+  readFileSync(new URL('./fixtures/osh-schema-flat.json', import.meta.url), 'utf8'),
 );
 const LATEST_PAGE = JSON.parse(
   readFileSync(new URL('./fixtures/osh-latest-page.json', import.meta.url), 'utf8'),
@@ -1169,9 +1173,9 @@ const LATEST_PAGE = JSON.parse(
 /**
  * A fetchImpl that answers every route the location pass touches. Every
  * candidate's schema answers SCHEMA_NO_LOCATION by default, so the pass
- * never reaches a page read (and so never needs Part B's oshObservationAgeMs,
- * still to be merged) unless a test opts a specific id into
- * `withLocationSchemaIds`.
+ * never reaches a page read unless a test opts a specific id into
+ * `withLocationSchemaIds`, which then answers SCHEMA_FLAT — the shape
+ * osh-latest-page.json's result rows match.
  */
 function locationsFetch({
   filterByUri = {},
@@ -1205,7 +1209,7 @@ function locationsFetch({
     }
     const schemaMatch = parsed.pathname.match(/\/datastreams\/([^/]+)\/schema$/);
     if (schemaMatch) {
-      return jsonResponse(200, withLocationSchemaIds.has(schemaMatch[1]) ? SCHEMA_VECTOR : SCHEMA_NO_LOCATION);
+      return jsonResponse(200, withLocationSchemaIds.has(schemaMatch[1]) ? SCHEMA_FLAT : SCHEMA_NO_LOCATION);
     }
     const latestMatch = parsed.pathname.match(/\/datastreams\/([^/]+)\/observations$/);
     if (latestMatch) return jsonResponse(200, LATEST_PAGE);
@@ -1387,7 +1391,7 @@ test('[osh-056] the observations route reads a candidate schema before it serves
   assert.ok(calls.some((call) => call.url.includes('/datastreams/ds-fixture-1/schema')));
 });
 
-test('[osh-056] the happy path: a candidate with a location-bearing schema yields folded location records (needs osh-observation-age merged for ageMs)', async () => {
+test('[osh-056] a candidate with a location-bearing schema yields folded location records, with ageMs recomputed at serve time', async () => {
   const [uriA] = OSH_DEFAULT_LOCATION_PROPERTIES;
   const proxy = oshProxy({
     env: { OSH_URL: 'https://osh.example/api/' },
@@ -1400,11 +1404,34 @@ test('[osh-056] the happy path: a candidate with a location-bearing schema yield
   const { json } = await callOsh(proxy, { url: '/locations' });
   assert.equal(json.streams, 1);
   assert.equal(json.failed, 0);
-  assert.equal(json.locations.length, 2, 'the fixture page has two items with a location out of three');
+  assert.equal(json.locations.length, 3, 'every item of the fixture page carries a location');
   const first = json.locations[0];
   assert.equal(first.systemId, 'sys-fixture-9');
   assert.equal(first.systemName, 'Fixture Aircraft');
   assert.equal(first.datastreamId, 'ds-aircraft');
   assert.equal(first.datastreamName, 'Aircraft Position');
   assert.equal(typeof first.ageMs, 'number');
+});
+
+test('[osh-056] ageMs grows between two answers served from the same cached pass, because it is recomputed at serve time', async () => {
+  const [uriA] = OSH_DEFAULT_LOCATION_PROPERTIES;
+  let now = 0;
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch({
+      filterByUri: { [uriA]: [{ id: 'ds-aircraft', 'system@id': 'sys-fixture-9' }] },
+      withLocationSchemaIds: new Set(['ds-aircraft']),
+    }),
+    now: () => now,
+  });
+  const first = await callOsh(proxy, { url: '/locations' });
+  const firstAge = first.json.locations[0].ageMs;
+  now += 500;
+  const second = await callOsh(proxy, { url: '/locations' });
+  assert.equal(
+    second.json.fetchedAt,
+    first.json.fetchedAt,
+    'both answers come from the same cached pass, inside its fifteen-second TTL',
+  );
+  assert.equal(second.json.locations[0].ageMs, firstAge + 500, 'the age grew by exactly the elapsed time');
 });

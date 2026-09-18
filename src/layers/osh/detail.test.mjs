@@ -207,3 +207,48 @@ test('[osh-032] the host innerHTML receives the rendered detail, and an empty se
 test('[osh-032] the function does nothing when there is no host', () => {
   assert.doesNotThrow(() => writeOshDetail(null, DETAIL));
 });
+
+// --- osh-032 (further MODIFIED by osh-location-streams): the placed-by line ---
+
+test('[osh-032] shows Placed by with the datastream name and the age, for a stream-placed system', () => {
+  const html = renderOshDetail({
+    system: {
+      id: 'sys-fixture-9',
+      uid: null,
+      name: null,
+      description: null,
+      placedBy: { datastreamName: 'Aircraft <Position>', ageMs: 12_000 },
+    },
+    datastreams: [],
+  });
+  assert.match(html, /Placed by Aircraft &lt;Position&gt; \(12 s\)/);
+});
+
+test('[osh-032] Placed by falls back to an em dash for a datastream with no name', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-9', uid: null, name: null, description: null, placedBy: { datastreamName: null, ageMs: 5000 } },
+    datastreams: [],
+  });
+  assert.match(html, /Placed by — \(5 s\)/);
+});
+
+test('[osh-032] no Placed by line for a system placed by its own geometry', () => {
+  const html = renderOshDetail(DETAIL);
+  assert.doesNotMatch(html, /Placed by/);
+  assert.doesNotMatch(html, /osh-detail-placed-by/);
+});
+
+test('[osh-032] the system id stands in for its name when the system has neither, for a stream-placed system', () => {
+  const html = renderOshDetail({
+    system: {
+      id: 'sys-fixture-unread',
+      uid: null,
+      name: null,
+      description: null,
+      placedBy: { datastreamName: 'Aircraft Position', ageMs: null },
+    },
+    datastreams: [],
+  });
+  assert.match(html, /<h3>sys-fixture-unread<\/h3>/);
+  assert.match(html, /Placed by Aircraft Position \(age unknown\)/);
+});

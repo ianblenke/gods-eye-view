@@ -66,11 +66,24 @@ function renderDatastream(datastream) {
   </div>`;
 }
 
+/**
+ * A system placed only by a fresh stream record shows which datastream
+ * placed it, and the record's own age in the same words the datastream
+ * blocks below use (osh-032, mirroring the entity's own stream-placed
+ * lifecycle, osh-057).
+ */
+function renderPlacedBy(placedBy) {
+  if (!placedBy) return '';
+  const name = placedBy.datastreamName || '—';
+  return `<div class="osh-detail-field osh-detail-placed-by">Placed by ${escapeHtml(name)} (${escapeHtml(formatOshAge(placedBy.ageMs))})</div>`;
+}
+
 function renderSystemHeader(system) {
   return `<div class="osh-detail-system">
     <h3>${escapeHtml(system.name || system.id)}</h3>
     <div class="osh-detail-field">UID: ${escapeHtml(system.uid || '—')}</div>
     <div class="osh-detail-field">${escapeHtml(system.description || '')}</div>
+    ${renderPlacedBy(system.placedBy)}
   </div>`;
 }
 

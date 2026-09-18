@@ -58,6 +58,8 @@ Each location answer names the system, the system's own name when one can be rea
 
 The whole pass sits behind one cache with the same short TTL the observation cache already uses, one shared refresh, and a stale snapshot on a failed refresh — so concurrent readers share one pass, and the browser's own five-minute refresh always finds a fresh one. No candidate property URI, and no vendor term, ever appears in a response.
 
+The pass caches the fold of every candidate's page, phenomenonTime included, but never an age: the route recomputes each location's age at serve time from that time, the same reason `osh-observation-age`'s own observation route recomputes its one age rather than trusting a cached one. Without this, two answers from one cached pass — or a stale one, served longer still — would carry the same frozen age, and the freshness gate this change's own placement rule depends on would judge a growing staleness by a number that stopped growing.
+
 ### D48 Placement with the gate, and the lifecycle of a stream-placed entity
 
 The merge function that places entities gains a third input, the pass's locations. A location counts only when it is fresh; a stale one is dropped before any other rule.
