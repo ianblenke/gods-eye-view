@@ -1,0 +1,68 @@
+{
+  "features": [
+    {
+      "id": "foi-fixture-1",
+      "geometry": { "type": "Point", "coordinates": [10.6, 45.3, 90] },
+      "properties": {
+        "uid": "urn:osh:foi-fixture-1",
+        "name": "Fixture Node One",
+        "description": "A synthetic mesh node used for tests.",
+        "validTime": ["2026-01-01T00:00:00Z", "now"],
+        "hostedProcedure@link": { "href": "https://osh.example/api/systems/sys-fixture-2" }
+      }
+    },
+    {
+      "id": "foi-fixture-2",
+      "geometry": { "type": "Point", "coordinates": [10.7, 45.4, 91] },
+      "properties": {
+        "uid": "urn:osh:foi-fixture-2",
+        "name": "Fixture Node Two",
+        "hostedProcedure@link": { "href": "https://osh.example/api/systems/sys-fixture-2" }
+      }
+    },
+    {
+      "id": "foi-fixture-3",
+      "geometry": { "type": "Point", "coordinates": [10.8, 45.5, 92] },
+      "properties": {
+        "uid": "urn:osh:foi-fixture-3",
+        "name": "Fixture Node Three",
+        "hostedProcedure@link": { "href": "https://osh.example/api/systems/sys-fixture-2" }
+      }
+    },
+    {
+      "id": "foi-fixture-4",
+      "geometry": { "type": "Point", "coordinates": [11.0, 46.0, 50] },
+      "properties": {
+        "uid": "urn:osh:foi-fixture-4",
+        "name": "Fixture Node Four",
+        "hostedProcedure@link": { "href": "https://osh.example/api/systems/sys-fixture-3" }
+      }
+    },
+    {
+      "id": "foi-fixture-5",
+      "geometry": null,
+      "properties": {
+        "uid": "urn:osh:foi-fixture-5",
+        "name": "Fixture Node Five, unplaced",
+        "hostedProcedure@link": { "href": "https://osh.example/api/systems/sys-fixture-2" }
+      }
+    },
+    {
+      "id": "foi-fixture-6",
+      "geometry": { "type": "Point", "coordinates": [12.0, 47.0] },
+      "properties": {
+        "uid": "urn:osh:foi-fixture-6",
+        "name": "Fixture Node Six, wrong link kind",
+        "hostedProcedure@link": { "href": "https://osh.example/api/procedures/x" }
+      }
+    },
+    {
+      "id": "foi-fixture-7",
+      "geometry": { "type": "Point", "coordinates": [13.0, 48.0] },
+      "properties": {
+        "uid": "urn:osh:foi-fixture-7",
+        "name": "Fixture Node Seven, no link"
+      }
+    }
+  ]
+}

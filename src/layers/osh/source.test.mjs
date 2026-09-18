@@ -10,7 +10,7 @@ function jsonResponse(status, body) {
   };
 }
 
-test('[osh-028] reports key required on the systems, datastreams and observation getters', async () => {
+test('[osh-028] reports key required on the systems, datastreams, fois and observation getters', async () => {
   const source = createOshSource({
     fetchImpl: async () => jsonResponse(503, { error: 'no_key' }),
   });
@@ -20,6 +20,7 @@ test('[osh-028] reports key required on the systems, datastreams and observation
     stale: false,
   });
   assert.deepEqual(await source.getDatastreams(), { keyRequired: true, datastreams: [] });
+  assert.deepEqual(await source.getFois(), { keyRequired: true, fois: [], truncated: false });
   assert.deepEqual(await source.getObservation('ds-fixture-1'), {
     keyRequired: true,
     observation: null,
@@ -50,6 +51,7 @@ test('[osh-028] another non-ok status throws', async () => {
   const source = createOshSource({ fetchImpl: async () => jsonResponse(502, {}) });
   await assert.rejects(source.getSystems(), /OSH HTTP 502/);
   await assert.rejects(source.getDatastreams(), /OSH HTTP 502/);
+  await assert.rejects(source.getFois(), /OSH HTTP 502/);
   await assert.rejects(source.getObservation('ds-fixture-1'), /OSH HTTP 502/);
 });
 
@@ -57,6 +59,7 @@ test('[osh-028] a payload without the expected array throws', async () => {
   const source = createOshSource({ fetchImpl: async () => jsonResponse(200, {}) });
   await assert.rejects(source.getSystems(), /Malformed OSH systems payload/);
   await assert.rejects(source.getDatastreams(), /Malformed OSH datastreams payload/);
+  await assert.rejects(source.getFois(), /Malformed OSH fois payload/);
   await assert.rejects(source.getObservation('ds-fixture-1'), /Malformed OSH observation payload/);
 });
 
@@ -77,6 +80,41 @@ test('[osh-028] returns the systems and datastreams records unchanged', async ()
     keyRequired: false,
     datastreams: [{ id: 'ds-fixture-1' }],
   });
+});
+
+test('[osh-028] the fois getter passes truncated through, and defaults it to false', async () => {
+  const source = createOshSource({
+    fetchImpl: async () =>
+      jsonResponse(200, { fois: [{ id: 'foi-fixture-1' }], truncated: true }),
+  });
+  assert.deepEqual(await source.getFois(), {
+    keyRequired: false,
+    fois: [{ id: 'foi-fixture-1' }],
+    truncated: true,
+  });
+
+  const noFlag = createOshSource({
+    fetchImpl: async () => jsonResponse(200, { fois: [] }),
+  });
+  assert.equal((await noFlag.getFois()).truncated, false);
+});
+
+test('[osh-028] the datastreams getter sends a given system id as the system query parameter, and sends no such key when none is given', async () => {
+  let observedPath;
+  const source = createOshSource({
+    fetchImpl: async (path) => {
+      observedPath = path;
+      return jsonResponse(200, { datastreams: [] });
+    },
+  });
+  await source.getDatastreams({ system: 'sys fixture 1' });
+  const url = new URL(observedPath, 'https://app.example');
+  assert.equal(url.pathname, '/api/osh/datastreams');
+  assert.equal(url.searchParams.get('system'), 'sys fixture 1');
+
+  await source.getDatastreams();
+  assert.equal(observedPath, '/api/osh/datastreams');
+  assert.equal(observedPath.includes('system'), false, 'no system key must be sent when none is given');
 });
 
 test('[osh-028] the observations getter passes the id as a query parameter', async () => {
