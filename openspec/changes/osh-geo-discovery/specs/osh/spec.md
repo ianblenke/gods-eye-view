@@ -92,7 +92,8 @@ Origin: spec-first
 
 #### Scenario: Poll the datastreams of the selected system `osh-030`
 - **WHEN** a click selects a system entity or a feature entity with a host
-- **THEN** the layer reads the datastreams of that system through the datastreams getter with the `system` key, once, and the newest observation of each, then again every 15 seconds
+- **THEN** the layer reads the datastreams of that system through the datastreams getter with the `system` key, once
+- **AND** it reads the newest observation of each, then again every 15 seconds
 - **AND** it keeps only the records whose `systemId` equals the selected id
 - **AND** a click that selects another system stops the first poll and starts a new one
 - **AND** a click on empty space or on a non-OSH entity clears the selection and stops the poll
@@ -106,7 +107,8 @@ Origin: spec-first
 #### Scenario: Render the detail with escaped values `osh-032`
 - **WHEN** `renderOshDetail(detail)` builds the system and datastream HTML
 - **THEN** it escapes the characters `<`, `>`, `&` and `"` in every name and value
-- **AND** when the selection came from a feature, the header shows the feature's name above the host's name, or the host's id when the host has no record, or `Host: —` when the feature has no host
+- **AND** when the selection came from a feature, the header shows the feature's name above the host's name
+- **AND** the header shows the host's id when the host has no record, or `Host: —` when the feature has no host
 - **AND** a host element given to the layer receives that HTML in `innerHTML`
 - **AND** an empty selection clears the host
 
@@ -147,16 +149,19 @@ Origin: spec-first
 ## ADDED Requirements
 
 ### Requirement: Features of interest
-The provider MUST serve the features of interest that carry a point, from one cached snapshot per five-minute TTL, with the same walk rules and the same request form as the other lists. It MUST report when a walk stopped at its page cap.
+The provider MUST serve the features of interest that carry a point. It MUST cache one snapshot per five-minute TTL, with the same walk rules and request form as the other lists. It MUST report when a walk stopped at its page cap.
 Origin: spec-first
 
 #### Scenario: Serve the feature list `osh-043`
 - **WHEN** a client sends `GET /api/osh/fois`
-- **THEN** the response is `{fetchedAt, stale, ttlMs, count, truncated, fois}`, with the records of `mapOshFois()`
+- **THEN** the response names the fetch time, a stale flag, the TTL, the count, the truncated flag and the feature records
+- **AND** the feature records are the ones `mapOshFois()` builds
 - **AND** two requests inside the five-minute TTL cause one upstream walk, and concurrent requests share one
-- **AND** a failed walk with an earlier snapshot answers that snapshot with `stale:true`, and with none answers `502` with `{error:'upstream_failed'}`
+- **AND** a failed walk with an earlier snapshot answers that snapshot with `stale:true`
+- **AND** a failed walk with no snapshot answers `502` with `{error:'upstream_failed'}`
 - **AND** each recorded upstream call of the walk has method `GET`, no body and an `AbortSignal`
-- **AND** the first page's query is `limit=200&f=application%2Fgeo%2Bjson`, and each recorded query equals its own `URLSearchParams` round trip
+- **AND** the first page's query is `limit=200&f=application%2Fgeo%2Bjson`
+- **AND** each recorded query equals its own `URLSearchParams` round trip
 - **AND** the status route reports the features cache the way it reports the two lists
 
 #### Scenario: Walk the feature list to its own page cap `osh-044`
@@ -167,14 +172,16 @@ Origin: spec-first
 - **AND** a walk that stops for a refused link, or for no next link, answers `truncated:false`
 
 ### Requirement: Feature markers
-The browser layer MUST show one entity for each feature of interest with a point, and MUST select the feature's host system when a click picks that entity.
+The browser layer MUST show one entity for each feature of interest with a point. It MUST select the feature's host system when a click picks that entity.
 Origin: spec-first
 
 #### Scenario: Show one entity per feature and select its host on a click `osh-045`
 - **WHEN** the layer updates with feature records
-- **THEN** the map holds one entity with the id `osh-foi:<id>` for each feature, with a point and a label that shows only within 200 km
-- **AND** `getStats().features` counts them
-- **AND** a click on a feature entity sets `selectedFeatureId` to the feature and `selectedId` to its host id, and starts the host's datastream poll, whether or not the host is in the systems list
+- **THEN** the map holds one entity with the id `osh-foi:<id>` for each feature, with a point
+- **AND** the entity's label shows only within 200 km
+- **AND** `getStats().features` counts the feature entities
+- **AND** a click on a feature entity sets `selectedFeatureId` to the feature and `selectedId` to its host id
+- **AND** that click starts the host's datastream poll, whether or not the host is in the systems list
 - **AND** a click on a feature with a null host sets `selectedFeatureId`, leaves `selectedId` null, and starts no poll
 - **AND** a click on empty space clears both, and a later refresh that drops the feature clears both
 - **AND** the layer finds a feature record by id and by uid, and never fetches a feature by id
@@ -188,16 +195,20 @@ Origin: spec-first
 - **WHEN** the `system` query value is absent with another key present, empty or repeated
 - **AND** the test sends, on its own, one value from the rejection sets of `osh-020`
 - **THEN** the response is `400` with `{error:'bad_system'}`, and the provider sends zero upstream requests
-- **AND** for an accepted id such as `sys-fixture-1`, the built URL origin equals the resolved root's origin, the path equals the root path plus `systems/<id>/datastreams`, and the query is `limit=100`
+- **AND** for an accepted id such as `sys-fixture-1`, the built URL origin equals the resolved root's origin
+- **AND** the built URL path equals the root path plus `systems/<id>/datastreams`, and the query is `limit=100`
 - **AND** `assertSystemDatastreamsUrl()` throws for another origin, another prefix, an extra path segment or another query
 - **AND** the route calls this fixed pair of functions directly, with no way for a caller to replace either one
 - **AND** `mapOshFois()` keeps a `systemId` outside the pattern as null
 
 #### Scenario: Serve the datastreams of one system, cached per id `osh-048`
 - **WHEN** a client sends `GET /api/osh/datastreams?system=sys-fixture-1` and the upstream page walk succeeds
-- **THEN** the response is `{system, fetchedAt, stale, ttlMs, count, datastreams}`, with the records of `mapOshDatastreams()`
-- **AND** each recorded upstream call is a `GET` with no body and an `AbortSignal`, its query round-trips through `URLSearchParams`, and it carries no `f` key
+- **THEN** the response names the system id, the fetch time, a stale flag, the TTL, the count and the datastream records
+- **AND** the datastream records are the ones `mapOshDatastreams()` builds
+- **AND** each recorded upstream call is a `GET` with no body and an `AbortSignal`
+- **AND** its query round-trips through `URLSearchParams`, and it carries no `f` key
 - **AND** concurrent requests for one id share one walk, a second id causes its own, and a request inside five minutes sends none
-- **AND** a failed walk serves the stale snapshot when one exists, answers `502` with `{error:'upstream_failed'}` with none, and the cache keeps at most 256 ids
+- **AND** a failed walk serves the stale snapshot when one exists, and answers `502` with `{error:'upstream_failed'}` when none exists
+- **AND** the cache keeps at most 256 ids
 - **AND** a request with no `system` key serves the global list as `osh-016` says
 - **AND** the status route reports the per-system cache size
