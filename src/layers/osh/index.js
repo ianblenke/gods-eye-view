@@ -7,7 +7,7 @@ export { renderOshDetail, writeOshDetail } from './detail.js';
 /** Poll interval for the datastreams and observations of a selected system. */
 const POLL_INTERVAL_MS = 15_000;
 /** A feature label shows only within this distance of the camera. */
-const FEATURE_LABEL_DISTANCE_METERS = 200_000;
+export const FEATURE_LABEL_DISTANCE_METERS = 200_000;
 
 function systemEntityId(systemId) {
   return `osh:${systemId}`;
