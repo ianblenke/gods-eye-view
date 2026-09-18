@@ -59,3 +59,55 @@ export function assertObservationUrl(url, root, id) {
     throw new Error('OSH observation URL failed the safety check');
   }
 }
+
+/** Fixed query for the per-system datastreams request. */
+export const OSH_SYSTEM_DATASTREAMS_QUERY = 'limit=100';
+
+/**
+ * Read the `system` query parameter and check it against the id pattern.
+ * Returns null for a missing, empty, repeated or malformed value — never a
+ * partial or decoded value. Mirrors readDatastreamId() above.
+ * @param {URLSearchParams} searchParams
+ * @returns {?string}
+ */
+export function readSystemId(searchParams) {
+  const values = searchParams.getAll('system');
+  if (values.length !== 1) return null;
+  const [value] = values;
+  return OSH_ID_PATTERN.test(value) ? value : null;
+}
+
+/**
+ * Build the per-system datastreams URL for one system id. The id sits
+ * between two fixed path segments, and the query is assigned as a whole
+ * after the id is in place, so the id cannot extend the path or append to
+ * the query. Mirrors observationUrl() above.
+ * @param {URL} root - Resolved API root, trailing slash.
+ * @param {string} id - An id already checked by readSystemId.
+ * @returns {URL}
+ */
+export function systemDatastreamsUrl(root, id) {
+  const url = new URL(`systems/${encodeURIComponent(id)}/datastreams`, root);
+  url.search = OSH_SYSTEM_DATASTREAMS_QUERY;
+  return url;
+}
+
+/**
+ * Re-check a built per-system datastreams URL against its root and id.
+ * Throws when the origin, the path or the query does not match exactly what
+ * systemDatastreamsUrl() would build. Mirrors assertObservationUrl() above.
+ * @param {URL} url
+ * @param {URL} root
+ * @param {string} id
+ */
+export function assertSystemDatastreamsUrl(url, root, id) {
+  const expectedPathname = `${root.pathname}systems/${id}/datastreams`;
+  if (
+    url.origin !== root.origin ||
+    url.pathname !== expectedPathname ||
+    url.search !== `?${OSH_SYSTEM_DATASTREAMS_QUERY}` ||
+    url.hash !== ''
+  ) {
+    throw new Error('OSH system datastreams URL failed the safety check');
+  }
+}

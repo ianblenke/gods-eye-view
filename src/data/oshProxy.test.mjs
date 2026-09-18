@@ -154,7 +154,13 @@ test('[osh-005] only osh/get.js calls fetch; no other scanned file calls it, nam
     .map((name) => `src/data/${name}`);
   assert.deepEqual(
     discoveredData,
-    ['src/data/osh.js', 'src/data/oshDatastreams.js', 'src/data/oshObservations.js', 'src/data/oshSystems.js'],
+    [
+      'src/data/osh.js',
+      'src/data/oshDatastreams.js',
+      'src/data/oshFois.js',
+      'src/data/oshObservations.js',
+      'src/data/oshSystems.js',
+    ],
     'the file list changed; a new src/data/osh*.js file must be scanned too',
   );
   const files = [

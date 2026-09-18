@@ -17,6 +17,14 @@
         "uid": "urn:osh:sys-fixture-2",
         "name": "Fixture System Two"
       }
+    },
+    {
+      "id": "sys-fixture-3",
+      "geometry": null,
+      "properties": {
+        "uid": "urn:osh:sys-fixture-3",
+        "name": "Fixture System Three, gateway with no point"
+      }
     }
   ]
 }
