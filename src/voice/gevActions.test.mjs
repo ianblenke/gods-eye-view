@@ -3273,3 +3273,10 @@ test('[credential-boundary-014] a fetch failure resolves to no place', async (t)
   installReverseGeocodeFetch(t, async () => { throw new Error('offline'); });
   assert.equal(await _reverseGeocodeForTest(30.2672, -97.7431), null);
 });
+
+test('[credential-boundary-014] an unparsable response resolves to no place', async (t) => {
+  installReverseGeocodeFetch(t, async () => ({
+    json: async () => { throw new SyntaxError('invalid json'); },
+  }));
+  assert.equal(await _reverseGeocodeForTest(30.2672, -97.7431), null);
+});
