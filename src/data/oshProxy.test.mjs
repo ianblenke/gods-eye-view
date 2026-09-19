@@ -1290,6 +1290,26 @@ test('[osh-055] refuses a value with no scheme and no white space, which parses 
   assert.ok(warnCalls.some((line) => line.includes('position 0')));
 });
 
+test('[osh-055] refuses a value that holds white space, even though it would otherwise parse as a URN', async () => {
+  const calls = [];
+  const warnCalls = [];
+  const proxy = oshProxy({
+    env: {
+      OSH_URL: 'https://osh.example/api/',
+      // `new URL()` tolerates internal white space in a URN's opaque
+      // path — it does not throw here — so only the whitespace check
+      // itself can refuse this value.
+      OSH_LOCATION_PROPERTIES: 'urn:osh:def:fixture:position 1:x',
+    },
+    fetchImpl: locationsFetch({ calls }),
+    warn: (...args) => warnCalls.push(args.join(' ')),
+  });
+  await callOsh(proxy, { url: '/locations' });
+  const filterCalls = calls.filter((call) => call.url.includes('observedProperty'));
+  assert.equal(filterCalls.length, 2, 'only the two defaults; the whitespace entry is refused');
+  assert.ok(warnCalls.some((line) => line.includes('position 0')));
+});
+
 test('[osh-055] a candidate found only by the filter, whose system is in no systems snapshot, is served like any other', async () => {
   const [uriA] = OSH_DEFAULT_LOCATION_PROPERTIES;
   const proxy = oshProxy({
@@ -1716,4 +1736,30 @@ test('[osh-056] a candidate with no system reference at all gives a location wit
   assert.strictEqual(json.locations[0].systemId, null);
   assert.ok('systemName' in json.locations[0]);
   assert.strictEqual(json.locations[0].systemName, null);
+});
+
+test('[osh-056] a candidate whose system is already in the systems snapshot uses that name, with no by-id read', async () => {
+  const [uriA] = OSH_DEFAULT_LOCATION_PROPERTIES;
+  const calls = [];
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch({
+      calls,
+      filterByUri: { [uriA]: [{ id: 'ds-fixture-known', 'system@id': 'sys-fixture-1' }] },
+      withLocationSchemaIds: new Set(['ds-fixture-known']),
+      systemsBody: {
+        features: [
+          { id: 'sys-fixture-1', properties: { name: 'Snapshot Name' }, geometry: { type: 'Point', coordinates: [1, 2] } },
+        ],
+      },
+      // If the by-id route were hit, it would answer this name instead —
+      // so a test that only checked the final name could pass even if the
+      // cheap snapshot path were skipped.
+      systemById: { 'sys-fixture-1': { name: 'By-id Name' } },
+    }),
+  });
+  const { json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(json.locations[0].systemName, 'Snapshot Name');
+  const byIdCalls = calls.filter((call) => /\/systems\/sys-fixture-1$/.test(new URL(call.url).pathname));
+  assert.equal(byIdCalls.length, 0, 'the snapshot already had the name, so no by-id read was needed');
 });

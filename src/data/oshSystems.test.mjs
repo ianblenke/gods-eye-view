@@ -465,3 +465,26 @@ test('[osh-042] when neither of two locations for one system has a usable time, 
     'neither location has a usable time, so the second never displaces the first',
   );
 });
+
+test('[osh-042] a fresh location naming an unknown feature is dropped entirely — it never places its own systemId as a fallback', () => {
+  const { systems, unplaced } = placeOshEntities({
+    systems: [{ id: 'sys-fixture-1', uid: null, name: 'Gateway', lon: null, lat: null, alt: null }],
+    fois: [],
+    locations: [
+      {
+        systemId: 'sys-fixture-1',
+        foiId: 'foi-fixture-unknown',
+        foiUid: null,
+        lon: 99,
+        lat: 99,
+        alt: 99,
+        datastreamId: 'ds-fixture-1',
+        datastreamName: 'Wrong',
+        phenomenonTime: '2026-01-01T00:00:00Z',
+        ageMs: FRESH_AGE_MS,
+      },
+    ],
+  });
+  assert.equal(systems.length, 0, 'the location named a feature, so it must never place a system, known or not');
+  assert.deepEqual(unplaced, ['sys-fixture-1']);
+});
