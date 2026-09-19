@@ -3176,6 +3176,47 @@ test('[credential-boundary-014] reverseGeocode fetches the server route, with no
   assert.equal(requestUrl.searchParams.has('key'), false);
 });
 
+test('[credential-boundary-014] a cached or in-flight coordinate makes no second fetch', async (t) => {
+  let calls = 0;
+  let releaseFetch;
+  const gate = new Promise((resolve) => { releaseFetch = resolve; });
+  installReverseGeocodeFetch(t, async () => {
+    calls += 1;
+    await gate;
+    return { json: async () => ({ configured: true, status: 'OK', results: [{
+      formatted_address: 'Austin, TX, USA',
+      types: ['locality'],
+      address_components: [{ long_name: 'Austin', types: ['locality'] }],
+    }] }) };
+  });
+
+  const first = _reverseGeocodeForTest(30.2672, -97.7431);
+  const second = _reverseGeocodeForTest(30.2672, -97.7431);
+  releaseFetch();
+  await Promise.all([first, second]);
+  assert.equal(calls, 1, 'the second call joins the first in-flight request');
+
+  const third = await _reverseGeocodeForTest(30.2672, -97.7431);
+  assert.equal(calls, 1, 'a cached coordinate makes no fetch at all');
+  assert.equal(third.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a sparse result defaults every missing field', async (t) => {
+  installReverseGeocodeFetch(t, async () => ({
+    json: async () => ({ configured: true, status: 'OK', results: [{}] }),
+  }));
+  const place = await _reverseGeocodeForTest(30.2672, -97.7431);
+  assert.deepEqual(place, {
+    formattedAddress: null,
+    locality: null,
+    region: null,
+    country: null,
+    types: [],
+    labels: [],
+    streetLabels: [],
+  });
+});
+
 test('[credential-boundary-014] a configured:false answer is remembered for the page life', async (t) => {
   let calls = 0;
   installReverseGeocodeFetch(t, async () => {
@@ -3219,4 +3260,16 @@ test('[credential-boundary-014] a configured answer gives the established place 
     labels: ['Austin, TX, USA'],
     streetLabels: [],
   });
+});
+
+test('[credential-boundary-014] a non-OK status or empty results gives no place', async (t) => {
+  installReverseGeocodeFetch(t, async () => ({
+    json: async () => ({ configured: true, status: 'ZERO_RESULTS', results: [] }),
+  }));
+  assert.equal(await _reverseGeocodeForTest(30.2672, -97.7431), null);
+});
+
+test('[credential-boundary-014] a fetch failure resolves to no place', async (t) => {
+  installReverseGeocodeFetch(t, async () => { throw new Error('offline'); });
+  assert.equal(await _reverseGeocodeForTest(30.2672, -97.7431), null);
 });

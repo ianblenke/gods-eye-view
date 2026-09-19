@@ -11,7 +11,7 @@ function install(options) {
     options,
   );
   const handler = routes.get('/api/google/geocode');
-  return async (query, { method = 'GET' } = {}) => {
+  const request = async (query, { method = 'GET' } = {}) => {
     const res = {
       statusCode: 200,
       headers: {},
@@ -28,6 +28,8 @@ function install(options) {
     );
     return res;
   };
+  request.handler = handler;
+  return request;
 }
 
 test('[credential-boundary-007] a keyless server answers configured:false with no upstream call', async (t) => {
@@ -138,6 +140,7 @@ test('[credential-boundary-010] refuses malformed input with a 400 and no upstre
     '?address=austin&lat=30&lon=-97',
     '?address=' + 'a'.repeat(257),
     '?address=austin&bounds=not-bounds',
+    '?address=',
     '?lat=999&lon=-97',
     '?lat=30',
   ]) {
@@ -165,6 +168,14 @@ test('[credential-boundary-011] a non-ok upstream status passes through its erro
   assert.equal(result.body.error, 'Denied');
   assert.ok(!JSON.stringify(result.body).includes('fixture-server-key'));
   assert.equal(result.headers['cache-control'], 'no-store');
+});
+
+test('[credential-boundary-011] a non-ok upstream status with no error_message gets a default error', async (t) => {
+  t.mock.method(globalThis, 'fetch', async () => Response.json({ status: 'UNKNOWN_ERROR' }, { status: 500 }));
+  const request = install({ resolveApiKey: () => 'fixture-server-key' });
+  const result = await request('?address=austin');
+  assert.equal(result.statusCode, 500);
+  assert.equal(result.body.error, 'Google Geocoding request failed');
 });
 
 test('[credential-boundary-011] a thrown fetch answers 502', async (t) => {
@@ -256,10 +267,61 @@ test('[credential-boundary-012] projectGeocodeResults caps lists and keeps only 
   });
 });
 
+test('[credential-boundary-012] projectGeocodeResults defaults every missing field on a sparse result', () => {
+  const projected = projectGeocodeResults({ status: 'OK', results: [{}] });
+  assert.deepEqual(projected.results, [{
+    formatted_address: null,
+    address_components: [],
+    types: [],
+    geometry: { location: null, bounds: null, viewport: null },
+  }]);
+});
+
+test('[credential-boundary-012] projectGeocodeResults defaults a sparse address component too', () => {
+  const projected = projectGeocodeResults({
+    status: 'OK',
+    results: [{ address_components: [{}] }],
+  });
+  assert.deepEqual(projected.results[0].address_components, [{ long_name: null, types: [] }]);
+});
+
 test('[credential-boundary-012] projectGeocodeResults gives an empty answer for a malformed input', () => {
   for (const malformed of [null, undefined, {}, { status: 1 }, { results: 'nope' }, 'nope']) {
     const projected = projectGeocodeResults(malformed);
     assert.equal(projected.status, malformed && typeof malformed.status === 'string' ? malformed.status : null);
     assert.deepEqual(projected.results, []);
   }
+});
+
+test('[credential-boundary-010] a request with no url is read as an empty query', async () => {
+  const request = install({ resolveApiKey: () => 'fixture-server-key' });
+  const res = {
+    statusCode: 200,
+    headers: {},
+    setHeader(name, value) {
+      this.headers[name.toLowerCase()] = value;
+    },
+    end(body) {
+      this.body = body ? JSON.parse(body) : null;
+    },
+  };
+  await request.handler({ method: 'GET', socket: { remoteAddress: 'fixture' } }, res);
+  assert.equal(res.statusCode, 400);
+});
+
+test('[credential-boundary-011] the upstream timeout aborts the request', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  t.mock.method(globalThis, 'fetch', (_url, options) => new Promise((_resolve, reject) => {
+    options.signal.addEventListener('abort', () => {
+      const error = new Error('This operation was aborted');
+      error.name = 'AbortError';
+      reject(error);
+    });
+  }));
+  const request = install({ resolveApiKey: () => 'fixture-server-key' });
+  const pending = request('?address=austin');
+  t.mock.timers.tick(5000);
+  const result = await pending;
+  assert.equal(result.statusCode, 502);
+  assert.equal(result.body.configured, true);
 });
