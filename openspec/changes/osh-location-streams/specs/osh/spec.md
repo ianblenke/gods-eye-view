@@ -47,23 +47,32 @@ Origin: spec-first
 - **AND** a system with no `Point` and no fresh location gives no placed system and adds one to `unplaced`
 - **AND** every feature record gives a placed feature at its own point with its `systemId`
 - **AND** a location whose `ageMs` is not fresh under `isOshObservationFresh()` is dropped before any other rule
-- **AND** a fresh location whose `foiId` or `foiUid` names a feature the layer holds moves that feature with `locationSource:'stream'`, and one that names a feature it does not hold is dropped
-- **AND** a fresh location with no feature reference places its system with `locationSource:'stream'`, the datastream id and name, `phenomenonTime` and `ageMs`, above a `Point`, and the newer of two such locations wins
+- **AND** a fresh location whose `foiId` or `foiUid` names a held feature moves that feature with `locationSource:'stream'`
+- **AND** a fresh location naming a feature the layer does not hold is dropped
+- **AND** a fresh location with no feature reference places its system with `locationSource:'stream'`, the datastream id and name, `phenomenonTime` and `ageMs`, above a `Point`
+- **AND** the newer of two such locations for one system wins
 - **AND** a fresh location whose system has no record still gives a placed system with `name:null`
 - **AND** a feature never places its host system, and a system never places a feature
 
 #### Scenario: Read the location fields from a schema `osh-051`
 - **WHEN** `readOshSchemaLocation(schema)` reads the record at `resultSchema`, walking `fields` and, inside a `Vector`, `coordinates`, to a bounded depth
-- **THEN** for a `Vector` whose coordinates carry `axisID` `Lat` and `Lon` with unit code `deg`, it binds `lat` and `lon` by axis id, never by list position, and `alt` to `h` with unit code `m`
-- **AND** a `Vector` with `Lat` and `Lon` axis ids and no `referenceFrame` binds; a present frame must resolve to EPSG 4979 or EPSG 4326, and any other frame, or axis ids outside `Lat`, `Lon` and `h` such as `X`, `Y` and `Z`, gives null
-- **AND** for two `Quantity` fields with unit code `deg` whose definition's last term, after the last `/`, `#` or `:` and in lower case, reads `latitude` and `longitude`, it binds each field's path, and binds a height only to a `Quantity` in `m` whose last term reads `heighthae`, `heightaboveellipsoid` or `ellipsoidalheight`, never `altitudemsl`
+- **THEN** for a `Vector` whose coordinates carry `axisID` `Lat` and `Lon` with unit code `deg`, it binds `lat` and `lon` by axis id
+- **AND** it never binds `lat` or `lon` by list position
+- **AND** it binds `alt` to a coordinate with axis id `h` and unit code `m`
+- **AND** a `Vector` with `Lat` and `Lon` axis ids and no `referenceFrame` binds; a present frame must resolve to EPSG 4979 or EPSG 4326
+- **AND** any other frame, or axis ids outside `Lat`, `Lon` and `h` such as `X`, `Y` and `Z`, gives null
+- **AND** it reads a definition's last term after the last `/`, `#` or `:`, in lower case
+- **AND** for two `Quantity` fields with unit code `deg` whose last term reads `latitude` and `longitude`, it binds each field's path
+- **AND** it binds a height only to a `Quantity` in `m` whose last term reads `heighthae`, `heightaboveellipsoid` or `ellipsoidalheight`, never `altitudemsl`
 - **AND** it takes the `Vector` shape when a schema has both, and binds `featureUid` to a `Text` field whose definition's last term reads `samplingfeatureuid`
-- **AND** it takes every field's path from the schema itself, so a `Vector` named one way and one named another give the same shape of reader
-- **AND** it gives null when the latitude or the longitude is absent, when the unit code of either is not `deg`, or when the body has no `resultSchema`
+- **AND** it takes every field's path from the schema itself, so a `Vector` named one way, and one named another, give the same reader
+- **AND** it gives null when the latitude or the longitude is absent, or when the unit code of either is not `deg`
+- **AND** it gives null when the body has no `resultSchema`
 
 #### Scenario: Map a page of newest-per-feature records to location records `osh-052`
 - **WHEN** `mapOshLocationPage(payload, reader, nowMs)` reads a page of newest-per-feature records
-- **THEN** each item gives a feature reference, the two times, a location and an age, with the feature reference and the location both null when absent
+- **THEN** each item gives a feature reference, the two times, a location and an age
+- **AND** the feature reference and the location are both null when absent
 - **AND** `location` comes from `extractOshLocation()` and the age from the age function this project's freshness change adds, computed with `nowMs`
 - **AND** an item with no location is kept with a null one, and a malformed payload gives an empty list
 - **AND** the order of the page is kept, newest first as the server answers it
@@ -109,10 +118,12 @@ Origin: spec-first
 - **AND** the status route reports the per-system cache size
 
 #### Scenario: Keep the built schema URL and system URL to their fixed shapes `osh-053`
-- **WHEN** the provider builds the schema URL for an accepted datastream id such as `ds-fixture-1`, or the system URL for an accepted system id such as `sys-fixture-1`
+- **WHEN** the provider builds the schema URL for an accepted datastream id such as `ds-fixture-1`
+- **AND** it builds the system URL for an accepted system id such as `sys-fixture-1`
 - **THEN** each URL's origin equals the resolved root's origin, its path equals the root path plus `datastreams/<id>/schema` or `systems/<id>`, and its query is empty
 - **AND** the safety check for each throws for another origin, another prefix, an extra path segment, or any query
-- **AND** the schema cache and the system cache each call their fixed pair directly, with no way for a caller to replace either one, and no browser value reaches either
+- **AND** the schema cache and the system cache each call their fixed pair directly, with no way for a caller to replace either one
+- **AND** no browser value reaches either fixed pair
 
 #### Scenario: Keep the newest-per-feature URL to its fixed shape `osh-054`
 - **WHEN** the provider builds the newest-per-feature URL for an accepted id
@@ -164,7 +175,8 @@ Origin: spec-first
 - **AND** the header shows the host's id when the host has no record, or `Host: —` when the feature has no host
 - **AND** each datastream block shows the observation's age beside its time, in words such as `12 s`, `5 min`, `3 h` or `6 d`
 - **AND** a block whose observation is not fresh carries the text `old` and the class `osh-detail-old`, and one with `ageMs:null` carries the text `age unknown`
-- **AND** when the system is placed by a stream, the header shows `Placed by` with the datastream's name and the age in the same words, and shows the system's id as its name when it has none
+- **AND** when the system is placed by a stream, the header shows `Placed by` with the datastream's name and the age in the same words
+- **AND** the header shows the system's id as its name when it has none
 - **AND** a host element given to the layer receives that HTML in `innerHTML`
 - **AND** an empty selection clears the host
 
@@ -194,10 +206,13 @@ Origin: spec-first
 #### Scenario: Place a system from a fresh stream record, and retire it when the record goes stale `osh-057`
 - **WHEN** a refresh brings a fresh location with no feature reference for a system
 - **THEN** the map holds the entity `osh:<id>` for that system with `locationSource:'stream'`, and `getStats().placed.stream` counts it
-- **AND** a system with no record in the union map gets that entity with the `systemName` the location carries, and a placeholder record that never enters the union map
-- **AND** only a location with `systemName:null` gives the id as the label, and that label means the name could not be read, a degraded state and not the design
-- **AND** the selected system's own poll moves its entity as `osh-031` says, unchanged, while this scenario governs placement and motion from the pass
-- **AND** a refresh with no fresh location for that system removes the entity and counts the system under `unplaced`, unless the system is selected, in which case the entity stays at its last position until deselected
+- **AND** a system with no record in the union map gets that entity with the `systemName` the location carries
+- **AND** that system also gets a placeholder record, one that never enters the union map
+- **AND** only a location with `systemName:null` gives the id as the label
+- **AND** that label means the name could not be read, a degraded state and not the design
+- **AND** the selected system's own poll moves its entity as `osh-031` says, unchanged; this scenario governs only placement and motion from the pass
+- **AND** a refresh with no fresh location for that system removes the entity and counts the system under `unplaced`
+- **AND** a selected system is the one exception: its entity stays at its last position until deselected
 - **AND** a fresh location that names a feature by id or uid moves that feature entity and never places the system
 - **AND** a click on a stream-placed entity selects it and starts its datastream poll as for any system
 
@@ -218,22 +233,31 @@ Origin: spec-first
 ## ADDED Requirements
 
 ### Requirement: Location discovery
-The provider MUST find candidate location datastreams from stable surfaces only: the datastreams list filtered by a declared property, the datastreams of each feature host, and the datastreams of each system with a point. It MUST let the schema decide whether a candidate carries a location, and MUST NOT walk a sampled list to find one.
+The provider MUST find candidate location datastreams from stable surfaces only. These are the datastreams list filtered by a declared property, the datastreams of each feature host, and the datastreams of each system with a point. It MUST let the schema decide whether a candidate carries a location. It MUST NOT walk a sampled list to find one.
 Origin: spec-first
 
 #### Scenario: Serve the candidate datastreams of each declared property `osh-055`
 - **WHEN** the location pass reads the property filter
-- **THEN** it sends one list request per URI in the built-in property list, built with the query keys `limit` and `observedProperty`, walked by the shared walk and cached per URI for the list TTL
+- **THEN** it sends one list request per URI in the built-in property list, built with the query keys `limit` and `observedProperty`
+- **AND** each request is walked by the shared walk and cached per URI for the list TTL
 - **AND** the built-in list holds two public terms, and an environment value appends comma-separated URIs to it
-- **AND** a value that does not parse as a URL or a URN scheme, or that holds white space, is skipped with a warning that names its position and never its text
-- **AND** no response of any route carries a URI of the list; the status route reports their count
+- **AND** a value that does not parse as a URL or a URN scheme, or that holds white space, is skipped
+- **AND** the skip carries a warning that names only the value's position, never its text
+- **AND** no response of any route carries a URI of the list
+- **AND** the status route reports their count
 - **AND** a candidate found only by the filter, whose system is in no systems snapshot, is served like any other
 
 #### Scenario: Serve the newest location of every candidate datastream `osh-056`
 - **WHEN** a client sends `GET /api/osh/locations`
-- **THEN** the provider unites the candidates of the property filter, of every feature host's datastreams and of every `Point` system's datastreams, reads each candidate's schema through a per-id cache with the list TTL, one shared refresh, a stale value on failure and a cap of 256 ids, and reads one newest-per-feature page for each candidate whose schema gave a reader
-- **AND** it answers a shape naming the fetch time, a stale flag, the TTL, the count, the stream count, the failed count and the location list, each location naming its system, its system's name, its datastream, its feature reference, its position, its time and its age
-- **AND** the system's name comes from the systems snapshot when it holds the system, else from one by-id read cached per id, else null when that read fails or the record has no name, and a failed name read never drops the location
+- **THEN** the provider unites the candidates of the property filter, of every feature host's datastreams and of every `Point` system's datastreams
+- **AND** it reads each candidate's schema through a per-id cache with the list TTL, one shared refresh and a stale value on failure
+- **AND** that schema cache keeps at most 256 ids
+- **AND** it reads one newest-per-feature page for each candidate whose schema gave a reader
+- **AND** it answers the fetch time, a stale flag, the TTL, the count, the stream count and the failed count
+- **AND** it also answers the location list
+- **AND** each location names its system, its system's name, its datastream, its feature reference, its position, its time and its age
+- **AND** the system's name comes from the systems snapshot when it holds the system, else from one by-id read cached per id
+- **AND** that name is null when the read fails or the record has no name, and a failed name read never drops the location
 - **AND** a candidate with no reader, or whose page read fails, gives no location and adds one to the failed count
 - **AND** every schema URL and every page URL of the pass goes through its fixed pair of functions
 - **AND** the pass sits behind a fifteen-second cache with one shared refresh and a stale snapshot on failure
