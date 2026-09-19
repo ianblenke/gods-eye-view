@@ -2,9 +2,13 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
+  OSH_CLOCK_SKEW_MAX_MS,
+  OSH_FRESH_MAX_AGE_MS,
   extractOshLocation,
   flattenOshResult,
+  isOshObservationFresh,
   mapOshObservation,
+  oshObservationAgeMs,
 } from './oshObservations.js';
 
 const fixture = JSON.parse(
@@ -168,4 +172,63 @@ test('[osh-022] a non-string phenomenonTime or resultTime becomes null', () => {
   });
   assert.equal(observation.phenomenonTime, null);
   assert.equal(observation.resultTime, null);
+});
+
+test('[osh-050] oshObservationAgeMs() returns nowMs minus the parsed phenomenonTime', () => {
+  const nowMs = Date.parse('2026-01-01T00:05:12Z');
+  assert.equal(oshObservationAgeMs('2026-01-01T00:05:00Z', nowMs), 12_000);
+});
+
+test('[osh-050] an absent or non-string phenomenonTime gives a null age', () => {
+  assert.equal(oshObservationAgeMs(null, 1000), null);
+  assert.equal(oshObservationAgeMs(undefined, 1000), null);
+  assert.equal(oshObservationAgeMs(5, 1000), null);
+});
+
+test('[osh-050] a phenomenonTime that does not parse gives a null age', () => {
+  assert.equal(oshObservationAgeMs('NaN', 1000), null);
+  assert.equal(oshObservationAgeMs('not a time', 1000), null);
+});
+
+test('[osh-050] the thresholds are the numbers the specification names', () => {
+  // Pinned to literals. Every other test uses the symbols, so the symbols
+  // alone prove nothing: moving a constant would move its own assertions.
+  assert.equal(OSH_FRESH_MAX_AGE_MS, 3_600_000);
+  assert.equal(OSH_CLOCK_SKEW_MAX_MS, 300_000);
+  assert.equal(isOshObservationFresh(3_600_000), true);
+  assert.equal(isOshObservationFresh(3_600_001), false);
+  assert.equal(isOshObservationFresh(-300_000), true);
+  assert.equal(isOshObservationFresh(-300_001), false);
+});
+
+test('[osh-050] a record far ahead of the clock is not fresh', () => {
+  // A month, and a year, in the future. Without a lower bound these read as
+  // the freshest possible reading and would move an entity.
+  assert.equal(isOshObservationFresh(-2_592_000_000), false);
+  assert.equal(isOshObservationFresh(-31_536_000_000), false);
+  // The measured skew on the owner's server stays fresh.
+  assert.equal(isOshObservationFresh(-5_000), true);
+});
+
+test('[osh-050] isOshObservationFresh() is true at the threshold and false one millisecond past it', () => {
+  assert.equal(isOshObservationFresh(OSH_FRESH_MAX_AGE_MS), true);
+  assert.equal(isOshObservationFresh(OSH_FRESH_MAX_AGE_MS + 1), false);
+});
+
+test('[osh-050] a null or non-finite age is never fresh', () => {
+  assert.equal(isOshObservationFresh(null), false);
+  assert.equal(isOshObservationFresh(undefined), false);
+  assert.equal(isOshObservationFresh(NaN), false);
+});
+
+test('[osh-050] a phenomenonTime ahead of nowMs gives a negative age, and a negative age is fresh', () => {
+  // The owner's OSH server runs a few seconds ahead of the provider, so a
+  // live reading's phenomenonTime lands after the provider's own clock and
+  // the age comes out negative. A guard that rejects a negative age, or
+  // that treats it as unknown, would reject every live reading from that
+  // server; this is the case that rules such a guard out.
+  const nowMs = Date.parse('2026-01-01T00:05:00Z');
+  const ageMs = oshObservationAgeMs('2026-01-01T00:05:05Z', nowMs);
+  assert.equal(ageMs, -5000);
+  assert.equal(isOshObservationFresh(ageMs), true);
 });
