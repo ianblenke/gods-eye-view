@@ -133,6 +133,11 @@
   - `osh-046` named this rule for the features getter and never named it for the locations getter; add the missing clause.
   - New test: a locations getter that resolves `keyRequired:true` with data still attached places nothing.
   - L9: drop the `!locationsSettled.value.keyRequired` guard. Reddens the new locations-keyRequired test.
+- [x] 6.13 Close the one branch `make ratchet` found still uncovered in `src/layers/osh/index.js`.
+  - The retirement skip's `placedIds.has(id)` disjunct never fired alone.
+  - New test: a placeholder gains a held record and a `Point` on a later refresh.
+  - Its stream goes stale the same refresh; it must not also count as retired.
+  - Mutation: drop the `placedIds.has(id)` disjunct, keeping only `newPlaceholderIds.has(id)`. Reddens the new test.
 
 ## 7. Gates and review
 

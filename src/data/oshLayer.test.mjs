@@ -1658,6 +1658,42 @@ test('[osh-057] a refresh with no fresh location for that system removes the ent
   layer.destroy(viewer);
 });
 
+test('[osh-057] a placeholder that gains a held record and a Point on a later refresh is not counted as retired', async (t) => {
+  let systems = [];
+  let locations = [aircraftLocation()];
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems, stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getLocations() {
+      return { keyRequired: false, locations, failed: 0 };
+    },
+    async getDatastreams() {
+      return { keyRequired: false, datastreams: [] };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.ok(dataSources[0].entities.getById('osh:sys-fixture-9'), 'placed as a placeholder from the stream');
+
+  // The system now shows up in a systems refresh with its own Point, and
+  // the stream that placed it as a placeholder goes stale. Its id is
+  // still placed this refresh, by geometry, so it must not add to the
+  // retirement count a placeholder losing its stream would otherwise add.
+  systems = [{ id: 'sys-fixture-9', uid: 'urn:n', name: 'Held Now', description: null, lon: 5, lat: 6, alt: 0 }];
+  locations = [];
+  await layer.update(viewer);
+  assert.ok(dataSources[0].entities.getById('osh:sys-fixture-9'), 'still placed, now by geometry');
+  assert.equal(layer.getStats().unplaced, 0, 'a system placed this refresh is never also counted as retired');
+  layer.destroy(viewer);
+});
+
 test('[osh-057] a selected stream-placed system keeps its entity at its last position until deselected', async () => {
   let locations = [aircraftLocation()];
   const source = {
