@@ -114,6 +114,13 @@
   - Add the clause to `osh-057`'s own scenario body: the exception governs the entity only, and the system still counts under `unplaced`.
   - L3: put `|| id === _selectedId` back in the retirement skip. This reddens the selected-system entity test, on its unplaced assertion.
 
+## 6c. Two more findings from the same review round
+
+- [x] 6.9 Fix `osh-029`'s falsified clause: a stream-placed system now gets an entity with no `Point`.
+  - Qualify the line the same way `osh-042` already reads: "no `Point` and no fresh location".
+  - The requirement text above it stays true as written; it names a point location, not the `Point` field, so it is not touched.
+  - Add `placed` to the `getStats()` field list in the same scenario; the getter has carried it since `osh-057` landed.
+
 ## 7. Gates and review
 
 - [ ] 7.1 Run `make lint` until no STE error remains.

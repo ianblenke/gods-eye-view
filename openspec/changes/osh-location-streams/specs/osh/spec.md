@@ -150,8 +150,9 @@ Origin: spec-first
 
 #### Scenario: Show one entity per placed system and report the stats `osh-029`
 - **WHEN** the layer updates with the systems and the features
-- **THEN** the map holds one entity with the id `osh:<id>` for each placed system, and none for a system with no `Point`
-- **AND** `getStats()` reports `count`, `features`, `lastUpdate`, `error`, `keyRequired`, `stale`, `unplaced`, `truncated`, `partial`, `selectedId` and `selectedFeatureId`
+- **THEN** the map holds one entity with the id `osh:<id>` for each placed system
+- **AND** the map holds no entity for a system with no `Point` and no fresh location
+- **AND** `getStats()` reports `count`, `features`, `lastUpdate`, `error`, `keyRequired`, `stale`, `unplaced`, `truncated`, `partial`, `selectedId`, `selectedFeatureId` and `placed`
 - **AND** a failed systems fetch sets `error` and leaves the entities unchanged
 - **AND** a failure while the layer places or draws the entities also sets `error`, and the update resolves to `false`
 - **AND** a `keyRequired` answer clears the entities

@@ -192,6 +192,19 @@ test('[osh-029] a system with no Point gets no entity, and counts toward unplace
   layer.destroy(viewer);
 });
 
+test('[osh-029] a system with no Point but a fresh location still gets an entity, counted under count', async () => {
+  const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.ok(dataSources[0].entities.getById('osh:sys-fixture-9'), 'the stream-placed entity must exist');
+  assert.equal(layer.getStats().count, 1);
+  assert.equal(layer.getStats().unplaced, 0);
+  layer.destroy(viewer);
+});
+
 test('[osh-029] reports getStats().stale from a stale systems fetch', async () => {
   const source = {
     async getSystems() {
