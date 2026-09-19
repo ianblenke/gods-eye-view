@@ -221,6 +221,8 @@ Origin: spec-first
 - **AND** the selected system's own poll moves its entity as `osh-031` says, unchanged; this scenario governs only placement and motion from the pass
 - **AND** a refresh with no fresh location for that system removes the entity and counts the system under `unplaced`
 - **AND** a selected system is the one exception: its entity stays at its last position until deselected
+- **AND** that exception governs the entity only
+- **AND** the system still counts under `unplaced`, because its stream went stale
 - **AND** a fresh location that names a feature by id or uid moves that feature entity and never places the system
 - **AND** a click on a stream-placed entity selects it and starts its datastream poll as for any system
 

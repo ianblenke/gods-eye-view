@@ -106,6 +106,14 @@
   - M19: drop the white-space refusal in `isAcceptableLocationProperty()`. Reddens the new test with an internal space in an otherwise-valid URN.
   - M22: skip the systems-snapshot lookup in `resolveSystemName()`. Reddens the new test asserting no by-id read when the snapshot already has the name.
 
+## 6b. A sixth mutation, found on the merged tree
+
+- [x] 6.8 Fix `osh-057`: a selected, retired system fell out of both counts.
+  - A selected, retired, stream-placed system was in neither `getStats().count` nor `getStats().unplaced`. The one-exception rule kept its entity for the current selection but also excluded it from the retired count.
+  - Drop the `|| id === _selectedId` term from the retirement skip in `src/layers/osh/index.js`, so the exception governs the entity only.
+  - Add the clause to `osh-057`'s own scenario body: the exception governs the entity only, and the system still counts under `unplaced`.
+  - L3: put `|| id === _selectedId` back in the retirement skip. This reddens the selected-system entity test, on its unplaced assertion.
+
 ## 7. Gates and review
 
 - [ ] 7.1 Run `make lint` until no STE error remains.
