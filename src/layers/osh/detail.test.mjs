@@ -89,6 +89,28 @@ test('[osh-032] a null ageMs reads "age unknown", takes the class, and never tak
   assert.doesNotMatch(html, /age unknown old/);
 });
 
+test('[osh-032] a time further ahead than drift explains reads as ahead, never as old', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: -31_536_000_000 } }],
+  });
+  assert.match(html, /time ahead of the clock/);
+  assert.match(html, /osh-detail-old/);
+  // Without the bound this read `0 s` with no mark, the freshest reading
+  // the panel can show, for a record dated a year from now.
+  assert.doesNotMatch(html, /0 s/);
+  assert.doesNotMatch(html, /clock old/);
+});
+
+test('[osh-032] the measured clock skew still reads as a fresh zero', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: -5_000 } }],
+  });
+  assert.match(html, /0 s/);
+  assert.doesNotMatch(html, /osh-detail-old/);
+});
+
 test('[osh-032] an age past the threshold does take the word old', () => {
   const html = renderOshDetail({
     system: { id: 'sys-fixture-1' },

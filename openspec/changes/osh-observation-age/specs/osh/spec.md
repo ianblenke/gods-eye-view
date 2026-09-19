@@ -24,7 +24,8 @@ Origin: spec-first
 - **AND** `oshObservationAgeMs()` and `isOshObservationFresh()` read no clock of their own and hold no state
 - **AND** an observation is fresh when `ageMs` is a finite number at or under `OSH_FRESH_MAX_AGE_MS`, which is one hour
 - **AND** `ageMs:null` is an unknown age, and an unknown age is never fresh
-- **AND** an `ageMs` below zero is fresh, because the OpenSensorHub server's clock leads the provider's clock
+- **AND** a small negative `ageMs` is fresh, down to `OSH_CLOCK_SKEW_MAX_MS`, five minutes, because the OpenSensorHub server's clock leads the provider's clock
+- **AND** an `ageMs` further below zero than that is not fresh, because a record from far ahead of the clock is wrong, not new
 - **AND** the route serves a negative `ageMs` when the `phenomenonTime` is ahead of the injected `now`
 - **AND** the browser source passes `ageMs` through unchanged and computes no age
 
@@ -70,7 +71,8 @@ Origin: spec-first
 - **AND** when the selection came from a feature, the header shows the feature's name above the host's name
 - **AND** the header shows the host's id when the host has no record, or `Host: —` when the feature has no host
 - **AND** each datastream block shows the observation's age below its time, in words such as `12 s`, `5 min`, `3 h` or `6 d`
-- **AND** an `ageMs` below zero reads `0 s`, which is the usual reading from a server whose clock leads
+- **AND** a small negative `ageMs` reads `0 s`, which is the usual reading from a server whose clock leads
+- **AND** an `ageMs` further ahead than `OSH_CLOCK_SKEW_MAX_MS` reads `time ahead of the clock`, and never reads `old`
 - **AND** a block whose observation is not fresh carries the class `osh-detail-old`
 - **AND** a block whose age is a number past the threshold also carries the text `old`
 - **AND** a block with `ageMs:null` reads `age unknown`, and never reads `old`, because an unknown age is not a large one
