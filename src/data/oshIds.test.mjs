@@ -228,7 +228,7 @@ test('[osh-053] assertSchemaUrl() and assertSystemUrl() throw for another origin
   );
 });
 
-test('[osh-053] the schema and system URL pairs are the only functions the route may call — no argument replaces either', () => {
+test('[osh-053] the schema and system URL pairs are the only functions the route can call — no argument replaces either', () => {
   // schemaUrl/assertSchemaUrl and systemUrl/assertSystemUrl take no
   // function argument at all: there is no seam for a caller to swap in a
   // different builder or checker, so this is a static fact of the
