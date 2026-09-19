@@ -1650,6 +1650,10 @@ test('[osh-057] a selected stream-placed system keeps its entity at its last pos
     const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
     assert.ok(entity, 'the selected entity stays even though its stream went stale');
     assert.equal(layer.getStats().selectedId, 'sys-fixture-9', 'the selection is not cleared');
+    // The exception governs the entity only: the system still counts as
+    // unplaced, because its stream went stale, even while its entity is
+    // kept for the current selection.
+    assert.equal(layer.getStats().unplaced, 1);
   });
   layer.destroy(viewer);
 });

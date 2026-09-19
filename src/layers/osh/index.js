@@ -375,9 +375,12 @@ export function createOshLayer({ source, detailHost = null } = {}) {
             .filter((record) => record.locationSource === 'stream' && !_systemRecords.has(record.id))
             .map((record) => record.id),
         );
+        // The selected exception in osh-057 governs the entity only: a
+        // retired placeholder still counts as unplaced even while its
+        // entity stays on the map for the current selection.
         let retiredPlaceholders = 0;
         for (const id of _placeholderStreamIds) {
-          if (newPlaceholderIds.has(id) || placedIds.has(id) || id === _selectedId) continue;
+          if (newPlaceholderIds.has(id) || placedIds.has(id)) continue;
           retiredPlaceholders += 1;
         }
         _placeholderStreamIds = newPlaceholderIds;
