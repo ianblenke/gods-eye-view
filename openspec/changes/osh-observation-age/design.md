@@ -32,7 +32,7 @@ A guard that needs a non-negative age, or that treats a negative one as unknown,
 
 ### D40 Fresh is two named bounds
 
-`src/data/oshObservations.js` exports two bounds beside `isOshObservationFresh(ageMs)`. `OSH_FRESH_MAX_AGE_MS` is one hour. `OSH_CLOCK_SKEW_MAX_MS` is five minutes. An age is fresh when it is finite, at or under the first bound, and no further below zero than the second. Null is never fresh. The layer and the detail both import the set, so the same two numbers decide both.
+`src/data/oshObservations.js` exports two bounds beside `isOshObservationFresh(ageMs)`. `OSH_FRESH_MAX_AGE_MS` is one hour. `OSH_CLOCK_SKEW_MAX_MS` is five minutes. An age is fresh when it is finite, at or under the first bound, and no further below zero than the second. Null is never fresh. `isOshObservationAhead(ageMs)` holds the lower bound, and `isOshObservationFresh` and the detail both call it, so one function decides where that bound lies.
 
 The upper bound alone is not a freshness rule. Take a `phenomenonTime` one year ahead of the clock. Its age is about minus thirty-one thousand million milliseconds, which is under one hour. So the record reads as the freshest the panel can show, and it moves an entity. This change exists to refuse that, and the upper bound alone repeats it on the future side. A record from another month is drawn as a fresh one.
 
