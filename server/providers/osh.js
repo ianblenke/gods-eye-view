@@ -71,16 +71,30 @@ export const OSH_DEFAULT_LOCATION_PROPERTIES = Object.freeze([
   'http://sensorml.com/ont/swe/property/LocationVector',
 ]);
 
-/** True for a value that parses as a URL, or reads as a URN scheme, with no white space. */
+/**
+ * True for a value that parses as a URL, with no white space. `new URL()`
+ * already accepts every syntactically valid URN — `urn:` is a generic
+ * scheme, not a special one, so the WHATWG parser never refuses a
+ * whitespace-free string of that shape. An earlier version of this
+ * function fell back to a URN regex on a parse failure; measured against
+ * every malformed `urn:`-prefixed value this project could construct,
+ * `new URL()` never threw, so that fallback's accepting branch was
+ * unreachable and it is gone.
+ *
+ * The one caller below already trims each entry and skips an empty one
+ * before this runs, so this never sees an empty string; an untrimmed or
+ * non-string value would still resolve correctly (an empty string, or one
+ * `new URL()` refuses, already answers false through the branches kept
+ * here), but no such call exists, so no guard is kept for it either.
+ */
 function isAcceptableLocationProperty(value) {
-  if (typeof value !== 'string' || value === '') return false;
   if (/\s/.test(value)) return false;
   try {
     // eslint-disable-next-line no-new
     new URL(value);
     return true;
   } catch {
-    return /^urn:[A-Za-z0-9][A-Za-z0-9-]{0,31}:/.test(value);
+    return false;
   }
 }
 
@@ -417,7 +431,7 @@ export function oshProxy({
         for (const record of records) {
           if (!record.location) continue;
           locations.push({
-            systemId: candidate.systemId || null,
+            systemId: candidate.systemId,
             systemName,
             datastreamId: candidate.id,
             datastreamName: candidate.name,

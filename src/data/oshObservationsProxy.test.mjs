@@ -382,6 +382,7 @@ test('[osh-056] createOshSystemCache() serves the name from properties.name, cac
   const cache = createOshSystemCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
   const first = await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
   assert.equal(first.name, 'Fixture Aircraft');
+  assert.equal('error' in first, false, 'a fresh answer carries no error field at all');
   await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
   assert.equal(calls, 1);
 });
@@ -391,6 +392,39 @@ test('[osh-056] createOshSystemCache() gives name:null for a record with no prop
   const cache = createOshSystemCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
   const result = await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
   assert.equal(result.name, null);
+});
+
+test('[osh-056] createOshSystemCache() gives name:null for a record with no properties at all', async () => {
+  const fetchImpl = async () => new Response(JSON.stringify({}), { status: 200 });
+  const cache = createOshSystemCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
+  const result = await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  assert.equal(result.name, null);
+});
+
+test('[osh-056] createOshSystemCache() gives name:null for an empty (204) body, with no throw on the missing json', async () => {
+  const fetchImpl = async () => new Response(null, { status: 204 });
+  const cache = createOshSystemCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
+  const result = await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  assert.equal(result.name, null);
+});
+
+test('[osh-056] createOshSystemCache() serves a stale name on a failed refresh, and rethrows with none', async () => {
+  let now = 0;
+  let succeed = true;
+  const fetchImpl = async () => {
+    if (succeed)
+      return new Response(JSON.stringify({ properties: { name: 'Fixture Aircraft' } }), { status: 200 });
+    return new Response(null, { status: 500 });
+  };
+  const cache = createOshSystemCache({ fetchImpl, now: () => now, ttlMs: 1000 });
+  await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  succeed = false;
+  now += 1001;
+  const result = await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  assert.equal(result.stale, true);
+  assert.equal(result.name, 'Fixture Aircraft');
+  assert.ok(result.error, 'the stale answer also carries the error that made it stale');
+  await assert.rejects(cache.get('sys-fixture-new', systemUrlFor('sys-fixture-new'), {}));
 });
 
 test('[osh-056] createOshLocationsPass() caches one shared value with its own TTL, and serves stale on a failed refresh', async () => {
