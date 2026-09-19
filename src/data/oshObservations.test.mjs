@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
+  OSH_CLOCK_SKEW_MAX_MS,
   OSH_FRESH_MAX_AGE_MS,
   extractOshLocation,
   flattenOshResult,
@@ -187,6 +188,26 @@ test('[osh-050] an absent or non-string phenomenonTime gives a null age', () => 
 test('[osh-050] a phenomenonTime that does not parse gives a null age', () => {
   assert.equal(oshObservationAgeMs('NaN', 1000), null);
   assert.equal(oshObservationAgeMs('not a time', 1000), null);
+});
+
+test('[osh-050] the thresholds are the numbers the specification names', () => {
+  // Pinned to literals. Every other test uses the symbols, so the symbols
+  // alone prove nothing: moving a constant would move its own assertions.
+  assert.equal(OSH_FRESH_MAX_AGE_MS, 3_600_000);
+  assert.equal(OSH_CLOCK_SKEW_MAX_MS, 300_000);
+  assert.equal(isOshObservationFresh(3_600_000), true);
+  assert.equal(isOshObservationFresh(3_600_001), false);
+  assert.equal(isOshObservationFresh(-300_000), true);
+  assert.equal(isOshObservationFresh(-300_001), false);
+});
+
+test('[osh-050] a record far ahead of the clock is not fresh', () => {
+  // A month, and a year, in the future. Without a lower bound these read as
+  // the freshest possible reading and would move an entity.
+  assert.equal(isOshObservationFresh(-2_592_000_000), false);
+  assert.equal(isOshObservationFresh(-31_536_000_000), false);
+  // The measured skew on the owner's server stays fresh.
+  assert.equal(isOshObservationFresh(-5_000), true);
 });
 
 test('[osh-050] isOshObservationFresh() is true at the threshold and false one millisecond past it', () => {
