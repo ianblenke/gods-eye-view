@@ -11243,6 +11243,8 @@
         "opening Contacts expands Context before activation and returns its settled aircraft window": 1,
         "set_context_mode forwards cancellation authority and reports a stale turn": 1,
         "set_context_mode pre-dispatch cancellation includes authoritative Context state": 1,
+        "set_layer_visibility refuses a layer the data manager does not carry, and names it": 1,
+        "set_layer_visibility tolerates a non-object argument instead of crashing on it": 1,
         "successful voice overhead framing stamps and releases the old owner before flight": 1,
         "successful voice tracking stamps and releases the old owner before layer takeover": 1,
         "track_entity narration names aircraft callsign → registration → icao24": 1,
