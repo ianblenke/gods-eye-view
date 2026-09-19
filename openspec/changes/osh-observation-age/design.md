@@ -32,11 +32,11 @@ A guard that needs a non-negative age, or that treats a negative one as unknown,
 
 ### D40 Fresh is two named bounds
 
-`OSH_FRESH_MAX_AGE_MS`, one hour, and `OSH_CLOCK_SKEW_MAX_MS`, five minutes, are exported from `src/data/oshObservations.js` beside `isOshObservationFresh(ageMs)`: true only for a finite `ageMs` at or under the first bound and no further below zero than the second. Null is never fresh. The layer and the detail both import the set, so the same two numbers decide both.
+`src/data/oshObservations.js` exports two bounds beside `isOshObservationFresh(ageMs)`. `OSH_FRESH_MAX_AGE_MS` is one hour. `OSH_CLOCK_SKEW_MAX_MS` is five minutes. An age is fresh when it is finite, at or under the first bound, and no further below zero than the second. Null is never fresh. The layer and the detail both import the set, so the same two numbers decide both.
 
-The lower bound exists because the upper one alone is not a freshness rule. Without it, a `phenomenonTime` a year in the future gives an age of about minus thirty-one thousand million, which is under one hour, so the record reads as the freshest the panel can show and moves an entity. That is this change's own defect, mirrored: a record from another month drawn as current. The measured skew on the owner's server is two to five seconds, so five minutes is a generous allowance for drift and still refuses a month.
+The upper bound alone is not a freshness rule. Take a `phenomenonTime` one year ahead of the clock. Its age is about minus thirty-one thousand million, which is under one hour. So the record reads as the freshest the panel can show, and it moves an entity. That is this change's own defect, mirrored. A record from another month is drawn as a current one. The measured skew on the owner's server is two to five seconds. Five minutes is therefore a generous allowance for drift, and it still refuses a month.
 
-Both numbers are pinned by a test against their literals. Every other test uses the symbols, and a test that uses only the symbol moves with the constant, so it proves nothing about the number the specification names.
+Both numbers are pinned by a test against their literals. Every other test uses the symbols. A test that uses only the symbol moves with the constant. Such a test proves nothing about the number the specification names.
 
 One hour is a statement about this project's confidence in a position, not about the server. Its consequence: most mesh stations never move from an observation, because their newest record is often days old. That is correct. The feature geometry places them, and `osh-selected-only-motion` already limits motion to the selected system. So the visible effect is one marker at most.
 

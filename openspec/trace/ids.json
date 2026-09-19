@@ -875,7 +875,7 @@
     "change": "osh-fusion"
   },
   "osh-032": {
-    "hash": "a69bbeb5e35e4b7a8a7c874e83bf029b44c060e02cb15e33eec6aed0c773bcf1",
+    "hash": "d3aedb00fcd2f83da8757e0586a6c44c943ef03227878dda3dc649058853ba2d",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -965,7 +965,7 @@
     "change": "osh-geo-discovery"
   },
   "osh-050": {
-    "hash": "767e0d091c5a0761315214774f0bd505144e428864c2edb70b2bc35c7e8235e0",
+    "hash": "ec621c4256047805683416142c1614c93ea6b395dfe998ac1164a02d31072e2a",
     "since": "2026-09-18",
     "change": "osh-observation-age"
   },
