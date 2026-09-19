@@ -36,4 +36,4 @@
 - [x] 4.1 Run `make lint` until no STE error remains.
 - [x] 4.2 Run `make ratchet`.
 - [x] 4.3 Run `make gates`. Confirm the five files stay at 100%.
-- [ ] 4.4 Run `/opsx:review osh-observation-age`, correct the findings, and record the result in `review.md`.
+- [x] 4.4 Run `/opsx:review osh-observation-age`, correct the findings, and record the result in `review.md`.
