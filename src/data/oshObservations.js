@@ -168,18 +168,8 @@ export function oshObservationAgeMs(phenomenonTime, nowMs) {
 }
 
 /**
- * True only for a finite age inside both bounds. A small negative age — the
- * record's time is ahead of `nowMs`, because the server's clock leads the provider's clock — is
- * fresh. A large negative age is not: a record from far in the future is as
- * wrong as one from far in the past, and nothing this project measured
- * reaches beyond two to five seconds of skew. Null, or any other non-finite
- * value, is never fresh.
- * @param {*} ageMs
- * @returns {boolean}
- */
-/**
  * True when a record's own time sits further ahead of the provider's clock
- * than drift explains. Such a record is not new, it is wrong. One function
+ * than drift explains. Such a record is not new. It is wrong. One function
  * holds this test, because three places ask it, and two copies of a bound
  * drift apart.
  * @param {*} ageMs
@@ -189,6 +179,15 @@ export function isOshObservationAhead(ageMs) {
   return Number.isFinite(ageMs) && ageMs < -OSH_CLOCK_SKEW_MAX_MS;
 }
 
+/**
+ * True only for a finite age inside both bounds. A small negative age is
+ * fresh, because the server's clock leads the provider's clock. A large
+ * negative age is not: a record from far in the future is as wrong as one
+ * from far in the past. Nothing this project measured reaches beyond two to
+ * five seconds of skew. Null, or any other non-finite value, is never fresh.
+ * @param {*} ageMs
+ * @returns {boolean}
+ */
 export function isOshObservationFresh(ageMs) {
   if (!Number.isFinite(ageMs)) return false;
   if (isOshObservationAhead(ageMs)) return false;
