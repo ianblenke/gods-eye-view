@@ -108,7 +108,8 @@ export function installGoogleGeocodeRoute(middlewares, {
         const text = await readResponseTextCapped(response, GEOCODE_MAX_RESPONSE_BYTES, controller.signal);
         data = JSON.parse(text);
       } catch (error) {
-        readError = error?.message || 'Upstream response too large';
+        // readResponseTextCapped and JSON.parse only ever throw a real Error.
+        readError = error.message;
       }
       const projected = projectGeocodeResults(data);
       sendJson(res, response.ok ? 200 : response.status, {
@@ -118,11 +119,12 @@ export function installGoogleGeocodeRoute(middlewares, {
         error: readError || (response.ok ? null : (data.error_message || 'Google Geocoding request failed')),
       });
     } catch (error) {
+      // A rejected fetch() always rejects with a real Error.
       sendJson(res, 502, {
         configured: true,
         status: null,
         results: [],
-        error: error?.message || 'Google Geocoding request failed',
+        error: error.message,
       });
     } finally {
       clearTimeout(timer);
