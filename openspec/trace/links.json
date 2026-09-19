@@ -686,6 +686,7 @@
   ],
   "osh-031": [
     "src/data/oshLayer.test.mjs › [osh-031] a moved entity with no altitude in the newest result defaults to zero",
+    "src/data/oshLayer.test.mjs › [osh-031] a newest result from far ahead of the clock leaves the entity where it was",
     "src/data/oshLayer.test.mjs › [osh-031] a newest result one millisecond past the freshness threshold leaves the entity where it was",
     "src/data/oshLayer.test.mjs › [osh-031] a newest result with a location moves the entity, and a systems refresh keeps the moved position",
     "src/data/oshLayer.test.mjs › [osh-031] a newest result with ageMs:null leaves the entity where it was",
@@ -699,10 +700,10 @@
     "src/layers/osh/detail.test.mjs › [osh-032] a system with no datastreams still renders the system header",
     "src/layers/osh/detail.test.mjs › [osh-032] a system-only selection still renders the plain system header, with no feature block",
     "src/layers/osh/detail.test.mjs › [osh-032] a time further ahead than drift explains reads as ahead, never as old",
+    "src/layers/osh/detail.test.mjs › [osh-032] adds the class osh-detail-old and the word old to a datastream past the threshold",
     "src/layers/osh/detail.test.mjs › [osh-032] an age past the threshold does take the word old",
     "src/layers/osh/detail.test.mjs › [osh-032] falls back to the feature id when the feature has no name",
     "src/layers/osh/detail.test.mjs › [osh-032] falls back to the host system id when the host record has no name",
-    "src/layers/osh/detail.test.mjs › [osh-032] marks a datastream past the freshness threshold old, with the osh-detail-old class",
     "src/layers/osh/detail.test.mjs › [osh-032] renders \"No data\" for a datastream with no rows, and falls back to the id",
     "src/layers/osh/detail.test.mjs › [osh-032] renders a null row value as an empty string",
     "src/layers/osh/detail.test.mjs › [osh-032] renders an empty string for no selection",
@@ -714,7 +715,8 @@
     "src/layers/osh/detail.test.mjs › [osh-032] shows the observation age in words: seconds, minutes, hours and days",
     "src/layers/osh/detail.test.mjs › [osh-032] the function does nothing when there is no host",
     "src/layers/osh/detail.test.mjs › [osh-032] the host innerHTML receives the rendered detail, and an empty selection clears it",
-    "src/layers/osh/detail.test.mjs › [osh-032] the measured clock skew still reads as a fresh zero"
+    "src/layers/osh/detail.test.mjs › [osh-032] the measured clock skew still reads as a fresh zero",
+    "src/layers/osh/detail.test.mjs › [osh-032] the panel and the freshness rule agree at the skew bound itself"
   ],
   "osh-033": [
     "src/data/layerState.test.mjs › [osh-033] registers the OSH systems layer with the token o, and localLayers.js exports it"
