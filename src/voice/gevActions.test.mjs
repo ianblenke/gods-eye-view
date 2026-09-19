@@ -60,6 +60,26 @@ test('track_entity narration names aircraft callsign → registration → icao24
   assert.equal(formatTrackedEntityLabel(null, 'the ISS'), 'the ISS');
 });
 
+test('set_layer_visibility refuses a layer the data manager does not carry, and names it', async () => {
+  const { viewer, styleManager } = createVoiceNavigationHarness();
+  const dataManager = { layers: new Map([['flights', { module: {} }]]) };
+  const runner = createGevActionRunner({ viewer, styleManager, dataManager });
+  await assert.rejects(
+    runner('set_layer_visibility', { layerId: 'not-a-real-layer' }),
+    { message: 'Unknown data layer: not-a-real-layer' },
+  );
+});
+
+test('set_layer_visibility tolerates a non-object argument instead of crashing on it', async () => {
+  const { viewer, styleManager } = createVoiceNavigationHarness();
+  const dataManager = { layers: new Map() };
+  const runner = createGevActionRunner({ viewer, styleManager, dataManager });
+  await assert.rejects(
+    runner('set_layer_visibility', null),
+    { message: 'Unknown data layer: missing' },
+  );
+});
+
 test('track_entity runner narrates a callsign-less aircraft by its registration', async () => {
   globalThis.window = globalThis.window || { clearTimeout, setTimeout, requestIdleCallback: null };
   // Only the layer lookup is stubbed — the runner reaches the real formatter
