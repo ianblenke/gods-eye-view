@@ -87,3 +87,5 @@ The coverage gate found four real gaps and five unreachable lines, across three 
 3. `server/providers/osh.js`, the `|| null` on a location's system id. Every candidate source — `mapOshDatastreams()`, and the per-system-route stamp in `gatherLocationCandidates()` — already guarantees a string or null there, never undefined.
 4. `src/data/oshObservations.js`, `vectorReaderOf()`'s array-type check on the coordinates. Its one caller, `walkForVector()`, already runs that same check before calling it.
 5. `src/data/oshObservations.js`, `readFinite()`'s null-path guard. Both of `extractOshLocation()`'s required paths are checked before it is called, and the optional height path reaches this function only when already truthy.
+
+With deletion 2 gone, `isAcceptableLocationProperty()`'s effective rule is: the value has a scheme, and no white space. A value such as `javascript:x` passes it. This is harmless here: an accepted value only ever becomes an `observedProperty` query value, and this provider never fetches it as a URL.
