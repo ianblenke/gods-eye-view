@@ -3075,7 +3075,7 @@ function installGeocodeFetch(t, handler) {
   });
 }
 
-test('voice Radio: a server that geocodes to nothing still places the station, keylessly', async (t) => {
+test('voice Radio: a key that geocodes to nothing still places the station, keylessly', async (t) => {
   const { calls, dataManager } = radioSelectionHarness();
   const requests = [];
   installGeocodeFetch(t, async (url) => {
