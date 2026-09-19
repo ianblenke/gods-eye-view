@@ -1064,6 +1064,34 @@ test('[osh-046] a fois getter that resolves keyRequired:true, while the systems 
   layer.destroy(viewer);
 });
 
+test('[osh-046] a locations getter that resolves keyRequired:true alone gives an empty location list, with partial:false and no error', async () => {
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getLocations() {
+      return { keyRequired: true, locations: [aircraftLocation()], failed: 0 };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.equal(
+    dataSources[0].entities.getById('osh:sys-fixture-9'),
+    undefined,
+    'a keyRequired locations answer places nothing, even though it carries a location',
+  );
+  assert.equal(layer.getStats().count, 0);
+  assert.equal(layer.getStats().partial, false);
+  assert.equal(layer.getStats().error, null);
+  layer.destroy(viewer);
+});
+
 test('[osh-046] the features getter throwing sets partial:true and no error, and the systems still place', async () => {
   const source = {
     async getSystems() {
@@ -1725,5 +1753,41 @@ test('[osh-057] the detail for a selected stream-placed placeholder shows Placed
     assert.match(detailHost.innerHTML, /Fixture Aircraft/, 'the header falls back to the location\'s own systemName');
     assert.match(detailHost.innerHTML, /Placed by Aircraft Position/);
   });
+  layer.destroy(viewer);
+});
+
+test('[osh-057] a held system\'s own name wins over the location\'s systemName in the detail header', async () => {
+  const source = fakeSource({ systems: [SYSTEM_NULL], fois: [], locations: [aircraftLocation()] });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-9');
+    getClick()({ position: {} });
+    await flush();
+    assert.match(detailHost.innerHTML, /No Point/, 'the held record\'s own name wins');
+    assert.doesNotMatch(
+      detailHost.innerHTML,
+      /Fixture Aircraft/,
+      'the location\'s systemName never overrides a held name',
+    );
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-057] getStats().placed.stream counts only the stream-placed system, not the geometry-placed one', async () => {
+  const source = fakeSource({ systems: [SYSTEM_A], fois: [], locations: [aircraftLocation()] });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const stats = layer.getStats();
+  assert.equal(stats.count, 2, 'both the geometry-placed and the stream-placed system are on the map');
+  assert.equal(stats.placed.stream, 1);
   layer.destroy(viewer);
 });
