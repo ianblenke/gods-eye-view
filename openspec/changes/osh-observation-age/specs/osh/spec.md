@@ -60,8 +60,8 @@ Origin: spec-first
 
 #### Scenario: Move the entity for the selected system's newest location `osh-031`
 - **WHEN** a poll's newest observation for the selected system carries a location
-- **THEN** the entity moves to that location only when the observation is fresh, with `ageMs` finite and at or under `OSH_FRESH_MAX_AGE_MS`
-- **AND** an observation with an `ageMs` above the threshold, or with `ageMs:null`, leaves the entity where it was
+- **THEN** the layer moves the entity to that location only when the observation is fresh
+- **AND** the layer leaves the entity in place when `ageMs` is above `OSH_FRESH_MAX_AGE_MS`, or further below zero than `OSH_CLOCK_SKEW_MAX_MS`, or null
 - **AND** an observation with no location leaves the entity where it was
 - **AND** a later systems refresh does not move the entity back while that system stays selected
 

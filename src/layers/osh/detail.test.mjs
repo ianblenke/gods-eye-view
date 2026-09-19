@@ -47,7 +47,7 @@ test('[osh-032] shows the observation age in words: seconds, minutes, hours and 
   assert.match(html(6 * 24 * 60 * 60_000), /6 d/);
 });
 
-test('[osh-032] marks a datastream past the freshness threshold old, with the osh-detail-old class', () => {
+test('[osh-032] adds the class osh-detail-old and the word old to a datastream past the threshold', () => {
   const html = renderOshDetail({
     system: { id: 'sys-fixture-1' },
     datastreams: [
@@ -100,6 +100,25 @@ test('[osh-032] a time further ahead than drift explains reads as ahead, never a
   // the panel can show, for a record dated a year from now.
   assert.doesNotMatch(html, /0 s/);
   assert.doesNotMatch(html, /clock old/);
+});
+
+test('[osh-032] the panel and the freshness rule agree at the skew bound itself', () => {
+  // The bound is one function now. When it was spelled out in three places,
+  // flipping one copy to `<=` left this value fresh to the layer and
+  // unusable to the panel, and all 164 tests passed.
+  const at = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: -300_000 } }],
+  });
+  assert.match(at, /0 s/);
+  assert.doesNotMatch(at, /osh-detail-old/);
+  assert.doesNotMatch(at, /ahead of the clock/);
+  const past = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: -300_001 } }],
+  });
+  assert.match(past, /ahead of the clock/);
+  assert.match(past, /osh-detail-old/);
 });
 
 test('[osh-032] the measured clock skew still reads as a fresh zero', () => {

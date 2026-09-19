@@ -3,7 +3,7 @@
  * block per datastream with its newest result as key/value rows.
  */
 
-import { OSH_CLOCK_SKEW_MAX_MS, isOshObservationFresh } from '../../data/oshObservations.js';
+import { isOshObservationAhead, isOshObservationFresh } from '../../data/oshObservations.js';
 
 const AGE_SECOND_MS = 1000;
 const AGE_MINUTE_MS = 60 * AGE_SECOND_MS;
@@ -21,7 +21,7 @@ export function formatOshAge(ageMs) {
   if (!Number.isFinite(ageMs)) return 'age unknown';
   // Further ahead of our clock than drift explains. The record is not new,
   // it is wrong, so it does not read as an amount of time.
-  if (ageMs < -OSH_CLOCK_SKEW_MAX_MS) return 'ahead of the clock';
+  if (isOshObservationAhead(ageMs)) return 'ahead of the clock';
   const clamped = ageMs < 0 ? 0 : ageMs;
   if (clamped < AGE_MINUTE_MS) return `${Math.round(clamped / AGE_SECOND_MS)} s`;
   if (clamped < AGE_HOUR_MS) return `${Math.round(clamped / AGE_MINUTE_MS)} min`;
@@ -37,7 +37,7 @@ function renderAge(ageMs) {
   // An unknown age, and a time further ahead than drift explains, both keep
   // the class and refuse the word `old`. Neither is a large age: one is not
   // known, and the other is not a past time at all.
-  if (!Number.isFinite(ageMs) || ageMs < -OSH_CLOCK_SKEW_MAX_MS) {
+  if (!Number.isFinite(ageMs) || isOshObservationAhead(ageMs)) {
     return `<div class="osh-detail-age osh-detail-old">${escapeHtml(text)}</div>`;
   }
   return `<div class="osh-detail-age osh-detail-old">${escapeHtml(text)} old</div>`;
