@@ -21,9 +21,12 @@ Origin: spec-first
 - **THEN** the observation carries `ageMs`, the provider's clock at serve time minus the parsed `phenomenonTime`, computed by the route and never stored in the cache
 - **AND** a second answer served from the same cached snapshot later carries a larger `ageMs`
 - **AND** an absent or unparsed `phenomenonTime` gives `ageMs:null`
-- **AND** `oshObservationAgeMs()` and `isOshObservationFresh()` are pure, and fresh is a finite `ageMs` at or under `OSH_FRESH_MAX_AGE_MS`, one hour; null is never fresh
-- **AND** an `ageMs` below zero is fresh, because the two clocks differ
-- **AND** a record whose `phenomenonTime` is ahead of the injected `now` keeps its negative age and moves an entity
+- **AND** `oshObservationAgeMs()` and `isOshObservationFresh()` read no clock of their own and hold no state
+- **AND** an observation is fresh when `ageMs` is a finite number at or under `OSH_FRESH_MAX_AGE_MS`, which is one hour
+- **AND** `ageMs:null` is an unknown age, and an unknown age is never fresh
+- **AND** a small negative `ageMs` is fresh, down to `OSH_CLOCK_SKEW_MAX_MS`, five minutes, because the OpenSensorHub server's clock leads the provider's clock
+- **AND** an `ageMs` further below zero than that is not fresh, because a record from far ahead of the clock is wrong, not new
+- **AND** the route serves a negative `ageMs` when the `phenomenonTime` is ahead of the injected `now`
 - **AND** the browser source passes `ageMs` through unchanged and computes no age
 
 ### Requirement: Systems layer
@@ -57,8 +60,8 @@ Origin: spec-first
 
 #### Scenario: Move the entity for the selected system's newest location `osh-031`
 - **WHEN** a poll's newest observation for the selected system carries a location
-- **THEN** the entity moves to that location only when the observation is fresh, with `ageMs` finite and at or under `OSH_FRESH_MAX_AGE_MS`
-- **AND** an observation with an `ageMs` above the threshold, or with `ageMs:null`, leaves the entity where it was
+- **THEN** the layer moves the entity to that location only when the observation is fresh
+- **AND** the layer leaves the entity in place when `ageMs` is above `OSH_FRESH_MAX_AGE_MS`, or further below zero than `OSH_CLOCK_SKEW_MAX_MS`, or null
 - **AND** an observation with no location leaves the entity where it was
 - **AND** a later systems refresh does not move the entity back while that system stays selected
 
@@ -67,8 +70,12 @@ Origin: spec-first
 - **THEN** it escapes the characters `<`, `>`, `&` and `"` in every name and value
 - **AND** when the selection came from a feature, the header shows the feature's name above the host's name
 - **AND** the header shows the host's id when the host has no record, or `Host: —` when the feature has no host
-- **AND** each datastream block shows the observation's age beside its time, in words such as `12 s`, `5 min`, `3 h` or `6 d`
-- **AND** a block whose observation is not fresh carries the text `old` and the class `osh-detail-old`, and one with `ageMs:null` carries the text `age unknown`
+- **AND** each datastream block shows the observation's age below its time, in words such as `12 s`, `5 min`, `3 h` or `6 d`
+- **AND** a small negative `ageMs` reads `0 s`, which is the usual reading from a server whose clock leads
+- **AND** an `ageMs` further ahead than `OSH_CLOCK_SKEW_MAX_MS` reads `ahead of the clock`, and never reads `old`
+- **AND** a block whose observation is not fresh carries the class `osh-detail-old`
+- **AND** a block whose age is a number past the threshold also carries the text `old`
+- **AND** a block with `ageMs:null` reads `age unknown`, and never reads `old`, because an unknown age is not a large one
 - **AND** a host element given to the layer receives that HTML in `innerHTML`
 - **AND** an empty selection clears the host
 
