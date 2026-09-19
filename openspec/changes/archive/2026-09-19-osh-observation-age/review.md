@@ -6,7 +6,7 @@ Date: 2026-09-19
 Gates: make gates CHANGE=osh-observation-age passed, but for this file
 Rounds: 3
 Scope: diff 9e33fd8
-Reviewed-Tree: 96f2d9e62c9afd5805dec593a2b96c74815be669be84be2c784f7500a1ac1652
+Reviewed-Tree: 08bad2f1b9d45b3e22ebfa82bac461e357344a86d754ea32c64a726175ea34fb
 
 The output of each round is in `review/round-<n>/`. The output in
 `review/` is round 3, where both agents gave PASS.
@@ -127,7 +127,7 @@ the change had dropped it.
 
 - [x] B3 blocker The new predicate was inserted between `isOshObservationFresh`'s doc block and its body, so the two-bound rule documented the one-bound predicate and the fresh rule carried no doc at all.
 - [x] B4 withdrawn by the reviewer. The live spec had lost `osh-050` and reverted two scenarios. That was the archive being rolled back so `osh-031` could be fixed, and the re-archive before merge restores it.
-- [ ] Round 3 minor D40 says two callers where the code comment says three. **Accepted by name.**
+- [ ] R3a minor D40 says two callers where the code comment says three. **Accepted by the lead.**
 
 ## What the third round proves about the second
 
