@@ -78,12 +78,12 @@ The systems read stays required. The feature read and the locations read are bot
 
 Coverage: every changed file at 100% line, branch and function coverage. Trace: each MODIFIED scenario carries one changed test with its tag. No new source file, so the pinned counts this provider's own hygiene test already checks hold unedited. Spec lint and STE lint run as they already do for this project.
 
-### D51 Three guards deleted, not tested, because their one caller already checks
+### D51 Five deletions, not tested, because their one caller already checks
 
-The coverage gate found four real gaps and three unreachable branches. The four real gaps got tests. The three unreachable branches got deleted instead. Each is confirmed unreachable by tracing its one caller, not by a mutation that merely failed to redden.
+The coverage gate found four real gaps and five unreachable lines, across three functions. The four real gaps got tests. The five unreachable lines got deleted instead. Each is confirmed unreachable by tracing its one caller, not by a mutation that merely failed to redden. Listed against `git diff main..HEAD`, for a reviewer to check line by line:
 
-`isAcceptableLocationProperty()` in `server/providers/osh.js` had a URN-regex fallback for when `new URL()` throws. No malformed, whitespace-free string starting `urn:` this project could construct ever made `new URL()` throw. `urn:` is a generic scheme, and the WHATWG parser accepts almost anything after one. The fallback's accepting branch was dead. Its type-and-empty-string guard was dead too — the one caller already trims each entry and skips an empty one first.
-
-A location's system id, in the same file, had a redundant `|| null` fallback. Every candidate source — `mapOshDatastreams()`, and the per-system-route stamp in `gatherLocationCandidates()` — already guarantees a string or null there, never undefined. The fallback never changed the answer.
-
-`vectorReaderOf()` and `readFinite()` in `src/data/oshObservations.js` each had a guard their one caller already made redundant. `vectorReaderOf()`'s array check repeated one `walkForVector()` already runs before calling it. `readFinite()`'s null-path guard covered a case that cannot occur: both of `extractOshLocation()`'s own required paths are checked before it is called. Its optional height path reaches it only when already truthy.
+1. `server/providers/osh.js`, `isAcceptableLocationProperty()`: its type-and-empty-string guard. The one caller already trims each entry and skips an empty one before calling it.
+2. The same function's URN-regex fallback, run when `new URL()` throws. No malformed, whitespace-free string starting `urn:` this project could construct ever made `new URL()` throw. `urn:` is a generic scheme, and the WHATWG parser accepts almost anything after one, so this branch's accepting answer was dead.
+3. `server/providers/osh.js`, the `|| null` on a location's system id. Every candidate source — `mapOshDatastreams()`, and the per-system-route stamp in `gatherLocationCandidates()` — already guarantees a string or null there, never undefined.
+4. `src/data/oshObservations.js`, `vectorReaderOf()`'s array-type check on the coordinates. Its one caller, `walkForVector()`, already runs that same check before calling it.
+5. `src/data/oshObservations.js`, `readFinite()`'s null-path guard. Both of `extractOshLocation()`'s required paths are checked before it is called, and the optional height path reaches this function only when already truthy.
