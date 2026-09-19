@@ -17,6 +17,7 @@ import {
 import { mapOshSystems } from '../../src/data/oshSystems.js';
 import { mapOshDatastreams } from '../../src/data/oshDatastreams.js';
 import { mapOshFois } from '../../src/data/oshFois.js';
+import { oshObservationAgeMs } from '../../src/data/oshObservations.js';
 
 /**
  * OpenSensorHub systems, datastreams, features-of-interest and
@@ -363,12 +364,19 @@ export function oshProxy({
           assertObservationUrl(target, state.root, id);
           try {
             const result = await observationsCache.get(id, target, headers);
+            // The age is arithmetic on the cached observation's phenomenonTime
+            // against the current instant, computed fresh on every answer;
+            // the cache itself never stores an age, so a stale snapshot
+            // served twice reports a larger age the second time.
+            const observation = result.observation
+              ? { ...result.observation, ageMs: oshObservationAgeMs(result.observation.phenomenonTime, now()) }
+              : null;
             sendJson(200, {
               datastream: id,
               fetchedAt: result.fetchedAt,
               stale: result.stale,
               ttlMs: OBS_TTL_MS,
-              observation: result.observation,
+              observation,
             });
           } catch (error) {
             sendJson(502, {
