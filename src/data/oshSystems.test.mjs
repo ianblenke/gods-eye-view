@@ -327,3 +327,141 @@ test('[osh-042] a location naming neither a feature nor a systemId is ignored', 
   assert.deepEqual(unplaced, ['sys-fixture-1']);
   assert.equal(systems.length, 0);
 });
+
+test('[osh-042] a location with no phenomenonTime is never treated as newer than one that has one', () => {
+  const { systems } = placeOshEntities({
+    systems: [{ id: 'sys-fixture-1', uid: null, name: 'Gateway', lon: 1, lat: 1, alt: 1 }],
+    fois: [],
+    locations: [
+      {
+        systemId: 'sys-fixture-1',
+        foiId: null,
+        foiUid: null,
+        lon: 10,
+        lat: 11,
+        alt: 12,
+        datastreamId: 'ds-fixture-first',
+        datastreamName: 'First',
+        phenomenonTime: '2026-01-01T00:00:00Z',
+        ageMs: FRESH_AGE_MS,
+      },
+      {
+        systemId: 'sys-fixture-1',
+        foiId: null,
+        foiUid: null,
+        lon: 20,
+        lat: 21,
+        alt: 22,
+        datastreamId: 'ds-fixture-no-time',
+        datastreamName: 'No Time',
+        phenomenonTime: null,
+        ageMs: FRESH_AGE_MS,
+      },
+    ],
+  });
+  assert.equal(systems[0].datastreamId, 'ds-fixture-first', 'a location with no time never displaces one that has one');
+});
+
+test('[osh-042] a location with a valid time replaces an earlier one that had no time at all', () => {
+  const { systems } = placeOshEntities({
+    systems: [{ id: 'sys-fixture-1', uid: null, name: 'Gateway', lon: 1, lat: 1, alt: 1 }],
+    fois: [],
+    locations: [
+      // Pushed first, with no time to compare against.
+      {
+        systemId: 'sys-fixture-1',
+        foiId: null,
+        foiUid: null,
+        lon: 10,
+        lat: 11,
+        alt: 12,
+        datastreamId: 'ds-fixture-no-time',
+        datastreamName: 'No Time',
+        phenomenonTime: null,
+        ageMs: FRESH_AGE_MS,
+      },
+      // Compared against the first: a valid time against no time at all
+      // must win, since "no time" can never itself be newer.
+      {
+        systemId: 'sys-fixture-1',
+        foiId: null,
+        foiUid: null,
+        lon: 20,
+        lat: 21,
+        alt: 22,
+        datastreamId: 'ds-fixture-has-time',
+        datastreamName: 'Has Time',
+        phenomenonTime: '2026-01-01T00:00:00Z',
+        ageMs: FRESH_AGE_MS,
+      },
+    ],
+  });
+  assert.equal(systems[0].datastreamId, 'ds-fixture-has-time');
+});
+
+test('[osh-042] the newer of two fresh locations naming the same feature wins', () => {
+  const { features } = placeOshEntities({
+    systems: [],
+    fois: [{ id: 'foi-fixture-1', uid: 'urn:foi-1', systemId: null, lon: 1, lat: 1, alt: null }],
+    locations: [
+      {
+        foiId: 'foi-fixture-1',
+        foiUid: null,
+        lon: 11,
+        lat: 12,
+        alt: 13,
+        phenomenonTime: '2026-01-01T00:00:00Z',
+        ageMs: FRESH_AGE_MS,
+      },
+      {
+        foiId: 'foi-fixture-1',
+        foiUid: null,
+        lon: 21,
+        lat: 22,
+        alt: 23,
+        phenomenonTime: '2026-01-01T01:00:00Z',
+        ageMs: FRESH_AGE_MS,
+      },
+    ],
+  });
+  const feature = features.find((f) => f.id === 'foi-fixture-1');
+  assert.deepEqual([feature.lon, feature.lat, feature.alt], [21, 22, 23], 'the newer of the two locations wins');
+});
+
+test('[osh-042] when neither of two locations for one system has a usable time, the first one seen is kept', () => {
+  const { systems } = placeOshEntities({
+    systems: [{ id: 'sys-fixture-1', uid: null, name: 'Gateway', lon: 1, lat: 1, alt: 1 }],
+    fois: [],
+    locations: [
+      {
+        systemId: 'sys-fixture-1',
+        foiId: null,
+        foiUid: null,
+        lon: 10,
+        lat: 11,
+        alt: 12,
+        datastreamId: 'ds-fixture-first-no-time',
+        datastreamName: 'First',
+        phenomenonTime: null,
+        ageMs: FRESH_AGE_MS,
+      },
+      {
+        systemId: 'sys-fixture-1',
+        foiId: null,
+        foiUid: null,
+        lon: 20,
+        lat: 21,
+        alt: 22,
+        datastreamId: 'ds-fixture-second-no-time',
+        datastreamName: 'Second',
+        phenomenonTime: 'also-not-a-time',
+        ageMs: FRESH_AGE_MS,
+      },
+    ],
+  });
+  assert.equal(
+    systems[0].datastreamId,
+    'ds-fixture-first-no-time',
+    'neither location has a usable time, so the second never displaces the first',
+  );
+});

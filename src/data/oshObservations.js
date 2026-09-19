@@ -98,11 +98,13 @@ function unitCodeOf(field) {
 /**
  * Bind a Vector field's coordinates by axisID, never by name or list
  * position. Returns null when the frame is present and not geographic, or
- * when no coordinate binds both Lat and Lon.
+ * when no coordinate binds both Lat and Lon. Its one caller, walkForVector()
+ * below, already checks `Array.isArray(field.coordinates)` before calling,
+ * so `field.coordinates` is always an array here.
  */
 function vectorReaderOf(field, fieldPath) {
   if (!frameIsGeographic(field.referenceFrame)) return null;
-  const coordinates = Array.isArray(field.coordinates) ? field.coordinates : [];
+  const coordinates = field.coordinates;
   let lat = null;
   let lon = null;
   let alt = null;
@@ -206,8 +208,10 @@ function readPath(result, path) {
   return value;
 }
 
+// Every call below passes a truthy path: reader.lat and reader.lon are both
+// checked at the top of extractOshLocation(), and reader.alt is checked by
+// the ternary at its own call site, so this never needs a null-path guard.
 function readFinite(result, path) {
-  if (!path) return null;
   const raw = readPath(result, path);
   if (raw === null || raw === undefined || raw === '') return null;
   const number = Number(raw);
@@ -293,9 +297,11 @@ export function isOshObservationFresh(ageMs) {
 }
 
 function readFeatureUid(result, reader) {
-  if (!reader?.featureUid) return null;
+  if (!reader) return null;
+  if (!reader.featureUid) return null;
   const raw = readPath(result, reader.featureUid);
-  return typeof raw === 'string' && raw ? raw : null;
+  if (typeof raw !== 'string') return null;
+  return raw || null;
 }
 
 /**

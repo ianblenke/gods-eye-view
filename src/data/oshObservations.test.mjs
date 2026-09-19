@@ -467,3 +467,205 @@ test('[osh-050] a phenomenonTime ahead of nowMs gives a negative age, and a nega
   assert.equal(ageMs, -5000);
   assert.equal(isOshObservationFresh(ageMs), true);
 });
+
+// --- osh-051: branch gaps in the schema reader's helper functions --------
+
+test('[osh-051] a non-string, non-null referenceFrame is treated as not geographic', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          referenceFrame: 12345,
+          coordinates: [
+            { type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+          ],
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(schema), null);
+});
+
+test('[osh-051] a referenceFrame string with no "epsg" in it is not geographic', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          referenceFrame: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+          coordinates: [
+            { type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+          ],
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(schema), null);
+});
+
+test('[osh-051] a flat field with no definition at all never binds', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        { type: 'Quantity', name: 'lat', uom: { code: 'deg' } },
+        {
+          type: 'Quantity',
+          name: 'lon',
+          definition: 'urn:osh:def:fixture:position:1#longitude',
+          uom: { code: 'deg' },
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(schema), null);
+});
+
+test('[osh-051] a definition with no token after its separators gives null, so featureUid stays null', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        ...flatSchema.resultSchema.fields.filter((field) => field.name !== 'featureUid'),
+        { type: 'Text', name: 'featureUid', definition: '///' },
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(schema);
+  assert.equal(reader.featureUid, null);
+});
+
+test('[osh-051] a Vector coordinate with no uom at all never binds', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          coordinates: [
+            { type: 'Quantity', name: 'lat', axisID: 'Lat' },
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+          ],
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(schema), null);
+});
+
+test('[osh-051] a malformed entry in a Vector\'s coordinates — null, or with no string name — is skipped', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          coordinates: [
+            null,
+            { type: 'Quantity', axisID: 'Lat', uom: { code: 'deg' } }, // no name
+            { type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+          ],
+        },
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(schema);
+  assert.deepEqual(reader.lat, ['loc', 'lat']);
+});
+
+test('[osh-051] finds featureUid one level below the root, not only at the top', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        ...flatSchema.resultSchema.fields.filter((field) => field.name !== 'featureUid'),
+        {
+          type: 'DataRecord',
+          name: 'wrap',
+          fields: [
+            { type: 'Text', name: 'featureUid', definition: 'urn:osh:def:fixture:position:1#samplingFeatureUid' },
+          ],
+        },
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(schema);
+  assert.deepEqual(reader.featureUid, ['wrap', 'featureUid']);
+});
+
+// --- osh-027: extractOshLocation() and its readFinite() helper -----------
+
+test('[osh-027] a non-null, non-object result gives null', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: null };
+  assert.equal(extractOshLocation('not an object', reader), null);
+  assert.equal(extractOshLocation(5, reader), null);
+});
+
+// --- osh-052: readFeatureUid() and mapOshLocationPage() branch gaps ------
+
+test('[osh-052] a foiUid path whose value is not a string, or is an empty string, gives null', () => {
+  const readerNumeric = { lat: ['lat'], lon: ['lon'], alt: null, featureUid: ['uid'] };
+  const nowMs = 0;
+  const numericPage = { items: [{ result: { lat: 1, lon: 2, uid: 42 } }] };
+  const emptyPage = { items: [{ result: { lat: 1, lon: 2, uid: '' } }] };
+  assert.equal(mapOshLocationPage(numericPage, readerNumeric, nowMs)[0].foiUid, null);
+  assert.equal(mapOshLocationPage(emptyPage, readerNumeric, nowMs)[0].foiUid, null);
+});
+
+test('[osh-052] an item with no "result" key at all is kept, with location:null', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: null, featureUid: null };
+  const records = mapOshLocationPage({ items: [{ phenomenonTime: '2026-01-01T00:00:00Z' }] }, reader, 0);
+  assert.equal(records.length, 1);
+  assert.equal(records[0].location, null);
+});
+
+test('[osh-052] a non-string phenomenonTime or resultTime becomes null, not just an absent one', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: null, featureUid: null };
+  const records = mapOshLocationPage(
+    { items: [{ phenomenonTime: 5, resultTime: 5, result: { lat: 1, lon: 2 } }] },
+    reader,
+    0,
+  );
+  assert.equal(records[0].phenomenonTime, null);
+  assert.equal(records[0].resultTime, null);
+});
+
+test('[osh-052] a null reader gives every record a null foiUid and a null location, with no throw', () => {
+  const records = mapOshLocationPage(latestPage, null, 0);
+  assert.equal(records.length, 3);
+  assert.ok(records.every((record) => record.foiUid === null && record.location === null));
+});
+
+test('[osh-052] a reader with featureUid explicitly undefined (never set) also gives a null foiUid', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: null };
+  const records = mapOshLocationPage({ items: [{ result: { lat: 1, lon: 2 } }] }, reader, 0);
+  assert.equal(records[0].foiUid, null);
+});
+
+test('[osh-051] finds the flat shape one level below the root, not only at the top', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'DataRecord',
+          name: 'wrap',
+          fields: flatSchema.resultSchema.fields.filter((field) => field.name !== 'featureUid'),
+        },
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(schema);
+  assert.deepEqual(reader.lat, ['wrap', 'lat']);
+  assert.deepEqual(reader.lon, ['wrap', 'lon']);
+});
