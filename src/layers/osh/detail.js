@@ -21,7 +21,7 @@ export function formatOshAge(ageMs) {
   if (!Number.isFinite(ageMs)) return 'age unknown';
   // Further ahead of our clock than drift explains. The record is not new,
   // it is wrong, so it does not read as an amount of time.
-  if (ageMs < -OSH_CLOCK_SKEW_MAX_MS) return 'time ahead of the clock';
+  if (ageMs < -OSH_CLOCK_SKEW_MAX_MS) return 'ahead of the clock';
   const clamped = ageMs < 0 ? 0 : ageMs;
   if (clamped < AGE_MINUTE_MS) return `${Math.round(clamped / AGE_SECOND_MS)} s`;
   if (clamped < AGE_HOUR_MS) return `${Math.round(clamped / AGE_MINUTE_MS)} min`;

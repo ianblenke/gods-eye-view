@@ -94,7 +94,7 @@ test('[osh-032] a time further ahead than drift explains reads as ahead, never a
     system: { id: 'sys-fixture-1' },
     datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: -31_536_000_000 } }],
   });
-  assert.match(html, /time ahead of the clock/);
+  assert.match(html, /ahead of the clock/);
   assert.match(html, /osh-detail-old/);
   // Without the bound this read `0 s` with no mark, the freshest reading
   // the panel can show, for a record dated a year from now.
