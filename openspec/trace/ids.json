@@ -850,7 +850,7 @@
     "change": "osh-fusion"
   },
   "osh-027": {
-    "hash": "6b30730da3c03657e215d0024cc2efe3305b8630bc3528baeb33f771a879c755",
+    "hash": "659d42919630951fa7f0bea4eb8b0c519cec6d023a7d56791f085af16c1c86a7",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -885,7 +885,7 @@
     "change": "osh-fusion"
   },
   "osh-034": {
-    "hash": "f9c7c206820a253d2ddef00057d0d2a553c490144381ada29570e5c2bc7c8c1c",
+    "hash": "f40d5cad355f68906ad13df49d178ce4b41133d5beb8cbcb4ed80d0e18584d13",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -925,7 +925,7 @@
     "change": "osh-geo-discovery"
   },
   "osh-042": {
-    "hash": "33898d4dffcb0bdd97e0028c93c4050995a950b12a4853f006f190ae09e77901",
+    "hash": "d8ed437da39df58dbf96cac97dcb2961e0a4194e1a9eccdbb87d7da529b97570",
     "since": "2026-09-18",
     "change": "osh-geo-discovery"
   },
@@ -968,6 +968,41 @@
     "hash": "4b0236a2db9b764c4d63d9a04c431d67c4a6c898e63ac596c684a85ee1cd08a4",
     "since": "2026-09-18",
     "change": "osh-observation-age"
+  },
+  "osh-051": {
+    "hash": "3940b870a3716284b093e59145b939b2927cf4a210131001bced09c5e66b96d3",
+    "since": "2026-09-19",
+    "change": "osh-location-streams"
+  },
+  "osh-052": {
+    "hash": "237a1cc5a26735d4afcf568db6120d308c877a7b41cfaa250579d903ff1e790f",
+    "since": "2026-09-19",
+    "change": "osh-location-streams"
+  },
+  "osh-053": {
+    "hash": "8435f3a742874ba17ed3d98d556cf13d2b94fb631814c48f5e87c02c28a7664a",
+    "since": "2026-09-19",
+    "change": "osh-location-streams"
+  },
+  "osh-054": {
+    "hash": "2c11b143c69681d6bb2ced5fdfcde558321070e2e59a8e31399ae79ed5ba61ab",
+    "since": "2026-09-19",
+    "change": "osh-location-streams"
+  },
+  "osh-055": {
+    "hash": "a36806f6a8defd101c30eda420e325b5e00e0132989d4478a5bfb40da98002d9",
+    "since": "2026-09-19",
+    "change": "osh-location-streams"
+  },
+  "osh-056": {
+    "hash": "d601d4d04535dc39772d4679d89b95e962b33d3f88b5417df695fb03e3e7aa70",
+    "since": "2026-09-19",
+    "change": "osh-location-streams"
+  },
+  "osh-057": {
+    "hash": "5bec79853cdd8db98885e48211dfb3fe5a00ed41eaa330b7f51417d58336ec87",
+    "since": "2026-09-19",
+    "change": "osh-location-streams"
   },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",

@@ -579,10 +579,12 @@
     "src/data/oshObservations.test.mjs › [osh-022] a non-string phenomenonTime or resultTime becomes null",
     "src/data/oshObservations.test.mjs › [osh-022] an absent phenomenonTime, resultTime or result becomes null or empty rows",
     "src/data/oshObservations.test.mjs › [osh-022] an empty or malformed item list maps to a null observation",
-    "src/data/oshObservations.test.mjs › [osh-022] maps the observation envelope from the fixture",
+    "src/data/oshObservations.test.mjs › [osh-022] maps the observation envelope from the fixture, given a reader for its shape",
+    "src/data/oshObservations.test.mjs › [osh-022] with no reader, location is null even though the fixture carries one",
     "src/data/oshObservationsProxy.test.mjs › [osh-022] an empty item list maps to observation:null",
     "src/data/oshObservationsProxy.test.mjs › [osh-022] an upstream non-2xx status throws with the upstream status attached",
     "src/data/oshObservationsProxy.test.mjs › [osh-022] serves the newest observation of a datastream",
+    "src/data/oshObservationsProxy.test.mjs › [osh-022] with no reader argument, the observation carries no location",
     "src/data/oshProxy.test.mjs › [osh-022] an empty upstream item list gives observation:null",
     "src/data/oshProxy.test.mjs › [osh-022] an observation failure with no numeric status reports upstreamStatus:null",
     "src/data/oshProxy.test.mjs › [osh-022] the observations route answers 502 with the upstream status on an upstream failure",
@@ -628,13 +630,13 @@
     "src/data/oshObservations.test.mjs › [osh-026] turns a non-primitive leaf past the depth cap into \"[object]\""
   ],
   "osh-027": [
-    "src/data/oshObservations.test.mjs › [osh-027] does not search past depth 4",
-    "src/data/oshObservations.test.mjs › [osh-027] extracts a location from lat/lon keys, case-insensitive, with an optional alt",
-    "src/data/oshObservations.test.mjs › [osh-027] falls back to geometry.coordinates as [lon, lat, alt]",
-    "src/data/oshObservations.test.mjs › [osh-027] finds a location object nested up to depth 4",
-    "src/data/oshObservations.test.mjs › [osh-027] ignores a non-finite alt value",
-    "src/data/oshObservations.test.mjs › [osh-027] rejects an out-of-range latitude or longitude",
-    "src/data/oshObservations.test.mjs › [osh-027] returns null when there is no location anywhere"
+    "src/data/oshObservations.test.mjs › [osh-027] a bad latitude or longitude, or one out of range, gives null",
+    "src/data/oshObservations.test.mjs › [osh-027] a bad or absent height gives alt:null and keeps a good latitude and longitude",
+    "src/data/oshObservations.test.mjs › [osh-027] a non-null, non-object result gives null",
+    "src/data/oshObservations.test.mjs › [osh-027] a null reader gives null, even for a result with lat and lon keys",
+    "src/data/oshObservations.test.mjs › [osh-027] never reads a value by a guessed key name, and never reads geometry.coordinates",
+    "src/data/oshObservations.test.mjs › [osh-027] the text \"NaN\", an empty string and null all fail as a value",
+    "src/data/oshObservations.test.mjs › [osh-027] walks the reader paths into the result"
   ],
   "osh-028": [
     "src/layers/osh/source.test.mjs › [osh-028] a 503 whose body does not confirm no_key still throws",
@@ -647,6 +649,8 @@
     "src/layers/osh/source.test.mjs › [osh-028] the datastreams getter sends a given system id as the system query parameter, and sends no such key when none is given",
     "src/layers/osh/source.test.mjs › [osh-028] the default fetch implementation calls the global fetch",
     "src/layers/osh/source.test.mjs › [osh-028] the fois getter passes truncated through, and defaults it to false",
+    "src/layers/osh/source.test.mjs › [osh-028] the locations getter defaults failed to 0 when the payload omits it",
+    "src/layers/osh/source.test.mjs › [osh-028] the locations getter passes locations and failed through, and sends no query",
     "src/layers/osh/source.test.mjs › [osh-028] the observations getter passes the id as a query parameter"
   ],
   "osh-029": [
@@ -693,6 +697,7 @@
     "src/data/oshLayer.test.mjs › [osh-031] a newest result without a location leaves the entity where it was"
   ],
   "osh-032": [
+    "src/layers/osh/detail.test.mjs › [osh-032] Placed by falls back to an em dash for a datastream with no name",
     "src/layers/osh/detail.test.mjs › [osh-032] a datastream at the freshness threshold is not marked old",
     "src/layers/osh/detail.test.mjs › [osh-032] a negative age is fresh and renders as a plain age, not old",
     "src/layers/osh/detail.test.mjs › [osh-032] a null ageMs renders \"age unknown\" and is marked old",
@@ -701,27 +706,32 @@
     "src/layers/osh/detail.test.mjs › [osh-032] falls back to the feature id when the feature has no name",
     "src/layers/osh/detail.test.mjs › [osh-032] falls back to the host system id when the host record has no name",
     "src/layers/osh/detail.test.mjs › [osh-032] marks a datastream past the freshness threshold old, with the osh-detail-old class",
+    "src/layers/osh/detail.test.mjs › [osh-032] no Placed by line for a system placed by its own geometry",
     "src/layers/osh/detail.test.mjs › [osh-032] renders \"No data\" for a datastream with no rows, and falls back to the id",
     "src/layers/osh/detail.test.mjs › [osh-032] renders a null row value as an empty string",
     "src/layers/osh/detail.test.mjs › [osh-032] renders an empty string for no selection",
     "src/layers/osh/detail.test.mjs › [osh-032] renders no rows and no time when there is no observation yet, and marks the age unknown",
     "src/layers/osh/detail.test.mjs › [osh-032] renders the system and its datastreams with escaped values",
     "src/layers/osh/detail.test.mjs › [osh-032] shows Host: — when the feature has no host",
+    "src/layers/osh/detail.test.mjs › [osh-032] shows Placed by with the datastream name and the age, for a stream-placed system",
     "src/layers/osh/detail.test.mjs › [osh-032] shows the feature name above the host name, when the selection came from a feature with a known host",
     "src/layers/osh/detail.test.mjs › [osh-032] shows the host id when the host has no record",
     "src/layers/osh/detail.test.mjs › [osh-032] shows the observation age in words: seconds, minutes, hours and days",
     "src/layers/osh/detail.test.mjs › [osh-032] the function does nothing when there is no host",
-    "src/layers/osh/detail.test.mjs › [osh-032] the host innerHTML receives the rendered detail, and an empty selection clears it"
+    "src/layers/osh/detail.test.mjs › [osh-032] the host innerHTML receives the rendered detail, and an empty selection clears it",
+    "src/layers/osh/detail.test.mjs › [osh-032] the system id stands in for its name when the system has neither, for a stream-placed system"
   ],
   "osh-033": [
     "src/data/layerState.test.mjs › [osh-033] registers the OSH systems layer with the token o, and localLayers.js exports it"
   ],
   "osh-034": [
-    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] .env.example has the three OSH keys, each with an empty value",
+    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] .env.example has the three OSH keys and OSH_LOCATION_PROPERTIES, each with an empty value",
+    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] every definition URN in a location schema fixture has the synthetic vendor segment",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] every system, datastream and feature fixture id starts with sys-fixture-, ds-fixture- or foi-fixture-",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] no OSH test file has a real address",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the bare-host check catches a real-looking host pasted with no scheme",
-    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the provider, adapter and layer files have no real address"
+    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the provider, adapter and layer files have no real address",
+    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the vendor-urn check catches a real-looking vendor segment"
   ],
   "osh-035": [
     "src/data/oshProxy.test.mjs › [osh-035] both configureServer and configurePreviewServer install the same middleware"
@@ -773,9 +783,18 @@
   ],
   "osh-042": [
     "src/data/oshSystems.test.mjs › [osh-042] a feature never places its host system, and a system never places a feature",
+    "src/data/oshSystems.test.mjs › [osh-042] a fresh location moves a feature it finds by foiId or by foiUid, and is dropped for an unknown feature",
+    "src/data/oshSystems.test.mjs › [osh-042] a fresh location whose system has no record still gives a placed system with name:null",
+    "src/data/oshSystems.test.mjs › [osh-042] a fresh location with no feature reference places its system above a Point, and the newer of two wins",
+    "src/data/oshSystems.test.mjs › [osh-042] a location naming neither a feature nor a systemId is ignored",
+    "src/data/oshSystems.test.mjs › [osh-042] a location whose ageMs is not fresh is dropped before any other rule",
+    "src/data/oshSystems.test.mjs › [osh-042] a location with a valid time replaces an earlier one that had no time at all",
+    "src/data/oshSystems.test.mjs › [osh-042] a location with no phenomenonTime is never treated as newer than one that has one",
     "src/data/oshSystems.test.mjs › [osh-042] defaults both lists to empty",
     "src/data/oshSystems.test.mjs › [osh-042] places a system with a Point, and adds a system with no Point to unplaced",
-    "src/data/oshSystems.test.mjs › [osh-042] places every feature record at its own point, with its systemId"
+    "src/data/oshSystems.test.mjs › [osh-042] places every feature record at its own point, with its systemId",
+    "src/data/oshSystems.test.mjs › [osh-042] the newer of two fresh locations naming the same feature wins",
+    "src/data/oshSystems.test.mjs › [osh-042] when neither of two locations for one system has a usable time, the first one seen is kept"
   ],
   "osh-043": [
     "src/data/oshProxy.test.mjs › [osh-043] a failed walk with no earlier snapshot answers 502 with upstream_failed",
@@ -801,9 +820,11 @@
   "osh-046": [
     "src/data/oshLayer.test.mjs › [osh-046] a features getter that throws synchronously behaves exactly like one that rejects",
     "src/data/oshLayer.test.mjs › [osh-046] a fois getter that resolves keyRequired:true, while the systems getter does not, gives an empty feature list",
+    "src/data/oshLayer.test.mjs › [osh-046] a locations getter that throws sets partial:true and no error, and the systems still place",
     "src/data/oshLayer.test.mjs › [osh-046] a server with no Point and no feature gives count:0, features:0, error:null and partial:false",
-    "src/data/oshLayer.test.mjs › [osh-046] an update aborted before both reads settle draws nothing from them",
+    "src/data/oshLayer.test.mjs › [osh-046] an update aborted before all three reads settle draws nothing from them",
     "src/data/oshLayer.test.mjs › [osh-046] the features getter throwing sets partial:true and no error, and the systems still place",
+    "src/data/oshLayer.test.mjs › [osh-046] the layer sends no candidate of its own to the locations getter",
     "src/data/oshLayer.test.mjs › [osh-046] truncated is true when the features payload says so"
   ],
   "osh-047": [
@@ -845,6 +866,100 @@
     "src/data/oshProxy.test.mjs › [osh-050] an item with no phenomenonTime gives ageMs:null, and a null observation stays null",
     "src/data/oshProxy.test.mjs › [osh-050] the observations route adds ageMs computed from the injected now",
     "src/layers/osh/source.test.mjs › [osh-050] the observation getter returns ageMs as served, computing nothing of its own"
+  ],
+  "osh-051": [
+    "src/data/oshObservations.test.mjs › [osh-051] a Vector coordinate with no uom at all never binds",
+    "src/data/oshObservations.test.mjs › [osh-051] a Vector missing Lon gives null, and does not fall through to a flat reading of the same fields",
+    "src/data/oshObservations.test.mjs › [osh-051] a definition with no token after its separators gives null, so featureUid stays null",
+    "src/data/oshObservations.test.mjs › [osh-051] a flat field with no definition at all never binds",
+    "src/data/oshObservations.test.mjs › [osh-051] a frame outside EPSG 4979/4326 gives null even with valid axis ids",
+    "src/data/oshObservations.test.mjs › [osh-051] a malformed entry in a Vector's coordinates — null, or with no string name — is skipped",
+    "src/data/oshObservations.test.mjs › [osh-051] a non-string, non-null referenceFrame is treated as not geographic",
+    "src/data/oshObservations.test.mjs › [osh-051] a radian unit on the coordinates never binds",
+    "src/data/oshObservations.test.mjs › [osh-051] a referenceFrame string with no \"epsg\" in it is not geographic",
+    "src/data/oshObservations.test.mjs › [osh-051] altitudeMsl alone never binds as a height",
+    "src/data/oshObservations.test.mjs › [osh-051] an ECEF Vector with X, Y, Z axis ids never binds, with or without a frame",
+    "src/data/oshObservations.test.mjs › [osh-051] does not read a field past a depth of four",
+    "src/data/oshObservations.test.mjs › [osh-051] finds featureUid one level below the root, not only at the top",
+    "src/data/oshObservations.test.mjs › [osh-051] finds the flat shape one level below the root, not only at the top",
+    "src/data/oshObservations.test.mjs › [osh-051] gives null with no resultSchema, or with a body that is not an object",
+    "src/data/oshObservations.test.mjs › [osh-051] reads the Vector shape of the mesh fixture, bound by axisID with an EPSG 4979 frame",
+    "src/data/oshObservations.test.mjs › [osh-051] reads the flat shape of the vendor fixture, bound by definition, and never binds altitudeMsl",
+    "src/data/oshObservations.test.mjs › [osh-051] reads the no-frame Vector fixture — the measured aircraft shape — with no referenceFrame at all",
+    "src/data/oshObservations.test.mjs › [osh-051] takes every field name from the schema, so \"Location\" and \"location\" give the same reader shape",
+    "src/data/oshObservations.test.mjs › [osh-051] takes the Vector shape when a schema declares both"
+  ],
+  "osh-052": [
+    "src/data/oshObservations.test.mjs › [osh-052] a foiUid path whose value is not a string, or is an empty string, gives null",
+    "src/data/oshObservations.test.mjs › [osh-052] a malformed payload maps to an empty list",
+    "src/data/oshObservations.test.mjs › [osh-052] a non-string phenomenonTime or resultTime becomes null, not just an absent one",
+    "src/data/oshObservations.test.mjs › [osh-052] a null reader gives every record a null foiUid and a null location, with no throw",
+    "src/data/oshObservations.test.mjs › [osh-052] a reader with featureUid explicitly undefined (never set) also gives a null foiUid",
+    "src/data/oshObservations.test.mjs › [osh-052] ageMs comes from nowMs, not the wall clock: two different nowMs values give two different ages",
+    "src/data/oshObservations.test.mjs › [osh-052] an item with no \"result\" key at all is kept, with location:null",
+    "src/data/oshObservations.test.mjs › [osh-052] an item with no location is kept with location:null",
+    "src/data/oshObservations.test.mjs › [osh-052] maps the fixture page, kept in order, newest first as the server answers it",
+    "src/data/oshObservations.test.mjs › [osh-052] the flat reader finds a location on every item, kept even for the item with no foi@id"
+  ],
+  "osh-053": [
+    "src/data/oshIds.test.mjs › [osh-053] assertSchemaUrl() and assertSystemUrl() throw for another origin, prefix, segment or query",
+    "src/data/oshIds.test.mjs › [osh-053] schemaUrl() and systemUrl() build fixed URLs with an empty query",
+    "src/data/oshIds.test.mjs › [osh-053] the schema and system URL pairs are the only functions the route can call — no argument replaces either"
+  ],
+  "osh-054": [
+    "src/data/oshIds.test.mjs › [osh-054] assertObservationsLatestUrl() throws for another origin, prefix, segment or query",
+    "src/data/oshIds.test.mjs › [osh-054] observationsLatestUrl() builds the fixed newest-per-feature URL"
+  ],
+  "osh-055": [
+    "src/data/oshProxy.test.mjs › [osh-055] a candidate found only by the filter, whose system is in no systems snapshot, is served like any other",
+    "src/data/oshProxy.test.mjs › [osh-055] an empty entry between two commas in OSH_LOCATION_PROPERTIES is skipped silently",
+    "src/data/oshProxy.test.mjs › [osh-055] appends an accepted OSH_LOCATION_PROPERTIES entry and skips a refused one with a positional warning",
+    "src/data/oshProxy.test.mjs › [osh-055] refuses a value with no scheme and no white space, which parses as neither a URL nor a URN",
+    "src/data/oshProxy.test.mjs › [osh-055] sends one request per default URI, built with limit and observedProperty, cached per URI",
+    "src/data/oshProxy.test.mjs › [osh-055] the status route reports the count of location properties"
+  ],
+  "osh-056": [
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshLocationsPass() caches one shared value with its own TTL, and serves stale on a failed refresh",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshLocationsPass() rethrows with no earlier snapshot to fall back on",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshLocationsPass() shares one in-flight refresh across concurrent loads",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshSchemaCache() serves a null reader for a schema with no location, and stores it (not a raw re-read per call)",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshSchemaCache() serves a reader built from a datastream schema, cached per id",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshSchemaCache() serves a stale reader on a failed refresh, and rethrows with none",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshSchemaCache() shares one in-flight read across concurrent callers for one id",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshSystemCache() gives name:null for a record with no properties at all",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshSystemCache() gives name:null for a record with no properties.name",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshSystemCache() gives name:null for an empty (204) body, with no throw on the missing json",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshSystemCache() serves a stale name on a failed refresh, and rethrows with none",
+    "src/data/oshObservationsProxy.test.mjs › [osh-056] createOshSystemCache() serves the name from properties.name, cached per id",
+    "src/data/oshProxy.test.mjs › [osh-056] a candidate whose newest-per-feature page answers a non-2xx status is counted as failed",
+    "src/data/oshProxy.test.mjs › [osh-056] a candidate whose newest-per-feature page request throws is counted as failed",
+    "src/data/oshProxy.test.mjs › [osh-056] a candidate whose schema read itself fails is counted as failed, not just one with no reader",
+    "src/data/oshProxy.test.mjs › [osh-056] a candidate with a location-bearing schema yields folded location records, with ageMs recomputed at serve time",
+    "src/data/oshProxy.test.mjs › [osh-056] a candidate with no system reference at all gives a location with systemId:null and systemName:null",
+    "src/data/oshProxy.test.mjs › [osh-056] a failed features read leaves no feature-host candidates, but the pass still answers",
+    "src/data/oshProxy.test.mjs › [osh-056] a failed per-system datastreams read drops only that host, other candidates still gathered",
+    "src/data/oshProxy.test.mjs › [osh-056] a failed property filter read contributes nothing, and does not fail the whole gather",
+    "src/data/oshProxy.test.mjs › [osh-056] a failed systems read leaves no Point-system candidates, but the pass still answers",
+    "src/data/oshProxy.test.mjs › [osh-056] a per-system datastream record with no system@id of its own is stamped with the queried host id",
+    "src/data/oshProxy.test.mjs › [osh-056] ageMs grows between two answers served from the same cached pass, because it is recomputed at serve time",
+    "src/data/oshProxy.test.mjs › [osh-056] caches the whole pass for its own fifteen-second TTL, and shares one refresh across concurrent requests",
+    "src/data/oshProxy.test.mjs › [osh-056] the locations route answers upstream_failed if the pass cache itself throws, with no snapshot to fall back on",
+    "src/data/oshProxy.test.mjs › [osh-056] the locations route reports base_unresolved when the root cannot be resolved",
+    "src/data/oshProxy.test.mjs › [osh-056] the observations route reads a candidate schema before it serves the observation",
+    "src/data/oshProxy.test.mjs › [osh-056] the response shape is {fetchedAt, stale, ttlMs, count, streams, failed, locations}",
+    "src/data/oshProxy.test.mjs › [osh-056] the status route reports the locations cache only after a locations request has run",
+    "src/data/oshProxy.test.mjs › [osh-056] unites the property filter, the feature hosts and the Point systems, without duplicates",
+    "src/data/oshProxy.test.mjs › [osh-056] with no candidate at all, it answers count:0 and sends no schema and no page request"
+  ],
+  "osh-057": [
+    "src/data/oshLayer.test.mjs › [osh-057] a click on a stream-placed entity selects it and starts its datastream poll like any system",
+    "src/data/oshLayer.test.mjs › [osh-057] a fresh location that names a feature moves the feature entity and never places a system",
+    "src/data/oshLayer.test.mjs › [osh-057] a fresh location with no feature reference places its system, counted under getStats().placed.stream",
+    "src/data/oshLayer.test.mjs › [osh-057] a refresh with no fresh location for that system removes the entity and counts it under unplaced",
+    "src/data/oshLayer.test.mjs › [osh-057] a selected stream-placed system keeps its entity at its last position until deselected",
+    "src/data/oshLayer.test.mjs › [osh-057] a system with no record in the union map is named from the location, and never enters the union",
+    "src/data/oshLayer.test.mjs › [osh-057] only a location with systemName:null gives the id as the label",
+    "src/data/oshLayer.test.mjs › [osh-057] the detail for a selected stream-placed placeholder shows Placed by, with the name the location carries"
   ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
