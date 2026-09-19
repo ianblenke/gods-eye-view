@@ -1,6 +1,7 @@
 import * as Cesium from 'cesium';
 import { writeOshDetail } from './detail.js';
 import { placeOshEntities } from '../../data/oshSystems.js';
+import { isOshObservationFresh } from '../../data/oshObservations.js';
 export { createOshSource } from './source.js';
 export { renderOshDetail, writeOshDetail } from './detail.js';
 
@@ -109,7 +110,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         outputName: datastream.outputName,
         observation,
       });
-      if (observation?.location && entity) {
+      if (observation?.location && entity && isOshObservationFresh(observation.ageMs)) {
         entity.position = Cesium.Cartesian3.fromDegrees(
           observation.location.lon,
           observation.location.lat,
