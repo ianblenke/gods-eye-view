@@ -201,6 +201,7 @@ Origin: spec-first
 - **AND** a server with no `Point`, no feature and no location gives `count:0`, `features:0`, `error:null` and `partial:false`
 - **AND** `truncated` is true when the features payload says so
 - **AND** a features getter that resolves `keyRequired:true` alone gives an empty feature list, with `partial:false` and no `error`
+- **AND** a locations getter that resolves `keyRequired:true` alone gives an empty location list, with `partial:false` and no `error`
 - **AND** an update aborted before the three reads settle draws nothing from them
 - **AND** the layer sends no candidate of its own to the locations getter, and never walks a sampled list to find one
 

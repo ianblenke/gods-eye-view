@@ -121,6 +121,19 @@
   - The requirement text above it stays true as written; it names a point location, not the `Point` field, so it is not touched.
   - Add `placed` to the `getStats()` field list in the same scenario; the getter has carried it since `osh-057` landed.
 
+## 6d. The L-series: three surviving mutants on the layer half of `osh-057`
+
+- [x] 6.10 L6: a held system's own name must win over the location's `streamSystemName` in the detail header.
+  - New test with both a held record name and a `streamSystemName` present; assert the held one wins.
+  - L6: swap the `??` order in `pollSelected()`'s `effectiveName`. Reddens the new held-name test.
+- [x] 6.11 L7: `getStats().placed.stream` must count only the stream-placed systems.
+  - New test with one geometry-placed and one stream-placed system; assert `placed.stream` is 1, not 2.
+  - L7: drop the `locationSource === 'stream'` filter before the `.length`. Reddens the new count test.
+- [x] 6.12 L9: a `keyRequired` answer from the locations read must be honoured, the same as the features read.
+  - `osh-046` named this rule for the features getter and never named it for the locations getter; add the missing clause.
+  - New test: a locations getter that resolves `keyRequired:true` with data still attached places nothing.
+  - L9: drop the `!locationsSettled.value.keyRequired` guard. Reddens the new locations-keyRequired test.
+
 ## 7. Gates and review
 
 - [ ] 7.1 Run `make lint` until no STE error remains.
