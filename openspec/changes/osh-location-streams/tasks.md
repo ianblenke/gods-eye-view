@@ -95,6 +95,17 @@
   - This is the same reason `osh-050`'s own route recomputes the single-observation age.
   - A new route test proves the age grows between two answers from one cached pass.
 
+## 6a. A second merge, and five mutations the spec review found
+
+- [x] 6.6 Merge `main` a second time. It had archived `osh-observation-age` after three review rounds this branch's first merge predated.
+  - Re-quote `osh-031` and `osh-032` from the now-current `main`, byte for byte, with this change's own lines kept in place.
+- [x] 6.7 Run each of the five mutations the spec review named, and confirm the one test that reddens.
+  - M3: bind a Vector's coordinates by list position instead of `axisID`. Reddens the new test with `Lon` listed before `Lat`.
+  - M12: make `readFeatureUid()` always return null. Reddens the new end-to-end test with a real `samplingFeatureUid` value.
+  - M16: let a location naming an unknown feature fall through to place its own `systemId`. Reddens the new test asserting no system is placed.
+  - M19: drop the white-space refusal in `isAcceptableLocationProperty()`. Reddens the new test with an internal space in an otherwise-valid URN.
+  - M22: skip the systems-snapshot lookup in `resolveSystemName()`. Reddens the new test asserting no by-id read when the snapshot already has the name.
+
 ## 7. Gates and review
 
 - [ ] 7.1 Run `make lint` until no STE error remains.

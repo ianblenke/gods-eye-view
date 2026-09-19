@@ -690,3 +690,45 @@ test('[osh-051] finds the flat shape one level below the root, not only at the t
   assert.deepEqual(reader.lat, ['wrap', 'lat']);
   assert.deepEqual(reader.lon, ['wrap', 'lon']);
 });
+
+test('[osh-051] binds by axisID, not by list position: Lon listed before Lat still binds correctly', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          coordinates: [
+            // Lon first, then Lat, then h — the reverse of every other
+            // fixture in this file. A reader that bound by list position
+            // instead of axisID would swap lat and lon here.
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'h', axisID: 'h', uom: { code: 'm' } },
+          ],
+        },
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(schema);
+  assert.deepEqual(reader.lat, ['loc', 'lat']);
+  assert.deepEqual(reader.lon, ['loc', 'lon']);
+  assert.deepEqual(reader.alt, ['loc', 'h']);
+});
+
+test('[osh-052] a schema-bound samplingFeatureUid reaches the page record as foiUid, end to end', () => {
+  const flatReader = readOshSchemaLocation(flatSchema);
+  const nowMs = Date.parse('2026-01-01T00:09:05Z');
+  const payload = {
+    items: [
+      {
+        phenomenonTime: '2026-01-01T00:09:00Z',
+        resultTime: '2026-01-01T00:09:01Z',
+        result: { lat: 45.31, lon: 10.61, height: 130, featureUid: 'urn:osh:foi-fixture-9' },
+      },
+    ],
+  };
+  const records = mapOshLocationPage(payload, flatReader, nowMs);
+  assert.equal(records[0].foiUid, 'urn:osh:foi-fixture-9');
+});
