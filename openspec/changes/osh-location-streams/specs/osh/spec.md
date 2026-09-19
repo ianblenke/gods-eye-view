@@ -94,6 +94,16 @@ Origin: spec-first
 - **AND** a safety check on the built URL throws for another origin, another prefix, an extra path segment or another query
 - **AND** the route calls this fixed pair of functions directly, with no way for a caller to replace either one
 
+#### Scenario: Keep the newest-per-feature URL to its fixed shape `osh-054`
+- **WHEN** the provider builds the newest-per-feature URL for an accepted id
+- **THEN** the path equals the root path plus `datastreams/<id>/observations` and the query is the fixed newest-per-feature query, from its own named constants
+- **AND** the safety check throws for another origin, another prefix, an extra path segment or another query
+- **AND** the location pass calls this fixed pair directly, and no browser value reaches it
+
+### Requirement: Datastreams of one system
+The provider MUST serve the datastreams of one system from the per-system route when a `system` query value matches the id pattern. It MUST keep the origin, the path and the query of that URL fixed, and MUST refuse any other value with no upstream request.
+Origin: spec-first
+
 #### Scenario: Keep the system id to the pattern and the URL to its shape `osh-047`
 - **WHEN** the `system` query key is present, with a value that is empty, repeated, or outside the id pattern
 - **AND** the test sends, on its own, one value from the rejection sets of `osh-020`
@@ -124,12 +134,6 @@ Origin: spec-first
 - **AND** the safety check for each throws for another origin, another prefix, an extra path segment, or any query
 - **AND** the schema cache and the system cache each call their fixed pair directly, with no way for a caller to replace either one
 - **AND** no browser value reaches either fixed pair
-
-#### Scenario: Keep the newest-per-feature URL to its fixed shape `osh-054`
-- **WHEN** the provider builds the newest-per-feature URL for an accepted id
-- **THEN** the path equals the root path plus `datastreams/<id>/observations` and the query is the fixed newest-per-feature query, from its own named constants
-- **AND** the safety check throws for another origin, another prefix, an extra path segment or another query
-- **AND** the location pass calls this fixed pair directly, and no browser value reaches it
 
 ### Requirement: Systems layer
 The browser layer MUST show one entity for each system with a point location. It MUST poll the datastreams and the newest observation of the selected system. It MUST report its state through `getStats()`.
