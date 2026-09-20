@@ -233,7 +233,12 @@ test('outline queue: clear drops queued-but-unstarted upgrades without a later f
       else signal.addEventListener('abort', finish, { once: true });
     }),
   });
-  const engine = createAnnotationEngine({ viewer: {}, renderer, resolveTarget });
+  const engine = createAnnotationEngine({
+    viewer: {},
+    renderer,
+    resolveTarget,
+    outlineRetryDelaysMs: [],
+  });
 
   await engine.annotate(Array.from({ length: 8 }, (_, i) => ({
     type: 'area',

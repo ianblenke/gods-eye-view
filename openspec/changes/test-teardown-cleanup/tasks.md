@@ -35,11 +35,11 @@
 
 ## 5. `src/annotations/annotationEngine.test.mjs`
 
-- [ ] 5.1 Find the two tests and the two timers that outlive them.
+- [x] 5.1 Find the two tests and the two timers that outlive them.
   - Lines 254 and 311 enable a mock timer. Confirm whether a mocked timer or a real one is the leak first.
-- [ ] 5.2 Clear each.
-- [ ] 5.3 Run the file. Confirm every test still passes, with the same names and assertions.
-- [ ] 5.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
+- [x] 5.2 Clear each.
+- [x] 5.3 Run the file. Confirm every test still passes, with the same names and assertions.
+- [x] 5.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
   - Confirm the plan line prints and the run exits cleanly. Report the two tests that held a timer.
 
 ## 6. `src/data/manager.test.mjs`
