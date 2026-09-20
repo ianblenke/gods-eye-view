@@ -200,7 +200,25 @@ function toleranceCounts(entry, gap) {
   return next;
 }
 
-function compareCoverageEntry(file, entry, gap, tolerance = () => 0) {
+/**
+ * The waiver lines of one active change after the base commit.
+ *
+ * @param {string} history - Current history text.
+ * @param {string} baseHistory - Base history text.
+ * @param {string} change - Active change name.
+ * @returns {object[]} Waiver lines.
+ */
+export function waiversOf(history, baseHistory, change) {
+  if (typeof history !== 'string' || typeof baseHistory !== 'string' || !history.startsWith(baseHistory) || !change) return [];
+  return history
+    .slice(baseHistory.length)
+    .split('\n')
+    .filter((line) => line.startsWith('{'))
+    .map((line) => JSON.parse(line))
+    .filter((line) => line.kind === 'waiver' && line.change === change);
+}
+
+function compareCoverageEntry(file, entry, gap, tolerance = () => 0, waived = () => 0) {
   const errors = [];
   const error = (code, message) => errors.push({ code, file, message });
   if (gap.untrue && !entry.untrue) {
@@ -211,15 +229,19 @@ function compareCoverageEntry(file, entry, gap, tolerance = () => 0) {
   }
   const changed = gap.sha !== entry.sha;
   const allowed = (metric) => entry[metric];
-  if (gap.lines > allowed('lines') + tolerance('lines')) {
-    error('LEDGER-LARGER-GAP', `${file} has ${gap.lines} lines not covered. The ledger allows ${allowed('lines') + tolerance('lines')}.`);
+  const waivedLines = waived('lines');
+  if (gap.lines > allowed('lines') + tolerance('lines') + waivedLines) {
+    const extra = waivedLines > 0 ? ` A waiver allows ${waivedLines} more.` : '';
+    error('LEDGER-LARGER-GAP', `${file} has ${gap.lines} lines not covered. The ledger allows ${allowed('lines') + tolerance('lines')}.${extra}`);
   }
   if (changed && !entry.loaded && gap.loaded) {
     error('LEDGER-NO-BASELINE', `${file} changed in the same change that first loads it. Load it in one change and edit it in a later change.`);
   } else if (changed && entry.loaded && gap.loaded) {
     for (const metric of ['branches', 'functions']) {
-      if (gap[metric] > allowed(metric)) {
-        error('LEDGER-LARGER-GAP', `${file} has ${gap[metric]} ${metric} not covered. The ledger allows ${allowed(metric)}.`);
+      const waivedMetric = waived(metric);
+      if (gap[metric] > allowed(metric) + waivedMetric) {
+        const extra = waivedMetric > 0 ? ` A waiver allows ${waivedMetric} more.` : '';
+        error('LEDGER-LARGER-GAP', `${file} has ${gap[metric]} ${metric} not covered. The ledger allows ${allowed(metric)}.${extra}`);
       }
     }
   } else if (entry.loaded && gap.loaded) {
@@ -242,9 +264,10 @@ function compareCoverageEntry(file, entry, gap, tolerance = () => 0) {
  *
  * @param {object} input
  * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
+ * @param {object[]} [input.waivers] - Waiver lines for the checked change.
  * @returns {{errors: object[], stale: object[]}}
  */
-export function compareLedger({ ledger, current, sameAsBase = () => false }) {
+export function compareLedger({ ledger, current, sameAsBase = () => false, waivers = [] }) {
   const errors = [];
   const stale = [];
   if (ledger.version !== VERSION) {
@@ -266,7 +289,14 @@ export function compareLedger({ ledger, current, sameAsBase = () => false }) {
     }
     // The counts of a file can be different in each run, so they can move inside the tolerance.
     const tolerant = hasTolerance(file, entry, gap, sameAsBase);
-    const entryErrors = compareCoverageEntry(file, entry, gap, tolerant ? gapTolerance(gap) : undefined);
+    const changed = gap.sha !== entry.sha;
+    const waived = (metric) => {
+      if (!changed) return 0;
+      return waivers
+        .filter((item) => item.file === file && item.metric === metric && item.sha === gap.sha)
+        .reduce((sum, item) => sum + item.count, 0);
+    };
+    const entryErrors = compareCoverageEntry(file, entry, gap, tolerant ? gapTolerance(gap) : undefined, waived);
     errors.push(...entryErrors);
     if (entryErrors.length === 0 && !sameGap(entry, gap) && !tolerant) stale.push({ kind: 'coverage', file });
   }
