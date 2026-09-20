@@ -62,12 +62,12 @@
 
 ## 8. `src/tooling/spec/testGuard.test.mjs`
 
-- [ ] 8.1 Look for the leak among the tests that spawn a real child process.
+- [x] 8.1 Look for the leak among the tests that spawn a real child process.
   - This file's leak did not reproduce in one isolated run. See `proposal.md`'s known limit.
   - Repeat the run several times, and also run this file beside the rest of the project suite.
-- [ ] 8.2 Clear the timer found.
-- [ ] 8.3 Run the file. Confirm every test still passes, with the same names and assertions.
-- [ ] 8.4 Run the file with the force-exit flag and the tap reporter, five times over.
+- [x] 8.2 Clear the timer found.
+- [x] 8.3 Run the file. Confirm every test still passes, with the same names and assertions.
+- [x] 8.4 Run the file with the force-exit flag and the tap reporter, five times over.
   - Confirm the plan line prints and the run exits cleanly each time. Report the test that held the timer.
 
 ## 9. Gates and review
