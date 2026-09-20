@@ -439,6 +439,86 @@
     "since": "2026-09-15",
     "change": "establish-spec-governance"
   },
+  "credential-boundary-001": {
+    "hash": "fbc1998c5281f6d62c80a8c091b4a13e565ac289dfde126df53d6cbd893ebf9f",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-002": {
+    "hash": "a2e6fcaa8ae2948ee2dfe985f4d2cdfe5f724385d183e39e9259af32ad6bb43f",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-003": {
+    "hash": "4cec30a93d399503ad45d4c0e7c1a39d1d5139a379b5783f32260d7182a8c836",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-004": {
+    "hash": "bb805154e6f0276dc8317ef2d83b049731421a526d2fb02d02b2cc5d7291009e",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-005": {
+    "hash": "be4d236002696655bb441f2e5de869f3e29624b692969943137693b8b36a8625",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-006": {
+    "hash": "37591c6104d9c4d6199ba5a72d1c93a1c541d8ca9e0c388ea7b734b466bd52b2",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-007": {
+    "hash": "74033e43fe429bd7a22b4686df7ca3cf7d12b1bf9ec40ee063cfc80d4d76b53b",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-008": {
+    "hash": "ba2e338e8e2cbb04699a14ff3d5eb4622dafabe9b5941e1d470edb0fb96a0dab",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-009": {
+    "hash": "0b85f6f3ecb9fd219569bcc4b0b83eb98b6640f90873d1fb03e98137c344dd7a",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-010": {
+    "hash": "1cab0e42b433edefce48d849ecf666c56b2a2dda0854814282ea27e8e31ead1a",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-011": {
+    "hash": "4758e4a56da75ca2d0ba18b5536d6f48f22b3f3aabe3d34d33e47f9769125057",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-012": {
+    "hash": "b235b1d7864f9034664182595aad08e633cc4fdd5a0eb0405afa30b4ea514ddc",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-013": {
+    "hash": "657e761baf56ebfc3289e3ff9db4f21dd791e69849c27a2b1ec48d3ae27813f5",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-014": {
+    "hash": "f710357ea4089841deaa293907a663a8bf99cca78c4c0f4ac47353d30252491c",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-015": {
+    "hash": "318ea5f8450121f581883271034884b5fa0dfead76b54cec5818a3a04fcce720",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-016": {
+    "hash": "d08ff73caf085557d30d8091afbab12e6cb75bb5d5de6d20b50a32a4b8bc3977",
+    "since": "2026-09-20",
+    "change": "credential-boundary"
+  },
   "gap-ledger-001": {
     "hash": "d926236986707c5770e366ba46ec70d9e7431ee9daf231b24b1d4d14e242705c",
     "since": "2026-09-14",
