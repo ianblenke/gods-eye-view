@@ -44,11 +44,11 @@
 
 ## 6. `src/data/manager.test.mjs`
 
-- [ ] 6.1 Find the two tests and the two timers that outlive them.
+- [x] 6.1 Find the two tests and the two timers that outlive them.
   - Lines 2403 and 2456 race a two-second give-up timer against another path. The loser is the likely leak.
-- [ ] 6.2 Clear each losing timer.
-- [ ] 6.3 Run the file. Confirm every test still passes, with the same names and assertions.
-- [ ] 6.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
+- [x] 6.2 Clear each losing timer.
+- [x] 6.3 Run the file. Confirm every test still passes, with the same names and assertions.
+- [x] 6.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
   - Confirm the plan line prints and the run exits cleanly. Report the two tests that held a timer.
 
 ## 7. `src/data/militaryInstallations.test.mjs`
