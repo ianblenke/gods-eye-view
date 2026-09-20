@@ -29,6 +29,8 @@ Each rule below comes from a defect that reached this project. Obey each one.
 16. Write each review finding as a checkbox item of a list. Start its text with the word `FINDING`. Put the severity after that word, as `blocker` or `minor`. The gate reads no other shape. A line with no checkbox is silent, and the gate then passes with no record of the review.
 17. Do not check a box for work that is not complete.
 18. Tell the lead when a gate stops correct work. Do not make the gate weaker, and do not change the code to satisfy an instrument that counts it wrongly.
+19. Look at the file again before you report a correction as complete. Give the output of the search that shows it. A report of work that is not done costs a reviewer a full round, and it is worse than slow work.
+20. Look for the fault that your own correction adds. A correction to prose frequently adds a new fault to the same file. Run `make lint` after each group of corrections.
 
 ## Gates
 
