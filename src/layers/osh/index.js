@@ -166,8 +166,8 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         );
       }
     }
-    // The entity this poll moves can cross the horizon between
-    // refreshes (D61). One call after the loop, not one per datastream.
+    // An entity the poll moved can cross the horizon between refreshes
+    // (D61). One call after the loop, not one per datastream.
     refreshHorizonVisibility();
     const systemRecord = _systemRecords.get(systemId) || null;
     const placedRecord = _placedSystemById.get(systemId) || null;
