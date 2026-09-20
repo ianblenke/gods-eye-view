@@ -61,7 +61,7 @@
 
 - [x] 5.1 Run `make lint` until no STE error remains.
 - [x] 5.2 Run `make ratchet CHANGE=osh-marker-depth`.
-  - Ran twice: once for `osh-061`/`osh-062` as written, and again after the STE fix renamed the requirement and scenario titles, since the scenario hash covers the name.
+  - Ran twice: once for `osh-061`/`osh-062` as written. It ran again after the STE fix renamed the requirement and scenario titles, since the scenario hash covers the name.
 - [x] 5.3 Run `make gates CHANGE=osh-marker-depth`. Confirm `src/layers/osh/index.js` stays at 100%.
   - Read the command output for the gate verdict. Three zeros in `results.json` mean the tests did not crash, not that the gates passed.
   - Ran twice. The first run, before the review fixes, failed on the ratchet not having run yet and `review.md` missing. The second, after both commits, failed on `review.md` missing alone — the one error expected before a review exists.
