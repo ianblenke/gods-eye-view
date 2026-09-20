@@ -1,16 +1,16 @@
 ## 1. The specs
 
-- [ ] 1.1 Write the delta spec with the three modified requirements and the requirement "Coverage waiver".
-- [ ] 1.2 Write proposal.md with the measured counts, the Impact and the known limits.
-- [ ] 1.3 Write design.md with the waiver, its bounds, the rejected options and the changed files.
+- [x] 1.1 Write the delta spec with the three modified requirements and the requirement "Coverage waiver".
+- [x] 1.2 Write proposal.md with the measured counts, the Impact and the known limits.
+- [x] 1.3 Write design.md with the waiver, its bounds, the rejected options and the changed files.
 
 ## 2. The tests of the waived count
 
 For each test below, run the named mutation before the code exists, and again after. Report the test that reddens for each mutation in the review notes.
 
-- [ ] 2.1 Write the test for `gap-ledger-081` with `compareLedger` and a synthetic waiver.
+- [x] 2.1 Write the test for `gap-ledger-081` with `compareLedger` and a synthetic waiver.
   - Mutation: remove the waived count from the branch comparison. The test must redden.
-- [ ] 2.2 Write the test for `gap-ledger-082` with a waiver for other content and one for the same hash.
+- [x] 2.2 Write the test for `gap-ledger-082` with a waiver for other content and one for the same hash.
   - Mutation 1: remove the hash condition from the waiver sum. The other-content case must redden.
   - Mutation 2: give the unchanged path a waived count. The same-hash case must redden.
 - [ ] 2.3 Write the test for `gap-ledger-083` with `compareWithBase` and a waiver line of the checked change.
@@ -21,9 +21,9 @@ For each test below, run the named mutation before the code exists, and again af
 - [ ] 2.5 Write the test for `gap-ledger-085` with `ratchetLedger` and a waiver that allows the rise.
   - Mutation 1: do not pass the waivers to `compareLedger`. The test must redden.
   - Mutation 2: write the reason `shown by test` for a changed file. The test must redden.
-- [ ] 2.6 Change the test for `gap-ledger-004` with a count above the entry plus the waived count.
+- [x] 2.6 Change the test for `gap-ledger-004` with a count above the entry plus the waived count.
   - Mutation: replace the waived line count with 8. The test must redden.
-- [ ] 2.7 Change the test for `gap-ledger-017` with a count above the entry plus the waived count.
+- [x] 2.7 Change the test for `gap-ledger-017` with a count above the entry plus the waived count.
   - Mutation: replace the waived branch count with 8. The test must redden.
 - [ ] 2.8 Change the test for `gap-ledger-013` with a waiver that is too small for the rise.
   - Mutation: give the ratchet command a waived count of 8. The test must redden.
@@ -34,7 +34,7 @@ For each test below, run the named mutation before the code exists, and again af
 
 ## 3. The code of the waived count
 
-- [ ] 3.1 Write `waiversOf` and the waived count in `compareCoverageEntry` and `compareLedger` until 2.1, 2.2, 2.6 and 2.7 pass.
+- [x] 3.1 Write `waiversOf` and the waived count in `compareCoverageEntry` and `compareLedger` until 2.1, 2.2, 2.6 and 2.7 pass.
 - [ ] 3.2 Write the waived count in `compareWithBase` until 2.3, 2.4, 2.9 and 2.10 pass.
 - [ ] 3.3 Write the waivers and the reason `waived` in `ratchetLedger` until 2.5 and 2.8 pass.
 - [ ] 3.4 Update the JSDoc of `compareLedger`, `compareWithBase` and `ratchetLedger`.
