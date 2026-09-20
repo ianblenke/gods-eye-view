@@ -53,7 +53,18 @@ test('[coverage-gate-022] runs real processes from a runs file and writes the re
       ]),
     );
     const started = Date.now();
-    const result = spawnSync(process.execPath, [RUNNER, runsFile, resultsFile], { encoding: 'utf8' });
+    // Clear the gate's own guard env before spawning. Left in place, a real gate run
+    // would carry it through this process into the two synthetic child processes above,
+    // and their own guard would then write a leak record for the second one's timer
+    // into the real gate's own outDir — the timer that calls process.exit() from
+    // inside its own callback, which still reads as an active resource at that exact
+    // synchronous point. Confirmed by reproducing it against the real gate image.
+    const env = { ...process.env };
+    delete env.NODE_V8_COVERAGE;
+    delete env.GEV_SPEC_OUT;
+    delete env.GEV_SPEC_ROOT;
+    delete env.GEV_SPEC_INVENTORY;
+    const result = spawnSync(process.execPath, [RUNNER, runsFile, resultsFile], { env, encoding: 'utf8' });
     assert.equal(result.status, 0, result.stderr);
     assert.ok(Date.now() - started < 5000);
     assert.deepEqual(JSON.parse(readFileSync(resultsFile, 'utf8')), [
