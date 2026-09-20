@@ -108,6 +108,8 @@ Rules for this group. Change no test name. The file has a ledger entry with untr
   - A second, blank-named `GATES-TEST-LEAK` line also appeared in the same run. That is the known, already-documented intermittent leak in `testGuard.test.mjs`, not a new fault this file's chain revealed.
 - [ ] 5.10 Confirm a green run records no leak.
   - Run `make gates` on the clean tree. Confirm no `GATES-TEST-LEAK` error appears for any file.
+  - Not fully true. One run recorded the same blank-named, intermittent leak task 5.9 also saw — the known `testGuard.test.mjs` leak from `test-teardown-cleanup`, already an accepted open limit there. It does not name a file this change touches, and no file this change edits shows a leak in either run.
+  - Left unchecked on a literal reading: a `GATES-TEST-LEAK` error did appear. Section 6's own `make gates` run will show the same limit again unless it happens not to reproduce that run.
 
 ## 6. Gates and review
 
