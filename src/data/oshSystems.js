@@ -106,6 +106,26 @@ function placedFromStream(systemId, system, location) {
   };
 }
 
+/** Build a placed-feature record for an unheld feature a fresh location names. */
+function drawnFromStream(key, location) {
+  return {
+    id: key,
+    uid: location.foiUid ?? null,
+    systemId: location.systemId ?? null,
+    name: null,
+    description: null,
+    validTime: null,
+    lon: location.lon,
+    lat: location.lat,
+    alt: location.alt,
+    locationSource: 'stream',
+    datastreamId: location.datastreamId,
+    datastreamName: location.datastreamName,
+    phenomenonTime: location.phenomenonTime,
+    ageMs: location.ageMs,
+  };
+}
+
 /**
  * Merge the system records, the feature-of-interest records and the
  * location-pass records into the entities the layer places, with no
@@ -114,9 +134,9 @@ function placedFromStream(systemId, system, location) {
  * under isOshObservationFresh() (design decisions D44 and D48); a stale
  * one is dropped before any other rule. A fresh location that names a
  * feature, by id or by uid, moves that feature instead of placing a
- * system, and is dropped when the layer holds no such feature. A fresh
- * location with no feature reference places its system above a `Point`;
- * the newer of two such locations for one system wins.
+ * system, and draws that feature when the layer holds no such feature. A
+ * fresh location with no feature reference places its system above a
+ * `Point`; the newer of two such locations for one system wins.
  * @param {{systems: Array, fois: Array, locations: Array}} lists
  * @returns {{systems: Array, features: Array, unplaced: Array}}
  */
@@ -128,6 +148,7 @@ export function placeOshEntities({ systems = [], fois = [], locations = [] } = {
   const fresh = locations.filter((location) => isOshObservationFresh(location?.ageMs));
 
   const featureOverrides = new Map();
+  const unheldFeatures = new Map();
   const systemLocations = [];
   for (const location of fresh) {
     const referencesFeature = Boolean(location.foiId || location.foiUid);
@@ -137,6 +158,12 @@ export function placeOshEntities({ systems = [], fois = [], locations = [] } = {
         const existing = featureOverrides.get(feature.id);
         if (!existing || isNewer(location.phenomenonTime, existing.phenomenonTime)) {
           featureOverrides.set(feature.id, location);
+        }
+      } else {
+        const key = location.foiId || location.foiUid;
+        const existing = unheldFeatures.get(key);
+        if (!existing || isNewer(location.phenomenonTime, existing.phenomenonTime)) {
+          unheldFeatures.set(key, location);
         }
       }
       continue;
@@ -176,8 +203,21 @@ export function placeOshEntities({ systems = [], fois = [], locations = [] } = {
   const features = fois.map((foi) => {
     const override = featureOverrides.get(foi.id);
     if (!override) return { ...foi };
-    return { ...foi, lon: override.lon, lat: override.lat, alt: override.alt, locationSource: 'stream' };
+    return {
+      ...foi,
+      lon: override.lon,
+      lat: override.lat,
+      alt: override.alt,
+      locationSource: 'stream',
+      datastreamId: override.datastreamId,
+      datastreamName: override.datastreamName,
+      phenomenonTime: override.phenomenonTime,
+      ageMs: override.ageMs,
+    };
   });
+  for (const [key, location] of unheldFeatures) {
+    features.push(drawnFromStream(key, location));
+  }
 
   return { systems: placedSystems, features, unplaced };
 }

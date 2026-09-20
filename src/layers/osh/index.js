@@ -48,6 +48,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
   let _pollTimer = null;
   let _pollGeneration = 0;
   let _placedStreamCount = 0;
+  let _placedStreamFeaturesCount = 0;
   /** Union across refreshes: a system seen once keeps its record. */
   const _systemRecords = new Map();
   /** Replaced whole on every refresh: the feature list is stable, not sampled. */
@@ -63,6 +64,8 @@ export function createOshLayer({ source, detailHost = null } = {}) {
   let _placeholderStreamIds = new Set();
   /** The last update's placed system records, by id — for the detail's "Placed by" line. */
   let _placedSystemById = new Map();
+  /** The last update's placed feature records, by id. */
+  let _placedFeatureById = new Map();
 
   function writeDetail(detail) {
     writeOshDetail(detailHost, detail);
@@ -132,15 +135,26 @@ export function createOshLayer({ source, detailHost = null } = {}) {
     const systemRecord = _systemRecords.get(systemId) || null;
     const placedRecord = _placedSystemById.get(systemId) || null;
     const featureRecord = featureId ? _featureRecordsById.get(featureId) : null;
+    const placedFeature = featureId ? _placedFeatureById.get(featureId) : null;
+    const effectiveFeature = featureRecord || placedFeature;
     // A held record's own name wins; with none, the location pass's own
     // name for a stream-placed system stands in (osh-032, mirroring the
     // entity label rule of osh-057). The header still falls back to the
     // id when both are null.
     const effectiveName = systemRecord?.name ?? placedRecord?.streamSystemName ?? null;
     const placedByStream = placedRecord?.locationSource === 'stream';
+    const featurePlacedByStream = placedFeature?.locationSource === 'stream';
     writeDetail({
-      feature: featureRecord ? { id: featureRecord.id, name: featureRecord.name } : null,
-      hostId: featureRecord ? systemId : null,
+      feature: effectiveFeature
+        ? {
+            id: effectiveFeature.id,
+            name: featureRecord?.name ?? null,
+            placedBy: featurePlacedByStream
+              ? { datastreamName: placedFeature.datastreamName, ageMs: placedFeature.ageMs }
+              : null,
+          }
+        : null,
+      hostId: effectiveFeature ? systemId : null,
       system:
         systemRecord || placedRecord
           ? {
@@ -171,7 +185,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
       return;
     }
     if (featureId) {
-      const record = _featureRecordsById.get(featureId);
+      const record = _placedFeatureById.get(featureId);
       writeDetail({
         feature: { id: featureId, name: record ? record.name : null },
         hostId: null,
@@ -194,7 +208,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
             : null;
       if (pickedId && pickedId.startsWith('osh-foi:')) {
         const featureId = pickedId.slice('osh-foi:'.length);
-        const record = _featureRecordsById.get(featureId);
+        const record = _placedFeatureById.get(featureId);
         applySelection(record ? record.systemId : null, featureId);
         return;
       }
@@ -218,9 +232,11 @@ export function createOshLayer({ source, detailHost = null } = {}) {
     _featureRecordsByUid = new Map();
     _placeholderStreamIds = new Set();
     _placedSystemById = new Map();
+    _placedFeatureById = new Map();
     _count = 0;
     _featuresCount = 0;
     _placedStreamCount = 0;
+    _placedStreamFeaturesCount = 0;
     _lastUpdate = null;
     _lastError = null;
     _keyRequired = false;
@@ -352,10 +368,8 @@ export function createOshLayer({ source, detailHost = null } = {}) {
           fois: featureRecords,
           locations: locationRecords,
         });
-        // Kept for pollSelected(), which needs a stream-placed system's
-        // datastream and age for the detail's "Placed by" line even when
-        // the union map holds no record for it at all (osh-032, osh-057).
         _placedSystemById = new Map(placed.systems.map((record) => [record.id, record]));
+        _placedFeatureById = new Map(placed.features.map((record) => [record.id, record]));
 
         const now = Cesium.JulianDate.now();
         const selectedSystemEntity = _selectedId
@@ -386,6 +400,9 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         _placeholderStreamIds = newPlaceholderIds;
         _unplaced = placed.unplaced.length + retiredPlaceholders;
         _placedStreamCount = placed.systems.filter((record) => record.locationSource === 'stream').length;
+        _placedStreamFeaturesCount = placed.features.filter(
+          (record) => record.locationSource === 'stream' && !_featureRecordsById.has(record.id),
+        ).length;
 
         _dataSource.entities.removeAll();
 
@@ -495,7 +512,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         // The system map is a union, so a system this refresh omitted keeps
         // its selection and its poll. The feature list is not a union: a
         // feature this refresh dropped is gone, and so is its selection.
-        if (_selectedFeatureId && !_featureRecordsById.has(_selectedFeatureId)) {
+        if (_selectedFeatureId && !_placedFeatureById.has(_selectedFeatureId)) {
           clearSelection();
         }
 
@@ -540,7 +557,10 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         partial: _partial,
         selectedId: _selectedId,
         selectedFeatureId: _selectedFeatureId,
-        placed: { stream: _placedStreamCount },
+        placed: {
+          stream: _placedStreamCount,
+          streamFeatures: _placedStreamFeaturesCount,
+        },
       };
     },
   };

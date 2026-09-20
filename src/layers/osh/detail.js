@@ -105,6 +105,7 @@ function renderFeatureHeader(feature, hostId, system) {
   return `<div class="osh-detail-feature">
     <h3>${escapeHtml(feature.name || feature.id)}</h3>
     <div class="osh-detail-field">Host: ${escapeHtml(hostLabel)}</div>
+    ${renderPlacedBy(feature.placedBy)}
   </div>`;
 }
 
