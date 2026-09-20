@@ -661,6 +661,7 @@
     "src/data/oshLayer.test.mjs › [osh-029] a failed fetch sets the error and does not change the entities",
     "src/data/oshLayer.test.mjs › [osh-029] a second update aborts the first, whose late result is discarded even without a thrown AbortError",
     "src/data/oshLayer.test.mjs › [osh-029] a superseded update that throws a real error still lets the newer request finish",
+    "src/data/oshLayer.test.mjs › [osh-029] a system with no Point but a fresh location still gets an entity, counted under count",
     "src/data/oshLayer.test.mjs › [osh-029] a system with no Point gets no entity, and counts toward unplaced",
     "src/data/oshLayer.test.mjs › [osh-029] a system with no name gets a point entity and no label",
     "src/data/oshLayer.test.mjs › [osh-029] a thrown non-Error still sets a fallback error message",
@@ -826,6 +827,7 @@
   "osh-046": [
     "src/data/oshLayer.test.mjs › [osh-046] a features getter that throws synchronously behaves exactly like one that rejects",
     "src/data/oshLayer.test.mjs › [osh-046] a fois getter that resolves keyRequired:true, while the systems getter does not, gives an empty feature list",
+    "src/data/oshLayer.test.mjs › [osh-046] a locations getter that resolves keyRequired:true alone gives an empty location list, with partial:false and no error",
     "src/data/oshLayer.test.mjs › [osh-046] a locations getter that throws sets partial:true and no error, and the systems still place",
     "src/data/oshLayer.test.mjs › [osh-046] a server with no Point and no feature gives count:0, features:0, error:null and partial:false",
     "src/data/oshLayer.test.mjs › [osh-046] an update aborted before all three reads settle draws nothing from them",
@@ -967,9 +969,12 @@
     "src/data/oshLayer.test.mjs › [osh-057] a click on a stream-placed entity selects it and starts its datastream poll like any system",
     "src/data/oshLayer.test.mjs › [osh-057] a fresh location that names a feature moves the feature entity and never places a system",
     "src/data/oshLayer.test.mjs › [osh-057] a fresh location with no feature reference places its system, counted under getStats().placed.stream",
+    "src/data/oshLayer.test.mjs › [osh-057] a held system's own name wins over the location's systemName in the detail header",
+    "src/data/oshLayer.test.mjs › [osh-057] a placeholder that gains a held record and a Point on a later refresh is not counted as retired",
     "src/data/oshLayer.test.mjs › [osh-057] a refresh with no fresh location for that system removes the entity and counts it under unplaced",
     "src/data/oshLayer.test.mjs › [osh-057] a selected stream-placed system keeps its entity at its last position until deselected",
     "src/data/oshLayer.test.mjs › [osh-057] a system with no record in the union map is named from the location, and never enters the union",
+    "src/data/oshLayer.test.mjs › [osh-057] getStats().placed.stream counts only the stream-placed system, not the geometry-placed one",
     "src/data/oshLayer.test.mjs › [osh-057] only a location with systemName:null gives the id as the label",
     "src/data/oshLayer.test.mjs › [osh-057] the detail for a selected stream-placed placeholder shows Placed by, with the name the location carries"
   ],
