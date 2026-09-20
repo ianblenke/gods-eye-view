@@ -473,7 +473,7 @@ test('[coverage-gate-050] records no leak for a test process without a live time
   assert.deepEqual(local.results().leaks, []);
 });
 
-test('a guard given no getActiveResources records no leak on a Node version without it', () => {
+test('[coverage-gate-050] a guard given no getActiveResources records no leak on a Node version without it', () => {
   const original = process.getActiveResourcesInfo;
   process.getActiveResourcesInfo = undefined;
   try {
@@ -484,7 +484,7 @@ test('a guard given no getActiveResources records no leak on a Node version with
   }
 });
 
-test('a guard given a falsy getActiveResources records no leak instead of throwing', () => {
+test('[coverage-gate-050] a guard given a falsy getActiveResources records no leak instead of throwing', () => {
   const local = createGuard({
     root: '/repo',
     inventory: new Map(),
