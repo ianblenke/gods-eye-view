@@ -70,6 +70,18 @@ const FEATURE_FAR = {
   lat: -2,
   alt: 0,
 };
+// osh-061: every other feature fixture carries alt:0, which leaves
+// `feature.alt || 0` mutation-proof. This one gives it a non-zero value.
+const FEATURE_ALT = {
+  id: 'foi-fixture-alt',
+  uid: 'urn:foi-alt',
+  systemId: 'sys-fixture-1',
+  name: 'Feature Alt',
+  description: null,
+  lon: 5,
+  lat: 6,
+  alt: 75,
+};
 
 function fakeSource({
   systems = [SYSTEM_A, SYSTEM_B],
@@ -1854,7 +1866,7 @@ test('[osh-057] getStats().placed.stream counts only the stream-placed system, n
   layer.destroy(viewer);
 });
 
-// --- osh-061: every marker draws on top of the depth test, at its own altitude ---
+// --- osh-061: every entity draws on top of the depth test, at its own altitude ---
 
 test('[osh-061] the system entity\'s point and label draw on top, with the height reference NONE', async () => {
   const source = fakeSource({ systems: [SYSTEM_A] });
@@ -1923,6 +1935,11 @@ test('[osh-061] the re-added entity for a selected system draws on top', async (
     const now = Cesium.JulianDate.now();
     assert.equal(entity.point.disableDepthTestDistance.getValue(now), Infinity);
     assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
+    // The re-add's label is the one site whose mechanism differs: it
+    // carries the values by reusing the previous refresh's LabelGraphics,
+    // not by passing through entityAlwaysOnTop() itself (D62).
+    assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
+    assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
   });
   layer.destroy(viewer);
 });
@@ -1941,6 +1958,24 @@ test('[osh-061] a system placed from a fresh location keeps its altitude', async
   assert.ok(
     Math.abs(cartographic.height - 100) < 1e-3,
     `expected the fixture's own altitude, 100, got ${cartographic.height}`,
+  );
+  layer.destroy(viewer);
+});
+
+test('[osh-061] a feature entity keeps its own altitude', async () => {
+  const source = fakeSource({ fois: [FEATURE_ALT] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-alt');
+  const cartographic = Cesium.Cartographic.fromCartesian(
+    entity.position.getValue(Cesium.JulianDate.now()),
+  );
+  assert.ok(
+    Math.abs(cartographic.height - 75) < 1e-3,
+    `expected the fixture's own altitude, 75, got ${cartographic.height}`,
   );
   layer.destroy(viewer);
 });
@@ -1975,7 +2010,7 @@ test('[osh-061] a moved entity keeps the observation\'s altitude', async () => {
   layer.destroy(viewer);
 });
 
-// --- osh-062: hide a marker beyond the ellipsoid horizon ---
+// --- osh-062: hide an entity beyond the ellipsoid horizon ---
 
 test('[osh-062] a refresh under a camera that has not moved hides the antipode entities and shows the near ones', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_FAR], fois: [FEATURE_A, FEATURE_FAR] });
@@ -1989,9 +2024,9 @@ test('[osh-062] a refresh under a camera that has not moved hides the antipode e
   const far = dataSources[0].entities.getById('osh:sys-fixture-far');
   const nearFeature = dataSources[0].entities.getById('osh-foi:foi-fixture-1');
   const farFeature = dataSources[0].entities.getById('osh-foi:foi-fixture-far');
-  assert.equal(near.show, true, 'a marker under the camera stays visible');
+  assert.equal(near.show, true, 'an entity under the camera stays visible');
   assert.equal(nearFeature.show, true);
-  assert.equal(far.show, false, 'a marker at the antipode starts hidden, before any moveEnd');
+  assert.equal(far.show, false, 'an entity at the antipode starts hidden, before any moveEnd');
   assert.equal(farFeature.show, false);
 });
 
@@ -2010,8 +2045,8 @@ test('[osh-062] a moveEnd over the antipode swaps which entities show', async (t
 
   setCamera(-179, -2, 1_500_000);
   raiseMoveEnd();
-  assert.equal(near.show, false, 'the near marker is now beyond the horizon');
-  assert.equal(far.show, true, 'the camera now sees the far marker');
+  assert.equal(near.show, false, 'the near entity is now beyond the horizon');
+  assert.equal(far.show, true, 'the camera now sees the far entity');
 });
 
 test('[osh-062] a moveEnd raised while the layer is off still updates show, so enable() shows a correct set', async (t) => {

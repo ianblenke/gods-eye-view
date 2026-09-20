@@ -20,17 +20,17 @@ function featureEntityId(featureId) {
 }
 
 /**
- * Keep a marker on top of the depth test, at its record's own altitude.
+ * Keep an entity on top of the depth test, at its record's own altitude.
  * The cctv layer met this exact submerge at a field test on 2026-07-06
  * (`src/layers/cctv/lifecycle.js:145`): a finite depth distance brought
- * the burial back at far zoom. D59 and D60 give the reasons an OSH marker
+ * the burial back at far zoom. D59 and D60 give the reasons an OSH entity
  * needs positive infinity, not a window, and keeps `heightReference` at
  * `NONE` so the choice to keep the altitude is visible at the site.
  * @param {object} graphics A point or label options object, before
  *   it is passed to a `Cesium.Entity` construction.
  * @returns {object} The same object, for use inline at the call site.
  */
-function markerAlwaysOnTop(graphics) {
+function entityAlwaysOnTop(graphics) {
   graphics.disableDepthTestDistance = Number.POSITIVE_INFINITY;
   graphics.heightReference = Cesium.HeightReference.NONE;
   return graphics;
@@ -163,10 +163,11 @@ export function createOshLayer({ source, detailHost = null } = {}) {
           observation.location.lat,
           observation.location.alt || 0,
         );
-        // The moved entity can cross the limb between refreshes (D61).
-        refreshHorizonVisibility();
       }
     }
+    // The entity this poll may have moved can cross the limb between
+    // refreshes (D61). One call after the loop, not one per datastream.
+    refreshHorizonVisibility();
     const systemRecord = _systemRecords.get(systemId) || null;
     const placedRecord = _placedSystemById.get(systemId) || null;
     const featureRecord = featureId ? _featureRecordsById.get(featureId) : null;
@@ -446,14 +447,14 @@ export function createOshLayer({ source, detailHost = null } = {}) {
             new Cesium.Entity({
               id: systemEntityId(record.id),
               position,
-              point: markerAlwaysOnTop({
+              point: entityAlwaysOnTop({
                 pixelSize: 10,
                 color: Cesium.Color.LIME,
                 outlineColor: Cesium.Color.BLACK,
                 outlineWidth: 1,
               }),
               label: labelText
-                ? markerAlwaysOnTop({
+                ? entityAlwaysOnTop({
                     text: labelText,
                     font: '12px sans-serif',
                     pixelOffset: new Cesium.Cartesian2(0, -16),
@@ -478,7 +479,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
             new Cesium.Entity({
               id: systemEntityId(_selectedId),
               position: selectedPosition,
-              point: markerAlwaysOnTop({
+              point: entityAlwaysOnTop({
                 pixelSize: 10,
                 color: Cesium.Color.LIME,
                 outlineColor: Cesium.Color.BLACK,
@@ -501,14 +502,14 @@ export function createOshLayer({ source, detailHost = null } = {}) {
                 feature.lat,
                 feature.alt || 0,
               ),
-              point: markerAlwaysOnTop({
+              point: entityAlwaysOnTop({
                 pixelSize: 6,
                 color: Cesium.Color.CYAN,
                 outlineColor: Cesium.Color.BLACK,
                 outlineWidth: 1,
               }),
               label: feature.name
-                ? markerAlwaysOnTop({
+                ? entityAlwaysOnTop({
                     text: feature.name,
                     font: '11px sans-serif',
                     pixelOffset: new Cesium.Cartesian2(0, -12),
