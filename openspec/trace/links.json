@@ -979,6 +979,20 @@
     "src/data/oshLayer.test.mjs › [osh-057] only a location with systemName:null gives the id as the label",
     "src/data/oshLayer.test.mjs › [osh-057] the detail for a selected stream-placed placeholder shows Placed by, with the name the location carries"
   ],
+  "osh-061": [
+    "src/data/oshLayer.test.mjs › [osh-061] a moved entity keeps the observation's altitude",
+    "src/data/oshLayer.test.mjs › [osh-061] a system placed from a fresh location keeps its altitude",
+    "src/data/oshLayer.test.mjs › [osh-061] the feature entity's point and label draw on top, with the height reference NONE",
+    "src/data/oshLayer.test.mjs › [osh-061] the re-added entity for a selected system draws on top",
+    "src/data/oshLayer.test.mjs › [osh-061] the system entity's point and label draw on top, with the height reference NONE"
+  ],
+  "osh-062": [
+    "src/data/oshLayer.test.mjs › [osh-062] a moveEnd over the antipode swaps which entities show",
+    "src/data/oshLayer.test.mjs › [osh-062] a moveEnd raised while the layer is off still updates show, so enable() shows a correct set",
+    "src/data/oshLayer.test.mjs › [osh-062] a poll move across the limb hides the selected entity, and a later move back shows it",
+    "src/data/oshLayer.test.mjs › [osh-062] a refresh under a camera that has not moved hides the antipode entities and shows the near ones",
+    "src/data/oshLayer.test.mjs › [osh-062] init() adds one moveEnd listener, disable() keeps it, and destroy() removes it"
+  ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
   ],
