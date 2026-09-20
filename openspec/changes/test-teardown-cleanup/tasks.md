@@ -26,11 +26,11 @@
 
 ## 4. `src/voice/gevRealtime.test.mjs`
 
-- [ ] 4.1 Find the two tests and the two timers that outlive them.
+- [x] 4.1 Find the two tests and the two timers that outlive them.
   - The gate recorded two live timers for this file.
-- [ ] 4.2 Clear each.
-- [ ] 4.3 Run the file. Confirm every test still passes, with the same names and assertions.
-- [ ] 4.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
+- [x] 4.2 Clear each.
+- [x] 4.3 Run the file. Confirm every test still passes, with the same names and assertions.
+- [x] 4.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
   - Confirm the plan line prints and the run exits cleanly. Report the two tests that held a timer.
 
 ## 5. `src/annotations/annotationEngine.test.mjs`
