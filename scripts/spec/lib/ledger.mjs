@@ -337,7 +337,14 @@ export function compareLedger({ ledger, current, sameAsBase = () => false, waive
  * Compare the ledger files with the same files in the base commit.
  *
  * @param {object} input
- * @param {string} [input.change] - The checked change. A changed total count needs a history line with this name.
+ * @param {object|null} input.ledger - Current ledger.
+ * @param {object|null} input.baseLedger - Base commit ledger.
+ * @param {string[]} input.retired - Retired scenario IDs.
+ * @param {string[]} input.baseRetired - Base retired scenario IDs.
+ * @param {string} input.history - Current history text.
+ * @param {string} input.baseHistory - Base history text.
+ * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
+ * @param {string} [input.change] - The checked change.
  * @returns {object[]} Errors.
  */
 export function compareWithBase({ ledger, baseLedger, retired, baseRetired, history, baseHistory, sameAsBase = () => false, change }) {
@@ -422,14 +429,25 @@ function sum(names) {
 /**
  * Record the current gaps in the ledger. Stops when a gap is larger.
  *
+ * @param {object} input
+ * @param {object} input.ledger - The current ledger.
+ * @param {object} input.current - The measured gaps.
+ * @param {string[]} input.inventory - Tracked code files.
+ * @param {string[]} input.testFiles - Tracked test files.
+ * @param {string} input.change - Active change name.
+ * @param {boolean} input.changeActive - True when the change is active.
+ * @param {string} input.date - Today's date.
+ * @param {string} input.commit - Head commit hash.
+ * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
+ * @param {object[]} [input.waivers] - Waiver lines for the checked change.
  * @returns {{ledger: object, history: object[]}}
  */
-export function ratchetLedger({ ledger, current, inventory, testFiles, change, changeActive, date, commit, sameAsBase = () => false }) {
+export function ratchetLedger({ ledger, current, inventory, testFiles, change, changeActive, date, commit, sameAsBase = () => false, waivers = [] }) {
   if (!change) throw new Error('The ratchet command needs --change <name>');
   if (!changeActive) throw new Error(`Change "${change}" has no folder with a proposal.md file in openspec/changes`);
   // The ratchet command writes the version and the total counts again, so these are not blocking.
   const RATCHET_FIXES = new Set(['LEDGER-STALE', 'LEDGER-NO-TOTALS', 'LEDGER-VERSION']);
-  const blocking = compareLedger({ ledger, current, sameAsBase }).errors.filter((error) => !RATCHET_FIXES.has(error.code));
+  const blocking = compareLedger({ ledger, current, sameAsBase, waivers }).errors.filter((error) => !RATCHET_FIXES.has(error.code));
   if (blocking.length > 0) {
     throw new Error(`The ratchet command cannot run while gaps are larger:\n${blocking.map((error) => `${error.code} ${error.message}`).join('\n')}`);
   }
@@ -453,11 +471,12 @@ export function ratchetLedger({ ledger, current, inventory, testFiles, change, c
     const tolerant = hasTolerance(file, entry, gap, sameAsBase);
     const next = { ...(tolerant ? toleranceCounts(entry, gap) : gap), origin: entry.origin, since: entry.since };
     if (next.lines < entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'smaller');
+    else if (next.lines > entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'waived');
     if (!entry.loaded && gap.loaded) record('coverage', file, 'loaded', false, true, 'loaded');
     if (entry.untrue && !gap.untrue) record('coverage', file, 'untrue', true, false, 'true coverage');
     for (const metric of ['branches', 'functions']) {
       if (entry[metric] === null || next[metric] === null || entry[metric] === next[metric]) continue;
-      record('coverage', file, metric, entry[metric], next[metric], next[metric] > entry[metric] ? 'shown by test' : 'smaller');
+      record('coverage', file, metric, entry[metric], next[metric], next[metric] > entry[metric] ? (gap.sha !== entry.sha ? 'waived' : 'shown by test') : 'smaller');
     }
     if (gap.sha !== entry.sha) record('coverage', file, 'hash', entry.sha, gap.sha, 'content changed');
     if (JSON.stringify(entry.totals ?? null) !== JSON.stringify(next.totals)) record('coverage', file, 'totals', entry.totals ?? null, next.totals, 'totals changed');
