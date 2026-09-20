@@ -1789,11 +1789,11 @@
     "src/annotations/annotationEngine.js": {
       "loaded": true,
       "lines": 432,
-      "branches": 85,
+      "branches": 84,
       "functions": 25,
       "totals": {
         "lines": 1159,
-        "branches": 238,
+        "branches": 237,
         "functions": 66
       },
       "sha": "1c366b95ef8978d9cfa88b4ef882d2105389e646c6c28aecdb0a3dd056c7b4bf",
