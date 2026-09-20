@@ -2573,7 +2573,7 @@
       "functions": 2,
       "totals": {
         "lines": 580,
-        "branches": 135,
+        "branches": 136,
         "functions": 25
       },
       "sha": "c290c7d22ca88334b1448b1cc94ce9b372f475628a0e2be2e2dbc883502381de",
