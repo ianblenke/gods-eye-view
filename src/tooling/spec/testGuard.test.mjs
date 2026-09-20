@@ -104,7 +104,7 @@ test('[coverage-gate-018] checks only the files in the inventory inside the root
   local.checkScript('file:///elsewhere/src/a.js', 'x');
   local.checkScript('/repo/src/a.js', 'export {};\n');
   local.checkScript('file:///repo/src/b.js', 'export {};\n');
-  assert.deepEqual(local.results(), { violations: [], checked: ['src/a.js', 'src/b.js'], assertions: [] });
+  assert.deepEqual(local.results(), { violations: [], checked: ['src/a.js', 'src/b.js'], assertions: [], leaks: [] });
   local.onSource('/repo/src/b.js')(new Error('no source'), undefined);
   assert.deepEqual(local.results().violations.map((item) => item.file), ['src/b.js']);
   local.onSource('/repo/src/a.js')(null, { scriptSource: 'export {};\n' });
@@ -255,7 +255,7 @@ test('[coverage-gate-028] writes the checked files, the errors and the assertion
   const file = path.join(OUT, `guard-${result.pid}.jsonl`);
   assert.equal(existsSync(file), true);
   const [line] = readFileSync(file, 'utf8').trim().split('\n').map(JSON.parse);
-  assert.deepEqual(line, { violations: [], checked: ['src/real.mjs'], assertions: [] });
+  assert.deepEqual(line, { violations: [], checked: ['src/real.mjs'], assertions: [], leaks: [] });
 });
 
 test('[coverage-gate-036] loads the guard before the other preloads of a child process', GUARDED_RUN, async () => {
@@ -450,3 +450,26 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
     assert.equal(skipped(`./${name}`).length, 0, `${name} has a test with the skip option of the guard`);
   }
 });
+
+test('[coverage-gate-049] records a live timer at the exit of a test process', () => {
+  const local = createGuard({
+    root: '/repo',
+    inventory: new Map(),
+    getContext: () => undefined,
+    getActiveResources: () => ['PipeWrap', 'Timeout', 'Immediate'],
+    testFile: 'src/a.test.mjs',
+  });
+  assert.deepEqual(local.results().leaks, [{ file: 'src/a.test.mjs', resources: ['Timeout', 'Immediate'] }]);
+});
+
+test('[coverage-gate-050] records no leak for a test process without a live timer', () => {
+  const local = createGuard({
+    root: '/repo',
+    inventory: new Map(),
+    getContext: () => undefined,
+    getActiveResources: () => ['PipeWrap'],
+    testFile: 'src/a.test.mjs',
+  });
+  assert.deepEqual(local.results().leaks, []);
+});
+
