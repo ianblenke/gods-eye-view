@@ -132,9 +132,7 @@ export function placeOshEntities({ systems = [], fois = [], locations = [] } = {
   for (const location of fresh) {
     const referencesFeature = Boolean(location.foiId || location.foiUid);
     if (referencesFeature) {
-      const feature = location.foiId
-        ? featureById.get(location.foiId)
-        : featureByUid.get(location.foiUid);
+      const feature = featureById.get(location.foiId) ?? featureByUid.get(location.foiUid);
       if (feature) {
         const existing = featureOverrides.get(feature.id);
         if (!existing || isNewer(location.phenomenonTime, existing.phenomenonTime)) {

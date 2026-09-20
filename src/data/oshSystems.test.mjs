@@ -252,6 +252,30 @@ test('[osh-042] a fresh location moves a feature it finds by foiId or by foiUid,
   assert.deepEqual([byId['foi-fixture-2'].lon, byId['foi-fixture-2'].lat], [21, 22]);
 });
 
+test('[osh-042] a location with an unheld foiId but a held foiUid still moves that feature', () => {
+  const { features } = placeOshEntities({
+    systems: [],
+    fois: [{ id: 'foi-fixture-1', uid: 'urn:foi-1', systemId: null, lon: 1, lat: 1, alt: null }],
+    locations: [
+      {
+        foiId: 'foi-fixture-unknown',
+        foiUid: 'urn:foi-1',
+        lon: 11,
+        lat: 12,
+        alt: 13,
+        ageMs: FRESH_AGE_MS,
+      },
+    ],
+  });
+  const byId = Object.fromEntries(features.map((f) => [f.id, f]));
+  assert.deepEqual(
+    [byId['foi-fixture-1'].lon, byId['foi-fixture-1'].lat, byId['foi-fixture-1'].alt],
+    [11, 12, 13],
+    'foiId names no held feature, so the layer falls back to foiUid instead of dropping the location',
+  );
+  assert.equal(byId['foi-fixture-1'].locationSource, 'stream');
+});
+
 test('[osh-042] a fresh location with no feature reference places its system above a Point, and the newer of two wins', () => {
   const { systems } = placeOshEntities({
     systems: [{ id: 'sys-fixture-1', uid: 'urn:sys-1', name: 'Gateway', lon: 1, lat: 1, alt: 1 }],
