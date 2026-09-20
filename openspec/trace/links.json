@@ -980,6 +980,7 @@
     "src/data/oshLayer.test.mjs › [osh-057] the detail for a selected stream-placed placeholder shows Placed by, with the name the location carries"
   ],
   "osh-061": [
+    "src/data/oshLayer.test.mjs › [osh-061] a feature entity keeps its own altitude",
     "src/data/oshLayer.test.mjs › [osh-061] a moved entity keeps the observation's altitude",
     "src/data/oshLayer.test.mjs › [osh-061] a system placed from a fresh location keeps its altitude",
     "src/data/oshLayer.test.mjs › [osh-061] the feature entity's point and label draw on top, with the height reference NONE",

@@ -1005,12 +1005,12 @@
     "change": "osh-location-streams"
   },
   "osh-061": {
-    "hash": "4c3fb3e54c12a878ddefb2b443e5a299e825d2defc3f60b6a344cf2573a60c7d",
+    "hash": "9fd0e23fcaf565a881bcc7b9c097700fe312bf39c8daa0ff83a65fa3f8edef9e",
     "since": "2026-09-20",
     "change": "osh-marker-depth"
   },
   "osh-062": {
-    "hash": "0e5d166f6705251a5c4a50811ef1e27eab8aaba97495a65929cdb73910d862c4",
+    "hash": "cb9e8f082ffb6fcd3b9abbd1882614bfd6f86b38c98972a00ad99a417e3dd6e1",
     "since": "2026-09-20",
     "change": "osh-marker-depth"
   },
