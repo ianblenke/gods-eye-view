@@ -233,11 +233,25 @@ test('outline queue: clear drops queued-but-unstarted upgrades without a later f
       else signal.addEventListener('abort', finish, { once: true });
     }),
   });
+  // Keep the default retry delays here (do not pass outlineRetryDelaysMs: []), so the two
+  // started tasks still take the real transient-retry path after their abort — the same
+  // path `isStale()` reads the real engine.clear() abort signal from. Capture and clear
+  // the real backoff timer each arms, instead of skipping the wait that arms it.
+  const originalSetTimeout = globalThis.setTimeout;
+  const retryTimers = [];
+  globalThis.setTimeout = (fn, ms, ...args) => {
+    const id = originalSetTimeout(fn, ms, ...args);
+    if (ms === 8000) retryTimers.push(id);
+    return id;
+  };
+  t.after(() => {
+    globalThis.setTimeout = originalSetTimeout;
+    for (const id of retryTimers) clearTimeout(id);
+  });
   const engine = createAnnotationEngine({
     viewer: {},
     renderer,
     resolveTarget,
-    outlineRetryDelaysMs: [],
   });
 
   await engine.annotate(Array.from({ length: 8 }, (_, i) => ({
@@ -251,6 +265,7 @@ test('outline queue: clear drops queued-but-unstarted upgrades without a later f
   await flushMicrotasks();
   assert.equal(engine.count(), 0);
   assert.equal(fetchesStarted, 2, 'the six queued upgrades were dropped on clear');
+  assert.equal(retryTimers.length, 2, 'both started tasks reached the real retry wait after abort');
 });
 
 test('retry: HTTP 429 Retry-After 5s gets one ladder-spaced retry; a second 429 stops', async (t) => {
