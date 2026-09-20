@@ -18,14 +18,14 @@ For each test below, run the named mutation before the code exists, and again af
 - [x] 2.4 Write the test for `gap-ledger-084` with four waiver lines that give nothing.
   - The four lines: in the base history, another change, another hash, a file with the base content.
   - Mutation: remove one of the four conditions at a time. One case must redden for each.
-- [ ] 2.5 Write the test for `gap-ledger-085` with `ratchetLedger` and a waiver that allows the rise.
+- [x] 2.5 Write the test for `gap-ledger-085` with `ratchetLedger` and a waiver that allows the rise.
   - Mutation 1: do not pass the waivers to `compareLedger`. The test must redden.
   - Mutation 2: write the reason `shown by test` for a changed file. The test must redden.
 - [x] 2.6 Change the test for `gap-ledger-004` with a count above the entry plus the waived count.
   - Mutation: replace the waived line count with 8. The test must redden.
 - [x] 2.7 Change the test for `gap-ledger-017` with a count above the entry plus the waived count.
   - Mutation: replace the waived branch count with 8. The test must redden.
-- [ ] 2.8 Change the test for `gap-ledger-013` with a waiver that is too small for the rise.
+- [x] 2.8 Change the test for `gap-ledger-013` with a waiver that is too small for the rise.
   - Mutation: give the ratchet command a waived count of 8. The test must redden.
 - [x] 2.9 Change the test for `gap-ledger-022` with a rise above the waived line count.
   - Mutation: replace the waived count with 8. The test must redden.
@@ -36,8 +36,8 @@ For each test below, run the named mutation before the code exists, and again af
 
 - [x] 3.1 Write `waiversOf` and the waived count in `compareCoverageEntry` and `compareLedger` until 2.1, 2.2, 2.6 and 2.7 pass.
 - [x] 3.2 Write the waived count in `compareWithBase` until 2.3, 2.4, 2.9 and 2.10 pass.
-- [ ] 3.3 Write the waivers and the reason `waived` in `ratchetLedger` until 2.5 and 2.8 pass.
-- [ ] 3.4 Update the JSDoc of `compareLedger`, `compareWithBase` and `ratchetLedger`.
+- [x] 3.3 Write the waivers and the reason `waived` in `ratchetLedger` until 2.5 and 2.8 pass.
+- [x] 3.4 Update the JSDoc of `compareLedger`, `compareWithBase` and `ratchetLedger`.
 
 ## 4. The tests and the code of the command
 

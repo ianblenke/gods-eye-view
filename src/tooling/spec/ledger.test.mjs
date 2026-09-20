@@ -419,6 +419,9 @@ test('[gap-ledger-013] stops the ratchet command when a gap is larger', () => {
   const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } });
   assert.throws(() => ratchet(ledger, gaps([loaded('src/orbit.js', 6, 3, 1)])), /LEDGER-LARGER-GAP/);
   assert.equal(ledger.coverage['src/orbit.js'].lines, 5);
+
+  const waivers = [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'lines', sha: 'edited', count: 2, lines: [10], reason: 'phantom' }];
+  assert.throws(() => ratchet(ledger, gaps([loaded('src/orbit.js', 8, 3, 1, 'edited')]), { waivers }), /LEDGER-LARGER-GAP/);
 });
 
 test('[gap-ledger-014] stops the ratchet command without a change name', () => {
@@ -766,4 +769,17 @@ test('[gap-ledger-084] gives no waived count in the base comparison for other wa
     sameAsBase: (file) => file === 'src/orbit.js',
   });
   assert.deepEqual(codes(case4), ['LEDGER-MORE-THAN-BASE']);
+});
+
+test('[gap-ledger-085] records a waived rise', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } });
+  const current = gaps([loaded('src/orbit.js', 5, 5, 1, 'edited')]);
+  const waivers = [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'branches', sha: 'edited', count: 2, lines: [10], reason: 'phantom' }];
+  const result = ratchet(ledger, current, { waivers });
+  assert.equal(result.ledger.coverage['src/orbit.js'].branches, 5);
+  assert.equal(result.ledger.coverage['src/orbit.js'].sha, 'edited');
+  assert.deepEqual(
+    result.history.filter((item) => item.metric === 'branches'),
+    [{ date: DATE, change: 'backfill-orbit', commit: COMMIT, kind: 'coverage', file: 'src/orbit.js', metric: 'branches', before: 3, after: 5, reason: 'waived' }],
+  );
 });
