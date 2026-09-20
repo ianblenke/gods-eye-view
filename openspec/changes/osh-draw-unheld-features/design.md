@@ -4,7 +4,7 @@
 
 On the owner's server, the feature collection is small and the location streams name many more features than it holds. The walk of the collection completes, so the features are not behind a page cap. They are absent from the collection. So the dropped case is the common case, and the map shows a small fraction of the fresh positions the provider serves.
 
-The features cluster. A few host systems own almost all of them, and one host owns hundreds. Those hundreds sit at far fewer distinct positions, and their ages run from seconds to more than a day. So the only name a location carries for an unheld feature is its host's name, and that name is shared by hundreds of features. A label built from it would fill the map with one word. The owner already sees a small version of this today, as repeated markers with one system's name.
+The features cluster. A few host systems own almost all of them, and one host owns most of the features that lack their own record. Those features sit at far fewer distinct positions, and their ages run from seconds to more than a day. So the only name a location carries for an unheld feature is its host's name, and many features share that name. A label built from it would fill the map with one word. The owner already sees a small version of this today, as repeated markers with one system's name.
 
 Terms: a *held feature* is a feature record the features read gave this refresh. An *unheld feature* is a feature a location names that the layer does not hold this refresh. A *stream-drawn feature* is the entity this change draws for an unheld feature from its fresh location alone. *Fresh*, *stream-placed*, *placeholder* and *partial* keep the meanings `osh-observation-age` and `osh-location-streams` gave them.
 
@@ -31,11 +31,11 @@ The base text of `osh-042` and `osh-057` is the delta of `osh-location-streams`.
 
 Eight options were weighed. The last is taken.
 
-- **Aggregate by host system.** Rejected. One host owns hundreds of features at many positions, so the host has no one position to draw. A marker at the newest feature's position claims to be the system while it sits on one feature. That is the M16 failure with a count attached.
+- **Aggregate by host system.** Rejected. One host owns many features at many positions, so the host has no one position to draw. A marker at the newest feature's position claims to be the system while it sits on one feature. That is the M16 failure with a count attached.
 
 - **Aggregate by position.** Rejected. Features that share a position would collapse into one entity with a count. The entity then has no feature id, so a click has no host to poll, and `osh-060`'s one-id rule cannot hold. Equality of two positions is also a fragile test on decimal coordinates.
 
-- **Cap the stream-drawn features, with a flag like `truncated`.** Rejected. The count is already bounded twice. Only a fresh location draws, and the measured fresh set is about a tenth of all locations. Each stream's page holds at most `OSH_LATEST_LIMIT` records, so the candidate count times that limit is a hard ceiling. A cap would also need an order rule, and the location list has no order across streams.
+- **Cap the stream-drawn features, with a flag like `truncated`.** Rejected. The count is already bounded twice. Only a fresh location draws, and only a minority of locations are fresh enough to draw. Each stream's page holds at most `OSH_LATEST_LIMIT` records, so the candidate count times that limit is a hard ceiling. A cap would also need an order rule, and the location list has no order across streams.
 
 - **Leave the rule and explain it.** Rejected. The rule is correct only when the layer holds the features the streams name. On this server it does not, and the layer exists to show positions. A rule that discards most of them is a defect, whatever the spec says.
 
@@ -69,7 +69,7 @@ The fourth option in D52 would skip the draw when `partial` is true. Under it, a
 
 ### D55 The layer draws, selects, counts and forgets
 
-The feature loop in `update()` in `src/layers/osh/index.js` already draws every record in `placed.features`. A stream-drawn record has a null name, so `osh-045`'s label rule gives it no label with no new branch. The location's `systemName` never stands in for the feature's name, on the label or in the detail. One host owns hundreds of features, so that name would repeat hundreds of times.
+The feature loop in `update()` in `src/layers/osh/index.js` already draws every record in `placed.features`. A stream-drawn record has a null name, so `osh-045`'s label rule gives it no label with no new branch. The location's `systemName` never stands in for the feature's name, on the label or in the detail. One host owns many features, so that name would repeat many times.
 
 `osh-057` labels a placeholder system with its id as a degraded state. A feature does not get that fallback. `osh-045` already gives a feature with no name no label, and a feature id is a server token. A test pins both refusals.
 
@@ -103,7 +103,7 @@ Coverage: `src/data/oshSystems.js`, `src/layers/osh/index.js` and `src/layers/os
 
 ## Risks / Trade-offs
 
-- **Many more entities on the map.** Accepted. A stream-drawn feature has no label, so a host's hundreds of features never repeat its name. The count is bounded by the freshness gate and by each stream's page limit, and `placed.streamFeatures` reports it.
+- **Many more entities on the map.** Accepted. A stream-drawn feature has no label, so a host's many features never repeat its name. The count is bounded by the freshness gate and by each stream's page limit, and `placed.streamFeatures` reports it.
 - **Stream-drawn features that share a position overlap.** Accepted. A click picks one of them, and its detail names it. A group entity would lose the feature id the click needs.
 - **The new entities inherit a known defect.** The OSH layer sets neither `disableDepthTestDistance` nor `heightReference` on its points and labels, so its markers vanish on a close zoom. A separate change owns that fix. This change adds entities that show the same defect until it lands, and does not touch it.
 - **A feature can draw twice.** One location names it by id, another by uid alone. Accepted and named as `osh-feature-key-split`. On the measured server, a location with a uid also carries an id.

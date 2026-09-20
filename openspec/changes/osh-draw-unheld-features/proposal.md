@@ -8,7 +8,7 @@ The premise is that a location names a feature the layer holds. Here that is tru
 
 A fresh location already carries everything an entity needs. It has the feature reference, the position, the time, the age and the system id. So this change draws the feature itself from the location, with no record from the feature collection. That mirrors the placeholder `osh-057` already draws for a system with no held record.
 
-The features cluster under a few hosts, and one host owns hundreds of them. So the host's name is the only name a location carries for an unheld feature, and it is shared by hundreds. This change never uses it for a feature. A stream-drawn feature gets no label, and its detail shows its id, its host and the age of the location that placed it.
+The features cluster under a few hosts, and one host owns most of the features that lack their own record. So the host's name is the only name a location carries for an unheld feature, and many features share it. This change never uses it for a feature. A stream-drawn feature gets no label, and its detail shows its id, its host and the age of the location that placed it.
 
 Two rules stay exactly as they are. A location that names a feature never places its host system, because one system hosts many features. A location that is not fresh places nothing. The second rule is also what bounds the count. Only a fresh location draws, and the measured fresh set is a small part of the whole.
 
