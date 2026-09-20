@@ -29,7 +29,7 @@ The base text of `osh-042` and `osh-057` is the delta of `osh-location-streams`.
 
 ### D52 Draw the feature, not the system, and not nothing
 
-Eight options were weighed. The last is taken.
+The author weighed eight options. The author chose the last option.
 
 - **Aggregate by host system.** Rejected. One host owns many features at many positions, so the host has no one position to draw. A marker at the newest feature's position claims to be the system while it sits on one feature. That is the M16 failure with a count attached.
 
@@ -91,7 +91,7 @@ The test that mutant M16 reddens keeps every assertion. Only its name changes, b
 
 A feature of a sensor that detects things is plausibly a detection or a tracked object, not a fixed installation. This change does not draw it as a system. It draws it as a feature entity, `osh-foi:<id>`, with the smaller cyan point every feature already gets, and no label. That is the class the server itself gives it. The layer cannot tell a fixed feature from a detection that moves, and it does not try.
 
-Two things keep a detection honest. The freshness gate removes it an hour after its stream stops, so a day-old detection never draws. And the detail shows when and by what it was placed. `renderFeatureHeader()` in `src/layers/osh/detail.js` gains the `Placed by` line `renderSystemHeader()` already has, for a feature with `locationSource:'stream'`. It shows the datastream's name and the age of the location, in the same words the datastream blocks use.
+Its freshness and its visible age make the drawn entity trustworthy. The freshness gate removes it an hour after its stream stops, so a day-old detection never draws. And the detail shows when and by what datastream the location placed it. `renderFeatureHeader()` in `src/layers/osh/detail.js` gains the `Placed by` line `renderSystemHeader()` already has, for a feature with `locationSource:'stream'`. It shows the datastream's name and the age of the location, in the same words the datastream blocks use.
 
 For that line to work for a moved feature too, the override in `placeOshEntities()` copies the four stream fields, not only the coordinates. `osh-042` gains one clause for it. A held feature a stream moves and an unheld feature a stream draws then carry the same fields, which is what D54 needs.
 
