@@ -186,8 +186,15 @@ export function createOshLayer({ source, detailHost = null } = {}) {
     }
     if (featureId) {
       const record = _placedFeatureById.get(featureId);
+      const featurePlacedByStream = record?.locationSource === 'stream';
       writeDetail({
-        feature: { id: featureId, name: record ? record.name : null },
+        feature: {
+          id: featureId,
+          name: record ? record.name : null,
+          placedBy: featurePlacedByStream
+            ? { datastreamName: record.datastreamName, ageMs: record.ageMs }
+            : null,
+        },
         hostId: null,
         system: null,
         datastreams: [],
