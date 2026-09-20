@@ -2,6 +2,7 @@ import * as Cesium from 'cesium';
 import { writeOshDetail } from './detail.js';
 import { placeOshEntities } from '../../data/oshSystems.js';
 import { isOshObservationFresh } from '../../data/oshObservations.js';
+import { horizonOccluder } from '../../data/iconOrientation.js';
 export { createOshSource } from './source.js';
 export { renderOshDetail, writeOshDetail } from './detail.js';
 
@@ -16,6 +17,24 @@ function systemEntityId(systemId) {
 
 function featureEntityId(featureId) {
   return `osh-foi:${featureId}`;
+}
+
+/**
+ * Keep an entity on top of the depth test, at its record's own altitude.
+ * The cctv layer met this exact defect at a field test on 2026-07-06
+ * (`src/layers/cctv/lifecycle.js:145`): a finite depth distance let the
+ * depth test hide the icon again at far zoom. D59 and D60 give the
+ * reasons an OSH entity needs positive infinity, not a window, and keeps
+ * `heightReference` at `NONE` so the choice to keep the altitude is
+ * visible at the site.
+ * @param {object} graphics A point or label options object, before
+ *   it is passed to a `Cesium.Entity` construction.
+ * @returns {object} The same object, for use inline at the call site.
+ */
+function entityAlwaysOnTop(graphics) {
+  graphics.disableDepthTestDistance = Number.POSITIVE_INFINITY;
+  graphics.heightReference = Cesium.HeightReference.NONE;
+  return graphics;
 }
 
 /**
@@ -48,6 +67,8 @@ export function createOshLayer({ source, detailHost = null } = {}) {
   let _pollTimer = null;
   let _pollGeneration = 0;
   let _placedStreamCount = 0;
+  /** Added at init(), removed at destroy(); stays while the layer is off (D61). */
+  let _moveEndListener = null;
   /** Union across refreshes: a system seen once keeps its record. */
   const _systemRecords = new Map();
   /** Replaced whole on every refresh: the feature list is stable, not sampled. */
@@ -66,6 +87,22 @@ export function createOshLayer({ source, detailHost = null } = {}) {
 
   function writeDetail(detail) {
     writeOshDetail(detailHost, detail);
+  }
+
+  /**
+   * Hide every system and feature entity beyond the ellipsoid horizon,
+   * and show every entity the camera can see. D61: runs on the camera's
+   * `moveEnd`, at the end of each refresh's draw loop, and again right
+   * after the poll moves the selected entity. `_dataSource` always holds
+   * an entity with a position at each of those three call sites, so this
+   * reads none of them behind a guard.
+   */
+  function refreshHorizonVisibility() {
+    const occluder = horizonOccluder(_viewer.camera);
+    const now = Cesium.JulianDate.now();
+    for (const entity of _dataSource.entities.values) {
+      entity.show = occluder.isPointVisible(entity.position.getValue(now));
+    }
   }
 
   function stopPolling() {
@@ -129,6 +166,9 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         );
       }
     }
+    // An entity the poll moved can cross the horizon between refreshes
+    // (D61). One call after the loop, not one per datastream.
+    refreshHorizonVisibility();
     const systemRecord = _systemRecords.get(systemId) || null;
     const placedRecord = _placedSystemById.get(systemId) || null;
     const featureRecord = featureId ? _featureRecordsById.get(featureId) : null;
@@ -275,6 +315,10 @@ export function createOshLayer({ source, detailHost = null } = {}) {
       _dataSource.show = false;
       viewer.dataSources.add(_dataSource);
       resetState();
+      // Stays through disable(), so a camera moved while the layer is
+      // off still leaves a correct show set for the next enable() (D61).
+      _moveEndListener = () => refreshHorizonVisibility();
+      viewer.camera.moveEnd.addEventListener(_moveEndListener);
     },
 
     enable(viewer) {
@@ -404,18 +448,18 @@ export function createOshLayer({ source, detailHost = null } = {}) {
             new Cesium.Entity({
               id: systemEntityId(record.id),
               position,
-              point: {
+              point: entityAlwaysOnTop({
                 pixelSize: 10,
                 color: Cesium.Color.LIME,
                 outlineColor: Cesium.Color.BLACK,
                 outlineWidth: 1,
-              },
+              }),
               label: labelText
-                ? {
+                ? entityAlwaysOnTop({
                     text: labelText,
                     font: '12px sans-serif',
                     pixelOffset: new Cesium.Cartesian2(0, -16),
-                  }
+                  })
                 : undefined,
               properties: {
                 uid: record.uid,
@@ -436,12 +480,14 @@ export function createOshLayer({ source, detailHost = null } = {}) {
             new Cesium.Entity({
               id: systemEntityId(_selectedId),
               position: selectedPosition,
-              point: {
+              point: entityAlwaysOnTop({
                 pixelSize: 10,
                 color: Cesium.Color.LIME,
                 outlineColor: Cesium.Color.BLACK,
                 outlineWidth: 1,
-              },
+              }),
+              // Reuses the label object of the entity it replaces, which
+              // already carries the two properties (D62).
               label: selectedSystemEntity.label,
               properties: selectedSystemEntity.properties,
             }),
@@ -457,14 +503,14 @@ export function createOshLayer({ source, detailHost = null } = {}) {
                 feature.lat,
                 feature.alt || 0,
               ),
-              point: {
+              point: entityAlwaysOnTop({
                 pixelSize: 6,
                 color: Cesium.Color.CYAN,
                 outlineColor: Cesium.Color.BLACK,
                 outlineWidth: 1,
-              },
+              }),
               label: feature.name
-                ? {
+                ? entityAlwaysOnTop({
                     text: feature.name,
                     font: '11px sans-serif',
                     pixelOffset: new Cesium.Cartesian2(0, -12),
@@ -472,7 +518,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
                       0,
                       FEATURE_LABEL_DISTANCE_METERS,
                     ),
-                  }
+                  })
                 : undefined,
               properties: {
                 uid: feature.uid,
@@ -483,6 +529,10 @@ export function createOshLayer({ source, detailHost = null } = {}) {
             }),
           );
         }
+
+        // A newly drawn entity starts with show:true, and the camera has
+        // not moved for this refresh to catch on its own (D61).
+        refreshHorizonVisibility();
 
         _count = placed.systems.length;
         _featuresCount = placed.features.length;
@@ -521,7 +571,11 @@ export function createOshLayer({ source, detailHost = null } = {}) {
       _enabled = false;
       clearSelection();
       removeClickHandler();
-      if (_dataSource && viewer) viewer.dataSources.remove(_dataSource, true);
+      if (_dataSource && viewer) {
+        viewer.dataSources.remove(_dataSource, true);
+        viewer.camera.moveEnd.removeEventListener(_moveEndListener);
+      }
+      _moveEndListener = null;
       _dataSource = null;
       _viewer = null;
       resetState();
