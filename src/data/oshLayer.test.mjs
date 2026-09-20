@@ -57,6 +57,31 @@ const FEATURE_NO_NAME = {
   lat: 12,
   alt: 0,
 };
+// osh-062: at the antipode of SYSTEM_A, beyond the horizon of the fake
+// viewer's camera (set over longitude 1, latitude 2).
+const SYSTEM_FAR = { id: 'sys-fixture-far', uid: 'urn:far', name: 'System Far', description: 'desc far', lon: -179, lat: -2, alt: 0 };
+const FEATURE_FAR = {
+  id: 'foi-fixture-far',
+  uid: 'urn:foi-far',
+  systemId: 'sys-fixture-far',
+  name: 'Feature Far',
+  description: null,
+  lon: -179,
+  lat: -2,
+  alt: 0,
+};
+// osh-061: every other feature fixture carries alt:0, which leaves
+// `feature.alt || 0` mutation-proof. This one gives it a non-zero value.
+const FEATURE_ALT = {
+  id: 'foi-fixture-alt',
+  uid: 'urn:foi-alt',
+  systemId: 'sys-fixture-1',
+  name: 'Feature Alt',
+  description: null,
+  lon: 5,
+  lat: 6,
+  alt: 75,
+};
 
 function fakeSource({
   systems = [SYSTEM_A, SYSTEM_B],
@@ -106,6 +131,10 @@ function fakeSource({
 function fakeViewer() {
   const dataSources = [];
   let picked = null;
+  const camera = { moveEnd: new Cesium.Event() };
+  function setCamera(lon, lat, height) {
+    camera.positionWC = Cesium.Cartesian3.fromDegrees(lon, lat, height);
+  }
   const viewer = {
     scene: {
       canvas: { addEventListener() {}, removeEventListener() {} },
@@ -113,6 +142,7 @@ function fakeViewer() {
         return picked;
       },
     },
+    camera,
     dataSources: {
       add(dataSource) {
         dataSources.push(dataSource);
@@ -125,11 +155,19 @@ function fakeViewer() {
       },
     },
   };
+  // The repro height the firms horizon test also uses. From here the
+  // horizon half-angle is about 36 degrees, so SYSTEM_A, SYSTEM_B and
+  // FEATURE_A stay visible and the antipode fixtures do not.
+  setCamera(1, 2, 1_500_000);
   return {
     viewer,
     dataSources,
     setPicked(id) {
       picked = id === null ? null : { id };
+    },
+    setCamera,
+    raiseMoveEnd() {
+      camera.moveEnd.raiseEvent();
     },
   };
 }
@@ -1826,4 +1864,263 @@ test('[osh-057] getStats().placed.stream counts only the stream-placed system, n
   assert.equal(stats.count, 2, 'both the geometry-placed and the stream-placed system are on the map');
   assert.equal(stats.placed.stream, 1);
   layer.destroy(viewer);
+});
+
+// --- osh-061: every entity draws on top of the depth test, at its own altitude ---
+
+test('[osh-061] the system entity\'s point and label draw on top, with the height reference NONE', async () => {
+  const source = fakeSource({ systems: [SYSTEM_A] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
+  const now = Cesium.JulianDate.now();
+  assert.equal(entity.point.disableDepthTestDistance.getValue(now), Infinity);
+  assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
+  assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
+  assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
+  layer.destroy(viewer);
+});
+
+test('[osh-061] the feature entity\'s point and label draw on top, with the height reference NONE', async () => {
+  const source = fakeSource({ fois: [FEATURE_A] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-1');
+  const now = Cesium.JulianDate.now();
+  assert.equal(entity.point.disableDepthTestDistance.getValue(now), Infinity);
+  assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
+  assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
+  assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
+  layer.destroy(viewer);
+});
+
+test('[osh-061] the re-added entity for a selected system draws on top, on its point and its label', async () => {
+  let locations = [aircraftLocation()];
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getLocations() {
+      return { keyRequired: false, locations, failed: 0 };
+    },
+    async getDatastreams() {
+      return { keyRequired: false, datastreams: [] };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-9');
+    getClick()({ position: {} });
+    await flush();
+
+    // The stream goes quiet: this refresh re-adds the same entity id at
+    // its last position instead of drawing it fresh (osh-057).
+    locations = [];
+    await layer.update(viewer);
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
+    const now = Cesium.JulianDate.now();
+    assert.equal(entity.point.disableDepthTestDistance.getValue(now), Infinity);
+    assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
+    // The re-add's label is the one site whose mechanism differs: it
+    // carries the values by reusing the previous refresh's LabelGraphics,
+    // not by passing through entityAlwaysOnTop() itself (D62).
+    assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
+    assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-061] a system placed from a fresh location keeps its altitude', async () => {
+  const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
+  const cartographic = Cesium.Cartographic.fromCartesian(
+    entity.position.getValue(Cesium.JulianDate.now()),
+  );
+  assert.ok(
+    Math.abs(cartographic.height - 100) < 1e-3,
+    `expected the fixture's own altitude, 100, got ${cartographic.height}`,
+  );
+  layer.destroy(viewer);
+});
+
+test('[osh-061] a feature entity keeps its own altitude', async () => {
+  const source = fakeSource({ fois: [FEATURE_ALT] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-alt');
+  const cartographic = Cesium.Cartographic.fromCartesian(
+    entity.position.getValue(Cesium.JulianDate.now()),
+  );
+  assert.ok(
+    Math.abs(cartographic.height - 75) < 1e-3,
+    `expected the fixture's own altitude, 75, got ${cartographic.height}`,
+  );
+  layer.destroy(viewer);
+});
+
+test('[osh-061] a moved entity keeps the observation\'s altitude', async () => {
+  const source = fakeSource({
+    systems: [SYSTEM_A],
+    datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
+    observations: {
+      'ds-fixture-1': { rows: [], location: { lat: 9, lon: 8, alt: 250 }, resultTime: 't', ageMs: 1000 },
+    },
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-1');
+    getClick()({ position: {} });
+    await flush();
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
+    const cartographic = Cesium.Cartographic.fromCartesian(
+      entity.position.getValue(Cesium.JulianDate.now()),
+    );
+    assert.ok(
+      Math.abs(cartographic.height - 250) < 1e-3,
+      `expected the observation's own altitude, 250, got ${cartographic.height}`,
+    );
+  });
+  layer.destroy(viewer);
+});
+
+// --- osh-062: hide an entity beyond the ellipsoid horizon ---
+
+test('[osh-062] a refresh under a camera that has not moved hides the antipode entities and shows the near ones', async (t) => {
+  const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_FAR], fois: [FEATURE_A, FEATURE_FAR] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const near = dataSources[0].entities.getById('osh:sys-fixture-1');
+  const far = dataSources[0].entities.getById('osh:sys-fixture-far');
+  const nearFeature = dataSources[0].entities.getById('osh-foi:foi-fixture-1');
+  const farFeature = dataSources[0].entities.getById('osh-foi:foi-fixture-far');
+  assert.equal(near.show, true, 'an entity under the camera stays visible');
+  assert.equal(nearFeature.show, true);
+  assert.equal(far.show, false, 'an entity at the antipode starts hidden, before any moveEnd');
+  assert.equal(farFeature.show, false);
+});
+
+test('[osh-062] a moveEnd over the antipode swaps which entities show', async (t) => {
+  const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_FAR], fois: [] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources, setCamera, raiseMoveEnd } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const near = dataSources[0].entities.getById('osh:sys-fixture-1');
+  const far = dataSources[0].entities.getById('osh:sys-fixture-far');
+  assert.equal(near.show, true);
+  assert.equal(far.show, false);
+
+  setCamera(-179, -2, 1_500_000);
+  raiseMoveEnd();
+  assert.equal(near.show, false, 'the near entity is now beyond the horizon');
+  assert.equal(far.show, true, 'the camera now sees the far entity');
+});
+
+test('[osh-062] a moveEnd raised while the layer is off still updates show, so enable() shows a correct set', async (t) => {
+  const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_FAR], fois: [] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources, setCamera, raiseMoveEnd } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+  layer.disable();
+
+  setCamera(-179, -2, 1_500_000);
+  raiseMoveEnd();
+
+  layer.enable(viewer);
+  const near = dataSources[0].entities.getById('osh:sys-fixture-1');
+  const far = dataSources[0].entities.getById('osh:sys-fixture-far');
+  assert.equal(near.show, false, 'updated while the layer was off');
+  assert.equal(far.show, true, 'enable() shows the set the listener already computed');
+});
+
+test('[osh-062] a poll move across the horizon hides the selected entity, and a later move back shows it', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  let location = { lat: 2, lon: 1 };
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getDatastreams() {
+      return { keyRequired: false, datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }] };
+    },
+    async getObservation() {
+      return { keyRequired: false, observation: { rows: [], location: { ...location, alt: 0 }, resultTime: 't', ageMs: 1000 } };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-1');
+    getClick()({ position: {} });
+    await flush();
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
+    assert.equal(entity.show, true, 'starts under the camera');
+
+    location = { lat: -2, lon: -179 };
+    t.mock.timers.tick(15_000);
+    await flush();
+    assert.equal(entity.show, false, 'the poll carried it past the horizon');
+
+    location = { lat: 2, lon: 1 };
+    t.mock.timers.tick(15_000);
+    await flush();
+    assert.equal(entity.show, true, 'a later poll move brings it back into view');
+  });
+});
+
+test('[osh-062] init() adds one moveEnd listener, disable() keeps it, and destroy() removes it', () => {
+  const layer = createOshLayer({ source: fakeSource() });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  assert.equal(viewer.camera.moveEnd.numberOfListeners, 1);
+  layer.enable(viewer);
+  assert.equal(viewer.camera.moveEnd.numberOfListeners, 1);
+  layer.disable();
+  assert.equal(viewer.camera.moveEnd.numberOfListeners, 1, 'the listener stays while the layer is off');
+  layer.destroy(viewer);
+  assert.equal(viewer.camera.moveEnd.numberOfListeners, 0);
 });
