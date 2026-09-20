@@ -48,6 +48,7 @@ Origin: spec-first
 - **AND** every feature record gives a placed feature at its own point with its `systemId`
 - **AND** a location whose `ageMs` is not fresh under `isOshObservationFresh()` is dropped before any other rule
 - **AND** a fresh location whose `foiId` or `foiUid` names a held feature moves that feature with `locationSource:'stream'`
+- **AND** a feature that a location moves also carries the location's `datastreamId`, `datastreamName`, `phenomenonTime` and `ageMs`
 - **AND** a fresh location that names a feature the layer does not hold draws that feature, as `osh-058` says
 - **AND** that location never places its system
 - **AND** a fresh location with no feature reference places its system with `locationSource:'stream'`, the datastream id and name, `phenomenonTime` and `ageMs`

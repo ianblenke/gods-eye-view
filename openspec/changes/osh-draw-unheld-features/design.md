@@ -85,7 +85,7 @@ A stream-drawn feature is absent from `placed.features` at the first refresh wit
 
 ### D56 The M16 pin stays
 
-The test that mutant M16 reddens keeps every assertion. Only its name changes, because the words "dropped entirely" are no longer true. The layer gains one test tagged `[osh-057 osh-059]` that asserts no system entity and no `placed.stream` count for a location that names an unheld feature. The host-fallback mutation must redden both.
+The test that mutant M16 reddens keeps its name and every assertion. It still asserts that a fresh location naming an unheld feature never places that feature's host as a fallback. The layer gains one separate test tagged `[osh-057 osh-059]` that asserts no system entity and no `placed.stream` count for the same input. The host-fallback mutation must redden both.
 
 ### D57 The entity class is a feature, and its age is visible
 
