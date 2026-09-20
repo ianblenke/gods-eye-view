@@ -5,7 +5,10 @@ import {
   OBS_MAX_ENTRIES,
   OBS_TTL_MS,
   createOshKeyedCache,
+  createOshLocationsPass,
   createOshObservationsCache,
+  createOshSchemaCache,
+  createOshSystemCache,
   createOshSystemDatastreamsCache,
 } from '../../server/providers/osh/observations.js';
 
@@ -16,6 +19,9 @@ const datastreamsFixture = JSON.parse(
   readFileSync(new URL('./fixtures/osh-datastreams.json', import.meta.url), 'utf8'),
 );
 const ROOT = new URL('https://osh.example/api/');
+
+/** The reader the fixture's own location shape needs, as readOshSchemaLocation() would give it. */
+const OBSERVATION_READER = { lat: ['location', 'lat'], lon: ['location', 'lon'], alt: ['location', 'alt'] };
 
 function urlFor(id) {
   return new URL(`https://osh.example/api/datastreams/${id}/observations?limit=1&resultTime=latest`);
@@ -32,12 +38,19 @@ test('[osh-022] serves the newest observation of a datastream', async () => {
     return new Response(JSON.stringify(fixture), { status: 200 });
   };
   const cache = createOshObservationsCache({ fetchImpl, now: () => 1000 });
-  const result = await cache.get('ds-fixture-1', urlFor('ds-fixture-1'), {});
+  const result = await cache.get('ds-fixture-1', urlFor('ds-fixture-1'), {}, OBSERVATION_READER);
   assert.equal(call, 1);
   assert.equal(result.stale, false);
   assert.equal(result.fetchedAt, 1000);
   assert.equal(result.observation.phenomenonTime, '2026-01-01T00:05:00Z');
   assert.deepEqual(result.observation.location, { lat: 45.21, lon: 10.53, alt: 121 });
+});
+
+test('[osh-022] with no reader argument, the observation carries no location', async () => {
+  const fetchImpl = async () => new Response(JSON.stringify(fixture), { status: 200 });
+  const cache = createOshObservationsCache({ fetchImpl, now: () => 1000 });
+  const result = await cache.get('ds-fixture-2', urlFor('ds-fixture-2'), {});
+  assert.equal(result.observation.location, null);
 });
 
 test('[osh-022] an empty item list maps to observation:null', async () => {
@@ -279,5 +292,182 @@ test('[osh-048] createOshSystemDatastreamsCache() serves the stale snapshot on a
 
   await assert.rejects(
     cache.get('sys-fixture-new', ROOT, systemDatastreamsUrlFor('sys-fixture-new'), {}),
+  );
+});
+
+// --- osh-056: createOshSchemaCache(), createOshSystemCache(), createOshLocationsPass() ---
+
+const vectorSchemaFixture = JSON.parse(
+  readFileSync(new URL('./fixtures/osh-schema-vector.json', import.meta.url), 'utf8'),
+);
+
+function schemaUrlFor(id) {
+  return new URL(`https://osh.example/api/datastreams/${id}/schema`);
+}
+
+function systemUrlFor(id) {
+  return new URL(`https://osh.example/api/systems/${id}`);
+}
+
+test('[osh-056] createOshSchemaCache() serves a reader built from a datastream schema, cached per id', async () => {
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return new Response(JSON.stringify(vectorSchemaFixture), { status: 200 });
+  };
+  const cache = createOshSchemaCache({ fetchImpl, now: () => 1000, ttlMs: 5000 });
+  const first = await cache.get('ds-fixture-1', schemaUrlFor('ds-fixture-1'), {});
+  assert.equal(calls, 1);
+  assert.deepEqual(first.reader.lat, ['location', 'lat']);
+
+  await cache.get('ds-fixture-1', schemaUrlFor('ds-fixture-1'), {});
+  assert.equal(calls, 1, 'a second read of the same id inside the TTL sends no request');
+
+  await cache.get('ds-fixture-2', schemaUrlFor('ds-fixture-2'), {});
+  assert.equal(calls, 2, 'a different id gets its own read');
+});
+
+test('[osh-056] createOshSchemaCache() shares one in-flight read across concurrent callers for one id', async () => {
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return new Response(JSON.stringify(vectorSchemaFixture), { status: 200 });
+  };
+  const cache = createOshSchemaCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
+  await Promise.all([
+    cache.get('ds-fixture-1', schemaUrlFor('ds-fixture-1'), {}),
+    cache.get('ds-fixture-1', schemaUrlFor('ds-fixture-1'), {}),
+  ]);
+  assert.equal(calls, 1);
+});
+
+test('[osh-056] createOshSchemaCache() stores a null reader too, not a raw re-read per call', async () => {
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return new Response(JSON.stringify({ resultSchema: { fields: [] } }), { status: 200 });
+  };
+  const cache = createOshSchemaCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
+  const first = await cache.get('ds-fixture-1', schemaUrlFor('ds-fixture-1'), {});
+  assert.equal(first.reader, null);
+  await cache.get('ds-fixture-1', schemaUrlFor('ds-fixture-1'), {});
+  assert.equal(calls, 1, 'the reader is cached, not recomputed from a stored raw schema on every call');
+});
+
+test('[osh-056] createOshSchemaCache() serves a stale reader on a failed refresh, and rethrows with none', async () => {
+  let now = 0;
+  let succeed = true;
+  const fetchImpl = async () => {
+    if (succeed) return new Response(JSON.stringify(vectorSchemaFixture), { status: 200 });
+    return new Response(null, { status: 500 });
+  };
+  const cache = createOshSchemaCache({ fetchImpl, now: () => now, ttlMs: 1000 });
+  await cache.get('ds-fixture-1', schemaUrlFor('ds-fixture-1'), {});
+  succeed = false;
+  now += 1001;
+  const result = await cache.get('ds-fixture-1', schemaUrlFor('ds-fixture-1'), {});
+  assert.equal(result.stale, true);
+  assert.ok(result.reader);
+  await assert.rejects(cache.get('ds-fixture-new', schemaUrlFor('ds-fixture-new'), {}));
+});
+
+test('[osh-056] createOshSystemCache() serves the name from properties.name, cached per id', async () => {
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return new Response(JSON.stringify({ properties: { name: 'Fixture Aircraft' } }), {
+      status: 200,
+    });
+  };
+  const cache = createOshSystemCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
+  const first = await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  assert.equal(first.name, 'Fixture Aircraft');
+  assert.equal('error' in first, false, 'a fresh answer carries no error field at all');
+  await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  assert.equal(calls, 1);
+});
+
+test('[osh-056] createOshSystemCache() gives name:null for a record with no properties.name', async () => {
+  const fetchImpl = async () => new Response(JSON.stringify({ properties: {} }), { status: 200 });
+  const cache = createOshSystemCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
+  const result = await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  assert.equal(result.name, null);
+});
+
+test('[osh-056] createOshSystemCache() gives name:null for a record with no properties at all', async () => {
+  const fetchImpl = async () => new Response(JSON.stringify({}), { status: 200 });
+  const cache = createOshSystemCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
+  const result = await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  assert.equal(result.name, null);
+});
+
+test('[osh-056] createOshSystemCache() gives name:null for an empty (204) body, with no throw on the missing json', async () => {
+  const fetchImpl = async () => new Response(null, { status: 204 });
+  const cache = createOshSystemCache({ fetchImpl, now: () => 0, ttlMs: 5000 });
+  const result = await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  assert.equal(result.name, null);
+});
+
+test('[osh-056] createOshSystemCache() serves a stale name on a failed refresh, and rethrows with none', async () => {
+  let now = 0;
+  let succeed = true;
+  const fetchImpl = async () => {
+    if (succeed)
+      return new Response(JSON.stringify({ properties: { name: 'Fixture Aircraft' } }), { status: 200 });
+    return new Response(null, { status: 500 });
+  };
+  const cache = createOshSystemCache({ fetchImpl, now: () => now, ttlMs: 1000 });
+  await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  succeed = false;
+  now += 1001;
+  const result = await cache.get('sys-fixture-9', systemUrlFor('sys-fixture-9'), {});
+  assert.equal(result.stale, true);
+  assert.equal(result.name, 'Fixture Aircraft');
+  assert.ok(result.error, 'the stale answer also carries the error that made it stale');
+  await assert.rejects(cache.get('sys-fixture-new', systemUrlFor('sys-fixture-new'), {}));
+});
+
+test('[osh-056] createOshLocationsPass() caches one shared value with its own TTL, and serves stale on a failed refresh', async () => {
+  let now = 0;
+  let calls = 0;
+  let succeed = true;
+  const pass = createOshLocationsPass({ ttlMs: 1000, now: () => now });
+  const refresh = async () => {
+    calls += 1;
+    if (!succeed) throw new Error('pass failed');
+    return { locations: [{ id: calls }] };
+  };
+  const first = await pass.load(refresh);
+  assert.equal(calls, 1);
+  assert.equal(first.stale, false);
+
+  now += 999;
+  await pass.load(refresh);
+  assert.equal(calls, 1, 'a load inside the TTL sends no new refresh');
+
+  now += 2;
+  succeed = false;
+  const failed = await pass.load(refresh);
+  assert.equal(failed.stale, true);
+  assert.deepEqual(failed.value, first.value);
+});
+
+test('[osh-056] createOshLocationsPass() shares one in-flight refresh across concurrent loads', async () => {
+  let calls = 0;
+  const pass = createOshLocationsPass({ ttlMs: 1000, now: () => 0 });
+  const refresh = async () => {
+    calls += 1;
+    return { locations: [] };
+  };
+  await Promise.all([pass.load(refresh), pass.load(refresh)]);
+  assert.equal(calls, 1);
+});
+
+test('[osh-056] createOshLocationsPass() rethrows with no earlier snapshot to fall back on', async () => {
+  const pass = createOshLocationsPass({ ttlMs: 1000, now: () => 0 });
+  await assert.rejects(
+    pass.load(async () => {
+      throw new Error('no candidates reachable');
+    }),
   );
 });

@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "foi@id": "foi-fixture-1",
+      "phenomenonTime": "2026-01-01T00:09:00Z",
+      "resultTime": "2026-01-01T00:09:01Z",
+      "result": { "lat": 45.31, "lon": 10.61, "height": 130 }
+    },
+    {
+      "phenomenonTime": "2026-01-01T00:08:00Z",
+      "resultTime": "2026-01-01T00:08:01Z",
+      "result": { "lat": 45.29, "lon": 10.59, "height": 128 }
+    },
+    {
+      "foi@id": "foi-fixture-2",
+      "phenomenonTime": "2026-01-01T00:07:00Z",
+      "resultTime": "2026-01-01T00:07:01Z",
+      "result": { "lat": 45.27, "lon": 10.57, "height": 126 }
+    }
+  ]
+}

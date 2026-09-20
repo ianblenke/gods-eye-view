@@ -7,13 +7,29 @@ import {
   extractOshLocation,
   flattenOshResult,
   isOshObservationFresh,
+  mapOshLocationPage,
   mapOshObservation,
   oshObservationAgeMs,
+  readOshSchemaLocation,
 } from './oshObservations.js';
 
-const fixture = JSON.parse(
-  readFileSync(new URL('./fixtures/osh-observation.json', import.meta.url), 'utf8'),
-);
+function fixture(name) {
+  return JSON.parse(readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8'));
+}
+
+const observationFixture = fixture('osh-observation.json');
+const vectorSchema = fixture('osh-schema-vector.json');
+const flatSchema = fixture('osh-schema-flat.json');
+const noframeSchema = fixture('osh-schema-noframe.json');
+const latestPage = fixture('osh-latest-page.json');
+
+/** The reader readOshSchemaLocation() gives for osh-schema-vector.json. */
+const VECTOR_READER = {
+  lat: ['location', 'lat'],
+  lon: ['location', 'lon'],
+  alt: ['location', 'h'],
+  featureUid: ['featureUid'],
+};
 
 test('[osh-026] flattens a primitive result to one row', () => {
   assert.deepEqual(flattenOshResult(5), [{ path: '', value: 5 }]);
@@ -76,77 +92,317 @@ test('[osh-026] keeps exactly 64 rows unmarked and truncates row 65 onward with 
   assert.equal(overRows.at(-2).path, 'k62');
 });
 
-test('[osh-027] extracts a location from lat/lon keys, case-insensitive, with an optional alt', () => {
-  assert.deepEqual(extractOshLocation({ lat: 45.2, lon: 10.5 }), {
-    lat: 45.2,
-    lon: 10.5,
-    alt: null,
+// --- osh-051: readOshSchemaLocation() ------------------------------------
+
+test('[osh-051] reads the Vector shape of the mesh fixture, bound by axisID with an EPSG 4979 frame', () => {
+  const reader = readOshSchemaLocation(vectorSchema);
+  assert.deepEqual(reader, VECTOR_READER);
+});
+
+test('[osh-051] reads the flat shape of the vendor fixture, bound by definition, and never binds altitudeMsl', () => {
+  const reader = readOshSchemaLocation(flatSchema);
+  assert.deepEqual(reader, {
+    lat: ['lat'],
+    lon: ['lon'],
+    alt: ['height'],
+    featureUid: ['featureUid'],
   });
-  assert.deepEqual(extractOshLocation({ LATITUDE: 1, Longitude: 2, Alt: 3 }), {
+});
+
+test('[osh-051] reads the no-frame Vector fixture — the measured aircraft shape — with no referenceFrame at all', () => {
+  const reader = readOshSchemaLocation(noframeSchema);
+  assert.deepEqual(reader, {
+    lat: ['Location', 'lat'],
+    lon: ['Location', 'lon'],
+    alt: ['Location', 'h'],
+    featureUid: null,
+  });
+});
+
+test('[osh-051] takes every field name from the schema, so "Location" and "location" give the same reader shape', () => {
+  const inLineSchema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'position',
+          referenceFrame: 'http://www.opengis.net/def/crs/EPSG/0/4326',
+          coordinates: [
+            { type: 'Quantity', name: 'y', axisID: 'Lat', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'x', axisID: 'Lon', uom: { code: 'deg' } },
+          ],
+        },
+      ],
+    },
+  };
+  assert.deepEqual(readOshSchemaLocation(inLineSchema), {
+    lat: ['position', 'y'],
+    lon: ['position', 'x'],
+    alt: null,
+    featureUid: null,
+  });
+});
+
+test('[osh-051] an ECEF Vector with X, Y, Z axis ids never binds, with or without a frame', () => {
+  const ecef = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'ecef',
+          referenceFrame: 'http://www.opengis.net/def/crs/EPSG/0/4978',
+          coordinates: [
+            { type: 'Quantity', name: 'x', axisID: 'X', uom: { code: 'm' } },
+            { type: 'Quantity', name: 'y', axisID: 'Y', uom: { code: 'm' } },
+            { type: 'Quantity', name: 'z', axisID: 'Z', uom: { code: 'm' } },
+          ],
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(ecef), null);
+});
+
+test('[osh-051] a frame outside EPSG 4979/4326 gives null even with valid axis ids', () => {
+  const otherFrame = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          referenceFrame: 'http://www.opengis.net/def/crs/EPSG/0/4978',
+          coordinates: [
+            { type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+          ],
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(otherFrame), null);
+});
+
+test('[osh-051] a radian unit on the coordinates never binds', () => {
+  const radians = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          coordinates: [
+            { type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'rad' } },
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'rad' } },
+          ],
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(radians), null);
+});
+
+test('[osh-051] a Vector missing Lon gives null, and does not fall through to a flat reading of the same fields', () => {
+  const missingLon = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          coordinates: [{ type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'deg' } }],
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(missingLon), null);
+});
+
+test('[osh-051] altitudeMsl alone never binds as a height', () => {
+  const altOnly = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Quantity',
+          name: 'lat',
+          definition: 'urn:osh:def:fixture:position:1#latitude',
+          uom: { code: 'deg' },
+        },
+        {
+          type: 'Quantity',
+          name: 'lon',
+          definition: 'urn:osh:def:fixture:position:1#longitude',
+          uom: { code: 'deg' },
+        },
+        {
+          type: 'Quantity',
+          name: 'amsl',
+          definition: 'urn:osh:def:fixture:position:1#altitudeMsl',
+          uom: { code: 'm' },
+        },
+      ],
+    },
+  };
+  assert.deepEqual(readOshSchemaLocation(altOnly), {
+    lat: ['lat'],
+    lon: ['lon'],
+    alt: null,
+    featureUid: null,
+  });
+});
+
+test('[osh-051] takes the Vector shape when a schema declares both', () => {
+  const both = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        ...flatSchema.resultSchema.fields,
+        ...vectorSchema.resultSchema.fields.filter((field) => field.type === 'Vector'),
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(both);
+  assert.deepEqual(reader.lat, ['location', 'lat']);
+  assert.deepEqual(reader.lon, ['location', 'lon']);
+});
+
+test('[osh-051] gives null with no resultSchema, or with a body that is not an object', () => {
+  assert.equal(readOshSchemaLocation({}), null);
+  assert.equal(readOshSchemaLocation(null), null);
+  assert.equal(readOshSchemaLocation({ resultSchema: null }), null);
+  assert.equal(readOshSchemaLocation({ resultSchema: 'x' }), null);
+});
+
+test('[osh-051] does not read a field past a depth of four', () => {
+  function nest(level, field) {
+    if (level === 0) return field;
+    return nest(level - 1, {
+      type: 'DataRecord',
+      name: `wrap${level}`,
+      fields: [field],
+    });
+  }
+  const vectorField = vectorSchema.resultSchema.fields.find((field) => field.type === 'Vector');
+  const atDepthFour = { resultSchema: { type: 'DataRecord', fields: [nest(4, vectorField)] } };
+  const atDepthFive = { resultSchema: { type: 'DataRecord', fields: [nest(5, vectorField)] } };
+  assert.notEqual(readOshSchemaLocation(atDepthFour), null);
+  assert.equal(readOshSchemaLocation(atDepthFive), null);
+});
+
+// --- osh-027 (MODIFIED): extractOshLocation(result, reader) --------------
+
+test('[osh-027] walks the reader paths into the result', () => {
+  const result = { location: { lat: 45.21, lon: 10.53, h: 121 } };
+  assert.deepEqual(extractOshLocation(result, VECTOR_READER), {
+    lat: 45.21,
+    lon: 10.53,
+    alt: 121,
+  });
+});
+
+test('[osh-027] the text "NaN", an empty string and null all fail as a value', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: null };
+  assert.equal(extractOshLocation({ lat: 'NaN', lon: 1 }, reader), null);
+  assert.equal(extractOshLocation({ lat: '', lon: 1 }, reader), null);
+  assert.equal(extractOshLocation({ lat: null, lon: 1 }, reader), null);
+});
+
+test('[osh-027] a bad or absent height gives alt:null and keeps a good latitude and longitude', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: ['h'] };
+  assert.deepEqual(extractOshLocation({ lat: 1, lon: 2, h: 'NaN' }, reader), {
     lat: 1,
     lon: 2,
-    alt: 3,
+    alt: null,
   });
-});
-
-test('[osh-027] finds a location object nested up to depth 4', () => {
-  const found = extractOshLocation({ a: { b: { c: { lat: 1, lon: 2 } } } });
-  assert.deepEqual(found, { lat: 1, lon: 2, alt: null });
-});
-
-test('[osh-027] does not search past depth 4', () => {
-  const found = extractOshLocation({ a: { b: { c: { d: { lat: 1, lon: 2 } } } } });
-  assert.equal(found, null);
-});
-
-test('[osh-027] falls back to geometry.coordinates as [lon, lat, alt]', () => {
-  assert.deepEqual(extractOshLocation({ geometry: { coordinates: [10.5, 45.2, 8] } }), {
-    lat: 45.2,
-    lon: 10.5,
-    alt: 8,
-  });
-  assert.deepEqual(extractOshLocation({ geometry: { coordinates: [10.5, 45.2] } }), {
-    lat: 45.2,
-    lon: 10.5,
+  assert.deepEqual(extractOshLocation({ lat: 1, lon: 2 }, reader), {
+    lat: 1,
+    lon: 2,
     alt: null,
   });
 });
 
-test('[osh-027] rejects an out-of-range latitude or longitude', () => {
-  assert.equal(extractOshLocation({ lat: 91, lon: 0 }), null);
-  assert.equal(extractOshLocation({ lat: 0, lon: 181 }), null);
-  assert.equal(
-    extractOshLocation({ geometry: { coordinates: [200, 0] } }),
-    null,
+test('[osh-027] a null reader gives null, even for a result with lat and lon keys', () => {
+  assert.equal(extractOshLocation({ lat: 1, lon: 2 }, null), null);
+});
+
+test('[osh-027] a bad latitude or longitude, or one out of range, gives null', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: null };
+  assert.equal(extractOshLocation({ lat: 'x', lon: 2 }, reader), null);
+  assert.equal(extractOshLocation({ lat: 91, lon: 0 }, reader), null);
+  assert.equal(extractOshLocation({ lat: 0, lon: 181 }, reader), null);
+});
+
+test('[osh-027] never reads a value by a guessed key name, and never reads geometry.coordinates', () => {
+  const reader = { lat: ['a', 'lat'], lon: ['a', 'lon'], alt: null };
+  const result = {
+    lat: 1,
+    lon: 2,
+    geometry: { coordinates: [10.5, 45.2] },
+    a: {},
+  };
+  assert.equal(extractOshLocation(result, reader), null);
+});
+
+// --- osh-052: mapOshLocationPage() ----------------------------------------
+
+test('[osh-052] maps the fixture page, kept in order, newest first as the server answers it', () => {
+  const nowMs = Date.parse('2026-01-01T00:09:05Z');
+  const records = mapOshLocationPage(latestPage, VECTOR_READER, nowMs);
+  assert.equal(records.length, 3);
+  assert.deepEqual(
+    records.map((record) => record.foiId),
+    ['foi-fixture-1', null, 'foi-fixture-2'],
   );
+  assert.equal(records[0].phenomenonTime, '2026-01-01T00:09:00Z');
+  assert.equal(records[2].phenomenonTime, '2026-01-01T00:07:00Z');
 });
 
-test('[osh-027] returns null when there is no location anywhere', () => {
-  assert.equal(extractOshLocation(null), null);
-  assert.equal(extractOshLocation(5), null);
-  assert.equal(extractOshLocation({ temperature: 21 }), null);
-  assert.equal(extractOshLocation({ lat: 1 }), null);
-  assert.equal(extractOshLocation({ lat: 'x', lon: 2 }), null);
-  assert.equal(extractOshLocation({ geometry: {} }), null);
-  assert.equal(extractOshLocation({ geometry: { coordinates: [1] } }), null);
-  assert.equal(extractOshLocation({ geometry: { coordinates: ['x', 1] } }), null);
-  assert.equal(extractOshLocation({ a: [{ lat: 1, lon: 2 }] }), null);
+test('[osh-052] the flat reader finds a location on every item, kept even for the item with no foi@id', () => {
+  const flatReader = { lat: ['lat'], lon: ['lon'], alt: ['height'], featureUid: null };
+  const nowMs = Date.parse('2026-01-01T00:09:05Z');
+  const records = mapOshLocationPage(latestPage, flatReader, nowMs);
+  assert.deepEqual(records[1].location, { lat: 45.29, lon: 10.59, alt: 128 });
+  assert.equal(records[1].foiId, null);
 });
 
-test('[osh-027] ignores a non-finite alt value', () => {
-  assert.deepEqual(extractOshLocation({ lat: 1, lon: 2, alt: 'x' }), {
-    lat: 1,
-    lon: 2,
-    alt: null,
-  });
+test('[osh-052] an item with no location is kept with location:null', () => {
+  const badReader = { lat: ['nope'], lon: ['nope'], alt: null, featureUid: null };
+  const nowMs = Date.parse('2026-01-01T00:09:05Z');
+  const records = mapOshLocationPage(latestPage, badReader, nowMs);
+  assert.equal(records.length, 3);
+  assert.ok(records.every((record) => record.location === null));
 });
 
-test('[osh-022] maps the observation envelope from the fixture', () => {
-  const observation = mapOshObservation(fixture);
+test('[osh-052] two different nowMs values give two different ages', () => {
+  const early = mapOshLocationPage(latestPage, VECTOR_READER, Date.parse('2026-01-01T00:09:10Z'));
+  const later = mapOshLocationPage(latestPage, VECTOR_READER, Date.parse('2026-01-01T00:19:10Z'));
+  assert.ok(later[0].ageMs > early[0].ageMs);
+});
+
+test('[osh-052] a malformed payload maps to an empty list', () => {
+  assert.deepEqual(mapOshLocationPage(null, VECTOR_READER, 0), []);
+  assert.deepEqual(mapOshLocationPage({}, VECTOR_READER, 0), []);
+  assert.deepEqual(mapOshLocationPage({ items: 'x' }, VECTOR_READER, 0), []);
+  assert.deepEqual(mapOshLocationPage({ items: [null, 'x'] }, VECTOR_READER, 0), []);
+});
+
+// --- osh-022 (carried; the pure function now takes a reader) -------------
+
+test('[osh-022] maps the observation envelope from the fixture, given a reader for its shape', () => {
+  const reader = { lat: ['location', 'lat'], lon: ['location', 'lon'], alt: ['location', 'alt'] };
+  const observation = mapOshObservation(observationFixture, reader);
   assert.equal(observation.phenomenonTime, '2026-01-01T00:05:00Z');
   assert.equal(observation.resultTime, '2026-01-01T00:05:01Z');
   assert.deepEqual(observation.location, { lat: 45.21, lon: 10.53, alt: 121 });
   assert.ok(observation.rows.some((row) => row.path === 'temperature'));
+});
+
+test('[osh-022] with no reader, location is null even though the fixture carries one', () => {
+  const observation = mapOshObservation(observationFixture);
+  assert.equal(observation.location, null);
 });
 
 test('[osh-022] an empty or malformed item list maps to a null observation', () => {
@@ -231,4 +487,248 @@ test('[osh-050] a phenomenonTime ahead of nowMs gives a negative age, and a nega
   const ageMs = oshObservationAgeMs('2026-01-01T00:05:05Z', nowMs);
   assert.equal(ageMs, -5000);
   assert.equal(isOshObservationFresh(ageMs), true);
+});
+
+// --- osh-051: branch gaps in the schema reader's helper functions --------
+
+test('[osh-051] a non-string, non-null referenceFrame is treated as not geographic', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          referenceFrame: 12345,
+          coordinates: [
+            { type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+          ],
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(schema), null);
+});
+
+test('[osh-051] a referenceFrame string with no "epsg" in it is not geographic', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          referenceFrame: 'http://www.opengis.net/def/crs/OGC/1.3/CRS84',
+          coordinates: [
+            { type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+          ],
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(schema), null);
+});
+
+test('[osh-051] a flat field with no definition at all never binds', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        { type: 'Quantity', name: 'lat', uom: { code: 'deg' } },
+        {
+          type: 'Quantity',
+          name: 'lon',
+          definition: 'urn:osh:def:fixture:position:1#longitude',
+          uom: { code: 'deg' },
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(schema), null);
+});
+
+test('[osh-051] a definition with no token after its separators gives null, so featureUid stays null', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        ...flatSchema.resultSchema.fields.filter((field) => field.name !== 'featureUid'),
+        { type: 'Text', name: 'featureUid', definition: '///' },
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(schema);
+  assert.equal(reader.featureUid, null);
+});
+
+test('[osh-051] a Vector coordinate with no uom at all never binds', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          coordinates: [
+            { type: 'Quantity', name: 'lat', axisID: 'Lat' },
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+          ],
+        },
+      ],
+    },
+  };
+  assert.equal(readOshSchemaLocation(schema), null);
+});
+
+test('[osh-051] a malformed entry in a Vector\'s coordinates — null, or with no string name — is skipped', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          coordinates: [
+            null,
+            { type: 'Quantity', axisID: 'Lat', uom: { code: 'deg' } }, // no name
+            { type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+          ],
+        },
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(schema);
+  assert.deepEqual(reader.lat, ['loc', 'lat']);
+});
+
+test('[osh-051] finds featureUid one level below the root, not only at the top', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        ...flatSchema.resultSchema.fields.filter((field) => field.name !== 'featureUid'),
+        {
+          type: 'DataRecord',
+          name: 'wrap',
+          fields: [
+            { type: 'Text', name: 'featureUid', definition: 'urn:osh:def:fixture:position:1#samplingFeatureUid' },
+          ],
+        },
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(schema);
+  assert.deepEqual(reader.featureUid, ['wrap', 'featureUid']);
+});
+
+// --- osh-027: extractOshLocation() and its readFinite() helper -----------
+
+test('[osh-027] a non-null, non-object result gives null', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: null };
+  assert.equal(extractOshLocation('not an object', reader), null);
+  assert.equal(extractOshLocation(5, reader), null);
+});
+
+// --- osh-052: readFeatureUid() and mapOshLocationPage() branch gaps ------
+
+test('[osh-052] a foiUid path whose value is not a string, or is an empty string, gives null', () => {
+  const readerNumeric = { lat: ['lat'], lon: ['lon'], alt: null, featureUid: ['uid'] };
+  const nowMs = 0;
+  const numericPage = { items: [{ result: { lat: 1, lon: 2, uid: 42 } }] };
+  const emptyPage = { items: [{ result: { lat: 1, lon: 2, uid: '' } }] };
+  assert.equal(mapOshLocationPage(numericPage, readerNumeric, nowMs)[0].foiUid, null);
+  assert.equal(mapOshLocationPage(emptyPage, readerNumeric, nowMs)[0].foiUid, null);
+});
+
+test('[osh-052] an item with no "result" key at all is kept, with location:null', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: null, featureUid: null };
+  const records = mapOshLocationPage({ items: [{ phenomenonTime: '2026-01-01T00:00:00Z' }] }, reader, 0);
+  assert.equal(records.length, 1);
+  assert.equal(records[0].location, null);
+});
+
+test('[osh-052] a non-string phenomenonTime or resultTime becomes null, not just an absent one', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: null, featureUid: null };
+  const records = mapOshLocationPage(
+    { items: [{ phenomenonTime: 5, resultTime: 5, result: { lat: 1, lon: 2 } }] },
+    reader,
+    0,
+  );
+  assert.equal(records[0].phenomenonTime, null);
+  assert.equal(records[0].resultTime, null);
+});
+
+test('[osh-052] a null reader gives every record a null foiUid and a null location, with no throw', () => {
+  const records = mapOshLocationPage(latestPage, null, 0);
+  assert.equal(records.length, 3);
+  assert.ok(records.every((record) => record.foiUid === null && record.location === null));
+});
+
+test('[osh-052] a reader with featureUid explicitly undefined (never set) also gives a null foiUid', () => {
+  const reader = { lat: ['lat'], lon: ['lon'], alt: null };
+  const records = mapOshLocationPage({ items: [{ result: { lat: 1, lon: 2 } }] }, reader, 0);
+  assert.equal(records[0].foiUid, null);
+});
+
+test('[osh-051] finds the flat shape one level below the root, not only at the top', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'DataRecord',
+          name: 'wrap',
+          fields: flatSchema.resultSchema.fields.filter((field) => field.name !== 'featureUid'),
+        },
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(schema);
+  assert.deepEqual(reader.lat, ['wrap', 'lat']);
+  assert.deepEqual(reader.lon, ['wrap', 'lon']);
+});
+
+test('[osh-051] binds by axisID, not by list position: Lon listed before Lat still binds correctly', () => {
+  const schema = {
+    resultSchema: {
+      type: 'DataRecord',
+      fields: [
+        {
+          type: 'Vector',
+          name: 'loc',
+          coordinates: [
+            // Lon first, then Lat, then h — the reverse of every other
+            // fixture in this file. A reader that bound by list position
+            // instead of axisID would swap lat and lon here.
+            { type: 'Quantity', name: 'lon', axisID: 'Lon', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'lat', axisID: 'Lat', uom: { code: 'deg' } },
+            { type: 'Quantity', name: 'h', axisID: 'h', uom: { code: 'm' } },
+          ],
+        },
+      ],
+    },
+  };
+  const reader = readOshSchemaLocation(schema);
+  assert.deepEqual(reader.lat, ['loc', 'lat']);
+  assert.deepEqual(reader.lon, ['loc', 'lon']);
+  assert.deepEqual(reader.alt, ['loc', 'h']);
+});
+
+test('[osh-052] a schema-bound samplingFeatureUid reaches the page record as foiUid, end to end', () => {
+  const flatReader = readOshSchemaLocation(flatSchema);
+  const nowMs = Date.parse('2026-01-01T00:09:05Z');
+  const payload = {
+    items: [
+      {
+        phenomenonTime: '2026-01-01T00:09:00Z',
+        resultTime: '2026-01-01T00:09:01Z',
+        result: { lat: 45.31, lon: 10.61, height: 130, featureUid: 'urn:osh:foi-fixture-9' },
+      },
+    ],
+  };
+  const records = mapOshLocationPage(payload, flatReader, nowMs);
+  assert.equal(records[0].foiUid, 'urn:osh:foi-fixture-9');
 });
