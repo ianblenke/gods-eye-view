@@ -347,6 +347,7 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
   }
   const errors = [];
   const error = (code, file, message) => errors.push({ code, file, message });
+  const waivers = waiversOf(history, baseHistory, change);
   const changeLines = (history.startsWith(baseHistory) ? history.slice(baseHistory.length) : '')
     .split('\n')
     .filter((line) => line.startsWith('{'))
@@ -362,8 +363,16 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
     }
     const unchanged = sameAsBase(file);
     const baseAllowed = base;
-    if (entry.lines > baseAllowed.lines) {
-      error('LEDGER-LARGER-THAN-BASE', file, `The ledger allows ${entry.lines} lines for ${file}. The base ledger allows ${baseAllowed.lines}.`);
+    const waived = (metric) => {
+      if (unchanged) return 0;
+      return waivers
+        .filter((w) => w.file === file && w.metric === metric && w.sha === entry.sha)
+        .reduce((sum, w) => sum + w.count, 0);
+    };
+    const waivedLines = waived('lines');
+    if (entry.lines > baseAllowed.lines + waivedLines) {
+      const extra = waivedLines > 0 ? ` A waiver allows ${waivedLines} more.` : '';
+      error('LEDGER-LARGER-THAN-BASE', file, `The ledger allows ${entry.lines} lines for ${file}. The base ledger allows ${baseAllowed.lines}.${extra}`);
     }
     if (entry.untrue && !base.untrue) {
       error('LEDGER-UNTRUE-NOT-IN-BASE', file, `The ledger records untrue coverage for ${file}, but the base ledger does not`);
@@ -378,8 +387,12 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
       if (!moreThan(entry, baseAllowed, metric)) continue;
       const covered = coveredCount(entry, metric);
       const baseCovered = coveredCount(base, metric);
+      const waivedMetric = waived(metric);
       if (!unchanged) {
-        error('LEDGER-MORE-THAN-BASE', file, `${file} changed, and the ledger allows ${entry[metric]} ${metric}. The base ledger allows ${baseAllowed[metric]}.`);
+        if (entry[metric] > baseAllowed[metric] + waivedMetric) {
+          const extra = waivedMetric > 0 ? ` A waiver allows ${waivedMetric} more.` : '';
+          error('LEDGER-MORE-THAN-BASE', file, `${file} changed, and the ledger allows ${entry[metric]} ${metric}. The base ledger allows ${baseAllowed[metric]}.${extra}`);
+        }
       } else if (covered === null || baseCovered === null || covered < baseCovered) {
         error('LEDGER-MORE-THAN-BASE', file, `The ledger allows ${entry[metric]} ${metric} for ${file} with ${covered} covered ${metric}. The base ledger allows ${base[metric]} with ${baseCovered} covered.`);
       }
