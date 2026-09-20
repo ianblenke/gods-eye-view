@@ -6,7 +6,7 @@ Date: 2026-09-20
 Gates: make gates CHANGE=test-teardown-cleanup passed
 Rounds: 3
 Scope: diff 6a5e581
-Reviewed-Tree: d3575375b773d8225cbb2de9b91391ab4a9ce0c01b8ce25cb6ac08b766432398
+Reviewed-Tree: 224fcf48229650b0e26cf5955a57063d6e01a54b1261b0b838cca9b6690c3a59
 
 ## Findings
 
