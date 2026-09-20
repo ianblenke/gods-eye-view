@@ -1,6 +1,6 @@
 ## Context
 
-`src/layers/osh/index.js` builds three entities in a `CustomDataSource`. The system entity is built at about line 404. The re-added entity for a selected system that this refresh did not place is at about line 436. The feature entity is at about line 453.
+`src/layers/osh/index.js` builds three entities in a `CustomDataSource`. They are the system entity, the re-added entity for a selected system that a refresh did not place, and the feature entity.
 
 Each has a `point`. Two build a `label` when a name exists, and the re-add reuses the label object of the entity it replaces. None of the three sets `disableDepthTestDistance` or `heightReference`.
 
@@ -27,29 +27,29 @@ Terms: `depth test` means Cesium's default check that hides a point behind a nea
 
 ### D59 On top at every distance, weighed against the finite windows this project ships
 
-The point and the label of every OSH entity get `disableDepthTestDistance` equal to positive infinity. The label gets it too, because a label that sinks while its point shows is the same defect in a smaller shape.
+The point and the label of every OSH entity get `disableDepthTestDistance` equal to positive infinity. The label gets it too. A label that fails the depth test while its point still shows repeats the same defect, at a smaller scale.
 
 This project ships two measured answers to the same symptom, not one. Nine layers — bikeshare, cctv, firms, flights, installations, launches, military, satellites and vessels — use positive infinity. cctv recorded why after 1800 metres failed at far zoom. Traffic's live jam dots use a 15 000 metre window, from `src/layers/traffic/policy.js:176`. Its note records the measurement: one A/B capture drew 396 jam dots, and none was visible under the shipped 2000 metre window. Traffic's window works, and a window needs no horizon pass at all.
 
 The depth test does not measure how far a point sits below the surface. It is binary. Inside a window's camera distance the test never runs, so a buried point still shows. Beyond the window the test runs, and any burial, however small, hides the point. So a window does not need to cover the size of a burial. It needs to cover every camera distance at which a viewer must still see the entity while it might be buried.
 
-Traffic's dots meet that requirement inside 15 kilometres. `src/layers/traffic/model.js:106` samples the scene height for each road, so a dot sits on the drawn surface, not below it. Beyond 15 kilometres the depth test runs again. A sampled dot has little or no burial to hide there. Traffic never asks a viewer to read a dot from further away. So the far band costs traffic nothing.
+Traffic's dots meet that requirement inside 15 kilometres. `src/layers/traffic/model.js:106` samples the scene height for each road, so a dot sits on the drawn surface, not below it. Beyond 15 kilometres the depth test runs again. A sampled dot has little or no burial to hide there. Traffic never asks a viewer to see a dot from further away. So the far band costs traffic nothing.
 
 An OSH entity samples no ground. It sits at `record.alt || 0`, above the ellipsoid, not the drawn surface. On land the drawn surface sits above the ellipsoid by the geoid height plus the terrain height, from tens of metres to thousands. That gap does not shrink as the camera moves. So an OSH entity's burial is present at every camera distance, not only inside a window.
 
-At whole-globe zoom the loaded surface sits near the ellipsoid, so the entity shows. As the camera zooms in, the loaded surface rises and the entity submerges. That is the symptom the owner reported.
+At whole-globe zoom the loaded surface sits near the ellipsoid, so the entity shows. As the camera zooms in, the loaded surface rises above the entity, and the depth test hides it. That is the symptom the owner reported.
 
-A 15-kilometre window does stop the submerge inside 15 kilometres of the entity, the near band. It does not stop the submerge beyond 15 kilometres, the far band. There the entity's burial is the same one that caused the defect. `osh-045` shows a feature label out to 200 kilometres, and a system label at any distance. So the far band sits inside this layer's own requirement. Traffic's far band sits outside traffic's requirement; OSH's far band sits inside OSH's requirement.
+A 15-kilometre window does keep the entity visible inside 15 kilometres, the near band. It does not keep the entity visible beyond 15 kilometres, the far band. There the depth test hides the entity again, from the same burial that caused the defect. `osh-045` shows a feature label out to 200 kilometres, and a system label at any distance. So the far band sits inside this layer's own requirement. Traffic's far band sits outside traffic's requirement, and OSH's far band sits inside OSH's requirement.
 
-So a window trades one camera-distance range with no fix for another. Only an entity that never takes the depth test removes the trade, because it removes the camera distance from the question. That is the claim a reader can check. Show that OSH records carry a true altitude, or add a ground sample. Then a window is an option again, sized to whatever range the sample no longer needs to cover.
+So a window fixes the depth test in one camera-distance range and not in another. Only an entity that never takes the depth test removes that split, because it removes the camera distance from the question. A later engineer can check this claim directly. Show that OSH records carry a true altitude, or add a ground sample. Then a window is an option again, sized to whatever range the sample no longer needs to cover.
 
-The two field measurements do not disagree. They describe two different populations. Traffic's dots sit on a sampled surface and serve a city-scale view, so one window clears the mesh at every distance that layer serves. OSH entities sit at an unsampled datum and serve a global view. The far band a window leaves open is exactly the band `osh-045` needs. A later change that wants to replace positive infinity with a number must first give OSH entities a ground sample.
+Rejected: a finite window, at 15 kilometres or another value. `osh-045` needs visibility at any camera distance, and every window leaves a far band open where the entity's burial reappears. A later change that wants to replace positive infinity with a number must first give OSH entities a ground sample.
 
-Rejected: a finite window, at 15 kilometres or another value. `osh-045` needs visibility at any camera distance, and every window leaves a far band open where the entity's burial reappears. Rejected: no change to the depth property. That is the defect. The cost of the horizon pass is small: pure math over the layer's own entities, on camera settle only. Firms runs the same pass over thousands of sprites per rebuild.
+Rejected: no change to the depth property. That is the defect. The cost of the horizon pass is small: pure math over the layer's own entities, on camera settle only. Firms runs the same pass over thousands of sprites per rebuild.
 
 ### D60 Keep the altitude, and set `heightReference` to `NONE` at the site
 
-The point and the label get `heightReference` equal to `NONE`. That is Cesium's default, so the value changes nothing. It is set on purpose, so a reader sees the decision at the site and a test can pin it against a clamp.
+The point and the label get `heightReference` equal to `NONE`. That is Cesium's default, so the value changes nothing. This change sets it on purpose. An engineer sees the decision at the site, and a test can pin it against a clamp.
 
 The layer keeps the altitude for every entity. A position is built from `record.alt || 0`, and the poll moves the selected entity with `observation.location.alt || 0`. Both keep that shape.
 
@@ -63,9 +63,9 @@ One rule serves both kinds. Traffic splits its window between live jam dots and 
 
 ### D61 Hide an entity beyond the horizon, through the shared occluder
 
-The layer gets one horizon pass. It reads the occluder from `horizonOccluder(_viewer.camera)`. It walks `_dataSource.entities.values`. For each entity it reads the position at the current `JulianDate` and sets `entity.show` from `occluder.isPointVisible(position)`. It writes `show` without a same-value guard, because Cesium's `Entity.show` setter returns early for an unchanged value. The implementer confirms this in the Cesium source before the guard is left out.
+The layer gets one horizon pass. It reads the occluder from `horizonOccluder(_viewer.camera)`. It walks `_dataSource.entities.values`. For each entity it reads the position at the current `JulianDate` and sets `entity.show` from `occluder.isPointVisible(position)`. It writes `show` without a same-value guard. Cesium's `Entity.show` setter returns early for an unchanged value, so this design adds no guard.
 
-The horizon pass runs at three points. It runs from the camera's `moveEnd` listener. It runs at the end of the draw loop in `update()`, because a new entity starts with `show:true` and the camera has not moved. And the poll runs it once after the loop over the selected system's datastreams. An entity that loop moves can cross the limb between refreshes. One call after the loop, not one per datastream with a fresh location.
+The horizon pass runs at three points. It runs from the camera's `moveEnd` listener. It runs at the end of the draw loop in `update()`, because a new entity starts with `show:true` and the camera has not moved. And the poll runs it once after the loop over the selected system's datastreams. An entity that the loop moves can cross the horizon between refreshes. It runs once after the loop, not once per datastream with a fresh location.
 
 `init()` adds the listener and `destroy()` removes it. It stays while the layer is off. So a camera that moves while the layer is off still updates the `show` flags, and `enable()` shows a correct set. The `moveEnd` event is a `Cesium.Event`, and the test can count its listeners.
 
@@ -77,7 +77,7 @@ Rejected: a shared horizon pass. cctv and firms each walk a `BillboardCollection
 
 ### D62 One local helper, and no shared module
 
-`index.js` gets one module-level function. It takes a graphics object and returns it with the two properties from D59 and D60 added. The three point constructions and the two label constructions pass through it. The re-add reuses the label object of the entity it replaces, so that label already carries the values.
+`index.js` gets one module-level function. It takes a graphics object and returns it with the two properties from D59 and D60 added. Each of the three point constructions and the two label constructions calls it. The re-add reuses the label object of the entity it replaces, so that label already carries the values.
 
 Rejected: a shared helper in `src/data/`. Nine layers set the literal in place today, and none imports a helper for it. A helper in `src/data/osh*.js` adds a sixth file and breaks the count `osh-005` pins. A helper elsewhere in `src/data/` is a project-wide change that this defect does not justify. The one shared thing this change needs, the occluder, exists already.
 
@@ -88,16 +88,16 @@ A test that reads the value from the code and compares it with the same value pr
 - The test compares the height reference with `Cesium.HeightReference.NONE`, which is Cesium's own enum and not a value from the layer. A mutation to `CLAMP_TO_GROUND` reads `1` and reddens it.
 - The altitude is read back through `Cesium.Cartographic.fromCartesian()` and compared with the fixture's own number, `100`. A mutation of `record.alt || 0` to `0` reddens it.
 - Each of the three constructions gets its own assertion, so the removal of the helper from one site reddens one named test.
-- The re-add's label carries the values by reuse, not by the helper. Its own assertion reddens when a fresh literal replaces the reused `LabelGraphics`.
+- The re-add's label carries the values by reuse, not by the helper. Its own assertion reddens when a new literal replaces the reused `LabelGraphics`.
 - Every feature fixture but one carries `alt:0`, which leaves `feature.alt || 0` mutation-proof. One fixture with a non-zero altitude closes that gap.
 
 The real occluder, not a stub, pins the horizon pass. The fake viewer gets a camera with `positionWC` at 1 500 000 metres over the first system fixture, at longitude 1 and latitude 2. That is the same repro height the firms horizon test uses. Two new fixtures sit at the antipode, longitude minus 179 and latitude minus 2. From that camera the horizon half-angle is about 36 degrees.
 
-`SYSTEM_A`, `SYSTEM_B` and `FEATURE_A` — the fixtures the `osh-061` and `osh-062` tests assert `show` on — stay visible, and the occluder hides the antipode. A horizon pass that always shows, always hides, or inverts the test reddens one of the two assertions.
+`SYSTEM_A` and `FEATURE_A` — the fixtures the `osh-062` tests assert `show:true` on — stay visible. The occluder hides `SYSTEM_FAR` and `FEATURE_FAR`, which the same tests assert `show:false` on. A horizon pass that always shows, always hides, or inverts the test reddens one of the two assertions.
 
 A fixture from another scenario can sit beyond this horizon too. `osh-057`'s location fixture, at longitude 30 and latitude 31, is one example. No test in this suite reads `show` on it. So its visibility under this camera is not a claim this design makes.
 
-The three cadences get one test each. A `moveEnd` raised on the fake event, a refresh under a camera that has not moved, and a poll move across the limb. `numberOfListeners` on the fake `Cesium.Event` pins the listener's lifetime: one after `init()`, still one after `disable()`, zero after `destroy()`.
+The three cadences get one test each. A `moveEnd` raised on the fake event, a refresh under a camera that has not moved, and a poll move across the horizon. `numberOfListeners` on the fake `Cesium.Event` pins the listener's lifetime: one after `init()`, still one after `disable()`, zero after `destroy()`.
 
 The task list names fourteen mutations, M1 to M14. The implementer runs each one, records which test reddened, and reports a mutation that no test reddened as a finding.
 
@@ -105,4 +105,4 @@ The task list names fourteen mutations, M1 to M14. The implementer runs each one
 
 Coverage: `src/layers/osh/index.js` is at 100% line, branch and function coverage now and must stay there. The horizon pass has no guard branch, so it adds no branch. The helper has none either.
 
-Trace: the change ADDS `osh-061` and `osh-062`, and each gets at least one test tagged with its id. The change MODIFIES no scenario, so no old id needs a changed test. Spec lint and STE lint run as they do for every change. The pinned file counts under `osh-005` hold, because the change adds no file.
+Trace: the change ADDS `osh-061` and `osh-062`, and each gets at least one test tagged with its id. The change MODIFIES no scenario, so no id from before this change needs a changed test. Spec lint and STE lint run as they do for every change. The pinned file counts under `osh-005` hold, because the change adds no file.

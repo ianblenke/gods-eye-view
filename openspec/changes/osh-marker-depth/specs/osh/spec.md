@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Entity depth and horizon
-The browser layer MUST draw every system entity and every feature entity on top of the terrain and the mesh, at its record's altitude. It MUST hide an entity that sits beyond the ellipsoid horizon from the camera.
+The browser layer MUST draw every system entity and every feature entity on top of the terrain and the mesh, at the entity's record altitude. It MUST hide an entity that sits beyond the ellipsoid horizon from the camera.
 Origin: spec-first
 
 #### Scenario: Draw every entity on top of the terrain, at its own altitude `osh-061`
