@@ -100,9 +100,12 @@ Rules for this group. Change no test name. The file has a ledger entry with untr
   - The `[coverage-gate-050]` guard test reddens. Put it back. Report the test that reddened.
 - [x] 5.8 Mutation: make `measure()` skip the `leaks` read.
   - The `[coverage-gate-049]` gate test reddens. Put it back. Report the test that reddened.
-- [ ] 5.9 Prove the chain end to end, in the gate image, with a temporary file.
+- [x] 5.9 Prove the chain end to end, in the gate image, with a temporary file.
   - Add a test file under `src/` that arms a timer and then fails. Run `make gates`.
   - Confirm the output has the fail record for that test and one `GATES-TEST-LEAK` error with that file. Remove the file. Report the two lines.
+  - The two lines: a `TRACE-FAILED-TEST` error naming the test and the file, and a `GATES-TEST-LEAK` error naming the same file with a live `Timeout`.
+  - A first attempt left the file untracked. `COVERAGE-UNTRACKED` fired, but the file never ran — test-file discovery only picks up tracked files. `git add` fixed it.
+  - A second, blank-named `GATES-TEST-LEAK` line also appeared in the same run. That is the known, already-documented intermittent leak in `testGuard.test.mjs`, not a new fault this file's chain revealed.
 - [ ] 5.10 Confirm a green run records no leak.
   - Run `make gates` on the clean tree. Confirm no `GATES-TEST-LEAK` error appears for any file.
 
