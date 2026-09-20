@@ -417,6 +417,7 @@ test('newer visual, map, and individual panel actions suppress only their owned 
   assert.equal(manager._initialRestorePending, true);
   manager.completeInitialRestore();
   assert.equal(manager._initialRestorePending, false);
+  clearTimeout(manager._debounceTimer);
 });
 
 test('every explicit visual UI gesture claims restore authority before it mutates state', () => {
