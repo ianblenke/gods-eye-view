@@ -1004,6 +1004,16 @@
     "since": "2026-09-19",
     "change": "osh-location-streams"
   },
+  "osh-061": {
+    "hash": "a758aeb66a9a856a94deaa591f6d06eda9e6128bc52d936cacc43a81e1ac389b",
+    "since": "2026-09-20",
+    "change": "osh-marker-depth"
+  },
+  "osh-062": {
+    "hash": "f583692210743257187f19987884087a0f8be600db370e0c742a3204b5db78ae",
+    "since": "2026-09-20",
+    "change": "osh-marker-depth"
+  },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
     "since": "2026-09-14",
