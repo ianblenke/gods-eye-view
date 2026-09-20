@@ -93,7 +93,7 @@ A test that reads the value from the code and compares it with the same value pr
 
 The real occluder, not a stub, pins the horizon pass. The fake viewer gets a camera with `positionWC` at 1 500 000 metres over the first system fixture, at longitude 1 and latitude 2. That is the same repro height the firms horizon test uses. Two new fixtures sit at the antipode, longitude minus 179 and latitude minus 2. From that camera the horizon half-angle is about 36 degrees.
 
-`SYSTEM_A` and `FEATURE_A` — the fixtures the `osh-062` tests assert `show:true` on — stay visible. The occluder hides `SYSTEM_FAR` and `FEATURE_FAR`, which the same tests assert `show:false` on. A horizon pass that always shows, always hides, or inverts the test reddens one of the two assertions.
+The `osh-062` tests assert `show` on four fixtures. `SYSTEM_A` and `FEATURE_A` sit under the camera and stay visible. `SYSTEM_FAR` and `FEATURE_FAR` sit at the antipode and the occluder hides them. A horizon pass that always shows, always hides, or inverts the test reddens one of the two assertions.
 
 A fixture from another scenario can sit beyond this horizon too. `osh-057`'s location fixture, at longitude 30 and latitude 31, is one example. No test in this suite reads `show` on it. So its visibility under this camera is not a claim this design makes.
 
