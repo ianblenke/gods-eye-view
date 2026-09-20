@@ -1,6 +1,6 @@
 ## 1. Diagnose before you fix
 
-- [ ] 1.1 Read `AGENTS.md` first, then read `teardown-guard`'s own `design.md` for the diagnostic method.
+- [x] 1.1 Read `AGENTS.md` first, then read `teardown-guard`'s own `design.md` for the diagnostic method.
   - For each file in section 2 to 8, run the file with the force-exit flag and the tap reporter, inside the gate image.
   - Name the test and the timer that stays live, before you change anything.
   - A leaking file prints every result, but its plan line prints late or not at all under a plain run.
