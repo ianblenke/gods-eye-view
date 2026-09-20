@@ -217,6 +217,13 @@ test('outline queue: an 8-spec batch keeps at most two FIFO upgrades in flight',
 
 test('outline queue: clear drops queued-but-unstarted upgrades without a later fetch', async (t) => {
   installAnimationFrameStubs(t);
+  // Mock the clock before annotate() ever runs, so the retry wait the two started tasks
+  // arm after their abort is a mock timer from the start, not a real 8s timer created
+  // before this enable() call — a real one made first would keep ticking on its own
+  // clock and stay armed after the test returns, leaking the very defect this change
+  // fixes. Confirmed by an earlier draft of this test doing exactly that.
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  t.after(() => t.mock.timers.reset());
   const { renderer } = fakeRenderer();
   let fetchesStarted = 0;
   const resolveTarget = async ({ target, signal }) => ({
@@ -235,19 +242,7 @@ test('outline queue: clear drops queued-but-unstarted upgrades without a later f
   });
   // Keep the default retry delays here (do not pass outlineRetryDelaysMs: []), so the two
   // started tasks still take the real transient-retry path after their abort — the same
-  // path `isStale()` reads the real engine.clear() abort signal from. Capture and clear
-  // the real backoff timer each arms, instead of skipping the wait that arms it.
-  const originalSetTimeout = globalThis.setTimeout;
-  const retryTimers = [];
-  globalThis.setTimeout = (fn, ms, ...args) => {
-    const id = originalSetTimeout(fn, ms, ...args);
-    if (ms === 8000) retryTimers.push(id);
-    return id;
-  };
-  t.after(() => {
-    globalThis.setTimeout = originalSetTimeout;
-    for (const id of retryTimers) clearTimeout(id);
-  });
+  // path isStale() reads clear()'s bumped generation from.
   const engine = createAnnotationEngine({
     viewer: {},
     renderer,
@@ -265,7 +260,14 @@ test('outline queue: clear drops queued-but-unstarted upgrades without a later f
   await flushMicrotasks();
   assert.equal(engine.count(), 0);
   assert.equal(fetchesStarted, 2, 'the six queued upgrades were dropped on clear');
-  assert.equal(retryTimers.length, 2, 'both started tasks reached the real retry wait after abort');
+
+  // Let the retry wait actually complete (on the mock clock, not a real 8s delay), so the
+  // isStale() check after it genuinely runs. clear() bumped generation before this tick,
+  // so isStale() must read that and stop the retry here — a second fetch per task would
+  // mean it did not, and fetchesStarted would rise past 2.
+  t.mock.timers.tick(8000);
+  await flushMicrotasks();
+  assert.equal(fetchesStarted, 2, 'isStale() stopped the retry once its wait completed, generation already bumped by clear()');
 });
 
 test('retry: HTTP 429 Retry-After 5s gets one ladder-spaced retry; a second 429 stops', async (t) => {
