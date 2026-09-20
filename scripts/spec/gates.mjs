@@ -83,8 +83,8 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
       output: `${outDir}/tests-main.jsonl`,
       args: [
         '--test',
-        '--test-force-exit',
         '--experimental-test-coverage',
+        '--test-force-exit',
         '--test-coverage-exclude=**/*.test.mjs',
         '--test-reporter=dot',
         '--test-reporter-destination=stdout',
@@ -106,8 +106,8 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
         args: [
           '--expose-gc',
           '--test',
-          '--test-force-exit',
           '--test-concurrency=1',
+          '--test-force-exit',
           '--test-reporter=dot',
           '--test-reporter-destination=stdout',
           `--test-reporter=${REPORTER}`,
@@ -210,6 +210,9 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
   const guardResults = readJsonLines(outDir, readdirSync(outDir).filter((file) => /^guard-\d+\.jsonl$/.test(file)).sort());
   for (const violation of guardResults.flatMap((result) => result.violations).filter((item) => !item.file)) {
     errors.push({ code: violation.code, file: '', message: violation.message });
+  }
+  for (const leak of guardResults.flatMap((result) => result.leaks || [])) {
+    errors.push({ code: 'GATES-TEST-LEAK', file: leak.file, message: `A test process left a live timer: ${leak.resources.join(', ')}` });
   }
   const assertions = new Map();
   for (const item of guardResults.flatMap((result) => result.assertions)) {

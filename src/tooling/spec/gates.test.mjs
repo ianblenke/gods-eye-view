@@ -815,4 +815,41 @@ test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
   }
 });
 
+test('[coverage-gate-049] stops for a test that leaves a live timer', () => {
+  withFixture((root) => {
+    passes(root, ['init']);
+    const stub = (command, args, options) => {
+      const result = spawnSync(command, args, options);
+      writeFileSync(
+        path.join(root, '.gev-cache/spec/guard-999.jsonl'),
+        `${JSON.stringify({ violations: [], checked: [], assertions: [], leaks: [{ file: 'src/math.test.mjs', resources: ['Timeout'] }] })}\n`,
+      );
+      return result;
+    };
+    const check = run(root, ['check'], { spawn: stub });
+    assert.equal(check.status, 1);
+    assert.match(check.output, /ERROR GATES-TEST-LEAK src\/math\.test\.mjs/);
+    assert.doesNotMatch(check.output, /COVERAGE-FAKE/);
+    assert.match(check.output, /0 untrue/);
+  });
+});
+
+test('[coverage-gate-050] does not stop for a test process without a live timer', () => {
+  withFixture((root) => {
+    passes(root, ['init']);
+    const stub = (command, args, options) => {
+      const result = spawnSync(command, args, options);
+      writeFileSync(
+        path.join(root, '.gev-cache/spec/guard-999.jsonl'),
+        `${JSON.stringify({ violations: [], checked: [], assertions: [], leaks: [] })}\n`,
+      );
+      return result;
+    };
+    const check = run(root, ['check'], { spawn: stub });
+    assert.equal(check.status, 0);
+    assert.doesNotMatch(check.output, /GATES-TEST-LEAK/);
+  });
+});
+
+
 
