@@ -141,7 +141,7 @@
 
 ## 7. Gates and review
 
-- [ ] 7.1 Run `make lint` until no STE error remains.
-- [ ] 7.2 Run `make ratchet CHANGE=osh-location-streams`.
+- [x] 7.1 Run `make lint` until no STE error remains.
+- [x] 7.2 Run `make ratchet CHANGE=osh-location-streams`.
 - [ ] 7.3 Run `make gates CHANGE=osh-location-streams`. Confirm every changed file stays at 100%.
-- [ ] 7.4 Run `/opsx:review osh-location-streams`. Correct the findings. Record the result in `review.md`.
+- [x] 7.4 Run the spec-adversary and STE-adversary review. Correct the findings. Record the result in `review.md`.
