@@ -24,14 +24,14 @@
   - Test `[osh-061]`: the re-added entity for a selected system draws on top, on its point and its label. Select a stream-placed system, then refresh with no fresh location.
   - Test `[osh-061]`: a placed system keeps its altitude. Use `aircraftLocation()`, whose `alt` is 100, and read the height back through `Cesium.Cartographic.fromCartesian()`.
   - Test `[osh-061]`: a moved entity keeps the observation's altitude. Give the observation `alt:250` and read the height back the same way.
-  - Test `[osh-061]`: a feature entity keeps its own altitude. Use `FEATURE_ALT`, whose `alt` is 75, and read the height back the same way — every other feature fixture carries `alt:0`, which leaves `feature.alt || 0` mutation-proof.
+  - Test `[osh-061]`: a feature entity keeps its own altitude. Use `FEATURE_ALT`, whose `alt` is 75, and read the height back the same way. Every other feature fixture carries `alt:0`, which leaves `feature.alt || 0` mutation-proof.
   - M1: set the system point's depth distance to `1800`. Reddens the system-entity test.
   - M2: remove the depth distance from the system label. Reddens the system-entity test on its label assertion.
   - M3: remove the helper from the feature point. Reddens the feature-entity test.
   - M4: remove the helper from the re-added point. Reddens the re-added-entity test.
   - M5: set the point's height reference to `CLAMP_TO_GROUND`. Reddens the system-entity test on its height-reference assertion.
   - M6: change `record.alt || 0` to `0`. Reddens the placed-altitude test.
-  - M13: replace the re-added entity's `label: selectedSystemEntity.label` with a fresh literal. Reddens the re-added-entity test on its label assertion.
+  - M13: replace the re-added entity's `label: selectedSystemEntity.label` with a new literal. Reddens the re-added-entity test on its label assertion.
   - M14: change `feature.alt || 0` to `0`. Reddens the feature-altitude test.
 - [x] 3.2 Add the helper from D62 and apply it at the five sites until 3.1 is green.
   - Put a one-line comment at the helper that names D59, D60 and the cctv field test of 2026-07-06.
@@ -42,7 +42,7 @@
   - Test `[osh-062]`: a refresh under a camera that has not moved hides the antipode entities and shows the near ones. Assert `show` on all four.
   - Test `[osh-062]`: a moveEnd over the antipode swaps which entities show. Call `setCamera(-179, -2, 1_500_000)`, then `raiseMoveEnd()`.
   - Test `[osh-062]`: a moveEnd raised while the layer is off still updates show, so enable() shows a correct set.
-  - Test `[osh-062]`: a poll move across the limb hides the selected entity, and a later move back shows it. Use mock timers as the `[osh-030]` poll test does.
+  - Test `[osh-062]`: a poll move across the horizon hides the selected entity, and a later move back shows it. Use mock timers as the `[osh-030]` poll test does.
   - Test `[osh-062]`: init() adds one moveEnd listener, disable() keeps it, and destroy() removes it. Assert `numberOfListeners` at each step.
   - M7: make the horizon pass set `show` to `true` for every entity. Reddens the refresh test on an antipode assertion.
   - M8: invert `isPointVisible`. Reddens the refresh test on both a near and an antipode assertion.
@@ -52,16 +52,16 @@
   - M12: remove the listener removal from `destroy()`. Reddens the listener-count test on its last assertion.
 - [x] 4.2 Write the horizon pass and the listener from D61 until 4.1 is green.
   - Confirm in the Cesium source that the `Entity.show` setter returns early for an unchanged value. Add no guard.
-  - The pass call inside the poll runs once after the loop over the selected system's datastreams, not once per datastream with a fresh location.
+  - The horizon pass call inside the poll runs once after the loop over the selected system's datastreams, not once per datastream with a fresh location.
 - [x] 4.3 Run M1 to M14 one at a time. Record the test that reddened for each.
   - Revert each mutation before the next. A mutation that no test reddens is a finding. Fix the test, then run it again.
-  - M13 and M14 came from the spec-adversary review, after the first pass through M1-M12 found nothing that survived.
+  - M13 and M14 came from the spec-adversary review, after the first run through M1-M12 found nothing that survived.
 
 ## 5. Gates and review
 
 - [x] 5.1 Run `make lint` until no STE error remains.
 - [x] 5.2 Run `make ratchet CHANGE=osh-marker-depth`.
-  - Ran twice: once for `osh-061`/`osh-062` as written. It ran again after the STE fix renamed the requirement and scenario titles, since the scenario hash covers the name.
+  - Ran twice: once for `osh-061`/`osh-062` as written. It ran again after the STE fix renamed the requirement and scenario titles. The scenario hash covers the name.
 - [x] 5.3 Run `make gates CHANGE=osh-marker-depth`. Confirm `src/layers/osh/index.js` stays at 100%.
   - Read the command output for the gate verdict. Three zeros in `results.json` mean the tests did not crash, not that the gates passed.
   - Ran twice. The first run, before the review fixes, failed on the ratchet not having run yet and `review.md` missing. The second, after both commits, failed on `review.md` missing alone — the one error expected before a review exists.

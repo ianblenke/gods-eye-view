@@ -21,11 +21,12 @@ function featureEntityId(featureId) {
 
 /**
  * Keep an entity on top of the depth test, at its record's own altitude.
- * The cctv layer met this exact submerge at a field test on 2026-07-06
- * (`src/layers/cctv/lifecycle.js:145`): a finite depth distance brought
- * the burial back at far zoom. D59 and D60 give the reasons an OSH entity
- * needs positive infinity, not a window, and keeps `heightReference` at
- * `NONE` so the choice to keep the altitude is visible at the site.
+ * The cctv layer met this exact defect at a field test on 2026-07-06
+ * (`src/layers/cctv/lifecycle.js:145`): a finite depth distance let the
+ * depth test hide the icon again at far zoom. D59 and D60 give the
+ * reasons an OSH entity needs positive infinity, not a window, and keeps
+ * `heightReference` at `NONE` so the choice to keep the altitude is
+ * visible at the site.
  * @param {object} graphics A point or label options object, before
  *   it is passed to a `Cesium.Entity` construction.
  * @returns {object} The same object, for use inline at the call site.
@@ -165,7 +166,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
         );
       }
     }
-    // The entity this poll may have moved can cross the limb between
+    // The entity this poll moves can cross the horizon between
     // refreshes (D61). One call after the loop, not one per datastream.
     refreshHorizonVisibility();
     const systemRecord = _systemRecords.get(systemId) || null;

@@ -1900,7 +1900,7 @@ test('[osh-061] the feature entity\'s point and label draw on top, with the heig
   layer.destroy(viewer);
 });
 
-test('[osh-061] the re-added entity for a selected system draws on top', async () => {
+test('[osh-061] the re-added entity for a selected system draws on top, on its point and its label', async () => {
   let locations = [aircraftLocation()];
   const source = {
     async getSystems() {
@@ -2069,7 +2069,7 @@ test('[osh-062] a moveEnd raised while the layer is off still updates show, so e
   assert.equal(far.show, true, 'enable() shows the set the listener already computed');
 });
 
-test('[osh-062] a poll move across the limb hides the selected entity, and a later move back shows it', async (t) => {
+test('[osh-062] a poll move across the horizon hides the selected entity, and a later move back shows it', async (t) => {
   t.mock.timers.enable({ apis: ['setInterval'] });
   let location = { lat: 2, lon: 1 };
   const source = {
@@ -2103,7 +2103,7 @@ test('[osh-062] a poll move across the limb hides the selected entity, and a lat
     location = { lat: -2, lon: -179 };
     t.mock.timers.tick(15_000);
     await flush();
-    assert.equal(entity.show, false, 'the poll carried it past the limb');
+    assert.equal(entity.show, false, 'the poll carried it past the horizon');
 
     location = { lat: 2, lon: 1 };
     t.mock.timers.tick(15_000);
