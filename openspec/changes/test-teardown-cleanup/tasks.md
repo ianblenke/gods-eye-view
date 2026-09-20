@@ -76,9 +76,10 @@
 
 ## 9. Gates and review
 
-- [ ] 9.1 Run the lint gate until no STE error remains.
-- [ ] 9.2 Run the ratchet gate for this change.
+- [x] 9.1 Run the lint gate until no STE error remains.
+- [x] 9.2 Run the ratchet gate for this change.
   - Confirm no new untraced test name in any of the seven files.
   - Confirm the leak check no longer names any of the seven files.
+  - `Gates passed.` No `GATES-TEST-LEAK` error, for any file, including `testGuard.test.mjs`.
 - [ ] 9.3 Run the full gate for this change. Read the command output for the verdict, not the result file.
 - [ ] 9.4 Run the spec-adversary and STE-adversary review. Correct the findings. Record the result in `review.md`.
