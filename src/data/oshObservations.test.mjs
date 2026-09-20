@@ -376,7 +376,7 @@ test('[osh-052] an item with no location is kept with location:null', () => {
   assert.ok(records.every((record) => record.location === null));
 });
 
-test('[osh-052] ageMs comes from nowMs, not the wall clock: two different nowMs values give two different ages', () => {
+test('[osh-052] two different nowMs values give two different ages', () => {
   const early = mapOshLocationPage(latestPage, VECTOR_READER, Date.parse('2026-01-01T00:09:10Z'));
   const later = mapOshLocationPage(latestPage, VECTOR_READER, Date.parse('2026-01-01T00:19:10Z'));
   assert.ok(later[0].ageMs > early[0].ageMs);

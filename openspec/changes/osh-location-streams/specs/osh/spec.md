@@ -49,13 +49,15 @@ Origin: spec-first
 - **AND** a location whose `ageMs` is not fresh under `isOshObservationFresh()` is dropped before any other rule
 - **AND** a fresh location whose `foiId` or `foiUid` names a held feature moves that feature with `locationSource:'stream'`
 - **AND** a fresh location naming a feature the layer does not hold is dropped
-- **AND** a fresh location with no feature reference places its system with `locationSource:'stream'`, the datastream id and name, `phenomenonTime` and `ageMs`, above a `Point`
-- **AND** the newer of two such locations for one system wins
+- **AND** a fresh location with no feature reference places its system with `locationSource:'stream'`, the datastream id and name, `phenomenonTime` and `ageMs`
+- **AND** that placement stands in place of that system's `Point`
+- **AND** the layer places the newer of two such locations for one system
 - **AND** a fresh location whose system has no record still gives a placed system with `name:null`
 - **AND** a feature never places its host system, and a system never places a feature
 
 #### Scenario: Read the location fields from a schema `osh-051`
-- **WHEN** `readOshSchemaLocation(schema)` reads the record at `resultSchema`, walking `fields` and, inside a `Vector`, `coordinates`, to a bounded depth
+- **WHEN** `readOshSchemaLocation(schema)` reads the record at `resultSchema`, walking `fields` to a depth of four
+- **AND** it walks a `Vector` field's `coordinates`
 - **THEN** for a `Vector` whose coordinates carry `axisID` `Lat` and `Lon` with unit code `deg`, it binds `lat` and `lon` by axis id
 - **AND** it never binds `lat` or `lon` by list position
 - **AND** it binds `alt` to a coordinate with axis id `h` and unit code `m`
@@ -145,8 +147,8 @@ Origin: spec-first
 - **AND** another non-ok status, or a payload without the expected field, makes the getter throw
 - **AND** the observation getter sends the datastream id as the `datastream` query parameter
 - **AND** the datastreams getter sends a given system id as the `system` query parameter, and sends no such key when none is given
-- **AND** the features getter passes through `truncated` from the payload
-- **AND** the locations getter passes through `locations` and `failed` from the payload, and sends no query
+- **AND** the features getter forwards `truncated` from the payload
+- **AND** the locations getter forwards `locations` and `failed` from the payload, and sends no query
 
 #### Scenario: Show one entity per placed system and report the stats `osh-029`
 - **WHEN** the layer updates with the systems and the features
@@ -169,7 +171,7 @@ Origin: spec-first
 #### Scenario: Move the entity for the selected system's newest location `osh-031`
 - **WHEN** a poll's newest observation for the selected system carries a location
 - **THEN** the layer moves the entity to that location only when the observation is fresh
-- **AND** the layer leaves the entity in place when `ageMs` is above `OSH_FRESH_MAX_AGE_MS`, or further below zero than `OSH_CLOCK_SKEW_MAX_MS`, or null
+- **AND** the layer leaves the entity in place when `ageMs` is above `OSH_FRESH_MAX_AGE_MS`, or below `-OSH_CLOCK_SKEW_MAX_MS`, or null
 - **AND** an observation with no location leaves the entity where it was
 - **AND** a later systems refresh does not move the entity back while that system stays selected
 
@@ -179,11 +181,11 @@ Origin: spec-first
 - **AND** when the selection came from a feature, the header shows the feature's name above the host's name
 - **AND** the header shows the host's id when the host has no record, or `Host: —` when the feature has no host
 - **AND** each datastream block shows the observation's age below its time, in words such as `12 s`, `5 min`, `3 h` or `6 d`
-- **AND** a small negative `ageMs` reads `0 s`, which is the usual reading from a server whose clock leads
-- **AND** an `ageMs` further ahead than `OSH_CLOCK_SKEW_MAX_MS` reads `ahead of the clock`, and never reads `old`
+- **AND** a negative `ageMs` within `OSH_CLOCK_SKEW_MAX_MS` reads `0 s`
+- **AND** an `ageMs` below `-OSH_CLOCK_SKEW_MAX_MS` reads `ahead of the clock`, and never reads `old`
 - **AND** a block whose observation is not fresh carries the class `osh-detail-old`
-- **AND** a block whose age is a number past the threshold also carries the text `old`
-- **AND** a block with `ageMs:null` reads `age unknown`, and never reads `old`, because an unknown age is not a large one
+- **AND** a block whose age is a number past `OSH_FRESH_MAX_AGE_MS` also carries the text `old`
+- **AND** a block with `ageMs:null` reads `age unknown`, and never reads `old`
 - **AND** when the system is placed by a stream, the header shows `Placed by` with the datastream's name and the age in the same words
 - **AND** the header shows the system's id as its name when it has none
 - **AND** a host element given to the layer receives that HTML in `innerHTML`
@@ -213,18 +215,17 @@ Origin: spec-first
 - **AND** only a `keyRequired` answer or `destroy()` empties the system map; `disable()` does not
 - **AND** a feature absent from a refresh is removed, with its entity and any selection of it, because the feature list is stable
 
-#### Scenario: Place a system from a fresh stream record, and retire it when the record goes stale `osh-057`
+#### Scenario: Place a system from a fresh stream record, and retire it when its record is no longer fresh `osh-057`
 - **WHEN** a refresh brings a fresh location with no feature reference for a system
 - **THEN** the map holds the entity `osh:<id>` for that system with `locationSource:'stream'`, and `getStats().placed.stream` counts it
 - **AND** a system with no record in the union map gets that entity with the `systemName` the location carries
 - **AND** that system also gets a placeholder record, one that never enters the union map
 - **AND** only a location with `systemName:null` gives the id as the label
-- **AND** that label means the name could not be read, a degraded state and not the design
-- **AND** the selected system's own poll moves its entity as `osh-031` says, unchanged; this scenario governs only placement and motion from the pass
+- **AND** the selected system's own poll moves its entity as `osh-031` says, unchanged
 - **AND** a refresh with no fresh location for that system removes the entity and counts the system under `unplaced`
 - **AND** a selected system is the one exception: its entity stays at its last position until deselected
 - **AND** that exception governs the entity only
-- **AND** the system still counts under `unplaced`, because its stream went stale
+- **AND** the system still counts under `unplaced`, because no fresh location named it
 - **AND** a fresh location that names a feature by id or uid moves that feature entity and never places the system
 - **AND** a click on a stream-placed entity selects it and starts its datastream poll as for any system
 

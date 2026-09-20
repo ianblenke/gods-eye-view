@@ -1,10 +1,12 @@
 ## Context
 
-A position lives in a datastream on the owner's server, not only in a system's own geometry. Three shapes of it are measured. One is a `Vector` field bound by axis id, in a geographic frame. Another is that same `Vector` shape with no reference frame at all, and a third is flat fields bound by definition, with no wrapping field. The no-frame shape is the one the position streams use. A rule that needs a frame, or that trusts a field's name over its axis id, misses it.
+A position lives in a datastream on the owner's server, not only in a system's own geometry. Three shapes of it are measured. One is a `Vector` field bound by axis id, in a geographic frame. Another is that same `Vector` shape with no reference frame at all, and a third is flat fields bound by definition, with no wrapping field. The no-frame shape is the one the position streams use. A rule that needs a frame, or that uses a field's name instead of its axis id, misses it.
 
-The systems list and the global datastreams list both sample. Two reads of either give a different set. So a candidate search over either never converges. Three surfaces are stable: the feature list, one system's own datastreams by id, and the datastreams list filtered by a declared property. This change finds every candidate stream through those three surfaces only.
+The systems list and the global datastreams list are both lists the server samples. Two reads of either give a different set. So a candidate search over either never converges. Three surfaces are stable: the feature list, one system's own datastreams by id, and the datastreams list filtered by a declared property. This change finds every candidate stream through those three surfaces only.
 
-A stream reports on its own schedule. A position drawn as current long after its stream stopped is a wrong position. This project already ships a freshness gate, `isOshObservationFresh()`. This change routes every placement a stream makes through it, with no exception.
+A stream reports on its own schedule. A position drawn as current long after its stream stopped is a wrong position. This project already provides a freshness gate, `isOshObservationFresh()`. This change routes every placement a stream makes through it, with no exception.
+
+Terms: `placed`, `candidate`, `pass` and `stream-placed` are new in this change. `fresh`, `entity` and the `stale` cache flag come from `osh-022`/`osh-023`.
 
 ## Goals / Non-Goals
 
@@ -56,17 +58,18 @@ The browser's own union of systems it has seen is not a candidate source. A syst
 
 Each location answer names the system, the datastream, the feature reference, the position, the time and the age. It also names the system's own name, when one can be read. A system's name comes from the systems snapshot when it holds that system. Otherwise it comes from one read by id, cached per id — the one reliable read for a system the snapshot never sampled. A failed name read never drops the location. It gives a null name instead.
 
-The whole pass sits behind one cache with the same short TTL the observation cache already uses. It has one shared refresh, and a stale snapshot on a failed refresh. So concurrent readers share one pass, and the browser's own five-minute refresh always finds a fresh one. No candidate property URI, and no vendor term, ever appears in a response.
+The whole pass sits behind one cache with the same short TTL the observation cache already uses. It has one shared refresh, and a stale snapshot on a failed refresh. So concurrent callers share one pass, and the browser's own five-minute refresh always finds a fresh one. No candidate property URI, and no vendor term, ever appears in a response.
 
-The pass caches the fold of every candidate's page, phenomenonTime included, but never an age. The route recomputes each location's age at serve time from that time. That is the same reason `osh-observation-age`'s own observation route recomputes its one age, rather than trusting a cached one. Without this fix, two answers from one cached pass would carry the same frozen age. A stale one, served longer still, would carry it even longer. The freshness gate this change's own placement rule depends on would then judge a growing staleness by a number that stopped growing.
+The pass caches the fold of every candidate's page, phenomenonTime included, but never an age. The route recomputes each location's age at serve time from that time. That is the same reason `osh-observation-age`'s own observation route recomputes its one age, rather than trusting a cached one. Without this fix, two answers from one cached pass would carry the same frozen age. A stale one, served longer still, would carry it even longer. The freshness gate this change's own placement rule depends on would then read a number that stopped growing as still fresh.
 
 ### D48 Placement with the gate, and the lifecycle of a stream-placed entity
 
-The merge function that places entities gains a third input, the pass's locations. A location counts only when it is fresh. A stale one is dropped before any other rule.
+The merge function that places entities gains a third input, the pass's locations. A location counts only when it is fresh. One that is not fresh is dropped before any other rule.
 - A fresh location naming a feature moves that feature. One naming a feature the layer does not hold is dropped. A feature never places its host.
 - A fresh location with no feature name places its system, above that system's own point. The newer of two such locations for one system wins.
 - A system with a point and no fresh location keeps that point. A system with neither counts as unplaced.
 - A fresh location whose system has no held record still places it, with the name the pass read. That entity carries the datastream, the time and the age. Its record is a placeholder, kept only for that one placement, and it never joins the layer's own union of systems. Only when that name could not be read does the entity's label fall back to the raw id — a degraded state, not the design. `osh-stream-placed-name-unread` names it.
+- A null age is unknown, not old. An unknown age is not a large one, so the detail panel never marks it `old`.
 
 The entity of a system placed this way carries the same id a point-placed one would. So the existing click handling and poll need no change. When its stream stops reporting fresh records, the entity is removed. This happens at the first refresh with nothing fresh for it. The system then counts as unplaced. The one exception is the current selection: it stays at its last position until deselected, the same rule this project already gives a point-placed selection.
 
@@ -83,7 +86,7 @@ Coverage: every changed file at 100% line, branch and function coverage. Trace: 
 The coverage gate found four real gaps and five unreachable lines, across three functions. The four real gaps got tests. The five unreachable lines got deleted instead. Each is confirmed unreachable by tracing its one caller, not by a mutation that merely failed to redden. Listed against `git diff main..HEAD`, for a reviewer to check line by line:
 
 1. `server/providers/osh.js`, `isAcceptableLocationProperty()`: its type-and-empty-string guard. The one caller already trims each entry and skips an empty one before calling it.
-2. The same function's URN-regex fallback, run when `new URL()` throws. No malformed, whitespace-free string starting `urn:` this project could construct ever made `new URL()` throw. `urn:` is a generic scheme, and the WHATWG parser accepts almost anything after one, so this branch's accepting answer was dead.
+2. The same function's URN-regex fallback, run when `new URL()` throws. WHATWG URL parsing takes any scheme with an opaque path, so `new URL()` throws for no `urn:`-prefixed value that carries no white space. This branch's accepting answer was dead.
 3. `server/providers/osh.js`, the `|| null` on a location's system id. Every candidate source — `mapOshDatastreams()`, and the per-system-route stamp in `gatherLocationCandidates()` — already guarantees a string or null there, never undefined.
 4. `src/data/oshObservations.js`, `vectorReaderOf()`'s array-type check on the coordinates. Its one caller, `walkForVector()`, already runs that same check before calling it.
 5. `src/data/oshObservations.js`, `readFinite()`'s null-path guard. Both of `extractOshLocation()`'s required paths are checked before it is called, and the optional height path reaches this function only when already truthy.

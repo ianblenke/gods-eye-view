@@ -341,7 +341,7 @@ test('[osh-056] createOshSchemaCache() shares one in-flight read across concurre
   assert.equal(calls, 1);
 });
 
-test('[osh-056] createOshSchemaCache() serves a null reader for a schema with no location, and stores it (not a raw re-read per call)', async () => {
+test('[osh-056] createOshSchemaCache() stores a null reader too, not a raw re-read per call', async () => {
   let calls = 0;
   const fetchImpl = async () => {
     calls += 1;
