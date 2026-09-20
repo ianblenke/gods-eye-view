@@ -63,12 +63,16 @@
 ## 8. `src/tooling/spec/testGuard.test.mjs`
 
 - [x] 8.1 Look for the leak among the tests that spawn a real child process.
-  - This file's leak did not reproduce in one isolated run. See `proposal.md`'s known limit.
-  - Repeat the run several times, and also run this file beside the rest of the project suite.
-- [x] 8.2 Clear the timer found.
+  - Five repeats, and a run beside the rest of the project suite, found no live timer.
+  - The lead independently repeated this three more times. Also clean each time.
+  - No test and no timer to name. The leak stands as an open known limit, not fixed.
+- [ ] 8.2 Clear the timer found.
+  - Not done. No reproduction means no failing case to prove a fix against.
 - [x] 8.3 Run the file. Confirm every test still passes, with the same names and assertions.
+  - True, but this was never in question: no line in the file changed.
 - [x] 8.4 Run the file with the force-exit flag and the tap reporter, five times over.
   - Confirm the plan line prints and the run exits cleanly each time. Report the test that held the timer.
+  - Clean every time. No test held a timer in any of these runs.
 
 ## 9. Gates and review
 
