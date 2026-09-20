@@ -105,15 +105,16 @@ Rules for this group. Change no test name. The file has a ledger entry with untr
   - Confirm the output has the fail record for that test and one `GATES-TEST-LEAK` error with that file. Remove the file. Report the two lines.
   - The two lines: a `TRACE-FAILED-TEST` error naming the test and the file, and a `GATES-TEST-LEAK` error naming the same file with a live `Timeout`.
   - A first attempt left the file untracked. `COVERAGE-UNTRACKED` fired, but the file never ran — test-file discovery only picks up tracked files. `git add` fixed it.
-  - A second, blank-named `GATES-TEST-LEAK` line also appeared in the same run. That is the known, already-documented intermittent leak in `testGuard.test.mjs`, not a new fault this file's chain revealed.
-- [ ] 5.10 Confirm a green run records no leak.
+  - A second, blank-named `GATES-TEST-LEAK` line also appeared in the same run. This was traced to a real, separate defect. `src/tooling/spec/runParallel.test.mjs`'s `[coverage-gate-022]` test spawned a real child with no guard-env isolation. A real gate run's env then cascaded two hops deep into a synthetic probe process. Fixed at commit `ddcd304`, confirmed absent across several later runs.
+- [x] 5.10 Confirm a green run records no leak.
   - Run `make gates` on the clean tree. Confirm no `GATES-TEST-LEAK` error appears for any file.
-  - Not fully true. One run recorded the same blank-named, intermittent leak task 5.9 also saw — the known `testGuard.test.mjs` leak from `test-teardown-cleanup`, already an accepted open limit there. It does not name a file this change touches, and no file this change edits shows a leak in either run.
-  - Left unchecked on a literal reading: a `GATES-TEST-LEAK` error did appear. Section 6's own `make gates` run will show the same limit again unless it happens not to reproduce that run.
+  - Confirmed clean. A separate, unrelated source of whole-project flakiness was found along the way. `osh-layer`/`osh-systems` scenarios intermittently read as unverified across several runs. None of these ever reproduced in isolation, and none touch any file this change edits.
+  - A long-running app container drifting to high CPU was one contributing factor. It was ruled in, then partly ruled out — stopping it did not fully stop the flakiness. The remaining cause stays open and unexplained. A clean run was reached by repeating the check, per the user's own choice.
 
 ## 6. Gates and review
 
-- [ ] 6.1 Run `make lint` until no STE error remains.
-- [ ] 6.2 Run `make ratchet CHANGE=teardown-guard`. Confirm it records no new untraced name in `src/data/localGeojson.test.mjs`.
+- [x] 6.1 Run `make lint` until no STE error remains.
+- [x] 6.2 Run `make ratchet CHANGE=teardown-guard`. Confirm it records no new untraced name in `src/data/localGeojson.test.mjs`.
+  - `Gates passed.` All scenarios verified, four history lines recorded, no untraced-name error for `localGeojson.test.mjs` or any file.
 - [ ] 6.3 Run `make gates CHANGE=teardown-guard`. Confirm `scripts/spec/gates.mjs` and `scripts/spec/lib/test-guard.mjs` stay at 100%. Read the command output for the verdict, not `results.json`.
 - [ ] 6.4 Run the spec-adversary and STE-adversary review. Correct the findings. Record the result in `review.md`.
