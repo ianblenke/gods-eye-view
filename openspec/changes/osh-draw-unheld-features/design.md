@@ -8,7 +8,7 @@ The features cluster. A few host systems own almost all of them, and one host ow
 
 Terms: a *held feature* is a feature record the features read gave this refresh. An *unheld feature* is a feature a location names that the layer does not hold this refresh. A *stream-drawn feature* is the entity this change draws for an unheld feature from its fresh location alone. *Fresh*, *stream-placed*, *placeholder* and *partial* keep the meanings `osh-observation-age` and `osh-location-streams` gave them.
 
-The base text of `osh-042` and `osh-057` is the delta of `osh-location-streams`. `main` has merged that change and has not yet archived it, so `openspec/specs/osh/spec.md` on `main` still carries the older `osh-042` and no `osh-057`. This change quotes its base from `git show main:openspec/changes/osh-location-streams/specs/osh/spec.md`. Archive `osh-location-streams` before this change runs its gates, so the two deltas never both modify `osh-042` at once.
+The base text of `osh-042` and `osh-057` comes from the archived change `osh-location-streams`. `main` has archived that change, so `openspec/specs/osh/spec.md` includes `osh-057` and the updated `osh-042`. This change modifies those scenarios directly from the current spec.
 
 ## Goals / Non-Goals
 

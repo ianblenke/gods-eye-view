@@ -11,10 +11,10 @@
 
 ## 2. The adapter: `osh-058` and the `osh-042` clause
 
-- [ ] 2.1 Rename the two `[osh-042]` tests whose names say an unheld location is dropped. Keep every assertion.
-  - New name: `[osh-042] a fresh location that names an unheld feature never places its own systemId as a fallback`.
-  - New name: `[osh-042] a fresh location moves a feature it finds by foiId or by foiUid`.
-  - These two renames are the changed `[osh-042]` tests the trace gate demands.
+- [ ] 2.1 Keep existing `[osh-042]` tests unchanged without renaming them.
+  - Do not rename existing tests. Renaming an existing test can stop the ratchet on a file with untraced entries.
+  - Add test coverage for the new moved-feature clause instead of renaming existing tests.
+  - The new test `[osh-042] a feature that a location moves carries the location's datastreamId, datastreamName, phenomenonTime and ageMs` satisfies the trace gate.
 - [ ] 2.2 Write the `[osh-058]` tests in `src/data/oshSystems.test.mjs`. Use `foi-fixture-`, `sys-fixture-` and `ds-fixture-` ids.
   - `[osh-058] a fresh location that names an unheld feature draws that feature at the location`.
   - `[osh-058] the drawn feature has the stream-placed shape: foiUid as uid, the location's systemId, null name, description and validTime`. Use `assert.deepEqual` on the whole record.
@@ -29,7 +29,7 @@
 - [ ] 2.3 Change `placeOshEntities()` in `src/data/oshSystems.js` until 2.2 is green and 2.1 stays green.
 - [ ] 2.4 Run each mutation below on the adapter. Report one line per mutation: the id, RED, and the test that reddened.
   - A1: restore the `continue` for an unheld feature. Reddens the draws-at-the-location test.
-  - A2: push the unheld location into `systemLocations`. Reddens the renamed M16 test and the systems-unchanged test.
+  - A2: push the unheld location into `systemLocations`. Reddens the M16 test and the systems-unchanged test.
   - A3: set the drawn feature's `systemId` to null. Reddens the shape test.
   - A4: key the drawn feature by `foiUid` before `foiId`. Reddens the both-keys test.
   - A5: drop the `foiUid` fallback for the key. Reddens the uid-alone test.
