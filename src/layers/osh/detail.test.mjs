@@ -89,7 +89,7 @@ test('[osh-032] a null ageMs reads "age unknown", takes the class, and never tak
   assert.doesNotMatch(html, /age unknown old/);
 });
 
-test('[osh-032] a time further ahead than drift explains reads as ahead, never as old', () => {
+test('[osh-032] an ageMs far ahead of the clock reads `ahead of the clock`, never `old`', () => {
   const html = renderOshDetail({
     system: { id: 'sys-fixture-1' },
     datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: -31_536_000_000 } }],
@@ -102,7 +102,7 @@ test('[osh-032] a time further ahead than drift explains reads as ahead, never a
   assert.doesNotMatch(html, /clock old/);
 });
 
-test('[osh-032] the panel and the freshness rule agree at the skew bound itself', () => {
+test('[osh-032] at the skew bound reads `0 s`, and just past it reads `ahead of the clock`', () => {
   // The bound is one function now. When it was spelled out in three places,
   // flipping one copy to `<=` left this value fresh to the layer and
   // unusable to the panel, and all 164 tests passed.
@@ -121,7 +121,7 @@ test('[osh-032] the panel and the freshness rule agree at the skew bound itself'
   assert.match(past, /osh-detail-old/);
 });
 
-test('[osh-032] the measured clock skew still reads as a fresh zero', () => {
+test('[osh-032] a negative ageMs within the clock skew reads `0 s`', () => {
   const html = renderOshDetail({
     system: { id: 'sys-fixture-1' },
     datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: -5_000 } }],
@@ -259,4 +259,49 @@ test('[osh-032] the host innerHTML receives the rendered detail, and an empty se
 
 test('[osh-032] the function does nothing when there is no host', () => {
   assert.doesNotThrow(() => writeOshDetail(null, DETAIL));
+});
+
+// --- osh-032 (further MODIFIED by osh-location-streams): the placed-by line ---
+
+test('[osh-032] shows Placed by with the datastream name and the age, for a stream-placed system', () => {
+  const html = renderOshDetail({
+    system: {
+      id: 'sys-fixture-9',
+      uid: null,
+      name: null,
+      description: null,
+      placedBy: { datastreamName: 'Aircraft <Position>', ageMs: 12_000 },
+    },
+    datastreams: [],
+  });
+  assert.match(html, /Placed by Aircraft &lt;Position&gt; \(12 s\)/);
+});
+
+test('[osh-032] Placed by falls back to an em dash for a datastream with no name', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-9', uid: null, name: null, description: null, placedBy: { datastreamName: null, ageMs: 5000 } },
+    datastreams: [],
+  });
+  assert.match(html, /Placed by — \(5 s\)/);
+});
+
+test('[osh-032] no Placed by line for a system placed by its own geometry', () => {
+  const html = renderOshDetail(DETAIL);
+  assert.doesNotMatch(html, /Placed by/);
+  assert.doesNotMatch(html, /osh-detail-placed-by/);
+});
+
+test('[osh-032] the system id stands in for its name when the system has neither, for a stream-placed system', () => {
+  const html = renderOshDetail({
+    system: {
+      id: 'sys-fixture-unread',
+      uid: null,
+      name: null,
+      description: null,
+      placedBy: { datastreamName: 'Aircraft Position', ageMs: null },
+    },
+    datastreams: [],
+  });
+  assert.match(html, /<h3>sys-fixture-unread<\/h3>/);
+  assert.match(html, /Placed by Aircraft Position \(age unknown\)/);
 });

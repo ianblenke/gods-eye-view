@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
-import { oshProxy } from '../../server/providers/osh.js';
+import { OSH_DEFAULT_LOCATION_PROPERTIES, oshProxy } from '../../server/providers/osh.js';
+import { OBS_TTL_MS } from '../../server/providers/osh/observations.js';
 
 const SECRET_URL = 'https://osh.example/instance-fixture';
 const SECRET_USER = 'fixture-user';
@@ -1153,4 +1154,612 @@ test('[osh-040] the format stays on every page of a multi-page systems walk', as
     'application/geo+json',
     'page 1 asked for a format, so page 3 must still carry ours even though the page 2 link omitted it',
   );
+});
+
+// --- osh-055 / osh-056: location discovery and the /locations route ------
+
+const SCHEMA_NO_LOCATION = { resultSchema: { type: 'DataRecord', fields: [] } };
+// osh-latest-page.json's result rows are the flat shape (`lat`, `lon`,
+// `height` at the result's own top level, no wrapping field), matching
+// osh-schema-flat.json's reader — not osh-schema-vector.json's, which
+// expects those under a `location` field.
+const SCHEMA_FLAT = JSON.parse(
+  readFileSync(new URL('./fixtures/osh-schema-flat.json', import.meta.url), 'utf8'),
+);
+const LATEST_PAGE = JSON.parse(
+  readFileSync(new URL('./fixtures/osh-latest-page.json', import.meta.url), 'utf8'),
+);
+
+/**
+ * A fetchImpl that answers every route the location pass touches. Every
+ * candidate's schema answers SCHEMA_NO_LOCATION by default, so the pass
+ * never reaches a page read unless a test opts a specific id into
+ * `withLocationSchemaIds`, which then answers SCHEMA_FLAT — the shape
+ * osh-latest-page.json's result rows match.
+ */
+function locationsFetch({
+  filterByUri = {},
+  systemsBody = { features: [] },
+  foisBody = { features: [] },
+  systemDatastreamsById = {},
+  withLocationSchemaIds = new Set(),
+  systemById = {},
+  calls = [],
+} = {}) {
+  const fetchImpl = async (url, options) => {
+    calls.push({ url: String(url), options });
+    const parsed = new URL(String(url));
+    if (parsed.pathname.endsWith('/systems') && !parsed.pathname.includes('/systems/')) {
+      return jsonResponse(200, systemsBody);
+    }
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(200, foisBody);
+    const systemMatch = parsed.pathname.match(/\/systems\/([^/]+)$/);
+    if (systemMatch) {
+      const record = systemById[systemMatch[1]];
+      return record ? jsonResponse(200, { properties: { name: record.name } }) : jsonResponse(404);
+    }
+    const perSystemMatch = parsed.pathname.match(/\/systems\/([^/]+)\/datastreams$/);
+    if (perSystemMatch) {
+      const items = systemDatastreamsById[perSystemMatch[1]] || [];
+      return jsonResponse(200, { items });
+    }
+    if (parsed.pathname.endsWith('/datastreams') && parsed.searchParams.has('observedProperty')) {
+      const items = filterByUri[parsed.searchParams.get('observedProperty')] || [];
+      return jsonResponse(200, { items });
+    }
+    const schemaMatch = parsed.pathname.match(/\/datastreams\/([^/]+)\/schema$/);
+    if (schemaMatch) {
+      return jsonResponse(200, withLocationSchemaIds.has(schemaMatch[1]) ? SCHEMA_FLAT : SCHEMA_NO_LOCATION);
+    }
+    const latestMatch = parsed.pathname.match(/\/datastreams\/([^/]+)\/observations$/);
+    if (latestMatch) return jsonResponse(200, LATEST_PAGE);
+    return jsonResponse(404);
+  };
+  fetchImpl.calls = calls;
+  return fetchImpl;
+}
+
+test('[osh-055] sends one request per default URI, built with limit and observedProperty, cached per URI', async () => {
+  const calls = [];
+  const [uriA, uriB] = OSH_DEFAULT_LOCATION_PROPERTIES;
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch({
+      calls,
+      filterByUri: {
+        [uriA]: [{ id: 'ds-fixture-a', 'system@id': 'sys-fixture-9' }],
+        [uriB]: [{ id: 'ds-fixture-b', 'system@id': 'sys-fixture-9' }],
+      },
+    }),
+  });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 200);
+  assert.equal(json.streams, 2);
+  assert.equal(json.failed, 2, 'neither candidate schema carries a location in this stub');
+  assert.equal(json.count, 0);
+
+  const filterCalls = calls.filter((call) => call.url.includes('observedProperty'));
+  assert.equal(filterCalls.length, 2);
+  for (const call of filterCalls) {
+    const url = new URL(call.url);
+    assert.equal(url.searchParams.get('limit'), '200');
+    assert.ok([uriA, uriB].includes(url.searchParams.get('observedProperty')));
+  }
+
+  const bodyText = JSON.stringify(json);
+  assert.ok(!bodyText.includes(uriA) && !bodyText.includes(uriB), 'no response ever carries a property URI');
+});
+
+test('[osh-055] appends an accepted OSH_LOCATION_PROPERTIES entry and skips a refused one with a positional warning', async () => {
+  const calls = [];
+  const warnCalls = [];
+  const proxy = oshProxy({
+    env: {
+      OSH_URL: 'https://osh.example/api/',
+      OSH_LOCATION_PROPERTIES: 'urn:osh:def:fixture:position:3.0.0#location,not a uri',
+    },
+    fetchImpl: locationsFetch({ calls }),
+    warn: (...args) => warnCalls.push(args.join(' ')),
+  });
+  await callOsh(proxy, { url: '/locations' });
+  const filterCalls = calls.filter((call) => call.url.includes('observedProperty'));
+  assert.equal(filterCalls.length, 3, 'two defaults plus the one accepted appended URI');
+  assert.ok(
+    warnCalls.some((line) => line.includes('position 1') && !line.includes('not a uri')),
+    'the warning names the position, never the refused text',
+  );
+});
+
+test('[osh-055] refuses a value with no scheme and no white space, which parses as neither a URL nor a URN', async () => {
+  const calls = [];
+  const warnCalls = [];
+  const proxy = oshProxy({
+    env: {
+      OSH_URL: 'https://osh.example/api/',
+      // No colon at all, so new URL() throws; no white space, so the
+      // whitespace check never fires first — this is the one shape of
+      // value that reaches the URL parser's catch branch.
+      OSH_LOCATION_PROPERTIES: 'no-scheme-no-colon',
+    },
+    fetchImpl: locationsFetch({ calls }),
+    warn: (...args) => warnCalls.push(args.join(' ')),
+  });
+  await callOsh(proxy, { url: '/locations' });
+  const filterCalls = calls.filter((call) => call.url.includes('observedProperty'));
+  assert.equal(filterCalls.length, 2, 'only the two defaults; the scheme-less entry is refused');
+  assert.ok(warnCalls.some((line) => line.includes('position 0')));
+});
+
+test('[osh-055] refuses a value that holds white space, even though it would otherwise parse as a URN', async () => {
+  const calls = [];
+  const warnCalls = [];
+  const proxy = oshProxy({
+    env: {
+      OSH_URL: 'https://osh.example/api/',
+      // `new URL()` tolerates internal white space in a URN's opaque
+      // path — it does not throw here — so only the whitespace check
+      // itself can refuse this value.
+      OSH_LOCATION_PROPERTIES: 'urn:osh:def:fixture:position 1:x',
+    },
+    fetchImpl: locationsFetch({ calls }),
+    warn: (...args) => warnCalls.push(args.join(' ')),
+  });
+  await callOsh(proxy, { url: '/locations' });
+  const filterCalls = calls.filter((call) => call.url.includes('observedProperty'));
+  assert.equal(filterCalls.length, 2, 'only the two defaults; the whitespace entry is refused');
+  assert.ok(warnCalls.some((line) => line.includes('position 0')));
+});
+
+test('[osh-055] a candidate found only by the filter, whose system is in no systems snapshot, is served like any other', async () => {
+  const [uriA] = OSH_DEFAULT_LOCATION_PROPERTIES;
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch({
+      filterByUri: { [uriA]: [{ id: 'ds-fixture-a', 'system@id': 'sys-fixture-unseen' }] },
+    }),
+  });
+  const { json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(json.streams, 1, 'the candidate is counted even though its system is unseen');
+});
+
+test('[osh-055] the status route reports the count of location properties', async () => {
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/', OSH_LOCATION_PROPERTIES: 'urn:osh:def:fixture:position:1#p' },
+    fetchImpl: locationsFetch(),
+  });
+  const { json } = await callOsh(proxy, { url: '/status' });
+  assert.equal(json.locationProperties.count, 3);
+});
+
+test('[osh-056] the status route reports the locations cache only after a locations request has run', async () => {
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl: locationsFetch() });
+  const before = await callOsh(proxy, { url: '/status' });
+  assert.deepEqual(before.json.locations, { lastFetch: null, count: null, stale: false });
+
+  const { json: locationsJson } = await callOsh(proxy, { url: '/locations' });
+  const after = await callOsh(proxy, { url: '/status' });
+  assert.equal(after.json.locations.count, locationsJson.locations.length);
+  assert.equal(typeof after.json.locations.lastFetch, 'number');
+  assert.equal(after.json.locations.stale, false);
+});
+
+test('[osh-056] the response shape is {fetchedAt, stale, ttlMs, count, streams, failed, locations}', async () => {
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl: locationsFetch() });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 200);
+  assert.deepEqual(Object.keys(json).sort(), [
+    'count',
+    'failed',
+    'fetchedAt',
+    'locations',
+    'stale',
+    'streams',
+    'ttlMs',
+  ]);
+  assert.equal(json.ttlMs, OBS_TTL_MS);
+});
+
+test('[osh-056] unites the property filter, the feature hosts and the Point systems, without duplicates', async () => {
+  const [uriA] = OSH_DEFAULT_LOCATION_PROPERTIES;
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch({
+      filterByUri: { [uriA]: [{ id: 'ds-shared', 'system@id': 'sys-fixture-1' }] },
+      systemsBody: {
+        features: [{ id: 'sys-fixture-1', geometry: { type: 'Point', coordinates: [1, 2] } }],
+      },
+      foisBody: {
+        features: [
+          {
+            id: 'foi-fixture-1',
+            geometry: { type: 'Point', coordinates: [3, 4] },
+            properties: {
+              'hostedProcedure@link': { href: 'https://osh.example/api/systems/sys-fixture-2' },
+            },
+          },
+        ],
+      },
+      systemDatastreamsById: {
+        'sys-fixture-1': [{ id: 'ds-shared', 'system@id': 'sys-fixture-1' }],
+        'sys-fixture-2': [{ id: 'ds-fixture-mesh', 'system@id': 'sys-fixture-2' }],
+      },
+    }),
+  });
+  const { json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(json.streams, 2, 'ds-shared, named by both the filter and the Point system, counts once');
+});
+
+test('[osh-056] with no candidate at all, it answers count:0 and sends no schema and no page request', async () => {
+  const calls = [];
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch({ calls }),
+  });
+  const { json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(json.count, 0);
+  assert.equal(json.streams, 0);
+  assert.ok(!calls.some((call) => call.url.includes('/schema')));
+  assert.ok(!calls.some((call) => call.url.includes('resultTime=latest')));
+});
+
+test('[osh-056] caches the whole pass for its own fifteen-second TTL, and shares one refresh across concurrent requests', async () => {
+  let refreshes = 0;
+  let now = 0;
+  const fetchImpl = locationsFetch();
+  const wrappedFetch = async (...args) => {
+    if (new URL(String(args[0])).searchParams.has('observedProperty')) refreshes += 1;
+    return fetchImpl(...args);
+  };
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: wrappedFetch,
+    now: () => now,
+  });
+  const [a, b] = await Promise.all([
+    callOsh(proxy, { url: '/locations' }),
+    callOsh(proxy, { url: '/locations' }),
+  ]);
+  assert.equal(a.json.fetchedAt, b.json.fetchedAt, 'two concurrent loads inside the TTL share one refresh');
+  const afterFirst = refreshes;
+  assert.ok(afterFirst > 0);
+
+  now += OBS_TTL_MS - 1;
+  const secondCall = await callOsh(proxy, { url: '/locations' });
+  assert.equal(secondCall.json.fetchedAt, a.json.fetchedAt, 'a load inside the TTL reuses the cached pass');
+  assert.equal(refreshes, afterFirst, 'and so sends no new upstream request');
+
+  now += 2;
+  const thirdCall = await callOsh(proxy, { url: '/locations' });
+  assert.notEqual(thirdCall.json.fetchedAt, a.json.fetchedAt, 'a load past the TTL runs a fresh pass');
+});
+
+test('[osh-056] the observations route reads a candidate schema before it serves the observation', async () => {
+  const calls = [];
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch({ calls, withLocationSchemaIds: new Set(['ds-fixture-1']) }),
+  });
+  await callOsh(proxy, { url: '/observations?datastream=ds-fixture-1' });
+  assert.ok(calls.some((call) => call.url.includes('/datastreams/ds-fixture-1/schema')));
+});
+
+test('[osh-056] a candidate with a location-bearing schema yields folded location records, with ageMs recomputed at serve time', async () => {
+  const [uriA] = OSH_DEFAULT_LOCATION_PROPERTIES;
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch({
+      filterByUri: { [uriA]: [{ id: 'ds-aircraft', 'system@id': 'sys-fixture-9', name: 'Aircraft Position' }] },
+      withLocationSchemaIds: new Set(['ds-aircraft']),
+      systemById: { 'sys-fixture-9': { name: 'Fixture Aircraft' } },
+    }),
+  });
+  const { json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(json.streams, 1);
+  assert.equal(json.failed, 0);
+  assert.equal(json.locations.length, 3, 'every item of the fixture page carries a location');
+  const first = json.locations[0];
+  assert.equal(first.systemId, 'sys-fixture-9');
+  assert.equal(first.systemName, 'Fixture Aircraft');
+  assert.equal(first.datastreamId, 'ds-aircraft');
+  assert.equal(first.datastreamName, 'Aircraft Position');
+  assert.equal(typeof first.ageMs, 'number');
+});
+
+test('[osh-056] ageMs grows between two answers served from the same cached pass, because it is recomputed at serve time', async () => {
+  const [uriA] = OSH_DEFAULT_LOCATION_PROPERTIES;
+  let now = 0;
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch({
+      filterByUri: { [uriA]: [{ id: 'ds-aircraft', 'system@id': 'sys-fixture-9' }] },
+      withLocationSchemaIds: new Set(['ds-aircraft']),
+    }),
+    now: () => now,
+  });
+  const first = await callOsh(proxy, { url: '/locations' });
+  const firstAge = first.json.locations[0].ageMs;
+  now += 500;
+  const second = await callOsh(proxy, { url: '/locations' });
+  assert.equal(
+    second.json.fetchedAt,
+    first.json.fetchedAt,
+    'both answers come from the same cached pass, inside its fifteen-second TTL',
+  );
+  assert.equal(second.json.locations[0].ageMs, firstAge + 500, 'the age grew by exactly the elapsed time');
+});
+
+test('[osh-056] a failed property filter read contributes nothing, and does not fail the whole gather', async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.searchParams.has('observedProperty')) return jsonResponse(500);
+    if (parsed.pathname.endsWith('/systems') && !parsed.pathname.includes('/systems/'))
+      return jsonResponse(200, { features: [] });
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(200, { features: [] });
+    return jsonResponse(404);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 200, 'a failed property filter must not turn the whole pass into a 502');
+  assert.equal(json.streams, 0);
+});
+
+test('[osh-056] a failed systems read leaves no Point-system candidates, but the pass still answers', async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.searchParams.has('observedProperty')) return jsonResponse(200, { items: [] });
+    if (parsed.pathname.endsWith('/systems') && !parsed.pathname.includes('/systems/')) {
+      // The base probe uses limit=1; only the list read behind it (limit=100)
+      // must fail here, or the base root itself never resolves.
+      if (parsed.searchParams.get('limit') === '1') return jsonResponse(200, { features: [] });
+      return jsonResponse(500);
+    }
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(200, { features: [] });
+    return jsonResponse(404);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 200, 'a failed systems read must not turn the whole pass into a 502');
+  assert.equal(json.streams, 0);
+});
+
+test('[osh-056] a failed features read leaves no feature-host candidates, but the pass still answers', async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.searchParams.has('observedProperty')) return jsonResponse(200, { items: [] });
+    if (parsed.pathname.endsWith('/systems') && !parsed.pathname.includes('/systems/'))
+      return jsonResponse(200, { features: [] });
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(500);
+    return jsonResponse(404);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 200, 'a failed features read must not turn the whole pass into a 502');
+  assert.equal(json.streams, 0);
+});
+
+test('[osh-056] a failed per-system datastreams read drops only that host, other candidates still gathered', async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.searchParams.has('observedProperty'))
+      return jsonResponse(200, { items: [{ id: 'ds-fixture-filter', 'system@id': 'sys-fixture-filtered' }] });
+    if (parsed.pathname.endsWith('/systems') && !parsed.pathname.includes('/systems/')) {
+      return jsonResponse(200, {
+        features: [{ id: 'sys-fixture-bad-host', geometry: { type: 'Point', coordinates: [1, 2] } }],
+      });
+    }
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(200, { features: [] });
+    if (parsed.pathname.match(/\/systems\/sys-fixture-bad-host\/datastreams$/)) return jsonResponse(500);
+    const schemaMatch = parsed.pathname.match(/\/datastreams\/([^/]+)\/schema$/);
+    if (schemaMatch) return jsonResponse(200, { resultSchema: { fields: [] } });
+    return jsonResponse(404);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 200, 'a failed per-system datastreams read must not turn the whole pass into a 502');
+  assert.equal(json.streams, 1, 'the property-filtered candidate is still gathered, despite the bad host');
+});
+
+test('[osh-056] a candidate whose schema read itself fails is counted as failed, not just one with no reader', async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.searchParams.has('observedProperty'))
+      return jsonResponse(200, { items: [{ id: 'ds-fixture-bad-schema', 'system@id': 'sys-fixture-1' }] });
+    if (parsed.pathname.endsWith('/systems') && !parsed.pathname.includes('/systems/'))
+      return jsonResponse(200, { features: [] });
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(200, { features: [] });
+    if (parsed.pathname.match(/\/datastreams\/ds-fixture-bad-schema\/schema$/)) return jsonResponse(500);
+    return jsonResponse(404);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 200);
+  assert.equal(json.streams, 1);
+  assert.equal(json.failed, 1);
+  assert.equal(json.locations.length, 0);
+});
+
+test('[osh-056] a candidate whose newest-per-feature page answers a non-2xx status is counted as failed', async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.searchParams.has('observedProperty'))
+      return jsonResponse(200, { items: [{ id: 'ds-fixture-bad-page', 'system@id': 'sys-fixture-1' }] });
+    if (parsed.pathname.endsWith('/systems') && !parsed.pathname.includes('/systems/'))
+      return jsonResponse(200, { features: [] });
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(200, { features: [] });
+    if (parsed.pathname.match(/\/datastreams\/ds-fixture-bad-page\/schema$/))
+      return jsonResponse(200, SCHEMA_FLAT);
+    if (parsed.pathname.match(/\/datastreams\/ds-fixture-bad-page\/observations$/)) return jsonResponse(503);
+    return jsonResponse(404);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 200);
+  assert.equal(json.streams, 1);
+  assert.equal(json.failed, 1);
+  assert.equal(json.locations.length, 0);
+});
+
+test('[osh-056] a candidate whose newest-per-feature page request throws is counted as failed', async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.searchParams.has('observedProperty'))
+      return jsonResponse(200, { items: [{ id: 'ds-fixture-throws', 'system@id': 'sys-fixture-1' }] });
+    if (parsed.pathname.endsWith('/systems') && !parsed.pathname.includes('/systems/'))
+      return jsonResponse(200, { features: [] });
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(200, { features: [] });
+    if (parsed.pathname.match(/\/datastreams\/ds-fixture-throws\/schema$/))
+      return jsonResponse(200, SCHEMA_FLAT);
+    if (parsed.pathname.match(/\/datastreams\/ds-fixture-throws\/observations$/))
+      throw new Error('socket hang up');
+    return jsonResponse(404);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 200);
+  assert.equal(json.streams, 1);
+  assert.equal(json.failed, 1);
+  assert.equal(json.locations.length, 0);
+});
+
+test('[osh-056] the locations route reports base_unresolved when the root cannot be resolved', async () => {
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: async () => jsonResponse(404),
+  });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 502);
+  assert.deepEqual(json, { error: 'base_unresolved' });
+});
+
+test('[osh-056] the locations route answers upstream_failed if the pass cache itself throws, with no snapshot to fall back on', async () => {
+  let calls = 0;
+  // runLocationsPass() catches every upstream failure it can reach, so the
+  // only way to make the pass cache's own load() reject is to break the
+  // clock it reads — the same technique osh-008 uses for the top-level
+  // catch. Enough calls succeed first to resolve the base root; the first
+  // call after that throws, from inside locationsPass.load() itself.
+  const now = () => {
+    calls += 1;
+    if (calls > 6) throw new Error('clock broke');
+    return calls;
+  };
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch(),
+    now,
+  });
+  const { status, json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(status, 502);
+  assert.deepEqual(json, { error: 'upstream_failed' });
+});
+
+test('[osh-055] an empty entry between two commas in OSH_LOCATION_PROPERTIES is skipped silently', async () => {
+  const calls = [];
+  const warnCalls = [];
+  const proxy = oshProxy({
+    env: {
+      OSH_URL: 'https://osh.example/api/',
+      OSH_LOCATION_PROPERTIES: 'urn:osh:def:fixture:position:1#a,,urn:osh:def:fixture:position:1#b',
+    },
+    fetchImpl: locationsFetch({ calls }),
+    warn: (...args) => warnCalls.push(args.join(' ')),
+  });
+  await callOsh(proxy, { url: '/locations' });
+  const filterCalls = calls.filter((call) => call.url.includes('observedProperty'));
+  assert.equal(filterCalls.length, 4, 'two defaults plus the two non-empty appended entries');
+  assert.equal(warnCalls.length, 0, 'the empty entry between the commas is skipped with no warning');
+});
+
+test('[osh-056] a per-system datastream record with no system@id of its own is stamped with the queried host id', async () => {
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.searchParams.has('observedProperty')) return jsonResponse(200, { items: [] });
+    if (parsed.pathname.endsWith('/systems') && !parsed.pathname.includes('/systems/')) {
+      return jsonResponse(200, {
+        features: [{ id: 'sys-fixture-1', geometry: { type: 'Point', coordinates: [1, 2] } }],
+      });
+    }
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(200, { features: [] });
+    if (parsed.pathname.match(/\/systems\/sys-fixture-1\/datastreams$/)) {
+      // No system@id, system.id or system@link on this entry at all.
+      return jsonResponse(200, { items: [{ id: 'ds-fixture-no-system-id' }] });
+    }
+    const schemaMatch = parsed.pathname.match(/\/datastreams\/ds-fixture-no-system-id\/schema$/);
+    if (schemaMatch) return jsonResponse(200, SCHEMA_FLAT);
+    const latestMatch = parsed.pathname.match(/\/datastreams\/ds-fixture-no-system-id\/observations$/);
+    if (latestMatch) {
+      return jsonResponse(200, {
+        items: [{ phenomenonTime: '2026-01-01T00:00:00Z', resultTime: '2026-01-01T00:00:00Z', result: { lat: 1, lon: 2 } }],
+      });
+    }
+    return jsonResponse(404);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(json.streams, 1);
+  assert.equal(json.locations[0].systemId, 'sys-fixture-1', 'the candidate is stamped with the host id it was read from');
+});
+
+test('[osh-056] a candidate with no system reference at all gives a location with systemId:null and systemName:null', async () => {
+  const [uriA] = OSH_DEFAULT_LOCATION_PROPERTIES;
+  const fetchImpl = async (url) => {
+    const parsed = new URL(String(url));
+    if (parsed.searchParams.get('observedProperty') === uriA) {
+      // A property-filtered candidate with no system@id, system.id or
+      // system@link — the aircraft-like case this change exists for.
+      return jsonResponse(200, { items: [{ id: 'ds-fixture-no-host' }] });
+    }
+    if (parsed.searchParams.has('observedProperty')) return jsonResponse(200, { items: [] });
+    if (parsed.pathname.endsWith('/systems') && !parsed.pathname.includes('/systems/'))
+      return jsonResponse(200, { features: [] });
+    if (parsed.pathname.endsWith('/fois')) return jsonResponse(200, { features: [] });
+    if (parsed.pathname.match(/\/datastreams\/ds-fixture-no-host\/schema$/)) return jsonResponse(200, SCHEMA_FLAT);
+    if (parsed.pathname.match(/\/datastreams\/ds-fixture-no-host\/observations$/)) {
+      return jsonResponse(200, {
+        items: [
+          // One item with a location, one item the reader cannot place at all.
+          { phenomenonTime: '2026-01-01T00:00:00Z', resultTime: '2026-01-01T00:00:00Z', result: { lat: 10, lon: 20 } },
+          { phenomenonTime: '2026-01-01T00:01:00Z', resultTime: '2026-01-01T00:01:00Z', result: { lat: 'not-a-number', lon: 20 } },
+        ],
+      });
+    }
+    return jsonResponse(404);
+  };
+  const proxy = oshProxy({ env: { OSH_URL: 'https://osh.example/api/' }, fetchImpl });
+  const { json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(json.streams, 1);
+  assert.equal(json.locations.length, 1, 'the item with no extractable location is dropped, not turned into a location');
+  // strictEqual, and the 'in' check: JSON drops an undefined field, so a
+  // loose assert.equal(undefined, null) would pass even if the server
+  // stopped sending this key at all.
+  assert.ok('systemId' in json.locations[0]);
+  assert.strictEqual(json.locations[0].systemId, null);
+  assert.ok('systemName' in json.locations[0]);
+  assert.strictEqual(json.locations[0].systemName, null);
+});
+
+test('[osh-056] a candidate whose system is already in the systems snapshot uses that name, with no by-id read', async () => {
+  const [uriA] = OSH_DEFAULT_LOCATION_PROPERTIES;
+  const calls = [];
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: locationsFetch({
+      calls,
+      filterByUri: { [uriA]: [{ id: 'ds-fixture-known', 'system@id': 'sys-fixture-1' }] },
+      withLocationSchemaIds: new Set(['ds-fixture-known']),
+      systemsBody: {
+        features: [
+          { id: 'sys-fixture-1', properties: { name: 'Snapshot Name' }, geometry: { type: 'Point', coordinates: [1, 2] } },
+        ],
+      },
+      // If the by-id route were hit, it would answer this name instead —
+      // so a test that only checked the final name could pass even if the
+      // cheap snapshot path were skipped.
+      systemById: { 'sys-fixture-1': { name: 'By-id Name' } },
+    }),
+  });
+  const { json } = await callOsh(proxy, { url: '/locations' });
+  assert.equal(json.locations[0].systemName, 'Snapshot Name');
+  const byIdCalls = calls.filter((call) => /\/systems\/sys-fixture-1$/.test(new URL(call.url).pathname));
+  assert.equal(byIdCalls.length, 0, 'the snapshot already had the name, so no by-id read was needed');
 });

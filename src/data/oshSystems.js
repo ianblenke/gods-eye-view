@@ -14,6 +14,8 @@
  * becomes null instead of a thrown error.
  */
 
+import { isOshObservationFresh } from './oshObservations.js';
+
 function finiteNumber(value) {
   if (value === null || value === undefined || value === '') return null;
   const number = Number(value);
@@ -72,23 +74,110 @@ export function mapOshSystems(payload) {
   return records;
 }
 
+/** True when `a` is a valid time later than `b`, or `b` is absent or unparseable. */
+function isNewer(a, b) {
+  const at = typeof a === 'string' ? Date.parse(a) : NaN;
+  if (!Number.isFinite(at)) return false;
+  const bt = typeof b === 'string' ? Date.parse(b) : NaN;
+  return !Number.isFinite(bt) || at > bt;
+}
+
+/** Build a placed-system record for a system a fresh stream location names, with or without a held record. */
+function placedFromStream(systemId, system, location) {
+  return {
+    id: systemId,
+    uid: system ? system.uid : null,
+    name: system ? system.name : null,
+    description: system ? system.description : null,
+    validTime: system ? system.validTime : null,
+    lon: location.lon,
+    lat: location.lat,
+    alt: location.alt,
+    locationSource: 'stream',
+    datastreamId: location.datastreamId,
+    datastreamName: location.datastreamName,
+    phenomenonTime: location.phenomenonTime,
+    ageMs: location.ageMs,
+    // The location pass's own name for this system (design decision D48),
+    // kept beside `name` rather than in it: `name` stays null with no held
+    // record, per this scenario's own rule, and the layer decides whether
+    // to fall back to this field when it builds a placeholder (osh-057).
+    streamSystemName: location.systemName ?? null,
+  };
+}
+
 /**
- * Merge the system records and the feature-of-interest records into the
- * entities the layer places, with no cross-placement: a feature never
- * places its host system, and a system never places a feature.
- * @param {{systems: Array, fois: Array}} lists
+ * Merge the system records, the feature-of-interest records and the
+ * location-pass records into the entities the layer places, with no
+ * cross-placement: a feature never places its host system, and a system
+ * never places a feature. A location counts only when its `ageMs` is fresh
+ * under isOshObservationFresh() (design decisions D44 and D48); a stale
+ * one is dropped before any other rule. A fresh location that names a
+ * feature, by id or by uid, moves that feature instead of placing a
+ * system, and is dropped when the layer holds no such feature. A fresh
+ * location with no feature reference places its system above a `Point`;
+ * the newer of two such locations for one system wins.
+ * @param {{systems: Array, fois: Array, locations: Array}} lists
  * @returns {{systems: Array, features: Array, unplaced: Array}}
  */
-export function placeOshEntities({ systems = [], fois = [] } = {}) {
+export function placeOshEntities({ systems = [], fois = [], locations = [] } = {}) {
+  const featureById = new Map(fois.map((foi) => [foi.id, foi]));
+  const featureByUid = new Map();
+  for (const foi of fois) if (foi.uid) featureByUid.set(foi.uid, foi);
+
+  const fresh = locations.filter((location) => isOshObservationFresh(location?.ageMs));
+
+  const featureOverrides = new Map();
+  const systemLocations = [];
+  for (const location of fresh) {
+    const referencesFeature = Boolean(location.foiId || location.foiUid);
+    if (referencesFeature) {
+      const feature = featureById.get(location.foiId) ?? featureByUid.get(location.foiUid);
+      if (feature) {
+        const existing = featureOverrides.get(feature.id);
+        if (!existing || isNewer(location.phenomenonTime, existing.phenomenonTime)) {
+          featureOverrides.set(feature.id, location);
+        }
+      }
+      continue;
+    }
+    if (!location.systemId) continue;
+    const existing = systemLocations.find((entry) => entry.systemId === location.systemId);
+    if (!existing) {
+      systemLocations.push(location);
+    } else if (isNewer(location.phenomenonTime, existing.phenomenonTime)) {
+      systemLocations[systemLocations.indexOf(existing)] = location;
+    }
+  }
+
+  const bestSystemLocation = new Map(systemLocations.map((location) => [location.systemId, location]));
+
   const placedSystems = [];
   const unplaced = [];
+  const seenIds = new Set();
   for (const system of systems) {
+    seenIds.add(system.id);
+    const streamLocation = bestSystemLocation.get(system.id);
+    if (streamLocation) {
+      placedSystems.push(placedFromStream(system.id, system, streamLocation));
+      continue;
+    }
     if (system.lon === null || system.lat === null) {
       unplaced.push(system.id);
       continue;
     }
     placedSystems.push({ ...system, locationSource: 'geometry' });
   }
-  const features = fois.map((foi) => ({ ...foi }));
+  for (const [systemId, location] of bestSystemLocation) {
+    if (seenIds.has(systemId)) continue;
+    placedSystems.push(placedFromStream(systemId, null, location));
+  }
+
+  const features = fois.map((foi) => {
+    const override = featureOverrides.get(foi.id);
+    if (!override) return { ...foi };
+    return { ...foi, lon: override.lon, lat: override.lat, alt: override.alt, locationSource: 'stream' };
+  });
+
   return { systems: placedSystems, features, unplaced };
 }

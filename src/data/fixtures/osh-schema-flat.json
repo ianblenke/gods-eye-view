@@ -1,0 +1,42 @@
+{
+  "resultSchema": {
+    "type": "DataRecord",
+    "label": "Position",
+    "fields": [
+      {
+        "type": "Time",
+        "name": "time",
+        "definition": "http://www.opengis.net/def/property/OGC/0/SamplingTime"
+      },
+      {
+        "type": "Quantity",
+        "name": "lat",
+        "definition": "urn:osh:def:fixture:position:3.0.0#latitude",
+        "uom": { "code": "deg" }
+      },
+      {
+        "type": "Quantity",
+        "name": "lon",
+        "definition": "urn:osh:def:fixture:position:3.0.0#longitude",
+        "uom": { "code": "deg" }
+      },
+      {
+        "type": "Quantity",
+        "name": "height",
+        "definition": "urn:osh:def:fixture:position:3.0.0#heightHAE",
+        "uom": { "code": "m" }
+      },
+      {
+        "type": "Quantity",
+        "name": "altitudeMsl",
+        "definition": "urn:osh:def:fixture:position:3.0.0#altitudeMsl",
+        "uom": { "code": "m" }
+      },
+      {
+        "type": "Text",
+        "name": "featureUid",
+        "definition": "urn:osh:def:fixture:position:3.0.0#samplingFeatureUid"
+      }
+    ]
+  }
+}
