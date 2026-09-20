@@ -2027,6 +2027,38 @@ test('[osh-059] the detail for a selected stream-drawn feature shows its id, its
   });
 });
 
+test('[osh-059] the detail for a selected stream-drawn feature with no host shows Placed by with the datastream name and age', async (t) => {
+  const detailHost = { innerHTML: '' };
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [
+      aircraftLocation({
+        foiId: 'foi-fixture-unheld-nohost-1',
+        systemId: null,
+        systemName: null,
+        datastreamName: 'Stream Unheld',
+        ageMs: 15_000,
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer, setPicked } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    setPicked('osh-foi:foi-fixture-unheld-nohost-1');
+    getClick()({ position: {} });
+    await flush();
+
+    assert.match(detailHost.innerHTML, /foi-fixture-unheld-nohost-1/);
+    assert.match(detailHost.innerHTML, /Host:\s*—/);
+    assert.match(detailHost.innerHTML, /Placed by Stream Unheld \(15 s\)/);
+  });
+});
+
 test('[osh-059] a refresh with no fresh location for a stream-drawn feature removes its entity and clears its selection', async (t) => {
   let locations = [
     aircraftLocation({
