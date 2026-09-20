@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { buildTestRuns, childEnv, parseArgs, runGates } from '../../../scripts/spec/gates.mjs';
+import { contentHash } from '../../../scripts/spec/lib/coverage.mjs';
 import { GUARD_PRELOAD, missingTestContext } from '../../../scripts/spec/lib/test-guard.mjs';
 
 // A test that needs the guard to count assertions needs getTestContext in node:test.
@@ -782,6 +783,112 @@ test('[coverage-gate-043] stops the check for a code file that imports a test fi
     const check = run(root, ['check']);
     assert.equal(check.status, 1);
     assert.match(check.output, /ERROR COVERAGE-TEST-IMPORT src\/uses\.js:1 Move the code out of the test file\. The gates do not measure test files\./);
+  });
+});
+
+const MATH_BRANCH_SRC = 'export function add(a, b) {\n  if (a < 0) return 0;\n  return a + b;\n}\n';
+
+function withWaiverFixture(body) {
+  return withFixture(
+    (root) => {
+      passes(root, ['init']);
+      mergeToMain(root, 'waiver-work');
+      return body(root);
+    },
+    { base: { 'src/math.js': MATH_BRANCH_SRC } },
+  );
+}
+
+test('[gap-ledger-079] records a coverage waiver, allows the rise in ratchet and passes the check', GUARDED_RUN, () => {
+  withWaiverFixture((root) => {
+    write(root, {
+      ...CHANGE,
+      'src/math.js': 'export function add(a, b) {\n  if (a < 0) return 0;\n  if (b < 0) return 0;\n  return a + b;\n}\n',
+      'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers'),
+    });
+
+    // Running ratchet command without waiver stops with LEDGER-LARGER-GAP.
+    const withoutWaiver = run(root, ['ratchet', '--change', 'add-demo']);
+    assert.equal(withoutWaiver.status, 1);
+    assert.match(withoutWaiver.output, /LEDGER-LARGER-GAP src\/math\.js has 2 branches not covered\. The ledger allows 1\./);
+
+    // Run waive command.
+    const waiveResult = passes(root, ['waive', '--change', 'add-demo', '--file', 'src/math.js', '--metric', 'branches', '--lines', '3', '--count', '1', '--reason', 'phantom branch']);
+    assert.match(waiveResult.output, /Gates passed\./);
+
+    // Read history line and assert all required fields.
+    const historyText = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8');
+    const historyLines = historyText.trim().split('\n').map(JSON.parse);
+    const waiver = historyLines.find((line) => line.kind === 'waiver');
+    assert.ok(waiver, 'history has waiver line');
+    assert.equal(waiver.date, '2026-09-13');
+    assert.equal(waiver.change, 'add-demo');
+    assert.equal(waiver.kind, 'waiver');
+    assert.equal(waiver.file, 'src/math.js');
+    assert.equal(waiver.metric, 'branches');
+    assert.match(waiver.commit, /^[0-9a-f]{40}$/);
+    assert.match(waiver.sha, /^[0-9a-f]{64}$/);
+    assert.deepEqual(waiver.lines, [3]);
+    assert.equal(waiver.count, 1);
+    assert.equal(waiver.reason, 'phantom branch');
+
+    // Ratchet command with waiver passes.
+    passes(root, ['ratchet', '--change', 'add-demo']);
+
+    // Check with change name passes.
+    reviewFor(root, 'add-demo');
+    passes(root, ['check', '--change', 'add-demo']);
+  });
+});
+
+test('[gap-ledger-080] stops the waive command for a fault in its options', GUARDED_RUN, () => {
+  withWaiverFixture((root) => {
+    write(root, {
+      ...CHANGE,
+      'src/math.js': 'export function add(a, b) {\n  if (a < 0) return 0;\n  if (b < 0) return 0;\n  return a + b;\n}\n',
+      'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers'),
+    });
+    const historyFile = path.join(root, 'openspec/trace/history.jsonl');
+    const historyBefore = existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : null;
+
+    // 1. Change not active
+    const fault1 = run(root, ['waive', '--change', 'inactive', '--file', 'src/math.js', '--metric', 'branches', '--lines', '3', '--count', '1', '--reason', 'test']);
+    assert.equal(fault1.status, 1);
+    assert.match(fault1.output, /ERROR GATES-WAIVE src\/math\.js Change "inactive" has no folder with a proposal\.md file/);
+
+    // 2. File not tracked
+    const fault2 = run(root, ['waive', '--change', 'add-demo', '--file', 'src/missing.js', '--metric', 'branches', '--lines', '3', '--count', '1', '--reason', 'test']);
+    assert.equal(fault2.status, 1);
+    assert.match(fault2.output, /ERROR GATES-WAIVE src\/missing\.js Git does not track src\/missing\.js/);
+
+    // 3. File with base content
+    const fault3 = run(root, ['waive', '--change', 'add-demo', '--file', 'tools/other.test.mjs', '--metric', 'branches', '--lines', '3', '--count', '1', '--reason', 'test']);
+    assert.equal(fault3.status, 1);
+    assert.match(fault3.output, /ERROR GATES-WAIVE tools\/other\.test\.mjs tools\/other\.test\.mjs has the base content/);
+
+    // 4. Unknown metric
+    const fault4 = run(root, ['waive', '--change', 'add-demo', '--file', 'src/math.js', '--metric', 'unknown', '--lines', '3', '--count', '1', '--reason', 'test']);
+    assert.equal(fault4.status, 1);
+    assert.match(fault4.output, /ERROR GATES-WAIVE src\/math\.js Unknown metric "unknown"/);
+
+    // 5. Line not a positive whole number
+    const fault5 = run(root, ['waive', '--change', 'add-demo', '--file', 'src/math.js', '--metric', 'branches', '--lines', '0', '--count', '1', '--reason', 'test']);
+    assert.equal(fault5.status, 1);
+    assert.match(fault5.output, /ERROR GATES-WAIVE src\/math\.js Line "0" is not a positive whole number/);
+
+    // 6. Count not a positive whole number
+    const fault6 = run(root, ['waive', '--change', 'add-demo', '--file', 'src/math.js', '--metric', 'branches', '--lines', '3', '--count', '0', '--reason', 'test']);
+    assert.equal(fault6.status, 1);
+    assert.match(fault6.output, /ERROR GATES-WAIVE src\/math\.js Count "0" is not a positive whole number/);
+
+    // 7. Empty reason
+    const fault7 = run(root, ['waive', '--change', 'add-demo', '--file', 'src/math.js', '--metric', 'branches', '--lines', '3', '--count', '1', '--reason', '   ']);
+    assert.equal(fault7.status, 1);
+    assert.match(fault7.output, /ERROR GATES-WAIVE src\/math\.js Reason is empty/);
+
+    // Assert history file was not changed
+    const historyAfter = existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : null;
+    assert.equal(historyAfter, historyBefore);
   });
 });
 
