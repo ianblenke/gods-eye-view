@@ -800,7 +800,9 @@ test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
   );
   try {
     const [mainRun] = buildTestRuns({ testFiles: [testFile], allocationFiles: [], outDir });
-    const result = spawnSync(process.execPath, mainRun.args, { timeout: 30_000, encoding: 'utf8' });
+    const env = { ...process.env };
+    delete env.NODE_TEST_CONTEXT;
+    const result = spawnSync(process.execPath, mainRun.args, { env, timeout: 30_000, encoding: 'utf8' });
     assert.equal(result.status, 1);
     const jsonl = readFileSync(path.join(outDir, 'tests-main.jsonl'), 'utf8')
       .trim()

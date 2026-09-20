@@ -83,6 +83,7 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
       output: `${outDir}/tests-main.jsonl`,
       args: [
         '--test',
+        '--test-force-exit',
         '--experimental-test-coverage',
         '--test-coverage-exclude=**/*.test.mjs',
         '--test-reporter=dot',
@@ -102,7 +103,17 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
       runs.push({
         kind: 'allocation',
         output,
-        args: ['--expose-gc', '--test', '--test-concurrency=1', '--test-reporter=dot', '--test-reporter-destination=stdout', `--test-reporter=${REPORTER}`, `--test-reporter-destination=${output}`, file],
+        args: [
+          '--expose-gc',
+          '--test',
+          '--test-force-exit',
+          '--test-concurrency=1',
+          '--test-reporter=dot',
+          '--test-reporter-destination=stdout',
+          `--test-reporter=${REPORTER}`,
+          `--test-reporter-destination=${output}`,
+          file,
+        ],
       });
     });
   return runs;
