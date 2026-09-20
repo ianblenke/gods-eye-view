@@ -133,8 +133,8 @@ function drawnFromStream(key, location) {
  * never places a feature. A location counts only when its `ageMs` is fresh
  * under isOshObservationFresh() (design decisions D44 and D48); a stale
  * one is dropped before any other rule. A fresh location that names a
- * feature, by id or by uid, moves that feature instead of placing a
- * system, and draws that feature when the layer holds no such feature. A
+ * feature, by id or by uid, moves that feature and does not place a
+ * system. It draws that feature when the layer holds no such feature. A
  * fresh location with no feature reference places its system above a
  * `Point`; the newer of two such locations for one system wins.
  * @param {{systems: Array, fois: Array, locations: Array}} lists
