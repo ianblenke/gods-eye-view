@@ -111,3 +111,111 @@ export function assertSystemDatastreamsUrl(url, root, id) {
     throw new Error('OSH system datastreams URL failed the safety check');
   }
 }
+
+/**
+ * Build the schema URL for one datastream id. The id sits between two fixed
+ * path segments, and the URL carries no query. Mirrors observationUrl()
+ * above.
+ * @param {URL} root - Resolved API root, trailing slash.
+ * @param {string} id - An id already checked by readDatastreamId.
+ * @returns {URL}
+ */
+export function schemaUrl(root, id) {
+  const url = new URL(`datastreams/${encodeURIComponent(id)}/schema`, root);
+  url.search = '';
+  return url;
+}
+
+/**
+ * Re-check a built schema URL against its root and id. Throws when the
+ * origin, the path or the query does not match exactly what schemaUrl()
+ * would build.
+ * @param {URL} url
+ * @param {URL} root
+ * @param {string} id
+ */
+export function assertSchemaUrl(url, root, id) {
+  const expectedPathname = `${root.pathname}datastreams/${id}/schema`;
+  if (
+    url.origin !== root.origin ||
+    url.pathname !== expectedPathname ||
+    url.search !== '' ||
+    url.hash !== ''
+  ) {
+    throw new Error('OSH schema URL failed the safety check');
+  }
+}
+
+/**
+ * Build the URL of one system by id. The id sits after a fixed path
+ * segment, and the URL carries no query. Mirrors observationUrl() above.
+ * @param {URL} root - Resolved API root, trailing slash.
+ * @param {string} id - An id already checked by readSystemId.
+ * @returns {URL}
+ */
+export function systemUrl(root, id) {
+  const url = new URL(`systems/${encodeURIComponent(id)}`, root);
+  url.search = '';
+  return url;
+}
+
+/**
+ * Re-check a built system URL against its root and id. Throws when the
+ * origin, the path or the query does not match exactly what systemUrl()
+ * would build.
+ * @param {URL} url
+ * @param {URL} root
+ * @param {string} id
+ */
+export function assertSystemUrl(url, root, id) {
+  const expectedPathname = `${root.pathname}systems/${id}`;
+  if (
+    url.origin !== root.origin ||
+    url.pathname !== expectedPathname ||
+    url.search !== '' ||
+    url.hash !== ''
+  ) {
+    throw new Error('OSH system URL failed the safety check');
+  }
+}
+
+/** Newest-per-feature page size: the number of distinct features one `latest` request answers. */
+export const OSH_LATEST_LIMIT = 300;
+
+/** Fixed query for the newest-per-feature observations request (D45). */
+export const OSH_LATEST_QUERY = `limit=${OSH_LATEST_LIMIT}&resultTime=latest`;
+
+/**
+ * Build the newest-per-feature observations URL for one datastream id. The
+ * id sits between two fixed path segments, and the query is assigned as a
+ * whole after the id is in place. Mirrors observationUrl() above; unlike
+ * it, this page is never walked (see design decision D45).
+ * @param {URL} root - Resolved API root, trailing slash.
+ * @param {string} id - An id already checked by readDatastreamId.
+ * @returns {URL}
+ */
+export function observationsLatestUrl(root, id) {
+  const url = new URL(`datastreams/${encodeURIComponent(id)}/observations`, root);
+  url.search = OSH_LATEST_QUERY;
+  return url;
+}
+
+/**
+ * Re-check a built newest-per-feature URL against its root and id. Throws
+ * when the origin, the path or the query does not match exactly what
+ * observationsLatestUrl() would build.
+ * @param {URL} url
+ * @param {URL} root
+ * @param {string} id
+ */
+export function assertObservationsLatestUrl(url, root, id) {
+  const expectedPathname = `${root.pathname}datastreams/${id}/observations`;
+  if (
+    url.origin !== root.origin ||
+    url.pathname !== expectedPathname ||
+    url.search !== `?${OSH_LATEST_QUERY}` ||
+    url.hash !== ''
+  ) {
+    throw new Error('OSH newest-per-feature URL failed the safety check');
+  }
+}

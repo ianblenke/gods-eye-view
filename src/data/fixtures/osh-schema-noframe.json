@@ -1,0 +1,38 @@
+{
+  "resultSchema": {
+    "type": "DataRecord",
+    "label": "Position",
+    "fields": [
+      {
+        "type": "Time",
+        "name": "time",
+        "definition": "http://www.opengis.net/def/property/OGC/0/SamplingTime"
+      },
+      {
+        "type": "Vector",
+        "name": "Location",
+        "definition": "http://sensorml.com/ont/swe/property/LocationVector",
+        "coordinates": [
+          {
+            "type": "Quantity",
+            "name": "lat",
+            "axisID": "Lat",
+            "uom": { "code": "deg" }
+          },
+          {
+            "type": "Quantity",
+            "name": "lon",
+            "axisID": "Lon",
+            "uom": { "code": "deg" }
+          },
+          {
+            "type": "Quantity",
+            "name": "h",
+            "axisID": "h",
+            "uom": { "code": "m" }
+          }
+        ]
+      }
+    ]
+  }
+}
