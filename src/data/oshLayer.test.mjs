@@ -2177,7 +2177,7 @@ test('[osh-060] one entity id across a held refresh, a failed features read and 
   let locationFresh = true;
   const foiRecord = {
     id: 'foi-fixture-stable-1',
-    uid: 'urn:foi-stable',
+    uid: 'foi-fixture-stable',
     systemId: 'sys-fixture-host-1',
     name: 'Stable Feature',
     description: null,
