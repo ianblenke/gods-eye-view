@@ -61,8 +61,9 @@
 
 - [x] 5.1 Run `make lint` until no STE error remains.
 - [x] 5.2 Run `make ratchet CHANGE=osh-marker-depth`.
-  - Ran once for `osh-061`/`osh-062`; runs again after the STE fix renames the requirement and scenario titles, since the scenario hash covers the name.
-- [ ] 5.3 Run `make gates CHANGE=osh-marker-depth`. Confirm `src/layers/osh/index.js` stays at 100%.
+  - Ran twice: once for `osh-061`/`osh-062` as written, and again after the STE fix renamed the requirement and scenario titles, since the scenario hash covers the name.
+- [x] 5.3 Run `make gates CHANGE=osh-marker-depth`. Confirm `src/layers/osh/index.js` stays at 100%.
   - Read the command output for the gate verdict. Three zeros in `results.json` mean the tests did not crash, not that the gates passed.
+  - Ran twice. The first run, before the review fixes, failed on the ratchet not having run yet and `review.md` missing. The second, after both commits, failed on `review.md` missing alone — the one error expected before a review exists.
 - [x] 5.4 Report the M1 to M14 results in the implementation report, one line per mutation.
 - [ ] 5.5 Run the spec-adversary and STE-adversary review. Correct the findings. Record the result in `review.md`.
