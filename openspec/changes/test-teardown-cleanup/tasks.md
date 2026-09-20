@@ -53,11 +53,11 @@
 
 ## 7. `src/data/militaryInstallations.test.mjs`
 
-- [ ] 7.1 Find the two tests and the two timers that outlive them.
+- [x] 7.1 Find the two tests and the two timers that outlive them.
   - Lines 575 and 632 each await a delay. Confirm which one, or both, are the leak first.
-- [ ] 7.2 Clear each.
-- [ ] 7.3 Run the file. Confirm every test still passes, with the same names and assertions.
-- [ ] 7.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
+- [x] 7.2 Clear each.
+- [x] 7.3 Run the file. Confirm every test still passes, with the same names and assertions.
+- [x] 7.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
   - Confirm the plan line prints and the run exits cleanly. Report the two tests that held a timer.
 
 ## 8. `src/tooling/spec/testGuard.test.mjs`
