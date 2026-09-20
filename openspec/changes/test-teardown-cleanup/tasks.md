@@ -9,10 +9,10 @@
 
 ## 2. `src/sharelink.celestial.test.mjs`
 
-- [ ] 2.1 Find the test and the timer that outlives it.
-- [ ] 2.2 Clear it with a clear call on the losing side of a race, or a hook that always runs.
-- [ ] 2.3 Run the file. Confirm every test still passes, with the same names and assertions.
-- [ ] 2.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
+- [x] 2.1 Find the test and the timer that outlives it.
+- [x] 2.2 Clear it with a clear call on the losing side of a race, or a hook that always runs.
+- [x] 2.3 Run the file. Confirm every test still passes, with the same names and assertions.
+- [x] 2.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
   - Confirm the plan line prints and the run exits cleanly. Report the test that held the timer.
 
 ## 3. `src/tooling/localServices.test.mjs`
