@@ -785,3 +785,32 @@ test('[coverage-gate-043] stops the check for a code file that imports a test fi
   });
 });
 
+test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
+  const runs = buildTestRuns({ testFiles: ['src/a.test.mjs', 'src/alloc.test.mjs'], allocationFiles: ['src/alloc.test.mjs'], outDir: '/out' });
+  assert.equal(runs[0].args.includes('--test-force-exit'), true);
+  assert.equal(runs[1].args.includes('--test-force-exit'), true);
+
+  const root = mkdtempSync(path.join(tmpdir(), 'gev-force-exit-'));
+  const outDir = path.join(root, 'out');
+  mkdirSync(outDir, { recursive: true });
+  const testFile = path.join(root, 'leak.test.mjs');
+  writeFileSync(
+    testFile,
+    "import test from 'node:test';\nimport assert from 'node:assert/strict';\ntest('fails and leaks', () => {\n  setInterval(() => {}, 1000);\n  assert.equal(1, 2);\n});\n",
+  );
+  try {
+    const [mainRun] = buildTestRuns({ testFiles: [testFile], allocationFiles: [], outDir });
+    const result = spawnSync(process.execPath, mainRun.args, { timeout: 30_000, encoding: 'utf8' });
+    assert.equal(result.status, 1);
+    const jsonl = readFileSync(path.join(outDir, 'tests-main.jsonl'), 'utf8')
+      .trim()
+      .split('\n')
+      .map((line) => JSON.parse(line));
+    assert.equal(jsonl.length, 1);
+    assert.equal(jsonl[0].status, 'fail');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+
