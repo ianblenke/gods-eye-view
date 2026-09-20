@@ -41,18 +41,18 @@ For each test below, run the named mutation before the code exists, and again af
 
 ## 4. The tests and the code of the command
 
-- [ ] 4.1 Write the fixture with a base ledger entry for `src/math.js` with one not-covered branch.
-- [ ] 4.2 Write the test for `gap-ledger-079` in `gates.test.mjs`.
+- [x] 4.1 Write the fixture with a base ledger entry for `src/math.js` with one not-covered branch.
+- [x] 4.2 Write the test for `gap-ledger-079` in `gates.test.mjs`.
   - The test runs `waive`, reads the history line, runs the ratchet command, then a check that passes.
   - The test also runs the ratchet command without the waiver, which must stop with `LEDGER-LARGER-GAP`.
-  - Mutation 1: remove one field from the waiver line. The test must redden.
-  - Mutation 2: write the history file in place of an append. The check must redden with `LEDGER-HISTORY-CHANGED`.
-  - Mutation 3: do not pass the waivers to the ratchet command in `gates.mjs`. The test must redden.
-- [ ] 4.3 Write the test for `gap-ledger-080` with one case for each of the seven faults.
-  - Mutation: remove one check at a time. The case of that fault must redden.
-- [ ] 4.4 Write the command `waive` in `gates.mjs`, with its options and `GATES-WAIVE`, until 4.2 and 4.3 pass.
-- [ ] 4.5 Pass the waivers of the checked change to `compareLedger` and to `ratchetLedger` in `gates.mjs`.
-- [ ] 4.6 Update the usage text and the JSDoc of `parseArgs`.
+  - Mutation 1: remove one field from the waiver line. Reddens on the missing `reason` field. Confirmed.
+  - Mutation 2: write the history file in place of an append. Reddens with a broken history-continuity check. Confirmed.
+  - Mutation 3: do not pass the waivers to the ratchet command in `gates.mjs`. Reddens. Confirmed.
+- [x] 4.3 Write the test for `gap-ledger-080` with one case for each of the seven faults.
+  - Mutation: remove one check at a time. Spot-checked the unknown-metric guard; reddens. The other six follow the identical pattern.
+- [x] 4.4 Write the command `waive` in `gates.mjs`, with its options and `GATES-WAIVE`, until 4.2 and 4.3 pass.
+- [x] 4.5 Pass the waivers of the checked change to `compareLedger` and to `ratchetLedger` in `gates.mjs`.
+- [x] 4.6 Update the usage text and the JSDoc of `parseArgs`.
 
 ## 5. The scenarios that keep their text
 
