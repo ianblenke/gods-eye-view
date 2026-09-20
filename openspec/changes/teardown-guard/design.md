@@ -1,10 +1,16 @@
 ## Context
 
-A test's teardown matters only when the test fails. A test that passes reaches its last line and tears down. A test that fails throws before that line. `src/data/oshLayer.test.mjs` tears down on its last line in 64 tests. Thirty of those tests select a system, and the layer arms a real `setInterval` for the selected system's poll. A failed assertion in one of them leaves that interval live. The process cannot exit. The run prints every result and never prints its plan line.
+A test's teardown matters only when the test fails. A test that passes reaches its last line and tears down. A test that fails throws before that line. `oshLayer.test.mjs` tears down on its last line in 64 tests. Thirty of those tests select a system, and the layer arms a real timer for that system's poll.
 
-The gate starts one `node --test` run for all main test files, through `scripts/spec/lib/run-parallel.mjs`. That runner waits for `close` with no deadline. The trace reporter streams one JSON line per test to `tests-main.jsonl`. So the failed test is in the result file, and the gate never reads it. CI stops the job at 30 minutes. The artifact step keeps the file. Nobody reads it.
+A failed assertion in one of those thirty leaves the timer live. The process cannot exit. The run prints every result and never prints its plan line.
 
-A synthetic probe on this branch reproduced the whole chain. One file with a test that arms an interval and then fails hangs `node --test`. The same file under `node --test --test-force-exit` exits with status 1. Its `exit` event fires. `process.getActiveResourcesInfo()` lists `Timeout` at that moment. The plan line prints. That probe ran on the machine's Node, not the pinned one. Task 4.1 repeats it in the gate image.
+The gate starts one `node --test` run for all main test files, through `run-parallel.mjs`. That runner waits for `close` with no deadline. The trace reporter streams one JSON line per test to a result file.
+
+So the failed test is in the result file, and the gate never reads it. CI stops the job at 30 minutes. The artifact step keeps the file. Nobody reads it.
+
+A synthetic probe on this branch reproduced the whole chain. One file with a test that arms a timer and then fails hangs `node --test`. The same file with the exit flag on exits with status 1.
+
+Its exit event fires. The active-resource list names the timer at that moment. The plan line prints. That probe ran on the machine's Node, not the pinned one. Task 4.1 repeats it in the gate image.
 
 ## Goals / Non-Goals
 
@@ -27,27 +33,37 @@ A synthetic probe on this branch reproduced the whole chain. One file with a tes
 
 Each test that makes a layer registers `t.after(() => layer.destroy(viewer))`. The line goes after `fakeViewer()` and before `layer.init(viewer)`. So a throw in `init` still tears down. The trailing `layer.destroy(viewer)` that only tears down is removed. The test then ends on its last assertion.
 
-Sixty of the 66 tests take no `t` parameter today. Each of those gains `(t)`. That is a change to the signature, not to the name. The trace gate reads the name only. The `t.after()` line adds one line per test and moves no other line. A `try/finally` would indent 64 test bodies and make the diff unreadable. `src/data/localGeojson.test.mjs` and `src/data/localGeojsonLifecycle.test.mjs` already use `t.after()` for this. `finally` in the other suites restores a global, such as `fetch`, not a layer.
+Sixty of the 66 tests take no `t` parameter today. Each of those gains `(t)`. That is a change to the signature, not to the name. The trace gate reads the name only. The `t.after()` line adds one line per test and moves no other line.
+
+A `try/finally` would indent 64 test bodies and make the diff unreadable. Two sibling test files already use `t.after()` for this same purpose. `finally` in the other suites restores a global, such as `fetch`, not a layer.
 
 `t.after()` runs after the body settles, on a pass and on a fail. The original assertion error is the test's result. The hook does not catch it and does not change it. A throw inside the hook is a second error on the same test. That is the same rule node:test gives every `after` hook.
 
 ### D2 Keep a `destroy` call whose effect a test asserts
 
-Two tests call `destroy()` as the behaviour under test. `[osh-029] disable hides the data source, destroy removes it, and disable stops more updates` asserts the data source count after the call. `[osh-029] aborts an update in flight on destroy` asserts the abort. Both keep their call and also get the `t.after()` line. A second `destroy()` is safe. `_request` is null, `clearSelection()` returns at once, `removeClickHandler()` returns at once, and `_dataSource` is null. Task 2.2 lists each kept call by test name.
+Two tests call `destroy()` as the behaviour under test. One asserts the data source count after the call, and one asserts that an in-flight update aborts. Both keep their call and also get the `t.after()` line.
 
-Two tests make no layer: `[osh-029] throws without a systems source` and `[osh-029] update does nothing before init and while disabled`. They do not change.
+A second `destroy()` is safe. Four internal fields are already cleared or null by the first call, so the second call does nothing further. Task 2.2 lists each kept call by test name.
+
+Two further tests make no layer at all. One throws before any source exists. One checks the layer does nothing before init or while disabled. Neither changes.
 
 ### D3 The other suites: three sites in `localGeojson.test.mjs`, none elsewhere
 
-The facts table counted the literal `destroy(viewer)`. `src/data/localGeojson.test.mjs` writes `env.layer.destroy(env.viewer); env.cleanup();` instead. Three tests end that way after their last assertion: the tests at lines 376, 467 and 683 on this branch. Each gains `(t)` and a `t.after(() => { env.layer.destroy(env.viewer); env.cleanup(); })` line after its harness call. That is the exact line the file's other tests already use.
+The facts table counted the literal `destroy(viewer)`. `localGeojson.test.mjs` writes `destroy` and a cleanup call together instead. Three tests end that way after their last assertion: the tests at lines 376, 467 and 683 on this branch.
 
-Each other site the table lists is not a teardown. `earthquakes.test.mjs` line 155 asserts the data source count after `destroy`. `traffic.test.mjs` asserts that `destroy` does not throw. `localGeojsonLifecycle.test.mjs` asserts the store after `destroy`, and its harness already has `t.after()`. `aisLiveVessels.test.mjs` destroys while a load is in flight and asserts the result. `firmsHorizonCull.test.mjs` calls `harness.cleanup()` inside `finally`. None of these changes.
+Each gains `(t)` and one destroy-and-cleanup hook line after its harness call. That is the exact line the file's other tests already use.
+
+Each other site the table lists is not a teardown. One file asserts the data source count after `destroy`. Another asserts only that `destroy` does not throw. A third already has `t.after()` in its harness.
+
+A fourth destroys while a load is in flight and asserts the result. A fifth calls its cleanup inside `finally` already. None of these five changes.
 
 ### D4 The gate exits each run with `--test-force-exit`, and rejects a deadline
 
 `buildTestRuns()` in `scripts/spec/gates.mjs` adds `--test-force-exit` to the main run and to each allocation run. node:test then exits the process when the tests are complete, also when a timer keeps the loop alive. The runner passes the option to each child process. The trace reporter has already written the failed test's line. The gate reads it, and `checkFailedRuns()` finds the `fail` record. The build stops with the test's name, in the time the run takes.
 
-A deadline in `run-parallel.mjs` was the other option. It needs a number. A fixed number is too short on a slow CI box and too long on a fast one. An idle deadline needs the runner to watch the result file. Both keep the hang for the length of the deadline. `--test-force-exit` is one option in one function, and the hang is gone. Rejected.
+A deadline in `run-parallel.mjs` was the other option, and it is rejected. It needs a number. A fixed number is too short on a slow CI box and too long on a fast one.
+
+An idle deadline needs the runner to watch the result file, and both kinds keep the hang for the length of the deadline. The exit flag is one option in one function, and the hang is gone entirely.
 
 The option hides one signal. A test that passes and leaves a timer live hangs today. With the option alone, it passes in silence. D5 restores that signal in a readable form.
 
