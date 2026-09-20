@@ -802,6 +802,13 @@ test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
     const [mainRun] = buildTestRuns({ testFiles: [testFile], allocationFiles: [], outDir });
     const env = { ...process.env };
     delete env.NODE_TEST_CONTEXT;
+    // A real gate run sets GEV_SPEC_OUT on this test's own process. Left in `env`, the
+    // spawned child would install its own guard and write this fixture's deliberate
+    // leak into the real gate run's outDir, not this test's own temporary one.
+    delete env.NODE_V8_COVERAGE;
+    delete env.GEV_SPEC_OUT;
+    delete env.GEV_SPEC_ROOT;
+    delete env.GEV_SPEC_INVENTORY;
     const result = spawnSync(process.execPath, mainRun.args, { env, timeout: 30_000, encoding: 'utf8' });
     assert.equal(result.status, 1);
     const jsonl = readFileSync(path.join(outDir, 'tests-main.jsonl'), 'utf8')
