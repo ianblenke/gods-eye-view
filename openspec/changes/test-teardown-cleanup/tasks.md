@@ -17,11 +17,11 @@
 
 ## 3. `src/tooling/localServices.test.mjs`
 
-- [ ] 3.1 Find the test and the timer that outlives it.
+- [x] 3.1 Find the test and the timer that outlives it.
   - Line 126 awaits a bare ten-millisecond delay. Confirm whether this site or another is the leak first.
-- [ ] 3.2 Clear it.
-- [ ] 3.3 Run the file. Confirm every test still passes, with the same names and assertions.
-- [ ] 3.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
+- [x] 3.2 Clear it.
+- [x] 3.3 Run the file. Confirm every test still passes, with the same names and assertions.
+- [x] 3.4 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
   - Confirm the plan line prints and the run exits cleanly. Report the test that held the timer.
 
 ## 4. `src/voice/gevRealtime.test.mjs`
