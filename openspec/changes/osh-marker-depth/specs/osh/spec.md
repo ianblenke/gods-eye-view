@@ -1,10 +1,10 @@
 ## ADDED Requirements
 
-### Requirement: Marker depth and horizon
+### Requirement: Entity depth and horizon
 The browser layer MUST draw every system entity and every feature entity on top of the terrain and the mesh, at its record's altitude. It MUST hide an entity that sits beyond the ellipsoid horizon from the camera.
 Origin: spec-first
 
-#### Scenario: Draw every marker on top of the terrain, at its own altitude `osh-061`
+#### Scenario: Draw every entity on top of the terrain, at its own altitude `osh-061`
 - **WHEN** the layer draws a system entity, a feature entity, or the entity it re-adds for a selected system
 - **THEN** the entity's point carries `disableDepthTestDistance` equal to positive infinity
 - **AND** a label on that entity carries `disableDepthTestDistance` equal to positive infinity
@@ -12,7 +12,7 @@ Origin: spec-first
 - **AND** the entity's position keeps the altitude its record carries, so a record with `alt:100` sits 100 metres above the ellipsoid
 - **AND** the entity the layer moves for a fresh observation keeps that observation's altitude in the same way
 
-#### Scenario: Hide a marker beyond the horizon `osh-062`
+#### Scenario: Hide an entity beyond the horizon `osh-062`
 - **WHEN** the camera's `moveEnd` event fires, or a refresh draws the entities, or the poll moves the selected entity
 - **THEN** each system entity and each feature entity beyond the ellipsoid horizon from the camera has `show:false`
 - **AND** each entity inside the horizon has `show:true`
