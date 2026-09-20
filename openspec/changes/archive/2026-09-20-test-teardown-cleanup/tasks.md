@@ -53,7 +53,7 @@
 - [x] 5.4 Let the retry wait tick to completion on the mock clock.
 - [x] 5.5 Capture no timer id.
   - `clear()` increases its generation counter before it aborts. `isStale()`'s check reads the generation counter first. So the counter, not the abort signal, is what a run of this line proves.
-  - This change's own prose, in its round-2 wording, named the abort signal instead. That was wrong. `design.md` and `proposal.md` now name the counter.
+  - This change's prose in round 2 named the abort signal instead. That was wrong. `design.md` and `proposal.md` now name the counter.
 - [x] 5.6 Add one assertion: the retry does not fetch again once its wait completes.
   - This restores what the round-1 fix dropped, and closes the round-2 fault the same fix carried. It is the one exception to "keep all current assertions" in this whole change.
 - [x] 5.7 Change `isStale` in this call to a function that always returns false.

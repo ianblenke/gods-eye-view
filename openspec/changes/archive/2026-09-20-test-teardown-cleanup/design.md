@@ -25,11 +25,11 @@ This change considered and rejected a single shared teardown helper. The seven f
 
 ### D1 `annotationEngine.test.mjs` uses a mock clock, not a cleared real timer
 
-One test in this file starts two outline-upgrade tasks, then calls `engine.clear()` mid-flight. Each task then runs its real transient-retry wait before it stops. Three earlier drafts of this fix got this wrong. The first two were reviewed and each still passed its own assertions:
+One test in this file starts two outline-upgrade tasks, then calls `engine.clear()` mid-flight. Each task then runs its real transient-retry wait before it stops. Three earlier drafts of this fix got this wrong. The review agents checked the first two drafts. Each draft still passed its own assertions:
 
 - The first draft, reviewed in round 1, passed an empty retry-delay list to skip the wait outright. That also skipped `isStale()`'s read of `clear()`'s state after the wait. That read is the only place in this file that runs after a real wait. The isolated retry-function tests use a fake `isStale` instead.
 - The second draft, reviewed in round 2, kept the real wait and captured the real timer id. It cleared that timer in the test's own teardown, before the timer ever fired. Its teardown did clear the timer, so no real leak survived the test. The fault was narrower. `isStale()` never ran, so the new assertion only proved a timer got made. It did not prove the retry logic reads `clear()`'s state after a real wait.
-- A third, unreviewed draft, written and dropped by the implementer while fixing the second draft's fault, enabled a mock clock only after `engine.clear()` ran. By then the real timer already existed, outside the mock clock's control, so a later `tick()` call could not reach it. That draft would have reintroduced the exact leak this whole change exists to close, this time inside the change's own fix. A written check on the fetch count alone could not see it either.
+- The implementer wrote and discarded a third, unreviewed draft to correct the second draft's fault. It enabled a mock clock only after `engine.clear()` ran. By then the real timer already existed, outside the mock clock's control. A later `tick()` call could not reach it. That is the exact leak this whole change exists to close, this time inside the change's own fix. A written check on the fetch count alone could not see it either.
 
 The fix uses a mock clock from before `annotate()` ever runs, not from after `clear()` and not from after the retry logic's first wait. Every timer the retry logic makes from that point is a mock timer. A `tick()` call, not a real wait, advances it. After the test advances the mock clock, the wait resolves and execution reaches `isStale()` for real.
 
