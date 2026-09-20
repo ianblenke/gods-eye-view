@@ -21,7 +21,7 @@ Each of these tests races a fast path against a timer, or waits on a fixed delay
   - `src/tooling/spec/testGuard.test.mjs`
 - No code file changes. No requirement changes. No new scenario. No spec delta.
 - No test name changes anywhere in scope.
-- `src/annotations/annotationEngine.test.mjs` gains one assertion. Its round-1 fix had skipped the real retry wait, and with it the only place any test read the real `engine.clear()` abort signal inside `isStale()`. The round-2 fix restores that exercise, and the new assertion confirms it. This is the one exception to "no assertion changes" in this whole change.
+- `src/annotations/annotationEngine.test.mjs` gains one assertion. Two earlier drafts of its fix each skipped, in a different way, the real retry wait `isStale()` reads `clear()`'s generation counter after. The final fix mocks the clock instead of clearing a real timer, and the new assertion confirms the read happens. This is the one exception to "no assertion changes" in this whole change. `design.md`'s D1 has the full account.
 
 ## Known limits
 

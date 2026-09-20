@@ -8,7 +8,7 @@ Each finding is a test that races a fast path against a fixed-delay timer, or th
 
 **Goals:**
 - Clear the timer or interval that outlives its test, in each of the seven named files.
-- Change no test name and no assertion. The fix removes a live timer. It does not change what a test checks.
+- Change no test name. Change no assertion in six of the seven files. The fix removes a live timer and does not change what those six check. The seventh file gains one assertion — see D1 below.
 
 **Non-Goals:**
 - Change any production code file. Every finding is in test code.
@@ -22,6 +22,19 @@ Each finding is a test that races a fast path against a fixed-delay timer, or th
 The seven leaks take two shapes. The first is a direct await on a fixed delay, one a failed assertion can skip past before it ever settles. The second is a race between two paths, where the timer on the side that loses stays live after the side that wins resolves. The fix for the first shape moves the wait behind whatever guard already exists, or clears the timer inside a hook that always runs. The fix for the second shape captures the timer id and clears it once the race settles, on whichever side loses.
 
 This change considered and rejected a single shared teardown helper. The seven files share no other test-harness code. A helper built for seven unrelated call shapes would carry more branches than the fix it replaces.
+
+### D1 `annotationEngine.test.mjs` mocks the clock instead of clearing a real timer
+
+One test in this file starts two outline-upgrade tasks, then calls `engine.clear()` mid-flight. Each task then runs its real transient-retry wait before it gives up. Two earlier drafts of this fix got this wrong, and each wrong draft still passed its own assertions:
+
+- The first draft passed an empty retry-delay list to skip the wait outright. That also skipped `isStale()`'s read of `clear()`'s state after the wait. That read is the only place in this file that runs after a real wait. The isolated retry-function tests use a fake `isStale` instead.
+- The second draft kept the real wait and captured the real timer id, but cleared that timer before it ever fired. The real setTimeout, made before the fix's own clock control took hold, kept running on its own after the test returned. That is the exact leak this whole change exists to close, reintroduced by its own fix. A written check on the fetch count alone could not see it.
+
+The fix mocks the clock before `annotate()` ever runs, not after `clear()`. Every timer the retry logic makes from that point is a mock timer. A `tick()` call, not a real wait, advances it. Once ticked, the wait resolves and execution reaches `isStale()` for real.
+
+`clear()` bumps a generation counter before it aborts its controllers. `isStale()`'s own check reads that counter first. So the counter, not the abort signal, is what this test actually proves. `isStale()`'s abort-signal read is unreached from `clear()`'s only call site, because the generation check short-circuits it first. Earlier drafts of this design and of `tasks.md` named the abort signal. That was wrong, and both now name the counter.
+
+The new assertion checks that a task's retry does not fetch a second time once its wait completes. A mutation makes `isStale()` always answer false. The assertion catches it: each of the two tasks then retries once, and the fetch count rises from 2 to 4.
 
 ### The `testGuard.test.mjs` leak is found by repetition, not by one clean run
 
@@ -45,5 +58,5 @@ A run under a 60-second limit uses the `timeout` command in front of it. A plain
 
 ## Risks / Trade-offs
 
-- **A cleared timer did useful work.** Unlikely for the shapes found. Each is a fixed delay used as a wait, or a give-up case, not a poll that a feature depends on and that repeats. Each file's own test run, and the mutation proof in `tasks.md`, confirms the same tests pass after the clear.
+- **A cleared timer did useful work.** Unlikely for the shapes found. Each is a fixed delay used as a wait, or a give-up case, not a poll that a feature depends on and that repeats. Each file's own test run, and the mutation proof in `tasks.md`, confirms the same tests pass after the fix. That fix is a clear in six files. It is a mocked wait in `annotationEngine.test.mjs`.
 - **The `testGuard.test.mjs` leak stays unproven if it never happens again.** If several repeats, and a run under load, find nothing, `tasks.md` task 8.1 calls for a report of that fact. It does not call for a guess at a fix with no case that fails, to prove it against.

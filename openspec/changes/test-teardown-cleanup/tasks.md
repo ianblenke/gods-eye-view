@@ -6,7 +6,7 @@
   - Name the test and the timer that stays live, before you change anything.
   - A file that leaks prints every result, but its plan line prints late or not at all under a plain run.
   - The force-exit flag ends the process while the leak is still live, so its resource list is readable.
-  - Change no test name and no assertion. The fix clears a timer. It does not change what a test checks.
+  - Keep all test names and current assertions. Add only the assertion that section 5's own notes describe.
 
 ## 2. `src/sharelink.celestial.test.mjs`
 
@@ -45,17 +45,25 @@
 - [x] 5.1 Find the one test and the two timers that outlive it.
   - Lines 254 and 311 enable a mock timer. Confirm whether a mocked timer or a real one is the leak first.
   - One test, the one that checks a clear call against queued upgrades, holds both.
-- [x] 5.2 Clear each. Do not skip the retry wait the timer belongs to.
-  - Keep the default retry delays. Capture the real timer id each of the two started tasks arms.
-  - Clear each timer once `engine.clear()` has run and the task's own promise has settled.
-  - The round-1 fix passed an empty retry-delay list instead. That skips the wait, and with it the read of the real abort signal from `engine.clear()` inside `isStale()`. That read is the only place any test exercises that real link. The isolated retry-function tests use a fake `isStale` instead. Restore the exercise of that line along with the fix.
-  - One new assertion checks that both timers reached the real wait, so the round-1 gap does not silently return. This is the one exception to "no assertion changes" in this whole change, made to restore what the round-1 fix had dropped.
-- [x] 5.3 Run the file.
-- [x] 5.4 Confirm every test still passes, with the same name and one added assertion.
-- [x] 5.5 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
-- [x] 5.6 Confirm the plan line prints and the run exits cleanly.
-- [x] 5.7 Report the test that held the two timers.
-  - The one that checks a clear call against queued upgrades. 22/22 tests pass. Clean exit.
+- [x] 5.2 Keep the default retry delays.
+  - Round 1 skipped the retry wait instead, by passing an empty retry-delay list. That also skipped the read `isStale()` makes of `clear()`'s state after the wait. That read is the only place any test exercises this real link. The isolated retry-function tests use a fake `isStale` instead.
+- [x] 5.3 Enable the mock clock before `annotate()` runs, not after `clear()`.
+  - A real timer made before the mock clock is enabled stays on its own clock. It outlives the test, whatever a later mock-clock tick does. A second draft of this fix made exactly that mistake, and a written check on `fetchesStarted` after the tick could not tell the difference.
+  - Read `AGENTS.md` rule 13 again on this file: check that a fix works. Do not assume it from its shape alone.
+- [x] 5.4 Let the retry wait tick to completion on the mock clock. Capture no timer id.
+  - `clear()` bumps its generation counter before it aborts. `isStale()`'s check reads the generation counter first. So the counter, not the abort signal, is what a run of this line proves.
+  - A second draft of this fix, and its own prose, named the abort signal instead. That was wrong. `design.md` and `proposal.md` now name the counter.
+- [x] 5.5 Add one assertion: the retry does not fetch again once its wait completes.
+  - This restores what the round-1 fix dropped, and closes the round-2 fault the same fix carried. It is the one exception to "keep all current assertions" in this whole change.
+- [x] 5.6 Mutation: change `isStale` in this call to a function that always answers false.
+  - `fetchesStarted` reads 4, not 2, once the mock clock ticks past the wait. Each started task retries once more. The new assertion reddens. Confirmed.
+- [x] 5.7 Run the file.
+- [x] 5.8 Confirm every test keeps its original name.
+- [x] 5.9 Confirm that only the test of queued upgrades gains the one new assertion.
+- [x] 5.10 Run the file with the force-exit flag and the tap reporter, under a 60-second limit.
+- [x] 5.11 Confirm the plan line prints and the run exits cleanly.
+- [x] 5.12 Report the test that held the two timers.
+  - The one that checks a clear call against queued upgrades. 22/22 tests pass. Clean exit. Repeated four times over, all clean.
 
 ## 6. `src/data/manager.test.mjs`
 
@@ -104,5 +112,8 @@
   - `Gates passed.` No `GATES-TEST-LEAK` error, for any file, including `testGuard.test.mjs`.
 - [ ] 9.3 Run the full gate for this change. Read the command output for the verdict, not the result file.
 - [ ] 9.4 Run the spec-adversary and STE-adversary review. Correct the findings. Record the result in `review.md`.
-  - Round 1: both PASS. Spec-adversary's F1 named a wording mismatch here, now corrected. STE-adversary gave 19 minor findings, all corrected in this file, `proposal.md` and `design.md`.
-  - The spec-adversary's first attempt had used the wrong repository copy. A later, corrected re-run found a major fault in the round-1 fix for section 5. The empty retry-delay list skipped the real retry wait, and with it the only test of the real `engine.clear()` abort signal reaching `isStale()`. Section 5 now fixes this properly.
+  - Round 1: both PASS. Spec-adversary's F1 named a text mismatch here, now corrected. STE-adversary gave 19 minor findings, all corrected in this file, `proposal.md` and `design.md`.
+  - The round-1 spec-adversary's first attempt used the wrong repository copy. A later, corrected re-run found a major fault in the round-1 fix for section 5. The empty retry-delay list skipped the real retry wait. It skipped, with it, the only test of `isStale()`'s read after that wait.
+  - Round 2: the tool for the review agents changed mid-round, from a Claude subagent to `codex -m gpt-6-astra`, on the user's own instruction. Round 2's spec-adversary found a second, different major fault in that same fix. The timer it captured was real, but the fix cleared it before it ever fired, so `isStale()` still never ran.
+  - Round 2 also caught a wrong claim in this file's own prose: that the fix reads `engine.clear()`'s abort signal. `clear()` bumps its generation counter first. `isStale()`'s check reads that counter first too. So the counter, not the signal, is what a run of this line actually proves.
+  - Section 5 now mocks the clock before `annotate()` ever runs, and ticks the mock wait to completion. It asserts no second fetch follows, with a named mutation that proves the assertion is not vacuous. See section 5 for the full account.
