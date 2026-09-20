@@ -1739,7 +1739,10 @@ test('[osh-057] a fresh location that names a feature moves the feature entity a
   const source = fakeSource({
     systems: [],
     fois: [FEATURE_A],
-    locations: [aircraftLocation({ systemId: null, systemName: null, foiId: FEATURE_A.id, lon: 30, lat: 31, alt: 32 })],
+    locations: [
+      aircraftLocation({ systemId: null, systemName: null, foiId: FEATURE_A.id, lon: 30, lat: 31, alt: 32 }),
+      aircraftLocation({ systemId: 'sys-fixture-second-no-point', systemName: null, foiId: 'foi-fixture-unheld-2', lon: 40, lat: 41, alt: 42 }),
+    ],
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
@@ -1751,6 +1754,8 @@ test('[osh-057] a fresh location that names a feature moves the feature entity a
   const expected = Cesium.Cartesian3.fromDegrees(30, 31, 32);
   assert.ok(Cesium.Cartesian3.equalsEpsilon(moved, expected, Cesium.Math.EPSILON6));
   assert.equal(dataSources[0].entities.getById('osh:sys-fixture-9'), undefined, 'no system entity was placed');
+  assert.equal(dataSources[0].entities.getById('osh:sys-fixture-second-no-point'), undefined, 'unheld feature location never places system');
+  assert.equal(layer.getStats().placed.stream, 0, 'placed.stream stays at zero');
   layer.destroy(viewer);
 });
 
@@ -1826,4 +1831,399 @@ test('[osh-057] getStats().placed.stream counts only the stream-placed system, n
   assert.equal(stats.count, 2, 'both the geometry-placed and the stream-placed system are on the map');
   assert.equal(stats.placed.stream, 1);
   layer.destroy(viewer);
+});
+
+// --- osh-059: show one entity per stream-drawn feature ---
+
+test('[osh-059] the map holds osh-foi:<id> for a stream-drawn feature at the location\'s position, with no label, and getStats().features counts it', async (t) => {
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [
+      aircraftLocation({
+        foiId: 'foi-fixture-unheld-1',
+        systemId: 'sys-fixture-host-1',
+        systemName: 'Host System',
+        lon: 15,
+        lat: 25,
+        alt: 50,
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+
+  const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-unheld-1');
+  assert.ok(entity);
+  const position = entity.position.getValue(Cesium.JulianDate.now());
+  const expected = Cesium.Cartesian3.fromDegrees(15, 25, 50);
+  assert.ok(Cesium.Cartesian3.equalsEpsilon(position, expected, Cesium.Math.EPSILON6));
+  assert.equal(entity.label, undefined);
+  assert.equal(layer.getStats().features, 1);
+});
+
+test('[osh-059] the location\'s systemName never becomes the label of a stream-drawn feature', async (t) => {
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [
+      aircraftLocation({
+        foiId: 'foi-fixture-unheld-1',
+        systemId: 'sys-fixture-host-1',
+        systemName: 'Host Name Should Not Appear On Feature',
+        lon: 15,
+        lat: 25,
+        alt: 50,
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+
+  const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-unheld-1');
+  assert.ok(entity);
+  assert.equal(entity.label, undefined);
+});
+
+test('[osh-059] three fresh unheld features of one host at one position give three entities, with no grouping', async (t) => {
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [
+      aircraftLocation({
+        foiId: 'foi-fixture-f1',
+        systemId: 'sys-fixture-host-1',
+        lon: 15,
+        lat: 25,
+        alt: 50,
+      }),
+      aircraftLocation({
+        foiId: 'foi-fixture-f2',
+        systemId: 'sys-fixture-host-1',
+        lon: 15,
+        lat: 25,
+        alt: 50,
+      }),
+      aircraftLocation({
+        foiId: 'foi-fixture-f3',
+        systemId: 'sys-fixture-host-1',
+        lon: 15,
+        lat: 25,
+        alt: 50,
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+
+  assert.equal(dataSources[0].entities.values.length, 3);
+  assert.ok(dataSources[0].entities.getById('osh-foi:foi-fixture-f1'));
+  assert.ok(dataSources[0].entities.getById('osh-foi:foi-fixture-f2'));
+  assert.ok(dataSources[0].entities.getById('osh-foi:foi-fixture-f3'));
+});
+
+test('[osh-059] a click on a stream-drawn feature selects its host and starts the datastream poll', async (t) => {
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [
+      aircraftLocation({
+        foiId: 'foi-fixture-unheld-1',
+        systemId: 'sys-fixture-host-1',
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, setPicked } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    setPicked('osh-foi:foi-fixture-unheld-1');
+    getClick()({ position: {} });
+    await flush();
+    assert.equal(layer.getStats().selectedFeatureId, 'foi-fixture-unheld-1');
+    assert.equal(layer.getStats().selectedId, 'sys-fixture-host-1');
+    assert.deepEqual(source.calls.datastreamsArgs, ['sys-fixture-host-1']);
+  });
+});
+
+test('[osh-059] placed.streamFeatures counts the stream-drawn feature and not the held feature a stream moved', async (t) => {
+  const source = fakeSource({
+    systems: [],
+    fois: [FEATURE_A],
+    locations: [
+      aircraftLocation({
+        foiId: FEATURE_A.id,
+        systemId: FEATURE_A.systemId,
+        lon: 10,
+        lat: 20,
+        alt: 30,
+      }),
+      aircraftLocation({
+        foiId: 'foi-fixture-unheld-1',
+        systemId: 'sys-fixture-host-1',
+        lon: 15,
+        lat: 25,
+        alt: 35,
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+
+  const stats = layer.getStats();
+  assert.equal(stats.features, 2);
+  assert.equal(stats.placed.streamFeatures, 1);
+});
+
+test('[osh-059] the detail for a selected stream-drawn feature shows its id, its host id and Placed by with the location\'s age', async (t) => {
+  const detailHost = { innerHTML: '' };
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [
+      aircraftLocation({
+        foiId: 'foi-fixture-unheld-1',
+        systemId: 'sys-fixture-host-1',
+        systemName: 'Fixture Host Name',
+        datastreamName: 'Stream Alpha',
+        ageMs: 12_000,
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer, setPicked } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    setPicked('osh-foi:foi-fixture-unheld-1');
+    getClick()({ position: {} });
+    await flush();
+
+    assert.match(detailHost.innerHTML, /foi-fixture-unheld-1/);
+    assert.match(detailHost.innerHTML, /Host:\s*sys-fixture-host-1/);
+    assert.match(detailHost.innerHTML, /Placed by Stream Alpha \(12 s\)/);
+    assert.doesNotMatch(detailHost.innerHTML, /<h3>Fixture Host Name<\/h3>/);
+  });
+});
+
+test('[osh-059] a refresh with no fresh location for a stream-drawn feature removes its entity and clears its selection', async (t) => {
+  let locations = [
+    aircraftLocation({
+      foiId: 'foi-fixture-unheld-1',
+      systemId: 'sys-fixture-host-1',
+    }),
+  ];
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [],
+  });
+  source.getLocations = async () => ({ keyRequired: false, locations, failed: 0 });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources, setPicked } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    setPicked('osh-foi:foi-fixture-unheld-1');
+    getClick()({ position: {} });
+    await flush();
+    assert.equal(layer.getStats().selectedFeatureId, 'foi-fixture-unheld-1');
+    assert.ok(dataSources[0].entities.getById('osh-foi:foi-fixture-unheld-1'));
+
+    locations = [];
+    await layer.update(viewer);
+    assert.equal(dataSources[0].entities.getById('osh-foi:foi-fixture-unheld-1'), undefined);
+    assert.equal(layer.getStats().selectedFeatureId, null);
+    assert.equal(layer.getStats().selectedId, null);
+  });
+});
+
+test('[osh-059] a selected stream-drawn feature keeps its selection across a refresh that still draws it', async (t) => {
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [
+      aircraftLocation({
+        foiId: 'foi-fixture-unheld-1',
+        systemId: 'sys-fixture-host-1',
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, setPicked } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    setPicked('osh-foi:foi-fixture-unheld-1');
+    getClick()({ position: {} });
+    await flush();
+    assert.equal(layer.getStats().selectedFeatureId, 'foi-fixture-unheld-1');
+
+    await layer.update(viewer);
+    assert.equal(layer.getStats().selectedFeatureId, 'foi-fixture-unheld-1');
+  });
+});
+
+test('[osh-059] a system with no Point that only an unheld-feature location names counts under unplaced', async (t) => {
+  const source = fakeSource({
+    systems: [SYSTEM_NULL],
+    fois: [],
+    locations: [
+      aircraftLocation({
+        foiId: 'foi-fixture-unheld-1',
+        systemId: SYSTEM_NULL.id,
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+
+  assert.equal(dataSources[0].entities.getById('osh:sys-fixture-9'), undefined);
+  assert.ok(dataSources[0].entities.getById('osh-foi:foi-fixture-unheld-1'));
+  const stats = layer.getStats();
+  assert.equal(stats.unplaced, 1);
+  assert.equal(stats.count, 0);
+  assert.equal(stats.features, 1);
+});
+
+test('[osh-059] destroy() forgets the stream-drawn feature and zeroes placed.streamFeatures', async (t) => {
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [
+      aircraftLocation({
+        foiId: 'foi-fixture-unheld-1',
+        systemId: 'sys-fixture-host-1',
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+
+  assert.equal(layer.getStats().placed.streamFeatures, 1);
+  layer.destroy(viewer);
+  assert.equal(layer.getStats().placed.streamFeatures, 0);
+});
+
+// --- osh-060: keep one entity across a failed features read ---
+
+test('[osh-060] one entity id across a held refresh, a failed features read and a restored read, and none once the location is gone', async (t) => {
+  let foiFail = false;
+  let locationFresh = true;
+  const foiRecord = {
+    id: 'foi-fixture-stable-1',
+    uid: 'urn:foi-stable',
+    systemId: 'sys-fixture-host-1',
+    name: 'Stable Feature',
+    description: null,
+    validTime: null,
+    lon: 1,
+    lat: 2,
+    alt: 0,
+  };
+  const source = fakeSource({
+    systems: [],
+    fois: [foiRecord],
+    locations: [],
+  });
+  source.getFois = async () => {
+    if (foiFail) throw new Error('features unavailable');
+    return { keyRequired: false, fois: [foiRecord], truncated: false };
+  };
+  source.getLocations = async () => {
+    if (!locationFresh) return { keyRequired: false, locations: [], failed: 0 };
+    return {
+      keyRequired: false,
+      locations: [
+        aircraftLocation({
+          foiId: 'foi-fixture-stable-1',
+          systemId: 'sys-fixture-host-1',
+          lon: 10,
+          lat: 20,
+          alt: 30,
+          ageMs: FRESH_AGE_MS,
+        }),
+      ],
+      failed: 0,
+    };
+  };
+
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+
+  const expectedPos = Cesium.Cartesian3.fromDegrees(10, 20, 30);
+
+  // Refresh 1: held refresh (getFois succeeds, location is fresh)
+  await layer.update(viewer);
+  let entity = dataSources[0].entities.getById('osh-foi:foi-fixture-stable-1');
+  assert.ok(entity);
+  assert.ok(Cesium.Cartesian3.equalsEpsilon(entity.position.getValue(Cesium.JulianDate.now()), expectedPos, Cesium.Math.EPSILON6));
+  assert.equal(entity.label?.text?.getValue(Cesium.JulianDate.now()), 'Stable Feature');
+  assert.equal(layer.getStats().partial, false);
+  assert.equal(layer.getStats().placed.streamFeatures, 0);
+
+  // Refresh 2: failed features read (getFois throws, location is fresh)
+  foiFail = true;
+  await layer.update(viewer);
+  entity = dataSources[0].entities.getById('osh-foi:foi-fixture-stable-1');
+  assert.ok(entity);
+  assert.ok(Cesium.Cartesian3.equalsEpsilon(entity.position.getValue(Cesium.JulianDate.now()), expectedPos, Cesium.Math.EPSILON6));
+  assert.equal(entity.label, undefined);
+  assert.equal(layer.getStats().partial, true);
+  assert.equal(layer.getStats().placed.streamFeatures, 1);
+
+  // Refresh 3: restored read (getFois succeeds, location is fresh)
+  foiFail = false;
+  await layer.update(viewer);
+  entity = dataSources[0].entities.getById('osh-foi:foi-fixture-stable-1');
+  assert.ok(entity);
+  assert.ok(Cesium.Cartesian3.equalsEpsilon(entity.position.getValue(Cesium.JulianDate.now()), expectedPos, Cesium.Math.EPSILON6));
+  assert.equal(entity.label?.text?.getValue(Cesium.JulianDate.now()), 'Stable Feature');
+  assert.equal(layer.getStats().partial, false);
+  assert.equal(layer.getStats().placed.streamFeatures, 0);
+
+  // Refresh 4: getFois throws, location is gone (no fresh location)
+  foiFail = true;
+  locationFresh = false;
+  await layer.update(viewer);
+  entity = dataSources[0].entities.getById('osh-foi:foi-fixture-stable-1');
+  assert.equal(entity, undefined);
+  assert.equal(layer.getStats().partial, true);
+  assert.equal(layer.getStats().placed.streamFeatures, 0);
 });

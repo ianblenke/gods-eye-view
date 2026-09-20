@@ -305,3 +305,48 @@ test('[osh-032] the system id stands in for its name when the system has neither
   assert.match(html, /<h3>sys-fixture-unread<\/h3>/);
   assert.match(html, /Placed by Aircraft Position \(age unknown\)/);
 });
+
+test('[osh-032] a feature placed by a stream shows Placed by with the datastream\'s name and the age', () => {
+  const html = renderOshDetail({
+    feature: {
+      id: 'foi-fixture-1',
+      name: 'Fixture Feature',
+      placedBy: { datastreamName: 'Stream <Alpha>', ageMs: 12_000 },
+    },
+    hostId: 'sys-fixture-1',
+    system: { id: 'sys-fixture-1', name: 'Host System' },
+    datastreams: [],
+  });
+  assert.match(html, /Placed by Stream &lt;Alpha&gt; \(12 s\)/);
+});
+
+test('[osh-032] a feature with no placedBy shows no Placed by line', () => {
+  const html = renderOshDetail({
+    feature: {
+      id: 'foi-fixture-1',
+      name: 'Fixture Feature',
+      placedBy: null,
+    },
+    hostId: 'sys-fixture-1',
+    system: { id: 'sys-fixture-1', name: 'Host System' },
+    datastreams: [],
+  });
+  assert.doesNotMatch(html, /Placed by/);
+  assert.doesNotMatch(html, /osh-detail-placed-by/);
+});
+
+test('[osh-032] a feature header with no name shows the feature\'s id, never the host\'s name', () => {
+  const html = renderOshDetail({
+    feature: {
+      id: 'foi-fixture-unnamed',
+      name: null,
+      placedBy: { datastreamName: 'Stream Beta', ageMs: 5_000 },
+    },
+    hostId: 'sys-fixture-host-1',
+    system: { id: 'sys-fixture-host-1', name: 'Host Named System' },
+    datastreams: [],
+  });
+  assert.match(html, /<h3>foi-fixture-unnamed<\/h3>/);
+  assert.doesNotMatch(html, /<h3>Host Named System<\/h3>/);
+  assert.match(html, /Host:\s*Host Named System/);
+});
