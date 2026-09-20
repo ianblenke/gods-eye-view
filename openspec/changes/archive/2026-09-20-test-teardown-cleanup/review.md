@@ -5,7 +5,7 @@ Reviewers: spec-adversary, ste-adversary
 Date: 2026-09-20
 Gates: make gates CHANGE=test-teardown-cleanup passed
 Rounds: 3
-Scope: round 1 full, round 2 diff `6b98ca5`, round 3 diff `6a5e581`
+Scope: diff 6a5e581
 Reviewed-Tree: d3575375b773d8225cbb2de9b91391ab4a9ce0c01b8ce25cb6ac08b766432398
 
 ## Findings
