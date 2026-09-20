@@ -21,6 +21,7 @@ import {
   parseLedger,
   ratchetLedger,
   readLedger,
+  waiversOf,
   writeLedger,
 } from './lib/ledger.mjs';
 import { buildLinks, checkLinks, checkRegistry, compareRegistryWithBase, idsOfChangedTests, readLinks, readRegistry, updateRegistry, writeLinks, writeRegistry } from './lib/registry.mjs';
@@ -37,11 +38,16 @@ const RUNNER = fileURLToPath(new URL('./lib/run-parallel.mjs', import.meta.url))
 const OUT_DIR = '.gev-cache/spec';
 const DEFAULT_BASE = 'origin/main';
 const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
-const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree']);
-const OPTIONS = new Set(['--change', '--base', '--root']);
-const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree> [--change <name>] [--base <ref>] [--root <dir>]';
+const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive']);
+const OPTIONS = new Set(['--change', '--base', '--root', '--file', '--metric', '--lines', '--count', '--reason']);
+const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive> [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>]';
 
-/** Read the command line. Throws the usage text for a bad command line. */
+/**
+ * Read the command line. Throws the usage text for a bad command line.
+ *
+ * @param {string[]} argv - Arguments from the command line.
+ * @returns {object} Parsed options.
+ */
 export function parseArgs(argv) {
   const [command, ...rest] = argv;
   if (!COMMANDS.has(command)) throw new Error(USAGE);
@@ -312,6 +318,50 @@ export function runGates({
     return 0;
   }
 
+  if (command === 'waive') {
+    const { file, metric, lines, count, reason } = options;
+    const tracked = new Set(listTrackedFiles(root));
+    const isTracked = Boolean(file) && tracked.has(file);
+    const sameAsBaseFile = isTracked && existsSync(path.join(root, file)) && readFileAt(root, base, file) === readFileSync(path.join(root, file), 'utf8');
+    const folder = change && changeFolder(root, change);
+    const active = Boolean(change) && Boolean(folder) && existsSync(path.join(root, folder, 'proposal.md'));
+    const validMetric = ['lines', 'branches', 'functions'].includes(metric);
+    const parsedLines = lines ? lines.split(',').map((item) => Number(item)) : [];
+    const validLines = parsedLines.length > 0 && parsedLines.every((n) => Number.isInteger(n) && n > 0);
+    const parsedCount = Number(count);
+    const validCount = Number.isInteger(parsedCount) && parsedCount > 0;
+    const validReason = Boolean(reason) && reason.trim().length > 0;
+
+    if (!active) {
+      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `Change "${change}" has no folder with a proposal.md file in openspec/changes` }]);
+    }
+    if (!isTracked) {
+      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `Git does not track ${file}` }]);
+    }
+    if (sameAsBaseFile) {
+      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `${file} has the base content. A waiver needs a changed file.` }]);
+    }
+    if (!validMetric) {
+      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `Unknown metric "${metric}". The metrics are lines, branches, functions.` }]);
+    }
+    if (!validLines) {
+      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `Line "${lines}" is not a positive whole number` }]);
+    }
+    if (!validCount) {
+      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `Count "${count}" is not a positive whole number` }]);
+    }
+    if (!validReason) {
+      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: 'Reason is empty' }]);
+    }
+
+    const sha = contentHash(readFileSync(path.join(root, file), 'utf8'));
+    const commit = headCommit(root);
+    const waiverLine = { date, change, commit, kind: 'waiver', file, metric, sha, lines: parsedLines, count: parsedCount, reason };
+    appendHistory(root, [waiverLine]);
+    log(`Waiver: recorded ${parsedCount} ${metric} for ${file}.`);
+    return report(log, []);
+  }
+
   const pinned = readOptional(root, '.node-version');
   if (pinned === null) {
     return report(log, [{ code: 'GATES-RUNTIME', file: '.node-version', message: 'Add the file .node-version with the pinned Node version.' }]);
@@ -370,6 +420,10 @@ export function runGates({
   const ledger = readLedger(root);
   if (!ledger) return report(log, [...measured.errors, { code: 'GATES-NO-LEDGER', file: LEDGER_FILE, message: 'Run: node scripts/spec/gates.mjs init' }]);
 
+  const historyText = readOptional(root, HISTORY_FILE) ?? '';
+  const baseHistoryText = readFileAt(root, base, HISTORY_FILE) ?? '';
+  const waivers = waiversOf(historyText, baseHistoryText, change);
+
   if (command === 'ratchet') {
     if (measured.errors.length > 0) return report(log, measured.errors);
     const registry = updateRegistry({
@@ -393,6 +447,7 @@ export function runGates({
         changeActive,
         date,
         commit: headCommit(root),
+        waivers,
       });
     } catch (error) {
       return report(log, [{ code: 'GATES-RATCHET', file: LEDGER_FILE, message: error.message }]);
@@ -405,14 +460,14 @@ export function runGates({
     return report(log, []);
   }
 
-  const comparison = compareLedger({ ledger, current: measured.current, sameAsBase });
+  const comparison = compareLedger({ ledger, current: measured.current, sameAsBase, waivers });
   const baseErrors = compareWithBase({
     ledger,
     baseLedger: parseLedger(readFileAt(root, base, LEDGER_FILE)),
     retired: [...measured.specs.retired],
     baseRetired: JSON.parse(readFileAt(root, base, RETIRED_FILE) ?? '[]'),
-    history: readOptional(root, HISTORY_FILE) ?? '',
-    baseHistory: readFileAt(root, base, HISTORY_FILE) ?? '',
+    history: historyText,
+    baseHistory: baseHistoryText,
     sameAsBase,
     change,
   });
