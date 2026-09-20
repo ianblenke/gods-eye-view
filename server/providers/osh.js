@@ -366,7 +366,7 @@ export function oshProxy({
   /**
    * Resolve one system's name: from the systems snapshot when it holds the
    * system, else one by-id read cached per id — the one reliable read for
-   * a system that snapshot never sampled (design decision D48). A failed
+   * a system that snapshot never sampled (design decision D47). A failed
    * read gives null and never drops the location it names.
    */
   async function resolveSystemName(systemId, systemsById, root, headers) {

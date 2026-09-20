@@ -89,7 +89,7 @@ test('[osh-032] a null ageMs reads "age unknown", takes the class, and never tak
   assert.doesNotMatch(html, /age unknown old/);
 });
 
-test('[osh-032] a time further ahead than drift explains reads as ahead, never as old', () => {
+test('[osh-032] an ageMs far ahead of the clock reads `ahead of the clock`, never `old`', () => {
   const html = renderOshDetail({
     system: { id: 'sys-fixture-1' },
     datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: -31_536_000_000 } }],
@@ -102,7 +102,7 @@ test('[osh-032] a time further ahead than drift explains reads as ahead, never a
   assert.doesNotMatch(html, /clock old/);
 });
 
-test('[osh-032] the panel and the freshness rule agree at the skew bound itself', () => {
+test('[osh-032] at the skew bound reads `0 s`, and just past it reads `ahead of the clock`', () => {
   // The bound is one function now. When it was spelled out in three places,
   // flipping one copy to `<=` left this value fresh to the layer and
   // unusable to the panel, and all 164 tests passed.
@@ -121,7 +121,7 @@ test('[osh-032] the panel and the freshness rule agree at the skew bound itself'
   assert.match(past, /osh-detail-old/);
 });
 
-test('[osh-032] the measured clock skew still reads as a fresh zero', () => {
+test('[osh-032] a negative ageMs within the clock skew reads `0 s`', () => {
   const html = renderOshDetail({
     system: { id: 'sys-fixture-1' },
     datastreams: [{ id: 'ds-fixture-1', observation: { rows: [], ageMs: -5_000 } }],
