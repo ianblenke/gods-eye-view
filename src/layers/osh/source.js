@@ -1,8 +1,8 @@
 /**
- * Read the OpenSensorHub systems, datastreams and newest-observation
- * endpoints. The server already applies the shared adapters before it
- * caches a response, so this file validates the envelope and passes the
- * records through unchanged.
+ * Read the OpenSensorHub systems, datastreams, features, locations and
+ * newest-observation endpoints. The server already applies the shared
+ * adapters before it caches a response, so this file validates the
+ * envelope and passes the records through unchanged.
  */
 
 async function readOshResponse(fetchImpl, path, { signal } = {}) {
@@ -54,6 +54,20 @@ export function createOshSource({
       if (keyRequired) return { keyRequired: true, fois: [], truncated: false };
       if (!Array.isArray(payload?.fois)) throw new Error('Malformed OSH fois payload');
       return { keyRequired: false, fois: payload.fois, truncated: Boolean(payload.truncated) };
+    },
+
+    async getLocations({ signal } = {}) {
+      const { keyRequired, payload } = await readOshResponse(fetchImpl, '/api/osh/locations', {
+        signal,
+      });
+      if (keyRequired) return { keyRequired: true, locations: [], failed: 0 };
+      if (!Array.isArray(payload?.locations))
+        throw new Error('Malformed OSH locations payload');
+      return {
+        keyRequired: false,
+        locations: payload.locations,
+        failed: Number.isFinite(payload.failed) ? payload.failed : 0,
+      };
     },
 
     async getObservation(datastreamId, { signal } = {}) {

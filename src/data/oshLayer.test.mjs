@@ -64,8 +64,17 @@ function fakeSource({
   truncated = false,
   datastreams = [],
   observations = {},
+  locations = [],
 } = {}) {
-  const calls = { systems: 0, fois: 0, datastreams: 0, datastreamsArgs: [], observations: [] };
+  const calls = {
+    systems: 0,
+    fois: 0,
+    datastreams: 0,
+    datastreamsArgs: [],
+    observations: [],
+    locations: 0,
+    locationsArgs: [],
+  };
   return {
     calls,
     async getSystems() {
@@ -84,6 +93,11 @@ function fakeSource({
     async getObservation(id) {
       calls.observations.push(id);
       return { keyRequired: false, observation: observations[id] ?? null };
+    },
+    async getLocations(...args) {
+      calls.locations += 1;
+      calls.locationsArgs.push(args);
+      return { keyRequired: false, locations, failed: 0 };
     },
   };
 }
@@ -175,6 +189,19 @@ test('[osh-029] a system with no Point gets no entity, and counts toward unplace
   const stats = layer.getStats();
   assert.equal(stats.count, 1);
   assert.equal(stats.unplaced, 1);
+  layer.destroy(viewer);
+});
+
+test('[osh-029] a system with no Point but a fresh location still gets an entity, counted under count', async () => {
+  const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.ok(dataSources[0].entities.getById('osh:sys-fixture-9'), 'the stream-placed entity must exist');
+  assert.equal(layer.getStats().count, 1);
+  assert.equal(layer.getStats().unplaced, 0);
   layer.destroy(viewer);
 });
 
@@ -1037,6 +1064,34 @@ test('[osh-046] a fois getter that resolves keyRequired:true, while the systems 
   layer.destroy(viewer);
 });
 
+test('[osh-046] a locations getter that resolves keyRequired:true alone gives an empty location list, with partial:false and no error', async () => {
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getLocations() {
+      return { keyRequired: true, locations: [aircraftLocation()], failed: 0 };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.equal(
+    dataSources[0].entities.getById('osh:sys-fixture-9'),
+    undefined,
+    'a keyRequired locations answer places nothing, even though it carries a location',
+  );
+  assert.equal(layer.getStats().count, 0);
+  assert.equal(layer.getStats().partial, false);
+  assert.equal(layer.getStats().error, null);
+  layer.destroy(viewer);
+});
+
 test('[osh-046] the features getter throwing sets partial:true and no error, and the systems still place', async () => {
   const source = {
     async getSystems() {
@@ -1087,9 +1142,10 @@ test('[osh-046] truncated is true when the features payload says so', async () =
   layer.destroy(viewer);
 });
 
-test('[osh-046] an update aborted before both reads settle draws nothing from them', async () => {
+test('[osh-046] an update aborted before all three reads settle draws nothing from them', async () => {
   let resolveSystems;
   let resolveFois;
+  let resolveLocations;
   const source = {
     async getSystems() {
       return new Promise((resolve) => {
@@ -1101,6 +1157,11 @@ test('[osh-046] an update aborted before both reads settle draws nothing from th
         resolveFois = resolve;
       });
     },
+    async getLocations() {
+      return new Promise((resolve) => {
+        resolveLocations = resolve;
+      });
+    },
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
@@ -1109,10 +1170,48 @@ test('[osh-046] an update aborted before both reads settle draws nothing from th
   const updatePromise = layer.update(viewer);
   layer.disable(viewer);
   resolveFois({ keyRequired: false, fois: [FEATURE_A], truncated: false });
+  resolveLocations({ keyRequired: false, locations: [], failed: 0 });
   resolveSystems({ keyRequired: false, systems: [SYSTEM_A], stale: false });
   assert.equal(await updatePromise, false);
   assert.equal(dataSources[0].entities.values.length, 0, 'nothing is drawn from a superseded update');
   assert.equal(layer.getStats().count, 0);
+  layer.destroy(viewer);
+});
+
+test('[osh-046] a locations getter that throws sets partial:true and no error, and the systems still place', async () => {
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getLocations() {
+      throw new Error('locations boom');
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.equal(layer.getStats().count, 1);
+  assert.equal(layer.getStats().partial, true);
+  assert.equal(layer.getStats().error, null);
+  assert.equal(dataSources[0].entities.getById('osh:sys-fixture-1') !== undefined, true);
+  layer.destroy(viewer);
+});
+
+test('[osh-046] the layer sends no candidate of its own to the locations getter', async () => {
+  const source = fakeSource();
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.equal(source.calls.locations, 1);
+  const [args] = source.calls.locationsArgs;
+  assert.deepEqual(Object.keys(args[0] ?? {}).sort(), ['signal']);
   layer.destroy(viewer);
 });
 
@@ -1460,3 +1559,271 @@ function viewerPickHelper(viewer) {
 async function flush() {
   for (let i = 0; i < 6; i += 1) await Promise.resolve();
 }
+
+// --- osh-057: place a system from a fresh stream record, and retire it ---
+
+const FRESH_AGE_MS = 5_000;
+const STALE_AGE_MS = 7_200_000;
+
+function aircraftLocation(overrides = {}) {
+  return {
+    systemId: 'sys-fixture-9',
+    systemName: 'Fixture Aircraft',
+    foiId: null,
+    foiUid: null,
+    datastreamId: 'ds-fixture-aircraft',
+    datastreamName: 'Aircraft Position',
+    lon: 10,
+    lat: 20,
+    alt: 100,
+    phenomenonTime: '2026-01-01T00:00:00Z',
+    ageMs: FRESH_AGE_MS,
+    ...overrides,
+  };
+}
+
+test('[osh-057] a fresh location with no feature reference places its system, counted under getStats().placed.stream', async () => {
+  const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
+  assert.ok(entity, 'the stream-placed entity must exist');
+  assert.equal(layer.getStats().placed.stream, 1);
+  layer.destroy(viewer);
+});
+
+test('[osh-057] a system with no record in the union map is named from the location, and never enters the union', async () => {
+  const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
+  assert.equal(entity.label.text.getValue(), 'Fixture Aircraft');
+  assert.equal(entity.properties.name.getValue(), null, 'no held system record was created');
+  layer.destroy(viewer);
+});
+
+test('[osh-057] only a location with systemName:null gives the id as the label', async () => {
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [aircraftLocation({ systemName: null })],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
+  assert.equal(entity.label.text.getValue(), 'sys-fixture-9');
+  layer.destroy(viewer);
+});
+
+test('[osh-057] a refresh with no fresh location for that system removes the entity and counts it under unplaced', async (t) => {
+  let locations = [aircraftLocation()];
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getLocations() {
+      return { keyRequired: false, locations, failed: 0 };
+    },
+    async getDatastreams() {
+      return { keyRequired: false, datastreams: [] };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.ok(dataSources[0].entities.getById('osh:sys-fixture-9'));
+
+  locations = [];
+  await layer.update(viewer);
+  assert.equal(
+    dataSources[0].entities.getById('osh:sys-fixture-9'),
+    undefined,
+    'the entity is gone once its stream is no longer fresh',
+  );
+  assert.equal(layer.getStats().unplaced, 1);
+  layer.destroy(viewer);
+});
+
+test('[osh-057] a placeholder that gains a held record and a Point on a later refresh is not counted as retired', async (t) => {
+  let systems = [];
+  let locations = [aircraftLocation()];
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems, stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getLocations() {
+      return { keyRequired: false, locations, failed: 0 };
+    },
+    async getDatastreams() {
+      return { keyRequired: false, datastreams: [] };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.ok(dataSources[0].entities.getById('osh:sys-fixture-9'), 'placed as a placeholder from the stream');
+
+  // The system now shows up in a systems refresh with its own Point, and
+  // the stream that placed it as a placeholder goes stale. Its id is
+  // still placed this refresh, by geometry, so it must not add to the
+  // retirement count a placeholder losing its stream would otherwise add.
+  systems = [{ id: 'sys-fixture-9', uid: 'urn:n', name: 'Held Now', description: null, lon: 5, lat: 6, alt: 0 }];
+  locations = [];
+  await layer.update(viewer);
+  assert.ok(dataSources[0].entities.getById('osh:sys-fixture-9'), 'still placed, now by geometry');
+  assert.equal(layer.getStats().unplaced, 0, 'a system placed this refresh is never also counted as retired');
+  layer.destroy(viewer);
+});
+
+test('[osh-057] a selected stream-placed system keeps its entity at its last position until deselected', async () => {
+  let locations = [aircraftLocation()];
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getLocations() {
+      return { keyRequired: false, locations, failed: 0 };
+    },
+    async getDatastreams() {
+      return { keyRequired: false, datastreams: [] };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-9');
+    getClick()({ position: {} });
+    await flush();
+    assert.equal(layer.getStats().selectedId, 'sys-fixture-9');
+
+    locations = [];
+    await layer.update(viewer);
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
+    assert.ok(entity, 'the selected entity stays even though its stream went stale');
+    assert.equal(layer.getStats().selectedId, 'sys-fixture-9', 'the selection is not cleared');
+    // The exception governs the entity only: the system still counts as
+    // unplaced, because its stream went stale, even while its entity is
+    // kept for the current selection.
+    assert.equal(layer.getStats().unplaced, 1);
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-057] a fresh location that names a feature moves the feature entity and never places a system', async () => {
+  const source = fakeSource({
+    systems: [],
+    fois: [FEATURE_A],
+    locations: [aircraftLocation({ systemId: null, systemName: null, foiId: FEATURE_A.id, lon: 30, lat: 31, alt: 32 })],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const featureEntity = dataSources[0].entities.getById('osh-foi:foi-fixture-1');
+  const moved = featureEntity.position.getValue(Cesium.JulianDate.now());
+  const expected = Cesium.Cartesian3.fromDegrees(30, 31, 32);
+  assert.ok(Cesium.Cartesian3.equalsEpsilon(moved, expected, Cesium.Math.EPSILON6));
+  assert.equal(dataSources[0].entities.getById('osh:sys-fixture-9'), undefined, 'no system entity was placed');
+  layer.destroy(viewer);
+});
+
+test('[osh-057] a click on a stream-placed entity selects it and starts its datastream poll like any system', async () => {
+  const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-9');
+    getClick()({ position: {} });
+    await flush();
+    assert.equal(layer.getStats().selectedId, 'sys-fixture-9');
+    assert.equal(source.calls.datastreams, 1);
+    assert.equal(source.calls.datastreamsArgs[0], 'sys-fixture-9');
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-057] the detail for a selected stream-placed placeholder shows Placed by, with the name the location carries', async () => {
+  const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-9');
+    getClick()({ position: {} });
+    await flush();
+    assert.match(detailHost.innerHTML, /Fixture Aircraft/, 'the header falls back to the location\'s own systemName');
+    assert.match(detailHost.innerHTML, /Placed by Aircraft Position/);
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-057] a held system\'s own name wins over the location\'s systemName in the detail header', async () => {
+  const source = fakeSource({ systems: [SYSTEM_NULL], fois: [], locations: [aircraftLocation()] });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-9');
+    getClick()({ position: {} });
+    await flush();
+    assert.match(detailHost.innerHTML, /No Point/, 'the held record\'s own name wins');
+    assert.doesNotMatch(
+      detailHost.innerHTML,
+      /Fixture Aircraft/,
+      'the location\'s systemName never overrides a held name',
+    );
+  });
+  layer.destroy(viewer);
+});
+
+test('[osh-057] getStats().placed.stream counts only the stream-placed system, not the geometry-placed one', async () => {
+  const source = fakeSource({ systems: [SYSTEM_A], fois: [], locations: [aircraftLocation()] });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const stats = layer.getStats();
+  assert.equal(stats.count, 2, 'both the geometry-placed and the stream-placed system are on the map');
+  assert.equal(stats.placed.stream, 1);
+  layer.destroy(viewer);
+});

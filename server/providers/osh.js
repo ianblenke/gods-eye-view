@@ -1,23 +1,33 @@
 import { coalesceProxyRequest } from './common/http.js';
-import { OSH_LIST_FORMAT, oshListUrl, oshPages } from './osh/get.js';
+import { OSH_LIST_FORMAT, oshGet, oshListUrl, oshPages } from './osh/get.js';
 import { baseErrorCode, createOshBase } from './osh/base.js';
 import {
   assertObservationUrl,
+  assertObservationsLatestUrl,
+  assertSchemaUrl,
   assertSystemDatastreamsUrl,
+  assertSystemUrl,
   observationUrl,
+  observationsLatestUrl,
   readDatastreamId,
   readSystemId,
+  schemaUrl,
   systemDatastreamsUrl,
+  systemUrl,
 } from './osh/ids.js';
 import {
   OBS_TTL_MS,
+  createOshKeyedCache,
+  createOshLocationsPass,
   createOshObservationsCache,
+  createOshSchemaCache,
+  createOshSystemCache,
   createOshSystemDatastreamsCache,
 } from './osh/observations.js';
 import { mapOshSystems } from '../../src/data/oshSystems.js';
 import { mapOshDatastreams } from '../../src/data/oshDatastreams.js';
 import { mapOshFois } from '../../src/data/oshFois.js';
-import { oshObservationAgeMs } from '../../src/data/oshObservations.js';
+import { mapOshLocationPage, oshObservationAgeMs } from '../../src/data/oshObservations.js';
 
 /**
  * OpenSensorHub systems, datastreams, features-of-interest and
@@ -30,12 +40,13 @@ import { oshObservationAgeMs } from '../../src/data/oshObservations.js';
  * fixed candidate list (osh/base.js) with GET probes only.
  *
  * Routes:
- *   GET /api/osh/status       → {hasKey, base, systems, datastreams, fois, observations, ttlMs}
+ *   GET /api/osh/status       → {hasKey, base, systems, datastreams, fois, observations, datastreamsBySystem, locationProperties, locations, ttlMs}
  *   GET /api/osh/systems      → {fetchedAt, stale, ttlMs, count, systems}
  *   GET /api/osh/datastreams  → {fetchedAt, stale, ttlMs, count, datastreams}
  *   GET /api/osh/datastreams?system=<id> → {system, fetchedAt, stale, ttlMs, count, datastreams}
  *   GET /api/osh/fois          → {fetchedAt, stale, ttlMs, count, truncated, fois}
  *   GET /api/osh/observations?datastream=<id> → {datastream, fetchedAt, stale, ttlMs, observation}
+ *   GET /api/osh/locations     → {fetchedAt, stale, ttlMs, count, streams, failed, locations}
  *
  * Keyless (no OSH_URL, or a value that does not parse as a URL): every
  * route but /status answers 503 {error:'no_key'}; /status answers
@@ -47,6 +58,68 @@ import { oshObservationAgeMs } from '../../src/data/oshObservations.js';
 export const OSH_LIST_TTL_MS = 5 * 60_000;
 /** The feature-of-interest walk needs more pages than the other two lists. */
 export const OSH_FOI_MAX_PAGES = 60;
+
+/**
+ * The location pass's built-in property-filter candidate source (design
+ * decision D46): the public OGC and SensorML terms measured to answer the
+ * position streams. `OSH_LOCATION_PROPERTIES` in the environment appends
+ * more, comma-separated — the owner's own vendor term never sits in the
+ * repository.
+ */
+export const OSH_DEFAULT_LOCATION_PROPERTIES = Object.freeze([
+  'http://www.opengis.net/def/property/OGC/0/SensorLocation',
+  'http://sensorml.com/ont/swe/property/LocationVector',
+]);
+
+/**
+ * True for a value that parses as a URL, with no white space. `new URL()`
+ * already accepts every syntactically valid URN — `urn:` is a generic
+ * scheme, not a special one, so the WHATWG parser never refuses a
+ * whitespace-free string of that shape. An earlier version of this
+ * function fell back to a URN regex on a parse failure; measured against
+ * every malformed `urn:`-prefixed value this project could construct,
+ * `new URL()` never threw, so that fallback's accepting branch was
+ * unreachable and it is gone.
+ *
+ * The one caller below already trims each entry and skips an empty one
+ * before this runs, so this never sees an empty string; an untrimmed or
+ * non-string value would still resolve correctly (an empty string, or one
+ * `new URL()` refuses, already answers false through the branches kept
+ * here), but no such call exists, so no guard is kept for it either.
+ */
+function isAcceptableLocationProperty(value) {
+  if (/\s/.test(value)) return false;
+  try {
+    // eslint-disable-next-line no-new
+    new URL(value);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Build the full candidate property list: the two built-in terms, plus
+ * every accepted, comma-separated entry of `env.OSH_LOCATION_PROPERTIES`.
+ * A refused entry is skipped with a warning naming its position in the
+ * list, never its text — the value itself may be the owner's own vendor
+ * term, and this project never logs an upstream vocabulary URI.
+ */
+function resolveLocationProperties(env, warn) {
+  const list = [...OSH_DEFAULT_LOCATION_PROPERTIES];
+  const raw = String(env.OSH_LOCATION_PROPERTIES || '').trim();
+  if (!raw) return list;
+  const entries = raw.split(',').map((entry) => entry.trim());
+  entries.forEach((entry, index) => {
+    if (!entry) return;
+    if (isAcceptableLocationProperty(entry)) {
+      list.push(entry);
+    } else {
+      warn(`[osh-proxy] OSH_LOCATION_PROPERTIES entry at position ${index} skipped: not a URL or a URN`);
+    }
+  });
+  return list;
+}
 
 function listOfSystems(payload) {
   if (Array.isArray(payload?.features)) return payload.features;
@@ -151,6 +224,32 @@ export function oshProxy({
     now,
     ttlMs: OSH_LIST_TTL_MS,
   });
+  const schemaCache = createOshSchemaCache({ fetchImpl, now, ttlMs: OSH_LIST_TTL_MS });
+  const systemNameCache = createOshSystemCache({ fetchImpl, now, ttlMs: OSH_LIST_TTL_MS });
+  const propertyFilterCache = createOshKeyedCache({
+    fetchImpl,
+    now,
+    ttlMs: OSH_LIST_TTL_MS,
+    refresh: async (fetchImplArg, uri, root, headers) => {
+      const firstUrl = oshListUrl(root, 'datastreams', { limit: '200', observedProperty: uri });
+      const { items } = await oshPages(fetchImplArg, root, firstUrl, {
+        headers,
+        listOf: listOfDatastreams,
+      });
+      return mapOshDatastreams({ items });
+    },
+  });
+  const locationsPass = createOshLocationsPass({ ttlMs: OBS_TTL_MS, now });
+  let lastLocationsResult = null;
+
+  function locationsPassStatus() {
+    if (!lastLocationsResult) return { lastFetch: null, count: null, stale: false };
+    return {
+      lastFetch: lastLocationsResult.fetchedAt,
+      count: lastLocationsResult.value.locations.length,
+      stale: lastLocationsResult.stale,
+    };
+  }
 
   function credentials() {
     const rawUrl = String(env.OSH_URL || '').trim();
@@ -199,6 +298,157 @@ export function oshProxy({
     return { records: mapOshFois({ features: items }), truncated };
   }
 
+  /**
+   * Gather location candidate datastreams from the three stable sources of
+   * design decision D46, deduplicated by datastream id: the property
+   * filter, the datastreams of every feature host, and the datastreams of
+   * every system with a `Point`. A source that fails contributes nothing —
+   * it never fails the whole gather. Returns the candidate records plus a
+   * map of the current systems snapshot, for the name resolution of D47.
+   */
+  async function gatherLocationCandidates(root, headers) {
+    const candidatesById = new Map();
+    const propertyUris = resolveLocationProperties(env, warn);
+    await Promise.all(
+      propertyUris.map(async (uri) => {
+        try {
+          const { value } = await propertyFilterCache.get(uri, root, headers);
+          for (const record of value) {
+            if (!candidatesById.has(record.id)) candidatesById.set(record.id, record);
+          }
+        } catch {
+          // A refused or unreachable property term contributes no candidates.
+        }
+      }),
+    );
+
+    let systemRecords = [];
+    let foiRecords = [];
+    try {
+      ({ records: systemRecords } = await systemsCache.load(() =>
+        fetchSystemsUpstream(root, headers),
+      ));
+    } catch {
+      systemRecords = [];
+    }
+    try {
+      ({ records: foiRecords } = await foisCache.load(() => fetchFoisUpstream(root, headers)));
+    } catch {
+      foiRecords = [];
+    }
+    const systemsById = new Map(systemRecords.map((record) => [record.id, record]));
+
+    const hostIds = new Set();
+    for (const foi of foiRecords) if (foi.systemId) hostIds.add(foi.systemId);
+    for (const system of systemRecords) {
+      if (system.lon !== null && system.lat !== null) hostIds.add(system.id);
+    }
+
+    await Promise.all(
+      [...hostIds].map(async (id) => {
+        try {
+          const target = systemDatastreamsUrl(root, id);
+          assertSystemDatastreamsUrl(target, root, id);
+          const result = await systemDatastreamsCache.get(id, root, target, headers);
+          for (const record of result.datastreams) {
+            const withSystem = record.systemId ? record : { ...record, systemId: id };
+            if (!candidatesById.has(withSystem.id)) candidatesById.set(withSystem.id, withSystem);
+          }
+        } catch {
+          // One host's datastreams read failing does not fail the gather.
+        }
+      }),
+    );
+
+    return { candidates: [...candidatesById.values()], systemsById, propertyCount: propertyUris.length };
+  }
+
+  /**
+   * Resolve one system's name: from the systems snapshot when it holds the
+   * system, else one by-id read cached per id — the one reliable read for
+   * a system that snapshot never sampled (design decision D47). A failed
+   * read gives null and never drops the location it names.
+   */
+  async function resolveSystemName(systemId, systemsById, root, headers) {
+    if (!systemId) return null;
+    const known = systemsById.get(systemId);
+    if (known) return known.name;
+    try {
+      const target = systemUrl(root, systemId);
+      assertSystemUrl(target, root, systemId);
+      const result = await systemNameCache.get(systemId, target, headers);
+      return result.name;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Run one location pass: read each candidate's schema through the schema
+   * cache, read one newest-per-feature page for every candidate whose
+   * schema gave a reader, and fold each page with mapOshLocationPage().
+   * See design decision D47.
+   */
+  async function runLocationsPass(root, headers) {
+    const { candidates, systemsById, propertyCount } = await gatherLocationCandidates(
+      root,
+      headers,
+    );
+    let failed = 0;
+    const locations = [];
+    await Promise.all(
+      candidates.map(async (candidate) => {
+        let reader;
+        try {
+          const schemaTarget = schemaUrl(root, candidate.id);
+          assertSchemaUrl(schemaTarget, root, candidate.id);
+          const schemaResult = await schemaCache.get(candidate.id, schemaTarget, headers);
+          reader = schemaResult.reader;
+        } catch {
+          failed += 1;
+          return;
+        }
+        if (!reader) {
+          failed += 1;
+          return;
+        }
+        let json;
+        try {
+          const pageUrl = observationsLatestUrl(root, candidate.id);
+          assertObservationsLatestUrl(pageUrl, root, candidate.id);
+          const { status, json: body } = await oshGet(fetchImpl, pageUrl, { headers });
+          if (status < 200 || status >= 300) {
+            failed += 1;
+            return;
+          }
+          json = body;
+        } catch {
+          failed += 1;
+          return;
+        }
+        const records = mapOshLocationPage(json, reader, now());
+        const systemName = await resolveSystemName(candidate.systemId, systemsById, root, headers);
+        for (const record of records) {
+          if (!record.location) continue;
+          locations.push({
+            systemId: candidate.systemId,
+            systemName,
+            datastreamId: candidate.id,
+            datastreamName: candidate.name,
+            foiId: record.foiId,
+            foiUid: record.foiUid,
+            lat: record.location.lat,
+            lon: record.location.lon,
+            alt: record.location.alt,
+            phenomenonTime: record.phenomenonTime,
+            ageMs: record.ageMs,
+          });
+        }
+      }),
+    );
+    return { streams: candidates.length, failed, locations, propertyCount };
+  }
+
   const installMiddleware = (server) => {
     server.middlewares.use('/api/osh', async (req, res) => {
       const sendJson = (status, obj) => {
@@ -232,6 +482,8 @@ export function oshProxy({
               fois: { lastFetch: null, count: null, stale: false },
               observations: { cached: 0 },
               datastreamsBySystem: { cached: 0 },
+              locationProperties: { count: OSH_DEFAULT_LOCATION_PROPERTIES.length },
+              locations: { lastFetch: null, count: null, stale: false },
               ttlMs: OSH_LIST_TTL_MS,
             });
             return;
@@ -249,6 +501,8 @@ export function oshProxy({
             fois: foisCache.status(),
             observations: { cached: observationsCache.size() },
             datastreamsBySystem: { cached: systemDatastreamsCache.size() },
+            locationProperties: { count: resolveLocationProperties(env, warn).length },
+            locations: locationsPassStatus(),
             ttlMs: OSH_LIST_TTL_MS,
           });
           return;
@@ -362,8 +616,21 @@ export function oshProxy({
           // unexpected throw falls to the outer catch, below, as a 500.
           const target = observationUrl(state.root, id);
           assertObservationUrl(target, state.root, id);
+          // The schema decides whether, and how, this stream's result
+          // carries a location (design decision D44). A failed schema
+          // read is not this route's failure: it degrades to a reader of
+          // null, which mapOshObservation() reports as location:null.
+          let reader = null;
           try {
-            const result = await observationsCache.get(id, target, headers);
+            const schemaTarget = schemaUrl(state.root, id);
+            assertSchemaUrl(schemaTarget, state.root, id);
+            const schemaResult = await schemaCache.get(id, schemaTarget, headers);
+            reader = schemaResult.reader;
+          } catch {
+            reader = null;
+          }
+          try {
+            const result = await observationsCache.get(id, target, headers, reader);
             // The age is arithmetic on the cached observation's phenomenonTime
             // against the current instant, computed fresh on every answer;
             // the cache itself never stores an age, so a stale snapshot
@@ -383,6 +650,40 @@ export function oshProxy({
               error: 'observation_failed',
               upstreamStatus: Number.isFinite(error?.status) ? error.status : null,
             });
+          }
+          return;
+        }
+
+        if (subPath === '/locations') {
+          const state = await base.resolveRoot(configuredUrl, headers);
+          if (!state.root) {
+            sendJson(502, { error: baseErrorCode(state.failures) });
+            return;
+          }
+          try {
+            const result = await locationsPass.load(() => runLocationsPass(state.root, headers));
+            lastLocationsResult = result;
+            // The pass cache can serve the same fold more than once, and a
+            // stale one longer than that: age is arithmetic on
+            // phenomenonTime against the current instant, so it is
+            // recomputed here at serve time, never trusted from the fold
+            // (the same reason the observations route above recomputes it).
+            const nowMs = now();
+            const locations = result.value.locations.map((location) => ({
+              ...location,
+              ageMs: oshObservationAgeMs(location.phenomenonTime, nowMs),
+            }));
+            sendJson(200, {
+              fetchedAt: result.fetchedAt,
+              stale: result.stale,
+              ttlMs: OBS_TTL_MS,
+              count: locations.length,
+              streams: result.value.streams,
+              failed: result.value.failed,
+              locations,
+            });
+          } catch {
+            sendJson(502, { error: 'upstream_failed' });
           }
           return;
         }
