@@ -78,9 +78,11 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
   const main = testFiles.filter((file) => !allocation.has(file));
   const runs = [];
   if (main.length > 0) {
+    const rawOutput = `${outDir}/tests-main.jsonl`;
     runs.push({
       kind: 'main',
-      output: `${outDir}/tests-main.jsonl`,
+      output: `${rawOutput}.sync`,
+      rawOutput,
       args: [
         '--test',
         '--experimental-test-coverage',
@@ -91,7 +93,7 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
         '--test-reporter=lcov',
         `--test-reporter-destination=${outDir}/lcov.info`,
         `--test-reporter=${REPORTER}`,
-        `--test-reporter-destination=${outDir}/tests-main.jsonl`,
+        `--test-reporter-destination=${rawOutput}`,
         ...main,
       ],
     });
@@ -99,10 +101,11 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
   testFiles
     .filter((file) => allocation.has(file))
     .forEach((file, index) => {
-      const output = `${outDir}/tests-allocation-${index}.jsonl`;
+      const rawOutput = `${outDir}/tests-allocation-${index}.jsonl`;
       runs.push({
         kind: 'allocation',
-        output,
+        output: `${rawOutput}.sync`,
+        rawOutput,
         args: [
           '--expose-gc',
           '--test',
@@ -111,7 +114,7 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
           '--test-reporter=dot',
           '--test-reporter-destination=stdout',
           `--test-reporter=${REPORTER}`,
-          `--test-reporter-destination=${output}`,
+          `--test-reporter-destination=${rawOutput}`,
           file,
         ],
       });
@@ -185,13 +188,26 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
   writeFileSync(inventoryFile, inventoryText);
   const resultsDir = mkdtempSync(path.join(tmpdir(), 'gev-spec-results-'));
   const runs = buildTestRuns({ testFiles, allocationFiles, outDir: resultsDir });
+  // Each run's own trace reporter opens its `.sync` file lazily, on its first record, which
+  // is not necessarily the first thing that touches that path: a test can write into it too
+  // (src/tooling/spec/gates.test.mjs's [spec-trace-039 spec-trace-040] deliberately does, to
+  // check that the gate catches a forged record). Creating the file empty here, before any
+  // test process starts, lets the reporter open it in append mode and never truncate content
+  // a test already wrote.
+  for (const run of runs) writeFileSync(run.output, '');
   const execution = executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash: contentHash(inventoryText) });
   errors.push(...execution.errors);
   if (!existsSync(inventoryFile) || readFileSync(inventoryFile, 'utf8') !== inventoryText) {
     errors.push({ code: 'COVERAGE-INVENTORY-CHANGED', file: path.relative(root, inventoryFile), message: 'The inventory file changed during the test run' });
   }
 
-  const named = new Set(['runs.json', 'results.json', 'lcov.info', ...runs.map((run) => path.basename(run.output))]);
+  const named = new Set([
+    'runs.json',
+    'results.json',
+    'lcov.info',
+    ...runs.map((run) => path.basename(run.output)),
+    ...runs.map((run) => path.basename(run.rawOutput)),
+  ]);
   for (const file of readdirSync(resultsDir).filter((name) => !named.has(name)).sort()) {
     errors.push({ code: 'COVERAGE-EXTRA-RESULT', file, message: `The result folder has ${file}, but the gate did not name it. The gate does not read it.` });
   }
