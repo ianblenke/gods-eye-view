@@ -22,3 +22,17 @@ Origin: spec-first
 - **AND** no `Timeout` and no `Immediate` keeps the event loop alive at that time
 - **THEN** the guard writes an empty leak list
 - **AND** the coverage gate does not stop the build for that process
+
+### Requirement: Trace record durability
+The trace reporter MUST write each finished test record itself, synchronously, to a `.sync` file beside its own destination. That record then survives a `--test-force-exit` that ends the process before Node's own destination stream flushes. The reporter MUST open that file only for Node's own CLI invocation of the reporter, never for a direct call. A direct call that opened the file could corrupt the real destination of a run it happens to share a process with.
+Origin: spec-first
+
+#### Scenario: findOwnDestination pairs a reporter flag with its own destination `coverage-gate-051`
+- **WHEN** `findOwnDestination()` reads an argument list with several `--test-reporter`/`--test-reporter-destination` pairs
+- **THEN** it returns the destination paired with the reporter whose path matches the given module path
+- **AND** it returns null for an argument list that names no matching reporter
+
+#### Scenario: only a real AbortSignal opens the reporter's own destination `coverage-gate-052`
+- **WHEN** the reporter runs with a `signal` option that is a real `AbortSignal`, and `process.execArgv` names this module's own destination
+- **THEN** it opens and writes that destination's `.sync` file
+- **AND** the same call with no `AbortSignal` opens no file, even with the same `process.execArgv`
