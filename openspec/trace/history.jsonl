@@ -551,3 +551,5 @@
 {"date":"2026-09-21","change":"teardown-guard","commit":"ef434ebfe80a2a1f452407380796fe31335d4e06","kind":"untraced","file":"src/overlays/worldOverlay.test.mjs","metric":"count","before":46,"after":21,"reason":"smaller"}
 {"date":"2026-09-21","change":"teardown-guard","commit":"5f9b6787cd612646c4b632026555a73b776ba574","kind":"coverage","file":"src/data/labelArbiter.js","metric":"branches","before":50,"after":52,"reason":"shown by test"}
 {"date":"2026-09-21","change":"teardown-guard","commit":"5f9b6787cd612646c4b632026555a73b776ba574","kind":"coverage","file":"src/data/labelArbiter.js","metric":"totals","before":{"lines":1125,"branches":405,"functions":58},"after":{"lines":1125,"branches":407,"functions":58},"reason":"totals changed"}
+{"date":"2026-09-21","change":"teardown-guard","commit":"81307256a8398d0b3a2cc703c558eb09e15d9d0c","kind":"untraced","file":"src/data/cctvCards.test.mjs","metric":"count","before":23,"after":21,"reason":"smaller"}
+{"date":"2026-09-21","change":"teardown-guard","commit":"81307256a8398d0b3a2cc703c558eb09e15d9d0c","kind":"untraced","file":"src/data/cctvLod.test.mjs","metric":"count","before":29,"after":18,"reason":"smaller"}
