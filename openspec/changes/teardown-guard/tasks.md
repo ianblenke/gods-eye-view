@@ -110,6 +110,10 @@ Rules for this group. Change no test name. The file has a ledger entry with untr
   - Run `make gates` on the clean tree. Confirm no `GATES-TEST-LEAK` error appears for any file.
   - Confirmed clean. A separate, unrelated source of whole-project flakiness was found along the way. `osh-layer`/`osh-systems` scenarios intermittently read as unverified across several runs. None of these ever reproduced in isolation, and none touch any file this change edits.
   - A long-running app container drifting to high CPU was one contributing factor. It was ruled in, then partly ruled out — stopping it did not fully stop the flakiness. The remaining cause stays open and unexplained. A clean run was reached by repeating the check, per the user's own choice.
+  - The same flakiness sweep also found `src/data/trafficTiming.test.mjs` intermittently reporting a live `Timeout` at exit, in whole-project runs only, never in isolation. Its real `vite` dev server (`createServer()`) was already closed correctly in `finally`.
+  - The cause: `close()`'s promise resolves before vite's own internal teardown (dependency-optimizer service, file watcher) finishes on its own tick. This only shows under real event-loop contention.
+  - Fixed with a short real-timer wait after `close()` and all other teardown (commit `0758c37`). The leak never reproduced on demand, so this could not be mutation-proven at the time.
+  - A dedicated whole-project verification run afterward came back fully clean. No `GATES-TEST-LEAK`, no other error. The fix held.
 
 ## 6. Gates and review
 
