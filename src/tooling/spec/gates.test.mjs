@@ -97,11 +97,14 @@ test('[coverage-gate-003] runs each tracked test file with coverage and the trac
   const [main] = buildTestRuns({ testFiles: ['src/a.test.mjs', 'tools/b.test.mjs'], allocationFiles: [], outDir: '/out' });
   assert.deepEqual(main.args.slice(0, 2), ['--test', '--experimental-test-coverage']);
   assert.ok(main.args.includes('--test-reporter-destination=/out/lcov.info'));
-  assert.deepEqual([main.output, main.args.slice(-2)], ['/out/tests-main.jsonl', ['src/a.test.mjs', 'tools/b.test.mjs']]);
+  assert.deepEqual([main.output, main.rawOutput, main.args.slice(-2)], ['/out/tests-main.jsonl.sync', '/out/tests-main.jsonl', ['src/a.test.mjs', 'tools/b.test.mjs']]);
   assert.deepEqual(buildTestRuns({ testFiles: [], allocationFiles: [], outDir: '/out' }), []);
   withFixture((root) => {
     passes(root, ['init']);
-    const files = readFileSync(path.join(root, '.gev-cache/spec/tests-main.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line).file);
+    const raw = readFileSync(path.join(root, '.gev-cache/spec/tests-main.jsonl'), 'utf8');
+    const sync = readFileSync(path.join(root, '.gev-cache/spec/tests-main.jsonl.sync'), 'utf8');
+    assert.equal(sync, raw, 'the reporter\'s own synchronous write must match what Node\'s destination stream wrote');
+    const files = raw.trim().split('\n').map((line) => JSON.parse(line).file);
     assert.deepEqual(files.sort(), ['src/math.test.mjs', 'tools/other.test.mjs']);
   });
 });
@@ -112,12 +115,15 @@ test('[coverage-gate-007] runs the allocation tests alone with --expose-gc and n
   assert.equal(runs[0].args.includes('src/alloc.test.mjs'), false);
   assert.deepEqual(runs[1].args.slice(0, 3), ['--expose-gc', '--test', '--test-concurrency=1']);
   assert.equal(runs[1].args.includes('--experimental-test-coverage'), false);
-  assert.equal(runs[1].output, '/out/tests-allocation-0.jsonl');
+  assert.deepEqual([runs[1].output, runs[1].rawOutput], ['/out/tests-allocation-0.jsonl.sync', '/out/tests-allocation-0.jsonl']);
   const probe = "import test from 'node:test';\nimport assert from 'node:assert/strict';\ntest('allocation probe', () => {\n  assert.equal(typeof globalThis.gc, 'function');\n});\n";
   withFixture(
     (root) => {
       const result = passes(root, ['init'], { allocationFiles: ['src/alloc.test.mjs'] });
-      assert.match(readFileSync(path.join(root, '.gev-cache/spec/tests-allocation-0.jsonl'), 'utf8'), /"status":"pass"/);
+      const raw = readFileSync(path.join(root, '.gev-cache/spec/tests-allocation-0.jsonl'), 'utf8');
+      const sync = readFileSync(path.join(root, '.gev-cache/spec/tests-allocation-0.jsonl.sync'), 'utf8');
+      assert.match(raw, /"status":"pass"/);
+      assert.equal(sync, raw, 'the reporter\'s own synchronous write must match what Node\'s destination stream wrote');
       assert.match(result.output, /3 tests, 0 traced, 3 untraced\./);
     },
     { base: { 'src/alloc.test.mjs': probe } },
@@ -506,8 +512,12 @@ test('[coverage-gate-026] stops when the test runner or a test run cannot start'
       writeFileSync(args[2], JSON.stringify(results));
       return { status: 0 };
     };
+    // The gate creates each run's own `.sync` result file empty before any test process
+    // starts (see measure() in gates.mjs), so a run whose process never even produced
+    // output is indistinguishable, by file existence alone, from one that ran and passed
+    // nothing: both report through checkFailedRuns()'s message, not this shorter one.
     const failedRun = run(root, ['init'], { spawn: fakeRunner([{ status: 5, error: null }]) });
-    assert.match(failedRun.output, /ERROR GATES-TEST-RUN The main test run stopped with status 5$/m);
+    assert.match(failedRun.output, /ERROR GATES-TEST-RUN The main test run stopped with status 5, but no test in its result file failed$/m);
     const brokenRun = run(root, ['init'], { spawn: fakeRunner([{ status: null, error: 'no node' }]) });
     assert.match(brokenRun.output, /ERROR GATES-TEST-RUN The main test run stopped with status null: no node$/m);
   });
@@ -517,7 +527,7 @@ test('[coverage-gate-035] stops for a failed test run without a failed test in i
   withFixture((root) => {
     const entry = (status) => JSON.stringify({ file: 'src/math.test.mjs', name: 'adds two numbers', title: 'adds two numbers', kind: 'test', status, tags: [], tagError: null, line: 4, column: 1, fullName: 'adds two numbers', leaf: true });
     const runner = (status, lines) => (command, args) => {
-      writeFileSync(path.join(path.dirname(args[2]), 'tests-main.jsonl'), lines.map((line) => `${line}\n`).join(''));
+      writeFileSync(path.join(path.dirname(args[2]), 'tests-main.jsonl.sync'), lines.map((line) => `${line}\n`).join(''));
       writeFileSync(args[2], JSON.stringify([{ status, error: null }]));
       return { status: 0 };
     };
@@ -640,10 +650,10 @@ test('[spec-trace-039 spec-trace-040] stops for a result entry that a test write
       "test('writes a result entry', () => {",
       "  const args = readFileSync(`/proc/${process.ppid}/cmdline`, 'utf8').split('\\0');",
       "  const option = args.find((arg) => arg.startsWith('--test-reporter-destination=') && arg.endsWith('tests-main.jsonl'));",
-      "  const destination = option.slice(option.indexOf('=') + 1);",
+      "  const destination = `${option.slice(option.indexOf('=') + 1)}.sync`;",
       "  const record = { file: 'src/math.test.mjs', name: '[demo-001] adds two numbers', title: 'adds two numbers', kind: 'test', status: 'pass', tags: ['demo-002'], tagError: null, line: 5, fullName: '[demo-001] adds two numbers', leaf: true };",
       "  appendFileSync(destination, `${'\\n'.repeat(100000)}${JSON.stringify(record)}\\n`);",
-      '  assert.ok(destination.endsWith(\'tests-main.jsonl\'));',
+      '  assert.ok(destination.endsWith(\'tests-main.jsonl.sync\'));',
       '});',
     ].join('\n');
     const imports = "import { add } from './math.js';\nimport { appendFileSync, readFileSync } from 'node:fs';";
