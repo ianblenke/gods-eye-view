@@ -131,10 +131,13 @@ export function childEnv(env, { outDir, root, inventoryHash }) {
   return { ...next, NODE_OPTIONS: GUARD_PRELOAD, GEV_SPEC_OUT: outDir, GEV_SPEC_ROOT: root, GEV_SPEC_INVENTORY: inventoryHash };
 }
 
+// Both call sites pass files that already exist: measure() creates every run's own `.sync`
+// file before any run starts, and the guard-*.jsonl names come from a readdirSync() of the
+// same directory. No caller can pass a name that is not already there.
 function readJsonLines(directory, files) {
   return files.flatMap((file) => {
     const absolute = path.join(directory, file);
-    return existsSync(absolute) ? readFileSync(absolute, 'utf8').split('\n').filter(Boolean).map((line) => JSON.parse(line)) : [];
+    return readFileSync(absolute, 'utf8').split('\n').filter(Boolean).map((line) => JSON.parse(line));
   });
 }
 
@@ -155,7 +158,7 @@ function executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash
   const errors = runs.flatMap((run, index) => {
     const { status, error } = results[index];
     if (!error) return [];
-    return [{ code: 'GATES-TEST-RUN', file: '', message: `The ${run.kind} test run stopped with status ${status}${error ? `: ${error}` : ''}` }];
+    return [{ code: 'GATES-TEST-RUN', file: '', message: `The ${run.kind} test run stopped with status ${status}: ${error}` }];
   });
   return { errors, results };
 }
