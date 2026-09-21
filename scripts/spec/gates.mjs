@@ -149,9 +149,12 @@ function executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash
     return { errors: [{ code: 'GATES-TEST-RUN', file: '', message: `The test runner stopped with status ${result.status}${detail}` }], results: [] };
   }
   const results = JSON.parse(readFileSync(resultsFile, 'utf8'));
+  // measure() creates every run's own `.sync` output file before any run starts, so
+  // `run.output` always exists here; a nonzero status with no real error defers entirely
+  // to checkFailedRuns(), which reads that file to say whether anything in it explains it.
   const errors = runs.flatMap((run, index) => {
     const { status, error } = results[index];
-    if (!error && (status === 0 || existsSync(run.output))) return [];
+    if (!error) return [];
     return [{ code: 'GATES-TEST-RUN', file: '', message: `The ${run.kind} test run stopped with status ${status}${error ? `: ${error}` : ''}` }];
   });
   return { errors, results };
@@ -161,7 +164,7 @@ function executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash
 function checkFailedRuns(runs, results, recordsByRun) {
   return runs.flatMap((run, index) => {
     const result = results[index];
-    if (!result || result.error || result.status === 0 || !existsSync(run.output)) return [];
+    if (!result || result.error || result.status === 0) return [];
     if (recordsByRun[index].some((record) => record.status === 'fail')) return [];
     return [{ code: 'GATES-TEST-RUN', file: '', message: `The ${run.kind} test run stopped with status ${result.status}, but no test in its result file failed` }];
   });
