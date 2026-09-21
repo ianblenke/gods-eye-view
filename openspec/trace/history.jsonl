@@ -553,3 +553,4 @@
 {"date":"2026-09-21","change":"teardown-guard","commit":"5f9b6787cd612646c4b632026555a73b776ba574","kind":"coverage","file":"src/data/labelArbiter.js","metric":"totals","before":{"lines":1125,"branches":405,"functions":58},"after":{"lines":1125,"branches":407,"functions":58},"reason":"totals changed"}
 {"date":"2026-09-21","change":"teardown-guard","commit":"81307256a8398d0b3a2cc703c558eb09e15d9d0c","kind":"untraced","file":"src/data/cctvCards.test.mjs","metric":"count","before":23,"after":21,"reason":"smaller"}
 {"date":"2026-09-21","change":"teardown-guard","commit":"81307256a8398d0b3a2cc703c558eb09e15d9d0c","kind":"untraced","file":"src/data/cctvLod.test.mjs","metric":"count","before":29,"after":18,"reason":"smaller"}
+{"date":"2026-09-21","change":"teardown-guard","commit":"40cdc5d7b9cb3b004fa40290e60a4aed6675dbe6","kind":"untraced","file":"src/data/cctvCards.test.mjs","metric":"count","before":23,"after":22,"reason":"smaller"}
