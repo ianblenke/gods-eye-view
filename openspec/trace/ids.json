@@ -454,6 +454,16 @@
     "since": "2026-09-20",
     "change": "teardown-guard"
   },
+  "coverage-gate-051": {
+    "hash": "90ba85fe39fc7d6e89e8d4d597071e5c9ac434959f598ba7b16a8ec5c08aa5d5",
+    "since": "2026-09-21",
+    "change": "teardown-guard"
+  },
+  "coverage-gate-052": {
+    "hash": "b8c4e39b8a3a57bf1be0ead84f7bf04aaec5eb0547c57bef1eddbea9b5adac06",
+    "since": "2026-09-21",
+    "change": "teardown-guard"
+  },
   "gap-ledger-001": {
     "hash": "d926236986707c5770e366ba46ec70d9e7431ee9daf231b24b1d4d14e242705c",
     "since": "2026-09-14",
