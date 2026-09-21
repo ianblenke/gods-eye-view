@@ -8616,16 +8616,22 @@
     },
     "src/data/localGeojsonLod.test.mjs": {
       "names": {
+        "applyInfraEvictionGrace does not mutate the graceState it was given": 1,
         "applyInfraEvictionGrace evicts on wall-clock even before the pass count": 1,
         "applyInfraEvictionGrace holds a dropped stem through the grace window then evicts it": 1,
         "applyInfraEvictionGrace keeps every selected id and starts no grace for them": 1,
         "applyInfraEvictionGrace never exceeds the cap: oldest-in-grace evicted first": 1,
+        "applyInfraEvictionGrace tolerates missing / malformed input": 1,
+        "grace constants are the documented defaults": 1,
         "infraLodBudget band boundaries are inclusive at the lower edge": 1,
         "infraLodBudget clamps hardest at global height and opens up as you zoom in": 1,
         "infraLodBudget uses the global band for non-finite height and clamps negative height to zero": 1,
+        "infraLodMotionEpsilonM falls back to the floor (most eager) on unreadable height": 1,
+        "infraLodMotionEpsilonM scales with camera height above a fixed floor": 1,
         "infraRankScore incumbency bonus reorders within a tier but never beats a name gap": 1,
         "infraRankScore is priority minus a bounded distance penalty": 1,
         "infraRankScore normalizes garbage inputs to a finite number": 1,
+        "motion-fallback constants are the documented defaults": 1,
         "selectInfraLod accepts an array or a Set of incumbent ids": 1,
         "selectInfraLod cap follows the zoom band": 1,
         "selectInfraLod caps at the global budget and keeps the most important": 1,
@@ -8636,7 +8642,12 @@
         "selectInfraLod orders by score: a near unnamed node never displaces a far named one": 1,
         "selectInfraLod produces a deterministic order for score+distance ties": 1,
         "selectInfraLod proximity breaks ties among equally important features": 1,
-        "selectInfraLod returns everything in view when under budget": 1
+        "selectInfraLod returns everything in view when under budget": 1,
+        "shouldRecomputeInfraLod holds the window shut inside the probe interval": 1,
+        "shouldRecomputeInfraLod ignores sub-epsilon jitter but accumulates real travel": 1,
+        "shouldRecomputeInfraLod opens on first use and tolerates missing / malformed input": 1,
+        "shouldRecomputeInfraLod recomputes once the camera has moved far enough": 1,
+        "shouldRecomputeInfraLod spends nothing on a parked camera": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
