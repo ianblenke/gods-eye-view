@@ -307,6 +307,12 @@
     "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] a guard given no getActiveResources records no leak on a Node version without it",
     "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak for a test process without a live timer"
   ],
+  "coverage-gate-051": [
+    "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-051] findOwnDestination pairs each --test-reporter with the --test-reporter-destination that follows it"
+  ],
+  "coverage-gate-052": [
+    "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-052] only a call with a real AbortSignal at options.signal self-registers, even when process.execArgv names this module's own real destination"
+  ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec"
