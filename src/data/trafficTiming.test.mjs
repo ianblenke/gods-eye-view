@@ -333,7 +333,9 @@ test('traffic timing pairs real ordering to the scheduling change and guards re-
     // wait here, on the real setTimeout restored above, lets that settle, so this test's own
     // process does not still show one of vite's own timers as live at exit — confirmed by
     // reproducing the leak under a real whole-project run, where this file never leaks alone.
-    await new Promise((resolve) => originalSetTimeout(resolve, 100));
+    // A 100ms wait held for 3 of 4 whole-project verification runs, then still leaked once
+    // under real event-loop contention; raised to 750ms for more margin.
+    await new Promise((resolve) => originalSetTimeout(resolve, 750));
   }
 });
 
