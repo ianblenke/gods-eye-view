@@ -554,3 +554,6 @@
 {"date":"2026-09-21","change":"teardown-guard","commit":"81307256a8398d0b3a2cc703c558eb09e15d9d0c","kind":"untraced","file":"src/data/cctvCards.test.mjs","metric":"count","before":23,"after":21,"reason":"smaller"}
 {"date":"2026-09-21","change":"teardown-guard","commit":"81307256a8398d0b3a2cc703c558eb09e15d9d0c","kind":"untraced","file":"src/data/cctvLod.test.mjs","metric":"count","before":29,"after":18,"reason":"smaller"}
 {"date":"2026-09-21","change":"teardown-guard","commit":"40cdc5d7b9cb3b004fa40290e60a4aed6675dbe6","kind":"untraced","file":"src/data/cctvCards.test.mjs","metric":"count","before":23,"after":22,"reason":"smaller"}
+{"date":"2026-09-21","change":"teardown-guard","commit":"ddb6be87c18184429cf67b76bfcea830e8107638","kind":"untraced","file":"src/cockpitMarkup.test.mjs","metric":"count","before":38,"after":16,"reason":"smaller"}
+{"date":"2026-09-21","change":"teardown-guard","commit":"ddb6be87c18184429cf67b76bfcea830e8107638","kind":"untraced","file":"src/contactsDetectionPolicy.test.mjs","metric":"count","before":18,"after":16,"reason":"smaller"}
+{"date":"2026-09-21","change":"teardown-guard","commit":"ddb6be87c18184429cf67b76bfcea830e8107638","kind":"untraced","file":"src/data/cctvCards.test.mjs","metric":"count","before":23,"after":20,"reason":"smaller"}
