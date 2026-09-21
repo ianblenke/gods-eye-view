@@ -6,6 +6,10 @@
 - [x] 1.2 Write `proposal.md`: the defect, the two halves, the impact, the limits.
 - [x] 1.3 Write `design.md` with D1 to D6 and the file list.
 - [x] 1.4 Write `tasks.md` from this list.
+- [x] 1.5 Add a second ADDED requirement to `specs/coverage-gate/spec.md`: scenarios `coverage-gate-051`, `coverage-gate-052`.
+  - Added once `--test-force-exit` was found to drop a reporter's own output under real contention. See 5.10.
+  - Tag the two tests of that fix's own safety logic with these IDs.
+  - An untagged test here could never pass `make gates`. `compareWithBase()`'s untraced check has no ratchet escape for a new name in an unmerged change.
 
 ## 2. Guard the teardown in `src/data/oshLayer.test.mjs`
 

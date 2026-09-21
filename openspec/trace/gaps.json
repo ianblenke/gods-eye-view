@@ -10957,14 +10957,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/tooling/spec/traceReporter.test.mjs": {
-      "names": {
-        "findOwnDestination pairs each --test-reporter with the --test-reporter-destination that follows it": 1,
-        "only a call with a real AbortSignal at options.signal self-registers, even when process.execArgv names this module's own real destination": 1
-      },
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "src/tooling/viteBuild.test.mjs": {
       "names": {
         "build export resolves in Node and has no browser fallback": 1,
