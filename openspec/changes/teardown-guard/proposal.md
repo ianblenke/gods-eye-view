@@ -11,7 +11,7 @@ A guard in one test file does not prevent teardown defects in other test files. 
 ## What Changes
 
 - Register `t.after(() => layer.destroy(viewer))` in each test of `src/data/oshLayer.test.mjs` that makes a layer. Remove the final `layer.destroy(viewer)` call if its only purpose is teardown. Keep each `destroy` call whose effect a test asserts. No test name changes.
-- Give the same guard to the four tests of `src/data/localGeojson.test.mjs` that tear down after their last assertion. One of the four also keeps a mid-test `destroy` call whose effect an assertion checks. No test name changes.
+- Give the same guard to four tests of `src/data/localGeojson.test.mjs`. Three tear down after their last assertion. The fourth also keeps a mid-test `destroy` call whose effect an assertion checks. No test name changes.
 - Start each gate test run with `--test-force-exit`. The run then exits when a test leaves a live timer. The result file keeps the record of the failed test.
 - Record each timer or immediate that keeps the event loop alive when a guarded test process exits. The gate stops the build for that record and names the test file.
 - Add two requirements to `coverage-gate`: "Run exit" with scenarios `coverage-gate-048`, `coverage-gate-049` and `coverage-gate-050`; and "Trace record durability" with scenarios `coverage-gate-051` and `coverage-gate-052`. The second requirement guards the trace reporter's own destination file against loss under `--test-force-exit`.
@@ -22,7 +22,7 @@ A guard in one test file does not prevent teardown defects in other test files. 
 - Changed code files, each at 100% coverage after the edit: `scripts/spec/gates.mjs`, `scripts/spec/lib/test-guard.mjs` and `scripts/spec/lib/trace-reporter.mjs`.
 - Changed gate tests: `src/tooling/spec/gates.test.mjs`, `src/tooling/spec/testGuard.test.mjs` and `src/tooling/spec/traceReporter.test.mjs`. Each new test carries a tag from this change.
 - No gap opens in `openspec/trace`. No gap closes. No new source file.
-- No requirement text changes to an existing requirement. Two requirements are ADDED. No requirement is MODIFIED.
+- This change adds two requirements. It changes no text in the base requirements.
 - The gate result folder gains one record type. A guard result file gains the key `leaks`.
 
 ## Known limits closed

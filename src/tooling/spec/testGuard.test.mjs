@@ -438,7 +438,8 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
       "[coverage-gate-040] stops for untrue coverage from a test runner that a test starts, with a preload that removes the gate values",
       "[coverage-gate-039] stops for untrue coverage from a child process that a worker thread starts",
       "[spec-trace-045] stops for changed scenario text when a test only moved to a renamed test file",
-      "[coverage-gate-043] stops the check for a code file that imports a test file"
+      "[coverage-gate-043] stops the check for a code file that imports a test file",
+      "[coverage-gate-049] stops for a real child process that leaves a live timer, with no stub"
   ]);
   // Each test that needs the guard to count assertions gets its skip option from the real
   // node:test module. So the skip option is false on a Node version with the function.
@@ -453,7 +454,11 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
 });
 
 test('[coverage-gate-049] writes a leak record when a real child process leaves a live timer at exit', GUARDED_RUN, () => {
-  const result = spawnSync(process.execPath, ['-e', 'setInterval(() => {}, 1000); process.exit(0);'], {
+  // A real script file, not `-e`, so process.argv[1] names a real file and the leak
+  // record's own `file` field is meaningful, not the empty string `-e` would give it.
+  const leaky = path.join(ROOT, 'leaky.mjs');
+  writeFileSync(leaky, 'setInterval(() => {}, 1000); process.exit(0);\n');
+  const result = spawnSync(process.execPath, [leaky], {
     env: { ...process.env, ...ENV, NODE_V8_COVERAGE: OWN_COVERAGE, NODE_OPTIONS: GUARD_PRELOAD },
     encoding: 'utf8',
   });
@@ -462,6 +467,7 @@ test('[coverage-gate-049] writes a leak record when a real child process leaves 
   assert.equal(existsSync(file), true);
   const [line] = readFileSync(file, 'utf8').trim().split('\n').map(JSON.parse);
   assert.equal(line.leaks.length, 1);
+  assert.equal(line.leaks[0].file, 'leaky.mjs');
   assert.deepEqual(line.leaks[0].resources, ['Timeout']);
   assert.equal(line.violations.length, 0);
 });

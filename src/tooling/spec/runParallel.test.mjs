@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { EventEmitter } from 'node:events';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -53,23 +53,25 @@ test('[coverage-gate-022] runs real processes from a runs file and writes the re
       ]),
     );
     const started = Date.now();
-    // Clear the gate's own guard env before spawning. Left in place, a real gate run
-    // would carry it through this process into the two synthetic child processes above,
-    // and their own guard would then write a leak record for the second one's timer
-    // into the real gate's own outDir — the timer that calls process.exit() from
-    // inside its own callback, which still reads as an active resource at that exact
-    // synchronous point. Confirmed by reproducing it against the real gate image.
-    // NODE_V8_COVERAGE must go too, not just GEV_SPEC_OUT: this process's own guard
-    // already wraps child_process globally, and withGuardEnv() re-injects its own
-    // GEV_SPEC_OUT into any spawned child's env whenever that child's env still carries
-    // NODE_V8_COVERAGE — regardless of what this call's own `env` argument deletes.
-    // Verified by restoring NODE_V8_COVERAGE alone in a real make gates run: the same
-    // blank-file GATES-TEST-LEAK this fix exists to prevent fired again immediately.
-    const env = { ...process.env };
-    delete env.NODE_V8_COVERAGE;
-    delete env.GEV_SPEC_OUT;
-    delete env.GEV_SPEC_ROOT;
-    delete env.GEV_SPEC_INVENTORY;
+    // Isolate the gate's own guard identity before spawning, without stopping coverage
+    // of RUNNER itself. Left in place, a real gate run would carry GEV_SPEC_OUT through
+    // this process into the two synthetic child processes above, and their own guard
+    // would then write a leak record for the second one's timer into the real gate's
+    // own outDir — the timer that calls process.exit() from inside its own callback,
+    // which still reads as an active resource at that exact synchronous point.
+    // Confirmed by reproducing it against the real gate image.
+    //
+    // This process's own guard already wraps child_process globally. withGuardEnv()
+    // (scripts/spec/lib/test-guard.mjs) always adds NODE_OPTIONS's guard preload when
+    // NODE_V8_COVERAGE is present, but only re-injects its own closed-over GEV_SPEC_OUT
+    // when the child's NODE_V8_COVERAGE points at the real gate's own coverage folder
+    // (its `gateRun` check). A separate coverage folder for this spawn makes that check
+    // false, so this call's own explicit env values win instead — real V8 coverage
+    // still collects for RUNNER, in an isolated folder, and the injected guard preload
+    // finds an empty GEV_SPEC_OUT and installs nothing.
+    const coverageDir = path.join(directory, 'coverage');
+    mkdirSync(coverageDir, { recursive: true });
+    const env = { ...process.env, NODE_V8_COVERAGE: coverageDir, GEV_SPEC_OUT: '', GEV_SPEC_ROOT: '', GEV_SPEC_INVENTORY: '' };
     const result = spawnSync(process.execPath, [RUNNER, runsFile, resultsFile], { env, encoding: 'utf8' });
     assert.equal(result.status, 0, result.stderr);
     assert.ok(Date.now() - started < 5000);
