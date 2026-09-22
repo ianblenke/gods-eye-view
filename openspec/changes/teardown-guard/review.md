@@ -6,7 +6,7 @@ Date: 2026-09-22
 Gates: make gates CHANGE=teardown-guard passed
 Rounds: 4
 Scope: diff 80367af7e1866e7fcce442f8f0471a4a0791db2f
-Reviewed-Tree: 32b67c568a5e52009bdea6b38e98c5fbcd9ec5657e299373c669bb1da164a725
+Reviewed-Tree: 782fdff47c1904cca829be9139691722bfeef0fa8012836263ec5892a0590c02
 
 ## Findings
 
