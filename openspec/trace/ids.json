@@ -450,17 +450,17 @@
     "change": "teardown-guard"
   },
   "coverage-gate-050": {
-    "hash": "2916bb49018d9a610a1d99caf57eb4bcf9b1517b8c09493b78e32d606182ed38",
+    "hash": "bd8830a4458408efc3387f7144c50f3e153d26b58759c767db7601e9b2e42780",
     "since": "2026-09-20",
     "change": "teardown-guard"
   },
   "coverage-gate-051": {
-    "hash": "90ba85fe39fc7d6e89e8d4d597071e5c9ac434959f598ba7b16a8ec5c08aa5d5",
+    "hash": "b4e279396bf06ead188d60dca16c6ad634a1a81e663f80d79d89091ba2e1af73",
     "since": "2026-09-21",
     "change": "teardown-guard"
   },
   "coverage-gate-052": {
-    "hash": "b8c4e39b8a3a57bf1be0ead84f7bf04aaec5eb0547c57bef1eddbea9b5adac06",
+    "hash": "1d3a1d847c8a5bcec0911109b6bffd62fa29affd4e72b241a8699e9eb4d21476",
     "since": "2026-09-21",
     "change": "teardown-guard"
   },

@@ -53,16 +53,20 @@ test('[coverage-gate-022] runs real processes from a runs file and writes the re
       ]),
     );
     const started = Date.now();
-    // Clear the gate's own guard identity before spawning, so this real run of RUNNER
-    // stays under real coverage measurement. Left in place, a real gate run would carry
-    // GEV_SPEC_OUT through this process into the two synthetic child processes above,
+    // Clear the gate's own guard env before spawning. Left in place, a real gate run
+    // would carry it through this process into the two synthetic child processes above,
     // and their own guard would then write a leak record for the second one's timer
     // into the real gate's own outDir — the timer that calls process.exit() from
     // inside its own callback, which still reads as an active resource at that exact
     // synchronous point. Confirmed by reproducing it against the real gate image.
-    // NODE_V8_COVERAGE stays: installGuard() only turns on the guard from GEV_SPEC_OUT,
-    // so clearing that alone stops the pollution without stopping coverage.
+    // NODE_V8_COVERAGE must go too, not just GEV_SPEC_OUT: this process's own guard
+    // already wraps child_process globally, and withGuardEnv() re-injects its own
+    // GEV_SPEC_OUT into any spawned child's env whenever that child's env still carries
+    // NODE_V8_COVERAGE — regardless of what this call's own `env` argument deletes.
+    // Verified by restoring NODE_V8_COVERAGE alone in a real make gates run: the same
+    // blank-file GATES-TEST-LEAK this fix exists to prevent fired again immediately.
     const env = { ...process.env };
+    delete env.NODE_V8_COVERAGE;
     delete env.GEV_SPEC_OUT;
     delete env.GEV_SPEC_ROOT;
     delete env.GEV_SPEC_INVENTORY;
