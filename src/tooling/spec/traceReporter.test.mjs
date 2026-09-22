@@ -1,11 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import traceReporter, { parseTags, TraceCollector } from '../../../scripts/spec/lib/trace-reporter.mjs';
+import traceReporter, { findOwnDestination, parseTags, TraceCollector } from '../../../scripts/spec/lib/trace-reporter.mjs';
 
 const REPORTER = fileURLToPath(new URL('../../../scripts/spec/lib/trace-reporter.mjs', import.meta.url));
 
@@ -104,6 +104,50 @@ test('[spec-trace-008] keeps the subtests of each file separate', () => {
   ]);
 });
 
+test('[coverage-gate-051] pairs each --test-reporter with the --test-reporter-destination that follows it', () => {
+  const argv = [
+    '/usr/bin/node',
+    '--test',
+    '--test-reporter=dot',
+    '--test-reporter-destination=stdout',
+    '--test-reporter=lcov',
+    '--test-reporter-destination=/out/lcov.info',
+    `--test-reporter=${REPORTER}`,
+    '--test-reporter-destination=/out/tests-main.jsonl',
+    'src/a.test.mjs',
+  ];
+  assert.equal(findOwnDestination(argv, REPORTER), '/out/tests-main.jsonl');
+  assert.equal(findOwnDestination(argv, '/other/reporter.mjs'), null);
+  assert.equal(findOwnDestination(['--test-reporter=dot'], REPORTER), null);
+});
+
+test('[coverage-gate-052] registers its destination only with a real AbortSignal at options.signal, even when process.execArgv names the module\'s destination', async () => {
+  const directory = mkdtempSync(path.join(tmpdir(), 'gev-trace-direct-'));
+  const originalExecArgv = process.execArgv;
+  try {
+    const destination = path.join(directory, 'tests-main.jsonl');
+    process.execArgv = [...originalExecArgv, `--test-reporter=${REPORTER}`, `--test-reporter-destination=${destination}`];
+
+    await collect([event('[flights-004] shows the label', 0)]);
+    assert.equal(existsSync(`${destination}.sync`), false, 'a call with no signal, like this file\'s own fake calls, must not self-register a destination');
+
+    const lines = [];
+    for await (const chunk of traceReporter(
+      (async function* () {
+        yield event('[flights-004] shows the label', 0);
+      })(),
+      { signal: new AbortController().signal },
+    )) {
+      lines.push(chunk);
+    }
+    assert.equal(existsSync(`${destination}.sync`), true, 'a call with a real AbortSignal, matching Node\'s own CLI shape, must self-register and write its destination');
+    assert.equal(readFileSync(`${destination}.sync`, 'utf8'), lines.join(''));
+  } finally {
+    process.execArgv = originalExecArgv;
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 test('[spec-trace-044] writes the line and the column of the definition of each test', async () => {
   const records = await collect([event('[flights-004] shows the label', 0, { line: 12, column: 3 }), event('no line', 0, { line: 'x', column: 'y' })]);
   assert.deepEqual(records.map((record) => [record.name, record.line, record.column]), [
@@ -133,7 +177,10 @@ test('[spec-trace-008 spec-trace-044] records the subtests and their lines from 
       env: withoutTestContext(),
     });
     assert.equal(result.status, 0, result.stderr);
-    const records = readFileSync(output, 'utf8').trim().split('\n').map(JSON.parse);
+    const raw = readFileSync(output, 'utf8');
+    const sync = readFileSync(`${output}.sync`, 'utf8');
+    assert.equal(sync, raw, 'the reporter\'s own synchronous write must match what Node\'s destination stream wrote');
+    const records = raw.trim().split('\n').map(JSON.parse);
     assert.deepEqual(
       records.map((record) => [record.file, record.fullName, record.leaf, record.tags, record.line, record.column]),
       [

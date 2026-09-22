@@ -561,6 +561,7 @@ test('a floor that lands after the render deadline lifts the dots off the ellips
   const lat = 44.123;
   const lon = -110.456;
   let terrainCalls = 0;
+  let terrainDelayTimer;
   setMeshFloorPreferred(false);
   _clearMeshFloorCellsForTest();
   _resetFireAnchorsForTest();
@@ -572,7 +573,9 @@ test('a floor that lands after the render deadline lifts the dots off the ellips
       // The production failure: the bounded pre-render resolve gives up before
       // Re:Earth answers, so the first paint has no floor to stand on.
       if (terrainCalls === 1) {
-        await new Promise((resolve) => setTimeout(resolve, FLOOR_RESOLVE_DEADLINE_MS + 200));
+        await new Promise((resolve) => {
+          terrainDelayTimer = setTimeout(resolve, FLOOR_RESOLVE_DEADLINE_MS + 200);
+        });
       }
       return { ok: true, status: 200, json: async () => ({ results: [{ ellipsoid: 2400 }] }) };
     }
@@ -639,6 +642,7 @@ test('a floor that lands after the render deadline lifts the dots off the ellips
       `re-render must lift the dot onto the resolved floor, got ${heightOf(lifted)}`,
     );
   } finally {
+    clearTimeout(terrainDelayTimer);
     militaryInstallationsLayer.destroy(viewer);
     _resetFireAnchorsForTest();
     setMeshFloorPreferred(true);
@@ -654,6 +658,15 @@ test('reports bounded installation requests as loading and clears on settlement'
   const originalDocument = globalThis.document;
   const originalWindow = globalThis.window;
   const originalFetch = globalThis.fetch;
+  const originalSetTimeout = globalThis.setTimeout;
+  let boundedTimer;
+  globalThis.setTimeout = (fn, ms, ...args) => {
+    const handle = originalSetTimeout(fn, ms, ...args);
+    if (ms === FLOOR_RESOLVE_DEADLINE_MS) {
+      boundedTimer = handle;
+    }
+    return handle;
+  };
   let resolveInstallations;
   const installationsResponse = new Promise((resolve) => { resolveInstallations = resolve; });
   globalThis.document = { addEventListener() {}, removeEventListener() {} };
@@ -701,6 +714,8 @@ test('reports bounded installation requests as loading and clears on settlement'
     await update;
     assert.equal(militaryInstallationsLayer.getStats().loading, false);
   } finally {
+    clearTimeout(boundedTimer);
+    globalThis.setTimeout = originalSetTimeout;
     militaryInstallationsLayer.destroy(viewer);
     globalThis.fetch = originalFetch;
     if (originalDocument === undefined) delete globalThis.document;

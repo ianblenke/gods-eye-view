@@ -1,0 +1,2 @@
+Verdict: FAIL
+- [ ] F1 minor openspec/changes/teardown-guard/tasks.md:139 At commit `dbd492b2ca1457d124ec76393b3d7f23f0801fb1`, searches confirm 77 test declarations and 75 teardown hooks. However, "Two make no layer at all" is false. The test at `src/data/oshLayer.test.mjs:351` creates a layer but does not initialize it. State that one test throws during creation and one creates a layer without initialization.
