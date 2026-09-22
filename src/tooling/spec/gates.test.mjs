@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -829,6 +829,10 @@ test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
     env.GEV_SPEC_INVENTORY = '';
     const result = spawnSync(process.execPath, mainRun.args, { env, timeout: 30_000, encoding: 'utf8' });
     assert.equal(result.status, 1);
+    // Real coverage still ran, isolated from the real gate's own coverage folder: V8
+    // itself writes one or more coverage-*.json files there whenever NODE_V8_COVERAGE
+    // names a real directory, independent of this project's own guard.
+    assert.ok(readdirSync(coverageDir).some((file) => file.startsWith('coverage-')), 'the isolated coverage folder must hold real V8 coverage output');
     // Read mainRun.output, the `.sync` file: measure() reads this file, not the raw
     // destination, because a forced exit can end the process before Node's own
     // destination stream flushes. See the "Trace record durability" requirement.
@@ -837,6 +841,7 @@ test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
       .split('\n')
       .map((line) => JSON.parse(line));
     assert.equal(jsonl.length, 1);
+    assert.equal(jsonl[0].file, path.relative(process.cwd(), testFile).split(path.sep).join('/'));
     assert.equal(jsonl[0].fullName, 'fails and leaks');
     assert.equal(jsonl[0].status, 'fail');
   } finally {
