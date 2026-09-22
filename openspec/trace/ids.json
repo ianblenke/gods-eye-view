@@ -439,6 +439,31 @@
     "since": "2026-09-15",
     "change": "establish-spec-governance"
   },
+  "coverage-gate-048": {
+    "hash": "53ee141ef094f833d63bb262e79c0aba022b19d30c038722ab1e72583c7f8e61",
+    "since": "2026-09-20",
+    "change": "teardown-guard"
+  },
+  "coverage-gate-049": {
+    "hash": "4a174d96f9d6a794b401f7c9a4d3b10fb1d3349dc16f7263757c15f6b9d0898a",
+    "since": "2026-09-20",
+    "change": "teardown-guard"
+  },
+  "coverage-gate-050": {
+    "hash": "bd8830a4458408efc3387f7144c50f3e153d26b58759c767db7601e9b2e42780",
+    "since": "2026-09-20",
+    "change": "teardown-guard"
+  },
+  "coverage-gate-051": {
+    "hash": "1b55c5a215d175023d39a431fe66dbd2946ca2346ff11c946e1cd915a3d126fa",
+    "since": "2026-09-21",
+    "change": "teardown-guard"
+  },
+  "coverage-gate-052": {
+    "hash": "8fd094a18d95bf7695b96d5b8bb829d5d435cc79b8379438cb79d36ae585c055",
+    "since": "2026-09-21",
+    "change": "teardown-guard"
+  },
   "gap-ledger-001": {
     "hash": "d926236986707c5770e366ba46ec70d9e7431ee9daf231b24b1d4d14e242705c",
     "since": "2026-09-14",

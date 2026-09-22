@@ -294,6 +294,27 @@
   "coverage-gate-047": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-047] stops for a local dotenv file that is not empty before the gate starts the test runs"
   ],
+  "coverage-gate-048": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-048] exits a test run that leaves a live timer"
+  ],
+  "coverage-gate-049": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-049] stops for a real child process that leaves a live timer, with no stub",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-049] stops for a test that leaves a live timer",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-049] records a live timer at the exit of a test process",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-049] writes a leak record when a real child process leaves a live timer at exit"
+  ],
+  "coverage-gate-050": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-050] does not stop for a test process without a live timer",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak and throws no error when getActiveResources has a falsy value",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak for a test process without a live timer",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak when the active-resource function is absent"
+  ],
+  "coverage-gate-051": [
+    "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-051] pairs each --test-reporter with the --test-reporter-destination that follows it"
+  ],
+  "coverage-gate-052": [
+    "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-052] registers its destination only with a real AbortSignal at options.signal, even when process.execArgv names the module's destination"
+  ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec"

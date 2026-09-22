@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -98,11 +98,14 @@ test('[coverage-gate-003] runs each tracked test file with coverage and the trac
   const [main] = buildTestRuns({ testFiles: ['src/a.test.mjs', 'tools/b.test.mjs'], allocationFiles: [], outDir: '/out' });
   assert.deepEqual(main.args.slice(0, 2), ['--test', '--experimental-test-coverage']);
   assert.ok(main.args.includes('--test-reporter-destination=/out/lcov.info'));
-  assert.deepEqual([main.output, main.args.slice(-2)], ['/out/tests-main.jsonl', ['src/a.test.mjs', 'tools/b.test.mjs']]);
+  assert.deepEqual([main.output, main.rawOutput, main.args.slice(-2)], ['/out/tests-main.jsonl.sync', '/out/tests-main.jsonl', ['src/a.test.mjs', 'tools/b.test.mjs']]);
   assert.deepEqual(buildTestRuns({ testFiles: [], allocationFiles: [], outDir: '/out' }), []);
   withFixture((root) => {
     passes(root, ['init']);
-    const files = readFileSync(path.join(root, '.gev-cache/spec/tests-main.jsonl'), 'utf8').trim().split('\n').map((line) => JSON.parse(line).file);
+    const raw = readFileSync(path.join(root, '.gev-cache/spec/tests-main.jsonl'), 'utf8');
+    const sync = readFileSync(path.join(root, '.gev-cache/spec/tests-main.jsonl.sync'), 'utf8');
+    assert.equal(sync, raw, 'the reporter\'s own synchronous write must match what Node\'s destination stream wrote');
+    const files = raw.trim().split('\n').map((line) => JSON.parse(line).file);
     assert.deepEqual(files.sort(), ['src/math.test.mjs', 'tools/other.test.mjs']);
   });
 });
@@ -113,12 +116,15 @@ test('[coverage-gate-007] runs the allocation tests alone with --expose-gc and n
   assert.equal(runs[0].args.includes('src/alloc.test.mjs'), false);
   assert.deepEqual(runs[1].args.slice(0, 3), ['--expose-gc', '--test', '--test-concurrency=1']);
   assert.equal(runs[1].args.includes('--experimental-test-coverage'), false);
-  assert.equal(runs[1].output, '/out/tests-allocation-0.jsonl');
+  assert.deepEqual([runs[1].output, runs[1].rawOutput], ['/out/tests-allocation-0.jsonl.sync', '/out/tests-allocation-0.jsonl']);
   const probe = "import test from 'node:test';\nimport assert from 'node:assert/strict';\ntest('allocation probe', () => {\n  assert.equal(typeof globalThis.gc, 'function');\n});\n";
   withFixture(
     (root) => {
       const result = passes(root, ['init'], { allocationFiles: ['src/alloc.test.mjs'] });
-      assert.match(readFileSync(path.join(root, '.gev-cache/spec/tests-allocation-0.jsonl'), 'utf8'), /"status":"pass"/);
+      const raw = readFileSync(path.join(root, '.gev-cache/spec/tests-allocation-0.jsonl'), 'utf8');
+      const sync = readFileSync(path.join(root, '.gev-cache/spec/tests-allocation-0.jsonl.sync'), 'utf8');
+      assert.match(raw, /"status":"pass"/);
+      assert.equal(sync, raw, 'the reporter\'s own synchronous write must match what Node\'s destination stream wrote');
       assert.match(result.output, /3 tests, 0 traced, 3 untraced\./);
     },
     { base: { 'src/alloc.test.mjs': probe } },
@@ -507,8 +513,12 @@ test('[coverage-gate-026] stops when the test runner or a test run cannot start'
       writeFileSync(args[2], JSON.stringify(results));
       return { status: 0 };
     };
+    // The gate creates each run's own `.sync` result file empty before any test process
+    // starts (see measure() in gates.mjs), so a run whose process never even produced
+    // output is indistinguishable, by file existence alone, from one that ran and passed
+    // nothing: both report through checkFailedRuns()'s message, not this shorter one.
     const failedRun = run(root, ['init'], { spawn: fakeRunner([{ status: 5, error: null }]) });
-    assert.match(failedRun.output, /ERROR GATES-TEST-RUN The main test run stopped with status 5$/m);
+    assert.match(failedRun.output, /ERROR GATES-TEST-RUN The main test run stopped with status 5, but no test in its result file failed$/m);
     const brokenRun = run(root, ['init'], { spawn: fakeRunner([{ status: null, error: 'no node' }]) });
     assert.match(brokenRun.output, /ERROR GATES-TEST-RUN The main test run stopped with status null: no node$/m);
   });
@@ -518,7 +528,7 @@ test('[coverage-gate-035] stops for a failed test run without a failed test in i
   withFixture((root) => {
     const entry = (status) => JSON.stringify({ file: 'src/math.test.mjs', name: 'adds two numbers', title: 'adds two numbers', kind: 'test', status, tags: [], tagError: null, line: 4, column: 1, fullName: 'adds two numbers', leaf: true });
     const runner = (status, lines) => (command, args) => {
-      writeFileSync(path.join(path.dirname(args[2]), 'tests-main.jsonl'), lines.map((line) => `${line}\n`).join(''));
+      writeFileSync(path.join(path.dirname(args[2]), 'tests-main.jsonl.sync'), lines.map((line) => `${line}\n`).join(''));
       writeFileSync(args[2], JSON.stringify([{ status, error: null }]));
       return { status: 0 };
     };
@@ -641,10 +651,10 @@ test('[spec-trace-039 spec-trace-040] stops for a result entry that a test write
       "test('writes a result entry', () => {",
       "  const args = readFileSync(`/proc/${process.ppid}/cmdline`, 'utf8').split('\\0');",
       "  const option = args.find((arg) => arg.startsWith('--test-reporter-destination=') && arg.endsWith('tests-main.jsonl'));",
-      "  const destination = option.slice(option.indexOf('=') + 1);",
+      "  const destination = `${option.slice(option.indexOf('=') + 1)}.sync`;",
       "  const record = { file: 'src/math.test.mjs', name: '[demo-001] adds two numbers', title: 'adds two numbers', kind: 'test', status: 'pass', tags: ['demo-002'], tagError: null, line: 5, fullName: '[demo-001] adds two numbers', leaf: true };",
       "  appendFileSync(destination, `${'\\n'.repeat(100000)}${JSON.stringify(record)}\\n`);",
-      '  assert.ok(destination.endsWith(\'tests-main.jsonl\'));',
+      '  assert.ok(destination.endsWith(\'tests-main.jsonl.sync\'));',
       '});',
     ].join('\n');
     const imports = "import { add } from './math.js';\nimport { appendFileSync, readFileSync } from 'node:fs';";
@@ -892,3 +902,107 @@ test('[gap-ledger-080] stops the waive command for a fault in its options', GUAR
   });
 });
 
+test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
+  const runs = buildTestRuns({ testFiles: ['src/a.test.mjs', 'src/alloc.test.mjs'], allocationFiles: ['src/alloc.test.mjs'], outDir: '/out' });
+  assert.equal(runs[0].args.includes('--test-force-exit'), true);
+  assert.equal(runs[1].args.includes('--test-force-exit'), true);
+
+  const root = mkdtempSync(path.join(tmpdir(), 'gev-force-exit-'));
+  const outDir = path.join(root, 'out');
+  mkdirSync(outDir, { recursive: true });
+  const testFile = path.join(root, 'leak.test.mjs');
+  writeFileSync(
+    testFile,
+    "import test from 'node:test';\nimport assert from 'node:assert/strict';\ntest('fails and leaks', () => {\n  setInterval(() => {}, 1000);\n  assert.equal(1, 2);\n});\n",
+  );
+  try {
+    const [mainRun] = buildTestRuns({ testFiles: [testFile], allocationFiles: [], outDir });
+    const env = { ...process.env };
+    delete env.NODE_TEST_CONTEXT;
+    // A real gate run sets GEV_SPEC_OUT on this test's own process, and this process's
+    // own guard wraps child_process globally. withGuardEnv() (test-guard.mjs) always adds
+    // the guard preload to NODE_OPTIONS when NODE_V8_COVERAGE is present, but only
+    // re-injects its own closed-over GEV_SPEC_OUT when the child's NODE_V8_COVERAGE points
+    // at the real gate's own coverage folder. Give this spawn its own coverage folder so
+    // that check is false: real coverage still collects for this run's own fixture and
+    // preloads, isolated from the real gate run, and the injected preload finds an empty
+    // GEV_SPEC_OUT and installs nothing — so this fixture's deliberate leak lands only in
+    // this test's own outDir, never the real gate run's.
+    const coverageDir = path.join(root, 'coverage');
+    mkdirSync(coverageDir, { recursive: true });
+    env.NODE_V8_COVERAGE = coverageDir;
+    env.GEV_SPEC_OUT = '';
+    env.GEV_SPEC_ROOT = '';
+    env.GEV_SPEC_INVENTORY = '';
+    const result = spawnSync(process.execPath, mainRun.args, { env, timeout: 30_000, encoding: 'utf8' });
+    assert.equal(result.status, 1);
+    // Real coverage still ran, isolated from the real gate's own coverage folder: V8
+    // itself writes one or more coverage-*.json files there whenever NODE_V8_COVERAGE
+    // names a real directory, independent of this project's own guard.
+    assert.ok(readdirSync(coverageDir).some((file) => file.startsWith('coverage-')), 'the isolated coverage folder must hold real V8 coverage output');
+    // Read mainRun.output, the `.sync` file: measure() reads this file, not the raw
+    // destination, because a forced exit can end the process before Node's own
+    // destination stream flushes. See the "Trace record durability" requirement.
+    const jsonl = readFileSync(mainRun.output, 'utf8')
+      .trim()
+      .split('\n')
+      .map((line) => JSON.parse(line));
+    assert.equal(jsonl.length, 1);
+    assert.equal(jsonl[0].file, path.relative(process.cwd(), testFile).split(path.sep).join('/'));
+    assert.equal(jsonl[0].fullName, 'fails and leaks');
+    assert.equal(jsonl[0].status, 'fail');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('[coverage-gate-049] stops for a test that leaves a live timer', () => {
+  withFixture((root) => {
+    passes(root, ['init']);
+    const stub = (command, args, options) => {
+      const result = spawnSync(command, args, options);
+      writeFileSync(
+        path.join(root, '.gev-cache/spec/guard-999.jsonl'),
+        `${JSON.stringify({ violations: [], checked: [], assertions: [], leaks: [{ file: 'src/math.test.mjs', resources: ['Timeout'] }] })}\n`,
+      );
+      return result;
+    };
+    const check = run(root, ['check'], { spawn: stub });
+    assert.equal(check.status, 1);
+    assert.match(check.output, /ERROR GATES-TEST-LEAK src\/math\.test\.mjs/);
+    assert.doesNotMatch(check.output, /COVERAGE-FAKE/);
+    assert.match(check.output, /0 untrue/);
+  });
+});
+
+test('[coverage-gate-050] does not stop for a test process without a live timer', () => {
+  withFixture((root) => {
+    passes(root, ['init']);
+    const stub = (command, args, options) => {
+      const result = spawnSync(command, args, options);
+      writeFileSync(
+        path.join(root, '.gev-cache/spec/guard-999.jsonl'),
+        `${JSON.stringify({ violations: [], checked: [], assertions: [], leaks: [] })}\n`,
+      );
+      return result;
+    };
+    const check = run(root, ['check'], { spawn: stub });
+    assert.equal(check.status, 0);
+    assert.doesNotMatch(check.output, /GATES-TEST-LEAK/);
+  });
+});
+
+test('[coverage-gate-049] stops for a real child process that leaves a live timer, with no stub', GUARDED_RUN, () => {
+  withFixture((root) => {
+    passes(root, ['init']);
+    write(root, { 'src/leaky.test.mjs': "import test from 'node:test';\ntest('passes and leaves a timer live', () => {\n  setInterval(() => {}, 1000);\n});\n" });
+    commitAll(root, 'add a leaky test');
+    const check = run(root, ['check']);
+    assert.equal(check.status, 1);
+    assert.match(check.output, /ERROR GATES-TEST-LEAK src\/leaky\.test\.mjs/);
+    // The guard's leak record is not a `violation`: untrueFiles() must not read it, so
+    // this real leaky test process does not cost src/math.js its true coverage.
+    assert.doesNotMatch(check.output, /COVERAGE-FAKE/);
+    assert.match(check.output, /0 untrue/);
+  });
+});
