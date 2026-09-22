@@ -299,19 +299,20 @@
   ],
   "coverage-gate-049": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-049] stops for a test that leaves a live timer",
-    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-049] records a live timer at the exit of a test process"
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-049] records a live timer at the exit of a test process",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-049] writes a leak record when a real child process leaves a live timer at exit"
   ],
   "coverage-gate-050": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-050] does not stop for a test process without a live timer",
-    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] a guard given a falsy getActiveResources records no leak instead of throwing",
-    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] a guard given no getActiveResources records no leak on a Node version without it",
-    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak for a test process without a live timer"
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak and throws no error when getActiveResources has a falsy value",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak for a test process without a live timer",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak when the active-resource function is absent"
   ],
   "coverage-gate-051": [
-    "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-051] findOwnDestination pairs each --test-reporter with the --test-reporter-destination that follows it"
+    "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-051] pairs each --test-reporter with the --test-reporter-destination that follows it"
   ],
   "coverage-gate-052": [
-    "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-052] only a call with a real AbortSignal at options.signal self-registers, even when process.execArgv names this module's own real destination"
+    "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-052] registers its destination only with a real AbortSignal at options.signal, even when process.execArgv names the module's destination"
   ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
