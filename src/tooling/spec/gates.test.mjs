@@ -821,7 +821,10 @@ test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
     delete env.GEV_SPEC_INVENTORY;
     const result = spawnSync(process.execPath, mainRun.args, { env, timeout: 30_000, encoding: 'utf8' });
     assert.equal(result.status, 1);
-    const jsonl = readFileSync(path.join(outDir, 'tests-main.jsonl'), 'utf8')
+    // Read mainRun.output, the `.sync` file: measure() reads this file, not the raw
+    // destination, because a forced exit can end the process before Node's own
+    // destination stream flushes. See the "Trace record durability" requirement.
+    const jsonl = readFileSync(mainRun.output, 'utf8')
       .trim()
       .split('\n')
       .map((line) => JSON.parse(line));

@@ -407,7 +407,8 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
   assert.deepEqual(skipped('./testGuard.test.mjs'), [
       "[spec-trace-027] counts the assertions of each test",
       "[coverage-gate-028] writes the checked files, the errors and the assertion counts of a child process at the end of the process",
-      "[coverage-gate-036] loads the guard before the other preloads of a child process"
+      "[coverage-gate-036] loads the guard before the other preloads of a child process",
+      "[coverage-gate-049] writes a leak record when a real child process leaves a live timer at exit"
   ]);
   assert.deepEqual(skipped('./gates.test.mjs'), [
       "[coverage-gate-003] runs each tracked test file with coverage and the trace reporter",
@@ -451,6 +452,20 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
   }
 });
 
+test('[coverage-gate-049] writes a leak record when a real child process leaves a live timer at exit', GUARDED_RUN, () => {
+  const result = spawnSync(process.execPath, ['-e', 'setInterval(() => {}, 1000); process.exit(0);'], {
+    env: { ...process.env, ...ENV, NODE_V8_COVERAGE: OWN_COVERAGE, NODE_OPTIONS: GUARD_PRELOAD },
+    encoding: 'utf8',
+  });
+  assert.equal(result.status, 0, result.stderr);
+  const file = path.join(OUT, `guard-${result.pid}.jsonl`);
+  assert.equal(existsSync(file), true);
+  const [line] = readFileSync(file, 'utf8').trim().split('\n').map(JSON.parse);
+  assert.equal(line.leaks.length, 1);
+  assert.deepEqual(line.leaks[0].resources, ['Timeout']);
+  assert.equal(line.violations.length, 0);
+});
+
 test('[coverage-gate-049] records a live timer at the exit of a test process', () => {
   const local = createGuard({
     root: '/repo',
@@ -473,7 +488,7 @@ test('[coverage-gate-050] records no leak for a test process without a live time
   assert.deepEqual(local.results().leaks, []);
 });
 
-test('[coverage-gate-050] a guard given no getActiveResources records no leak on a Node version without it', () => {
+test('[coverage-gate-050] records no leak when the active-resource function is absent', () => {
   const original = process.getActiveResourcesInfo;
   process.getActiveResourcesInfo = undefined;
   try {
@@ -484,7 +499,7 @@ test('[coverage-gate-050] a guard given no getActiveResources records no leak on
   }
 });
 
-test('[coverage-gate-050] a guard given a falsy getActiveResources records no leak instead of throwing', () => {
+test('[coverage-gate-050] records no leak and throws no error when getActiveResources has a falsy value', () => {
   const local = createGuard({
     root: '/repo',
     inventory: new Map(),

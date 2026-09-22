@@ -1870,10 +1870,11 @@ test('[osh-057] getStats().placed.stream counts only the stream-placed system, n
 
 // --- osh-061: every entity draws on top of the depth test, at its own altitude ---
 
-test('[osh-061] the system entity\'s point and label draw on top, with the height reference NONE', async () => {
+test('[osh-061] the system entity\'s point and label draw on top, with the height reference NONE', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_A] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1883,13 +1884,13 @@ test('[osh-061] the system entity\'s point and label draw on top, with the heigh
   assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
   assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
   assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
-  layer.destroy(viewer);
 });
 
-test('[osh-061] the feature entity\'s point and label draw on top, with the height reference NONE', async () => {
+test('[osh-061] the feature entity\'s point and label draw on top, with the height reference NONE', async (t) => {
   const source = fakeSource({ fois: [FEATURE_A] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1899,10 +1900,9 @@ test('[osh-061] the feature entity\'s point and label draw on top, with the heig
   assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
   assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
   assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
-  layer.destroy(viewer);
 });
 
-test('[osh-061] the re-added entity for a selected system draws on top, on its point and its label', async () => {
+test('[osh-061] the re-added entity for a selected system draws on top, on its point and its label', async (t) => {
   let locations = [aircraftLocation()];
   const source = {
     async getSystems() {
@@ -1920,6 +1920,7 @@ test('[osh-061] the re-added entity for a selected system draws on top, on its p
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1943,13 +1944,13 @@ test('[osh-061] the re-added entity for a selected system draws on top, on its p
     assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
     assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-061] a system placed from a fresh location keeps its altitude', async () => {
+test('[osh-061] a system placed from a fresh location keeps its altitude', async (t) => {
   const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1961,13 +1962,13 @@ test('[osh-061] a system placed from a fresh location keeps its altitude', async
     Math.abs(cartographic.height - 100) < 1e-3,
     `expected the fixture's own altitude, 100, got ${cartographic.height}`,
   );
-  layer.destroy(viewer);
 });
 
-test('[osh-061] a feature entity keeps its own altitude', async () => {
+test('[osh-061] a feature entity keeps its own altitude', async (t) => {
   const source = fakeSource({ fois: [FEATURE_ALT] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1979,10 +1980,9 @@ test('[osh-061] a feature entity keeps its own altitude', async () => {
     Math.abs(cartographic.height - 75) < 1e-3,
     `expected the fixture's own altitude, 75, got ${cartographic.height}`,
   );
-  layer.destroy(viewer);
 });
 
-test('[osh-061] a moved entity keeps the observation\'s altitude', async () => {
+test('[osh-061] a moved entity keeps the observation\'s altitude', async (t) => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
@@ -1992,6 +1992,7 @@ test('[osh-061] a moved entity keeps the observation\'s altitude', async () => {
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -2009,7 +2010,6 @@ test('[osh-061] a moved entity keeps the observation\'s altitude', async () => {
       `expected the observation's own altitude, 250, got ${cartographic.height}`,
     );
   });
-  layer.destroy(viewer);
 });
 
 // --- osh-062: hide an entity beyond the ellipsoid horizon ---
@@ -2114,9 +2114,10 @@ test('[osh-062] a poll move across the horizon hides the selected entity, and a 
   });
 });
 
-test('[osh-062] init() adds one moveEnd listener, disable() keeps it, and destroy() removes it', () => {
+test('[osh-062] init() adds one moveEnd listener, disable() keeps it, and destroy() removes it', (t) => {
   const layer = createOshLayer({ source: fakeSource() });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   assert.equal(viewer.camera.moveEnd.numberOfListeners, 1);
   layer.enable(viewer);
