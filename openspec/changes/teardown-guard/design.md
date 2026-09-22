@@ -49,7 +49,7 @@ Two further tests make no layer at all. One throws before any source exists. One
 
 ### D3 The other suites: four sites in `localGeojson.test.mjs`, none elsewhere
 
-The facts table counted the literal `destroy(viewer)`. `localGeojson.test.mjs` writes `destroy` and a cleanup call together instead. Four tests end that way after their last assertion: the tests at lines 366, 463, 472 and 690 on this branch.
+The facts table counted the literal `destroy(viewer)`. `localGeojson.test.mjs` writes `destroy` and a cleanup call together instead, at the tests at lines 366, 463, 472 and 690 on this branch. Three of the four end that way after their last assertion. The fourth keeps a call whose effect an assertion checks before that.
 
 Each gains `(t)` and one destroy-and-cleanup hook line after its harness call. That is the exact line the file's other tests already use. One of the four, the disable-and-re-enable test, also keeps its own mid-test `destroy()` call. An assertion reads the settle-listener count right after it, the same pattern D2 describes for `oshLayer.test.mjs`. The hook then calls `destroy` a second time on that test.
 

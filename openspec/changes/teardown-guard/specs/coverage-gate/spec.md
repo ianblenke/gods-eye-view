@@ -24,7 +24,7 @@ Origin: spec-first
 - **AND** the coverage gate reports no live-timer error for that process
 
 ### Requirement: Trace record durability
-The trace reporter MUST write each finished test record itself, synchronously, to a `.sync` file beside its own destination. That record then survives a `--test-force-exit` that ends the process before Node's own destination stream flushes. The reporter MUST open that file only when the signal option is a real `AbortSignal` and the process arguments name its own destination. A direct call could open the file with no such signal. That call could then corrupt the real destination of a run in the same process.
+The trace reporter MUST write each finished test record itself, synchronously, to a `.sync` file beside its own destination. That record then survives a `--test-force-exit` that ends the process before Node's own destination stream flushes. The reporter MUST open that file only when the signal option is a real `AbortSignal` and the process arguments name its own destination. Without this check, a direct call could open the file with no such signal. That call could then corrupt the real destination of a run in the same process.
 Origin: spec-first
 
 #### Scenario: findOwnDestination pairs a reporter flag with its own destination `coverage-gate-051`

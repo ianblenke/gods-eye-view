@@ -812,13 +812,21 @@ test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
     const [mainRun] = buildTestRuns({ testFiles: [testFile], allocationFiles: [], outDir });
     const env = { ...process.env };
     delete env.NODE_TEST_CONTEXT;
-    // A real gate run sets GEV_SPEC_OUT on this test's own process. Left in `env`, the
-    // spawned child would install its own guard and write this fixture's deliberate
-    // leak into the real gate run's outDir, not this test's own temporary one.
-    delete env.NODE_V8_COVERAGE;
-    delete env.GEV_SPEC_OUT;
-    delete env.GEV_SPEC_ROOT;
-    delete env.GEV_SPEC_INVENTORY;
+    // A real gate run sets GEV_SPEC_OUT on this test's own process, and this process's
+    // own guard wraps child_process globally. withGuardEnv() (test-guard.mjs) always adds
+    // the guard preload to NODE_OPTIONS when NODE_V8_COVERAGE is present, but only
+    // re-injects its own closed-over GEV_SPEC_OUT when the child's NODE_V8_COVERAGE points
+    // at the real gate's own coverage folder. Give this spawn its own coverage folder so
+    // that check is false: real coverage still collects for this run's own fixture and
+    // preloads, isolated from the real gate run, and the injected preload finds an empty
+    // GEV_SPEC_OUT and installs nothing — so this fixture's deliberate leak lands only in
+    // this test's own outDir, never the real gate run's.
+    const coverageDir = path.join(root, 'coverage');
+    mkdirSync(coverageDir, { recursive: true });
+    env.NODE_V8_COVERAGE = coverageDir;
+    env.GEV_SPEC_OUT = '';
+    env.GEV_SPEC_ROOT = '';
+    env.GEV_SPEC_INVENTORY = '';
     const result = spawnSync(process.execPath, mainRun.args, { env, timeout: 30_000, encoding: 'utf8' });
     assert.equal(result.status, 1);
     // Read mainRun.output, the `.sync` file: measure() reads this file, not the raw
@@ -829,6 +837,7 @@ test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
       .split('\n')
       .map((line) => JSON.parse(line));
     assert.equal(jsonl.length, 1);
+    assert.equal(jsonl[0].fullName, 'fails and leaks');
     assert.equal(jsonl[0].status, 'fail');
   } finally {
     rmSync(root, { recursive: true, force: true });
@@ -868,6 +877,21 @@ test('[coverage-gate-050] does not stop for a test process without a live timer'
     const check = run(root, ['check'], { spawn: stub });
     assert.equal(check.status, 0);
     assert.doesNotMatch(check.output, /GATES-TEST-LEAK/);
+  });
+});
+
+test('[coverage-gate-049] stops for a real child process that leaves a live timer, with no stub', GUARDED_RUN, () => {
+  withFixture((root) => {
+    passes(root, ['init']);
+    write(root, { 'src/leaky.test.mjs': "import test from 'node:test';\ntest('passes and leaves a timer live', () => {\n  setInterval(() => {}, 1000);\n});\n" });
+    commitAll(root, 'add a leaky test');
+    const check = run(root, ['check']);
+    assert.equal(check.status, 1);
+    assert.match(check.output, /ERROR GATES-TEST-LEAK src\/leaky\.test\.mjs/);
+    // The guard's leak record is not a `violation`: untrueFiles() must not read it, so
+    // this real leaky test process does not cost src/math.js its true coverage.
+    assert.doesNotMatch(check.output, /COVERAGE-FAKE/);
+    assert.match(check.output, /0 untrue/);
   });
 });
 

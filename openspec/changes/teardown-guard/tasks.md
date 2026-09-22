@@ -23,6 +23,7 @@ Rules for this group. Change no test name. Change no assertion. Do not touch `wi
   - Keep any other call whose effect an assertion reads. List each kept call in the commit message.
   - Record the exact counts: hook lines added, calls removed, calls kept.
 - [x] 2.3 Run `node --test src/data/oshLayer.test.mjs`. Confirm that all 66 tests pass and the runner skips none.
+  - The file had 66 tests at this task's own time, 64 with a layer. Other, already-merged work later added more tests to the file. Task 6.4 records the file's current total.
 - [x] 2.4 Prove the guard with a temporary failure. Remove the temporary failure.
   - In the selected-entity-stays test tagged `osh-057`, invert the entity assertion so it expects no entity.
   - Run `node --test` on the file, under a 60-second `timeout`, with the `tap` reporter.
@@ -108,14 +109,14 @@ Rules for this group. Change no test name. The file has a ledger entry with untr
 - [x] 5.9 Prove the chain end to end, in the gate image, with a temporary file.
   - Add a test file under `src/` that arms a timer and then fails. Run `make gates`.
   - Confirm the output has the fail record for that test and one `GATES-TEST-LEAK` error with that file. Remove the file. Report the two lines.
-  - The two lines contain a `TRACE-FAILED-TEST` error that names the test and file. The other is a `GATES-TEST-LEAK` error that names the same file with a live `Timeout`.
+  - One line contains a `TRACE-FAILED-TEST` error that names the test and file. The other line contains a `GATES-TEST-LEAK` error for the same file, with a live `Timeout`.
   - A first attempt left the file untracked. `COVERAGE-UNTRACKED` fired, but the file never ran — test-file discovery selects only tracked files. `git add` fixed it.
   - A second, blank-named `GATES-TEST-LEAK` line also appeared in the same run. The investigation found a separate defect that caused this error. `src/tooling/spec/runParallel.test.mjs`'s `[coverage-gate-022]` test spawned a real child with no guard-env isolation. A real gate run's env then cascaded two hops deep into a synthetic probe process. Fixed at commit `ddcd304`, confirmed absent across several later runs.
 - [x] 5.10 Confirm a green run records no leak.
   - Run `make gates` on the clean tree. Confirm no `GATES-TEST-LEAK` error appears for any file.
   - Confirmed clean. These checks also found intermittent failures in tests of the full project. `osh-layer`/`osh-systems` scenarios intermittently read as unverified across several runs. None of these ever reproduced in isolation, and none touch any file this change edits.
   - An application container used much CPU time. The failures continued after we stopped it. The other cause remains unknown. At the user's request, we repeated the check until a run passed.
-  - Some full-project runs reported a live `Timeout` in `src/data/trafficTiming.test.mjs`. Isolated runs did not. The test correctly called the real `vite` dev server's close method (`createServer()`) in `finally`.
+  - Some full-project runs reported a live `Timeout` in `src/data/trafficTiming.test.mjs`. Isolated runs did not. The test correctly called the server's `close()` method in `finally`.
   - The cause: `close()`'s promise resolves before vite's own internal teardown (dependency-optimizer service, file watcher) finishes on its own tick. This only shows under real event-loop contention.
   - Fixed with a short real-timer wait after `close()` and all other teardown (commit `0758c37`). We could not reproduce the leak on demand, so we could not verify the correction with a mutation test.
   - A later verification run of the full project reported no errors. No `GATES-TEST-LEAK`, no other error. The fix held.
@@ -130,6 +131,8 @@ Rules for this group. Change no test name. The file has a ledger entry with untr
   - A rare, real defect undercounted a file's own untagged names on some whole-project runs. It struck eight distinct files, one of them three times, and once during `make ratchet` itself. For each affected file, we extracted the correct test names from the source with a regular expression. We merged and committed the names.
   - `--trace-warnings` identified Node's reporter pipeline as the source of a `MaxListenersExceededWarning` on every run, not this project's code. We removed the cosmetic `dot` reporter, and the warning stopped for good. It did not stop the drift; that recurred once with the warning absent. The warning was a correlated symptom, not the sole cause.
   - Also fixed along the way: a real coverage gap in `gates.mjs` itself, found from measured lcov data, not guessed.
+  - `openspec/trace/history.jsonl` records `src/data/labelArbiter.js`'s branch count moving between 50 and 52 on almost every ratchet run tagged `teardown-guard`, and `src/data/localGeojsonCore.js` gaining one total branch once. Neither file is in this change's own file list. The pattern predates this change. The same 50/52 flip on `labelArbiter.js` starts at commit `2069f913f` on 2026-09-15, before `teardown-guard` began.
+  - Each flip reverses on the very next ratchet run. The gate's own count tolerance absorbs each one; none ever stopped a build. This is the same unexplained whole-project measurement flakiness task 5.10 records for `trafficTiming.test.mjs`, in its coverage form rather than its untraced-name form.
   - And a structural gap: `LEDGER-NOT-IN-BASE` has no ratchet escape for a new untagged name in an unmerged change. We added scenario tags `coverage-gate-051` and `coverage-gate-052` to the two new safety tests.
   - `Gates passed.` with only the expected `REVIEW-MISSING`. `scripts/spec/gates.mjs` and `scripts/spec/lib/test-guard.mjs` stayed at 100%.
 - [ ] 6.4 Run the spec-adversary and STE-adversary review. Correct the findings. Record the result in `review.md`.
