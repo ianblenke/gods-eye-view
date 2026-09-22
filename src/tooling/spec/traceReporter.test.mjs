@@ -104,7 +104,7 @@ test('[spec-trace-008] keeps the subtests of each file separate', () => {
   ]);
 });
 
-test('[coverage-gate-051] findOwnDestination pairs each --test-reporter with the --test-reporter-destination that follows it', () => {
+test('[coverage-gate-051] pairs each --test-reporter with the --test-reporter-destination that follows it', () => {
   const argv = [
     '/usr/bin/node',
     '--test',
@@ -121,7 +121,7 @@ test('[coverage-gate-051] findOwnDestination pairs each --test-reporter with the
   assert.equal(findOwnDestination(['--test-reporter=dot'], REPORTER), null);
 });
 
-test('[coverage-gate-052] only a call with a real AbortSignal at options.signal self-registers, even when process.execArgv names this module\'s own real destination', async () => {
+test('[coverage-gate-052] registers its destination only with a real AbortSignal at options.signal, even when process.execArgv names the module\'s destination', async () => {
   const directory = mkdtempSync(path.join(tmpdir(), 'gev-trace-direct-'));
   const originalExecArgv = process.execArgv;
   try {
