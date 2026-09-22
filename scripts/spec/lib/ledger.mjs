@@ -218,7 +218,7 @@ export function waiversOf(history, baseHistory, change) {
     .filter((line) => line.kind === 'waiver' && line.change === change);
 }
 
-function compareCoverageEntry(file, entry, gap, tolerance = () => 0, waived = () => 0) {
+function compareCoverageEntry(file, entry, gap, tolerance = () => 0, waived) {
   const errors = [];
   const error = (code, message) => errors.push({ code, file, message });
   if (gap.untrue && !entry.untrue) {
