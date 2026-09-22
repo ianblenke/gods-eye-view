@@ -573,3 +573,4 @@
 {"date":"2026-09-22","change":"teardown-guard","commit":"ccc4278b44831a09ff81d947335724efffc43094","kind":"untraced","file":"src/data/aisLiveVessels.test.mjs","metric":"count","before":74,"after":60,"reason":"smaller"}
 {"date":"2026-09-22","change":"teardown-guard","commit":"ccc4278b44831a09ff81d947335724efffc43094","kind":"untraced","file":"src/data/aisWatchdog.test.mjs","metric":"count","before":49,"after":35,"reason":"smaller"}
 {"date":"2026-09-22","change":"teardown-guard","commit":"ccc4278b44831a09ff81d947335724efffc43094","kind":"untraced","file":"src/data/cctvCards.test.mjs","metric":"count","before":23,"after":20,"reason":"smaller"}
+{"date":"2026-09-22","change":"teardown-guard","commit":"857593b9670ab9350fe8ccdeaa6a1c0427caadc6","kind":"untraced","file":"src/data/cctvLod.test.mjs","metric":"count","before":29,"after":18,"reason":"smaller"}
