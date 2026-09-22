@@ -88,8 +88,6 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
         '--experimental-test-coverage',
         '--test-force-exit',
         '--test-coverage-exclude=**/*.test.mjs',
-        '--test-reporter=dot',
-        '--test-reporter-destination=stdout',
         '--test-reporter=lcov',
         `--test-reporter-destination=${outDir}/lcov.info`,
         `--test-reporter=${REPORTER}`,
