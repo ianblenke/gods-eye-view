@@ -783,3 +783,16 @@ test('[gap-ledger-085] records a waived rise', () => {
     [{ date: DATE, change: 'backfill-orbit', commit: COMMIT, kind: 'coverage', file: 'src/orbit.js', metric: 'branches', before: 3, after: 5, reason: 'waived' }],
   );
 });
+
+test('[gap-ledger-085] records a waived rise of the line count', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(3, 5, 1) } });
+  const current = gaps([loaded('src/orbit.js', 5, 5, 1, 'edited')]);
+  const waivers = [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'lines', sha: 'edited', count: 2, lines: [10], reason: 'phantom' }];
+  const result = ratchet(ledger, current, { waivers });
+  assert.equal(result.ledger.coverage['src/orbit.js'].lines, 5);
+  assert.equal(result.ledger.coverage['src/orbit.js'].sha, 'edited');
+  assert.deepEqual(
+    result.history.filter((item) => item.metric === 'lines'),
+    [{ date: DATE, change: 'backfill-orbit', commit: COMMIT, kind: 'coverage', file: 'src/orbit.js', metric: 'lines', before: 3, after: 5, reason: 'waived' }],
+  );
+});

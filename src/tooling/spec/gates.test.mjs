@@ -886,6 +886,11 @@ test('[gap-ledger-080] stops the waive command for a fault in its options', GUAR
     assert.equal(fault5.status, 1);
     assert.match(fault5.output, /ERROR GATES-WAIVE src\/math\.js Line "0" is not a positive whole number/);
 
+    // 5b. --lines not given at all
+    const fault5b = run(root, ['waive', '--change', 'add-demo', '--file', 'src/math.js', '--metric', 'branches', '--count', '1', '--reason', 'test']);
+    assert.equal(fault5b.status, 1);
+    assert.match(fault5b.output, /ERROR GATES-WAIVE src\/math\.js Line "undefined" is not a positive whole number/);
+
     // 6. Count not a positive whole number
     const fault6 = run(root, ['waive', '--change', 'add-demo', '--file', 'src/math.js', '--metric', 'branches', '--lines', '3', '--count', '0', '--reason', 'test']);
     assert.equal(fault6.status, 1);
