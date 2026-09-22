@@ -124,5 +124,11 @@ Rules for this group. Change no test name. The file has a ledger entry with untr
 - [x] 6.1 Run `make lint` until no STE error remains.
 - [x] 6.2 Run `make ratchet CHANGE=teardown-guard`. Confirm it records no new untraced name in `src/data/localGeojson.test.mjs`.
   - `Gates passed.` All scenarios verified, four history lines recorded, no untraced-name error for `localGeojson.test.mjs` or any file.
-- [ ] 6.3 Run `make gates CHANGE=teardown-guard`. Confirm `scripts/spec/gates.mjs` and `scripts/spec/lib/test-guard.mjs` stay at 100%. Read the command output for the verdict, not `results.json`.
+- [x] 6.3 Run `make gates CHANGE=teardown-guard`. Confirm `scripts/spec/gates.mjs` and `scripts/spec/lib/test-guard.mjs` stay at 100%. Read the command output for the verdict, not `results.json`.
+  - A clean run took a long saga. It was never test flakiness. It was permanent ledger drift.
+  - A rare, real defect undercounted a file's own untagged names on some whole-project runs. It struck eight distinct files, one of them three times, including once during `make ratchet` itself. Each was fixed as found: extract the true names from the source with a regex, merge them, commit.
+  - `--trace-warnings` traced a `MaxListenersExceededWarning` on every run to Node's own reporter-pipeline plumbing, not this project's code. Dropping the cosmetic `dot` reporter cleared the warning for good. It did not clear the drift; that recurred once with the warning absent. The warning was a correlated symptom, not the sole cause.
+  - Also fixed along the way: a real coverage gap in `gates.mjs` itself, found from measured lcov data, not guessed.
+  - And a structural gap: `LEDGER-NOT-IN-BASE` has no ratchet escape for a new untagged name in an unmerged change. Resolved by giving the two new safety tests proper scenario tags (`coverage-gate-051`, `coverage-gate-052`) instead of leaving them untraced.
+  - `Gates passed.` with only the expected `REVIEW-MISSING`. `scripts/spec/gates.mjs` and `scripts/spec/lib/test-guard.mjs` stayed at 100%.
 - [ ] 6.4 Run the spec-adversary and STE-adversary review. Correct the findings. Record the result in `review.md`.
