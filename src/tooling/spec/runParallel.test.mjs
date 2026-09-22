@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { EventEmitter } from 'node:events';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -74,6 +74,10 @@ test('[coverage-gate-022] runs real processes from a runs file and writes the re
     const env = { ...process.env, NODE_V8_COVERAGE: coverageDir, GEV_SPEC_OUT: '', GEV_SPEC_ROOT: '', GEV_SPEC_INVENTORY: '' };
     const result = spawnSync(process.execPath, [RUNNER, runsFile, resultsFile], { env, encoding: 'utf8' });
     assert.equal(result.status, 0, result.stderr);
+    // Real coverage of RUNNER itself, not just a run with no error: V8 writes one or
+    // more coverage-*.json files into the isolated folder whenever NODE_V8_COVERAGE
+    // names a real directory, independent of this project's own guard.
+    assert.ok(readdirSync(coverageDir).some((file) => file.startsWith('coverage-')), 'the isolated coverage folder must hold real V8 coverage output');
     assert.ok(Date.now() - started < 5000);
     assert.deepEqual(JSON.parse(readFileSync(resultsFile, 'utf8')), [
       { status: 0, error: null },
