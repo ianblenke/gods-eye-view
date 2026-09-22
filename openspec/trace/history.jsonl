@@ -581,3 +581,5 @@
 {"date":"2026-09-22","change":"teardown-guard","commit":"8b811e142ba10d3485e508d9df6598939f6932b5","kind":"untraced","file":"src/data/aisWatchdog.test.mjs","metric":"count","before":49,"after":36,"reason":"smaller"}
 {"date":"2026-09-22","change":"teardown-guard","commit":"2aa2215e4086dbbf02e5b29a93afdc10088abc0f","kind":"untraced","file":"src/contactsDetectionPolicy.test.mjs","metric":"count","before":18,"after":16,"reason":"smaller"}
 {"date":"2026-09-22","change":"teardown-guard","commit":"2aa2215e4086dbbf02e5b29a93afdc10088abc0f","kind":"untraced","file":"src/data/cctvCards.test.mjs","metric":"count","before":23,"after":20,"reason":"smaller"}
+{"date":"2026-09-22","change":"teardown-guard","commit":"424491373fcb30bf1ebb80b46c05d20d105bf1d9","kind":"untraced","file":"src/data/aisWatchdog.test.mjs","metric":"count","before":49,"after":35,"reason":"smaller"}
+{"date":"2026-09-22","change":"teardown-guard","commit":"424491373fcb30bf1ebb80b46c05d20d105bf1d9","kind":"untraced","file":"src/data/cctvLod.test.mjs","metric":"count","before":29,"after":19,"reason":"smaller"}
