@@ -518,3 +518,23 @@ test('[coverage-gate-050] records no leak and throws no error when getActiveReso
   assert.deepEqual(local.results().leaks, []);
 });
 
+test('[coverage-gate-053] sets the standard output of a test-file child to blocking mode', () => {
+  let blocking;
+  const processObject = { stdout: { _handle: { setBlocking: (value) => { blocking = value; } } } };
+  const result = installGuard({ env: { ...ENV, NODE_TEST_CONTEXT: 'child-v8' }, processObject });
+  assert.equal(blocking, true);
+  assert.equal(result, guard);
+  // A standard output without a blocking-mode function gives no error.
+  for (const other of [{ stdout: { _handle: {} } }, { stdout: {} }, {}]) {
+    assert.doesNotThrow(() => installGuard({ env: { ...ENV, NODE_TEST_CONTEXT: 'child-v8' }, processObject: other }));
+  }
+});
+
+test('[coverage-gate-054] does not change the standard output of another process', () => {
+  let calls = 0;
+  const processObject = { stdout: { _handle: { setBlocking: () => { calls += 1; } } } };
+  installGuard({ env: { ...ENV }, processObject });
+  installGuard({ env: { ...ENV, NODE_TEST_CONTEXT: 'child' }, processObject });
+  installGuard({ env: { NODE_TEST_CONTEXT: 'child-v8' }, processObject });
+  assert.equal(calls, 0);
+});
