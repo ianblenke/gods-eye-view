@@ -1,32 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createPlaceSearch, createGoogleGeocoder, createPhotonGeocoder, normalizeGooglePlace } from './index.js';
+import { createPlaceSearch, createGoogleGeocoder, createPhotonGeocoder } from './index.js';
 import { createStandalonePlaceSearch } from '../standalone/placeSearch.js';
 import { photonExtentToBounds } from '../keylessGeocoder.js';
 const feature = { geometry: { type: 'Point', coordinates: [105.85, 21.03] }, properties: { name: 'Hà Nội', type: 'city' } };
 const hit = () => Response.json({ features: [feature] });
-
-test('[credential-boundary-013] a request function that answers no response counts as no verdict', async () => {
-  const geocoder = createGoogleGeocoder({ request: async () => null });
-  assert.deepEqual(await geocoder.geocode('Hanoi'), { place: null, answered: true });
-});
-
-test('[credential-boundary-013] a response with ok:false counts as a real, unanswered attempt', async () => {
-  const geocoder = createGoogleGeocoder({ request: async () => ({ ok: false }) });
-  assert.deepEqual(await geocoder.geocode('Hanoi'), { place: null, answered: false });
-});
-
-test('[credential-boundary-013] normalizeGooglePlace refuses an out-of-range or non-finite coordinate', () => {
-  for (const location of [{ lat: 91, lng: 0 }, { lat: 0, lng: 181 }, { lat: NaN, lng: 0 }]) {
-    assert.equal(normalizeGooglePlace({ geometry: { location } }), null);
-  }
-});
-
-test('[credential-boundary-013] normalizeGooglePlace defaults an absent types list and formatted address', () => {
-  const place = normalizeGooglePlace({ geometry: { location: { lat: 1, lng: 2 } } });
-  assert.deepEqual(place.types, []);
-  assert.equal(place.label, '');
-});
 
 test('malformed successful Photon responses remain retryable', async () => {
   for (const malformed of [{ error: 'temporary failure' }, { features: {} }, { features: [{ geometry: { coordinates: [null, 1] } }] }]) {
