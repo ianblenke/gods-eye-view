@@ -3156,9 +3156,13 @@ function installReverseGeocodeFetch(t, handler) {
 }
 
 test('[credential-boundary-014] reverseGeocode fetches the server route, with no key', async (t) => {
+  let rawUrl;
   let requestUrl;
-  installReverseGeocodeFetch(t, async (url) => {
-    requestUrl = new URL(String(url), 'http://localhost');
+  let requestInit;
+  installReverseGeocodeFetch(t, async (url, init) => {
+    rawUrl = String(url);
+    requestUrl = new URL(rawUrl, 'http://localhost');
+    requestInit = init;
     return {
       json: async () => ({ configured: true, status: 'OK', results: [{
         formatted_address: 'Austin, TX, USA',
@@ -3167,6 +3171,8 @@ test('[credential-boundary-014] reverseGeocode fetches the server route, with no
       }] }),
     };
   });
+  // Only this test sets the browser key: the request must not carry it.
+  globalThis.window.__GOOGLE_MAPS_API_KEY__ = 'sentinel-browser-key';
 
   await _reverseGeocodeForTest(30.2672, -97.7431);
 
@@ -3174,9 +3180,14 @@ test('[credential-boundary-014] reverseGeocode fetches the server route, with no
   assert.equal(requestUrl.searchParams.get('lat'), '30.2672');
   assert.equal(requestUrl.searchParams.get('lon'), '-97.7431');
   assert.equal(requestUrl.searchParams.has('key'), false);
+  assert.doesNotMatch(rawUrl, /sentinel-browser-key/);
+  assert.doesNotMatch(
+    JSON.stringify({ ...requestInit, headers: [...new Headers(requestInit?.headers)] }),
+    /sentinel-browser-key/,
+  );
 });
 
-test('[credential-boundary-014] a cached or in-flight coordinate makes no second fetch', async (t) => {
+test('[credential-boundary-014] a later call for the same coordinate joins the fetch in progress or uses the result in the cache', async (t) => {
   let calls = 0;
   let releaseFetch;
   const gate = new Promise((resolve) => { releaseFetch = resolve; });
@@ -3194,14 +3205,14 @@ test('[credential-boundary-014] a cached or in-flight coordinate makes no second
   const second = _reverseGeocodeForTest(30.2672, -97.7431);
   releaseFetch();
   await Promise.all([first, second]);
-  assert.equal(calls, 1, 'the second call joins the first in-flight request');
+  assert.equal(calls, 1, 'the second call joins the fetch in progress');
 
   const third = await _reverseGeocodeForTest(30.2672, -97.7431);
   assert.equal(calls, 1, 'a cached coordinate makes no fetch at all');
   assert.equal(third.formattedAddress, 'Austin, TX, USA');
 });
 
-test('[credential-boundary-014] a sparse result defaults every missing field', async (t) => {
+test('[credential-boundary-014] an empty result gets a default value for each field', async (t) => {
   installReverseGeocodeFetch(t, async () => ({
     json: async () => ({ configured: true, status: 'OK', results: [{}] }),
   }));
@@ -3217,7 +3228,7 @@ test('[credential-boundary-014] a sparse result defaults every missing field', a
   });
 });
 
-test('[credential-boundary-014] a configured:false answer is remembered for the page life', async (t) => {
+test('[credential-boundary-014] the reverse lookup remembers a configured:false answer for the life of the page', async (t) => {
   let calls = 0;
   installReverseGeocodeFetch(t, async () => {
     calls += 1;
@@ -3233,7 +3244,7 @@ test('[credential-boundary-014] a configured:false answer is remembered for the 
   assert.equal(calls, 1, 'a remembered keyless server takes no second fetch');
 });
 
-test('[credential-boundary-014] a configured answer gives the established place shape', async (t) => {
+test('[credential-boundary-014] a configured answer gives the same place shape as before this change', async (t) => {
   installReverseGeocodeFetch(t, async () => ({
     json: async () => ({
       configured: true,
@@ -3266,21 +3277,109 @@ test('[credential-boundary-014] a configured answer gives the established place 
   });
 });
 
-test('[credential-boundary-014] a non-OK status or empty results gives no place', async (t) => {
+test('[credential-boundary-014] a ZERO_RESULTS answer with no results gives no place', async (t) => {
   installReverseGeocodeFetch(t, async () => ({
     json: async () => ({ configured: true, status: 'ZERO_RESULTS', results: [] }),
   }));
   assert.equal(await _reverseGeocodeForTest(30.2672, -97.7431), null);
 });
 
-test('[credential-boundary-014] a fetch failure resolves to no place', async (t) => {
+test('[credential-boundary-014] a fetch failure gives no place', async (t) => {
   installReverseGeocodeFetch(t, async () => { throw new Error('offline'); });
   assert.equal(await _reverseGeocodeForTest(30.2672, -97.7431), null);
 });
 
-test('[credential-boundary-014] an unparsable response resolves to no place', async (t) => {
+test('[credential-boundary-014] a response that is not JSON gives no place', async (t) => {
   installReverseGeocodeFetch(t, async () => ({
     json: async () => { throw new SyntaxError('invalid json'); },
   }));
   assert.equal(await _reverseGeocodeForTest(30.2672, -97.7431), null);
+});
+
+const AUSTIN_OK_ANSWER = { configured: true, status: 'OK', results: [{
+  formatted_address: 'Austin, TX, USA',
+  types: ['locality'],
+  address_components: [{ long_name: 'Austin', types: ['locality'] }],
+}] };
+
+/** Give `first` to the first fetch and an OK answer to each later fetch, then look up one coordinate two times. */
+async function reverseGeocodeTwiceAfter(t, first) {
+  let calls = 0;
+  installReverseGeocodeFetch(t, async () => {
+    calls += 1;
+    return calls === 1 ? first : { ok: true, status: 200, json: async () => AUSTIN_OK_ANSWER };
+  });
+  const firstPlace = await _reverseGeocodeForTest(30.2672, -97.7431);
+  const secondPlace = await _reverseGeocodeForTest(30.2672, -97.7431);
+  return { firstPlace, secondPlace, calls };
+}
+
+test('[credential-boundary-014] a later call fetches again after an HTTP 502 answer with a null Google status', async (t) => {
+  // The route sends this when the upstream fetch throws.
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: false,
+    status: 502,
+    json: async () => ({ configured: true, status: null, results: [], error: 'offline' }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(calls, 2, 'the reverse lookup does not remember an error answer');
+  assert.equal(secondPlace?.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a later call fetches again after an HTTP 429 answer with a null Google status', async (t) => {
+  // The route sends this when the rate limiter refuses the request.
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: false,
+    status: 429,
+    json: async () => ({ configured: true, status: null, results: [], error: 'Rate limit exceeded' }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(calls, 2, 'the reverse lookup does not remember an error answer');
+  assert.equal(secondPlace?.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a later call fetches again after an HTTP 200 answer with a null Google status', async (t) => {
+  // The route sends this when the upstream body is larger than the maximum size.
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: true,
+    status: 200,
+    json: async () => ({ configured: true, status: null, results: [], error: 'Response too large' }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(calls, 2, 'the reverse lookup does not remember an answer with no Google status');
+  assert.equal(secondPlace?.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a later call fetches again after an HTTP 200 answer with no status field', async (t) => {
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: true,
+    status: 200,
+    json: async () => ({ configured: true, results: [] }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(calls, 2, 'the reverse lookup does not remember an answer with no Google status');
+  assert.equal(secondPlace?.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a later call fetches again after an HTTP 500 answer with a Google status', async (t) => {
+  // The route sends the upstream HTTP status and the upstream Google status.
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: false,
+    status: 500,
+    json: async () => ({ configured: true, status: 'UNKNOWN_ERROR', results: [], error: 'Google Geocoding request failed' }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(calls, 2, 'the reverse lookup does not remember an HTTP error answer');
+  assert.equal(secondPlace?.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a later call makes no fetch after an HTTP 200 ZERO_RESULTS answer', async (t) => {
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: true,
+    status: 200,
+    json: async () => ({ configured: true, status: 'ZERO_RESULTS', results: [] }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(secondPlace, null, 'the second call gives the null in the cache');
+  assert.equal(calls, 1, 'the reverse lookup remembers a ZERO_RESULTS answer');
 });

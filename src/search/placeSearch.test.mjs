@@ -29,7 +29,7 @@ test('standalone geocoding falls back after Google connection, JSON and refusal 
   }
 });
 
-test('[credential-boundary-013] a keyless server answers configured:false and the search falls back to Photon', async () => {
+test('[credential-boundary-013] a keyless server answers configured:false and the search then uses Photon', async () => {
   const service = createStandalonePlaceSearch({ fetchImpl: async (url) => {
     if (String(url).startsWith('/api/google/geocode')) {
       return Response.json({ configured: false, status: null, results: [] });
@@ -40,11 +40,10 @@ test('[credential-boundary-013] a keyless server answers configured:false and th
   assert.equal((await service.geocode('Hanoi')).place.lat, 21.03);
 });
 
-test('[credential-boundary-013] a configured:false answer contributes no verdict, not a negative one', async () => {
-  // Both providers come back with no place. Photon's is a confirmed miss
-  // (an empty feature list), so the combined answer must stay a confident
-  // "no place", not the "inconclusive" shape an unconfigured provider would
-  // cause if it were treated as a refusal instead of a non-answer.
+test('[credential-boundary-013] a configured:false answer does not make the combined answer inconclusive', async () => {
+  // configured:false gives {place:null, answered:true}, the same shape as a
+  // ZERO_RESULTS miss. Photon's empty feature list is also a miss, so the
+  // combined answer is {place:null, answered:true}, not answered:false.
   const service = createStandalonePlaceSearch({ fetchImpl: async (url) => {
     if (String(url).startsWith('/api/google/geocode')) {
       return Response.json({ configured: false, status: null, results: [] });
@@ -54,6 +53,40 @@ test('[credential-boundary-013] a configured:false answer contributes no verdict
   const result = await service.geocode('nowhere at all');
   assert.equal(result.place, null);
   assert.equal(result.answered, true);
+});
+
+// The route answers 429 from its limiter and 502 when the upstream fetch fails.
+const routeError = (status, photon) => {
+  const urls = [];
+  const service = createStandalonePlaceSearch({ fetchImpl: async (url) => {
+    urls.push(String(url));
+    if (String(url).startsWith('/api/google/geocode')) {
+      return Response.json({ configured: true, status: null, results: [] }, { status });
+    }
+    return photon();
+  } });
+  return { service, urls };
+};
+
+test('[credential-boundary-013] an HTTP error answer from the route and a Photon miss make the combined answer inconclusive', async () => {
+  // With no place, the result has no fallbackUsed field.
+  for (const status of [429, 502]) {
+    const { service, urls } = routeError(status, () => Response.json({ features: [] }));
+    assert.deepEqual(await service.geocode('nowhere at all'), { place: null, answered: false });
+    assert.equal(new URL(urls[1], 'http://localhost').hostname, 'photon.komoot.io');
+    assert.equal(urls.length, 2);
+  }
+});
+
+test('[credential-boundary-013] after an HTTP error answer from the route, the search then uses the Photon place', async () => {
+  for (const status of [429, 502]) {
+    const { service, urls } = routeError(status, hit);
+    const result = await service.geocode('Hanoi');
+    assert.equal(result.place.name, 'Hà Nội');
+    assert.equal(result.answered, true);
+    assert.equal(result.fallbackUsed, true);
+    assert.equal(urls.length, 2);
+  }
 });
 
 test('[credential-boundary-013] the geocode request URL is same-origin, with address and bounds, and no key', async () => {

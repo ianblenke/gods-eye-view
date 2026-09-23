@@ -1,4 +1,4 @@
-import { googleServerApiKey, keylessGooglePlacesResponse } from './google-key.js';
+import { keylessGooglePlacesResponse } from './google-key.js';
 import { clientKey } from '../common/rate-limit.js';
 import { readResponseTextCapped } from '../common/http.js';
 import { validatePlacesCoordinates } from './coordinates.js';
@@ -15,6 +15,22 @@ const GEOCODE_TIMEOUT_MS = 5000;
 
 /** Google's `bounds` viewport-bias shape: `lat,lng|lat,lng`. */
 const GEOCODE_BOUNDS_PATTERN = /^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?\|-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/;
+
+/**
+ * Fixed error text for a failed upstream call, so no upstream text, and so no
+ * key, reaches the client.
+ */
+function upstreamErrorText(error, otherText) {
+  if (error.code === 'RESPONSE_TOO_LARGE') return 'Upstream response too large';
+  if (error.name === 'AbortError') return 'Upstream timeout';
+  return otherText;
+}
+
+/** Google's own error text for a non-ok answer, with the key removed. */
+function upstreamErrorMessage(data, apiKey) {
+  if (!data?.error_message) return 'Google Geocoding request failed';
+  return String(data.error_message).replaceAll(apiKey, '[redacted]');
+}
 
 function sendJson(res, statusCode, body) {
   res.statusCode = statusCode;
@@ -51,18 +67,20 @@ function readGeocodeRequest(searchParams) {
 }
 
 /**
- * Google geocoding, server-key only, forward and reverse. Shares the Places
- * rate limiter (passed in) so both cost-bearing Google surfaces spend one
- * per-IP budget. Every answer carries `Cache-Control: no-store` — Google
- * content is never cached here.
+ * Google geocoding, server-key only, forward and reverse. `resolveApiKey` is
+ * required: the caller selects the key. Shares the Places rate limiter
+ * (passed in) so both cost-bearing Google surfaces spend one per-IP budget.
+ * Every answer carries `Cache-Control: no-store` — Google content is never
+ * cached here.
  */
 export function installGoogleGeocodeRoute(middlewares, {
-  resolveApiKey = googleServerApiKey,
+  resolveApiKey,
   rateLimiter = null,
-} = {}) {
+}) {
   middlewares.use('/api/google/geocode', async (req, res) => {
     if (req.method !== 'GET') {
-      sendJson(res, 405, { configured: false, error: 'Method not allowed', status: null, results: [] });
+      // The key is not known yet, so the body has no `configured` flag.
+      sendJson(res, 405, { error: 'Method not allowed', status: null, results: [] });
       return;
     }
 
@@ -109,14 +127,14 @@ export function installGoogleGeocodeRoute(middlewares, {
         data = JSON.parse(text);
       } catch (error) {
         // readResponseTextCapped and JSON.parse only ever throw a real Error.
-        readError = error.message;
+        readError = upstreamErrorText(error, 'Google Geocoding response was not valid JSON');
       }
       const projected = projectGeocodeResults(data);
       sendJson(res, response.ok ? 200 : response.status, {
         configured: true,
         status: projected.status,
         results: projected.results,
-        error: readError || (response.ok ? null : (data.error_message || 'Google Geocoding request failed')),
+        error: readError || (response.ok ? null : upstreamErrorMessage(data, apiKey)),
       });
     } catch (error) {
       // A rejected fetch() always rejects with a real Error.
@@ -124,7 +142,7 @@ export function installGoogleGeocodeRoute(middlewares, {
         configured: true,
         status: null,
         results: [],
-        error: error.message,
+        error: upstreamErrorText(error, 'Google Geocoding request failed'),
       });
     } finally {
       clearTimeout(timer);

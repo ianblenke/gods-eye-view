@@ -114,11 +114,30 @@ export function projectTextSearchPlaces(data, latitude, longitude) {
   return places;
 }
 
+/** A Google `{lat, lng}` point with number fields only, else null. */
+function projectGeocodePoint(point) {
+  return Number.isFinite(point?.lat) && Number.isFinite(point?.lng)
+    ? { lat: point.lat, lng: point.lng }
+    : null;
+}
+
+/** A Google `{northeast, southwest}` box with two good points, else null. */
+function projectGeocodeBox(box) {
+  const northeast = projectGeocodePoint(box?.northeast);
+  const southwest = projectGeocodePoint(box?.southwest);
+  return northeast && southwest ? { northeast, southwest } : null;
+}
+
 /**
  * Project a Google geocoding response to the fields the browser parsers use,
  * with Google's own field names, so only the transport changes at the call
- * site. Caps every list so one malformed upstream answer cannot grow the
- * response without bound. A malformed input gives an empty answer.
+ * site. Keeps at most 12 results, 20 address components, and 8 types for
+ * each result and each component, so one bad upstream answer cannot grow the
+ * response without bound. A component keeps only `long_name` and `types`;
+ * `location` keeps only `lat` and `lng`; `bounds` and `viewport` keep only
+ * those two fields of `northeast` and `southwest`. A point or a box without
+ * number coordinates gives null. A `status` that is not a string gives null,
+ * and `results` that is not an array gives [].
  */
 export function projectGeocodeResults(data) {
   const status = typeof data?.status === 'string' ? data.status : null;
@@ -128,7 +147,9 @@ export function projectGeocodeResults(data) {
     const addressComponents = Array.isArray(result?.address_components)
       ? result.address_components.slice(0, 20).map((component) => ({
           long_name: component?.long_name ?? null,
-          types: Array.isArray(component?.types) ? component.types : [],
+          types: Array.isArray(component?.types)
+            ? component.types.slice(0, 8)
+            : [],
         }))
       : [];
     return {
@@ -136,9 +157,9 @@ export function projectGeocodeResults(data) {
       address_components: addressComponents,
       types,
       geometry: {
-        location: result?.geometry?.location ?? null,
-        bounds: result?.geometry?.bounds ?? null,
-        viewport: result?.geometry?.viewport ?? null,
+        location: projectGeocodePoint(result?.geometry?.location),
+        bounds: projectGeocodeBox(result?.geometry?.bounds),
+        viewport: projectGeocodeBox(result?.geometry?.viewport),
       },
     };
   });
