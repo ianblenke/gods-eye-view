@@ -7,6 +7,7 @@ Origin: spec-first
 #### Scenario: Stop for a new code file below 100% `gap-ledger-003`
 - **WHEN** a code file has no ledger entry
 - **AND** the file has a line, a branch or a function that is not covered
+- **AND** the file does not have the conditions of `gap-ledger-086`
 - **THEN** the gate stops the build
 
 #### Scenario: Stop for more lines that are not covered `gap-ledger-004`
@@ -101,6 +102,7 @@ Origin: spec-first
 #### Scenario: Stop for a ledger entry that the base does not have `gap-ledger-021`
 - **WHEN** the ledger has an entry for a file
 - **AND** the base ledger has no entry for that file
+- **AND** the entry is for untraced test names, or it is a coverage entry without the conditions of `gap-ledger-087`
 - **THEN** the gate stops the build
 
 #### Scenario: Stop for a ledger entry that is larger than the base `gap-ledger-022`
@@ -117,7 +119,8 @@ Origin: spec-first
 - **AND** the gate shows the file, the two counts and the waived count
 
 #### Scenario: Stop for more branches than the base with fewer covered branches `gap-ledger-048`
-- **WHEN** a ledger entry has more not-covered branches or functions than the base entry
+- **WHEN** the content of a file is equal to its content in the base commit
+- **AND** its ledger entry has more not-covered branches or functions than the base entry
 - **AND** the covered count of that metric is smaller than in the base entry, or one of the two entries has no total count
 - **THEN** the gate stops the build
 
@@ -253,7 +256,8 @@ Origin: spec-first
 
 #### Scenario: Give no waived count for other content `gap-ledger-082`
 - **WHEN** a waiver for a code file does not have the content hash of the file, or the file has the hash of its entry
-- **THEN** the gate compares the counts of the file with the counts of its entry, using a waived count of 0
+- **THEN** the gate compares the counts of the file with the counts of its entry, and the waived count is 0
+- **AND** a file that no test loads also gets a waived count of 0
 
 #### Scenario: Allow a rise above the base by the waived count of the checked change `gap-ledger-083`
 - **WHEN** the content of a file is not equal to its content in the base commit
@@ -266,6 +270,8 @@ Origin: spec-first
 - **WHEN** a waiver line is in the base history, has another change name, or has another content hash than the ledger entry
 - **THEN** the waived count of the checked change for that file and that metric does not include the line
 - **AND** the waived count of a file with the base content is 0, also with a waiver line of the checked change for its hash
+- **AND** the waived count of a file that no test loads is 0
+- **AND** a waiver line with a count that is not a positive whole number gives no waived count
 
 #### Scenario: Record a waived rise `gap-ledger-085`
 - **WHEN** you run the ratchet command for a changed file with a not-covered count above its entry
@@ -275,14 +281,18 @@ Origin: spec-first
 
 #### Scenario: Allow the waived count for a file with no entry `gap-ledger-086`
 - **WHEN** a loaded code file with a not-covered count has no entry in the ledger
+- **AND** the content of the file is not equal to its content in the base commit
 - **AND** one or more waivers for the file have the content hash of the file
 - **AND** the not-covered count of each metric of the file is not above the sum of the counts of its waivers for that metric
-- **THEN** the gate does not stop the build for that file
+- **THEN** the gate does not stop the build for that count
+- **AND** the gate records the file as not current, so the build stops until the ratchet command runs
 - **AND** the ratchet command adds an entry for the file with its measured counts and the content hash
 - **AND** the ratchet command adds one history line for each not-covered metric, with the reason `waived`
 
-#### Scenario: Allow a ledger entry the base does not have, by the waived count `gap-ledger-087`
-- **WHEN** the ledger has an entry for a loaded file that the base ledger does not have
+#### Scenario: Allow the waived count for a ledger entry that the base does not have `gap-ledger-087`
+- **WHEN** the ledger has an entry for a loaded file
+- **AND** the base ledger has no entry for that file
+- **AND** the content of the file is not equal to its content in the base commit
 - **AND** one or more waivers of the checked change for the file have the content hash of the entry
 - **AND** the not-covered count of each metric of the entry is not above the sum of the counts of its waivers for that metric
-- **THEN** the comparison with the base commit does not stop the build for that file
+- **THEN** the gate does not stop the build for that file
