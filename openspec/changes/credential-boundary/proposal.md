@@ -67,7 +67,12 @@ name that the server reads.
   call to Google with a 5 s timeout, and it reads at most 1 MB.
 - Gaps that this change opens: one branch of `src/voice/gevActions.js`, at
   the range with no code of D7. The waiver of D7 allows it.
-- Gaps that this change closes: GAPS_CLOSED
+- Gaps that this change closes:
+  - The ledger entry of `src/standalone/placeSearch.js`.
+  - One line of `src/standalone/application.js`.
+  - 74 lines and 4 functions of `src/voice/gevActions.js`.
+  - One branch of `src/search/google.js`.
+  - Five untraced test names, in four test files.
 - The OpenAI client secret is out of scope. Our server makes it for each
   voice session, and it expires. The browser gets it by design for WebRTC,
   so it is not an API key in the sense of this change.

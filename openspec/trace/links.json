@@ -321,6 +321,92 @@
   "coverage-gate-054": [
     "src/tooling/spec/testGuard.test.mjs › [coverage-gate-054] does not change the standard output of another process"
   ],
+  "credential-boundary-001": [
+    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] a fixture build exposes only the allowed sentinels",
+    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] every secret sentinel stays out of the built output, by name"
+  ],
+  "credential-boundary-002": [
+    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-002] a VITE_ value outside the AIS prefix never reaches the bundle"
+  ],
+  "credential-boundary-003": [
+    "src/googleServerKey.test.mjs › [credential-boundary-003] browser defines contain the browser key and exclude the server key",
+    "src/tooling/viteBuild.test.mjs › [credential-boundary-003] build helper does not discover environment values or construct local providers",
+    "src/tooling/viteBuild.test.mjs › [credential-boundary-003] explicit build inputs preserve browser-only defines, plugin order and loopback protections"
+  ],
+  "credential-boundary-004": [
+    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-004] no key-shaped literal appears in browser source"
+  ],
+  "credential-boundary-005": [
+    "src/keySetupCore.test.mjs › [credential-boundary-005] the client-exposed registry names equal the names in the define of the browser build"
+  ],
+  "credential-boundary-006": [
+    "src/keySetupCore.test.mjs › [credential-boundary-006] the registry or .env.example documents each credential name that the server reads"
+  ],
+  "credential-boundary-007": [
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-007] a keyless server answers configured:false with no upstream call",
+    "src/tooling/previewServing.test.mjs › [credential-boundary-007] real dev and built-preview servers serve provider JSON and terminate unknown APIs"
+  ],
+  "credential-boundary-008": [
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-008] the forward mode sends the address and bounds, and keeps the key out of the body",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-008] the route uses the server key first, and uses the browser key when the server key is blank"
+  ],
+  "credential-boundary-009": [
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-009] the reverse mode sends latlng and projects the answer"
+  ],
+  "credential-boundary-010": [
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route reads a request with no URL as an empty query",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route refuses a non-GET method with a 405 and no upstream call",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route refuses bad input with a 400 and no upstream call"
+  ],
+  "credential-boundary-011": [
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] a non-ok upstream status gives the same status and its error, with no key",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] a non-ok upstream status with no error_message gets a default error",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] the route reads a body of exactly the maximum size with no error",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] the route removes the key from the upstream error message",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] the route stops the fetch after 5 s and answers 502",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] when the body does not arrive in 5 s, the route answers with a timeout error",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] when the body is larger than the maximum size, the route answers with an error and does not throw",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] when the body is not JSON, the route answers 200 with a fixed error and no key",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] when the fetch throws, the route answers 502",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] when the rate limiter refuses the request, the route answers 429 with Retry-After",
+    "src/googleGeocodeRateLimit.test.mjs › [credential-boundary-011] after one Places request, the shared rate limiter refuses a geocode request from the same client"
+  ],
+  "credential-boundary-012": [
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults gives a default value to each field of an empty address component",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults gives a default value to each field of an empty result",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults gives an empty answer for an incorrect input",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults keeps only the named fields inside each component, point and box",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults shortens each list to its maximum length and keeps only the allowed fields"
+  ],
+  "credential-boundary-013": [
+    "src/search/placeSearch.test.mjs › [credential-boundary-013] a configured:false answer does not make the combined answer inconclusive",
+    "src/search/placeSearch.test.mjs › [credential-boundary-013] a keyless server answers configured:false and the search then uses Photon",
+    "src/search/placeSearch.test.mjs › [credential-boundary-013] after an HTTP error answer from the route, the search then uses the Photon place",
+    "src/search/placeSearch.test.mjs › [credential-boundary-013] an HTTP error answer from the route and a Photon miss make the combined answer inconclusive",
+    "src/search/placeSearch.test.mjs › [credential-boundary-013] the geocode request URL is same-origin, with address and bounds, and no key"
+  ],
+  "credential-boundary-014": [
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a ZERO_RESULTS answer with no results gives no place",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a configured answer gives the same place shape as before this change",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a fetch failure gives no place",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 200 answer with a null Google status",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 200 answer with no status field",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 429 answer with a null Google status",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 500 answer with a Google status",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 502 answer with a null Google status",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call for the same coordinate joins the fetch in progress or uses the result in the cache",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call makes no fetch after an HTTP 200 ZERO_RESULTS answer",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] a response that is not JSON gives no place",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] an empty result gets a default value for each field",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] reverseGeocode fetches the server route, with no key",
+    "src/voice/gevActions.test.mjs › [credential-boundary-014] the reverse lookup remembers a configured:false answer for the life of the page"
+  ],
+  "credential-boundary-015": [
+    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-015] no direct call to Google geocoding remains in the browser source"
+  ],
+  "credential-boundary-016": [
+    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-016] the server key stays out of the bundle and out of main.js, and a failure names it"
+  ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec"

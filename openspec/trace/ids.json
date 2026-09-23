@@ -474,6 +474,86 @@
     "since": "2026-09-23",
     "change": "gate-measurement-race"
   },
+  "credential-boundary-001": {
+    "hash": "eaef1a424e119ef144eb60a230f3592743ea14ab6d772b1c441006589caf402c",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-002": {
+    "hash": "cf48d9414be622796b0eb7200db0dd76b38ec70fd8dfa625060a58a9db79b129",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-003": {
+    "hash": "4ee19ddc019c308b7757109df30d846e81fa664b9987c5491c544473e077e62a",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-004": {
+    "hash": "c505cba67b70853dd986505bcd6b20d84053186ee0b4b87360fc6876ede89de5",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-005": {
+    "hash": "9c4691e97769510ed8024dd44b51652dbf54fbb436620b75e9a396e271d16e95",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-006": {
+    "hash": "4210b60c78a0337505ceb8d5c264049699a0404e8695787cb5cdfc6ccd02cb38",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-007": {
+    "hash": "1ffcbac62c292f7d3c176588708021030b493c9cc80485e231e6bf83a72cc235",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-008": {
+    "hash": "0e4204c1136f3fd287618f6b5e4e7a2d90620a6a10c27ee0cd221adea8591d20",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-009": {
+    "hash": "ffa02c7356c969ae8f31eb57688b571e2ca1b3394449eb1132f47298f55006a8",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-010": {
+    "hash": "e2cc98b5898298f72318e8c8ffb415cfddc1804ac80a5c4e5e4964d8562b4089",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-011": {
+    "hash": "016ef8919ee1cb0a61b1f3093d6a838eaee8b13b224b68cee356e394dd4a8468",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-012": {
+    "hash": "105393118d25acbb76b344340a271258020f0f33f578ea0280d73f266140ca53",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-013": {
+    "hash": "a71eee047bd18cea5367bbaa9fdbc74de62374d07f147697e517c59d2287f12b",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-014": {
+    "hash": "67369b7be5de9238e3fbb82124461b90120f882568a3e6aa54a59418211da719",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-015": {
+    "hash": "85da26a0a16e4e4e39a6734a6f951a5436dc924f7e8ac9292d5d8ce14f16f701",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-016": {
+    "hash": "d3c20d65d212ef4630a17d03d5261e9c76722736a56cccd3e19182381499625d",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
   "gap-ledger-001": {
     "hash": "d926236986707c5770e366ba46ec70d9e7431ee9daf231b24b1d4d14e242705c",
     "since": "2026-09-14",
