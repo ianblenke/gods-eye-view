@@ -482,6 +482,33 @@ test('[gap-ledger-056] stops for changed total counts of an unchanged file witho
   assert.deepEqual(compare({ history: own }), []);
   const legacy = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals: undefined }) } });
   assert.deepEqual(codes(compareWithBase({ ledger: legacy, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true, change: 'backfill-orbit' })), ['LEDGER-TOTALS-NOT-BASE']);
+  // A changed total with the same not-covered count still moves the covered count, so it still stops the build.
+  const movedCovered = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals: { ...TOTALS, branches: 98 } }) } });
+  assert.deepEqual(codes(compareWithBase({ ledger: movedCovered, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true, change: 'backfill-orbit' })), ['LEDGER-TOTALS-NOT-BASE']);
+  const movedLines = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals: { ...TOTALS, lines: 98 } }) } });
+  assert.deepEqual(codes(compareWithBase({ ledger: movedLines, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true })), ['LEDGER-TOTALS-NOT-BASE']);
+  // A covered count that goes up, and a drift of the functions total only, also stop the build.
+  for (const totals of [{ ...TOTALS, branches: 102 }, { ...TOTALS, functions: 9 }]) {
+    const drift = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals }) } });
+    assert.deepEqual(codes(compareWithBase({ ledger: drift, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true })), ['LEDGER-TOTALS-NOT-BASE']);
+  }
+  // A base entry without totals, and a changed metric without a covered count, both still stop the build.
+  const legacyBase = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals: undefined }) } });
+  assert.deepEqual(codes(compareWithBase({ ledger: ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } }), baseLedger: legacyBase, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true })), ['LEDGER-TOTALS-NOT-BASE']);
+  const noBranchCount = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, null, 1, { totals: { ...TOTALS, branches: 98 } }) } });
+  const noBranchBase = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, null, 1) } });
+  assert.deepEqual(codes(compareWithBase({ ledger: noBranchCount, baseLedger: noBranchBase, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true })), ['LEDGER-TOTALS-NOT-BASE']);
+});
+
+test('[gap-ledger-088] allows changed total counts of an unchanged file when the covered count agrees', () => {
+  const base = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } });
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 5, 1, { totals: { ...TOTALS, branches: 102 } }) } });
+  const compare = (extra) => compareWithBase({ ledger, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true, ...extra });
+  assert.deepEqual(compare({}), []);
+  const betterLines = ledgerWith({ coverage: { 'src/orbit.js': LOADED(4, 5, 1, { totals: { ...TOTALS, branches: 102 } }) } });
+  assert.deepEqual(compare({ ledger: betterLines }), []);
+  const changedCovered = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals: { ...TOTALS, branches: 98 } }) } });
+  assert.deepEqual(codes(compare({ ledger: changedCovered })), ['LEDGER-TOTALS-NOT-BASE']);
 });
 
 test('[gap-ledger-029] records the hash of a changed file and the end of untrue coverage', () => {

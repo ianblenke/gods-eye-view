@@ -79,6 +79,7 @@ For each test below, run the named mutation before the code exists, and again af
 - [ ] 5.10 Keep the tests for `gap-ledger-010`, `gap-ledger-011`, `gap-ledger-012`.
 - [ ] 5.11 Keep the tests for `gap-ledger-014`, `gap-ledger-027`, `gap-ledger-077`.
 - [ ] 5.12 Keep the tests for `gap-ledger-028`, `gap-ledger-029`, `gap-ledger-057`.
+- [ ] 5.13 Keep the test for `gap-ledger-088`, which `gate-measurement-race` added on `main`.
 
 ## 6. Coverage
 
