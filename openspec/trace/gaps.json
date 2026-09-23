@@ -7,11 +7,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 39,
+        "lines": 35,
         "branches": 7,
         "functions": 1
       },
-      "sha": "62f04730850a36be6073f6cf7d7918d404aaf8a6d932440d3aecd213c064a378",
+      "sha": "45ee69d1343ba07fc4ac2406ecec75e00e30c8e8bfd37f670812273e70a54ade",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1066,6 +1066,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "scripts/spec/gates.mjs": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 529,
+        "branches": 179,
+        "functions": 57
+      },
+      "sha": "e139d8ecea7cef40e6e19dfbe862465d15a4cc93a86d51722b7ce8a77d85bf32",
+      "untrue": false,
+      "origin": "ledger-waiver",
+      "since": "2026-09-22"
+    },
     "scripts/track-regression.mjs": {
       "loaded": false,
       "lines": 4084,
@@ -1253,7 +1268,7 @@
       "functions": 2,
       "totals": {
         "lines": 118,
-        "branches": 36,
+        "branches": 35,
         "functions": 9
       },
       "sha": "568c15600c1c2903e447862ee7da80556cb66c2cec32dd234116807b03618eb5",
@@ -1507,11 +1522,11 @@
       "branches": 10,
       "functions": 2,
       "totals": {
-        "lines": 270,
-        "branches": 47,
-        "functions": 9
+        "lines": 282,
+        "branches": 62,
+        "functions": 10
       },
-      "sha": "27ff17c0b8194e176053ba6d289e09acffc2d817978d76d75557191185841b2a",
+      "sha": "52f6c33f4947fbadcc0dbaf925a967c4531971970ff7f0defa10cc4ba39c556f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2573,7 +2588,7 @@
       "functions": 2,
       "totals": {
         "lines": 580,
-        "branches": 135,
+        "branches": 136,
         "functions": 25
       },
       "sha": "c290c7d22ca88334b1448b1cc94ce9b372f475628a0e2be2e2dbc883502381de",
@@ -2644,11 +2659,11 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 18,
-      "branches": 50,
+      "branches": 52,
       "functions": 0,
       "totals": {
         "lines": 1125,
-        "branches": 405,
+        "branches": 407,
         "functions": 58
       },
       "sha": "86cc0fab84963a9f0ab168cf0d9f3e44ac00401d2650f91f883cec1f97ce5275",
@@ -2693,7 +2708,7 @@
       "functions": 6,
       "totals": {
         "lines": 1230,
-        "branches": 296,
+        "branches": 297,
         "functions": 52
       },
       "sha": "16085ee95156cb19e53509a47effb0ed09649df8d29e78be8c66541c38209a66",
@@ -2872,11 +2887,11 @@
       "branches": 5,
       "functions": 0,
       "totals": {
-        "lines": 166,
-        "branches": 90,
-        "functions": 15
+        "lines": 135,
+        "branches": 67,
+        "functions": 12
       },
-      "sha": "6ea8e9c8c1d6c349ef3c4f2e1f6f0f155ff3a3d2d7cfb1fa0a27975327a6b824",
+      "sha": "13df9e89c18bf7c5fd0e4f5a19eade1546580d7d9db7081807ef57ffb0aceb73",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3278,7 +3293,7 @@
       "functions": 1,
       "totals": {
         "lines": 405,
-        "branches": 121,
+        "branches": 118,
         "functions": 16
       },
       "sha": "142e1a3081f94f4babe95cd54accbe31ebbd7541d6302f58e64b5ef27943eb59",
@@ -5686,6 +5701,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/search/google.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 4,
+      "functions": 0,
+      "totals": {
+        "lines": 66,
+        "branches": 29,
+        "functions": 6
+      },
+      "sha": "d407e00b7fa8cebb66b02bd97ac8ddb9e3e6fc51d1e00271adee98d9f7b5812d",
+      "untrue": false,
+      "origin": "pre-spec",
+      "since": "2026-09-15"
+    },
     "src/search/placeSearch.js": {
       "loaded": true,
       "lines": 2,
@@ -5693,7 +5723,7 @@
       "functions": 1,
       "totals": {
         "lines": 65,
-        "branches": 24,
+        "branches": 23,
         "functions": 3
       },
       "sha": "a817bf9f3a850c4bf09a4707c3976b46feb9e4708bc29416ddf8e928d0a40511",
@@ -5778,15 +5808,15 @@
     },
     "src/standalone/application.js": {
       "loaded": false,
-      "lines": 42,
+      "lines": 43,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 42,
+        "lines": 43,
         "branches": null,
         "functions": null
       },
-      "sha": "545aacedaf6438675a0dc9bfde7ebcebe6e3bb28d3bea5ecb2c38ac62d494c78",
+      "sha": "9c047e28b2a8143266039eaf1f0253b34895d80503281235b11d4d6bbc9b594b",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5832,6 +5862,21 @@
         "functions": null
       },
       "sha": "661b15de03e9a65953c8681ad0a3a6f5b7670c755de6e565da7af1979bdc9ece",
+      "untrue": false,
+      "origin": "pre-spec",
+      "since": "2026-09-15"
+    },
+    "src/standalone/placeSearch.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 32,
+        "branches": 9,
+        "functions": 3
+      },
+      "sha": "bd782364ab4b740a094208f7be342da8ffa3609e6e30f80dd06f6dee20b5e0ed",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6693,15 +6738,15 @@
     },
     "src/voice/gevActions.js": {
       "loaded": true,
-      "lines": 1228,
+      "lines": 1304,
       "branches": 221,
-      "functions": 62,
+      "functions": 65,
       "totals": {
-        "lines": 3464,
-        "branches": 846,
-        "functions": 168
+        "lines": 3445,
+        "branches": 798,
+        "functions": 157
       },
-      "sha": "e1cb952c7b63f3e14d9208299e045bad1ef64f54753348bdaa05737d5158e300",
+      "sha": "709d9841dcb3581fef061fd8b71a12bb48e1abf80817f5dbe6d8aa2f97fae014",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9747,6 +9792,7 @@
     "src/googleServerKey.test.mjs": {
       "names": {
         "both Places routes select the intended key and keep it out of responses": 1,
+        "browser defines contain the browser key and exclude the server key": 1,
         "keyless stays keyless": 1,
         "server-side Google calls prefer the server-only key": 1,
         "the Street View tool resolves per-variable overrides before preferring the server key": 1,
@@ -10696,6 +10742,7 @@
     "src/search/placeSearch.test.mjs": {
       "names": {
         "a Google request cancelled by its caller never starts the fallback": 1,
+        "a keyless service does not issue any Google request": 1,
         "cancellation before lookup makes no request": 1,
         "cancellation stops Photon retries and does not cache a late response": 1,
         "definitive misses expire while outage outcomes are never cached": 1,
@@ -10908,7 +10955,8 @@
     },
     "src/tooling/previewServing.test.mjs": {
       "names": {
-        "data providers have both hooks; credential editing stays development-only": 1
+        "data providers have both hooks; credential editing stays development-only": 1,
+        "real dev and built-preview servers serve provider JSON and terminate unknown APIs": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10927,6 +10975,8 @@
     "src/tooling/viteBuild.test.mjs": {
       "names": {
         "build export resolves in Node and has no browser fallback": 1,
+        "build helper does not discover environment values or construct local providers": 1,
+        "explicit build inputs preserve browser-only defines, plugin order and loopback protections": 1,
         "root config retains existing named exports and standalone provider order": 1
       },
       "origin": "pre-spec",
@@ -11208,8 +11258,6 @@
         "opening Contacts expands Context before activation and returns its settled aircraft window": 1,
         "set_context_mode forwards cancellation authority and reports a stale turn": 1,
         "set_context_mode pre-dispatch cancellation includes authoritative Context state": 1,
-        "set_layer_visibility refuses a layer the data manager does not carry, and names it": 1,
-        "set_layer_visibility tolerates a non-object argument instead of crashing on it": 1,
         "successful voice overhead framing stamps and releases the old owner before flight": 1,
         "successful voice tracking stamps and releases the old owner before layer takeover": 1,
         "track_entity narration names aircraft callsign → registration → icao24": 1,

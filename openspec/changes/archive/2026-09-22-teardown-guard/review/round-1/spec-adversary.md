@@ -1,0 +1,13 @@
+Verdict: FAIL
+
+- [ ] F1 major openspec/changes/teardown-guard/proposal.md:30 At commit `a6c4e387efc0` with current edits, seven OSH tests still lack teardown hooks. These include the selected-system tests at `oshLayer.test.mjs:1905` and `:1985`. A failed assertion skips their final `destroy()` and leaves the poll timer live. Add the missing hooks, keep calls whose effects have assertions, and correct the test counts.
+
+- [ ] F2 critical src/tooling/spec/testGuard.test.mjs:454 At commit `a6c4e387efc0` with current edits, the `coverage-gate-049` test supplies resource names and a file name directly. The gate test writes its own leak record. Neither checks the required process-exit path. A default resource reader that always returns `[]` escapes these checks. Add a real guarded child test with a live timer. Assert its written record, file name, gate error, and unchanged true-coverage result.
+
+- [ ] F3 critical src/tooling/spec/runParallel.test.mjs:63 At commit `a6c4e387efc0` with current edits, this test removes `NODE_V8_COVERAGE` and all guard values before it starts repository code. `gates.test.mjs:818` also removes these values. This violates the reviewer's gate-value check and leaves child execution outside coverage measurement. Use isolated coverage and guard folders with a valid inventory. Keep the isolation fix within this change.
+
+- [ ] F4 critical src/tooling/spec/gates.test.mjs:824 At commit `a6c4e387efc0` with current edits, `coverage-gate-048` checks the raw destination. The gate now reads `mainRun.output`, which names the `.sync` file. The test therefore does not assert that the gate receives the failed-test record after forced exit. Read `mainRun.output` and assert the failed test's identity and status there.
+
+- [ ] F5 minor openspec/changes/teardown-guard/tasks.md:129 At commit `a6c4e387efc0` with current edits, the ledger explanation omits the coverage movements. `labelArbiter.js` changes from 50/405 to 52/407 uncovered/total branches; its covered count stays 355. `localGeojsonCore.js` gains one total branch. History also retains false untraced reductions without corresponding restoration records. Document these movements and identify the superseded measurements and restoration commits.
+
+- [ ] F6 minor src/data/trafficTiming.test.mjs:338 At commit `a6c4e387efc0` with current edits, the 750 ms wait does not establish that teardown is complete. The comment records that the earlier fixed wait failed under load. This correction fits the change's scope, but its remaining timing risk is absent from the proposal's known limits. Await a verifiable completion condition, or record the wait as an unproved mitigation and keep that limit open.

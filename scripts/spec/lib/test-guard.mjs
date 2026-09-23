@@ -51,11 +51,22 @@ function sha256(text) {
  * @param {string} input.root - Project root.
  * @param {Map<string, string>} input.inventory - Content hash of each code file at the start of the run.
  * @param {() => object|undefined} input.getContext - Returns the current node:test context.
+ * @param {() => string[]} [input.getActiveResources] - Returns active resource names.
+ * @param {string} [input.testFile] - Test file name.
  */
-export function createGuard({ root, inventory, getContext }) {
+export function createGuard({
+  root,
+  inventory,
+  getContext,
+  getActiveResources = () => (typeof process.getActiveResourcesInfo === 'function' ? process.getActiveResourcesInfo() : []),
+  testFile,
+}) {
   const violations = new Map();
   const checked = new Set();
   const counts = new Map();
+  const currentTestFile = testFile
+    ? (path.isAbsolute(testFile) ? path.relative(root, testFile).split(path.sep).join('/') : testFile)
+    : (process.argv[1] ? path.relative(root, process.argv[1]).split(path.sep).join('/') : '');
   const checkScript = (url, source) => {
     const file = fileOfScriptUrl(url, root);
     if (!file || !inventory.has(file)) return;
@@ -81,6 +92,8 @@ export function createGuard({ root, inventory, getContext }) {
       counts.set(key, (counts.get(key) || 0) + 1);
     },
     results() {
+      const resources = (getActiveResources ? getActiveResources() : []).filter((type) => type === 'Timeout' || type === 'Immediate');
+      const leaks = resources.length > 0 ? [{ file: currentTestFile, resources }] : [];
       return {
         violations: [...violations.values()],
         checked: [...checked].sort(),
@@ -88,6 +101,7 @@ export function createGuard({ root, inventory, getContext }) {
           const [file, fullName] = key.split('\0');
           return { file, fullName, count };
         }),
+        leaks,
       };
     },
   };
@@ -232,6 +246,10 @@ export function missingTestContext(nodeTest = require('node:test')) {
  * coverage to a file that only a worker loads. In each case, the child processes of the
  * process or the worker get the gate values.
  *
+ * A test-file child process, which Node marks with `NODE_TEST_CONTEXT=child-v8`, also gets its
+ * standard output set to blocking mode. Without this, `--test-force-exit` can end that process
+ * before its queued reporter output reaches the parent.
+ *
  * @param {{env?: Record<string, string>, createSession?: () => Session, execArgv?: string[], mainThread?: boolean, nodeTest?: object}} [options]
  * @returns {object|null} The guard, or null when the environment has no GEV_SPEC_OUT, the thread is a worker or the process has no inspector.
  */
@@ -243,8 +261,10 @@ export function installGuard({
   childProcess = require('node:child_process'),
   processObject = process,
   nodeTest = require('node:test'),
+  getActiveResources,
 } = {}) {
   if (!env.GEV_SPEC_OUT) return null;
+  if (env.NODE_TEST_CONTEXT === 'child-v8') processObject.stdout?._handle?.setBlocking?.(true);
   const guards = (globalThis[GUARDS] ||= new Map());
   if (guards.has(env.GEV_SPEC_OUT)) return guards.get(env.GEV_SPEC_OUT);
 
@@ -274,7 +294,7 @@ export function installGuard({
   }
   const inventory = new Map(Object.entries(JSON.parse(inventoryText)));
   const noContext = missingTestContext(nodeTest);
-  const guard = createGuard({ root, inventory, getContext: noContext ? () => undefined : nodeTest.getTestContext });
+  const guard = createGuard({ root, inventory, getContext: noContext ? () => undefined : nodeTest.getTestContext, getActiveResources });
   guards.set(outDir, guard);
   if (noContext) {
     const violation = { code: 'COVERAGE-NO-TEST-CONTEXT', file: '', message: `The test guard cannot count assertions: ${noContext}` };

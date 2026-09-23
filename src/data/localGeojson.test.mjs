@@ -341,8 +341,9 @@ test('slow parked frames do not keep republishing the same local overlay cohort'
   assert.equal(publications().length, 3, 're-enable must republish after clearing the host');
 });
 
-test('real layer disable clears its published host entries and balances settle listeners', async () => {
+test('real layer disable clears its published host entries and balances settle listeners', async (t) => {
   const env = await createRealLocalLayerHarness();
+  t.after(() => { env.layer.destroy(env.viewer); env.cleanup(); });
   env.preRender.raise();
   assert.ok(env.hostCalls.some(([type]) => type === 'entries'), 'real preRender path did not publish');
 
@@ -370,11 +371,11 @@ test('real layer disable clears its published host entries and balances settle l
   const addCountAtDestroy = env.moveEnd.addCount;
   await env.layer.enable(env.viewer);
   assert.equal(env.moveEnd.addCount, addCountAtDestroy, 'destroyed layer must stay permanently inert');
-  env.cleanup();
 });
 
-test('unchanged moveEnds do not redefine stem constants and real tip changes update once', async () => {
+test('unchanged moveEnds do not redefine stem constants and real tip changes update once', async (t) => {
   const env = await createRealLocalLayerHarness();
+  t.after(() => { env.layer.destroy(env.viewer); env.cleanup(); });
   env.preRender.raise();
   const entity = env.dataSources[0].entities.values[0];
   let positionSetCalls = 0;
@@ -460,17 +461,14 @@ test('unchanged moveEnds do not redefine stem constants and real tip changes upd
     'steady-state updates must allocate no stem arrays beyond the two preallocated buffers',
   );
   removeDefinitionListener();
-  env.layer.destroy(env.viewer);
-  env.cleanup();
 });
 
-test('a real enabled local layer has no native label graphics at runtime', async () => {
+test('a real enabled local layer has no native label graphics at runtime', async (t) => {
   const env = await createRealLocalLayerHarness();
+  t.after(() => { env.layer.destroy(env.viewer); env.cleanup(); });
   const entities = env.dataSources[0].entities.values;
   assert.ok(entities.length > 0, 'runtime guard requires a populated real data source');
   assert.ok(entities.every((entity) => entity.label === undefined));
-  env.layer.destroy(env.viewer);
-  env.cleanup();
 });
 
 for (const [heightM, minStemM, maxStemM] of [[500, 45, 90], [10000, 1100, 1400]]) {
@@ -680,15 +678,14 @@ test('a rejected scene add surfaces as an error instead of healthy stats', async
   cleanup();
 });
 
-test('a loaded dataset is distinguishable from a dead one', async () => {
+test('a loaded dataset is distinguishable from a dead one', async (t) => {
   const env = await createRealLocalLayerHarness();
+  t.after(() => { env.layer.destroy(env.viewer); env.cleanup(); });
   const stats = env.layer.getStats();
   assert.equal(stats.error, null);
   assert.ok(stats.count > 0);
   assert.ok(Number.isFinite(stats.lastUpdate), 'a successful load must timestamp itself');
   assert.equal(layerFeedState(stats), 'nominal');
-  env.layer.destroy(env.viewer);
-  env.cleanup();
 });
 
 // ── Ground-sample retry vs the idle render governor ───────────────────────────

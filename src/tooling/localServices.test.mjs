@@ -225,6 +225,13 @@ test('key setup writes only the supplied application root, retains request guard
   const first = root(t),
     untouched = root(t);
   env(t, 'OPENAI_API_KEY', undefined);
+  let restartTimer;
+  const originalSetTimeout = globalThis.setTimeout;
+  t.mock.method(globalThis, 'setTimeout', (...args) => {
+    restartTimer = originalSetTimeout(...args);
+    return restartTimer;
+  });
+  t.after(() => clearTimeout(restartTimer));
   const plugin = keySetupEndpoint({ sourceRoot: first });
   assert.equal(plugin.apply({}, { command: 'serve', isPreview: true }), false);
   assert.equal(plugin.configurePreviewServer, undefined);
@@ -254,4 +261,5 @@ test('key setup writes only the supplied application root, retains request guard
     assert.equal(statSync(path.join(first, '.env')).mode & 0o777, 0o600);
   assert.equal(saved.body.includes('sk-fixture-only-not-a-real-key'), false);
   assert.equal(existsSync(path.join(untouched, '.env')), false);
+  clearTimeout(restartTimer);
 });
