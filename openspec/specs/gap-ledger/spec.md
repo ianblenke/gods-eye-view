@@ -2,7 +2,6 @@
 
 ## Purpose
 Record each open gap in coverage and in test links. Stop the build when a gap opens, becomes larger or closes and the ledger does not show it. A loaded code file with true coverage, the content of the base commit and the content hash of its entry has the tolerance conditions. Such a file can differ from its entry by at most the tolerance and can have a smaller gap.
-
 ## Requirements
 ### Requirement: Ledger file
 The gap ledger MUST be the file `openspec/trace/gaps.json`. For each code file below 100%, it records the content hash and untrue coverage. It also records the not-covered lines, branches and functions, and the total counts of each loaded file. For each test file with untraced tests, it records the name of each untraced test. Each entry records its origin and the date that it opened.
@@ -153,6 +152,7 @@ Origin: spec-first
 - **WHEN** the content of a file is equal to its content in the base commit
 - **AND** the total counts in its ledger entry are not equal to the total counts in the base entry
 - **AND** the history after the base has no line with the metric `totals` for the file from the checked change
+- **AND** for a metric whose total counts differ, a covered count is not known or is not equal to the base covered count
 - **THEN** the gate stops the build
 
 #### Scenario: Stop for untrue coverage that the base does not record `gap-ledger-032`
@@ -184,6 +184,12 @@ Origin: spec-first
 #### Scenario: Stop for a base branch that Git cannot find `gap-ledger-030`
 - **WHEN** Git cannot find the base branch
 - **THEN** the gate stops the build
+
+#### Scenario: Allow changed total counts of an unchanged file when the covered count agrees `gap-ledger-088`
+- **WHEN** the content of a file is equal to its content in the base commit
+- **AND** the total counts in its ledger entry are not equal to the total counts in the base entry
+- **AND** for each metric whose total counts differ, the covered count is known and is equal to the base covered count
+- **THEN** the gate does not stop the build for the changed total counts
 
 ### Requirement: Ratchet command
 The ledger command `ratchet` MUST record the current gaps when no gap is larger. It MUST record each changed entry in `openspec/trace/history.jsonl` with the change name and the commit that the command ran on.

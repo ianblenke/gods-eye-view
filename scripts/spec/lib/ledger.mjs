@@ -39,6 +39,20 @@ function coveredCount(item, metric) {
 }
 
 /**
+ * True when every metric whose total in `entry` differs from `base` has the same covered
+ * count in both. A total that moves with no change of the covered count cannot mean a lost
+ * test. False when either side has no totals, or when a changed metric has no covered count.
+ */
+function totalsAgreeOnCoverage(entry, base) {
+  if (!entry.totals || !base.totals) return false;
+  return METRICS.every((metric) => {
+    if (entry.totals[metric] === base.totals[metric]) return true;
+    const covered = coveredCount(entry, metric);
+    return covered !== null && covered === coveredCount(base, metric);
+  });
+}
+
+/**
  * The loss of a metric of an unchanged file: the smaller of the increase of the not-covered
  * count and the decrease of the covered count. A run can give another total for the same
  * file, and that moves one of the two counts only. A fall of the not-covered count never
@@ -307,7 +321,8 @@ export function compareLedger({ ledger, current, sameAsBase = () => false }) {
  * Compare the ledger files with the same files in the base commit.
  *
  * @param {object} input
- * @param {string} [input.change] - The checked change. A changed total count needs a history line with this name.
+ * @param {string} [input.change] - The checked change. A changed total count with a changed covered
+ *   count needs a history line with this name.
  * @returns {object[]} Errors.
  */
 export function compareWithBase({ ledger, baseLedger, retired, baseRetired, history, baseHistory, sameAsBase = () => false, change }) {
@@ -341,7 +356,12 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
     if (unchanged && entry.sha !== base.sha) {
       error('LEDGER-HASH-NOT-BASE', file, `The content of ${file} is the base content, but its ledger hash is not the base hash`);
     }
-    if (unchanged && JSON.stringify(entry.totals ?? null) !== JSON.stringify(base.totals ?? null) && !totalsHistory.has(file)) {
+    if (
+      unchanged &&
+      JSON.stringify(entry.totals ?? null) !== JSON.stringify(base.totals ?? null) &&
+      !totalsHistory.has(file) &&
+      !totalsAgreeOnCoverage(entry, base)
+    ) {
       error('LEDGER-TOTALS-NOT-BASE', file, `The total counts of ${file} are not the base total counts, but the history has no totals line for it from the change ${change}`);
     }
     for (const metric of ['branches', 'functions']) {
