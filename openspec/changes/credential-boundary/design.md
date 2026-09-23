@@ -109,8 +109,10 @@ Each test task below names the hand edit that must turn its test red.
 
 ### D6 How the gates measure this change
 
-Coverage: every new and changed file stays at full line, branch and
-function coverage, read from the per-file report, not only the ratchet.
+Coverage: every new file stays at full line, branch and function
+coverage. In a changed file, the tests cover each branch that this change
+adds. The gate reads the per-file report, not only the ratchet. D7 and D8
+give the rules for the two pre-spec files.
 Trace: every test names its scenario ids, at most three per test. Spec
 lint: one `WHEN` line and at least one `THEN` line per scenario, a `MUST`
 sentence and an `Origin` line per requirement. STE lint covers the
@@ -118,6 +120,55 @@ proposal, this file, the tasks, the delta spec and every tagged test name.
 Boundaries: the `place-providers` group in
 `scripts/package-boundaries.json` gains `geocode.js` and `coordinates.js`.
 Preview: `previewServing.test.mjs`'s route table gains the geocode route.
+
+### D7 The ledger entry of `src/voice/gevActions.js`
+
+`src/voice/gevActions.js` is a pre-spec file. Its ledger entry allows 221
+not-covered branches of 798. On `main`, no test runs `reverseGeocode` or
+`sanitizeLabel`, so the report has no branch records inside them. The
+tests of `credential-boundary-014` run both functions, and the report now
+counts 845 branches.
+
+The report gives 222 not-covered branches. A comparison with the report of
+`main`, record by record, finds one new not-covered record. It is at line
+2974, in the async function of `reverseGeocode`.
+
+The raw V8 coverage gives its range as line 2974, columns 5 to 6. The text
+of the range is one space, between the closing brace of the `catch` block
+and `finally`. V8 counts it as the code after the `try` and `catch`
+blocks, and both blocks end with `return`. So no statement is in the
+range, and no test can execute it. A marker run shows that the `finally`
+block executes 8 times and the `catch` block 2 times.
+
+The other new branches of the two functions are covered. The control
+character branch of `sanitizeLabel` had no test at first. The place-shape
+test of `credential-boundary-014` now gives control characters and a
+letter that is not ASCII. It checks that the labels are the same as
+before this change.
+
+So the change writes one waiver with the `waive` command of
+`gap-ledger-079`, for the metric `branches`, the line 2974 and the count 1.
+Its reason names the range and the marker counts. The change does not
+edit the code only to move the count.
+
+An earlier version of this change had two tests of `set_layer_visibility`.
+They covered two old branches to offset the count. No scenario traces
+them, so `LEDGER-NOT-IN-BASE` stopped their names. The change removes
+them.
+
+### D8 The tests of `src/search/google.js`
+
+On `main`, the standalone search gave no response when it had no key, and
+the `if (!response)` arm of `createGoogleGeocoder` answered for that path.
+This change removes that path, so no caller can reach the arm. The change
+removes the arm and its comment.
+
+An earlier version of this change had four tests with the tag
+`credential-boundary-013`. No test checked what that scenario states. They
+covered the arm above, the `ok:false` arm and two defaults of
+`normalizeGooglePlace`. The change removes them for the same reason as
+the tests of D7. `src/search/google.js` keeps the 4 not-covered branches
+that its ledger entry allows.
 
 ### Files
 

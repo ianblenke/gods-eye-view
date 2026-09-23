@@ -90,14 +90,27 @@
   - State the browser key's narrowed scope, the server key's widened
     scope, and the OpenAI client secret's design.
 
-## 8. Gates and review
+## 8. The ledger entries of `gevActions.js` and `google.js`
 
-- [ ] 7.1 Run `make lint`, until clean.
-- [ ] 7.2 Run `make ratchet`.
-- [ ] 7.3 Run `make gates`. Read the per-file coverage from the Docker run
+- [x] 7.1 Remove the two `set_layer_visibility` offset tests. No scenario traces them.
+- [x] 7.2 Measure the not-covered branches of `gevActions.js` against the report of `main`.
+  - The result is 222 against 221, with one new record at line 2974.
+- [x] 7.3 Give control characters and a letter that is not ASCII in the 014 place-shape test.
+  - Mutation 1: write each character with no replacement. The test must fail.
+  - Mutation 2: remove the DEL condition. The test must fail.
+  - Mutation 3: change `code < 0x20` to `code < 0x1f`. The test must fail.
+  - Mutation 4: change `code === 0x7f` to `code >= 0x7f`. The test must fail.
+- [x] 7.4 Remove the `if (!response)` arm of `createGoogleGeocoder` and the four 013 tests of D8.
+- [x] 7.5 Run `waive` for line 2974 with the count 1 and a reason with the evidence of D7.
+
+## 9. Gates and review
+
+- [ ] 8.1 Run `make lint`, until clean.
+- [ ] 8.2 Run `make ratchet`.
+- [ ] 8.3 Run `make gates`. Read the per-file coverage from the Docker run
   for every changed file, by name.
-- [ ] 7.4 Run every mutation above once more on the final tree, in one sitting.
-- [ ] 7.5 Run the review agents. Write `review.md`.
+- [ ] 8.4 Run every mutation above once more on the final tree, in one sitting.
+- [ ] 8.5 Run the review agents. Write `review.md`.
 
 ## Scenario ledger
 
@@ -117,7 +130,7 @@
 | Google geocoding proxy | `credential-boundary-011` | ADDED | the non-ok passthrough, the 502, the over-cap answer, the 429 |
 | Google geocoding proxy | `credential-boundary-012` | ADDED | the caps and the field allowlist; a malformed input |
 | Browser geocoding | `credential-boundary-013` | ADDED | the same-origin URL, no key, the keyless fallback to Photon |
-| Browser geocoding | `credential-boundary-014` | ADDED | the proxy URL, no global key needed, the remembered keyless state |
+| Browser geocoding | `credential-boundary-014` | ADDED | the proxy URL, no global key needed, the remembered keyless state, the labels as before |
 | Browser geocoding | `credential-boundary-015` | ADDED | no direct call to the Google geocoding host remains in `src/` |
 
 Sixteen ADDED, zero MODIFIED, zero carried. Four requirements, all new.
