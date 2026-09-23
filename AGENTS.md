@@ -14,6 +14,24 @@ These rules are for each person and each AI agent that changes this project.
 
 `openspec/config.yaml` has the full rules for the scenario IDs, the test tags and the prose.
 
+## Rules for an agent
+
+Each rule below comes from a defect that reached this project. Obey each one.
+
+8. Read the verdict from the output of the command. Do not read a verdict from `.gev-cache/spec/results.json`. That file records only the exit status of each test process.
+9. A `Gates passed.` line from a ratchet run is not the verdict of the gates. Read the first line of the log to find which command ran.
+10. Say plainly when a run stopped before the end. Do not give a verdict for it.
+11. Name the commit of the tree that you read. Give that commit in each report and each finding. A copy in a scratchpad has no branch, and it becomes old without a sign.
+12. Run one container at a time on this machine. A second container makes a long run stop at its time limit.
+13. Name the change to the code that must make each test fail. Make that change. Report the test that failed. A test that passes against the code and against the opposite of the code proves nothing.
+14. Do not compare a value with the constant that gave it. Compare it with the literal value that the specification names.
+15. Ask whether this code set a property, or whether the property came from somewhere else. A property that comes from a parent object or from a default passes each test of its value and no test of its source.
+16. Write each review finding as a checkbox item of a list. Start its text with the word `FINDING`. Put the severity after that word, as `blocker` or `minor`. The gate reads no other shape. A line with no checkbox is silent, and the gate then passes with no record of the review.
+17. Do not check a box for work that is not complete.
+18. Tell the lead when a gate stops correct work. Do not make the gate weaker, and do not change the code to satisfy an instrument that counts it wrongly.
+19. Look at the file again before you report a correction as complete. Give the output of the search that shows it. A report of work that is not done costs a reviewer a full round, and it is worse than slow work.
+20. Look for the fault that your own correction adds. A correction to prose frequently adds a new fault to the same file. Run `make lint` after each group of corrections.
+
 ## Gates
 
 The gates run on the Node version in `.node-version`. Use the Docker image, because other Node versions give different coverage counts.

@@ -39,6 +39,20 @@ function coveredCount(item, metric) {
 }
 
 /**
+ * True when every metric whose total in `entry` differs from `base` has the same covered
+ * count in both. A total that moves with no change of the covered count cannot mean a lost
+ * test. False when either side has no totals, or when a changed metric has no covered count.
+ */
+function totalsAgreeOnCoverage(entry, base) {
+  if (!entry.totals || !base.totals) return false;
+  return METRICS.every((metric) => {
+    if (entry.totals[metric] === base.totals[metric]) return true;
+    const covered = coveredCount(entry, metric);
+    return covered !== null && covered === coveredCount(base, metric);
+  });
+}
+
+/**
  * The loss of a metric of an unchanged file: the smaller of the increase of the not-covered
  * count and the decrease of the covered count. A run can give another total for the same
  * file, and that moves one of the two counts only. A fall of the not-covered count never
@@ -175,6 +189,19 @@ function hasTolerance(file, entry, gap, sameAsBase) {
 }
 
 /**
+ * True when waivers cover each not-covered count of a file that has no entry to compare with.
+ * The record must be loaded, the file must not have the base content, and one or more waivers
+ * must name the file and the content hash of the record.
+ */
+function waiversCover(file, record, waivers, sameAsBase) {
+  if (!record.loaded || sameAsBase(file)) return false;
+  const own = waivers.filter((item) => item.file === file && item.sha === record.sha);
+  if (own.length === 0) return false;
+  const waived = (metric) => own.filter((item) => item.metric === metric).reduce((sum, item) => sum + item.count, 0);
+  return METRICS.every((metric) => record[metric] <= waived(metric));
+}
+
+/**
  * The tolerance of each metric, from the measured total counts of the file. The measurement
  * gives the real total, and the entry records the same number for a file that no change edits.
  */
@@ -200,7 +227,26 @@ function toleranceCounts(entry, gap) {
   return next;
 }
 
-function compareCoverageEntry(file, entry, gap, tolerance = () => 0) {
+/**
+ * The waiver lines of one active change after the base commit. A person can write a history line
+ * by hand, so a line with a count that is not a positive whole number gives no waived count.
+ *
+ * @param {string} history - Current history text.
+ * @param {string} baseHistory - Base history text.
+ * @param {string} change - Active change name.
+ * @returns {object[]} Waiver lines.
+ */
+export function waiversOf(history, baseHistory, change) {
+  if (!change || !history.startsWith(baseHistory)) return [];
+  return history
+    .slice(baseHistory.length)
+    .split('\n')
+    .filter((line) => line.startsWith('{'))
+    .map((line) => JSON.parse(line))
+    .filter((line) => line.kind === 'waiver' && line.change === change && Number.isInteger(line.count) && line.count > 0);
+}
+
+function compareCoverageEntry(file, entry, gap, tolerance = () => 0, waived) {
   const errors = [];
   const error = (code, message) => errors.push({ code, file, message });
   if (gap.untrue && !entry.untrue) {
@@ -211,15 +257,19 @@ function compareCoverageEntry(file, entry, gap, tolerance = () => 0) {
   }
   const changed = gap.sha !== entry.sha;
   const allowed = (metric) => entry[metric];
-  if (gap.lines > allowed('lines') + tolerance('lines')) {
-    error('LEDGER-LARGER-GAP', `${file} has ${gap.lines} lines not covered. The ledger allows ${allowed('lines') + tolerance('lines')}.`);
+  const waivedLines = waived('lines');
+  if (gap.lines > allowed('lines') + tolerance('lines') + waivedLines) {
+    const extra = waivedLines > 0 ? ` A waiver allows ${waivedLines} more.` : '';
+    error('LEDGER-LARGER-GAP', `${file} has ${gap.lines} lines not covered. The ledger allows ${allowed('lines') + tolerance('lines')}.${extra}`);
   }
   if (changed && !entry.loaded && gap.loaded) {
     error('LEDGER-NO-BASELINE', `${file} changed in the same change that first loads it. Load it in one change and edit it in a later change.`);
   } else if (changed && entry.loaded && gap.loaded) {
     for (const metric of ['branches', 'functions']) {
-      if (gap[metric] > allowed(metric)) {
-        error('LEDGER-LARGER-GAP', `${file} has ${gap[metric]} ${metric} not covered. The ledger allows ${allowed(metric)}.`);
+      const waivedMetric = waived(metric);
+      if (gap[metric] > allowed(metric) + waivedMetric) {
+        const extra = waivedMetric > 0 ? ` A waiver allows ${waivedMetric} more.` : '';
+        error('LEDGER-LARGER-GAP', `${file} has ${gap[metric]} ${metric} not covered. The ledger allows ${allowed(metric)}.${extra}`);
       }
     }
   } else if (entry.loaded && gap.loaded) {
@@ -242,9 +292,10 @@ function compareCoverageEntry(file, entry, gap, tolerance = () => 0) {
  *
  * @param {object} input
  * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
+ * @param {object[]} [input.waivers] - Waiver lines for the checked change.
  * @returns {{errors: object[], stale: object[]}}
  */
-export function compareLedger({ ledger, current, sameAsBase = () => false }) {
+export function compareLedger({ ledger, current, sameAsBase = () => false, waivers = [] }) {
   const errors = [];
   const stale = [];
   if (ledger.version !== VERSION) {
@@ -258,7 +309,9 @@ export function compareLedger({ ledger, current, sameAsBase = () => false }) {
   for (const [file, gap] of current.coverage) {
     const entry = ledger.coverage[file];
     if (!entry) {
-      errors.push({ code: 'LEDGER-NEW-COVERAGE-GAP', file, message: describeGap(file, gap) });
+      // A waived file with no entry is not current until the ratchet command adds its entry.
+      if (waiversCover(file, gap, waivers, sameAsBase)) stale.push({ kind: 'coverage', file });
+      else errors.push({ code: 'LEDGER-NEW-COVERAGE-GAP', file, message: describeGap(file, gap) });
       if (gap.untrue) {
         errors.push({ code: 'COVERAGE-FAKE', file, message: `A test ran code under the name ${file}, but the code is not the file content` });
       }
@@ -266,7 +319,14 @@ export function compareLedger({ ledger, current, sameAsBase = () => false }) {
     }
     // The counts of a file can be different in each run, so they can move inside the tolerance.
     const tolerant = hasTolerance(file, entry, gap, sameAsBase);
-    const entryErrors = compareCoverageEntry(file, entry, gap, tolerant ? gapTolerance(gap) : undefined);
+    const changed = gap.sha !== entry.sha;
+    const waived = (metric) => {
+      if (!changed || !entry.loaded || !gap.loaded) return 0;
+      return waivers
+        .filter((item) => item.file === file && item.metric === metric && item.sha === gap.sha)
+        .reduce((sum, item) => sum + item.count, 0);
+    };
+    const entryErrors = compareCoverageEntry(file, entry, gap, tolerant ? gapTolerance(gap) : undefined, waived);
     errors.push(...entryErrors);
     if (entryErrors.length === 0 && !sameGap(entry, gap) && !tolerant) stale.push({ kind: 'coverage', file });
   }
@@ -307,7 +367,15 @@ export function compareLedger({ ledger, current, sameAsBase = () => false }) {
  * Compare the ledger files with the same files in the base commit.
  *
  * @param {object} input
- * @param {string} [input.change] - The checked change. A changed total count needs a history line with this name.
+ * @param {object|null} input.ledger - Current ledger.
+ * @param {object|null} input.baseLedger - Base commit ledger.
+ * @param {string[]} input.retired - Retired scenario IDs.
+ * @param {string[]} input.baseRetired - Base retired scenario IDs.
+ * @param {string} input.history - Current history text.
+ * @param {string} input.baseHistory - Base history text.
+ * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
+ * @param {string} [input.change] - The checked change. A changed total count with a changed covered
+ *   count needs a history line with this name.
  * @returns {object[]} Errors.
  */
 export function compareWithBase({ ledger, baseLedger, retired, baseRetired, history, baseHistory, sameAsBase = () => false, change }) {
@@ -317,6 +385,7 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
   }
   const errors = [];
   const error = (code, file, message) => errors.push({ code, file, message });
+  const waivers = waiversOf(history, baseHistory, change);
   const changeLines = (history.startsWith(baseHistory) ? history.slice(baseHistory.length) : '')
     .split('\n')
     .filter((line) => line.startsWith('{'))
@@ -327,13 +396,23 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
   for (const [file, entry] of Object.entries(ledger.coverage)) {
     const base = baseLedger.coverage[file];
     if (!base) {
-      error('LEDGER-NOT-IN-BASE', file, `The ledger entry for ${file} is not in the base ledger`);
+      if (!waiversCover(file, entry, waivers, sameAsBase)) {
+        error('LEDGER-NOT-IN-BASE', file, `The ledger entry for ${file} is not in the base ledger`);
+      }
       continue;
     }
     const unchanged = sameAsBase(file);
     const baseAllowed = base;
-    if (entry.lines > baseAllowed.lines) {
-      error('LEDGER-LARGER-THAN-BASE', file, `The ledger allows ${entry.lines} lines for ${file}. The base ledger allows ${baseAllowed.lines}.`);
+    const waived = (metric) => {
+      if (unchanged || !entry.loaded) return 0;
+      return waivers
+        .filter((w) => w.file === file && w.metric === metric && w.sha === entry.sha)
+        .reduce((sum, w) => sum + w.count, 0);
+    };
+    const waivedLines = waived('lines');
+    if (entry.lines > baseAllowed.lines + waivedLines) {
+      const extra = waivedLines > 0 ? ` A waiver allows ${waivedLines} more.` : '';
+      error('LEDGER-LARGER-THAN-BASE', file, `The ledger allows ${entry.lines} lines for ${file}. The base ledger allows ${baseAllowed.lines}.${extra}`);
     }
     if (entry.untrue && !base.untrue) {
       error('LEDGER-UNTRUE-NOT-IN-BASE', file, `The ledger records untrue coverage for ${file}, but the base ledger does not`);
@@ -341,15 +420,24 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
     if (unchanged && entry.sha !== base.sha) {
       error('LEDGER-HASH-NOT-BASE', file, `The content of ${file} is the base content, but its ledger hash is not the base hash`);
     }
-    if (unchanged && JSON.stringify(entry.totals ?? null) !== JSON.stringify(base.totals ?? null) && !totalsHistory.has(file)) {
+    if (
+      unchanged &&
+      JSON.stringify(entry.totals ?? null) !== JSON.stringify(base.totals ?? null) &&
+      !totalsHistory.has(file) &&
+      !totalsAgreeOnCoverage(entry, base)
+    ) {
       error('LEDGER-TOTALS-NOT-BASE', file, `The total counts of ${file} are not the base total counts, but the history has no totals line for it from the change ${change}`);
     }
     for (const metric of ['branches', 'functions']) {
       if (!moreThan(entry, baseAllowed, metric)) continue;
       const covered = coveredCount(entry, metric);
       const baseCovered = coveredCount(base, metric);
+      const waivedMetric = waived(metric);
       if (!unchanged) {
-        error('LEDGER-MORE-THAN-BASE', file, `${file} changed, and the ledger allows ${entry[metric]} ${metric}. The base ledger allows ${baseAllowed[metric]}.`);
+        if (entry[metric] > baseAllowed[metric] + waivedMetric) {
+          const extra = waivedMetric > 0 ? ` A waiver allows ${waivedMetric} more.` : '';
+          error('LEDGER-MORE-THAN-BASE', file, `${file} changed, and the ledger allows ${entry[metric]} ${metric}. The base ledger allows ${baseAllowed[metric]}.${extra}`);
+        }
       } else if (covered === null || baseCovered === null || covered < baseCovered) {
         error('LEDGER-MORE-THAN-BASE', file, `The ledger allows ${entry[metric]} ${metric} for ${file} with ${covered} covered ${metric}. The base ledger allows ${base[metric]} with ${baseCovered} covered.`);
       }
@@ -379,14 +467,25 @@ function sum(names) {
 /**
  * Record the current gaps in the ledger. Stops when a gap is larger.
  *
+ * @param {object} input
+ * @param {object} input.ledger - The current ledger.
+ * @param {object} input.current - The measured gaps.
+ * @param {string[]} input.inventory - Tracked code files.
+ * @param {string[]} input.testFiles - Tracked test files.
+ * @param {string} input.change - Active change name.
+ * @param {boolean} input.changeActive - True when the change is active.
+ * @param {string} input.date - Today's date.
+ * @param {string} input.commit - Head commit hash.
+ * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
+ * @param {object[]} [input.waivers] - Waiver lines for the checked change.
  * @returns {{ledger: object, history: object[]}}
  */
-export function ratchetLedger({ ledger, current, inventory, testFiles, change, changeActive, date, commit, sameAsBase = () => false }) {
+export function ratchetLedger({ ledger, current, inventory, testFiles, change, changeActive, date, commit, sameAsBase = () => false, waivers = [] }) {
   if (!change) throw new Error('The ratchet command needs --change <name>');
   if (!changeActive) throw new Error(`Change "${change}" has no folder with a proposal.md file in openspec/changes`);
   // The ratchet command writes the version and the total counts again, so these are not blocking.
   const RATCHET_FIXES = new Set(['LEDGER-STALE', 'LEDGER-NO-TOTALS', 'LEDGER-VERSION']);
-  const blocking = compareLedger({ ledger, current, sameAsBase }).errors.filter((error) => !RATCHET_FIXES.has(error.code));
+  const blocking = compareLedger({ ledger, current, sameAsBase, waivers }).errors.filter((error) => !RATCHET_FIXES.has(error.code));
   if (blocking.length > 0) {
     throw new Error(`The ratchet command cannot run while gaps are larger:\n${blocking.map((error) => `${error.code} ${error.message}`).join('\n')}`);
   }
@@ -410,15 +509,23 @@ export function ratchetLedger({ ledger, current, inventory, testFiles, change, c
     const tolerant = hasTolerance(file, entry, gap, sameAsBase);
     const next = { ...(tolerant ? toleranceCounts(entry, gap) : gap), origin: entry.origin, since: entry.since };
     if (next.lines < entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'smaller');
+    else if (next.lines > entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'waived');
     if (!entry.loaded && gap.loaded) record('coverage', file, 'loaded', false, true, 'loaded');
     if (entry.untrue && !gap.untrue) record('coverage', file, 'untrue', true, false, 'true coverage');
     for (const metric of ['branches', 'functions']) {
       if (entry[metric] === null || next[metric] === null || entry[metric] === next[metric]) continue;
-      record('coverage', file, metric, entry[metric], next[metric], next[metric] > entry[metric] ? 'shown by test' : 'smaller');
+      record('coverage', file, metric, entry[metric], next[metric], next[metric] > entry[metric] ? (gap.sha !== entry.sha ? 'waived' : 'shown by test') : 'smaller');
     }
     if (gap.sha !== entry.sha) record('coverage', file, 'hash', entry.sha, gap.sha, 'content changed');
     if (JSON.stringify(entry.totals ?? null) !== JSON.stringify(next.totals)) record('coverage', file, 'totals', entry.totals ?? null, next.totals, 'totals changed');
     coverage[file] = next;
+  }
+  for (const [file, gap] of current.coverage) {
+    if (file in ledger.coverage) continue;
+    for (const metric of METRICS) {
+      if (gap[metric] > 0) record('coverage', file, metric, 0, gap[metric], 'waived');
+    }
+    coverage[file] = { ...gap, origin: change, since: date };
   }
 
   const untracedTests = {};

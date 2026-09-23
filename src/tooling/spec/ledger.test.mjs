@@ -121,6 +121,9 @@ test('[gap-ledger-003] stops for a new code file below 100%', () => {
   ]);
   const base = compareLedger({ ledger: ledgerWith(), current: gaps([loaded('src/new.js', 0, 1, 0, 'same', BIG)]), sameAsBase: () => true });
   assert.deepEqual(codes(base), ['LEDGER-NEW-COVERAGE-GAP'], 'a file with no entry gets no tolerance');
+  const baseWaiver = [{ change: 'backfill-orbit', file: 'src/new.js', metric: 'branches', sha: 'same', count: 1, lines: [2], reason: 'phantom' }];
+  const waivedBase = compareLedger({ ledger: ledgerWith(), current: gaps([loaded('src/new.js', 0, 1, 0)]), sameAsBase: () => true, waivers: baseWaiver });
+  assert.deepEqual(codes(waivedBase), ['LEDGER-NEW-COVERAGE-GAP'], 'a file with the base content gets no waived count');
   const unloadedNew = compareLedger({ ledger: ledgerWith(), current: gaps([unloaded('src/new.js', 12)]) });
   assert.deepEqual(unloadedNew.errors.map((error) => error.message), ['no test loads src/new.js']);
 });
@@ -130,6 +133,14 @@ test('[gap-ledger-004] stops for more lines that are not covered and shows both 
   const tolerant = compareLedger({ ledger: ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } }), current: gaps([loaded('src/orbit.js', 6, 3, 1)]), sameAsBase: () => true });
   assert.deepEqual(tolerant.errors, [], 'the tolerance of the total 100 is 4');
   assert.deepEqual(result.errors, [{ code: 'LEDGER-LARGER-GAP', file: 'src/orbit.js', message: 'src/orbit.js has 6 lines not covered. The ledger allows 5.' }]);
+
+  const waivers = [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'lines', sha: 'edited', count: 2, lines: [10], reason: 'phantom' }];
+  const waived = compareLedger({
+    ledger: ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } }),
+    current: gaps([loaded('src/orbit.js', 8, 3, 1, 'edited')]),
+    waivers,
+  });
+  assert.deepEqual(waived.errors, [{ code: 'LEDGER-LARGER-GAP', file: 'src/orbit.js', message: 'src/orbit.js has 8 lines not covered. The ledger allows 5. A waiver allows 2 more.' }]);
 });
 
 test('[gap-ledger-017] stops for more branches or functions that are not covered in a changed file', () => {
@@ -140,6 +151,17 @@ test('[gap-ledger-017] stops for more branches or functions that are not covered
   ]);
   const tolerant = compareLedger({ ledger: ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } }), current: gaps([loaded('src/orbit.js', 5, 4, 2, 'edited')]), sameAsBase: () => true });
   assert.deepEqual(codes(tolerant), ['LEDGER-LARGER-GAP', 'LEDGER-LARGER-GAP'], 'a changed file gets no tolerance');
+
+  const waivers = [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'branches', sha: 'edited', count: 2, lines: [10], reason: 'phantom' }];
+  const waived = compareLedger({
+    ledger: ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } }),
+    current: gaps([loaded('src/orbit.js', 5, 6, 2, 'edited')]),
+    waivers,
+  });
+  assert.deepEqual(waived.errors.map((error) => error.message), [
+    'src/orbit.js has 6 branches not covered. The ledger allows 3. A waiver allows 2 more.',
+    'src/orbit.js has 2 functions not covered. The ledger allows 1.',
+  ]);
 });
 
 test('[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file', () => {
@@ -304,11 +326,30 @@ test('[gap-ledger-021] stops for a ledger entry that the base does not have', ()
     ['LEDGER-NOT-IN-BASE', 'src/a.test.mjs'],
     ['LEDGER-NOT-IN-BASE', 'src/b.test.mjs'],
   ]);
+  // Waivers of the checked change can allow a coverage entry, never an untraced test name.
+  const waiver = `${JSON.stringify({ change: 'backfill-orbit', kind: 'waiver', file: 'src/hidden.js', metric: 'lines', sha: 'same', count: 400 })}\n`;
+  assert.deepEqual(base({ ledger, history: `a\nb\n${waiver}`, change: 'backfill-orbit' }).map((error) => [error.code, error.file]), [
+    ['LEDGER-NOT-IN-BASE', 'src/a.test.mjs'],
+    ['LEDGER-NOT-IN-BASE', 'src/b.test.mjs'],
+  ]);
 });
 
 test('[gap-ledger-022] stops for a ledger entry that is larger than the base', () => {
   const ledger = ledgerWith({ coverage: { ...BASE.coverage, 'src/orbit.js': LOADED(9, 3, 1) }, untracedTests: BASE.untracedTests });
   assert.deepEqual(base({ ledger }), [{ code: 'LEDGER-LARGER-THAN-BASE', file: 'src/orbit.js', message: 'The ledger allows 9 lines for src/orbit.js. The base ledger allows 5.' }]);
+
+  const waiverLine = JSON.stringify({ date: '2026-09-20', change: 'test-change', commit: 'abc', kind: 'waiver', file: 'src/orbit.js', metric: 'lines', sha: 'same', lines: [10], count: 2, reason: 'phantom' });
+  const waived = compareWithBase({
+    ledger,
+    baseLedger: BASE,
+    retired: ['x-001'],
+    baseRetired: ['x-001'],
+    history: 'base\n' + waiverLine + '\n',
+    baseHistory: 'base\n',
+    change: 'test-change',
+    sameAsBase: () => false,
+  });
+  assert.deepEqual(waived, [{ code: 'LEDGER-LARGER-THAN-BASE', file: 'src/orbit.js', message: 'The ledger allows 9 lines for src/orbit.js. The base ledger allows 5. A waiver allows 2 more.' }]);
 });
 
 test('[gap-ledger-032] stops for untrue coverage that the base does not record', () => {
@@ -387,6 +428,9 @@ test('[gap-ledger-013] stops the ratchet command when a gap is larger', () => {
   const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } });
   assert.throws(() => ratchet(ledger, gaps([loaded('src/orbit.js', 6, 3, 1)])), /LEDGER-LARGER-GAP/);
   assert.equal(ledger.coverage['src/orbit.js'].lines, 5);
+
+  const waivers = [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'lines', sha: 'edited', count: 2, lines: [10], reason: 'phantom' }];
+  assert.throws(() => ratchet(ledger, gaps([loaded('src/orbit.js', 8, 3, 1, 'edited')]), { waivers }), /LEDGER-LARGER-GAP/);
 });
 
 test('[gap-ledger-014] stops the ratchet command without a change name', () => {
@@ -447,6 +491,33 @@ test('[gap-ledger-056] stops for changed total counts of an unchanged file witho
   assert.deepEqual(compare({ history: own }), []);
   const legacy = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals: undefined }) } });
   assert.deepEqual(codes(compareWithBase({ ledger: legacy, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true, change: 'backfill-orbit' })), ['LEDGER-TOTALS-NOT-BASE']);
+  // A changed total with the same not-covered count still moves the covered count, so it still stops the build.
+  const movedCovered = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals: { ...TOTALS, branches: 98 } }) } });
+  assert.deepEqual(codes(compareWithBase({ ledger: movedCovered, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true, change: 'backfill-orbit' })), ['LEDGER-TOTALS-NOT-BASE']);
+  const movedLines = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals: { ...TOTALS, lines: 98 } }) } });
+  assert.deepEqual(codes(compareWithBase({ ledger: movedLines, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true })), ['LEDGER-TOTALS-NOT-BASE']);
+  // A covered count that goes up, and a drift of the functions total only, also stop the build.
+  for (const totals of [{ ...TOTALS, branches: 102 }, { ...TOTALS, functions: 9 }]) {
+    const drift = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals }) } });
+    assert.deepEqual(codes(compareWithBase({ ledger: drift, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true })), ['LEDGER-TOTALS-NOT-BASE']);
+  }
+  // A base entry without totals, and a changed metric without a covered count, both still stop the build.
+  const legacyBase = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals: undefined }) } });
+  assert.deepEqual(codes(compareWithBase({ ledger: ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } }), baseLedger: legacyBase, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true })), ['LEDGER-TOTALS-NOT-BASE']);
+  const noBranchCount = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, null, 1, { totals: { ...TOTALS, branches: 98 } }) } });
+  const noBranchBase = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, null, 1) } });
+  assert.deepEqual(codes(compareWithBase({ ledger: noBranchCount, baseLedger: noBranchBase, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true })), ['LEDGER-TOTALS-NOT-BASE']);
+});
+
+test('[gap-ledger-088] allows changed total counts of an unchanged file when the covered count agrees', () => {
+  const base = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } });
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 5, 1, { totals: { ...TOTALS, branches: 102 } }) } });
+  const compare = (extra) => compareWithBase({ ledger, baseLedger: base, retired: [], baseRetired: [], history: '', baseHistory: '', sameAsBase: () => true, ...extra });
+  assert.deepEqual(compare({}), []);
+  const betterLines = ledgerWith({ coverage: { 'src/orbit.js': LOADED(4, 5, 1, { totals: { ...TOTALS, branches: 102 } }) } });
+  assert.deepEqual(compare({ ledger: betterLines }), []);
+  const changedCovered = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { totals: { ...TOTALS, branches: 98 } }) } });
+  assert.deepEqual(codes(compare({ ledger: changedCovered })), ['LEDGER-TOTALS-NOT-BASE']);
 });
 
 test('[gap-ledger-029] records the hash of a changed file and the end of untrue coverage', () => {
@@ -468,6 +539,22 @@ test('[gap-ledger-040] stops for more branches than the base in a changed file',
     ['LEDGER-MORE-THAN-BASE', 'src/orbit.js changed, and the ledger allows 7 branches. The base ledger allows 3.'],
     ['LEDGER-MORE-THAN-BASE', 'src/orbit.js changed, and the ledger allows 3 functions. The base ledger allows 1.'],
   ]);
+
+  const waiverLine = JSON.stringify({ date: '2026-09-20', change: 'test-change', commit: 'abc', kind: 'waiver', file: 'src/orbit.js', metric: 'branches', sha: 'new', count: 2, lines: [10], reason: 'phantom' });
+  const waived = compareWithBase({
+    ledger,
+    baseLedger,
+    retired: [],
+    baseRetired: [],
+    history: 'base\n' + waiverLine + '\n',
+    baseHistory: 'base\n',
+    change: 'test-change',
+    sameAsBase: () => false,
+  });
+  assert.deepEqual(waived.map((error) => [error.code, error.message]), [
+    ['LEDGER-MORE-THAN-BASE', 'src/orbit.js changed, and the ledger allows 7 branches. The base ledger allows 3. A waiver allows 2 more.'],
+    ['LEDGER-MORE-THAN-BASE', 'src/orbit.js changed, and the ledger allows 3 functions. The base ledger allows 1.'],
+  ]);
 });
 
 test('[gap-ledger-048] stops for more branches than the base with fewer covered branches', () => {
@@ -486,6 +573,10 @@ test('[gap-ledger-048] stops for more branches than the base with fewer covered 
     { code: 'LEDGER-MORE-THAN-BASE', file: 'src/orbit.js', message: 'The ledger allows 4 branches for src/orbit.js with 96 covered branches. The base ledger allows 3 with 97 covered.' },
     { code: 'LEDGER-MORE-THAN-BASE', file: 'src/old.js', message: 'The ledger allows 2 branches for src/old.js with 98 covered branches. The base ledger allows 1 with null covered.' },
   ]);
+  // For a file with other content, gap-ledger-040 applies instead, and a waiver can allow the rise.
+  const changedWaiver = `${JSON.stringify({ change: 'backfill-orbit', kind: 'waiver', file: 'src/orbit.js', metric: 'branches', sha: 'same', count: 1 })}\n`;
+  const changed = compareWithBase({ ledger: ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 4, 1) } }), baseLedger: ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } }), retired: [], baseRetired: [], history: `a\n${changedWaiver}`, baseHistory: 'a\n', sameAsBase: () => false, change: 'backfill-orbit' });
+  assert.deepEqual(changed, []);
 });
 
 test('[gap-ledger-041] stops for a ledger hash that is not equal to the base hash for an unchanged file', () => {
@@ -603,4 +694,265 @@ test('[gap-ledger-076] stops for a ledger file with another version', () => {
     { code: 'LEDGER-VERSION', file: 'openspec/trace/gaps.json', message: 'openspec/trace/gaps.json has the version 3. The gates need the version 4.' },
   ]);
   withRoot((root) => assert.equal(writeLedger(root, ratchet(ledger, current, TOLERANT).ledger).version, 4));
+});
+
+test('[gap-ledger-081] allows the waived count for a changed file with the content hash of the waiver', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } });
+  const current = gaps([loaded('src/orbit.js', 5, 5, 1, 'edited')]);
+  const waivers = [
+    { change: 'backfill-orbit', file: 'src/orbit.js', metric: 'branches', sha: 'edited', count: 1, lines: [10], reason: 'phantom 1' },
+    { change: 'backfill-orbit', file: 'src/orbit.js', metric: 'branches', sha: 'edited', count: 1, lines: [20], reason: 'phantom 2' },
+  ];
+  const result = compareLedger({ ledger, current, waivers });
+  assert.deepEqual(codes(result), ['LEDGER-STALE']);
+  assert.deepEqual(result.stale, [{ kind: 'coverage', file: 'src/orbit.js' }]);
+});
+
+test('[gap-ledger-082] gives no waived count for other content', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } });
+  // Case 1: Other content (waiver has sha 'edited-1', but file has sha 'edited-2').
+  const otherContent = compareLedger({
+    ledger,
+    current: gaps([loaded('src/orbit.js', 5, 4, 1, 'edited-2')]),
+    waivers: [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'branches', sha: 'edited-1', count: 2, lines: [10], reason: 'phantom' }],
+  });
+  assert.deepEqual(otherContent.errors.map((error) => error.message), [
+    'src/orbit.js has 4 branches not covered. The ledger allows 3.',
+  ]);
+
+  // Case 2: Same hash as entry (file is unchanged, sha 'same').
+  const sameHash = compareLedger({
+    ledger,
+    current: gaps([loaded('src/orbit.js', 6, 3, 1, 'same')]),
+    waivers: [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'lines', sha: 'same', count: 2, lines: [10], reason: 'phantom' }],
+  });
+  assert.deepEqual(sameHash.errors, [
+    { code: 'LEDGER-LARGER-GAP', file: 'src/orbit.js', message: 'src/orbit.js has 6 lines not covered. The ledger allows 5.' },
+  ]);
+
+  // Case 3: A file that no test loads has no coverage report that can be wrong.
+  const unloadedFile = compareLedger({
+    ledger: ledgerWith({ coverage: { 'src/orbit.js': UNLOADED(5) } }),
+    current: gaps([unloaded('src/orbit.js', 7, 'edited')]),
+    waivers: [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'lines', sha: 'edited', count: 2, lines: [10, 11], reason: 'phantom' }],
+  });
+  assert.deepEqual(codes(unloadedFile), ['LEDGER-LARGER-GAP']);
+
+  // Case 4: The entry is loaded, and no test loads the file now.
+  const lineWaiver = [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'lines', sha: 'edited', count: 2, lines: [10, 11], reason: 'phantom' }];
+  const notLoadedNow = compareLedger({ ledger, current: gaps([unloaded('src/orbit.js', 7, 'edited')]), waivers: lineWaiver });
+  assert.deepEqual(codes(notLoadedNow), ['LEDGER-UNLOADED', 'LEDGER-LARGER-GAP']);
+
+  // Case 5: The entry records that no test loads the file, and a test loads it now.
+  const loadedNow = compareLedger({ ledger: ledgerWith({ coverage: { 'src/orbit.js': UNLOADED(5) } }), current: gaps([loaded('src/orbit.js', 7, 0, 0, 'edited')]), waivers: lineWaiver });
+  assert.deepEqual(codes(loadedNow), ['LEDGER-LARGER-GAP', 'LEDGER-NO-BASELINE']);
+});
+
+test('[gap-ledger-083] allows a rise above the base by the waived count of the checked change', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 5, 1, { sha: 'new' }) } });
+  const baseLedger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { sha: 'old' }) } });
+  const waiverLine = JSON.stringify({ date: '2026-09-20', change: 'test-change', commit: 'abc', kind: 'waiver', file: 'src/orbit.js', metric: 'branches', sha: 'new', count: 2, lines: [10], reason: 'phantom' });
+  const errors = compareWithBase({
+    ledger,
+    baseLedger,
+    retired: [],
+    baseRetired: [],
+    history: 'base\n' + waiverLine + '\n',
+    baseHistory: 'base\n',
+    change: 'test-change',
+    sameAsBase: () => false,
+  });
+  assert.deepEqual(errors, []);
+  const linesLedger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(7, 3, 1, { sha: 'new' }) } });
+  const linesWaiver = JSON.stringify({ date: '2026-09-20', change: 'test-change', commit: 'abc', kind: 'waiver', file: 'src/orbit.js', metric: 'lines', sha: 'new', count: 2, lines: [10, 11], reason: 'phantom' });
+  const linesErrors = compareWithBase({ ledger: linesLedger, baseLedger, retired: [], baseRetired: [], history: `base\n${linesWaiver}\n`, baseHistory: 'base\n', change: 'test-change', sameAsBase: () => false });
+  assert.deepEqual(linesErrors, [], 'a lines waiver allows a rise of the not-covered lines');
+});
+
+test('[gap-ledger-084] gives no waived count in the base comparison for other waiver lines', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 5, 1, { sha: 'new' }) } });
+  const baseLedger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { sha: 'old' }) } });
+
+  // Case 1: In the base history.
+  const inBaseWaiver = JSON.stringify({ date: '2026-09-20', change: 'test-change', commit: 'abc', kind: 'waiver', file: 'src/orbit.js', metric: 'branches', sha: 'new', count: 2, lines: [10], reason: 'phantom' });
+  const case1 = compareWithBase({
+    ledger,
+    baseLedger,
+    retired: [],
+    baseRetired: [],
+    history: inBaseWaiver + '\n',
+    baseHistory: inBaseWaiver + '\n',
+    change: 'test-change',
+    sameAsBase: () => false,
+  });
+  assert.deepEqual(codes(case1), ['LEDGER-MORE-THAN-BASE']);
+
+  // Case 2: Another change.
+  const otherChangeWaiver = JSON.stringify({ date: '2026-09-20', change: 'other-change', commit: 'abc', kind: 'waiver', file: 'src/orbit.js', metric: 'branches', sha: 'new', count: 2, lines: [10], reason: 'phantom' });
+  const case2 = compareWithBase({
+    ledger,
+    baseLedger,
+    retired: [],
+    baseRetired: [],
+    history: 'base\n' + otherChangeWaiver + '\n',
+    baseHistory: 'base\n',
+    change: 'test-change',
+    sameAsBase: () => false,
+  });
+  assert.deepEqual(codes(case2), ['LEDGER-MORE-THAN-BASE']);
+
+  // Case 3: Another hash.
+  const otherHashWaiver = JSON.stringify({ date: '2026-09-20', change: 'test-change', commit: 'abc', kind: 'waiver', file: 'src/orbit.js', metric: 'branches', sha: 'other-hash', count: 2, lines: [10], reason: 'phantom' });
+  const case3 = compareWithBase({
+    ledger,
+    baseLedger,
+    retired: [],
+    baseRetired: [],
+    history: 'base\n' + otherHashWaiver + '\n',
+    baseHistory: 'base\n',
+    change: 'test-change',
+    sameAsBase: () => false,
+  });
+  assert.deepEqual(codes(case3), ['LEDGER-MORE-THAN-BASE']);
+
+  // Case 4: A file with the base content.
+  const unchangedLedger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 5, 1, { sha: 'same' }) } });
+  const unchangedBaseLedger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { sha: 'same' }) } });
+  const sameContentWaiver = JSON.stringify({ date: '2026-09-20', change: 'test-change', commit: 'abc', kind: 'waiver', file: 'src/orbit.js', metric: 'branches', sha: 'same', count: 2, lines: [10], reason: 'phantom' });
+  const case4 = compareWithBase({
+    ledger: unchangedLedger,
+    baseLedger: unchangedBaseLedger,
+    retired: [],
+    baseRetired: [],
+    history: 'base\n' + sameContentWaiver + '\n',
+    baseHistory: 'base\n',
+    change: 'test-change',
+    sameAsBase: (file) => file === 'src/orbit.js',
+  });
+  assert.deepEqual(codes(case4), ['LEDGER-MORE-THAN-BASE']);
+
+  // Case 5: A lines waiver for a file with the base content gives a waived count of 0.
+  const linesWaiver = JSON.stringify({ date: '2026-09-20', change: 'test-change', commit: 'abc', kind: 'waiver', file: 'src/orbit.js', metric: 'lines', sha: 'same', count: 2, lines: [10, 11], reason: 'phantom' });
+  const case5 = compareWithBase({
+    ledger: ledgerWith({ coverage: { 'src/orbit.js': LOADED(7, 3, 1, { sha: 'same' }) } }),
+    baseLedger: unchangedBaseLedger,
+    retired: [],
+    baseRetired: [],
+    history: 'base\n' + linesWaiver + '\n',
+    baseHistory: 'base\n',
+    change: 'test-change',
+    sameAsBase: (file) => file === 'src/orbit.js',
+  });
+  assert.deepEqual(codes(case5), ['LEDGER-LARGER-THAN-BASE']);
+
+  // Cases 6 to 13: waiver lines that give nothing to a changed file with a rise of 2 branches.
+  const rise = (lines, extra = {}) =>
+    codes(compareWithBase({ ledger, baseLedger, retired: [], baseRetired: [], history: `base\n${lines.map((line) => `${JSON.stringify(line)}\n`).join('')}`, baseHistory: 'base\n', change: 'test-change', sameAsBase: () => false, ...extra }));
+  const good = { date: '2026-09-20', change: 'test-change', commit: 'abc', kind: 'waiver', file: 'src/orbit.js', metric: 'branches', sha: 'new', count: 2, lines: [10], reason: 'phantom' };
+  assert.deepEqual(rise([good]), [], 'the valid line allows the rise');
+  assert.deepEqual(rise([{ ...good, count: '2' }]), ['LEDGER-MORE-THAN-BASE'], 'a count that is not a number');
+  assert.deepEqual(rise([good, { ...good, count: -1 }]), [], 'a negative count does not lower the sum');
+  const zeroEntry = { ledger: ledgerWith({ coverage: { 'src/new.js': LOADED(0, 0, 0, { sha: 'new' }) } }), baseLedger: ledgerWith() };
+  assert.deepEqual(rise([{ ...good, file: 'src/new.js', count: 0 }], zeroEntry), ['LEDGER-NOT-IN-BASE'], 'a count of 0 is not a waiver');
+  assert.deepEqual(rise([{ ...good, metric: 'branch' }]), ['LEDGER-MORE-THAN-BASE'], 'an unknown metric');
+  assert.deepEqual(rise([{ ...good, sha: undefined }]), ['LEDGER-MORE-THAN-BASE'], 'no content hash');
+  assert.deepEqual(rise([{ ...good, kind: 'coverage' }]), ['LEDGER-MORE-THAN-BASE'], 'a line of another kind');
+  const { change: _, ...noChange } = good;
+  assert.deepEqual(rise([noChange], { change: undefined }), ['LEDGER-MORE-THAN-BASE'], 'no change name');
+  assert.deepEqual(rise([good], { history: `other\n${JSON.stringify(good)}\n` }).sort(), ['LEDGER-HISTORY-CHANGED', 'LEDGER-MORE-THAN-BASE'], 'a rewritten history');
+
+  // Case 14: A file that no test loads gets no waived count.
+  const unloadedCase = compareWithBase({ ledger: ledgerWith({ coverage: { 'src/orbit.js': UNLOADED(7, { sha: 'new' }) } }), baseLedger: ledgerWith({ coverage: { 'src/orbit.js': UNLOADED(5, { sha: 'old' }) } }), retired: [], baseRetired: [], history: `base\n${JSON.stringify({ ...good, metric: 'lines' })}\n`, baseHistory: 'base\n', change: 'test-change', sameAsBase: () => false });
+  assert.deepEqual(codes(unloadedCase), ['LEDGER-LARGER-THAN-BASE']);
+});
+
+test('[gap-ledger-085] records a waived rise', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1) } });
+  const current = gaps([loaded('src/orbit.js', 5, 5, 1, 'edited')]);
+  const waivers = [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'branches', sha: 'edited', count: 2, lines: [10], reason: 'phantom' }];
+  const result = ratchet(ledger, current, { waivers });
+  assert.equal(result.ledger.coverage['src/orbit.js'].branches, 5);
+  assert.equal(result.ledger.coverage['src/orbit.js'].sha, 'edited');
+  assert.deepEqual(
+    result.history.filter((item) => item.metric === 'branches'),
+    [{ date: DATE, change: 'backfill-orbit', commit: COMMIT, kind: 'coverage', file: 'src/orbit.js', metric: 'branches', before: 3, after: 5, reason: 'waived' }],
+  );
+});
+
+test('[gap-ledger-085] records a waived rise of the line count', () => {
+  const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(3, 5, 1) } });
+  const current = gaps([loaded('src/orbit.js', 5, 5, 1, 'edited')]);
+  const waivers = [{ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'lines', sha: 'edited', count: 2, lines: [10], reason: 'phantom' }];
+  const result = ratchet(ledger, current, { waivers });
+  assert.equal(result.ledger.coverage['src/orbit.js'].lines, 5);
+  assert.equal(result.ledger.coverage['src/orbit.js'].sha, 'edited');
+  assert.deepEqual(
+    result.history.filter((item) => item.metric === 'lines'),
+    [{ date: DATE, change: 'backfill-orbit', commit: COMMIT, kind: 'coverage', file: 'src/orbit.js', metric: 'lines', before: 3, after: 5, reason: 'waived' }],
+  );
+});
+
+const orbitWaiver = (extra = {}) => ({ change: 'backfill-orbit', file: 'src/orbit.js', metric: 'branches', sha: 'new', count: 2, lines: [10, 20], reason: 'phantom', ...extra });
+
+test('[gap-ledger-086] allows the waived count for a file with no entry, and records the file as not current', () => {
+  const current = gaps([loaded('src/orbit.js', 1, 2, 0, 'new')]);
+  const waivers = [orbitWaiver({ count: 1, lines: [10] }), orbitWaiver({ count: 1, lines: [20] }), orbitWaiver({ metric: 'lines', count: 1, lines: [5] })];
+  const result = compareLedger({ ledger: ledgerWith(), current, waivers });
+  assert.deepEqual(codes(result), ['LEDGER-STALE']);
+  assert.deepEqual(result.stale, [{ kind: 'coverage', file: 'src/orbit.js' }]);
+});
+
+test('[gap-ledger-086] stops the build for a file with no entry and a count above the waived count', () => {
+  const check = (record, waivers, sameAsBase) => codes(compareLedger({ ledger: ledgerWith(), current: gaps([record]), waivers, sameAsBase }));
+  const orbit = loaded('src/orbit.js', 0, 2, 0, 'new');
+  assert.deepEqual(check(orbit, [orbitWaiver({ count: 1 })]), ['LEDGER-NEW-COVERAGE-GAP'], 'a count above the waived count');
+  assert.deepEqual(check(orbit, [orbitWaiver({ sha: 'old' })]), ['LEDGER-NEW-COVERAGE-GAP'], 'a waiver for other content');
+  assert.deepEqual(check(orbit, [orbitWaiver({ file: 'src/other.js' })]), ['LEDGER-NEW-COVERAGE-GAP'], 'a waiver for another file');
+  assert.deepEqual(check(loaded('src/orbit.js', 1, 2, 0, 'new'), [orbitWaiver()]), ['LEDGER-NEW-COVERAGE-GAP'], 'a metric without a waiver');
+  assert.deepEqual(check(unloaded('src/orbit.js', 4, 'new'), [orbitWaiver({ metric: 'lines', count: 4 })]), ['LEDGER-NEW-COVERAGE-GAP'], 'a file that no test loads');
+  assert.deepEqual(check(orbit, [orbitWaiver()], () => true), ['LEDGER-NEW-COVERAGE-GAP'], 'a file with the base content');
+});
+
+test('[gap-ledger-086] adds the entry for a file with no entry and a waived count, and records the rise', () => {
+  const current = gaps([loaded('src/orbit.js', 1, 2, 0, 'new')]);
+  const waivers = [orbitWaiver(), orbitWaiver({ metric: 'lines', count: 1, lines: [5] })];
+  const result = ratchet(ledgerWith(), current, { waivers });
+  assert.deepEqual(result.ledger.coverage['src/orbit.js'], { ...LOADED(1, 2, 0), sha: 'new', untrue: false, origin: 'backfill-orbit', since: DATE });
+  assert.deepEqual(
+    result.history.filter((item) => item.file === 'src/orbit.js'),
+    [
+      { date: DATE, change: 'backfill-orbit', commit: COMMIT, kind: 'coverage', file: 'src/orbit.js', metric: 'lines', before: 0, after: 1, reason: 'waived' },
+      { date: DATE, change: 'backfill-orbit', commit: COMMIT, kind: 'coverage', file: 'src/orbit.js', metric: 'branches', before: 0, after: 2, reason: 'waived' },
+    ],
+  );
+});
+
+const newFileBase = (ledger, lines, sameAsBase = () => false) =>
+  compareWithBase({
+    ledger,
+    baseLedger: ledgerWith(),
+    retired: [],
+    baseRetired: [],
+    history: `base\n${lines.map((line) => `${JSON.stringify({ date: '2026-09-20', change: 'test-change', commit: 'abc', kind: 'waiver', file: 'src/new.js', metric: 'branches', sha: 'new', count: 2, lines: [10], reason: 'phantom', ...line })}\n`).join('')}`,
+    baseHistory: 'base\n',
+    change: 'test-change',
+    sameAsBase,
+  });
+
+test('[gap-ledger-087] allows the waived count for a ledger entry that the base does not have', () => {
+  const ledger = ledgerWith({ coverage: { 'src/new.js': LOADED(1, 2, 0, { sha: 'new' }) } });
+  assert.deepEqual(newFileBase(ledger, [{}, { metric: 'lines', count: 1 }]), []);
+});
+
+test('[gap-ledger-087] stops the build for a ledger entry that the base does not have and a count above the waived count', () => {
+  const entry = ledgerWith({ coverage: { 'src/new.js': LOADED(0, 2, 0, { sha: 'new' }) } });
+  const stops = (ledger, lines, sameAsBase) => assert.deepEqual(codes(newFileBase(ledger, lines, sameAsBase)), ['LEDGER-NOT-IN-BASE']);
+  stops(entry, [{ count: 1 }]);
+  stops(entry, [{ sha: 'old' }]);
+  stops(entry, [{ file: 'src/other.js' }]);
+  stops(entry, [{ change: 'other-change' }]);
+  stops(ledgerWith({ coverage: { 'src/new.js': LOADED(1, 2, 0, { sha: 'new' }) } }), [{}]);
+  stops(ledgerWith({ coverage: { 'src/new.js': UNLOADED(4, { sha: 'new' }) } }), [{ metric: 'lines', count: 4 }]);
+  stops(entry, [{}], () => true);
+  stops(ledgerWith({ coverage: { 'src/new.js': LOADED(0, 0, 0, { sha: 'new' }) } }), []);
 });

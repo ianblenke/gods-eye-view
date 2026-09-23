@@ -294,81 +294,32 @@
   "coverage-gate-047": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-047] stops for a local dotenv file that is not empty before the gate starts the test runs"
   ],
-  "credential-boundary-001": [
-    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] a fixture build exposes only the allowed sentinels",
-    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] every secret sentinel stays out of the built output, by name"
+  "coverage-gate-048": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-048] exits a test run that leaves a live timer"
   ],
-  "credential-boundary-002": [
-    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-002] a VITE_ value outside the AIS prefix never reaches the bundle"
+  "coverage-gate-049": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-049] stops for a real child process that leaves a live timer, with no stub",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-049] stops for a test that leaves a live timer",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-049] records a live timer at the exit of a test process",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-049] writes a leak record when a real child process leaves a live timer at exit"
   ],
-  "credential-boundary-003": [
-    "src/googleServerKey.test.mjs › [credential-boundary-003] browser defines contain the browser key and exclude the server key",
-    "src/tooling/viteBuild.test.mjs › [credential-boundary-003] build helper does not discover environment values or construct local providers",
-    "src/tooling/viteBuild.test.mjs › [credential-boundary-003] explicit build inputs preserve browser-only defines, plugin order and loopback protections"
+  "coverage-gate-050": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-050] does not stop for a test process without a live timer",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak and throws no error when getActiveResources has a falsy value",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak for a test process without a live timer",
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-050] records no leak when the active-resource function is absent"
   ],
-  "credential-boundary-004": [
-    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-004] no key-shaped literal appears in browser source"
+  "coverage-gate-051": [
+    "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-051] pairs each --test-reporter with the --test-reporter-destination that follows it"
   ],
-  "credential-boundary-005": [
-    "src/keySetupCore.test.mjs › [credential-boundary-005] the client-exposed registry names equal the browser build define names"
+  "coverage-gate-052": [
+    "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-052] registers its destination only with a real AbortSignal at options.signal, even when process.execArgv names the module's destination"
   ],
-  "credential-boundary-006": [
-    "src/keySetupCore.test.mjs › [credential-boundary-006] every server read of a credential name is documented"
+  "coverage-gate-053": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-053] sets the standard output of a test-file child to blocking mode"
   ],
-  "credential-boundary-007": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-007] a keyless server answers configured:false with no upstream call",
-    "src/tooling/previewServing.test.mjs › [credential-boundary-007] real dev and built-preview servers serve provider JSON and stop unknown APIs"
-  ],
-  "credential-boundary-008": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-008] forward mode sends the address and bounds, and keeps the key out of the body",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-008] the server key wins over the browser key, and a blank server key falls back"
-  ],
-  "credential-boundary-009": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-009] reverse mode sends latlng and projects the answer"
-  ],
-  "credential-boundary-010": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] a request with no url is read as an empty query",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] refuses a non-GET method with a 405",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] refuses malformed input with a 400 and no upstream call"
-  ],
-  "credential-boundary-011": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] a non-ok upstream status passes through its error with no key",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] a non-ok upstream status with no error_message gets a default error",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] a set rate limiter answers 429 with Retry-After",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] a thrown fetch answers 502",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] an over-cap body answers with an error, not a throw",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-011] the upstream timeout aborts the request"
-  ],
-  "credential-boundary-012": [
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults caps lists and keeps only the allowed fields",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults defaults a sparse address component too",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults defaults every missing field on a sparse result",
-    "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults gives an empty answer for a malformed input"
-  ],
-  "credential-boundary-013": [
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] a configured:false answer contributes no verdict, not a negative one",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] a keyless server answers configured:false and the search falls back to Photon",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] a request function that answers no response counts as no verdict",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] a response with ok:false counts as a real, unanswered attempt",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] normalizeGooglePlace defaults an absent types list and formatted address",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] normalizeGooglePlace refuses an out-of-range or non-finite coordinate",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] the geocode request URL is same-origin, with address and bounds, and no key"
-  ],
-  "credential-boundary-014": [
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a cached or in-flight coordinate makes no second fetch",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a configured answer gives the established place shape",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a configured:false answer is remembered for the page life",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a fetch failure resolves to no place",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a non-OK status or empty results gives no place",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a sparse result defaults every missing field",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] an unparsable response resolves to no place",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] reverseGeocode fetches the server route, with no key"
-  ],
-  "credential-boundary-015": [
-    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-015] no direct call to Google geocoding remains in the browser source"
-  ],
-  "credential-boundary-016": [
-    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-016] the server key stays out of the bundle and out of the global, named on failure"
+  "coverage-gate-054": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-054] does not change the standard output of another process"
   ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
@@ -539,6 +490,40 @@
   ],
   "gap-ledger-078": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+  ],
+  "gap-ledger-079": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-079] records a coverage waiver, allows the rise in the ratchet command and passes the check"
+  ],
+  "gap-ledger-080": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-080] stops the waive command for a fault in its options"
+  ],
+  "gap-ledger-081": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-081] allows the waived count for a changed file with the content hash of the waiver"
+  ],
+  "gap-ledger-082": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-082] gives no waived count for other content"
+  ],
+  "gap-ledger-083": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-083] allows a rise above the base by the waived count of the checked change"
+  ],
+  "gap-ledger-084": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-084] gives no waived count in the base comparison for other waiver lines"
+  ],
+  "gap-ledger-085": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-085] records a waived rise",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-085] records a waived rise of the line count"
+  ],
+  "gap-ledger-086": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-086] adds the entry for a file with no entry and a waived count, and records the rise",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-086] allows the waived count for a file with no entry, and records the file as not current",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-086] stops the build for a file with no entry and a count above the waived count"
+  ],
+  "gap-ledger-087": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-087] allows the waived count for a ledger entry that the base does not have",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-087] stops the build for a ledger entry that the base does not have and a count above the waived count"
+  ],
+  "gap-ledger-088": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-088] allows changed total counts of an unchanged file when the covered count agrees"
   ],
   "hud-markings-001": [
     "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"
@@ -1054,6 +1039,21 @@
     "src/data/oshLayer.test.mjs › [osh-057] getStats().placed.stream counts only the stream-placed system, not the geometry-placed one",
     "src/data/oshLayer.test.mjs › [osh-057] only a location with systemName:null gives the id as the label",
     "src/data/oshLayer.test.mjs › [osh-057] the detail for a selected stream-placed placeholder shows Placed by, with the name the location carries"
+  ],
+  "osh-061": [
+    "src/data/oshLayer.test.mjs › [osh-061] a feature entity keeps its own altitude",
+    "src/data/oshLayer.test.mjs › [osh-061] a moved entity keeps the observation's altitude",
+    "src/data/oshLayer.test.mjs › [osh-061] a system placed from a fresh location keeps its altitude",
+    "src/data/oshLayer.test.mjs › [osh-061] the feature entity's point and label draw on top, with the height reference NONE",
+    "src/data/oshLayer.test.mjs › [osh-061] the re-added entity for a selected system draws on top, on its point and its label",
+    "src/data/oshLayer.test.mjs › [osh-061] the system entity's point and label draw on top, with the height reference NONE"
+  ],
+  "osh-062": [
+    "src/data/oshLayer.test.mjs › [osh-062] a moveEnd over the antipode swaps which entities show",
+    "src/data/oshLayer.test.mjs › [osh-062] a moveEnd raised while the layer is off still updates show, so enable() shows a correct set",
+    "src/data/oshLayer.test.mjs › [osh-062] a poll move across the horizon hides the selected entity, and a later move back shows it",
+    "src/data/oshLayer.test.mjs › [osh-062] a refresh under a camera that has not moved hides the antipode entities and shows the near ones",
+    "src/data/oshLayer.test.mjs › [osh-062] init() adds one moveEnd listener, disable() keeps it, and destroy() removes it"
   ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
