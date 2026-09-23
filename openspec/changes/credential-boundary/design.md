@@ -113,6 +113,7 @@ Coverage: every new file stays at full line, branch and function
 coverage. In a changed file, the tests cover each branch that this change
 adds. The gate reads the per-file report, not only the ratchet. D7 and D8
 give the rules for the two pre-spec files.
+
 Trace: every test names its scenario ids, at most three per test. Spec
 lint: one `WHEN` line and at least one `THEN` line per scenario, a `MUST`
 sentence and an `Origin` line per requirement. STE lint covers the
