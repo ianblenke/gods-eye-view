@@ -202,7 +202,8 @@ tests of D7.
 
 The `ok:false` arm now has a real test of `credential-boundary-013`. The
 route can answer `429` or `502`. The search must then give an open answer
-and use Photon. GOOGLE_JS_LEDGER
+and use Photon. `src/search/google.js` keeps 3 not-covered
+branches, down from the 4 that its ledger entry allowed.
 
 ### Files
 
