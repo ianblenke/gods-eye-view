@@ -72,7 +72,7 @@ name that the server reads.
   - One line of `src/standalone/application.js`.
   - 74 lines and 4 functions of `src/voice/gevActions.js`.
   - One branch of `src/search/google.js`.
-  - Five untraced test names, in four test files.
+  - Four untraced test names, in three test files.
 - The OpenAI client secret is out of scope. Our server makes it for each
   voice session, and it expires. The browser gets it by design for WebRTC,
   so it is not an API key in the sense of this change.

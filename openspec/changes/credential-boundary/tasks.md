@@ -74,9 +74,12 @@ Revert each mutation of this file after its check.
 - [x] 5.7 Install the route from `google.js`. Export it from `places.js`.
 - [x] 5.8 Add `geocode.js` and `coordinates.js` to `package-boundaries.json`.
 - [x] 5.9 Run `npm run check:boundaries`.
-- [x] 5.10 Add the route to the route table of `previewServing` with the tag `credential-boundary-007`.
-  - Mutation 1: change the route path in `geocode.js`. The table row must answer `404`.
-  - Mutation 2: install a stub answer before the route. The body check of the row must fail.
+- [x] 5.10 Write a test of `credential-boundary-007` in `previewServing.test.mjs` for the real servers.
+  - The test leaves the existing test of that file unchanged.
+  - Mutation 1: change the route path in `geocode.js`. The test must fail.
+  - Mutation 2: install a stub answer before the route. The test must fail.
+  - Mutation 3: remove the `no-store` header. The test must fail.
+  - Mutation 4: make a keyless request call the upstream host. The test must fail.
 
 ## 6. Browser
 
