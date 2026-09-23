@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import test, { after } from 'node:test';
+import test, { after, before } from 'node:test';
 import { mkdtemp, writeFile, rm, readFile, readdir } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -125,19 +125,19 @@ async function buildFixture() {
 }
 
 let fixture;
-/** Build the fixture once; the build tests share the result. */
-function sharedFixture() {
-  fixture ??= buildFixture();
-  return fixture;
-}
+// Build once, in a hook. A test that awaited one shared promise would have its
+// assertions counted for the test that started the build, not for itself.
+before(async () => {
+  fixture = await buildFixture();
+});
 
-test('[credential-boundary-001] a fixture build exposes only the allowed sentinels', async () => {
-  const { found } = await sharedFixture();
+test('[credential-boundary-001] a fixture build exposes only the allowed sentinels', () => {
+  const { found } = fixture;
   assert.deepEqual(found, new Set(ALLOWED_SENTINELS));
 });
 
-test('[credential-boundary-001] every secret sentinel stays out of the built output, by name', async () => {
-  const { names, found, byFile } = await sharedFixture();
+test('[credential-boundary-001] every secret sentinel stays out of the built output, by name', () => {
+  const { names, found, byFile } = fixture;
   const secretNames = names.filter((name) => !ALLOWED_SENTINELS.includes(`GEV_SENTINEL_${name}`));
   for (const name of secretNames) {
     const sentinel = `GEV_SENTINEL_${name}`;
@@ -152,14 +152,14 @@ test('[credential-boundary-001] every secret sentinel stays out of the built out
   }
 });
 
-test('[credential-boundary-002] a VITE_ value outside the AIS prefix never reaches the bundle', async () => {
-  const { found } = await sharedFixture();
+test('[credential-boundary-002] a VITE_ value outside the AIS prefix never reaches the bundle', () => {
+  const { found } = fixture;
   assert.equal(found.has('GEV_SENTINEL_VITE_GEV_PROBE_SECRET'), false);
   assert.equal(found.has('GEV_SENTINEL_VITE_AIS_LIVE_MAX_ROWS'), true);
 });
 
-test('[credential-boundary-016] the server key stays out of the bundle and out of main.js, and a failure names it', async () => {
-  const { found, byFile } = await sharedFixture();
+test('[credential-boundary-016] the server key stays out of the bundle and out of main.js, and a failure names it', () => {
+  const { found, byFile } = fixture;
   const sentinel = 'GEV_SENTINEL_GOOGLE_MAPS_SERVER_API_KEY';
   assert.equal(
     found.has(sentinel),
