@@ -6,18 +6,19 @@ The gates measured `credential-boundary` on 2026-09-20. The base entry of `src/v
 
 ## Changed files
 
-- `scripts/spec/lib/ledger.mjs`: the waived count in `compareCoverageEntry`, `compareLedger`, `compareWithBase` and `ratchetLedger`, and the function `waiversOf`.
-- `scripts/spec/gates.mjs`: the command `waive`, its options, and the waivers that the check and the ratchet command read.
-- `src/tooling/spec/ledger.test.mjs`: the tests of `gap-ledger-081` to `gap-ledger-085` and the changed tests of the five changed scenarios.
+- `scripts/spec/lib/ledger.mjs`: the waived count in `compareCoverageEntry`, `compareLedger`, `compareWithBase` and `ratchetLedger`, and the function `waiversOf`. Also the waived count for a file with no entry, in `compareLedger`, `ratchetLedger` and `compareWithBase`.
+- `scripts/spec/gates.mjs`: the command `waive`, its options, and the waivers that the check and the ratchet command read. The seven checks of the command become one array and one `find` call.
+- `src/tooling/spec/ledger.test.mjs`: the tests of `gap-ledger-081` to `gap-ledger-087` and the changed tests of the five changed scenarios.
 - `src/tooling/spec/gates.test.mjs`: the tests of `gap-ledger-079` and `gap-ledger-080`.
-- `openspec/specs/gap-ledger/spec.md`: the five changed scenarios and the requirement "Coverage waiver".
+- `openspec/specs/gap-ledger/spec.md`: the seven changed or added scenarios and the requirement "Coverage waiver".
 
 ## Goals / Non-Goals
 
 **Goals:**
 - Give a person one recorded, exact and visible way to allow a not-covered count that the coverage report gets wrong.
 - Keep each automatic rule as strict as it is now. A changed file gets no tolerance.
-- Keep the ledger closed. The ledger gets no new entry and no new untraced name.
+- Keep the ledger closed to a new untraced name.
+- A file the change edits stays at 100%, so it needs no new entry. Where that is not possible for the change's own new code, a waiver adds one entry, not a silent gap. See D10.
 
 **Non-Goals:**
 - Do not give the tolerance to a changed file.
@@ -117,6 +118,26 @@ The first exit is smaller. The design recommends it.
 
 Defect 2 needs no code. The waiver is one new requirement and five changed scenario bodies. A split would give one change with no code, so this is one change.
 
+### D10. A waiver for a file with no ledger entry
+
+The gates of this change have the exact defect they fix, in their own new code. `scripts/spec/gates.mjs`'s `waive` command has seven early-return checks. Each one executes. A marker before each return proved it, and `gap-ledger-080` triggers every one of the seven and checks its exact message.
+
+lcov reports 0 hits for each. The team put the seven `if` blocks into one array and one `find` call. That closed six of the seven. The last one is the same defect, one line, in `gates.mjs`, a file the change edits.
+
+`compareCoverageEntry`'s waiver applies only inside a ledger entry the file already has. This file had none: it was at 100% before this change edited it. So `LEDGER-NEW-COVERAGE-GAP` stops the build first, and no waiver reaches that path. More tests cannot close a defect in how the gate counts. So the choice is a waiver here too, or a change with a real gap in its own coverage.
+
+`compareLedger`'s loop over `current.coverage` gets a waived count for a file with no entry, the same shape as the changed-file one. The count is the sum of the waivers for that file, that metric and the measured content hash. The gate does not stop the build when every metric's not-covered count is at or below its waived count.
+
+`ratchetLedger` gets a second loop, after the loop over the entries it already has. That loop is for a file in `current.coverage` with no entry and a real gap. It writes the entry with the measured counts, the content hash, and the change name as the origin. It adds one history line per not-covered metric, with the reason `waived`.
+
+Scenario `gap-ledger-086` covers this. The mutation: replace the `fullyWaived` check with `true`. The two tests of the compareLedger case redden. Remove the second loop of `ratchetLedger`. The test that reads the new entry reddens, because the entry does not exist.
+
+The second loop first had its own `if (!gapped) continue` guard, for a file with no not-covered count. `currentGaps` already drops a `complete` record before it reaches `current.coverage`, so a gap in that loop always has a not-covered count. The guard was dead code, not a phantom branch, so the fix removes it. `ledger.mjs` needs no waiver of its own.
+
+A first version of this design stopped here, and a real `make gates` run on the change's own new entry for `gates.mjs` caught what it missed. `compareWithBase` has its own, separate rule for a ledger entry the base does not have. It stops the build with `LEDGER-NOT-IN-BASE`, unconditionally, because until now the ledger got no new entry outside the init command. A file entry that `gap-ledger-086` adds is exactly such an entry, so `compareWithBase` stopped this change on its own waiver.
+
+`compareWithBase` gets the same waived count as the new-entry case of `compareLedger`, for an entry the base ledger does not have. The count is the sum of the checked change's waivers for that file, that metric and the entry's content hash. Scenario `gap-ledger-087` covers this. The mutation: replace the `fullyWaived` check with `false`. The allowed case reddens, because the gate stops the build.
+
 ## What `fix-covered-count` fixed, and how this change differs
 
 `fix-covered-count` shipped on 2026-09-17. It is for a file that no change edits. V8 measured the branch total of `src/search/placeSearch.js` as 23 in one run and 22 in another, with the same 3 branches not covered. The covered count fell with the total, and the gate read the fall as a lost branch.
@@ -163,7 +184,7 @@ Each rule has a mutation that must redden one test:
 - `gap-ledger-013`: remove `waivers` from the `compareLedger` call in `ratchetLedger`. The test of `gap-ledger-085` reddens, because the command then throws. Give the ratchet command a waived count of 8. The test of `gap-ledger-013` reddens.
 - `gap-ledger-085`: change the reason `waived` to `shown by test`. The test reddens.
 - `gap-ledger-079`: remove one field from the waiver line, or write the line with `writeFileSync`. The gate test reddens on the line, or on `LEDGER-HISTORY-CHANGED` in the check that follows.
-- `gap-ledger-080`: remove one of the seven checks. The case of the gate test for that fault reddens.
+- `gap-ledger-080`: remove one entry from the `faults` array. The case of the gate test for that fault reddens.
 
 The tests of `gap-ledger-081` to `gap-ledger-085` call `compareLedger`, `compareWithBase` and `ratchetLedger` with synthetic ledgers and synthetic waiver lines. The tests of `gap-ledger-079` and `gap-ledger-080` run `runGates` on the fixture of `gates.test.mjs`. Its base commit has a ledger entry for `src/math.js` with one not-covered branch. The work branch adds a second not-covered branch to that file. The ratchet command stops without a waiver, and it passes after the `waive` command with a count of 1. A check with the change name then passes.
 

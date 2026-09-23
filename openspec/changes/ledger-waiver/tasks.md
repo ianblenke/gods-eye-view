@@ -31,6 +31,11 @@ For each test below, run the named mutation before the code exists, and again af
   - Mutation: replace the waived count with 8. The test must redden.
 - [x] 2.10 Change the test for `gap-ledger-040` with a rise above the waived branch count.
   - Mutation: replace the waived count with 8. The test must redden.
+- [x] 2.11 Write the tests for `gap-ledger-086`: a file with no ledger entry, waived and under-waived, and the added entry.
+  - Mutation 1: replace the `fullyWaived` check in `compareLedger` with `true`. The two `compareLedger` cases must redden.
+  - Mutation 2: remove the second loop of `ratchetLedger`. The test that reads the new entry must redden.
+- [x] 2.12 Write the tests for `gap-ledger-087`: a `compareWithBase` entry the base does not have, waived and under-waived.
+  - Mutation: replace the `fullyWaived` check in `compareWithBase` with `false`. The allowed case must redden.
 
 ## 3. The code of the waived count
 
@@ -38,6 +43,10 @@ For each test below, run the named mutation before the code exists, and again af
 - [x] 3.2 Write the waived count in `compareWithBase` until 2.3, 2.4, 2.9 and 2.10 pass.
 - [x] 3.3 Write the waivers and the reason `waived` in `ratchetLedger` until 2.5 and 2.8 pass.
 - [x] 3.4 Update the JSDoc of `compareLedger`, `compareWithBase` and `ratchetLedger`.
+- [x] 3.5 Write the waived count for a file with no entry, in `compareLedger` and a new `ratchetLedger` loop, until 2.11 passes.
+  - See D10.
+- [x] 3.6 Write the waived count for an entry the base does not have, in `compareWithBase`, until 2.12 passes.
+  - A real gates run on the change's own new `gates.mjs` entry found this gap. See D10.
 
 ## 4. The tests and the code of the command
 
@@ -45,7 +54,7 @@ For each test below, run the named mutation before the code exists, and again af
 - [x] 4.2 Write the test for `gap-ledger-079` in `gates.test.mjs`.
   - The test runs `waive`, reads the history line, runs the ratchet command, then a check that passes.
   - The test also runs the ratchet command without the waiver, which must stop with `LEDGER-LARGER-GAP`.
-  - Mutation 1: remove one field from the waiver line. Reddens on the missing `reason` field. Confirmed.
+  - Mutation 1: remove one field from the waiver line. Reddens because the `reason` field is not there. Confirmed.
   - Mutation 2: write the history file in place of an append. Reddens with a broken history-continuity check. Confirmed.
   - Mutation 3: do not pass the waivers to the ratchet command in `gates.mjs`. Reddens. Confirmed.
 - [x] 4.3 Write the test for `gap-ledger-080` with one case for each of the seven faults.
@@ -53,6 +62,8 @@ For each test below, run the named mutation before the code exists, and again af
 - [x] 4.4 Write the command `waive` in `gates.mjs`, with its options and `GATES-WAIVE`, until 4.2 and 4.3 pass.
 - [x] 4.5 Pass the waivers of the checked change to `compareLedger` and to `ratchetLedger` in `gates.mjs`.
 - [x] 4.6 Update the usage text and the JSDoc of `parseArgs`.
+- [x] 4.7 Restructure the seven checks of `waive` into one `faults` array and one `find` call. Keep the tests of `gap-ledger-080` green.
+  - Confirmed by mutation that this closes six of the seven phantom branches. The last one is the `if (fault)` line. See D10.
 
 ## 5. The scenarios that keep their text
 
@@ -71,8 +82,10 @@ For each test below, run the named mutation before the code exists, and again af
 
 ## 6. Coverage
 
-- [ ] 6.1 Keep `scripts/spec/lib/ledger.mjs` and `scripts/spec/gates.mjs` at 100% lines, branches and functions.
+- [ ] 6.1 Keep `scripts/spec/lib/ledger.mjs` at 100% lines, branches and functions.
 - [ ] 6.2 Report each mutation of sections 2 and 4 with the test that reddened, in the review notes.
+- [x] 6.3 Correct the stale 7-branch waiver in the history for `gates.mjs`, for the one phantom branch it still has.
+  - Run `waive` with the measured count and a reason that names the marker evidence, in place of the earlier line.
 
 ## 7. Gates and review
 
