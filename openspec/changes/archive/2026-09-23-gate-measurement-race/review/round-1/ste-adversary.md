@@ -1,0 +1,36 @@
+Verdict: FAIL
+- [ ] S1 major design.md:37 "The guard already returns early for a worker thread before this point." Does not agree with the code: the setBlocking line runs before `if (!mainThread) return null`. Write: "The setBlocking line runs before the worker-thread check. In a worker thread, `process.stdout` has no `_handle`, so the line does nothing."
+- [ ] S2 major tasks.md:13 Task 2.1 mutation "remove the `env.NODE_TEST_CONTEXT === 'child-v8'` condition" does not agree with design.md:65 or the test. Write: "Mutation: remove the line that sets blocking mode. The test must redden."
+- [ ] S3 major tasks.md:15 Task 2.2 mutation "remove the line that sets blocking mode" does not agree with design.md:65. Write: "Mutation: remove the `env.NODE_TEST_CONTEXT === 'child-v8'` condition. The first case must redden."
+- [ ] S4 major design.md:63 "`coverage-gate-054` checks two cases." The test has three cases, and the no-handle cases set `child-v8`. Rewrite to describe the three cases.
+- [ ] S5 major specs/coverage-gate/spec.md:14 The AND line about a standard output with no blocking-mode function sits under a WHEN without `child-v8`, but the test checks it with `child-v8` set. Move the case to a separate scenario or to `coverage-gate-053`.
+- [ ] S6 major specs/coverage-gate/spec.md:4 "That file's tests, links or coverage then undercount for the run." "That file" has no referent; "can be lost silently" is passive.
+- [ ] S7 major proposal.md:11 "lost more than half the events" does not agree with design.md:7 (196 to 313 of 640). Write: "lost 196 to 313 of 640 events of a small test run each time".
+- [ ] S8 major design.md:9 "Node reads the per-process coverage records of one test file with `opendirSync`." Two meanings: the records merged belong to 42 test-file processes for one source file.
+- [ ] S9 major design.md:29 "See D3." Wrong reference; D4 gives that decision.
+- [ ] S10 major design.md:77 "`gap-ledger-056` gets a fourth AND line" The new line is the third AND line.
+- [ ] S11 major design.md:39 "so it changes no other platform's behavior" Two meanings, one false: the line changes Linux behavior, which is the purpose.
+- [ ] S12 major design.md:83 "a total drift whose covered count happens to move the same way" Two meanings; the tolerance applies only when the covered count does not change.
+- [ ] S13 major proposal.md:44 and design.md:33 heading "blocks ... standard output" can mean "stops the output". Write "sets the standard output ... to blocking mode".
+- [ ] S14 minor proposal.md:5 "Both are reproduced" Voice.
+- [ ] S15 minor design.md:5 "This was confirmed by reading" Voice and -ing.
+- [ ] S16 minor design.md:57, proposal.md:45 "was confirmed" Voice.
+- [ ] S17 minor proposal.md:11 "passing", "Forcing", "Removing" -ing words.
+- [ ] S18 minor proposal.md:15, design.md:9 "Merging" -ing word.
+- [ ] S19 minor design.md:37, 51, 69 "Leaving", "matching the existing rule", "missing" -ing words.
+- [ ] S20 minor "coverage-collecting", "covered-count-changing" -ing compounds. Write "a child process that collects coverage", "a drift that changes the covered count".
+- [ ] S21 minor proposal.md:19 "keeps its own standard output blocking" Write "in blocking mode".
+- [ ] S22 minor proposal.md:3 "This has cost" present perfect; proposal.md:9 "has sent" present perfect.
+- [ ] S23 minor design.md:39 "until the queued output is sent, which is milliseconds" Voice; unclear "which".
+- [ ] S24 minor design.md:43, 45 "sorted by", "kept in step with ... by hand", "turns out" Voice and phrasal verb.
+- [ ] S25 minor proposal.md:43, design.md:23, 47, 51, 83 "total flip", "totals-only drift", "totals difference", "total drift": four names for one thing. Use "total drift".
+- [ ] S26 minor design.md:65, 79, tasks.md "redden" not an approved STE verb. Write "fail".
+- [ ] S27 minor design.md:7 "repro" not approved. Write "reproduction".
+- [ ] S28 minor proposal.md:45, design.md:55 "flakiness" not approved.
+- [ ] S29 minor specs/gap-ledger/spec.md:35 subject and verb do not agree.
+- [ ] S30 minor tasks.md:3 task 1.1 does not name `gap-ledger-088`.
+- [ ] S31 minor proposal.md:37 "That is ..." introduces two items.
+- [ ] S32 minor design.md:83 "honest bound" not approved; a known limit records a risk, it does not limit it.
+- [ ] S33 minor src/tooling/spec/testGuard.test.mjs:527 and specs/coverage-gate/spec.md:11 "leaves ... alone" is an idiom. Write "does not change the standard output of another process".
+
+Notes: "blocking mode" is accepted as a technical name. The test names `[coverage-gate-053]` and `[gap-ledger-088]` have no findings.

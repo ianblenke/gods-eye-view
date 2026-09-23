@@ -315,6 +315,12 @@
   "coverage-gate-052": [
     "src/tooling/spec/traceReporter.test.mjs › [coverage-gate-052] registers its destination only with a real AbortSignal at options.signal, even when process.execArgv names the module's destination"
   ],
+  "coverage-gate-053": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-053] sets the standard output of a test-file child to blocking mode"
+  ],
+  "coverage-gate-054": [
+    "src/tooling/spec/testGuard.test.mjs › [coverage-gate-054] does not change the standard output of another process"
+  ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec"
@@ -484,6 +490,9 @@
   ],
   "gap-ledger-078": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+  ],
+  "gap-ledger-088": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-088] allows changed total counts of an unchanged file when the covered count agrees"
   ],
   "hud-markings-001": [
     "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"
