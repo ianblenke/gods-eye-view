@@ -42,11 +42,16 @@ is documented somewhere.
 
 - New files, each at full coverage: `server/providers/places/geocode.js`,
   `server/providers/places/coordinates.js`, and their test files.
-- Changed files, each at full coverage after the edit: `build/vite.js`,
-  `server/providers/places/google.js`, `server/providers/places.js`,
-  `src/data/placeProviderPayloads.js`, `src/search/google.js`,
-  `src/standalone/placeSearch.js`, `src/standalone/application.js`,
-  `src/voice/gevActions.js`.
+- Changed files: `build/vite.js`, `server/providers/places/google.js`,
+  `server/providers/places.js`, `src/data/placeProviderPayloads.js`,
+  `src/search/google.js`, `src/standalone/placeSearch.js`,
+  `src/standalone/application.js`, `src/voice/gevActions.js`. The tests
+  cover each branch that this change adds.
+- `src/search/google.js` and `src/voice/gevActions.js` are pre-spec files
+  with ledger entries. Their old not-covered branches stay. The tests of
+  this change run two functions of `gevActions.js` for the first time, and
+  one of their branches is a range with no code. The change writes a
+  waiver with the count 1 for it (D7).
 - Five test files gain a new tagged assertion this change adds:
   `viteBuild.test.mjs`, `googleServerKey.test.mjs`,
   `previewServing.test.mjs`, `src/search/placeSearch.test.mjs` and
