@@ -3246,6 +3246,10 @@ test('[credential-boundary-014] a configured answer gives the established place 
           { long_name: 'Texas', types: ['administrative_area_level_1'] },
           { long_name: 'United States', types: ['country'] },
         ],
+      }, {
+        // A control character that is not whitespace becomes a space, as before this change.
+        formatted_address: 'Downtown\u0007Austin',
+        address_components: [{ long_name: 'Congress\u007fAvenue', types: ['route'] }],
       }],
     }),
   }));
@@ -3257,8 +3261,8 @@ test('[credential-boundary-014] a configured answer gives the established place 
     region: 'Texas',
     country: 'United States',
     types: ['locality', 'political'],
-    labels: ['Austin, TX, USA'],
-    streetLabels: [],
+    labels: ['Austin, TX, USA', 'Downtown Austin'],
+    streetLabels: ['Congress Avenue'],
   });
 });
 
