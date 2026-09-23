@@ -26,7 +26,7 @@ test('data providers have both hooks; credential editing stays development-only'
   }
 });
 
-test('[credential-boundary-007] real dev and built-preview servers serve provider JSON and terminate unknown APIs', async (t) => {
+test('real dev and built-preview servers serve provider JSON and terminate unknown APIs', async (t) => {
   const root = await mkdtemp(path.join(tmpdir(), 'gev-preview-'));
   t.after(() => rm(root, { recursive: true, force: true }));
   await writeFile(
@@ -100,7 +100,6 @@ test('[credential-boundary-007] real dev and built-preview servers serve provide
         ['/api/terrain/heights?points=invalid', 400],
         ['/api/overpass', 405],
         ['/api/cctv/sources', 200],
-        ['/api/google/geocode?address=austin', 200],
         ['/api/gbfs/', 400],
         ['/api/tomtom/status', 200],
         ['/api/radio/unknown', 404],
@@ -123,15 +122,6 @@ test('[credential-boundary-007] real dev and built-preview servers serve provide
         const body = await response.json();
         if (route === '/api/cctv/sources')
           assert.equal(body.sources[0].id, 'fixture');
-        if (route.startsWith('/api/google/geocode')) {
-          const where = `${isPreview ? 'preview' : 'dev'} ${route}`;
-          assert.deepEqual(
-            body,
-            { configured: false, error: null, status: null, results: [] },
-            where,
-          );
-          assert.equal(response.headers.get('cache-control'), 'no-store', where);
-        }
         if (
           route === '/api/does-not-exist' ||
           (isPreview && route.startsWith('/api/setup'))
@@ -162,4 +152,65 @@ test('[credential-boundary-007] real dev and built-preview servers serve provide
       await server.close();
     }
   }
+});
+
+test('[credential-boundary-007] the real dev and preview servers answer the geocode route with the keyless answer', async (t) => {
+  const root = await mkdtemp(path.join(tmpdir(), 'gev-preview-geocode-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  await writeFile(
+    path.join(root, 'index.html'),
+    '<!doctype html><title>Preview fixture</title><p>Built application</p>',
+  );
+  for (const name of ['GOOGLE_MAPS_API_KEY', 'GOOGLE_MAPS_SERVER_API_KEY']) {
+    const before = process.env[name];
+    process.env[name] = '';
+    t.after(() => {
+      if (before === undefined) delete process.env[name];
+      else process.env[name] = before;
+    });
+  }
+  const nativeFetch = globalThis.fetch;
+  const upstreamCalls = [];
+  t.mock.method(globalThis, 'fetch', async (raw, options) => {
+    const url = new URL(raw);
+    if (url.hostname === '127.0.0.1') return nativeFetch(raw, options);
+    upstreamCalls.push(url.origin);
+    return Response.json({});
+  });
+  const base = {
+    root,
+    configFile: false,
+    envFile: false,
+    publicDir: false,
+    logLevel: 'silent',
+  };
+  await build(base);
+  for (const isPreview of [false, true]) {
+    const where = isPreview ? 'preview' : 'dev';
+    const config = {
+      ...base,
+      plugins: [...localProviderPlugins(), apiNotFoundPlugin()],
+      server: { host: '127.0.0.1', port: 0, hmr: false },
+      preview: { host: '127.0.0.1', port: 0 },
+    };
+    const server = isPreview
+      ? await preview(config)
+      : await createServer(config);
+    if (!isPreview) await server.listen();
+    const origin = `http://127.0.0.1:${server.httpServer.address().port}`;
+    try {
+      const response = await fetch(`${origin}/api/google/geocode?address=austin`);
+      assert.equal(response.status, 200, where);
+      assert.match(response.headers.get('content-type'), /application\/json/, where);
+      assert.equal(response.headers.get('cache-control'), 'no-store', where);
+      assert.deepEqual(
+        await response.json(),
+        { configured: false, error: null, status: null, results: [] },
+        where,
+      );
+    } finally {
+      await server.close();
+    }
+  }
+  assert.deepEqual(upstreamCalls, [], 'a keyless server makes no upstream call');
 });

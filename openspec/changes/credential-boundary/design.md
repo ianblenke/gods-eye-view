@@ -148,8 +148,8 @@ lint: one `WHEN` line and one or more `THEN` lines for each scenario, and a
 the proposal, this file, the tasks, the delta spec and every tagged test
 name. Boundaries: the `place-providers` group in
 `scripts/package-boundaries.json` gets `geocode.js` and `coordinates.js`.
-Preview: the route table of `previewServing.test.mjs` gets the geocoding
-route.
+Preview: a new test of `previewServing.test.mjs` checks the geocoding route
+on the real dev and preview servers.
 
 ### D7 The ledger entry of `src/voice/gevActions.js`
 
