@@ -36,18 +36,22 @@ Origin: spec-first
 #### Scenario: Stop for a new code file below 100% `gap-ledger-003`
 - **WHEN** a code file has no ledger entry
 - **AND** the file has a line, a branch or a function that is not covered
+- **AND** the file does not have the conditions of `gap-ledger-086`
 - **THEN** the gate stops the build
 
 #### Scenario: Stop for more lines that are not covered `gap-ledger-004`
 - **WHEN** a code file has more not-covered lines than its ledger entry
-- **AND** the file does not have the tolerance conditions, or its count is above the entry count plus the tolerance
+- **AND** its count is above the entry count plus the tolerance plus the waived line count
+- **AND** the tolerance is 0 without the tolerance conditions, and the waived count is 0 without a waiver
 - **THEN** the gate stops the build
-- **AND** the gate shows the file, the count in the ledger and the current count
+- **AND** the gate shows the file, the count in the ledger, the waived count and the current count
 
 #### Scenario: Stop for more branches that are not covered in a changed file `gap-ledger-017`
 - **WHEN** the content hash of a code file is not equal to the hash in its ledger entry
-- **AND** the file has more not-covered branches or functions than its entry
+- **AND** the not-covered branch count or the not-covered function count is above the entry count plus the waived count of that metric
+- **AND** the waived count is 0 without a waiver for that metric with the content hash of the file
 - **THEN** the gate stops the build
+- **AND** the gate shows the file, the count in the ledger, the waived count and the current count
 
 #### Scenario: Do not stop for branches that a new test shows in an unchanged file `gap-ledger-018`
 - **WHEN** the content hash of a code file is equal to the hash in its ledger entry
@@ -127,19 +131,25 @@ Origin: spec-first
 #### Scenario: Stop for a ledger entry that the base does not have `gap-ledger-021`
 - **WHEN** the ledger has an entry for a file
 - **AND** the base ledger has no entry for that file
+- **AND** the entry is for untraced test names, or it is a coverage entry without the conditions of `gap-ledger-087`
 - **THEN** the gate stops the build
 
 #### Scenario: Stop for a ledger entry that is larger than the base `gap-ledger-022`
 - **WHEN** a ledger entry has more not-covered lines than the same entry in the base ledger
+- **AND** the rise is above the waived count of the checked change for the lines of the file
 - **THEN** the gate stops the build
+- **AND** the gate shows the file, the two counts and the waived count
 
 #### Scenario: Stop for more branches than the base in a changed file `gap-ledger-040`
 - **WHEN** the content of a file is not equal to its content in the base commit
 - **AND** its ledger entry has more not-covered branches or functions than the base entry
+- **AND** the rise of that metric is above the waived count of the checked change for that metric
 - **THEN** the gate stops the build
+- **AND** the gate shows the file, the two counts and the waived count
 
 #### Scenario: Stop for more branches than the base with fewer covered branches `gap-ledger-048`
-- **WHEN** a ledger entry has more not-covered branches or functions than the base entry
+- **WHEN** the content of a file is equal to its content in the base commit
+- **AND** its ledger entry has more not-covered branches or functions than the base entry
 - **AND** the covered count of that metric is smaller than in the base entry, or one of the two entries has no total count
 - **THEN** the gate stops the build
 
@@ -212,7 +222,8 @@ Origin: spec-first
 
 #### Scenario: Stop the ratchet command when a gap is larger `gap-ledger-013`
 - **WHEN** you run the ratchet command and a current gap is larger than its entry
-- **AND** the file does not have the tolerance conditions, or a count of the file is outside the tolerance
+- **AND** a count of the file is above the entry count plus the tolerance plus the waived count of that metric
+- **AND** the tolerance is 0 without the tolerance conditions, and the waived count is 0 without a waiver
 - **THEN** the command stops and does not change the ledger
 
 #### Scenario: Stop the ratchet command without a change name `gap-ledger-014`
@@ -296,4 +307,74 @@ Origin: spec-first
 #### Scenario: Stop for a ledger file with another version `gap-ledger-076`
 - **WHEN** `openspec/trace/gaps.json` does not have the version 4
 - **THEN** the gate stops the build
+
+### Requirement: Coverage waiver
+A waiver MUST record a not-covered count that a person allows for one metric of one changed code file. The waiver names the content hash of the file, the lines, the change name and a reason. The gates and the ratchet command MUST allow that metric to be above the entry count by at most the waived count. This applies to a file with the content hash of the waiver. The gates MUST give no waived count to a file with other content, to a file with the base content, or to another change.
+Origin: spec-first
+
+#### Scenario: Record a waiver `gap-ledger-079`
+- **WHEN** you run the ledger command `waive` with a change name, a file, a metric, one or more lines, a count and a reason
+- **AND** the change is active, and the file is a tracked code file with other content than the base commit
+- **AND** each line and the count are positive whole numbers, and the reason is not empty
+- **THEN** the command adds one line to `openspec/trace/history.jsonl` with the kind `waiver`
+- **AND** the line has the date, the change name, the commit, the file, the metric and the content hash of the file
+- **AND** the line has the lines, the count and the reason
+- **AND** the command runs no test and does not change `openspec/trace/gaps.json`
+
+#### Scenario: Stop the waive command for a fault in its options `gap-ledger-080`
+- **WHEN** you run the ledger command `waive` with a fault in its options
+- **AND** a fault is a change that is not active, a file that Git does not track, or a file with the base content
+- **AND** a fault is also an unknown metric, a line or a count that is not a positive whole number, or an empty reason
+- **THEN** the command stops and shows the fault
+- **AND** the command does not change `openspec/trace/history.jsonl`
+
+#### Scenario: Allow the waived count for a changed file with the content hash of the waiver `gap-ledger-081`
+- **WHEN** the content hash of a code file is not equal to the hash in its ledger entry
+- **AND** one or more waivers for the file have the content hash of the file
+- **AND** the not-covered count of the metric of those waivers is not above the entry count plus the sum of their counts
+- **THEN** the gate does not stop the build for that metric
+- **AND** the gate records the entry as not current, so the ratchet command writes the current count
+
+#### Scenario: Give no waived count for other content `gap-ledger-082`
+- **WHEN** a waiver for a code file does not have the content hash of the file, or the file has the hash of its entry
+- **THEN** the gate compares the counts of the file with the counts of its entry, and the waived count is 0
+- **AND** a file that no test loads also gets a waived count of 0
+
+#### Scenario: Allow a rise above the base by the waived count of the checked change `gap-ledger-083`
+- **WHEN** the content of a file is not equal to its content in the base commit
+- **AND** its ledger entry has a larger not-covered count of a metric than the base entry
+- **AND** the history after the base has one or more waiver lines from the checked change for the file and the metric
+- **AND** those lines have the content hash of the entry, and the rise is not above the sum of their counts
+- **THEN** the gate does not stop the build for that metric
+
+#### Scenario: Give no waived count in the base comparison for other waiver lines `gap-ledger-084`
+- **WHEN** a waiver line is in the base history, has another change name, or has another content hash than the ledger entry
+- **THEN** the waived count of the checked change for that file and that metric does not include the line
+- **AND** the waived count of a file with the base content is 0, also with a waiver line of the checked change for its hash
+- **AND** the waived count of a file that no test loads is 0
+- **AND** a waiver line with a count that is not a positive whole number gives no waived count
+
+#### Scenario: Record a waived rise `gap-ledger-085`
+- **WHEN** you run the ratchet command for a changed file with a not-covered count above its entry
+- **AND** a waiver with the content hash of the file allows the rise
+- **THEN** the command writes the larger count and the new content hash
+- **AND** the history line for that metric has the reason `waived`
+
+#### Scenario: Allow the waived count for a file with no entry `gap-ledger-086`
+- **WHEN** a loaded code file with a not-covered count has no entry in the ledger
+- **AND** the content of the file is not equal to its content in the base commit
+- **AND** one or more waivers for the file have the content hash of the file
+- **AND** the not-covered count of each metric of the file is not above the sum of the counts of its waivers for that metric
+- **THEN** the gate does not stop the build for that count
+- **AND** the gate records the file as not current, so the build stops until the ratchet command runs
+- **AND** the ratchet command adds an entry for the file with its measured counts and the content hash
+- **AND** the ratchet command adds one history line for each not-covered metric, with the reason `waived`
+
+#### Scenario: Allow the waived count for a ledger entry that the base does not have `gap-ledger-087`
+- **WHEN** the ledger has an entry for a loaded file
+- **AND** the base ledger has no entry for that file
+- **AND** the content of the file is not equal to its content in the base commit
+- **AND** one or more waivers of the checked change for the file have the content hash of the entry
+- **AND** the not-covered count of each metric of the entry is not above the sum of the counts of its waivers for that metric
+- **THEN** the gate does not stop the build for that file
 

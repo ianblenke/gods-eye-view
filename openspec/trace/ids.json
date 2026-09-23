@@ -485,7 +485,7 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-003": {
-    "hash": "483fe3505a9500cccd6748ff6fb2db002c96f61db81f60d22b68d6500a9b6851",
+    "hash": "7a0b654aaf138a75c9835571faf7099a5d71bff1ccf6d6c99e01cd9a7aa54b24",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -575,7 +575,7 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-021": {
-    "hash": "a2d64656ade81e2a53db44fadb532e80c687a536c815bba283cac657c3018c70",
+    "hash": "30825d33f0d673d252383dcd723cd30dc81dd27ad85da607a987a2cfe4a5c36d",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -655,7 +655,7 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-048": {
-    "hash": "d012d8e04953538f8870ce1792152196aa4904ddd1f8e3b0c03acdbb39931356",
+    "hash": "d1f0b9b5d08d28676a4e1cb85f3a01d85f6087f4bfadfc0692959bcb76c1d9c0",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -750,7 +750,7 @@
     "change": "ledger-waiver"
   },
   "gap-ledger-082": {
-    "hash": "113cfdabf8449c0346b303023e36387f7b5d52fc39f99524e827cb53b3350495",
+    "hash": "69376b7f53ca0961ac5b0864e28003a5862b31c16f7f97be3c00542665ade51e",
     "since": "2026-09-22",
     "change": "ledger-waiver"
   },
@@ -760,7 +760,7 @@
     "change": "ledger-waiver"
   },
   "gap-ledger-084": {
-    "hash": "1e6758ef78a46c0d379f85592050af2b3d48766ea58bd663b4bebd4938918f41",
+    "hash": "f9791051b0652c8db3970e211ed9490495ae9f4c7cf2f2604e936a4c44fbca78",
     "since": "2026-09-22",
     "change": "ledger-waiver"
   },
@@ -770,12 +770,12 @@
     "change": "ledger-waiver"
   },
   "gap-ledger-086": {
-    "hash": "67dfbd233da3dd803dfea6f145f6fe8e198b1cc2023b505e675f31d5783c828a",
+    "hash": "5ee070587b931726239726ba3a376a68a1eb3a5143dd38fa75664b9e357367df",
     "since": "2026-09-22",
     "change": "ledger-waiver"
   },
   "gap-ledger-087": {
-    "hash": "3ca5d157f49f3f68a6565e722dfaf05a4fa5114908f367de424b563f5e0f8f82",
+    "hash": "e6610b4905b1e96dd16757520b76681eab67308f68997d062da64d6ac492081b",
     "since": "2026-09-22",
     "change": "ledger-waiver"
   },

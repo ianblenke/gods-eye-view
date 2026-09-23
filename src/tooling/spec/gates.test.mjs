@@ -816,6 +816,8 @@ test('[gap-ledger-079] records a coverage waiver, allows the rise in the ratchet
       'src/math.js': 'export function add(a, b) {\n  if (a < 0) return 0;\n  if (b < 0) return 0;\n  return a + b;\n}\n',
       'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers'),
     });
+    // A commit on the work branch makes the head commit differ from the base commit.
+    commitAll(root, 'work on add-demo');
 
     // Running ratchet command without waiver stops with LEDGER-LARGER-GAP.
     const withoutWaiver = run(root, ['ratchet', '--change', 'add-demo']);
@@ -824,6 +826,8 @@ test('[gap-ledger-079] records a coverage waiver, allows the rise in the ratchet
 
     // Run waive command. It runs no test and does not change the ledger file.
     const ledgerBefore = readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8');
+    const historyFile = path.join(root, 'openspec/trace/history.jsonl');
+    const historyBefore = existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : '';
     const waiveResult = passes(root, ['waive', '--change', 'add-demo', '--file', 'src/math.js', '--metric', 'branches', '--lines', '3', '--count', '1', '--reason', 'phantom branch']);
     assert.match(waiveResult.output, /Gates passed\./);
     assert.doesNotMatch(waiveResult.output, /Trace:/, 'the waive command runs no test');
@@ -831,19 +835,28 @@ test('[gap-ledger-079] records a coverage waiver, allows the rise in the ratchet
 
     // Read history line and assert all required fields.
     const historyText = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8');
-    const historyLines = historyText.trim().split('\n').map(JSON.parse);
-    const waiver = historyLines.find((line) => line.kind === 'waiver');
-    assert.ok(waiver, 'history has waiver line');
+    assert.ok(historyText.startsWith(historyBefore), 'the waive command only appends');
+    const added = historyText.slice(historyBefore.length).trim().split('\n').map(JSON.parse);
+    assert.equal(added.length, 1, 'the waive command adds exactly one line');
+    const [waiver] = added;
+    assert.equal(waiver.kind, 'waiver');
     assert.equal(waiver.date, '2026-09-13');
     assert.equal(waiver.change, 'add-demo');
     assert.equal(waiver.kind, 'waiver');
     assert.equal(waiver.file, 'src/math.js');
     assert.equal(waiver.metric, 'branches');
-    assert.match(waiver.commit, /^[0-9a-f]{40}$/);
+    assert.equal(waiver.commit, git(root, 'rev-parse', 'HEAD'));
+    assert.notEqual(waiver.commit, git(root, 'merge-base', 'HEAD', 'main'));
     assert.match(waiver.sha, /^[0-9a-f]{64}$/);
     assert.deepEqual(waiver.lines, [3]);
     assert.equal(waiver.count, 1);
     assert.equal(waiver.reason, 'phantom branch');
+
+    // Before the ratchet, the check reads the waiver: the rise is allowed, and the entry is only not current.
+    reviewFor(root, 'add-demo');
+    const beforeRatchet = run(root, ['check', '--change', 'add-demo']);
+    assert.doesNotMatch(beforeRatchet.output, /LEDGER-LARGER-GAP/);
+    assert.match(beforeRatchet.output, /LEDGER-STALE/);
 
     // Ratchet command with waiver passes.
     passes(root, ['ratchet', '--change', 'add-demo']);
