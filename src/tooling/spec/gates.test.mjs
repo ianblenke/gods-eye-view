@@ -809,7 +809,7 @@ function withWaiverFixture(body) {
   );
 }
 
-test('[gap-ledger-079] records a coverage waiver, allows the rise in ratchet and passes the check', GUARDED_RUN, () => {
+test('[gap-ledger-079] records a coverage waiver, allows the rise in the ratchet command and passes the check', GUARDED_RUN, () => {
   withWaiverFixture((root) => {
     write(root, {
       ...CHANGE,
@@ -822,9 +822,12 @@ test('[gap-ledger-079] records a coverage waiver, allows the rise in ratchet and
     assert.equal(withoutWaiver.status, 1);
     assert.match(withoutWaiver.output, /LEDGER-LARGER-GAP src\/math\.js has 2 branches not covered\. The ledger allows 1\./);
 
-    // Run waive command.
+    // Run waive command. It runs no test and does not change the ledger file.
+    const ledgerBefore = readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8');
     const waiveResult = passes(root, ['waive', '--change', 'add-demo', '--file', 'src/math.js', '--metric', 'branches', '--lines', '3', '--count', '1', '--reason', 'phantom branch']);
     assert.match(waiveResult.output, /Gates passed\./);
+    assert.doesNotMatch(waiveResult.output, /Trace:/, 'the waive command runs no test');
+    assert.equal(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8'), ledgerBefore, 'the waive command does not change openspec/trace/gaps.json');
 
     // Read history line and assert all required fields.
     const historyText = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8');

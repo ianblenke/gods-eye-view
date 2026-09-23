@@ -1066,6 +1066,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "scripts/spec/gates.mjs": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 529,
+        "branches": 179,
+        "functions": 57
+      },
+      "sha": "e139d8ecea7cef40e6e19dfbe862465d15a4cc93a86d51722b7ce8a77d85bf32",
+      "untrue": false,
+      "origin": "ledger-waiver",
+      "since": "2026-09-22"
+    },
     "scripts/track-regression.mjs": {
       "loaded": false,
       "lines": 4084,
@@ -2644,11 +2659,11 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 18,
-      "branches": 52,
+      "branches": 50,
       "functions": 0,
       "totals": {
         "lines": 1125,
-        "branches": 407,
+        "branches": 405,
         "functions": 58
       },
       "sha": "86cc0fab84963a9f0ab168cf0d9f3e44ac00401d2650f91f883cec1f97ce5275",

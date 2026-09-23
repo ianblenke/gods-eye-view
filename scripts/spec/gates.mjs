@@ -366,26 +366,18 @@ export function runGates({
     const validCount = Number.isInteger(parsedCount) && parsedCount > 0;
     const validReason = Boolean(reason) && reason.trim().length > 0;
 
-    if (!active) {
-      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `Change "${change}" has no folder with a proposal.md file in openspec/changes` }]);
-    }
-    if (!isTracked) {
-      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `Git does not track ${file}` }]);
-    }
-    if (sameAsBaseFile) {
-      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `${file} has the base content. A waiver needs a changed file.` }]);
-    }
-    if (!validMetric) {
-      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `Unknown metric "${metric}". The metrics are lines, branches, functions.` }]);
-    }
-    if (!validLines) {
-      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `Line "${lines}" is not a positive whole number` }]);
-    }
-    if (!validCount) {
-      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: `Count "${count}" is not a positive whole number` }]);
-    }
-    if (!validReason) {
-      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: 'Reason is empty' }]);
+    const faults = [
+      [!active, `Change "${change}" has no folder with a proposal.md file in openspec/changes`],
+      [!isTracked, `Git does not track ${file}`],
+      [sameAsBaseFile, `${file} has the base content. A waiver needs a changed file.`],
+      [!validMetric, `Unknown metric "${metric}". The metrics are lines, branches, functions.`],
+      [!validLines, `Line "${lines}" is not a positive whole number`],
+      [!validCount, `Count "${count}" is not a positive whole number`],
+      [!validReason, 'Reason is empty'],
+    ];
+    const fault = faults.find(([bad]) => bad);
+    if (fault) {
+      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: fault[1] }]);
     }
 
     const sha = contentHash(readFileSync(path.join(root, file), 'utf8'));

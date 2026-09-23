@@ -246,7 +246,7 @@ Origin: spec-first
 
 #### Scenario: Give no waived count for other content `gap-ledger-082`
 - **WHEN** a waiver for a code file does not have the content hash of the file, or the file has the hash of its entry
-- **THEN** the gate compares the counts of the file with its entry with a waived count of 0
+- **THEN** the gate compares the counts of the file with the counts of its entry, using a waived count of 0
 
 #### Scenario: Allow a rise above the base by the waived count of the checked change `gap-ledger-083`
 - **WHEN** the content of a file is not equal to its content in the base commit
@@ -265,3 +265,17 @@ Origin: spec-first
 - **AND** a waiver with the content hash of the file allows the rise
 - **THEN** the command writes the larger count and the new content hash
 - **AND** the history line for that metric has the reason `waived`
+
+#### Scenario: Allow the waived count for a file with no entry `gap-ledger-086`
+- **WHEN** a loaded code file with a not-covered count has no entry in the ledger
+- **AND** one or more waivers for the file have the content hash of the file
+- **AND** the not-covered count of each metric of the file is not above the sum of the counts of its waivers for that metric
+- **THEN** the gate does not stop the build for that file
+- **AND** the ratchet command adds an entry for the file with its measured counts and the content hash
+- **AND** the ratchet command adds one history line for each not-covered metric, with the reason `waived`
+
+#### Scenario: Allow a ledger entry the base does not have, by the waived count `gap-ledger-087`
+- **WHEN** the ledger has an entry for a loaded file that the base ledger does not have
+- **AND** one or more waivers of the checked change for the file have the content hash of the entry
+- **AND** the not-covered count of each metric of the entry is not above the sum of the counts of its waivers for that metric
+- **THEN** the comparison with the base commit does not stop the build for that file

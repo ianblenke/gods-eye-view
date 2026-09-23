@@ -281,7 +281,14 @@ export function compareLedger({ ledger, current, sameAsBase = () => false, waive
   for (const [file, gap] of current.coverage) {
     const entry = ledger.coverage[file];
     if (!entry) {
-      errors.push({ code: 'LEDGER-NEW-COVERAGE-GAP', file, message: describeGap(file, gap) });
+      const waivedNew = (metric) =>
+        waivers
+          .filter((item) => item.file === file && item.metric === metric && item.sha === gap.sha)
+          .reduce((sum, item) => sum + item.count, 0);
+      const fullyWaived = gap.loaded && METRICS.every((metric) => gap[metric] <= waivedNew(metric));
+      if (!fullyWaived) {
+        errors.push({ code: 'LEDGER-NEW-COVERAGE-GAP', file, message: describeGap(file, gap) });
+      }
       if (gap.untrue) {
         errors.push({ code: 'COVERAGE-FAKE', file, message: `A test ran code under the name ${file}, but the code is not the file content` });
       }
@@ -365,7 +372,14 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
   for (const [file, entry] of Object.entries(ledger.coverage)) {
     const base = baseLedger.coverage[file];
     if (!base) {
-      error('LEDGER-NOT-IN-BASE', file, `The ledger entry for ${file} is not in the base ledger`);
+      const newWaived = (metric) =>
+        waivers
+          .filter((w) => w.file === file && w.metric === metric && w.sha === entry.sha)
+          .reduce((sum, w) => sum + w.count, 0);
+      const fullyWaived = entry.loaded && METRICS.every((metric) => entry[metric] <= newWaived(metric));
+      if (!fullyWaived) {
+        error('LEDGER-NOT-IN-BASE', file, `The ledger entry for ${file} is not in the base ledger`);
+      }
       continue;
     }
     const unchanged = sameAsBase(file);
@@ -481,6 +495,13 @@ export function ratchetLedger({ ledger, current, inventory, testFiles, change, c
     if (gap.sha !== entry.sha) record('coverage', file, 'hash', entry.sha, gap.sha, 'content changed');
     if (JSON.stringify(entry.totals ?? null) !== JSON.stringify(next.totals)) record('coverage', file, 'totals', entry.totals ?? null, next.totals, 'totals changed');
     coverage[file] = next;
+  }
+  for (const [file, gap] of current.coverage) {
+    if (file in ledger.coverage || !codeFiles.has(file) || !gap.loaded) continue;
+    for (const metric of METRICS) {
+      if (gap[metric] > 0) record('coverage', file, metric, 0, gap[metric], 'waived');
+    }
+    coverage[file] = { ...gap, origin: change, since: date };
   }
 
   const untracedTests = {};
