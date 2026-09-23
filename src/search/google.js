@@ -44,8 +44,9 @@ export function createGoogleGeocoder({ request }) {
         if (response.ok === false) return { place: null, answered: false };
         const data = await response.json();
         signal?.throwIfAborted();
-        // The server holds the key; a keyless server answers this shape
-        // instead of a Google result, and did not contribute a verdict.
+        // The server holds the key; a keyless server answers configured:false.
+        // It gives {place:null, answered:true}, the same shape as a
+        // ZERO_RESULTS miss, so the Photon fallback still runs.
         if (data?.configured === false) return { place: null, answered: true };
         if (
           data?.status === 'ZERO_RESULTS' &&

@@ -6,6 +6,11 @@ import { apiNotFoundPlugin } from './api-not-found.js';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 
+/** The production browser plugins: local providers, then the API 404. */
+export function standalonePlugins() {
+  return [...localProviderPlugins(), apiNotFoundPlugin()];
+}
+
 /** Load this checkout's configuration and attach its local provider middleware. */
 export default defineConfig(({ mode }) => {
   const loaded = loadEnv(mode, root, '');
@@ -13,7 +18,7 @@ export default defineConfig(({ mode }) => {
     if (process.env[key] === undefined) process.env[key] = value;
   }
   return createBrowserViteConfig({
-    plugins: [...localProviderPlugins(), apiNotFoundPlugin()],
+    plugins: standalonePlugins(),
     googleApiKey: process.env.GOOGLE_MAPS_API_KEY,
     cesiumToken: process.env.CESIUM_ION_TOKEN,
     host: process.env.HOST,

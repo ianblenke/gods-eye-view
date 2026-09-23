@@ -7,11 +7,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 39,
+        "lines": 35,
         "branches": 7,
         "functions": 1
       },
-      "sha": "62f04730850a36be6073f6cf7d7918d404aaf8a6d932440d3aecd213c064a378",
+      "sha": "45ee69d1343ba07fc4ac2406ecec75e00e30c8e8bfd37f670812273e70a54ade",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1268,7 +1268,7 @@
       "functions": 2,
       "totals": {
         "lines": 118,
-        "branches": 36,
+        "branches": 35,
         "functions": 9
       },
       "sha": "568c15600c1c2903e447862ee7da80556cb66c2cec32dd234116807b03618eb5",
@@ -1522,11 +1522,11 @@
       "branches": 10,
       "functions": 2,
       "totals": {
-        "lines": 270,
-        "branches": 47,
-        "functions": 9
+        "lines": 282,
+        "branches": 62,
+        "functions": 10
       },
-      "sha": "27ff17c0b8194e176053ba6d289e09acffc2d817978d76d75557191185841b2a",
+      "sha": "52f6c33f4947fbadcc0dbaf925a967c4531971970ff7f0defa10cc4ba39c556f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2887,11 +2887,11 @@
       "branches": 5,
       "functions": 0,
       "totals": {
-        "lines": 166,
-        "branches": 90,
-        "functions": 15
+        "lines": 135,
+        "branches": 67,
+        "functions": 12
       },
-      "sha": "6ea8e9c8c1d6c349ef3c4f2e1f6f0f155ff3a3d2d7cfb1fa0a27975327a6b824",
+      "sha": "13df9e89c18bf7c5fd0e4f5a19eade1546580d7d9db7081807ef57ffb0aceb73",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3293,7 +3293,7 @@
       "functions": 1,
       "totals": {
         "lines": 405,
-        "branches": 121,
+        "branches": 118,
         "functions": 16
       },
       "sha": "142e1a3081f94f4babe95cd54accbe31ebbd7541d6302f58e64b5ef27943eb59",
@@ -5707,11 +5707,11 @@
       "branches": 4,
       "functions": 0,
       "totals": {
-        "lines": 67,
-        "branches": 30,
+        "lines": 66,
+        "branches": 29,
         "functions": 6
       },
-      "sha": "d6afa97c981a22c398ca330584d435d1849e20a2cf4afa5be67702dd7517765e",
+      "sha": "d407e00b7fa8cebb66b02bd97ac8ddb9e3e6fc51d1e00271adee98d9f7b5812d",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5723,7 +5723,7 @@
       "functions": 1,
       "totals": {
         "lines": 65,
-        "branches": 24,
+        "branches": 23,
         "functions": 3
       },
       "sha": "a817bf9f3a850c4bf09a4707c3976b46feb9e4708bc29416ddf8e928d0a40511",
@@ -5808,15 +5808,15 @@
     },
     "src/standalone/application.js": {
       "loaded": false,
-      "lines": 42,
+      "lines": 43,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 42,
+        "lines": 43,
         "branches": null,
         "functions": null
       },
-      "sha": "545aacedaf6438675a0dc9bfde7ebcebe6e3bb28d3bea5ecb2c38ac62d494c78",
+      "sha": "9c047e28b2a8143266039eaf1f0253b34895d80503281235b11d4d6bbc9b594b",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5862,6 +5862,21 @@
         "functions": null
       },
       "sha": "661b15de03e9a65953c8681ad0a3a6f5b7670c755de6e565da7af1979bdc9ece",
+      "untrue": false,
+      "origin": "pre-spec",
+      "since": "2026-09-15"
+    },
+    "src/standalone/placeSearch.js": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 32,
+        "branches": 9,
+        "functions": 3
+      },
+      "sha": "bd782364ab4b740a094208f7be342da8ffa3609e6e30f80dd06f6dee20b5e0ed",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6723,15 +6738,15 @@
     },
     "src/voice/gevActions.js": {
       "loaded": true,
-      "lines": 1230,
-      "branches": 222,
-      "functions": 61,
+      "lines": 1304,
+      "branches": 221,
+      "functions": 65,
       "totals": {
-        "lines": 3464,
-        "branches": 845,
-        "functions": 168
+        "lines": 3445,
+        "branches": 798,
+        "functions": 157
       },
-      "sha": "e1cb952c7b63f3e14d9208299e045bad1ef64f54753348bdaa05737d5158e300",
+      "sha": "709d9841dcb3581fef061fd8b71a12bb48e1abf80817f5dbe6d8aa2f97fae014",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9777,6 +9792,7 @@
     "src/googleServerKey.test.mjs": {
       "names": {
         "both Places routes select the intended key and keep it out of responses": 1,
+        "browser defines contain the browser key and exclude the server key": 1,
         "keyless stays keyless": 1,
         "server-side Google calls prefer the server-only key": 1,
         "the Street View tool resolves per-variable overrides before preferring the server key": 1,
@@ -10726,6 +10742,7 @@
     "src/search/placeSearch.test.mjs": {
       "names": {
         "a Google request cancelled by its caller never starts the fallback": 1,
+        "a keyless service does not issue any Google request": 1,
         "cancellation before lookup makes no request": 1,
         "cancellation stops Photon retries and does not cache a late response": 1,
         "definitive misses expire while outage outcomes are never cached": 1,
@@ -10938,7 +10955,8 @@
     },
     "src/tooling/previewServing.test.mjs": {
       "names": {
-        "data providers have both hooks; credential editing stays development-only": 1
+        "data providers have both hooks; credential editing stays development-only": 1,
+        "real dev and built-preview servers serve provider JSON and terminate unknown APIs": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10957,6 +10975,8 @@
     "src/tooling/viteBuild.test.mjs": {
       "names": {
         "build export resolves in Node and has no browser fallback": 1,
+        "build helper does not discover environment values or construct local providers": 1,
+        "explicit build inputs preserve browser-only defines, plugin order and loopback protections": 1,
         "root config retains existing named exports and standalone provider order": 1
       },
       "origin": "pre-spec",

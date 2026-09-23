@@ -2943,7 +2943,8 @@ async function reverseGeocode(latitude, longitude) {
         return null;
       }
       if (data.status !== 'OK' || !data.results?.length) {
-        reverseGeocodeCache.set(key, null);
+        // Do not remember an error answer (HTTP error or no Google status); a later call fetches again.
+        if (response.ok !== false && data.status != null) reverseGeocodeCache.set(key, null);
         return null;
       }
 

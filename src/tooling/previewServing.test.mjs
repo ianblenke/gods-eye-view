@@ -26,7 +26,7 @@ test('data providers have both hooks; credential editing stays development-only'
   }
 });
 
-test('[credential-boundary-007] real dev and built-preview servers serve provider JSON and stop unknown APIs', async (t) => {
+test('[credential-boundary-007] real dev and built-preview servers serve provider JSON and terminate unknown APIs', async (t) => {
   const root = await mkdtemp(path.join(tmpdir(), 'gev-preview-'));
   t.after(() => rm(root, { recursive: true, force: true }));
   await writeFile(
@@ -123,6 +123,15 @@ test('[credential-boundary-007] real dev and built-preview servers serve provide
         const body = await response.json();
         if (route === '/api/cctv/sources')
           assert.equal(body.sources[0].id, 'fixture');
+        if (route.startsWith('/api/google/geocode')) {
+          const where = `${isPreview ? 'preview' : 'dev'} ${route}`;
+          assert.deepEqual(
+            body,
+            { configured: false, error: null, status: null, results: [] },
+            where,
+          );
+          assert.equal(response.headers.get('cache-control'), 'no-store', where);
+        }
         if (
           route === '/api/does-not-exist' ||
           (isPreview && route.startsWith('/api/setup'))

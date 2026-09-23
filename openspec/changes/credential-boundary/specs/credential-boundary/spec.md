@@ -1,81 +1,89 @@
 ## ADDED Requirements
 
 ### Requirement: Browser bundle inputs
-The browser build MUST expose only three inputs to the browser: the Google Maps browser key, the Cesium ion token and the AIS live knobs. Each comes from an explicit input.
+The browser build MUST expose to the browser only the two public credentials and the AIS live settings. The two public credentials are the Google Maps browser key and the Cesium ion token, from the parameters of `createBrowserViteConfig()`. The AIS live settings come from environment names that start with `VITE_AIS_LIVE_`.
 Origin: spec-first
 
 #### Scenario: Build a fixture and find only the allowed sentinels `credential-boundary-001`
-- **WHEN** the test builds a fixture page through the real browser config, with a sentinel value set for every credential name
+- **WHEN** the test builds a fixture page through the real browser config, with a sentinel value for every credential name
 - **THEN** the built output holds the browser-key sentinel, the ion-token sentinel and the `VITE_AIS_LIVE_MAX_ROWS` sentinel, and no other
 
 #### Scenario: Keep an unprefixed `VITE_` value out of the bundle `credential-boundary-002`
-- **WHEN** a `VITE_GEV_PROBE_SECRET` sentinel and a `VITE_AIS_LIVE_MAX_ROWS` sentinel are both set on the environment before the build
+- **WHEN** the test puts a `VITE_GEV_PROBE_SECRET` sentinel and a `VITE_AIS_LIVE_MAX_ROWS` sentinel on the environment before the build
 - **THEN** the built output has no `VITE_GEV_PROBE_SECRET` sentinel
 - **AND** the built output has the `VITE_AIS_LIVE_MAX_ROWS` sentinel
 
-#### Scenario: Keep the define list at the two names `credential-boundary-003`
-- **WHEN** the test reads `Object.keys()` of the browser config's `define`
+#### Scenario: Keep the `define` list at the two names `credential-boundary-003`
+- **WHEN** the test reads `Object.keys()` of the `define` of the browser config
 - **THEN** it deep-equals the two `import.meta.env.` names, in order
-- **AND** with no inputs given, both names define to `undefined`
+- **AND** with no parameters, both `define` values are `undefined`
 
 #### Scenario: Keep key-shaped literals out of browser source `credential-boundary-004`
 - **WHEN** the test reads `index.html`, every file under `build/`, and every non-test file under `src/`, as text
 - **THEN** none of them match a Google key pattern, an OpenAI key pattern or a JWT pattern
 - **AND** each pattern matches a synthetic sample built from itself
 
-#### Scenario: Keep the server key out of the bundle and out of the global `credential-boundary-016`
-- **WHEN** `GOOGLE_MAPS_SERVER_API_KEY` carries a sentinel on the environment and the browser sentinel is given as the build's `googleApiKey`
+#### Scenario: Keep the server key out of the bundle and out of `main.js` `credential-boundary-016`
+- **WHEN** the environment has a sentinel for `GOOGLE_MAPS_SERVER_API_KEY`, and the test gives the browser sentinel as the `googleApiKey` of the build
 - **THEN** the built output holds no sentinel for `GOOGLE_MAPS_SERVER_API_KEY`, and a failed assertion names it
-- **AND** `src/main.js`, read as text, passes only `import.meta.env.GOOGLE_MAPS_API_KEY` as `googleApiKey`, and has no text `SERVER_API_KEY`
+- **AND** `src/main.js`, read as text, gives only `import.meta.env.GOOGLE_MAPS_API_KEY` as `googleApiKey`, and has no text `SERVER_API_KEY`
 
 ### Requirement: Credential registry
-The key registry MUST mark as client-exposed exactly the names the browser build defines. Every credential name the server reads MUST appear in the registry or in `.env.example`.
+The key registry MUST mark as client-exposed exactly the names in the `define` of the browser build. Every credential name that the server reads MUST appear in the registry or in `.env.example`.
 Origin: spec-first
 
-#### Scenario: The registry and the define list agree `credential-boundary-005`
-- **WHEN** the test reads every registry entry marked client-exposed, and every name in the browser build's `define`
+#### Scenario: The registry and the `define` list agree `credential-boundary-005`
+- **WHEN** the test reads every registry entry marked client-exposed, and every name in the `define` of the browser build
 - **THEN** the two name sets are equal
 
-#### Scenario: Every server credential read is documented `credential-boundary-006`
-- **WHEN** the test reads `process.env.NAME` and `env.NAME` under `server/`, `scripts/` and `tools/`, for a name ending in `_KEY`, `_TOKEN`, `_SECRET` or `_PASSWORD`
+#### Scenario: Document each credential name that the server reads `credential-boundary-006`
+- **WHEN** the test reads the files under `server/`, `scripts/` and `tools/`
+- **AND** it finds each name in `process.env.NAME`, `env.NAME`, a bracket read, a destructured `process.env` or `env`, or a quoted string
+- **AND** the name ends in `_KEY`, `_TOKEN`, `_SECRET` or `_PASSWORD`
 - **THEN** every name found is in the registry, in `.env.example`, or in both
 - **AND** the list of names found nowhere is empty
+- **AND** the names found include `OPENAI_API_KEY` and `GOOGLE_MAPS_SERVER_API_KEY`
 
 ### Requirement: Google geocoding proxy
-The server MUST answer geocoding requests on `/api/google/geocode`, with the server-side Google key. It MUST keep that key out of every response. It MUST send no upstream request when no key is set.
+The server MUST answer geocoding requests on `/api/google/geocode`, with the server-side Google key. It MUST keep that key out of every response. It MUST send no upstream request when it has no Google key.
 Origin: spec-first
 
 #### Scenario: Answer a keyless request with no upstream call `credential-boundary-007`
-- **WHEN** a client sends `GET /api/google/geocode` and no Google key is configured, on the route directly and on the real dev and preview servers
+- **WHEN** a client sends `GET /api/google/geocode` and the server has no Google key, on the route directly and on the real dev and preview servers
 - **THEN** the response is `200` with `{configured:false, error:null, status:null, results:[]}`, and carries `Cache-Control: no-store`
 - **AND** the route makes zero upstream calls
 
-#### Scenario: Forward an address lookup with the resolved key `credential-boundary-008`
-- **WHEN** a client sends `GET /api/google/geocode?address=...` with an optional `bounds`, under each row of the server-key/browser-key selection table
-- **THEN** the upstream query carries the given `address` and `bounds`, and the `key` the table names
+#### Scenario: Send a forward lookup to Google with the selected key `credential-boundary-008`
+- **WHEN** a client sends `GET /api/google/geocode?address=...` with an optional `bounds`, with a server key, a browser key, or both
+- **THEN** the upstream query carries the given `address` and `bounds`, and the server key when it is not blank, else the browser key
 - **AND** the response carries the projected result and no key, with `Cache-Control: no-store`
 
-#### Scenario: Reverse a coordinate lookup with the resolved key `credential-boundary-009`
+#### Scenario: Send a reverse lookup to Google with the selected key `credential-boundary-009`
 - **WHEN** a client sends `GET /api/google/geocode?lat=...&lon=...`
 - **THEN** the upstream query carries `latlng` built from `lat` and `lon`
 - **AND** the response carries the projected result
 
-#### Scenario: Refuse malformed input before any upstream call `credential-boundary-010`
-- **WHEN** a request names neither mode, both modes, a malformed `bounds`, an out-of-range coordinate, an address past 256 characters, or a non-GET method
-- **THEN** a bad-input request answers `400` and a wrong-method request answers `405`, both with zero upstream calls
+#### Scenario: Refuse a bad request before any upstream call `credential-boundary-010`
+- **WHEN** the server has a Google key, and a request has a fault
+- **AND** a fault is neither mode, both modes, a bad `bounds` or an out-of-range coordinate
+- **AND** a fault is also a blank address, or an address of more than 256 characters
+- **THEN** the route answers `400` with zero upstream calls
+- **AND** a request with a method other than `GET` answers `405` with zero upstream calls, with or without a key
 
-#### Scenario: Answer upstream trouble without leaking the key `credential-boundary-011`
-- **WHEN** the upstream answers a non-ok status, the fetch throws, the body is over the size cap, or the shared rate limiter refuses the request
-- **THEN** a non-ok status passes its error through with no key
-- **AND** a thrown fetch answers `502`
-- **AND** an over-cap body answers with an error, not a thrown exception
-- **AND** a refused request answers `429` with `Retry-After`
+#### Scenario: Answer an upstream problem and keep the key out of the response `credential-boundary-011`
+- **WHEN** an upstream call fails, or the shared rate limiter refuses the request
+- **THEN** an HTTP error status from Google gives the same status and the Google error text, with the key removed
+- **AND** when the fetch throws or gets no answer in 5 s, the route answers `502` with a fixed error text
+- **AND** a body that is not JSON, larger than 1 MB, or not complete in 5 s gives a fixed error text
+- **AND** when the rate limiter refuses the request, the route answers `429` with `Retry-After`
 - **AND** every one of these answers carries `Cache-Control: no-store`
 
-#### Scenario: Project a geocoding result to capped, named fields `credential-boundary-012`
+#### Scenario: Project a geocoding result to named fields, with a maximum length for each list `credential-boundary-012`
 - **WHEN** `projectGeocodeResults(data)` reads an upstream payload
-- **THEN** it keeps `status`, and up to 12 results, each with `formatted_address`, up to 20 `address_components`, up to 8 `types` and `geometry`
-- **AND** a malformed input gives `{status:null, results:[]}`
+- **THEN** it keeps `status`, and at most 12 results, each with `formatted_address`, at most 20 `address_components`, at most 8 `types` and `geometry`
+- **AND** each address component keeps only `long_name` and at most 8 `types`
+- **AND** `geometry` keeps only the `lat` and `lng` values of `location`, `bounds` and `viewport`
+- **AND** a bad input gives `{status:null, results:[]}`
 
 ### Requirement: Browser geocoding
 The browser MUST send geocoding requests only to `/api/google/geocode`, with no API key in the request.
@@ -84,15 +92,17 @@ Origin: spec-first
 #### Scenario: Send a forward lookup to the server route, with a keyless fallback `credential-boundary-013`
 - **WHEN** the standalone place search geocodes a query
 - **THEN** its request URL is the same-origin `/api/google/geocode`, with `address` and `bounds`, and no `key`
-- **AND** a `configured:false` answer counts as no verdict, and the Photon fallback runs next
+- **AND** a `configured:false` answer gives `{place:null, answered:true}`, and the Photon fallback runs next
+- **AND** an HTTP error answer from the route gives `{place:null, answered:false}`, and the Photon fallback runs next
 
 #### Scenario: Send a reverse lookup to the server route, and remember a keyless answer `credential-boundary-014`
 - **WHEN** the voice reverse-lookup geocodes a coordinate
-- **THEN** its fetch URL is `/api/google/geocode?lat=...&lon=...`, built with no global key
-- **AND** a `configured:false` answer is remembered for the page's life, so a later call makes no fetch
+- **THEN** its fetch URL is `/api/google/geocode?lat=...&lon=...`, with no key, also when the page has a browser key
+- **AND** it remembers a `configured:false` answer for the life of the page, so a later call makes no fetch
+- **AND** it does not remember an answer with an HTTP error status or with no Google status, so a later call fetches again
 - **AND** a configured answer gives the same place shape as before this change
 
-#### Scenario: Leave no direct call to Google's geocoding host `credential-boundary-015`
+#### Scenario: Leave no direct call to the geocoding host of Google `credential-boundary-015`
 - **WHEN** the test reads every non-test file under `src/`, as text
 - **THEN** none of them match `maps.googleapis.com/maps/api/geocode`
 - **AND** exactly one file under `server/` matches it

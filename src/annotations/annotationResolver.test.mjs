@@ -328,7 +328,7 @@ test('ask-side admin bypass: admin level 2/3 result types never grant a township
   installGoogleMocks(t, async (url) => {
     calls.push(String(url));
     if (String(url).startsWith('/api/google/geocode')) {
-      const query = new URL(String(url)).searchParams.get('address');
+      const query = new URL(String(url), 'http://localhost').searchParams.get('address');
       return { json: async () => geocodePayload({
         lat: 39.7817,
         lon: -89.6501,
