@@ -41,8 +41,6 @@ export function createGoogleGeocoder({ request }) {
       try {
         const response = await request(query, { bias, signal });
         signal?.throwIfAborted();
-        // An unconfigured provider did not contribute a negative verdict.
-        if (!response) return { place: null, answered: true };
         if (response.ok === false) return { place: null, answered: false };
         const data = await response.json();
         signal?.throwIfAborted();
