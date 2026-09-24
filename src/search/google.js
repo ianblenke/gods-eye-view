@@ -41,11 +41,13 @@ export function createGoogleGeocoder({ request }) {
       try {
         const response = await request(query, { bias, signal });
         signal?.throwIfAborted();
-        // An unconfigured provider did not contribute a negative verdict.
-        if (!response) return { place: null, answered: true };
         if (response.ok === false) return { place: null, answered: false };
         const data = await response.json();
         signal?.throwIfAborted();
+        // The server holds the key; a keyless server answers configured:false.
+        // It gives {place:null, answered:true}, the same shape as a
+        // ZERO_RESULTS miss, so the Photon fallback still runs.
+        if (data?.configured === false) return { place: null, answered: true };
         if (
           data?.status === 'ZERO_RESULTS' &&
           Array.isArray(data.results) &&

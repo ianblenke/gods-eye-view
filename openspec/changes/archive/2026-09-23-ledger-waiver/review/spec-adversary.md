@@ -1,0 +1,17 @@
+Verdict: PASS
+- [ ] F1 minor src/tooling/spec/ledger.test.mjs:746 Case 5 of the `gap-ledger-082` test uses a file that a test loads now, and its ledger entry shows that no test loaded it. The scenario text does not describe this case. The AND line of `gap-ledger-082` (specs/gap-ledger/spec.md:260, and openspec/specs/gap-ledger/spec.md:341) names only "a file that no test loads". Under the literal WHEN of `gap-ledger-081`, case 5 would get the waived count. The mutation "remove `!entry.loaded`" fails only because one `LEDGER-LARGER-GAP` error goes away. The `LEDGER-NO-BASELINE` error of `gap-ledger-019` stays and still stops the build. So `!entry.loaded` (scripts/spec/lib/ledger.mjs:324) never changes the verdict, and no scenario names it. tasks.md:13 also names only "a file that no test loads". To correct it, do one of these:
+  - Extend the AND line of `gap-ledger-082` in the delta spec and the main spec, for example: "a file that no test loads now, or whose ledger entry shows that no test loaded it, also gets a waived count of 0". Then run the ratchet command so that ids.json gets the new hash.
+  - Or record a known limit in proposal.md: this condition only removes a second error next to `LEDGER-NO-BASELINE`.
+- [ ] F2 minor gate output This carries round-4 F6. The gates still fail with `ERROR REVIEW-MISSING openspec/changes/archive/2026-09-23-ledger-waiver/review.md`. That file is not in the tree. The given output also leaves out the `WARN` lines, so I cannot check whether any of the 226 STE warnings names a file that this change edits. Write review.md, run `make gates CHANGE=ledger-waiver` on the final tree, and record the full output with the `WARN` lines in review.md.
+
+Round-4 status. I read the code and did not run it. Each mutation result below comes from reading the code.
+- **Spec F1, corrected.** At ledger.test.mjs:854, removing `line.count > 0` lets the -1 line in, the sum becomes 1, and the result becomes `LEDGER-MORE-THAN-BASE`, so the case fails. At :856, the count-0 line makes `own.length` 1, `waiversCover` returns true and the result is `[]`, so the case fails. Removing `Number.isInteger` lets `'2'` in, and the sum becomes the string `'02'`, so `5 > '302'` is false and :853 fails. design.md:187 agrees with the code.
+- **Spec F2, corrected.** proposal.md:44 now agrees with the code. `planCi` (scripts/spec/lib/ci.mjs:30) removes the date prefix, so the CI check uses the name `ledger-waiver`. `waiversOf` reads only the lines after the base history.
+- **STE S1, closed.** Case 4 (:743) fails when `!gap.loaded` is removed: the count 7 is no longer above 5 + 2. Case 5 (:747) fails when `!entry.loaded` is removed. design.md:188 and tasks.md:16 agree.
+- **STE S2, closed.** The `waive` command (scripts/spec/gates.mjs:369-377) has no condition for a loaded file, so the new text of proposal.md:38 is correct.
+- **STE S3, S4, S5 and S7, closed.**
+  - S3: design.md:130 now agrees with `waiversCover`.
+  - S4: the new title of `gap-ledger-087` is the same in the delta spec and the main spec (openspec/specs/gap-ledger/spec.md:373), and it is equal to the test name in links.json:522. The gate gives no `TRACE-ID-CHANGED`, so ids.json has the new hash. The meaning of the ID did not change.
+  - S5: tasks.md:59-60 is corrected.
+  - S7: design.md:193 is corrected. The gates.test.mjs:848-849 check of HEAD and merge-base supports it.
+- The comments "Cases 6 to 13" and "Case 14" in ledger.test.mjs agree with the assertions. The diff adds no history lines and no ledger entries.

@@ -17,6 +17,8 @@ import {
   formatTrackedEntityLabel,
   knownRadioLocation,
   normalizeStackId,
+  _reverseGeocodeForTest,
+  _resetReverseGeocodeForTest,
 } from './gevActions.js';
 import { MAP_STACKS } from '../mapStackController.js';
 import { GEV_REALTIME_TOOLS } from '../../server/providers/openai/tools.js';
@@ -3063,27 +3065,23 @@ function radioSelectionHarness() {
   };
 }
 
-/** Install a Google key plus a fetch stub, restoring both afterwards. */
-function installKeyedFetch(t, handler) {
+/** Install a fetch stub for the server geocode route and Photon, restoring it after. */
+function installGeocodeFetch(t, handler) {
   globalThis.window = globalThis.window || { clearTimeout, setTimeout, requestIdleCallback: null };
-  const priorKey = globalThis.window.__GOOGLE_MAPS_API_KEY__;
   const priorFetch = globalThis.fetch;
-  globalThis.window.__GOOGLE_MAPS_API_KEY__ = 'unit-test-key';
   globalThis.fetch = handler;
   t.after(() => {
     globalThis.fetch = priorFetch;
-    if (priorKey === undefined) delete globalThis.window.__GOOGLE_MAPS_API_KEY__;
-    else globalThis.window.__GOOGLE_MAPS_API_KEY__ = priorKey;
   });
 }
 
 test('voice Radio: a key that geocodes to nothing still places the station, keylessly', async (t) => {
   const { calls, dataManager } = radioSelectionHarness();
   const requests = [];
-  installKeyedFetch(t, async (url) => {
+  installGeocodeFetch(t, async (url) => {
     requests.push(String(url));
-    if (String(url).startsWith('https://maps.googleapis.com/')) {
-      return { ok: true, json: async () => ({ status: 'ZERO_RESULTS', results: [] }) };
+    if (String(url).startsWith('/api/google/geocode')) {
+      return { ok: true, json: async () => ({ configured: true, status: 'ZERO_RESULTS', results: [] }) };
     }
     assert.match(String(url), /^https:\/\/photon\.komoot\.io\/api\/\?/);
     return {
@@ -3106,8 +3104,9 @@ test('voice Radio: a key that geocodes to nothing still places the station, keyl
   assert.equal(calls.length, 1);
   assert.ok(Math.abs(calls[0].criteria.anchor.lat - 20.9101) < 1e-9);
   assert.ok(Math.abs(calls[0].criteria.anchor.lon - 107.1839) < 1e-9);
-  // Google is asked first and exactly once; Photon answers unbiased, in one call.
-  assert.equal(requests.filter((url) => url.includes('maps.googleapis.com')).length, 1);
+  // The server geocode route is asked first and exactly once; Photon answers
+  // unbiased, in one call.
+  assert.equal(requests.filter((url) => url.startsWith('/api/google/geocode')).length, 1);
   assert.equal(requests.filter((url) => url.includes('photon.komoot.io')).length, 1);
   assert.match(requests.at(-1), /[?&]q=H%E1%BA%A1\+Long\+Bay/);
   assert.doesNotMatch(requests.at(-1), /[?&](lat|lon|bbox)=/, 'a named radio location is not viewport-biased');
@@ -3120,8 +3119,8 @@ test('voice Radio: the keyless path applies no country filter the keyed path wou
   // "No Radio station matched" for exactly the places it just resolved, while a
   // keyed install placed a station. The label may carry it; the filter may not.
   const { calls, dataManager } = radioSelectionHarness();
-  installKeyedFetch(t, async (url) => (String(url).startsWith('https://maps.googleapis.com/')
-    ? { ok: true, json: async () => ({ status: 'ZERO_RESULTS', results: [] }) }
+  installGeocodeFetch(t, async (url) => (String(url).startsWith('/api/google/geocode')
+    ? { ok: true, json: async () => ({ configured: true, status: 'ZERO_RESULTS', results: [] }) }
     : {
       ok: true,
       json: async () => ({
@@ -3137,6 +3136,250 @@ test('voice Radio: the keyless path applies no country filter the keyed path wou
   assert.equal(result.requestedLocation, 'Kraków, Polska', 'the label still names the country honestly');
 });
 
-const testPlaceSearch = () => createStandalonePlaceSearch({ resolveApiKey: () => globalThis.window?.__GOOGLE_MAPS_API_KEY__ });
+const testPlaceSearch = () => createStandalonePlaceSearch();
 function createGevActionRunner(options) { return createActionRunner({ placeSearch: testPlaceSearch(), ...options }); }
 function controlRadio(viewer, manager, args, options) { return runControlRadio(viewer, manager, args, { placeSearch: testPlaceSearch(), ...options }); }
+
+/** Install a window (for fetchWithTimeout) and a fetch stub for reverseGeocode. */
+function installReverseGeocodeFetch(t, handler) {
+  const originalWindow = globalThis.window;
+  const originalFetch = globalThis.fetch;
+  globalThis.window = { setTimeout, clearTimeout };
+  globalThis.fetch = handler;
+  _resetReverseGeocodeForTest();
+  t.after(() => {
+    if (originalWindow === undefined) delete globalThis.window;
+    else globalThis.window = originalWindow;
+    globalThis.fetch = originalFetch;
+    _resetReverseGeocodeForTest();
+  });
+}
+
+test('[credential-boundary-014] reverseGeocode fetches the server route, with no key', async (t) => {
+  let rawUrl;
+  let requestUrl;
+  let requestInit;
+  installReverseGeocodeFetch(t, async (url, init) => {
+    rawUrl = String(url);
+    requestUrl = new URL(rawUrl, 'http://localhost');
+    requestInit = init;
+    return {
+      json: async () => ({ configured: true, status: 'OK', results: [{
+        formatted_address: 'Austin, TX, USA',
+        types: ['locality'],
+        address_components: [{ long_name: 'Austin', types: ['locality'] }],
+      }] }),
+    };
+  });
+  // Only this test sets the browser key: the request must not carry it.
+  globalThis.window.__GOOGLE_MAPS_API_KEY__ = 'sentinel-browser-key';
+
+  await _reverseGeocodeForTest(30.2672, -97.7431);
+
+  assert.equal(requestUrl.pathname, '/api/google/geocode');
+  assert.equal(requestUrl.searchParams.get('lat'), '30.2672');
+  assert.equal(requestUrl.searchParams.get('lon'), '-97.7431');
+  assert.equal(requestUrl.searchParams.has('key'), false);
+  assert.doesNotMatch(rawUrl, /sentinel-browser-key/);
+  assert.doesNotMatch(
+    JSON.stringify({ ...requestInit, headers: [...new Headers(requestInit?.headers)] }),
+    /sentinel-browser-key/,
+  );
+});
+
+test('[credential-boundary-014] a later call for the same coordinate joins the fetch in progress or uses the result in the cache', async (t) => {
+  let calls = 0;
+  let releaseFetch;
+  const gate = new Promise((resolve) => { releaseFetch = resolve; });
+  installReverseGeocodeFetch(t, async () => {
+    calls += 1;
+    await gate;
+    return { json: async () => ({ configured: true, status: 'OK', results: [{
+      formatted_address: 'Austin, TX, USA',
+      types: ['locality'],
+      address_components: [{ long_name: 'Austin', types: ['locality'] }],
+    }] }) };
+  });
+
+  const first = _reverseGeocodeForTest(30.2672, -97.7431);
+  const second = _reverseGeocodeForTest(30.2672, -97.7431);
+  releaseFetch();
+  await Promise.all([first, second]);
+  assert.equal(calls, 1, 'the second call joins the fetch in progress');
+
+  const third = await _reverseGeocodeForTest(30.2672, -97.7431);
+  assert.equal(calls, 1, 'a cached coordinate makes no fetch at all');
+  assert.equal(third.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] an empty result gets a default value for each field', async (t) => {
+  installReverseGeocodeFetch(t, async () => ({
+    json: async () => ({ configured: true, status: 'OK', results: [{}] }),
+  }));
+  const place = await _reverseGeocodeForTest(30.2672, -97.7431);
+  assert.deepEqual(place, {
+    formattedAddress: null,
+    locality: null,
+    region: null,
+    country: null,
+    types: [],
+    labels: [],
+    streetLabels: [],
+  });
+});
+
+test('[credential-boundary-014] the reverse lookup remembers a configured:false answer for the life of the page', async (t) => {
+  let calls = 0;
+  installReverseGeocodeFetch(t, async () => {
+    calls += 1;
+    return { json: async () => ({ configured: false, status: null, results: [] }) };
+  });
+
+  const first = await _reverseGeocodeForTest(30.2672, -97.7431);
+  assert.equal(first, null);
+  assert.equal(calls, 1);
+
+  const second = await _reverseGeocodeForTest(51.5074, -0.1278);
+  assert.equal(second, null);
+  assert.equal(calls, 1, 'a remembered keyless server takes no second fetch');
+});
+
+test('[credential-boundary-014] a configured answer gives the same place shape as before this change', async (t) => {
+  installReverseGeocodeFetch(t, async () => ({
+    json: async () => ({
+      configured: true,
+      status: 'OK',
+      results: [{
+        formatted_address: 'Austin, TX, USA',
+        types: ['locality', 'political'],
+        address_components: [
+          { long_name: 'Austin', types: ['locality'] },
+          { long_name: 'Texas', types: ['administrative_area_level_1'] },
+          { long_name: 'United States', types: ['country'] },
+        ],
+      }, {
+        // A control character that is not whitespace becomes a space, as before this change.
+        formatted_address: 'Old\u001fTown\u0007Kraków',
+        address_components: [{ long_name: 'Congress\u007fAvenue', types: ['route'] }],
+      }],
+    }),
+  }));
+
+  const place = await _reverseGeocodeForTest(30.2672, -97.7431);
+  assert.deepEqual(place, {
+    formattedAddress: 'Austin, TX, USA',
+    locality: 'Austin',
+    region: 'Texas',
+    country: 'United States',
+    types: ['locality', 'political'],
+    labels: ['Austin, TX, USA', 'Old Town Kraków'],
+    streetLabels: ['Congress Avenue'],
+  });
+});
+
+test('[credential-boundary-014] a ZERO_RESULTS answer with no results gives no place', async (t) => {
+  installReverseGeocodeFetch(t, async () => ({
+    json: async () => ({ configured: true, status: 'ZERO_RESULTS', results: [] }),
+  }));
+  assert.equal(await _reverseGeocodeForTest(30.2672, -97.7431), null);
+});
+
+test('[credential-boundary-014] a fetch failure gives no place', async (t) => {
+  installReverseGeocodeFetch(t, async () => { throw new Error('offline'); });
+  assert.equal(await _reverseGeocodeForTest(30.2672, -97.7431), null);
+});
+
+test('[credential-boundary-014] a response that is not JSON gives no place', async (t) => {
+  installReverseGeocodeFetch(t, async () => ({
+    json: async () => { throw new SyntaxError('invalid json'); },
+  }));
+  assert.equal(await _reverseGeocodeForTest(30.2672, -97.7431), null);
+});
+
+const AUSTIN_OK_ANSWER = { configured: true, status: 'OK', results: [{
+  formatted_address: 'Austin, TX, USA',
+  types: ['locality'],
+  address_components: [{ long_name: 'Austin', types: ['locality'] }],
+}] };
+
+/** Give `first` to the first fetch and an OK answer to each later fetch, then look up one coordinate two times. */
+async function reverseGeocodeTwiceAfter(t, first) {
+  let calls = 0;
+  installReverseGeocodeFetch(t, async () => {
+    calls += 1;
+    return calls === 1 ? first : { ok: true, status: 200, json: async () => AUSTIN_OK_ANSWER };
+  });
+  const firstPlace = await _reverseGeocodeForTest(30.2672, -97.7431);
+  const secondPlace = await _reverseGeocodeForTest(30.2672, -97.7431);
+  return { firstPlace, secondPlace, calls };
+}
+
+test('[credential-boundary-014] a later call fetches again after an HTTP 502 answer with a null Google status', async (t) => {
+  // The route sends this when the upstream fetch throws.
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: false,
+    status: 502,
+    json: async () => ({ configured: true, status: null, results: [], error: 'offline' }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(calls, 2, 'the reverse lookup does not remember an error answer');
+  assert.equal(secondPlace?.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a later call fetches again after an HTTP 429 answer with a null Google status', async (t) => {
+  // The route sends this when the rate limiter refuses the request.
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: false,
+    status: 429,
+    json: async () => ({ configured: true, status: null, results: [], error: 'Rate limit exceeded' }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(calls, 2, 'the reverse lookup does not remember an error answer');
+  assert.equal(secondPlace?.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a later call fetches again after an HTTP 200 answer with a null Google status', async (t) => {
+  // The route sends this when the upstream body is larger than the maximum size.
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: true,
+    status: 200,
+    json: async () => ({ configured: true, status: null, results: [], error: 'Response too large' }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(calls, 2, 'the reverse lookup does not remember an answer with no Google status');
+  assert.equal(secondPlace?.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a later call fetches again after an HTTP 200 answer with no status field', async (t) => {
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: true,
+    status: 200,
+    json: async () => ({ configured: true, results: [] }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(calls, 2, 'the reverse lookup does not remember an answer with no Google status');
+  assert.equal(secondPlace?.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a later call fetches again after an HTTP 500 answer with a Google status', async (t) => {
+  // The route sends the upstream HTTP status and the upstream Google status.
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: false,
+    status: 500,
+    json: async () => ({ configured: true, status: 'UNKNOWN_ERROR', results: [], error: 'Google Geocoding request failed' }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(calls, 2, 'the reverse lookup does not remember an HTTP error answer');
+  assert.equal(secondPlace?.formattedAddress, 'Austin, TX, USA');
+});
+
+test('[credential-boundary-014] a later call makes no fetch after an HTTP 200 ZERO_RESULTS answer', async (t) => {
+  const { firstPlace, secondPlace, calls } = await reverseGeocodeTwiceAfter(t, {
+    ok: true,
+    status: 200,
+    json: async () => ({ configured: true, status: 'ZERO_RESULTS', results: [] }),
+  });
+  assert.equal(firstPlace, null);
+  assert.equal(secondPlace, null, 'the second call gives the null in the cache');
+  assert.equal(calls, 1, 'the reverse lookup remembers a ZERO_RESULTS answer');
+});

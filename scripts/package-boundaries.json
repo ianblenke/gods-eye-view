@@ -57,6 +57,8 @@
     "exports": ["./server/providers/places"],
     "modules": [
       "server/providers/places.js",
+      "server/providers/places/coordinates.js",
+      "server/providers/places/geocode.js",
       "server/providers/places/google.js",
       "server/providers/places/google-key.js",
       "server/providers/places/routes.js",
@@ -914,6 +916,7 @@
   "osh-layer": {
     "exports": ["./layers/osh"],
     "modules": [
+      "src/data/iconOrientation.js",
       "src/data/oshObservations.js",
       "src/data/oshSystems.js",
       "src/layers/osh/detail.js",

@@ -242,6 +242,9 @@ const FRAME_TARGETS = new Map([
 
 const reverseGeocodeCache = new Map();
 const reverseGeocodeInFlight = new Map();
+// Set once the server answers `configured:false`, for the life of the page,
+// so a keyless server takes exactly one wasted request, not one per lookup.
+let reverseGeocodeUnconfigured = false;
 const nearbyPlacesCache = new Map();
 const nearbyPlacesInFlight = new Map();
 const VISIBLE_ENTITY_SHORTLIST = 64;
@@ -2924,19 +2927,24 @@ function inferCountry(latitude, longitude) {
 }
 
 async function reverseGeocode(latitude, longitude) {
-  const apiKey = window.__GOOGLE_MAPS_API_KEY__;
-  if (!apiKey || !Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+  if (reverseGeocodeUnconfigured || !Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
   const key = reverseGeocodeKey(latitude, longitude);
   if (reverseGeocodeCache.has(key)) return reverseGeocodeCache.get(key);
   if (reverseGeocodeInFlight.has(key)) return reverseGeocodeInFlight.get(key);
 
   const request = (async () => {
     try {
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${encodeURIComponent(`${latitude},${longitude}`)}&key=${apiKey}`;
+      const url = `/api/google/geocode?lat=${encodeURIComponent(latitude)}&lon=${encodeURIComponent(longitude)}`;
       const response = await fetchWithTimeout(url, {}, 5000);
       const data = await response.json();
-      if (data.status !== 'OK' || !data.results?.length) {
+      if (data.configured === false) {
+        reverseGeocodeUnconfigured = true;
         reverseGeocodeCache.set(key, null);
+        return null;
+      }
+      if (data.status !== 'OK' || !data.results?.length) {
+        // Do not remember an error answer (HTTP error or no Google status); a later call fetches again.
+        if (response.ok !== false && data.status != null) reverseGeocodeCache.set(key, null);
         return null;
       }
 
@@ -2970,6 +2978,18 @@ async function reverseGeocode(latitude, longitude) {
   })();
   reverseGeocodeInFlight.set(key, request);
   return request;
+}
+
+/** Test seam: exercise the real reverse-geocode fetch, cache and remember path. */
+export function _reverseGeocodeForTest(latitude, longitude) {
+  return reverseGeocode(latitude, longitude);
+}
+
+/** Test seam: clear the reverse-geocode cache and the remembered unconfigured flag. */
+export function _resetReverseGeocodeForTest() {
+  reverseGeocodeCache.clear();
+  reverseGeocodeInFlight.clear();
+  reverseGeocodeUnconfigured = false;
 }
 
 async function reverseGeocodeViewportSamples(samples, cameraHeightM) {

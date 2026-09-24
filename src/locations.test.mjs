@@ -55,19 +55,14 @@ const AUSTIN_RESULT = {
 };
 
 async function runSearch(viewer, options, { result = AUSTIN_RESULT, query = 'austin' } = {}) {
-  const hadWindow = Object.hasOwn(globalThis, 'window');
-  const priorWindow = globalThis.window;
   const priorFetch = globalThis.fetch;
-  globalThis.window = { __GOOGLE_MAPS_API_KEY__: 'test-key' };
   globalThis.fetch = async () => ({
-    json: async () => ({ status: 'OK', results: [result] }),
+    json: async () => ({ configured: true, status: 'OK', results: [result] }),
   });
   try {
-    return await searchAndFlyTo(viewer, query, { placeSearch: createStandalonePlaceSearch({ resolveApiKey: () => globalThis.window?.__GOOGLE_MAPS_API_KEY__ }), ...options });
+    return await searchAndFlyTo(viewer, query, { placeSearch: createStandalonePlaceSearch(), ...options });
   } finally {
     globalThis.fetch = priorFetch;
-    if (hadWindow) globalThis.window = priorWindow;
-    else delete globalThis.window;
   }
 }
 

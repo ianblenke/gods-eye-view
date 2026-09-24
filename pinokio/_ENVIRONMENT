@@ -9,7 +9,10 @@
 # Do not enter credentials in Pinokio 8.0.40's native Configure panel: that
 # release saves this nested layout to the wrong path and logs submitted values.
 
-# Browser: 3D tiles and geocoding; server: Places and Street View.
+# In the browser, GOOGLE_MAPS_API_KEY serves only the 3D tiles. While
+# GOOGLE_MAPS_SERVER_API_KEY is blank, the server uses GOOGLE_MAPS_API_KEY as
+# the fallback for Places, Street View and geocoding. So narrow the browser
+# key only after you set a server key.
 # GOOGLE_MAPS_API_KEY=
 # GOOGLE_MAPS_SERVER_API_KEY=
 # CESIUM_ION_TOKEN=

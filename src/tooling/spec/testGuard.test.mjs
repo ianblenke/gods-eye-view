@@ -104,7 +104,7 @@ test('[coverage-gate-018] checks only the files in the inventory inside the root
   local.checkScript('file:///elsewhere/src/a.js', 'x');
   local.checkScript('/repo/src/a.js', 'export {};\n');
   local.checkScript('file:///repo/src/b.js', 'export {};\n');
-  assert.deepEqual(local.results(), { violations: [], checked: ['src/a.js', 'src/b.js'], assertions: [] });
+  assert.deepEqual(local.results(), { violations: [], checked: ['src/a.js', 'src/b.js'], assertions: [], leaks: [] });
   local.onSource('/repo/src/b.js')(new Error('no source'), undefined);
   assert.deepEqual(local.results().violations.map((item) => item.file), ['src/b.js']);
   local.onSource('/repo/src/a.js')(null, { scriptSource: 'export {};\n' });
@@ -255,7 +255,7 @@ test('[coverage-gate-028] writes the checked files, the errors and the assertion
   const file = path.join(OUT, `guard-${result.pid}.jsonl`);
   assert.equal(existsSync(file), true);
   const [line] = readFileSync(file, 'utf8').trim().split('\n').map(JSON.parse);
-  assert.deepEqual(line, { violations: [], checked: ['src/real.mjs'], assertions: [] });
+  assert.deepEqual(line, { violations: [], checked: ['src/real.mjs'], assertions: [], leaks: [] });
 });
 
 test('[coverage-gate-036] loads the guard before the other preloads of a child process', GUARDED_RUN, async () => {
@@ -407,7 +407,8 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
   assert.deepEqual(skipped('./testGuard.test.mjs'), [
       "[spec-trace-027] counts the assertions of each test",
       "[coverage-gate-028] writes the checked files, the errors and the assertion counts of a child process at the end of the process",
-      "[coverage-gate-036] loads the guard before the other preloads of a child process"
+      "[coverage-gate-036] loads the guard before the other preloads of a child process",
+      "[coverage-gate-049] writes a leak record when a real child process leaves a live timer at exit"
   ]);
   assert.deepEqual(skipped('./gates.test.mjs'), [
       "[coverage-gate-003] runs each tracked test file with coverage and the trace reporter",
@@ -437,7 +438,10 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
       "[coverage-gate-040] stops for untrue coverage from a test runner that a test starts, with a preload that removes the gate values",
       "[coverage-gate-039] stops for untrue coverage from a child process that a worker thread starts",
       "[spec-trace-045] stops for changed scenario text when a test only moved to a renamed test file",
-      "[coverage-gate-043] stops the check for a code file that imports a test file"
+      "[coverage-gate-043] stops the check for a code file that imports a test file",
+      "[gap-ledger-079] records a coverage waiver, allows the rise in the ratchet command and passes the check",
+      "[gap-ledger-080] stops the waive command for a fault in its options",
+      "[coverage-gate-049] stops for a real child process that leaves a live timer, with no stub"
   ]);
   // Each test that needs the guard to count assertions gets its skip option from the real
   // node:test module. So the skip option is false on a Node version with the function.
@@ -449,4 +453,88 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
   for (const name of others) {
     assert.equal(skipped(`./${name}`).length, 0, `${name} has a test with the skip option of the guard`);
   }
+});
+
+test('[coverage-gate-049] writes a leak record when a real child process leaves a live timer at exit', GUARDED_RUN, () => {
+  // A real script file, not `-e`, so process.argv[1] names a real file and the leak
+  // record's own `file` field is meaningful, not the empty string `-e` would give it.
+  const leaky = path.join(ROOT, 'leaky.mjs');
+  writeFileSync(leaky, 'setInterval(() => {}, 1000); process.exit(0);\n');
+  const result = spawnSync(process.execPath, [leaky], {
+    env: { ...process.env, ...ENV, NODE_V8_COVERAGE: OWN_COVERAGE, NODE_OPTIONS: GUARD_PRELOAD },
+    encoding: 'utf8',
+  });
+  assert.equal(result.status, 0, result.stderr);
+  const file = path.join(OUT, `guard-${result.pid}.jsonl`);
+  assert.equal(existsSync(file), true);
+  const [line] = readFileSync(file, 'utf8').trim().split('\n').map(JSON.parse);
+  assert.equal(line.leaks.length, 1);
+  assert.equal(line.leaks[0].file, 'leaky.mjs');
+  assert.deepEqual(line.leaks[0].resources, ['Timeout']);
+  assert.equal(line.violations.length, 0);
+});
+
+test('[coverage-gate-049] records a live timer at the exit of a test process', () => {
+  const local = createGuard({
+    root: '/repo',
+    inventory: new Map(),
+    getContext: () => undefined,
+    getActiveResources: () => ['PipeWrap', 'Timeout', 'Immediate'],
+    testFile: 'src/a.test.mjs',
+  });
+  assert.deepEqual(local.results().leaks, [{ file: 'src/a.test.mjs', resources: ['Timeout', 'Immediate'] }]);
+});
+
+test('[coverage-gate-050] records no leak for a test process without a live timer', () => {
+  const local = createGuard({
+    root: '/repo',
+    inventory: new Map(),
+    getContext: () => undefined,
+    getActiveResources: () => ['PipeWrap'],
+    testFile: 'src/a.test.mjs',
+  });
+  assert.deepEqual(local.results().leaks, []);
+});
+
+test('[coverage-gate-050] records no leak when the active-resource function is absent', () => {
+  const original = process.getActiveResourcesInfo;
+  process.getActiveResourcesInfo = undefined;
+  try {
+    const local = createGuard({ root: '/repo', inventory: new Map(), getContext: () => undefined, testFile: 'src/a.test.mjs' });
+    assert.deepEqual(local.results().leaks, []);
+  } finally {
+    process.getActiveResourcesInfo = original;
+  }
+});
+
+test('[coverage-gate-050] records no leak and throws no error when getActiveResources has a falsy value', () => {
+  const local = createGuard({
+    root: '/repo',
+    inventory: new Map(),
+    getContext: () => undefined,
+    getActiveResources: null,
+    testFile: 'src/a.test.mjs',
+  });
+  assert.deepEqual(local.results().leaks, []);
+});
+
+test('[coverage-gate-053] sets the standard output of a test-file child to blocking mode', () => {
+  let blocking;
+  const processObject = { stdout: { _handle: { setBlocking: (value) => { blocking = value; } } } };
+  const result = installGuard({ env: { ...ENV, NODE_TEST_CONTEXT: 'child-v8' }, processObject });
+  assert.equal(blocking, true);
+  assert.equal(result, guard);
+  // A standard output without a blocking-mode function gives no error.
+  for (const other of [{ stdout: { _handle: {} } }, { stdout: {} }, {}]) {
+    assert.doesNotThrow(() => installGuard({ env: { ...ENV, NODE_TEST_CONTEXT: 'child-v8' }, processObject: other }));
+  }
+});
+
+test('[coverage-gate-054] does not change the standard output of another process', () => {
+  let calls = 0;
+  const processObject = { stdout: { _handle: { setBlocking: () => { calls += 1; } } } };
+  installGuard({ env: { ...ENV }, processObject });
+  installGuard({ env: { ...ENV, NODE_TEST_CONTEXT: 'child' }, processObject });
+  installGuard({ env: { NODE_TEST_CONTEXT: 'child-v8' }, processObject });
+  assert.equal(calls, 0);
 });

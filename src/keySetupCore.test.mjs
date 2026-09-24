@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 import {
   KEY_SETUP_APPEND_HEADER,
   KEY_SETUP_KEYS,
@@ -361,4 +363,83 @@ test('server Google key remains supported without appearing in setup or its miss
   assert.deepEqual(complete, keySetupStatus({ ...allVisibleConfigured, GOOGLE_MAPS_SERVER_API_KEY: secret }));
   assert.ok(!JSON.stringify(status).includes('GOOGLE_MAPS_SERVER_API_KEY'));
   assert.ok(!JSON.stringify(status).includes(secret));
+});
+
+test('[credential-boundary-005] the client-exposed registry names equal the names in the define of the browser build', async () => {
+  const { createBrowserViteConfig } = await import('../build/vite.js');
+  const clientExposed = new Set(
+    KEY_SETUP_KEYS.filter((entry) => entry.clientExposed).flatMap((entry) => entry.envVars),
+  );
+  const defineNames = new Set(
+    Object.keys(createBrowserViteConfig().define).map((key) => key.replace('import.meta.env.', '')),
+  );
+  assert.deepEqual(clientExposed, defineNames);
+});
+
+/** Every `NAME=` (commented or not) named in `.env.example`. */
+function envExampleNames() {
+  const text = readFileSync(new URL('../.env.example', import.meta.url), 'utf8');
+  const names = new Set();
+  for (const match of text.matchAll(/^#?\s*([A-Z][A-Z0-9_]*)=/gm)) names.add(match[1]);
+  return names;
+}
+
+/** Every `.js`/`.mjs` file directly under a directory, recursively. */
+function scriptFilesUnder(directory) {
+  const files = [];
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const full = path.join(directory, entry.name);
+    if (entry.isDirectory()) files.push(...scriptFilesUnder(full));
+    else if (/\.m?js$/.test(entry.name)) files.push(full);
+  }
+  return files;
+}
+
+/**
+ * The read forms that the 006 scan finds: `process.env.NAME` or `env.NAME`, a
+ * destructured `process.env` or `env`, and a quoted name. The quoted form also
+ * finds `env['NAME']` and a helper call such as `value('NAME')`.
+ */
+const NAME_READS = [
+  /\b(?:process\.)?env\.(?<names>[A-Z][A-Z0-9_]*)\b/g,
+  /\{(?<names>[^{}]*)\}\s*=\s*(?:process\.)?env\b/g,
+  /(['"`])(?<names>[A-Z][A-Z0-9_]*)\1/g,
+];
+
+/** Each name in a source text that a read form finds and that ends in a credential suffix. */
+function credentialNamesRead(text) {
+  const names = new Set();
+  for (const pattern of NAME_READS) {
+    for (const match of text.matchAll(pattern)) {
+      for (const part of match.groups.names.split(',')) {
+        const name = part.trim().replace(/^\.\.\./, '').match(/^[A-Z][A-Z0-9_]*\b/)?.[0];
+        if (name && /_(KEY|TOKEN|SECRET|PASSWORD)$/.test(name)) names.add(name);
+      }
+    }
+  }
+  return names;
+}
+
+test('[credential-boundary-006] the registry or .env.example documents each credential name that the server reads', () => {
+  const root = fileURLToPath(new URL('../', import.meta.url));
+  const files = ['server', 'scripts', 'tools']
+    .map((name) => path.join(root, name))
+    .flatMap((directory) => scriptFilesUnder(directory));
+  const found = new Set(files.flatMap((file) => [...credentialNamesRead(readFileSync(file, 'utf8'))]));
+  const documented = new Set([...knownKeySetupEnvVars(), ...envExampleNames()]);
+  assert.deepEqual([...found].filter((name) => !documented.has(name)), []);
+  // Positive control: a scan that finds nothing must not pass.
+  for (const name of ['OPENAI_API_KEY', 'GOOGLE_MAPS_SERVER_API_KEY']) {
+    assert.ok(found.has(name), `the scan finds ${name}`);
+  }
+  // Each read form finds its name. The scan ignores a name with no credential suffix.
+  assert.deepEqual(credentialNamesRead([
+    'process.env.A_KEY; env.B_TOKEN; process.env.MAP_ZOOM;',
+    `process.env['C_SECRET']; env["D_PASSWORD"];`,
+    'const { E_KEY, F_TOKEN: token, ...rest } = process.env;',
+    'const { G_SECRET } = env;',
+    "value('H_PASSWORD'); value(`I_KEY`);",
+  ].join('\n')), new Set([
+    'A_KEY', 'B_TOKEN', 'C_SECRET', 'D_PASSWORD', 'E_KEY', 'F_TOKEN', 'G_SECRET', 'H_PASSWORD', 'I_KEY',
+  ]));
 });
