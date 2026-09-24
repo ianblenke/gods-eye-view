@@ -10938,7 +10938,8 @@
     },
     "src/tooling/previewServing.test.mjs": {
       "names": {
-        "data providers have both hooks; credential editing stays development-only": 1
+        "data providers have both hooks; credential editing stays development-only": 1,
+        "real dev and built-preview servers serve provider JSON and terminate unknown APIs": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"

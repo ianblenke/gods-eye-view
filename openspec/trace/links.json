@@ -344,7 +344,7 @@
   ],
   "credential-boundary-007": [
     "src/googleGeocodeProxy.test.mjs › [credential-boundary-007] a keyless server answers configured:false with no upstream call",
-    "src/tooling/previewServing.test.mjs › [credential-boundary-007] real dev and built-preview servers serve provider JSON and terminate unknown APIs"
+    "src/tooling/previewServing.test.mjs › [credential-boundary-007] the real dev and preview servers answer the geocode route with the keyless answer"
   ],
   "credential-boundary-008": [
     "src/googleGeocodeProxy.test.mjs › [credential-boundary-008] the forward mode sends the address and bounds, and keeps the key out of the body",
