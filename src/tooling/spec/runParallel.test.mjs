@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { EventEmitter } from 'node:events';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -53,8 +53,31 @@ test('[coverage-gate-022] runs real processes from a runs file and writes the re
       ]),
     );
     const started = Date.now();
-    const result = spawnSync(process.execPath, [RUNNER, runsFile, resultsFile], { encoding: 'utf8' });
+    // Isolate the gate's own guard identity before spawning, without stopping coverage
+    // of RUNNER itself. Left in place, a real gate run would carry GEV_SPEC_OUT through
+    // this process into the two synthetic child processes above, and their own guard
+    // would then write a leak record for the second one's timer into the real gate's
+    // own outDir — the timer that calls process.exit() from inside its own callback,
+    // which still reads as an active resource at that exact synchronous point.
+    // Confirmed by reproducing it against the real gate image.
+    //
+    // This process's own guard already wraps child_process globally. withGuardEnv()
+    // (scripts/spec/lib/test-guard.mjs) always adds NODE_OPTIONS's guard preload when
+    // NODE_V8_COVERAGE is present, but only re-injects its own closed-over GEV_SPEC_OUT
+    // when the child's NODE_V8_COVERAGE points at the real gate's own coverage folder
+    // (its `gateRun` check). A separate coverage folder for this spawn makes that check
+    // false, so this call's own explicit env values win instead — real V8 coverage
+    // still collects for RUNNER, in an isolated folder, and the injected guard preload
+    // finds an empty GEV_SPEC_OUT and installs nothing.
+    const coverageDir = path.join(directory, 'coverage');
+    mkdirSync(coverageDir, { recursive: true });
+    const env = { ...process.env, NODE_V8_COVERAGE: coverageDir, GEV_SPEC_OUT: '', GEV_SPEC_ROOT: '', GEV_SPEC_INVENTORY: '' };
+    const result = spawnSync(process.execPath, [RUNNER, runsFile, resultsFile], { env, encoding: 'utf8' });
     assert.equal(result.status, 0, result.stderr);
+    // Real coverage of RUNNER itself, not just a run with no error: V8 writes one or
+    // more coverage-*.json files into the isolated folder whenever NODE_V8_COVERAGE
+    // names a real directory, independent of this project's own guard.
+    assert.ok(readdirSync(coverageDir).some((file) => file.startsWith('coverage-')), 'the isolated coverage folder must hold real V8 coverage output');
     assert.ok(Date.now() - started < 5000);
     assert.deepEqual(JSON.parse(readFileSync(resultsFile, 'utf8')), [
       { status: 0, error: null },

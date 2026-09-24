@@ -7,11 +7,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 35,
+        "lines": 39,
         "branches": 7,
         "functions": 1
       },
-      "sha": "45ee69d1343ba07fc4ac2406ecec75e00e30c8e8bfd37f670812273e70a54ade",
+      "sha": "62f04730850a36be6073f6cf7d7918d404aaf8a6d932440d3aecd213c064a378",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1066,6 +1066,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "scripts/spec/gates.mjs": {
+      "loaded": true,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 529,
+        "branches": 179,
+        "functions": 57
+      },
+      "sha": "e139d8ecea7cef40e6e19dfbe862465d15a4cc93a86d51722b7ce8a77d85bf32",
+      "untrue": false,
+      "origin": "ledger-waiver",
+      "since": "2026-09-22"
+    },
     "scripts/track-regression.mjs": {
       "loaded": false,
       "lines": 4084,
@@ -1507,11 +1522,11 @@
       "branches": 10,
       "functions": 2,
       "totals": {
-        "lines": 282,
-        "branches": 62,
-        "functions": 10
+        "lines": 270,
+        "branches": 47,
+        "functions": 9
       },
-      "sha": "52f6c33f4947fbadcc0dbaf925a967c4531971970ff7f0defa10cc4ba39c556f",
+      "sha": "27ff17c0b8194e176053ba6d289e09acffc2d817978d76d75557191185841b2a",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1777,11 +1792,11 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 22,
-        "branches": 4,
-        "functions": 1
+        "lines": 27,
+        "branches": 5,
+        "functions": 2
       },
-      "sha": "5cd57063ba4973ab3f4d6582d1028a337543d1326f6783435d30fc163fd495a0",
+      "sha": "331bddcc5fa0237b1a61d202b20c8073ed7a4160ecd829d9c7000103d034fdf4",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2573,7 +2588,7 @@
       "functions": 2,
       "totals": {
         "lines": 580,
-        "branches": 135,
+        "branches": 136,
         "functions": 25
       },
       "sha": "c290c7d22ca88334b1448b1cc94ce9b372f475628a0e2be2e2dbc883502381de",
@@ -2693,7 +2708,7 @@
       "functions": 6,
       "totals": {
         "lines": 1230,
-        "branches": 296,
+        "branches": 297,
         "functions": 52
       },
       "sha": "16085ee95156cb19e53509a47effb0ed09649df8d29e78be8c66541c38209a66",
@@ -2872,11 +2887,11 @@
       "branches": 5,
       "functions": 0,
       "totals": {
-        "lines": 135,
-        "branches": 67,
-        "functions": 12
+        "lines": 187,
+        "branches": 98,
+        "functions": 17
       },
-      "sha": "13df9e89c18bf7c5fd0e4f5a19eade1546580d7d9db7081807ef57ffb0aceb73",
+      "sha": "4b7b3cd663d0a37d6305c8836c60e2ab306f10185a1fb0d3221c0d24bb0bdf53",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3278,7 +3293,7 @@
       "functions": 1,
       "totals": {
         "lines": 405,
-        "branches": 118,
+        "branches": 119,
         "functions": 16
       },
       "sha": "142e1a3081f94f4babe95cd54accbe31ebbd7541d6302f58e64b5ef27943eb59",
@@ -5689,14 +5704,14 @@
     "src/search/google.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 4,
+      "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 66,
-        "branches": 29,
+        "lines": 68,
+        "branches": 30,
         "functions": 6
       },
-      "sha": "d407e00b7fa8cebb66b02bd97ac8ddb9e3e6fc51d1e00271adee98d9f7b5812d",
+      "sha": "5fe61bedad920cf2e00434731af0adb42e8552b6b893dc1ecddd65e9071192e6",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5708,7 +5723,7 @@
       "functions": 1,
       "totals": {
         "lines": 65,
-        "branches": 23,
+        "branches": 24,
         "functions": 3
       },
       "sha": "a817bf9f3a850c4bf09a4707c3976b46feb9e4708bc29416ddf8e928d0a40511",
@@ -5793,15 +5808,15 @@
     },
     "src/standalone/application.js": {
       "loaded": false,
-      "lines": 43,
+      "lines": 42,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 43,
+        "lines": 42,
         "branches": null,
         "functions": null
       },
-      "sha": "9c047e28b2a8143266039eaf1f0253b34895d80503281235b11d4d6bbc9b594b",
+      "sha": "545aacedaf6438675a0dc9bfde7ebcebe6e3bb28d3bea5ecb2c38ac62d494c78",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5847,21 +5862,6 @@
         "functions": null
       },
       "sha": "661b15de03e9a65953c8681ad0a3a6f5b7670c755de6e565da7af1979bdc9ece",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
-    "src/standalone/placeSearch.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 32,
-        "branches": 9,
-        "functions": 3
-      },
-      "sha": "bd782364ab4b740a094208f7be342da8ffa3609e6e30f80dd06f6dee20b5e0ed",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6723,15 +6723,15 @@
     },
     "src/voice/gevActions.js": {
       "loaded": true,
-      "lines": 1304,
-      "branches": 221,
-      "functions": 65,
+      "lines": 1230,
+      "branches": 222,
+      "functions": 61,
       "totals": {
-        "lines": 3445,
-        "branches": 798,
-        "functions": 157
+        "lines": 3465,
+        "branches": 847,
+        "functions": 168
       },
-      "sha": "709d9841dcb3581fef061fd8b71a12bb48e1abf80817f5dbe6d8aa2f97fae014",
+      "sha": "75e704370f21283bcbaa584acb3b075369699275a5fb591ee5a5fbb4039cf2d0",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9777,7 +9777,6 @@
     "src/googleServerKey.test.mjs": {
       "names": {
         "both Places routes select the intended key and keep it out of responses": 1,
-        "browser defines contain the browser key and exclude the server key": 1,
         "keyless stays keyless": 1,
         "server-side Google calls prefer the server-only key": 1,
         "the Street View tool resolves per-variable overrides before preferring the server key": 1,
@@ -10727,7 +10726,6 @@
     "src/search/placeSearch.test.mjs": {
       "names": {
         "a Google request cancelled by its caller never starts the fallback": 1,
-        "a keyless service does not issue any Google request": 1,
         "cancellation before lookup makes no request": 1,
         "cancellation stops Photon retries and does not cache a late response": 1,
         "definitive misses expire while outage outcomes are never cached": 1,
@@ -10960,8 +10958,6 @@
     "src/tooling/viteBuild.test.mjs": {
       "names": {
         "build export resolves in Node and has no browser fallback": 1,
-        "build helper does not discover environment values or construct local providers": 1,
-        "explicit build inputs preserve browser-only defines, plugin order and loopback protections": 1,
         "root config retains existing named exports and standalone provider order": 1
       },
       "origin": "pre-spec",

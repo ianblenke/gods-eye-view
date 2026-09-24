@@ -57,6 +57,31 @@ const FEATURE_NO_NAME = {
   lat: 12,
   alt: 0,
 };
+// osh-062: at the antipode of SYSTEM_A, beyond the horizon of the fake
+// viewer's camera (set over longitude 1, latitude 2).
+const SYSTEM_FAR = { id: 'sys-fixture-far', uid: 'urn:far', name: 'System Far', description: 'desc far', lon: -179, lat: -2, alt: 0 };
+const FEATURE_FAR = {
+  id: 'foi-fixture-far',
+  uid: 'urn:foi-far',
+  systemId: 'sys-fixture-far',
+  name: 'Feature Far',
+  description: null,
+  lon: -179,
+  lat: -2,
+  alt: 0,
+};
+// osh-061: every other feature fixture carries alt:0, which leaves
+// `feature.alt || 0` mutation-proof. This one gives it a non-zero value.
+const FEATURE_ALT = {
+  id: 'foi-fixture-alt',
+  uid: 'urn:foi-alt',
+  systemId: 'sys-fixture-1',
+  name: 'Feature Alt',
+  description: null,
+  lon: 5,
+  lat: 6,
+  alt: 75,
+};
 
 function fakeSource({
   systems = [SYSTEM_A, SYSTEM_B],
@@ -106,6 +131,10 @@ function fakeSource({
 function fakeViewer() {
   const dataSources = [];
   let picked = null;
+  const camera = { moveEnd: new Cesium.Event() };
+  function setCamera(lon, lat, height) {
+    camera.positionWC = Cesium.Cartesian3.fromDegrees(lon, lat, height);
+  }
   const viewer = {
     scene: {
       canvas: { addEventListener() {}, removeEventListener() {} },
@@ -113,6 +142,7 @@ function fakeViewer() {
         return picked;
       },
     },
+    camera,
     dataSources: {
       add(dataSource) {
         dataSources.push(dataSource);
@@ -125,11 +155,19 @@ function fakeViewer() {
       },
     },
   };
+  // The repro height the firms horizon test also uses. From here the
+  // horizon half-angle is about 36 degrees, so SYSTEM_A, SYSTEM_B and
+  // FEATURE_A stay visible and the antipode fixtures do not.
+  setCamera(1, 2, 1_500_000);
   return {
     viewer,
     dataSources,
     setPicked(id) {
       picked = id === null ? null : { id };
+    },
+    setCamera,
+    raiseMoveEnd() {
+      camera.moveEnd.raiseEvent();
     },
   };
 }
@@ -152,10 +190,11 @@ test('[osh-029] throws without a systems source', () => {
   assert.throws(() => createOshLayer({}), TypeError);
 });
 
-test('[osh-029] shows one entity per system and reports stats, including the new fields', async () => {
+test('[osh-029] shows one entity per system and reports stats, including the new fields', async (t) => {
   const source = fakeSource({ fois: [FEATURE_A] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   const updated = await layer.update(viewer);
@@ -174,13 +213,13 @@ test('[osh-029] shows one entity per system and reports stats, including the new
   assert.equal(stats.selectedId, null);
   assert.equal(stats.selectedFeatureId, null);
   layer.disable(viewer);
-  layer.destroy(viewer);
 });
 
-test('[osh-029] a system with no Point gets no entity, and counts toward unplaced', async () => {
+test('[osh-029] a system with no Point gets no entity, and counts toward unplaced', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_NULL] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -189,23 +228,22 @@ test('[osh-029] a system with no Point gets no entity, and counts toward unplace
   const stats = layer.getStats();
   assert.equal(stats.count, 1);
   assert.equal(stats.unplaced, 1);
-  layer.destroy(viewer);
 });
 
-test('[osh-029] a system with no Point but a fresh location still gets an entity, counted under count', async () => {
+test('[osh-029] a system with no Point but a fresh location still gets an entity, counted under count', async (t) => {
   const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   assert.ok(dataSources[0].entities.getById('osh:sys-fixture-9'), 'the stream-placed entity must exist');
   assert.equal(layer.getStats().count, 1);
   assert.equal(layer.getStats().unplaced, 0);
-  layer.destroy(viewer);
 });
 
-test('[osh-029] reports getStats().stale from a stale systems fetch', async () => {
+test('[osh-029] reports getStats().stale from a stale systems fetch', async (t) => {
   const source = {
     async getSystems() {
       return { keyRequired: false, systems: [SYSTEM_A], stale: true };
@@ -213,14 +251,14 @@ test('[osh-029] reports getStats().stale from a stale systems fetch', async () =
   };
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   assert.equal(layer.getStats().stale, true);
-  layer.destroy(viewer);
 });
 
-test('[osh-029] a failed fetch sets the error and does not change the entities', async () => {
+test('[osh-029] a failed fetch sets the error and does not change the entities', async (t) => {
   let fail = false;
   const source = {
     async getSystems() {
@@ -230,6 +268,7 @@ test('[osh-029] a failed fetch sets the error and does not change the entities',
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   assert.equal(await layer.update(viewer), true);
@@ -244,10 +283,9 @@ test('[osh-029] a failed fetch sets the error and does not change the entities',
     2,
     'a failed fetch must leave the earlier entities in place',
   );
-  layer.destroy(viewer);
 });
 
-test('[osh-029] a thrown non-Error still sets a fallback error message', async () => {
+test('[osh-029] a thrown non-Error still sets a fallback error message', async (t) => {
   const source = {
     async getSystems() {
       throw { not: 'an error' };
@@ -255,14 +293,14 @@ test('[osh-029] a thrown non-Error still sets a fallback error message', async (
   };
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   assert.equal(layer.getStats().error, 'OSH source unavailable');
-  layer.destroy(viewer);
 });
 
-test('[osh-029] keyRequired clears the entities and reports keyRequired:true', async () => {
+test('[osh-029] keyRequired clears the entities and reports keyRequired:true', async (t) => {
   const source = {
     async getSystems() {
       return { keyRequired: true, systems: [], stale: false };
@@ -270,18 +308,19 @@ test('[osh-029] keyRequired clears the entities and reports keyRequired:true', a
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   assert.equal(dataSources[0].entities.values.length, 0);
   assert.equal(layer.getStats().keyRequired, true);
-  layer.destroy(viewer);
 });
 
-test('[osh-029] disable hides the data source, destroy removes it, and disable stops more updates', async () => {
+test('[osh-029] disable hides the data source, destroy removes it, and disable stops more updates', async (t) => {
   const source = fakeSource();
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -292,10 +331,11 @@ test('[osh-029] disable hides the data source, destroy removes it, and disable s
   assert.equal(dataSources.length, 0);
 });
 
-test('[osh-049] disable() does not clear the system union', async () => {
+test('[osh-049] disable() does not clear the system union', async (t) => {
   const source = fakeSource();
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -306,7 +346,6 @@ test('[osh-049] disable() does not clear the system union', async () => {
   layer.enable(viewer);
   assert.equal(dataSources[0].show, true);
   assert.equal(dataSources[0].entities.values.length, 2, 'the same union is visible again after re-enabling');
-  layer.destroy(viewer);
 });
 
 test('[osh-029] update does nothing before init and while disabled', async () => {
@@ -314,12 +353,12 @@ test('[osh-029] update does nothing before init and while disabled', async () =>
   assert.equal(await layer.update(), false);
 });
 
-test('[osh-029] init cannot run twice', () => {
+test('[osh-029] init cannot run twice', (t) => {
   const layer = createOshLayer({ source: fakeSource() });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   assert.throws(() => layer.init(viewer), /already initialized/);
-  layer.destroy(viewer);
 });
 
 test('[osh-030] polls the datastreams of a selected system, again every 15 seconds', async (t) => {
@@ -334,6 +373,7 @@ test('[osh-030] polls the datastreams of a selected system, again every 15 secon
   const detailHost = { innerHTML: '' };
   const layer = createOshLayer({ source, detailHost });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
 
   await withClickCapture(async (getClick) => {
@@ -369,7 +409,6 @@ test('[osh-030] polls the datastreams of a selected system, again every 15 secon
     await flush();
     assert.equal(source.calls.datastreams, callsAtDeselect, 'no more polling once deselected');
   });
-  layer.destroy(viewer);
 });
 
 test('[osh-030] stops the poll of the selected system when the layer disables', async (t) => {
@@ -379,6 +418,7 @@ test('[osh-030] stops the poll of the selected system when the layer disables', 
   });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -393,13 +433,13 @@ test('[osh-030] stops the poll of the selected system when the layer disables', 
     await flush();
     assert.equal(source.calls.datastreams, calls);
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-030] deselects on a click on empty space or on a non-osh entity', async () => {
+test('[osh-030] deselects on a click on empty space or on a non-osh entity', async (t) => {
   const source = fakeSource({ datastreams: [] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -430,13 +470,13 @@ test('[osh-030] deselects on a click on empty space or on a non-osh entity', asy
     await flush();
     assert.equal(layer.getStats().selectedId, null, 'deselecting twice is a no-op');
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-030] a picked entity whose id is a plain string is also read', async () => {
+test('[osh-030] a picked entity whose id is a plain string is also read', async (t) => {
   const source = fakeSource({ datastreams: [] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -446,13 +486,13 @@ test('[osh-030] a picked entity whose id is a plain string is also read', async 
     await flush();
     assert.equal(layer.getStats().selectedId, 'sys-fixture-1');
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-030] a second click handler install does nothing, and a second click on the same system does not restart the poll', async () => {
+test('[osh-030] a second click handler install does nothing, and a second click on the same system does not restart the poll', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_A], datastreams: [] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -467,10 +507,9 @@ test('[osh-030] a second click handler install does nothing, and a second click 
     await flush();
     assert.equal(source.calls.datastreams, 1, 'the same system clicked again does not restart the poll');
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-030] a keyRequired datastreams response during a poll stops that poll cycle', async () => {
+test('[osh-030] a keyRequired datastreams response during a poll stops that poll cycle', async (t) => {
   const source = {
     async getSystems() {
       return { keyRequired: false, systems: [SYSTEM_A], stale: false };
@@ -485,6 +524,7 @@ test('[osh-030] a keyRequired datastreams response during a poll stops that poll
   const detailHost = { innerHTML: 'stale' };
   const layer = createOshLayer({ source, detailHost });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -495,10 +535,9 @@ test('[osh-030] a keyRequired datastreams response during a poll stops that poll
     await flush();
     assert.equal(detailHost.innerHTML, 'stale', 'no detail is written for a key-required poll');
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-030] a failed datastreams or observation fetch during a poll does not throw, and the next poll still runs', async () => {
+test('[osh-030] a failed datastreams or observation fetch during a poll does not throw, and the next poll still runs', async (t) => {
   let failDatastreams = true;
   let getDatastreamsCalls = 0;
   let getObservationCalls = 0;
@@ -522,6 +561,7 @@ test('[osh-030] a failed datastreams or observation fetch during a poll does not
   const detailHost = { innerHTML: 'unset' };
   const layer = createOshLayer({ source, detailHost });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -552,10 +592,9 @@ test('[osh-030] a failed datastreams or observation fetch during a poll does not
     );
     assert.match(detailHost.innerHTML, /No data/);
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-031] a newest result with a location moves the entity, and a systems refresh keeps the moved position', async () => {
+test('[osh-031] a newest result with a location moves the entity, and a systems refresh keeps the moved position', async (t) => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
@@ -565,6 +604,7 @@ test('[osh-031] a newest result with a location moves the entity, and a systems 
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -583,10 +623,9 @@ test('[osh-031] a newest result with a location moves the entity, and a systems 
     const stillMoved = stillEntity.position.getValue(Cesium.JulianDate.now());
     assert.ok(Cesium.Cartesian3.equalsEpsilon(stillMoved, expected, Cesium.Math.EPSILON6));
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-031] a newest result without a location leaves the entity where it was', async () => {
+test('[osh-031] a newest result without a location leaves the entity where it was', async (t) => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
@@ -594,6 +633,7 @@ test('[osh-031] a newest result without a location leaves the entity where it wa
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -607,14 +647,13 @@ test('[osh-031] a newest result without a location leaves the entity where it wa
     const expected = Cesium.Cartesian3.fromDegrees(SYSTEM_A.lon, SYSTEM_A.lat, 0);
     assert.ok(Cesium.Cartesian3.equalsEpsilon(position, expected, Cesium.Math.EPSILON6));
   });
-  layer.destroy(viewer);
 });
 
 // The owner's OSH server runs a few seconds ahead of the provider, so a live
 // reading's phenomenonTime lands after the injected "now" and its age comes
 // out negative. A negative age is as fresh as it gets, and motion must not
 // refuse it.
-test('[osh-031] the layer moves the entity from a newest result with a negative ageMs', async () => {
+test('[osh-031] the layer moves the entity from a newest result with a negative ageMs', async (t) => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
@@ -624,6 +663,7 @@ test('[osh-031] the layer moves the entity from a newest result with a negative 
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -637,10 +677,9 @@ test('[osh-031] the layer moves the entity from a newest result with a negative 
     const expected = Cesium.Cartesian3.fromDegrees(8, 9, 7);
     assert.ok(Cesium.Cartesian3.equalsEpsilon(moved, expected, Cesium.Math.EPSILON6));
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-031] a newest result one millisecond past the freshness threshold leaves the entity where it was', async () => {
+test('[osh-031] a newest result one millisecond past the freshness threshold leaves the entity where it was', async (t) => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
@@ -655,6 +694,7 @@ test('[osh-031] a newest result one millisecond past the freshness threshold lea
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -668,10 +708,9 @@ test('[osh-031] a newest result one millisecond past the freshness threshold lea
     const expected = Cesium.Cartesian3.fromDegrees(SYSTEM_A.lon, SYSTEM_A.lat, 0);
     assert.ok(Cesium.Cartesian3.equalsEpsilon(position, expected, Cesium.Math.EPSILON6));
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-031] a newest result from far ahead of the clock leaves the entity where it was', async () => {
+test('[osh-031] a newest result from far ahead of the clock leaves the entity where it was', async (t) => {
   // One year ahead. Finite, and under the upper bound, so a rule with only
   // that bound treats it as the freshest reading there is and moves to it.
   const source = fakeSource({
@@ -688,6 +727,7 @@ test('[osh-031] a newest result from far ahead of the clock leaves the entity wh
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -701,10 +741,9 @@ test('[osh-031] a newest result from far ahead of the clock leaves the entity wh
     const expected = Cesium.Cartesian3.fromDegrees(SYSTEM_A.lon, SYSTEM_A.lat, 0);
     assert.ok(Cesium.Cartesian3.equalsEpsilon(position, expected, Cesium.Math.EPSILON6));
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-031] a newest result with ageMs:null leaves the entity where it was', async () => {
+test('[osh-031] a newest result with ageMs:null leaves the entity where it was', async (t) => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
@@ -714,6 +753,7 @@ test('[osh-031] a newest result with ageMs:null leaves the entity where it was',
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -727,7 +767,6 @@ test('[osh-031] a newest result with ageMs:null leaves the entity where it was',
     const expected = Cesium.Cartesian3.fromDegrees(SYSTEM_A.lon, SYSTEM_A.lat, 0);
     assert.ok(Cesium.Cartesian3.equalsEpsilon(position, expected, Cesium.Math.EPSILON6));
   });
-  layer.destroy(viewer);
 });
 
 test('[osh-049] the system map is a union across refreshes', async (t) => {
@@ -754,6 +793,7 @@ test('[osh-049] the system map is a union across refreshes', async (t) => {
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -812,7 +852,6 @@ test('[osh-049] the system map is a union across refreshes', async (t) => {
     await layer.update(viewer);
     assert.equal(layer.getStats().count, 1, 'the keyRequired reset must have cleared the union');
   });
-  layer.destroy(viewer);
 });
 
 test('[osh-049] a selected feature dropped from the next refresh clears the feature and its host, and stops the poll', async (t) => {
@@ -836,6 +875,7 @@ test('[osh-049] a selected feature dropped from the next refresh clears the feat
   };
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -862,13 +902,13 @@ test('[osh-049] a selected feature dropped from the next refresh clears the feat
       'the poll of the dropped feature\'s host must have stopped',
     );
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-045] shows one entity per feature, with a label distance condition, and getStats().features counts them', async () => {
+test('[osh-045] shows one entity per feature, with a label distance condition, and getStats().features counts them', async (t) => {
   const source = fakeSource({ fois: [FEATURE_A, FEATURE_NO_HOST] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -879,26 +919,26 @@ test('[osh-045] shows one entity per feature, with a label distance condition, a
   assert.equal(condition.near, 0);
   assert.equal(condition.far, 200_000, 'the spec fixes this at 200 km');
   assert.equal(layer.getStats().features, 2);
-  layer.destroy(viewer);
 });
 
-test('[osh-045] a feature with no name gets a point entity and no label', async () => {
+test('[osh-045] a feature with no name gets a point entity and no label', async (t) => {
   const source = fakeSource({ fois: [FEATURE_NO_NAME] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-4');
   assert.ok(entity);
   assert.equal(entity.label, undefined);
-  layer.destroy(viewer);
 });
 
-test('[osh-045] a click on a feature selects and polls its host, whether or not the host is in the systems list', async () => {
+test('[osh-045] a click on a feature selects and polls its host, whether or not the host is in the systems list', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_A], fois: [FEATURE_A, FEATURE_ORPHAN] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -924,13 +964,13 @@ test('[osh-045] a click on a feature selects and polls its host, whether or not 
     );
     assert.equal(source.calls.datastreams, 2, 'a host outside the systems list still polls');
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-045] a click on a feature with a null host selects the feature, leaves selectedId null, and starts no poll', async () => {
+test('[osh-045] a click on a feature with a null host selects the feature, leaves selectedId null, and starts no poll', async (t) => {
   const source = fakeSource({ fois: [FEATURE_NO_HOST] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -948,14 +988,14 @@ test('[osh-045] a click on a feature with a null host selects the feature, leave
     await flush();
     assert.equal(layer.getStats().selectedFeatureId, null);
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-045] finds a feature record by id and by uid, with no per-feature fetch method on the source', async () => {
+test('[osh-045] finds a feature record by id and by uid, with no per-feature fetch method on the source', async (t) => {
   const source = fakeSource({ fois: [FEATURE_A] });
   assert.equal(typeof source.getFoiById, 'undefined');
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -966,13 +1006,13 @@ test('[osh-045] finds a feature record by id and by uid, with no per-feature fet
     await flush();
     assert.equal(layer.getStats().selectedFeatureId, 'foi-fixture-1');
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-045] a click on a stale feature entity selects that feature id, with no host and no name', async () => {
+test('[osh-045] a click on a stale feature entity selects that feature id, with no host and no name', async (t) => {
   const source = fakeSource({ fois: [] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -985,10 +1025,9 @@ test('[osh-045] a click on a stale feature entity selects that feature id, with 
     assert.equal(layer.getStats().selectedFeatureId, 'gone');
     assert.equal(layer.getStats().selectedId, null);
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-030] a fresh observation with a location does not throw when the selected system has no entity', async () => {
+test('[osh-030] a fresh observation with a location does not throw when the selected system has no entity', async (t) => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     fois: [FEATURE_ORPHAN],
@@ -999,6 +1038,7 @@ test('[osh-030] a fresh observation with a location does not throw when the sele
   });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1015,13 +1055,13 @@ test('[osh-030] a fresh observation with a location does not throw when the sele
     await layer.update(viewer);
     assert.equal(layer.getStats().selectedId, 'sys-fixture-unknown');
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-045] a selected feature that is still present after a later refresh keeps its selection', async () => {
+test('[osh-045] a selected feature that is still present after a later refresh keeps its selection', async (t) => {
   const source = fakeSource({ fois: [FEATURE_A] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1039,10 +1079,9 @@ test('[osh-045] a selected feature that is still present after a later refresh k
       'the feature is still in the list, so the selection must stay',
     );
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-046] a fois getter that resolves keyRequired:true, while the systems getter does not, gives an empty feature list', async () => {
+test('[osh-046] a fois getter that resolves keyRequired:true, while the systems getter does not, gives an empty feature list', async (t) => {
   const source = {
     async getSystems() {
       return { keyRequired: false, systems: [SYSTEM_A], stale: false };
@@ -1056,15 +1095,15 @@ test('[osh-046] a fois getter that resolves keyRequired:true, while the systems 
   };
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   assert.equal(layer.getStats().features, 0);
   assert.equal(layer.getStats().partial, false);
-  layer.destroy(viewer);
 });
 
-test('[osh-046] a locations getter that resolves keyRequired:true alone gives an empty location list, with partial:false and no error', async () => {
+test('[osh-046] a locations getter that resolves keyRequired:true alone gives an empty location list, with partial:false and no error', async (t) => {
   const source = {
     async getSystems() {
       return { keyRequired: false, systems: [], stale: false };
@@ -1078,6 +1117,7 @@ test('[osh-046] a locations getter that resolves keyRequired:true alone gives an
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1089,10 +1129,9 @@ test('[osh-046] a locations getter that resolves keyRequired:true alone gives an
   assert.equal(layer.getStats().count, 0);
   assert.equal(layer.getStats().partial, false);
   assert.equal(layer.getStats().error, null);
-  layer.destroy(viewer);
 });
 
-test('[osh-046] the features getter throwing sets partial:true and no error, and the systems still place', async () => {
+test('[osh-046] the features getter throwing sets partial:true and no error, and the systems still place', async (t) => {
   const source = {
     async getSystems() {
       return { keyRequired: false, systems: [SYSTEM_A], stale: false };
@@ -1106,6 +1145,7 @@ test('[osh-046] the features getter throwing sets partial:true and no error, and
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1113,13 +1153,13 @@ test('[osh-046] the features getter throwing sets partial:true and no error, and
   assert.equal(layer.getStats().partial, true);
   assert.equal(layer.getStats().error, null);
   assert.equal(dataSources[0].entities.getById('osh:sys-fixture-1') !== undefined, true);
-  layer.destroy(viewer);
 });
 
-test('[osh-046] a server with no Point and no feature gives count:0, features:0, error:null and partial:false', async () => {
+test('[osh-046] a server with no Point and no feature gives count:0, features:0, error:null and partial:false', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_NULL], fois: [] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1128,21 +1168,20 @@ test('[osh-046] a server with no Point and no feature gives count:0, features:0,
   assert.equal(stats.features, 0);
   assert.equal(stats.error, null);
   assert.equal(stats.partial, false);
-  layer.destroy(viewer);
 });
 
-test('[osh-046] truncated is true when the features payload says so', async () => {
+test('[osh-046] truncated is true when the features payload says so', async (t) => {
   const source = fakeSource({ fois: [FEATURE_A], truncated: true });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   assert.equal(layer.getStats().truncated, true);
-  layer.destroy(viewer);
 });
 
-test('[osh-046] an update aborted before all three reads settle draws nothing from them', async () => {
+test('[osh-046] an update aborted before all three reads settle draws nothing from them', async (t) => {
   let resolveSystems;
   let resolveFois;
   let resolveLocations;
@@ -1165,6 +1204,7 @@ test('[osh-046] an update aborted before all three reads settle draws nothing fr
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   const updatePromise = layer.update(viewer);
@@ -1175,10 +1215,9 @@ test('[osh-046] an update aborted before all three reads settle draws nothing fr
   assert.equal(await updatePromise, false);
   assert.equal(dataSources[0].entities.values.length, 0, 'nothing is drawn from a superseded update');
   assert.equal(layer.getStats().count, 0);
-  layer.destroy(viewer);
 });
 
-test('[osh-046] a locations getter that throws sets partial:true and no error, and the systems still place', async () => {
+test('[osh-046] a locations getter that throws sets partial:true and no error, and the systems still place', async (t) => {
   const source = {
     async getSystems() {
       return { keyRequired: false, systems: [SYSTEM_A], stale: false };
@@ -1192,6 +1231,7 @@ test('[osh-046] a locations getter that throws sets partial:true and no error, a
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1199,23 +1239,22 @@ test('[osh-046] a locations getter that throws sets partial:true and no error, a
   assert.equal(layer.getStats().partial, true);
   assert.equal(layer.getStats().error, null);
   assert.equal(dataSources[0].entities.getById('osh:sys-fixture-1') !== undefined, true);
-  layer.destroy(viewer);
 });
 
-test('[osh-046] the layer sends no candidate of its own to the locations getter', async () => {
+test('[osh-046] the layer sends no candidate of its own to the locations getter', async (t) => {
   const source = fakeSource();
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   assert.equal(source.calls.locations, 1);
   const [args] = source.calls.locationsArgs;
   assert.deepEqual(Object.keys(args[0] ?? {}).sort(), ['signal']);
-  layer.destroy(viewer);
 });
 
-test('[osh-030] the poll passes the selected system id to the datastreams getter, and drops a record naming another system', async () => {
+test('[osh-030] the poll passes the selected system id to the datastreams getter, and drops a record naming another system', async (t) => {
   const source = fakeSource({
     systems: [SYSTEM_A, SYSTEM_B],
     datastreams: [
@@ -1226,6 +1265,7 @@ test('[osh-030] the poll passes the selected system id to the datastreams getter
   const detailHost = { innerHTML: '' };
   const layer = createOshLayer({ source, detailHost });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1238,10 +1278,9 @@ test('[osh-030] the poll passes the selected system id to the datastreams getter
     assert.match(detailHost.innerHTML, /D1/);
     assert.doesNotMatch(detailHost.innerHTML, /D2 \(foreign\)/, 'a record naming another system must be dropped');
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-030] a poll superseded while it waits for the datastreams is discarded, and the newer poll still runs', async () => {
+test('[osh-030] a poll superseded while it waits for the datastreams is discarded, and the newer poll still runs', async (t) => {
   let resolveDatastreams;
   const datastreamsPromise = new Promise((resolve) => {
     resolveDatastreams = resolve;
@@ -1260,6 +1299,7 @@ test('[osh-030] a poll superseded while it waits for the datastreams is discarde
   const detailHost = { innerHTML: 'unset' };
   const layer = createOshLayer({ source, detailHost });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1278,10 +1318,9 @@ test('[osh-030] a poll superseded while it waits for the datastreams is discarde
     await flush();
     assert.match(detailHost.innerHTML, /D1/, 'the newer poll for sys-fixture-2 still completes');
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-030] a poll superseded mid-loop while it waits for an observation stops the detail rows', async () => {
+test('[osh-030] a poll superseded mid-loop while it waits for an observation stops the detail rows', async (t) => {
   let resolveObservation;
   const observationPromise = new Promise((resolve) => {
     resolveObservation = resolve;
@@ -1307,6 +1346,7 @@ test('[osh-030] a poll superseded mid-loop while it waits for an observation sto
   const detailHost = { innerHTML: 'unset' };
   const layer = createOshLayer({ source, detailHost });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1327,23 +1367,22 @@ test('[osh-030] a poll superseded mid-loop while it waits for an observation sto
       'the superseded poll must not overwrite the cleared host',
     );
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-029] a system with no name gets a point entity and no label', async () => {
+test('[osh-029] a system with no name gets a point entity and no label', async (t) => {
   const unnamed = { id: 'sys-fixture-3', uid: null, name: null, description: null, lon: 5, lat: 6, alt: 0 };
   const source = fakeSource({ systems: [unnamed] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   const entity = dataSources[0].entities.getById('osh:sys-fixture-3');
   assert.equal(entity.label, undefined);
-  layer.destroy(viewer);
 });
 
-test('[osh-029] a second update aborts the first, whose late result is discarded even without a thrown AbortError', async () => {
+test('[osh-029] a second update aborts the first, whose late result is discarded even without a thrown AbortError', async (t) => {
   let calls = 0;
   let resolveFirst;
   const firstPromise = new Promise((resolve) => {
@@ -1363,6 +1402,7 @@ test('[osh-029] a second update aborts the first, whose late result is discarded
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   const firstUpdate = layer.update(viewer);
@@ -1377,10 +1417,9 @@ test('[osh-029] a second update aborts the first, whose late result is discarded
   assert.equal(secondResult, true);
   assert.equal(firstResult, false);
   assert.equal(dataSources[0].entities.values.length, 2, 'only the second, newer result is applied');
-  layer.destroy(viewer);
 });
 
-test('[osh-029] aborts an update in flight on disable, with no error recorded', async () => {
+test('[osh-029] aborts an update in flight on disable, with no error recorded', async (t) => {
   let signalSeen;
   const source = {
     async getSystems({ signal } = {}) {
@@ -1393,6 +1432,7 @@ test('[osh-029] aborts an update in flight on disable, with no error recorded', 
   };
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   const updatePromise = layer.update(viewer);
@@ -1400,10 +1440,9 @@ test('[osh-029] aborts an update in flight on disable, with no error recorded', 
   assert.equal(await updatePromise, false);
   assert.equal(signalSeen.aborted, true);
   assert.equal(layer.getStats().error, null);
-  layer.destroy(viewer);
 });
 
-test('[osh-029] aborts an update in flight on destroy', async () => {
+test('[osh-029] aborts an update in flight on destroy', async (t) => {
   let signalSeen;
   const source = {
     async getSystems({ signal } = {}) {
@@ -1416,6 +1455,7 @@ test('[osh-029] aborts an update in flight on destroy', async () => {
   };
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   const updatePromise = layer.update(viewer);
@@ -1424,7 +1464,7 @@ test('[osh-029] aborts an update in flight on destroy', async () => {
   assert.equal(signalSeen.aborted, true);
 });
 
-test('[osh-029] a superseded update that throws a real error still lets the newer request finish', async () => {
+test('[osh-029] a superseded update that throws a real error still lets the newer request finish', async (t) => {
   let calls = 0;
   let rejectFirst;
   const firstPromise = new Promise((_resolve, reject) => {
@@ -1439,6 +1479,7 @@ test('[osh-029] a superseded update that throws a real error still lets the newe
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   const firstUpdate = layer.update(viewer);
@@ -1449,10 +1490,9 @@ test('[osh-029] a superseded update that throws a real error still lets the newe
   assert.equal(secondResult, true);
   assert.equal(layer.getStats().error, null, 'the superseded failure must not overwrite the newer result');
   assert.equal(dataSources[0].entities.values.length, 2);
-  layer.destroy(viewer);
 });
 
-test('[osh-046] a features getter that throws synchronously behaves exactly like one that rejects', async () => {
+test('[osh-046] a features getter that throws synchronously behaves exactly like one that rejects', async (t) => {
   const source = {
     async getSystems() {
       return { keyRequired: false, systems: [SYSTEM_A], stale: false };
@@ -1467,6 +1507,7 @@ test('[osh-046] a features getter that throws synchronously behaves exactly like
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   const updated = await layer.update(viewer);
@@ -1475,10 +1516,9 @@ test('[osh-046] a features getter that throws synchronously behaves exactly like
   assert.equal(dataSources[0].entities.values.length, 1);
   assert.equal(layer.getStats().partial, true);
   assert.equal(layer.getStats().error, null);
-  layer.destroy(viewer);
 });
 
-test('[osh-029] a duplicate feature id makes the draw loop throw, and the update reports that failure', async () => {
+test('[osh-029] a duplicate feature id makes the draw loop throw, and the update reports that failure', async (t) => {
   // placeOshEntities() does not dedupe by id; only the server-side adapter
   // does. Two fois records sharing an id are a malformed features read
   // that reaches the draw loop, where Cesium refuses a second entity with
@@ -1487,16 +1527,16 @@ test('[osh-029] a duplicate feature id makes the draw loop throw, and the update
   const source = fakeSource({ fois: [FEATURE_A, { ...FEATURE_A }] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   const updated = await layer.update(viewer);
   assert.equal(updated, false);
   assert.equal(typeof layer.getStats().error, 'string');
   assert.notEqual(layer.getStats().error, null);
-  layer.destroy(viewer);
 });
 
-test('[osh-029] a thrown non-Error while placing the entities still sets the fallback error message', async () => {
+test('[osh-029] a thrown non-Error while placing the entities still sets the fallback error message', async (t) => {
   // A getter, not a mocked getter/source call: this throws from inside
   // placeOshEntities()'s own read of the record, still after both reads
   // already settled, so it lands in the same catch as the duplicate-id
@@ -1515,14 +1555,14 @@ test('[osh-029] a thrown non-Error while placing the entities still sets the fal
   const source = fakeSource({ systems: [evilSystem] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   assert.equal(layer.getStats().error, 'OSH source unavailable');
-  layer.destroy(viewer);
 });
 
-test('[osh-031] a moved entity with no altitude in the newest result defaults to zero', async () => {
+test('[osh-031] a moved entity with no altitude in the newest result defaults to zero', async (t) => {
   const source = fakeSource({
     systems: [SYSTEM_A],
     datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
@@ -1532,6 +1572,7 @@ test('[osh-031] a moved entity with no altitude in the newest result defaults to
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1545,7 +1586,6 @@ test('[osh-031] a moved entity with no altitude in the newest result defaults to
     const expected = Cesium.Cartesian3.fromDegrees(8, 9, 0);
     assert.ok(Cesium.Cartesian3.equalsEpsilon(moved, expected, Cesium.Math.EPSILON6));
   });
-  layer.destroy(viewer);
 });
 
 function viewerPickHelper(viewer) {
@@ -1582,33 +1622,33 @@ function aircraftLocation(overrides = {}) {
   };
 }
 
-test('[osh-057] a fresh location with no feature reference places its system, counted under getStats().placed.stream', async () => {
+test('[osh-057] a fresh location with no feature reference places its system, counted under getStats().placed.stream', async (t) => {
   const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
   assert.ok(entity, 'the stream-placed entity must exist');
   assert.equal(layer.getStats().placed.stream, 1);
-  layer.destroy(viewer);
 });
 
-test('[osh-057] a system with no record in the union map is named from the location, and never enters the union', async () => {
+test('[osh-057] a system with no record in the union map is named from the location, and never enters the union', async (t) => {
   const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
   assert.equal(entity.label.text.getValue(), 'Fixture Aircraft');
   assert.equal(entity.properties.name.getValue(), null, 'no held system record was created');
-  layer.destroy(viewer);
 });
 
-test('[osh-057] only a location with systemName:null gives the id as the label', async () => {
+test('[osh-057] only a location with systemName:null gives the id as the label', async (t) => {
   const source = fakeSource({
     systems: [],
     fois: [],
@@ -1616,12 +1656,12 @@ test('[osh-057] only a location with systemName:null gives the id as the label',
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
   assert.equal(entity.label.text.getValue(), 'sys-fixture-9');
-  layer.destroy(viewer);
 });
 
 test('[osh-057] a refresh with no fresh location for that system removes the entity and counts it under unplaced', async (t) => {
@@ -1642,6 +1682,7 @@ test('[osh-057] a refresh with no fresh location for that system removes the ent
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1655,7 +1696,6 @@ test('[osh-057] a refresh with no fresh location for that system removes the ent
     'the entity is gone once its stream is no longer fresh',
   );
   assert.equal(layer.getStats().unplaced, 1);
-  layer.destroy(viewer);
 });
 
 test('[osh-057] a placeholder that gains a held record and a Point on a later refresh is not counted as retired', async (t) => {
@@ -1677,6 +1717,7 @@ test('[osh-057] a placeholder that gains a held record and a Point on a later re
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1691,10 +1732,9 @@ test('[osh-057] a placeholder that gains a held record and a Point on a later re
   await layer.update(viewer);
   assert.ok(dataSources[0].entities.getById('osh:sys-fixture-9'), 'still placed, now by geometry');
   assert.equal(layer.getStats().unplaced, 0, 'a system placed this refresh is never also counted as retired');
-  layer.destroy(viewer);
 });
 
-test('[osh-057] a selected stream-placed system keeps its entity at its last position until deselected', async () => {
+test('[osh-057] a selected stream-placed system keeps its entity at its last position until deselected', async (t) => {
   let locations = [aircraftLocation()];
   const source = {
     async getSystems() {
@@ -1712,6 +1752,7 @@ test('[osh-057] a selected stream-placed system keeps its entity at its last pos
   };
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1732,10 +1773,9 @@ test('[osh-057] a selected stream-placed system keeps its entity at its last pos
     // kept for the current selection.
     assert.equal(layer.getStats().unplaced, 1);
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-057] a fresh location that names a feature moves the feature entity and never places a system', async () => {
+test('[osh-057] a fresh location that names a feature moves the feature entity and never places a system', async (t) => {
   const source = fakeSource({
     systems: [],
     fois: [FEATURE_A],
@@ -1746,6 +1786,7 @@ test('[osh-057] a fresh location that names a feature moves the feature entity a
   });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
@@ -1756,13 +1797,13 @@ test('[osh-057] a fresh location that names a feature moves the feature entity a
   assert.equal(dataSources[0].entities.getById('osh:sys-fixture-9'), undefined, 'no system entity was placed');
   assert.equal(dataSources[0].entities.getById('osh:sys-fixture-second-no-point'), undefined, 'unheld feature location never places system');
   assert.equal(layer.getStats().placed.stream, 0, 'placed.stream stays at zero');
-  layer.destroy(viewer);
 });
 
-test('[osh-057] a click on a stream-placed entity selects it and starts its datastream poll like any system', async () => {
+test('[osh-057] a click on a stream-placed entity selects it and starts its datastream poll like any system', async (t) => {
   const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1775,14 +1816,14 @@ test('[osh-057] a click on a stream-placed entity selects it and starts its data
     assert.equal(source.calls.datastreams, 1);
     assert.equal(source.calls.datastreamsArgs[0], 'sys-fixture-9');
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-057] the detail for a selected stream-placed placeholder shows Placed by, with the name the location carries', async () => {
+test('[osh-057] the detail for a selected stream-placed placeholder shows Placed by, with the name the location carries', async (t) => {
   const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
   const detailHost = { innerHTML: '' };
   const layer = createOshLayer({ source, detailHost });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1794,14 +1835,14 @@ test('[osh-057] the detail for a selected stream-placed placeholder shows Placed
     assert.match(detailHost.innerHTML, /Fixture Aircraft/, 'the header falls back to the location\'s own systemName');
     assert.match(detailHost.innerHTML, /Placed by Aircraft Position/);
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-057] a held system\'s own name wins over the location\'s systemName in the detail header', async () => {
+test('[osh-057] a held system\'s own name wins over the location\'s systemName in the detail header', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_NULL], fois: [], locations: [aircraftLocation()] });
   const detailHost = { innerHTML: '' };
   const layer = createOshLayer({ source, detailHost });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   await withClickCapture(async (getClick) => {
     layer.enable(viewer);
@@ -1817,20 +1858,279 @@ test('[osh-057] a held system\'s own name wins over the location\'s systemName i
       'the location\'s systemName never overrides a held name',
     );
   });
-  layer.destroy(viewer);
 });
 
-test('[osh-057] getStats().placed.stream counts only the stream-placed system, not the geometry-placed one', async () => {
+test('[osh-057] getStats().placed.stream counts only the stream-placed system, not the geometry-placed one', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_A], fois: [], locations: [aircraftLocation()] });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
   const stats = layer.getStats();
   assert.equal(stats.count, 2, 'both the geometry-placed and the stream-placed system are on the map');
   assert.equal(stats.placed.stream, 1);
+});
+
+// --- osh-061: every entity draws on top of the depth test, at its own altitude ---
+
+test('[osh-061] the system entity\'s point and label draw on top, with the height reference NONE', async (t) => {
+  const source = fakeSource({ systems: [SYSTEM_A] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
+  const now = Cesium.JulianDate.now();
+  assert.equal(entity.point.disableDepthTestDistance.getValue(now), Infinity);
+  assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
+  assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
+  assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
+});
+
+test('[osh-061] the feature entity\'s point and label draw on top, with the height reference NONE', async (t) => {
+  const source = fakeSource({ fois: [FEATURE_A] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-1');
+  const now = Cesium.JulianDate.now();
+  assert.equal(entity.point.disableDepthTestDistance.getValue(now), Infinity);
+  assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
+  assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
+  assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
+});
+
+test('[osh-061] the re-added entity for a selected system draws on top, on its point and its label', async (t) => {
+  let locations = [aircraftLocation()];
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getLocations() {
+      return { keyRequired: false, locations, failed: 0 };
+    },
+    async getDatastreams() {
+      return { keyRequired: false, datastreams: [] };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-9');
+    getClick()({ position: {} });
+    await flush();
+
+    // The stream goes quiet: this refresh re-adds the same entity id at
+    // its last position instead of drawing it fresh (osh-057).
+    locations = [];
+    await layer.update(viewer);
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
+    const now = Cesium.JulianDate.now();
+    assert.equal(entity.point.disableDepthTestDistance.getValue(now), Infinity);
+    assert.equal(entity.point.heightReference.getValue(now), Cesium.HeightReference.NONE);
+    // The re-add's label is the one site whose mechanism differs: it
+    // carries the values by reusing the previous refresh's LabelGraphics,
+    // not by passing through entityAlwaysOnTop() itself (D62).
+    assert.equal(entity.label.disableDepthTestDistance.getValue(now), Infinity);
+    assert.equal(entity.label.heightReference.getValue(now), Cesium.HeightReference.NONE);
+  });
+});
+
+test('[osh-061] a system placed from a fresh location keeps its altitude', async (t) => {
+  const source = fakeSource({ systems: [], fois: [], locations: [aircraftLocation()] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh:sys-fixture-9');
+  const cartographic = Cesium.Cartographic.fromCartesian(
+    entity.position.getValue(Cesium.JulianDate.now()),
+  );
+  assert.ok(
+    Math.abs(cartographic.height - 100) < 1e-3,
+    `expected the fixture's own altitude, 100, got ${cartographic.height}`,
+  );
+});
+
+test('[osh-061] a feature entity keeps its own altitude', async (t) => {
+  const source = fakeSource({ fois: [FEATURE_ALT] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const entity = dataSources[0].entities.getById('osh-foi:foi-fixture-alt');
+  const cartographic = Cesium.Cartographic.fromCartesian(
+    entity.position.getValue(Cesium.JulianDate.now()),
+  );
+  assert.ok(
+    Math.abs(cartographic.height - 75) < 1e-3,
+    `expected the fixture's own altitude, 75, got ${cartographic.height}`,
+  );
+});
+
+test('[osh-061] a moved entity keeps the observation\'s altitude', async (t) => {
+  const source = fakeSource({
+    systems: [SYSTEM_A],
+    datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }],
+    observations: {
+      'ds-fixture-1': { rows: [], location: { lat: 9, lon: 8, alt: 250 }, resultTime: 't', ageMs: 1000 },
+    },
+  });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-1');
+    getClick()({ position: {} });
+    await flush();
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
+    const cartographic = Cesium.Cartographic.fromCartesian(
+      entity.position.getValue(Cesium.JulianDate.now()),
+    );
+    assert.ok(
+      Math.abs(cartographic.height - 250) < 1e-3,
+      `expected the observation's own altitude, 250, got ${cartographic.height}`,
+    );
+  });
+});
+
+// --- osh-062: hide an entity beyond the ellipsoid horizon ---
+
+test('[osh-062] a refresh under a camera that has not moved hides the antipode entities and shows the near ones', async (t) => {
+  const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_FAR], fois: [FEATURE_A, FEATURE_FAR] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const near = dataSources[0].entities.getById('osh:sys-fixture-1');
+  const far = dataSources[0].entities.getById('osh:sys-fixture-far');
+  const nearFeature = dataSources[0].entities.getById('osh-foi:foi-fixture-1');
+  const farFeature = dataSources[0].entities.getById('osh-foi:foi-fixture-far');
+  assert.equal(near.show, true, 'an entity under the camera stays visible');
+  assert.equal(nearFeature.show, true);
+  assert.equal(far.show, false, 'an entity at the antipode starts hidden, before any moveEnd');
+  assert.equal(farFeature.show, false);
+});
+
+test('[osh-062] a moveEnd over the antipode swaps which entities show', async (t) => {
+  const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_FAR], fois: [] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources, setCamera, raiseMoveEnd } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+  const near = dataSources[0].entities.getById('osh:sys-fixture-1');
+  const far = dataSources[0].entities.getById('osh:sys-fixture-far');
+  assert.equal(near.show, true);
+  assert.equal(far.show, false);
+
+  setCamera(-179, -2, 1_500_000);
+  raiseMoveEnd();
+  assert.equal(near.show, false, 'the near entity is now beyond the horizon');
+  assert.equal(far.show, true, 'the camera now sees the far entity');
+});
+
+test('[osh-062] a moveEnd raised while the layer is off still updates show, so enable() shows a correct set', async (t) => {
+  const source = fakeSource({ systems: [SYSTEM_A, SYSTEM_FAR], fois: [] });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources, setCamera, raiseMoveEnd } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.enable(viewer);
+  await layer.update(viewer);
+  layer.disable();
+
+  setCamera(-179, -2, 1_500_000);
+  raiseMoveEnd();
+
+  layer.enable(viewer);
+  const near = dataSources[0].entities.getById('osh:sys-fixture-1');
+  const far = dataSources[0].entities.getById('osh:sys-fixture-far');
+  assert.equal(near.show, false, 'updated while the layer was off');
+  assert.equal(far.show, true, 'enable() shows the set the listener already computed');
+});
+
+test('[osh-062] a poll move across the horizon hides the selected entity, and a later move back shows it', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  let location = { lat: 2, lon: 1 };
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [SYSTEM_A], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getDatastreams() {
+      return { keyRequired: false, datastreams: [{ id: 'ds-fixture-1', systemId: 'sys-fixture-1', name: 'D1' }] };
+    },
+    async getObservation() {
+      return { keyRequired: false, observation: { rows: [], location: { ...location, alt: 0 }, resultTime: 't', ageMs: 1000 } };
+    },
+  };
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    const { setPicked } = viewerPickHelper(viewer);
+    setPicked('osh:sys-fixture-1');
+    getClick()({ position: {} });
+    await flush();
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
+    assert.equal(entity.show, true, 'starts under the camera');
+
+    location = { lat: -2, lon: -179 };
+    t.mock.timers.tick(15_000);
+    await flush();
+    assert.equal(entity.show, false, 'the poll carried it past the horizon');
+
+    location = { lat: 2, lon: 1 };
+    t.mock.timers.tick(15_000);
+    await flush();
+    assert.equal(entity.show, true, 'a later poll move brings it back into view');
+  });
+});
+
+test('[osh-062] init() adds one moveEnd listener, disable() keeps it, and destroy() removes it', (t) => {
+  const layer = createOshLayer({ source: fakeSource() });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  assert.equal(viewer.camera.moveEnd.numberOfListeners, 1);
+  layer.enable(viewer);
+  assert.equal(viewer.camera.moveEnd.numberOfListeners, 1);
+  layer.disable();
+  assert.equal(viewer.camera.moveEnd.numberOfListeners, 1, 'the listener stays while the layer is off');
   layer.destroy(viewer);
+  assert.equal(viewer.camera.moveEnd.numberOfListeners, 0);
 });
 
 // --- osh-059: show one entity per stream-drawn feature ---

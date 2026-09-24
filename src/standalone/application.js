@@ -23,7 +23,6 @@ export function createStandaloneApplication({
   return createApplication({
     createScene: (context) => {
       placeSearch = createStandalonePlaceSearch({
-        resolveApiKey: () => googleApiKey,
         signal: context.signal,
       });
       return createStandaloneScene({

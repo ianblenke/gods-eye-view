@@ -439,6 +439,121 @@
     "since": "2026-09-15",
     "change": "establish-spec-governance"
   },
+  "coverage-gate-048": {
+    "hash": "53ee141ef094f833d63bb262e79c0aba022b19d30c038722ab1e72583c7f8e61",
+    "since": "2026-09-20",
+    "change": "teardown-guard"
+  },
+  "coverage-gate-049": {
+    "hash": "4a174d96f9d6a794b401f7c9a4d3b10fb1d3349dc16f7263757c15f6b9d0898a",
+    "since": "2026-09-20",
+    "change": "teardown-guard"
+  },
+  "coverage-gate-050": {
+    "hash": "bd8830a4458408efc3387f7144c50f3e153d26b58759c767db7601e9b2e42780",
+    "since": "2026-09-20",
+    "change": "teardown-guard"
+  },
+  "coverage-gate-051": {
+    "hash": "1b55c5a215d175023d39a431fe66dbd2946ca2346ff11c946e1cd915a3d126fa",
+    "since": "2026-09-21",
+    "change": "teardown-guard"
+  },
+  "coverage-gate-052": {
+    "hash": "8fd094a18d95bf7695b96d5b8bb829d5d435cc79b8379438cb79d36ae585c055",
+    "since": "2026-09-21",
+    "change": "teardown-guard"
+  },
+  "coverage-gate-053": {
+    "hash": "1c0270c7055d23d4bd0c5fb8fe6f7ddb2d9a9c01d26d329a0c475c980350866e",
+    "since": "2026-09-23",
+    "change": "gate-measurement-race"
+  },
+  "coverage-gate-054": {
+    "hash": "3829e27959eac6371bf4452bf2286cb5b049ec12f3f19a9753ef8fd6c2edcd01",
+    "since": "2026-09-23",
+    "change": "gate-measurement-race"
+  },
+  "credential-boundary-001": {
+    "hash": "eaef1a424e119ef144eb60a230f3592743ea14ab6d772b1c441006589caf402c",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-002": {
+    "hash": "cf48d9414be622796b0eb7200db0dd76b38ec70fd8dfa625060a58a9db79b129",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-003": {
+    "hash": "4ee19ddc019c308b7757109df30d846e81fa664b9987c5491c544473e077e62a",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-004": {
+    "hash": "c505cba67b70853dd986505bcd6b20d84053186ee0b4b87360fc6876ede89de5",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-005": {
+    "hash": "9c4691e97769510ed8024dd44b51652dbf54fbb436620b75e9a396e271d16e95",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-006": {
+    "hash": "217f14dc20cf3a6685406b61ac624d7933492ecefa8bc60f0f263afd92f6177b",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-007": {
+    "hash": "1ffcbac62c292f7d3c176588708021030b493c9cc80485e231e6bf83a72cc235",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-008": {
+    "hash": "0e4204c1136f3fd287618f6b5e4e7a2d90620a6a10c27ee0cd221adea8591d20",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-009": {
+    "hash": "c1c11e5dad6c00284cdee22f44fd8ba445cc6744510984f910b58735f1a05706",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-010": {
+    "hash": "92f5ce9945aa92d2608e8cdabe93d53e31e1dedc8ee07529de032357d279c651",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-011": {
+    "hash": "8b97075c28c2aadeb3c5e6ba44fe59476756dad91346be6d8886468aadd62b06",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-012": {
+    "hash": "b216d7632ba4b2a81f5907e4a63f922cd638a08422e98148ff37f258d744cf63",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-013": {
+    "hash": "a71eee047bd18cea5367bbaa9fdbc74de62374d07f147697e517c59d2287f12b",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-014": {
+    "hash": "fc4c69e32ea0ac4049ffab3737862131a1a84788dc1c7cd9dd2387a4bb0e1733",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-015": {
+    "hash": "85da26a0a16e4e4e39a6734a6f951a5436dc924f7e8ac9292d5d8ce14f16f701",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
+  "credential-boundary-016": {
+    "hash": "d3c20d65d212ef4630a17d03d5261e9c76722736a56cccd3e19182381499625d",
+    "since": "2026-09-23",
+    "change": "credential-boundary"
+  },
   "gap-ledger-001": {
     "hash": "d926236986707c5770e366ba46ec70d9e7431ee9daf231b24b1d4d14e242705c",
     "since": "2026-09-14",
@@ -450,12 +565,12 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-003": {
-    "hash": "483fe3505a9500cccd6748ff6fb2db002c96f61db81f60d22b68d6500a9b6851",
+    "hash": "7a0b654aaf138a75c9835571faf7099a5d71bff1ccf6d6c99e01cd9a7aa54b24",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
   "gap-ledger-004": {
-    "hash": "054121cd844c25378a4c5667d57bc5474f3734509014c7f3ffcc23efdef4af62",
+    "hash": "784d39983a79e6babc581398e3a6e0a028b883af8ab0f7fd2c82d4d8ce9c9d93",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -500,7 +615,7 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-013": {
-    "hash": "aef5643912426c426b89340b56eaefea700e7aeda6ecdfd053c1d9c1723e6408",
+    "hash": "cce6bacbccdfe079d514661614010d30bf465dbb3723e86244ae14be6ed07372",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -520,7 +635,7 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-017": {
-    "hash": "db44a131e677524038a6b17885b903a690c43f056e623a0ee1e9df0e39762733",
+    "hash": "8835b9b00de14bc355bca253068904f13c2326ca7359144bad1a231cc9fa936c",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -540,12 +655,12 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-021": {
-    "hash": "a2d64656ade81e2a53db44fadb532e80c687a536c815bba283cac657c3018c70",
+    "hash": "30825d33f0d673d252383dcd723cd30dc81dd27ad85da607a987a2cfe4a5c36d",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
   "gap-ledger-022": {
-    "hash": "6579a6fb106bf53e0b4f62680a621822dada0a638680426ea60545572a01baa5",
+    "hash": "c5a41dff50d9e8f52ac6f960a685cdb3cf2b6737bd18b4380da24f9907bb20e3",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -600,7 +715,7 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-040": {
-    "hash": "cfd11db30b0551c6c6dce50cef4a7bb238ede5d59476ef657fc86439eb734f5d",
+    "hash": "eb95b0bf88336c82c41b536c644e6e815dc95c8af2e7e78fd08bd1b8e1cc7c6f",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -620,7 +735,7 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-048": {
-    "hash": "d012d8e04953538f8870ce1792152196aa4904ddd1f8e3b0c03acdbb39931356",
+    "hash": "d1f0b9b5d08d28676a4e1cb85f3a01d85f6087f4bfadfc0692959bcb76c1d9c0",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -640,7 +755,7 @@
     "change": "establish-spec-governance"
   },
   "gap-ledger-056": {
-    "hash": "d6bd8c9307b3ff621ea9e91a61905abbe7a22ad8124d9ab7eab2b21c3c97503a",
+    "hash": "168db41d8e2771825b4e2d560ab9443ab4468cc7ff14df9c83095388c307b8c8",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
@@ -698,6 +813,56 @@
     "hash": "5332b7c028287aa2308d097b76dcb6fd9ff3fb6aaee9df2d7dcda9cabfaef9bd",
     "since": "2026-09-17",
     "change": "fix-covered-count"
+  },
+  "gap-ledger-079": {
+    "hash": "80d54ac96ffaa264ac71f53453f298751777bbecb81f78ce3d7d87dfc072fc20",
+    "since": "2026-09-22",
+    "change": "ledger-waiver"
+  },
+  "gap-ledger-080": {
+    "hash": "799c5d8c6abe2740f76135d5ef3146bf29d4d87c1bd4f71da23825f8ef684a2d",
+    "since": "2026-09-22",
+    "change": "ledger-waiver"
+  },
+  "gap-ledger-081": {
+    "hash": "b35db2bfbaf4445a33fc811d2560ea5077d1f268b0813fe271c1136d2137247b",
+    "since": "2026-09-22",
+    "change": "ledger-waiver"
+  },
+  "gap-ledger-082": {
+    "hash": "69376b7f53ca0961ac5b0864e28003a5862b31c16f7f97be3c00542665ade51e",
+    "since": "2026-09-22",
+    "change": "ledger-waiver"
+  },
+  "gap-ledger-083": {
+    "hash": "f6c7532a07c61e7fdf75dccae93db5e7429b85ea11fae4fb43cb9d3f6b2538fc",
+    "since": "2026-09-22",
+    "change": "ledger-waiver"
+  },
+  "gap-ledger-084": {
+    "hash": "f9791051b0652c8db3970e211ed9490495ae9f4c7cf2f2604e936a4c44fbca78",
+    "since": "2026-09-22",
+    "change": "ledger-waiver"
+  },
+  "gap-ledger-085": {
+    "hash": "ff0bb0b8ce5ce5ff30db94df0e976848290ff9c8c0bfd0e96b6a569bff573491",
+    "since": "2026-09-22",
+    "change": "ledger-waiver"
+  },
+  "gap-ledger-086": {
+    "hash": "5ee070587b931726239726ba3a376a68a1eb3a5143dd38fa75664b9e357367df",
+    "since": "2026-09-22",
+    "change": "ledger-waiver"
+  },
+  "gap-ledger-087": {
+    "hash": "e6610b4905b1e96dd16757520b76681eab67308f68997d062da64d6ac492081b",
+    "since": "2026-09-22",
+    "change": "ledger-waiver"
+  },
+  "gap-ledger-088": {
+    "hash": "760073ea72df9bc5c2dca1374309fa7945875e9fd673493cf241a415eaafe0dd",
+    "since": "2026-09-23",
+    "change": "gate-measurement-race"
   },
   "hud-markings-001": {
     "hash": "bf07f3ac338e3fd2d2154e6b57509df6157b73411cd9031a3d84856c0ef48c0a",
@@ -1003,6 +1168,16 @@
     "hash": "daeb05fd9ed1df0f3bc7ef4e214eab09fb908a6e4795545abcbfa3d12703f554",
     "since": "2026-09-19",
     "change": "osh-location-streams"
+  },
+  "osh-061": {
+    "hash": "a758aeb66a9a856a94deaa591f6d06eda9e6128bc52d936cacc43a81e1ac389b",
+    "since": "2026-09-20",
+    "change": "osh-marker-depth"
+  },
+  "osh-062": {
+    "hash": "f583692210743257187f19987884087a0f8be600db370e0c742a3204b5db78ae",
+    "since": "2026-09-20",
+    "change": "osh-marker-depth"
   },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",

@@ -21,6 +21,7 @@ import {
   parseLedger,
   ratchetLedger,
   readLedger,
+  waiversOf,
   writeLedger,
 } from './lib/ledger.mjs';
 import { buildLinks, checkLinks, checkRegistry, compareRegistryWithBase, idsOfChangedTests, readLinks, readRegistry, updateRegistry, writeLinks, writeRegistry } from './lib/registry.mjs';
@@ -37,11 +38,16 @@ const RUNNER = fileURLToPath(new URL('./lib/run-parallel.mjs', import.meta.url))
 const OUT_DIR = '.gev-cache/spec';
 const DEFAULT_BASE = 'origin/main';
 const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
-const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree']);
-const OPTIONS = new Set(['--change', '--base', '--root']);
-const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree> [--change <name>] [--base <ref>] [--root <dir>]';
+const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive']);
+const OPTIONS = new Set(['--change', '--base', '--root', '--file', '--metric', '--lines', '--count', '--reason']);
+const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive> [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>]';
 
-/** Read the command line. Throws the usage text for a bad command line. */
+/**
+ * Read the command line. Throws the usage text for a bad command line.
+ *
+ * @param {string[]} argv - Arguments from the command line.
+ * @returns {object} Parsed options.
+ */
 export function parseArgs(argv) {
   const [command, ...rest] = argv;
   if (!COMMANDS.has(command)) throw new Error(USAGE);
@@ -78,19 +84,20 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
   const main = testFiles.filter((file) => !allocation.has(file));
   const runs = [];
   if (main.length > 0) {
+    const rawOutput = `${outDir}/tests-main.jsonl`;
     runs.push({
       kind: 'main',
-      output: `${outDir}/tests-main.jsonl`,
+      output: `${rawOutput}.sync`,
+      rawOutput,
       args: [
         '--test',
         '--experimental-test-coverage',
+        '--test-force-exit',
         '--test-coverage-exclude=**/*.test.mjs',
-        '--test-reporter=dot',
-        '--test-reporter-destination=stdout',
         '--test-reporter=lcov',
         `--test-reporter-destination=${outDir}/lcov.info`,
         `--test-reporter=${REPORTER}`,
-        `--test-reporter-destination=${outDir}/tests-main.jsonl`,
+        `--test-reporter-destination=${rawOutput}`,
         ...main,
       ],
     });
@@ -98,11 +105,22 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
   testFiles
     .filter((file) => allocation.has(file))
     .forEach((file, index) => {
-      const output = `${outDir}/tests-allocation-${index}.jsonl`;
+      const rawOutput = `${outDir}/tests-allocation-${index}.jsonl`;
       runs.push({
         kind: 'allocation',
-        output,
-        args: ['--expose-gc', '--test', '--test-concurrency=1', '--test-reporter=dot', '--test-reporter-destination=stdout', `--test-reporter=${REPORTER}`, `--test-reporter-destination=${output}`, file],
+        output: `${rawOutput}.sync`,
+        rawOutput,
+        args: [
+          '--expose-gc',
+          '--test',
+          '--test-concurrency=1',
+          '--test-force-exit',
+          '--test-reporter=dot',
+          '--test-reporter-destination=stdout',
+          `--test-reporter=${REPORTER}`,
+          `--test-reporter-destination=${rawOutput}`,
+          file,
+        ],
       });
     });
   return runs;
@@ -117,10 +135,13 @@ export function childEnv(env, { outDir, root, inventoryHash }) {
   return { ...next, NODE_OPTIONS: GUARD_PRELOAD, GEV_SPEC_OUT: outDir, GEV_SPEC_ROOT: root, GEV_SPEC_INVENTORY: inventoryHash };
 }
 
+// Both call sites pass files that already exist: measure() creates every run's own `.sync`
+// file before any run starts, and the guard-*.jsonl names come from a readdirSync() of the
+// same directory. No caller can pass a name that is not already there.
 function readJsonLines(directory, files) {
   return files.flatMap((file) => {
     const absolute = path.join(directory, file);
-    return existsSync(absolute) ? readFileSync(absolute, 'utf8').split('\n').filter(Boolean).map((line) => JSON.parse(line)) : [];
+    return readFileSync(absolute, 'utf8').split('\n').filter(Boolean).map((line) => JSON.parse(line));
   });
 }
 
@@ -135,10 +156,13 @@ function executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash
     return { errors: [{ code: 'GATES-TEST-RUN', file: '', message: `The test runner stopped with status ${result.status}${detail}` }], results: [] };
   }
   const results = JSON.parse(readFileSync(resultsFile, 'utf8'));
+  // measure() creates every run's own `.sync` output file before any run starts, so
+  // `run.output` always exists here; a nonzero status with no real error defers entirely
+  // to checkFailedRuns(), which reads that file to say whether anything in it explains it.
   const errors = runs.flatMap((run, index) => {
     const { status, error } = results[index];
-    if (!error && (status === 0 || existsSync(run.output))) return [];
-    return [{ code: 'GATES-TEST-RUN', file: '', message: `The ${run.kind} test run stopped with status ${status}${error ? `: ${error}` : ''}` }];
+    if (!error) return [];
+    return [{ code: 'GATES-TEST-RUN', file: '', message: `The ${run.kind} test run stopped with status ${status}: ${error}` }];
   });
   return { errors, results };
 }
@@ -147,7 +171,7 @@ function executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash
 function checkFailedRuns(runs, results, recordsByRun) {
   return runs.flatMap((run, index) => {
     const result = results[index];
-    if (!result || result.error || result.status === 0 || !existsSync(run.output)) return [];
+    if (!result || result.error || result.status === 0) return [];
     if (recordsByRun[index].some((record) => record.status === 'fail')) return [];
     return [{ code: 'GATES-TEST-RUN', file: '', message: `The ${run.kind} test run stopped with status ${result.status}, but no test in its result file failed` }];
   });
@@ -174,13 +198,26 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
   writeFileSync(inventoryFile, inventoryText);
   const resultsDir = mkdtempSync(path.join(tmpdir(), 'gev-spec-results-'));
   const runs = buildTestRuns({ testFiles, allocationFiles, outDir: resultsDir });
+  // Each run's own trace reporter opens its `.sync` file lazily, on its first record, which
+  // is not necessarily the first thing that touches that path: a test can write into it too
+  // (src/tooling/spec/gates.test.mjs's [spec-trace-039 spec-trace-040] deliberately does, to
+  // check that the gate catches a forged record). Creating the file empty here, before any
+  // test process starts, lets the reporter open it in append mode and never truncate content
+  // a test already wrote.
+  for (const run of runs) writeFileSync(run.output, '');
   const execution = executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash: contentHash(inventoryText) });
   errors.push(...execution.errors);
   if (!existsSync(inventoryFile) || readFileSync(inventoryFile, 'utf8') !== inventoryText) {
     errors.push({ code: 'COVERAGE-INVENTORY-CHANGED', file: path.relative(root, inventoryFile), message: 'The inventory file changed during the test run' });
   }
 
-  const named = new Set(['runs.json', 'results.json', 'lcov.info', ...runs.map((run) => path.basename(run.output))]);
+  const named = new Set([
+    'runs.json',
+    'results.json',
+    'lcov.info',
+    ...runs.map((run) => path.basename(run.output)),
+    ...runs.map((run) => path.basename(run.rawOutput)),
+  ]);
   for (const file of readdirSync(resultsDir).filter((name) => !named.has(name)).sort()) {
     errors.push({ code: 'COVERAGE-EXTRA-RESULT', file, message: `The result folder has ${file}, but the gate did not name it. The gate does not read it.` });
   }
@@ -199,6 +236,9 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
   const guardResults = readJsonLines(outDir, readdirSync(outDir).filter((file) => /^guard-\d+\.jsonl$/.test(file)).sort());
   for (const violation of guardResults.flatMap((result) => result.violations).filter((item) => !item.file)) {
     errors.push({ code: violation.code, file: '', message: violation.message });
+  }
+  for (const leak of guardResults.flatMap((result) => result.leaks || [])) {
+    errors.push({ code: 'GATES-TEST-LEAK', file: leak.file, message: `A test process left a live timer: ${leak.resources.join(', ')}` });
   }
   const assertions = new Map();
   for (const item of guardResults.flatMap((result) => result.assertions)) {
@@ -312,6 +352,42 @@ export function runGates({
     return 0;
   }
 
+  if (command === 'waive') {
+    const { file, metric, lines, count, reason } = options;
+    const tracked = new Set(listTrackedFiles(root));
+    const isTracked = Boolean(file) && tracked.has(file);
+    const sameAsBaseFile = isTracked && existsSync(path.join(root, file)) && readFileAt(root, base, file) === readFileSync(path.join(root, file), 'utf8');
+    const folder = change && changeFolder(root, change);
+    const active = Boolean(change) && Boolean(folder) && existsSync(path.join(root, folder, 'proposal.md'));
+    const validMetric = ['lines', 'branches', 'functions'].includes(metric);
+    const parsedLines = lines ? lines.split(',').map((item) => Number(item)) : [];
+    const validLines = parsedLines.length > 0 && parsedLines.every((n) => Number.isInteger(n) && n > 0);
+    const parsedCount = Number(count);
+    const validCount = Number.isInteger(parsedCount) && parsedCount > 0;
+    const validReason = Boolean(reason) && reason.trim().length > 0;
+
+    const faults = [
+      [!active, `Change "${change}" has no folder with a proposal.md file in openspec/changes`],
+      [!isTracked, `Git does not track ${file}`],
+      [sameAsBaseFile, `${file} has the base content. A waiver needs a changed file.`],
+      [!validMetric, `Unknown metric "${metric}". The metrics are lines, branches, functions.`],
+      [!validLines, `Line "${lines}" is not a positive whole number`],
+      [!validCount, `Count "${count}" is not a positive whole number`],
+      [!validReason, 'Reason is empty'],
+    ];
+    const fault = faults.find(([bad]) => bad);
+    if (fault) {
+      return report(log, [{ code: 'GATES-WAIVE', file: file || '', message: fault[1] }]);
+    }
+
+    const sha = contentHash(readFileSync(path.join(root, file), 'utf8'));
+    const commit = headCommit(root);
+    const waiverLine = { date, change, commit, kind: 'waiver', file, metric, sha, lines: parsedLines, count: parsedCount, reason };
+    appendHistory(root, [waiverLine]);
+    log(`Waiver: recorded ${parsedCount} ${metric} for ${file}.`);
+    return report(log, []);
+  }
+
   const pinned = readOptional(root, '.node-version');
   if (pinned === null) {
     return report(log, [{ code: 'GATES-RUNTIME', file: '.node-version', message: 'Add the file .node-version with the pinned Node version.' }]);
@@ -370,6 +446,10 @@ export function runGates({
   const ledger = readLedger(root);
   if (!ledger) return report(log, [...measured.errors, { code: 'GATES-NO-LEDGER', file: LEDGER_FILE, message: 'Run: node scripts/spec/gates.mjs init' }]);
 
+  const historyText = readOptional(root, HISTORY_FILE) ?? '';
+  const baseHistoryText = readFileAt(root, base, HISTORY_FILE) ?? '';
+  const waivers = waiversOf(historyText, baseHistoryText, change);
+
   if (command === 'ratchet') {
     if (measured.errors.length > 0) return report(log, measured.errors);
     const registry = updateRegistry({
@@ -393,6 +473,7 @@ export function runGates({
         changeActive,
         date,
         commit: headCommit(root),
+        waivers,
       });
     } catch (error) {
       return report(log, [{ code: 'GATES-RATCHET', file: LEDGER_FILE, message: error.message }]);
@@ -405,14 +486,14 @@ export function runGates({
     return report(log, []);
   }
 
-  const comparison = compareLedger({ ledger, current: measured.current, sameAsBase });
+  const comparison = compareLedger({ ledger, current: measured.current, sameAsBase, waivers });
   const baseErrors = compareWithBase({
     ledger,
     baseLedger: parseLedger(readFileAt(root, base, LEDGER_FILE)),
     retired: [...measured.specs.retired],
     baseRetired: JSON.parse(readFileAt(root, base, RETIRED_FILE) ?? '[]'),
-    history: readOptional(root, HISTORY_FILE) ?? '',
-    baseHistory: readFileAt(root, base, HISTORY_FILE) ?? '',
+    history: historyText,
+    baseHistory: baseHistoryText,
     sameAsBase,
     change,
   });

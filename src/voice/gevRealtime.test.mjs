@@ -2959,6 +2959,12 @@ test('hidden document yields no fresh frame — capture must not label a stale c
 
 test('visible document with a rendering scene reports a fresh frame', async () => {
   const originalDocument = globalThis.document;
+  const originalSetTimeout = globalThis.setTimeout;
+  let timerId;
+  globalThis.setTimeout = (fn, delay, ...args) => {
+    timerId = originalSetTimeout(fn, delay, ...args);
+    return timerId;
+  };
   try {
     globalThis.document = { hidden: false };
     let fire = null;
@@ -2969,12 +2975,20 @@ test('visible document with a rendering scene reports a fresh frame', async () =
     const fresh = await renderFreshCesiumFrame({ scene });
     assert.equal(fresh, true);
   } finally {
+    clearTimeout(timerId);
+    globalThis.setTimeout = originalSetTimeout;
     globalThis.document = originalDocument;
   }
 });
 
 test('a tab switch during the bounded render wait invalidates freshness', async () => {
   const originalDocument = globalThis.document;
+  const originalSetTimeout = globalThis.setTimeout;
+  let timerId;
+  globalThis.setTimeout = (fn, delay, ...args) => {
+    timerId = originalSetTimeout(fn, delay, ...args);
+    return timerId;
+  };
   try {
     const doc = { hidden: false };
     globalThis.document = doc;
@@ -2986,6 +3000,8 @@ test('a tab switch during the bounded render wait invalidates freshness', async 
     const fresh = await renderFreshCesiumFrame({ scene });
     assert.equal(fresh, false, 'freshness rechecked after the await');
   } finally {
+    clearTimeout(timerId);
+    globalThis.setTimeout = originalSetTimeout;
     globalThis.document = originalDocument;
   }
 });
@@ -3671,6 +3687,6 @@ test('a genuinely different refused call still gets its own output', async () =>
   assert.deepEqual(outputs, ['call_one', 'call_two'], 'each distinct call is answered');
 });
 
-const testPlaceSearch = () => createStandalonePlaceSearch({ resolveApiKey: () => globalThis.window?.__GOOGLE_MAPS_API_KEY__ });
+const testPlaceSearch = () => createStandalonePlaceSearch();
 function createGevActionRunner(options) { return createActionRunner({ placeSearch: testPlaceSearch(), ...options }); }
 function controlRadio(viewer, manager, args, options) { return runControlRadio(viewer, manager, args, { placeSearch: testPlaceSearch(), ...options }); }
