@@ -331,13 +331,15 @@ test('traffic timing pairs real ordering to the scheduling change and guards re-
     console.warn = originalWarn;
     performance.clearMarks();
     performance.clearMeasures();
-    // vite's own close() resolves before every resource it owns (its dependency-optimizer
-    // service process, its file watcher) has finished tearing down on its own tick. A short
-    // wait here, on the real setTimeout restored above, lets that settle, so this test's own
-    // process does not still show one of vite's own timers as live at exit — confirmed by
-    // reproducing the leak under a real whole-project run, where this file never leaks alone.
-    // A 100ms wait held for 3 of 4 whole-project verification runs, then still leaked once
-    // under real event-loop contention; raised to 750ms for more margin.
+    // vite's own close() resolves before every resource it owns has finished tearing down on
+    // its own tick. A short wait here, on the real setTimeout restored above, lets that settle,
+    // so this test's own process does not still show one of vite's own timers as live at exit —
+    // confirmed by reproducing the leak under a real whole-project run, where this file never
+    // leaks alone. A 100ms wait held for 3 of 4 whole-project verification runs, then still
+    // leaked once under real event-loop contention; raised to 750ms for more margin.
+    // The config above now stops the dependency optimizer and the file watcher, which started
+    // most of these timers. The wait stays: a module request can still start a 50ms timer in
+    // vite (read in the vite 6.4.3 source, not confirmed by a run).
     await new Promise((resolve) => originalSetTimeout(resolve, 750));
   }
 });
