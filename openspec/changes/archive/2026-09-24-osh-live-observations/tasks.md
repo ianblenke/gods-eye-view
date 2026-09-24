@@ -119,9 +119,9 @@ Do not rename a test that exists on `main`. Use only synthetic ids: `ds-fixture-
 
 ## 4. Gates and review
 
-- [ ] 4.1 Run `make lint` until no STE error remains.
-- [ ] 4.2 Run `make ratchet CHANGE=osh-live-observations`.
-- [ ] 4.3 Run `make gates CHANGE=osh-live-observations`. Confirm that each changed code file has full coverage.
-- [ ] 4.4 Run `/opsx:review osh-live-observations`.
-- [ ] 4.5 Correct the findings.
-- [ ] 4.6 Record the result in `review.md`.
+- [x] 4.1 Run `make lint` until no STE error remains.
+- [x] 4.2 Run `make ratchet CHANGE=osh-live-observations`.
+- [x] 4.3 Run `make gates CHANGE=osh-live-observations`. Confirm that each changed code file has full coverage.
+- [x] 4.4 Run `/opsx:review osh-live-observations`.
+- [x] 4.5 Correct the findings.
+- [x] 4.6 Record the result in `review.md`.
