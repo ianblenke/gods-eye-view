@@ -2,11 +2,13 @@ import { coalesceProxyRequest } from './common/http.js';
 import { OSH_LIST_FORMAT, oshGet, oshListUrl, oshPages } from './osh/get.js';
 import { baseErrorCode, createOshBase } from './osh/base.js';
 import {
+  assertLiveUrl,
   assertObservationUrl,
   assertObservationsLatestUrl,
   assertSchemaUrl,
   assertSystemDatastreamsUrl,
   assertSystemUrl,
+  liveUrl,
   observationUrl,
   observationsLatestUrl,
   readDatastreamId,
@@ -15,6 +17,7 @@ import {
   systemDatastreamsUrl,
   systemUrl,
 } from './osh/ids.js';
+import { createOshLiveHub } from './osh/live.js';
 import {
   OBS_TTL_MS,
   createOshKeyedCache,
@@ -46,6 +49,7 @@ import { mapOshLocationPage, oshObservationAgeMs } from '../../src/data/oshObser
  *   GET /api/osh/datastreams?system=<id> → {system, fetchedAt, stale, ttlMs, count, datastreams}
  *   GET /api/osh/fois          → {fetchedAt, stale, ttlMs, count, truncated, fois}
  *   GET /api/osh/observations?datastream=<id> → {datastream, fetchedAt, stale, ttlMs, observation}
+ *   GET /api/osh/live?datastream=<id> → server-sent events: observation, open, down, unsupported
  *   GET /api/osh/locations     → {fetchedAt, stale, ttlMs, count, streams, failed, locations}
  *
  * Keyless (no OSH_URL, or a value that does not parse as a URL): every
@@ -58,6 +62,13 @@ import { mapOshLocationPage, oshObservationAgeMs } from '../../src/data/oshObser
 export const OSH_LIST_TTL_MS = 5 * 60_000;
 /** The feature-of-interest walk needs more pages than the other two lists. */
 export const OSH_FOI_MAX_PAGES = 60;
+
+/** The head of every answer of the live route (design decision D64). */
+const OSH_LIVE_HEADERS = Object.freeze({
+  'Content-Type': 'text/event-stream; charset=utf-8',
+  'Cache-Control': 'no-store',
+  'X-Accel-Buffering': 'no',
+});
 
 /**
  * The location pass's built-in property-filter candidate source (design
@@ -213,8 +224,10 @@ export function oshProxy({
   fetchImpl = globalThis.fetch,
   now = Date.now,
   warn = console.warn,
+  liveHub = null,
 } = {}) {
   const base = createOshBase({ fetchImpl, now });
+  const hub = liveHub || createOshLiveHub({ now, warn });
   const systemsCache = createOshListCache({ ttlMs: OSH_LIST_TTL_MS, now });
   const datastreamsCache = createOshListCache({ ttlMs: OSH_LIST_TTL_MS, now });
   const foisCache = createOshFoisCache({ ttlMs: OSH_LIST_TTL_MS, now });
@@ -268,6 +281,23 @@ export function oshProxy({
       headers.Authorization = `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`;
     }
     return { configuredUrl, headers };
+  }
+
+  /**
+   * The schema decides whether, and how, a stream's result carries a
+   * location (design decision D44). A failed schema read is not the
+   * failure of the route that asks: it gives a reader of null, which
+   * mapOshObservation() reports as location:null.
+   */
+  async function readerFor(root, id, headers) {
+    try {
+      const schemaTarget = schemaUrl(root, id);
+      assertSchemaUrl(schemaTarget, root, id);
+      const schemaResult = await schemaCache.get(id, schemaTarget, headers);
+      return schemaResult.reader;
+    } catch {
+      return null;
+    }
   }
 
   async function fetchSystemsUpstream(root, headers) {
@@ -616,19 +646,7 @@ export function oshProxy({
           // unexpected throw falls to the outer catch, below, as a 500.
           const target = observationUrl(state.root, id);
           assertObservationUrl(target, state.root, id);
-          // The schema decides whether, and how, this stream's result
-          // carries a location (design decision D44). A failed schema
-          // read is not this route's failure: it degrades to a reader of
-          // null, which mapOshObservation() reports as location:null.
-          let reader = null;
-          try {
-            const schemaTarget = schemaUrl(state.root, id);
-            assertSchemaUrl(schemaTarget, state.root, id);
-            const schemaResult = await schemaCache.get(id, schemaTarget, headers);
-            reader = schemaResult.reader;
-          } catch {
-            reader = null;
-          }
+          const reader = await readerFor(state.root, id, headers);
           try {
             const result = await observationsCache.get(id, target, headers, reader);
             // The age is arithmetic on the cached observation's phenomenonTime
@@ -651,6 +669,43 @@ export function oshProxy({
               upstreamStatus: Number.isFinite(error?.status) ? error.status : null,
             });
           }
+          return;
+        }
+
+        if (subPath === '/live') {
+          const id = readDatastreamId(requestUrl.searchParams);
+          if (!id) {
+            sendJson(400, { error: 'bad_datastream' });
+            return;
+          }
+          const state = await base.resolveRoot(configuredUrl, headers);
+          if (!state.root) {
+            sendJson(502, { error: baseErrorCode(state.failures) });
+            return;
+          }
+          // Like the observation route: fixed imports from ids.js, no seam.
+          const target = liveUrl(state.root, id);
+          assertLiveUrl(target, state.root, id);
+          const reader = await readerFor(state.root, id, headers);
+          // The client can leave while the root and the schema load.
+          if (res.destroyed) return;
+          const joined = hub.join(
+            id,
+            { url: target, headers, reader },
+            {
+              start() {
+                res.writeHead(200, OSH_LIVE_HEADERS);
+                res.flushHeaders();
+              },
+              write: (text) => res.write(text),
+              end: () => res.end(),
+            },
+          );
+          if (joined.error) {
+            sendJson(503, { error: joined.error });
+            return;
+          }
+          res.on('close', joined.leave);
           return;
         }
 

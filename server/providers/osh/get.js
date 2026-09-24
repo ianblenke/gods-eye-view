@@ -4,7 +4,8 @@ import { readResponseJsonCapped } from '../common/http.js';
  * The only fetch() call site of the OpenSensorHub provider. Every route,
  * the base-path probe and the page walk call oshGet(). It sends one GET
  * request with no body, never follows a redirect, and caps the response
- * body and the request time.
+ * body and the request time. The only WebSocket call site is
+ * oshOpenStream(), below.
  */
 
 /** The list format this provider asks for. Measured against the owner's server on 2026-09-17. */
@@ -103,6 +104,25 @@ export async function oshGet(
     clearTimeout(timeoutId);
     if (signal) signal.removeEventListener('abort', onAbort);
   }
+}
+
+/**
+ * The only WebSocket call site of the provider. It opens one upstream
+ * stream. The Node constructor takes a second argument with a `headers`
+ * object (an extension of Node), and it sends a GET handshake with those
+ * headers. The server sends one JSON observation in each binary frame, so
+ * the socket reads a frame as an ArrayBuffer. No file of the provider calls
+ * `send`, so the provider sends no frame to the server.
+ * @param {typeof WebSocket} WebSocketImpl - Injected WebSocket constructor.
+ * @param {string|URL} url - Live URL, already built and guarded by the caller.
+ * @param {object} [options]
+ * @param {Record<string,string>} [options.headers]
+ * @returns {WebSocket}
+ */
+export function oshOpenStream(WebSocketImpl, url, { headers = {} } = {}) {
+  const socket = new WebSocketImpl(String(url), { headers });
+  socket.binaryType = 'arraybuffer';
+  return socket;
 }
 
 /** Query keys a next-page link may carry. Any other key stops the walk. */

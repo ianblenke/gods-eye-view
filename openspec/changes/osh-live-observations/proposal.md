@@ -19,9 +19,11 @@ This change uses the live stream for the selected system. The provider relays it
 
 ## Impact
 
+- Changed configuration: `scripts/package-boundaries.json` gets `live.js` in the group `osh-provider`.
 - Changed code files: `server/providers/osh.js`, `server/providers/osh/get.js`, `server/providers/osh/ids.js`, `src/layers/osh/source.js` and `src/layers/osh/index.js`.
 - New code file: `server/providers/osh/live.js`. The pinned count of `osh-005` changes from four files to five.
-- Changed test files: `src/data/oshProxy.test.mjs`, `src/data/oshLayer.test.mjs` and `src/layers/osh/source.test.mjs`.
+- Changed test files: `src/data/oshProxy.test.mjs`, `src/data/oshIds.test.mjs`, `src/data/oshLayer.test.mjs`, `src/layers/osh/source.test.mjs` and `src/data/oshRepositoryHygiene.test.mjs`.
+- The hygiene test pins the number of OSH test files. The new test file changes that number from 14 to 15.
 - New test file: `src/data/oshLive.test.mjs`. It uses a fixture WebSocket server on the loopback address. No test calls a real server.
 - No new request method, no request body and no new environment variable. The list routes and the observation route do not change.
 - The provider holds more open connections. Eight upstream sockets and sixteen clients for each datastream are the limits.
@@ -34,3 +36,5 @@ This change uses the live stream for the selected system. The provider relays it
 - `osh-live-one-way`: the provider only listens. It sends no command, and the server accepts none.
 - `osh-live-header-extension`: the `headers` option of the `WebSocket` constructor is an extension of Node. A different runtime can ignore it, and the handshake then carries no credentials.
 - `osh-live-no-live-test`: no test proves that the owner's server behaves like the fixture. Every fixture is synthetic.
+- `osh-live-poll-after-down`: after a `down` event, the poll runs as today. It can replace a newer live observation with an older cached one, because the observation route caches for 15 seconds. A later change can order the two by `phenomenonTime`.
+- `osh-live-first-client-reader`: the hub keeps the URL, the headers and the schema reader of the first client for the life of the entry of a datastream. The entry lives until two seconds after the last client leaves. The reader of a later client is not used.

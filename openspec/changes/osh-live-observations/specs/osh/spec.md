@@ -41,7 +41,8 @@ Origin: spec-first
 - **WHEN** the provider builds the live URL for a datastream id and a resolved root
 - **THEN** the URL has the scheme `ws` for an `http` root and `wss` for an `https` root
 - **AND** the URL has the host and the port of the root, and the path `datastreams/<id>/observations`
-- **AND** the URL has the query `f=application/om+json`
+- **AND** the URL has the query `f` with the value `application/om+json`, encoded as the URL rules say
+- **AND** the URL has no user name and no password, also when the root has them
 - **AND** `assertLiveUrl()` throws for another host, path, query, user name, password or fragment
 
 #### Scenario: Open one upstream WebSocket as a GET and send nothing `osh-065`
@@ -53,9 +54,10 @@ Origin: spec-first
 #### Scenario: Relay each frame as an observation event `osh-066`
 - **WHEN** the upstream socket delivers a binary frame or a text frame that holds one JSON observation
 - **THEN** the client receives an event `observation`, and its data is the observation of `osh-022` for that datastream, with the `ageMs` of that moment
-- **AND** a frame that is not JSON, has no `result`, or has more than 65536 bytes gives no event, and the stream stays open
+- **AND** a frame that is not JSON or has no `result` gives no event, and the stream stays open
 - **AND** a frame with more than 65536 bytes closes the upstream socket, and the client receives the event `unsupported`
-- **AND** the provider refuses the live route for that datastream for ten minutes
+- **AND** the provider ends the response of each client of that datastream
+- **AND** a request for that datastream in the next ten minutes gets `503` with `{error:'live_unsupported'}`
 
 #### Scenario: Share one upstream socket and close it after the last client `osh-067`
 - **WHEN** two clients open the live route for one datastream, and both close
@@ -71,6 +73,7 @@ Origin: spec-first
 #### Scenario: Tell the client when the upstream opens and closes, and reconnect `osh-069`
 - **WHEN** the upstream socket opens, closes or fails while a client listens
 - **THEN** the client receives the event `open` after each open, and the event `down` after each close or failure
+- **AND** a client that joins while the upstream socket is open receives the event `open` at once
 - **AND** while a client listens, the provider opens a new upstream socket after a delay of 1, 2, 4, 8, 16 and then 30 seconds
 - **AND** the response carries a comment line every 20 seconds, so that a proxy keeps the connection open
 
@@ -96,9 +99,9 @@ Origin: spec-first
 - **WHEN** a live stream delivers an observation for a datastream of the selected system
 - **THEN** the detail shows that observation in the block of its datastream, with its age
 - **AND** the entity of the system moves to its location when the location is fresh, and not when the observation is ahead of the clock
-- **AND** the layer reads no second observation for that datastream while its stream is open
+- **AND** the layer reads no observation by poll for that datastream, while its stream is open and the layer holds an observation for it
 
 #### Scenario: Poll a datastream whose stream is not open `osh-074`
-- **WHEN** a live stream is not open, or reports `down` or `unsupported`
+- **WHEN** a live stream is not open, the layer holds no observation for its datastream, or the stream reports `down` or `unsupported`
 - **THEN** the layer polls the newest observation of that datastream at each poll interval, as `osh-022` says
-- **AND** a stream that opens again stops that poll
+- **AND** a stream that is open, for a datastream that has an observation, stops that poll

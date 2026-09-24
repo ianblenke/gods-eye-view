@@ -2,7 +2,8 @@
  * Read the OpenSensorHub systems, datastreams, features, locations and
  * newest-observation endpoints. The server already applies the shared
  * adapters before it caches a response, so this file validates the
- * envelope and passes the records through unchanged.
+ * envelope and passes the records through unchanged. It also opens the
+ * live stream of one datastream.
  */
 
 async function readOshResponse(fetchImpl, path, { signal } = {}) {
@@ -24,6 +25,7 @@ async function readOshResponse(fetchImpl, path, { signal } = {}) {
 
 export function createOshSource({
   fetchImpl = (...args) => globalThis.fetch(...args),
+  eventSourceImpl,
 } = {}) {
   return {
     async getSystems({ signal } = {}) {
@@ -77,6 +79,35 @@ export function createOshSource({
       if (!payload || typeof payload !== 'object' || !('observation' in payload))
         throw new Error('Malformed OSH observation payload');
       return { keyRequired: false, observation: payload.observation };
+    },
+
+    /**
+     * Open the live stream of one datastream (osh-071). One same-origin GET
+     * with no credentials; the browser opens the connection again after a
+     * break. The route sends the events `observation`, `open`, `down` and
+     * `unsupported`, and the `error` event of the browser also means `down`.
+     */
+    openLive(datastreamId, { onObservation, onOpen, onDown, onUnsupported }) {
+      const url = `/api/osh/live?datastream=${encodeURIComponent(datastreamId)}`;
+      const stream = new (eventSourceImpl ?? globalThis.EventSource)(url);
+      stream.addEventListener('observation', (event) => {
+        let observation;
+        try {
+          observation = JSON.parse(event.data);
+        } catch {
+          return;
+        }
+        if (observation && typeof observation === 'object') onObservation(observation);
+      });
+      // The browser also raises `open` when the connection itself opens. Only
+      // the event of the route has data, and it says the upstream is open.
+      stream.addEventListener('open', (event) => {
+        if (typeof event.data === 'string') onOpen();
+      });
+      stream.addEventListener('down', () => onDown());
+      stream.addEventListener('unsupported', () => onUnsupported());
+      stream.addEventListener('error', () => onDown());
+      return { close: () => stream.close() };
     },
   };
 }

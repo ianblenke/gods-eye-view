@@ -29,7 +29,7 @@ The route is `GET /api/osh/live?datastream=<id>`. Its answer has the type `text/
 
 ### D65 One upstream socket for each datastream, shared
 
-`server/providers/osh/live.js` exports `createOshLiveHub()`. It keeps one entry for each datastream. The entry has the upstream socket, the set of clients and the state. A client joins an entry, and it leaves when its connection closes.
+`server/providers/osh/live.js` exports `createOshLiveHub()`. It keeps one entry for each datastream. The entry has the upstream socket, the set of clients and the state. A client joins an entry, and it leaves when its connection closes. The plugin builds one hub, and a test can give its own hub.
 
 The hub closes the upstream socket two seconds after the last client leaves. A client that joins within those two seconds keeps the socket. This stops a new socket for each quick selection.
 
@@ -37,7 +37,7 @@ The limits are eight upstream sockets and sixteen clients for each datastream. A
 
 ### D66 The handshake is a GET request and the provider sends nothing
 
-`oshOpenStream()` in `get.js` builds the upstream socket. It takes the constructor, the URL and the headers, and it sets `binaryType` to `arraybuffer`. The Node constructor accepts a second argument with a `headers` object, and it sends a GET handshake with those headers.
+`oshOpenStream()` in `get.js` builds the upstream socket. It takes the constructor, the URL and the headers, and it sets `binaryType` to `arraybuffer`. The Node constructor accepts a second argument with a `headers` object, and it sends a GET handshake with those headers. The URL encodes the `/` and the `+` of the value of `f`. So a server that decodes a form reads a plus sign, not a space.
 
 A local test on Node 24.21 and on Node 26 shows three facts. The header reaches the server, the method is GET, and the binary frame arrives as an `ArrayBuffer`. No file calls `send`, and a test scans the source for that call. The hub gives the constructor as an injected option, so a test can record the call.
 
@@ -47,11 +47,11 @@ A local test on Node 24.21 and on Node 26 shows three facts. The header reaches 
 
 The hub decodes the frame as UTF-8, whether the frame is binary or text. It parses the JSON and needs an object with a `result` field. It then calls `mapOshObservation()` with the frame and the schema reader that the observation route uses. The result has `phenomenonTime`, `resultTime`, `rows` and `location`. The hub adds `ageMs` at the moment of sending.
 
-A frame that is not JSON or has no `result` gives no event. A frame of more than 65536 bytes closes the upstream socket. The hub then refuses the datastream for ten minutes and sends the event `unsupported`. This protects the provider from a video datastream, which sends large frames.
+A frame that is not JSON or has no `result` gives no event. A frame of more than 65536 bytes closes the upstream socket. The hub then ends the response of each client and refuses the datastream for ten minutes. A request in that time gets `503` with `{error:'live_unsupported'}`. The event `unsupported` comes before the end. This protects the provider from a video datastream, which sends large frames.
 
 ### D68 The events
 
-Each event is a `data:` line with one JSON value, after an `event:` line. The events are `observation`, `open`, `down` and `unsupported`. `open` comes after each open of the upstream socket. `down` comes after each close or failure. A comment line `: hb` comes every 20 seconds, so that a proxy keeps the connection open.
+Each event is a `data:` line with one JSON value, after an `event:` line. The events are `observation`, `open`, `down` and `unsupported`. `open` comes after each open of the upstream socket, and a client that joins an open socket gets it at once. `down` comes after each close or failure. A comment line `: hb` comes every 20 seconds, so that a proxy keeps the connection open.
 
 While a client listens and the socket is down, the hub opens a new socket after 1, 2, 4, 8, 16 and then 30 seconds. A socket that stays open for 30 seconds resets the delay.
 
@@ -65,7 +65,7 @@ An event has only the four names above and an observation. A failure logs a fixe
 
 The layer keeps one stream for each datastream of the selected system, at most eight. It opens them when `pollSelected()` first knows the datastreams.
 
-A live observation replaces the observation of its datastream in the detail. The layer moves the entity when the location is fresh and the observation is not ahead of the clock. A datastream with an open stream gets no poll. A datastream whose stream is not open, or reports `down` or `unsupported`, keeps the poll of today. A new selection, a click on empty space and `destroy()` close every stream.
+A live observation replaces the observation of its datastream in the detail. The layer moves the entity when the location is fresh and the observation is not ahead of the clock. A datastream whose stream is open, and for which the layer holds an observation, gets no poll. Every other datastream keeps the poll of today. So a slow datastream shows its newest observation from the poll, and the stream then keeps it current. A new selection, a click on empty space and `destroy()` close every stream.
 
 ### D71 How the gates measure this change
 

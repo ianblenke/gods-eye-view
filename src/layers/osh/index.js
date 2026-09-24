@@ -10,6 +10,8 @@ export { renderOshDetail, writeOshDetail } from './detail.js';
 const POLL_INTERVAL_MS = 15_000;
 /** A feature label shows only within this distance of the camera. */
 const FEATURE_LABEL_DISTANCE_METERS = 200_000;
+/** The selected system opens a live stream for at most this many datastreams (D70). */
+const MAX_LIVE_STREAMS = 8;
 
 function systemEntityId(systemId) {
   return `osh:${systemId}`;
@@ -37,12 +39,22 @@ function entityAlwaysOnTop(graphics) {
   return graphics;
 }
 
+/** Move a system entity to the location of an observation that has a fresh age. */
+function moveToObservation(entity, observation) {
+  if (!observation?.location || !entity || !isOshObservationFresh(observation.ageMs)) return;
+  entity.position = Cesium.Cartesian3.fromDegrees(
+    observation.location.lon,
+    observation.location.lat,
+    observation.location.alt || 0,
+  );
+}
+
 /**
  * Own the OSH systems and features-of-interest display, the selected
- * system's datastream poll and the entity it moves when a newest result
- * carries a location.
+ * system's datastream poll, its live streams and the entity they move when
+ * a newest result carries a location.
  * @param {object} options
- * @param {{getSystems: Function, getDatastreams: Function, getObservation: Function, getFois?: Function, getLocations?: Function}} options.source
+ * @param {{getSystems: Function, getDatastreams: Function, getObservation: Function, getFois?: Function, getLocations?: Function, openLive?: Function}} options.source
  * @param {?{innerHTML: string}} [options.detailHost]
  */
 export function createOshLayer({ source, detailHost = null } = {}) {
@@ -66,6 +78,14 @@ export function createOshLayer({ source, detailHost = null } = {}) {
   let _clickHandler = null;
   let _pollTimer = null;
   let _pollGeneration = 0;
+  /**
+   * The datastreams of the selected system, by id, with the newest
+   * observation, the live stream and its state (D70). Empty with no selection.
+   */
+  const _datastreamStates = new Map();
+  let _liveOpened = false;
+  /** The states that the last poll wrote to the detail, for a live redraw. */
+  let _shownStates = null;
   let _placedStreamCount = 0;
   let _placedStreamFeaturesCount = 0;
   /** Added at init(), removed at destroy(); stays while the layer is off (D61). */
@@ -114,6 +134,11 @@ export function createOshLayer({ source, detailHost = null } = {}) {
       clearInterval(_pollTimer);
       _pollTimer = null;
     }
+    // Every path that ends a selection comes here, so every stream closes here.
+    for (const state of _datastreamStates.values()) state.stream?.close();
+    _datastreamStates.clear();
+    _liveOpened = false;
+    _shownStates = null;
   }
 
   function clearSelection() {
@@ -124,54 +149,17 @@ export function createOshLayer({ source, detailHost = null } = {}) {
     writeDetail(null);
   }
 
-  async function pollSelected() {
-    // applySelection() only starts this poll while _selectedId names a
-    // system, so systemId is always set at this point; the entity for that
-    // system may still be absent, when the host is not on the map.
-    const generation = _pollGeneration;
-    const systemId = _selectedId;
-    const featureId = _selectedFeatureId;
-    const entity = _dataSource.entities.getById(systemEntityId(systemId));
-    const datastreamsResult = await source
-      .getDatastreams({ system: systemId })
-      .catch(() => null);
-    if (
-      generation !== _pollGeneration ||
-      !datastreamsResult ||
-      datastreamsResult.keyRequired
-    ) {
-      return;
+  function datastreamState(id) {
+    let state = _datastreamStates.get(id);
+    if (!state) {
+      state = { id, observation: null, stream: null, open: false, seq: 0 };
+      _datastreamStates.set(id, state);
     }
-    const datastreams = datastreamsResult.datastreams.filter(
-      (record) => record.systemId === systemId,
-    );
-    const detailDatastreams = [];
-    for (const datastream of datastreams) {
-      const observationResult = await source
-        .getObservation(datastream.id)
-        .catch(() => null);
-      if (generation !== _pollGeneration) return;
-      const observation =
-        observationResult && !observationResult.keyRequired
-          ? observationResult.observation
-          : null;
-      detailDatastreams.push({
-        id: datastream.id,
-        name: datastream.name,
-        outputName: datastream.outputName,
-        observation,
-      });
-      if (observation?.location && entity && isOshObservationFresh(observation.ageMs)) {
-        entity.position = Cesium.Cartesian3.fromDegrees(
-          observation.location.lon,
-          observation.location.lat,
-          observation.location.alt || 0,
-        );
-      }
-    }
-    // An entity the poll moved can cross the horizon between refreshes
-    // (D61). One call after the loop, not one per datastream.
-    refreshHorizonVisibility();
+    return state;
+  }
+
+  /** The selected system's detail, from the datastream states in the order given. */
+  function writeSelectedDetail(systemId, featureId, states) {
     const systemRecord = _systemRecords.get(systemId) || null;
     const placedRecord = _placedSystemById.get(systemId) || null;
     const featureRecord = featureId ? _featureRecordsById.get(featureId) : null;
@@ -207,8 +195,103 @@ export function createOshLayer({ source, detailHost = null } = {}) {
                 : null,
             }
           : null,
-      datastreams: detailDatastreams,
+      datastreams: states.map(({ id, name, outputName, observation }) => ({
+        id,
+        name,
+        outputName,
+        observation,
+      })),
     });
+  }
+
+  /**
+   * A live observation replaces the observation of its datastream, moves the
+   * entity like a poll does, and draws the detail again (osh-073).
+   */
+  function showLiveObservation(state, observation) {
+    state.observation = observation;
+    state.seq += 1;
+    moveToObservation(_dataSource.entities.getById(systemEntityId(_selectedId)), observation);
+    refreshHorizonVisibility();
+    if (_shownStates) writeSelectedDetail(_selectedId, _selectedFeatureId, _shownStates);
+  }
+
+  /**
+   * Open one live stream for each of at most eight datastreams, once for each
+   * selection (osh-072). A callback of a closed or replaced selection does
+   * nothing, as a stale poll does.
+   */
+  function openLiveStreams(states, generation) {
+    if (_liveOpened) return;
+    _liveOpened = true;
+    if (typeof source.openLive !== 'function') return;
+    const current = (callback) => (data) => {
+      if (generation === _pollGeneration) callback(data);
+    };
+    // One stream for each id, whatever the list holds.
+    for (const state of [...new Set(states)].slice(0, MAX_LIVE_STREAMS)) {
+      state.stream = source.openLive(state.id, {
+        onObservation: current((observation) => showLiveObservation(state, observation)),
+        onOpen: current(() => {
+          state.open = true;
+        }),
+        onDown: current(() => {
+          state.open = false;
+        }),
+        onUnsupported: current(() => {
+          state.open = false;
+          state.stream.close();
+        }),
+      });
+    }
+  }
+
+  async function pollSelected() {
+    // applySelection() only starts this poll while _selectedId names a
+    // system, so systemId is always set at this point; the entity for that
+    // system may still be absent, when the host is not on the map.
+    const generation = _pollGeneration;
+    const systemId = _selectedId;
+    const featureId = _selectedFeatureId;
+    const entity = _dataSource.entities.getById(systemEntityId(systemId));
+    const datastreamsResult = await source
+      .getDatastreams({ system: systemId })
+      .catch(() => null);
+    if (
+      generation !== _pollGeneration ||
+      !datastreamsResult ||
+      datastreamsResult.keyRequired
+    ) {
+      return;
+    }
+    const datastreams = datastreamsResult.datastreams.filter(
+      (record) => record.systemId === systemId,
+    );
+    const states = datastreams.map((datastream) => {
+      const state = datastreamState(datastream.id);
+      state.name = datastream.name;
+      state.outputName = datastream.outputName;
+      return state;
+    });
+    openLiveStreams(states, generation);
+    for (const state of states) {
+      // An open stream that has delivered nothing gets the poll, so a slow
+      // datastream shows its newest observation until its first live one.
+      if (state.open && state.observation) continue;
+      const seq = state.seq;
+      const observationResult = await source.getObservation(state.id).catch(() => null);
+      if (generation !== _pollGeneration) return;
+      // A live observation that came while the poll waited is newer.
+      if (state.seq !== seq) continue;
+      state.observation =
+        observationResult && !observationResult.keyRequired ? observationResult.observation : null;
+      moveToObservation(entity, state.observation);
+    }
+    // An entity the poll moved can cross the horizon between refreshes
+    // (D61). One call after the loop, not one per datastream.
+    refreshHorizonVisibility();
+    _shownStates = states;
+    writeSelectedDetail(systemId, featureId, states);
   }
 
   /** systemId may be null (a feature with no known host); featureId may be null (a direct system click). */

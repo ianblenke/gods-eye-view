@@ -203,3 +203,155 @@ test('[osh-028] a cancelled observation read never publishes the response', asyn
     { name: 'AbortError' },
   );
 });
+
+/** A fake EventSource class. It records each instance and its listeners, and lets a test send an event. */
+function fakeEventSource() {
+  const instances = [];
+  class FakeEventSource {
+    constructor(url) {
+      this.url = url;
+      this.closed = false;
+      this.listeners = new Map();
+      instances.push(this);
+    }
+
+    addEventListener(name, listener) {
+      this.listeners.set(name, [...(this.listeners.get(name) ?? []), listener]);
+    }
+
+    close() {
+      this.closed = true;
+    }
+
+    send(name, event = {}) {
+      for (const listener of this.listeners.get(name) ?? []) listener({ type: name, ...event });
+    }
+  }
+  return { EventSource: FakeEventSource, instances };
+}
+
+/** Four callbacks that record each call as one array. */
+function recordLiveCallbacks() {
+  const calls = [];
+  return {
+    calls,
+    callbacks: {
+      onObservation: (observation) => calls.push(['observation', observation]),
+      onOpen: () => calls.push(['open']),
+      onDown: () => calls.push(['down']),
+      onUnsupported: () => calls.push(['unsupported']),
+    },
+  };
+}
+
+test('[osh-071] the source opens one event source for the same-origin path of the datastream', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openLive('ds fixture/1?a=b', recordLiveCallbacks().callbacks);
+  assert.equal(instances.length, 1);
+  assert.equal(instances[0].url, '/api/osh/live?datastream=ds%20fixture%2F1%3Fa%3Db');
+  const url = new URL(instances[0].url, 'https://app.example');
+  assert.equal(url.origin, 'https://app.example', 'the path is same-origin');
+  assert.equal(url.pathname, '/api/osh/live');
+  assert.equal(url.searchParams.get('datastream'), 'ds fixture/1?a=b');
+  assert.equal(url.username, '');
+  assert.equal(url.password, '');
+  assert.deepEqual(
+    [...instances[0].listeners].map(([name, listeners]) => [name, listeners.length]).sort(),
+    [
+      ['down', 1],
+      ['error', 1],
+      ['observation', 1],
+      ['open', 1],
+      ['unsupported', 1],
+    ],
+    'one listener for each event name',
+  );
+});
+
+test('[osh-071] the source gives an observation event to its callback as the parsed data', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const { calls, callbacks } = recordLiveCallbacks();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openLive('ds-fixture-1', callbacks);
+  const observation = {
+    phenomenonTime: '2026-01-01T00:00:00Z',
+    resultTime: '2026-01-01T00:00:01Z',
+    rows: [{ path: 'speed', value: 42 }],
+    location: { lat: 9, lon: 8, alt: 7 },
+    ageMs: 3000,
+  };
+  instances[0].send('observation', { data: JSON.stringify(observation) });
+  assert.deepEqual(calls, [['observation', observation]]);
+});
+
+test('[osh-071] the source ignores an observation event whose data is not one JSON object', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const { calls, callbacks } = recordLiveCallbacks();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openLive('ds-fixture-1', callbacks);
+  for (const data of ['not json', '', 'null', '42', '"text"']) {
+    instances[0].send('observation', { data });
+  }
+  assert.deepEqual(calls, []);
+});
+
+test('[osh-071] the source gives the open, down and unsupported events to their callbacks', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const { calls, callbacks } = recordLiveCallbacks();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openLive('ds-fixture-1', callbacks);
+  instances[0].send('open', { data: '{}' });
+  instances[0].send('down', { data: '{}' });
+  instances[0].send('unsupported', { data: '{}' });
+  assert.deepEqual(calls, [['open'], ['down'], ['unsupported']]);
+});
+
+test('[osh-071] the source ignores the open event of the connection, which has no data', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const { calls, callbacks } = recordLiveCallbacks();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openLive('ds-fixture-1', callbacks);
+  instances[0].send('open');
+  assert.deepEqual(calls, []);
+});
+
+test('[osh-071] the source gives an error event to the down callback', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const { calls, callbacks } = recordLiveCallbacks();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openLive('ds-fixture-1', callbacks);
+  instances[0].send('error');
+  assert.deepEqual(calls, [['down']]);
+});
+
+test('[osh-071] the close method closes the event source, and only that one', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  const first = source.openLive('ds-fixture-1', recordLiveCallbacks().callbacks);
+  source.openLive('ds-fixture-2', recordLiveCallbacks().callbacks);
+  assert.deepEqual(
+    instances.map((instance) => instance.closed),
+    [false, false],
+  );
+  first.close();
+  assert.deepEqual(
+    instances.map((instance) => instance.closed),
+    [true, false],
+  );
+});
+
+test('[osh-071] the default event source is the global constructor', () => {
+  const original = globalThis.EventSource;
+  const { EventSource, instances } = fakeEventSource();
+  globalThis.EventSource = EventSource;
+  try {
+    const source = createOshSource();
+    source.openLive('ds-fixture-1', recordLiveCallbacks().callbacks);
+    assert.equal(instances.length, 1);
+    assert.equal(instances[0].url, '/api/osh/live?datastream=ds-fixture-1');
+  } finally {
+    if (original === undefined) delete globalThis.EventSource;
+    else globalThis.EventSource = original;
+  }
+});
