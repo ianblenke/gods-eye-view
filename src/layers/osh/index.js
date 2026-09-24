@@ -3,6 +3,7 @@ import { writeOshDetail } from './detail.js';
 import { placeOshEntities } from '../../data/oshSystems.js';
 import { isOshObservationFresh } from '../../data/oshObservations.js';
 import { horizonOccluder } from '../../data/iconOrientation.js';
+import { createVideoPlayer, createVideoView } from './videoPlayer.js';
 export { createOshSource } from './source.js';
 export { renderOshDetail, writeOshDetail } from './detail.js';
 
@@ -56,13 +57,26 @@ function moveToObservation(entity, observation) {
 
 /**
  * Own the OSH systems and features-of-interest display, the selected
- * system's datastream poll, its live streams and the entity they move when
- * a newest result carries a location.
+ * system's datastream poll, its live streams, its video and the entity they
+ * move when a newest result carries a location.
  * @param {object} options
- * @param {{getSystems: Function, getDatastreams: Function, getObservation: Function, getFois?: Function, getLocations?: Function, openLive?: Function}} options.source
+ * @param {{getSystems: Function, getDatastreams: Function, getObservation: Function, getFois?: Function, getLocations?: Function, openLive?: Function, openVideo?: Function}} options.source
  * @param {?{innerHTML: string}} [options.detailHost]
+ * @param {?{hidden: boolean}} [options.panelHost] Shown while a selection exists (osh-086).
+ * @param {?object} [options.videoHost] Holds the view of the video of the selected system (osh-087).
+ * @param {Function} [options.createPlayer] Builds the player, as `createVideoPlayer` does.
+ * @param {Function} [options.createView] Builds the view, as `createVideoView` does.
+ * @param {?object} [options.documentImpl] The document that builds the view.
  */
-export function createOshLayer({ source, detailHost = null } = {}) {
+export function createOshLayer({
+  source,
+  detailHost = null,
+  panelHost = null,
+  videoHost = null,
+  createPlayer = createVideoPlayer,
+  createView = createVideoView,
+  documentImpl = globalThis.document,
+} = {}) {
   if (typeof source?.getSystems !== 'function')
     throw new TypeError('OSH layer requires a systems source');
   let _viewer = null;
@@ -89,6 +103,11 @@ export function createOshLayer({ source, detailHost = null } = {}) {
    */
   const _datastreamStates = new Map();
   let _liveOpened = false;
+  /**
+   * The video of the selected system (osh-087): one stream, one player and one
+   * view, or null. It closes with the live streams.
+   */
+  let _videoSession = null;
   /** The states that the last poll wrote to the detail, for a live redraw. */
   let _shownStates = null;
   let _placedStreamCount = 0;
@@ -115,6 +134,8 @@ export function createOshLayer({ source, detailHost = null } = {}) {
 
   function writeDetail(detail) {
     writeOshDetail(detailHost, detail);
+    // The panel shows while a detail exists, and hides with the selection (osh-086).
+    if (panelHost) panelHost.hidden = !detail;
   }
 
   /**
@@ -141,9 +162,20 @@ export function createOshLayer({ source, detailHost = null } = {}) {
     }
     // Every path that ends a selection comes here, so every stream closes here.
     for (const state of _datastreamStates.values()) state.stream?.close();
+    closeVideoSession();
     _datastreamStates.clear();
     _liveOpened = false;
     _shownStates = null;
+  }
+
+  /** Close the stream and the player, and remove the view, as the selection ends. */
+  function closeVideoSession() {
+    if (!_videoSession) return;
+    const { stream, player, view } = _videoSession;
+    _videoSession = null;
+    stream?.close();
+    player.close();
+    view.destroy();
   }
 
   function clearSelection() {
@@ -157,7 +189,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
   function datastreamState(id) {
     let state = _datastreamStates.get(id);
     if (!state) {
-      state = { id, observation: null, stream: null, open: false, seq: 0 };
+      state = { id, observation: null, stream: null, open: false, seq: 0, video: false };
       _datastreamStates.set(id, state);
     }
     return state;
@@ -200,11 +232,12 @@ export function createOshLayer({ source, detailHost = null } = {}) {
                 : null,
             }
           : null,
-      datastreams: states.map(({ id, name, outputName, observation }) => ({
+      datastreams: states.map(({ id, name, outputName, observation, video }) => ({
         id,
         name,
         outputName,
         observation,
+        video,
       })),
     });
   }
@@ -222,28 +255,83 @@ export function createOshLayer({ source, detailHost = null } = {}) {
   }
 
   /**
-   * Open one live stream for each of at most three datastreams, once for each
-   * selection (osh-072). A callback of a closed or replaced selection does
-   * nothing, as a stale poll does.
+   * A callback of a closed or replaced selection does nothing, as a stale poll
+   * does. A live stream and a video stream both guard their callbacks with it.
    */
-  function openLiveStreams(states, generation) {
-    if (_liveOpened) return;
-    _liveOpened = true;
-    if (typeof source.openLive !== 'function') return;
-    const current = (callback) => (data) => {
+  function currentOnly(generation, callback) {
+    return (data) => {
       if (generation === _pollGeneration) callback(data);
     };
+  }
+
+  /**
+   * Open the video and the live streams, once for each selection (osh-072,
+   * osh-087). The video datastreams leave the live streams: they have no
+   * observation to stream, and they must not use one of the three slots.
+   */
+  function openStreams(states, generation) {
+    if (_liveOpened) return;
+    _liveOpened = true;
+    openVideoSession(
+      states.find((state) => state.video),
+      generation,
+    );
+    openLiveStreams(
+      states.filter((state) => !state.video),
+      generation,
+    );
+  }
+
+  /**
+   * Play the first video datastream of the system: one view, one player and
+   * one stream, closed with the selection (osh-087).
+   */
+  function openVideoSession(state, generation) {
+    if (!state || typeof source.openVideo !== 'function' || !videoHost) return;
+    const view = createView({ document: documentImpl, host: videoHost, name: state.name || state.id });
+    let playerStatus = '';
+    const player = createPlayer({
+      canvas: view.canvas,
+      onStatus: (text) => {
+        playerStatus = text;
+        view.setStatus(text);
+      },
+    });
+    const session = { stream: null, player, view };
+    _videoSession = session;
+    // A browser with no WebCodecs cannot show the picture, so the layer does not fetch it.
+    if (playerStatus === 'unsupported') return;
+    session.stream = source.openVideo(state.id, {
+      onFrame: currentOnly(generation, (bytes) => player.push(bytes)),
+      // The player reports `live` once, not for each frame. So when the stream
+      // is back after `down`, the view shows the last status of the player again.
+      onOpen: currentOnly(generation, () => view.setStatus(playerStatus)),
+      onDown: currentOnly(generation, () => view.setStatus('reconnecting')),
+      onUnsupported: currentOnly(generation, () => {
+        view.setStatus('unavailable');
+        session.stream.close();
+        session.stream = null;
+      }),
+    });
+  }
+
+  /**
+   * Open one live stream for each of at most three datastreams (osh-072).
+   * @param {object[]} states The datastream states that have no video.
+   */
+  function openLiveStreams(states, generation) {
+    if (typeof source.openLive !== 'function') return;
     // One stream for each id, whatever the list holds.
     for (const state of [...new Set(states)].slice(0, MAX_LIVE_STREAMS)) {
       state.stream = source.openLive(state.id, {
-        onObservation: current((observation) => showLiveObservation(state, observation)),
-        onOpen: current(() => {
+        onObservation: currentOnly(generation, (observation) => showLiveObservation(state, observation)),
+        onOpen: currentOnly(generation, () => {
           state.open = true;
         }),
-        onDown: current(() => {
+        onDown: currentOnly(generation, () => {
           state.open = false;
         }),
-        onUnsupported: current(() => {
+        onUnsupported: currentOnly(generation, () => {
           state.open = false;
           state.stream.close();
         }),
@@ -276,10 +364,13 @@ export function createOshLayer({ source, detailHost = null } = {}) {
       const state = datastreamState(datastream.id);
       state.name = datastream.name;
       state.outputName = datastream.outputName;
+      state.video = datastream.video === true;
       return state;
     });
-    openLiveStreams(states, generation);
+    openStreams(states, generation);
     for (const state of states) {
+      // A video datastream has no observation to read (osh-074).
+      if (state.video) continue;
       // An open stream that has delivered nothing gets the poll, so a slow
       // datastream shows its newest observation until its first live one.
       if (state.open && state.observation) continue;

@@ -8,6 +8,7 @@ import {
   assertSchemaUrl,
   assertSystemDatastreamsUrl,
   assertSystemUrl,
+  assertVideoUrl,
   liveUrl,
   observationUrl,
   observationsLatestUrl,
@@ -16,6 +17,7 @@ import {
   schemaUrl,
   systemDatastreamsUrl,
   systemUrl,
+  videoUrl,
 } from './osh/ids.js';
 import { createOshLiveHub } from './osh/live.js';
 import {
@@ -50,6 +52,7 @@ import { mapOshLocationPage, oshObservationAgeMs } from '../../src/data/oshObser
  *   GET /api/osh/fois          → {fetchedAt, stale, ttlMs, count, truncated, fois}
  *   GET /api/osh/observations?datastream=<id> → {datastream, fetchedAt, stale, ttlMs, observation}
  *   GET /api/osh/live?datastream=<id> → server-sent events: observation, open, down, unsupported
+ *   GET /api/osh/video?datastream=<id> → server-sent events: frame, open, down, unsupported
  *   GET /api/osh/locations     → {fetchedAt, stale, ttlMs, count, streams, failed, locations}
  *
  * Keyless (no OSH_URL, or a value that does not parse as a URL): every
@@ -63,7 +66,7 @@ export const OSH_LIST_TTL_MS = 5 * 60_000;
 /** The feature-of-interest walk needs more pages than the other two lists. */
 export const OSH_FOI_MAX_PAGES = 60;
 
-/** The head of every answer of the live route (design decision D64). */
+/** The head of every answer of the live route and the video route (design decisions D64 and D73). */
 const OSH_LIVE_HEADERS = Object.freeze({
   'Content-Type': 'text/event-stream; charset=utf-8',
   'Cache-Control': 'no-store',
@@ -674,7 +677,9 @@ export function oshProxy({
           return;
         }
 
-        if (subPath === '/live') {
+        if (subPath === '/live' || subPath === '/video') {
+          // The video route has the checks and the answers of the live route.
+          const video = subPath === '/video';
           const id = readDatastreamId(requestUrl.searchParams);
           if (!id) {
             sendJson(400, { error: 'bad_datastream' });
@@ -686,23 +691,28 @@ export function oshProxy({
             return;
           }
           // Like the observation route: fixed imports from ids.js, no seam.
-          const target = liveUrl(state.root, id);
-          assertLiveUrl(target, state.root, id);
-          const reader = await readerFor(state.root, id, headers);
+          // Video needs no reader, so its route reads no schema.
+          let stream;
+          if (video) {
+            const target = videoUrl(state.root, id);
+            assertVideoUrl(target, state.root, id);
+            stream = { url: target, headers, reader: null, kind: 'video' };
+          } else {
+            const target = liveUrl(state.root, id);
+            assertLiveUrl(target, state.root, id);
+            const reader = await readerFor(state.root, id, headers);
+            stream = { url: target, headers, reader, kind: 'observation' };
+          }
           // The client can leave while the root and the schema load.
           if (res.destroyed) return;
-          const joined = hub.join(
-            id,
-            { url: target, headers, reader },
-            {
-              start() {
-                res.writeHead(200, OSH_LIVE_HEADERS);
-                res.flushHeaders();
-              },
-              write: (text) => res.write(text),
-              end: () => res.end(),
+          const joined = hub.join(id, stream, {
+            start() {
+              res.writeHead(200, OSH_LIVE_HEADERS);
+              res.flushHeaders();
             },
-          );
+            write: (text) => res.write(text),
+            end: () => res.end(),
+          });
           if (joined.error) {
             sendJson(503, { error: joined.error });
             return;

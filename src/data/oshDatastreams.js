@@ -7,6 +7,9 @@
 
 const DATASTREAM_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$/;
 
+/** The observed property of a datastream that carries pictures (design decision D72). */
+const RASTER_IMAGE = 'RasterImage';
+
 function listOf(payload) {
   if (Array.isArray(payload?.items)) return payload.items;
   if (Array.isArray(payload?.datastreams)) return payload.datastreams;
@@ -42,9 +45,27 @@ function readSystemId(entry) {
 }
 
 /**
- * Map a raw OpenSensorHub datastream list to trimmed records.
+ * True for a datastream that carries video: the result type is `coverage`,
+ * and one observed property has the name `RasterImage`. The name is the last
+ * non-empty segment of the definition, cut at a slash, a hash sign or a
+ * colon, so the host of a vocabulary does not matter. The rule reads the type
+ * of the data and never the name of the datastream.
+ */
+function isVideoEntry(entry) {
+  if (entry.resultType !== 'coverage' || !Array.isArray(entry.observedProperties)) return false;
+  return entry.observedProperties.some(
+    (property) =>
+      typeof property?.definition === 'string' &&
+      property.definition.split(/[/#:]/).filter(Boolean).at(-1) === RASTER_IMAGE,
+  );
+}
+
+/**
+ * Map a raw OpenSensorHub datastream list to trimmed records. A record of a
+ * datastream that carries video also has `video: true`. Any other record has
+ * no `video` key.
  * @param {*} payload - Upstream JSON body.
- * @returns {Array<{id:string, systemId:?string, name:?string, outputName:?string, validTime:?Array}>}
+ * @returns {Array<{id:string, systemId:?string, name:?string, outputName:?string, validTime:?Array, video?:true}>}
  */
 export function mapOshDatastreams(payload) {
   const list = listOf(payload);
@@ -54,13 +75,15 @@ export function mapOshDatastreams(payload) {
     if (!entry || typeof entry !== 'object') continue;
     const id = typeof entry.id === 'string' ? entry.id : '';
     if (!DATASTREAM_ID_PATTERN.test(id)) continue;
-    records.push({
+    const record = {
       id,
       systemId: readSystemId(entry),
       name: typeof entry.name === 'string' ? entry.name : null,
       outputName: typeof entry.outputName === 'string' ? entry.outputName : null,
       validTime: Array.isArray(entry.validTime) ? entry.validTime : null,
-    });
+    };
+    if (isVideoEntry(entry)) record.video = true;
+    records.push(record);
   }
   return records;
 }

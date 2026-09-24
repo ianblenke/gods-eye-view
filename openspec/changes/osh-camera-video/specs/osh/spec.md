@@ -128,6 +128,7 @@ Origin: spec-first
 - **AND** it draws each decoded frame on the canvas, closes the frame, and reports the status `live`
 - **AND** it drops delta frames while the queue of the decoder holds more than eight frames, until the next key frame
 - **AND** it configures the decoder again when the SPS changes, and it resets the decoder and waits for a key frame after a decoder error
+- **AND** it treats an exception from `configure` or `decode`, or from the constructor of the decoder, as a decoder error
 
 #### Scenario: Show when the browser cannot decode `osh-085`
 - **WHEN** the browser has no `VideoDecoder` or no `EncodedVideoChunk`
@@ -149,6 +150,7 @@ Origin: spec-first
 - **AND** the view shows the name of the datastream and the status of the player
 - **AND** a new selection, a click on empty space and `destroy()` each close the video stream and the player, and remove the view
 - **AND** the event `down` shows the status `reconnecting`, and the event `unsupported` shows the status `unavailable` and closes the stream
+- **AND** the layer starts no video stream when the player reports the status `unsupported`
 
 #### Scenario: Show a video datastream in the detail `osh-088`
 - **WHEN** the detail holds a datastream with `video: true`

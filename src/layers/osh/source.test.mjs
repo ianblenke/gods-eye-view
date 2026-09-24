@@ -208,8 +208,9 @@ test('[osh-028] a cancelled observation read never publishes the response', asyn
 function fakeEventSource() {
   const instances = [];
   class FakeEventSource {
-    constructor(url) {
+    constructor(url, options) {
       this.url = url;
+      this.options = options;
       this.closed = false;
       this.listeners = new Map();
       instances.push(this);
@@ -350,6 +351,149 @@ test('[osh-071] the default event source is the global constructor', () => {
     source.openLive('ds-fixture-1', recordLiveCallbacks().callbacks);
     assert.equal(instances.length, 1);
     assert.equal(instances[0].url, '/api/osh/live?datastream=ds-fixture-1');
+  } finally {
+    if (original === undefined) delete globalThis.EventSource;
+    else globalThis.EventSource = original;
+  }
+});
+
+/** Four callbacks for the video stream that record each call as one array. */
+function recordVideoCallbacks() {
+  const calls = [];
+  return {
+    calls,
+    callbacks: {
+      onFrame: (bytes) => calls.push(['frame', bytes]),
+      onOpen: () => calls.push(['open']),
+      onDown: () => calls.push(['down']),
+      onUnsupported: () => calls.push(['unsupported']),
+    },
+  };
+}
+
+/** The data of a frame event: the base64 text of the bytes, as one JSON string. */
+const frameData = (bytes) => JSON.stringify(Buffer.from(bytes).toString('base64'));
+
+test('[osh-082] the source opens one event source for the same-origin video path of the datastream', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openVideo('ds fixture/1?a=b', recordVideoCallbacks().callbacks);
+  assert.equal(instances.length, 1);
+  assert.equal(instances[0].url, '/api/osh/video?datastream=ds%20fixture%2F1%3Fa%3Db');
+  const url = new URL(instances[0].url, 'https://app.example');
+  assert.equal(url.origin, 'https://app.example', 'the path is same-origin');
+  assert.equal(url.pathname, '/api/osh/video');
+  assert.equal(url.searchParams.get('datastream'), 'ds fixture/1?a=b');
+  assert.equal(url.username, '');
+  assert.equal(url.password, '');
+  assert.equal(instances[0].options, undefined, 'the source passes no option, so no credentials');
+  assert.deepEqual(
+    [...instances[0].listeners].map(([name, listeners]) => [name, listeners.length]).sort(),
+    [
+      ['down', 1],
+      ['error', 1],
+      ['frame', 1],
+      ['open', 1],
+      ['unsupported', 1],
+    ],
+    'one listener for each event name',
+  );
+});
+
+test('[osh-082] the source gives a frame event to its callback as the decoded bytes', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const { calls, callbacks } = recordVideoCallbacks();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openVideo('ds-fixture-1', callbacks);
+  const first = Uint8Array.from([0, 255, 128, 1, 2, 3, 250]);
+  const second = Uint8Array.from([9, 8, 7]);
+  instances[0].send('frame', { data: frameData(first) });
+  instances[0].send('frame', { data: frameData(second) });
+  assert.equal(calls.length, 2);
+  assert.ok(calls[0][1] instanceof Uint8Array);
+  assert.deepEqual(calls, [
+    ['frame', first],
+    ['frame', second],
+  ]);
+});
+
+test('[osh-082] the source ignores a frame event whose data is not one JSON string of base64 text', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const { calls, callbacks } = recordVideoCallbacks();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openVideo('ds-fixture-1', callbacks);
+  const notFrames = [
+    'not json',
+    '',
+    'AAAA',
+    'null',
+    '42',
+    '{"a":1}',
+    '["AAAA"]',
+    '"!!!!"',
+    '"A"',
+    '"AA=A"',
+  ];
+  for (const data of notFrames) instances[0].send('frame', { data });
+  instances[0].send('frame');
+  assert.deepEqual(calls, []);
+});
+
+test('[osh-082] the source gives the open, down and unsupported events to their callbacks', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const { calls, callbacks } = recordVideoCallbacks();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openVideo('ds-fixture-1', callbacks);
+  instances[0].send('open', { data: '{}' });
+  instances[0].send('down', { data: '{}' });
+  instances[0].send('unsupported', { data: '{}' });
+  assert.deepEqual(calls, [['open'], ['down'], ['unsupported']]);
+});
+
+test('[osh-082] the source ignores an open event that has no text data', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const { calls, callbacks } = recordVideoCallbacks();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openVideo('ds-fixture-1', callbacks);
+  instances[0].send('open');
+  instances[0].send('open', { data: 42 });
+  assert.deepEqual(calls, []);
+});
+
+test('[osh-082] the source gives an error event to the down callback', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const { calls, callbacks } = recordVideoCallbacks();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  source.openVideo('ds-fixture-1', callbacks);
+  instances[0].send('error');
+  assert.deepEqual(calls, [['down']]);
+});
+
+test('[osh-082] the close method closes the video event source, and only that one', () => {
+  const { EventSource, instances } = fakeEventSource();
+  const source = createOshSource({ eventSourceImpl: EventSource });
+  const first = source.openVideo('ds-fixture-1', recordVideoCallbacks().callbacks);
+  source.openVideo('ds-fixture-2', recordVideoCallbacks().callbacks);
+  assert.deepEqual(
+    instances.map((instance) => instance.closed),
+    [false, false],
+  );
+  first.close();
+  assert.deepEqual(
+    instances.map((instance) => instance.closed),
+    [true, false],
+  );
+});
+
+test('[osh-082] the default event source of the video stream is the global constructor', () => {
+  const original = globalThis.EventSource;
+  const { EventSource, instances } = fakeEventSource();
+  globalThis.EventSource = EventSource;
+  try {
+    const source = createOshSource();
+    source.openVideo('ds-fixture-1', recordVideoCallbacks().callbacks);
+    assert.equal(instances.length, 1);
+    assert.equal(instances[0].url, '/api/osh/video?datastream=ds-fixture-1');
   } finally {
     if (original === undefined) delete globalThis.EventSource;
     else globalThis.EventSource = original;

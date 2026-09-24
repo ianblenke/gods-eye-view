@@ -1,20 +1,28 @@
 import { oshOpenStream } from './get.js';
 import { mapOshObservation, oshObservationAgeMs } from '../../../src/data/oshObservations.js';
+import { isOshVideoKeyMessage, readOshVideoMessage } from '../../../src/data/oshVideo.js';
 
 /**
  * The live relay of the OpenSensorHub provider (design decisions D65 to
- * D69). The hub keeps one upstream WebSocket for each datastream, shared by
- * every client of that datastream, and relays each frame to those clients
- * as a server-sent event. It only listens: no file of the provider uses the
- * name `send`, and oshOpenStream() in get.js is the only place that builds a
- * socket. The runtime sends only control frames: a pong for each ping, and a
- * close frame when a socket closes.
+ * D69, and D73 to D75 for video). The hub keeps one upstream WebSocket for
+ * each datastream and each kind, shared by every client of that entry, and
+ * relays each frame to those clients as a server-sent event. It only
+ * listens: no file of the provider uses the name `send`, and
+ * oshOpenStream() in get.js is the only place that builds a socket. The
+ * runtime sends only control frames: a pong for each ping, and a close frame
+ * when a socket closes.
  *
  * A client is `{start, write, end}`. `start()` writes the response head
  * and runs once, before the first `write()`. Every event is `event: <name>`
  * and `data: <one JSON value>`. The names are `observation`, `open`, `down`
- * and `unsupported`. A comment line `: hb` keeps a proxy from closing an
- * idle connection.
+ * and `unsupported`, and `frame` for a video entry. A comment line `: hb`
+ * keeps a proxy from closing an idle connection.
+ *
+ * An entry has a kind. The kind `observation` relays each JSON frame as an
+ * observation. The kind `video` relays each binary video message as a
+ * `frame` event, and it keeps the frames since the last key message for a
+ * client that joins late. The two kinds of one datastream id are two
+ * entries, with two sockets.
  */
 
 /** At most this many datastreams count toward the limit, and this many clients listen to one. */
@@ -22,6 +30,10 @@ export const OSH_LIVE_MAX_SOCKETS = 8;
 export const OSH_LIVE_MAX_CLIENTS = 16;
 /** A frame over this many bytes is not an observation. It is a video frame. */
 export const OSH_LIVE_MAX_FRAME_BYTES = 65_536;
+/** A video message over this many bytes closes the socket. A key picture is larger than an observation. */
+export const OSH_VIDEO_MAX_MESSAGE_BYTES = 2_097_152;
+/** The frames since the last key message stay only while they total at most this many bytes. */
+export const OSH_VIDEO_MAX_GROUP_BYTES = 2_097_152;
 /** The upstream socket stays this long after the last client leaves. */
 export const OSH_LIVE_IDLE_MS = 2_000;
 /** The route refuses a datastream this long after an oversize frame. */
@@ -36,6 +48,11 @@ const HEARTBEAT = ': hb\n\n';
 
 function eventText(name, data) {
   return `event: ${name}\ndata: ${JSON.stringify(data)}\n\n`;
+}
+
+/** The key of an entry: the datastream id, and for a video entry the id with a prefix. */
+function entryKey(id, kind) {
+  return kind === 'video' ? `video:${id}` : id;
 }
 
 /**
@@ -64,7 +81,7 @@ export function createOshLiveHub({
 
   /** Clear the timers of one entry, close its socket and forget it. */
   function drop(entry) {
-    entries.delete(entry.id);
+    entries.delete(entry.key);
     for (const timer of [entry.idleTimer, entry.retryTimer, entry.stableTimer]) {
       timers.clearTimeout(timer);
     }
@@ -82,6 +99,8 @@ export function createOshLiveHub({
     entry.stableTimer = null;
     entry.socket = null;
     entry.open = false;
+    entry.group = [];
+    entry.groupBytes = 0;
     broadcast(entry, eventText('down', {}));
     if (entry.clients.size === 0) {
       drop(entry);
@@ -103,9 +122,9 @@ export function createOshLiveHub({
     broadcast(entry, eventText('open', {}));
   }
 
-  /** A frame over the size limit is a video frame: stop the stream, and refuse the datastream. */
+  /** A frame or a message over the size limit: stop the stream, and refuse the datastream and the kind. */
   function refuse(entry) {
-    refusedUntil.set(entry.id, now() + OSH_LIVE_REFUSE_MS);
+    refusedUntil.set(entry.key, now() + OSH_LIVE_REFUSE_MS);
     broadcast(entry, eventText('unsupported', {}));
     endClients(entry);
     drop(entry);
@@ -135,6 +154,47 @@ export function createOshLiveHub({
     );
   }
 
+  /**
+   * Keep the event text of a video message for a client that joins late. A
+   * key message starts the group again. Any other message joins the group
+   * when one exists. A group over the byte limit is emptied, and it stays
+   * empty until the next key message.
+   */
+  function remember(entry, bytes, text) {
+    if (isOshVideoKeyMessage(bytes)) {
+      entry.group = [text];
+      entry.groupBytes = bytes.byteLength;
+    } else if (entry.group.length > 0) {
+      entry.groupBytes += bytes.byteLength;
+      if (entry.groupBytes > OSH_VIDEO_MAX_GROUP_BYTES) {
+        entry.group = [];
+        entry.groupBytes = 0;
+      } else {
+        entry.group.push(text);
+      }
+    }
+  }
+
+  /**
+   * Relay one binary video message as a `frame` event. The data of the event
+   * is the base64 text of the whole message. A text message, a message that
+   * is not a good video message and a message over the size limit are never
+   * relayed, and the last one stops the stream like a frame of the live kind.
+   */
+  function relayVideo(entry, data) {
+    if (typeof data === 'string') return;
+    if (data.byteLength > OSH_VIDEO_MAX_MESSAGE_BYTES) {
+      refuse(entry);
+      return;
+    }
+    const bytes = new Uint8Array(data);
+    if (readOshVideoMessage(bytes) === null) return;
+    const base64 = Buffer.from(bytes.buffer, bytes.byteOffset, bytes.byteLength).toString('base64');
+    const text = eventText('frame', base64);
+    remember(entry, bytes, text);
+    broadcast(entry, text);
+  }
+
   function connect(entry) {
     let socket;
     try {
@@ -155,7 +215,10 @@ export function createOshLiveHub({
       down(entry);
     });
     socket.addEventListener('open', current(() => opened(entry)));
-    socket.addEventListener('message', current((event) => relay(entry, event.data)));
+    socket.addEventListener(
+      'message',
+      current((event) => (entry.kind === 'video' ? relayVideo : relay)(entry, event.data)),
+    );
     socket.addEventListener('close', gone);
     socket.addEventListener('error', gone);
   }
@@ -170,40 +233,47 @@ export function createOshLiveHub({
   }
 
   /**
-   * Add one client to the entry of a datastream. The first client opens the
-   * upstream socket. The reader, the URL and the headers of the first client
-   * stay for the life of the entry.
+   * Add one client to the entry of a datastream and a kind. The first client
+   * opens the upstream socket. The reader, the URL and the headers of the
+   * first client stay for the life of the entry. A client of a video entry
+   * that joins an open socket also gets the frames of the current group,
+   * after the event `open`.
    * @param {string} id - Datastream id, already checked by the route.
-   * @param {{url: URL, headers: Record<string,string>, reader: ?object}} stream
+   * @param {{url: URL, headers: Record<string,string>, reader: ?object, kind?: 'observation'|'video'}} stream
    * @param {{start: () => void, write: (text: string) => void, end: () => void}} client
    * @returns {{error: string}|{leave: () => void}} An error code, or the function that removes the client.
    */
-  function join(id, { url, headers, reader }, client) {
-    if ((refusedUntil.get(id) ?? 0) > now()) return { error: 'live_unsupported' };
-    const existing = entries.get(id);
+  function join(id, { url, headers, reader, kind = 'observation' }, client) {
+    const key = entryKey(id, kind);
+    if ((refusedUntil.get(key) ?? 0) > now()) return { error: 'live_unsupported' };
+    const existing = entries.get(key);
     const full = existing
       ? existing.clients.size >= OSH_LIVE_MAX_CLIENTS
       : entries.size >= OSH_LIVE_MAX_SOCKETS;
     if (full) return { error: 'live_busy' };
     client.start();
     const entry = existing || {
-      id,
+      key,
+      kind,
       url,
       headers,
       reader,
       clients: new Map(),
       socket: null,
       open: false,
+      group: [],
+      groupBytes: 0,
       attempt: 0,
       idleTimer: null,
       retryTimer: null,
       stableTimer: null,
     };
-    entries.set(id, entry);
+    entries.set(key, entry);
     timers.clearTimeout(entry.idleTimer);
     entry.idleTimer = null;
     entry.clients.set(client, timers.setInterval(() => client.write(HEARTBEAT), OSH_LIVE_HEARTBEAT_MS));
     if (entry.open) client.write(eventText('open', {}));
+    for (const text of entry.group) client.write(text);
     if (!existing) connect(entry);
     return { leave: () => leave(entry, client) };
   }
