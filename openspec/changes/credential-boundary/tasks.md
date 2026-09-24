@@ -133,11 +133,11 @@ Revert each mutation of this section after its check.
 
 ## 9. Gates and review
 
-- [ ] 9.1 Run `make lint`, until it gives no errors.
-- [ ] 9.2 Run `make ratchet CHANGE=credential-boundary`.
-- [ ] 9.3 Run `make gates CHANGE=credential-boundary`.
-- [ ] 9.4 Read the coverage of each changed file from the Docker run.
-- [ ] 9.5 Run each mutation of sections 3 to 8 on the final tree, in one session.
+- [x] 9.1 Run `make lint`, until it gives no errors.
+- [x] 9.2 Run `make ratchet CHANGE=credential-boundary`.
+- [x] 9.3 Run `make gates CHANGE=credential-boundary`.
+- [x] 9.4 Read the coverage of each changed file from the Docker run.
+- [x] 9.5 Run each mutation of sections 3 to 8 on the final tree, in one session.
 - [ ] 9.6 Run the review agents.
 - [ ] 9.7 Write `review.md`.
 
