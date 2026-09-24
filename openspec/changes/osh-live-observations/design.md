@@ -77,7 +77,7 @@ A datastream whose stream is open, and for which the layer holds an observation,
 
 Coverage: `live.js` and every changed code file stay at 100% line, branch and function coverage. Trace: `osh-063` to `osh-075` tag new tests. The scenarios `osh-004`, `osh-005`, `osh-006` and `osh-039` have a changed test with their tag. A new `[osh-006]` test covers the live route.
 
-The server tests use a hand-made WebSocket server on the loopback address. It accepts the upgrade, sends binary and text frames, and records the request headers and each frame that it receives. The browser tests use a fake `EventSource`. Every mutation in `tasks.md` names the test that must fail.
+The server tests use a hand-made WebSocket server on the loopback address. It accepts the upgrade, sends binary and text frames and a ping, and records the request headers and each frame that it receives. The browser tests use a fake `EventSource`. Every mutation in `tasks.md` names the test that must fail.
 
 ## Risks / Trade-offs
 

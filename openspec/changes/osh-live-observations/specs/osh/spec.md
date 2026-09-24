@@ -6,7 +6,7 @@ Origin: spec-first
 
 #### Scenario: Send every upstream request as a recorded GET `osh-004`
 - **WHEN** a client requests the systems, datastreams, observations and live routes, so that each upstream call runs
-- **THEN** each recorded upstream call has method `GET`, no body and an `AbortSignal`
+- **THEN** each recorded fetch call has method `GET`, no body and an `AbortSignal`
 - **AND** `oshOpenStream()` passes the URL and an option object with only `headers`, so the handshake is a GET with no body
 
 #### Scenario: Keep one upstream call site `osh-005`
@@ -129,7 +129,7 @@ Origin: spec-first
 
 #### Scenario: Close every live stream when the server closes `osh-075`
 - **WHEN** the HTTP server of the provider closes while clients listen
-- **THEN** the provider ends the response of each client and clears each timer of the hub
+- **THEN** the provider ends the response of each client and clears each of its timers
 - **AND** the provider closes each upstream socket that it holds
 - **AND** no timer of the provider opens a new upstream socket after that
 

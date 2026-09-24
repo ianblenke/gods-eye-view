@@ -17,7 +17,7 @@ import { mapOshObservation, oshObservationAgeMs } from '../../../src/data/oshObs
  * idle connection.
  */
 
-/** At most this many datastreams hold an upstream socket, and this many clients listen to one. */
+/** At most this many datastreams count toward the limit, and this many clients listen to one. */
 export const OSH_LIVE_MAX_SOCKETS = 8;
 export const OSH_LIVE_MAX_CLIENTS = 16;
 /** A frame over this many bytes is not an observation. It is a video frame. */

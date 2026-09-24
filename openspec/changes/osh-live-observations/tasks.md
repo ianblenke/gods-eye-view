@@ -90,7 +90,7 @@ Do not rename a test that exists on `main`. Use only synthetic ids: `ds-fixture-
 - [x] 3.1 Write the `[osh-071]` tests in `src/layers/osh/source.test.mjs` with a fake `EventSource`.
   - The URL is the same-origin path with the id, and it has no credentials.
   - Each event calls its callback. `close()` closes the `EventSource`.
-  - The `error` event calls the `down` callback. The `open` event of the connection calls no callback.
+  - The `error` event calls the `down` callback. The event `open` that the browser raises with no data calls no callback.
   - An observation event whose data is not one JSON object calls no callback.
 - [x] 3.2 Add `openLive()` to `src/layers/osh/source.js` until 3.1 passes.
 - [x] 3.3 Write the `[osh-072]`, `[osh-073]` and `[osh-074]` tests in `src/data/oshLayer.test.mjs`. Register `t.after(() => layer.destroy(viewer))` in each.
