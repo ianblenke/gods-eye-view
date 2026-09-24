@@ -639,7 +639,6 @@
     "src/data/oshGet.test.mjs › [osh-004] aborts through an external caller signal",
     "src/data/oshGet.test.mjs › [osh-004] accepts a URL object and a 204 with no body",
     "src/data/oshGet.test.mjs › [osh-004] an already-aborted caller signal aborts immediately, before any request",
-    "src/data/oshGet.test.mjs › [osh-004] opens one WebSocket from the URL and an option object that holds only headers, so the handshake is a GET with no body",
     "src/data/oshGet.test.mjs › [osh-004] sends one GET request with no body and an abort signal",
     "src/data/oshProxy.test.mjs › [osh-004] the probe, the systems, the datastreams and the observations calls are each a recorded GET with no body and an abort signal"
   ],
@@ -647,7 +646,6 @@
     "src/data/oshProxy.test.mjs › [osh-005] only osh/get.js calls fetch; no other scanned file calls it, names POST, PUT, PATCH or DELETE, sends a body, or imports a raw transport"
   ],
   "osh-006": [
-    "src/data/oshProxy.test.mjs › [osh-006] refuses a browser request whose method is not GET on the live route, and opens no socket",
     "src/data/oshProxy.test.mjs › [osh-006] refuses a browser request whose method is not GET, on every sub-path"
   ],
   "osh-007": [
@@ -675,7 +673,6 @@
   "osh-012": [
     "src/data/oshBase.test.mjs › [osh-012] base_unresolved when no failure carries 401 or 403",
     "src/data/oshBase.test.mjs › [osh-012] reports failure with candidate:null when every candidate misses, and holds before a retry",
-    "src/data/oshLive.test.mjs › [osh-012] the live route reports base_unresolved and auth_failed when no candidate root answers",
     "src/data/oshProxy.test.mjs › [osh-012] the datastreams route answers base_unresolved and auth_failed as appropriate",
     "src/data/oshProxy.test.mjs › [osh-012] the fois route reports base_unresolved when the root cannot be resolved",
     "src/data/oshProxy.test.mjs › [osh-012] the observations route reports base_unresolved when the root cannot be resolved",
@@ -890,7 +887,6 @@
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] every definition URN in a location schema fixture has the synthetic vendor segment",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] every system, datastream and feature fixture id starts with sys-fixture-, ds-fixture- or foi-fixture-",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] no OSH test file has a real address",
-    "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the address check catches a real-looking WebSocket address, and lets a fixture one pass",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the bare-host check catches a real-looking host pasted with no scheme",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the provider, adapter and layer files have no real address",
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] the vendor-urn check catches a real-looking vendor segment"
@@ -1178,106 +1174,6 @@
     "src/data/oshLayer.test.mjs › [osh-062] a poll move across the horizon hides the selected entity, and a later move back shows it",
     "src/data/oshLayer.test.mjs › [osh-062] a refresh under a camera that has not moved hides the antipode entities and shows the near ones",
     "src/data/oshLayer.test.mjs › [osh-062] init() adds one moveEnd listener, disable() keeps it, and destroy() removes it"
-  ],
-  "osh-063": [
-    "src/data/oshLive.test.mjs › [osh-063] the live route gives 400 with bad_datastream for a bad id, and opens no socket",
-    "src/data/oshLive.test.mjs › [osh-063] the live route gives 405 with Allow GET for a wrong method, and opens no socket",
-    "src/data/oshLive.test.mjs › [osh-063] the live route gives 503 with no_key when no key is set, and opens no socket"
-  ],
-  "osh-064": [
-    "src/data/oshIds.test.mjs › [osh-064] assertLiveUrl() throws for another scheme, host, port, path, query, user name, password or fragment",
-    "src/data/oshIds.test.mjs › [osh-064] liveUrl() builds a ws URL for an http root and a wss URL for an https root",
-    "src/data/oshIds.test.mjs › [osh-064] liveUrl() drops the credentials that the root holds",
-    "src/data/oshIds.test.mjs › [osh-064] liveUrl() keeps the host and the port of the root, and sets the fixed path and query",
-    "src/data/oshLive.test.mjs › [osh-064] the live route builds the URL with liveUrl() and checks it with assertLiveUrl()"
-  ],
-  "osh-065": [
-    "src/data/oshLive.test.mjs › [osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays frames, and the socket closes after the client leaves",
-    "src/data/oshLive.test.mjs › [osh-065] oshOpenStream() sets binaryType to arraybuffer, passes the headers and sends no message frame",
-    "src/data/oshLive.test.mjs › [osh-065] the handshake carries Authorization only when both credentials are set",
-    "src/data/oshLive.test.mjs › [osh-065] the route opens one upstream socket with binaryType set to arraybuffer, and with the Basic header"
-  ],
-  "osh-066": [
-    "src/data/oshLive.test.mjs › [osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays frames, and the socket closes after the client leaves",
-    "src/data/oshLive.test.mjs › [osh-066] a binary frame gives an observation event with the shape of osh-022 and the age of that moment",
-    "src/data/oshLive.test.mjs › [osh-066] a frame of exactly 65536 bytes is not too large",
-    "src/data/oshLive.test.mjs › [osh-066] a frame of more than 65536 bytes closes the socket and sends the event unsupported, whatever it holds",
-    "src/data/oshLive.test.mjs › [osh-066] a frame of more than 65536 bytes that holds an observation closes the socket and sends the event unsupported",
-    "src/data/oshLive.test.mjs › [osh-066] a frame that is not JSON or has no result gives no event, and the stream stays open",
-    "src/data/oshLive.test.mjs › [osh-066] a loopback server sends a frame of 70000 bytes, and the route gives unsupported and ends the stream",
-    "src/data/oshLive.test.mjs › [osh-066] a text frame gives the same observation event",
-    "src/data/oshLive.test.mjs › [osh-066] the hub refuses the datastream for ten minutes after a frame that is too large",
-    "src/data/oshLive.test.mjs › [osh-066] the route gives 503 with live_unsupported after a frame that is too large"
-  ],
-  "osh-067": [
-    "src/data/oshLive.test.mjs › [osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays frames, and the socket closes after the client leaves",
-    "src/data/oshLive.test.mjs › [osh-067] a client that joins within the two seconds keeps the same socket",
-    "src/data/oshLive.test.mjs › [osh-067] a client that leaves while the route reads the schema opens no socket",
-    "src/data/oshLive.test.mjs › [osh-067] the route removes the client when the connection closes",
-    "src/data/oshLive.test.mjs › [osh-067] the socket closes two seconds after the last client leaves",
-    "src/data/oshLive.test.mjs › [osh-067] two clients share one upstream socket and both receive each frame"
-  ],
-  "osh-068": [
-    "src/data/oshLive.test.mjs › [osh-068] a client for a ninth datastream gets live_busy, and the hub opens no socket",
-    "src/data/oshLive.test.mjs › [osh-068] a seventeenth client for one datastream gets live_busy, and the hub opens no socket"
-  ],
-  "osh-069": [
-    "src/data/oshLive.test.mjs › [osh-069] a client that joins an open socket gets the event open at once",
-    "src/data/oshLive.test.mjs › [osh-069] a constructor that throws gives the event down and a new attempt",
-    "src/data/oshLive.test.mjs › [osh-069] a retry that waits when the last client leaves is cleared with the entry",
-    "src/data/oshLive.test.mjs › [osh-069] a socket that closes before 30 seconds open leaves no timer that resets the delay",
-    "src/data/oshLive.test.mjs › [osh-069] a socket that stays open for 30 seconds resets the delay",
-    "src/data/oshLive.test.mjs › [osh-069] an error event and a close event of one socket give one down event",
-    "src/data/oshLive.test.mjs › [osh-069] an event of a socket that the entry no longer holds changes nothing",
-    "src/data/oshLive.test.mjs › [osh-069] the client receives open each time the socket opens, and down each time it closes",
-    "src/data/oshLive.test.mjs › [osh-069] the delays before a new socket are 1, 2, 4, 8, 16 and 30 seconds",
-    "src/data/oshLive.test.mjs › [osh-069] the hub does not open a new socket after a socket closes while no client listens",
-    "src/data/oshLive.test.mjs › [osh-069] the response carries a heartbeat comment every 20 seconds",
-    "src/data/oshLive.test.mjs › [osh-069] the route writes the response head before the event open of a client that joins an open socket"
-  ],
-  "osh-070": [
-    "src/data/oshLive.test.mjs › [osh-070] no event, header or log line holds the URL, the user name or the password after a failure"
-  ],
-  "osh-071": [
-    "src/layers/osh/source.test.mjs › [osh-071] the close method closes the event source, and only that one",
-    "src/layers/osh/source.test.mjs › [osh-071] the default event source is the global constructor",
-    "src/layers/osh/source.test.mjs › [osh-071] the source gives an error event to the down callback",
-    "src/layers/osh/source.test.mjs › [osh-071] the source gives an observation event to its callback as the parsed data",
-    "src/layers/osh/source.test.mjs › [osh-071] the source gives the open, down and unsupported events to their callbacks",
-    "src/layers/osh/source.test.mjs › [osh-071] the source ignores an observation event whose data is not one JSON object",
-    "src/layers/osh/source.test.mjs › [osh-071] the source ignores the open event of the connection, which has no data",
-    "src/layers/osh/source.test.mjs › [osh-071] the source opens one event source for the same-origin path of the datastream"
-  ],
-  "osh-072": [
-    "src/data/oshLayer.test.mjs › [osh-072] a callback of a live stream that the layer closed changes nothing",
-    "src/data/oshLayer.test.mjs › [osh-072] a click on empty space closes every open live stream",
-    "src/data/oshLayer.test.mjs › [osh-072] a new selection closes every open live stream and opens the streams of the new system",
-    "src/data/oshLayer.test.mjs › [osh-072] a refresh that drops the selected feature closes every open live stream",
-    "src/data/oshLayer.test.mjs › [osh-072] the destroy method closes every open live stream",
-    "src/data/oshLayer.test.mjs › [osh-072] the layer opens one live stream for a datastream that the list holds twice",
-    "src/data/oshLayer.test.mjs › [osh-072] the layer opens one live stream for each of the first three datastreams of the selected system"
-  ],
-  "osh-073": [
-    "src/data/oshLayer.test.mjs › [osh-073] a live observation replaces the observation of its datastream and keeps the others",
-    "src/data/oshLayer.test.mjs › [osh-073] a live observation that comes before the first poll of a new selection does not redraw the old detail",
-    "src/data/oshLayer.test.mjs › [osh-073] a live observation that is ahead of the clock leaves the entity where it was",
-    "src/data/oshLayer.test.mjs › [osh-073] a live observation that is not fresh leaves the entity where it was, and the detail shows the observation",
-    "src/data/oshLayer.test.mjs › [osh-073] a live observation that moves the entity across the horizon hides it, and a later one shows it",
-    "src/data/oshLayer.test.mjs › [osh-073] a live observation with a fresh location moves the entity",
-    "src/data/oshLayer.test.mjs › [osh-073] a poll answer that comes after a live observation does not replace it",
-    "src/data/oshLayer.test.mjs › [osh-073] the layer reads no second observation for a datastream while its live stream is open"
-  ],
-  "osh-074": [
-    "src/data/oshLayer.test.mjs › [osh-074] a live stream that opens again stops the poll of its datastream",
-    "src/data/oshLayer.test.mjs › [osh-074] an open live stream stops the poll of its datastream after the first live observation",
-    "src/data/oshLayer.test.mjs › [osh-074] the layer polls a datastream that has no open live stream",
-    "src/data/oshLayer.test.mjs › [osh-074] the layer polls a datastream whose live stream is open and has delivered nothing",
-    "src/data/oshLayer.test.mjs › [osh-074] the layer polls a datastream whose live stream reports down",
-    "src/data/oshLayer.test.mjs › [osh-074] the layer polls a datastream whose live stream reports unsupported"
-  ],
-  "osh-075": [
-    "src/data/oshLive.test.mjs › [osh-075] the hub ends each client, clears each timer and closes each open socket when it closes",
-    "src/data/oshLive.test.mjs › [osh-075] the provider closes the hub when the HTTP server closes"
   ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"

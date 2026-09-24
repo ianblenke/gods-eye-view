@@ -113,7 +113,7 @@ export async function oshGet(
  * headers. The server sends one JSON observation in each binary frame, so
  * the socket reads a frame as an ArrayBuffer. No file of the provider uses the
  * name `send`, so the provider sends no message frame to the server. The
- * close frame of a socket that the provider closes is the only frame it sends.
+ * runtime sends only control frames: a pong for each ping, and a close frame.
  * @param {typeof WebSocket} WebSocketImpl - Injected WebSocket constructor.
  * @param {string|URL} url - Live URL, already built and guarded by the caller.
  * @param {object} [options]

@@ -2657,7 +2657,7 @@ function isAt(position, lon, lat, alt) {
   return Cesium.Cartesian3.equalsEpsilon(position, Cesium.Cartesian3.fromDegrees(lon, lat, alt), Cesium.Math.EPSILON6);
 }
 
-test('[osh-072] the layer opens one live stream for each of the first three datastreams of the selected system', async (t) => {
+test('[osh-072] the layer starts one live stream for each of the first three datastreams of the selected system', async (t) => {
   t.mock.timers.enable({ apis: ['setInterval'] });
   const other = { id: 'ds-fixture-other', systemId: 'sys-fixture-2', name: 'Other' };
   const source = fakeSource({ live: true, datastreams: [other, ...liveDatastreams(10)] });
@@ -2679,7 +2679,7 @@ test('[osh-072] the layer opens one live stream for each of the first three data
   });
 });
 
-test('[osh-072] the layer opens one live stream for a datastream that the list holds twice', async (t) => {
+test('[osh-072] the layer starts one live stream for a datastream that the list holds twice', async (t) => {
   const twice = liveDatastreams(1)[0];
   const source = fakeSource({ live: true, datastreams: [twice, twice] });
   const layer = createOshLayer({ source });
@@ -2697,7 +2697,7 @@ test('[osh-072] the layer opens one live stream for a datastream that the list h
   });
 });
 
-test('[osh-072] a new selection closes every open live stream and opens the streams of the new system', async (t) => {
+test('[osh-072] a new selection closes every live stream and starts the streams of the new system', async (t) => {
   const source = fakeSource({
     live: true,
     datastreams: [...liveDatastreams(2), ...liveDatastreams(2, 'sys-fixture-2', 'b')],
@@ -2732,7 +2732,7 @@ test('[osh-072] a new selection closes every open live stream and opens the stre
   });
 });
 
-test('[osh-072] a click on empty space closes every open live stream', async (t) => {
+test('[osh-072] a click on empty space closes every live stream', async (t) => {
   const source = fakeSource({ live: true, datastreams: liveDatastreams(2) });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
@@ -2754,7 +2754,7 @@ test('[osh-072] a click on empty space closes every open live stream', async (t)
   });
 });
 
-test('[osh-072] the destroy method closes every open live stream', async (t) => {
+test('[osh-072] the destroy method closes every live stream', async (t) => {
   const source = fakeSource({ live: true, datastreams: liveDatastreams(2) });
   const layer = createOshLayer({ source });
   const { viewer } = fakeViewer();
@@ -2772,7 +2772,7 @@ test('[osh-072] the destroy method closes every open live stream', async (t) => 
   });
 });
 
-test('[osh-072] a refresh that drops the selected feature closes every open live stream', async (t) => {
+test('[osh-072] a refresh that drops the selected feature closes every live stream', async (t) => {
   let fois = [FEATURE_A];
   const source = fakeSource({ live: true, datastreams: liveDatastreams(2) });
   source.getFois = async () => ({ keyRequired: false, fois, truncated: false });
@@ -3013,7 +3013,7 @@ test('[osh-073] a poll answer that comes after a live observation does not repla
   });
 });
 
-test('[osh-073] a live observation that comes before the first poll of a new selection does not redraw the old detail', async (t) => {
+test('[osh-073] a live observation that comes before the first poll of a new selection does not change the detail of the old selection', async (t) => {
   const source = fakeSource({
     live: true,
     datastreams: [...liveDatastreams(1), ...liveDatastreams(1, 'sys-fixture-2', 'b')],

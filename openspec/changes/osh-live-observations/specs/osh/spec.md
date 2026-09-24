@@ -5,7 +5,7 @@ The provider MUST send only GET requests to the OpenSensorHub server, through on
 Origin: spec-first
 
 #### Scenario: Send every upstream request as a recorded GET `osh-004`
-- **WHEN** a client requests the systems, datastreams and observations routes, so that the base probe, the list fetch and the observation fetch each run
+- **WHEN** a client requests the systems, datastreams, observations and live routes, so that each upstream call runs
 - **THEN** each recorded upstream call has method `GET`, no body and an `AbortSignal`
 - **AND** `oshOpenStream()` passes the URL and an option object with only `headers`, so the handshake is a GET with no body
 
@@ -80,14 +80,16 @@ Origin: spec-first
 - **WHEN** a client opens the live route for a datastream with the key set
 - **THEN** the provider opens one upstream WebSocket with `binaryType` set to `arraybuffer`, and the handshake is a GET request
 - **AND** the handshake carries `Authorization: Basic` only when both credentials are set, as `osh-007` says
-- **AND** the provider sends no message frame to the upstream server, and its only frame is the close frame of a socket that it closes
+- **AND** the provider sends no message frame to the upstream server
+- **AND** the runtime sends only control frames: a pong for each ping, and a close frame when a socket closes
 - **AND** the response has the type `text/event-stream`, `Cache-Control: no-store` and `X-Accel-Buffering: no`
 
 #### Scenario: Relay each frame as an observation event `osh-066`
 - **WHEN** the upstream socket delivers a binary frame or a text frame that holds one JSON observation
 - **THEN** the client receives an event `observation`, and its data is the observation of `osh-022` for that datastream, with the `ageMs` of that moment
-- **AND** a frame that is not JSON or has no `result` gives no event, and the upstream socket and the client responses stay open
-- **AND** a frame with more than 65536 bytes closes the upstream socket, whatever the frame holds, and the client receives the event `unsupported`
+- **AND** a frame of 65536 bytes or less that is not JSON, or has no `result`, gives no event
+- **AND** after such a frame, the upstream socket and the client responses stay open
+- **AND** a frame with more than 65536 bytes closes the upstream socket, with any content, and the client receives the event `unsupported`
 - **AND** the provider ends the response of each client of that datastream
 - **AND** a request for that datastream in the next ten minutes gets `503` with `{error:'live_unsupported'}`
 
@@ -102,15 +104,15 @@ Origin: spec-first
 - **WHEN** the provider serves eight datastreams, or sixteen clients listen to one datastream
 - **THEN** a client for a ninth datastream, or a seventeenth client for one datastream, gets `503` with `{error:'live_busy'}`
 - **AND** the provider opens no upstream socket for that client
-- **AND** a datastream counts from its first client until two seconds after its last client leaves
-- **AND** a datastream counts while its socket connects or waits to try again
+- **AND** a datastream counts toward the limit of eight from its first client until two seconds after its last client leaves
+- **AND** a datastream counts toward that limit while its socket connects or waits to try again
 
 #### Scenario: Tell the client when the upstream opens and closes, and open a new socket `osh-069`
 - **WHEN** the upstream socket opens, closes or fails while a client listens
 - **THEN** the client receives the event `open` each time the upstream socket opens, and the event `down` each time it closes or fails
 - **AND** a client that joins while the upstream socket is open receives the event `open` at once
-- **AND** while a client listens, the provider opens a new socket after 1, 2, 4, 8 and 16 seconds, and then every 30 seconds
-- **AND** an upstream socket that stays open for 30 seconds resets the delay to 1 second
+- **AND** while a client listens, the delay before each new socket is 1, 2, 4, 8 and 16 seconds, and then 30 seconds each time
+- **AND** a socket that stays open for 30 seconds resets that delay to 1 second
 - **AND** the response carries a comment line every 20 seconds, so that a proxy keeps the connection open
 
 #### Scenario: Keep the URL and the credentials out of the live route `osh-070`
@@ -121,14 +123,15 @@ Origin: spec-first
 - **WHEN** the browser source opens a live stream for a datastream id, and later closes it
 - **THEN** it creates one `EventSource` for the same-origin path `/api/osh/live?datastream=<id>`, with no credentials in the URL
 - **AND** it calls its callbacks for the events `observation`, `open`, `down` and `unsupported`, and `close()` closes the `EventSource`
-- **AND** the `error` event of the `EventSource` also calls the callback for `down`, and the `open` event of the connection calls no callback
+- **AND** the `error` event of the `EventSource` also calls the callback for `down`
+- **AND** the event `open` that the browser raises with no data calls no callback
 - **AND** an `observation` event whose data is not one JSON object calls no callback
 
 #### Scenario: Close every live stream when the server closes `osh-075`
 - **WHEN** the HTTP server of the provider closes while clients listen
 - **THEN** the provider ends the response of each client and clears each timer of the hub
-- **AND** the provider closes each upstream socket that is open
-- **AND** the hub opens no new upstream socket after that
+- **AND** the provider closes each upstream socket that it holds
+- **AND** no timer of the provider opens a new upstream socket after that
 
 ### Requirement: Live layer
 The layer MUST start a live stream for each of at most three datastreams of the selected system. It MUST close each stream when the selection ends. A stream is open from its event `open` until its event `down` or `unsupported`.

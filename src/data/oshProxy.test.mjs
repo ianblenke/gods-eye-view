@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { EventEmitter } from 'node:events';
 import { readFileSync, readdirSync } from 'node:fs';
 import { OSH_DEFAULT_LOCATION_PROPERTIES, oshProxy } from '../../server/providers/osh.js';
 import { createOshLiveHub } from '../../server/providers/osh/live.js';
@@ -127,11 +128,26 @@ test('[osh-003] reads the three keys at request time, not at plugin build', asyn
   assert.equal(after.json.systems.length, 1);
 });
 
-test('[osh-004] the probe, the systems, the datastreams and the observations calls are each a recorded GET with no body and an abort signal', async () => {
+test('[osh-004] the probe, the systems, the datastreams and the observations calls are each a recorded GET with no body and an abort signal', async (t) => {
   const calls = [];
+  const sockets = [];
+  const hub = createOshLiveHub({
+    WebSocketImpl: class {
+      constructor(url, options) {
+        sockets.push({ url, options });
+      }
+
+      addEventListener() {}
+
+      close() {}
+    },
+    warn: () => {},
+  });
+  t.after(() => hub.close());
   const proxy = oshProxy({
     env: { OSH_URL: 'https://osh.example/api/' },
     fetchImpl: fixtureFetch({ calls }),
+    liveHub: hub,
   });
   await callOsh(proxy, { url: '/systems' });
   await callOsh(proxy, { url: '/datastreams' });
@@ -143,6 +159,21 @@ test('[osh-004] the probe, the systems, the datastreams and the observations cal
     assert.equal(call.options.redirect, 'manual');
     assert.ok(call.options.signal instanceof AbortSignal);
   }
+  // The live route opens one upstream WebSocket, and its handshake is a GET.
+  // So the constructor gets the URL and an option object with only headers.
+  let handler;
+  proxy.configureServer({
+    middlewares: {
+      use(_path, callback) {
+        handler = callback;
+      },
+    },
+  });
+  const res = Object.assign(new EventEmitter(), { writeHead() {}, flushHeaders() {}, write: () => true, end() {}, destroyed: false });
+  await handler({ method: 'GET', url: '/live?datastream=ds-fixture-1' }, res);
+  assert.equal(sockets.length, 1);
+  assert.match(sockets[0].url, /^wss:\/\/osh\.example\/api\/datastreams\/ds-fixture-1\/observations\?/);
+  assert.deepEqual(Object.keys(sockets[0].options), ['headers']);
 });
 
 test('[osh-005] only osh/get.js calls fetch; no other scanned file calls it, names POST, PUT, PATCH or DELETE, sends a body, or imports a raw transport', async () => {
