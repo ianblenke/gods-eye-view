@@ -28,7 +28,7 @@ This change uses the live stream for the selected system. The provider relays it
 - The hygiene test pins the number of OSH test files. The new test file changes that number from 14 to 15. The address scan of the hygiene test now reads the schemes `ws` and `wss`.
 - New test file: `src/data/oshLive.test.mjs`. It uses a fixture WebSocket server on the loopback address. No test calls a real server.
 - No new request method, no request body and no new environment variable. The list routes and the observation route do not change.
-- The provider holds more open connections. The limits are eight datastreams in all, and sixteen clients for each datastream. Each datastream holds one upstream socket.
+- The provider holds more open connections. The limits are eight datastreams in all, and sixteen clients for each datastream. Each datastream holds at most one upstream socket.
 - Gaps that this change opens or closes: none. Each new code file must have full coverage.
 
 ## Known limits and later changes
@@ -39,8 +39,9 @@ This change uses the live stream for the selected system. The provider relays it
 - `osh-live-one-way`: the provider only listens. It sends no command and no message frame, and the server accepts none. The runtime sends only control frames: a pong for each ping, and a close frame when a socket closes.
 - `osh-live-header-extension`: the `headers` option of the `WebSocket` constructor is an extension of Node. A different runtime can ignore it, and the handshake then carries no credentials.
 - `osh-live-no-live-test`: no test proves that the owner's server behaves like the fixture. Every fixture is synthetic.
-- `osh-live-poll-after-down`: after a `down` event, the poll runs as today. It can replace a newer live observation with an older cached one, because the observation route caches for 15 seconds. A later change can order the two by `phenomenonTime`.
+- `osh-live-poll-after-down`: after a `down` event, the poll runs as it does without this change. It can replace a newer live observation with an older cached one, because the observation route caches for 15 seconds. A later change can order the two by `phenomenonTime`.
 - `osh-live-first-client-reader`: the hub keeps the URL, the headers and the schema reader of the first client for the life of the entry of a datastream. The entry lives until two seconds after the last client leaves. The hub does not use the reader of a later client.
-- `osh-live-silent-upstream`: the hub has no timer for an upstream socket that sends no data, because a datastream can send no data for a long time. The event `down` comes only when the socket closes or fails. While a stream is open and the layer holds an observation, the layer does not poll. So a socket that no longer works leaves the last observation in the detail, with the age that the hub sent.
+- `osh-live-silent-upstream`: the hub has no timer for an upstream socket that sends no data, because a datastream can send no data for a long time. The event `down` comes only when the socket closes or fails. While a stream is open and the layer holds an observation, the layer does not poll. So the detail keeps the last observation, with the age that the hub sent.
 - `osh-live-memory`: the hub receives a whole frame before it checks its size. The map of refused datastreams keeps every entry. The provider does not check the result of `write()` for a client, so a slow client can make its buffer grow.
+- `osh-live-early-place-release`: the place of a datastream can end before two seconds after its last client leaves. This happens in two cases. Its socket closes or fails while no client listens. Or the provider refuses the datastream after a frame that is too large. No test asserts the count on these paths.
 - `osh-live-no-retry-after-refusal`: an answer `503` makes the `EventSource` stop, and it does not try again. The layer treats it as `down`, polls the datastream, and starts no new stream for the same selection. When eight datastreams hold a place, each new datastream gets `live_busy`. A datastream keeps its place for two seconds after its last client leaves, so quick selections can fill the hub.

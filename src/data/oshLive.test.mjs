@@ -847,7 +847,7 @@ test('[osh-069] a socket that stays open for 30 seconds resets the delay', async
   fail(2);
 });
 
-test('[osh-069] the hub clears the wait for a new socket when the entry drops after the last client leaves', async (t) => {
+test('[osh-069] the hub clears the timer of the next socket when it removes the entry after the last client leaves', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const joined = rig.hub.join(DS, streamOf(), fakeClient());
