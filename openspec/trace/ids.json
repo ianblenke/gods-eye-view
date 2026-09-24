@@ -905,7 +905,7 @@
     "change": "osh-fusion"
   },
   "osh-005": {
-    "hash": "312def51cd8ef6bac066453181fc3ae9d067279a8cdbaa1fafd08f90493101f7",
+    "hash": "b013647194f271e90f68b4381a59f1e37c7693d2d4548c32dde175cdd5d79943",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -1240,7 +1240,7 @@
     "change": "osh-live-observations"
   },
   "osh-072": {
-    "hash": "a632400c1b766ed17501c26862449d8b8a0628c65d74f44c275df85b2bd1e007",
+    "hash": "52add3662b951330c44dcf9967d27a1eee01bb5e8f0619e692a095827b68e486",
     "since": "2026-09-24",
     "change": "osh-live-observations"
   },
@@ -1250,7 +1250,7 @@
     "change": "osh-live-observations"
   },
   "osh-074": {
-    "hash": "a85fe8faaa6feaf8351abbc6d1e1b91a7522adad57e22a4ffedf3230a5db6c59",
+    "hash": "c1a56ede962ab3eb387a42694acc6d6f825e17ad04bbc7fce410516392595f13",
     "since": "2026-09-24",
     "change": "osh-live-observations"
   },
@@ -1258,6 +1258,76 @@
     "hash": "d8efe4458954c52260d0e0f3510b53286d5ca8e63bb0c7f3c8a607a9e8ee0cb5",
     "since": "2026-09-24",
     "change": "osh-live-observations"
+  },
+  "osh-076": {
+    "hash": "4e68e688983b890526168631ea6a836811827d25839e316f7184bf75cb3a0200",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-077": {
+    "hash": "42100f72bcc557b31871070f09bd1159bd1dcbd7b0413b3ddcb1f354ea565a18",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-078": {
+    "hash": "8abd7c57abb97e72f4e38368d20e69401c2398335a678d2e618548b6785459c7",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-079": {
+    "hash": "5ddcf5fa3a2b1f28f883e25ab2566ad245704875eb1209c95340e3b92ae1511d",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-080": {
+    "hash": "0dca4c883fd0979c56a83c63e5d886e77f3c077889763171a754fd1020b636c3",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-081": {
+    "hash": "34aa066d1c1ddbcd50de8e960985cb4969ffe536a579bc5871fd23c587390d69",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-082": {
+    "hash": "06b4b5e2c5a1768b216dea6543a34d934c6ffc930a89016a3d111befc6c37767",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-083": {
+    "hash": "01f8283a551aa902117bd9bdd1e5932816fd79910f072d850a869efa1a74bc3a",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-084": {
+    "hash": "8c410642ec55ec23b13ffb16052f40ba03cdf05b322fe323ba6178d2db38a1e2",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-085": {
+    "hash": "6ed908a8fd2588b860ad8596a0814ebda7182776844b98223ff09c00837a5ddc",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-086": {
+    "hash": "31c05bf99f8cc8f12415ba5c2e2d95af9e72478c265df010420458a0984372ad",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-087": {
+    "hash": "2b202aef98706f8519772300738457ec3c47d8a92c51507c3ab4ce3cffd055d2",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-088": {
+    "hash": "e190917fb9dcbe1122f08cda38dd492bab67be498efb2da767f2627470dea480",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
+  },
+  "osh-089": {
+    "hash": "8e05ad8f168f0d49d4c65e17409d3b1848eaac53999ac66dc2e59418268ce962",
+    "since": "2026-09-24",
+    "change": "osh-camera-video"
   },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
