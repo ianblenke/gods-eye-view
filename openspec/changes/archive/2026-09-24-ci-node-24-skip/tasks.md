@@ -4,7 +4,7 @@
 - [x] 1.2 Add `GUARDED_RUN` to the test `[coverage-gate-050]`.
 - [x] 1.3 Add the names of the two tests to the list for `gates.test.mjs` in the test `[coverage-gate-046]`.
 - [x] 1.4 Run the files `src/tooling/spec/gates.test.mjs` and `src/tooling/spec/testGuard.test.mjs`.
-- [x] 1.5 Confirm that every test keeps its name and its assertions.
+- [x] 1.5 Confirm that no test name changes and that only the list in the test `[coverage-gate-046]` changes an assertion.
 
 ## 2. Gates and review
 
