@@ -480,6 +480,8 @@ export function oshProxy({
   }
 
   const installMiddleware = (server) => {
+    // The hub owns timers and upstream sockets, so it closes with the HTTP server (osh-075).
+    server.httpServer?.on('close', () => hub.close());
     server.middlewares.use('/api/osh', async (req, res) => {
       const sendJson = (status, obj) => {
         res.writeHead(status, {

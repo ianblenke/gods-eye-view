@@ -5,9 +5,9 @@ import { mapOshObservation, oshObservationAgeMs } from '../../../src/data/oshObs
  * The live relay of the OpenSensorHub provider (design decisions D65 to
  * D69). The hub keeps one upstream WebSocket for each datastream, shared by
  * every client of that datastream, and relays each frame to those clients
- * as a server-sent event. It only listens: no file of the provider calls
- * `send`, and oshOpenStream() in get.js is the only place that builds a
- * socket.
+ * as a server-sent event. It only listens: no file of the provider uses the
+ * name `send`, and oshOpenStream() in get.js is the only place that builds a
+ * socket. The close frame of a socket that the hub closes is its only frame.
  *
  * A client is `{start, write, end}`. `start()` writes the response head
  * and runs once, before the first `write()`. Every event is `event: <name>`

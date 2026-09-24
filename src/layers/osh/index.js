@@ -10,8 +10,13 @@ export { renderOshDetail, writeOshDetail } from './detail.js';
 const POLL_INTERVAL_MS = 15_000;
 /** A feature label shows only within this distance of the camera. */
 const FEATURE_LABEL_DISTANCE_METERS = 200_000;
-/** The selected system opens a live stream for at most this many datastreams (D70). */
-const MAX_LIVE_STREAMS = 8;
+/**
+ * The selected system opens a live stream for at most this many datastreams (D70).
+ * A stream keeps one connection to the server for its whole life, and a browser
+ * keeps about six connections to one origin over HTTP/1.1. The other requests
+ * to the server need the rest.
+ */
+const MAX_LIVE_STREAMS = 3;
 
 function systemEntityId(systemId) {
   return `osh:${systemId}`;
@@ -217,7 +222,7 @@ export function createOshLayer({ source, detailHost = null } = {}) {
   }
 
   /**
-   * Open one live stream for each of at most eight datastreams, once for each
+   * Open one live stream for each of at most three datastreams, once for each
    * selection (osh-072). A callback of a closed or replaced selection does
    * nothing, as a stale poll does.
    */

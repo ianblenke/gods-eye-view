@@ -2657,7 +2657,7 @@ function isAt(position, lon, lat, alt) {
   return Cesium.Cartesian3.equalsEpsilon(position, Cesium.Cartesian3.fromDegrees(lon, lat, alt), Cesium.Math.EPSILON6);
 }
 
-test('[osh-072] the layer opens one live stream for each of the first eight datastreams of the selected system', async (t) => {
+test('[osh-072] the layer opens one live stream for each of the first three datastreams of the selected system', async (t) => {
   t.mock.timers.enable({ apis: ['setInterval'] });
   const other = { id: 'ds-fixture-other', systemId: 'sys-fixture-2', name: 'Other' };
   const source = fakeSource({ live: true, datastreams: [other, ...liveDatastreams(10)] });
@@ -2671,11 +2671,11 @@ test('[osh-072] the layer opens one live stream for each of the first eight data
     await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
     assert.deepEqual(
       source.calls.live.map((stream) => stream.id),
-      liveDatastreams(8).map((record) => record.id),
+      liveDatastreams(3).map((record) => record.id),
     );
     t.mock.timers.tick(15_000);
     await settle();
-    assert.equal(source.calls.live.length, 8, 'the next poll opens no more stream');
+    assert.equal(source.calls.live.length, 3, 'the next poll opens no more stream');
   });
 });
 
@@ -2885,7 +2885,7 @@ test('[osh-073] a live observation with a fresh location moves the entity', asyn
   });
 });
 
-test('[osh-073] a live move across the horizon hides the entity, and a later move shows it', async (t) => {
+test('[osh-073] a live observation that moves the entity across the horizon hides it, and a later one shows it', async (t) => {
   const source = fakeSource({ live: true, datastreams: liveDatastreams(1) });
   const layer = createOshLayer({ source });
   const { viewer, dataSources } = fakeViewer();
@@ -2905,7 +2905,7 @@ test('[osh-073] a live move across the horizon hides the entity, and a later mov
   });
 });
 
-test('[osh-073] a live observation that is not fresh leaves the entity where it was, and the detail shows it', async (t) => {
+test('[osh-073] a live observation that is not fresh leaves the entity where it was, and the detail shows the observation', async (t) => {
   const source = fakeSource({ live: true, datastreams: liveDatastreams(1) });
   const detailHost = { innerHTML: '' };
   const layer = createOshLayer({ source, detailHost });
@@ -3013,7 +3013,7 @@ test('[osh-073] a poll answer that comes after a live observation does not repla
   });
 });
 
-test('[osh-073] a live observation of a new selection does not draw the datastreams of the old one', async (t) => {
+test('[osh-073] a live observation that comes before the first poll of a new selection does not redraw the old detail', async (t) => {
   const source = fakeSource({
     live: true,
     datastreams: [...liveDatastreams(1), ...liveDatastreams(1, 'sys-fixture-2', 'b')],
@@ -3073,8 +3073,8 @@ test('[osh-074] the layer polls a datastream that has no open live stream', asyn
     await settle();
     assert.deepEqual(
       source.calls.observations.slice(20),
-      ['ds-fixture-9', 'ds-fixture-10'],
-      'the two datastreams that have no stream keep the poll',
+      liveDatastreams(10).slice(3).map((record) => record.id),
+      'the seven datastreams that have no stream keep the poll',
     );
   });
 });

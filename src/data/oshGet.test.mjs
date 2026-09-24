@@ -7,6 +7,7 @@ import {
   isSamePageWalk,
   oshGet,
   oshListUrl,
+  oshOpenStream,
   oshPages,
 } from '../../server/providers/osh/get.js';
 
@@ -29,6 +30,24 @@ test('[osh-004] sends one GET request with no body and an abort signal', async (
   assert.ok(observedOptions.signal instanceof AbortSignal);
   assert.deepEqual(observedOptions.headers, { Accept: 'application/json' });
   assert.deepEqual(result, { status: 200, json: { items: [] } });
+});
+
+test('[osh-004] opens one WebSocket from the URL and an option object that holds only headers, so the handshake is a GET with no body', () => {
+  const calls = [];
+  class RecordingSocket {
+    constructor(url, options) {
+      calls.push({ url, options });
+    }
+  }
+  const url = new URL('wss://osh.example/api/datastreams/ds-fixture-1/observations');
+  const socket = oshOpenStream(RecordingSocket, url, { headers: { Authorization: 'Basic fixture' } });
+  oshOpenStream(RecordingSocket, url);
+  assert.equal(calls.length, 2);
+  assert.equal(calls[0].url, url.href);
+  assert.deepEqual(calls[0].options, { headers: { Authorization: 'Basic fixture' } });
+  assert.deepEqual(calls[1].options, { headers: {} });
+  for (const { options } of calls) assert.deepEqual(Object.keys(options), ['headers']);
+  assert.equal(socket.binaryType, 'arraybuffer');
 });
 
 test('[osh-004] accepts a URL object and a 204 with no body', async () => {

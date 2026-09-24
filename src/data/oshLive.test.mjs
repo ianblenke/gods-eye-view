@@ -320,7 +320,7 @@ test('[osh-012] the live route reports base_unresolved and auth_failed when no c
   assert.equal(rig.sockets.instances.length, 0);
 });
 
-test('[osh-064] the live route builds and checks the URL through the fixed pair from ids.js', () => {
+test('[osh-064] the live route builds the URL with liveUrl() and checks it with assertLiveUrl()', () => {
   const source = readFileSync(new URL('../../server/providers/osh.js', import.meta.url), 'utf8');
   assert.match(
     source,
@@ -329,7 +329,7 @@ test('[osh-064] the live route builds and checks the URL through the fixed pair 
   assert.match(source, /from '\.\/osh\/ids\.js'/);
 });
 
-test('[osh-065] the route opens one upstream socket with the arraybuffer type and the Basic header', async (t) => {
+test('[osh-065] the route opens one upstream socket with binaryType set to arraybuffer, and with the Basic header', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const proxy = oshProxy({
@@ -371,7 +371,7 @@ test('[osh-065] the handshake carries Authorization only when both credentials a
   }
 });
 
-test('[osh-065] oshOpenStream() sets the arraybuffer type, gives the headers and sends no frame', () => {
+test('[osh-065] oshOpenStream() sets binaryType to arraybuffer, passes the headers and sends no message frame', () => {
   const sockets = fakeSockets();
   const url = liveUrl(ROOT, DS);
   const plain = oshOpenStream(sockets.Impl, url);
@@ -472,7 +472,7 @@ test('[osh-066] a frame of exactly 65536 bytes is not too large', async (t) => {
   assert.equal(socket.closeCalls, 0);
 });
 
-test('[osh-066] a frame of more than 65536 bytes closes the socket and gives the event unsupported', async (t) => {
+test('[osh-066] a frame of more than 65536 bytes that holds an observation closes the socket and sends the event unsupported', async (t) => {
   for (const [label, makeData] of [
     ['a binary frame', () => binaryOf(frameOfSize(65537))],
     ['a text frame', () => JSON.stringify(frameOfSize(65537))],
@@ -500,7 +500,30 @@ test('[osh-066] a frame of more than 65536 bytes closes the socket and gives the
   }
 });
 
-test('[osh-066] the hub refuses the datastream for ten minutes after an oversize frame', async (t) => {
+test('[osh-066] a frame of more than 65536 bytes closes the socket and sends the event unsupported, whatever it holds', async (t) => {
+  const noResult = { phenomenonTime: FRAME.phenomenonTime, resultTime: FRAME.resultTime };
+  for (const [label, makeData] of [
+    ['a binary frame that is not JSON', () => new Uint8Array(65_537).fill(0xff).buffer],
+    ['a text frame that is not JSON', () => 'x'.repeat(65_537)],
+    ['a binary frame of JSON with no result', () => binaryOf({ ...noResult, pad: 'x'.repeat(65_537) })],
+    ['a text frame of JSON with no result', () => JSON.stringify({ ...noResult, pad: 'x'.repeat(65_537) })],
+    ['a text frame of a JSON array', () => JSON.stringify([FRAME, 'x'.repeat(65_537)])],
+  ]) {
+    const rig = makeRig();
+    t.after(() => rig.hub.close());
+    const client = fakeClient();
+    rig.hub.join(DS, streamOf(), client);
+    const [socket] = rig.sockets.instances;
+    socket.emit('open');
+    socket.emit('message', { data: makeData() });
+    assert.deepEqual(namesOf(client), ['open', 'unsupported'], label);
+    assert.equal(client.ended, 1, label);
+    assert.equal(socket.closeCalls, 1, label);
+    assert.equal(rig.timers.pending(), 0, label);
+  }
+});
+
+test('[osh-066] the hub refuses the datastream for ten minutes after a frame that is too large', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const client = fakeClient();
@@ -522,7 +545,7 @@ test('[osh-066] the hub refuses the datastream for ten minutes after an oversize
   assert.equal(rig.sockets.instances.length, 3);
 });
 
-test('[osh-066] the route gives 503 with live_unsupported after an oversize frame', async (t) => {
+test('[osh-066] the route gives 503 with live_unsupported after a frame that is too large', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
@@ -622,7 +645,7 @@ test('[osh-067] the route removes the client when the connection closes', async 
   assert.equal(rig.timers.pending(), 0);
 });
 
-test('[osh-067] a client that leaves before the join opens no socket', async (t) => {
+test('[osh-067] a client that leaves while the route reads the schema opens no socket', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
@@ -635,7 +658,7 @@ test('[osh-067] a client that leaves before the join opens no socket', async (t)
   assert.equal(rig.timers.pending(), 0);
 });
 
-test('[osh-068] a ninth datastream gets live_busy and opens no socket', async (t) => {
+test('[osh-068] a client for a ninth datastream gets live_busy, and the hub opens no socket', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const joined = [];
@@ -664,7 +687,7 @@ test('[osh-068] a ninth datastream gets live_busy and opens no socket', async (t
   assert.equal(rig.sockets.instances.length, 9);
 });
 
-test('[osh-068] a seventeenth client gets live_busy and opens no socket', async (t) => {
+test('[osh-068] a seventeenth client for one datastream gets live_busy, and the hub opens no socket', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const joined = [];
@@ -682,7 +705,7 @@ test('[osh-068] a seventeenth client gets live_busy and opens no socket', async 
   assert.deepEqual(rig.hub.join(DS, streamOf(), fakeClient()), { error: 'live_busy' });
 });
 
-test('[osh-069] the client receives open after each open and down after each close', async (t) => {
+test('[osh-069] the client receives open each time the socket opens, and down each time it closes', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const client = fakeClient();
@@ -794,6 +817,44 @@ test('[osh-069] a socket that stays open for 30 seconds resets the delay', async
   fail(2);
 });
 
+test('[osh-069] a retry that waits when the last client leaves is cleared with the entry', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const joined = rig.hub.join(DS, streamOf(), fakeClient());
+  for (const seconds of [1, 2]) {
+    rig.sockets.instances.at(-1).emit('close', { code: 1006 });
+    rig.timers.advance(seconds * 1000);
+  }
+  assert.equal(rig.sockets.instances.length, 3);
+  rig.sockets.instances[2].emit('close', { code: 1006 });
+  joined.leave();
+  rig.timers.advance(2000);
+  assert.equal(rig.timers.pending(), 0, 'the entry cleared the retry of 4 seconds');
+  rig.timers.advance(60_000);
+  assert.equal(rig.sockets.instances.length, 3, 'no socket opens for a dropped entry');
+  rig.hub.join(DS, streamOf(), fakeClient());
+  assert.equal(rig.sockets.instances.length, 4, 'a new client starts a new socket');
+});
+
+test('[osh-069] a socket that closes before 30 seconds open leaves no timer that resets the delay', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  rig.hub.join(DS, streamOf(), fakeClient());
+  rig.sockets.instances[0].emit('open');
+  rig.timers.advance(10_000);
+  rig.sockets.instances[0].emit('close', { code: 1006 });
+  rig.timers.advance(1000);
+  rig.sockets.instances[1].emit('close', { code: 1006 });
+  rig.timers.advance(2000);
+  assert.equal(rig.sockets.instances.length, 3);
+  rig.timers.advance(18_000);
+  rig.sockets.instances[2].emit('close', { code: 1006 });
+  rig.timers.advance(3999);
+  assert.equal(rig.sockets.instances.length, 3, 'the delay is 4 seconds, and not 1 second');
+  rig.timers.advance(1);
+  assert.equal(rig.sockets.instances.length, 4);
+});
+
 test('[osh-069] the response carries a heartbeat comment every 20 seconds', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
@@ -813,7 +874,7 @@ test('[osh-069] the response carries a heartbeat comment every 20 seconds', asyn
   assert.equal(other.chunks.length, 6);
 });
 
-test('[osh-069] a socket that closes while no client listens is not opened again', async (t) => {
+test('[osh-069] the hub does not open a new socket after a socket closes while no client listens', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const joined = rig.hub.join(DS, streamOf(), fakeClient());
@@ -910,6 +971,55 @@ test('[osh-070] no event, header or log line holds the URL, the user name or the
     for (const secret of [SECRET_USER, SECRET_PASS, SECRET_TOKEN, 'osh.example', 'instance-fixture']) {
       assert.equal(String(text).includes(secret), false, `${secret} must not appear in: ${text}`);
     }
+  }
+});
+
+test('[osh-075] the hub ends each client, clears each timer and closes each open socket when it closes', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const first = fakeClient();
+  const second = fakeClient();
+  const third = fakeClient();
+  rig.hub.join(DS, streamOf(), first);
+  rig.hub.join(DS, streamOf(), second);
+  rig.hub.join('ds-fixture-2', streamOf('ds-fixture-2'), third);
+  const [open, waiting] = rig.sockets.instances;
+  open.emit('open');
+  waiting.emit('close', { code: 1006 });
+  assert.ok(rig.timers.pending() >= 4, 'heartbeats, one stable timer and one retry wait');
+  rig.hub.close();
+  for (const client of [first, second, third]) assert.equal(client.ended, 1);
+  assert.equal(open.closeCalls, 1);
+  assert.equal(waiting.closeCalls, 0, 'a socket that already closed is not closed again');
+  assert.equal(rig.timers.pending(), 0);
+  rig.timers.advance(120_000);
+  assert.equal(rig.sockets.instances.length, 2, 'no new socket opens');
+  assert.equal(first.chunks.length, 1, 'no heartbeat after the close');
+});
+
+test('[osh-075] the provider closes the hub when the HTTP server closes', async (t) => {
+  for (const hook of ['configureServer', 'configurePreviewServer']) {
+    const rig = makeRig();
+    t.after(() => rig.hub.close());
+    const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+    const httpServer = new EventEmitter();
+    let handler;
+    proxy[hook]({
+      httpServer,
+      middlewares: {
+        use(path, callback) {
+          handler = callback;
+        },
+      },
+    });
+    const res = fakeRes();
+    await handler({ method: 'GET', url: `/live?datastream=${DS}` }, res);
+    rig.sockets.instances[0].emit('open');
+    assert.equal(res.ended, 0, hook);
+    httpServer.emit('close');
+    assert.equal(res.ended, 1, hook);
+    assert.equal(rig.sockets.instances[0].closeCalls, 1, hook);
+    assert.equal(rig.timers.pending(), 0, hook);
   }
 });
 
@@ -1080,7 +1190,7 @@ const parseWire = (text) =>
 const OBSERVATION_WITHOUT_AGE = { ...EXPECTED_OBSERVATION };
 delete OBSERVATION_WITHOUT_AGE.ageMs;
 
-test('[osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no frame, the route relays the frames, and the socket closes two seconds after the client leaves', async (t) => {
+test('[osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays the frames, and the socket closes two seconds after the client leaves', async (t) => {
   const frames = [
     wsFrame(2, Buffer.from(JSON.stringify(FRAME))),
     wsFrame(1, Buffer.from(JSON.stringify(FRAME))),

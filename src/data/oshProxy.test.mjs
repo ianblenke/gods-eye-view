@@ -187,7 +187,7 @@ test('[osh-005] only osh/get.js calls fetch; no other scanned file calls it, nam
   const CALL_TOKEN = /\b(?:fetch(?:Impl)?|WebSocket(?:Impl)?)\s*\(/;
   const CALL_TOKEN_GLOBAL = /\bfetch(?:Impl)?\s*\(/g;
   const SOCKET_TOKEN_GLOBAL = /\bWebSocket(?:Impl)?\s*\(/g;
-  const SEND_TOKEN = /\bsend\s*\(/;
+  const SEND_TOKEN = /\bsend\b/;
   const OPEN_STREAM_CALL = /\boshOpenStream\s*\(/;
   const OPEN_STREAM_IMPORT = /import\s*\{[^}]*\boshOpenStream\b[^}]*\}\s*from\s*'\.\/get\.js'/;
   const BAD_METHOD_TOKEN = /['"](post|put|patch|delete)['"]/i;
@@ -210,7 +210,7 @@ test('[osh-005] only osh/get.js calls fetch; no other scanned file calls it, nam
     assert.doesNotMatch(text, BAD_METHOD_TOKEN, `${file} must not name a mutating HTTP method`);
     assert.doesNotMatch(text, BODY_TOKEN, `${file} must not send a request body`);
     assert.doesNotMatch(text, RAW_TRANSPORT_TOKEN, `${file} must not import a raw transport`);
-    assert.doesNotMatch(text, SEND_TOKEN, `${file} must not call send, so the provider sends no frame`);
+    assert.doesNotMatch(text, SEND_TOKEN, `${file} must not use send, so the provider sends no message frame`);
     if (file !== 'server/providers/osh/get.js') {
       assert.doesNotMatch(text, CALL_TOKEN, `${file} must not call fetch or WebSocket directly`);
       if (OPEN_STREAM_CALL.test(text)) {

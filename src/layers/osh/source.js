@@ -97,7 +97,9 @@ export function createOshSource({
         } catch {
           return;
         }
-        if (observation && typeof observation === 'object') onObservation(observation);
+        if (observation && typeof observation === 'object' && !Array.isArray(observation)) {
+          onObservation(observation);
+        }
       });
       // The browser also raises `open` when the connection itself opens. Only
       // the event of the route has data, and it says the upstream is open.
