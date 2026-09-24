@@ -1,0 +1,42 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-09-24-osh-live-observations/specs/osh/spec.md:83 The claim "its only frame is the close frame of a socket that it closes" is false. The same claim is in the synced openspec/specs/osh/spec.md:615, design.md:46 ("That is the only frame that the provider sends"), proposal.md:39 (`osh-live-one-way`), server/providers/osh/get.js:116, server/providers/osh/live.js:10 and the assertion message at src/data/oshLive.test.mjs:1238.
+  - The Node runtime also sends a pong for each server ping. It also sends a close frame when the server closes first.
+  - The round-1 skeptic S1 ran a real loopback test and saw opcodes [10], then [10,8]. It rated the wording "only the close frame" as wrong, and this round uses exactly that wording.
+  - No test makes the fixture server ping. The `[8]` assertion covers only the path where the provider closes.
+  - The unbounded "only" hides every case that it omits.
+  - Fix: write "no message frame" and name the control frames. For example: "The runtime sends a close frame when a socket closes, and a pong for each ping." Change osh-065, D66, `osh-live-one-way`, the two code comments and the assertion message the same way.
+  - Add a loopback test tagged osh-065 in which the fixture server pings and the test asserts opcode 10. Or drop the "only" claim. Edit the synced spec as well, and ratchet osh-065 (its requirement text stays the same).
+- [ ] F2 major src/data/oshLive.test.mjs:661 Two AND lines of osh-068 have no asserting test (delta spec.md:105-106, synced spec.md:637-638). The lines are new since round 1.
+  - Line 105: "counts from its first client until two seconds after its last client leaves".
+  - Line 106: "counts while its socket connects or waits to try again".
+  - The only osh-068 tests are the two at :661 and :690. Neither closes a socket, so no test covers the retry wait. The first test calls `leave()` and then advances the full 2000 ms, so no test asserts that the place is still held at 1999 ms.
+  - Traced by hand, these mutations pass every test in the change:
+    - M1: count only entries with `clients.size > 0` in `join()` (live.js:183-185). This frees the place at once when the last client leaves.
+    - M2: count only entries with a non-null `socket`. This frees the place while the retry timer waits.
+  - Fix: add an `[osh-068]` test. Join 8 datastreams, close every socket, and assert that the ninth client gets `live_busy` while every retry waits.
+  - Add a second assertion in the same or a new test. Let the last client of one datastream leave, then assert `live_busy` for the ninth at 1999 ms and success at 2000 ms.
+  - Add M1 and M2 to the mutation list in tasks.md 2.9.
+- [ ] F3 minor src/data/oshLive.test.mjs:820 The new test name "a retry that waits when the last client leaves is cleared with the entry" has "is cleared". `lintTestNames` reports STE-PASSIVE for it (scripts/spec/lib/ste.mjs:173: a BE form followed by a word ending in `ed`, with the participle not in the exclusion list). The lead's claim that this change's new tests give no lint warning is wrong for this test. The test is new, so a rename is allowed. Example: "a retry that waits when the last client leaves does not run after the entry drops". Ratchet the trace after the rename.
+- [ ] F4 minor openspec/changes/archive/2026-09-24-osh-live-observations/tasks.md:43 Task 2.8b writes the code (close the hub with the HTTP server) and the two `[osh-075]` tests in one task, after the code tasks 2.7 and 2.8. The config.yaml rule and the check on `Origin: spec-first` need a test task before the code task. Split it into a test task before 2.5 and a code task.
+- [ ] F5 minor openspec/changes/archive/2026-09-24-osh-live-observations/specs/osh/spec.md:131 The line "the hub opens no new upstream socket after that" is stronger than the code and the test. `join()` after `close()` (live.js:180-207) opens a socket, because the hub has no closed state. The test at oshLive.test.mjs:343-344 checks only that pending retry timers do not fire. Narrow the line to "opens no socket for a retry", or add a closed flag and a test.
+- [ ] F6 minor openspec/changes/archive/2026-09-24-osh-live-observations/specs/osh/spec.md:10 The new AND of osh-004 sits under a WHEN (a client requests the routes) that does not run `oshOpenStream()`. The test at src/data/oshGet.test.mjs:35 calls it directly, and it proves only the shape of the option object. The claim "so the handshake is a GET" is proved only by the loopback test (oshLive.test.mjs:1226), which has other tags. Move the AND into its own scenario with its own WHEN, or narrow the text to the option object.
+- [ ] F7 minor openspec/changes/archive/2026-09-24-osh-live-observations/proposal.md:37 The known limit `osh-live-stream-cap` does not name two consequences of the cap of 3. First, the connection limit of about 6 is shared by all tabs of one origin, so two tabs with a selection use it all. Second, the first three datastreams take the slots even when they are video streams. A video stream reports `unsupported`, and the layer does not start a stream for the fourth datastream in its place. Name both.
+- [ ] F8 minor openspec/changes/archive/2026-09-24-osh-live-observations/design.md:64 D69 says a failure logs "the close code of the socket, when there is one" and that only a constructor failure has no code. An `error` event has no code, and the hub logs `code 0` (live.js:153). The test at oshLive.test.mjs:774-776 pins that text. Say that an event with no code logs `code 0`.
+
+Notes:
+- This session had no shell tool. I ran no test, no mutation and no lint. I traced the new tests, the mutations V24 to V32 and the ste.mjs rules by hand. The mutation battery and the coverage figures in the task are unverified by me.
+- Round-1 corrections that I checked and that are right:
+  - F1: the address scan reads `ws` and `wss`, and the self-check test builds its hosts from parts.
+  - F2: the delta text of "Query construction" equals the synced main spec. tasks.md 1.1 names osh-037 to osh-040, and the `[osh-039]` test changed.
+  - F3, F4, F5: the new tests fail on the named mutations. Both `configureServer` and `configurePreviewServer` are tested for the close wiring.
+  - F6: `MAX_LIVE_STREAMS` is 3, and the tests pin the ids and the count.
+  - F8: the requirement now says "one file", and osh-004 has a new test.
+  - F10: `\bsend\b` is used on comment-stripped source.
+  - F13: arrays are rejected, with two test cases.
+- Standing constraints 1 to 5: I found no violation.
+  - The sources have no `send` word outside comments.
+  - The added hosts are `osh.example`, `localhost` and fake hosts built from parts.
+  - Renamed tests carry tags osh-064 to osh-073, and those scenarios are new in this change.
+  - The loopback servers bind 127.0.0.1.
+  - I found no credential in an event, a header or the `EventSource` URL.
+- The gate has no new ledger or history entry for this change. `osh-075` is not in `retired-ids.json`.
