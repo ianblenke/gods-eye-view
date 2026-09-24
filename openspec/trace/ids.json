@@ -905,7 +905,7 @@
     "change": "osh-fusion"
   },
   "osh-005": {
-    "hash": "ebeaaf46c0d54e4b805a34350bdb881c4acb146872fe5f4538f470d6efcb35fe",
+    "hash": "7632f0b47e824f9ee67b95f5ab6d8f23ff4d3f19c3b86c813eb8eee708fc8c3d",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -1193,6 +1193,66 @@
     "hash": "f583692210743257187f19987884087a0f8be600db370e0c742a3204b5db78ae",
     "since": "2026-09-20",
     "change": "osh-marker-depth"
+  },
+  "osh-063": {
+    "hash": "214273ddb29872e9277782bb96961c9a81d04ae9a88afb59175befdf33555d93",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-064": {
+    "hash": "24f8f3f62371f2ce6d5b1b7ded7f367c038f3f1bacc6949b6abd9bd8d8b5b53f",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-065": {
+    "hash": "5fff86a95c489e11b24ab9eb4a0957f19948730280ac5bdf6f0e36a20df4f277",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-066": {
+    "hash": "a84a6299ff7c8a43554573ce06a8e4f3431e6a28ff37f6eede9b018e125ebc66",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-067": {
+    "hash": "bf526a4cc1f412b79c517ac06bd7249d06c362fc482f1a155fbb0c7ef136a39a",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-068": {
+    "hash": "2d8a424481423c9f63752f6f31ec155f08fbb4f7b33e1926d667b2cf30901f50",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-069": {
+    "hash": "1f6c38f5544ba3fcf78979b74e8756a3f7949cd748a36e3305ae93a8445a4643",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-070": {
+    "hash": "8569c27f752d9e53fb6837c9aebf0afe6577f2dbf9501b2a43a2c36f06a560df",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-071": {
+    "hash": "5a2874017456a4c47f24b0613cbcd37e7c6d301ce92c24f23e86fea402e732d0",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-072": {
+    "hash": "96b9008e895e7870625206e90b6321f2c94ef03e19ab6c58cadef02860343680",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-073": {
+    "hash": "3ad6de7a8fdba69202135d647d69f913c8ee80af6aa5a29fca11703dd2312d7b",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-074": {
+    "hash": "3838c9e0523bbd59733c3033f9aea131819b82de9535f322fd74c9271ae50f4f",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
   },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
