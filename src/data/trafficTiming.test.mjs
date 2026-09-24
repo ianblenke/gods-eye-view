@@ -162,7 +162,10 @@ test('traffic timing pairs real ordering to the scheduling change and guards re-
       configFile: false,
       appType: 'custom',
       logLevel: 'silent',
-      server: { middlewareMode: true },
+      // No dependency discovery and no file watcher: each arms timers that are still live when
+      // the test process exits (found on the CI runner).
+      optimizeDeps: { noDiscovery: true, include: [] },
+      server: { middlewareMode: true, watch: null },
       plugins: [{
         name: 'traffic-timing-test-hooks',
         transform(code, id) {
