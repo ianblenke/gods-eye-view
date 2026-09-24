@@ -37,8 +37,8 @@ Origin: spec-first
 - **THEN** the two name sets are equal
 
 #### Scenario: Document each credential name that the server reads `credential-boundary-006`
-- **WHEN** the test reads the files under `server/`, `scripts/` and `tools/`
-- **AND** it finds each name in `process.env.NAME`, `env.NAME`, a bracket read, a destructured `process.env` or `env`, or a quoted string
+- **WHEN** the test reads the `.js` and `.mjs` files under `server/`, `scripts/` and `tools/`
+- **AND** it finds each name in `process.env.NAME`, `env.NAME`, `env['NAME']`, a destructured `process.env` or `env`, or a quoted string
 - **AND** the name ends in `_KEY`, `_TOKEN`, `_SECRET` or `_PASSWORD`
 - **THEN** every name found is in the registry, in `.env.example`, or in both
 - **AND** the list of names found nowhere is empty
@@ -58,21 +58,22 @@ Origin: spec-first
 - **THEN** the upstream query carries the given `address` and `bounds`, and the server key when it is not blank, else the browser key
 - **AND** the response carries the projected result and no key, with `Cache-Control: no-store`
 
-#### Scenario: Send a reverse lookup to Google with the selected key `credential-boundary-009`
+#### Scenario: Send a reverse lookup to Google `credential-boundary-009`
 - **WHEN** a client sends `GET /api/google/geocode?lat=...&lon=...`
 - **THEN** the upstream query carries `latlng` built from `lat` and `lon`
 - **AND** the response carries the projected result
 
 #### Scenario: Refuse a bad request before any upstream call `credential-boundary-010`
-- **WHEN** the server has a Google key, and a request has a fault
-- **AND** a fault is neither mode, both modes, a bad `bounds` or an out-of-range coordinate
-- **AND** a fault is also a blank address, or an address of more than 256 characters
-- **THEN** the route answers `400` with zero upstream calls
+- **WHEN** a request has a fault, or has a method other than `GET`
+- **AND** these are faults: neither mode, both modes, a bad `bounds`, and a missing or out-of-range coordinate
+- **AND** these are faults: a blank address, and an address of more than 256 characters
+- **THEN** with a Google key on the server, a request with a fault answers `400` with zero upstream calls
 - **AND** a request with a method other than `GET` answers `405` with zero upstream calls, with or without a key
 
 #### Scenario: Answer an upstream problem and keep the key out of the response `credential-boundary-011`
 - **WHEN** an upstream call fails, or the shared rate limiter refuses the request
-- **THEN** an HTTP error status from Google gives the same status and the Google error text, with the key removed
+- **THEN** an HTTP error status from Google gives the same status, with the Google error text or a fixed text when Google gives none
+- **AND** the route removes the key from that text
 - **AND** when the fetch throws or gets no answer in 5 s, the route answers `502` with a fixed error text
 - **AND** a body that is not JSON, larger than 1 MB, or not complete in 5 s gives a fixed error text
 - **AND** when the rate limiter refuses the request, the route answers `429` with `Retry-After`
@@ -82,8 +83,11 @@ Origin: spec-first
 - **WHEN** `projectGeocodeResults(data)` reads an upstream payload
 - **THEN** it keeps `status`, and at most 12 results, each with `formatted_address`, at most 20 `address_components`, at most 8 `types` and `geometry`
 - **AND** each address component keeps only `long_name` and at most 8 `types`
-- **AND** `geometry` keeps only the `lat` and `lng` values of `location`, `bounds` and `viewport`
-- **AND** a bad input gives `{status:null, results:[]}`
+- **AND** `geometry` keeps only `location`, `bounds` and `viewport`
+- **AND** `location` is `{lat, lng}`, and `bounds` and `viewport` are `{northeast, southwest}` boxes of such points
+- **AND** a point or a box with a coordinate that is not a finite number gives null
+- **AND** a result with no fields gets a default value for each field
+- **AND** a `status` that is not a string gives `null`, and a `results` value that is not a list gives an empty list
 
 ### Requirement: Browser geocoding
 The browser MUST send geocoding requests only to `/api/google/geocode`, with no API key in the request.
@@ -97,7 +101,7 @@ Origin: spec-first
 
 #### Scenario: Send a reverse lookup to the server route, and remember a keyless answer `credential-boundary-014`
 - **WHEN** the voice reverse-lookup geocodes a coordinate
-- **THEN** its fetch URL is `/api/google/geocode?lat=...&lon=...`, with no key, also when the page has a browser key
+- **THEN** its fetch URL is `/api/google/geocode?lat=...&lon=...`, with no key. The URL has no key when the page has a browser key too
 - **AND** it remembers a `configured:false` answer for the life of the page, so a later call makes no fetch
 - **AND** it does not remember an answer with an HTTP error status or with no Google status, so a later call fetches again
 - **AND** a configured answer gives the same place shape as before this change

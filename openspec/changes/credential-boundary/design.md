@@ -7,8 +7,8 @@ the URL. The key is public by design: a referrer restriction and an API
 restriction protect it, not secrecy. But the browser must not send it: each
 other Google call already goes through our server first.
 
-A second gap is in the build config. The default `VITE_` prefix of Vite
-exposes each `.env` line with a matching name to the bundle, with no code
+A second problem is in the build config. The default `VITE_` prefix of Vite
+exposes each `.env` line with a name that matches to the bundle, with no code
 change and no review. The AIS live settings need three such names. No other
 name must use that prefix.
 
@@ -46,21 +46,23 @@ The route has no key of its own. `google.js` gives it the key resolver of the Pl
 resolver selects the server key, or the browser key when the server key is
 blank. With no key, the route answers `200` with
 `{configured:false, error:null, status:null, results:[]}` and makes no
-upstream call. With a key, a request with neither mode or both modes answers
-`400`. A request with a method other than `GET` answers `405` before the
-route reads a key, so that answer has no `configured` field.
+upstream call. With a key, the route answers
+`400` for a request with neither mode or both modes. The route answers `405`
+for a method other than `GET`, before it reads a key, so that answer has no
+`configured` field.
 
-A request with a key sends one GET to Google, with a 5 s timeout. The route
-reads at most 1 MB of the answer. Every answer carries `Cache-Control:
-no-store`, and no answer holds the key. For an HTTP error status, the route
-sends the error text of Google with the key removed. For a read that is too
-large, too late or not JSON, the route sends a fixed error text.
+For a request with a key, the route sends one GET to Google, with a 5 s
+timeout. The route reads at most 1 MB of the answer. Every answer carries
+`Cache-Control: no-store`, and no answer holds the key. For an HTTP error
+status, the route sends the error text of Google, or a fixed text when
+Google gives none. It removes the key from that text. For an answer that is
+too large, too late or not JSON, the route sends a fixed error text.
 
 The route uses the same rate limiter as the Places routes. `google.js` gives
 its own `googleRateLimiter()` to the geocoding installer, so the two paid
 Google APIs spend one budget for each IP address.
 `validatePlacesCoordinates()` moves to a new small module, `coordinates.js`.
-So `google.js` and `geocode.js` both read it, and neither one imports the
+So `google.js` and `geocode.js` both import it, and neither one imports the
 other.
 
 ### D2 The projection is pure and is in the module of the other place payloads
@@ -90,9 +92,9 @@ not get to the bundle. The `define` block keeps its two names, unchanged.
 request function sends `/api/google/geocode?address=..&bounds=..` and never
 sends a `key`. `createGoogleGeocoder()` gives `{place:null, answered:true}`
 for a `configured:false` answer, the same shape as a `ZERO_RESULTS` miss.
-The Photon fallback then runs, and its answer alone decides the result. An
-HTTP error answer of the route gives `{place:null, answered:false}`, so the
-result stays open to a later search.
+The Photon fallback then runs, and its answer alone decides the result. An HTTP error answer of the route gives `{place:null, answered:false}`. When
+Photon also finds no place, the combined answer is `answered:false`, and the
+search does not keep it.
 
 `reverseGeocode()` in `gevActions.js` fetches
 `/api/google/geocode?lat=..&lon=..`, and it does not read
@@ -101,7 +103,7 @@ for the life of the page, so a keyless server costs one request, not one
 for each lookup. It does not remember an answer with an HTTP error status or with no Google
 status. So after a short outage, a later call fetches again.
 `window.__GOOGLE_MAPS_API_KEY__` stays. It holds only the browser key, and
-`mapStackController.js` reads it to find if photoreal tiles are available.
+`mapStackController.js` reads it to check if photoreal tiles are available.
 
 ### D5 The bundle test builds a fixture through the real config
 
@@ -115,8 +117,8 @@ sentinel value for each of those names on the environment.
 list of the production build. The test gives it to
 `createBrowserViteConfig()`, and it gives the full config to the real
 `build()` of Vite, with no config file. The test does not call the default
-export, because that reads the real `.env`. The build runs one time, and
-each test reads the output files as text.
+export, because that reads the real `.env`. The build and the read of
+the output files run one time, in a hook. Each test uses the result.
 
 The assertion has two sides. Every secret sentinel must be absent. The test
 checks one name at a time, so a failure names the credential and the file.
@@ -124,10 +126,13 @@ The two public sentinels and the one AIS sentinel must be present, as a
 positive control. An empty scan result passes the first check for the wrong
 reason, but it fails the second.
 
-The scans of `credential-boundary-004` and `credential-boundary-015` read
-each file under `build/`. Under `src/`, they read each file with a name that
-does not end in `.test.js` or `.test.mjs`. This includes `.mjs`, `.json`, `.css`
-and data files, because the browser loads some of them. A data file in
+The scan of `credential-boundary-004` reads `index.html`, each file under
+`build/`, and each file under `src/` that is not a test file. The scan of
+`credential-boundary-015` reads each file under `src/` that is not a test
+file, and each such file under `server/`. A test file has a name that ends in
+`.test.js` or `.test.mjs`. The files under `src/` include `.mjs`, `.json`,
+`.css` and data files, because the browser loads some of them. The fixture
+scan does not read the `cesium/` folder that Vite copies from `node_modules`. A data file in
 protobuf keeps its strings as UTF-8, so a key in it still matches.
 
 Mutation checks are part of each test task, not of the gate. The ratchet
@@ -201,8 +206,8 @@ covered the arm above, the `ok:false` arm and two defaults of
 tests of D7.
 
 The `ok:false` arm now has a real test of `credential-boundary-013`. The
-route can answer `429` or `502`. The search must then give an open answer
-and use Photon. `src/search/google.js` keeps 3 not-covered
+route can answer `429` or `502`. The search must then give `answered:false` when Photon finds no place, and it
+uses Photon. `src/search/google.js` keeps 3 not-covered
 branches, down from the 4 that its ledger entry allowed.
 
 ### Files
@@ -238,15 +243,15 @@ Changed prose: `.env.example`, `SECURITY.md`, `pinokio/_ENVIRONMENT`,
    passes the negative check, but it fails those controls.
 2. **A later credential name is not in the registry or in `.env.example`.**
    Guard: the registry test finds dotted, destructured and quoted reads
-   under `server/`, `scripts/` and `tools/`. It stops the build for each
+   in the `.js` and `.mjs` files under `server/`, `scripts/` and `tools/`. It stops the build for each
    name with a credential suffix that no file documents. The known limit
    `credential-scan-forms` names the reads that it does not find.
 3. **The shared rate limiter counts geocoding against the Places budget.**
    This is the design: geocoding and Places spend the same budget for each
    IP address, because both are the same paid Google service.
-4. **The narrower `VITE_` prefix stops an AIS setting.** Guard: the prefix
+4. **The narrower `VITE_` prefix breaks an AIS setting.** Guard: the prefix
    test of `viteBuild.test.mjs` and the positive control of the fixture on
-   `VITE_AIS_LIVE_MAX_ROWS` stop a changed prefix.
+   `VITE_AIS_LIVE_MAX_ROWS` fail when the prefix changes.
 5. **The fixture checks only one of the three AIS settings by name.** The
    test keeps all three off the "must be absent" list, but it checks only
    `VITE_AIS_LIVE_MAX_ROWS` as present. A change that stops only

@@ -210,6 +210,28 @@ test('[credential-boundary-010] the route refuses a non-GET method with a 405 an
   assert.deepEqual(result.body, { error: 'Method not allowed', status: null, results: [] });
   assert.equal(result.headers['cache-control'], 'no-store');
   assert.equal(calls, 0);
+
+  // A server with no key also answers 405, before it reads a key.
+  let keyReads = 0;
+  const keyless = install({ resolveApiKey: () => { keyReads += 1; return ''; } });
+  const keylessResult = await keyless('?address=austin', { method: 'POST' });
+  assert.equal(keylessResult.statusCode, 405);
+  assert.deepEqual(keylessResult.body, { error: 'Method not allowed', status: null, results: [] });
+  assert.equal(keylessResult.headers['cache-control'], 'no-store');
+  assert.equal(keyReads, 0);
+  assert.equal(calls, 0);
+});
+
+test('[credential-boundary-010] the route accepts an address of exactly 256 characters', async (t) => {
+  let calls = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    calls += 1;
+    return Response.json({ status: 'OK', results: [] });
+  });
+  const request = install({ resolveApiKey: () => 'fixture-server-key' });
+  const result = await request('?address=' + 'a'.repeat(256));
+  assert.equal(result.statusCode, 200);
+  assert.equal(calls, 1);
 });
 
 test('[credential-boundary-011] a non-ok upstream status gives the same status and its error, with no key', async (t) => {

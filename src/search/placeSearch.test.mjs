@@ -40,7 +40,7 @@ test('[credential-boundary-013] a keyless server answers configured:false and th
   assert.equal((await service.geocode('Hanoi')).place.lat, 21.03);
 });
 
-test('[credential-boundary-013] a configured:false answer does not make the combined answer inconclusive', async () => {
+test('[credential-boundary-013] a configured:false answer does not give answered:false', async () => {
   // configured:false gives {place:null, answered:true}, the same shape as a
   // ZERO_RESULTS miss. Photon's empty feature list is also a miss, so the
   // combined answer is {place:null, answered:true}, not answered:false.
@@ -56,22 +56,28 @@ test('[credential-boundary-013] a configured:false answer does not make the comb
 });
 
 // The route answers 429 from its limiter and 502 when the upstream fetch fails.
-const routeError = (status, photon) => {
+// The body defaults to the body of the route. A test can give another body, so
+// that only the HTTP status decides the answer.
+const routeError = (status, photon, body = { configured: true, status: null, results: [] }) => {
   const urls = [];
   const service = createStandalonePlaceSearch({ fetchImpl: async (url) => {
     urls.push(String(url));
     if (String(url).startsWith('/api/google/geocode')) {
-      return Response.json({ configured: true, status: null, results: [] }, { status });
+      return Response.json(body, { status });
     }
     return photon();
   } });
   return { service, urls };
 };
 
-test('[credential-boundary-013] an HTTP error answer from the route and a Photon miss make the combined answer inconclusive', async () => {
+test('[credential-boundary-013] an HTTP error answer from the route and a Photon miss give answered:false', async () => {
   // With no place, the result has no fallbackUsed field.
-  for (const status of [429, 502]) {
-    const { service, urls } = routeError(status, () => Response.json({ features: [] }));
+  // Each body would give answered:true if the search read it, so only the status gives answered:false.
+  for (const [status, body] of [
+    [429, { status: 'ZERO_RESULTS', results: [] }],
+    [502, { configured: false, status: null, results: [] }],
+  ]) {
+    const { service, urls } = routeError(status, () => Response.json({ features: [] }), body);
     assert.deepEqual(await service.geocode('nowhere at all'), { place: null, answered: false });
     assert.equal(new URL(urls[1], 'http://localhost').hostname, 'photon.komoot.io');
     assert.equal(urls.length, 2);
