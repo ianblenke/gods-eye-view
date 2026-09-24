@@ -290,7 +290,7 @@ test('[osh-071] the source ignores an observation event whose data is not one JS
   const { calls, callbacks } = recordLiveCallbacks();
   const source = createOshSource({ eventSourceImpl: EventSource });
   source.openLive('ds-fixture-1', callbacks);
-  for (const data of ['not json', '', 'null', '42', '"text"']) {
+  for (const data of ['not json', '', 'null', '42', '"text"', '[]', '[{"rows":[]}]']) {
     instances[0].send('observation', { data });
   }
   assert.deepEqual(calls, []);

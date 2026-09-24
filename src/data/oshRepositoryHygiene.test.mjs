@@ -137,7 +137,7 @@ function assertVendorUrnIsFixture(text, file) {
 
 /** Every `osh*` file MUST use a scheme-qualified, fixture-only address. */
 function assertOnlyFixtureAddress(text, file) {
-  const urls = text.match(/https?:\/\/[^\s'"`)]+/g) || [];
+  const urls = text.match(/(?:https?|wss?):\/\/[^\s'"`)]+/g) || [];
   for (const url of urls) {
     let hostname;
     try {
@@ -184,6 +184,22 @@ test('[osh-034] the bare-host check catches a real-looking host pasted with no s
   // to prove the datastream id pattern, must not read as a real host.
   assert.doesNotThrow(() => assertNoBareHost('// see Array.isArray', 'synthetic'));
   assert.doesNotThrow(() => assertNoBareHost("{ id: 'has.dot' }", 'synthetic'));
+});
+
+test('[osh-034] the address check catches a real-looking WebSocket address, and lets a fixture one pass', () => {
+  // Built from parts: a literal match here would trip this file's own scan below.
+  const dot = '.';
+  for (const scheme of ['ws', 'wss']) {
+    for (const host of [`osh-prod${dot}internal`, `10${dot}20${dot}30${dot}40:8443`]) {
+      assert.throws(
+        () => assertOnlyFixtureAddress(`const url = '${scheme}://${host}/api';`, 'synthetic'),
+        /real-looking address/,
+      );
+    }
+  }
+  assert.doesNotThrow(() =>
+    assertOnlyFixtureAddress('wss://osh.example/api and ws://localhost:4173/x', 'synthetic'),
+  );
 });
 
 test('[osh-034] the provider, adapter and layer files have no real address', () => {
