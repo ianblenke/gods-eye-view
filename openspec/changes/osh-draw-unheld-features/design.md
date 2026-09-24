@@ -49,7 +49,9 @@ The author weighed eight options. The author chose the last option.
 
 ### D53 The stream-drawn record mirrors the stream-placed system
 
-`placeOshEntities()` in `src/data/oshSystems.js` gains one branch. A fresh location that names no held feature gives a placed feature in `features`. The record is `{id, uid, systemId, name, description, validTime, lon, lat, alt, locationSource, datastreamId, datastreamName, phenomenonTime, ageMs}`. `name`, `description` and `validTime` are null. `locationSource` is `'stream'`. The stream fields are the ones `placedFromStream()` already copies for a system.
+`placeOshEntities()` in `src/data/oshSystems.js` gains one branch. A fresh location that names no held feature gives a placed feature in `features`. The record has the fields `id`, `uid`, `systemId`, `name`, `description` and `validTime`. It also has `lon`, `lat`, `alt` and `locationSource`. Last come the four stream fields `datastreamId`, `datastreamName`, `phenomenonTime` and `ageMs`.
+
+`name`, `description` and `validTime` are null. `locationSource` is `'stream'`. The stream fields are the ones `placedFromStream()` already copies for a system.
 
 The key is the location's `foiId`, or its `foiUid` when the location carries no `foiId`. `uid` is the location's `foiUid`, or null. `systemId` is the location's `systemId`, or null. The newer of two fresh locations for one key wins, by the `isNewer()` rule the system branch already uses. The location still never places its system, so `systems` and `unplaced` do not change.
 
