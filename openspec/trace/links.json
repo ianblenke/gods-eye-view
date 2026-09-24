@@ -1192,13 +1192,13 @@
     "src/data/oshLive.test.mjs › [osh-064] the live route builds the URL with liveUrl() and checks it with assertLiveUrl()"
   ],
   "osh-065": [
-    "src/data/oshLive.test.mjs › [osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays the frames, and the socket closes two seconds after the client leaves",
+    "src/data/oshLive.test.mjs › [osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays frames, and the socket closes after the client leaves",
     "src/data/oshLive.test.mjs › [osh-065] oshOpenStream() sets binaryType to arraybuffer, passes the headers and sends no message frame",
     "src/data/oshLive.test.mjs › [osh-065] the handshake carries Authorization only when both credentials are set",
     "src/data/oshLive.test.mjs › [osh-065] the route opens one upstream socket with binaryType set to arraybuffer, and with the Basic header"
   ],
   "osh-066": [
-    "src/data/oshLive.test.mjs › [osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays the frames, and the socket closes two seconds after the client leaves",
+    "src/data/oshLive.test.mjs › [osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays frames, and the socket closes after the client leaves",
     "src/data/oshLive.test.mjs › [osh-066] a binary frame gives an observation event with the shape of osh-022 and the age of that moment",
     "src/data/oshLive.test.mjs › [osh-066] a frame of exactly 65536 bytes is not too large",
     "src/data/oshLive.test.mjs › [osh-066] a frame of more than 65536 bytes closes the socket and sends the event unsupported, whatever it holds",
@@ -1210,7 +1210,7 @@
     "src/data/oshLive.test.mjs › [osh-066] the route gives 503 with live_unsupported after a frame that is too large"
   ],
   "osh-067": [
-    "src/data/oshLive.test.mjs › [osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays the frames, and the socket closes two seconds after the client leaves",
+    "src/data/oshLive.test.mjs › [osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays frames, and the socket closes after the client leaves",
     "src/data/oshLive.test.mjs › [osh-067] a client that joins within the two seconds keeps the same socket",
     "src/data/oshLive.test.mjs › [osh-067] a client that leaves while the route reads the schema opens no socket",
     "src/data/oshLive.test.mjs › [osh-067] the route removes the client when the connection closes",
