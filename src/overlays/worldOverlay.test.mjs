@@ -1525,6 +1525,10 @@ test('the occluder inventory carries no cockpit line-art chrome', () => {
   }
 });
 
+test('[osh-086] the occluder inventory carries the panel of the OSH layer', () => {
+  assert.ok(WORLD_OVERLAY_OCCLUDER_SELECTORS.includes('#osh-panel'));
+});
+
 test('position getters snapshot once per frame and cockpit-gated sources disappear', () => {
   const env = installMockEnvironment();
   let getterCalls = 0;

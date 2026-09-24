@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import * as Cesium from 'cesium';
 import createOshLayer, { createOshLayer as createLayer, createOshPanelHosts } from './osh.js';
@@ -205,3 +206,17 @@ test('[osh-089] the default layer looks for the panel elements in the page and f
   assert.equal(elements['osh-panel'].hidden, false, 'the panel element shows');
   assert.match(elements['osh-panel-detail'].innerHTML, /System A/, 'the detail element holds the detail');
 });
+
+test('[osh-089] index.html has the element osh-panel, hidden at the start, with the hosts of the video and the detail inside it', () => {
+  const html = readFileSync(new URL('../../index.html', import.meta.url), 'utf8');
+  const opening = /<aside\b[^>]*\bid="osh-panel"[^>]*>/.exec(html);
+  assert.ok(opening, 'the page has the element osh-panel');
+  assert.match(opening[0], /\shidden[\s>]/, 'the panel is hidden until the layer shows it');
+  const inside = html.slice(opening.index + opening[0].length, html.indexOf('</aside>', opening.index));
+  for (const id of ['osh-panel-video', 'osh-panel-detail']) {
+    assert.equal(html.split(`id="${id}"`).length - 1, 1, `the page has one element ${id}`);
+    assert.ok(inside.includes(`id="${id}"`), `${id} is inside the panel`);
+  }
+  assert.equal(html.split('id="osh-panel"').length - 1, 1, 'the page has one element osh-panel');
+});
+

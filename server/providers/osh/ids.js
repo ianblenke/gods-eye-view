@@ -240,7 +240,7 @@ export const OSH_VIDEO_FORMAT = 'application/swe+binary';
 export const OSH_VIDEO_QUERY = new URLSearchParams({ f: OSH_VIDEO_FORMAT }).toString();
 
 /**
- * Build the video-stream URL for one datastream id: the same URL as
+ * Build the video URL for one datastream id: the same URL as
  * liveUrl(), with the format query of the binary video messages. It has the
  * scheme `ws` for an `http` root and `wss` for an `https` root, and no
  * credentials. The credentials of the provider travel in a header, never in
@@ -259,7 +259,7 @@ export function videoUrl(root, id) {
 }
 
 /**
- * Re-check a built video-stream URL against its root and id. Throws when the
+ * Re-check a built video URL against its root and id. Throws when the
  * scheme, the host, the path, the query, the user name, the password or the
  * fragment does not match exactly what videoUrl() would build. Mirrors
  * assertLiveUrl() above.

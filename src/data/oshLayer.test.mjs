@@ -3342,7 +3342,7 @@ test('[osh-086] the panel shows for a camera system that holds only a video data
   });
 });
 
-test('[osh-086] the panel shows for a feature that has no host and hides when the selection ends', async (t) => {
+test('[osh-086] the panel shows for a feature that has no system and hides when the selection ends', async (t) => {
   const source = fakeSource({ fois: [FEATURE_NO_HOST] });
   const { layer, panelHost, detailHost, viewer } = videoLayer({ source });
   t.after(() => layer.destroy(viewer));
@@ -3429,7 +3429,7 @@ test('[osh-087] the layer starts one video stream for the first video datastream
   });
 });
 
-test('[osh-087] the view shows the id of a video datastream that has no name', async (t) => {
+test('[osh-087] the layer gives the id to the view as the name of a video datastream that has no name', async (t) => {
   const source = fakeSource({ video: true, datastreams: [videoDatastream({ name: undefined })] });
   const { layer, parts, viewer } = videoLayer({ source });
   t.after(() => layer.destroy(viewer));
@@ -3645,7 +3645,7 @@ test('[osh-087] a new selection closes the video stream and the player, removes 
   });
 });
 
-test('[osh-087] a system with no video datastream leaves the video of the earlier selection closed once', async (t) => {
+test('[osh-087] the video stream of the earlier selection closes once, when the next system has no video datastream', async (t) => {
   const source = fakeSource({
     video: true,
     datastreams: [videoDatastream(), ...liveDatastreams(1, 'sys-fixture-2', 'b')],
@@ -3758,7 +3758,7 @@ test('[osh-087] a callback of a video stream that the layer closed does nothing'
   });
 });
 
-test('[osh-072] a video datastream gets no live stream and does not use one of the three live slots', async (t) => {
+test('[osh-072] a video datastream gets no live stream and does not count toward the limit of three live streams', async (t) => {
   const others = liveDatastreams(4);
   const source = fakeSource({
     live: true,

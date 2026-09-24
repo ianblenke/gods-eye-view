@@ -21,12 +21,12 @@
 
 /* ── OSH Panel ────────────────────────────────── */
 /* The detail of the selected OpenSensorHub system and the live video of its
-   camera. The panel docks left of the right rail (52px from the edge, 330px
-   wide) and right of the left stack. On a window of 1060px or more it covers
-   neither. On a narrower window the panel shrinks to 240px, and it can cover
-   the edge of an open left panel. It stays under the top chrome (z100 to
-   z102) and under both rails, and it stops above the command dock. The OSH
-   layer shows it while a selection exists. */
+   camera. The panel docks left of the right rail and right of the left stack.
+   The right rail is 330px wide and 52px from the edge. On a window of 1060px
+   or more the panel covers neither. On a narrower window the panel shrinks
+   to 240px, and it can cover the edge of an open left panel. It stays under
+   the top chrome (z100 to z102) and under both rails, and it stops above the
+   command dock. The OSH layer shows it while the layer holds a detail. */
 .osh-panel {
   --osh-panel-right: calc(var(--right-rail-x) + 330px + 12px);
   --osh-panel-left-clear: calc(var(--left-stack-x) + 360px + 12px);

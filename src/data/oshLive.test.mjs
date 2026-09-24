@@ -8,6 +8,7 @@ import { oshProxy } from '../../server/providers/osh.js';
 import { oshOpenStream } from '../../server/providers/osh/get.js';
 import { liveUrl, videoUrl } from '../../server/providers/osh/ids.js';
 import {
+  OSH_LIVE_MAX_CLIENT_BUFFER_BYTES,
   OSH_LIVE_MAX_FRAME_BYTES,
   OSH_VIDEO_MAX_GROUP_BYTES,
   OSH_VIDEO_MAX_MESSAGE_BYTES,
@@ -1162,7 +1163,7 @@ test('[osh-077] the video route gives 405 with Allow GET for a wrong method, and
   assert.equal(calls.length, 0);
 });
 
-test('[osh-077] the video route reports base_unresolved and auth_failed when no candidate root answers', async (t) => {
+test('[osh-091] the video route reports base_unresolved and auth_failed when no candidate root answers', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const missing = oshProxy({ env: KEYED, fetchImpl: async () => jsonResponse(404), liveHub: rig.hub });
@@ -1176,7 +1177,7 @@ test('[osh-077] the video route reports base_unresolved and auth_failed when no 
   assert.equal(rig.sockets.instances.length, 0);
 });
 
-test('[osh-077] a good request to the video route opens one socket with the wss video URL and with only the headers option', async (t) => {
+test('[osh-091] a good request to the video route opens one socket with the wss video URL and with only the headers option', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const calls = [];
@@ -1199,7 +1200,7 @@ test('[osh-077] a good request to the video route opens one socket with the wss 
   assert.deepEqual(socket.sent, []);
 });
 
-test('[osh-077] the video route reads no schema, and every request to the server is a GET', async (t) => {
+test('[osh-091] the video route reads no schema, and every request to the server is a GET', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const calls = [];
@@ -1219,7 +1220,7 @@ test('[osh-077] the video route reads no schema, and every request to the server
   );
 });
 
-test('[osh-077] the video route sends the Basic header only when both credentials are set', async (t) => {
+test('[osh-091] the video route sends the Basic header only when both credentials are set', async (t) => {
   const combos = [
     {},
     { OSH_USERNAME: SECRET_USER },
@@ -1240,7 +1241,7 @@ test('[osh-077] the video route sends the Basic header only when both credential
   }
 });
 
-test('[osh-077] the video route writes the same response head as the live route, then relays each frame', async (t) => {
+test('[osh-091] the video route writes the same response head as the live route, then relays each frame', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
@@ -1262,7 +1263,7 @@ test('[osh-077] the video route writes the same response head as the live route,
   assert.equal(res.chunks.at(-1), ': hb\n\n');
 });
 
-test('[osh-077] the video route removes the client when the connection closes', async (t) => {
+test('[osh-091] the video route removes the client when the connection closes', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
@@ -1276,7 +1277,7 @@ test('[osh-077] the video route removes the client when the connection closes', 
   assert.equal(rig.timers.pending(), 0);
 });
 
-test('[osh-077] a client that leaves while the video route loads the root opens no socket', async (t) => {
+test('[osh-091] a client that leaves while the video route loads the root opens no socket', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
@@ -1289,7 +1290,7 @@ test('[osh-077] a client that leaves while the video route loads the root opens 
   assert.equal(rig.timers.pending(), 0);
 });
 
-test('[osh-077] the video route gives 503 with live_busy for a ninth datastream, and opens no socket', async (t) => {
+test('[osh-091] the video route gives 503 with live_busy for a ninth datastream, and opens no socket', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   for (let index = 1; index <= 8; index += 1) {
@@ -1328,7 +1329,7 @@ test('[osh-079] a good video message gives one frame event with the base64 text 
   assert.deepEqual(new Uint8Array(decoded), message);
 });
 
-test('[osh-079] the frame event of a fixed message has a fixed text', async (t) => {
+test('[osh-079] a known message gives a known text of the frame event', async (t) => {
   const { client, socket } = openVideoRig(t);
   const tiny = Uint8Array.from([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 1, 0x65]);
   socket.emit('message', messageOf(tiny));
@@ -1351,7 +1352,7 @@ test('[osh-079] a message of exactly 12 bytes with a length field of zero is a g
   assert.deepEqual(client.chunks, [OPEN_TEXT, frameText(empty)]);
 });
 
-test('[osh-079] a text message, a message of 11 bytes and a message with a wrong length field give no event, and the stream stays open', async (t) => {
+test('[osh-079] a text message, a short message, a wrong length field or a bad time stamp gives no event, and the stream stays open', async (t) => {
   const { client, socket } = openVideoRig(t);
   const good = keyMessage({ at: 1 });
   const spelled = videoMessage([[0x65, 0x11, 0x22]]);
@@ -1364,6 +1365,7 @@ test('[osh-079] a text message, a message of 11 bytes and a message with a wrong
     JSON.stringify(FRAME),
     '',
     'text',
+    '12',
     String.fromCharCode(...spelled),
     Buffer.from(good).toString('base64'),
     Buffer.from(good).toString('latin1'),
@@ -1521,7 +1523,7 @@ test('[osh-080] a message with a slice of type 1 does not start the group again,
   assert.deepEqual(second.chunks, [OPEN_TEXT, frameText(type5)]);
 });
 
-test('[osh-080] a delta message with no group is not stored, and the group starts at the next key message', async (t) => {
+test('[osh-080] the hub stores no delta message when it has no group, and the group starts at the next key message', async (t) => {
   const { rig, client, socket } = openVideoRig(t);
   const [first, second, key] = [deltaMessage({ at: 1 }), deltaMessage({ at: 2 }), keyMessage({ at: 3 })];
   socket.emit('message', messageOf(first));
@@ -1536,7 +1538,7 @@ test('[osh-080] a delta message with no group is not stored, and the group start
   assert.deepEqual(after.chunks, [OPEN_TEXT, frameText(key)]);
 });
 
-test('[osh-080] a message that gives no event is not stored in the group', async (t) => {
+test('[osh-080] the hub stores no message in the group when the message gives no event', async (t) => {
   const { rig, socket } = openVideoRig(t);
   const key = keyMessage({ at: 1 });
   socket.emit('message', messageOf(key));
@@ -1917,11 +1919,11 @@ async function startProvider(t, upstream, env) {
   return { port: server.address().port };
 }
 
-/** Read the event stream of the live route until `done(text)` is true, or the response ends. */
-function readStream(port, done) {
+/** Read the event stream of a route (the live route by default) until `done(text)` is true, or the response ends. */
+function readStream(port, done, path = `/api/osh/live?datastream=${DS}`) {
   return new Promise((resolve, reject) => {
     const request = http.get(
-      { host: 'localhost', port, path: `/api/osh/live?datastream=${DS}`, agent: false },
+      { host: 'localhost', port, path, agent: false },
       (response) => {
         let text = '';
         const timer = setTimeout(() => {
@@ -2023,3 +2025,96 @@ test('[osh-066] a loopback server sends a frame of 70000 bytes, and the route gi
   assert.deepEqual(upstream.seen.clientOpcodes, [8]);
   assert.equal(upstream.seen.handshakes[0].headers.authorization, undefined);
 });
+
+test('[osh-079] a loopback server sends a binary video message of 70000 bytes, and the video route gives its frame event', async (t) => {
+  const message = keyMessage({ at: 1, size: 70_000 });
+  const upstream = await startUpstream(t, { frames: [wsFrame(2, Buffer.from(message))] });
+  const provider = await startProvider(t, upstream, {});
+  const { text } = await readStream(
+    provider.port,
+    (seen) => seen.includes('event: frame') && seen.endsWith('\n\n'),
+    `/api/osh/video?datastream=${DS}`,
+  );
+  const events = parseWire(text);
+  assert.deepEqual(
+    events.map((event) => event.name),
+    ['open', 'frame'],
+  );
+  assert.equal(events[1].data, Buffer.from(message).toString('base64'));
+  const [handshake] = upstream.seen.handshakes;
+  assert.equal(handshake.method, 'GET');
+  assert.equal(handshake.url, `/api/datastreams/${DS}/observations?f=application%2Fswe%2Bbinary`);
+  assert.equal(handshake.headers.authorization, undefined);
+  assert.ok(upstream.seen.requests.every((seen) => seen.method === 'GET'));
+  assert.ok(
+    upstream.seen.requests.every((seen) => !seen.pathname.endsWith('/schema')),
+    'the video route reads no schema',
+  );
+});
+
+/** A response that reports how many bytes it has not yet written, and counts the calls of destroy. */
+function bufferedRes(writableLength = 0) {
+  const res = fakeRes();
+  res.writableLength = writableLength;
+  res.destroyCalls = 0;
+  res.destroy = () => {
+    res.destroyCalls += 1;
+    res.closeConnection();
+  };
+  return res;
+}
+
+test('[osh-090] the video route ends a client that holds more than 8388608 unwritten bytes, and the other client keeps its events', async (t) => {
+  assert.equal(OSH_LIVE_MAX_CLIENT_BUFFER_BYTES, 8_388_608);
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+  const slow = await driveLive(proxy, { url: VIDEO_PATH, res: bufferedRes() });
+  const steady = await driveLive(proxy, { url: VIDEO_PATH });
+  const [socket] = rig.sockets.instances;
+  socket.emit('open');
+  const first = keyMessage({ at: 1 });
+  slow.writableLength = 8_388_608;
+  socket.emit('message', messageOf(first));
+  assert.equal(slow.destroyCalls, 0, 'a client at the limit stays');
+  assert.equal(slow.chunks.at(-1), frameText(first));
+  const second = deltaMessage({ at: 2 });
+  slow.writableLength = 8_388_609;
+  socket.emit('message', messageOf(second));
+  assert.equal(slow.destroyCalls, 1);
+  assert.notEqual(slow.chunks.at(-1), frameText(second), 'the ended client gets no more text');
+  assert.equal(steady.chunks.at(-1), frameText(second));
+  const written = slow.chunks.length;
+  socket.emit('message', messageOf(deltaMessage({ at: 3 })));
+  assert.equal(slow.destroyCalls, 1, 'the hub has removed the ended client');
+  assert.equal(slow.chunks.length, written);
+  assert.equal(steady.chunks.at(-1), frameText(deltaMessage({ at: 3 })));
+  assert.equal(socket.closeCalls, 0, 'the socket stays open for the other client');
+});
+
+test('[osh-090] the live route ends a client that holds more than 8388608 unwritten bytes', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+  const slow = await driveLive(proxy, { res: bufferedRes() });
+  const [socket] = rig.sockets.instances;
+  socket.emit('open');
+  socket.emit('message', { data: binaryOf(FRAME) });
+  assert.equal(slow.destroyCalls, 0);
+  slow.writableLength = 8_388_609;
+  socket.emit('message', { data: binaryOf({ ...FRAME, resultTime: '2026-01-01T00:00:01Z' }) });
+  assert.equal(slow.destroyCalls, 1);
+});
+
+test('[osh-090] a response that reports no unwritten bytes is never ended', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+  const res = await driveLive(proxy, { url: VIDEO_PATH, res: bufferedRes(0) });
+  const [socket] = rig.sockets.instances;
+  socket.emit('open');
+  for (let at = 1; at <= 3; at += 1) socket.emit('message', messageOf(keyMessage({ at })));
+  assert.equal(res.destroyCalls, 0);
+  assert.equal(res.chunks.filter((chunk) => chunk.startsWith('event: frame')).length, 3);
+});
+

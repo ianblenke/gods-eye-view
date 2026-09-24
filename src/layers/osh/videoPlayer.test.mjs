@@ -155,7 +155,7 @@ test('[osh-084] the player decodes nothing until a key message has an SPS and a 
   assert.deepEqual(statuses, ['waiting']);
 });
 
-test('[osh-084] the player drops a message whose envelope is wrong', () => {
+test('[osh-084] the player ignores a message whose length field is wrong or that is too short', () => {
   const { player, decoders } = makePlayer();
   player.push(keyMessage(100.5).subarray(0, 8));
   player.push(videoMessage(100.5, [SPS, PPS, IDR], { lengthDelta: 1 }));
@@ -230,7 +230,7 @@ test('[osh-084] the player drops a message that has no slice unit', () => {
   assert.equal(decoder.of('decode').length, 1, 'only the first key message became a chunk');
 });
 
-test('[osh-084] the player draws each decoded frame at the origin of the canvas and closes it', () => {
+test('[osh-084] the player draws each decoded frame at the top left corner of the canvas and closes it', () => {
   const { canvas, decoder } = startedPlayer();
   const first = fakeFrame();
   const second = fakeFrame();
@@ -401,7 +401,7 @@ test('[osh-084] a decoder error closes the decoder and reports `error`, then `wa
   assert.equal(decoders.length, 1, 'no message without a parameter set makes a new decoder');
 });
 
-test('[osh-084] after a decoder error the next key message makes a new decoder and the frames go live again', () => {
+test('[osh-084] after a decoder error the next key message makes a new decoder, and the player reports `live` again after its first decoded frame', () => {
   const { player, statuses, decoders, decoder } = startedPlayer();
   decoder.init.output(fakeFrame());
   decoder.init.error(new Error('the decoder failed'));
@@ -451,7 +451,7 @@ test('[osh-084] a configuration that the browser refuses is a decoder error', ()
   assert.equal(codecs.decoders[1].of('decode').length, 1);
 });
 
-test('[osh-084] a decoder that throws from decode is reset and starts again at the next key message', () => {
+test('[osh-084] a decoder that throws from decode makes the player reset it, and the player starts again at the next key message', () => {
   const { player, statuses, decoders, decoder } = startedPlayer();
   decoder.decodeThrows = true;
   player.push(deltaMessage(100.75));
@@ -521,7 +521,7 @@ test('[osh-084] the close method does not throw when the close of the decoder th
   assert.equal(decoder.of('close').length, 1);
 });
 
-test('[osh-084] a callback of the decoder after the close method draws nothing and reports nothing', () => {
+test('[osh-084] after the close method the player draws nothing and reports nothing for a callback of the decoder', () => {
   const { player, canvas, statuses, decoder } = startedPlayer();
   player.close();
   const frame = fakeFrame();

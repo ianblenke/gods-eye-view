@@ -62,7 +62,7 @@ function moveToObservation(entity, observation) {
  * @param {object} options
  * @param {{getSystems: Function, getDatastreams: Function, getObservation: Function, getFois?: Function, getLocations?: Function, openLive?: Function, openVideo?: Function}} options.source
  * @param {?{innerHTML: string}} [options.detailHost]
- * @param {?{hidden: boolean}} [options.panelHost] Shown while a selection exists (osh-086).
+ * @param {?{hidden: boolean}} [options.panelHost] Shown while the layer holds a detail (osh-086).
  * @param {?object} [options.videoHost] Holds the view of the video of the selected system (osh-087).
  * @param {Function} [options.createPlayer] Builds the player, as `createVideoPlayer` does.
  * @param {Function} [options.createView] Builds the view, as `createVideoView` does.

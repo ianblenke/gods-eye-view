@@ -15,7 +15,7 @@ import {
   toAvccSample,
 } from '../../data/oshVideo.js';
 
-/** The player drops delta messages while the decoder holds more frames than this. */
+/** The player ignores delta messages while the decoder queue holds more chunks than this. */
 const MAX_DECODE_QUEUE = 8;
 
 function sameBytes(first, second) {
@@ -51,7 +51,7 @@ export function createVideoPlayer({
   let originMs = null;
   let closed = false;
   let live = false;
-  // After a drop the delta frames that follow would refer to a frame that the decoder never got.
+  // After an ignored message the delta messages that follow refer to a message that the decoder never got.
   let droppingDeltas = false;
   let shownWidth = null;
   let shownHeight = null;

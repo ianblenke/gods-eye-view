@@ -103,9 +103,9 @@ export const WORLD_OVERLAY_OCCLUDER_SELECTORS = Object.freeze([
   '#space-mission-panel',
   '#space-mission-panel-host',
   '#military-awareness-panel',
-  // OSH panel: a solid backdrop-filled window, `hidden` until a system is
-  // selected. Not `:not([hidden])`: the host observes a match for its `hidden`
-  // attribute, and a hidden element that the selector skips is never observed.
+  // OSH panel: a solid backdrop-filled window, `hidden` until the layer holds a
+  // detail. Not `:not([hidden])`: the world overlay watches the `hidden` attribute
+  // of an element that matches at start, and it never watches a skipped element.
   '#osh-panel',
   // Cockpit: solid backdrop-filled windows only (both bounded to
   // `min(340px, 28vw)` wide and `min(42vh, 410px)` tall, both `hidden` until
