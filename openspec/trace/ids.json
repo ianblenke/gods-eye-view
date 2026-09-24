@@ -900,17 +900,17 @@
     "change": "osh-fusion"
   },
   "osh-004": {
-    "hash": "78c30e981837d8ebbe985b9a70939eeab5512f1e4d4fc06e87a128416d8531cf",
+    "hash": "8dd172389375104ac3b53eaf3825191c8fd8617383b660508efcf8142ccf63a1",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
   "osh-005": {
-    "hash": "ebeaaf46c0d54e4b805a34350bdb881c4acb146872fe5f4538f470d6efcb35fe",
+    "hash": "312def51cd8ef6bac066453181fc3ae9d067279a8cdbaa1fafd08f90493101f7",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
   "osh-006": {
-    "hash": "295595465686d3e38e583163b797d0dd13c787e7abdfd645fc250ff5be701d65",
+    "hash": "1b837c87d3441d9f2f231a4528ad8cf37c2bcba4a3a6afbcf08139ec6ebb498a",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -1075,7 +1075,7 @@
     "change": "fix-osh-probe-format"
   },
   "osh-039": {
-    "hash": "db12f63d0d6b25a580f567eaafa2961576ad231cf9706a5dfec13a8543159a8c",
+    "hash": "b84d72c3f56c41e942377e4d66459f4d278ce8b1c68b53203db3767743056792",
     "since": "2026-09-17",
     "change": "fix-osh-probe-format"
   },
@@ -1193,6 +1193,71 @@
     "hash": "f583692210743257187f19987884087a0f8be600db370e0c742a3204b5db78ae",
     "since": "2026-09-20",
     "change": "osh-marker-depth"
+  },
+  "osh-063": {
+    "hash": "c046167ea47e69b3c3697687003f2a3a9d0899b7b09627e6f339a6f58941e18d",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-064": {
+    "hash": "9774c64db61bcef7b4493f00e38747c321b9dfbc71a477ac0cb9aa624fe7e250",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-065": {
+    "hash": "51e56f9f585c2469d29650ddee5c132f9cf76d0e132bee74081497edfff7fc09",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-066": {
+    "hash": "c69e36bfc6c5698585eabc327e9c19e11531ac6035d85800f209e3eac49de3d0",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-067": {
+    "hash": "3220c67070832e4bb54d24da7b1c76b36bd60293cc605d22af5c4749107b2a23",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-068": {
+    "hash": "454ac3f5057773a939452a0dbf03ebc1b73e341ac3f38518c70ba4f5026def9e",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-069": {
+    "hash": "cab2259e99e720b58fb36be40fefc682c3222917ff936efb04de2c0ca20d35b8",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-070": {
+    "hash": "d639ac757ff2927f07e834c2253ee056df41240d873fb9baa2462f8aae80800c",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-071": {
+    "hash": "fe238b3774f2c8ed4240b0484cecf0fc458ac8f6f131b1d74217543ca43a463d",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-072": {
+    "hash": "a632400c1b766ed17501c26862449d8b8a0628c65d74f44c275df85b2bd1e007",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-073": {
+    "hash": "a53f2b4b3a89fdac964186dfb593d6b7ed8dee67921a01464cd50b73157782d4",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-074": {
+    "hash": "a85fe8faaa6feaf8351abbc6d1e1b91a7522adad57e22a4ffedf3230a5db6c59",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
+  },
+  "osh-075": {
+    "hash": "0cf49bee795a4ceb60502107215080c2ba5ba7d604c3ba23bef79ddaa4d2fa67",
+    "since": "2026-09-24",
+    "change": "osh-live-observations"
   },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
