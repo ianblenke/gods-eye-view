@@ -847,6 +847,7 @@
     "src/data/oshLayer.test.mjs › [osh-031] the layer moves the entity from a newest result with a negative ageMs"
   ],
   "osh-032": [
+    "src/data/oshLayer.test.mjs › [osh-032] the detail for a selected held feature that a stream moves shows its name and Placed by with the location's age",
     "src/layers/osh/detail.test.mjs › [osh-032] Placed by falls back to an em dash for a datastream with no name",
     "src/layers/osh/detail.test.mjs › [osh-032] a datastream at the freshness threshold is not marked old",
     "src/layers/osh/detail.test.mjs › [osh-032] a feature header with no name shows the feature's id, never the host's name",
@@ -1137,6 +1138,7 @@
     "src/data/oshSystems.test.mjs › [osh-058] a location that is not fresh draws no feature",
     "src/data/oshSystems.test.mjs › [osh-058] a location with both keys draws a feature keyed by foiId",
     "src/data/oshSystems.test.mjs › [osh-058] a location with foiUid alone draws a feature keyed by the uid",
+    "src/data/oshSystems.test.mjs › [osh-058] a newer location that comes first wins over an older location for one unheld feature",
     "src/data/oshSystems.test.mjs › [osh-058] a second call with no such location gives no such feature",
     "src/data/oshSystems.test.mjs › [osh-058] the drawn feature has the stream-placed shape: foiUid as uid, the location's systemId, null name, description and validTime",
     "src/data/oshSystems.test.mjs › [osh-058] the drawn feature's location leaves systems and unplaced unchanged",

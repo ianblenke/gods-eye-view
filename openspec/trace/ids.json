@@ -1170,17 +1170,17 @@
     "change": "osh-location-streams"
   },
   "osh-058": {
-    "hash": "356620236d8ed403cb50eb48cc666ec031d4897f6390c1e4841ae82b993bb5bb",
+    "hash": "1e3fab1871b331f2d701803ec88cb65ef91a5986583311f525dbbf5d819fcf3d",
     "since": "2026-09-24",
     "change": "osh-draw-unheld-features"
   },
   "osh-059": {
-    "hash": "9d166fbd68a3e91ee8210aba1ef452b37830a43079914d53dc592e8c5270c5b1",
+    "hash": "96922931bbfeeb638fb50a3a068e88225c62a7396f810e0767a0cf6249981018",
     "since": "2026-09-24",
     "change": "osh-draw-unheld-features"
   },
   "osh-060": {
-    "hash": "8b790a82037370835d232499696d31babf24903c6c5476f7d36c1d3d87073f93",
+    "hash": "cd36258cbdf766a9500a2fc334490e34c8177ceda6729a72a3124a27ac447bd7",
     "since": "2026-09-24",
     "change": "osh-draw-unheld-features"
   },
