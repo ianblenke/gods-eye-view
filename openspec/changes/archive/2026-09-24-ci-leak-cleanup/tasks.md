@@ -46,6 +46,6 @@
 - [x] 6.3 Read the command output for the verdict.
 - [x] 6.4 Run `npm run format:check`.
 - [x] 6.5 Run `npm run check:boundaries`.
-- [ ] 6.6 Run `/opsx:review ci-leak-cleanup`.
-- [ ] 6.7 Correct the findings.
-- [ ] 6.8 Record the result in `review.md`.
+- [x] 6.6 Run `/opsx:review ci-leak-cleanup`.
+- [x] 6.7 Correct the findings.
+- [x] 6.8 Record the result in `review.md`.
