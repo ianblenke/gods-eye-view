@@ -12,6 +12,6 @@
 - [x] 2.2 Run `make gates CHANGE=ci-node-24-skip`.
 - [x] 2.3 Read the command output for the verdict.
 - [x] 2.4 Run `npm run format:check`.
-- [ ] 2.5 Run `/opsx:review ci-node-24-skip`.
-- [ ] 2.6 Correct the findings.
-- [ ] 2.7 Record the result in `review.md`.
+- [x] 2.5 Run `/opsx:review ci-node-24-skip`.
+- [x] 2.6 Correct the findings.
+- [x] 2.7 Record the result in `review.md`.

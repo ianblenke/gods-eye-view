@@ -8,7 +8,7 @@ The two tests of this change start with `passes(root, ['init'])`. On Node 24.14.
 
 **Goals:**
 - Make the job "Node 24.14.0" pass.
-- Keep every test name. Keep every assertion, except the list in the test `[coverage-gate-046]`.
+- Keep every test name. Keep every assertion, except the list for `gates.test.mjs` in the test `[coverage-gate-046]`.
 
 **Non-Goals:**
 - Change a code file, the guard or the workflow.
