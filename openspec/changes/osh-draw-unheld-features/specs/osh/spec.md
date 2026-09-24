@@ -81,11 +81,11 @@ Origin: spec-first
 - **AND** an item with no location is kept with a null one, and a malformed payload gives an empty list
 - **AND** the order of the page is kept, newest first as the server answers it
 
-#### Scenario: Draw a feature the layer does not hold from its fresh location alone `osh-058`
+#### Scenario: Add a feature that the layer does not hold, from its fresh location alone `osh-058`
 - **WHEN** `placeOshEntities({systems, fois, locations})` reads a fresh location whose `foiId` and `foiUid` name no held feature
 - **THEN** `features` gains one placed feature at the location's `lon`, `lat` and `alt`, with `locationSource:'stream'`
 - **AND** that feature's `id` is the location's `foiId`, or its `foiUid` when the location carries no `foiId`
-- **AND** that feature keeps `uid` from the location's `foiUid`, `systemId` from the location's `systemId`, and null for `name`, `description` and `validTime`
+- **AND** that feature takes `uid` from the location's `foiUid` and `systemId` from the location's `systemId`, and has null for `name`, `description` and `validTime`
 - **AND** that feature carries the location's `datastreamId`, `datastreamName`, `phenomenonTime` and `ageMs`, the same fields a stream-placed system carries
 - **AND** `systems` and `unplaced` are the same as with no such location, so the location never places its system
 - **AND** two fresh locations that name one such feature give one placed feature, at the newer location
@@ -206,12 +206,12 @@ Origin: spec-first
 - **AND** the detail names the feature and its host
 
 #### Scenario: Show one entity per stream-drawn feature, and remove it when its location is no longer fresh `osh-059`
-- **WHEN** the layer updates with a fresh location that names a feature the feature list does not hold
+- **WHEN** the layer updates with a fresh location that names a feature the layer does not hold
 - **THEN** the map holds the entity `osh-foi:<id>` for that feature at the location's position, where `<id>` is the placed feature's `id`
-- **AND** the map holds no entity `osh:<systemId>` for that location's system, and `getStats().placed.stream` does not count it
+- **AND** that location adds no entity `osh:<systemId>` for its system, and adds nothing to `getStats().placed.stream`
 - **AND** a system with no `Point` that only such a location names still counts under `unplaced`
 - **AND** the entity gets no label, because the feature has no name
-- **AND** the location's `systemName` never stands in for the feature's name, on the label or in the detail, because one host has many features
+- **AND** the location's `systemName` never replaces the feature's name, on the label or in the detail, because one host has many features
 - **AND** the layer draws one entity per fresh unheld feature, so three such features of one host at one position give three entities
 - **AND** the layer applies no cap to the stream-drawn features, and does not group them by host or by position
 - **AND** `getStats().features` counts the entity, and `getStats().placed.streamFeatures` counts only the stream-drawn features
@@ -220,13 +220,14 @@ Origin: spec-first
 - **AND** the detail for that selection shows the feature's id in place of its name, and shows its host
 - **AND** that detail shows `Placed by` with the datastream's name and the location's age
 - **AND** a refresh with no fresh location for that feature removes the entity and clears any selection of it
-- **AND** the layer keeps no record of a stream-drawn feature between refreshes, so `destroy()` and a refresh alone forget it
+- **AND** the layer keeps no record of a stream-drawn feature after a refresh or after `destroy()`
 
 #### Scenario: Keep one entity for a feature across a failed features read `osh-060`
-- **WHEN** one refresh holds a feature and a fresh location that names it
-- **AND** the next refresh's features getter throws, with the same location, and a third refresh holds the feature again
-- **THEN** all three refreshes hold the one entity `osh-foi:<id>` at the location's position
-- **AND** the first and the third refresh label the entity with the feature's name, with `partial:false` and `placed.streamFeatures` at zero
-- **AND** the second refresh gives the entity no label, sets `partial:true`, and counts it under `placed.streamFeatures`
-- **AND** a fourth refresh whose features getter throws with no fresh location for that feature removes the entity
+- **WHEN** one refresh holds a feature and a fresh location whose `foiId` is the feature's `id`
+- **AND** the second refresh has a features getter that throws, with the same location, and a third refresh holds the feature again
+- **AND** a fourth refresh has a features getter that throws and no fresh location for that feature
+- **THEN** all three first refreshes hold the one entity `osh-foi:<id>` at the location's position
+- **AND** in the first and the third refresh the entity has the feature's name as its label, with `partial:false` and `placed.streamFeatures` at zero
+- **AND** in the second refresh the entity has no label, `partial` is true, and `placed.streamFeatures` counts it
+- **AND** the fourth refresh removes the entity
 - **AND** the layer places the stream-drawn feature the same way whether the features read failed or the feature list has no such feature

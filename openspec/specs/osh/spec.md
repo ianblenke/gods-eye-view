@@ -240,9 +240,7 @@ Origin: spec-first
 - **AND** every feature record gives a placed feature at its own point with its `systemId`
 - **AND** a location whose `ageMs` is not fresh under `isOshObservationFresh()` is dropped before any other rule
 - **AND** a fresh location whose `foiId` or `foiUid` names a held feature moves that feature with `locationSource:'stream'`
-- **AND** a feature that a location moves also carries the location's `datastreamId`, `datastreamName`, `phenomenonTime` and `ageMs`
-- **AND** a fresh location that names a feature the layer does not hold draws that feature, as `osh-058` says
-- **AND** that location never places its system
+- **AND** a fresh location naming a feature the layer does not hold is dropped
 - **AND** a fresh location with no feature reference places its system with `locationSource:'stream'`, the datastream id and name, `phenomenonTime` and `ageMs`
 - **AND** that placement stands in place of that system's `Point`
 - **AND** the layer places the newer of two such locations for one system
@@ -272,17 +270,6 @@ Origin: spec-first
 - **AND** `location` comes from `extractOshLocation()` and the age from the age function this project's freshness change adds, computed with `nowMs`
 - **AND** an item with no location is kept with a null one, and a malformed payload gives an empty list
 - **AND** the order of the page is kept, newest first as the server answers it
-
-#### Scenario: Draw a feature the layer does not hold from its fresh location alone `osh-058`
-- **WHEN** `placeOshEntities({systems, fois, locations})` reads a fresh location whose `foiId` and `foiUid` name no held feature
-- **THEN** `features` gains one placed feature at the location's `lon`, `lat` and `alt`, with `locationSource:'stream'`
-- **AND** that feature's `id` is the location's `foiId`, or its `foiUid` when the location carries no `foiId`
-- **AND** that feature keeps `uid` from the location's `foiUid`, `systemId` from the location's `systemId`, and null for `name`, `description` and `validTime`
-- **AND** that feature carries the location's `datastreamId`, `datastreamName`, `phenomenonTime` and `ageMs`, the same fields a stream-placed system carries
-- **AND** `systems` and `unplaced` are the same as with no such location, so the location never places its system
-- **AND** two fresh locations that name one such feature give one placed feature, at the newer location
-- **AND** a location that is not fresh, or that names a held feature, gives no such placed feature
-- **AND** `placeOshEntities()` keeps no state between two calls, so a second call with no such location gives no such feature
 
 ### Requirement: Systems layer
 The browser layer MUST show one entity for each system with a point location. It MUST poll the datastreams and the newest observation of the selected system. It MUST report its state through `getStats()`.
@@ -334,8 +321,6 @@ Origin: spec-first
 - **AND** a block whose age is a number past `OSH_FRESH_MAX_AGE_MS` also carries the text `old`
 - **AND** a block with `ageMs:null` reads `age unknown`, and never reads `old`
 - **AND** when the system is placed by a stream, the header shows `Placed by` with the datastream's name and the age in the same words
-- **AND** when the selected feature is placed by a stream, its header shows the same `Placed by` line for the location that placed it
-- **AND** a feature header never shows the host's name in place of the feature's name
 - **AND** the header shows the system's id as its name when it has none
 - **AND** a host element given to the layer receives that HTML in `innerHTML`
 - **AND** an empty selection clears the host
@@ -376,7 +361,6 @@ Origin: spec-first
 - **AND** that exception governs the entity only
 - **AND** the system still counts under `unplaced`, because no fresh location named it
 - **AND** a fresh location that names a feature by id or uid moves that feature entity and never places the system
-- **AND** a fresh location that names a feature the layer does not hold draws that feature entity, as `osh-059` says, and never places the system
 - **AND** a click on a stream-placed entity selects it and starts its datastream poll as for any system
 
 ### Requirement: Synthetic fixtures
@@ -472,32 +456,6 @@ Origin: spec-first
 - **AND** a later refresh that drops the feature also clears `selectedFeatureId` and `selectedId`
 - **AND** the layer finds a feature record by id and by uid, and never fetches a feature by id
 - **AND** the detail names the feature and its host
-
-#### Scenario: Show one entity per stream-drawn feature, and remove it when its location is no longer fresh `osh-059`
-- **WHEN** the layer updates with a fresh location that names a feature the feature list does not hold
-- **THEN** the map holds the entity `osh-foi:<id>` for that feature at the location's position, where `<id>` is the placed feature's `id`
-- **AND** the map holds no entity `osh:<systemId>` for that location's system, and `getStats().placed.stream` does not count it
-- **AND** a system with no `Point` that only such a location names still counts under `unplaced`
-- **AND** the entity gets no label, because the feature has no name
-- **AND** the location's `systemName` never stands in for the feature's name, on the label or in the detail, because one host has many features
-- **AND** the layer draws one entity per fresh unheld feature, so three such features of one host at one position give three entities
-- **AND** the layer applies no cap to the stream-drawn features, and does not group them by host or by position
-- **AND** `getStats().features` counts the entity, and `getStats().placed.streamFeatures` counts only the stream-drawn features
-- **AND** a held feature that a fresh location moves is not counted under `placed.streamFeatures`
-- **AND** a click on the entity sets `selectedFeatureId` to the feature and `selectedId` to the location's `systemId`, and starts that host's datastream poll
-- **AND** the detail for that selection shows the feature's id in place of its name, and shows its host
-- **AND** that detail shows `Placed by` with the datastream's name and the location's age
-- **AND** a refresh with no fresh location for that feature removes the entity and clears any selection of it
-- **AND** the layer keeps no record of a stream-drawn feature between refreshes, so `destroy()` and a refresh alone forget it
-
-#### Scenario: Keep one entity for a feature across a failed features read `osh-060`
-- **WHEN** one refresh holds a feature and a fresh location that names it
-- **AND** the next refresh's features getter throws, with the same location, and a third refresh holds the feature again
-- **THEN** all three refreshes hold the one entity `osh-foi:<id>` at the location's position
-- **AND** the first and the third refresh label the entity with the feature's name, with `partial:false` and `placed.streamFeatures` at zero
-- **AND** the second refresh gives the entity no label, sets `partial:true`, and counts it under `placed.streamFeatures`
-- **AND** a fourth refresh whose features getter throws with no fresh location for that feature removes the entity
-- **AND** the layer places the stream-drawn feature the same way whether the features read failed or the feature list has no such feature
 
 ### Requirement: Datastreams of one system
 The provider MUST serve the datastreams of one system from the per-system route when a `system` query value matches the id pattern. It MUST keep the origin, the path and the query of that URL fixed, and MUST refuse any other value with no upstream request.

@@ -2421,6 +2421,36 @@ test('[osh-059] a selected stream-drawn feature keeps its selection across a ref
   });
 });
 
+test('[osh-032] the detail for a selected held feature that a stream moves shows its name and Placed by with the location\'s age', async (t) => {
+  const detailHost = { innerHTML: '' };
+  const source = fakeSource({
+    systems: [SYSTEM_A],
+    fois: [FEATURE_A],
+    locations: [
+      aircraftLocation({
+        foiId: FEATURE_A.id,
+        systemId: FEATURE_A.systemId,
+        datastreamName: 'Stream Beta',
+        ageMs: 42_000,
+      }),
+    ],
+  });
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer, setPicked } = fakeViewer();
+  layer.init(viewer);
+  t.after(() => layer.destroy(viewer));
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    setPicked(`osh-foi:${FEATURE_A.id}`);
+    getClick()({ position: {} });
+    await flush();
+
+    assert.match(detailHost.innerHTML, /<h3>Feature A<\/h3>/);
+    assert.match(detailHost.innerHTML, /Placed by Stream Beta \(42 s\)/);
+  });
+});
+
 test('[osh-059] a system with no Point that only an unheld-feature location names counts under unplaced', async (t) => {
   const source = fakeSource({
     systems: [SYSTEM_NULL],
@@ -2445,6 +2475,7 @@ test('[osh-059] a system with no Point that only an unheld-feature location name
   assert.equal(stats.unplaced, 1);
   assert.equal(stats.count, 0);
   assert.equal(stats.features, 1);
+  assert.equal(stats.placed.stream, 0, 'the location places no system');
 });
 
 test('[osh-059] destroy() forgets the stream-drawn feature and zeroes placed.streamFeatures', async (t) => {
