@@ -6,18 +6,19 @@ search box and the voice reverse-lookup both call the geocoding endpoint of
 Google directly, with the key in the URL. Both calls can go through our own
 server, as the Places and Street View calls of Google already do.
 
-A second gap is in the build. By default, Vite exposes each `.env` line
+A second problem is in the build. By default, Vite exposes each `.env` line
 with a name that starts with `VITE_` to the browser bundle. This needs no
-code change and no review. A fixture build through the real browser config
-shows this: a probe value on the environment gets to the built output. A
-later `.env` line can thus ship a value that nobody wants to expose.
+code change and no review. Before this change, a fixture build through
+the browser config showed this: a probe value on the environment got to the
+built output. So a later `.env` line can ship a value that the team does not
+want to expose.
 
-This change adds a geocoding route on the server. It moves both browser
+This change adds a geocoding route on the server, and it moves both browser
 calls to that route. It narrows the `VITE_` prefix to the three AIS live
-settings. It also adds two checks that stay after this change. One scans
-the build output and names each credential that gets to the bundle. The
-other checks that the registry or `.env.example` documents each credential
-name that the server reads.
+settings. It also adds two checks that stay after this change. The first
+check scans the build output and names each credential that gets to the
+bundle. The second check finds each credential name that the server reads.
+It fails when the registry and `.env.example` do not document the name.
 
 ## What Changes
 
@@ -55,7 +56,7 @@ name that the server reads.
   this change run `reverseGeocode` and `sanitizeLabel` of `gevActions.js`
   for the first time. One branch of `reverseGeocode` is a range with no
   code. The change writes a waiver with the count 1 for it (D7).
-- Six test files get new tagged tests: `viteBuild.test.mjs`,
+- Six test files get new tags or new tagged tests: `viteBuild.test.mjs`,
   `googleServerKey.test.mjs`, `previewServing.test.mjs`,
   `src/search/placeSearch.test.mjs`, `gevActions.test.mjs` and
   `keySetupCore.test.mjs`.
@@ -86,11 +87,18 @@ name that the server reads.
   the browser key. The browser sends its geocoding requests only to our
   server, with no key, also when no server key exists. The photoreal map
   tiles still send the browser key to Google.
-- `credential-scan-forms`: the registry scan does not find a dynamic read
-  such as `env[variable]`, or a name that the code builds from parts. It
+- `credential-scan-forms`: the registry scan does not find a name that the code
+  reads with `env[variable]`, or a name that the code builds from parts. It
   also does not find a credential name with no `_KEY`, `_TOKEN`, `_SECRET`
-  or `_PASSWORD` suffix. It reads only `server/`, `scripts/` and `tools/`.
+  or `_PASSWORD` suffix. It reads only the `.js` and `.mjs` files under
+  `server/`, `scripts/` and `tools/`. So it does not read shell scripts.
 - `one-ais-setting-probed`: the fixture checks only `VITE_AIS_LIVE_MAX_ROWS`
-  as present in the bundle. `viteBuild.test.mjs` stops a change of the
-  prefix. A change that removes only `VITE_AIS_LIVE_API_URL` or
-  `VITE_AIS_LIVE_LABEL_MAX_ROWS` in another way passes these tests.
+  as present in the bundle. `viteBuild.test.mjs` fails when the
+  prefix changes. A change that removes only `VITE_AIS_LIVE_API_URL` or
+  `VITE_AIS_LIVE_LABEL_MAX_ROWS`, and keeps the prefix, passes these tests.
+- `bundle-scan-skips-cesium`: the fixture scan does not read the `cesium/`
+  folder that Vite copies from `node_modules` to the output. A plugin that
+  writes a credential into that folder passes the fixture tests.
+- `public-folder-not-scanned`: the fixture build has `publicDir: false`, and
+  the key scan of `credential-boundary-004` does not read `public/`. A
+  key-shaped literal in `public/` passes these tests.

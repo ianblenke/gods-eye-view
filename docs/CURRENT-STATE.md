@@ -472,8 +472,9 @@ box (`src/standalone/placeSearch.js`) and the voice reverse-lookup
 (`src/voice/gevActions.js`) both call the same-origin `/api/google/geocode`
 route, which answers `{configured:false, ...}` with no upstream call when no
 key is set. `src/data/placeProviderPayloads.js`'s `projectGeocodeResults()`
-keeps Google's own field names and caps every list, so only the transport
-changed at both call sites.
+keeps Google's own field names and sets a maximum length for each list. The
+voice reverse-lookup also remembers a `configured:false` answer for the life
+of the page, and it does not remember an HTTP error answer.
 
 
 ## Infrastructure marker visibility
