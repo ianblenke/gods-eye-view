@@ -179,6 +179,59 @@ export function assertSystemUrl(url, root, id) {
   }
 }
 
+/**
+ * The observation format of the live stream (design decision D64) and its
+ * fixed query. The serializer encodes the value, so a `+` and a `/` reach
+ * the server as bytes of the value and never as a space or a path separator.
+ */
+export const OSH_LIVE_FORMAT = 'application/om+json';
+export const OSH_LIVE_QUERY = new URLSearchParams({ f: OSH_LIVE_FORMAT }).toString();
+
+/**
+ * Build the live-stream URL for one datastream id: the observations path
+ * of `observationUrl()` with the scheme `ws` for an `http` root and `wss`
+ * for an `https` root, the fixed format query and no credentials. The id
+ * sits between two fixed path segments, and the query is assigned as a
+ * whole after the id is in place. The credentials of the provider travel
+ * in a header, never in this URL.
+ * @param {URL} root - Resolved API root, trailing slash.
+ * @param {string} id - An id already checked by readDatastreamId.
+ * @returns {URL}
+ */
+export function liveUrl(root, id) {
+  const url = new URL(`datastreams/${encodeURIComponent(id)}/observations`, root);
+  url.protocol = root.protocol === 'https:' ? 'wss:' : 'ws:';
+  url.username = '';
+  url.password = '';
+  url.search = OSH_LIVE_QUERY;
+  return url;
+}
+
+/**
+ * Re-check a built live-stream URL against its root and id. Throws when the
+ * scheme, the host, the path, the query, the user name, the password or the
+ * fragment does not match exactly what liveUrl() would build. Mirrors
+ * assertObservationUrl() above.
+ * @param {URL} url
+ * @param {URL} root
+ * @param {string} id
+ */
+export function assertLiveUrl(url, root, id) {
+  const expectedProtocol = root.protocol === 'https:' ? 'wss:' : 'ws:';
+  const expectedPathname = `${root.pathname}datastreams/${id}/observations`;
+  if (
+    url.protocol !== expectedProtocol ||
+    url.host !== root.host ||
+    url.pathname !== expectedPathname ||
+    url.search !== `?${OSH_LIVE_QUERY}` ||
+    url.username !== '' ||
+    url.password !== '' ||
+    url.hash !== ''
+  ) {
+    throw new Error('OSH live URL failed the safety check');
+  }
+}
+
 /** Newest-per-feature page size: the number of distinct features one `latest` request answers. */
 export const OSH_LATEST_LIMIT = 300;
 

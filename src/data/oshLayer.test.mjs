@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test, { before, after } from 'node:test';
 import * as Cesium from 'cesium';
 import { createOshLayer } from '../layers/osh/index.js';
-import { OSH_FRESH_MAX_AGE_MS } from './oshObservations.js';
+import { OSH_CLOCK_SKEW_MAX_MS, OSH_FRESH_MAX_AGE_MS } from './oshObservations.js';
 
 let _originalDocument;
 before(() => {
@@ -90,6 +90,7 @@ function fakeSource({
   datastreams = [],
   observations = {},
   locations = [],
+  live = false,
 } = {}) {
   const calls = {
     systems: 0,
@@ -99,8 +100,9 @@ function fakeSource({
     observations: [],
     locations: 0,
     locationsArgs: [],
+    live: [],
   };
-  return {
+  const source = {
     calls,
     async getSystems() {
       calls.systems += 1;
@@ -125,6 +127,21 @@ function fakeSource({
       return { keyRequired: false, locations, failed: 0 };
     },
   };
+  // A source with no openLive keeps the polling of today. With one, each
+  // stream records its callbacks, so a test can push the events.
+  if (live) {
+    source.openLive = (id, callbacks) => {
+      const stream = { id, callbacks, closed: 0 };
+      stream.handle = {
+        close() {
+          stream.closed += 1;
+        },
+      };
+      calls.live.push(stream);
+      return stream.handle;
+    };
+  }
+  return source;
 }
 
 /** A fake viewer with entity dataSources, a pickable scene and a click capture. */
@@ -2589,4 +2606,626 @@ test('[osh-060] one entity id across a held refresh, a failed features read and 
   assert.equal(entity, undefined);
   assert.equal(layer.getStats().partial, true);
   assert.equal(layer.getStats().placed.streamFeatures, 0);
+});
+
+// --- osh-072 to osh-074: the live streams of the selected system ---
+
+/** Wait until every promise step of the layer has run. */
+async function settle() {
+  await new Promise((resolve) => setImmediate(resolve));
+}
+
+async function pickAndSettle(getClick, viewer, id) {
+  viewerPickHelper(viewer).setPicked(id);
+  getClick()({ position: {} });
+  await settle();
+}
+
+function liveDatastreams(count, systemId = 'sys-fixture-1', prefix = '') {
+  return Array.from({ length: count }, (_, index) => ({
+    id: `ds-fixture-${prefix}${index + 1}`,
+    systemId,
+    name: `D${index + 1}`,
+  }));
+}
+
+function polledObservation(text, overrides = {}) {
+  return { rows: [{ path: 'polled', value: text }], location: null, resultTime: 't', ageMs: 1000, ...overrides };
+}
+
+function liveObservation(overrides = {}) {
+  return {
+    phenomenonTime: '2026-01-01T00:00:00Z',
+    resultTime: '2026-01-01T00:00:01Z',
+    rows: [{ path: 'speed', value: 42 }],
+    location: { lat: 9, lon: 8, alt: 7 },
+    ageMs: 3000,
+    ...overrides,
+  };
+}
+
+/** The datastream blocks of a detail, in order. */
+function detailBlocks(detailHost) {
+  return detailHost.innerHTML.split('<div class="osh-detail-datastream">').slice(1);
+}
+
+function positionOf(dataSource, id) {
+  return dataSource.entities.getById(id).position.getValue(Cesium.JulianDate.now());
+}
+
+function isAt(position, lon, lat, alt) {
+  return Cesium.Cartesian3.equalsEpsilon(position, Cesium.Cartesian3.fromDegrees(lon, lat, alt), Cesium.Math.EPSILON6);
+}
+
+test('[osh-072] the layer opens one live stream for each of the first eight datastreams of the selected system', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  const other = { id: 'ds-fixture-other', systemId: 'sys-fixture-2', name: 'Other' };
+  const source = fakeSource({ live: true, datastreams: [other, ...liveDatastreams(10)] });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.deepEqual(
+      source.calls.live.map((stream) => stream.id),
+      liveDatastreams(8).map((record) => record.id),
+    );
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.equal(source.calls.live.length, 8, 'the next poll opens no more stream');
+  });
+});
+
+test('[osh-072] the layer opens one live stream for a datastream that the list holds twice', async (t) => {
+  const twice = liveDatastreams(1)[0];
+  const source = fakeSource({ live: true, datastreams: [twice, twice] });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.deepEqual(
+      source.calls.live.map((stream) => stream.id),
+      ['ds-fixture-1'],
+    );
+  });
+});
+
+test('[osh-072] a new selection closes every open live stream and opens the streams of the new system', async (t) => {
+  const source = fakeSource({
+    live: true,
+    datastreams: [...liveDatastreams(2), ...liveDatastreams(2, 'sys-fixture-2', 'b')],
+  });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const first = [...source.calls.live];
+    assert.deepEqual(
+      first.map((stream) => stream.closed),
+      [0, 0],
+    );
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-2');
+    assert.deepEqual(
+      first.map((stream) => stream.closed),
+      [1, 1],
+      'the streams of the first system close',
+    );
+    const second = source.calls.live.slice(2);
+    assert.deepEqual(
+      second.map((stream) => [stream.id, stream.closed]),
+      [
+        ['ds-fixture-b1', 0],
+        ['ds-fixture-b2', 0],
+      ],
+    );
+  });
+});
+
+test('[osh-072] a click on empty space closes every open live stream', async (t) => {
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(2) });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.deepEqual(
+      source.calls.live.map((stream) => stream.closed),
+      [0, 0],
+    );
+    await pickAndSettle(getClick, viewer, null);
+    assert.deepEqual(
+      source.calls.live.map((stream) => stream.closed),
+      [1, 1],
+    );
+  });
+});
+
+test('[osh-072] the destroy method closes every open live stream', async (t) => {
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(2) });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    layer.destroy(viewer);
+    assert.deepEqual(
+      source.calls.live.map((stream) => stream.closed),
+      [1, 1],
+    );
+  });
+});
+
+test('[osh-072] a refresh that drops the selected feature closes every open live stream', async (t) => {
+  let fois = [FEATURE_A];
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(2) });
+  source.getFois = async () => ({ keyRequired: false, fois, truncated: false });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh-foi:foi-fixture-1');
+    assert.equal(layer.getStats().selectedFeatureId, 'foi-fixture-1');
+    assert.equal(source.calls.live.length, 2, 'a feature selection opens the streams of its host');
+    fois = [];
+    await layer.update(viewer);
+    assert.equal(layer.getStats().selectedFeatureId, null);
+    assert.deepEqual(
+      source.calls.live.map((stream) => stream.closed),
+      [1, 1],
+    );
+  });
+});
+
+test('[osh-072] a callback of a live stream that the layer closed changes nothing', async (t) => {
+  const source = fakeSource({
+    live: true,
+    datastreams: [...liveDatastreams(1), ...liveDatastreams(1, 'sys-fixture-2', 'b')],
+  });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stale] = source.calls.live;
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-2');
+    const detailBefore = detailHost.innerHTML;
+    stale.callbacks.onOpen();
+    stale.callbacks.onObservation(liveObservation());
+    assert.equal(detailHost.innerHTML, detailBefore, 'the detail of the new selection stays');
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-2'), 3, 4, 0), 'the new entity stays');
+    layer.destroy(viewer);
+    assert.doesNotThrow(() => stale.callbacks.onObservation(liveObservation()));
+  });
+});
+
+test('[osh-073] a live observation replaces the observation of its datastream and keeps the others', async (t) => {
+  const source = fakeSource({
+    live: true,
+    datastreams: liveDatastreams(2),
+    observations: {
+      'ds-fixture-1': polledObservation('one'),
+      'ds-fixture-2': polledObservation('two'),
+    },
+  });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.match(detailBlocks(detailHost)[0], />one</);
+    const [first, second] = source.calls.live;
+    first.callbacks.onOpen();
+    second.callbacks.onOpen();
+
+    first.callbacks.onObservation(liveObservation());
+    let blocks = detailBlocks(detailHost);
+    assert.equal(blocks.length, 2);
+    assert.match(blocks[0], /D1/);
+    assert.match(blocks[0], /speed/);
+    assert.match(blocks[0], />42</);
+    assert.match(blocks[0], /2026-01-01T00:00:01Z/);
+    assert.match(blocks[0], /3 s/, 'the block shows the age of the observation');
+    assert.doesNotMatch(blocks[0], />one</, 'the live observation replaces the polled one');
+    assert.match(blocks[1], />two</, 'the other datastream keeps its observation');
+
+    second.callbacks.onObservation(liveObservation({ rows: [{ path: 'altitude', value: 900 }], ageMs: 65_000 }));
+    blocks = detailBlocks(detailHost);
+    assert.match(blocks[0], /speed/, 'the first datastream keeps its live observation');
+    assert.match(blocks[1], /altitude/);
+    assert.match(blocks[1], /1 min/);
+    assert.doesNotMatch(blocks[1], />two</);
+  });
+});
+
+test('[osh-073] a live observation with a fresh location moves the entity', async (t) => {
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(1) });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.live;
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-1'), 1, 2, 0), 'the entity starts at its system point');
+    stream.callbacks.onOpen();
+    stream.callbacks.onObservation(liveObservation());
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-1'), 8, 9, 7));
+    stream.callbacks.onObservation(liveObservation({ location: { lat: 6, lon: 5 } }));
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-1'), 5, 6, 0), 'a location with no altitude gives zero');
+  });
+});
+
+test('[osh-073] a live move across the horizon hides the entity, and a later move shows it', async (t) => {
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(1) });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.live;
+    const entity = dataSources[0].entities.getById('osh:sys-fixture-1');
+    assert.equal(entity.show, true, 'starts under the camera');
+    stream.callbacks.onObservation(liveObservation({ location: { lat: -2, lon: -179, alt: 0 } }));
+    assert.equal(entity.show, false, 'the live move carried it past the horizon');
+    stream.callbacks.onObservation(liveObservation({ location: { lat: 2, lon: 1, alt: 0 } }));
+    assert.equal(entity.show, true, 'a later live move brings it back into view');
+  });
+});
+
+test('[osh-073] a live observation that is not fresh leaves the entity where it was, and the detail shows it', async (t) => {
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(1) });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.live;
+    stream.callbacks.onObservation(liveObservation({ ageMs: OSH_FRESH_MAX_AGE_MS + 1 }));
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-1'), 1, 2, 0), 'an old observation moves nothing');
+    assert.match(detailBlocks(detailHost)[0], /speed/, 'the detail still shows the old observation');
+    stream.callbacks.onObservation(liveObservation({ ageMs: null }));
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-1'), 1, 2, 0), 'an unknown age moves nothing');
+    stream.callbacks.onObservation(liveObservation({ location: null }));
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-1'), 1, 2, 0), 'no location moves nothing');
+  });
+});
+
+test('[osh-073] a live observation that is ahead of the clock leaves the entity where it was', async (t) => {
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(1) });
+  const layer = createOshLayer({ source });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.live;
+    stream.callbacks.onObservation(liveObservation({ ageMs: -(OSH_CLOCK_SKEW_MAX_MS + 1) }));
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-1'), 1, 2, 0), 'an observation from too far ahead moves nothing');
+    stream.callbacks.onObservation(liveObservation({ ageMs: -5000, location: { lat: 6, lon: 5, alt: 4 } }));
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-1'), 5, 6, 4), 'a small negative age is fresh');
+  });
+});
+
+test('[osh-073] the layer reads no second observation for a datastream while its live stream is open', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  const source = fakeSource({
+    live: true,
+    datastreams: liveDatastreams(2),
+    observations: {
+      'ds-fixture-1': polledObservation('one'),
+      'ds-fixture-2': polledObservation('two'),
+    },
+  });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.deepEqual(source.calls.observations, ['ds-fixture-1', 'ds-fixture-2']);
+    const [first, second] = source.calls.live;
+    first.callbacks.onOpen();
+    second.callbacks.onOpen();
+    first.callbacks.onObservation(liveObservation());
+
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.equal(source.calls.datastreams, 2, 'the poll still reads the list of datastreams');
+    assert.deepEqual(source.calls.observations, ['ds-fixture-1', 'ds-fixture-2'], 'the poll reads no observation');
+    const blocks = detailBlocks(detailHost);
+    assert.match(blocks[0], /speed/, 'the poll keeps the live observation');
+    assert.match(blocks[1], />two</, 'the poll keeps the held observation');
+  });
+});
+
+test('[osh-073] a poll answer that comes after a live observation does not replace it', async (t) => {
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(1) });
+  let answer;
+  source.getObservation = () =>
+    new Promise((resolve) => {
+      answer = resolve;
+    });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer, dataSources } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.live;
+    stream.callbacks.onObservation(liveObservation());
+    assert.equal(detailHost.innerHTML, '', 'the poll has not written a detail yet');
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-1'), 8, 9, 7), 'the live observation moved the entity');
+
+    answer({
+      keyRequired: false,
+      observation: polledObservation('old', { location: { lat: 1, lon: 1, alt: 0 }, ageMs: 20_000 }),
+    });
+    await settle();
+    const blocks = detailBlocks(detailHost);
+    assert.match(blocks[0], /speed/, 'the detail shows the live observation');
+    assert.doesNotMatch(blocks[0], />old</);
+    assert.ok(isAt(positionOf(dataSources[0], 'osh:sys-fixture-1'), 8, 9, 7), 'the older answer moves nothing');
+  });
+});
+
+test('[osh-073] a live observation of a new selection does not draw the datastreams of the old one', async (t) => {
+  const source = fakeSource({
+    live: true,
+    datastreams: [...liveDatastreams(1), ...liveDatastreams(1, 'sys-fixture-2', 'b')],
+    observations: { 'ds-fixture-1': polledObservation('one') },
+  });
+  let answer;
+  const read = source.getObservation;
+  source.getObservation = (id) =>
+    id === 'ds-fixture-b1'
+      ? new Promise((resolve) => {
+          answer = resolve;
+        })
+      : read(id);
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.match(detailHost.innerHTML, /System A/);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-2');
+    const detailBefore = detailHost.innerHTML;
+    source.calls.live[1].callbacks.onObservation(liveObservation());
+    assert.equal(detailHost.innerHTML, detailBefore, 'the new selection has no detail yet');
+
+    answer({ keyRequired: false, observation: null });
+    await settle();
+    assert.match(detailHost.innerHTML, /System B/);
+    assert.match(detailBlocks(detailHost)[0], /speed/, 'the first detail of the new selection has the live observation');
+  });
+});
+
+test('[osh-074] the layer polls a datastream that has no open live stream', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  const observations = {};
+  for (let index = 1; index <= 10; index += 1) observations[`ds-fixture-${index}`] = polledObservation('one');
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(10), observations });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(source.calls.observations.length, 10, 'the first poll reads every datastream');
+
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.equal(source.calls.observations.length, 20, 'a stream that is still opening does not stop the poll');
+
+    for (const stream of source.calls.live) stream.callbacks.onOpen();
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.deepEqual(
+      source.calls.observations.slice(20),
+      ['ds-fixture-9', 'ds-fixture-10'],
+      'the two datastreams that have no stream keep the poll',
+    );
+  });
+});
+
+test('[osh-074] the layer polls a datastream whose live stream reports down', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  const observations = { 'ds-fixture-1': polledObservation('one') };
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(1), observations });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.live;
+    stream.callbacks.onOpen();
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.equal(source.calls.observations.length, 1, 'an open stream stops the poll');
+
+    stream.callbacks.onDown();
+    observations['ds-fixture-1'] = polledObservation('two');
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.equal(source.calls.observations.length, 2, 'a stream that is down keeps the poll');
+    assert.match(detailBlocks(detailHost)[0], />two</);
+  });
+});
+
+test('[osh-074] the layer polls a datastream whose live stream reports unsupported', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  const observations = {
+    'ds-fixture-1': polledObservation('one'),
+    'ds-fixture-2': polledObservation('two'),
+  };
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(2), observations });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [first, second] = source.calls.live;
+    first.callbacks.onOpen();
+    second.callbacks.onOpen();
+    first.callbacks.onUnsupported();
+    assert.equal(first.closed, 1, 'the layer closes the stream that reports unsupported');
+    assert.equal(second.closed, 0, 'the other stream stays open');
+
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.deepEqual(source.calls.observations.slice(2), ['ds-fixture-1']);
+  });
+});
+
+test('[osh-074] a live stream that opens again stops the poll of its datastream', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  const observations = { 'ds-fixture-1': polledObservation('one') };
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(1), observations });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.live;
+    stream.callbacks.onOpen();
+    stream.callbacks.onDown();
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.equal(source.calls.observations.length, 2, 'the poll runs while the stream is down');
+
+    stream.callbacks.onOpen();
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.equal(source.calls.observations.length, 2, 'the poll stops when the stream opens again');
+  });
+});
+
+test('[osh-074] the layer polls a datastream whose live stream is open and has delivered nothing', async (t) => {
+  const source = fakeSource({
+    live: true,
+    datastreams: liveDatastreams(2),
+    observations: {
+      'ds-fixture-1': polledObservation('one'),
+      'ds-fixture-2': polledObservation('two'),
+    },
+  });
+  // The first read waits, so the second stream opens before the poll reaches its datastream.
+  let answer;
+  const read = source.getObservation;
+  source.getObservation = (id) => {
+    if (id !== 'ds-fixture-1') return read(id);
+    source.calls.observations.push(id);
+    return new Promise((resolve) => {
+      answer = resolve;
+    });
+  };
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    source.calls.live[1].callbacks.onOpen();
+    answer({ keyRequired: false, observation: polledObservation('one') });
+    await settle();
+    assert.deepEqual(source.calls.observations, ['ds-fixture-1', 'ds-fixture-2']);
+    const blocks = detailBlocks(detailHost);
+    assert.match(blocks[0], />one</);
+    assert.match(blocks[1], />two</, 'the polled observation shows for the stream that has delivered nothing');
+  });
+});
+
+test('[osh-074] an open live stream stops the poll of its datastream after the first live observation', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  const source = fakeSource({ live: true, datastreams: liveDatastreams(1) });
+  const detailHost = { innerHTML: '' };
+  const layer = createOshLayer({ source, detailHost });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.live;
+    assert.equal(source.calls.observations.length, 1);
+    assert.match(detailBlocks(detailHost)[0], /No data/);
+
+    stream.callbacks.onOpen();
+    t.mock.timers.tick(15_000);
+    await settle();
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.equal(source.calls.observations.length, 3, 'the poll runs while the stream has delivered nothing');
+
+    stream.callbacks.onObservation(liveObservation());
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.equal(source.calls.observations.length, 3, 'the first live observation stops the poll');
+    assert.match(detailBlocks(detailHost)[0], /speed/);
+  });
 });

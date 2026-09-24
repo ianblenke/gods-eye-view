@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { OSH_DEFAULT_LOCATION_PROPERTIES, oshProxy } from '../../server/providers/osh.js';
+import { createOshLiveHub } from '../../server/providers/osh/live.js';
 import { OBS_TTL_MS } from '../../server/providers/osh/observations.js';
 
 const SECRET_URL = 'https://osh.example/instance-fixture';
@@ -156,6 +157,7 @@ test('[osh-005] only osh/get.js calls fetch; no other scanned file calls it, nam
       'server/providers/osh/base.js',
       'server/providers/osh/get.js',
       'server/providers/osh/ids.js',
+      'server/providers/osh/live.js',
       'server/providers/osh/observations.js',
     ],
     'the file list changed; a new file under server/providers/osh/ must be scanned too',
@@ -182,8 +184,12 @@ test('[osh-005] only osh/get.js calls fetch; no other scanned file calls it, nam
     ...discoveredData,
     'server/providers/common/http.js',
   ];
-  const CALL_TOKEN = /\bfetch(?:Impl)?\s*\(/;
+  const CALL_TOKEN = /\b(?:fetch(?:Impl)?|WebSocket(?:Impl)?)\s*\(/;
   const CALL_TOKEN_GLOBAL = /\bfetch(?:Impl)?\s*\(/g;
+  const SOCKET_TOKEN_GLOBAL = /\bWebSocket(?:Impl)?\s*\(/g;
+  const SEND_TOKEN = /\bsend\s*\(/;
+  const OPEN_STREAM_CALL = /\boshOpenStream\s*\(/;
+  const OPEN_STREAM_IMPORT = /import\s*\{[^}]*\boshOpenStream\b[^}]*\}\s*from\s*'\.\/get\.js'/;
   const BAD_METHOD_TOKEN = /['"](post|put|patch|delete)['"]/i;
   const BODY_TOKEN = /\bbody\s*:|['"]body['"]\s*:/;
   const RAW_TRANSPORT_TOKEN = /['"](node:http|node:https|undici|ws)['"]/;
@@ -195,6 +201,8 @@ test('[osh-005] only osh/get.js calls fetch; no other scanned file calls it, nam
   );
   const getJsCalls = source.get('server/providers/osh/get.js').match(CALL_TOKEN_GLOBAL) || [];
   assert.equal(getJsCalls.length, 1, 'get.js must hold exactly one fetch/fetchImpl call');
+  const getJsSockets = source.get('server/providers/osh/get.js').match(SOCKET_TOKEN_GLOBAL) || [];
+  assert.equal(getJsSockets.length, 1, 'get.js must hold exactly one WebSocket call');
   assert.match(source.get('server/providers/osh/get.js'), /method:\s*'GET'/);
   assert.match(source.get('server/providers/osh/get.js'), /redirect:\s*'manual'/);
   for (const file of files) {
@@ -202,10 +210,19 @@ test('[osh-005] only osh/get.js calls fetch; no other scanned file calls it, nam
     assert.doesNotMatch(text, BAD_METHOD_TOKEN, `${file} must not name a mutating HTTP method`);
     assert.doesNotMatch(text, BODY_TOKEN, `${file} must not send a request body`);
     assert.doesNotMatch(text, RAW_TRANSPORT_TOKEN, `${file} must not import a raw transport`);
+    assert.doesNotMatch(text, SEND_TOKEN, `${file} must not call send, so the provider sends no frame`);
     if (file !== 'server/providers/osh/get.js') {
-      assert.doesNotMatch(text, CALL_TOKEN, `${file} must not call fetch directly`);
+      assert.doesNotMatch(text, CALL_TOKEN, `${file} must not call fetch or WebSocket directly`);
+      if (OPEN_STREAM_CALL.test(text)) {
+        assert.match(text, OPEN_STREAM_IMPORT, `${file} must import oshOpenStream from get.js`);
+      }
     }
   }
+  assert.match(
+    source.get('server/providers/osh/live.js'),
+    OPEN_STREAM_CALL,
+    'live.js must open its socket through oshOpenStream',
+  );
   assert.match(source.get('server/providers/osh.js'), /from '\.\/osh\/get\.js'/);
   assert.match(source.get('server/providers/osh/base.js'), /from '\.\/get\.js'/);
   assert.match(source.get('server/providers/osh/observations.js'), /from '\.\/get\.js'/);
@@ -225,6 +242,34 @@ test('[osh-006] refuses a browser request whose method is not GET, on every sub-
       assert.equal(typeof json.error, 'string');
     }
   }
+  assert.equal(calls.length, 0);
+});
+
+test('[osh-006] refuses a browser request whose method is not GET on the live route, and opens no socket', async (t) => {
+  const sockets = [];
+  const hub = createOshLiveHub({
+    WebSocketImpl: class {
+      constructor() {
+        sockets.push(this);
+      }
+    },
+  });
+  t.after(() => hub.close());
+  const calls = [];
+  const proxy = oshProxy({
+    env: { OSH_URL: 'https://osh.example/api/' },
+    fetchImpl: fixtureFetch({ calls }),
+    liveHub: hub,
+  });
+  for (const url of ['/live', '/live?datastream=ds-fixture-1']) {
+    for (const method of ['POST', 'PUT', 'DELETE', 'PATCH']) {
+      const { status, headers, json } = await callOsh(proxy, { method, url });
+      assert.equal(status, 405);
+      assert.equal(headers.Allow, 'GET');
+      assert.equal(typeof json.error, 'string');
+    }
+  }
+  assert.equal(sockets.length, 0);
   assert.equal(calls.length, 0);
 });
 
@@ -866,8 +911,8 @@ test('[osh-021] a caller cannot replace the URL builder or its safety check', ()
   oshProxy(optionsProxy);
   assert.deepEqual(
     [...accessed].sort(),
-    ['env', 'fetchImpl', 'now', 'warn'],
-    'oshProxy() must destructure only these four options; any other name it reads could be a reintroduced seam',
+    ['env', 'fetchImpl', 'liveHub', 'now', 'warn'],
+    'oshProxy() must destructure only these five options; any other name it reads could be a reintroduced seam',
   );
   const oshJsSource = readFileSync(new URL('../../server/providers/osh.js', import.meta.url), 'utf8');
   // The signature ends right after its one destructured parameter, so a
@@ -1002,6 +1047,7 @@ test('[osh-039] the provider files write no query as a literal string, and no qu
       'server/providers/osh/base.js',
       'server/providers/osh/get.js',
       'server/providers/osh/ids.js',
+      'server/providers/osh/live.js',
       'server/providers/osh/observations.js',
     ],
     'the file list changed; a new file under server/providers/osh/ must be scanned too',

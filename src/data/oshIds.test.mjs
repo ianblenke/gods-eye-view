@@ -4,13 +4,17 @@ import {
   OSH_ID_PATTERN,
   OSH_LATEST_LIMIT,
   OSH_LATEST_QUERY,
+  OSH_LIVE_FORMAT,
+  OSH_LIVE_QUERY,
   OSH_OBSERVATIONS_QUERY,
   OSH_SYSTEM_DATASTREAMS_QUERY,
+  assertLiveUrl,
   assertObservationUrl,
   assertObservationsLatestUrl,
   assertSchemaUrl,
   assertSystemDatastreamsUrl,
   assertSystemUrl,
+  liveUrl,
   observationUrl,
   observationsLatestUrl,
   readDatastreamId,
@@ -281,4 +285,89 @@ test('[osh-054] assertObservationsLatestUrl() throws for another origin, prefix,
       id,
     ),
   );
+});
+
+test('[osh-064] liveUrl() builds a ws URL for an http root and a wss URL for an https root', () => {
+  const id = 'ds-fixture-1';
+  for (const [rootText, protocol] of [
+    ['http://osh.example/api/', 'ws:'],
+    ['https://osh.example/api/', 'wss:'],
+  ]) {
+    const root = new URL(rootText);
+    const url = liveUrl(root, id);
+    assert.equal(url.protocol, protocol);
+    assert.doesNotThrow(() => assertLiveUrl(url, root, id));
+  }
+});
+
+test('[osh-064] liveUrl() keeps the host and the port of the root, and sets the fixed path and query', () => {
+  const id = 'A_b-9';
+  const root = new URL('http://osh.example:8080/prefix/api/');
+  const url = liveUrl(root, id);
+  assert.equal(url.host, 'osh.example:8080');
+  assert.equal(url.pathname, `${root.pathname}datastreams/${id}/observations`);
+  assert.equal(OSH_LIVE_FORMAT, 'application/om+json');
+  assert.equal(url.search, `?${OSH_LIVE_QUERY}`);
+  assert.equal(url.searchParams.get('f'), 'application/om+json');
+  assert.equal(url.searchParams.size, 1);
+  assert.equal(url.search, '?f=application%2Fom%2Bjson', 'the slash and the plus sign reach the server encoded');
+  assert.equal(url.hash, '');
+});
+
+test('[osh-064] liveUrl() drops the credentials that the root holds', () => {
+  const id = 'ds-fixture-1';
+  const root = new URL('https://fixture-user:fixture-pass@osh.example/api/');
+  const url = liveUrl(root, id);
+  assert.equal(url.username, '');
+  assert.equal(url.password, '');
+  assert.doesNotThrow(() => assertLiveUrl(url, root, id));
+});
+
+test('[osh-064] assertLiveUrl() throws for another scheme, host, port, path, query, user name, password or fragment', () => {
+  const id = 'ds-fixture-1';
+  for (const rootText of ['http://osh.example/api/', 'https://osh.example/api/']) {
+    const root = new URL(rootText);
+    const good = liveUrl(root, id);
+    const refuses = (label, change) => {
+      const url = new URL(good.href);
+      change(url);
+      assert.throws(() => assertLiveUrl(url, root, id), /safety check/, `${rootText}: ${label}`);
+    };
+    refuses('another scheme', (url) => {
+      url.protocol = root.protocol === 'https:' ? 'ws:' : 'wss:';
+    });
+    refuses('another host', (url) => {
+      url.hostname = 'attacker.example';
+    });
+    refuses('another port', (url) => {
+      url.port = '9999';
+    });
+    refuses('another prefix', (url) => {
+      url.pathname = `/other/datastreams/${id}/observations`;
+    });
+    refuses('another datastream', (url) => {
+      url.pathname = `${root.pathname}datastreams/ds-fixture-2/observations`;
+    });
+    refuses('an extra segment', (url) => {
+      url.pathname = `${root.pathname}datastreams/${id}/observations/extra`;
+    });
+    refuses('another query', (url) => {
+      url.search = 'limit=2';
+    });
+    refuses('an extra query key', (url) => {
+      url.search = `${OSH_LIVE_QUERY}&limit=2`;
+    });
+    refuses('no query', (url) => {
+      url.search = '';
+    });
+    refuses('a user name', (url) => {
+      url.username = 'fixture-user';
+    });
+    refuses('a password', (url) => {
+      url.password = 'fixture-pass';
+    });
+    refuses('a fragment', (url) => {
+      url.hash = 'f';
+    });
+  }
 });
