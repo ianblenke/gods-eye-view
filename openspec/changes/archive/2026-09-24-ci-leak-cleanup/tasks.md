@@ -1,7 +1,8 @@
 ## 1. Diagnose before you fix
 
 - [x] 1.1 Read the CI logs of the failed runs with `gh run view`.
-- [x] 1.2 Run the CI workflow on a temporary branch that holds a timer tracer.
+- [x] 1.2 Run a temporary workflow with a timer tracer on a temporary branch.
+  - The workflow ran the format check, the gates without the tracer, and the tracer.
 - [x] 1.3 Delete the temporary branch after the run.
 - [x] 1.4 Name each live timer that the tracer finds, and the code that creates it.
   - The tracer named no timer for `src/data/trafficTiming.test.mjs`. This file leaks on some runs only.
@@ -35,6 +36,8 @@
 - [x] 5.2 Confirm that the run lists no `GATES-TEST-LEAK`.
 - [x] 5.3 Run the tracer on the runner with the fixes.
 - [x] 5.4 Confirm that the tracer lists no pending timer for the three files.
+- [x] 5.5 Run `npm run format:check` on the runner with the fixes.
+- [x] 5.6 Confirm that the step prints no error.
 
 ## 6. Gates and review
 
@@ -43,6 +46,6 @@
 - [x] 6.3 Read the command output for the verdict.
 - [x] 6.4 Run `npm run format:check`.
 - [x] 6.5 Run `npm run check:boundaries`.
-- [x] 6.6 Run `/opsx:review ci-leak-cleanup`.
-- [x] 6.7 Correct the findings.
-- [x] 6.8 Record the result in `review.md`.
+- [ ] 6.6 Run `/opsx:review ci-leak-cleanup`.
+- [ ] 6.7 Correct the findings.
+- [ ] 6.8 Record the result in `review.md`.
