@@ -6,7 +6,7 @@
 ## 2. Spec and proposal
 
 - [x] 2.1 Write `specs/credential-boundary/spec.md`, with four requirements and the scenarios `001` to `016`.
-- [x] 2.2 Write `proposal.md` with the two direct calls, the `VITE_` gap, the impact and the known limits.
+- [x] 2.2 Write `proposal.md` with the two direct calls, the `VITE_` problem, the impact and the known limits.
 - [x] 2.3 Write `design.md` with D1 to D8, the risks and the file list.
 - [x] 2.4 Write `tasks.md`.
 
@@ -138,8 +138,8 @@ Revert each mutation of this section after its check.
 - [x] 9.3 Run `make gates CHANGE=credential-boundary`.
 - [x] 9.4 Read the coverage of each changed file from the Docker run.
 - [x] 9.5 Run each mutation of sections 3 to 8 on the final tree, in one session.
-- [ ] 9.6 Run the review agents.
-- [ ] 9.7 Write `review.md`.
+- [x] 9.6 Run the review agents.
+- [x] 9.7 Write `review.md`.
 
 ## Scenario ledger
 

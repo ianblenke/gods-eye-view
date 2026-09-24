@@ -15,10 +15,9 @@ want to expose.
 
 This change adds a geocoding route on the server, and it moves both browser
 calls to that route. It narrows the `VITE_` prefix to the three AIS live
-settings. It also adds two checks that stay after this change. The first
-check scans the build output and names each credential that gets to the
+settings. It also adds two checks that stay after this change. The first check scans the built output and names each credential that gets to the
 bundle. The second check finds each credential name that the server reads.
-It fails when the registry and `.env.example` do not document the name.
+It fails when neither the registry nor `.env.example` documents the name.
 
 ## What Changes
 
@@ -85,8 +84,20 @@ It fails when the registry and `.env.example` do not document the name.
   Geocoding API, not only Map Tiles API. This stays true until the account
   owner makes a second key, sets `GOOGLE_MAPS_SERVER_API_KEY`, and narrows
   the browser key. The browser sends its geocoding requests only to our
-  server, with no key, also when no server key exists. The photoreal map
+  server, with no key. It sends no key when no server key exists too. The photoreal map
   tiles still send the browser key to Google.
+- `projection-partial-points`: the tests of `credential-boundary-012` send
+  one point with a bad `lat` and one box with no `southwest`. A change that
+  removes `Number.isFinite(point?.lng)`, or that changes `northeast && southwest`
+  to `southwest`, passes these tests.
+- `photon-fallback-from-browser`: the browser still sends a request to
+  `photon.komoot.io` when the geocoding route gives no place. The requirement
+  "Browser geocoding" and the Purpose line say that the browser sends
+  geocoding requests only to our server. They mean the requests to Google.
+  The Photon fallback is old behavior of the search, and this change keeps it.
+- `tasks-order-code-before-test`: in sections 4, 5 and 6 of `tasks.md`, some
+  code tasks come before the test tasks of the same scenario. The gates do
+  not check the order of tasks.
 - `credential-scan-forms`: the registry scan does not find a name that the code
   reads with `env[variable]`, or a name that the code builds from parts. It
   also does not find a credential name with no `_KEY`, `_TOKEN`, `_SECRET`

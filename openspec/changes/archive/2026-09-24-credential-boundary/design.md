@@ -7,9 +7,8 @@ the URL. The key is public by design: a referrer restriction and an API
 restriction protect it, not secrecy. But the browser must not send it: each
 other Google call already goes through our server first.
 
-A second problem is in the build config. The default `VITE_` prefix of Vite
-exposes each `.env` line with a name that matches to the bundle, with no code
-change and no review. The AIS live settings need three such names. No other
+A second problem is in the build config. The default `VITE_` prefix of Vite exposes to the bundle each `.env` line with a
+name that starts with that prefix. This needs no code change and no review. The AIS live settings need three such names. No other
 name must use that prefix.
 
 ## Goals / Non-Goals
@@ -117,8 +116,12 @@ sentinel value for each of those names on the environment.
 list of the production build. The test gives it to
 `createBrowserViteConfig()`, and it gives the full config to the real
 `build()` of Vite, with no config file. The test does not call the default
-export, because that reads the real `.env`. The build and the read of
-the output files run one time, in a hook. Each test uses the result.
+export, because that reads the real `.env`. The test builds the fixture and reads the output files one time, in a hook.
+Each test uses the result.
+
+The scan of the built output does not read the `cesium/` folder that Vite
+copies from `node_modules`. The known limit `bundle-scan-skips-cesium`
+records this.
 
 The assertion has two sides. Every secret sentinel must be absent. The test
 checks one name at a time, so a failure names the credential and the file.
@@ -131,8 +134,7 @@ The scan of `credential-boundary-004` reads `index.html`, each file under
 `credential-boundary-015` reads each file under `src/` that is not a test
 file, and each such file under `server/`. A test file has a name that ends in
 `.test.js` or `.test.mjs`. The files under `src/` include `.mjs`, `.json`,
-`.css` and data files, because the browser loads some of them. The fixture
-scan does not read the `cesium/` folder that Vite copies from `node_modules`. A data file in
+`.css` and data files, because the browser loads some of them.  A data file in
 protobuf keeps its strings as UTF-8, so a key in it still matches.
 
 Mutation checks are part of each test task, not of the gate. The ratchet
@@ -206,8 +208,7 @@ covered the arm above, the `ok:false` arm and two defaults of
 tests of D7.
 
 The `ok:false` arm now has a real test of `credential-boundary-013`. The
-route can answer `429` or `502`. The search must then give `answered:false` when Photon finds no place, and it
-uses Photon. `src/search/google.js` keeps 3 not-covered
+route can answer `429` or `502`. The search must then use Photon. It must give `answered:false` when Photon also finds no place. `src/search/google.js` keeps 3 not-covered
 branches, down from the 4 that its ledger entry allowed.
 
 ### Files
@@ -242,8 +243,7 @@ Changed prose: `.env.example`, `SECURITY.md`, `pinokio/_ENVIRONMENT`,
    sentinels and the AIS sentinel are positive controls. An empty scan
    passes the negative check, but it fails those controls.
 2. **A later credential name is not in the registry or in `.env.example`.**
-   Guard: the registry test finds dotted, destructured and quoted reads
-   in the `.js` and `.mjs` files under `server/`, `scripts/` and `tools/`. It stops the build for each
+   Guard: the registry test finds a credential name in a dotted form, a destructured form and a quoted form. It reads the `.js` and `.mjs` files under `server/`, `scripts/` and `tools/`. It stops the build for each
    name with a credential suffix that no file documents. The known limit
    `credential-scan-forms` names the reads that it does not find.
 3. **The shared rate limiter counts geocoding against the Places budget.**
@@ -254,6 +254,5 @@ Changed prose: `.env.example`, `SECURITY.md`, `pinokio/_ENVIRONMENT`,
    `VITE_AIS_LIVE_MAX_ROWS` fail when the prefix changes.
 5. **The fixture checks only one of the three AIS settings by name.** The
    test keeps all three off the "must be absent" list, but it checks only
-   `VITE_AIS_LIVE_MAX_ROWS` as present. A change that stops only
-   `VITE_AIS_LIVE_API_URL` or `VITE_AIS_LIVE_LABEL_MAX_ROWS` passes this
+   `VITE_AIS_LIVE_MAX_ROWS` as present. A change that breaks only `VITE_AIS_LIVE_API_URL` or `VITE_AIS_LIVE_LABEL_MAX_ROWS` passes this
    test. The known limit `one-ais-setting-probed` records this.
