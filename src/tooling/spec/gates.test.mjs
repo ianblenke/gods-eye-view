@@ -977,7 +977,7 @@ test('[coverage-gate-048] exits a test run that leaves a live timer', () => {
   }
 });
 
-test('[coverage-gate-049] stops for a test that leaves a live timer', () => {
+test('[coverage-gate-049] stops for a test that leaves a live timer', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const stub = (command, args, options) => {
@@ -996,7 +996,7 @@ test('[coverage-gate-049] stops for a test that leaves a live timer', () => {
   });
 });
 
-test('[coverage-gate-050] does not stop for a test process without a live timer', () => {
+test('[coverage-gate-050] does not stop for a test process without a live timer', GUARDED_RUN, () => {
   withFixture((root) => {
     passes(root, ['init']);
     const stub = (command, args, options) => {
