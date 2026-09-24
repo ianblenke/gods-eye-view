@@ -162,8 +162,8 @@ test('traffic timing pairs real ordering to the scheduling change and guards re-
       configFile: false,
       appType: 'custom',
       logLevel: 'silent',
-      // No dependency discovery and no file watcher: each arms timers that are still live when
-      // the test process exits (found on the CI runner).
+      // No dependency optimizer and no file watcher: in src/tooling/previewServing.test.mjs, each
+      // started timers that were still live when the test process exited (found on the CI runner).
       optimizeDeps: { noDiscovery: true, include: [] },
       server: { middlewareMode: true, watch: null },
       plugins: [{
@@ -337,9 +337,10 @@ test('traffic timing pairs real ordering to the scheduling change and guards re-
     // confirmed by reproducing the leak under a real whole-project run, where this file never
     // leaks alone. A 100ms wait held for 3 of 4 whole-project verification runs, then still
     // leaked once under real event-loop contention; raised to 750ms for more margin.
-    // The config above now stops the dependency optimizer and the file watcher, which started
-    // most of these timers. The wait stays: a module request can still start a 50ms timer in
-    // vite (read in the vite 6.4.3 source, not confirmed by a run).
+    // The config above now stops the dependency optimizer and the file watcher. In
+    // src/tooling/previewServing.test.mjs, these two started the timers that the tracer named.
+    // The wait remains: a module request can still start a 50ms timer in vite (read in the
+    // vite 6.4.3 source, not confirmed by a run).
     await new Promise((resolve) => originalSetTimeout(resolve, 750));
   }
 });
