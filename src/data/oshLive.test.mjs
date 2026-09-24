@@ -986,7 +986,8 @@ async function startUpstream(t, { frames = [] } = {}) {
     });
     for (const frame of frames) socket.write(frame);
   });
-  await new Promise((resolve) => server.listen(0, 'localhost', resolve));
+  // Bind IPv4 only: in the Node 24 image, `localhost` binds ::1 and a `localhost` client then fails.
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   t.after(async () => {
     for (const socket of upgraded) socket.destroy();
     server.closeAllConnections();
@@ -1030,7 +1031,7 @@ async function startProvider(t, upstream, env) {
     req.url = req.url.slice('/api/osh'.length);
     handler(req, res);
   });
-  await new Promise((resolve) => server.listen(0, 'localhost', resolve));
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   t.after(async () => {
     hub.close();
     server.closeAllConnections();
