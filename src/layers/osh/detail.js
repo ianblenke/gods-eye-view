@@ -63,7 +63,20 @@ function renderRows(rows) {
     .join('');
 }
 
+/**
+ * A video datastream has a picture and no rows, so the block shows no time,
+ * no age and no `No data`: it would say the datastream is empty while the
+ * panel plays it (osh-088).
+ */
+function renderVideoDatastream(datastream) {
+  return `<div class="osh-detail-datastream">
+    <h4>${escapeHtml(datastream.name || datastream.id)}</h4>
+    <div class="osh-detail-row osh-detail-video">Video</div>
+  </div>`;
+}
+
 function renderDatastream(datastream) {
+  if (datastream.video) return renderVideoDatastream(datastream);
   const observation = datastream.observation;
   const rows = observation?.rows;
   const time = observation?.resultTime;

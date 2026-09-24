@@ -6,11 +6,14 @@ import { readFileSync } from 'node:fs';
 import http from 'node:http';
 import { oshProxy } from '../../server/providers/osh.js';
 import { oshOpenStream } from '../../server/providers/osh/get.js';
-import { liveUrl } from '../../server/providers/osh/ids.js';
+import { liveUrl, videoUrl } from '../../server/providers/osh/ids.js';
 import {
   OSH_LIVE_MAX_FRAME_BYTES,
+  OSH_VIDEO_MAX_GROUP_BYTES,
+  OSH_VIDEO_MAX_MESSAGE_BYTES,
   createOshLiveHub,
 } from '../../server/providers/osh/live.js';
+import { readOshVideoMessage } from './oshVideo.js';
 
 const ROOT = new URL('https://osh.example/api/');
 const DS = 'ds-fixture-1';
@@ -181,6 +184,60 @@ const binaryOf = (value) => new TextEncoder().encode(JSON.stringify(value)).buff
 function frameOfSize(bytes) {
   const shell = JSON.stringify({ ...FRAME, result: { pad: '' } });
   return { ...FRAME, result: { pad: 'x'.repeat(bytes - shell.length) } };
+}
+
+// Synthetic H.264 NAL units. The hub reads only the type, the low five bits of the first byte.
+const NAL_SPS = [0x67, 0x4d, 0x00, 0x1f];
+const NAL_PPS = [0x68, 0xce, 0x3c, 0x80];
+const NAL_IDR = [0x65, 0x88, 0x84, 0x01];
+const NAL_DELTA = [0x41, 0x9a, 0x20, 0x33];
+const VIDEO_ENVELOPE_BYTES = 12;
+const GROUP_LIMIT = 2_097_152;
+
+/**
+ * One video message: 8 bytes of time stamp, 4 bytes of length, then H.264
+ * data in Annex B framing. `at` is the time stamp in seconds, so each message
+ * of a test has its own text. `size` pads the last NAL unit with bytes that
+ * are not zero, up to that many bytes in all. `length` writes a wrong length
+ * field on purpose.
+ */
+function videoMessage(nals, { at = 0, size = 0, length = null } = {}) {
+  const parts = nals.flatMap((nal) => [0, 0, 0, 1, ...nal]);
+  const padding = Math.max(0, size - VIDEO_ENVELOPE_BYTES - parts.length);
+  const bytes = new Uint8Array(VIDEO_ENVELOPE_BYTES + parts.length + padding);
+  const view = new DataView(bytes.buffer);
+  view.setFloat64(0, at);
+  view.setUint32(8, length ?? parts.length + padding);
+  bytes.set(parts, VIDEO_ENVELOPE_BYTES);
+  bytes.fill(0xab, VIDEO_ENVELOPE_BYTES + parts.length);
+  if (size) assert.equal(bytes.byteLength, size, 'the fixture has the size that the test asks for');
+  return bytes;
+}
+
+const keyMessage = (options) => videoMessage([NAL_SPS, NAL_PPS, NAL_IDR], options);
+const deltaMessage = (options) => videoMessage([NAL_DELTA], options);
+/** The event of a socket for one message. The socket reads a message as an ArrayBuffer. */
+const messageOf = (bytes) => ({ data: bytes.buffer });
+const frameText = (bytes) =>
+  `event: frame\ndata: ${JSON.stringify(Buffer.from(bytes).toString('base64'))}\n\n`;
+const OPEN_TEXT = 'event: open\ndata: {}\n\n';
+const UNSUPPORTED_TEXT = 'event: unsupported\ndata: {}\n\n';
+
+function videoStreamOf(id = DS, headers = {}) {
+  return { url: videoUrl(ROOT, id), headers, reader: null, kind: 'video' };
+}
+
+const VIDEO_PATH = `/video?datastream=${DS}`;
+
+/** A hub rig with one video client, and the open socket of its entry. */
+function openVideoRig(t, id = DS) {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const client = fakeClient();
+  const joined = rig.hub.join(id, videoStreamOf(id), client);
+  const socket = rig.sockets.instances.at(-1);
+  socket.emit('open');
+  return { rig, client, joined, socket };
 }
 
 function jsonResponse(status, payload) {
@@ -1050,6 +1107,677 @@ test('[osh-075] the provider closes the hub when the HTTP server closes', async 
     assert.equal(res.ended, 1, hook);
     assert.equal(rig.sockets.instances[0].closeCalls, 1, hook);
     assert.equal(rig.timers.pending(), 0, hook);
+  }
+});
+
+test('[osh-077] the video route gives 503 with no_key when no key is set, and opens no socket', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const calls = [];
+  const proxy = oshProxy({ env: {}, fetchImpl: upstreamFetch({ calls }), liveHub: rig.hub });
+  const res = await driveLive(proxy, { url: VIDEO_PATH });
+  assert.equal(res.status, 503);
+  assert.deepEqual(jsonOf(res), { error: 'no_key' });
+  assert.equal(res.flushed, 0);
+  assert.equal(rig.sockets.instances.length, 0);
+  assert.equal(calls.length, 0);
+});
+
+test('[osh-077] the video route gives 400 with bad_datastream for a bad id, and opens no socket', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const calls = [];
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch({ calls }), liveHub: rig.hub });
+  for (const url of [
+    '/video',
+    '/video?datastream=',
+    '/video?datastream=a%2Fb',
+    '/video?datastream=a.b',
+    '/video?datastream=ds-fixture-1&datastream=ds-fixture-2',
+    `/video?datastream=${'a'.repeat(65)}`,
+  ]) {
+    const res = await driveLive(proxy, { url });
+    assert.equal(res.status, 400, `${url} must be refused`);
+    assert.deepEqual(jsonOf(res), { error: 'bad_datastream' });
+    assert.equal(res.flushed, 0);
+  }
+  assert.equal(rig.sockets.instances.length, 0);
+  assert.equal(calls.length, 0);
+});
+
+test('[osh-077] the video route gives 405 with Allow GET for a wrong method, and opens no socket', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const calls = [];
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch({ calls }), liveHub: rig.hub });
+  for (const url of ['/video', VIDEO_PATH]) {
+    for (const method of ['POST', 'PUT', 'PATCH', 'DELETE']) {
+      const res = await driveLive(proxy, { method, url });
+      assert.equal(res.status, 405, `${method} ${url}`);
+      assert.equal(res.headers.Allow, 'GET');
+      assert.equal(res.flushed, 0);
+    }
+  }
+  assert.equal(rig.sockets.instances.length, 0);
+  assert.equal(calls.length, 0);
+});
+
+test('[osh-077] the video route reports base_unresolved and auth_failed when no candidate root answers', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const missing = oshProxy({ env: KEYED, fetchImpl: async () => jsonResponse(404), liveHub: rig.hub });
+  const notFound = await driveLive(missing, { url: VIDEO_PATH });
+  assert.equal(notFound.status, 502);
+  assert.deepEqual(jsonOf(notFound), { error: 'base_unresolved' });
+  const refused = oshProxy({ env: KEYED, fetchImpl: async () => jsonResponse(401), liveHub: rig.hub });
+  const unauthorized = await driveLive(refused, { url: VIDEO_PATH });
+  assert.equal(unauthorized.status, 502);
+  assert.deepEqual(jsonOf(unauthorized), { error: 'auth_failed' });
+  assert.equal(rig.sockets.instances.length, 0);
+});
+
+test('[osh-077] a good request to the video route opens one socket with the wss video URL and with only the headers option', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const calls = [];
+  const proxy = oshProxy({
+    env: { ...KEYED, OSH_USERNAME: SECRET_USER, OSH_PASSWORD: SECRET_PASS },
+    fetchImpl: upstreamFetch({ calls }),
+    liveHub: rig.hub,
+  });
+  const res = await driveLive(proxy, { url: VIDEO_PATH });
+  assert.equal(res.status, 200);
+  assert.equal(rig.sockets.instances.length, 1);
+  const [socket] = rig.sockets.instances;
+  assert.equal(
+    socket.url,
+    'wss://osh.example/api/datastreams/ds-fixture-1/observations?f=application%2Fswe%2Bbinary',
+  );
+  assert.deepEqual(Object.keys(socket.options), ['headers']);
+  assert.deepEqual(socket.options, { headers: { Authorization: `Basic ${SECRET_TOKEN}` } });
+  assert.equal(socket.binaryType, 'arraybuffer');
+  assert.deepEqual(socket.sent, []);
+});
+
+test('[osh-077] the video route reads no schema, and every request to the server is a GET', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const calls = [];
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch({ calls }), liveHub: rig.hub });
+  await driveLive(proxy, { url: VIDEO_PATH });
+  assert.ok(calls.length > 0, 'the route probed the root');
+  for (const call of calls) {
+    assert.equal(new URL(call.url).pathname.includes('/datastreams/'), false, call.url);
+    assert.equal(call.options.method, 'GET');
+    assert.equal(call.options.body, undefined);
+  }
+  const live = await driveLive(proxy);
+  assert.equal(live.status, 200);
+  assert.ok(
+    calls.some((call) => new URL(call.url).pathname.endsWith('/schema')),
+    'the live route still reads the schema',
+  );
+});
+
+test('[osh-077] the video route sends the Basic header only when both credentials are set', async (t) => {
+  const combos = [
+    {},
+    { OSH_USERNAME: SECRET_USER },
+    { OSH_PASSWORD: SECRET_PASS },
+    { OSH_USERNAME: SECRET_USER, OSH_PASSWORD: SECRET_PASS },
+  ];
+  for (const [index, extra] of combos.entries()) {
+    const rig = makeRig();
+    t.after(() => rig.hub.close());
+    const proxy = oshProxy({
+      env: { ...KEYED, ...extra },
+      fetchImpl: upstreamFetch(),
+      liveHub: rig.hub,
+    });
+    await driveLive(proxy, { url: VIDEO_PATH });
+    const { headers } = rig.sockets.instances[0].options;
+    assert.equal(Object.hasOwn(headers, 'Authorization'), index === 3, `combo ${index}`);
+  }
+});
+
+test('[osh-077] the video route writes the same response head as the live route, then relays each frame', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+  const res = await driveLive(proxy, { url: VIDEO_PATH });
+  assert.equal(res.status, 200);
+  assert.equal(res.flushed, 1);
+  assert.deepEqual(res.headers, {
+    'Content-Type': 'text/event-stream; charset=utf-8',
+    'Cache-Control': 'no-store',
+    'X-Accel-Buffering': 'no',
+  });
+  const [socket] = rig.sockets.instances;
+  socket.emit('open');
+  const key = keyMessage({ at: 1 });
+  socket.emit('message', messageOf(key));
+  assert.equal(res.earlyWrites, 0, 'the head comes before the first event');
+  assert.deepEqual(res.chunks, [OPEN_TEXT, frameText(key)]);
+  rig.timers.advance(20_000);
+  assert.equal(res.chunks.at(-1), ': hb\n\n');
+});
+
+test('[osh-077] the video route removes the client when the connection closes', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+  const res = await driveLive(proxy, { url: VIDEO_PATH });
+  const [socket] = rig.sockets.instances;
+  res.closeConnection();
+  rig.timers.advance(1999);
+  assert.equal(socket.closeCalls, 0);
+  rig.timers.advance(1);
+  assert.equal(socket.closeCalls, 1);
+  assert.equal(rig.timers.pending(), 0);
+});
+
+test('[osh-077] a client that leaves while the video route loads the root opens no socket', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+  const res = fakeRes();
+  res.destroyed = true;
+  await driveLive(proxy, { url: VIDEO_PATH, res });
+  assert.equal(res.status, null);
+  assert.equal(res.flushed, 0);
+  assert.equal(rig.sockets.instances.length, 0);
+  assert.equal(rig.timers.pending(), 0);
+});
+
+test('[osh-077] the video route gives 503 with live_busy for a ninth datastream, and opens no socket', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  for (let index = 1; index <= 8; index += 1) {
+    const id = `ds-fixture-${index}`;
+    rig.hub.join(id, videoStreamOf(id), fakeClient());
+  }
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+  const res = await driveLive(proxy, { url: '/video?datastream=ds-fixture-9' });
+  assert.equal(res.status, 503);
+  assert.deepEqual(jsonOf(res), { error: 'live_busy' });
+  assert.equal(res.flushed, 0);
+  assert.equal(rig.sockets.instances.length, 8);
+});
+
+test('[osh-078] the video route builds the URL with videoUrl() and checks it with assertVideoUrl()', () => {
+  const source = readFileSync(new URL('../../server/providers/osh.js', import.meta.url), 'utf8');
+  assert.match(
+    source,
+    /const target = videoUrl\(state\.root, id\);\s*assertVideoUrl\(target, state\.root, id\);/,
+  );
+});
+
+test('[osh-079] a good video message gives one frame event with the base64 text of the whole message, for each client', async (t) => {
+  const { rig, client, socket } = openVideoRig(t);
+  const second = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), second);
+  const message = keyMessage({ at: 1 });
+  socket.emit('message', messageOf(message));
+  assert.deepEqual(namesOf(client), ['open', 'frame']);
+  assert.deepEqual(client.chunks, [OPEN_TEXT, frameText(message)]);
+  assert.deepEqual(second.chunks, [OPEN_TEXT, frameText(message)]);
+  const [, frame] = eventsOf(client);
+  assert.equal(typeof frame.data, 'string');
+  const decoded = Buffer.from(frame.data, 'base64');
+  assert.equal(decoded.length, message.byteLength, 'the text holds the envelope and the data');
+  assert.deepEqual(new Uint8Array(decoded), message);
+});
+
+test('[osh-079] the frame event of a fixed message has a fixed text', async (t) => {
+  const { client, socket } = openVideoRig(t);
+  const tiny = Uint8Array.from([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 1, 0x65]);
+  socket.emit('message', messageOf(tiny));
+  assert.deepEqual(client.chunks, [OPEN_TEXT, 'event: frame\ndata: "AAAAAAAAAAAAAAAFAAAAAWU="\n\n']);
+});
+
+test('[osh-079] each later message gives its own frame event, in the order of arrival', async (t) => {
+  const { client, socket } = openVideoRig(t);
+  const messages = [keyMessage({ at: 1 }), deltaMessage({ at: 2 }), deltaMessage({ at: 3 })];
+  for (const message of messages) socket.emit('message', messageOf(message));
+  assert.deepEqual(client.chunks, [OPEN_TEXT, ...messages.map(frameText)]);
+  assert.equal(new Set(client.chunks).size, 4, 'each event has its own text');
+});
+
+test('[osh-079] a message of exactly 12 bytes with a length field of zero is a good message', async (t) => {
+  const { client, socket } = openVideoRig(t);
+  const empty = videoMessage([], { at: 4 });
+  assert.equal(empty.byteLength, 12);
+  socket.emit('message', messageOf(empty));
+  assert.deepEqual(client.chunks, [OPEN_TEXT, frameText(empty)]);
+});
+
+test('[osh-079] a text message, a message of 11 bytes and a message with a wrong length field give no event, and the stream stays open', async (t) => {
+  const { client, socket } = openVideoRig(t);
+  const good = keyMessage({ at: 1 });
+  const spelled = videoMessage([[0x65, 0x11, 0x22]]);
+  assert.ok(
+    spelled.every((byte) => byte < 0x80),
+    'every byte of the fixture is a one-byte character',
+  );
+  assert.notEqual(readOshVideoMessage(spelled), null, 'the characters spell a good message');
+  const data = [
+    JSON.stringify(FRAME),
+    '',
+    'text',
+    String.fromCharCode(...spelled),
+    Buffer.from(good).toString('base64'),
+    Buffer.from(good).toString('latin1'),
+    new ArrayBuffer(0),
+    new Uint8Array(11).buffer,
+    good.slice(0, 11).buffer,
+    good.slice(0, 12).buffer,
+    keyMessage({ at: 2, length: good.byteLength - 11 }).buffer,
+    keyMessage({ at: 3, length: good.byteLength - 13 }).buffer,
+    keyMessage({ at: 4, length: 0 }).buffer,
+    keyMessage({ at: 5, length: 0xffffffff }).buffer,
+    keyMessage({ at: Number.NaN }).buffer,
+    keyMessage({ at: Number.POSITIVE_INFINITY }).buffer,
+    binaryOf(FRAME),
+    binaryOf('text'),
+  ];
+  for (const one of data) socket.emit('message', { data: one });
+  assert.deepEqual(client.chunks, [OPEN_TEXT]);
+  assert.equal(socket.closeCalls, 0);
+  assert.equal(client.ended, 0);
+  socket.emit('message', messageOf(good));
+  assert.deepEqual(client.chunks, [OPEN_TEXT, frameText(good)]);
+});
+
+test('[osh-079] a message of more than 2097152 bytes closes the socket, and the clients get unsupported and end', async (t) => {
+  assert.equal(OSH_VIDEO_MAX_MESSAGE_BYTES, 2_097_152);
+  const size = OSH_VIDEO_MAX_MESSAGE_BYTES + 1;
+  for (const [label, makeMessage] of [
+    ['a message of zero bytes', () => new Uint8Array(size)],
+    ['a good key message', () => keyMessage({ at: 1, size })],
+    ['a good delta message', () => deltaMessage({ at: 1, size })],
+    ['a message with a wrong length field', () => keyMessage({ at: 1, size, length: 3 })],
+  ]) {
+    const { rig, client, socket } = openVideoRig(t);
+    const second = fakeClient();
+    rig.hub.join(DS, videoStreamOf(), second);
+    socket.emit('message', messageOf(makeMessage()));
+    for (const one of [client, second]) {
+      assert.deepEqual(one.chunks.slice(-1), [UNSUPPORTED_TEXT], label);
+      assert.deepEqual(namesOf(one).filter((name) => name !== 'open'), ['unsupported'], label);
+      assert.equal(one.ended, 1, label);
+    }
+    assert.equal(socket.closeCalls, 1, label);
+    assert.equal(rig.timers.pending(), 0, label);
+  }
+});
+
+test('[osh-079] a message of exactly 2097152 bytes is a good message, and the socket stays open', async (t) => {
+  const { client, socket } = openVideoRig(t);
+  const message = keyMessage({ at: 1, size: OSH_VIDEO_MAX_MESSAGE_BYTES });
+  socket.emit('message', messageOf(message));
+  assert.deepEqual(client.chunks, [OPEN_TEXT, frameText(message)]);
+  assert.equal(socket.closeCalls, 0);
+  assert.equal(client.ended, 0);
+});
+
+test('[osh-079] the hub refuses the datastream for ten minutes after a message that is too large', async (t) => {
+  const { rig, client, joined, socket } = openVideoRig(t);
+  socket.emit('message', messageOf(new Uint8Array(OSH_VIDEO_MAX_MESSAGE_BYTES + 1)));
+  joined.leave();
+  assert.equal(client.ended, 1);
+  assert.equal(rig.timers.pending(), 0);
+  const other = fakeClient();
+  assert.equal(rig.hub.join('ds-fixture-2', videoStreamOf('ds-fixture-2'), other).error, undefined);
+  rig.timers.advance(10 * 60_000 - 1);
+  const refused = fakeClient();
+  assert.deepEqual(rig.hub.join(DS, videoStreamOf(), refused), { error: 'live_unsupported' });
+  assert.equal(refused.started, 0);
+  assert.equal(rig.sockets.instances.length, 2);
+  rig.timers.advance(1);
+  const again = fakeClient();
+  assert.equal(typeof rig.hub.join(DS, videoStreamOf(), again).leave, 'function');
+  assert.equal(again.started, 1);
+  assert.equal(rig.sockets.instances.length, 3);
+});
+
+test('[osh-079] the video route gives 503 with live_unsupported after a message that is too large, for ten minutes', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+  const first = await driveLive(proxy, { url: VIDEO_PATH });
+  assert.equal(first.status, 200);
+  rig.sockets.instances[0].emit('message', messageOf(new Uint8Array(OSH_VIDEO_MAX_MESSAGE_BYTES + 1)));
+  assert.deepEqual(first.chunks, [UNSUPPORTED_TEXT]);
+  assert.equal(first.ended, 1);
+  first.closeConnection();
+  const second = await driveLive(proxy, { url: VIDEO_PATH });
+  assert.equal(second.status, 503);
+  assert.deepEqual(jsonOf(second), { error: 'live_unsupported' });
+  assert.equal(second.flushed, 0);
+  assert.equal(rig.sockets.instances.length, 1);
+  rig.timers.advance(10 * 60_000);
+  const third = await driveLive(proxy, { url: VIDEO_PATH });
+  assert.equal(third.status, 200);
+  assert.equal(rig.sockets.instances.length, 2);
+});
+
+test('[osh-080] a late client gets the event open and then each frame since the last key message, in order', async (t) => {
+  const { rig, client, socket } = openVideoRig(t);
+  const [key, first, second] = [keyMessage({ at: 1 }), deltaMessage({ at: 2 }), deltaMessage({ at: 3 })];
+  for (const message of [key, first, second]) socket.emit('message', messageOf(message));
+  const before = [...client.chunks];
+  const late = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), late);
+  assert.equal(late.started, 1);
+  assert.deepEqual(late.chunks, [OPEN_TEXT, frameText(key), frameText(first), frameText(second)]);
+  assert.deepEqual(client.chunks, before, 'the client that listened gets no frame twice');
+  assert.equal(rig.sockets.instances.length, 1);
+  const next = deltaMessage({ at: 4 });
+  socket.emit('message', messageOf(next));
+  assert.equal(late.chunks.at(-1), frameText(next));
+  assert.equal(client.chunks.at(-1), frameText(next));
+  const later = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), later);
+  assert.deepEqual(later.chunks, [
+    OPEN_TEXT,
+    ...[key, first, second, next].map(frameText),
+  ]);
+});
+
+test('[osh-080] a key message starts the group again', async (t) => {
+  const { rig, socket } = openVideoRig(t);
+  const [oldKey, oldDelta, key, delta] = [
+    keyMessage({ at: 1 }),
+    deltaMessage({ at: 2 }),
+    keyMessage({ at: 3 }),
+    deltaMessage({ at: 4 }),
+  ];
+  for (const message of [oldKey, oldDelta, deltaMessage({ at: 5 }), key, delta]) {
+    socket.emit('message', messageOf(message));
+  }
+  const late = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), late);
+  assert.deepEqual(late.chunks, [OPEN_TEXT, frameText(key), frameText(delta)]);
+  const last = keyMessage({ at: 6 });
+  socket.emit('message', messageOf(last));
+  const alone = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), alone);
+  assert.deepEqual(alone.chunks, [OPEN_TEXT, frameText(last)]);
+});
+
+test('[osh-080] a message with a slice of type 1 does not start the group again, and a message with a slice of type 5 does', async (t) => {
+  const { rig, socket } = openVideoRig(t);
+  const type1 = videoMessage([[0x21, 0x01], [0x41, 0x02]], { at: 2 });
+  const type5 = videoMessage([[0x25, 0x01]], { at: 4 });
+  const key = keyMessage({ at: 1 });
+  socket.emit('message', messageOf(key));
+  socket.emit('message', messageOf(type1));
+  const first = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), first);
+  assert.deepEqual(first.chunks, [OPEN_TEXT, frameText(key), frameText(type1)]);
+  socket.emit('message', messageOf(type5));
+  const second = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), second);
+  assert.deepEqual(second.chunks, [OPEN_TEXT, frameText(type5)]);
+});
+
+test('[osh-080] a delta message with no group is not stored, and the group starts at the next key message', async (t) => {
+  const { rig, client, socket } = openVideoRig(t);
+  const [first, second, key] = [deltaMessage({ at: 1 }), deltaMessage({ at: 2 }), keyMessage({ at: 3 })];
+  socket.emit('message', messageOf(first));
+  socket.emit('message', messageOf(second));
+  assert.deepEqual(client.chunks, [OPEN_TEXT, frameText(first), frameText(second)], 'the client gets each frame');
+  const late = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), late);
+  assert.deepEqual(late.chunks, [OPEN_TEXT]);
+  socket.emit('message', messageOf(key));
+  const after = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), after);
+  assert.deepEqual(after.chunks, [OPEN_TEXT, frameText(key)]);
+});
+
+test('[osh-080] a message that gives no event is not stored in the group', async (t) => {
+  const { rig, socket } = openVideoRig(t);
+  const key = keyMessage({ at: 1 });
+  socket.emit('message', messageOf(key));
+  socket.emit('message', messageOf(deltaMessage({ at: 2, length: 1 })));
+  socket.emit('message', messageOf(new Uint8Array(11)));
+  socket.emit('message', { data: JSON.stringify(FRAME) });
+  const late = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), late);
+  assert.deepEqual(late.chunks, [OPEN_TEXT, frameText(key)]);
+});
+
+test('[osh-080] a close or an error of the socket empties the group', async (t) => {
+  for (const event of ['close', 'error']) {
+    const { rig, socket } = openVideoRig(t);
+    const key = keyMessage({ at: 1 });
+    socket.emit('message', messageOf(key));
+    socket.emit('message', messageOf(deltaMessage({ at: 2 })));
+    socket.emit(event, { code: 1006 });
+    const waiting = fakeClient();
+    rig.hub.join(DS, videoStreamOf(), waiting);
+    assert.deepEqual(waiting.chunks.filter((text) => text.startsWith('event: frame')), [], `${event}: no frame while the socket is down`);
+    rig.timers.advance(1000);
+    const [, next] = rig.sockets.instances;
+    next.emit('open');
+    const late = fakeClient();
+    rig.hub.join(DS, videoStreamOf(), late);
+    assert.deepEqual(late.chunks, [OPEN_TEXT], `${event}: the new socket holds no old frame`);
+    const fresh = keyMessage({ at: 3 });
+    next.emit('message', messageOf(fresh));
+    const after = fakeClient();
+    rig.hub.join(DS, videoStreamOf(), after);
+    assert.deepEqual(after.chunks, [OPEN_TEXT, frameText(fresh)], event);
+  }
+});
+
+test('[osh-080] a group of exactly 2097152 bytes stays for a late client', async (t) => {
+  assert.equal(OSH_VIDEO_MAX_GROUP_BYTES, GROUP_LIMIT);
+  const { rig, socket } = openVideoRig(t);
+  const [key, delta] = [
+    keyMessage({ at: 1, size: 1_000_000 }),
+    deltaMessage({ at: 2, size: GROUP_LIMIT - 1_000_000 }),
+  ];
+  socket.emit('message', messageOf(key));
+  socket.emit('message', messageOf(delta));
+  const late = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), late);
+  assert.deepEqual(late.chunks, [OPEN_TEXT, frameText(key), frameText(delta)]);
+});
+
+test('[osh-080] the hub empties a group of 2097153 bytes, and the group stays empty until the next key message', async (t) => {
+  const { rig, client, socket } = openVideoRig(t);
+  const [key, big, over] = [
+    keyMessage({ at: 1, size: 1_000_000 }),
+    deltaMessage({ at: 2, size: 1_000_000 }),
+    deltaMessage({ at: 3, size: GROUP_LIMIT - 2_000_000 + 1 }),
+  ];
+  for (const message of [key, big, over]) socket.emit('message', messageOf(message));
+  assert.deepEqual(client.chunks, [OPEN_TEXT, ...[key, big, over].map(frameText)], 'the client gets each frame');
+  const dropped = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), dropped);
+  assert.deepEqual(dropped.chunks, [OPEN_TEXT], 'the group is empty');
+  const small = deltaMessage({ at: 4 });
+  socket.emit('message', messageOf(small));
+  const still = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), still);
+  assert.deepEqual(still.chunks, [OPEN_TEXT], 'a delta message does not refill the empty group');
+  const next = keyMessage({ at: 5 });
+  socket.emit('message', messageOf(next));
+  const after = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), after);
+  assert.deepEqual(after.chunks, [OPEN_TEXT, frameText(next)]);
+});
+
+test('[osh-080] a group holds the frames of its own datastream only', async (t) => {
+  const first = openVideoRig(t);
+  const key = keyMessage({ at: 1 });
+  first.socket.emit('message', messageOf(key));
+  const other = fakeClient();
+  first.rig.hub.join('ds-fixture-2', videoStreamOf('ds-fixture-2'), other);
+  first.rig.sockets.instances[1].emit('open');
+  const late = fakeClient();
+  first.rig.hub.join('ds-fixture-2', videoStreamOf('ds-fixture-2'), late);
+  assert.deepEqual(late.chunks, [OPEN_TEXT]);
+  const own = fakeClient();
+  first.rig.hub.join(DS, videoStreamOf(), own);
+  assert.deepEqual(own.chunks, [OPEN_TEXT, frameText(key)]);
+});
+
+test('[osh-080] the route writes the response head before the replayed frames of a late client', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+  const first = await driveLive(proxy, { url: VIDEO_PATH });
+  const [socket] = rig.sockets.instances;
+  socket.emit('open');
+  const [key, delta] = [keyMessage({ at: 1 }), deltaMessage({ at: 2 })];
+  socket.emit('message', messageOf(key));
+  socket.emit('message', messageOf(delta));
+  const second = await driveLive(proxy, { url: VIDEO_PATH });
+  assert.equal(rig.sockets.instances.length, 1);
+  assert.equal(second.status, 200);
+  assert.equal(second.flushed, 1);
+  assert.equal(second.earlyWrites, 0, 'the head comes before the first event');
+  assert.deepEqual(second.chunks, [OPEN_TEXT, frameText(key), frameText(delta)]);
+  assert.deepEqual(first.chunks, [OPEN_TEXT, frameText(key), frameText(delta)]);
+});
+
+test('[osh-081] the live route and the video route of one id hold two entries and open two sockets with two URLs', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const clients = [fakeClient(), fakeClient(), fakeClient(), fakeClient()];
+  rig.hub.join(DS, streamOf(), clients[0]);
+  rig.hub.join(DS, videoStreamOf(), clients[1]);
+  assert.equal(rig.sockets.instances.length, 2);
+  assert.deepEqual(
+    rig.sockets.instances.map((socket) => socket.url),
+    [
+      'wss://osh.example/api/datastreams/ds-fixture-1/observations?f=application%2Fom%2Bjson',
+      'wss://osh.example/api/datastreams/ds-fixture-1/observations?f=application%2Fswe%2Bbinary',
+    ],
+  );
+  rig.hub.join(DS, streamOf(), clients[2]);
+  rig.hub.join(DS, videoStreamOf(), clients[3]);
+  assert.equal(rig.sockets.instances.length, 2, 'a second client of each kind shares its socket');
+  rig.hub.close();
+  for (const client of clients) assert.equal(client.ended, 1);
+  for (const socket of rig.sockets.instances) assert.equal(socket.closeCalls, 1);
+});
+
+test('[osh-081] the video entry closes two seconds after its last client leaves, and the live entry of the same id stays', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const live = fakeClient();
+  rig.hub.join(DS, streamOf(), live);
+  const videoJoin = rig.hub.join(DS, videoStreamOf(), fakeClient());
+  const [liveSocket, videoSocket] = rig.sockets.instances;
+  liveSocket.emit('open');
+  videoJoin.leave();
+  rig.timers.advance(2000);
+  assert.equal(videoSocket.closeCalls, 1);
+  assert.equal(liveSocket.closeCalls, 0);
+  liveSocket.emit('message', { data: binaryOf(FRAME) });
+  assert.deepEqual(namesOf(live), ['open', 'observation']);
+  const again = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), again);
+  assert.equal(rig.sockets.instances.length, 3, 'a new client opens a new video socket');
+});
+
+test('[osh-081] the live route and the video route of one id open two sockets', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
+  const live = await driveLive(proxy);
+  const video = await driveLive(proxy, { url: VIDEO_PATH });
+  assert.equal(live.status, 200);
+  assert.equal(video.status, 200);
+  assert.equal(rig.sockets.instances.length, 2);
+  assert.deepEqual(
+    rig.sockets.instances.map((socket) => new URL(socket.url).search),
+    ['?f=application%2Fom%2Bjson', '?f=application%2Fswe%2Bbinary'],
+  );
+});
+
+test('[osh-081] each entry of the live kind and of the video kind counts toward the limit of eight datastreams', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const joined = [];
+  for (let index = 1; index <= 4; index += 1) {
+    const id = `ds-fixture-${index}`;
+    joined.push(rig.hub.join(id, streamOf(id), fakeClient()));
+    joined.push(rig.hub.join(id, videoStreamOf(id), fakeClient()));
+  }
+  assert.equal(rig.sockets.instances.length, 8);
+  for (const stream of [streamOf('ds-fixture-5'), videoStreamOf('ds-fixture-5')]) {
+    const ninth = fakeClient();
+    assert.deepEqual(rig.hub.join('ds-fixture-5', stream, ninth), { error: 'live_busy' });
+    assert.equal(ninth.started, 0);
+  }
+  assert.equal(rig.sockets.instances.length, 8);
+  const extra = rig.hub.join('ds-fixture-1', videoStreamOf('ds-fixture-1'), fakeClient());
+  assert.equal(typeof extra.leave, 'function', 'an entry that holds a socket still takes clients');
+  joined[1].leave();
+  extra.leave();
+  rig.timers.advance(2000);
+  const later = rig.hub.join('ds-fixture-5', videoStreamOf('ds-fixture-5'), fakeClient());
+  assert.equal(typeof later.leave, 'function', 'a closed video socket frees its place');
+  assert.equal(rig.sockets.instances.length, 9);
+});
+
+test('[osh-081] the limit of sixteen clients counts the clients of one entry, and not the clients of the other entry of the same id', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  for (let index = 1; index <= 16; index += 1) rig.hub.join(DS, streamOf(), fakeClient());
+  const video = rig.hub.join(DS, videoStreamOf(), fakeClient());
+  assert.equal(typeof video.leave, 'function');
+  assert.equal(rig.sockets.instances.length, 2);
+  assert.deepEqual(rig.hub.join(DS, streamOf(), fakeClient()), { error: 'live_busy' });
+  for (let index = 2; index <= 16; index += 1) rig.hub.join(DS, videoStreamOf(), fakeClient());
+  assert.deepEqual(rig.hub.join(DS, videoStreamOf(), fakeClient()), { error: 'live_busy' });
+  assert.equal(rig.sockets.instances.length, 2);
+});
+
+test('[osh-081] a video client gets no observation event, and a live client gets no frame event', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const live = fakeClient();
+  const video = fakeClient();
+  rig.hub.join(DS, streamOf(), live);
+  rig.hub.join(DS, videoStreamOf(), video);
+  const [liveSocket, videoSocket] = rig.sockets.instances;
+  liveSocket.emit('open');
+  videoSocket.emit('open');
+  const key = keyMessage({ at: 1 });
+  liveSocket.emit('message', { data: binaryOf(FRAME) });
+  liveSocket.emit('message', messageOf(key));
+  liveSocket.emit('message', { data: JSON.stringify(FRAME) });
+  videoSocket.emit('message', { data: binaryOf(FRAME) });
+  videoSocket.emit('message', { data: JSON.stringify(FRAME) });
+  videoSocket.emit('message', messageOf(key));
+  assert.deepEqual(namesOf(live), ['open', 'observation', 'observation']);
+  assert.deepEqual(namesOf(video), ['open', 'frame']);
+  assert.deepEqual(video.chunks, [OPEN_TEXT, frameText(key)]);
+  const lateLive = fakeClient();
+  rig.hub.join(DS, streamOf(), lateLive);
+  assert.deepEqual(lateLive.chunks, [OPEN_TEXT], 'the live entry holds no group');
+});
+
+test('[osh-081] a refusal of one entry leaves the other entry of the same id open', async (t) => {
+  for (const [label, refusedStream, otherStream, tooLarge] of [
+    ['video', videoStreamOf, streamOf, () => new Uint8Array(OSH_VIDEO_MAX_MESSAGE_BYTES + 1)],
+    ['live', streamOf, videoStreamOf, () => new Uint8Array(OSH_LIVE_MAX_FRAME_BYTES + 1)],
+  ]) {
+    const rig = makeRig();
+    t.after(() => rig.hub.close());
+    rig.hub.join(DS, refusedStream(), fakeClient());
+    rig.sockets.instances[0].emit('message', messageOf(tooLarge()));
+    assert.deepEqual(rig.hub.join(DS, refusedStream(), fakeClient()), { error: 'live_unsupported' }, label);
+    const other = fakeClient();
+    assert.equal(typeof rig.hub.join(DS, otherStream(), other).leave, 'function', label);
+    assert.equal(other.started, 1, label);
+    assert.equal(rig.sockets.instances.length, 2, label);
   }
 });
 

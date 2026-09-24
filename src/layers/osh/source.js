@@ -3,7 +3,7 @@
  * newest-observation endpoints. The server already applies the shared
  * adapters before it caches a response, so this file validates the
  * envelope and passes the records through unchanged. It also opens the
- * live stream of one datastream.
+ * live stream and the video stream of one datastream.
  */
 
 async function readOshResponse(fetchImpl, path, { signal } = {}) {
@@ -21,6 +21,44 @@ async function readOshResponse(fetchImpl, path, { signal } = {}) {
   const payload = await response.json();
   signal?.throwIfAborted();
   return { keyRequired: false, payload };
+}
+
+/**
+ * Give the events of the route that show the state of the upstream to their
+ * callbacks. The browser also raises `open` when the connection itself opens.
+ * Only the event of the route has data, and it says the upstream is open. The
+ * `error` event of the browser also means `down`.
+ */
+function listenToStreamState(stream, { onOpen, onDown, onUnsupported }) {
+  stream.addEventListener('open', (event) => {
+    if (typeof event.data === 'string') onOpen();
+  });
+  stream.addEventListener('down', () => onDown());
+  stream.addEventListener('unsupported', () => onUnsupported());
+  stream.addEventListener('error', () => onDown());
+}
+
+/**
+ * The bytes of a `frame` event: its data is one JSON string of base64 text.
+ * @returns {?Uint8Array} Null when the data is not that.
+ */
+function decodeFrameData(data) {
+  let text;
+  try {
+    text = JSON.parse(data);
+  } catch {
+    return null;
+  }
+  if (typeof text !== 'string') return null;
+  let binary;
+  try {
+    binary = atob(text);
+  } catch {
+    return null;
+  }
+  const bytes = new Uint8Array(binary.length);
+  for (let at = 0; at < binary.length; at += 1) bytes[at] = binary.charCodeAt(at);
+  return bytes;
 }
 
 export function createOshSource({
@@ -101,14 +139,25 @@ export function createOshSource({
           onObservation(observation);
         }
       });
-      // The browser also raises `open` when the connection itself opens. Only
-      // the event of the route has data, and it says the upstream is open.
-      stream.addEventListener('open', (event) => {
-        if (typeof event.data === 'string') onOpen();
+      listenToStreamState(stream, { onOpen, onDown, onUnsupported });
+      return { close: () => stream.close() };
+    },
+
+    /**
+     * Open the video stream of one datastream (osh-082). One same-origin GET
+     * with no credentials. The route sends the events `frame`, `open`, `down`
+     * and `unsupported`, as the live route does. The data of a `frame` is one
+     * whole video message as base64 text in one JSON string, and the callback
+     * gets its bytes.
+     */
+    openVideo(datastreamId, { onFrame, onOpen, onDown, onUnsupported }) {
+      const url = `/api/osh/video?datastream=${encodeURIComponent(datastreamId)}`;
+      const stream = new (eventSourceImpl ?? globalThis.EventSource)(url);
+      stream.addEventListener('frame', (event) => {
+        const bytes = decodeFrameData(event.data);
+        if (bytes !== null) onFrame(bytes);
       });
-      stream.addEventListener('down', () => onDown());
-      stream.addEventListener('unsupported', () => onUnsupported());
-      stream.addEventListener('error', () => onDown());
+      listenToStreamState(stream, { onOpen, onDown, onUnsupported });
       return { close: () => stream.close() };
     },
   };

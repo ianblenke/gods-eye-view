@@ -830,6 +830,14 @@
     </div>
   </aside>
 
+  <!-- OpenSensorHub selection: the detail of the selected system and the live
+       video of its camera. Docked left of the right rail. The OSH layer shows
+       it while a selection exists and fills both hosts — see src/data/osh.js. -->
+  <aside id="osh-panel" class="osh-panel" hidden aria-label="OpenSensorHub selection">
+    <div id="osh-panel-video"></div>
+    <div id="osh-panel-detail"></div>
+  </aside>
+
   <div id="scene-runtime"></div>
 
   <!-- Explicit mission choice on a fresh session. Live feeds are not auto-enabled

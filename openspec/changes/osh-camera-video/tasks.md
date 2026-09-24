@@ -84,6 +84,8 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - P9: use `VideoDecoder` without a check. `[osh-085]` fails.
   - P10: put a user name in the `EventSource` URL of `openVideo()`. `[osh-082]` fails.
   - P11: call `onFrame` for data that is not base64 text. `[osh-082]` fails.
+  - P12: let an exception from `configure` leave the player. `[osh-084]` fails.
+  - P13: let an exception from `decode` leave the player. `[osh-084]` fails.
   - A mutation that no test fails is a finding: add a test that fails for it.
 
 ## 6. The layer and the panel
@@ -110,6 +112,7 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - L11: poll a video datastream. `[osh-074]` fails.
   - L12: show `No data` for a video datastream. `[osh-088]` fails.
   - L13: use a wrong element id for the panel host. `[osh-089]` fails.
+  - L14: start a video stream when the player reports `unsupported`. `[osh-087]` fails.
   - A mutation that no test fails is a finding: add a test that fails for it.
 
 ## 7. The page

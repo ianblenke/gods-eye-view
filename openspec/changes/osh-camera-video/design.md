@@ -59,7 +59,7 @@ The file is in `src/data/osh*.js`, so the scan of `osh-005` covers it. The pinne
 
 The player converts each message to one sample, with a length of four bytes before each slice. It gives the decoder a key chunk or a delta chunk. The time stamp is in microseconds from the first message.
 
-The decoder calls back with a frame. The player draws the frame on the canvas, closes it, and reports the status `live`. It drops delta messages while the queue of the decoder holds more than eight frames, until the next key message. A new SPS starts a new configuration. A decoder error resets the decoder, and the player waits for a key message.
+The decoder calls back with a frame. The player draws the frame on the canvas, closes it, and reports the status `live`. It drops delta messages while the queue of the decoder holds more than eight frames, until the next key message. A new SPS starts a new configuration. A decoder error resets the decoder, and the player waits for a key message. An exception from `configure`, from `decode` or from the constructor of the decoder is a decoder error too.
 
 A page that is not secure has no `VideoDecoder`. The player then decodes nothing and reports the status `unsupported`. The classes are options, so the tests use fakes, and the real decoder runs only in a browser.
 
@@ -67,13 +67,13 @@ A page that is not secure has no `VideoDecoder`. The player then decodes nothing
 
 The layer has three new options: the panel host, the detail host and the video host. `src/data/osh.js` finds them by the ids `osh-panel`, `osh-panel-detail` and `osh-panel-video`. It uses none when the page has no document.
 
-The panel host shows while a selection exists, and it hides when the selection ends. The video host is apart from the detail host. The layer writes the detail as HTML again at each change, and that would remove a canvas. The layer creates one video view and one player for the first datastream with `video: true`. It closes them when the selection ends, as it closes a live stream.
+The panel host shows while a selection exists, and it hides when the selection ends. The video host is apart from the detail host. The layer writes the detail as HTML again at each change, and that would remove a canvas. The layer creates one video view and one player for the first datastream with `video: true`. It closes them when the selection ends, as it closes a live stream. When the player reports `unsupported`, the layer starts no video stream, because the browser cannot show the picture.
 
 A video datastream gets no live stream and no poll. It does not count toward the limit of three live streams. The block of the detail shows its name and the word `Video`.
 
 ### D79 The page
 
-`index.html` gets one panel element with two hosts. `style.css` docks the panel at the right of the globe, clear of the other panels, and the world overlay treats it as an occluder. No test checks the place of the panel. The lead looks at it in a browser and reports what it shows.
+`index.html` gets one panel element with two hosts. `style.css` docks the panel left of the right rail, clear of the other panels, and the world overlay treats it as an occluder. No test checks the place of the panel. The lead looks at it in a browser and reports what it shows.
 
 ### D80 How the gates measure this change
 

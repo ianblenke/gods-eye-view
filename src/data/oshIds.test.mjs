@@ -8,12 +8,15 @@ import {
   OSH_LIVE_QUERY,
   OSH_OBSERVATIONS_QUERY,
   OSH_SYSTEM_DATASTREAMS_QUERY,
+  OSH_VIDEO_FORMAT,
+  OSH_VIDEO_QUERY,
   assertLiveUrl,
   assertObservationUrl,
   assertObservationsLatestUrl,
   assertSchemaUrl,
   assertSystemDatastreamsUrl,
   assertSystemUrl,
+  assertVideoUrl,
   liveUrl,
   observationUrl,
   observationsLatestUrl,
@@ -22,6 +25,7 @@ import {
   schemaUrl,
   systemDatastreamsUrl,
   systemUrl,
+  videoUrl,
 } from '../../server/providers/osh/ids.js';
 
 function paramsFor(rawQuery) {
@@ -369,5 +373,103 @@ test('[osh-064] assertLiveUrl() throws for another scheme, host, port, path, que
     refuses('a fragment', (url) => {
       url.hash = 'f';
     });
+  }
+});
+
+test('[osh-078] videoUrl() builds a ws URL for an http root and a wss URL for an https root', () => {
+  const id = 'ds-fixture-1';
+  for (const [rootText, protocol] of [
+    ['http://osh.example/api/', 'ws:'],
+    ['https://osh.example/api/', 'wss:'],
+  ]) {
+    const root = new URL(rootText);
+    const url = videoUrl(root, id);
+    assert.equal(url.protocol, protocol);
+    assert.doesNotThrow(() => assertVideoUrl(url, root, id));
+  }
+});
+
+test('[osh-078] videoUrl() keeps the host and the port of the root, and sets the fixed path and the video format query', () => {
+  const id = 'A_b-9';
+  const root = new URL('http://osh.example:8080/prefix/api/');
+  const url = videoUrl(root, id);
+  assert.equal(url.host, 'osh.example:8080');
+  assert.equal(url.pathname, `${root.pathname}datastreams/${id}/observations`);
+  assert.equal(OSH_VIDEO_FORMAT, 'application/swe+binary');
+  assert.equal(url.search, `?${OSH_VIDEO_QUERY}`);
+  assert.equal(url.searchParams.get('f'), 'application/swe+binary');
+  assert.equal(url.searchParams.size, 1);
+  assert.equal(url.search, '?f=application%2Fswe%2Bbinary', 'the slash and the plus sign reach the server encoded');
+  assert.equal(url.hash, '');
+  assert.notEqual(url.search, liveUrl(root, id).search, 'the video query is not the live query');
+});
+
+test('[osh-078] videoUrl() drops the credentials that the root holds', () => {
+  const id = 'ds-fixture-1';
+  const root = new URL('https://fixture-user:fixture-pass@osh.example/api/');
+  const url = videoUrl(root, id);
+  assert.equal(url.username, '');
+  assert.equal(url.password, '');
+  assert.doesNotThrow(() => assertVideoUrl(url, root, id));
+});
+
+test('[osh-078] assertVideoUrl() throws for another scheme, host, port, path, query, user name, password or fragment', () => {
+  const id = 'ds-fixture-1';
+  for (const rootText of ['http://osh.example/api/', 'https://osh.example/api/']) {
+    const root = new URL(rootText);
+    const good = videoUrl(root, id);
+    const refuses = (label, change) => {
+      const url = new URL(good.href);
+      change(url);
+      assert.throws(() => assertVideoUrl(url, root, id), /safety check/, `${rootText}: ${label}`);
+    };
+    refuses('another scheme', (url) => {
+      url.protocol = root.protocol === 'https:' ? 'ws:' : 'wss:';
+    });
+    refuses('another host', (url) => {
+      url.hostname = 'attacker.example';
+    });
+    refuses('another port', (url) => {
+      url.port = '9999';
+    });
+    refuses('another prefix', (url) => {
+      url.pathname = `/other/datastreams/${id}/observations`;
+    });
+    refuses('another datastream', (url) => {
+      url.pathname = `${root.pathname}datastreams/ds-fixture-2/observations`;
+    });
+    refuses('an extra segment', (url) => {
+      url.pathname = `${root.pathname}datastreams/${id}/observations/extra`;
+    });
+    refuses('another query', (url) => {
+      url.search = 'limit=2';
+    });
+    refuses('the live query', (url) => {
+      url.search = OSH_LIVE_QUERY;
+    });
+    refuses('an extra query key', (url) => {
+      url.search = `${OSH_VIDEO_QUERY}&limit=2`;
+    });
+    refuses('no query', (url) => {
+      url.search = '';
+    });
+    refuses('a user name', (url) => {
+      url.username = 'fixture-user';
+    });
+    refuses('a password', (url) => {
+      url.password = 'fixture-pass';
+    });
+    refuses('a fragment', (url) => {
+      url.hash = 'f';
+    });
+  }
+});
+
+test('[osh-078] the live guard refuses the video URL, and the video guard refuses the live URL', () => {
+  const id = 'ds-fixture-1';
+  for (const rootText of ['http://osh.example/api/', 'https://osh.example/api/']) {
+    const root = new URL(rootText);
+    assert.throws(() => assertLiveUrl(videoUrl(root, id), root, id), /safety check/);
+    assert.throws(() => assertVideoUrl(liveUrl(root, id), root, id), /safety check/);
   }
 });

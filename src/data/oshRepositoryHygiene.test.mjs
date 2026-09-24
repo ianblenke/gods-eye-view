@@ -19,6 +19,7 @@ const PROVIDER_FILES = [
   'src/data/oshDatastreams.js',
   'src/data/oshFois.js',
   'src/data/oshObservations.js',
+  'src/data/oshVideo.js',
   'src/data/osh.js',
   'src/layers/osh/index.js',
   'src/layers/osh/source.js',
@@ -215,7 +216,7 @@ test('[osh-034] no OSH test file has a real address', () => {
   const files = oshTestFiles();
   assert.equal(
     files.length,
-    15,
+    17,
     'the discovered OSH test file count changed; update this number and check the new file too',
   );
   for (const file of files) {

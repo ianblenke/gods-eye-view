@@ -258,7 +258,8 @@
       "src/data/oshDatastreams.js",
       "src/data/oshFois.js",
       "src/data/oshObservations.js",
-      "src/data/oshSystems.js"
+      "src/data/oshSystems.js",
+      "src/data/oshVideo.js"
     ],
     "external": []
   },
@@ -920,9 +921,11 @@
       "src/data/iconOrientation.js",
       "src/data/oshObservations.js",
       "src/data/oshSystems.js",
+      "src/data/oshVideo.js",
       "src/layers/osh/detail.js",
       "src/layers/osh/index.js",
-      "src/layers/osh/source.js"
+      "src/layers/osh/source.js",
+      "src/layers/osh/videoPlayer.js"
     ],
     "external": ["cesium"]
   }

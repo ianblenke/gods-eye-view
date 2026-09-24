@@ -232,6 +232,57 @@ export function assertLiveUrl(url, root, id) {
   }
 }
 
+/**
+ * The binary format of the video stream (design decision D73) and its fixed
+ * query. It is the live query with another value of `f`.
+ */
+export const OSH_VIDEO_FORMAT = 'application/swe+binary';
+export const OSH_VIDEO_QUERY = new URLSearchParams({ f: OSH_VIDEO_FORMAT }).toString();
+
+/**
+ * Build the video-stream URL for one datastream id: the same URL as
+ * liveUrl(), with the format query of the binary video messages. It has the
+ * scheme `ws` for an `http` root and `wss` for an `https` root, and no
+ * credentials. The credentials of the provider travel in a header, never in
+ * this URL.
+ * @param {URL} root - Resolved API root, trailing slash.
+ * @param {string} id - An id already checked by readDatastreamId.
+ * @returns {URL}
+ */
+export function videoUrl(root, id) {
+  const url = new URL(`datastreams/${encodeURIComponent(id)}/observations`, root);
+  url.protocol = root.protocol === 'https:' ? 'wss:' : 'ws:';
+  url.username = '';
+  url.password = '';
+  url.search = OSH_VIDEO_QUERY;
+  return url;
+}
+
+/**
+ * Re-check a built video-stream URL against its root and id. Throws when the
+ * scheme, the host, the path, the query, the user name, the password or the
+ * fragment does not match exactly what videoUrl() would build. Mirrors
+ * assertLiveUrl() above.
+ * @param {URL} url
+ * @param {URL} root
+ * @param {string} id
+ */
+export function assertVideoUrl(url, root, id) {
+  const expectedProtocol = root.protocol === 'https:' ? 'wss:' : 'ws:';
+  const expectedPathname = `${root.pathname}datastreams/${id}/observations`;
+  if (
+    url.protocol !== expectedProtocol ||
+    url.host !== root.host ||
+    url.pathname !== expectedPathname ||
+    url.search !== `?${OSH_VIDEO_QUERY}` ||
+    url.username !== '' ||
+    url.password !== '' ||
+    url.hash !== ''
+  ) {
+    throw new Error('OSH video URL failed the safety check');
+  }
+}
+
 /** Newest-per-feature page size: the number of distinct features one `latest` request answers. */
 export const OSH_LATEST_LIMIT = 300;
 

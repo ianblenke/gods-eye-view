@@ -350,3 +350,57 @@ test('[osh-032] a feature header with no name shows the feature\'s id, never the
   assert.doesNotMatch(html, /<h3>Host Named System<\/h3>/);
   assert.match(html, /Host:\s*Host Named System/);
 });
+
+// --- osh-088: a video datastream in the detail ---
+
+const VIDEO_DETAIL = {
+  system: { id: 'sys-fixture-1', uid: null, name: 'Fixture Camera', description: null },
+  datastreams: [{ id: 'ds-fixture-v1', name: 'Camera <One>', observation: null, video: true }],
+};
+
+test('[osh-088] the block of a video datastream shows its name and the word Video', () => {
+  const html = renderOshDetail(VIDEO_DETAIL);
+  assert.match(html, /<h4>Camera &lt;One&gt;<\/h4>/);
+  assert.match(html, /<div class="osh-detail-row osh-detail-video">Video<\/div>/);
+});
+
+test('[osh-088] the block of a video datastream shows no row No data', () => {
+  const html = renderOshDetail(VIDEO_DETAIL);
+  assert.doesNotMatch(html, /No data/);
+  assert.doesNotMatch(html, /osh-detail-empty/);
+});
+
+test('[osh-088] the block of a video datastream shows no time and no age', () => {
+  const html = renderOshDetail(VIDEO_DETAIL);
+  assert.doesNotMatch(html, /osh-detail-time/);
+  assert.doesNotMatch(html, /osh-detail-age/);
+  assert.doesNotMatch(html, /age unknown/);
+});
+
+test('[osh-088] a video datastream with no name shows its id', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [{ id: 'ds-fixture-v2', observation: null, video: true }],
+  });
+  assert.match(html, /<h4>ds-fixture-v2<\/h4>/);
+  assert.match(html, /osh-detail-video">Video</);
+});
+
+test('[osh-088] a video datastream sits next to a datastream that has no video mark', () => {
+  const html = renderOshDetail({
+    system: { id: 'sys-fixture-1' },
+    datastreams: [
+      { id: 'ds-fixture-1', name: 'Weather', observation: null },
+      { id: 'ds-fixture-v1', name: 'Camera', observation: null, video: true },
+      { id: 'ds-fixture-2', name: 'Wind', observation: null, video: false },
+    ],
+  });
+  const blocks = html.split('<div class="osh-detail-datastream">').slice(1);
+  assert.equal(blocks.length, 3);
+  assert.match(blocks[0], /No data/);
+  assert.doesNotMatch(blocks[0], /Video/);
+  assert.match(blocks[1], /Video/);
+  assert.doesNotMatch(blocks[1], /No data/);
+  assert.match(blocks[2], /No data/);
+  assert.doesNotMatch(blocks[2], /Video/);
+});

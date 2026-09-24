@@ -91,6 +91,7 @@ function fakeSource({
   observations = {},
   locations = [],
   live = false,
+  video = false,
 } = {}) {
   const calls = {
     systems: 0,
@@ -101,6 +102,7 @@ function fakeSource({
     locations: 0,
     locationsArgs: [],
     live: [],
+    video: [],
   };
   const source = {
     calls,
@@ -138,6 +140,20 @@ function fakeSource({
         },
       };
       calls.live.push(stream);
+      return stream.handle;
+    };
+  }
+  // A source with no openVideo plays no video. With one, each stream records
+  // its callbacks and its close calls, as a live stream does.
+  if (video) {
+    source.openVideo = (id, callbacks) => {
+      const stream = { id, callbacks, closed: 0 };
+      stream.handle = {
+        close() {
+          stream.closed += 1;
+        },
+      };
+      calls.video.push(stream);
       return stream.handle;
     };
   }
@@ -3227,5 +3243,618 @@ test('[osh-074] an open live stream stops the poll of its datastream after the f
     await settle();
     assert.equal(source.calls.observations.length, 3, 'the first live observation stops the poll');
     assert.match(detailBlocks(detailHost)[0], /speed/);
+  });
+});
+
+// --- osh-086 and osh-087: the panel and the video of the selected system ---
+
+const VIDEO_DOCUMENT = { name: 'fake document' };
+
+function videoDatastream(overrides = {}) {
+  return { id: 'ds-fixture-v1', systemId: 'sys-fixture-1', name: 'Camera One', video: true, ...overrides };
+}
+
+/**
+ * A fake view and a fake player factory. Each records its options and its
+ * calls, so a test reads what the layer passed and what it closed.
+ */
+function fakeVideoParts() {
+  const calls = { views: [], players: [] };
+  return {
+    calls,
+    createView(options) {
+      const view = {
+        options,
+        canvas: { name: 'fake canvas' },
+        statuses: [],
+        destroyed: 0,
+        setStatus(text) {
+          view.statuses.push(text);
+        },
+        destroy() {
+          view.destroyed += 1;
+        },
+      };
+      calls.views.push(view);
+      return view;
+    },
+    createPlayer(options) {
+      const player = {
+        options,
+        pushed: [],
+        closed: 0,
+        push(bytes) {
+          player.pushed.push(bytes);
+        },
+        close() {
+          player.closed += 1;
+        },
+      };
+      calls.players.push(player);
+      return player;
+    },
+  };
+}
+
+/** A layer with a fake panel, a fake detail host, a fake video host and the fake video parts. */
+function videoLayer(options = {}) {
+  const parts = fakeVideoParts();
+  const hosts = { panelHost: { hidden: true }, detailHost: { innerHTML: '' }, videoHost: { name: 'fake video host' } };
+  const layer = createOshLayer({
+    ...hosts,
+    createPlayer: parts.createPlayer,
+    createView: parts.createView,
+    documentImpl: VIDEO_DOCUMENT,
+    ...options,
+  });
+  return { layer, parts, ...hosts, ...fakeViewer() };
+}
+
+test('[osh-086] the panel shows when the user selects a system and hides when the selection ends', async (t) => {
+  const source = fakeSource({ datastreams: liveDatastreams(1) });
+  const { layer, panelHost, detailHost, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    assert.equal(panelHost.hidden, true, 'the panel stays hidden with no selection');
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(panelHost.hidden, false);
+    assert.match(detailHost.innerHTML, /System A/);
+    await pickAndSettle(getClick, viewer, null);
+    assert.equal(panelHost.hidden, true);
+    assert.equal(detailHost.innerHTML, '');
+  });
+});
+
+test('[osh-086] the panel shows for a camera system that holds only a video datastream', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  const { layer, panelHost, detailHost, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(panelHost.hidden, false);
+    assert.match(detailHost.innerHTML, /Camera One/);
+  });
+});
+
+test('[osh-086] the panel shows for a feature that has no host and hides when the selection ends', async (t) => {
+  const source = fakeSource({ fois: [FEATURE_NO_HOST] });
+  const { layer, panelHost, detailHost, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh-foi:foi-fixture-3');
+    assert.equal(panelHost.hidden, false);
+    assert.match(detailHost.innerHTML, /Feature No Host/);
+    await pickAndSettle(getClick, viewer, null);
+    assert.equal(panelHost.hidden, true);
+    assert.equal(detailHost.innerHTML, '');
+  });
+});
+
+test('[osh-086] the panel hides and the detail host empties when the layer disables', async (t) => {
+  const source = fakeSource({ datastreams: liveDatastreams(1) });
+  const { layer, panelHost, detailHost, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(panelHost.hidden, false);
+    layer.disable();
+    assert.equal(panelHost.hidden, true);
+    assert.equal(detailHost.innerHTML, '');
+  });
+});
+
+test('[osh-086] the destroy method hides the panel and empties the detail host', async (t) => {
+  const source = fakeSource({ datastreams: liveDatastreams(1) });
+  const { layer, panelHost, detailHost, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(panelHost.hidden, false);
+    layer.destroy(viewer);
+    assert.equal(panelHost.hidden, true);
+    assert.equal(detailHost.innerHTML, '');
+  });
+});
+
+test('[osh-086] a layer with a detail host and no panel host still writes the detail', async (t) => {
+  const source = fakeSource({ datastreams: liveDatastreams(1) });
+  const { layer, detailHost, viewer } = videoLayer({ source, panelHost: null });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.match(detailHost.innerHTML, /System A/);
+  });
+});
+
+test('[osh-087] the layer starts one video stream for the first video datastream when the system has two', async (t) => {
+  const second = videoDatastream({ id: 'ds-fixture-v2', name: 'Camera Two' });
+  const source = fakeSource({ video: true, datastreams: [...liveDatastreams(1), videoDatastream(), second] });
+  const { layer, parts, videoHost, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.deepEqual(
+      source.calls.video.map((stream) => stream.id),
+      ['ds-fixture-v1'],
+    );
+    assert.equal(parts.calls.views.length, 1, 'one view');
+    assert.equal(parts.calls.players.length, 1, 'one player');
+    const [view] = parts.calls.views;
+    const [player] = parts.calls.players;
+    assert.deepEqual(view.options, { document: VIDEO_DOCUMENT, host: videoHost, name: 'Camera One' });
+    assert.equal(player.options.canvas, view.canvas, 'the player draws on the canvas of the view');
+    player.options.onStatus('live');
+    assert.deepEqual(view.statuses, ['live'], 'the view shows the status of the player');
+  });
+});
+
+test('[osh-087] the view shows the id of a video datastream that has no name', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream({ name: undefined })] });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(parts.calls.views[0].options.name, 'ds-fixture-v1');
+  });
+});
+
+test('[osh-087] the layer starts no video stream for a system that has no video datastream', async (t) => {
+  const source = fakeSource({ video: true, live: true, datastreams: liveDatastreams(2) });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(source.calls.video.length, 0);
+    assert.equal(parts.calls.views.length, 0);
+    assert.equal(parts.calls.players.length, 0);
+  });
+});
+
+test('[osh-087] the layer starts no video stream when the source has no openVideo method', async (t) => {
+  const source = fakeSource({ datastreams: [videoDatastream()] });
+  assert.equal(source.openVideo, undefined);
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(parts.calls.views.length, 0);
+    assert.equal(parts.calls.players.length, 0);
+  });
+});
+
+test('[osh-087] the layer starts no video stream when it has no video host', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  const { layer, parts, viewer } = videoLayer({ source, videoHost: null });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(source.calls.video.length, 0);
+    assert.equal(parts.calls.views.length, 0);
+    assert.equal(parts.calls.players.length, 0);
+  });
+});
+
+test('[osh-087] the layer starts no video stream when the player reports unsupported, and it still closes the player', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  const { layer, parts, viewer } = videoLayer({
+    source,
+    createPlayer(options) {
+      const player = parts.createPlayer(options);
+      options.onStatus('unsupported');
+      return player;
+    },
+  });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(source.calls.video.length, 0, 'no stream for a picture that the browser cannot decode');
+    assert.deepEqual(parts.calls.views[0].statuses, ['unsupported']);
+    await pickAndSettle(getClick, viewer, null);
+    assert.equal(parts.calls.players[0].closed, 1);
+    assert.equal(parts.calls.views[0].destroyed, 1);
+  });
+});
+
+test('[osh-087] the layer starts the video stream once for each selection', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    t.mock.timers.tick(15_000);
+    await settle();
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.equal(source.calls.datastreams, 3, 'the poll ran three times');
+    assert.equal(source.calls.video.length, 1);
+    assert.equal(parts.calls.views.length, 1);
+    assert.equal(parts.calls.players.length, 1);
+    assert.equal(source.calls.video[0].closed, 0);
+  });
+});
+
+test('[osh-087] each frame of the video stream reaches the player', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.video;
+    const first = new Uint8Array([1, 2, 3]);
+    const second = new Uint8Array([4, 5]);
+    stream.callbacks.onFrame(first);
+    stream.callbacks.onFrame(second);
+    assert.equal(parts.calls.players[0].pushed.length, 2);
+    assert.equal(parts.calls.players[0].pushed[0], first);
+    assert.equal(parts.calls.players[0].pushed[1], second);
+  });
+});
+
+test('[osh-087] the event down shows the status `reconnecting`', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.video;
+    stream.callbacks.onDown();
+    assert.deepEqual(parts.calls.views[0].statuses, ['reconnecting']);
+    assert.equal(stream.closed, 0, 'the layer keeps the stream open, so it can reconnect');
+    assert.equal(parts.calls.players[0].closed, 0);
+  });
+});
+
+test('[osh-087] the event open shows the last status of the player again after the event down', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.video;
+    const [player] = parts.calls.players;
+    player.options.onStatus('live');
+    stream.callbacks.onDown();
+    stream.callbacks.onOpen();
+    player.options.onStatus('waiting');
+    stream.callbacks.onDown();
+    stream.callbacks.onOpen();
+    assert.deepEqual(parts.calls.views[0].statuses, ['live', 'reconnecting', 'live', 'waiting', 'reconnecting', 'waiting']);
+    assert.equal(stream.closed, 0);
+  });
+});
+
+test('[osh-087] the event unsupported shows the status unavailable and closes the stream once', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stream] = source.calls.video;
+    stream.callbacks.onUnsupported();
+    assert.deepEqual(parts.calls.views[0].statuses, ['unavailable']);
+    assert.equal(stream.closed, 1);
+    assert.equal(parts.calls.players[0].closed, 0, 'the view keeps its message until the selection ends');
+    assert.equal(parts.calls.views[0].destroyed, 0);
+    await pickAndSettle(getClick, viewer, null);
+    assert.equal(stream.closed, 1, 'the end of the selection closes the stream no second time');
+    assert.equal(parts.calls.players[0].closed, 1);
+    assert.equal(parts.calls.views[0].destroyed, 1);
+  });
+});
+
+test('[osh-087] a new selection closes the video stream and the player, removes the view, and starts the next stream', async (t) => {
+  const source = fakeSource({
+    video: true,
+    datastreams: [videoDatastream(), videoDatastream({ id: 'ds-fixture-v2', systemId: 'sys-fixture-2', name: 'Camera Two' })],
+  });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [first] = source.calls.video;
+    assert.equal(first.closed, 0);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-2');
+    assert.equal(first.closed, 1);
+    assert.equal(parts.calls.players[0].closed, 1);
+    assert.equal(parts.calls.views[0].destroyed, 1);
+    assert.deepEqual(
+      source.calls.video.map((stream) => [stream.id, stream.closed]),
+      [
+        ['ds-fixture-v1', 1],
+        ['ds-fixture-v2', 0],
+      ],
+    );
+    assert.equal(parts.calls.views[1].options.name, 'Camera Two');
+    assert.equal(parts.calls.players[1].closed, 0);
+    assert.equal(parts.calls.views[1].destroyed, 0);
+  });
+});
+
+test('[osh-087] a system with no video datastream leaves the video of the earlier selection closed once', async (t) => {
+  const source = fakeSource({
+    video: true,
+    datastreams: [videoDatastream(), ...liveDatastreams(1, 'sys-fixture-2', 'b')],
+  });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-2');
+    assert.equal(parts.calls.views.length, 1, 'the second system starts no video');
+    await pickAndSettle(getClick, viewer, null);
+    layer.destroy(viewer);
+    assert.equal(source.calls.video[0].closed, 1);
+    assert.equal(parts.calls.players[0].closed, 1);
+    assert.equal(parts.calls.views[0].destroyed, 1);
+  });
+});
+
+test('[osh-087] a click on empty space closes the video stream and the player and removes the view', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(source.calls.video[0].closed, 0);
+    await pickAndSettle(getClick, viewer, null);
+    assert.equal(source.calls.video[0].closed, 1);
+    assert.equal(parts.calls.players[0].closed, 1);
+    assert.equal(parts.calls.views[0].destroyed, 1);
+  });
+});
+
+test('[osh-087] a refresh that drops the selected feature closes the video stream and the player and removes the view', async (t) => {
+  let fois = [FEATURE_A];
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  source.getFois = async () => ({ keyRequired: false, fois, truncated: false });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh-foi:foi-fixture-1');
+    assert.equal(source.calls.video.length, 1, 'a feature selection plays the video of its host');
+    fois = [];
+    await layer.update(viewer);
+    assert.equal(layer.getStats().selectedFeatureId, null);
+    assert.equal(source.calls.video[0].closed, 1);
+    assert.equal(parts.calls.players[0].closed, 1);
+    assert.equal(parts.calls.views[0].destroyed, 1);
+  });
+});
+
+test('[osh-087] the destroy method closes the video stream and the player and removes the view', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    layer.destroy(viewer);
+    assert.equal(source.calls.video[0].closed, 1);
+    assert.equal(parts.calls.players[0].closed, 1);
+    assert.equal(parts.calls.views[0].destroyed, 1);
+  });
+});
+
+test('[osh-087] a callback of a video stream that the layer closed does nothing', async (t) => {
+  const source = fakeSource({
+    video: true,
+    datastreams: [videoDatastream(), videoDatastream({ id: 'ds-fixture-v2', systemId: 'sys-fixture-2', name: 'Camera Two' })],
+  });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const [stale] = source.calls.video;
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-2');
+    const [oldView, newView] = parts.calls.views;
+    const [oldPlayer, newPlayer] = parts.calls.players;
+    stale.callbacks.onOpen();
+    stale.callbacks.onFrame(new Uint8Array([1]));
+    stale.callbacks.onDown();
+    stale.callbacks.onUnsupported();
+    assert.deepEqual(oldPlayer.pushed, [], 'the closed player gets no frame');
+    assert.deepEqual(newPlayer.pushed, [], 'the new player gets no frame');
+    assert.deepEqual(oldView.statuses, []);
+    assert.deepEqual(newView.statuses, []);
+    assert.equal(stale.closed, 1, 'the layer closed the stream once, and the callback closes it no more');
+    assert.equal(source.calls.video[1].closed, 0, 'the stream of the new selection stays open');
+    layer.destroy(viewer);
+    assert.doesNotThrow(() => {
+      stale.callbacks.onFrame(new Uint8Array([2]));
+      stale.callbacks.onDown();
+      stale.callbacks.onUnsupported();
+    });
+    assert.deepEqual(newPlayer.pushed, []);
+    assert.deepEqual(newView.statuses, []);
+  });
+});
+
+test('[osh-072] a video datastream gets no live stream and does not use one of the three live slots', async (t) => {
+  const others = liveDatastreams(4);
+  const source = fakeSource({
+    live: true,
+    video: true,
+    datastreams: [others[0], videoDatastream(), ...others.slice(1)],
+  });
+  const { layer, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.deepEqual(
+      source.calls.live.map((stream) => stream.id),
+      ['ds-fixture-1', 'ds-fixture-2', 'ds-fixture-3'],
+    );
+    assert.equal(source.calls.video.length, 1, 'the video datastream has its own stream');
+  });
+});
+
+test('[osh-072] a system with three other datastreams and one video datastream opens three live streams', async (t) => {
+  const source = fakeSource({ live: true, video: true, datastreams: [videoDatastream(), ...liveDatastreams(3)] });
+  const { layer, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(source.calls.live.length, 3);
+    assert.ok(
+      source.calls.live.every((stream) => stream.id !== 'ds-fixture-v1'),
+      'no live stream for the video datastream',
+    );
+  });
+});
+
+test('[osh-074] the layer never polls a video datastream', async (t) => {
+  t.mock.timers.enable({ apis: ['setInterval'] });
+  const source = fakeSource({
+    video: true,
+    datastreams: [videoDatastream(), ...liveDatastreams(1)],
+    observations: {
+      'ds-fixture-v1': polledObservation('picture'),
+      'ds-fixture-1': polledObservation('one'),
+    },
+  });
+  const { layer, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.deepEqual(source.calls.observations, ['ds-fixture-1']);
+    t.mock.timers.tick(15_000);
+    await settle();
+    assert.deepEqual(source.calls.observations, ['ds-fixture-1', 'ds-fixture-1']);
+  });
+});
+
+test('[osh-074] a system that holds only a video datastream gets no poll and no live stream', async (t) => {
+  const source = fakeSource({
+    live: true,
+    video: true,
+    datastreams: [videoDatastream()],
+    observations: { 'ds-fixture-v1': polledObservation('picture') },
+  });
+  const { layer, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.deepEqual(source.calls.observations, []);
+    assert.equal(source.calls.live.length, 0);
+  });
+});
+
+test('[osh-088] the detail that the layer writes shows Video for a video datastream and No data for the others', async (t) => {
+  const source = fakeSource({ video: true, datastreams: [videoDatastream(), ...liveDatastreams(1)] });
+  const { layer, detailHost, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    const blocks = detailBlocks(detailHost);
+    assert.equal(blocks.length, 2);
+    assert.match(blocks[0], /Camera One/);
+    assert.match(blocks[0], /Video/);
+    assert.doesNotMatch(blocks[0], /No data/);
+    assert.match(blocks[1], /No data/);
+    assert.doesNotMatch(blocks[1], /Video/);
   });
 });
