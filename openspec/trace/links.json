@@ -849,6 +849,9 @@
   "osh-032": [
     "src/layers/osh/detail.test.mjs › [osh-032] Placed by falls back to an em dash for a datastream with no name",
     "src/layers/osh/detail.test.mjs › [osh-032] a datastream at the freshness threshold is not marked old",
+    "src/layers/osh/detail.test.mjs › [osh-032] a feature header with no name shows the feature's id, never the host's name",
+    "src/layers/osh/detail.test.mjs › [osh-032] a feature placed by a stream shows Placed by with the datastream's name and the age",
+    "src/layers/osh/detail.test.mjs › [osh-032] a feature with no placedBy shows no Placed by line",
     "src/layers/osh/detail.test.mjs › [osh-032] a negative age is fresh and renders as a plain age, not old",
     "src/layers/osh/detail.test.mjs › [osh-032] a negative ageMs within the clock skew reads `0 s`",
     "src/layers/osh/detail.test.mjs › [osh-032] a null ageMs reads \"age unknown\", takes the class, and never takes the word old",
@@ -937,6 +940,7 @@
   ],
   "osh-042": [
     "src/data/oshSystems.test.mjs › [osh-042] a feature never places its host system, and a system never places a feature",
+    "src/data/oshSystems.test.mjs › [osh-042] a feature that a location moves carries the location's datastreamId, datastreamName, phenomenonTime and ageMs",
     "src/data/oshSystems.test.mjs › [osh-042] a fresh location moves a feature it finds by foiId or by foiUid, and is dropped for an unknown feature",
     "src/data/oshSystems.test.mjs › [osh-042] a fresh location naming an unknown feature is dropped entirely — it never places its own systemId as a fallback",
     "src/data/oshSystems.test.mjs › [osh-042] a fresh location whose system has no record still gives a placed system with name:null",
@@ -1126,6 +1130,33 @@
     "src/data/oshLayer.test.mjs › [osh-057] getStats().placed.stream counts only the stream-placed system, not the geometry-placed one",
     "src/data/oshLayer.test.mjs › [osh-057] only a location with systemName:null gives the id as the label",
     "src/data/oshLayer.test.mjs › [osh-057] the detail for a selected stream-placed placeholder shows Placed by, with the name the location carries"
+  ],
+  "osh-058": [
+    "src/data/oshSystems.test.mjs › [osh-058] a fresh location that names an unheld feature draws that feature at the location",
+    "src/data/oshSystems.test.mjs › [osh-058] a held feature is moved, not drawn a second time",
+    "src/data/oshSystems.test.mjs › [osh-058] a location that is not fresh draws no feature",
+    "src/data/oshSystems.test.mjs › [osh-058] a location with both keys draws a feature keyed by foiId",
+    "src/data/oshSystems.test.mjs › [osh-058] a location with foiUid alone draws a feature keyed by the uid",
+    "src/data/oshSystems.test.mjs › [osh-058] a second call with no such location gives no such feature",
+    "src/data/oshSystems.test.mjs › [osh-058] the drawn feature has the stream-placed shape: foiUid as uid, the location's systemId, null name, description and validTime",
+    "src/data/oshSystems.test.mjs › [osh-058] the drawn feature's location leaves systems and unplaced unchanged",
+    "src/data/oshSystems.test.mjs › [osh-058] the newer of two fresh locations that name one unheld feature wins, and one feature is drawn"
+  ],
+  "osh-059": [
+    "src/data/oshLayer.test.mjs › [osh-059] a click on a stream-drawn feature selects its host and starts the datastream poll",
+    "src/data/oshLayer.test.mjs › [osh-059] a refresh with no fresh location for a stream-drawn feature removes its entity and clears its selection",
+    "src/data/oshLayer.test.mjs › [osh-059] a selected stream-drawn feature keeps its selection across a refresh that still draws it",
+    "src/data/oshLayer.test.mjs › [osh-059] a system with no Point that only an unheld-feature location names counts under unplaced",
+    "src/data/oshLayer.test.mjs › [osh-059] destroy() forgets the stream-drawn feature and zeroes placed.streamFeatures",
+    "src/data/oshLayer.test.mjs › [osh-059] placed.streamFeatures counts the stream-drawn feature and not the held feature a stream moved",
+    "src/data/oshLayer.test.mjs › [osh-059] the detail for a selected stream-drawn feature shows its id, its host id and Placed by with the location's age",
+    "src/data/oshLayer.test.mjs › [osh-059] the detail for a selected stream-drawn feature with no host shows Placed by with the datastream name and age",
+    "src/data/oshLayer.test.mjs › [osh-059] the location's systemName never becomes the label of a stream-drawn feature",
+    "src/data/oshLayer.test.mjs › [osh-059] the map holds osh-foi:<id> for a stream-drawn feature at the location's position, with no label, and getStats().features counts it",
+    "src/data/oshLayer.test.mjs › [osh-059] three fresh unheld features of one host at one position give three entities, with no grouping"
+  ],
+  "osh-060": [
+    "src/data/oshLayer.test.mjs › [osh-060] one entity id across a held refresh, a failed features read and a restored read, and none once the location is gone"
   ],
   "osh-061": [
     "src/data/oshLayer.test.mjs › [osh-061] a feature entity keeps its own altitude",

@@ -1040,7 +1040,7 @@
     "change": "osh-fusion"
   },
   "osh-032": {
-    "hash": "29181dbee44edda7c33fdba1231b6c46f6c35c8e1466e50f6cce57d33057ec14",
+    "hash": "4914e73b81c46e5b33d5b8bd8a240ee1532213ef2cd5499c73d1b490ee74e6a5",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -1090,7 +1090,7 @@
     "change": "osh-geo-discovery"
   },
   "osh-042": {
-    "hash": "e3fb0b124a999608304f2e79c1920e4086ddf707b6d3545aa38ecdafb3d887e5",
+    "hash": "0356eeae590125d710fe82ccdb680da9197534a30baef8cce4a5f034fed9b572",
     "since": "2026-09-18",
     "change": "osh-geo-discovery"
   },
@@ -1165,9 +1165,24 @@
     "change": "osh-location-streams"
   },
   "osh-057": {
-    "hash": "daeb05fd9ed1df0f3bc7ef4e214eab09fb908a6e4795545abcbfa3d12703f554",
+    "hash": "73417c54800563e0bfcd4f78284c2d74fee1ac6700ec0f5f559ff9b8478741a3",
     "since": "2026-09-19",
     "change": "osh-location-streams"
+  },
+  "osh-058": {
+    "hash": "356620236d8ed403cb50eb48cc666ec031d4897f6390c1e4841ae82b993bb5bb",
+    "since": "2026-09-24",
+    "change": "osh-draw-unheld-features"
+  },
+  "osh-059": {
+    "hash": "9d166fbd68a3e91ee8210aba1ef452b37830a43079914d53dc592e8c5270c5b1",
+    "since": "2026-09-24",
+    "change": "osh-draw-unheld-features"
+  },
+  "osh-060": {
+    "hash": "8b790a82037370835d232499696d31babf24903c6c5476f7d36c1d3d87073f93",
+    "since": "2026-09-24",
+    "change": "osh-draw-unheld-features"
   },
   "osh-061": {
     "hash": "a758aeb66a9a856a94deaa591f6d06eda9e6128bc52d936cacc43a81e1ac389b",
