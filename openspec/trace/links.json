@@ -1232,7 +1232,7 @@
     "src/data/oshLive.test.mjs › [osh-069] an event of a socket that the entry no longer holds changes nothing",
     "src/data/oshLive.test.mjs › [osh-069] the client receives open each time the socket opens, and down each time it closes",
     "src/data/oshLive.test.mjs › [osh-069] the delays before a new socket are 1, 2, 4, 8, 16 and 30 seconds",
-    "src/data/oshLive.test.mjs › [osh-069] the hub clears the wait for a new socket when the entry drops after the last client leaves",
+    "src/data/oshLive.test.mjs › [osh-069] the hub clears the timer of the next socket when it removes the entry after the last client leaves",
     "src/data/oshLive.test.mjs › [osh-069] the hub does not open a new socket after a socket closes while no client listens",
     "src/data/oshLive.test.mjs › [osh-069] the response carries a heartbeat comment every 20 seconds",
     "src/data/oshLive.test.mjs › [osh-069] the route writes the response head before the event open of a client that joins an open socket"

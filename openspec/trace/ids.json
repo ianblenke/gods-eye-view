@@ -900,7 +900,7 @@
     "change": "osh-fusion"
   },
   "osh-004": {
-    "hash": "68b378a7cb28a615f078768b312138f7ed732d30cecac27bc12747314c842d6f",
+    "hash": "465f10f78426ad1287ac02881f871e59f79269a7ec0563acc2f6088ff879fdf5",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -1255,7 +1255,7 @@
     "change": "osh-live-observations"
   },
   "osh-075": {
-    "hash": "ccc6c06570a24ec50e5ca56cd8ffbd54901be2e4524d8a7565ff3fb5967491a1",
+    "hash": "d8efe4458954c52260d0e0f3510b53286d5ca8e63bb0c7f3c8a607a9e8ee0cb5",
     "since": "2026-09-24",
     "change": "osh-live-observations"
   },
