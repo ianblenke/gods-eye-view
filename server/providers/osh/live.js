@@ -7,7 +7,8 @@ import { mapOshObservation, oshObservationAgeMs } from '../../../src/data/oshObs
  * every client of that datastream, and relays each frame to those clients
  * as a server-sent event. It only listens: no file of the provider uses the
  * name `send`, and oshOpenStream() in get.js is the only place that builds a
- * socket. The close frame of a socket that the hub closes is its only frame.
+ * socket. The runtime sends only control frames: a pong for each ping, and a
+ * close frame when a socket closes.
  *
  * A client is `{start, write, end}`. `start()` writes the response head
  * and runs once, before the first `write()`. Every event is `event: <name>`

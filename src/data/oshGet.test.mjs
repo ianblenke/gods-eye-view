@@ -32,7 +32,7 @@ test('[osh-004] sends one GET request with no body and an abort signal', async (
   assert.deepEqual(result, { status: 200, json: { items: [] } });
 });
 
-test('[osh-004] opens one WebSocket from the URL and an option object that holds only headers, so the handshake is a GET with no body', () => {
+test('[osh-004] oshOpenStream() gives the constructor the URL and an option object with only headers, so the handshake has no body', () => {
   const calls = [];
   class RecordingSocket {
     constructor(url, options) {

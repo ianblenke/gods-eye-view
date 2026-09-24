@@ -425,7 +425,7 @@ test('[osh-066] a text frame gives the same observation event', async (t) => {
   assert.deepEqual(events[1].data, EXPECTED_OBSERVATION);
 });
 
-test('[osh-066] a frame that is not JSON or has no result gives no event, and the stream stays open', async (t) => {
+test('[osh-066] a frame of 65536 bytes or less that is not JSON or has no result gives no event, and the stream stays open', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const client = fakeClient();
@@ -500,7 +500,7 @@ test('[osh-066] a frame of more than 65536 bytes that holds an observation close
   }
 });
 
-test('[osh-066] a frame of more than 65536 bytes closes the socket and sends the event unsupported, whatever it holds', async (t) => {
+test('[osh-066] a frame of more than 65536 bytes closes the socket and sends the event unsupported, with any content', async (t) => {
   const noResult = { phenomenonTime: FRAME.phenomenonTime, resultTime: FRAME.resultTime };
   for (const [label, makeData] of [
     ['a binary frame that is not JSON', () => new Uint8Array(65_537).fill(0xff).buffer],
@@ -705,6 +705,36 @@ test('[osh-068] a seventeenth client for one datastream gets live_busy, and the 
   assert.deepEqual(rig.hub.join(DS, streamOf(), fakeClient()), { error: 'live_busy' });
 });
 
+test('[osh-068] a datastream keeps its place until two seconds after its last client leaves', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  const joined = [];
+  for (let index = 1; index <= 8; index += 1) {
+    const id = `ds-fixture-${index}`;
+    joined.push(rig.hub.join(id, streamOf(id), fakeClient()));
+  }
+  joined[0].leave();
+  rig.timers.advance(1999);
+  assert.deepEqual(rig.hub.join('ds-fixture-9', streamOf('ds-fixture-9'), fakeClient()), { error: 'live_busy' });
+  rig.timers.advance(1);
+  assert.equal(typeof rig.hub.join('ds-fixture-9', streamOf('ds-fixture-9'), fakeClient()).leave, 'function');
+  assert.equal(rig.sockets.instances.length, 9);
+});
+
+test('[osh-068] a datastream keeps its place while its socket waits to try again', async (t) => {
+  const rig = makeRig();
+  t.after(() => rig.hub.close());
+  for (let index = 1; index <= 8; index += 1) {
+    const id = `ds-fixture-${index}`;
+    rig.hub.join(id, streamOf(id), fakeClient());
+  }
+  for (const socket of rig.sockets.instances) socket.emit('close', { code: 1006 });
+  const ninth = fakeClient();
+  assert.deepEqual(rig.hub.join('ds-fixture-9', streamOf('ds-fixture-9'), ninth), { error: 'live_busy' });
+  assert.equal(ninth.started, 0);
+  assert.equal(rig.sockets.instances.length, 8);
+});
+
 test('[osh-069] the client receives open each time the socket opens, and down each time it closes', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
@@ -817,7 +847,7 @@ test('[osh-069] a socket that stays open for 30 seconds resets the delay', async
   fail(2);
 });
 
-test('[osh-069] a retry that waits when the last client leaves is cleared with the entry', async (t) => {
+test('[osh-069] the hub clears the wait for a new socket when the entry drops after the last client leaves', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const joined = rig.hub.join(DS, streamOf(), fakeClient());
@@ -836,7 +866,7 @@ test('[osh-069] a retry that waits when the last client leaves is cleared with t
   assert.equal(rig.sockets.instances.length, 4, 'a new client starts a new socket');
 });
 
-test('[osh-069] a socket that closes before 30 seconds open leaves no timer that resets the delay', async (t) => {
+test('[osh-069] a socket that closes less than 30 seconds after it opens leaves no timer that resets the delay', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   rig.hub.join(DS, streamOf(), fakeClient());
@@ -1053,7 +1083,7 @@ function opcodesOf(chunk) {
 }
 
 async function startUpstream(t, { frames = [] } = {}) {
-  const seen = { handshakes: [], requests: [], clientOpcodes: [], firstClientByteAt: 0 };
+  const seen = { handshakes: [], requests: [], clientOpcodes: [], closeFrameAt: 0 };
   const waiters = [];
   const upgraded = new Set();
   const server = http.createServer((req, res) => {
@@ -1090,9 +1120,15 @@ async function startUpstream(t, { frames = [] } = {}) {
       ].join('\r\n'),
     );
     socket.on('data', (chunk) => {
-      if (!seen.firstClientByteAt) seen.firstClientByteAt = Date.now();
-      seen.clientOpcodes.push(...opcodesOf(chunk));
-      for (const waiter of waiters.splice(0)) waiter();
+      const opcodes = opcodesOf(chunk);
+      if (opcodes.includes(8) && !seen.closeFrameAt) seen.closeFrameAt = Date.now();
+      seen.clientOpcodes.push(...opcodes);
+      for (const waiter of [...waiters]) {
+        if (seen.clientOpcodes.length >= waiter.count) {
+          waiters.splice(waiters.indexOf(waiter), 1);
+          waiter.done();
+        }
+      }
     });
     for (const frame of frames) socket.write(frame);
   });
@@ -1106,17 +1142,20 @@ async function startUpstream(t, { frames = [] } = {}) {
   return {
     seen,
     port: server.address().port,
-    /** Resolve when the client has sent its first bytes, which are the close frame. */
-    clientBytes: () =>
+    /** Resolve when the client has sent `count` frames. */
+    clientFrames: (count) =>
       new Promise((resolve, reject) => {
-        if (seen.clientOpcodes.length > 0) {
+        if (seen.clientOpcodes.length >= count) {
           resolve();
           return;
         }
         const timer = setTimeout(() => reject(new Error('the client sent no frame in time')), 8000);
-        waiters.push(() => {
-          clearTimeout(timer);
-          resolve();
+        waiters.push({
+          count,
+          done: () => {
+            clearTimeout(timer);
+            resolve();
+          },
         });
       }),
   };
@@ -1192,6 +1231,7 @@ delete OBSERVATION_WITHOUT_AGE.ageMs;
 
 test('[osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays frames, and the socket closes after the client leaves', async (t) => {
   const frames = [
+    wsFrame(9, Buffer.from('ping')),
     wsFrame(2, Buffer.from(JSON.stringify(FRAME))),
     wsFrame(1, Buffer.from(JSON.stringify(FRAME))),
     wsFrame(2, Buffer.from('not json')),
@@ -1228,14 +1268,15 @@ test('[osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no me
   assert.equal(handshake.headers.authorization, `Basic ${SECRET_TOKEN}`);
   assert.equal(handshake.url, `/api/datastreams/${DS}/observations?f=application%2Fom%2Bjson`);
   assert.ok(upstream.seen.requests.every((seen) => seen.method === 'GET'));
-  assert.deepEqual(upstream.seen.clientOpcodes, [], 'the provider sent no frame while it listened');
+  await upstream.clientFrames(1);
+  assert.deepEqual(upstream.seen.clientOpcodes, [10], 'the runtime answered the ping with a pong, and no message frame followed');
   const left = Date.now();
   request.destroy();
-  await upstream.clientBytes();
-  const waited = upstream.seen.firstClientByteAt - left;
+  await upstream.clientFrames(2);
+  const waited = upstream.seen.closeFrameAt - left;
   assert.ok(waited >= 1900, `the socket closed after ${waited} ms, too early`);
   assert.ok(waited < 6000, `the socket closed after ${waited} ms, too late`);
-  assert.deepEqual(upstream.seen.clientOpcodes, [8], 'the only frame is the close frame');
+  assert.deepEqual(upstream.seen.clientOpcodes, [10, 8], 'the frames are the pong and the close frame, and both are control frames');
 });
 
 test('[osh-066] a loopback server sends a frame of 70000 bytes, and the route gives unsupported and ends the stream', async (t) => {
@@ -1250,7 +1291,7 @@ test('[osh-066] a loopback server sends a frame of 70000 bytes, and the route gi
     parseWire(text).map((event) => event.name),
     ['open', 'observation', 'unsupported'],
   );
-  await upstream.clientBytes();
+  await upstream.clientFrames(1);
   assert.deepEqual(upstream.seen.clientOpcodes, [8]);
   assert.equal(upstream.seen.handshakes[0].headers.authorization, undefined);
 });

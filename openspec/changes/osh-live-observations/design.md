@@ -33,9 +33,9 @@ The route is `GET /api/osh/live?datastream=<id>`. Its answer has the type `text/
 
 The hub closes the upstream socket two seconds after the last client leaves. A client that joins within those two seconds keeps the socket. This stops a new socket for each quick selection.
 
-The limits are eight upstream sockets in all, and sixteen clients for each datastream. A datastream holds its place from its first client until two seconds after its last client leaves. This includes the time while its socket connects or waits to try again. A client beyond a limit gets `503` with `{error:'live_busy'}`, and the hub opens no socket for it.
+The limits are eight datastreams in all, and sixteen clients for each datastream. A datastream counts toward the limit of eight from its first client until two seconds after its last client leaves. This includes the time while its socket connects or waits to try again. A client beyond a limit gets `503` with `{error:'live_busy'}`, and the hub opens no socket for it.
 
-The hub closes with the HTTP server, as the AIS provider does. A restart of the server in the same process then leaves no timer and no socket (`osh-075`). `close()` ends each client, clears each timer and closes each open socket.
+The hub closes when the HTTP server closes, and the AIS provider does the same. When the server starts again in the same process, no timer and no socket of the old server stay (`osh-075`). `close()` ends each client, clears each timer and closes each socket that the hub holds.
 
 ### D66 The handshake is a GET request and the provider sends no message frame
 
@@ -43,13 +43,13 @@ The hub closes with the HTTP server, as the AIS provider does. A restart of the 
 
 A local test on Node 24.21 and on Node 26 shows three facts. The header reaches the server, the method is GET, and the binary frame arrives as an `ArrayBuffer`. No file uses the name `send`, and a test scans the source for that word. The hub takes the constructor as an injected option, so a test can record the call.
 
-The provider closes a socket with `close()`, and the runtime sends the close frame. That is the only frame that the provider sends. `assertLiveUrl()` re-checks the built URL against the root and the id, as the other builders do. The scheme is `ws` for an `http` root and `wss` for an `https` root.
+The runtime sends only control frames: a pong for each ping of the server, and a close frame when a socket closes. The provider sends no message frame. `assertLiveUrl()` re-checks the built URL against the root and the id, as the other builders do. The scheme is `ws` for an `http` root and `wss` for an `https` root.
 
 ### D67 Each frame becomes the observation of osh-022
 
 The hub decodes the frame as UTF-8, whether the frame is binary or text. It parses the JSON and needs an object with a `result` field. It then calls `mapOshObservation()` with the frame and the schema reader that the observation route uses. The result has `phenomenonTime`, `resultTime`, `rows` and `location`. The hub adds `ageMs` when it sends the event.
 
-The hub checks the size of a frame first. A frame of more than 65536 bytes closes the upstream socket, whatever the frame holds. The hub then ends the response of each client and refuses the datastream for ten minutes. A request in that time gets `503` with `{error:'live_unsupported'}`. The event `unsupported` comes before the end.
+The hub checks the size of a frame first. A frame of more than 65536 bytes closes the upstream socket, with any content. The hub then ends the response of each client and refuses the datastream for ten minutes. A request in that time gets `503` with `{error:'live_unsupported'}`. The event `unsupported` comes before the end.
 
 This protects the provider from a video datastream, which sends large frames that are not JSON. A frame of 65536 bytes or less that is not JSON, or has no `result`, gives no event.
 
@@ -61,17 +61,17 @@ While a client listens and the socket is down, the hub opens a new socket. It wa
 
 ### D69 No configured value in an event or a log line
 
-An event has only the four names above and an observation. A failure logs a fixed text with the close code of the socket, when there is one. When the constructor throws, the text has no code. The text never contains the URL, the user name or the password, as `osh-008` says.
+An event has only the four names above and an observation. A failure logs a fixed text with the close code of the socket. An `error` event has no code, so the text says `code 0`. When the constructor throws, the text has no code. The text never contains the URL, the user name or the password, as `osh-008` says.
 
 ### D70 The browser source and the layer
 
-`createOshSource()` has the method `openLive()`. It takes a datastream id and four callbacks: `onObservation`, `onOpen`, `onDown` and `onUnsupported`. It creates one `EventSource` for the same-origin live route and returns an object with `close()`. The method is optional. A source without it keeps the poll of today.
+`createOshSource()` has the method `openLive()`. It takes a datastream id and four callbacks: `onObservation`, `onOpen`, `onDown` and `onUnsupported`. It creates one `EventSource` for the same-origin live route and returns an object with `close()`. The method is optional. A source without it keeps the poll that it has without this change.
 
-The layer starts one stream for each datastream of the selected system, at most three. It starts them when `pollSelected()` first knows the datastreams. Each stream holds one connection for its whole life. A browser keeps about six connections to one origin over HTTP/1.1, and the other requests to the server need the rest. So the limit is three, and the layer polls the other datastreams (`osh-live-stream-cap`).
+The layer starts one stream for each datastream of the selected system, at most three. It starts them when `pollSelected()` first knows the datastreams. Each stream holds one connection for its whole life. A browser allows about six connections to one origin over HTTP/1.1, and the other requests to the server need the rest. So the limit is three, and the layer polls the other datastreams (`osh-live-stream-cap`).
 
 A stream is open from its event `open` until its event `down` or `unsupported`. A live observation replaces the observation of its datastream in the detail. The layer moves the entity when the location is fresh and the observation is not ahead of the clock.
 
-A datastream whose stream is open, and for which the layer holds an observation, gets no poll. Every other datastream keeps the poll of today. So a slow datastream shows its newest observation from the poll, and the stream then keeps that observation current. A new selection, a click on empty space and `destroy()` close every stream.
+A datastream whose stream is open, and for which the layer holds an observation, gets no poll. Every other datastream keeps the poll that it has without this change. So a slow datastream shows its newest observation from the poll, and the stream then keeps that observation current. A new selection, a click on empty space and `destroy()` close every stream.
 
 ### D71 How the gates measure this change
 
@@ -81,15 +81,15 @@ The server tests use a hand-made WebSocket server on the loopback address. It ac
 
 ## Risks / Trade-offs
 
-- **The provider holds more open connections.** Accepted. The limits are eight sockets in all and sixteen clients for each datastream, and the last client closes the socket.
-- **A stream can stay open on a socket that no longer works.** Accepted, and named as `osh-live-silent-upstream`. The hub has no timer for silence, because a datastream can stay silent for a long time. The event `down` comes only after a close or an error. While the stream is open and the layer holds an observation, the layer does not poll. So the detail keeps the last observation and the age that the hub sent.
+- **The provider holds more open connections.** Accepted. The limits are eight datastreams in all and sixteen clients for each datastream, and the last client closes the socket.
+- **A stream can stay open on a socket that no longer works.** Accepted, and named as `osh-live-silent-upstream`. The hub has no timer for a socket that sends no data, because a datastream can send no data for a long time. The event `down` comes only when the socket closes or fails. While the stream is open and the layer holds an observation, the layer does not poll. So the detail keeps the last observation and the age that the hub sent.
 - **Each stream holds one browser connection.** Accepted, and named as `osh-live-stream-cap`. The layer starts at most three streams, so the other requests keep the rest of the connections.
 - **The `headers` option is an extension of Node.** Accepted and named as `osh-live-header-extension`. A test checks the header on the pinned Node version.
 - **The relay adds a second path to the same observations.** Accepted. Both paths use `mapOshObservation()`, so a frame and a poll give the same shape.
 
 ## Migration Plan
 
-None. The route is new. A source without `openLive()` keeps the poll of today.
+None. The route is new. A source without `openLive()` keeps the poll that it has without this change.
 
 ## Open Questions
 
