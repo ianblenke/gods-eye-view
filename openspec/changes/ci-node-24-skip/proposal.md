@@ -9,11 +9,12 @@ Each other test of this file that runs the gates has the option `GUARDED_RUN`. T
 ## What Changes
 
 - Add `GUARDED_RUN` to the two tests as the options argument.
+- Add the names of the two tests to the list of skipped tests that the test `[coverage-gate-046]` pins.
 - No test name changes. No assertion changes. No code file changes. No spec delta.
 
 ## Impact
 
-- Changed test file: `src/tooling/spec/gates.test.mjs`.
+- Changed test files: `src/tooling/spec/gates.test.mjs` and `src/tooling/spec/testGuard.test.mjs`.
 - On Node 24.14.0, the two tests skip. On Node 24.21.0 and Node 26, they run as before.
 - Gaps that this change opens or closes: none.
 

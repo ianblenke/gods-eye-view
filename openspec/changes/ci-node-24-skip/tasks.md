@@ -2,8 +2,9 @@
 
 - [x] 1.1 Add `GUARDED_RUN` to the test `[coverage-gate-049]` that stops for a live timer.
 - [x] 1.2 Add `GUARDED_RUN` to the test `[coverage-gate-050]`.
-- [x] 1.3 Run the file `src/tooling/spec/gates.test.mjs`.
-- [x] 1.4 Confirm that every test keeps its name and its assertions.
+- [x] 1.3 Add the names of the two tests to the list in the test `[coverage-gate-046]`.
+- [x] 1.4 Run the files `src/tooling/spec/gates.test.mjs` and `src/tooling/spec/testGuard.test.mjs`.
+- [x] 1.5 Confirm that every test keeps its name and its assertions.
 
 ## 2. Gates and review
 

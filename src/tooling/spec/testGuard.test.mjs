@@ -441,6 +441,8 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
       "[coverage-gate-043] stops the check for a code file that imports a test file",
       "[gap-ledger-079] records a coverage waiver, allows the rise in the ratchet command and passes the check",
       "[gap-ledger-080] stops the waive command for a fault in its options",
+      "[coverage-gate-049] stops for a test that leaves a live timer",
+      "[coverage-gate-050] does not stop for a test process without a live timer",
       "[coverage-gate-049] stops for a real child process that leaves a live timer, with no stub"
   ]);
   // Each test that needs the guard to count assertions gets its skip option from the real

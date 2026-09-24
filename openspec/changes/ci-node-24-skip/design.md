@@ -21,9 +21,13 @@ The two tests of this change run the gates on a fixture. On Node 24.14.0 the run
 
 Each other test of the file that needs the guard uses `GUARDED_RUN`. The two tests get the same option. A skip is the existing way to handle a Node version without the function. A change of the workflow matrix or of the guard is a larger change with its own risk.
 
+### D2 Keep the list of skipped tests true
+
+The test `[coverage-gate-046]` in `src/tooling/spec/testGuard.test.mjs` pins the exact list of tests that carry `GUARDED_RUN`. It checks the scenario `coverage-gate-046`: each test that needs the guard has a skip reason, and the other tests have none. The two tests need the guard, because they run the gates on a fixture. So the pinned list gets their two names, in the order of the file. The text of the scenario does not change.
+
 ## How the gates measure this change
 
-Coverage: no code file changes. Trace: no test name changes, and the ratchet has nothing to record. The job "Node 24.14.0" of the CI workflow is the acceptance test. It must pass on the push of this change.
+Coverage: no code file changes. Trace: no test name changes, and the ratchet has nothing to record. The test `[coverage-gate-046]` fails without the two new names in its list, and it passes with them. The job "Node 24.14.0" of the CI workflow is the acceptance test. It must pass on the push of this change.
 
 ## Risks / Trade-offs
 
