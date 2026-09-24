@@ -24,6 +24,7 @@ const PROVIDER_FILES = [
   'src/layers/osh/index.js',
   'src/layers/osh/source.js',
   'src/layers/osh/detail.js',
+  'src/layers/osh/videoPlayer.js',
 ];
 
 /**

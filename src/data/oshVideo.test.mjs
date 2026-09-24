@@ -49,7 +49,7 @@ test('[osh-083] the reader returns the time stamp in milliseconds and the H.264 
   assert.equal(empty.data.length, 0);
 });
 
-test('[osh-083] the reader gives null for a message with a wrong length field, a short message or a time stamp that is not a number', () => {
+test('[osh-083] the reader gives null for a message with a wrong length field, a short message or a time stamp that is not a finite number', () => {
   const data = annexB([IDR]);
   assert.equal(readOshVideoMessage(message(data, { length: data.length + 1 })), null);
   assert.equal(readOshVideoMessage(message(data, { length: data.length - 1 })), null);
@@ -60,7 +60,7 @@ test('[osh-083] the reader gives null for a message with a wrong length field, a
   assert.equal(readOshVideoMessage(message(data, { seconds: Number.POSITIVE_INFINITY })), null);
 });
 
-test('[osh-083] the reader reads a message that is a view into a larger buffer', () => {
+test('[osh-083] the reader reads a message that is a part of a larger buffer', () => {
   const data = annexB([DELTA]);
   const whole = message(data);
   const padded = new Uint8Array(whole.length + 10);
@@ -94,13 +94,20 @@ test('[osh-083] the type of a NAL unit is the low five bits of its first byte', 
   assert.equal(nalTypeOf(IDR), 5);
   assert.equal(nalTypeOf(DELTA), 1);
   assert.equal(nalTypeOf(Uint8Array.from([0xe5])), 5);
+  // Bit 4 is set in these bytes, so a mask of four bits would give another type.
+  assert.equal(nalTypeOf(Uint8Array.from([0x74])), 20);
+  assert.equal(nalTypeOf(Uint8Array.from([0x75])), 21);
+  assert.equal(nalTypeOf(Uint8Array.from([0x10])), 16);
+  assert.equal(nalTypeOf(Uint8Array.from([0x1f])), 31);
+  assert.equal(nalTypeOf(Uint8Array.from([0x60])), 0);
 });
 
-test('[osh-083] a list of NAL units is a key list only when it holds a NAL unit of type 5', () => {
+test('[osh-083] hasKeyNal is true for a list of NAL units only when the list holds a NAL unit of type 5', () => {
   assert.equal(hasKeyNal([SPS, PPS, IDR]), true);
   assert.equal(hasKeyNal([DELTA, DELTA]), false);
   assert.equal(hasKeyNal([SEI, AUD]), false);
   assert.equal(hasKeyNal([]), false);
+  assert.equal(hasKeyNal([Uint8Array.from([0x75])]), false, 'type 21 is not type 5');
 });
 
 test('[osh-083] a whole message is a key message only when it is valid and holds an IDR slice', () => {
@@ -122,13 +129,13 @@ test('[osh-083] the parameter sets are the first SPS and the first PPS of the li
   assert.equal(findParameterSets([PPS]).sps, null);
 });
 
-test('[osh-083] the codec string is avc1 and the three bytes after the NAL header of the SPS in hexadecimal', () => {
+test('[osh-083] the codec string is avc1 and the three bytes after the NAL header of the SPS in capital hexadecimal digits', () => {
   assert.equal(codecStringOf(SPS), 'avc1.4D001F');
   assert.equal(codecStringOf(Uint8Array.from([0x67, 0x42, 0xc0, 0x0a])), 'avc1.42C00A');
   assert.equal(codecStringOf(Uint8Array.from([0x67, 0x64, 0x00, 0x28])), 'avc1.640028');
 });
 
-test('[osh-083] the avcC record holds the profile bytes, the length of the SPS and the length of the PPS', () => {
+test('[osh-083] the avcC record has the version byte, the profile bytes, the SPS with its length and the PPS with its length', () => {
   const config = buildAvcConfig(SPS, PPS);
   assert.deepEqual(
     [...config],
@@ -153,6 +160,12 @@ test('[osh-083] the sample holds the slice NAL units only, each with its length 
   const bigSample = toAvccSample([big]);
   assert.deepEqual([...bigSample.subarray(0, 4)], [0, 1, 0x11, 0x70]);
   assert.equal(bigSample.length, 70_004);
+});
+
+test('[osh-083] the sample leaves out a NAL unit of type 0 and an empty NAL unit', () => {
+  const zero = Uint8Array.from([0x00, 0x11]);
+  assert.deepEqual([...toAvccSample([zero, new Uint8Array(0), IDR])], [0, 0, 0, 5, ...IDR]);
+  assert.equal(toAvccSample([zero, new Uint8Array(0)]), null);
 });
 
 test('[osh-083] the sample is null when the list holds no slice', () => {

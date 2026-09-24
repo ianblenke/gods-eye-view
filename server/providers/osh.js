@@ -19,7 +19,7 @@ import {
   systemUrl,
   videoUrl,
 } from './osh/ids.js';
-import { createOshLiveHub } from './osh/live.js';
+import { createOshLiveHub, OSH_LIVE_MAX_CLIENT_BUFFER_BYTES } from './osh/live.js';
 import {
   OBS_TTL_MS,
   createOshKeyedCache,
@@ -710,7 +710,15 @@ export function oshProxy({
               res.writeHead(200, OSH_LIVE_HEADERS);
               res.flushHeaders();
             },
-            write: (text) => res.write(text),
+            write(text) {
+              // A client that stops reading would make the response hold every message. Past
+              // the limit the response ends, and the browser opens the stream again.
+              if (res.writableLength > OSH_LIVE_MAX_CLIENT_BUFFER_BYTES) {
+                res.destroy();
+                return false;
+              }
+              return res.write(text);
+            },
             end: () => res.end(),
           });
           if (joined.error) {

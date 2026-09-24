@@ -217,7 +217,7 @@ test('[osh-076] a coverage result with no RasterImage property gives no video ke
   for (const record of records) assert.equal(Object.hasOwn(record, 'video'), false, record.id);
 });
 
-test('[osh-076] the name is the whole last path segment of the definition, so a longer name or another segment gives no video key', () => {
+test('[osh-076] the name must be exactly RasterImage in letter case and in length, so a longer name, another case or another segment gives no video key', () => {
   const definitions = [
     'http://sensorml.com/ont/swe/property/MyRasterImage',
     'http://sensorml.com/ont/swe/property/RasterImages',
@@ -238,7 +238,7 @@ test('[osh-076] the name is the whole last path segment of the definition, so a 
   }
 });
 
-test('[osh-076] the adapter reads the name after a slash, a hash sign or a colon, and ignores a slash at the end', () => {
+test('[osh-076] the adapter reads the name after a slash, a hash sign or a colon, and ignores a slash at the end of the definition', () => {
   const definitions = [
     RASTER,
     'https://vocabulary.example/def/RasterImage',

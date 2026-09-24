@@ -386,7 +386,7 @@ test('[osh-088] a video datastream with no name shows its id', () => {
   assert.match(html, /osh-detail-video">Video</);
 });
 
-test('[osh-088] a video datastream sits next to a datastream that has no video mark', () => {
+test('[osh-088] a video datastream and a datastream with no video mark show separate blocks', () => {
   const html = renderOshDetail({
     system: { id: 'sys-fixture-1' },
     datastreams: [

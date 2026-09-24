@@ -6,11 +6,11 @@ import { isOshVideoKeyMessage, readOshVideoMessage } from '../../../src/data/osh
  * The live relay of the OpenSensorHub provider (design decisions D65 to
  * D69, and D73 to D75 for video). The hub keeps one upstream WebSocket for
  * each datastream and each kind, shared by every client of that entry, and
- * relays each frame to those clients as a server-sent event. It only
- * listens: no file of the provider uses the name `send`, and
- * oshOpenStream() in get.js is the only place that builds a socket. The
- * runtime sends only control frames: a pong for each ping, and a close frame
- * when a socket closes.
+ * relays each message to those clients as a server-sent event. It only
+ * listens: no scanned file of the provider uses the name `send` outside a
+ * comment, and oshOpenStream() in get.js is the only place that builds a
+ * socket. The runtime writes only control frames to the upstream: a pong for
+ * each ping, and a close frame when a socket closes.
  *
  * A client is `{start, write, end}`. `start()` writes the response head
  * and runs once, before the first `write()`. Every event is `event: <name>`
@@ -20,7 +20,7 @@ import { isOshVideoKeyMessage, readOshVideoMessage } from '../../../src/data/osh
  *
  * An entry has a kind. The kind `observation` relays each JSON frame as an
  * observation. The kind `video` relays each binary video message as a
- * `frame` event, and it keeps the frames since the last key message for a
+ * `frame` event, and it keeps the messages from the last key message on for a
  * client that joins late. The two kinds of one datastream id are two
  * entries, with two sockets.
  */
@@ -32,8 +32,10 @@ export const OSH_LIVE_MAX_CLIENTS = 16;
 export const OSH_LIVE_MAX_FRAME_BYTES = 65_536;
 /** A video message over this many bytes closes the socket. A key picture is larger than an observation. */
 export const OSH_VIDEO_MAX_MESSAGE_BYTES = 2_097_152;
-/** The frames since the last key message stay only while they total at most this many bytes. */
+/** The messages from the last key message on stay only while they total at most this many bytes. */
 export const OSH_VIDEO_MAX_GROUP_BYTES = 2_097_152;
+/** A client that has this many bytes not yet written has stopped reading. The route ends its response. */
+export const OSH_LIVE_MAX_CLIENT_BUFFER_BYTES = 8_388_608;
 /** The upstream socket stays this long after the last client leaves. */
 export const OSH_LIVE_IDLE_MS = 2_000;
 /** The route refuses a datastream this long after an oversize frame. */
@@ -236,7 +238,7 @@ export function createOshLiveHub({
    * Add one client to the entry of a datastream and a kind. The first client
    * opens the upstream socket. The reader, the URL and the headers of the
    * first client stay for the life of the entry. A client of a video entry
-   * that joins an open socket also gets the frames of the current group,
+   * that joins an open socket also gets the messages of the current group,
    * after the event `open`.
    * @param {string} id - Datastream id, already checked by the route.
    * @param {{url: URL, headers: Record<string,string>, reader: ?object, kind?: 'observation'|'video'}} stream
