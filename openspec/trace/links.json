@@ -354,6 +354,7 @@
     "src/googleGeocodeProxy.test.mjs › [credential-boundary-009] the reverse mode sends latlng and projects the answer"
   ],
   "credential-boundary-010": [
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route accepts an address of exactly 256 characters",
     "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route reads a request with no URL as an empty query",
     "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route refuses a non-GET method with a 405 and no upstream call",
     "src/googleGeocodeProxy.test.mjs › [credential-boundary-010] the route refuses bad input with a 400 and no upstream call"
@@ -379,10 +380,10 @@
     "src/googleGeocodeProxy.test.mjs › [credential-boundary-012] projectGeocodeResults shortens each list to its maximum length and keeps only the allowed fields"
   ],
   "credential-boundary-013": [
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] a configured:false answer does not make the combined answer inconclusive",
+    "src/search/placeSearch.test.mjs › [credential-boundary-013] a configured:false answer does not give answered:false",
     "src/search/placeSearch.test.mjs › [credential-boundary-013] a keyless server answers configured:false and the search then uses Photon",
     "src/search/placeSearch.test.mjs › [credential-boundary-013] after an HTTP error answer from the route, the search then uses the Photon place",
-    "src/search/placeSearch.test.mjs › [credential-boundary-013] an HTTP error answer from the route and a Photon miss make the combined answer inconclusive",
+    "src/search/placeSearch.test.mjs › [credential-boundary-013] an HTTP error answer from the route and a Photon miss give answered:false",
     "src/search/placeSearch.test.mjs › [credential-boundary-013] the geocode request URL is same-origin, with address and bounds, and no key"
   ],
   "credential-boundary-014": [
