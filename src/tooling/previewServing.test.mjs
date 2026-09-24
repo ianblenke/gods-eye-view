@@ -83,7 +83,11 @@ test('real dev and built-preview servers serve provider JSON and terminate unkno
     const config = {
       ...base,
       plugins: [...localProviderPlugins(), apiNotFoundPlugin()],
-      server: { host: '127.0.0.1', port: 0, hmr: false },
+      // The fixture page has no script to bundle and no file to watch. Vite's dependency
+      // optimizer and its file watcher each arm timers that are still live when the test
+      // process exits (found on the CI runner).
+      optimizeDeps: { noDiscovery: true, include: [] },
+      server: { host: '127.0.0.1', port: 0, hmr: false, watch: null },
       preview: { host: '127.0.0.1', port: 0 },
     };
     const server = isPreview
@@ -190,7 +194,11 @@ test('[credential-boundary-007] the real dev and preview servers answer the geoc
     const config = {
       ...base,
       plugins: [...localProviderPlugins(), apiNotFoundPlugin()],
-      server: { host: '127.0.0.1', port: 0, hmr: false },
+      // The fixture page has no script to bundle and no file to watch. Vite's dependency
+      // optimizer and its file watcher each arm timers that are still live when the test
+      // process exits (found on the CI runner).
+      optimizeDeps: { noDiscovery: true, include: [] },
+      server: { host: '127.0.0.1', port: 0, hmr: false, watch: null },
       preview: { host: '127.0.0.1', port: 0 },
     };
     const server = isPreview
@@ -199,9 +207,15 @@ test('[credential-boundary-007] the real dev and preview servers answer the geoc
     if (!isPreview) await server.listen();
     const origin = `http://127.0.0.1:${server.httpServer.address().port}`;
     try {
-      const response = await fetch(`${origin}/api/google/geocode?address=austin`);
+      const response = await fetch(
+        `${origin}/api/google/geocode?address=austin`,
+      );
       assert.equal(response.status, 200, where);
-      assert.match(response.headers.get('content-type'), /application\/json/, where);
+      assert.match(
+        response.headers.get('content-type'),
+        /application\/json/,
+        where,
+      );
       assert.equal(response.headers.get('cache-control'), 'no-store', where);
       assert.deepEqual(
         await response.json(),
@@ -212,5 +226,9 @@ test('[credential-boundary-007] the real dev and preview servers answer the geoc
       await server.close();
     }
   }
-  assert.deepEqual(upstreamCalls, [], 'a keyless server makes no upstream call');
+  assert.deepEqual(
+    upstreamCalls,
+    [],
+    'a keyless server makes no upstream call',
+  );
 });

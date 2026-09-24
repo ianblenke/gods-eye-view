@@ -246,7 +246,10 @@ const LAYERS = [
 ];
 
 for (const fixture of LAYERS) {
-  test(`${fixture.name}: production fleet loader admits a HIDDEN primitive and fails back to 2D`, async () => {
+  test(`${fixture.name}: production fleet loader admits a HIDDEN primitive and fails back to 2D`, async (t) => {
+    // The fleet loader queues a type enrichment, and the queue parks a drip timer that is still
+    // live when the test process exits. A mock timer keeps the real event loop free of it.
+    t.mock.timers.enable({ apis: ['setTimeout'] });
     clearTr3bRegistry();
     fixture.layer.stopTracking();
     fixture.layer.setParams({ models3d: true });
