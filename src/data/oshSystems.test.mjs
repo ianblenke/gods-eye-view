@@ -661,6 +661,43 @@ test('[osh-058] the newer of two fresh locations that name one unheld feature wi
   assert.equal(features[0].datastreamId, 'ds-fixture-2');
 });
 
+test('[osh-058] a newer location that comes first wins over an older location for one unheld feature', () => {
+  const { features } = placeOshEntities({
+    systems: [],
+    fois: [],
+    locations: [
+      {
+        foiId: 'foi-fixture-1',
+        foiUid: null,
+        systemId: 'sys-fixture-1',
+        lon: 15,
+        lat: 25,
+        alt: null,
+        datastreamId: 'ds-fixture-2',
+        datastreamName: 'Newer',
+        phenomenonTime: '2026-01-01T00:05:00Z',
+        ageMs: FRESH_AGE_MS,
+      },
+      {
+        foiId: 'foi-fixture-1',
+        foiUid: null,
+        systemId: 'sys-fixture-1',
+        lon: 10,
+        lat: 20,
+        alt: null,
+        datastreamId: 'ds-fixture-1',
+        datastreamName: 'Older',
+        phenomenonTime: '2026-01-01T00:00:00Z',
+        ageMs: FRESH_AGE_MS,
+      },
+    ],
+  });
+  assert.equal(features.length, 1);
+  assert.equal(features[0].lon, 15);
+  assert.equal(features[0].lat, 25);
+  assert.equal(features[0].datastreamId, 'ds-fixture-2');
+});
+
 test('[osh-058] a location that is not fresh draws no feature', () => {
   const STALE_AGE_MS = 3_700_000;
   const { features } = placeOshEntities({
