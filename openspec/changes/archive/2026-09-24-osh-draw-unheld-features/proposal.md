@@ -1,22 +1,22 @@
 ## Why
 
-The feature collection of the owner's server does not hold every feature that its location streams name. The feature walk completes with `truncated:false`, so a longer walk finds nothing more. The features the streams name are not in the collection at all.
+The feature collection of the owner's server does not have every feature that its location streams name. The feature walk completes with `truncated:false`, so a longer walk finds nothing more. The features that the layer does not hold are not in the collection at all.
 
-`osh-042` drops a fresh location that names a feature the layer does not hold. That rule is correct as written, and mutant M16 proves it. But this server does not meet the premise of the rule.
+`osh-042` drops a fresh location that names a feature the layer does not hold. That rule is correct as written, and mutant M16 proves it. But the premise is not always true on this server.
 
 The premise is that a location names a feature that the layer holds. On this server that is not always true. So the layer drops the fresh positions of the features that it does not hold. The map draws fewer entities than the layer has positions for.
 
 A fresh location already carries everything an entity needs. It has the feature reference, the position, the time, the age and the system id. So this change draws the feature itself from the location, with no record from the feature collection. This is the same as the placeholder that `osh-057` already draws for a system with no held record.
 
-One host can have many features. So the host's name is the only name a location carries for an unheld feature, and many features share it. This change never uses it for a feature. A stream-drawn feature gets no label, and its detail shows its id, its host and the age of the location that placed it.
+One host can have many features. A location carries the name of its system, not the name of a feature. So the host's name is the only name a location carries for an unheld feature, and many features share it. This change never uses it for a feature. A stream-drawn feature gets no label, and its detail shows its id, its host and the age of the location that placed it.
 
-Two rules stay exactly as they are. A location that names a feature never places its host system, because one system hosts many features. A location that is not fresh places nothing. The second rule is also what bounds the count. Only a fresh location draws, and the measured fresh set is a small part of the whole.
+Two rules stay exactly as they are. A location that names a feature never places its host system, because one system hosts many features. A location that is not fresh places nothing. The second rule is also what bounds the count. Only a fresh location draws, so a stream that stopped more than an hour ago adds nothing.
 
 ## What Changes
 
 - Extend `placeOshEntities()` in `src/data/oshSystems.js`. A fresh location that names a feature the layer does not hold gives a placed feature at the location. Its id is the location's `foiId`, or its `foiUid` when there is no `foiId`. It carries the same stream fields a stream-placed system carries.
 - Extend the layer in `src/layers/osh/index.js`. It draws a stream-drawn feature with the same entity id a held feature gets. A click on it selects its host and starts the poll. The layer counts it under `getStats().features` and under a new `getStats().placed.streamFeatures`. The layer keeps no record of it between refreshes.
-- Keep one entity id and one position for a feature, whether the layer holds it or not. This needs a location with the `foiId` of the record. A features getter that throws sets `partial:true`. It changes the label, the entity properties and `placed.streamFeatures` for one refresh.
+- Keep one entity id and one position for a feature, whether the layer holds it or not. This needs a location whose `foiId` is the `id` of the held feature. When the features getter throws, the layer sets `partial:true`. For that refresh, the layer changes the label, the entity properties, the name in the detail, the host of a click and `placed.streamFeatures`.
 - Extend `renderFeatureHeader()` in `src/layers/osh/detail.js`. A feature placed by a stream shows the `Placed by` line a stream-placed system already shows. A moved feature carries the stream fields for it.
 - No provider change. No new file. No request change. No requirement text change.
 
@@ -36,11 +36,12 @@ None. The limits `osh-location-streams` left open stay open. The defect this cha
 
 ## Known limits and later changes
 
-- `osh-stream-drawn-feature-unnamed`: a stream-drawn feature has no name, because no record holds one. Its entity gets no label, and the detail shows its id. This is the degraded state `osh-stream-placed-name-unread` names for a system, without the by-id read. The feature collection does not hold the feature, so a by-id read has nothing to find.
-- `osh-feature-key-split`: one location can name a feature by id, and another can name it by uid alone. The layer then draws it twice, once under each key, because no record links the two keys. On the owner's server, a location that carries a uid also carries an id. A location can also name a held feature by its uid only, or by an id that is not its record id. It then moves the feature under its record id. When the features getter throws, it draws the feature under the key that it carries, and the entity id changes for that refresh.
+- `osh-stream-drawn-feature-unnamed`: a stream-drawn feature has no name, because no record holds one. Its entity gets no label, and the detail shows its id. This is the degraded state `osh-stream-placed-name-unread` names for a system, without the by-id read. The feature collection does not have the feature, so a by-id read has nothing to find.
+- `osh-feature-key-split`: one location can name a feature by id, and another can name it by uid alone. The layer then draws it twice, once under each key, because no record links the two keys. A location can also name a held feature by its uid only, or by an id that is not its record id. It then moves the feature under its record id. When the features getter throws, it draws the feature under the key that it carries, and the entity id changes for that refresh.
 - `osh-stream-drawn-features-overlap`: features of one host that share a position draw as entities that overlap. A click picks one, and its detail names it. The layer does not group them, because a group entity has no feature id for the click to use.
 - `osh-fresh-threshold-one-hour`: unchanged. A stream-drawn feature lives only as long as its location is fresh, the same as a stream-placed system.
 - `osh-no-live-test`: unchanged. No test proves the server's locations name features the way the fixtures do. Every fixture is synthetic.
-- `osh-feature-key-collision`: a location can carry a uid that equals the id of a held feature but is not its uid. The layer then has two records with one id. Cesium refuses the second entity. Then `update()` returns false and sets `error`, and the map is partly empty for that refresh. On the owner's server, a location that carries a uid also carries an id, so this needs an unusual location.
+- `osh-feature-key-collision`: a location can carry no id. Its uid can equal the id of a held feature, and it is not the uid of that feature. The layer then has two records with one id. Cesium throws an error for the second entity. Then `update()` returns false and sets `error`, and the map has only some of its entities for that refresh.
 - `osh-failed-read-click-host`: when the features getter throws, a click on a drawn feature takes its host from the `systemId` of the location. It does not use a feature record. No test pins this.
 - `osh-042-old-test-names`: two old tests in `oshSystems.test.mjs` say that the location is dropped for an unknown feature. Since `osh-058`, the location draws a feature. An existing test keeps its name, so the names stay. A new test covers the drawn feature.
+- `osh-059-record-wording`: the clause of `osh-059` says that the layer keeps no record of a stream-drawn feature after a refresh or after `destroy()`. It means that the layer does not carry the record from one refresh to the next. During a refresh, `_placedFeatureById` holds the record, and a click reads it. `destroy()` clears it.

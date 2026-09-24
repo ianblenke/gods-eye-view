@@ -21,30 +21,31 @@
   - `[osh-058]` a location with both keys draws a feature keyed by `foiId`.
   - `[osh-058]` a location with `foiUid` alone draws a feature keyed by the uid.
   - `[osh-058]` the newer of two fresh locations that name one unheld feature wins, and one feature is drawn.
-    - `[osh-058]` a newer location that comes first wins over an older location for one unheld feature.
+  - `[osh-058]` a newer location that comes first wins over an older location for one unheld feature.
   - `[osh-058]` a location that is not fresh draws no feature.
   - `[osh-058]` a held feature is moved, not drawn a second time. Assert `features.length`.
   - `[osh-058]` the drawn feature's location leaves systems and unplaced unchanged. Give the system no `Point`.
   - `[osh-058]` a second call with no such location gives no such feature.
   - `[osh-042]` a feature that a location moves carries the location's `datastreamId`, `datastreamName`, `phenomenonTime` and `ageMs`.
 - [x] 2.3 Change `placeOshEntities()` in `src/data/oshSystems.js` until 2.2 is green and 2.1 stays green.
-- [x] 2.4 Run each mutation below on the adapter. Report one line for each mutation: the id and the test that failed.
-  - A1: restore the `continue` for an unheld feature. Fails the draws-at-the-location test.
-  - A2: push the unheld location into `systemLocations`. Fails the M16 test and the systems-unchanged test.
-  - A3: set the drawn feature's `systemId` to null. Fails the shape test.
-  - A4: key the drawn feature by `foiUid` before `foiId`. Fails the both-keys test.
-  - A5: drop the `foiUid` fallback for the key. Fails the uid-alone test.
-    - A6: keep the first of two locations for one key. Fails the newer-wins test.
-  - A13: replace the newer-wins condition of the unheld-feature draw with a constant true. Fails the test that gives the newer location first.
-  - A7: run the draw before the fresh filter. Fails the not-fresh test.
-  - A8: also draw an unheld record when the feature is held. Fails the moved-not-drawn-twice test.
-  - A9: set the drawn record's `locationSource` to `'geometry'`. Fails the shape test.
-  - A10: omit the four stream fields from the drawn record. Fails the shape test.
-  - A11: keep the drawn keys in a module-level map across calls. Fails the second-call test.
-  - A12: copy only the coordinates on a moved feature. Fails the moved-feature stream-fields test.
-  - A mutation that no test fails on is a finding. Stop, add a test that fails for it, and then continue.
+- [x] 2.4 Run each mutation below on the adapter.
+  - Report one line for each mutation: the id and the test that failed.
+  - A1: restore the `continue` for an unheld feature. Then the draws-at-the-location test fails.
+  - A2: push the unheld location into `systemLocations`. Then the M16 test and the systems-unchanged test fail.
+  - A3: set the drawn feature's `systemId` to null. Then the shape test fails.
+  - A4: key the drawn feature by `foiUid` before `foiId`. Then the both-keys test fails.
+  - A5: drop the `foiUid` fallback for the key. Then the uid-alone test fails.
+  - A6: keep the first of two locations for one key. Then the newer-wins test fails.
+  - A7: run the draw before the fresh filter. Then the not-fresh test fails.
+  - A8: also draw an unheld record when the feature is held. Then the moved-not-drawn-twice test fails.
+  - A9: set the drawn record's `locationSource` to `'geometry'`. Then the shape test fails.
+  - A10: omit the four stream fields from the drawn record. Then the shape test fails.
+  - A11: keep the drawn keys in a module-level map across calls. Then the second-call test fails.
+  - A12: copy only the coordinates on a moved feature. Then the moved-feature stream-fields test fails.
+  - A13: replace the newer-wins condition of the unheld-feature draw with a constant true. Then the test that gives the newer location first fails.
+  - If no test fails for a mutation, that is a finding. Stop. Add a test that fails for it, and then continue.
 
-## 3. The layer: `osh-059`, `osh-060` and the `osh-057` clause
+## 3. The layer: `osh-059`, `osh-060`, `osh-032` and the `osh-057` clause
 
 - [x] 3.1 Write the `[osh-059]` tests in `src/data/oshLayer.test.mjs`. Register `t.after(() => layer.destroy(viewer))` in each.
   - `[osh-059]` the map holds `osh-foi:<id>` for a stream-drawn feature at the location's position, with no label, and `getStats().features` counts it.
@@ -69,26 +70,27 @@
   - Assert the entity id, the position, the label, `partial` and `placed.streamFeatures` after each refresh.
 - [x] 3.4 Change `src/layers/osh/index.js` until 3.1 to 3.3 are green.
   - The functions that change: `update()`, the click handler, `pollSelected()`, `applySelection()`, `resetState()` and `getStats()`.
-- [x] 3.5 Run each mutation below on the layer. Report one line for each mutation: the id and the test that failed.
-  - L1: filter `placed.features` to held records before the draw loop. Fails the holds-the-entity test.
-  - L2: label a stream-drawn feature with its id. Fails the holds-the-entity test on its label assertion.
-  - L2b: label a stream-drawn feature with the location's `systemName`. Fails the never-systemName test.
-  - L2c: group stream-drawn features by host, or by position, into one entity. Fails the three-entities test.
-  - L3: exclude stream-drawn records from `getStats().features`. Fails the holds-the-entity test on its count assertion.
-  - L4: read the click's host from `_featureRecordsById` only. Fails the click test.
-  - L5: count every placed feature under `placed.streamFeatures`. Fails the count test.
-  - L6: count every feature with `locationSource:'stream'` under `placed.streamFeatures`. Fails the count test.
-  - L7: build the detail's `feature` from `_featureRecordsById` only. Fails the detail test.
-  - L7b: pass no `placedBy` for a feature in `pollSelected()`. Fails the detail test on its `Placed by` assertion.
-  - L7c: put the location's `systemName` in the detail's feature name. Fails the detail test on its absent-name assertion.
-  - L8: keep stream-drawn records in a map across refreshes and draw them again. Fails the removes-its-entity test and the fourth refresh of `[osh-060]`.
-  - L9: read the selection-drop rule from `_featureRecordsById` only. Fails the keeps-its-selection test.
-  - L10: skip the draw of stream-drawn records when `partial` is true. Fails the second refresh of `[osh-060]`.
-  - L11: do not zero `placed.streamFeatures` in `resetState()`. Fails the destroy test.
-    - L12: run the A2 mutation again with the layer suite. Fails the extended `[osh-057]` test.
-  - L13: count the stream-drawn features under `placed.stream` too. Fails the extended `[osh-057]` test and the `[osh-059]` unplaced test.
-  - L7d: read the feature's `Placed by` from the effective feature, or only for a feature that is not held. Fails the `[osh-032]` layer test.
-  - A mutation that no test fails on is a finding. Stop, add a test that fails for it, and then continue.
+- [x] 3.5 Run each mutation below on the layer.
+  - Report one line for each mutation: the id and the test that failed.
+  - L1: filter `placed.features` to held records before the draw loop. Then the holds-the-entity test fails.
+  - L2: label a stream-drawn feature with its id. Then the holds-the-entity test on its label assertion fails.
+  - L2b: label a stream-drawn feature with the location's `systemName`. Then the never-systemName test fails.
+  - L2c: group stream-drawn features by host, or by position, into one entity. Then the three-entities test fails.
+  - L3: exclude stream-drawn records from `getStats().features`. Then the holds-the-entity test on its count assertion fails.
+  - L4: read the click's host from `_featureRecordsById` only. Then the click test fails.
+  - L5: count every placed feature under `placed.streamFeatures`. Then the count test fails.
+  - L6: count every feature with `locationSource:'stream'` under `placed.streamFeatures`. Then the count test fails.
+  - L7: build the detail's `feature` from `_featureRecordsById` only. Then the detail test fails.
+  - L7b: pass no `placedBy` for a feature in `pollSelected()`. Then the detail test on its `Placed by` assertion fails.
+  - L7c: put the location's `systemName` in the detail's feature name. Then the detail test on its absent-name assertion fails.
+  - L7d: read the feature's `Placed by` from the effective feature, or only for a feature that is not held. Then the `[osh-032]` layer test fails.
+  - L8: keep stream-drawn records in a map across refreshes and draw them again. Then the removes-its-entity test and the fourth refresh of `[osh-060]` fail.
+  - L9: read the selection-drop rule from `_featureRecordsById` only. Then the keeps-its-selection test fails.
+  - L10: skip the draw of stream-drawn records when `partial` is true. Then the second refresh of `[osh-060]` fails.
+  - L11: do not zero `placed.streamFeatures` in `resetState()`. Then the destroy test fails.
+  - L12: run the A2 mutation again with the layer suite. Then the extended `[osh-057]` test fails.
+  - L13: count the stream-drawn features under `placed.stream` too. Then the extended `[osh-057]` test and the `[osh-059]` unplaced test fail.
+  - If no test fails for a mutation, that is a finding. Stop. Add a test that fails for it, and then continue.
 
 ## 4. The detail: the `osh-032` clauses
 
@@ -98,17 +100,18 @@
   - `[osh-032]` a feature header with no name shows the feature's id, never the host's name.
   - These are the changed `[osh-032]` tests the trace gate demands.
 - [x] 4.2 Change `renderFeatureHeader()` in `src/layers/osh/detail.js` until 4.1 is green.
-- [x] 4.3 Run each mutation below on the detail. Report one line for each mutation: the id and the test that failed.
-  - D1: omit `renderPlacedBy()` from the feature header. Fails the Placed-by test.
-  - D2: always render the line, with an em dash for no `placedBy`. Fails the no-line test.
-  - D3: show `system.name` in place of `feature.id` when the feature has no name. Fails the never-host-name test.
-  - A mutation that no test fails on is a finding. Stop, add a test that fails for it, and then continue.
+- [x] 4.3 Run each mutation below on the detail.
+  - Report one line for each mutation: the id and the test that failed.
+  - D1: omit `renderPlacedBy()` from the feature header. Then the Placed-by test fails.
+  - D2: always render the line, with an em dash for no `placedBy`. Then the no-line test fails.
+  - D3: show `system.name` in place of `feature.id` when the feature has no name. Then the never-host-name test fails.
+  - If no test fails for a mutation, that is a finding. Stop. Add a test that fails for it, and then continue.
 
 ## 5. Gates and review
 
 - [x] 5.1 Run `make lint` until no STE error remains.
 - [x] 5.2 Run `make ratchet CHANGE=osh-draw-unheld-features`.
 - [x] 5.3 Run `make gates CHANGE=osh-draw-unheld-features`. Confirm the three changed files stay at 100%.
-- [ ] 5.4 Run `/opsx:review osh-draw-unheld-features`.
-- [ ] 5.5 Correct the findings.
-- [ ] 5.6 Record the result in `review.md`.
+- [x] 5.4 Run `/opsx:review osh-draw-unheld-features`.
+- [x] 5.5 Correct the findings.
+- [x] 5.6 Record the result in `review.md`.
