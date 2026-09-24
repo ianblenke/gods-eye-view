@@ -10,12 +10,12 @@
 
 Use only synthetic ids and bytes. No test calls a real server. Do not rename a test that exists on `main`.
 
-- [ ] 2.1 Write the `[osh-083]` tests in the new file `src/data/oshVideo.test.mjs`.
+- [x] 2.1 Write the `[osh-083]` tests in the new file `src/data/oshVideo.test.mjs`.
   - The envelope: a good length field, a wrong one, and a message of less than 12 bytes.
   - The NAL split for three-byte and four-byte start codes, and for a trailing zero byte.
   - The codec string, the `avcC` record and the sample of slice NAL units.
-- [ ] 2.2 Write `src/data/oshVideo.js` until 2.1 passes. It must not use the word `send`.
-- [ ] 2.3 Run each mutation below on the helper.
+- [x] 2.2 Write `src/data/oshVideo.js` until 2.1 passes. It must not use the word `send`.
+- [x] 2.3 Run each mutation below on the helper.
   - H1: accept a length field that is not the size minus 12. `[osh-083]` fails.
   - H2: split at a start code of four bytes only. `[osh-083]` fails.
   - H3: leave the trailing zero byte in a NAL unit. `[osh-083]` fails.
@@ -27,24 +27,24 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 
 ## 3. The video datastream mark
 
-- [ ] 3.1 Write the `[osh-076]` tests in `src/data/oshDatastreams.test.mjs`.
+- [x] 3.1 Write the `[osh-076]` tests in `src/data/oshDatastreams.test.mjs`.
   - A `coverage` result with `RasterImage` gets `video: true`. Each other record has no `video` key.
-- [ ] 3.2 Change `mapOshDatastreams()` in `src/data/oshDatastreams.js` until 3.1 passes.
+- [x] 3.2 Change `mapOshDatastreams()` in `src/data/oshDatastreams.js` until 3.1 passes.
 
 ## 4. The server
 
-- [ ] 4.1 Write the `[osh-078]` tests in `src/data/oshIds.test.mjs` for `videoUrl()` and `assertVideoUrl()`.
-- [ ] 4.2 Write the tests of `osh-077`, `osh-079`, `osh-080` and `osh-081` in `src/data/oshLive.test.mjs`.
+- [x] 4.1 Write the `[osh-078]` tests in `src/data/oshIds.test.mjs` for `videoUrl()` and `assertVideoUrl()`.
+- [x] 4.2 Write the tests of `osh-077`, `osh-079`, `osh-080` and `osh-081` in `src/data/oshLive.test.mjs`.
   - Use the injected socket constructor and the injected timers of the hub tests.
   - `[osh-079]` a good message gives an event `frame`. A text message, a short message and a wrong length field give no event. A message of more than 2097152 bytes gives `unsupported`.
   - `[osh-080]` a late client gets `open` and the frames since the last key frame. A key frame starts the group again. A close or a failure empties it. A group of more than 2097152 bytes is dropped.
   - `[osh-081]` the live route and the video route of one id hold two entries and two sockets.
-- [ ] 4.3 Change the test `[osh-005]` in `src/data/oshProxy.test.mjs` for six files. Keep its name and its tag.
-- [ ] 4.4 Change the pinned OSH test file count and the file list of `[osh-034]` in `src/data/oshRepositoryHygiene.test.mjs`. Keep its name.
-- [ ] 4.5 Add `videoUrl()` and `assertVideoUrl()` to `server/providers/osh/ids.js` until 4.1 passes.
-- [ ] 4.6 Give the hub of `server/providers/osh/live.js` a video kind until 4.2 passes.
-- [ ] 4.7 Add the route `/api/osh/video` to `server/providers/osh.js` with the checks of `osh-077`.
-- [ ] 4.8 Run each mutation below on the server.
+- [x] 4.3 Change the test `[osh-005]` in `src/data/oshProxy.test.mjs` for six files. Keep its name and its tag.
+- [x] 4.4 Change the pinned OSH test file count and the file list of `[osh-034]` in `src/data/oshRepositoryHygiene.test.mjs`. Keep its name.
+- [x] 4.5 Add `videoUrl()` and `assertVideoUrl()` to `server/providers/osh/ids.js` until 4.1 passes.
+- [x] 4.6 Give the hub of `server/providers/osh/live.js` a video kind until 4.2 passes.
+- [x] 4.7 Add the route `/api/osh/video` to `server/providers/osh.js` with the checks of `osh-077`.
+- [x] 4.8 Run each mutation below on the server.
   - V1: skip the bad-id check on the video route. `[osh-077]` fails.
   - V2: let the keyless path open a socket on the video route. `[osh-077]` fails.
   - V3: accept a POST on the video route. `[osh-077]` fails.
@@ -64,15 +64,15 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 
 ## 5. The browser player
 
-- [ ] 5.1 Write the `[osh-082]` tests in `src/layers/osh/source.test.mjs` with a fake `EventSource`.
-- [ ] 5.2 Add `openVideo()` to `src/layers/osh/source.js` until 5.1 passes.
-- [ ] 5.3 Write the tests of `osh-084` and `osh-085` in the new file `src/layers/osh/videoPlayer.test.mjs`.
+- [x] 5.1 Write the `[osh-082]` tests in `src/layers/osh/source.test.mjs` with a fake `EventSource`.
+- [x] 5.2 Add `openVideo()` to `src/layers/osh/source.js` until 5.1 passes.
+- [x] 5.3 Write the tests of `osh-084` and `osh-085` in the new file `src/layers/osh/videoPlayer.test.mjs`.
   - Use a fake `VideoDecoder`, a fake `EncodedVideoChunk` and a fake canvas. No test decodes real H.264.
   - Cover the wait for a key frame, the configure call, and the chunk types and time stamps.
   - Cover the draw and close of each frame, and the drop while the queue is long.
   - Cover the new configure for a new SPS, the reset after an error, and the missing decoder.
-- [ ] 5.4 Write `src/layers/osh/videoPlayer.js` with `createVideoPlayer()` until 5.3 passes.
-- [ ] 5.5 Run each mutation below on the source and the player.
+- [x] 5.4 Write `src/layers/osh/videoPlayer.js` with `createVideoPlayer()` until 5.3 passes.
+- [x] 5.5 Run each mutation below on the source and the player.
   - P1: decode a delta frame before the first key frame. `[osh-084]` fails.
   - P2: configure the decoder with the wrong codec string. `[osh-084]` fails.
   - P3: give every chunk the type key. `[osh-084]` fails.
@@ -90,15 +90,15 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 
 ## 6. The layer and the panel
 
-- [ ] 6.1 Write the tests of `osh-086`, `osh-087`, `osh-072` and `osh-074` in `src/data/oshLayer.test.mjs`.
+- [x] 6.1 Write the tests of `osh-086`, `osh-087`, `osh-072` and `osh-074` in `src/data/oshLayer.test.mjs`.
   - Register `t.after(() => layer.destroy(viewer))` in each test, and use a fake source, a fake view and a fake player.
-- [ ] 6.2 Write the `[osh-088]` tests in `src/layers/osh/detail.test.mjs`.
-- [ ] 6.3 Write the `[osh-089]` tests in `src/data/osh.test.mjs`.
-- [ ] 6.4 Change `src/layers/osh/detail.js` until 6.2 passes.
-- [ ] 6.5 Change `src/layers/osh/index.js` until 6.1 passes. A source with no `openVideo()` plays no video.
-- [ ] 6.6 Change `src/data/osh.js` until 6.3 passes.
-- [ ] 6.7 Add `src/data/oshVideo.js` and `src/layers/osh/videoPlayer.js` to `scripts/package-boundaries.json`.
-- [ ] 6.8 Run each mutation below on the layer.
+- [x] 6.2 Write the `[osh-088]` tests in `src/layers/osh/detail.test.mjs`.
+- [x] 6.3 Write the `[osh-089]` tests in `src/data/osh.test.mjs`.
+- [x] 6.4 Change `src/layers/osh/detail.js` until 6.2 passes.
+- [x] 6.5 Change `src/layers/osh/index.js` until 6.1 passes. A source with no `openVideo()` plays no video.
+- [x] 6.6 Change `src/data/osh.js` until 6.3 passes.
+- [x] 6.7 Add `src/data/oshVideo.js` and `src/layers/osh/videoPlayer.js` to `scripts/package-boundaries.json`.
+- [x] 6.8 Run each mutation below on the layer.
   - L1: show the panel with no selection. `[osh-086]` fails.
   - L2: leave the panel shown after the selection ends. `[osh-086]` fails.
   - L3: start no video stream for a video datastream. `[osh-087]` fails.
@@ -117,15 +117,15 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 
 ## 7. The page
 
-- [ ] 7.1 Add the panel element and its two hosts to `index.html`.
-- [ ] 7.2 Add the style of the panel to `style.css`.
+- [x] 7.1 Add the panel element and its two hosts to `index.html`.
+- [x] 7.2 Add the style of the panel to `style.css`.
   - Keep the panel clear of the other panels, and add its selector to the occluders of the world overlay.
 - [ ] 7.3 Run the app and look at the panel with a selected camera. Report what you see.
 
 ## 8. Gates and review
 
-- [ ] 8.1 Run `make lint` until no STE error remains.
-- [ ] 8.2 Run `make ratchet CHANGE=osh-camera-video`.
+- [x] 8.1 Run `make lint` until no STE error remains.
+- [x] 8.2 Run `make ratchet CHANGE=osh-camera-video`.
 - [ ] 8.3 Run `make gates CHANGE=osh-camera-video`. Confirm that each changed code file has full coverage.
 - [ ] 8.4 Run `npm run format:check` and `npm run check:boundaries`.
 - [ ] 8.5 Run `/opsx:review osh-camera-video`.
