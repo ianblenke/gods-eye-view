@@ -1190,7 +1190,7 @@ const parseWire = (text) =>
 const OBSERVATION_WITHOUT_AGE = { ...EXPECTED_OBSERVATION };
 delete OBSERVATION_WITHOUT_AGE.ageMs;
 
-test('[osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays the frames, and the socket closes two seconds after the client leaves', async (t) => {
+test('[osh-065 osh-066 osh-067] a loopback server sees a GET handshake and no message frame, the route relays frames, and the socket closes after the client leaves', async (t) => {
   const frames = [
     wsFrame(2, Buffer.from(JSON.stringify(FRAME))),
     wsFrame(1, Buffer.from(JSON.stringify(FRAME))),
