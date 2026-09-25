@@ -1,14 +1,15 @@
 ## 1. The test
 
-- [x] 1.1 Change the test `[osh-090]` with real HTTP clients in `src/data/oshLive.test.mjs`. Keep its name.
-  - The test waits after each message until the client that reads has got it.
-  - The client that does not read has a corked response.
-  - The test stops after 40 messages, and it does not import `node:net`.
-- [x] 1.2 Run the file `src/data/oshLive.test.mjs` on one CPU core, six times.
-- [x] 1.3 Run each mutation below. `[osh-090]` fails each time.
+- [x] 1.1 Change the test `[osh-090]` with real HTTP clients in `src/data/oshLive.test.mjs`, and keep its name.
+  - Make the test wait after each message until the client that reads receives it.
+  - Cork the response of the client that does not read.
+  - Stop the test when the provider destroys the response, or after 40 messages.
+  - Remove the import of `node:net`.
+- [x] 1.2 Run the file `src/data/oshLive.test.mjs` on one CPU core, six times. Each run must pass.
+- [x] 1.3 Run each mutation below, and remove it after its run. The test `[osh-090]` with real HTTP clients fails each time.
   - B1: remove the check of `writableLength` in `server/providers/osh.js`.
-  - B2: raise the limit of the unwritten bytes to 1677721600.
-  - B3: check the bytes and do not destroy the response.
+  - B2: set `OSH_LIVE_MAX_CLIENT_BUFFER_BYTES` in `server/providers/osh/live.js` to 1677721600.
+  - B3: keep the check of `writableLength` in `server/providers/osh.js`, and remove the call of `res.destroy()`.
 
 ## 2. Gates and review
 
