@@ -1160,7 +1160,7 @@ test('[gap-ledger-090] stops the adopt command for a fault before it runs a test
   });
 });
 
-test('[gap-ledger-096 gap-ledger-097] stops the check for an adopt line with a commit or a file that the merge commit did not bring', GUARDED_RUN, () => {
+test('[gap-ledger-096 gap-ledger-097] stops the check for an adopt line when its commit is not a merged commit, or when the merged commit did not change its file', GUARDED_RUN, () => {
   withMergeFixture((root) => {
     passes(root, ['adopt', '--change', 'sync', '--from', 'up']);
     const ledgerFile = path.join(root, 'openspec/trace/gaps.json');
