@@ -58,3 +58,11 @@ test('[ci-gates-008] pins the Node version of the image and installs Git', () =>
   assert.match(dockerfile, new RegExp(`^FROM node:${version.replaceAll('.', '\\.')}-bookworm-slim$`, 'm'));
   assert.match(dockerfile, /apt-get install -y --no-install-recommends git/);
 });
+
+test('[gap-ledger-099] runs the adopt command with make', () => {
+  const makefile = read('Makefile');
+  assert.match(makefile, /^FROM_ARG := \$\(if \$\(FROM\),--from \$\(FROM\),\)$/m);
+  assert.equal(makefile.match(/^FROM_ARG :=/gm).length, 1);
+  assert.ok(makefile.includes('\nadopt: ensure-image\n\t$(GATES) adopt $(CHANGE_ARG) $(BASE_ARG) $(FROM_ARG)\n'));
+  assert.match(makefile, /^\.PHONY: .*\badopt\b/m);
+});

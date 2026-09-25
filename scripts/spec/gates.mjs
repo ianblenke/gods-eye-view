@@ -7,13 +7,17 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { ALLOCATION_TEST_FILES } from '../run-unit-tests.mjs';
 import { planCi } from './lib/ci.mjs';
 import { contentHash, findCoverageFlags, findIgnoreComments, findTestImports, measureCoverage, parseLcov, untrueFiles } from './lib/coverage.mjs';
-import { diffNames, headCommit, listFilesAt, readFileAt, resolveMergeBase } from './lib/git.mjs';
+import { changedByCommit, diffNames, headCommit, listFilesAt, mergeParents, readFileAt, resolveCommit, resolveMergeBase } from './lib/git.mjs';
 import { checkUntracked, codeInventory, isTestFile, listTrackedFiles, listUntrackedFiles, testInventory } from './lib/inventory.mjs';
 import {
   HISTORY_FILE,
   LEDGER_FILE,
   RETIRED_FILE,
+  adoptLedger,
+  adoptedCounts,
+  adoptsOf,
   appendHistory,
+  checkAdopts,
   compareLedger,
   compareWithBase,
   currentGaps,
@@ -38,9 +42,9 @@ const RUNNER = fileURLToPath(new URL('./lib/run-parallel.mjs', import.meta.url))
 const OUT_DIR = '.gev-cache/spec';
 const DEFAULT_BASE = 'origin/main';
 const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
-const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive']);
-const OPTIONS = new Set(['--change', '--base', '--root', '--file', '--metric', '--lines', '--count', '--reason']);
-const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive> [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>]';
+const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive', 'adopt']);
+const OPTIONS = new Set(['--change', '--base', '--root', '--file', '--metric', '--lines', '--count', '--reason', '--from']);
+const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt> [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
 
 /**
  * Read the command line. Throws the usage text for a bad command line.
@@ -388,6 +392,22 @@ export function runGates({
     return report(log, []);
   }
 
+  // The adopt command stops for a fault in its options before it runs a test. See the requirement "Adoption of merged code".
+  const fromCommit = command === 'adopt' && options.from ? resolveCommit(root, options.from) : null;
+  if (command === 'adopt') {
+    const folder = change && changeFolder(root, change);
+    const active = Boolean(change) && Boolean(folder) && existsSync(path.join(root, folder, 'proposal.md'));
+    const faults = [
+      [!active, `Change "${change}" has no folder with a proposal.md file in openspec/changes`],
+      [!options.from, 'The adopt command needs --from with the merged commit'],
+      [Boolean(options.from) && !fromCommit, `Git cannot find the commit ${options.from}`],
+      [Boolean(fromCommit) && !mergeParents(root, base).has(fromCommit), `The commit ${options.from} is not a merged commit. It must be a parent, other than the first parent, of a merge commit after the base commit.`],
+      [!existsSync(path.join(root, LEDGER_FILE)), `${LEDGER_FILE} is not there. Run: node scripts/spec/gates.mjs init`],
+    ];
+    const fault = faults.find(([bad]) => bad);
+    if (fault) return report(log, [{ code: 'GATES-ADOPT', file: '', message: fault[1] }]);
+  }
+
   const pinned = readOptional(root, '.node-version');
   if (pinned === null) {
     return report(log, [{ code: 'GATES-RUNTIME', file: '.node-version', message: 'Add the file .node-version with the pinned Node version.' }]);
@@ -450,6 +470,24 @@ export function runGates({
   const baseHistoryText = readFileAt(root, base, HISTORY_FILE) ?? '';
   const waivers = waiversOf(historyText, baseHistoryText, change);
 
+  if (command === 'adopt') {
+    if (measured.errors.length > 0) return report(log, measured.errors);
+    const merged = changedByCommit(root, base, fromCommit);
+    const result = adoptLedger({
+      ledger,
+      current: measured.current,
+      eligible: (file) => merged.has(file) && !sameAsBase(file),
+      change,
+      date,
+      commit: headCommit(root),
+      from: fromCommit,
+    });
+    writeLedger(root, result.ledger);
+    appendHistory(root, result.history);
+    log(`Adopt: ${result.history.length} files from ${fromCommit}.`);
+    return report(log, []);
+  }
+
   if (command === 'ratchet') {
     if (measured.errors.length > 0) return report(log, measured.errors);
     const registry = updateRegistry({
@@ -487,6 +525,12 @@ export function runGates({
   }
 
   const comparison = compareLedger({ ledger, current: measured.current, sameAsBase, waivers });
+  const mergedCommits = mergeParents(root, base);
+  const adoption = checkAdopts({
+    adopts: adoptsOf(historyText, baseHistoryText, change),
+    isMergedCommit: (from) => mergedCommits.has(from),
+    changedFiles: (from) => changedByCommit(root, base, from),
+  });
   const baseErrors = compareWithBase({
     ledger,
     baseLedger: parseLedger(readFileAt(root, base, LEDGER_FILE)),
@@ -496,6 +540,7 @@ export function runGates({
     baseHistory: baseHistoryText,
     sameAsBase,
     change,
+    adopted: adoptedCounts(adoption.valid),
   });
   const registry = readRegistry(root);
   const registryErrors = [
@@ -514,7 +559,7 @@ export function runGates({
   ];
   log(`Ledger: ${comparison.stale.length} entries do not match the current gaps.`);
   log(`STE: ${lint.errors.length} errors, ${lint.warnings.length} warnings.`);
-  return report(log, [...measured.errors, ...comparison.errors, ...baseErrors, ...registryErrors, ...lint.errors, ...reviews], lint.warnings);
+  return report(log, [...measured.errors, ...comparison.errors, ...baseErrors, ...adoption.errors, ...registryErrors, ...lint.errors, ...reviews], lint.warnings);
 }
 
 if (import.meta.url === pathToFileURL(path.resolve(String(process.argv[1]))).href) {

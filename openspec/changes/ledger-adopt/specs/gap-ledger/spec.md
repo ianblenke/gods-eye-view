@@ -100,6 +100,7 @@ Origin: spec-first
 - **AND** the line has the date, the change name, the head commit, the file and the commit of the option
 - **AND** the line also has the not-covered counts, the count of untraced tests and the mark for untrue coverage
 - **AND** the command changes no entry of another file, and it does not change the registry or the links
+- **AND** the command writes nothing when the measurement has an error, such as a failed test
 
 #### Scenario: Stop the adopt command for a fault in its options `gap-ledger-090`
 - **WHEN** you run the ledger command `adopt` with a fault in its options

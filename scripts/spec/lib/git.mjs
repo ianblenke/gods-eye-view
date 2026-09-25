@@ -35,3 +35,25 @@ export function diffNames(root, commit) {
   const untracked = git(root, ['ls-files', '--others', '--exclude-standard', '-z']).stdout.split('\0');
   return [...new Set([...changed, ...untracked].filter(Boolean))].sort();
 }
+
+/** The full hash of the commit that a name gives, or null when the name is not a commit. */
+export function resolveCommit(root, ref) {
+  const result = git(root, ['rev-parse', '--verify', '--quiet', `${ref}^{commit}`]);
+  return result.status === 0 ? result.stdout.trim() : null;
+}
+
+/**
+ * The merged commits: the parents, other than the first parent, of the merge commits between the base commit and HEAD.
+ * A commit with one parent has no such parent, so the list needs no filter for merge commits.
+ */
+export function mergeParents(root, base) {
+  const lines = git(root, ['rev-list', '--parents', `${base}..HEAD`]).stdout.split('\n').filter(Boolean);
+  return new Set(lines.flatMap((line) => line.split(' ').slice(2)));
+}
+
+/** The files that a commit changed since its merge base with the base commit. The set is empty when Git finds no merge base. */
+export function changedByCommit(root, base, commit) {
+  const mergeBase = git(root, ['merge-base', base, commit]);
+  if (mergeBase.status !== 0) return new Set();
+  return new Set(git(root, ['diff', '--name-only', '-z', mergeBase.stdout.trim(), commit]).stdout.split('\0').filter(Boolean));
+}
