@@ -1,6 +1,6 @@
 ## 1. Spec and proposal
 
-- [x] 1.1 Write `specs/osh/spec.md`: `osh-005`, `osh-072` and `osh-074` MODIFIED, and `osh-076` to `osh-091` ADDED.
+- [x] 1.1 Write `specs/osh/spec.md`: `osh-005`, `osh-072` and `osh-074` MODIFIED, and `osh-076` to `osh-094` ADDED.
   - The requirements "GET only" and "Live layer" keep their text. Keep the tests for `osh-004`, `osh-006` and `osh-073`.
 - [x] 1.2 Write `proposal.md` with the Why, the What Changes, the Impact and the limits.
 - [x] 1.3 Write `design.md` with D72 to D81.
@@ -20,7 +20,7 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - H2: split at a start code of four bytes only. `[osh-083]` fails.
   - H3: leave a zero byte at the end of a NAL unit. `[osh-083]` fails.
   - H4: write the profile bytes in the wrong order in the codec string. `[osh-083]` fails.
-  - H5: omit the length of the SPS or the PPS from the `avcC` record. `[osh-083]` fails.
+  - H5: remove the length of the SPS or the PPS from the `avcC` record. `[osh-083]` fails.
   - H6: put the SPS and the PPS into the sample. `[osh-083]` fails.
   - H7: write the length of a NAL unit in little-endian order. `[osh-083]` fails.
   - H8: read the type of a NAL unit with a mask of four bits. `[osh-083]` fails.
@@ -38,19 +38,21 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 ## 4. The server
 
 - [x] 4.1 Write the `[osh-078]` tests in `src/data/oshIds.test.mjs` for `videoUrl()` and `assertVideoUrl()`.
-- [x] 4.2 Write the tests of `osh-077`, `osh-079`, `osh-080`, `osh-081`, `osh-090` and `osh-091` in `src/data/oshLive.test.mjs`.
+- [x] 4.2 Write the tests of `osh-077`, `osh-079` to `osh-081`, `osh-090`, `osh-091` and `osh-092` in `src/data/oshLive.test.mjs`.
   - Use the injected socket constructor and the injected timers of the hub tests.
   - Cover `[osh-079]`: a good message gives an event `frame`. Each kind of bad message gives no event.
   - Cover `[osh-079]` with one loopback test that runs the real WebSocket and a message of 70000 bytes.
   - Cover `[osh-080]`: a late client gets `open` and the messages from the last key message on. A key message starts the group again.
   - Cover `[osh-081]`: the live route and the video route of one id have two entries and two sockets.
-  - Cover `[osh-090]`: a client with more than 8388608 unwritten bytes loses its response, and the other clients keep theirs.
+  - Cover `[osh-080]`: a video client gets `down` when the socket closes, and `open` after the retry delay.
+  - Cover `[osh-090]`: the provider destroys the response of a client with more than 8388608 unwritten bytes. The other clients keep their responses.
+  - Cover `[osh-090]` with one real HTTP client that does not read, and one that reads.
 - [x] 4.3 Change the test `[osh-005]` in `src/data/oshProxy.test.mjs` for six files.
 - [x] 4.4 Change the pinned number of OSH test files and the file list of `[osh-034]` in `src/data/oshRepositoryHygiene.test.mjs`.
 - [x] 4.5 Add `videoUrl()` and `assertVideoUrl()` to `server/providers/osh/ids.js` until 4.1 passes.
 - [x] 4.6 Give the hub of `server/providers/osh/live.js` a video kind until 4.2 passes.
 - [x] 4.7 Add the route `/api/osh/video` to `server/providers/osh.js` with the checks of `osh-077`.
-- [x] 4.8 Destroy the response of a client that has too many unwritten bytes, in `server/providers/osh.js`.
+- [x] 4.8 Destroy the response of a client when it has more than 8388608 unwritten bytes, in `server/providers/osh.js`.
 - [x] 4.9 Run each mutation below on the server.
   - V1: skip the bad-id check on the video route. `[osh-077]` fails.
   - V2: let a request with no key open a socket on the video route. `[osh-077]` fails.
@@ -68,12 +70,14 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - V14: give the video entry and the live entry of one id the same key. `[osh-081]` fails.
   - V15: write an event `observation` to a client of the video route. `[osh-081]` fails.
   - V16: remove the check of the unwritten bytes of a client. `[osh-090]` fails.
-  - V17: end a client at exactly 8388608 unwritten bytes. `[osh-090]` fails.
+  - V17: destroy the response of a client at exactly 8388608 unwritten bytes. `[osh-090]` fails.
   - V18: check the bytes and do not destroy the response. `[osh-090]` fails.
-  - V19: write the message after the destroy. `[osh-090]` fails.
+  - V19: write the message after the provider destroys the response. `[osh-090]` fails.
   - V20: change the limit to another value. `[osh-090]` fails.
   - V21: relay a text message that is a string of digits. `[osh-079]` fails.
   - V22: cut the size limit of a video message to 65536 bytes. `[osh-079]` fails.
+  - V23: close the socket for a text message of more than 2097152 characters. `[osh-079]` fails.
+  - V24: skip the event `down` for a video client. `[osh-080]` fails.
   - A mutation that no test fails is a finding: add a test that fails for it.
 
 ## 5. The browser player
@@ -82,9 +86,9 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 - [x] 5.2 Add `openVideo()` to `src/layers/osh/source.js` until 5.1 passes.
 - [x] 5.3 Write the tests of `osh-084` and `osh-085` in the new file `src/layers/osh/videoPlayer.test.mjs`.
   - Use a fake `VideoDecoder`, a fake `EncodedVideoChunk` and a fake canvas. No test decodes real H.264.
-  - Cover the wait for a key message, the call of `configure`, and the chunk types and time stamps.
-  - Cover the draw and the close of each frame, and the ignored delta messages while the queue is long.
-  - Cover the new configuration for a new SPS, the reset after an error, and a page with no decoder class.
+  - Cover how the player waits for a key message, calls `configure`, and sets the chunk types and the time stamps.
+  - Cover how the player draws and closes each frame, and how it ignores delta messages while the decoder queue is long.
+  - Cover how the player configures again for a new SPS, resets after an error, and works on a page with no decoder class.
 - [x] 5.4 Write `src/layers/osh/videoPlayer.js` with `createVideoPlayer()` until 5.3 passes.
 - [x] 5.5 Run each mutation below on the source and the player.
   - P1: decode a delta message before the first key message. `[osh-084]` fails.
@@ -107,13 +111,13 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 - [x] 6.1 Write the tests of `osh-086`, `osh-087`, `osh-072` and `osh-074` in `src/data/oshLayer.test.mjs`.
   - Register `t.after(() => layer.destroy(viewer))` in each test, and use a fake source, a fake view and a fake player.
 - [x] 6.2 Write the `[osh-088]` tests in `src/layers/osh/detail.test.mjs`.
-- [x] 6.3 Write the `[osh-089]` tests in `src/data/osh.test.mjs`, with one test that reads `index.html`.
+- [x] 6.3 Write the `[osh-089]` tests in `src/data/osh.test.mjs`.
 - [x] 6.4 Change `src/layers/osh/detail.js` until 6.2 passes.
 - [x] 6.5 Change `src/layers/osh/index.js` until 6.1 passes. A source with no `openVideo()` plays no video.
 - [x] 6.6 Change `src/data/osh.js` until 6.3 passes.
 - [x] 6.7 Add `src/data/oshVideo.js` and `src/layers/osh/videoPlayer.js` to `scripts/package-boundaries.json`.
-- [x] 6.8 Write the `[osh-086]` test of the occluder selector in `src/overlays/worldOverlay.test.mjs`.
-- [x] 6.9 Run each mutation below on the layer and the page.
+- [x] 6.8 Write the `[osh-093]` test of the occluder selector in `src/overlays/worldOverlay.test.mjs`.
+- [x] 6.9 Run each mutation below on the layer.
   - L1: show the panel with no selection. `[osh-086]` fails.
   - L2: leave the panel shown after the selection ends. `[osh-086]` fails.
   - L3: start no video stream for a video datastream. `[osh-087]` fails.
@@ -128,24 +132,30 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - L12: show `No data` for a video datastream. `[osh-088]` fails.
   - L13: use a wrong element id for the panel host. `[osh-089]` fails.
   - L14: start a video stream when the player reports `unsupported`. `[osh-087]` fails.
-  - L15: remove the attribute `hidden` from the panel in `index.html`. `[osh-089]` fails.
-  - L16: rename the video host in `index.html`. `[osh-089]` fails.
-  - L17: put the detail host outside the panel in `index.html`. `[osh-089]` fails.
-  - L18: rename the panel in `index.html`. `[osh-089]` fails.
-  - L19: remove `#osh-panel` from the occluders of the world overlay. `[osh-086]` fails.
   - A mutation that no test fails is a finding: add a test that fails for it.
 
 ## 7. The page
 
 - [x] 7.1 Add the panel element and its two hosts to `index.html`.
-- [x] 7.2 Add the style of the panel to `style.css`. Keep the panel apart from the other panels.
+- [x] 7.2 Add the style of the panel to `style.css`.
+  - The panel must not cover another panel on a window of 1060px or more.
 - [x] 7.3 Add `#osh-panel` to the occluders in `src/overlays/worldOverlay.js`.
-- [ ] 7.4 Run the app, select a camera, and report what the panel shows.
+- [x] 7.4 Write the `[osh-094]` tests of `index.html` and `style.css` in `src/data/osh.test.mjs`.
+- [x] 7.5 Run each mutation below on the page.
+  - L15: remove the attribute `hidden` from the panel in `index.html`. `[osh-094]` fails.
+  - L16: rename the video host in `index.html`. `[osh-094]` fails.
+  - L17: put the detail host outside the panel in `index.html`. `[osh-094]` fails.
+  - L18: rename the panel in `index.html`. `[osh-094]` fails.
+  - L19: remove `#osh-panel` from the occluders of the world overlay. `[osh-093]` fails.
+  - L20: remove the rule `.osh-panel[hidden]` from `style.css`. `[osh-094]` fails.
+  - L21: give the rule `.osh-panel[hidden]` the display `block`. `[osh-094]` fails.
+  - A mutation that no test fails is a finding: add a test that fails for it.
+- [ ] 7.6 Run the app, select a camera, and report what the panel shows.
 
 ## 8. Gates and review
 
-- [x] 8.1 Run `make lint` until no STE error remains.
-- [x] 8.2 Run `make ratchet CHANGE=osh-camera-video`.
+- [ ] 8.1 Run `make lint` until no STE error remains.
+- [ ] 8.2 Run `make ratchet CHANGE=osh-camera-video`.
 - [ ] 8.3 Run `make gates CHANGE=osh-camera-video`.
 - [ ] 8.4 Confirm that each changed code file has full coverage.
 - [ ] 8.5 Run `npm run format:check` and `npm run check:boundaries`.

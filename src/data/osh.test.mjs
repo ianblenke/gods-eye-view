@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { readStylesheet } from '../testSupport/readStylesheet.mjs';
 import * as Cesium from 'cesium';
 import createOshLayer, { createOshLayer as createLayer, createOshPanelHosts } from './osh.js';
 import { createOshSource } from '../layers/osh/index.js';
@@ -207,7 +208,7 @@ test('[osh-089] the default layer looks for the panel elements in the page and f
   assert.match(elements['osh-panel-detail'].innerHTML, /System A/, 'the detail element holds the detail');
 });
 
-test('[osh-089] index.html has the element osh-panel, hidden at the start, with the hosts of the video and the detail inside it', () => {
+test('[osh-094] index.html has one element osh-panel, hidden at the start, with one host of the video and one host of the detail inside it', () => {
   const html = readFileSync(new URL('../../index.html', import.meta.url), 'utf8');
   const opening = /<aside\b[^>]*\bid="osh-panel"[^>]*>/.exec(html);
   assert.ok(opening, 'the page has the element osh-panel');
@@ -218,5 +219,10 @@ test('[osh-089] index.html has the element osh-panel, hidden at the start, with 
     assert.ok(inside.includes(`id="${id}"`), `${id} is inside the panel`);
   }
   assert.equal(html.split('id="osh-panel"').length - 1, 1, 'the page has one element osh-panel');
+});
+
+test('[osh-094] the stylesheet gives the panel with the attribute hidden the display none', () => {
+  const css = readStylesheet(new URL('../../style.css', import.meta.url));
+  assert.match(css, /\.osh-panel\[hidden\]\s*\{[^}]*display:\s*none/);
 });
 

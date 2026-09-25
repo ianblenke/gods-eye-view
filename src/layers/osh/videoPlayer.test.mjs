@@ -194,7 +194,7 @@ test('[osh-084] the player decodes each message as a key chunk or a delta chunk 
   );
 });
 
-test('[osh-084] the player gives each chunk a time stamp in microseconds from the first message', () => {
+test('[osh-084] the player gives each chunk a time stamp in microseconds after the time stamp of the first decoded message', () => {
   const { player, decoder } = startedPlayer();
   player.push(deltaMessage(100.75));
   player.push(deltaMessage(101.5));
@@ -212,7 +212,7 @@ test('[osh-084] the player rounds a time stamp to whole microseconds', () => {
   assert.ok(Number.isInteger(stamp));
 });
 
-test('[osh-084] the time origin is the first message that the player decodes, and no dropped message', () => {
+test('[osh-084] the time origin is the first message that the player decodes, and never an ignored message', () => {
   const { player, decoders } = makePlayer();
   player.push(deltaMessage(50));
   player.push(keyMessage(100.5));
@@ -223,14 +223,14 @@ test('[osh-084] the time origin is the first message that the player decodes, an
   );
 });
 
-test('[osh-084] the player drops a message that has no slice unit', () => {
+test('[osh-084] the player ignores a message that has no slice unit', () => {
   const { player, decoder } = startedPlayer();
   player.push(videoMessage(100.6, [SEI]));
   player.push(videoMessage(100.7, [SPS, PPS]));
   assert.equal(decoder.of('decode').length, 1, 'only the first key message became a chunk');
 });
 
-test('[osh-084] the player draws each decoded frame at the top left corner of the canvas and closes it', () => {
+test('[osh-084] the player draws each decoded frame at the top left corner of the canvas and closes the frame', () => {
   const { canvas, decoder } = startedPlayer();
   const first = fakeFrame();
   const second = fakeFrame();
@@ -268,7 +268,7 @@ test('[osh-084] the player sets the size of the canvas from the first frame and 
   assert.deepEqual([canvas.width, canvas.height], [320, 200]);
 });
 
-test('[osh-084] the player closes a frame when the draw throws, and reports no live status', () => {
+test('[osh-084] when the draw fails, the player closes the frame and reports no live status', () => {
   const { decoder, statuses } = startedPlayer({ drawThrows: true });
   const frame = fakeFrame();
   assert.throws(() => decoder.init.output(frame), /the draw failed/);
@@ -285,7 +285,7 @@ test('[osh-084] the player reports the status `live` once for a run of frames', 
   assert.deepEqual(statuses, ['waiting', 'live']);
 });
 
-test('[osh-084] the player drops delta messages while the decoder queue holds more than eight frames', () => {
+test('[osh-084] when the decoder queue holds more than eight chunks, the player ignores each delta message', () => {
   const { player, decoder } = startedPlayer();
   decoder.decodeQueueSize = 8;
   player.push(deltaMessage(100.6));
@@ -296,7 +296,7 @@ test('[osh-084] the player drops delta messages while the decoder queue holds mo
   assert.equal(decoder.of('decode').length, 2, 'a long queue drops the delta messages');
 });
 
-test('[osh-084] the player keeps the drop of delta messages until the next key message', () => {
+test('[osh-084] after the player ignores a delta message, it ignores each later delta message until the next key message', () => {
   const { player, decoder } = startedPlayer();
   decoder.decodeQueueSize = 9;
   player.push(deltaMessage(100.6));
@@ -321,7 +321,7 @@ test('[osh-084] the player decodes a key message even when the decoder queue is 
   );
 });
 
-test('[osh-084] a message that has no slice unit does not start the drop of delta messages', () => {
+test('[osh-084] a message that has no slice unit does not make the player ignore later delta messages', () => {
   const { player, decoder } = startedPlayer();
   decoder.decodeQueueSize = 9;
   player.push(videoMessage(100.6, [SEI]));
@@ -417,7 +417,7 @@ test('[osh-084] after a decoder error the next key message makes a new decoder, 
   assert.deepEqual(statuses, ['waiting', 'live', 'error', 'waiting', 'live']);
 });
 
-test('[osh-084] a decoder error resets the player when the close of the decoder throws', () => {
+test('[osh-084] a decoder error resets the player when the decoder fails to close', () => {
   const { player, statuses, decoders, decoder } = startedPlayer();
   decoder.closeThrows = true;
   decoder.init.error(new Error('the decoder failed'));
@@ -451,7 +451,7 @@ test('[osh-084] a configuration that the browser refuses is a decoder error', ()
   assert.equal(codecs.decoders[1].of('decode').length, 1);
 });
 
-test('[osh-084] a decoder that throws from decode makes the player reset it, and the player starts again at the next key message', () => {
+test('[osh-084] a decoder that throws from decode makes the player reset the decoder, and the player starts again at the next key message', () => {
   const { player, statuses, decoders, decoder } = startedPlayer();
   decoder.decodeThrows = true;
   player.push(deltaMessage(100.75));
@@ -494,7 +494,7 @@ test('[osh-084] a decoder class that throws from its constructor is a decoder er
   assert.equal(made, 2, 'the next key message tries a new decoder');
 });
 
-test('[osh-084] the close method closes the decoder and stops the decode of later messages', () => {
+test('[osh-084] the close method closes the decoder, and the player decodes no later message', () => {
   const { player, decoders, decoder } = startedPlayer();
   player.close();
   assert.equal(decoder.of('close').length, 1);
@@ -514,7 +514,7 @@ test('[osh-084] the close method makes no decoder when the player has none', () 
   assert.equal(decoders.length, 0);
 });
 
-test('[osh-084] the close method does not throw when the close of the decoder throws', () => {
+test('[osh-084] the close method does not throw when the decoder fails to close', () => {
   const { player, decoder } = startedPlayer();
   decoder.closeThrows = true;
   assert.doesNotThrow(() => player.close());

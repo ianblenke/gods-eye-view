@@ -162,7 +162,7 @@ test('[osh-076] a coverage result with the observed property RasterImage gets vi
   ]);
 });
 
-test('[osh-076] a list with one video record marks it, and leaves each neighbour with no video key', () => {
+test('[osh-076] a list with one video record marks it, and leaves each neighbour with no video property', () => {
   const records = mapOshDatastreams({
     items: [
       entryOf('ds-fixture-31'),
@@ -182,14 +182,14 @@ test('[osh-076] a list with one video record marks it, and leaves each neighbour
   assert.equal(Object.hasOwn(records[2], 'video'), false);
 });
 
-test('[osh-076] each record of the fixture list has no video key and keeps its five keys', () => {
+test('[osh-076] each record of the fixture list has no video property and keeps its five keys', () => {
   for (const record of mapOshDatastreams(fixture)) {
     assert.equal(Object.hasOwn(record, 'video'), false);
     assert.equal(Object.keys(record).length, 5);
   }
 });
 
-test('[osh-076] a RasterImage property with a result type other than coverage gives no video key', () => {
+test('[osh-076] a RasterImage property with a result type other than coverage gives no video property', () => {
   const records = mapOshDatastreams({
     items: [
       entryOf('ds-fixture-34', { resultType: 'measure' }),
@@ -202,7 +202,7 @@ test('[osh-076] a RasterImage property with a result type other than coverage gi
   for (const record of records) assert.equal(Object.hasOwn(record, 'video'), false, record.id);
 });
 
-test('[osh-076] a coverage result with no RasterImage property gives no video key', () => {
+test('[osh-076] a coverage result with no RasterImage property gives no video property', () => {
   const records = mapOshDatastreams({
     items: [
       entryOf('ds-fixture-38', { observedProperties: [{ definition: OTHER_PROPERTY }] }),
@@ -217,7 +217,7 @@ test('[osh-076] a coverage result with no RasterImage property gives no video ke
   for (const record of records) assert.equal(Object.hasOwn(record, 'video'), false, record.id);
 });
 
-test('[osh-076] the name must be exactly RasterImage in letter case and in length, so a longer name, another case or another segment gives no video key', () => {
+test('[osh-076] the name must be exactly RasterImage in letter case and in length, so a longer name, another case or another segment gives no video property', () => {
   const definitions = [
     'http://sensorml.com/ont/swe/property/MyRasterImage',
     'http://sensorml.com/ont/swe/property/RasterImages',
@@ -269,7 +269,7 @@ test('[osh-076] one RasterImage property among the observed properties is enough
   for (const record of records) assert.equal(record.video, true, record.id);
 });
 
-test('[osh-076] an observed property with no definition string, and a null property, give no video key and no error', () => {
+test('[osh-076] an observed property with no definition string, and a null property, give no video property and no error', () => {
   const records = mapOshDatastreams({
     items: [
       entryOf('ds-fixture-73', { observedProperties: [null] }),

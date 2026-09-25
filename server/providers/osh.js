@@ -711,8 +711,8 @@ export function oshProxy({
               res.flushHeaders();
             },
             write(text) {
-              // A client that stops reading would make the response hold every message. Past
-              // the limit the response ends, and the browser opens the stream again.
+              // A client that does not read would make the response hold every message. Past
+              // the limit the route destroys the response, and the browser opens the stream again.
               if (res.writableLength > OSH_LIVE_MAX_CLIENT_BUFFER_BYTES) {
                 res.destroy();
                 return false;
