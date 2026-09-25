@@ -156,10 +156,12 @@ test('three identical-order 15000-vehicle snapshots retain paths within a bounde
   t.diagnostic(
     `15000-vehicle ingestion ms: ${times.map((n) => n.toFixed(1)).join('/')}`,
   );
-  // A ceiling that says "not quadratic", not a benchmark: 15,000 rows in
-  // well under two seconds on a loaded laptop or a slow CI runner. The
-  // per-run figure above is the diagnostic to read.
-  assert.ok(Math.max(...times) < 2000, `ingestion ms: ${times}`);
+  // A ceiling that says "not quadratic", not a benchmark. A run alone with
+  // coverage takes under one second per poll. The spec gates run this file
+  // next to many other test processes, so the ceiling is ten seconds. A
+  // quadratic ingestion of 15,000 rows still takes far longer than that.
+  // The per-run figure above is the diagnostic to read.
+  assert.ok(Math.max(...times) < 10000, `ingestion ms: ${times}`);
 });
 
 test('snapshot capacity pressure preserves members not yet visited and discloses recreated history', (t) => {
