@@ -1275,12 +1275,12 @@
     "change": "osh-camera-video"
   },
   "osh-079": {
-    "hash": "34893a1068d0e83e56ff8ab5ad0dbace116bc82618e04ff6135dbd94d1f1b1c5",
+    "hash": "52822aa724d38dafc2f55decfdb669e9e91af0fc6f52fe5caf7e26d44283328f",
     "since": "2026-09-24",
     "change": "osh-camera-video"
   },
   "osh-080": {
-    "hash": "fe5480754ba80592bbcaf43ea07f1a03752631b6aa6cfb9661421715c2bcd84b",
+    "hash": "5a556af3aab69deae09d82f4bb4cd393c40545da490010c733c461c40e682adf",
     "since": "2026-09-24",
     "change": "osh-camera-video"
   },
@@ -1295,12 +1295,12 @@
     "change": "osh-camera-video"
   },
   "osh-083": {
-    "hash": "a01608238271a9c9391a1c2883dd7b29df94819984738856874daf3d265fef41",
+    "hash": "44c32032aaf2ddf97664d0a288dbcb49781fa81a64062c90c4c05d995a972097",
     "since": "2026-09-24",
     "change": "osh-camera-video"
   },
   "osh-084": {
-    "hash": "cd57132424011e9f448a3e9563ec7c9c874afdc07543e217a5756d28aef2e1e1",
+    "hash": "2680cf7d8b0cebfec9ee394d8bd505a552f36d627dbf11f23aee46b7483da0a0",
     "since": "2026-09-24",
     "change": "osh-camera-video"
   },
@@ -1315,7 +1315,7 @@
     "change": "osh-camera-video"
   },
   "osh-087": {
-    "hash": "6b8c895dc6ab980955990862111925bc14c1854fa7e3df51df431596997d4bbe",
+    "hash": "115c9606886543fba06c0e911abf2d6ceafd44a0e395bafe0b96238dfc95ce57",
     "since": "2026-09-24",
     "change": "osh-camera-video"
   },
@@ -1330,7 +1330,7 @@
     "change": "osh-camera-video"
   },
   "osh-090": {
-    "hash": "8711c9f693cd91a023d6dea29fc2eddfe9f60c563d7a3c073024394cce03167c",
+    "hash": "3d2ba82a978470eedd6baf2e826130d2cc5b91930ff90acb4700ccadb2430598",
     "since": "2026-09-24",
     "change": "osh-camera-video"
   },
@@ -1340,17 +1340,17 @@
     "change": "osh-camera-video"
   },
   "osh-092": {
-    "hash": "949f2c71416300ed8144eea438cf2d8745574154e1fb3cbab14643de9b15aced",
+    "hash": "146570df3603d799caf99e95a2a6997d81dc873496f6e286595343669f2a2853",
     "since": "2026-09-25",
     "change": "osh-camera-video"
   },
   "osh-093": {
-    "hash": "d712b7ff2dde4bc8fe7638d2fc0f5f242f7f5e4e7a94f293e6cef530915bc365",
+    "hash": "a22ccc25630a8ddf1ee6da808213232779b06a925661ddac03f77764c78381be",
     "since": "2026-09-25",
     "change": "osh-camera-video"
   },
   "osh-094": {
-    "hash": "e47e5e543394cad7c045f3fc017eab949c44770f69f05da07d804b32dfa67542",
+    "hash": "50c0fe69a7b809e27c24c19315971888fdb9a5610e5a9aa44e5ddbd0be861198",
     "since": "2026-09-25",
     "change": "osh-camera-video"
   },

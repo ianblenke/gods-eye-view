@@ -1311,16 +1311,16 @@
     "src/data/oshLive.test.mjs › [osh-078] the video route builds the URL with videoUrl() and checks it with assertVideoUrl()"
   ],
   "osh-079": [
-    "src/data/oshLive.test.mjs › [osh-079] a good video message gives one frame event with the base64 text of the whole message, for each client",
     "src/data/oshLive.test.mjs › [osh-079] a known message gives a known text of the frame event",
     "src/data/oshLive.test.mjs › [osh-079] a loopback server sends a binary video message of 70000 bytes, and the video route gives its frame event",
-    "src/data/oshLive.test.mjs › [osh-079] a message of exactly 12 bytes with a length field of zero is a good message",
-    "src/data/oshLive.test.mjs › [osh-079] a message of exactly 2097152 bytes is a good message, and the socket stays open",
+    "src/data/oshLive.test.mjs › [osh-079] a message of exactly 12 bytes with a length field of zero is a valid message",
+    "src/data/oshLive.test.mjs › [osh-079] a message of exactly 2097152 bytes is a valid message, and the socket stays open",
     "src/data/oshLive.test.mjs › [osh-079] a message of more than 2097152 bytes closes the socket, and the clients get unsupported and end",
     "src/data/oshLive.test.mjs › [osh-079] a text message of more than 2097152 characters gives no event, and the socket stays open",
+    "src/data/oshLive.test.mjs › [osh-079] a valid video message gives one frame event with the base64 text of the whole message, for each client",
+    "src/data/oshLive.test.mjs › [osh-079] after a message that is too large, the hub refuses the video route for the datastream of that message for ten minutes",
     "src/data/oshLive.test.mjs › [osh-079] each later message gives its own frame event, in the order of arrival",
     "src/data/oshLive.test.mjs › [osh-079] each of the four kinds of ignored message gives no event, and the stream stays open",
-    "src/data/oshLive.test.mjs › [osh-079] the hub refuses the video route for that datastream for ten minutes after a message that is too large",
     "src/data/oshLive.test.mjs › [osh-079] the video route gives 503 with live_unsupported after a message that is too large, for ten minutes"
   ],
   "osh-080": [
@@ -1329,7 +1329,7 @@
     "src/data/oshLive.test.mjs › [osh-080] a key message starts the group again",
     "src/data/oshLive.test.mjs › [osh-080] a late client gets the event open and then each message from the last key message on, in order",
     "src/data/oshLive.test.mjs › [osh-080] a message with a slice of type 1 does not start the group again, and a message with a slice of type 5 does",
-    "src/data/oshLive.test.mjs › [osh-080] a video client gets the event down when the socket closes, and the event open after the retry delay",
+    "src/data/oshLive.test.mjs › [osh-080] each video client gets the event down when the socket closes, and the event open when the new socket opens after each delay",
     "src/data/oshLive.test.mjs › [osh-080] the hub empties a group of 2097153 bytes, and the group stays empty until the next key message",
     "src/data/oshLive.test.mjs › [osh-080] the hub empties the group when the socket closes or fails",
     "src/data/oshLive.test.mjs › [osh-080] the hub stores no delta message when it has no group, and the group starts at the next key message",
@@ -1361,10 +1361,10 @@
     "src/data/oshVideo.test.mjs › [osh-083] the avcC record has the exact bytes for an SPS and a PPS",
     "src/data/oshVideo.test.mjs › [osh-083] the codec string is avc1 and the three bytes after the NAL header of the SPS in capital hexadecimal digits",
     "src/data/oshVideo.test.mjs › [osh-083] the helper cuts H.264 data at a start code of three bytes and at a start code of four bytes",
-    "src/data/oshVideo.test.mjs › [osh-083] the helper gives null for a message with a wrong length field, a short message or a time stamp that is not a finite number",
+    "src/data/oshVideo.test.mjs › [osh-083] the helper gives null for each message that is not valid",
     "src/data/oshVideo.test.mjs › [osh-083] the helper reads a message that is a part of a larger buffer",
-    "src/data/oshVideo.test.mjs › [osh-083] the helper removes the zero bytes before the next start code and ignores bytes before the first one",
-    "src/data/oshVideo.test.mjs › [osh-083] the helper returns the time stamp in milliseconds and the H.264 data of a good message",
+    "src/data/oshVideo.test.mjs › [osh-083] the helper removes the zero bytes before the next start code and ignores bytes before the first start code",
+    "src/data/oshVideo.test.mjs › [osh-083] the helper returns the time stamp in milliseconds and the H.264 data of a valid message",
     "src/data/oshVideo.test.mjs › [osh-083] the parameter sets are the first SPS and the first PPS of the list",
     "src/data/oshVideo.test.mjs › [osh-083] the sample has no NAL unit of type 0 and no empty NAL unit, and it is null when no slice is left",
     "src/data/oshVideo.test.mjs › [osh-083] the sample holds the slice NAL units only, each with its length in four bytes before it",
@@ -1375,7 +1375,6 @@
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] a configuration that the browser refuses is a decoder error",
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] a decoder class that throws from its constructor is a decoder error",
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] a decoder error closes the decoder and reports `error`, then `waiting`",
-    "src/layers/osh/videoPlayer.test.mjs › [osh-084] a decoder error resets the player when the decoder fails to close",
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] a decoder that throws from decode makes the player reset the decoder, and the player starts again at the next key message",
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] a key message with a new SPS configures the same decoder again before it decodes",
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] a key message with an SPS of another size configures the decoder again",
@@ -1383,6 +1382,7 @@
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] a key message with the same SPS does not configure the decoder again",
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] a message that has no slice unit does not make the player ignore later delta messages",
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] after a decoder error the next key message makes a new decoder, and the player reports `live` again after its first decoded frame",
+    "src/layers/osh/videoPlayer.test.mjs › [osh-084] after a decoder error the player resets, also when the decoder fails to close",
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] after the close method the player draws nothing and reports nothing for a callback of the decoder",
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] after the player ignores a delta message, it ignores each later delta message until the next key message",
     "src/layers/osh/videoPlayer.test.mjs › [osh-084] the close method closes the decoder, and the player decodes no later message",
@@ -1463,8 +1463,8 @@
     "src/data/osh.test.mjs › [osh-089] the hosts come from the global document when the caller gives none"
   ],
   "osh-090": [
-    "src/data/oshLive.test.mjs › [osh-090] a real HTTP client that does not read loses its response, and a client that reads keeps its events",
     "src/data/oshLive.test.mjs › [osh-090] the live route destroys the response of a client that has more than 8388608 unwritten bytes",
+    "src/data/oshLive.test.mjs › [osh-090] the provider destroys the response of a real HTTP client that does not read, and a client that reads keeps its events",
     "src/data/oshLive.test.mjs › [osh-090] the route never destroys a response that reports no unwritten bytes",
     "src/data/oshLive.test.mjs › [osh-090] the video route destroys the response of a client that has more than 8388608 unwritten bytes, and the other client keeps its events",
     "src/data/oshLive.test.mjs › [osh-090] the video route keeps the response of a client that has exactly 8388608 unwritten bytes"
@@ -1472,7 +1472,7 @@
   "osh-091": [
     "src/data/oshLive.test.mjs › [osh-091] a client that leaves while the video route loads the root opens no socket",
     "src/data/oshLive.test.mjs › [osh-091] a good request to the video route opens one socket for the wss video URL, with binary type arraybuffer and only the headers option",
-    "src/data/oshLive.test.mjs › [osh-091] the socket of the video route writes no message frame",
+    "src/data/oshLive.test.mjs › [osh-091] the provider writes no message frame to the socket of the video route",
     "src/data/oshLive.test.mjs › [osh-091] the video route gives the socket the header Authorization only when both credentials are set",
     "src/data/oshLive.test.mjs › [osh-091] the video route reads no schema, and every request to the server is a GET",
     "src/data/oshLive.test.mjs › [osh-091] the video route removes the client when the connection closes",
@@ -1483,10 +1483,11 @@
     "src/data/oshLive.test.mjs › [osh-092] the video route reports base_unresolved and auth_failed when no candidate root answers"
   ],
   "osh-093": [
-    "src/overlays/worldOverlay.test.mjs › [osh-093] the list of occluder selectors has `#osh-panel`"
+    "src/overlays/worldOverlay.test.mjs › [osh-093] the list of occluder selectors has `#osh-panel`",
+    "src/overlays/worldOverlay.test.mjs › [osh-093] the world overlay places a card clear of the panel of the OSH layer when it can"
   ],
   "osh-094": [
-    "src/data/osh.test.mjs › [osh-094] index.html has one element osh-panel, hidden at the start, with one host of the video and one host of the detail inside it",
+    "src/data/osh.test.mjs › [osh-094] index.html has one element osh-panel, hidden at the start, and one video host and one detail host inside that element",
     "src/data/osh.test.mjs › [osh-094] the stylesheet gives the panel with the attribute hidden the display none"
   ],
   "spec-lint-001": [
