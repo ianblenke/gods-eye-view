@@ -387,20 +387,19 @@
     "src/search/placeSearch.test.mjs › [credential-boundary-013] the geocode request URL is same-origin, with address and bounds, and no key"
   ],
   "credential-boundary-014": [
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a ZERO_RESULTS answer with no results gives no place",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a configured answer gives the same place shape as before this change",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a fetch failure gives no place",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 200 answer with a null Google status",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 200 answer with no status field",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 429 answer with a null Google status",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 500 answer with a Google status",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 502 answer with a null Google status",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call for the same coordinate joins the fetch in progress or uses the result in the cache",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a later call makes no fetch after an HTTP 200 ZERO_RESULTS answer",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] a response that is not JSON gives no place",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] an empty result gets a default value for each field",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] reverseGeocode fetches the server route, with no key",
-    "src/voice/gevActions.test.mjs › [credential-boundary-014] the reverse lookup remembers a configured:false answer for the life of the page"
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a ZERO_RESULTS answer with no results gives no place",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a configured answer gives the same place shape as before this change",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a fetch failure gives no place",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 200 answer with a null Google status",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 200 answer with no status field",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 429 answer with a null Google status",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 500 answer with a Google status",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 502 answer with a null Google status",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call makes no fetch after an HTTP 200 ZERO_RESULTS answer",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a response that is not JSON gives no place",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] an empty result gets a default value for each field",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] reverseGeocode fetches the server route, with no key",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] the reverse lookup remembers a configured:false answer for the life of the page"
   ],
   "credential-boundary-015": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-015] no direct call to Google geocoding remains in the browser source"
@@ -1530,6 +1529,9 @@
   "osh-094": [
     "src/data/osh.test.mjs › [osh-094] index.html has one element osh-panel, hidden at the start, and one video host and one detail host inside that element",
     "src/data/osh.test.mjs › [osh-094] the stylesheet gives the panel with the attribute hidden the display none"
+  ],
+  "osh-095": [
+    "src/app/layers/osh.test.mjs › [osh-095] builds the OSH systems layer in the application catalog right after the recent-imagery layer"
   ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"

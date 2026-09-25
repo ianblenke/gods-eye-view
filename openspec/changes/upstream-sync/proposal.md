@@ -11,7 +11,7 @@ This change makes the merge. The merged commit is `b210ab0`, the newest commit o
 - Keep the credential boundary in the new search code of upstream. The reverse geocoder and the Google forward geocoder call the server route `/api/google/geocode`, with no key in the request. The function `resolveApiKey` is gone.
 - Format the OSH files with the Prettier version of upstream, and list the OSH modules in the package boundaries of upstream.
 - Fix two upstream tests that the gates stop. The test file `src/sdr/controller.test.mjs` left 15 live timers. The ingestion test in `server/providers/transitHistory.test.mjs` has a wall-clock ceiling that fails under the load of the gates.
-- Run the ledger command `adopt` for the merged files that have a gap. The next section gives the counts.
+- Run the ledger command `adopt` for the merged files that have a gap. The section Impact gives the counts.
 - Change the scenarios `osh-033`, `osh-094` and `credential-boundary-014` for the new structure, and add the scenario `osh-095` for the application catalog.
 
 ## Capabilities
@@ -28,7 +28,8 @@ None.
 ## Impact
 
 - Changed files: 1002 files of upstream, the conflict resolutions in 16 files, the files of the sections above, `openspec/specs/osh/spec.md`, `openspec/specs/credential-boundary/spec.md` and the trace files.
-- Gaps that this change opens: the adopted gaps of the merged upstream files. The command `adopt` writes one history line for each file. Rule 21 of `AGENTS.md` limits the command to merged upstream code. The person who merges this change checks the merged commit against the upstream remote.
+- Gaps that this change opens: the adopted gaps of the merged upstream files. The command `adopt` wrote one history line for each of 797 files. These are 525 code files and 272 test files.
+- The 525 code files have 60497 lines, 5868 branches and 1683 functions that no test covers. Of these files, 17 have untrue coverage, because a test runs them through a transform. The 272 test files have 3413 tests without a scenario ID. Rule 21 of `AGENTS.md` limits the command to merged upstream code. The person who merges this change checks the merged commit against the upstream remote.
 - Gaps that this change closes: none.
 - The backfill changes close the adopted gaps. Each backfill change takes one feature area and writes its specs from what the code does. It adds the scenario IDs and the tests until the files are complete.
 
