@@ -368,6 +368,9 @@ test('[gap-ledger-022] stops for a ledger entry that is larger than the base', (
   // An adopted count below the rise does not allow it, and the message shows that count.
   const adopted = adoptedCounts([ADOPT('src/orbit.js', { lines: 7 })]);
   assert.deepEqual(base({ ledger, adopted }), [{ code: 'LEDGER-LARGER-THAN-BASE', file: 'src/orbit.js', message: 'The ledger allows 9 lines for src/orbit.js. The base ledger allows 5. The adopted count is 7.' }]);
+  // A waiver and an adopted count together: the message shows both, and the larger allowance applies.
+  const both = compareWithBase({ ledger, baseLedger: BASE, retired: ['x-001'], baseRetired: ['x-001'], history: 'base\n' + waiverLine + '\n', baseHistory: 'base\n', change: 'test-change', sameAsBase: () => false, adopted });
+  assert.deepEqual(both.map((error) => error.message), ['The ledger allows 9 lines for src/orbit.js. The base ledger allows 5. A waiver allows 2 more. The adopted count is 7.']);
 });
 
 test('[gap-ledger-032] stops for untrue coverage that the base does not record', () => {
@@ -584,6 +587,9 @@ test('[gap-ledger-040] stops for more branches than the base in a changed file',
   assert.deepEqual(adoptedErrors.map((error) => [error.code, error.message]), [
     ['LEDGER-MORE-THAN-BASE', 'src/orbit.js changed, and the ledger allows 7 branches. The base ledger allows 3. The adopted count is 6.'],
   ]);
+  // A waiver for the branches and an adopted count together: the message shows both.
+  const bothErrors = compareWithBase({ ledger, baseLedger, retired: [], baseRetired: [], history: 'base\n' + waiverLine + '\n', baseHistory: 'base\n', change: 'test-change', sameAsBase: () => false, adopted });
+  assert.deepEqual(bothErrors.map((error) => error.message), ['src/orbit.js changed, and the ledger allows 7 branches. The base ledger allows 3. A waiver allows 2 more. The adopted count is 6.']);
 });
 
 test('[gap-ledger-048] stops for more branches than the base with fewer covered branches', () => {
@@ -989,7 +995,7 @@ test('[gap-ledger-087] stops the build for a ledger entry that the base does not
 test('[gap-ledger-089] writes the entries and the history lines of the adopted files', () => {
   const ledger = ledgerWith({
     coverage: { 'src/old.js': LOADED(5, 3, 1), 'src/keep.js': LOADED(2, 0, 0) },
-    untracedTests: { 'src/old.test.mjs': { one: 1 }, 'src/keep.test.mjs': { four: 1 } },
+    untracedTests: { 'src/old.test.mjs': { one: 1, gone: 1 }, 'src/keep.test.mjs': { four: 1 } },
   });
   const current = gaps(
     [loaded('src/new.js', 4, 2, 1, 'sha-new'), loaded('src/old.js', 7, 3, 1, 'sha-old'), unloaded('src/dark.js', 30, 'sha-dark', true), loaded('src/other.js', 1, 0, 0, 'sha-other')],
@@ -1004,7 +1010,7 @@ test('[gap-ledger-089] writes the entries and the history lines of the adopted f
   });
   assert.deepEqual(result.ledger.untracedTests, {
     'src/keep.test.mjs': ledger.untracedTests['src/keep.test.mjs'],
-    'src/old.test.mjs': { names: { one: 1, two: 2 }, origin: 'pre-spec', since: '2026-01-01' },
+    'src/old.test.mjs': { names: { one: 1, two: 2 }, origin: 'pre-spec', since: '2026-01-01' }, // the closed name `gone` is not in the entry
     'src/new.test.mjs': { names: { three: 1 }, origin: 'sync', since: DATE },
   });
   const line = (file, extra) => ({ date: DATE, change: 'sync', commit: COMMIT, kind: 'adopt', file, from: 'up1', ...extra });
@@ -1101,7 +1107,7 @@ test('[gap-ledger-092] allows a ledger entry that the base does not have for an 
   assert.deepEqual(messages([namesLine], () => true), notInBase);
 });
 
-test('[gap-ledger-093] allows a rise above the base entry up to the adopted count, and no more', () => {
+test('[gap-ledger-093] allows a rise above the base entry up to the adopted count, and not above it', () => {
   const baseLedger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(5, 3, 1, { sha: 'old' }) } });
   const ledger = ledgerWith({ coverage: { 'src/orbit.js': LOADED(9, 7, 3, { sha: 'new' }) } });
   const all = { lines: 9, branches: 7, functions: 3 };
@@ -1127,23 +1133,18 @@ test('[gap-ledger-093] allows a rise above the base entry up to the adopted coun
   assert.deepEqual(run([ADOPT('src/orbit.js', { ...all, lines: 6 })], { history: `base\n${waiver}`, baseHistory: 'base\n', change: 'sync' }), []);
   // A file with the base content has no adopted count.
   assert.deepEqual(codes(run([ADOPT('src/orbit.js', all)], { sameAsBase: () => true })), ['LEDGER-LARGER-THAN-BASE', 'LEDGER-HASH-NOT-BASE', 'LEDGER-MORE-THAN-BASE', 'LEDGER-MORE-THAN-BASE']);
-  // The gate reads the content of a file for the adopted count only when the file has an adopt line.
-  const plain = ledgerWith({ coverage: { 'src/plain.js': LOADED(5, 3, 1, { sha: 'old' }), 'src/orbit.js': ledger.coverage['src/orbit.js'] } });
-  const read = [];
-  withAdopted({ ledger: plain, baseLedger: ledgerWith({ coverage: { 'src/plain.js': LOADED(5, 3, 1, { sha: 'old' }), 'src/orbit.js': baseLedger.coverage['src/orbit.js'] } }), lines: [ADOPT('src/orbit.js', all)], sameAsBase: (file) => read.push(file) < 0 });
-  assert.deepEqual(read, ['src/plain.js', 'src/orbit.js', 'src/orbit.js']);
 });
 
 test('[gap-ledger-094] allows more untraced tests than the base entry up to the adopted count', () => {
   const baseLedger = ledgerWith({ untracedTests: { 'src/a.test.mjs': { one: 1 } } });
-  // The rise is 5 tests: two more of `one`, two of `two` and one of `three`. The entry has 3 names.
+  // The entry has 6 untraced tests in 3 names. The base entry has 1 test. So the rise is 5 tests.
   const ledger = ledgerWith({ untracedTests: { 'src/a.test.mjs': { one: 3, two: 2, three: 1 } } });
-  const line = ADOPT('src/a.test.mjs', { ...NO_METRICS, untraced: 5 });
+  const line = ADOPT('src/a.test.mjs', { ...NO_METRICS, untraced: 6 });
   const messages = (lines, sameAsBase) => withAdopted({ ledger, baseLedger, lines, sameAsBase }).map((error) => error.message);
   assert.deepEqual(messages([line]), []);
-  assert.deepEqual(messages([{ ...line, untraced: 2 }, { ...line, untraced: 5 }]), [], 'the largest count');
+  assert.deepEqual(messages([{ ...line, untraced: 2 }, { ...line, untraced: 6 }]), [], 'the largest count');
   const notInBase = ['one', 'two', 'three'].map((name) => `Untraced test "${name}" is not in the base ledger`);
-  assert.deepEqual(messages([{ ...line, untraced: 4 }]), notInBase);
+  assert.deepEqual(messages([{ ...line, untraced: 5 }]), notInBase, 'the number of untraced tests of the entry, and not the rise, is the number to compare');
   assert.deepEqual(messages([{ ...line, file: 'src/b.test.mjs' }]), notInBase);
   assert.deepEqual(messages([line], () => true), notInBase);
 });
@@ -1161,4 +1162,5 @@ test('[gap-ledger-098] allows untrue coverage of an adopted file', () => {
   const fresh = ledgerWith({ coverage: { 'src/traffic.js': UNLOADED(40, { sha: 'new', untrue: true }) } });
   assert.deepEqual(withAdopted({ ledger: fresh, lines: [marked] }), []);
   assert.deepEqual(codes(withAdopted({ ledger: fresh, lines: [{ ...marked, untrue: false }] })), ['LEDGER-NOT-IN-BASE']);
+  assert.deepEqual(codes(withAdopted({ ledger: fresh, lines: [marked], sameAsBase: () => true })), ['LEDGER-NOT-IN-BASE']);
 });

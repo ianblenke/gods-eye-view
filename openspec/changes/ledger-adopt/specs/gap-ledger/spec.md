@@ -16,7 +16,8 @@ Origin: spec-first
 - **AND** the rise is above the waived count of the checked change for the lines of the file
 - **AND** the count of the entry is above the adopted count of the file for the lines
 - **THEN** the gate stops the build
-- **AND** the gate shows the file, the two counts, the waived count and the adopted count
+- **AND** the gate shows the file and the two counts
+- **AND** the gate also shows the waived count and the adopted count, each when it is above 0
 
 #### Scenario: Stop for more branches than the base in a changed file `gap-ledger-040`
 - **WHEN** the content of a file is not equal to its content in the base commit
@@ -24,7 +25,8 @@ Origin: spec-first
 - **AND** the rise of that metric is above the waived count of the checked change for that metric
 - **AND** the count of the entry is above the adopted count of the file for that metric
 - **THEN** the gate stops the build
-- **AND** the gate shows the file, the two counts, the waived count and the adopted count
+- **AND** the gate shows the file and the two counts
+- **AND** the gate also shows the waived count and the adopted count, each when it is above 0
 
 #### Scenario: Stop for more branches than the base with fewer covered branches `gap-ledger-048`
 - **WHEN** the content of a file is equal to its content in the base commit
@@ -91,29 +93,32 @@ Origin: spec-first
 - **WHEN** you run the ledger command `adopt` with a change name and the option `--from`
 - **AND** the change is active, and the ledger file is there
 - **AND** the option names a merged commit
-- **AND** a tracked file has other content than the base commit, and that commit changed the file since its merge base with the base commit
-- **AND** the file is a code file with a not-covered count, or a test file with untraced tests
+- **AND** the content of a tracked file is not equal to its content in the base commit
+- **AND** the merged commit changed the file since its merge base with the base commit
+- **AND** the file is a code file with a not-covered count above 0, or a test file with untraced tests
 - **THEN** the command writes the ledger entry of the file with the measured counts and the content hash
 - **AND** the entry keeps its origin and its date when the ledger had an entry
 - **AND** the entry gets the change name and the date when the ledger had none
 - **AND** the command adds one line to `openspec/trace/history.jsonl` with the kind `adopt`
-- **AND** the line has the date, the change name, the head commit, the file and the commit of the option
-- **AND** the line also has the not-covered counts, the count of untraced tests and the mark for untrue coverage
-- **AND** the command changes no entry of another file, and it does not change the registry or the links
+- **AND** the line has the date, the change name, the head commit and the file
+- **AND** the line also has the full hash of the merged commit and the not-covered counts
+- **AND** the line also has the number of untraced tests of the file and the mark for untrue coverage
+- **AND** the line has `null` for each not-covered count of a test file
+- **AND** the command changes no entry of a file that does not have these conditions
+- **AND** the command does not change the registry or the links
 - **AND** the command writes nothing when the measurement has an error, such as a failed test
 
-#### Scenario: Stop the adopt command for a fault in its options `gap-ledger-090`
-- **WHEN** you run the ledger command `adopt` with a fault in its options
-- **AND** a fault is a change that is not active, no option `--from`, or a commit that Git cannot find
-- **AND** a fault is also a commit that is not a merged commit
-- **AND** a fault is also a ledger file that is not there
+#### Scenario: Stop the adopt command for a fault before it runs a test `gap-ledger-090`
+- **WHEN** you run the ledger command `adopt` with a fault
+- **AND** a fault is one of these: the change is not active, the option `--from` is not there, or Git cannot find the commit
+- **AND** a fault is also one of these: the commit is not a merged commit, or the ledger file is not there
 - **THEN** the command stops and shows the fault
 - **AND** the command runs no test and does not change `openspec/trace/gaps.json` or `openspec/trace/history.jsonl`
 
 #### Scenario: Adopt no gap of a file that the merged commit did not change `gap-ledger-091`
 - **WHEN** you run the ledger command `adopt` with correct options
-- **AND** a code file has a not-covered count, or a test file has untraced tests
-- **AND** the file has the base content, or the commit of the option did not change it since its merge base with the base commit
+- **AND** a code file has a not-covered count above 0, or a test file has untraced tests
+- **AND** the content of the file is equal to its content in the base commit, or the merged commit did not change the file
 - **THEN** the command writes no entry and no history line for that file
 
 #### Scenario: Allow a ledger entry that the base does not have for an adopted file `gap-ledger-092`
@@ -123,6 +128,7 @@ Origin: spec-first
 - **AND** the file has one or more valid adopt lines of the checked change
 - **AND** for a coverage entry, each not-covered count is not above the adopted count of its metric
 - **AND** for an entry of untraced test names, the number of untraced tests is not above the adopted count of untraced tests
+- **AND** the entry does not record untrue coverage, or the conditions of `gap-ledger-098` are true for the file
 - **THEN** the gate does not stop the build for that entry
 
 #### Scenario: Allow a rise above the base entry up to the adopted count `gap-ledger-093`
@@ -135,31 +141,34 @@ Origin: spec-first
 #### Scenario: Allow more untraced tests than the base entry up to the adopted count `gap-ledger-094`
 - **WHEN** a test file has a ledger entry and a base ledger entry
 - **AND** the content of the file is not equal to its content in the base commit
-- **AND** the entry has untraced tests that the base entry does not have
-- **AND** the number of these tests is not above the adopted count of untraced tests
-- **THEN** the gate does not stop the build for these tests
-- **AND** a number above the adopted count stops the build for each of these tests
+- **AND** the entry has a test name that the base entry does not have, or with a higher count
+- **AND** the number of untraced tests of the entry is not above the adopted count of untraced tests
+- **THEN** the gate does not stop the build for these test names
+- **AND** a number above the adopted count stops the build for each of these test names
 
 #### Scenario: Give no adopted count for a line that is not valid `gap-ledger-095`
 - **WHEN** an adopt line is in the base history, or it has another change name
 - **THEN** the adopted count of its file does not include the line
-- **AND** an adopt line with a count that is not a whole number of 0 or more gives no adopted count
-- **AND** the gate shows no error for such a line alone
+- **AND** a line with no file or no commit gives no adopted count
+- **AND** a line with a not-covered count that is not `null` and not a whole number of 0 or more gives no adopted count
+- **AND** a line with a count of untraced tests that is not a whole number of 0 or more gives no adopted count
+- **AND** the gate shows no error for such a line, and the old errors show the gap
 
-#### Scenario: Stop for an adopt line with a commit that the merge did not bring `gap-ledger-096`
+#### Scenario: Stop for an adopt line with a commit that is not a merged commit `gap-ledger-096`
 - **WHEN** an adopt line of the checked change names a commit that is not a merged commit
 - **THEN** the gate stops the build with the code `LEDGER-ADOPT-FROM`
 - **AND** the adopted count of the file does not include that line
 
-#### Scenario: Stop for an adopt line with a file that the commit did not change `gap-ledger-097`
-- **WHEN** an adopt line of the checked change names a file
-- **AND** the file has the same content in the commit of the line as at the merge base of that commit and the base commit
+#### Scenario: Stop for an adopt line with a file that the merged commit did not change `gap-ledger-097`
+- **WHEN** an adopt line of the checked change names a merged commit and a file
+- **AND** the file has the same content in the merged commit as at the merge base of that commit and the base commit
 - **THEN** the gate stops the build with the code `LEDGER-ADOPT-FILE`
 - **AND** the adopted count of the file does not include that line
 
 #### Scenario: Allow untrue coverage of an adopted file `gap-ledger-098`
 - **WHEN** a ledger entry records untrue coverage
 - **AND** the same entry in the base ledger does not record untrue coverage, or the base ledger has no entry for the file
+- **AND** the content of the file is not equal to its content in the base commit
 - **AND** a valid adopt line of the checked change names the file and records untrue coverage
 - **THEN** the gate does not stop the build for the untrue coverage
 
