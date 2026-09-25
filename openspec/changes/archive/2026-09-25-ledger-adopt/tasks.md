@@ -106,9 +106,9 @@ For each test below, run the named mutation. Report the test that fails in `revi
 
 ## 8. Gates and review
 
-- [ ] 8.1 Run `make ratchet CHANGE=ledger-adopt`.
-- [ ] 8.2 Run `make lint`.
-- [ ] 8.3 Correct each STE error.
+- [x] 8.1 Run `make ratchet CHANGE=ledger-adopt`.
+- [x] 8.2 Run `make lint`.
+- [x] 8.3 Correct each STE error.
 - [ ] 8.4 Run `make gates CHANGE=ledger-adopt`. The only errors must be review errors.
 - [ ] 8.5 Run the review with `/opsx:review ledger-adopt`.
 - [ ] 8.6 Write `review.md`.
