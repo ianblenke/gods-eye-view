@@ -443,7 +443,10 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
       "[gap-ledger-080] stops the waive command for a fault in its options",
       "[coverage-gate-049] stops for a test that leaves a live timer",
       "[coverage-gate-050] does not stop for a test process without a live timer",
-      "[coverage-gate-049] stops for a real child process that leaves a live timer, with no stub"
+      "[coverage-gate-049] stops for a real child process that leaves a live timer, with no stub",
+      "[gap-ledger-089 gap-ledger-091] adopts the gaps of the merged files, and the ratchet command and the check pass",
+      "[gap-ledger-090] stops the adopt command for a fault in its options",
+      "[gap-ledger-096 gap-ledger-097] stops the check for an adopt line with a commit or a file that the merge did not bring"
   ]);
   // Each test that needs the guard to count assertions gets its skip option from the real
   // node:test module. So the skip option is false on a Node version with the function.
