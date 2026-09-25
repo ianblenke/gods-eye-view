@@ -141,7 +141,7 @@ Origin: spec-first
 #### Scenario: Allow an entry with more untraced tests than the base entry when its number of untraced tests is not above the adopted count `gap-ledger-094`
 - **WHEN** a test file has a ledger entry and a base ledger entry
 - **AND** the content of the file is not equal to its content in the base commit
-- **AND** the entry has a new test name, or a higher count of a test name, than the base entry
+- **AND** the entry has a test name that the base entry does not have, or a name with a higher count
 - **AND** the number of untraced tests of the entry is not above the adopted count of untraced tests
 - **THEN** the gate does not stop the build for these test names
 - **AND** a number above the adopted count stops the build for each of these test names
@@ -149,21 +149,21 @@ Origin: spec-first
 #### Scenario: Give no adopted count for a line that is not valid `gap-ledger-095`
 - **WHEN** an adopt line is in the base history, or it has another change name
 - **THEN** the adopted count of its file does not include the line
-- **AND** a line with no file, or with no full hash of a commit, gives no adopted count
+- **AND** a line whose field `file` or field `from` is not a string gives no adopted count
 - **AND** a line with a not-covered count that is not `null` and not a whole number of 0 or more gives no adopted count
 - **AND** a line whose number of untraced tests is not a whole number of 0 or more gives no adopted count
-- **AND** the gate shows no error for such a line, and it shows the errors of the gap as if the line was not there
+- **AND** the gate shows no error for such a line, and it shows the same errors as it shows with no such line
 - **AND** the gate does not check the head commit and the date of an adopt line
 
 #### Scenario: Stop for an adopt line with a commit that is not a merged commit `gap-ledger-096`
 - **WHEN** an adopt line of the checked change names a commit that is not a merged commit
-- **AND** the line has no fault that `gap-ledger-095` names
+- **AND** the scenario `gap-ledger-095` does not reject the line
 - **THEN** the gate stops the build with the code `LEDGER-ADOPT-FROM`
 - **AND** the adopted count of the file does not include that line
 
 #### Scenario: Stop for an adopt line with a file that the merged commit did not change `gap-ledger-097`
 - **WHEN** an adopt line of the checked change names a merged commit and a file
-- **AND** the line has no fault that `gap-ledger-095` names
+- **AND** the scenario `gap-ledger-095` does not reject the line
 - **AND** the file has the same content in the merged commit as at the merge base of that commit and the base commit
 - **THEN** the gate stops the build with the code `LEDGER-ADOPT-FILE`
 - **AND** the adopted count of the file does not include that line
