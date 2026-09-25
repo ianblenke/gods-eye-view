@@ -40,12 +40,12 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 - [x] 4.1 Write the `[osh-078]` tests in `src/data/oshIds.test.mjs` for `videoUrl()` and `assertVideoUrl()`.
 - [x] 4.2 Write the tests of `osh-077`, `osh-079` to `osh-081`, `osh-090`, `osh-091` and `osh-092` in `src/data/oshLive.test.mjs`.
   - Use the injected socket constructor and the injected timers of the hub tests.
-  - Cover `[osh-079]`: a good message gives an event `frame`. Each kind of bad message gives no event.
+  - Cover `[osh-079]`: a message that the hub relays gives an event `frame`. Each other kind of message gives no event.
   - Cover `[osh-079]` with one loopback test that runs the real WebSocket and a message of 70000 bytes.
   - Cover `[osh-080]`: a late client gets `open` and the messages from the last key message on. A key message starts the group again.
   - Cover `[osh-081]`: the live route and the video route of one id have two entries and two sockets.
-  - Cover `[osh-080]`: each video client gets `down` when the socket closes, and `open` when the new socket opens after the delays.
-  - Cover `[osh-090]`: the provider destroys the response of a client with more than 8388608 unwritten bytes. The other clients keep their responses.
+  - Cover `[osh-080]`: each video client gets `down` when the socket closes, and `open` when the new socket opens, after the delays of `osh-069`.
+  - Cover `[osh-090]`: the provider destroys a response that has more than 8388608 unwritten bytes. The other clients keep their responses.
   - Cover `[osh-090]` with one real HTTP client that does not read, and one that reads.
 - [x] 4.3 Change the test `[osh-005]` in `src/data/oshProxy.test.mjs` for six files.
 - [x] 4.4 Change the pinned number of OSH test files and the file list of `[osh-034]` in `src/data/oshRepositoryHygiene.test.mjs`.
@@ -69,7 +69,7 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - V13: remove the size limit of the group. `[osh-080]` fails.
   - V14: give the video entry and the live entry of one id the same key. `[osh-081]` fails.
   - V15: write an event `observation` to a client of the video route. `[osh-081]` fails.
-  - V16: remove the check of the unwritten bytes of a client. `[osh-090]` fails.
+  - V16: remove the check of the unwritten bytes of a response. `[osh-090]` fails.
   - V17: destroy the response at exactly 8388608 unwritten bytes. `[osh-090]` fails.
   - V18: check the bytes and do not destroy the response. `[osh-090]` fails.
   - V19: write the message after the provider destroys the response. `[osh-090]` fails.
@@ -78,7 +78,7 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - V22: cut the size limit of a video message to 65536 bytes. `[osh-079]` fails.
   - V23: close the socket for a text message of more than 2097152 characters. `[osh-079]` fails.
   - V24: skip the event `down` for a video client. `[osh-080]` fails.
-  - V25: give the second retry delay of the video entry the value of one second. `[osh-080]` fails.
+  - V25: use one second, and not two seconds, for the delay before the second new socket of the video entry. `[osh-080]` fails.
   - A mutation that no test fails is a finding: add a test that fails for it.
 
 ## 5. The browser player
@@ -89,7 +89,8 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - Use a fake `VideoDecoder`, a fake `EncodedVideoChunk` and a fake canvas. No test decodes real H.264.
   - Cover how the player waits for a key message, calls `configure`, and sets the chunk types and the time stamps.
   - Cover how the player draws and closes each frame.
-  - Cover the ignored delta messages: a queue of more than eight chunks starts them, and the next key message ends them.
+  - Cover how the player ignores each delta message when the decoder queue holds more than eight chunks.
+  - Cover how the player decodes again from the next key message.
   - Cover how the player configures again for a new SPS and resets after an error.
   - Cover the status `unsupported` on a page with no decoder class.
 - [x] 5.4 Write `src/layers/osh/videoPlayer.js` with `createVideoPlayer()` until 5.3 passes.
@@ -119,7 +120,9 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 - [x] 6.5 Change `src/layers/osh/index.js` until 6.1 passes. A source with no `openVideo()` plays no video.
 - [x] 6.6 Change `src/data/osh.js` until 6.3 passes.
 - [x] 6.7 Add `src/data/oshVideo.js` and `src/layers/osh/videoPlayer.js` to `scripts/package-boundaries.json`.
-- [x] 6.8 Write the `[osh-093]` test of the occluder selector in `src/overlays/worldOverlay.test.mjs`.
+- [x] 6.8 Write the `[osh-093]` tests in `src/overlays/worldOverlay.test.mjs`.
+  - One test checks the occluder selector.
+  - One test checks that the world overlay places a label clear of the panel.
 - [x] 6.9 Run each mutation below on the layer.
   - L1: show the panel with no selection. `[osh-086]` fails.
   - L2: leave the panel shown after the selection ends. `[osh-086]` fails.
@@ -161,9 +164,9 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 
 - [x] 8.1 Run `make lint` until no STE error remains.
 - [x] 8.2 Run `make ratchet CHANGE=osh-camera-video`.
-- [ ] 8.3 Run `make gates CHANGE=osh-camera-video`.
-- [ ] 8.4 Confirm that each changed code file has full coverage.
-- [ ] 8.5 Run `npm run format:check` and `npm run check:boundaries`.
-- [ ] 8.6 Run `/opsx:review osh-camera-video`.
-- [ ] 8.7 Correct the findings.
-- [ ] 8.8 Record the result in `review.md`.
+- [x] 8.3 Run `make gates CHANGE=osh-camera-video`.
+- [x] 8.4 Confirm that each changed code file has full coverage.
+- [x] 8.5 Run `npm run format:check` and `npm run check:boundaries`.
+- [x] 8.6 Run `/opsx:review osh-camera-video`.
+- [x] 8.7 Correct the findings.
+- [x] 8.8 Record the result in `review.md`.

@@ -30,7 +30,7 @@ This change adds a panel to the page. The panel shows the detail of the selected
 - New test files: `src/data/oshVideo.test.mjs` and `src/layers/osh/videoPlayer.test.mjs`. The hygiene test pins the number of OSH test files, and the count changes from 15 to 17.
 - No new request method, no request body and no new environment variable. The handshake is a GET request, and the provider sends no message frame.
 - Gaps that this change opens or closes: none. Each new code file must have full coverage.
-- The ratchet history has lines for `src/data/labelArbiter.js`: its uncovered branches went from 52 to 50 and back to 52 between runs. No file of this change touches it. The history of `teardown-guard` shows the same flips, and the final count equals `main`.
+- The ratchet history has lines for `src/data/labelArbiter.js`: its uncovered branches went from 52 to 50 and back to 52 between runs. No file of this change touches `src/data/labelArbiter.js`. The history of `teardown-guard` shows the same flips, and the final count is 52, the count of `main`.
 
 ## Known limits and later changes
 
@@ -48,4 +48,6 @@ This change adds a panel to the page. The panel shows the detail of the selected
 - `osh-video-late-burst`: a late client gets its group in one burst. When the group has more than eight delta messages, the player ignores each later delta message. The picture waits for the next key message.
 - `osh-video-status-after-refusal`: when the route answers with the HTTP status 502 or 503, the browser closes the stream and never opens it again. The panel then keeps the status `reconnecting`.
 - `osh-panel-late`: for a system, the panel shows after the layer reads the datastreams of the system for the first time, and not at the click.
-- `osh-panel-layout-unchecked`: no test checks the position of the panel on the page. A person checks the style by eye. Tests check the ids, the attribute `hidden`, which elements are inside `osh-panel`, the rule for `hidden`, and the occluder selector.
+- `osh-panel-layout-unchecked`: no test checks the position of the panel on the page. A person checks the style by eye. Tests check the ids, the attribute `hidden`, the class `osh-panel` and which elements are inside `osh-panel`. Tests also check the rule for `hidden`, the occluder selector, and the placement of a label clear of the panel.
+- `osh-occluder-visible`: the world overlay skips an element of the list that has the attribute `hidden` or that is not visible. `osh-093` does not say so. The effect is small, because a hidden panel has no rectangle.
+- `osh-html-test-comments`: the `[osh-094]` test of `index.html` does not remove HTML comments, and it matches the class `osh-panel` as part of a longer name. A commented panel, or a class `osh-panel-old`, passes it.
