@@ -4,7 +4,6 @@ import { EventEmitter } from 'node:events';
 import crypto from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import http from 'node:http';
-import net from 'node:net';
 import { oshProxy } from '../../server/providers/osh.js';
 import { oshOpenStream } from '../../server/providers/osh/get.js';
 import { liveUrl, videoUrl } from '../../server/providers/osh/ids.js';
@@ -2159,7 +2158,11 @@ test('[osh-090] the provider destroys the response of a real HTTP client that do
   });
   const closed = [];
   const server = http.createServer((req, res) => {
-    res.on('close', () => closed.push(req.headers['x-client']));
+    const name = req.headers['x-client'];
+    res.on('close', () => closed.push(name));
+    // A corked response keeps each write in memory, as the response of a client that does not read does.
+    // The result does not depend on the size of the buffers of the kernel or on the speed of a reader.
+    if (name === 'lagging') res.cork();
     req.url = req.url.slice('/api/osh'.length);
     handler(req, res);
   });
@@ -2169,43 +2172,42 @@ test('[osh-090] the provider destroys the response of a real HTTP client that do
     await new Promise((resolve) => server.close(resolve));
   });
   const { port } = server.address();
-  // This client asks for the stream, and then it never reads the answer.
-  const lagging = net.connect(port, '127.0.0.1');
-  lagging.on('error', () => {});
-  t.after(() => lagging.destroy());
-  lagging.write(`GET /api/osh/video?datastream=${DS} HTTP/1.1\r\nHost: localhost\r\nX-Client: lagging\r\n\r\n`);
+  const ask = (name, onData = () => {}) => {
+    const request = http.get(
+      { host: '127.0.0.1', port, path: `/api/osh/video?datastream=${DS}`, headers: { 'X-Client': name }, agent: false },
+      (response) => {
+        response.setEncoding('utf8');
+        response.on('data', onData);
+        response.on('error', () => {});
+      },
+    );
+    request.on('error', () => {});
+    t.after(() => request.destroy());
+  };
+  ask('lagging');
   let steadyFrames = 0;
   let steadyOpen = false;
   // A read can end inside the text `event: frame`, so each read keeps the last characters of the one before.
   let carry = '';
-  const steady = http.get(
-    { host: '127.0.0.1', port, path: `/api/osh/video?datastream=${DS}`, headers: { 'X-Client': 'steady' }, agent: false },
-    (response) => {
-      response.setEncoding('utf8');
-      response.on('data', (chunk) => {
-        const text = carry + chunk;
-        steadyOpen ||= text.includes('event: open');
-        steadyFrames += text.split('event: frame').length - 1;
-        carry = text.slice(-'event: frame'.length + 1);
-      });
-      response.on('error', () => {});
-    },
-  );
-  steady.on('error', () => {});
-  t.after(() => steady.destroy());
+  ask('steady', (chunk) => {
+    const text = carry + chunk;
+    steadyOpen ||= text.includes('event: open');
+    steadyFrames += text.split('event: frame').length - 1;
+    carry = text.slice(-'event: frame'.length + 1);
+  });
   assert.ok(await until(() => rig.sockets.instances.length === 1, 3000), 'the hub opens the upstream socket');
   const [socket] = rig.sockets.instances;
   socket.emit('open');
   assert.ok(await until(() => steadyOpen, 3000), 'the client that reads gets the event open');
   let written = 0;
-  while (written < 60 && !closed.includes('lagging')) {
+  while (written < 40 && !closed.includes('lagging')) {
     written += 1;
     socket.emit('message', messageOf(keyMessage({ at: written, size: 2_000_000 })));
-    await new Promise((resolve) => setImmediate(resolve));
+    // The client that reads gets each message before the next one, so it never holds a backlog of its own.
+    assert.ok(await until(() => steadyFrames === written, 5000), `the client that reads got message ${written}`);
   }
   assert.ok(await until(() => closed.includes('lagging'), 3000), `the response of the client that does not read is destroyed after ${written} messages`);
   assert.equal(closed.includes('steady'), false);
-  assert.ok(await until(() => steadyFrames === written, 5000), 'the client that reads got each message');
   socket.emit('message', messageOf(keyMessage({ at: written + 1, size: 2_000_000 })));
   assert.ok(await until(() => steadyFrames === written + 1, 5000), 'the client that reads still gets the next message');
   assert.equal(socket.closeCalls, 0, 'the socket stays open for the client that reads');
