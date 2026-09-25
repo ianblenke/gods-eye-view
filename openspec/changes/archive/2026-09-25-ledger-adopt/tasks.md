@@ -87,7 +87,8 @@ For each test below, run the named mutation. Report the test that fails in `revi
   - Mutation 1: remove each entry of the `faults` array, one at a time. The test must fail for each.
   - Mutation 2: write the ledger file in the part of the code that handles a fault. The test must fail.
 - [x] 5.4 Write the test for `gap-ledger-096` and `gap-ledger-097` with adopt lines that a person writes by hand.
-  - Mutation: do not pass the errors of `checkAdopts` to the report. The test must fail.
+  - Mutation 1: do not pass the errors of `checkAdopts` to the report. The test must fail.
+  - Mutation 2: drop the shape checks from the adopt lines. The test must fail.
 - [x] 5.5 Write the test for `gap-ledger-099` in `ciFiles.test.mjs`, with the text of `Makefile`.
   - Mutation 1: remove `FROM_ARG` from the target. The test must fail.
   - Mutation 2: define `FROM_ARG` two times. The test must fail.
@@ -113,6 +114,6 @@ For each test below, run the named mutation. Report the test that fails in `revi
 - [x] 8.1 Run `make ratchet CHANGE=ledger-adopt`.
 - [x] 8.2 Run `make lint`.
 - [x] 8.3 Correct each STE error.
-- [ ] 8.4 Run `make gates CHANGE=ledger-adopt`. The only errors must be review errors.
-- [ ] 8.5 Run the review with `/opsx:review ledger-adopt`.
-- [ ] 8.6 Write `review.md`.
+- [x] 8.4 Run `make gates CHANGE=ledger-adopt`. The only errors must be review errors.
+- [x] 8.5 Run the review with `/opsx:review ledger-adopt`.
+- [x] 8.6 Write `review.md`.

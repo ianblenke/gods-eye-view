@@ -9,7 +9,7 @@ The gates run on the merged tree with the base `origin/main`. They stop the buil
 - 184 test files have no entry (`LEDGER-NEW-UNTRACED`).
 - 170 test names are new in a test file that has an entry (`LEDGER-NEW-UNTRACED-NAME`).
 
-The other 10 errors have other codes: four `COVERAGE-FAKE`, two `TRACE-FAILED-TEST` for one test, and one each of `GATES-TEST-LEAK`, `LEDGER-NO-BASELINE`, `LEDGER-STALE` and `TRACE-LINKS-STALE`. The four types and `LEDGER-NO-BASELINE` name 656 files. 16 of these files differ from the same file in the merged commit, because a person merged them by hand. The other 640 files have the content of the merged commit.
+The other 10 errors have other codes: four `COVERAGE-FAKE`, two `TRACE-FAILED-TEST` for one test, and one each of `GATES-TEST-LEAK`, `LEDGER-NO-BASELINE`, `LEDGER-STALE` and `TRACE-LINKS-STALE`. The four types and `LEDGER-NO-BASELINE` name 656 files. For 16 of these files, a person merged the files by hand. The content of each of these files is not equal to the content of the same file in the merged commit. The other 640 files have the content of the merged commit.
 
 ## Goals and non-goals
 
@@ -20,9 +20,9 @@ The other 10 errors have other codes: four `COVERAGE-FAKE`, two `TRACE-FAILED-TE
 
 ## D1 A new command, and not many waivers
 
-The command `waive` needs one call for each file and each metric. The errors name 423 code files with a gap that the ledger does not allow. So the command needs at least 423 calls, and each call needs a reason. A reason that repeats 423 times tells the reviewer nothing. The command also refuses a file that no test loads, and it has no metric for untraced tests.
+The command `waive` needs one call for each file and each metric. The errors name 423 code files with a gap that the ledger does not allow. So the command needs at least 423 calls, and each call needs a reason. A reason that repeats 423 times tells the person who merges the change nothing. The command also refuses a file that no test loads, and it has no metric for untraced tests.
 
-The command `adopt` makes one decision for all the files that the merged commit changed. It records that decision as one history line for each file. The lines give the person who merges the change a list of files, with the counts, and one merged commit. That person can compare the list with the Git diff between the merge base and the merged commit.
+The command `adopt` makes one decision for all the files that it adopts (D2). It records that decision as one history line for each of these files. The lines give the person who merges the change a list of files, with the counts, and one merged commit. That person can compare the list with the Git diff between the merge base and the merged commit.
 
 ## D2 Which files the command adopts
 
@@ -34,12 +34,12 @@ A file that both sides changed is in the diff. A person can add a gap to such a 
 
 ## D3 What the gate checks in an adopt line
 
-An adopt line has the kind `adopt`. It has the date, the change name, the head commit, the file and the full hash of the merged commit. It also has the three not-covered counts, the number of untraced tests and the mark for untrue coverage.
+An adopt line has the kind `adopt`. It has the date, the change name, the head commit and the file. It also has, in the field `from`, the full hash of the merged commit. It also has the three not-covered counts, the number of untraced tests and the mark for untrue coverage.
 
 The gate reads the lines of the checked change after the base history, as it does for a waiver. A line is valid when its fields `file` and `from` are strings, and its not-covered counts are whole numbers of 0 or more or `null`. Its number of untraced tests must be a whole number of 0 or more. It must also pass these two checks:
 
-- If the commit is not a merged commit, the gate stops with `LEDGER-ADOPT-FROM`.
-- If the commit is a merged commit, and the merged commit did not change the file, the gate stops with `LEDGER-ADOPT-FILE`.
+- If the commit in the field `from` is not a merged commit, the gate stops with `LEDGER-ADOPT-FROM`.
+- If the commit in the field `from` is a merged commit, and it did not change the file, the gate stops with `LEDGER-ADOPT-FILE`.
 
 Some lines give no error and no adopted count:
 
@@ -49,7 +49,7 @@ Some lines give no error and no adopted count:
 
 For such a line, the gate shows the same errors as it shows with no such line. The gate does not check the head commit and the date of a line.
 
-The gate checks the commit that the line names and its file with Git. It does not compare the counts of the line with a measurement. A person can also merge a local branch and adopt from it. The known limits `adopt-by-hand` and `adopt-own-merge-commit` name this. The person who merges the change reads the lines, and records the check of the merged commit in `review.md`.
+The gate checks with Git the merged commit that the line names, and the file that the line names. It does not compare the counts of the line with a measurement. A person can also merge a local branch and adopt from it. The known limits `adopt-by-hand` and `adopt-own-merge-commit` name this. The person who merges the change reads the lines, and records in `review.md` that the upstream remote has the merged commit.
 
 ## D4 The adopted count and how the gate uses it
 
@@ -65,7 +65,7 @@ A file that has no entry in the base ledger has a base count of 0. The gate allo
 
 The ledger keeps a count for each test name. An adopt line does not keep the names, because the names of about 1800 untraced tests are too many for a person to read. The line has one number for the file: the number of untraced tests of its entry.
 
-`compareWithBase` adds the counts of all names of the entry, and this gives the number of untraced tests of the entry. The gate allows the entry when this number is at or below the adopted count. If this number is above the adopted count, the gate keeps the old error. That error is for each name that is new or that has a higher count than in the base entry.
+`compareWithBase` adds the counts of all names of the entry, and this gives the number of untraced tests of the entry. The gate allows the entry when this number is at or below the adopted count. If this number is above the adopted count, the gate stops the build. This is for each name that is new, or that has a higher count than in the base entry.
 
 ## D6 Untrue coverage
 
