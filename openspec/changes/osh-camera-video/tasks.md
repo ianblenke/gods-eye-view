@@ -154,8 +154,8 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 
 ## 8. Gates and review
 
-- [ ] 8.1 Run `make lint` until no STE error remains.
-- [ ] 8.2 Run `make ratchet CHANGE=osh-camera-video`.
+- [x] 8.1 Run `make lint` until no STE error remains.
+- [x] 8.2 Run `make ratchet CHANGE=osh-camera-video`.
 - [ ] 8.3 Run `make gates CHANGE=osh-camera-video`.
 - [ ] 8.4 Confirm that each changed code file has full coverage.
 - [ ] 8.5 Run `npm run format:check` and `npm run check:boundaries`.
