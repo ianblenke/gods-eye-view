@@ -31,6 +31,7 @@ Each rule below comes from a defect that reached this project. Obey each one.
 18. Tell the lead when a gate stops correct work. Do not make the gate weaker, and do not change the code to satisfy an instrument that counts it wrongly.
 19. Look at the file again before you report a correction as complete. Give the output of the search that shows it. A report of work that is not done costs a reviewer a full round, and it is worse than slow work.
 20. Look for the fault that your own correction adds. A correction to prose frequently adds a new fault to the same file. Run `make lint` after each group of corrections.
+21. Use the ledger command `adopt` only for code that a merge commit brought from the upstream project. Do not use it for code of this project. The reviewer of the change compares the merged commit with the upstream remote.
 
 ## Gates
 

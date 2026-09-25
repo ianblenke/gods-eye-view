@@ -488,10 +488,7 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
   const totalsHistory = new Set(changeLines.filter((line) => line.metric === 'totals').map((line) => line.file));
   const moreThan = (entry, base, metric) => entry[metric] !== null && base[metric] !== null && entry[metric] > base[metric];
   // The adopted counts of a file with other content than the base. A file with the base content has none.
-  const adoptedFor = (file) => {
-    if (!adopted.has(file) || sameAsBase(file)) return undefined;
-    return adopted.get(file);
-  };
+  const adoptedFor = (file) => (sameAsBase(file) ? undefined : adopted.get(file));
   const adoptedNote = (count) => (count > 0 ? ` The adopted count is ${count}.` : '');
   for (const [file, entry] of Object.entries(ledger.coverage)) {
     const base = baseLedger.coverage[file];
@@ -547,9 +544,9 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
   for (const [file, entry] of Object.entries(ledger.untracedTests)) {
     const baseNames = baseLedger.untracedTests[file] ? baseLedger.untracedTests[file].names : {};
     const extra = Object.entries(entry.names).filter(([name, count]) => count > (baseNames[name] || 0));
-    // The adopted count of untraced tests allows the number of tests above the base entry, not the number of names.
-    const rise = extra.reduce((total, [name, count]) => total + count - (baseNames[name] || 0), 0);
-    if (rise <= (adoptedFor(file) ?? NO_ADOPTED).untraced) continue;
+    // The adopted count of untraced tests is the number of untraced tests of the file, and not the rise above the base entry.
+    const total = Object.values(entry.names).reduce((sum, count) => sum + count, 0);
+    if (total <= (adoptedFor(file) ?? NO_ADOPTED).untraced) continue;
     for (const [name] of extra) {
       error('LEDGER-NOT-IN-BASE', file, `Untraced test "${name}" is not in the base ledger`);
     }

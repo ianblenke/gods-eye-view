@@ -1075,7 +1075,7 @@ const historyLines = (root, from = 0) =>
     .filter(Boolean)
     .map((line) => JSON.parse(line));
 
-test('[gap-ledger-089 gap-ledger-091] adopts the gaps of the merged files, and the ratchet command and the check pass', GUARDED_RUN, () => {
+test('[gap-ledger-089 gap-ledger-091] adopts the gaps of the merged files and gives no error in the ratchet command and in the check', GUARDED_RUN, () => {
   withMergeFixture((root) => {
     const ledgerFile = path.join(root, 'openspec/trace/gaps.json');
     const before = JSON.parse(readFileSync(ledgerFile, 'utf8'));
@@ -1093,8 +1093,11 @@ test('[gap-ledger-089 gap-ledger-091] adopts the gaps of the merged files, and t
     assert.equal(existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : null, historyBefore, 'the command does not write the history');
     git(root, 'rm', '-q', '-f', 'src/broken.test.mjs');
 
+    const traceFile = (name) => (existsSync(path.join(root, 'openspec/trace', name)) ? readFileSync(path.join(root, 'openspec/trace', name), 'utf8') : null);
+    const registryBefore = [traceFile('ids.json'), traceFile('links.json')];
     const result = passes(root, ['adopt', '--change', 'sync', '--from', 'up']);
     assert.match(result.output, /Adopt: 3 files from [0-9a-f]{40}\./);
+    assert.deepEqual([traceFile('ids.json'), traceFile('links.json')], registryBefore, 'the command does not change the registry or the links');
     assert.notEqual(git(root, 'rev-parse', 'up'), git(root, 'rev-parse', 'HEAD'));
     const none = { lines: null, branches: null, functions: null, untrue: false };
     const added = historyLines(root).sort((a, b) => a.file.localeCompare(b.file));
@@ -1129,7 +1132,7 @@ test('[gap-ledger-089 gap-ledger-091] adopts the gaps of the merged files, and t
   });
 });
 
-test('[gap-ledger-090] stops the adopt command for a fault in its options', GUARDED_RUN, () => {
+test('[gap-ledger-090] stops the adopt command for a fault before it runs a test', GUARDED_RUN, () => {
   withMergeFixture((root) => {
     const ledgerFile = path.join(root, 'openspec/trace/gaps.json');
     const historyFile = path.join(root, 'openspec/trace/history.jsonl');
@@ -1142,19 +1145,22 @@ test('[gap-ledger-090] stops the adopt command for a fault in its options', GUAR
       assert.doesNotMatch(result.output, /Trace:/, 'the adopt command runs no test for a fault');
     };
     fault(['--change', 'nope', '--from', 'up'], /ERROR GATES-ADOPT Change "nope" has no folder with a proposal\.md file/);
+    assert.equal(readFileSync(ledgerFile, 'utf8'), ledgerText, 'a fault does not change the ledger');
     fault(['--from', 'up'], /ERROR GATES-ADOPT Change "undefined" has no folder/);
     fault(['--change', 'sync'], /ERROR GATES-ADOPT The adopt command needs --from with the merged commit/);
     fault(['--change', 'sync', '--from', 'nope'], /ERROR GATES-ADOPT Git cannot find the commit nope/);
     fault(['--change', 'sync', '--from', 'main'], /ERROR GATES-ADOPT The commit main is not a merged commit\./);
     fault(['--change', 'sync', '--from', 'HEAD^1'], /ERROR GATES-ADOPT The commit HEAD\^1 is not a merged commit\./);
+    assert.equal(readFileSync(ledgerFile, 'utf8'), ledgerText, 'a fault does not change the ledger');
     rmSync(ledgerFile);
     fault(['--change', 'sync', '--from', 'up'], /ERROR GATES-ADOPT openspec\/trace\/gaps\.json is not there/);
+    assert.equal(existsSync(ledgerFile), false, 'a fault does not write the ledger');
     writeFileSync(ledgerFile, ledgerText);
     assert.equal(existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : null, historyText, 'the command does not change the history');
   });
 });
 
-test('[gap-ledger-096 gap-ledger-097] stops the check for an adopt line with a commit or a file that the merge did not bring', GUARDED_RUN, () => {
+test('[gap-ledger-096 gap-ledger-097] stops the check for an adopt line with a commit or a file that the merge commit did not bring', GUARDED_RUN, () => {
   withMergeFixture((root) => {
     passes(root, ['adopt', '--change', 'sync', '--from', 'up']);
     const ledgerFile = path.join(root, 'openspec/trace/gaps.json');
