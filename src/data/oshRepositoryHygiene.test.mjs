@@ -217,7 +217,7 @@ test('[osh-034] no OSH test file has a real address', () => {
   const files = oshTestFiles();
   assert.equal(
     files.length,
-    17,
+    18,
     'the discovered OSH test file count changed; update this number and check the new file too',
   );
   for (const file of files) {
