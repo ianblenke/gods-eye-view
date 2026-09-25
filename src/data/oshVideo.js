@@ -30,8 +30,12 @@ export function readOshVideoMessage(bytes) {
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   const seconds = view.getFloat64(0);
   if (!Number.isFinite(seconds)) return null;
-  if (view.getUint32(8) !== bytes.byteLength - OSH_VIDEO_ENVELOPE_BYTES) return null;
-  return { timestampMs: seconds * 1000, data: bytes.subarray(OSH_VIDEO_ENVELOPE_BYTES) };
+  if (view.getUint32(8) !== bytes.byteLength - OSH_VIDEO_ENVELOPE_BYTES)
+    return null;
+  return {
+    timestampMs: seconds * 1000,
+    data: bytes.subarray(OSH_VIDEO_ENVELOPE_BYTES),
+  };
 }
 
 /**
@@ -108,7 +112,16 @@ export function codecStringOf(sps) {
  */
 export function buildAvcConfig(sps, pps) {
   const config = new Uint8Array(11 + sps.length + pps.length);
-  config.set([1, sps[1], sps[2], sps[3], 0xff, 0xe1, sps.length >> 8, sps.length & 0xff]);
+  config.set([
+    1,
+    sps[1],
+    sps[2],
+    sps[3],
+    0xff,
+    0xe1,
+    sps.length >> 8,
+    sps.length & 0xff,
+  ]);
   config.set(sps, 8);
   const ppsAt = 8 + sps.length;
   config.set([1, pps.length >> 8, pps.length & 0xff], ppsAt);
@@ -128,7 +141,9 @@ export function toAvccSample(nals) {
     return type >= NAL_SLICE_FIRST && type <= NAL_SLICE_IDR;
   });
   if (slices.length === 0) return null;
-  const sample = new Uint8Array(slices.reduce((sum, nal) => sum + 4 + nal.length, 0));
+  const sample = new Uint8Array(
+    slices.reduce((sum, nal) => sum + 4 + nal.length, 0),
+  );
   const view = new DataView(sample.buffer);
   let at = 0;
   for (const nal of slices) {

@@ -3,7 +3,10 @@
  * block per datastream with its newest result as key/value rows.
  */
 
-import { isOshObservationAhead, isOshObservationFresh } from '../../data/oshObservations.js';
+import {
+  isOshObservationAhead,
+  isOshObservationFresh,
+} from '../../data/oshObservations.js';
 
 const AGE_SECOND_MS = 1000;
 const AGE_MINUTE_MS = 60 * AGE_SECOND_MS;
@@ -23,8 +26,10 @@ export function formatOshAge(ageMs) {
   // it is wrong, so it does not read as an amount of time.
   if (isOshObservationAhead(ageMs)) return 'ahead of the clock';
   const clamped = ageMs < 0 ? 0 : ageMs;
-  if (clamped < AGE_MINUTE_MS) return `${Math.round(clamped / AGE_SECOND_MS)} s`;
-  if (clamped < AGE_HOUR_MS) return `${Math.round(clamped / AGE_MINUTE_MS)} min`;
+  if (clamped < AGE_MINUTE_MS)
+    return `${Math.round(clamped / AGE_SECOND_MS)} s`;
+  if (clamped < AGE_HOUR_MS)
+    return `${Math.round(clamped / AGE_MINUTE_MS)} min`;
   if (clamped < AGE_DAY_MS) return `${Math.round(clamped / AGE_HOUR_MS)} h`;
   return `${Math.round(clamped / AGE_DAY_MS)} d`;
 }
@@ -128,7 +133,12 @@ function renderFeatureHeader(feature, hostId, system) {
  */
 export function renderOshDetail(detail) {
   if (!detail || (!detail.system && !detail.feature)) return '';
-  const { feature = null, hostId = null, system = null, datastreams = [] } = detail;
+  const {
+    feature = null,
+    hostId = null,
+    system = null,
+    datastreams = [],
+  } = detail;
   const header = feature
     ? renderFeatureHeader(feature, hostId, system)
     : renderSystemHeader(system);

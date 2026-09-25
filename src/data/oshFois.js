@@ -23,12 +23,19 @@ function listOf(payload) {
 
 /** Read a Point geometry's finite coordinates, or null when absent or not finite. */
 function pointOf(geometry) {
-  if (!geometry || geometry.type !== 'Point' || !Array.isArray(geometry.coordinates))
+  if (
+    !geometry ||
+    geometry.type !== 'Point' ||
+    !Array.isArray(geometry.coordinates)
+  )
     return null;
   const lon = finiteNumber(geometry.coordinates[0]);
   const lat = finiteNumber(geometry.coordinates[1]);
   if (lon === null || lat === null) return null;
-  const alt = geometry.coordinates.length > 2 ? finiteNumber(geometry.coordinates[2]) : null;
+  const alt =
+    geometry.coordinates.length > 2
+      ? finiteNumber(geometry.coordinates[2])
+      : null;
   return { lon, lat, alt };
 }
 
@@ -85,8 +92,12 @@ export function mapOshFois(payload) {
       systemId: hostSystemId(properties),
       name: typeof properties.name === 'string' ? properties.name : null,
       description:
-        typeof properties.description === 'string' ? properties.description : null,
-      validTime: Array.isArray(properties.validTime) ? properties.validTime : null,
+        typeof properties.description === 'string'
+          ? properties.description
+          : null,
+      validTime: Array.isArray(properties.validTime)
+        ? properties.validTime
+        : null,
       lon: point.lon,
       lat: point.lat,
       alt: point.alt,

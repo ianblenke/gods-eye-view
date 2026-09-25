@@ -12,7 +12,7 @@ test('[credential-boundary-003] explicit build inputs preserve browser-only defi
     googleApiKey: 'browser-fixture',
     cesiumToken: 'ion-fixture',
   });
-  assert.equal(config.plugins[1], plugin);
+  assert.equal(config.plugins[2], plugin);
   assert.equal(config.server.host, 'localhost');
   assert.equal(config.server.port, 4173);
   assert.deepEqual(config.server.allowedHosts, [
@@ -61,7 +61,7 @@ test('[credential-boundary-003] build helper does not discover environment value
       'import.meta.env.GOOGLE_MAPS_API_KEY',
       'import.meta.env.CESIUM_ION_TOKEN',
     ]);
-    assert.equal(config.plugins.length, 1);
+    assert.equal(config.plugins.length, 2);
   } finally {
     if (before === undefined) delete process.env.GOOGLE_MAPS_API_KEY;
     else process.env.GOOGLE_MAPS_API_KEY = before;
@@ -73,7 +73,7 @@ test('root config retains existing named exports and standalone provider order',
     assert.equal(compatibility[name], value, name);
   const config = standaloneConfig({ mode: 'test' });
   assert.deepEqual(
-    config.plugins.slice(1, -1).map((plugin) => plugin.name),
+    config.plugins.slice(2, -1).map((plugin) => plugin.name),
     providers.localProviderPlugins().map((plugin) => plugin.name),
   );
   assert.equal(config.plugins.at(-2).name, 'gev-key-setup');

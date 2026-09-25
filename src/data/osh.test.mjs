@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { readStylesheet } from '../testSupport/readStylesheet.mjs';
+import { expandApplicationHtml } from '../../build/application-html.js';
 import * as Cesium from 'cesium';
 import createOshLayer, { createOshLayer as createLayer, createOshPanelHosts } from './osh.js';
 import { createOshSource } from '../layers/osh/index.js';
@@ -209,7 +210,10 @@ test('[osh-089] the default layer looks for the panel elements in the page and f
 });
 
 test('[osh-094] index.html has one element osh-panel, hidden at the start, and one video host and one detail host inside that element', () => {
-  const html = readFileSync(new URL('../../index.html', import.meta.url), 'utf8');
+  // The page is index.html with its component templates expanded, as the build makes it.
+  const html = expandApplicationHtml(
+    readFileSync(new URL('../../index.html', import.meta.url), 'utf8'),
+  );
   const opening = /<aside\b[^>]*\bid="osh-panel"[^>]*>/.exec(html);
   assert.ok(opening, 'the page has the element osh-panel');
   assert.match(opening[0], /\shidden[\s>]/, 'the panel is hidden until the layer shows it');

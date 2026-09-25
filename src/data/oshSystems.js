@@ -30,12 +30,19 @@ function listOf(payload) {
 
 /** Read a Point geometry's coordinates as `{lon, lat, alt}`, all null when absent or not finite. */
 function pointOf(geometry) {
-  if (!geometry || geometry.type !== 'Point' || !Array.isArray(geometry.coordinates))
+  if (
+    !geometry ||
+    geometry.type !== 'Point' ||
+    !Array.isArray(geometry.coordinates)
+  )
     return { lon: null, lat: null, alt: null };
   const lon = finiteNumber(geometry.coordinates[0]);
   const lat = finiteNumber(geometry.coordinates[1]);
   if (lon === null || lat === null) return { lon: null, lat: null, alt: null };
-  const alt = geometry.coordinates.length > 2 ? finiteNumber(geometry.coordinates[2]) : null;
+  const alt =
+    geometry.coordinates.length > 2
+      ? finiteNumber(geometry.coordinates[2])
+      : null;
   return { lon, lat, alt };
 }
 
@@ -64,8 +71,12 @@ export function mapOshSystems(payload) {
       uid: typeof properties.uid === 'string' ? properties.uid : null,
       name: typeof properties.name === 'string' ? properties.name : null,
       description:
-        typeof properties.description === 'string' ? properties.description : null,
-      validTime: Array.isArray(properties.validTime) ? properties.validTime : null,
+        typeof properties.description === 'string'
+          ? properties.description
+          : null,
+      validTime: Array.isArray(properties.validTime)
+        ? properties.validTime
+        : null,
       lon,
       lat,
       alt,
@@ -140,12 +151,18 @@ function drawnFromStream(key, location) {
  * @param {{systems: Array, fois: Array, locations: Array}} lists
  * @returns {{systems: Array, features: Array, unplaced: Array}}
  */
-export function placeOshEntities({ systems = [], fois = [], locations = [] } = {}) {
+export function placeOshEntities({
+  systems = [],
+  fois = [],
+  locations = [],
+} = {}) {
   const featureById = new Map(fois.map((foi) => [foi.id, foi]));
   const featureByUid = new Map();
   for (const foi of fois) if (foi.uid) featureByUid.set(foi.uid, foi);
 
-  const fresh = locations.filter((location) => isOshObservationFresh(location?.ageMs));
+  const fresh = locations.filter((location) =>
+    isOshObservationFresh(location?.ageMs),
+  );
 
   const featureOverrides = new Map();
   const unheldFeatures = new Map();
@@ -153,23 +170,32 @@ export function placeOshEntities({ systems = [], fois = [], locations = [] } = {
   for (const location of fresh) {
     const referencesFeature = Boolean(location.foiId || location.foiUid);
     if (referencesFeature) {
-      const feature = featureById.get(location.foiId) ?? featureByUid.get(location.foiUid);
+      const feature =
+        featureById.get(location.foiId) ?? featureByUid.get(location.foiUid);
       if (feature) {
         const existing = featureOverrides.get(feature.id);
-        if (!existing || isNewer(location.phenomenonTime, existing.phenomenonTime)) {
+        if (
+          !existing ||
+          isNewer(location.phenomenonTime, existing.phenomenonTime)
+        ) {
           featureOverrides.set(feature.id, location);
         }
       } else {
         const key = location.foiId || location.foiUid;
         const existing = unheldFeatures.get(key);
-        if (!existing || isNewer(location.phenomenonTime, existing.phenomenonTime)) {
+        if (
+          !existing ||
+          isNewer(location.phenomenonTime, existing.phenomenonTime)
+        ) {
           unheldFeatures.set(key, location);
         }
       }
       continue;
     }
     if (!location.systemId) continue;
-    const existing = systemLocations.find((entry) => entry.systemId === location.systemId);
+    const existing = systemLocations.find(
+      (entry) => entry.systemId === location.systemId,
+    );
     if (!existing) {
       systemLocations.push(location);
     } else if (isNewer(location.phenomenonTime, existing.phenomenonTime)) {
@@ -177,7 +203,9 @@ export function placeOshEntities({ systems = [], fois = [], locations = [] } = {
     }
   }
 
-  const bestSystemLocation = new Map(systemLocations.map((location) => [location.systemId, location]));
+  const bestSystemLocation = new Map(
+    systemLocations.map((location) => [location.systemId, location]),
+  );
 
   const placedSystems = [];
   const unplaced = [];
