@@ -48,6 +48,8 @@ test('[credential-boundary-013] a configured:false answer does not give answered
     if (String(url).startsWith('/api/google/geocode')) {
       return Response.json({ configured: false, status: null, results: [] });
     }
+    // The last-resort Nominatim route answers a miss in the shape of Google.
+    if (String(url).startsWith('/api/geocode')) return Response.json({ status: 'ZERO_RESULTS', results: [] });
     return Response.json({ features: [] });
   } });
   const result = await service.geocode('nowhere at all');
@@ -65,6 +67,8 @@ const routeError = (status, photon, body = { configured: true, status: null, res
     if (String(url).startsWith('/api/google/geocode')) {
       return Response.json(body, { status });
     }
+    // The last-resort Nominatim route answers a miss in the shape of Google.
+    if (String(url).startsWith('/api/geocode')) return Response.json({ status: 'ZERO_RESULTS', results: [] });
     return photon();
   } });
   return { service, urls };
@@ -80,7 +84,7 @@ test('[credential-boundary-013] an HTTP error answer from the route and a Photon
     const { service, urls } = routeError(status, () => Response.json({ features: [] }), body);
     assert.deepEqual(await service.geocode('nowhere at all'), { place: null, answered: false });
     assert.equal(new URL(urls[1], 'http://localhost').hostname, 'photon.komoot.io');
-    assert.equal(urls.length, 2);
+    assert.equal(urls.length, 3, 'the Nominatim route is the last resort after the Photon miss');
   }
 });
 

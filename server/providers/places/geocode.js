@@ -14,7 +14,8 @@ const GEOCODE_MAX_RESPONSE_BYTES = 1024 * 1024; // 1 MB
 const GEOCODE_TIMEOUT_MS = 5000;
 
 /** Google's `bounds` viewport-bias shape: `lat,lng|lat,lng`. */
-const GEOCODE_BOUNDS_PATTERN = /^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?\|-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/;
+const GEOCODE_BOUNDS_PATTERN =
+  /^-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?\|-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?$/;
 
 /**
  * Fixed error text for a failed upstream call, so no upstream text, and so no
@@ -47,13 +48,19 @@ function readGeocodeRequest(searchParams) {
   const hasAddress = searchParams.has('address');
   const hasLatLon = searchParams.has('lat') || searchParams.has('lon');
   if (hasAddress === hasLatLon) {
-    return { ok: false, error: 'Provide exactly one of address or lat and lon' };
+    return {
+      ok: false,
+      error: 'Provide exactly one of address or lat and lon',
+    };
   }
   if (hasAddress) {
     const address = String(searchParams.get('address') || '').trim();
     if (!address) return { ok: false, error: 'address must not be blank' };
     if (address.length > GEOCODE_MAX_ADDRESS_LENGTH) {
-      return { ok: false, error: `address is longer than ${GEOCODE_MAX_ADDRESS_LENGTH} characters` };
+      return {
+        ok: false,
+        error: `address is longer than ${GEOCODE_MAX_ADDRESS_LENGTH} characters`,
+      };
     }
     const bounds = searchParams.get('bounds');
     if (bounds !== null && !GEOCODE_BOUNDS_PATTERN.test(bounds)) {
@@ -63,7 +70,12 @@ function readGeocodeRequest(searchParams) {
   }
   const coordinates = validatePlacesCoordinates(searchParams);
   if (!coordinates.ok) return { ok: false, error: coordinates.error };
-  return { ok: true, mode: 'reverse', latitude: coordinates.latitude, longitude: coordinates.longitude };
+  return {
+    ok: true,
+    mode: 'reverse',
+    latitude: coordinates.latitude,
+    longitude: coordinates.longitude,
+  };
 }
 
 /**
@@ -73,28 +85,42 @@ function readGeocodeRequest(searchParams) {
  * Every answer carries `Cache-Control: no-store` — Google content is never
  * cached here.
  */
-export function installGoogleGeocodeRoute(middlewares, {
-  resolveApiKey,
-  rateLimiter = null,
-}) {
+export function installGoogleGeocodeRoute(
+  middlewares,
+  { resolveApiKey, rateLimiter = null },
+) {
   middlewares.use('/api/google/geocode', async (req, res) => {
     if (req.method !== 'GET') {
       // The key is not known yet, so the body has no `configured` flag.
-      sendJson(res, 405, { error: 'Method not allowed', status: null, results: [] });
+      sendJson(res, 405, {
+        error: 'Method not allowed',
+        status: null,
+        results: [],
+      });
       return;
     }
 
     const apiKey = resolveApiKey();
     const keyless = keylessGooglePlacesResponse(apiKey);
     if (keyless) {
-      sendJson(res, keyless.statusCode, { configured: false, error: keyless.payload.error, status: null, results: [] });
+      sendJson(res, keyless.statusCode, {
+        configured: false,
+        error: keyless.payload.error,
+        status: null,
+        results: [],
+      });
       return;
     }
 
     const requestUrl = new URL(req.url || '', 'http://localhost');
     const parsed = readGeocodeRequest(requestUrl.searchParams);
     if (!parsed.ok) {
-      sendJson(res, 400, { configured: true, error: parsed.error, status: null, results: [] });
+      sendJson(res, 400, {
+        configured: true,
+        error: parsed.error,
+        status: null,
+        results: [],
+      });
       return;
     }
 
@@ -103,17 +129,29 @@ export function installGoogleGeocodeRoute(middlewares, {
       res.setHeader('Content-Type', 'application/json; charset=utf-8');
       res.setHeader('Cache-Control', 'no-store');
       res.setHeader('Retry-After', '5');
-      res.end(JSON.stringify({ configured: true, error: 'Rate limit exceeded', status: null, results: [] }));
+      res.end(
+        JSON.stringify({
+          configured: true,
+          error: 'Rate limit exceeded',
+          status: null,
+          results: [],
+        }),
+      );
       return;
     }
 
-    const upstream = new URL('https://maps.googleapis.com/maps/api/geocode/json');
+    const upstream = new URL(
+      'https://maps.googleapis.com/maps/api/geocode/json',
+    );
     upstream.searchParams.set('key', apiKey);
     if (parsed.mode === 'forward') {
       upstream.searchParams.set('address', parsed.address);
       if (parsed.bounds) upstream.searchParams.set('bounds', parsed.bounds);
     } else {
-      upstream.searchParams.set('latlng', `${parsed.latitude},${parsed.longitude}`);
+      upstream.searchParams.set(
+        'latlng',
+        `${parsed.latitude},${parsed.longitude}`,
+      );
     }
 
     const controller = new AbortController();
@@ -123,18 +161,27 @@ export function installGoogleGeocodeRoute(middlewares, {
       let data = {};
       let readError = null;
       try {
-        const text = await readResponseTextCapped(response, GEOCODE_MAX_RESPONSE_BYTES, controller.signal);
+        const text = await readResponseTextCapped(
+          response,
+          GEOCODE_MAX_RESPONSE_BYTES,
+          controller.signal,
+        );
         data = JSON.parse(text);
       } catch (error) {
         // readResponseTextCapped and JSON.parse only ever throw a real Error.
-        readError = upstreamErrorText(error, 'Google Geocoding response was not valid JSON');
+        readError = upstreamErrorText(
+          error,
+          'Google Geocoding response was not valid JSON',
+        );
       }
       const projected = projectGeocodeResults(data);
       sendJson(res, response.ok ? 200 : response.status, {
         configured: true,
         status: projected.status,
         results: projected.results,
-        error: readError || (response.ok ? null : upstreamErrorMessage(data, apiKey)),
+        error:
+          readError ||
+          (response.ok ? null : upstreamErrorMessage(data, apiKey)),
       });
     } catch (error) {
       // A rejected fetch() always rejects with a real Error.

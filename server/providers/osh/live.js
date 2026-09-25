@@ -1,6 +1,12 @@
 import { oshOpenStream } from './get.js';
-import { mapOshObservation, oshObservationAgeMs } from '../../../src/data/oshObservations.js';
-import { isOshVideoKeyMessage, readOshVideoMessage } from '../../../src/data/oshVideo.js';
+import {
+  mapOshObservation,
+  oshObservationAgeMs,
+} from '../../../src/data/oshObservations.js';
+import {
+  isOshVideoKeyMessage,
+  readOshVideoMessage,
+} from '../../../src/data/oshVideo.js';
 
 /**
  * The live relay of the OpenSensorHub provider (design decisions D65 to
@@ -44,7 +50,9 @@ export const OSH_LIVE_HEARTBEAT_MS = 20_000;
 /** A socket that stays open this long resets the delay before the next open. */
 export const OSH_LIVE_STABLE_MS = 30_000;
 /** The delay before each new attempt, and the last delay repeats. */
-export const OSH_LIVE_RETRY_MS = Object.freeze([1_000, 2_000, 4_000, 8_000, 16_000, 30_000]);
+export const OSH_LIVE_RETRY_MS = Object.freeze([
+  1_000, 2_000, 4_000, 8_000, 16_000, 30_000,
+]);
 
 const HEARTBEAT = ': hb\n\n';
 
@@ -84,7 +92,11 @@ export function createOshLiveHub({
   /** Clear the timers of one entry, close its socket and forget it. */
   function drop(entry) {
     entries.delete(entry.key);
-    for (const timer of [entry.idleTimer, entry.retryTimer, entry.stableTimer]) {
+    for (const timer of [
+      entry.idleTimer,
+      entry.retryTimer,
+      entry.stableTimer,
+    ]) {
       timers.clearTimeout(timer);
     }
     for (const timer of entry.clients.values()) timers.clearInterval(timer);
@@ -108,7 +120,8 @@ export function createOshLiveHub({
       drop(entry);
       return;
     }
-    const delay = OSH_LIVE_RETRY_MS[Math.min(entry.attempt, OSH_LIVE_RETRY_MS.length - 1)];
+    const delay =
+      OSH_LIVE_RETRY_MS[Math.min(entry.attempt, OSH_LIVE_RETRY_MS.length - 1)];
     entry.attempt += 1;
     entry.retryTimer = timers.setTimeout(() => {
       entry.retryTimer = null;
@@ -134,14 +147,17 @@ export function createOshLiveHub({
 
   /** Decode one frame, binary or text, and relay it as the observation of osh-022. */
   function relay(entry, data) {
-    const bytes = typeof data === 'string' ? Buffer.byteLength(data) : data.byteLength;
+    const bytes =
+      typeof data === 'string' ? Buffer.byteLength(data) : data.byteLength;
     if (bytes > OSH_LIVE_MAX_FRAME_BYTES) {
       refuse(entry);
       return;
     }
     let frame;
     try {
-      frame = JSON.parse(typeof data === 'string' ? data : new TextDecoder().decode(data));
+      frame = JSON.parse(
+        typeof data === 'string' ? data : new TextDecoder().decode(data),
+      );
     } catch {
       return;
     }
@@ -191,7 +207,11 @@ export function createOshLiveHub({
     }
     const bytes = new Uint8Array(data);
     if (readOshVideoMessage(bytes) === null) return;
-    const base64 = Buffer.from(bytes.buffer, bytes.byteOffset, bytes.byteLength).toString('base64');
+    const base64 = Buffer.from(
+      bytes.buffer,
+      bytes.byteOffset,
+      bytes.byteLength,
+    ).toString('base64');
     const text = eventText('frame', base64);
     remember(entry, bytes, text);
     broadcast(entry, text);
@@ -200,7 +220,9 @@ export function createOshLiveHub({
   function connect(entry) {
     let socket;
     try {
-      socket = oshOpenStream(WebSocketImpl, entry.url, { headers: entry.headers });
+      socket = oshOpenStream(WebSocketImpl, entry.url, {
+        headers: entry.headers,
+      });
     } catch {
       // Fixed text only: the message of a failure can name the URL.
       warn('[osh-live] upstream socket not created');
@@ -216,10 +238,15 @@ export function createOshLiveHub({
       warn(`[osh-live] upstream socket ended, code ${Number(event.code) || 0}`);
       down(entry);
     });
-    socket.addEventListener('open', current(() => opened(entry)));
+    socket.addEventListener(
+      'open',
+      current(() => opened(entry)),
+    );
     socket.addEventListener(
       'message',
-      current((event) => (entry.kind === 'video' ? relayVideo : relay)(entry, event.data)),
+      current((event) =>
+        (entry.kind === 'video' ? relayVideo : relay)(entry, event.data),
+      ),
     );
     socket.addEventListener('close', gone);
     socket.addEventListener('error', gone);
@@ -247,7 +274,8 @@ export function createOshLiveHub({
    */
   function join(id, { url, headers, reader, kind = 'observation' }, client) {
     const key = entryKey(id, kind);
-    if ((refusedUntil.get(key) ?? 0) > now()) return { error: 'live_unsupported' };
+    if ((refusedUntil.get(key) ?? 0) > now())
+      return { error: 'live_unsupported' };
     const existing = entries.get(key);
     const full = existing
       ? existing.clients.size >= OSH_LIVE_MAX_CLIENTS
@@ -273,7 +301,10 @@ export function createOshLiveHub({
     entries.set(key, entry);
     timers.clearTimeout(entry.idleTimer);
     entry.idleTimer = null;
-    entry.clients.set(client, timers.setInterval(() => client.write(HEARTBEAT), OSH_LIVE_HEARTBEAT_MS));
+    entry.clients.set(
+      client,
+      timers.setInterval(() => client.write(HEARTBEAT), OSH_LIVE_HEARTBEAT_MS),
+    );
     if (entry.open) client.write(eventText('open', {}));
     for (const text of entry.group) client.write(text);
     if (!existing) connect(entry);

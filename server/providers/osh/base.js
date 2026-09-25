@@ -33,7 +33,8 @@ function isListPayload(json) {
 function failureReasonFor(error) {
   if (error?.code === 'OSH_REDIRECT') return 'redirect';
   if (error?.code === 'OSH_TOO_LARGE') return 'too_large';
-  if (error?.name === 'AbortError' || error?.name === 'TimeoutError') return 'timeout';
+  if (error?.name === 'AbortError' || error?.name === 'TimeoutError')
+    return 'timeout';
   return 'network_error';
 }
 
@@ -43,7 +44,9 @@ function failureReasonFor(error) {
  * @param {Array<{status:?number}>} failures
  */
 export function baseErrorCode(failures) {
-  return failures.some((failure) => failure.status === 401 || failure.status === 403)
+  return failures.some(
+    (failure) => failure.status === 401 || failure.status === 403,
+  )
     ? 'auth_failed'
     : 'base_unresolved';
 }
@@ -55,7 +58,13 @@ export function baseErrorCode(failures) {
  * @returns {{resolveRoot: (configured:string, headers:object) => Promise<object>, getState: () => object}}
  */
 export function createOshBase({ fetchImpl, now = Date.now }) {
-  let state = { configured: null, root: null, candidate: null, failures: [], probedAt: 0 };
+  let state = {
+    configured: null,
+    root: null,
+    candidate: null,
+    failures: [],
+    probedAt: 0,
+  };
   let inflight = null;
 
   async function probeOnce(configuredUrl, headers) {
@@ -85,11 +94,21 @@ export function createOshBase({ fetchImpl, now = Date.now }) {
 
   async function resolveRoot(configuredString, headers = {}) {
     if (state.configured !== configuredString) {
-      state = { configured: configuredString, root: null, candidate: null, failures: [], probedAt: 0 };
+      state = {
+        configured: configuredString,
+        root: null,
+        candidate: null,
+        failures: [],
+        probedAt: 0,
+      };
     }
     if (state.root) return state;
     const nowMs = now();
-    if (state.probedAt && state.failures.length && nowMs - state.probedAt < BASE_HOLD_MS) {
+    if (
+      state.probedAt &&
+      state.failures.length &&
+      nowMs - state.probedAt < BASE_HOLD_MS
+    ) {
       return state;
     }
     if (!inflight) {

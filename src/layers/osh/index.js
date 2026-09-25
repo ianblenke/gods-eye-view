@@ -5,6 +5,7 @@ import { isOshObservationFresh } from '../../data/oshObservations.js';
 import { horizonOccluder } from '../../data/iconOrientation.js';
 import { createVideoPlayer, createVideoView } from './videoPlayer.js';
 export { createOshSource } from './source.js';
+export { createOshPanelHosts } from './hosts.js';
 export { renderOshDetail, writeOshDetail } from './detail.js';
 
 /** Poll interval for the datastreams and observations of a selected system. */
@@ -47,7 +48,12 @@ function entityAlwaysOnTop(graphics) {
 
 /** Move a system entity to the location of an observation that has a fresh age. */
 function moveToObservation(entity, observation) {
-  if (!observation?.location || !entity || !isOshObservationFresh(observation.ageMs)) return;
+  if (
+    !observation?.location ||
+    !entity ||
+    !isOshObservationFresh(observation.ageMs)
+  )
+    return;
   entity.position = Cesium.Cartesian3.fromDegrees(
     observation.location.lon,
     observation.location.lat,
@@ -189,7 +195,14 @@ export function createOshLayer({
   function datastreamState(id) {
     let state = _datastreamStates.get(id);
     if (!state) {
-      state = { id, observation: null, stream: null, open: false, seq: 0, video: false };
+      state = {
+        id,
+        observation: null,
+        stream: null,
+        open: false,
+        seq: 0,
+        video: false,
+      };
       _datastreamStates.set(id, state);
     }
     return state;
@@ -206,7 +219,8 @@ export function createOshLayer({
     // name for a stream-placed system stands in (osh-032, mirroring the
     // entity label rule of osh-057). The header still falls back to the
     // id when both are null.
-    const effectiveName = systemRecord?.name ?? placedRecord?.streamSystemName ?? null;
+    const effectiveName =
+      systemRecord?.name ?? placedRecord?.streamSystemName ?? null;
     const placedByStream = placedRecord?.locationSource === 'stream';
     const featurePlacedByStream = placedFeature?.locationSource === 'stream';
     writeDetail({
@@ -215,7 +229,10 @@ export function createOshLayer({
             id: effectiveFeature.id,
             name: featureRecord?.name ?? null,
             placedBy: featurePlacedByStream
-              ? { datastreamName: placedFeature.datastreamName, ageMs: placedFeature.ageMs }
+              ? {
+                  datastreamName: placedFeature.datastreamName,
+                  ageMs: placedFeature.ageMs,
+                }
               : null,
           }
         : null,
@@ -228,17 +245,22 @@ export function createOshLayer({
               name: effectiveName,
               description: systemRecord?.description ?? null,
               placedBy: placedByStream
-                ? { datastreamName: placedRecord.datastreamName, ageMs: placedRecord.ageMs }
+                ? {
+                    datastreamName: placedRecord.datastreamName,
+                    ageMs: placedRecord.ageMs,
+                  }
                 : null,
             }
           : null,
-      datastreams: states.map(({ id, name, outputName, observation, video }) => ({
-        id,
-        name,
-        outputName,
-        observation,
-        video,
-      })),
+      datastreams: states.map(
+        ({ id, name, outputName, observation, video }) => ({
+          id,
+          name,
+          outputName,
+          observation,
+          video,
+        }),
+      ),
     });
   }
 
@@ -249,9 +271,13 @@ export function createOshLayer({
   function showLiveObservation(state, observation) {
     state.observation = observation;
     state.seq += 1;
-    moveToObservation(_dataSource.entities.getById(systemEntityId(_selectedId)), observation);
+    moveToObservation(
+      _dataSource.entities.getById(systemEntityId(_selectedId)),
+      observation,
+    );
     refreshHorizonVisibility();
-    if (_shownStates) writeSelectedDetail(_selectedId, _selectedFeatureId, _shownStates);
+    if (_shownStates)
+      writeSelectedDetail(_selectedId, _selectedFeatureId, _shownStates);
   }
 
   /**
@@ -288,7 +314,11 @@ export function createOshLayer({
    */
   function openVideoSession(state, generation) {
     if (!state || typeof source.openVideo !== 'function' || !videoHost) return;
-    const view = createView({ document: documentImpl, host: videoHost, name: state.name || state.id });
+    const view = createView({
+      document: documentImpl,
+      host: videoHost,
+      name: state.name || state.id,
+    });
     let playerStatus = '';
     const player = createPlayer({
       canvas: view.canvas,
@@ -324,7 +354,9 @@ export function createOshLayer({
     // One stream for each id, whatever the list holds.
     for (const state of [...new Set(states)].slice(0, MAX_LIVE_STREAMS)) {
       state.stream = source.openLive(state.id, {
-        onObservation: currentOnly(generation, (observation) => showLiveObservation(state, observation)),
+        onObservation: currentOnly(generation, (observation) =>
+          showLiveObservation(state, observation),
+        ),
         onOpen: currentOnly(generation, () => {
           state.open = true;
         }),
@@ -375,12 +407,16 @@ export function createOshLayer({
       // datastream shows its newest observation until its first live one.
       if (state.open && state.observation) continue;
       const seq = state.seq;
-      const observationResult = await source.getObservation(state.id).catch(() => null);
+      const observationResult = await source
+        .getObservation(state.id)
+        .catch(() => null);
       if (generation !== _pollGeneration) return;
       // A live observation that came while the poll waited is newer.
       if (state.seq !== seq) continue;
       state.observation =
-        observationResult && !observationResult.keyRequired ? observationResult.observation : null;
+        observationResult && !observationResult.keyRequired
+          ? observationResult.observation
+          : null;
       moveToObservation(entity, state.observation);
     }
     // An entity the poll moved can cross the horizon between refreshes
@@ -547,18 +583,20 @@ export function createOshLayer({
         if (_request === request) _request = null;
       };
       try {
-        const [systemsSettled, foisSettled, locationsSettled] = await Promise.allSettled([
-          callSourceGetSystems(request.signal),
-          callSourceGetFois(request.signal),
-          callSourceGetLocations(request.signal),
-        ]);
+        const [systemsSettled, foisSettled, locationsSettled] =
+          await Promise.allSettled([
+            callSourceGetSystems(request.signal),
+            callSourceGetFois(request.signal),
+            callSourceGetLocations(request.signal),
+          ]);
         if (request.signal.aborted || _request !== request || !_enabled) {
           release();
           return false;
         }
         if (systemsSettled.status === 'rejected') {
           release();
-          _lastError = systemsSettled.reason?.message || 'OSH source unavailable';
+          _lastError =
+            systemsSettled.reason?.message || 'OSH source unavailable';
           return false;
         }
         const result = systemsSettled.value;
@@ -573,23 +611,34 @@ export function createOshLayer({
           return true;
         }
 
-        for (const record of result.systems) _systemRecords.set(record.id, record);
+        for (const record of result.systems)
+          _systemRecords.set(record.id, record);
 
-        const partial = foisSettled.status === 'rejected' || locationsSettled.status === 'rejected';
+        const partial =
+          foisSettled.status === 'rejected' ||
+          locationsSettled.status === 'rejected';
         let featureRecords = [];
         let truncated = false;
-        if (foisSettled.status === 'fulfilled' && !foisSettled.value.keyRequired) {
+        if (
+          foisSettled.status === 'fulfilled' &&
+          !foisSettled.value.keyRequired
+        ) {
           featureRecords = foisSettled.value.fois;
           truncated = Boolean(foisSettled.value.truncated);
         }
-        _featureRecordsById = new Map(featureRecords.map((record) => [record.id, record]));
+        _featureRecordsById = new Map(
+          featureRecords.map((record) => [record.id, record]),
+        );
         _featureRecordsByUid = new Map();
         for (const record of featureRecords) {
           if (record.uid) _featureRecordsByUid.set(record.uid, record);
         }
 
         let locationRecords = [];
-        if (locationsSettled.status === 'fulfilled' && !locationsSettled.value.keyRequired) {
+        if (
+          locationsSettled.status === 'fulfilled' &&
+          !locationsSettled.value.keyRequired
+        ) {
           locationRecords = locationsSettled.value.locations;
         }
 
@@ -598,14 +647,19 @@ export function createOshLayer({
           fois: featureRecords,
           locations: locationRecords,
         });
-        _placedSystemById = new Map(placed.systems.map((record) => [record.id, record]));
-        _placedFeatureById = new Map(placed.features.map((record) => [record.id, record]));
+        _placedSystemById = new Map(
+          placed.systems.map((record) => [record.id, record]),
+        );
+        _placedFeatureById = new Map(
+          placed.features.map((record) => [record.id, record]),
+        );
 
         const now = Cesium.JulianDate.now();
         const selectedSystemEntity = _selectedId
           ? _dataSource.entities.getById(systemEntityId(_selectedId))
           : null;
-        const selectedPosition = selectedSystemEntity?.position?.getValue(now) ?? null;
+        const selectedPosition =
+          selectedSystemEntity?.position?.getValue(now) ?? null;
 
         // The lifecycle of a stream-placed placeholder (design decision
         // D48, osh-057): a system with no record in the union map, placed
@@ -616,7 +670,11 @@ export function createOshLayer({
         const placedIds = new Set(placed.systems.map((record) => record.id));
         const newPlaceholderIds = new Set(
           placed.systems
-            .filter((record) => record.locationSource === 'stream' && !_systemRecords.has(record.id))
+            .filter(
+              (record) =>
+                record.locationSource === 'stream' &&
+                !_systemRecords.has(record.id),
+            )
             .map((record) => record.id),
         );
         // The selected exception in osh-057 governs the entity only: a
@@ -629,9 +687,13 @@ export function createOshLayer({
         }
         _placeholderStreamIds = newPlaceholderIds;
         _unplaced = placed.unplaced.length + retiredPlaceholders;
-        _placedStreamCount = placed.systems.filter((record) => record.locationSource === 'stream').length;
+        _placedStreamCount = placed.systems.filter(
+          (record) => record.locationSource === 'stream',
+        ).length;
         _placedStreamFeaturesCount = placed.features.filter(
-          (record) => record.locationSource === 'stream' && !_featureRecordsById.has(record.id),
+          (record) =>
+            record.locationSource === 'stream' &&
+            !_featureRecordsById.has(record.id),
         ).length;
 
         _dataSource.entities.removeAll();
@@ -641,12 +703,20 @@ export function createOshLayer({
           const position =
             isSelected && selectedPosition
               ? selectedPosition
-              : Cesium.Cartesian3.fromDegrees(record.lon, record.lat, record.alt || 0);
-          const isPlaceholder = record.locationSource === 'stream' && !_systemRecords.has(record.id);
+              : Cesium.Cartesian3.fromDegrees(
+                  record.lon,
+                  record.lat,
+                  record.alt || 0,
+                );
+          const isPlaceholder =
+            record.locationSource === 'stream' &&
+            !_systemRecords.has(record.id);
           // A held record's own name wins; a placeholder falls back to
           // the pass's own name for the system; with neither, the id is
           // the label — a degraded, visible state, not the design.
-          const labelText = record.name || (isPlaceholder ? record.streamSystemName || record.id : null);
+          const labelText =
+            record.name ||
+            (isPlaceholder ? record.streamSystemName || record.id : null);
           _dataSource.entities.add(
             new Cesium.Entity({
               id: systemEntityId(record.id),
@@ -678,7 +748,12 @@ export function createOshLayer({
         // it drops out of this refresh's placement entirely — a stale
         // stream, or a placeholder whose stream went quiet — until it is
         // deselected (osh-057, mirroring osh-031's rule for the union).
-        if (_selectedId && !placedIds.has(_selectedId) && selectedSystemEntity && selectedPosition) {
+        if (
+          _selectedId &&
+          !placedIds.has(_selectedId) &&
+          selectedSystemEntity &&
+          selectedPosition
+        ) {
           _dataSource.entities.add(
             new Cesium.Entity({
               id: systemEntityId(_selectedId),
@@ -717,10 +792,11 @@ export function createOshLayer({
                     text: feature.name,
                     font: '11px sans-serif',
                     pixelOffset: new Cesium.Cartesian2(0, -12),
-                    distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
-                      0,
-                      FEATURE_LABEL_DISTANCE_METERS,
-                    ),
+                    distanceDisplayCondition:
+                      new Cesium.DistanceDisplayCondition(
+                        0,
+                        FEATURE_LABEL_DISTANCE_METERS,
+                      ),
                   })
                 : undefined,
               properties: {

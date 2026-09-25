@@ -19,7 +19,10 @@ import {
   systemUrl,
   videoUrl,
 } from './osh/ids.js';
-import { createOshLiveHub, OSH_LIVE_MAX_CLIENT_BUFFER_BYTES } from './osh/live.js';
+import {
+  createOshLiveHub,
+  OSH_LIVE_MAX_CLIENT_BUFFER_BYTES,
+} from './osh/live.js';
 import {
   OBS_TTL_MS,
   createOshKeyedCache,
@@ -32,7 +35,10 @@ import {
 import { mapOshSystems } from '../../src/data/oshSystems.js';
 import { mapOshDatastreams } from '../../src/data/oshDatastreams.js';
 import { mapOshFois } from '../../src/data/oshFois.js';
-import { mapOshLocationPage, oshObservationAgeMs } from '../../src/data/oshObservations.js';
+import {
+  mapOshLocationPage,
+  oshObservationAgeMs,
+} from '../../src/data/oshObservations.js';
 
 /**
  * OpenSensorHub systems, datastreams, features-of-interest and
@@ -129,7 +135,9 @@ function resolveLocationProperties(env, warn) {
     if (isAcceptableLocationProperty(entry)) {
       list.push(entry);
     } else {
-      warn(`[osh-proxy] OSH_LOCATION_PROPERTIES entry at position ${index} skipped: not a URL or a URN`);
+      warn(
+        `[osh-proxy] OSH_LOCATION_PROPERTIES entry at position ${index} skipped: not a URL or a URN`,
+      );
     }
   });
   return list;
@@ -163,14 +171,24 @@ function createOshListCache({ ttlMs, now }) {
       entry = { at: now(), records };
       return { records, stale: false, fetchedAt: entry.at };
     } catch (error) {
-      if (entry) return { records: entry.records, stale: true, fetchedAt: entry.at, error };
+      if (entry)
+        return {
+          records: entry.records,
+          stale: true,
+          fetchedAt: entry.at,
+          error,
+        };
       throw error;
     }
   }
 
   function status() {
     if (!entry) return { lastFetch: null, count: null, stale: false };
-    return { lastFetch: entry.at, count: entry.records.length, stale: now() - entry.at >= ttlMs };
+    return {
+      lastFetch: entry.at,
+      count: entry.records.length,
+      stale: now() - entry.at >= ttlMs,
+    };
   }
 
   return { load, status };
@@ -216,7 +234,11 @@ function createOshFoisCache({ ttlMs, now }) {
 
   function status() {
     if (!entry) return { lastFetch: null, count: null, stale: false };
-    return { lastFetch: entry.at, count: entry.records.length, stale: now() - entry.at >= ttlMs };
+    return {
+      lastFetch: entry.at,
+      count: entry.records.length,
+      stale: now() - entry.at >= ttlMs,
+    };
   }
 
   return { load, status };
@@ -240,14 +262,25 @@ export function oshProxy({
     now,
     ttlMs: OSH_LIST_TTL_MS,
   });
-  const schemaCache = createOshSchemaCache({ fetchImpl, now, ttlMs: OSH_LIST_TTL_MS });
-  const systemNameCache = createOshSystemCache({ fetchImpl, now, ttlMs: OSH_LIST_TTL_MS });
+  const schemaCache = createOshSchemaCache({
+    fetchImpl,
+    now,
+    ttlMs: OSH_LIST_TTL_MS,
+  });
+  const systemNameCache = createOshSystemCache({
+    fetchImpl,
+    now,
+    ttlMs: OSH_LIST_TTL_MS,
+  });
   const propertyFilterCache = createOshKeyedCache({
     fetchImpl,
     now,
     ttlMs: OSH_LIST_TTL_MS,
     refresh: async (fetchImplArg, uri, root, headers) => {
-      const firstUrl = oshListUrl(root, 'datastreams', { limit: '200', observedProperty: uri });
+      const firstUrl = oshListUrl(root, 'datastreams', {
+        limit: '200',
+        observedProperty: uri,
+      });
       const { items } = await oshPages(fetchImplArg, root, firstUrl, {
         headers,
         listOf: listOfDatastreams,
@@ -259,7 +292,8 @@ export function oshProxy({
   let lastLocationsResult = null;
 
   function locationsPassStatus() {
-    if (!lastLocationsResult) return { lastFetch: null, count: null, stale: false };
+    if (!lastLocationsResult)
+      return { lastFetch: null, count: null, stale: false };
     return {
       lastFetch: lastLocationsResult.fetchedAt,
       count: lastLocationsResult.value.locations.length,
@@ -304,7 +338,10 @@ export function oshProxy({
   }
 
   async function fetchSystemsUpstream(root, headers) {
-    const firstUrl = oshListUrl(root, 'systems', { limit: '100', f: OSH_LIST_FORMAT });
+    const firstUrl = oshListUrl(root, 'systems', {
+      limit: '100',
+      f: OSH_LIST_FORMAT,
+    });
     const { items } = await oshPages(fetchImpl, root, firstUrl, {
       headers,
       listOf: listOfSystems,
@@ -322,7 +359,10 @@ export function oshProxy({
   }
 
   async function fetchFoisUpstream(root, headers) {
-    const firstUrl = oshListUrl(root, 'fois', { limit: '200', f: OSH_LIST_FORMAT });
+    const firstUrl = oshListUrl(root, 'fois', {
+      limit: '200',
+      f: OSH_LIST_FORMAT,
+    });
     const { items, truncated } = await oshPages(fetchImpl, root, firstUrl, {
       headers,
       listOf: listOfSystems,
@@ -347,7 +387,8 @@ export function oshProxy({
         try {
           const { value } = await propertyFilterCache.get(uri, root, headers);
           for (const record of value) {
-            if (!candidatesById.has(record.id)) candidatesById.set(record.id, record);
+            if (!candidatesById.has(record.id))
+              candidatesById.set(record.id, record);
           }
         } catch {
           // A refused or unreachable property term contributes no candidates.
@@ -365,11 +406,15 @@ export function oshProxy({
       systemRecords = [];
     }
     try {
-      ({ records: foiRecords } = await foisCache.load(() => fetchFoisUpstream(root, headers)));
+      ({ records: foiRecords } = await foisCache.load(() =>
+        fetchFoisUpstream(root, headers),
+      ));
     } catch {
       foiRecords = [];
     }
-    const systemsById = new Map(systemRecords.map((record) => [record.id, record]));
+    const systemsById = new Map(
+      systemRecords.map((record) => [record.id, record]),
+    );
 
     const hostIds = new Set();
     for (const foi of foiRecords) if (foi.systemId) hostIds.add(foi.systemId);
@@ -382,10 +427,18 @@ export function oshProxy({
         try {
           const target = systemDatastreamsUrl(root, id);
           assertSystemDatastreamsUrl(target, root, id);
-          const result = await systemDatastreamsCache.get(id, root, target, headers);
+          const result = await systemDatastreamsCache.get(
+            id,
+            root,
+            target,
+            headers,
+          );
           for (const record of result.datastreams) {
-            const withSystem = record.systemId ? record : { ...record, systemId: id };
-            if (!candidatesById.has(withSystem.id)) candidatesById.set(withSystem.id, withSystem);
+            const withSystem = record.systemId
+              ? record
+              : { ...record, systemId: id };
+            if (!candidatesById.has(withSystem.id))
+              candidatesById.set(withSystem.id, withSystem);
           }
         } catch {
           // One host's datastreams read failing does not fail the gather.
@@ -393,7 +446,11 @@ export function oshProxy({
       }),
     );
 
-    return { candidates: [...candidatesById.values()], systemsById, propertyCount: propertyUris.length };
+    return {
+      candidates: [...candidatesById.values()],
+      systemsById,
+      propertyCount: propertyUris.length,
+    };
   }
 
   /**
@@ -423,10 +480,8 @@ export function oshProxy({
    * See design decision D47.
    */
   async function runLocationsPass(root, headers) {
-    const { candidates, systemsById, propertyCount } = await gatherLocationCandidates(
-      root,
-      headers,
-    );
+    const { candidates, systemsById, propertyCount } =
+      await gatherLocationCandidates(root, headers);
     let failed = 0;
     const locations = [];
     await Promise.all(
@@ -435,7 +490,11 @@ export function oshProxy({
         try {
           const schemaTarget = schemaUrl(root, candidate.id);
           assertSchemaUrl(schemaTarget, root, candidate.id);
-          const schemaResult = await schemaCache.get(candidate.id, schemaTarget, headers);
+          const schemaResult = await schemaCache.get(
+            candidate.id,
+            schemaTarget,
+            headers,
+          );
           reader = schemaResult.reader;
         } catch {
           failed += 1;
@@ -449,7 +508,9 @@ export function oshProxy({
         try {
           const pageUrl = observationsLatestUrl(root, candidate.id);
           assertObservationsLatestUrl(pageUrl, root, candidate.id);
-          const { status, json: body } = await oshGet(fetchImpl, pageUrl, { headers });
+          const { status, json: body } = await oshGet(fetchImpl, pageUrl, {
+            headers,
+          });
           if (status < 200 || status >= 300) {
             failed += 1;
             return;
@@ -460,7 +521,12 @@ export function oshProxy({
           return;
         }
         const records = mapOshLocationPage(json, reader, now());
-        const systemName = await resolveSystemName(candidate.systemId, systemsById, root, headers);
+        const systemName = await resolveSystemName(
+          candidate.systemId,
+          systemsById,
+          root,
+          headers,
+        );
         for (const record of records) {
           if (!record.location) continue;
           locations.push({
@@ -517,7 +583,9 @@ export function oshProxy({
               fois: { lastFetch: null, count: null, stale: false },
               observations: { cached: 0 },
               datastreamsBySystem: { cached: 0 },
-              locationProperties: { count: OSH_DEFAULT_LOCATION_PROPERTIES.length },
+              locationProperties: {
+                count: OSH_DEFAULT_LOCATION_PROPERTIES.length,
+              },
               locations: { lastFetch: null, count: null, stale: false },
               ttlMs: OSH_LIST_TTL_MS,
             });
@@ -536,7 +604,9 @@ export function oshProxy({
             fois: foisCache.status(),
             observations: { cached: observationsCache.size() },
             datastreamsBySystem: { cached: systemDatastreamsCache.size() },
-            locationProperties: { count: resolveLocationProperties(env, warn).length },
+            locationProperties: {
+              count: resolveLocationProperties(env, warn).length,
+            },
             locations: locationsPassStatus(),
             ttlMs: OSH_LIST_TTL_MS,
           });
@@ -550,7 +620,10 @@ export function oshProxy({
 
         const requestUrl = new URL(req.url, 'http://localhost');
 
-        if (subPath === '/datastreams' && requestUrl.searchParams.has('system')) {
+        if (
+          subPath === '/datastreams' &&
+          requestUrl.searchParams.has('system')
+        ) {
           const id = readSystemId(requestUrl.searchParams);
           if (!id) {
             sendJson(400, { error: 'bad_system' });
@@ -567,7 +640,12 @@ export function oshProxy({
           const target = systemDatastreamsUrl(state.root, id);
           assertSystemDatastreamsUrl(target, state.root, id);
           try {
-            const result = await systemDatastreamsCache.get(id, state.root, target, headers);
+            const result = await systemDatastreamsCache.get(
+              id,
+              state.root,
+              target,
+              headers,
+            );
             sendJson(200, {
               system: id,
               fetchedAt: result.fetchedAt,
@@ -616,9 +694,10 @@ export function oshProxy({
             return;
           }
           try {
-            const { records, truncated, stale, fetchedAt } = await foisCache.load(() =>
-              fetchFoisUpstream(state.root, headers),
-            );
+            const { records, truncated, stale, fetchedAt } =
+              await foisCache.load(() =>
+                fetchFoisUpstream(state.root, headers),
+              );
             sendJson(200, {
               fetchedAt,
               stale,
@@ -653,13 +732,24 @@ export function oshProxy({
           assertObservationUrl(target, state.root, id);
           const reader = await readerFor(state.root, id, headers);
           try {
-            const result = await observationsCache.get(id, target, headers, reader);
+            const result = await observationsCache.get(
+              id,
+              target,
+              headers,
+              reader,
+            );
             // The age is arithmetic on the cached observation's phenomenonTime
             // against the current instant, computed fresh on every answer;
             // the cache itself never stores an age, so a stale snapshot
             // served twice reports a larger age the second time.
             const observation = result.observation
-              ? { ...result.observation, ageMs: oshObservationAgeMs(result.observation.phenomenonTime, now()) }
+              ? {
+                  ...result.observation,
+                  ageMs: oshObservationAgeMs(
+                    result.observation.phenomenonTime,
+                    now(),
+                  ),
+                }
               : null;
             sendJson(200, {
               datastream: id,
@@ -671,7 +761,9 @@ export function oshProxy({
           } catch (error) {
             sendJson(502, {
               error: 'observation_failed',
-              upstreamStatus: Number.isFinite(error?.status) ? error.status : null,
+              upstreamStatus: Number.isFinite(error?.status)
+                ? error.status
+                : null,
             });
           }
           return;
@@ -736,7 +828,9 @@ export function oshProxy({
             return;
           }
           try {
-            const result = await locationsPass.load(() => runLocationsPass(state.root, headers));
+            const result = await locationsPass.load(() =>
+              runLocationsPass(state.root, headers),
+            );
             lastLocationsResult = result;
             // The pass cache can serve the same fold more than once, and a
             // stale one longer than that: age is arithmetic on

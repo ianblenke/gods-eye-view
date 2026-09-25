@@ -70,7 +70,8 @@ function namedFields(node) {
   const fields = schemaFieldsOf(node);
   if (!fields) return [];
   return fields.filter(
-    (field) => field && typeof field === 'object' && typeof field.name === 'string',
+    (field) =>
+      field && typeof field === 'object' && typeof field.name === 'string',
   );
 }
 
@@ -109,7 +110,8 @@ function vectorReaderOf(field, fieldPath) {
   let lon = null;
   let alt = null;
   for (const coord of coordinates) {
-    if (!coord || typeof coord !== 'object' || typeof coord.name !== 'string') continue;
+    if (!coord || typeof coord !== 'object' || typeof coord.name !== 'string')
+      continue;
     const unit = unitCodeOf(coord);
     const path = [...fieldPath, coord.name];
     if (coord.axisID === 'Lat' && unit === 'deg') lat = path;
@@ -151,7 +153,8 @@ function walkForFlat(node, path, depth) {
     const fieldPath = [...path, field.name];
     if (unit === 'deg' && token === 'latitude') lat = fieldPath;
     else if (unit === 'deg' && token === 'longitude') lon = fieldPath;
-    else if (unit === 'm' && HEIGHT_DEFINITION_TOKENS.has(token)) alt = fieldPath;
+    else if (unit === 'm' && HEIGHT_DEFINITION_TOKENS.has(token))
+      alt = fieldPath;
   }
   if (lat && lon) return { lat, lon, alt };
   for (const field of fields) {
@@ -166,7 +169,10 @@ function walkForFeatureUid(node, path, depth) {
   if (depth > MAX_SCHEMA_DEPTH) return null;
   const fields = namedFields(node);
   for (const field of fields) {
-    if (field.type === 'Text' && lastDefinitionToken(field.definition) === 'samplingfeatureuid') {
+    if (
+      field.type === 'Text' &&
+      lastDefinitionToken(field.definition) === 'samplingfeatureuid'
+    ) {
       return [...path, field.name];
     }
   }
@@ -192,7 +198,8 @@ function walkForFeatureUid(node, path, depth) {
  * @returns {?{lat:string[], lon:string[], alt:?string[], featureUid:?string[]}}
  */
 export function readOshSchemaLocation(schema) {
-  const root = schema && typeof schema === 'object' ? schema.resultSchema : null;
+  const root =
+    schema && typeof schema === 'object' ? schema.resultSchema : null;
   if (!root || typeof root !== 'object') return null;
   const reader = walkForVector(root, [], 0) || walkForFlat(root, [], 0);
   if (!reader) return null;
@@ -256,7 +263,8 @@ export function mapOshObservation(payload, reader = null) {
   if (!first || typeof first !== 'object') return null;
   const result = Object.hasOwn(first, 'result') ? first.result : null;
   return {
-    phenomenonTime: typeof first.phenomenonTime === 'string' ? first.phenomenonTime : null,
+    phenomenonTime:
+      typeof first.phenomenonTime === 'string' ? first.phenomenonTime : null,
     resultTime: typeof first.resultTime === 'string' ? first.resultTime : null,
     rows: flattenOshResult(result),
     location: extractOshLocation(result, reader),
@@ -348,9 +356,13 @@ export function mapOshLocationPage(payload, reader, nowMs) {
   for (const item of items) {
     if (!item || typeof item !== 'object') continue;
     const result = Object.hasOwn(item, 'result') ? item.result : null;
-    const phenomenonTime = typeof item.phenomenonTime === 'string' ? item.phenomenonTime : null;
+    const phenomenonTime =
+      typeof item.phenomenonTime === 'string' ? item.phenomenonTime : null;
     records.push({
-      foiId: typeof item['foi@id'] === 'string' && item['foi@id'] ? item['foi@id'] : null,
+      foiId:
+        typeof item['foi@id'] === 'string' && item['foi@id']
+          ? item['foi@id']
+          : null,
       foiUid: readFeatureUid(result, reader),
       phenomenonTime,
       resultTime: typeof item.resultTime === 'string' ? item.resultTime : null,

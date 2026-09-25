@@ -34,7 +34,10 @@ export function readDatastreamId(searchParams) {
  * @returns {URL}
  */
 export function observationUrl(root, id) {
-  const url = new URL(`datastreams/${encodeURIComponent(id)}/observations`, root);
+  const url = new URL(
+    `datastreams/${encodeURIComponent(id)}/observations`,
+    root,
+  );
   url.search = OSH_OBSERVATIONS_QUERY;
   return url;
 }
@@ -185,7 +188,9 @@ export function assertSystemUrl(url, root, id) {
  * the server as bytes of the value and never as a space or a path separator.
  */
 export const OSH_LIVE_FORMAT = 'application/om+json';
-export const OSH_LIVE_QUERY = new URLSearchParams({ f: OSH_LIVE_FORMAT }).toString();
+export const OSH_LIVE_QUERY = new URLSearchParams({
+  f: OSH_LIVE_FORMAT,
+}).toString();
 
 /**
  * Build the live-stream URL for one datastream id: the observations path
@@ -199,7 +204,10 @@ export const OSH_LIVE_QUERY = new URLSearchParams({ f: OSH_LIVE_FORMAT }).toStri
  * @returns {URL}
  */
 export function liveUrl(root, id) {
-  const url = new URL(`datastreams/${encodeURIComponent(id)}/observations`, root);
+  const url = new URL(
+    `datastreams/${encodeURIComponent(id)}/observations`,
+    root,
+  );
   url.protocol = root.protocol === 'https:' ? 'wss:' : 'ws:';
   url.username = '';
   url.password = '';
@@ -237,7 +245,9 @@ export function assertLiveUrl(url, root, id) {
  * query. It is the live query with another value of `f`.
  */
 export const OSH_VIDEO_FORMAT = 'application/swe+binary';
-export const OSH_VIDEO_QUERY = new URLSearchParams({ f: OSH_VIDEO_FORMAT }).toString();
+export const OSH_VIDEO_QUERY = new URLSearchParams({
+  f: OSH_VIDEO_FORMAT,
+}).toString();
 
 /**
  * Build the video URL for one datastream id: the same URL as
@@ -250,7 +260,10 @@ export const OSH_VIDEO_QUERY = new URLSearchParams({ f: OSH_VIDEO_FORMAT }).toSt
  * @returns {URL}
  */
 export function videoUrl(root, id) {
-  const url = new URL(`datastreams/${encodeURIComponent(id)}/observations`, root);
+  const url = new URL(
+    `datastreams/${encodeURIComponent(id)}/observations`,
+    root,
+  );
   url.protocol = root.protocol === 'https:' ? 'wss:' : 'ws:';
   url.username = '';
   url.password = '';
@@ -299,7 +312,10 @@ export const OSH_LATEST_QUERY = `limit=${OSH_LATEST_LIMIT}&resultTime=latest`;
  * @returns {URL}
  */
 export function observationsLatestUrl(root, id) {
-  const url = new URL(`datastreams/${encodeURIComponent(id)}/observations`, root);
+  const url = new URL(
+    `datastreams/${encodeURIComponent(id)}/observations`,
+    root,
+  );
   url.search = OSH_LATEST_QUERY;
   return url;
 }

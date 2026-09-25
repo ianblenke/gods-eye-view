@@ -1,0 +1,201 @@
+/* ── OSH Panel ────────────────────────────────── */
+/* The detail of the selected OpenSensorHub system and the live video of its
+   camera. The panel docks left of the right rail and right of the left stack.
+   The right rail is 330px wide and 52px from the edge. On a window of 1060px
+   or more the panel covers neither. On a narrower window the panel shrinks
+   to 240px, and it can cover the edge of an open left panel. It stays under
+   the top chrome (z100 to z102) and under both rails, and it stops above the
+   command dock. The OSH layer shows it while the layer holds a detail. */
+.osh-panel {
+  --osh-panel-right: calc(var(--right-rail-x) + 330px + 12px);
+  --osh-panel-left-clear: calc(var(--left-stack-x) + 360px + 12px);
+  position: fixed;
+  top: 104px;
+  right: var(--osh-panel-right);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+  width: clamp(
+    240px,
+    calc(100vw - var(--osh-panel-right) - var(--osh-panel-left-clear)),
+    360px
+  );
+  max-height: calc(100vh - 104px - 112px);
+  padding: 14px;
+  overflow-y: auto;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--panel-radius);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  pointer-events: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 212, 255, 0.46) rgba(255, 255, 255, 0.06);
+}
+
+.osh-panel[hidden] {
+  display: none;
+}
+
+/* A host with no content takes no room, so it leaves no gap. */
+.osh-panel > :empty {
+  display: none;
+}
+
+body.ui-clean-view .osh-panel,
+body.recording-mode .osh-panel {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+body.cockpit-mode .osh-panel {
+  display: none !important;
+}
+
+/* The video block that the player builds: a title, a canvas and a status. */
+.osh-video {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.osh-video-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+.osh-video-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #000;
+  border-radius: 8px;
+}
+
+.osh-video-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.osh-video-status:empty {
+  display: none;
+}
+
+/* The detail that src/layers/osh/detail.js writes. */
+.osh-detail-system,
+.osh-detail-feature,
+.osh-detail-datastream {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.osh-detail-datastream {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.osh-detail-system h3,
+.osh-detail-feature h3 {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  overflow-wrap: anywhere;
+}
+
+.osh-detail-datastream h4 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+.osh-detail-field {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.osh-detail-field:empty {
+  display: none;
+}
+
+.osh-detail-placed-by {
+  color: var(--accent);
+}
+
+.osh-detail-time,
+.osh-detail-age {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+}
+
+.osh-detail-old {
+  color: #ffd488;
+}
+
+.osh-detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.osh-detail-path {
+  flex: 0 1 45%;
+  min-width: 0;
+  color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.osh-detail-value {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.osh-detail-empty,
+.osh-detail-video {
+  color: var(--text-dim);
+}
+
+/* No free lane on a phone: the panel covers the left stack while it shows. */
+@media (max-width: 720px) {
+  .osh-panel {
+    top: 70px;
+    right: 16px;
+    left: 16px;
+    z-index: 120;
+    width: auto;
+    max-height: calc(50vh - 78px);
+  }
+}

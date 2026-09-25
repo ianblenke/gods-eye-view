@@ -1,6 +1,9 @@
 import { oshGet, oshPages } from './get.js';
 import { coalesceProxyRequest } from '../common/http.js';
-import { mapOshObservation, readOshSchemaLocation } from '../../../src/data/oshObservations.js';
+import {
+  mapOshObservation,
+  readOshSchemaLocation,
+} from '../../../src/data/oshObservations.js';
 import { mapOshDatastreams } from '../../../src/data/oshDatastreams.js';
 
 /** Cache TTL for one datastream's newest observation. */
@@ -55,7 +58,8 @@ export function createOshKeyedCache({
       }
       return { value, stale: false, fetchedAt: at };
     } catch (error) {
-      if (entry) return { value: entry.value, stale: true, fetchedAt: entry.at, error };
+      if (entry)
+        return { value: entry.value, stale: true, fetchedAt: entry.at, error };
       throw error;
     }
   }
@@ -98,7 +102,12 @@ export function createOshObservationsCache({ fetchImpl, now = Date.now }) {
    * @param {?object} [reader] - From readOshSchemaLocation(), or null.
    */
   async function get(id, url, headers, reader = null) {
-    const { value, stale, fetchedAt, error } = await keyed.get(id, url, headers, reader);
+    const { value, stale, fetchedAt, error } = await keyed.get(
+      id,
+      url,
+      headers,
+      reader,
+    );
     return error
       ? { observation: value, stale, fetchedAt, error }
       : { observation: value, stale, fetchedAt };
@@ -128,7 +137,11 @@ async function refreshSystemDatastreams(fetchImpl, _id, root, url, headers) {
  * @param {() => number} [options.now]
  * @param {number} options.ttlMs
  */
-export function createOshSystemDatastreamsCache({ fetchImpl, now = Date.now, ttlMs }) {
+export function createOshSystemDatastreamsCache({
+  fetchImpl,
+  now = Date.now,
+  ttlMs,
+}) {
   const keyed = createOshKeyedCache({
     fetchImpl,
     now,
@@ -144,7 +157,12 @@ export function createOshSystemDatastreamsCache({ fetchImpl, now = Date.now, ttl
    * @param {Record<string,string>} headers
    */
   async function get(id, root, url, headers) {
-    const { value, stale, fetchedAt, error } = await keyed.get(id, root, url, headers);
+    const { value, stale, fetchedAt, error } = await keyed.get(
+      id,
+      root,
+      url,
+      headers,
+    );
     return error
       ? { datastreams: value, stale, fetchedAt, error }
       : { datastreams: value, stale, fetchedAt };
@@ -187,7 +205,11 @@ export function createOshSchemaCache({ fetchImpl, now = Date.now, ttlMs }) {
    * @param {Record<string,string>} headers
    */
   async function get(id, url, headers) {
-    const { value, stale, fetchedAt, error } = await keyed.get(id, url, headers);
+    const { value, stale, fetchedAt, error } = await keyed.get(
+      id,
+      url,
+      headers,
+    );
     return error
       ? { reader: value, stale, fetchedAt, error }
       : { reader: value, stale, fetchedAt };
@@ -204,7 +226,9 @@ async function refreshSystemName(fetchImpl, _id, url, headers) {
     throw error;
   }
   const properties =
-    json?.properties && typeof json.properties === 'object' ? json.properties : {};
+    json?.properties && typeof json.properties === 'object'
+      ? json.properties
+      : {};
   return typeof properties.name === 'string' ? properties.name : null;
 }
 
@@ -232,8 +256,14 @@ export function createOshSystemCache({ fetchImpl, now = Date.now, ttlMs }) {
    * @param {Record<string,string>} headers
    */
   async function get(id, url, headers) {
-    const { value, stale, fetchedAt, error } = await keyed.get(id, url, headers);
-    return error ? { name: value, stale, fetchedAt, error } : { name: value, stale, fetchedAt };
+    const { value, stale, fetchedAt, error } = await keyed.get(
+      id,
+      url,
+      headers,
+    );
+    return error
+      ? { name: value, stale, fetchedAt, error }
+      : { name: value, stale, fetchedAt };
   }
 
   return { get, size: keyed.size };
@@ -269,7 +299,8 @@ export function createOshLocationsPass({ ttlMs, now = Date.now }) {
       entry = { at: now(), value };
       return { value, stale: false, fetchedAt: entry.at };
     } catch (error) {
-      if (entry) return { value: entry.value, stale: true, fetchedAt: entry.at, error };
+      if (entry)
+        return { value: entry.value, stale: true, fetchedAt: entry.at, error };
       throw error;
     }
   }

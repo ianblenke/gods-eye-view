@@ -19,7 +19,10 @@ import {
 const MAX_DECODE_QUEUE = 8;
 
 function sameBytes(first, second) {
-  return first.length === second.length && first.every((byte, at) => byte === second[at]);
+  return (
+    first.length === second.length &&
+    first.every((byte, at) => byte === second[at])
+  );
 }
 
 /**
@@ -40,7 +43,10 @@ export function createVideoPlayer({
   onStatus = () => {},
 }) {
   // A page that is not secure has no WebCodecs.
-  if (typeof VideoDecoderImpl !== 'function' || typeof EncodedVideoChunkImpl !== 'function') {
+  if (
+    typeof VideoDecoderImpl !== 'function' ||
+    typeof EncodedVideoChunkImpl !== 'function'
+  ) {
     onStatus('unsupported');
     return { push() {}, close() {} };
   }
@@ -63,7 +69,10 @@ export function createVideoPlayer({
     }
     try {
       // A new size clears the canvas, so the size is set only when it changes.
-      if (frame.displayWidth !== shownWidth || frame.displayHeight !== shownHeight) {
+      if (
+        frame.displayWidth !== shownWidth ||
+        frame.displayHeight !== shownHeight
+      ) {
         shownWidth = frame.displayWidth;
         shownHeight = frame.displayHeight;
         canvas.width = shownWidth;
@@ -106,7 +115,11 @@ export function createVideoPlayer({
       if (key) {
         droppingDeltas = false;
         const found = findParameterSets(nals);
-        if (found.sps && found.pps && (sps === null || !sameBytes(sps, found.sps))) {
+        if (
+          found.sps &&
+          found.pps &&
+          (sps === null || !sameBytes(sps, found.sps))
+        ) {
           try {
             decoder ??= new VideoDecoderImpl({ output, error });
             decoder.configure({
@@ -126,7 +139,10 @@ export function createVideoPlayer({
       if (decoder === null) return;
       const sample = toAvccSample(nals);
       if (sample === null) return;
-      if (!key && (droppingDeltas || decoder.decodeQueueSize > MAX_DECODE_QUEUE)) {
+      if (
+        !key &&
+        (droppingDeltas || decoder.decodeQueueSize > MAX_DECODE_QUEUE)
+      ) {
         droppingDeltas = true;
         return;
       }

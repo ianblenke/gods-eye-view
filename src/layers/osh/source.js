@@ -57,7 +57,8 @@ function decodeFrameData(data) {
     return null;
   }
   const bytes = new Uint8Array(binary.length);
-  for (let at = 0; at < binary.length; at += 1) bytes[at] = binary.charCodeAt(at);
+  for (let at = 0; at < binary.length; at += 1)
+    bytes[at] = binary.charCodeAt(at);
   return bytes;
 }
 
@@ -67,20 +68,30 @@ export function createOshSource({
 } = {}) {
   return {
     async getSystems({ signal } = {}) {
-      const { keyRequired, payload } = await readOshResponse(fetchImpl, '/api/osh/systems', {
-        signal,
-      });
+      const { keyRequired, payload } = await readOshResponse(
+        fetchImpl,
+        '/api/osh/systems',
+        {
+          signal,
+        },
+      );
       if (keyRequired) return { keyRequired: true, systems: [], stale: false };
       if (!Array.isArray(payload?.systems))
         throw new Error('Malformed OSH systems payload');
-      return { keyRequired: false, systems: payload.systems, stale: Boolean(payload.stale) };
+      return {
+        keyRequired: false,
+        systems: payload.systems,
+        stale: Boolean(payload.stale),
+      };
     },
 
     async getDatastreams({ system, signal } = {}) {
       const path = system
         ? `/api/osh/datastreams?system=${encodeURIComponent(system)}`
         : '/api/osh/datastreams';
-      const { keyRequired, payload } = await readOshResponse(fetchImpl, path, { signal });
+      const { keyRequired, payload } = await readOshResponse(fetchImpl, path, {
+        signal,
+      });
       if (keyRequired) return { keyRequired: true, datastreams: [] };
       if (!Array.isArray(payload?.datastreams))
         throw new Error('Malformed OSH datastreams payload');
@@ -88,18 +99,31 @@ export function createOshSource({
     },
 
     async getFois({ signal } = {}) {
-      const { keyRequired, payload } = await readOshResponse(fetchImpl, '/api/osh/fois', {
-        signal,
-      });
+      const { keyRequired, payload } = await readOshResponse(
+        fetchImpl,
+        '/api/osh/fois',
+        {
+          signal,
+        },
+      );
       if (keyRequired) return { keyRequired: true, fois: [], truncated: false };
-      if (!Array.isArray(payload?.fois)) throw new Error('Malformed OSH fois payload');
-      return { keyRequired: false, fois: payload.fois, truncated: Boolean(payload.truncated) };
+      if (!Array.isArray(payload?.fois))
+        throw new Error('Malformed OSH fois payload');
+      return {
+        keyRequired: false,
+        fois: payload.fois,
+        truncated: Boolean(payload.truncated),
+      };
     },
 
     async getLocations({ signal } = {}) {
-      const { keyRequired, payload } = await readOshResponse(fetchImpl, '/api/osh/locations', {
-        signal,
-      });
+      const { keyRequired, payload } = await readOshResponse(
+        fetchImpl,
+        '/api/osh/locations',
+        {
+          signal,
+        },
+      );
       if (keyRequired) return { keyRequired: true, locations: [], failed: 0 };
       if (!Array.isArray(payload?.locations))
         throw new Error('Malformed OSH locations payload');
@@ -112,9 +136,15 @@ export function createOshSource({
 
     async getObservation(datastreamId, { signal } = {}) {
       const path = `/api/osh/observations?datastream=${encodeURIComponent(datastreamId)}`;
-      const { keyRequired, payload } = await readOshResponse(fetchImpl, path, { signal });
+      const { keyRequired, payload } = await readOshResponse(fetchImpl, path, {
+        signal,
+      });
       if (keyRequired) return { keyRequired: true, observation: null };
-      if (!payload || typeof payload !== 'object' || !('observation' in payload))
+      if (
+        !payload ||
+        typeof payload !== 'object' ||
+        !('observation' in payload)
+      )
         throw new Error('Malformed OSH observation payload');
       return { keyRequired: false, observation: payload.observation };
     },
@@ -135,7 +165,11 @@ export function createOshSource({
         } catch {
           return;
         }
-        if (observation && typeof observation === 'object' && !Array.isArray(observation)) {
+        if (
+          observation &&
+          typeof observation === 'object' &&
+          !Array.isArray(observation)
+        ) {
           onObservation(observation);
         }
       });

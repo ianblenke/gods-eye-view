@@ -28,7 +28,8 @@ function lastPathSegment(href) {
 function readSystemId(entry) {
   if (typeof entry['system@id'] === 'string' && entry['system@id'])
     return entry['system@id'];
-  if (typeof entry.systemId === 'string' && entry.systemId) return entry.systemId;
+  if (typeof entry.systemId === 'string' && entry.systemId)
+    return entry.systemId;
   if (
     entry.system &&
     typeof entry.system === 'object' &&
@@ -52,11 +53,16 @@ function readSystemId(entry) {
  * of the data and never the name of the datastream.
  */
 function isVideoEntry(entry) {
-  if (entry.resultType !== 'coverage' || !Array.isArray(entry.observedProperties)) return false;
+  if (
+    entry.resultType !== 'coverage' ||
+    !Array.isArray(entry.observedProperties)
+  )
+    return false;
   return entry.observedProperties.some(
     (property) =>
       typeof property?.definition === 'string' &&
-      property.definition.split(/[/#:]/).filter(Boolean).at(-1) === RASTER_IMAGE,
+      property.definition.split(/[/#:]/).filter(Boolean).at(-1) ===
+        RASTER_IMAGE,
   );
 }
 
@@ -79,7 +85,8 @@ export function mapOshDatastreams(payload) {
       id,
       systemId: readSystemId(entry),
       name: typeof entry.name === 'string' ? entry.name : null,
-      outputName: typeof entry.outputName === 'string' ? entry.outputName : null,
+      outputName:
+        typeof entry.outputName === 'string' ? entry.outputName : null,
       validTime: Array.isArray(entry.validTime) ? entry.validTime : null,
     };
     if (isVideoEntry(entry)) record.video = true;
