@@ -123,14 +123,14 @@ test('[credential-boundary-014] a ZERO_RESULTS answer with no results gives no p
   assert.equal(await provider.reverseGeocode(30.2672, -97.7431), null);
 });
 
-test('[credential-boundary-014] a fetch failure gives no place', async () => {
+test('[credential-boundary-014] a fetch failure makes the reverse lookup reject', async () => {
   const { provider } = providerWith(async () => {
     throw new Error('offline');
   });
   await assert.rejects(provider.reverseGeocode(30.2672, -97.7431), /offline/);
 });
 
-test('[credential-boundary-014] a response that is not JSON gives no place', async () => {
+test('[credential-boundary-014] an answer that is not JSON makes the reverse lookup reject', async () => {
   const { provider } = providerWith(async () => ({
     ok: true,
     status: 200,
