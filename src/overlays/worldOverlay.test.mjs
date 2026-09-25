@@ -1529,6 +1529,30 @@ test('[osh-093] the list of occluder selectors has `#osh-panel`', () => {
   assert.ok(WORLD_OVERLAY_OCCLUDER_SELECTORS.includes('#osh-panel'));
 });
 
+test('[osh-093] the world overlay places a card clear of the panel of the OSH layer when it can', () => {
+  // The panel is the shipped one: the stacking comes from the rule of `.osh-panel` in style.css.
+  const shipped = cssDeclarationsFor(SHIPPED_CSS, '.osh-panel');
+  const panel = { left: 0, top: 0, width: 60, height: 220 };
+  const paint = (occluders) => {
+    const env = installMockEnvironment({ width: 400, height: 300, dpr: 1, occluders });
+    initWorldOverlay(env.viewer);
+    setOverlayEntries('ambient', [selectedEntry('NEXT-TO-PANEL', { position: positionAtScreen(80, 100) })]);
+    env.postRender.raise();
+    const painted = getOverlayPaintRect('ambient', 'NEXT-TO-PANEL');
+    env.cleanup();
+    return painted;
+  };
+  assert.equal(rectsIntersect(paint([]), inflatedRect(panel)), true,
+    'with no panel the default place of the card collides with the panel area');
+  const beside = paint([{
+    id: 'osh-panel',
+    rect: panel,
+    style: { position: shipped.position, zIndex: shipped['z-index'] },
+  }]);
+  assert.equal(rectsIntersect(beside, inflatedRect(panel)), false,
+    'with the panel the card steps clear of it');
+});
+
 test('position getters snapshot once per frame and cockpit-gated sources disappear', () => {
   const env = installMockEnvironment();
   let getterCalls = 0;

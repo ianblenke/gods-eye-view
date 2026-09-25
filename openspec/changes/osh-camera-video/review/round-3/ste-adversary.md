@@ -1,0 +1,71 @@
+Verdict: FAIL
+
+Findings:
+- [ ] S1 (major) The occluder text says the wrong thing. Delta spec `/home/ianblenke/docker/gev-video/openspec/changes/archive/2026-09-25-osh-camera-video/specs/osh/spec.md:213` says "the world overlay hides an entry that lies under an element of the list". The synced spec (`/home/ianblenke/docker/gev-video/openspec/specs/osh/spec.md:851`) has the same line. `/home/ianblenke/docker/gev-video/openspec/changes/archive/2026-09-25-osh-camera-video/design.md:86` says "it hides an entry that lies under the panel".
+  - The code does not hide the entry. `/home/ianblenke/docker/gev-video/src/overlays/worldOverlay.js:63-74` and `:1664-1694` say that the occluder list is a placement rule. The solver prefers a place that is clear of the panel. When it finds no such place, the entry still renders and the panel covers it.
+  - The panel has z-index 99, above the overlay host, so it gets only this soft rule.
+  - A reader who follows the spec writes a hide, and that changes what the code must do. The test at `/home/ianblenke/docker/gev-video/src/overlays/worldOverlay.test.mjs:1528` checks only that the list has `#osh-panel`, so nothing catches the error.
+  - `entry` also gets a second meaning here, next to the hub entry.
+  - Spec text: "- **AND** the world overlay places a label or a card clear of an element of the list when it can".
+  - Design text: "The world overlay treats the panel as an occluder: it places each label or card clear of the panel when it can."
+  - Make the same change in the synced spec.
+- [ ] S2 (minor) The round-2 S3 wording came back in a changed task. `/home/ianblenke/docker/gev-video/openspec/changes/archive/2026-09-25-osh-camera-video/tasks.md:90` says "how it ignores delta messages while the decoder queue is long". A reader can think that the player ignores delta messages only while the queue is long. The rule is that it ignores each delta message until the next key message. Mutation P6 (`tasks.md:99`) has the same words.
+  - Task 5.3 text: "Cover how the player draws and closes each frame, and how it ignores each delta message until the next key message when the decoder queue holds more than eight chunks."
+  - P6 text: "P6: never ignore a delta message when the decoder queue holds more than eight chunks."
+- [ ] S3 (minor) The WHEN of `osh-092` does not name its two cases (`specs/osh/spec.md:82-86`). The conditions "when no root answers" and "for a ninth datastream" are in the THEN and AND lines. `osh-077` lists its cases in the WHEN. Text: "- **WHEN** a client requests `/api/osh/video?datastream=<id>` with a key set and a good id, and no root answers, or the request is for a ninth datastream".
+- [ ] S4 (minor) The three new lines of `osh-080` (`specs/osh/spec.md:117-119`) do not follow the WHEN "a client joins a video stream that has already relayed messages". They are about a socket that closes, and about the retry. The same round-2 S21 problem appears again. Use the pattern of `osh-077`, with two triggers in the WHEN and the condition in each THEN line.
+  - WHEN: "a client joins a video stream that has already relayed messages, or the upstream socket of the video stream closes or fails".
+  - First THEN: "when a client joins, it receives the event `open`, and then one event `frame` for each message of the group, in order".
+- [ ] S5 (minor) Three `osh-084` lines are hard to read (`specs/osh/spec.md`). The design does not agree with the changed line 171.
+  - Line 166 has "in microseconds ... in whole microseconds". Text: "the time stamp of a chunk is the number of whole microseconds after the time stamp of the first decoded message".
+  - Line 167 uses "whenever". I am not sure that it is an approved word. Text: "it sets the size of the canvas at the first decoded frame and when the size of a frame changes".
+  - Line 171: "an SPS that is not the SPS of the decoder". A decoder has no SPS. Text: "it configures the decoder again when a key message has a PPS and an SPS that is different from the SPS of the current configuration".
+  - `design.md:70` says "A new SPS starts a new configuration". The code (`videoPlayer.js:109`) also needs a PPS in the same key message. Text: "A key message with a PPS and a new SPS starts a new configuration."
+- [ ] S6 (minor) `osh-087` line 193 has a pronoun that a reader can misread: "the view shows the title `Video` when it gets no name". `it` can mean the datastream, and line 192 says the view then shows the id. The layer gives the view `name || id` (`src/layers/osh/index.js:291`). The view gets no name only when the name and the id are both empty. Text: "the view shows the title `Video` when the name that the layer gives it is empty".
+- [ ] S7 (minor) `osh-094` (`specs/osh/spec.md:215-220`) has three small breaks.
+  - The WHEN "the page `index.html` and the stylesheet `style.css` are read" is passive. `osh-005` says "the test discovers". Text: "WHEN a test reads `index.html` and `style.css`".
+  - "the element `osh-panel`" gives no id. The `aside` has the id `osh-panel` and the class `osh-panel`, and line 220 says "the class `osh-panel`". A reader cannot tell that it is one element.
+  - Text: "`index.html` has one element with the id `osh-panel` and the attribute `hidden`", "the elements with the ids `osh-panel-video` and `osh-panel-detail` are inside that element", and "`style.css` gives the display `none` to an element that has the class `osh-panel` and the attribute `hidden`".
+- [ ] S8 (minor) One thing has two names. The spec `osh-090` (`specs/osh/spec.md:130` and `:133`) says "bytes not yet written". The design, the proposal, the tasks and the test names say "unwritten bytes". The bytes belong to the response, but the tasks give them to the client. Define one phrase, once, in the spec.
+  - Line 130: "the response of that client has more than 8388608 unwritten bytes, that is, its `writableLength` is more than 8388608".
+  - Line 133: "a client whose response has exactly 8388608 unwritten bytes, or fewer, keeps its response".
+  - `tasks.md:55`: "Destroy a response that has more than 8388608 unwritten bytes, in `server/providers/osh.js`."
+  - `tasks.md:73`: "V17: destroy the response at exactly 8388608 unwritten bytes."
+  - I am not sure that `unwritten` is an approved word, so define it with `writableLength` once.
+- [ ] S9 (minor) Three new test names have a wrong subject, or a second word for `destroy`.
+  - `/home/ianblenke/docker/gev-video/src/data/oshLive.test.mjs:1203` "the socket of the video route writes no message frame". A socket does not write; the provider writes to it. Text: "the provider writes no message frame to the socket of the video route".
+  - `oshLive.test.mjs:2148` "loses its response". Text: "the provider destroys the response of a real HTTP client that does not read, and a client that reads keeps its events". The assertion text at `:2202` says "ends"; write "is destroyed".
+  - `/home/ianblenke/docker/gev-video/src/layers/osh/videoPlayer.test.mjs:420` "a decoder error resets the player when the decoder fails to close". An error does not reset anything, and the spec says "resets the decoder". Text: "after a decoder error the player resets, also when the decoder fails to close".
+- [ ] S10 (minor) Five test names are vague, or use a word that the spec does not use.
+  - `oshLive.test.mjs:1436` "for that datastream" has no earlier noun. Text: "after a message that is too large, the hub refuses the video route for the datastream of that message for ten minutes".
+  - `oshLive.test.mjs:2218` "the retry delay" is not a spec word, and the spec says one second. Text: "a video client gets the event down when the socket closes, and the event open when the new socket opens after one second".
+  - `/home/ianblenke/docker/gev-video/src/data/oshVideo.test.mjs:52` "a short message". Text: "a message of less than 12 bytes".
+  - `oshVideo.test.mjs:82` "before the first one". Text: "before the first start code".
+  - `/home/ianblenke/docker/gev-video/src/data/osh.test.mjs:211` "inside it" can mean the detail. "host of the video" is a second name for "video host". Text: "index.html has one element osh-panel, hidden at the start, and one video host and one detail host inside that element".
+- [ ] S11 (minor) The term "good message" has two definitions. `osh-079` (`specs/osh/spec.md:99-100`) says binary, 12 to 2097152 bytes, and so on. `osh-083` (`:150`) says 12 bytes or more, and so on. `osh-084` line 164 says "a message that is not good" with no hint which one. Stop using "good" in `osh-083`. `osh-083` text: "THEN it returns the time stamp in milliseconds and the H.264 data of a message that has 12 bytes or more, a length field equal to its size minus 12, and a finite time stamp". Keep "it returns null for every other message". `osh-084` text: "it ignores a message for which the helper returns null, and a message that has no slice NAL unit". The proposal and design text for this term stays as it is.
+- [ ] S12 (minor) The proposal has three small problems.
+  - `/home/ianblenke/docker/gev-video/openspec/changes/archive/2026-09-25-osh-camera-video/proposal.md:33` "No file of this change touches it". `it` can mean `main`. Text: "No file of this change touches `src/data/labelArbiter.js`."
+  - `proposal.md:45` "A person ran ... and a person examines" does not say whether the person is the same. No file of the repository records the run, and round-2 spec F7 already named this. Text, if no record exists: "A person examines the real picture in a browser."
+  - `proposal.md:51` "Tests check only the ids, the rule for `hidden` and the occluder selector" is not true. The tests also check the attribute `hidden` and which elements are inside `osh-panel`, as D79 says. Text: "Tests check the ids, the attribute `hidden`, which elements are inside `osh-panel`, the rule for `hidden` and the occluder selector."
+- [ ] S13 (minor) Two changed tasks are inexact.
+  - `tasks.md:91` says the tests cover how the player "works on a page with no decoder class". The player decodes nothing there. Text: "and reports the status `unsupported` on a page with no decoder class".
+  - Task 7.5 (`tasks.md:144`) says "Run each mutation below on the page", but L19 (`:149`) changes the world overlay. Text: "Run each mutation below on the page and the world overlay."
+
+Judgment on the items that the lead kept:
+- `host` for a DOM element is acceptable. The code names `panelHost`, `detailHost` and `videoHost`, and the spec writes "URL host" for the other meaning.
+- `hold` in the names of older tests is acceptable under standing constraint 5 (never rename an existing test).
+- The new test names use "holds" only in "the decoder queue holds more than eight chunks". That is the wording of the spec.
+
+What I checked (Read, Grep and Glob only; repository root `/home/ianblenke/docker/gev-video`):
+- **Diff and files.** I read the whole round-3 diff and the current delta spec, design, proposal and tasks. I read all 47 names in `new-test-names-round3.txt`. I compared the changed lines with `src/layers/osh/videoPlayer.js`, `src/layers/osh/index.js:289-305`, `server/providers/osh/live.js` (retry delays, `down`), `src/overlays/worldOverlay.js`, `style.css`, `index.html`, and the bodies of the tests at `osh.test.mjs:211-227`, `oshLive.test.mjs:1366` and `videoPlayer.test.mjs:420`. I also read `osh-012` and `osh-068` in the synced spec.
+- **Round-2 findings.** I checked S1 to S21 one by one.
+  - Corrected: S1, S2, S3, S4, S6, S7, S8, S10, S12 to S18 and S20.
+    - The `chunk`, `image` and `picture` words are now consistent. The `destroy` word is consistent in the spec, design, tasks and code comments.
+    - The names "no video property", "the helper", "the video route" and "the observation kind" match the spec.
+  - Corrected in the design, the proposal and the tasks; new points remain in S8: S9.
+  - Corrected: S5 (spec lines 164, 165 and 169) and S11 (no verb used as a noun remains in the changed lines).
+  - Partly corrected: S19 (the test names are complete; S10 finds one new pronoun) and S21 (`osh-093` and `osh-094` exist; S1 and S7 remain; `osh-092` gets S3).
+- **Test names the lead changed.** The four-kinds name (`oshLive.test.mjs:1366`) is acceptable. Design D74 and `osh-079` list the four kinds, and the test body has all four. The `hold` names are covered in the judgment above.
+- **Constraints.** The added lines name no real server, host, stream, system or place. They have no non-GET request, no `SHALL`, `SHOULD` or `MAY`, and no `send` outside the spec text and test names.
+- **Not reported.** `design.md:32` uses `host` for the server part of a URL. That line is not in the diff.
+- **Not checked.** The lint limits, the real decoder, and the look of the panel. I did not verify the number 1060px in the CSS arithmetic; I checked that the design, the tasks and the CSS comment say the same.

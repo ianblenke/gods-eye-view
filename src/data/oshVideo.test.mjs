@@ -40,7 +40,7 @@ function message(data, { seconds = 1_790_000_000.25, length = data.length } = {}
   return bytes;
 }
 
-test('[osh-083] the helper returns the time stamp in milliseconds and the H.264 data of a good message', () => {
+test('[osh-083] the helper returns the time stamp in milliseconds and the H.264 data of a valid message', () => {
   const data = annexB([SPS, PPS, IDR]);
   const read = readOshVideoMessage(message(data));
   assert.equal(read.timestampMs, 1_790_000_000_250);
@@ -49,7 +49,7 @@ test('[osh-083] the helper returns the time stamp in milliseconds and the H.264 
   assert.equal(empty.data.length, 0);
 });
 
-test('[osh-083] the helper gives null for a message with a wrong length field, a short message or a time stamp that is not a finite number', () => {
+test('[osh-083] the helper gives null for each message that is not valid', () => {
   const data = annexB([IDR]);
   assert.equal(readOshVideoMessage(message(data, { length: data.length + 1 })), null);
   assert.equal(readOshVideoMessage(message(data, { length: data.length - 1 })), null);
@@ -79,7 +79,7 @@ test('[osh-083] the helper cuts H.264 data at a start code of three bytes and at
   assert.deepEqual(splitNalUnits(mixed).map((unit) => [...unit]), [[...SPS], [...PPS], [...IDR]]);
 });
 
-test('[osh-083] the helper removes the zero bytes before the next start code and ignores bytes before the first one', () => {
+test('[osh-083] the helper removes the zero bytes before the next start code and ignores bytes before the first start code', () => {
   const data = Uint8Array.from([9, 9, ...START4, ...IDR, 0, 0, ...START4, ...DELTA, 0]);
   const units = splitNalUnits(data);
   assert.deepEqual(units.map((unit) => [...unit]), [[...IDR], [...DELTA]]);
