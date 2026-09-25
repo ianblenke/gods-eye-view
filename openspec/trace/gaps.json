@@ -2659,11 +2659,11 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 18,
-      "branches": 52,
+      "branches": 50,
       "functions": 0,
       "totals": {
         "lines": 1125,
-        "branches": 407,
+        "branches": 405,
         "functions": 58
       },
       "sha": "86cc0fab84963a9f0ab168cf0d9f3e44ac00401d2650f91f883cec1f97ce5275",
@@ -5576,7 +5576,7 @@
         "branches": 653,
         "functions": 92
       },
-      "sha": "80541cb3e8c4560ca52a468b9f5374a88e0ab720cbc8b475a6e66c07ed460956",
+      "sha": "b8398cc09aefc2ee08898c5dd37553d4f63f0f5e060e810d2250e0c42a446caa",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
