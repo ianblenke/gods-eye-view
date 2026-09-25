@@ -29,7 +29,7 @@ None.
 
 ## Impact
 
-- Changed files: `scripts/spec/lib/ledger.mjs`, `scripts/spec/lib/git.mjs`, `scripts/spec/gates.mjs`, `Makefile`, `src/tooling/spec/ledger.test.mjs`, `src/tooling/spec/gates.test.mjs`, `src/tooling/spec/git.test.mjs`, `src/tooling/spec/ciFiles.test.mjs` and `openspec/specs/gap-ledger/spec.md`.
+- Changed files: `scripts/spec/lib/ledger.mjs`, `scripts/spec/lib/git.mjs`, `scripts/spec/gates.mjs`, `Makefile`, `src/tooling/spec/ledger.test.mjs`, `src/tooling/spec/gates.test.mjs`, `src/tooling/spec/git.test.mjs`, `src/tooling/spec/ciFiles.test.mjs`, `src/tooling/spec/testGuard.test.mjs` and `openspec/specs/gap-ledger/spec.md`.
 - The ratchet run also changes `openspec/trace/ids.json`, `openspec/trace/links.json` and `openspec/trace/history.jsonl`.
 - Gaps that this change opens: none. The change must keep `scripts/spec/lib/ledger.mjs`, `scripts/spec/lib/git.mjs` and `scripts/spec/gates.mjs` at the counts that the ledger has now.
 - Gaps that this change closes: none.

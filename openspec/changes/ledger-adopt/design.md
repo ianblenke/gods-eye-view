@@ -91,3 +91,4 @@ Each new scenario has a test with the tag of its ID. `scripts/spec/lib/ledger.mj
 - `scripts/spec/gates.mjs`: the command `adopt`, the option `--from` and the check of the adopt lines.
 - `Makefile`: the target `adopt`.
 - `src/tooling/spec/ledger.test.mjs`, `src/tooling/spec/gates.test.mjs`, `src/tooling/spec/git.test.mjs` and `src/tooling/spec/ciFiles.test.mjs`: the tests.
+- `src/tooling/spec/testGuard.test.mjs`: the list of the tests that need the guard gets the three new tests of `gates.test.mjs`.
