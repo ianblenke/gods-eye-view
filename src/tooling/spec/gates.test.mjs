@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { appendFileSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -1025,5 +1025,152 @@ test('[coverage-gate-049] stops for a real child process that leaves a live time
     // this real leaky test process does not cost src/math.js its true coverage.
     assert.doesNotMatch(check.output, /COVERAGE-FAKE/);
     assert.match(check.output, /0 untrue/);
+  });
+});
+
+const UNIT_TEST = (module, name, extra = '') =>
+  ["import test from 'node:test';", "import assert from 'node:assert/strict';", `import { ${module} } from './${module}.js';`, `test('${name}', () => {`, `  assert.equal(${module}(1), 1);`, '});', extra, ''].join('\n');
+const BRANCH_SRC = (name, extra = '') => `export function ${name}(a) {\n  if (a < 0) return 0;\n${extra}  return a;\n}\n`;
+const SYNC_CHANGE = {
+  'openspec/changes/sync/proposal.md': '## Why\n\nThe merge brings code with gaps, so that the gates have a change to check.\n\n## What Changes\n\n- Merge the branch.\n',
+  'openspec/changes/sync/tasks.md': '## 1. Merge\n\n- [ ] 1.1 Merge the branch.\n',
+};
+
+/**
+ * A base commit on main with a ledger, a branch `up` that adds code with gaps, and a work branch that merges `up`.
+ * The merge commit is the head. The work branch also adds its own files with gaps. The working tree keeps the base
+ * content of `src/legacy.js`, which `up` changed.
+ */
+function withMergeFixture(body) {
+  return withFixture(
+    (root) => {
+      passes(root, ['init']);
+      commitAll(root, 'ledger');
+      git(root, 'checkout', '-q', 'main');
+      git(root, 'merge', '-q', '--ff-only', 'work');
+      git(root, 'checkout', '-q', '-b', 'up');
+      write(root, {
+        'src/merged.js': BRANCH_SRC('merged'),
+        'src/merged.test.mjs': UNIT_TEST('merged', 'runs merged'),
+        'src/legacy.js': BRANCH_SRC('legacy', '  if (a > 9) return 9;\n'),
+        'src/math.test.mjs': MATH_TEST('adds two numbers', "test('adds negative numbers', () => {\n  assert.equal(add(-1, -2), -3);\n});"),
+      });
+      commitAll(root, 'upstream work');
+      git(root, 'checkout', '-q', 'work');
+      write(root, { ...SYNC_CHANGE, 'src/own.js': BRANCH_SRC('own'), 'src/own.test.mjs': UNIT_TEST('own', 'runs own') });
+      commitAll(root, 'own work');
+      git(root, 'merge', '-q', '--no-ff', '-m', 'merge up', 'up');
+      git(root, 'checkout', '-q', 'main', '--', 'src/legacy.js');
+      return body(root);
+    },
+    { base: { 'src/legacy.js': BRANCH_SRC('legacy'), 'src/legacy.test.mjs': UNIT_TEST('legacy', 'runs legacy') } },
+  );
+}
+
+const ADOPT_LINE = (root, file, extra) => ({ date: '2026-09-13', change: 'sync', commit: git(root, 'rev-parse', 'HEAD'), kind: 'adopt', file, from: git(root, 'rev-parse', 'up'), ...extra });
+const historyLines = (root, from = 0) =>
+  readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8')
+    .slice(from)
+    .split('\n')
+    .filter(Boolean)
+    .map((line) => JSON.parse(line));
+
+test('[gap-ledger-089 gap-ledger-091] adopts the gaps of the merged files, and the ratchet command and the check pass', GUARDED_RUN, () => {
+  withMergeFixture((root) => {
+    const ledgerFile = path.join(root, 'openspec/trace/gaps.json');
+    const before = JSON.parse(readFileSync(ledgerFile, 'utf8'));
+    assert.deepEqual(parseArgs(['adopt', '--change', 'sync', '--from', 'up']), { command: 'adopt', change: 'sync', base: undefined, root: undefined, from: 'up' });
+
+    // A failed test stops the command before it writes.
+    const historyFile = path.join(root, 'openspec/trace/history.jsonl');
+    const historyBefore = existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : null;
+    write(root, { 'src/broken.test.mjs': "import test from 'node:test';\nimport assert from 'node:assert/strict';\ntest('fails', () => {\n  assert.equal(1, 2);\n});\n" });
+    git(root, 'add', 'src/broken.test.mjs');
+    const broken = run(root, ['adopt', '--change', 'sync', '--from', 'up']);
+    assert.equal(broken.status, 1, broken.output);
+    assert.match(broken.output, /ERROR TRACE-FAILED-TEST src\/broken\.test\.mjs/);
+    assert.equal(readFileSync(ledgerFile, 'utf8'), JSON.stringify(before, null, 2) + '\n', 'the command does not write the ledger');
+    assert.equal(existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : null, historyBefore, 'the command does not write the history');
+    git(root, 'rm', '-q', '-f', 'src/broken.test.mjs');
+
+    const result = passes(root, ['adopt', '--change', 'sync', '--from', 'up']);
+    assert.match(result.output, /Adopt: 3 files from [0-9a-f]{40}\./);
+    assert.notEqual(git(root, 'rev-parse', 'up'), git(root, 'rev-parse', 'HEAD'));
+    const none = { lines: null, branches: null, functions: null, untrue: false };
+    const added = historyLines(root).sort((a, b) => a.file.localeCompare(b.file));
+    assert.deepEqual(added, [
+      ADOPT_LINE(root, 'src/math.test.mjs', { ...none, untraced: 2 }),
+      ADOPT_LINE(root, 'src/merged.js', { lines: 0, branches: 1, functions: 0, untraced: 0, untrue: false }),
+      ADOPT_LINE(root, 'src/merged.test.mjs', { ...none, untraced: 1 }),
+    ]);
+
+    const ledger = JSON.parse(readFileSync(ledgerFile, 'utf8'));
+    assert.equal(ledger.coverage['src/merged.js'].origin, 'sync');
+    assert.equal(ledger.coverage['src/merged.js'].branches, 1);
+    assert.deepEqual(ledger.coverage['src/legacy.js'], before.coverage['src/legacy.js'], 'the file with the base content is not adopted');
+    assert.equal(ledger.coverage['src/own.js'], undefined, 'the merged commit did not change src/own.js');
+    assert.deepEqual(Object.keys(ledger.untracedTests['src/math.test.mjs'].names).sort(), ['adds negative numbers', 'adds two numbers']);
+    assert.equal(ledger.untracedTests['src/math.test.mjs'].origin, 'pre-spec', 'an entry that exists keeps its origin');
+    assert.equal(ledger.untracedTests['src/merged.test.mjs'].origin, 'sync');
+    assert.equal(ledger.untracedTests['src/own.test.mjs'], undefined);
+
+    // The check stops for the gaps of the work branch and for no adopted gap.
+    const stops = run(root, ['check', '--change', 'sync']);
+    const errors = stops.output.split('\n').filter((line) => line.startsWith('ERROR'));
+    assert.ok(errors.some((line) => line.startsWith('ERROR LEDGER-NEW-COVERAGE-GAP src/own.js')), stops.output);
+    assert.ok(errors.some((line) => line.startsWith('ERROR LEDGER-NEW-UNTRACED src/own.test.mjs')), stops.output);
+    assert.deepEqual(errors.filter((line) => /merged|math\.test|legacy/.test(line)), []);
+
+    rmSync(path.join(root, 'src/own.js'));
+    rmSync(path.join(root, 'src/own.test.mjs'));
+    passes(root, ['ratchet', '--change', 'sync']);
+    reviewFor(root, 'sync');
+    passes(root, ['check', '--change', 'sync']);
+  });
+});
+
+test('[gap-ledger-090] stops the adopt command for a fault in its options', GUARDED_RUN, () => {
+  withMergeFixture((root) => {
+    const ledgerFile = path.join(root, 'openspec/trace/gaps.json');
+    const historyFile = path.join(root, 'openspec/trace/history.jsonl');
+    const ledgerText = readFileSync(ledgerFile, 'utf8');
+    const historyText = existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : null;
+    const fault = (argv, message) => {
+      const result = run(root, ['adopt', ...argv]);
+      assert.equal(result.status, 1, result.output);
+      assert.match(result.output, message);
+      assert.doesNotMatch(result.output, /Trace:/, 'the adopt command runs no test for a fault');
+    };
+    fault(['--change', 'nope', '--from', 'up'], /ERROR GATES-ADOPT Change "nope" has no folder with a proposal\.md file/);
+    fault(['--from', 'up'], /ERROR GATES-ADOPT Change "undefined" has no folder/);
+    fault(['--change', 'sync'], /ERROR GATES-ADOPT The adopt command needs --from with the merged commit/);
+    fault(['--change', 'sync', '--from', 'nope'], /ERROR GATES-ADOPT Git cannot find the commit nope/);
+    fault(['--change', 'sync', '--from', 'main'], /ERROR GATES-ADOPT The commit main is not a merged commit\./);
+    fault(['--change', 'sync', '--from', 'HEAD^1'], /ERROR GATES-ADOPT The commit HEAD\^1 is not a merged commit\./);
+    rmSync(ledgerFile);
+    fault(['--change', 'sync', '--from', 'up'], /ERROR GATES-ADOPT openspec\/trace\/gaps\.json is not there/);
+    writeFileSync(ledgerFile, ledgerText);
+    assert.equal(existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : null, historyText, 'the command does not change the history');
+  });
+});
+
+test('[gap-ledger-096 gap-ledger-097] stops the check for an adopt line with a commit or a file that the merge did not bring', GUARDED_RUN, () => {
+  withMergeFixture((root) => {
+    passes(root, ['adopt', '--change', 'sync', '--from', 'up']);
+    const ledgerFile = path.join(root, 'openspec/trace/gaps.json');
+    const ledger = JSON.parse(readFileSync(ledgerFile, 'utf8'));
+    // The work branch changed src/own.js, and `up` did not. The entry below needs an adopted count that no valid line gives.
+    ledger.coverage['src/own.js'] = { loaded: true, lines: 0, branches: 1, functions: 0, totals: { lines: 4, branches: 2, functions: 1 }, sha: 'x', untrue: false, origin: 'sync', since: '2026-09-13' };
+    writeFileSync(ledgerFile, `${JSON.stringify(ledger, null, 2)}\n`);
+    const counts = { lines: 0, branches: 1, functions: 0, untraced: 0, untrue: false };
+    appendFileSync(
+      path.join(root, 'openspec/trace/history.jsonl'),
+      [ADOPT_LINE(root, 'src/math.js', { ...counts, from: git(root, 'rev-parse', 'main') }), ADOPT_LINE(root, 'src/own.js', counts)].map((line) => `${JSON.stringify(line)}\n`).join(''),
+    );
+    const check = run(root, ['check', '--change', 'sync']);
+    assert.equal(check.status, 1);
+    assert.match(check.output, new RegExp(`ERROR LEDGER-ADOPT-FROM src/math\\.js The adopt line for src/math\\.js names the commit ${git(root, 'rev-parse', 'main')}, and no merge commit`));
+    assert.match(check.output, /ERROR LEDGER-ADOPT-FILE src\/own\.js The adopt line for src\/own\.js names the commit [0-9a-f]{40}, and that commit did not change src\/own\.js/);
+    assert.match(check.output, /ERROR LEDGER-NOT-IN-BASE src\/own\.js The ledger entry for src\/own\.js is not in the base ledger/, 'the line with a file that the commit did not change gives no adopted count');
   });
 });

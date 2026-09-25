@@ -11,8 +11,9 @@ GATES := docker run --rm -v "$(CURDIR)":/src $(IMAGE) sh -c '$(GATES_COPY) || ex
 
 CHANGE_ARG := $(if $(CHANGE),--change $(CHANGE),)
 BASE_ARG := $(if $(BASE),--base $(BASE),)
+FROM_ARG := $(if $(FROM),--from $(FROM),)
 
-.PHONY: up down image ensure-image test gates gates-init ratchet lint tree
+.PHONY: up down image ensure-image test gates gates-init ratchet adopt lint tree
 
 up:
 	docker compose build
@@ -38,6 +39,9 @@ gates-init: ensure-image
 
 ratchet: ensure-image
 	$(GATES) ratchet $(CHANGE_ARG) $(BASE_ARG)
+
+adopt: ensure-image
+	$(GATES) adopt $(CHANGE_ARG) $(BASE_ARG) $(FROM_ARG)
 
 
 lint: ensure-image
