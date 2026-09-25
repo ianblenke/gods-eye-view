@@ -37,9 +37,9 @@ For each test below, run the named mutation, and report the test that fails in `
 
 ## 4. Gates and review
 
-- [ ] 4.1 Run `make adopt CHANGE=upstream-sync FROM=b210ab0fe4d71c7faa0268134e0aa5f3c53fc7fe`.
-- [ ] 4.2 Run the command `waive` for each file that the command `adopt` did not adopt, if there is one.
-- [ ] 4.3 Run `make ratchet CHANGE=upstream-sync`.
+- [x] 4.1 Run `make adopt CHANGE=upstream-sync FROM=b210ab0fe4d71c7faa0268134e0aa5f3c53fc7fe`.
+- [x] 4.2 Run the command `waive` for each file that the command `adopt` did not adopt, if there is one.
+- [x] 4.3 Run `make ratchet CHANGE=upstream-sync`.
 - [ ] 4.4 Run `make lint`, and correct each STE error.
 - [ ] 4.5 Run `make gates CHANGE=upstream-sync`. The only errors must be review errors.
 - [ ] 4.6 Run the review with `/opsx:review upstream-sync` and write `review.md`.
