@@ -85,7 +85,7 @@ A video datastream gets no live stream and no poll. It does not count toward the
 
 `index.html` gets one panel element with two hosts. `style.css` docks the panel left of the right rail and right of the left stack. On a window narrower than 1060px the panel can cover the edge of an open left panel. The world overlay treats the panel as an occluder: it places each label or card clear of the panel when it can.
 
-Tests check the ids of the elements in `index.html`, which elements are inside `osh-panel`, the rule for `hidden` in `style.css`, and the occluder selector. No test checks the position of the panel on the page. A person examines the panel in a browser and reports the status and the picture.
+Tests check the ids, the attribute `hidden`, the class `osh-panel` and the elements inside `osh-panel` in `index.html`. Tests also check the rule for `hidden` in `style.css`, the occluder selector, and the placement of a label clear of the panel. No test checks the position of the panel on the page. A person examines the panel in a browser and reports the status and the picture.
 
 ### D80 How the gates measure this change
 
