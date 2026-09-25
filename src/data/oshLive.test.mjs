@@ -1200,7 +1200,7 @@ test('[osh-091] a good request to the video route opens one socket for the wss v
   assert.equal(socket.binaryType, 'arraybuffer');
 });
 
-test('[osh-091] the socket of the video route writes no message frame', async (t) => {
+test('[osh-091] the provider writes no message frame to the socket of the video route', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
@@ -1324,7 +1324,7 @@ test('[osh-078] the video route builds the URL with videoUrl() and checks it wit
   );
 });
 
-test('[osh-079] a good video message gives one frame event with the base64 text of the whole message, for each client', async (t) => {
+test('[osh-079] a valid video message gives one frame event with the base64 text of the whole message, for each client', async (t) => {
   const { rig, client, socket } = openVideoRig(t);
   const second = fakeClient();
   rig.hub.join(DS, videoStreamOf(), second);
@@ -1355,7 +1355,7 @@ test('[osh-079] each later message gives its own frame event, in the order of ar
   assert.equal(new Set(client.chunks).size, 4, 'each event has its own text');
 });
 
-test('[osh-079] a message of exactly 12 bytes with a length field of zero is a good message', async (t) => {
+test('[osh-079] a message of exactly 12 bytes with a length field of zero is a valid message', async (t) => {
   const { client, socket } = openVideoRig(t);
   const empty = videoMessage([], { at: 4 });
   assert.equal(empty.byteLength, 12);
@@ -1424,7 +1424,7 @@ test('[osh-079] a message of more than 2097152 bytes closes the socket, and the 
   }
 });
 
-test('[osh-079] a message of exactly 2097152 bytes is a good message, and the socket stays open', async (t) => {
+test('[osh-079] a message of exactly 2097152 bytes is a valid message, and the socket stays open', async (t) => {
   const { client, socket } = openVideoRig(t);
   const message = keyMessage({ at: 1, size: OSH_VIDEO_MAX_MESSAGE_BYTES });
   socket.emit('message', messageOf(message));
@@ -1433,7 +1433,7 @@ test('[osh-079] a message of exactly 2097152 bytes is a good message, and the so
   assert.equal(client.ended, 0);
 });
 
-test('[osh-079] the hub refuses the video route for that datastream for ten minutes after a message that is too large', async (t) => {
+test('[osh-079] after a message that is too large, the hub refuses the video route for the datastream of that message for ten minutes', async (t) => {
   const { rig, client, joined, socket } = openVideoRig(t);
   socket.emit('message', messageOf(new Uint8Array(OSH_VIDEO_MAX_MESSAGE_BYTES + 1)));
   joined.leave();
@@ -2145,7 +2145,7 @@ async function until(check, ms) {
   return check();
 }
 
-test('[osh-090] a real HTTP client that does not read loses its response, and a client that reads keeps its events', async (t) => {
+test('[osh-090] the provider destroys the response of a real HTTP client that does not read, and a client that reads keeps its events', async (t) => {
   const rig = makeRig();
   t.after(() => rig.hub.close());
   const proxy = oshProxy({ env: KEYED, fetchImpl: upstreamFetch(), liveHub: rig.hub });
@@ -2176,13 +2176,17 @@ test('[osh-090] a real HTTP client that does not read loses its response, and a 
   lagging.write(`GET /api/osh/video?datastream=${DS} HTTP/1.1\r\nHost: localhost\r\nX-Client: lagging\r\n\r\n`);
   let steadyFrames = 0;
   let steadyOpen = false;
+  // A read can end inside the text `event: frame`, so each read keeps the last characters of the one before.
+  let carry = '';
   const steady = http.get(
     { host: '127.0.0.1', port, path: `/api/osh/video?datastream=${DS}`, headers: { 'X-Client': 'steady' }, agent: false },
     (response) => {
       response.setEncoding('utf8');
       response.on('data', (chunk) => {
-        steadyOpen ||= chunk.includes('event: open');
-        steadyFrames += chunk.split('event: frame').length - 1;
+        const text = carry + chunk;
+        steadyOpen ||= text.includes('event: open');
+        steadyFrames += text.split('event: frame').length - 1;
+        carry = text.slice(-'event: frame'.length + 1);
       });
       response.on('error', () => {});
     },
@@ -2199,7 +2203,7 @@ test('[osh-090] a real HTTP client that does not read loses its response, and a 
     socket.emit('message', messageOf(keyMessage({ at: written, size: 2_000_000 })));
     await new Promise((resolve) => setImmediate(resolve));
   }
-  assert.ok(await until(() => closed.includes('lagging'), 3000), `the response of the client that does not read ends after ${written} messages`);
+  assert.ok(await until(() => closed.includes('lagging'), 3000), `the response of the client that does not read is destroyed after ${written} messages`);
   assert.equal(closed.includes('steady'), false);
   assert.ok(await until(() => steadyFrames === written, 5000), 'the client that reads got each message');
   socket.emit('message', messageOf(keyMessage({ at: written + 1, size: 2_000_000 })));
@@ -2215,14 +2219,27 @@ test('[osh-079] a text message of more than 2097152 characters gives no event, a
   assert.equal(client.ended, 0);
 });
 
-test('[osh-080] a video client gets the event down when the socket closes, and the event open after the retry delay', async (t) => {
+test('[osh-080] each video client gets the event down when the socket closes, and the event open when the new socket opens after each delay', async (t) => {
   const { rig, client, socket } = openVideoRig(t);
+  const other = fakeClient();
+  rig.hub.join(DS, videoStreamOf(), other);
+  const down = 'event: down\ndata: {}\n\n';
   socket.emit('close', { code: 1006 });
-  assert.equal(client.chunks.at(-1), 'event: down\ndata: {}\n\n');
+  assert.equal(client.chunks.at(-1), down);
+  assert.equal(other.chunks.at(-1), down);
   rig.timers.advance(999);
   assert.equal(rig.sockets.instances.length, 1, 'the hub waits for the delay of one second');
   rig.timers.advance(1);
   assert.equal(rig.sockets.instances.length, 2);
-  rig.sockets.instances[1].emit('open');
+  const second = rig.sockets.instances[1];
+  second.emit('open');
+  assert.equal(client.chunks.at(-1), OPEN_TEXT);
+  assert.equal(other.chunks.at(-1), OPEN_TEXT);
+  second.emit('close', { code: 1006 });
+  rig.timers.advance(1999);
+  assert.equal(rig.sockets.instances.length, 2, 'the hub waits for the delay of two seconds');
+  rig.timers.advance(1);
+  assert.equal(rig.sockets.instances.length, 3);
+  rig.sockets.instances[2].emit('open');
   assert.equal(client.chunks.at(-1), OPEN_TEXT);
 });

@@ -417,7 +417,7 @@ test('[osh-084] after a decoder error the next key message makes a new decoder, 
   assert.deepEqual(statuses, ['waiting', 'live', 'error', 'waiting', 'live']);
 });
 
-test('[osh-084] a decoder error resets the player when the decoder fails to close', () => {
+test('[osh-084] after a decoder error the player resets, also when the decoder fails to close', () => {
   const { player, statuses, decoders, decoder } = startedPlayer();
   decoder.closeThrows = true;
   decoder.init.error(new Error('the decoder failed'));

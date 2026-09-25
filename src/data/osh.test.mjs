@@ -208,11 +208,12 @@ test('[osh-089] the default layer looks for the panel elements in the page and f
   assert.match(elements['osh-panel-detail'].innerHTML, /System A/, 'the detail element holds the detail');
 });
 
-test('[osh-094] index.html has one element osh-panel, hidden at the start, with one host of the video and one host of the detail inside it', () => {
+test('[osh-094] index.html has one element osh-panel, hidden at the start, and one video host and one detail host inside that element', () => {
   const html = readFileSync(new URL('../../index.html', import.meta.url), 'utf8');
   const opening = /<aside\b[^>]*\bid="osh-panel"[^>]*>/.exec(html);
   assert.ok(opening, 'the page has the element osh-panel');
   assert.match(opening[0], /\shidden[\s>]/, 'the panel is hidden until the layer shows it');
+  assert.match(opening[0], /\sclass="[^"]*\bosh-panel\b/, 'the panel has the class of its style');
   const inside = html.slice(opening.index + opening[0].length, html.indexOf('</aside>', opening.index));
   for (const id of ['osh-panel-video', 'osh-panel-detail']) {
     assert.equal(html.split(`id="${id}"`).length - 1, 1, `the page has one element ${id}`);
@@ -222,7 +223,8 @@ test('[osh-094] index.html has one element osh-panel, hidden at the start, with 
 });
 
 test('[osh-094] the stylesheet gives the panel with the attribute hidden the display none', () => {
-  const css = readStylesheet(new URL('../../style.css', import.meta.url));
+  // A comment must not satisfy the check, so the comments go first.
+  const css = readStylesheet(new URL('../../style.css', import.meta.url)).replace(/\/\*[\s\S]*?\*\//g, '');
   assert.match(css, /\.osh-panel\[hidden\]\s*\{[^}]*display:\s*none/);
 });
 

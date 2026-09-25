@@ -45,7 +45,7 @@ A video client gets the events `open`, `down` and `unsupported`, as a live clien
 
 The hub ignores four kinds of message. The first kind is a text message. The second kind has less than 12 bytes. The third kind has a wrong length field. The fourth kind has a time stamp that is not a finite number. The length field is right when it equals the size minus 12.
 
-A message of more than 2097152 bytes closes the socket. The clients get `unsupported`, and the provider refuses the video route for that datastream for ten minutes, as it does for a live stream. The limit is larger than the limit of the live route, because a key message is larger than an observation.
+A binary message of more than 2097152 bytes closes the socket. The clients get `unsupported`, and the provider refuses the video route for that datastream for ten minutes, as it does for a live stream. The limit is larger than the limit of the live route, because a key message is larger than an observation.
 
 ### D75 The message group for a late client
 
@@ -67,7 +67,7 @@ The player converts each message to one sample. Each slice has its length in fou
 
 The decoder calls back with a decoded frame. The player sets the size of the canvas, draws the frame, closes it, and reports the status `live`. When the decoder queue holds more than eight chunks, the player ignores each delta message until the next key message. A later delta message would refer to a delta message that the decoder never got.
 
-A new SPS starts a new configuration. After a decoder error the player reports the status `error` and then `waiting`. It resets the decoder and waits for a key message. An exception from `configure`, from `decode` or from the constructor of the decoder is a decoder error too.
+A key message with a PPS and a new SPS starts a new configuration. After a decoder error the player reports the status `error` and then `waiting`. It resets the decoder and waits for a key message. An exception from `configure`, from `decode` or from the constructor of the decoder is a decoder error too.
 
 A page that is not secure has no `VideoDecoder`. The player then decodes nothing and reports the status `unsupported`. The classes are options, so the tests use fakes, and the real decoder runs only in a browser.
 
@@ -83,7 +83,7 @@ A video datastream gets no live stream and no poll. It does not count toward the
 
 ### D79 The page
 
-`index.html` gets one panel element with two hosts. `style.css` docks the panel left of the right rail and right of the left stack. On a window narrower than 1060px the panel can cover the edge of an open left panel. The world overlay treats the panel as an occluder: it hides an entry that lies under the panel.
+`index.html` gets one panel element with two hosts. `style.css` docks the panel left of the right rail and right of the left stack. On a window narrower than 1060px the panel can cover the edge of an open left panel. The world overlay treats the panel as an occluder: it places each label or card clear of the panel when it can.
 
 Tests check the ids of the elements in `index.html`, which elements are inside `osh-panel`, the rule for `hidden` in `style.css`, and the occluder selector. No test checks the position of the panel on the page. A person examines the panel in a browser and reports the status and the picture.
 

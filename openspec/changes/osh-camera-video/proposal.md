@@ -30,7 +30,7 @@ This change adds a panel to the page. The panel shows the detail of the selected
 - New test files: `src/data/oshVideo.test.mjs` and `src/layers/osh/videoPlayer.test.mjs`. The hygiene test pins the number of OSH test files, and the count changes from 15 to 17.
 - No new request method, no request body and no new environment variable. The handshake is a GET request, and the provider sends no message frame.
 - Gaps that this change opens or closes: none. Each new code file must have full coverage.
-- The ratchet records the uncovered branches of `src/data/labelArbiter.js` as 50, and `main` has 52. No file of this change touches it. The count of that file changes between ratchet runs, as the history of `teardown-guard` shows.
+- The ratchet records the uncovered branches of `src/data/labelArbiter.js` as 50, and `main` has 52. No file of this change touches `src/data/labelArbiter.js`. The count of that file changes between ratchet runs, as the history of `teardown-guard` shows.
 
 ## Known limits and later changes
 
@@ -42,10 +42,10 @@ This change adds a panel to the page. The panel shows the detail of the selected
 - `osh-video-live-only`: the panel shows the live stream only. It does not read the history of a datastream.
 - `osh-video-base64`: the messages go through server-sent events as base64 text, which adds about one third to their size.
 - `osh-video-connections`: the video stream uses one more browser connection. With the three live streams of `osh-live-observations`, four of about six connections are in use.
-- `osh-video-no-decode-test`: no Node test decodes real H.264. The tests use a fake decoder. A person ran the real player in a browser on a synthetic clip, and a person examines the real picture in the app.
+- `osh-video-no-decode-test`: no Node test decodes real H.264. The tests use a fake decoder. The real player ran once in a headless browser on a synthetic clip, and no test repeats that run. A person examines the real picture in the app.
 - `osh-video-silent-upstream`: like the live route, the video hub has no timer for a socket that gives no data. The picture stops, and the status stays `live`.
 - `osh-video-stale-after-reconnect`: when the upstream socket closes and opens again, the first messages can be delta messages. The player decodes them with the old state of the decoder until the next key message. The picture can look wrong for a short time.
 - `osh-video-late-burst`: a late client gets its group in one burst. When the group has more than eight delta messages, the player ignores each later delta message. The picture waits for the next key message.
 - `osh-video-status-after-refusal`: when the route answers with the HTTP status 502 or 503, the browser closes the stream and never opens it again. The panel then keeps the status `reconnecting`.
 - `osh-panel-late`: for a system, the panel shows after the layer reads the datastreams of the system for the first time, and not at the click.
-- `osh-panel-layout-unchecked`: no test checks the position of the panel on the page. A person checks the style by eye. Tests check only the ids, the rule for `hidden` and the occluder selector.
+- `osh-panel-layout-unchecked`: no test checks the position of the panel on the page. A person checks the style by eye. Tests check the ids, the attribute `hidden`, which elements are inside `osh-panel`, the rule for `hidden`, and the occluder selector.

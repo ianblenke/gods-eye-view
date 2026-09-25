@@ -44,7 +44,7 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - Cover `[osh-079]` with one loopback test that runs the real WebSocket and a message of 70000 bytes.
   - Cover `[osh-080]`: a late client gets `open` and the messages from the last key message on. A key message starts the group again.
   - Cover `[osh-081]`: the live route and the video route of one id have two entries and two sockets.
-  - Cover `[osh-080]`: a video client gets `down` when the socket closes, and `open` after the retry delay.
+  - Cover `[osh-080]`: each video client gets `down` when the socket closes, and `open` when the new socket opens after the delays.
   - Cover `[osh-090]`: the provider destroys the response of a client with more than 8388608 unwritten bytes. The other clients keep their responses.
   - Cover `[osh-090]` with one real HTTP client that does not read, and one that reads.
 - [x] 4.3 Change the test `[osh-005]` in `src/data/oshProxy.test.mjs` for six files.
@@ -52,7 +52,7 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 - [x] 4.5 Add `videoUrl()` and `assertVideoUrl()` to `server/providers/osh/ids.js` until 4.1 passes.
 - [x] 4.6 Give the hub of `server/providers/osh/live.js` a video kind until 4.2 passes.
 - [x] 4.7 Add the route `/api/osh/video` to `server/providers/osh.js` with the checks of `osh-077`.
-- [x] 4.8 Destroy the response of a client when it has more than 8388608 unwritten bytes, in `server/providers/osh.js`.
+- [x] 4.8 Destroy a response that has more than 8388608 unwritten bytes, in `server/providers/osh.js`.
 - [x] 4.9 Run each mutation below on the server.
   - V1: skip the bad-id check on the video route. `[osh-077]` fails.
   - V2: let a request with no key open a socket on the video route. `[osh-077]` fails.
@@ -70,7 +70,7 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - V14: give the video entry and the live entry of one id the same key. `[osh-081]` fails.
   - V15: write an event `observation` to a client of the video route. `[osh-081]` fails.
   - V16: remove the check of the unwritten bytes of a client. `[osh-090]` fails.
-  - V17: destroy the response of a client at exactly 8388608 unwritten bytes. `[osh-090]` fails.
+  - V17: destroy the response at exactly 8388608 unwritten bytes. `[osh-090]` fails.
   - V18: check the bytes and do not destroy the response. `[osh-090]` fails.
   - V19: write the message after the provider destroys the response. `[osh-090]` fails.
   - V20: change the limit to another value. `[osh-090]` fails.
@@ -78,6 +78,7 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - V22: cut the size limit of a video message to 65536 bytes. `[osh-079]` fails.
   - V23: close the socket for a text message of more than 2097152 characters. `[osh-079]` fails.
   - V24: skip the event `down` for a video client. `[osh-080]` fails.
+  - V25: give the second retry delay of the video entry the value of one second. `[osh-080]` fails.
   - A mutation that no test fails is a finding: add a test that fails for it.
 
 ## 5. The browser player
@@ -87,8 +88,10 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 - [x] 5.3 Write the tests of `osh-084` and `osh-085` in the new file `src/layers/osh/videoPlayer.test.mjs`.
   - Use a fake `VideoDecoder`, a fake `EncodedVideoChunk` and a fake canvas. No test decodes real H.264.
   - Cover how the player waits for a key message, calls `configure`, and sets the chunk types and the time stamps.
-  - Cover how the player draws and closes each frame, and how it ignores delta messages while the decoder queue is long.
-  - Cover how the player configures again for a new SPS, resets after an error, and works on a page with no decoder class.
+  - Cover how the player draws and closes each frame.
+  - Cover the ignored delta messages: a queue of more than eight chunks starts them, and the next key message ends them.
+  - Cover how the player configures again for a new SPS and resets after an error.
+  - Cover the status `unsupported` on a page with no decoder class.
 - [x] 5.4 Write `src/layers/osh/videoPlayer.js` with `createVideoPlayer()` until 5.3 passes.
 - [x] 5.5 Run each mutation below on the source and the player.
   - P1: decode a delta message before the first key message. `[osh-084]` fails.
@@ -96,7 +99,7 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - P3: give every chunk the type key. `[osh-084]` fails.
   - P4: use milliseconds for the time stamp. `[osh-084]` fails.
   - P5: draw a decoded frame and not close it. `[osh-084]` fails.
-  - P6: never ignore a delta message while the decoder queue is long. `[osh-084]` fails.
+  - P6: never ignore a delta message when the decoder queue holds more than eight chunks. `[osh-084]` fails.
   - P7: never configure again for a new SPS. `[osh-084]` fails.
   - P8: do not reset the decoder after a decoder error. `[osh-084]` fails.
   - P9: use `VideoDecoder` without a check. `[osh-085]` fails.
@@ -136,12 +139,12 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
 
 ## 7. The page
 
-- [x] 7.1 Add the panel element and its two hosts to `index.html`.
-- [x] 7.2 Add the style of the panel to `style.css`.
+- [x] 7.1 Write the `[osh-094]` tests of `index.html` and `style.css` in `src/data/osh.test.mjs`.
+- [x] 7.2 Add the panel element and its two hosts to `index.html`.
+- [x] 7.3 Add the style of the panel to `style.css`.
   - The panel must not cover another panel on a window of 1060px or more.
-- [x] 7.3 Add `#osh-panel` to the occluders in `src/overlays/worldOverlay.js`.
-- [x] 7.4 Write the `[osh-094]` tests of `index.html` and `style.css` in `src/data/osh.test.mjs`.
-- [x] 7.5 Run each mutation below on the page.
+- [x] 7.4 Add `#osh-panel` to the occluders in `src/overlays/worldOverlay.js`.
+- [x] 7.5 Run each mutation below on the page and the world overlay.
   - L15: remove the attribute `hidden` from the panel in `index.html`. `[osh-094]` fails.
   - L16: rename the video host in `index.html`. `[osh-094]` fails.
   - L17: put the detail host outside the panel in `index.html`. `[osh-094]` fails.
@@ -149,13 +152,15 @@ Use only synthetic ids and bytes. No test calls a real server. Do not rename a t
   - L19: remove `#osh-panel` from the occluders of the world overlay. `[osh-093]` fails.
   - L20: remove the rule `.osh-panel[hidden]` from `style.css`. `[osh-094]` fails.
   - L21: give the rule `.osh-panel[hidden]` the display `block`. `[osh-094]` fails.
+  - L22: remove the class `osh-panel` from the panel in `index.html`. `[osh-094]` fails.
+  - L23: replace the rule `.osh-panel[hidden]` with a comment. `[osh-094]` fails.
   - A mutation that no test fails is a finding: add a test that fails for it.
 - [ ] 7.6 Run the app, select a camera, and report what the panel shows.
 
 ## 8. Gates and review
 
-- [x] 8.1 Run `make lint` until no STE error remains.
-- [x] 8.2 Run `make ratchet CHANGE=osh-camera-video`.
+- [ ] 8.1 Run `make lint` until no STE error remains.
+- [ ] 8.2 Run `make ratchet CHANGE=osh-camera-video`.
 - [ ] 8.3 Run `make gates CHANGE=osh-camera-video`.
 - [ ] 8.4 Confirm that each changed code file has full coverage.
 - [ ] 8.5 Run `npm run format:check` and `npm run check:boundaries`.
