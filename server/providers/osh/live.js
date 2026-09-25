@@ -30,11 +30,11 @@ export const OSH_LIVE_MAX_SOCKETS = 8;
 export const OSH_LIVE_MAX_CLIENTS = 16;
 /** A frame over this many bytes is not an observation. It is a video frame. */
 export const OSH_LIVE_MAX_FRAME_BYTES = 65_536;
-/** A video message over this many bytes closes the socket. A key picture is larger than an observation. */
+/** A video message over this many bytes closes the socket. A key message is larger than an observation. */
 export const OSH_VIDEO_MAX_MESSAGE_BYTES = 2_097_152;
 /** The messages from the last key message on stay only while they total at most this many bytes. */
 export const OSH_VIDEO_MAX_GROUP_BYTES = 2_097_152;
-/** A client that has this many bytes not yet written has stopped reading. The route ends its response. */
+/** A client whose response has more than this many bytes not yet written does not read. The route destroys that response. */
 export const OSH_LIVE_MAX_CLIENT_BUFFER_BYTES = 8_388_608;
 /** The upstream socket stays this long after the last client leaves. */
 export const OSH_LIVE_IDLE_MS = 2_000;

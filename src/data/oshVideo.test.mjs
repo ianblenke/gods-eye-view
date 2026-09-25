@@ -40,7 +40,7 @@ function message(data, { seconds = 1_790_000_000.25, length = data.length } = {}
   return bytes;
 }
 
-test('[osh-083] the reader returns the time stamp in milliseconds and the H.264 data of a good message', () => {
+test('[osh-083] the helper returns the time stamp in milliseconds and the H.264 data of a good message', () => {
   const data = annexB([SPS, PPS, IDR]);
   const read = readOshVideoMessage(message(data));
   assert.equal(read.timestampMs, 1_790_000_000_250);
@@ -49,7 +49,7 @@ test('[osh-083] the reader returns the time stamp in milliseconds and the H.264 
   assert.equal(empty.data.length, 0);
 });
 
-test('[osh-083] the reader gives null for a message with a wrong length field, a short message or a time stamp that is not a finite number', () => {
+test('[osh-083] the helper gives null for a message with a wrong length field, a short message or a time stamp that is not a finite number', () => {
   const data = annexB([IDR]);
   assert.equal(readOshVideoMessage(message(data, { length: data.length + 1 })), null);
   assert.equal(readOshVideoMessage(message(data, { length: data.length - 1 })), null);
@@ -60,7 +60,7 @@ test('[osh-083] the reader gives null for a message with a wrong length field, a
   assert.equal(readOshVideoMessage(message(data, { seconds: Number.POSITIVE_INFINITY })), null);
 });
 
-test('[osh-083] the reader reads a message that is a part of a larger buffer', () => {
+test('[osh-083] the helper reads a message that is a part of a larger buffer', () => {
   const data = annexB([DELTA]);
   const whole = message(data);
   const padded = new Uint8Array(whole.length + 10);
@@ -70,7 +70,7 @@ test('[osh-083] the reader reads a message that is a part of a larger buffer', (
   assert.deepEqual([...read.data], [...data]);
 });
 
-test('[osh-083] the splitter cuts H.264 data at a start code of three bytes and at a start code of four bytes', () => {
+test('[osh-083] the helper cuts H.264 data at a start code of three bytes and at a start code of four bytes', () => {
   for (const start of [START4, START3]) {
     const units = splitNalUnits(annexB([SPS, PPS, IDR], start));
     assert.deepEqual(units.map((unit) => [...unit]), [[...SPS], [...PPS], [...IDR]], `start code of ${start.length} bytes`);
@@ -79,7 +79,7 @@ test('[osh-083] the splitter cuts H.264 data at a start code of three bytes and 
   assert.deepEqual(splitNalUnits(mixed).map((unit) => [...unit]), [[...SPS], [...PPS], [...IDR]]);
 });
 
-test('[osh-083] the splitter removes the zero bytes before the next start code and ignores bytes before the first one', () => {
+test('[osh-083] the helper removes the zero bytes before the next start code and ignores bytes before the first one', () => {
   const data = Uint8Array.from([9, 9, ...START4, ...IDR, 0, 0, ...START4, ...DELTA, 0]);
   const units = splitNalUnits(data);
   assert.deepEqual(units.map((unit) => [...unit]), [[...IDR], [...DELTA]]);
@@ -135,7 +135,7 @@ test('[osh-083] the codec string is avc1 and the three bytes after the NAL heade
   assert.equal(codecStringOf(Uint8Array.from([0x67, 0x64, 0x00, 0x28])), 'avc1.640028');
 });
 
-test('[osh-083] the avcC record has the version byte, the profile bytes, the SPS with its length and the PPS with its length', () => {
+test('[osh-083] the avcC record has the exact bytes for an SPS and a PPS', () => {
   const config = buildAvcConfig(SPS, PPS);
   assert.deepEqual(
     [...config],
@@ -162,7 +162,7 @@ test('[osh-083] the sample holds the slice NAL units only, each with its length 
   assert.equal(bigSample.length, 70_004);
 });
 
-test('[osh-083] the sample leaves out a NAL unit of type 0 and an empty NAL unit', () => {
+test('[osh-083] the sample has no NAL unit of type 0 and no empty NAL unit, and it is null when no slice is left', () => {
   const zero = Uint8Array.from([0x00, 0x11]);
   assert.deepEqual([...toAvccSample([zero, new Uint8Array(0), IDR])], [0, 0, 0, 5, ...IDR]);
   assert.equal(toAvccSample([zero, new Uint8Array(0)]), null);

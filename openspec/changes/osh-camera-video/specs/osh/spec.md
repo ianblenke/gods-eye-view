@@ -71,12 +71,19 @@ Origin: spec-first
 - **AND** in each of these three cases the provider opens no upstream socket
 
 #### Scenario: Answer a good request to the video route as the live route does `osh-091`
-- **WHEN** a client requests `/api/osh/video?datastream=<id>` with a key set and a good id
+- **WHEN** a client requests `/api/osh/video?datastream=<id>` with a key set, a good id and a root that answers
 - **THEN** the provider writes the response head of the live route, and it opens one upstream socket for the video URL
-- **AND** the socket has the header `Authorization` only when both credentials are set, and its option `binaryType` is `arraybuffer`
+- **AND** the socket has the header `Authorization` only when both credentials are set
+- **AND** the property `binaryType` of the socket is `arraybuffer`, and the provider writes no message frame to the socket
 - **AND** the provider reads no schema, and every request that it makes to the server is a GET
-- **AND** the answer is `502` with the error code of the root when no root answers, and `503` with `{error:'live_busy'}` when eight datastreams are open
-- **AND** the hub removes the client when its connection closes, and it opens no socket for a client that has already left
+- **AND** the hub removes the client when its connection closes
+- **AND** the provider opens no socket when the client has left before the root loads
+
+#### Scenario: Refuse the video route when no root answers or the hub is full `osh-092`
+- **WHEN** a client requests `/api/osh/video?datastream=<id>` with a key set and a good id
+- **THEN** the answer is `502` with `{error:'auth_failed'}` or `{error:'base_unresolved'}`, as `osh-012` says, when no root answers
+- **AND** the answer is `503` with `{error:'live_busy'}` for a ninth datastream, as `osh-068` says
+- **AND** in both cases the provider opens no upstream socket
 
 #### Scenario: Build the video URL to its fixed shape `osh-078`
 - **WHEN** the provider builds the video URL for a datastream id and a resolved root
@@ -88,17 +95,17 @@ Origin: spec-first
 
 #### Scenario: Relay each video message as a frame event `osh-079`
 - **WHEN** the upstream socket delivers a message
-- **THEN** the client receives one event `frame` for each good message
+- **THEN** each client of the entry receives one event `frame` for each good message
 - **AND** a good message is binary, and it has 12 to 2097152 bytes
-- **AND** a good message has a length field that equals its size minus 12, and a time stamp that is a finite number
+- **AND** a good message has a length field equal to its size minus 12, and a finite time stamp
 - **AND** the data of the event is the base64 text of the whole message, as one JSON string
-- **AND** a text message gives no event
+- **AND** a text message of any size gives no event
 - **AND** a message of less than 12 bytes gives no event
 - **AND** a message whose length field does not equal its size minus 12 gives no event
 - **AND** a message whose time stamp is not a finite number gives no event
-- **AND** a message of more than 2097152 bytes closes the upstream socket, and the client receives the event `unsupported`
+- **AND** a binary message of more than 2097152 bytes closes the upstream socket, and each client receives the event `unsupported`
 - **AND** the provider ends the response of each client of the video entry
-- **AND** for ten minutes the video route for that datastream answers `503` with `{error:'live_unsupported'}`
+- **AND** after that message, the video route for that datastream answers `503` with `{error:'live_unsupported'}` for ten minutes
 
 #### Scenario: Replay the current message group to a late client `osh-080`
 - **WHEN** a client joins a video stream that has already relayed messages
@@ -107,20 +114,23 @@ Origin: spec-first
 - **AND** a message is a key message when its H.264 data has a NAL unit of type 5
 - **AND** the hub starts the group again at each key message, and it empties the group when the upstream socket closes or fails
 - **AND** the hub empties a group of more than 2097152 bytes, and it keeps no group until the next key message
+- **AND** when the upstream socket closes or fails, each client receives the event `down`
+- **AND** the hub opens the socket again after one second, and then after longer delays, as it does for a live entry
+- **AND** each client receives the event `open` when the new socket opens
 
 #### Scenario: Keep the video stream apart from the live stream `osh-081`
 - **WHEN** clients open the live route and the video route for one datastream id
 - **THEN** the hub has two entries and opens two upstream sockets, one for each URL
 - **AND** each entry counts toward the limit of eight datastreams
 - **AND** a client of the video route gets no event `observation`, and a client of the live route gets no event `frame`
-- **AND** a refusal or a close of one entry leaves the other entry of the same id open
+- **AND** the other entry of the same id stays open when the hub refuses or closes one entry
 
-#### Scenario: End a client that does not read `osh-090`
+#### Scenario: Destroy the response of a client that does not read `osh-090`
 - **WHEN** the hub writes to a client of the live route or the video route
 - **AND** the response of that client has more than 8388608 bytes not yet written
-- **THEN** the provider destroys the response of that client, and the hub removes it
+- **THEN** the provider destroys the response of that client, and the hub removes that client
 - **AND** the other clients of the entry keep their events, and the upstream socket stays open
-- **AND** a client that has exactly 8388608 bytes not yet written, or fewer, keeps its response
+- **AND** a client whose response has exactly 8388608 bytes not yet written, or fewer, keeps its response
 
 ### Requirement: Video player
 The browser MUST decode the video messages of one camera onto a canvas, and MUST show a status when it cannot decode them.
@@ -137,8 +147,7 @@ Origin: spec-first
 #### Scenario: Read the parts of a video message `osh-083`
 - **WHEN** `src/data/oshVideo.js`, the helper, gets the bytes of a video message
 - **THEN** it returns the time stamp in milliseconds and the H.264 data of a good message
-- **AND** a message is good when it has at least 12 bytes and its time stamp is a finite number
-- **AND** the length field of a good message equals its size minus 12
+- **AND** a good message has 12 bytes or more, a length field equal to its size minus 12, and a finite time stamp
 - **AND** it returns null for every other message
 - **AND** the time stamp in the message is a double in seconds, and the length field has four bytes, most significant byte first
 - **AND** it splits the H.264 data into NAL units at each start code of three or four bytes
@@ -152,13 +161,14 @@ Origin: spec-first
 - **THEN** it decodes nothing until a key message with an SPS and a PPS arrives
 - **AND** it reports the status `waiting` until then
 - **AND** it configures the decoder with the codec string and the `avcC` record of that key message
-- **AND** it decodes each message from that key message on, as a key chunk or a delta chunk
-- **AND** the time stamp of a chunk is in microseconds after the time stamp of the first decoded message
-- **AND** it sets the size of the canvas from a decoded frame, and it draws the frame on the canvas
-- **AND** it closes the frame, and it reports the status `live` at the first drawn frame
-- **AND** it closes the frame also when the draw throws
+- **AND** it ignores a message that is not good, and a message that has no slice NAL unit
+- **AND** it decodes each other message from that key message on, as a key chunk or a delta chunk
+- **AND** the time stamp of a chunk is in microseconds after the time stamp of the first decoded message, in whole microseconds
+- **AND** it sets the size of the canvas at the first decoded frame and whenever the size of a frame changes
+- **AND** it draws each decoded frame on the canvas, and it closes the frame also when the draw fails
+- **AND** it reports the status `live` at the first drawn frame after each start or reset
 - **AND** when the decoder queue holds more than eight chunks, it ignores each delta message until the next key message
-- **AND** it configures the decoder again when the SPS changes
+- **AND** it configures the decoder again when a key message has a PPS and an SPS that is not the SPS of the decoder
 - **AND** after a decoder error it reports the status `error` and then `waiting`, resets the decoder, and waits for a key message
 - **AND** it treats an exception from `configure` or `decode`, or from the constructor of the decoder, as a decoder error
 
@@ -174,16 +184,18 @@ Origin: spec-first
 - **WHEN** the user selects a system or a feature, and later selects nothing
 - **THEN** the layer shows the panel host while it has a detail for the selection, and the detail host has that detail
 - **AND** the layer hides the panel host and empties the detail host when the selection ends
-- **AND** the world overlay treats the panel host as an occluder
 
 #### Scenario: Play the video of the selected system `osh-087`
 - **WHEN** the datastreams of the selected system have a datastream with `video: true`
 - **THEN** the layer starts one video stream for the first such datastream, and it creates one video view and one player
 - **AND** the layer passes each message of the stream to the player
 - **AND** the view shows the name of the datastream, or its id when it has no name, and the status of the player
+- **AND** the view shows the title `Video` when it gets no name
 - **AND** a new selection, a click on empty space and `destroy()` each close the video stream and the player, and remove the view
 - **AND** the event `down` shows the status `reconnecting`, and the event `unsupported` shows the status `unavailable` and closes the stream
+- **AND** the event `open` shows the last status of the player again
 - **AND** the layer starts no video stream when the player reports the status `unsupported`
+- **AND** the layer starts no video stream when the source has no `openVideo()`, or when the page has no video host
 
 #### Scenario: Show a video datastream in the detail `osh-088`
 - **WHEN** the detail has a datastream with `video: true`
@@ -194,4 +206,15 @@ Origin: spec-first
 - **WHEN** the default layer looks for its hosts in a page
 - **THEN** it uses the elements with the ids `osh-panel`, `osh-panel-detail` and `osh-panel-video`
 - **AND** it uses no host when there is no document, or when the page has no element for an id
-- **AND** `index.html` has the element `osh-panel` with the attribute `hidden`, and the two other elements are inside it
+
+#### Scenario: Treat the panel as an occluder of the world overlay `osh-093`
+- **WHEN** the world overlay reads its list of occluder selectors
+- **THEN** the list has `#osh-panel`, the selector of the panel host
+- **AND** the world overlay hides an entry that lies under an element of the list
+
+#### Scenario: Keep the panel in the page and hidden at the start `osh-094`
+- **WHEN** the page `index.html` and the stylesheet `style.css` are read
+- **THEN** `index.html` has the element `osh-panel` with the attribute `hidden`
+- **AND** the elements `osh-panel-video` and `osh-panel-detail` are inside that element
+- **AND** each of the three ids is on one element only
+- **AND** the stylesheet gives an element with the class `osh-panel` and the attribute `hidden` the display `none`

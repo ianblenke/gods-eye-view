@@ -3533,7 +3533,7 @@ test('[osh-087] the layer starts the video stream once for each selection', asyn
   });
 });
 
-test('[osh-087] each frame of the video stream reaches the player', async (t) => {
+test('[osh-087] each message of the video stream reaches the player', async (t) => {
   const source = fakeSource({ video: true, datastreams: [videoDatastream()] });
   const { layer, parts, viewer } = videoLayer({ source });
   t.after(() => layer.destroy(viewer));
