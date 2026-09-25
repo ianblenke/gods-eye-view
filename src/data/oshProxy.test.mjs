@@ -215,6 +215,8 @@ test('[osh-005] only osh/get.js calls fetch; no other scanned file calls it, nam
     ...discovered,
     ...discoveredData,
     'server/providers/common/http.js',
+    // The body reader lives here since the merge of upstream; common/http.js re-exports it.
+    'src/sources/httpBody.js',
   ];
   const CALL_TOKEN = /\b(?:fetch(?:Impl)?|WebSocket(?:Impl)?)\s*\(/;
   const CALL_TOKEN_GLOBAL = /\bfetch(?:Impl)?\s*\(/g;

@@ -133,7 +133,7 @@ Origin: spec-first
 
 #### Scenario: Keep the panel in the page and hidden at the start `osh-094`
 - **WHEN** a test expands `index.html` with its component templates, as the build does, and reads `style.css` with the files that it imports
-- **THEN** the page has one element with the id `osh-panel` and the attribute `hidden`
+- **THEN** the page has one `aside` element with the id `osh-panel` and the attribute `hidden`
 - **AND** that element has the class `osh-panel`
 - **AND** the elements with the ids `osh-panel-video` and `osh-panel-detail` are inside that element
 - **AND** each of the three ids is on one element only
@@ -142,11 +142,19 @@ Origin: spec-first
 ## ADDED Requirements
 
 ### Requirement: Application catalog
-The application catalog MUST build the OSH systems layer from the production source, with the hosts of the page. It MUST place that layer after the recent-imagery layer.
+The application catalog MUST build the OSH systems layer with the production OSH source and the hosts of the page. It MUST place that layer right after the recent-imagery layer.
 Origin: spec-first
 
 #### Scenario: Build the layer in the application catalog `osh-095`
-- **WHEN** a test builds the application catalog with the standalone layer sources
+- **WHEN** a test builds the application catalog with the standalone layer inputs
 - **THEN** the catalog has one layer with the id `osh-systems`
 - **AND** that layer comes right after the layer `recent-imagery`
 - **AND** the catalog metadata of that layer has the token `3` and the disposition `enabled-only`
+
+#### Scenario: Give the layer the production source and the elements of the page `osh-096`
+- **WHEN** a test builds the application layer in a page that has the elements of the panel
+- **AND** the fetch of the test answers the same-origin routes of the OSH systems
+- **AND** the test clicks the system on the globe
+- **THEN** the layer reads the systems from the route `/api/osh/systems`
+- **AND** the element `osh-panel` shows
+- **AND** the element `osh-panel-detail` holds the name of the system
