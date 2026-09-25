@@ -1072,11 +1072,11 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 529,
-        "branches": 179,
-        "functions": 57
+        "lines": 574,
+        "branches": 199,
+        "functions": 61
       },
-      "sha": "e139d8ecea7cef40e6e19dfbe862465d15a4cc93a86d51722b7ce8a77d85bf32",
+      "sha": "a98e785fe0b96464092e40b409d690ae8f3ee270e48aa41d5378fe4ac8bba9d0",
       "untrue": false,
       "origin": "ledger-waiver",
       "since": "2026-09-22"

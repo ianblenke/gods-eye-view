@@ -612,6 +612,47 @@
   "gap-ledger-088": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-088] allows changed total counts of an unchanged file when the covered count agrees"
   ],
+  "gap-ledger-089": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-089 gap-ledger-091] adopts the gaps of the merged files and gives no error in the ratchet command and in the check",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-089] writes the entries and the history lines of the adopted files"
+  ],
+  "gap-ledger-090": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-090] stops the adopt command for a fault before it runs a test",
+    "src/tooling/spec/git.test.mjs › [gap-ledger-090 gap-ledger-096] finds the merged commits after the base commit and not the first parents or the merge commits before the base commit",
+    "src/tooling/spec/git.test.mjs › [gap-ledger-090] finds the full hash of a commit and no hash for a name that is not a commit"
+  ],
+  "gap-ledger-091": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-089 gap-ledger-091] adopts the gaps of the merged files and gives no error in the ratchet command and in the check",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-091] adopts no gap of a file that the merged commit did not change"
+  ],
+  "gap-ledger-092": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-092] allows a ledger entry that the base does not have for an adopted file"
+  ],
+  "gap-ledger-093": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-093] allows a rise above the base entry up to the adopted count, and not above it"
+  ],
+  "gap-ledger-094": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-094] allows an entry with more untraced tests than the base entry when its number of untraced tests is not above the adopted count"
+  ],
+  "gap-ledger-095": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-095] reads only the adopt lines of the checked change after the base history"
+  ],
+  "gap-ledger-096": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-096 gap-ledger-097] stops the check for an adopt line when its commit is not a merged commit, or when the merged commit did not change its file",
+    "src/tooling/spec/git.test.mjs › [gap-ledger-090 gap-ledger-096] finds the merged commits after the base commit and not the first parents or the merge commits before the base commit",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-096 gap-ledger-097] separates the valid adopt lines from the lines with a wrong commit or a wrong file"
+  ],
+  "gap-ledger-097": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-096 gap-ledger-097] stops the check for an adopt line when its commit is not a merged commit, or when the merged commit did not change its file",
+    "src/tooling/spec/git.test.mjs › [gap-ledger-097] finds the files that a commit changed since its merge base with the base commit",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-096 gap-ledger-097] separates the valid adopt lines from the lines with a wrong commit or a wrong file"
+  ],
+  "gap-ledger-098": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-098] allows untrue coverage of an adopted file"
+  ],
+  "gap-ledger-099": [
+    "src/tooling/spec/ciFiles.test.mjs › [gap-ledger-099] runs the adopt command with make"
+  ],
   "hud-markings-001": [
     "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"
   ],
