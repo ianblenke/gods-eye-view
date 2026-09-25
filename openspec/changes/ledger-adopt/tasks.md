@@ -22,13 +22,14 @@ For each test below, run the named mutation. Report the test that fails in `revi
 
 - [x] 3.1 Write the test for `gap-ledger-089` with `adoptLedger`, one code file and one test file.
   - Mutation 1: write the change name as the origin of an entry that exists. The test must fail.
-  - Mutation 4: keep the closed names of the old entry of a test file. The test must fail.
   - Mutation 2: skip the loop of the test files. The test must fail.
   - Mutation 3: write `null` counts for a code file, or a count for a test file. The test must fail.
+  - Mutation 4: keep the closed names of the old entry of a test file. The test must fail.
 - [x] 3.2 Write the test for `gap-ledger-091` with a file that the merged commit did not change.
   - Mutation: remove the eligible condition from the loop of the code files, then from the loop of the test files. The test must fail for each.
 - [x] 3.3 Write the test for `gap-ledger-095` with `adoptsOf` and one line for each condition.
   - The lines: the base history, another change name, another kind, a negative count, a count that is not whole, and a valid line.
+  - One valid line has no head commit and no date.
   - Mutation: remove one condition at a time. One case must fail for each.
 - [x] 3.4 Write the test for `gap-ledger-096` and `gap-ledger-097` with `checkAdopts`.
   - Mutation 1: give the commit error a wrong code. The test must fail.
@@ -43,9 +44,11 @@ For each test below, run the named mutation. Report the test that fails in `revi
   - Mutation 2: remove it from the branch and function rule. The test must fail.
   - Mutation 3: use the smallest adopted count, and not the largest. The test must fail.
 - [x] 3.7 Write the test for `gap-ledger-094` with more untraced tests in a file that the base has.
+  - The entry keeps one name at its base count.
   - Mutation 1: remove the adopted count from the untraced check. The test must fail.
   - Mutation 2: count the names of the entry, and not its tests. The test must fail.
   - Mutation 3: count the tests above the base entry, and not all tests of the entry. The test must fail.
+  - Mutation 4: count only the tests of the new names and of the names with a higher count. The test must fail.
 - [x] 3.8 Write the test for `gap-ledger-098` with an entry that has untrue coverage.
   - Mutation 1: ignore the mark of the adopt line. The test must fail.
   - Mutation 2: allow untrue coverage of a file with no adopt line. The test must fail.
@@ -73,15 +76,15 @@ For each test below, run the named mutation. Report the test that fails in `revi
   - The fork also adds a file that the branch does not change.
 - [x] 5.2 Write the test for `gap-ledger-089` and `gap-ledger-091` in `gates.test.mjs`.
   - The test runs `adopt`, reads the history lines, runs the ratchet command and runs the check.
+  - The test also compares `ids.json` and `links.json` before and after `adopt`.
   - Mutation 1: write the head commit in the field `from`. The test must fail.
   - Mutation 2: adopt the file that only the fork changed. The test must fail.
-  - The test also compares `ids.json` and `links.json` before and after `adopt`.
-  - Mutation 4: write the links file in the `adopt` command. The test must fail.
   - Mutation 3: remove the stop for an error of the measurement. The test must fail.
+  - Mutation 4: write the links file in the `adopt` command. The test must fail.
 - [x] 5.3 Write the test for `gap-ledger-090` with one case for each fault.
   - The test also compares `gaps.json` after each fault.
-  - Mutation 2: write the ledger file in the code of a fault. The test must fail.
-  - Mutation: remove each entry of the `faults` array, one at a time. The test must fail for each.
+  - Mutation 1: remove each entry of the `faults` array, one at a time. The test must fail for each.
+  - Mutation 2: write the ledger file in the part of the code that handles a fault. The test must fail.
 - [x] 5.4 Write the test for `gap-ledger-096` and `gap-ledger-097` with adopt lines that a person writes by hand.
   - Mutation: do not pass the errors of `checkAdopts` to the report. The test must fail.
 - [x] 5.5 Write the test for `gap-ledger-099` in `ciFiles.test.mjs`, with the text of `Makefile`.

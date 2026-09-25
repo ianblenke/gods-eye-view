@@ -1050,9 +1050,10 @@ test('[gap-ledger-095] reads only the adopt lines of the checked change after th
     ADOPT('src/i.js', { file: 7 }),
     ADOPT('src/j.js', { from: undefined }),
     ADOPT('src/k.js', { change: undefined }),
+    ADOPT('src/l.js', { commit: undefined, date: undefined }),
   );
   const found = adoptsOf(`base\n${text}`, 'base\n', 'sync');
-  assert.deepEqual(found.map((line) => line.file), ['src/a.js', 'src/none.test.mjs']);
+  assert.deepEqual(found.map((line) => line.file), ['src/a.js', 'src/none.test.mjs', 'src/l.js'], 'the gate does not check the head commit and the date of a line');
   assert.deepEqual(found[0], good);
   assert.deepEqual(adoptsOf(text, text, 'sync'), [], 'a line in the base history');
   assert.deepEqual(adoptsOf(`base\n${text}`, 'base\n', undefined), [], 'no change name');
@@ -1135,16 +1136,17 @@ test('[gap-ledger-093] allows a rise above the base entry up to the adopted coun
   assert.deepEqual(codes(run([ADOPT('src/orbit.js', all)], { sameAsBase: () => true })), ['LEDGER-LARGER-THAN-BASE', 'LEDGER-HASH-NOT-BASE', 'LEDGER-MORE-THAN-BASE', 'LEDGER-MORE-THAN-BASE']);
 });
 
-test('[gap-ledger-094] allows more untraced tests than the base entry up to the adopted count', () => {
-  const baseLedger = ledgerWith({ untracedTests: { 'src/a.test.mjs': { one: 1 } } });
-  // The entry has 6 untraced tests in 3 names. The base entry has 1 test. So the rise is 5 tests.
-  const ledger = ledgerWith({ untracedTests: { 'src/a.test.mjs': { one: 3, two: 2, three: 1 } } });
-  const line = ADOPT('src/a.test.mjs', { ...NO_METRICS, untraced: 6 });
+test('[gap-ledger-094] allows an entry with more untraced tests than the base entry when its number of untraced tests is not above the adopted count', () => {
+  const baseLedger = ledgerWith({ untracedTests: { 'src/a.test.mjs': { one: 1, kept: 4 } } });
+  // The entry has 10 untraced tests in 4 names. The base entry has 5 tests. The name `kept` has the base count, so the new tests are 5.
+  const ledger = ledgerWith({ untracedTests: { 'src/a.test.mjs': { one: 3, two: 2, three: 1, kept: 4 } } });
+  const line = ADOPT('src/a.test.mjs', { ...NO_METRICS, untraced: 10 });
   const messages = (lines, sameAsBase) => withAdopted({ ledger, baseLedger, lines, sameAsBase }).map((error) => error.message);
   assert.deepEqual(messages([line]), []);
-  assert.deepEqual(messages([{ ...line, untraced: 2 }, { ...line, untraced: 6 }]), [], 'the largest count');
+  assert.deepEqual(messages([{ ...line, untraced: 2 }, { ...line, untraced: 10 }]), [], 'the largest count');
   const notInBase = ['one', 'two', 'three'].map((name) => `Untraced test "${name}" is not in the base ledger`);
   assert.deepEqual(messages([{ ...line, untraced: 5 }]), notInBase, 'the number of untraced tests of the entry, and not the rise, is the number to compare');
+  assert.deepEqual(messages([{ ...line, untraced: 6 }]), notInBase, 'the tests of the names that have the base count are in the number to compare');
   assert.deepEqual(messages([{ ...line, file: 'src/b.test.mjs' }]), notInBase);
   assert.deepEqual(messages([line], () => true), notInBase);
 });

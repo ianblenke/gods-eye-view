@@ -88,7 +88,7 @@ test('[gap-ledger-090] finds the full hash of a commit and no hash for a name th
   });
 });
 
-test('[gap-ledger-090 gap-ledger-096] finds the merged commits after the base and not the first parents or the older merge commits', () => {
+test('[gap-ledger-090 gap-ledger-096] finds the merged commits after the base commit and not the first parents or the merge commits before the base commit', () => {
   withMerges(({ root, base, upSide, oldSide, workSide }) => {
     const parents = mergeParents(root, base);
     assert.deepEqual([...parents], [upSide]);
