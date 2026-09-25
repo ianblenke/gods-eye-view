@@ -1169,14 +1169,17 @@ test('[gap-ledger-096 gap-ledger-097] stops the check for an adopt line when its
     ledger.coverage['src/own.js'] = { loaded: true, lines: 0, branches: 1, functions: 0, totals: { lines: 4, branches: 2, functions: 1 }, sha: 'x', untrue: false, origin: 'sync', since: '2026-09-13' };
     writeFileSync(ledgerFile, `${JSON.stringify(ledger, null, 2)}\n`);
     const counts = { lines: 0, branches: 1, functions: 0, untraced: 0, untrue: false };
+    // The line for src/merged.js has a commit that is not a merged commit and a negative count, which gap-ledger-095 rejects. It gives no error of its own.
+    const rejected = ADOPT_LINE(root, 'src/merged.js', { ...counts, lines: -1, from: git(root, 'rev-parse', 'main') });
     appendFileSync(
       path.join(root, 'openspec/trace/history.jsonl'),
-      [ADOPT_LINE(root, 'src/math.js', { ...counts, from: git(root, 'rev-parse', 'main') }), ADOPT_LINE(root, 'src/own.js', counts)].map((line) => `${JSON.stringify(line)}\n`).join(''),
+      [ADOPT_LINE(root, 'src/math.js', { ...counts, from: git(root, 'rev-parse', 'main') }), ADOPT_LINE(root, 'src/own.js', counts), rejected].map((line) => `${JSON.stringify(line)}\n`).join(''),
     );
     const check = run(root, ['check', '--change', 'sync']);
     assert.equal(check.status, 1);
     assert.match(check.output, new RegExp(`ERROR LEDGER-ADOPT-FROM src/math\\.js The adopt line for src/math\\.js names the commit ${git(root, 'rev-parse', 'main')}, and no merge commit`));
     assert.match(check.output, /ERROR LEDGER-ADOPT-FILE src\/own\.js The adopt line for src\/own\.js names the commit [0-9a-f]{40}, and that commit did not change src\/own\.js/);
     assert.match(check.output, /ERROR LEDGER-NOT-IN-BASE src\/own\.js The ledger entry for src\/own\.js is not in the base ledger/, 'the line with a file that the commit did not change gives no adopted count');
+    assert.doesNotMatch(check.output, /LEDGER-ADOPT-[A-Z]+ src\/merged\.js/, 'a line that gap-ledger-095 rejects gives no adopt error');
   });
 });

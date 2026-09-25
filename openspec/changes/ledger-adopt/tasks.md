@@ -30,7 +30,8 @@ For each test below, run the named mutation. Report the test that fails in `revi
 - [x] 3.3 Write the test for `gap-ledger-095` with `adoptsOf` and one line for each condition.
   - The lines: the base history, another change name, another kind, a negative count, a count that is not whole, and a valid line.
   - One valid line has no head commit and no date.
-  - Mutation: remove one condition at a time. One case must fail for each.
+  - Mutation 1: remove one condition at a time. One case must fail for each.
+  - Mutation 2: make the head commit, or the date, a condition of a valid line. The test must fail.
 - [x] 3.4 Write the test for `gap-ledger-096` and `gap-ledger-097` with `checkAdopts`.
   - Mutation 1: give the commit error a wrong code. The test must fail.
   - Mutation 2: keep a line with a wrong commit in the valid lines. The test must fail.
@@ -38,7 +39,7 @@ For each test below, run the named mutation. Report the test that fails in `revi
 - [x] 3.5 Write the test for `gap-ledger-092` with `compareWithBase`, a coverage entry and an entry of untraced tests.
   - Mutation 1: remove the adopted count from the check of an entry that the base does not have. The test must fail.
   - Mutation 2: allow a count above the adopted count. The test must fail.
-  - Mutation 3: remove the condition for a file with the base content. The test must fail.
+  - Mutation 3: remove the condition that the content of the file is not equal to its content in the base commit. The test must fail.
 - [x] 3.6 Write the test for `gap-ledger-093` with a rise of the lines, the branches and the functions.
   - Mutation 1: remove the adopted count from the rule for the lines metric. The test must fail.
   - Mutation 2: remove it from the branch and function rule. The test must fail.
