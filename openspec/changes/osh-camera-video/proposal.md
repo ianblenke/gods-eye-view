@@ -30,7 +30,7 @@ This change adds a panel to the page. The panel shows the detail of the selected
 - New test files: `src/data/oshVideo.test.mjs` and `src/layers/osh/videoPlayer.test.mjs`. The hygiene test pins the number of OSH test files, and the count changes from 15 to 17.
 - No new request method, no request body and no new environment variable. The handshake is a GET request, and the provider sends no message frame.
 - Gaps that this change opens or closes: none. Each new code file must have full coverage.
-- The ratchet records the uncovered branches of `src/data/labelArbiter.js` as 50, and `main` has 52. No file of this change touches `src/data/labelArbiter.js`. The count of that file changes between ratchet runs, as the history of `teardown-guard` shows.
+- The ratchet history has lines for `src/data/labelArbiter.js`: its uncovered branches went from 52 to 50 and back to 52 between runs. No file of this change touches it. The history of `teardown-guard` shows the same flips, and the final count equals `main`.
 
 ## Known limits and later changes
 
