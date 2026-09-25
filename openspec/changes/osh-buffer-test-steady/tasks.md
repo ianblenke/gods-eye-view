@@ -12,7 +12,7 @@
 
 ## 2. Gates and review
 
-- [ ] 2.1 Run `make lint` until no STE error remains.
+- [x] 2.1 Run `make lint` until no STE error remains.
 - [ ] 2.2 Run `make gates CHANGE=osh-buffer-test-steady`.
 - [ ] 2.3 Read the command output for the verdict.
 - [ ] 2.4 Run `npm run format:check`.
