@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor openspec/trace/gaps.json:2587 At commit 715b0af5d812969910ac2e9a9bdac0d6e42cc70b, this change raises the uncovered branch count for unchanged `labelArbiter.js` from 50 to 52. Restore the unrelated ledger entry and remove its two new history lines after a stable coverage run.

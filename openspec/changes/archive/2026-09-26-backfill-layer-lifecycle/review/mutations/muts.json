@@ -1,0 +1,102 @@
+[
+ {
+  "id": "001-false-result",
+  "file": "src/data/lifecycle.js",
+  "old": "        if (destroyed === false)\n          throw lifecycleRejectedError(layerId, 'destroy');",
+  "new": "",
+  "test": [
+   "src/data/manager.test.mjs"
+  ],
+  "pattern": "layer-lifecycle-"
+ },
+ {
+  "id": "001-return-value",
+  "file": "src/data/lifecycle.js",
+  "old": "        this._publishActivity({ type: 'status' });\n        return false;\n      }\n    }\n    this.layers.delete(layerId);",
+  "new": "        this._publishActivity({ type: 'status' });\n        return true;\n      }\n    }\n    this.layers.delete(layerId);",
+  "test": [
+   "src/data/manager.test.mjs"
+  ],
+  "pattern": "layer-lifecycle-"
+ },
+ {
+  "id": "001-keep-layer",
+  "file": "src/data/lifecycle.js",
+  "old": "        console.warn(`[Data] ${layerId} destroy error:`, e);",
+  "new": "        console.warn(`[Data] ${layerId} destroy error:`, e);\n        this.layers.delete(layerId);",
+  "test": [
+   "src/data/manager.test.mjs"
+  ],
+  "pattern": "layer-lifecycle-"
+ },
+ {
+  "id": "001-reset-destroying",
+  "file": "src/data/lifecycle.js",
+  "old": "        console.warn(`[Data] ${layerId} destroy error:`, e);\n        entry.destroying = false;",
+  "new": "        console.warn(`[Data] ${layerId} destroy error:`, e);",
+  "test": [
+   "src/data/manager.test.mjs"
+  ],
+  "pattern": "layer-lifecycle-"
+ },
+ {
+  "id": "001-reset-intent",
+  "file": "src/data/lifecycle.js",
+  "old": "        console.warn(`[Data] ${layerId} destroy error:`, e);\n        entry.destroying = false;\n        entry.visibilityIntentEnabled = entry.enabled;\n        this._settleLifecycle(entry);\n        this._publishActivity({ type: 'status' });\n        return false;",
+  "new": "        console.warn(`[Data] ${layerId} destroy error:`, e);\n        entry.destroying = false;\n        this._settleLifecycle(entry);\n        this._publishActivity({ type: 'status' });\n        return false;",
+  "test": [
+   "src/data/manager.test.mjs"
+  ],
+  "pattern": "layer-lifecycle-"
+ },
+ {
+  "id": "001-settle-state",
+  "file": "src/data/lifecycle.js",
+  "old": "        console.warn(`[Data] ${layerId} destroy error:`, e);\n        entry.destroying = false;\n        entry.visibilityIntentEnabled = entry.enabled;\n        this._settleLifecycle(entry);\n        this._publishActivity({ type: 'status' });\n        return false;",
+  "new": "        console.warn(`[Data] ${layerId} destroy error:`, e);\n        entry.destroying = false;\n        entry.visibilityIntentEnabled = entry.enabled;\n        this._publishActivity({ type: 'status' });\n        return false;",
+  "test": [
+   "src/data/manager.test.mjs"
+  ],
+  "pattern": "layer-lifecycle-"
+ },
+ {
+  "id": "001-status-event",
+  "file": "src/data/lifecycle.js",
+  "old": "        console.warn(`[Data] ${layerId} destroy error:`, e);\n        entry.destroying = false;\n        entry.visibilityIntentEnabled = entry.enabled;\n        this._settleLifecycle(entry);\n        this._publishActivity({ type: 'status' });\n        return false;",
+  "new": "        console.warn(`[Data] ${layerId} destroy error:`, e);\n        entry.destroying = false;\n        entry.visibilityIntentEnabled = entry.enabled;\n        this._settleLifecycle(entry);\n        return false;",
+  "test": [
+   "src/data/manager.test.mjs"
+  ],
+  "pattern": "layer-lifecycle-"
+ },
+ {
+  "id": "002-catch",
+  "file": "src/data/lifecycle.js",
+  "old": "      try {\n        callback(change);\n      } catch (error) {\n        console.warn('[Data] activity listener error:', error);\n      }",
+  "new": "      callback(change);",
+  "test": [
+   "src/data/manager.test.mjs"
+  ],
+  "pattern": "layer-lifecycle-"
+ },
+ {
+  "id": "002-warning",
+  "file": "src/data/lifecycle.js",
+  "old": "console.warn('[Data] activity listener error:', error);",
+  "new": "console.warn('[Data] listener error:', error);",
+  "test": [
+   "src/data/manager.test.mjs"
+  ],
+  "pattern": "layer-lifecycle-"
+ },
+ {
+  "id": "002-copy",
+  "file": "src/data/lifecycle.js",
+  "old": "        callback(change);\n      } catch (error) {\n        console.warn('[Data] activity listener error:', error);",
+  "new": "        callback({ ...change });\n      } catch (error) {\n        console.warn('[Data] activity listener error:', error);",
+  "test": [
+   "src/data/manager.test.mjs"
+  ],
+  "pattern": "layer-lifecycle-"
+ }
+]

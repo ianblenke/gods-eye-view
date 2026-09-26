@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/proposal.md:29 At commit 715b0af5d812969910ac2e9a9bdac0d6e42cc70b, “are now always covered” uses passive voice. Write: “The tests now cover the two catch blocks in each run. The uncovered count of this file is stable between runs.”
