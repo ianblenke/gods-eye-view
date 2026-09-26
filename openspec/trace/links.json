@@ -389,6 +389,7 @@
   "credential-boundary-014": [
     "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a ZERO_RESULTS answer with no results gives no place",
     "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a configured answer gives the same place shape as before this change",
+    "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a coordinate that rounds to the same four decimals makes no fetch, and one that differs at the fourth decimal fetches",
     "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a fetch failure makes the reverse lookup reject",
     "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 200 answer with a null Google status",
     "src/search/reverseGeocodeRoute.test.mjs › [credential-boundary-014] a later call fetches again after an HTTP 200 answer with no status field",
@@ -1534,7 +1535,7 @@
     "src/app/layers/osh.test.mjs › [osh-095] builds the OSH systems layer in the application catalog right after the recent-imagery layer"
   ],
   "osh-096": [
-    "src/app/layers/osh.test.mjs › [osh-096] gives the OSH systems layer of the catalog the production source and the hosts of the page"
+    "src/app/layers/osh.test.mjs › [osh-096] builds the OSH systems layer in the catalog with the production source and the hosts of the page"
   ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
