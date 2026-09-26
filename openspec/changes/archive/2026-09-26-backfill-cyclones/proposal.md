@@ -16,7 +16,7 @@ This is a backfill change. It writes a spec from what the code does now. It tags
 
 - Add the capability `cyclones` with 9 requirements and the 25 scenarios `cyclones-001` to `cyclones-025`. Each requirement has `Origin: backfill`.
 - Tag 31 of the 32 old tests with scenario IDs. The tag is the only change of an old name. One old test gets no tag (`cyclones-untagged-old-test`).
-- Add 78 tests to the four test files of the layer. Each new test has a tag and at least one `node:assert` call.
+- Add 89 tests to the four test files of the layer. Each new test has a tag and at least one `node:assert` call.
 - Run a mutation of the code for each scenario, and record the test that fails. The task list has the mutations.
 - Change no production file. The change does not fix any defect and does not add any behavior.
 
