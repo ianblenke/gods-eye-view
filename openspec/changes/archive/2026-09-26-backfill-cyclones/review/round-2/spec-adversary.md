@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-26-backfill-cyclones/proposal.md:78 At commit 44f1eb0de4db13c70bb4e1c84056529d1b1487d7, the new phrase “a pending add” triggers an STE warning. Write “an add that has not finished.”

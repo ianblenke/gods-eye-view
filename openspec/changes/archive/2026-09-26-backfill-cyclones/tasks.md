@@ -175,7 +175,7 @@ The mutation log records the test files that fail for each layer change.
 
 - [x] 6.1 Keep `source.js`, `labels.js` and `rendering.js` at 100% lines, branches and functions.
 - [x] 6.2 Keep `index.js` at 100% lines and functions, and at one open branch.
-- [ ] 6.3 Report each mutation of sections 2 to 5 with the test that failed, in `review.md`.
+- [x] 6.3 Report each mutation of sections 2 to 5 with the test that failed, in `review.md`.
 
 ## 7. Gates and review
 
@@ -183,5 +183,5 @@ The mutation log records the test files that fail for each layer change.
 - [x] 7.2 Run the STE lint with host Node.
 - [x] 7.3 Correct each STE error.
 - [x] 7.4 Run `make gates CHANGE=backfill-cyclones`. The only errors must be review errors.
-- [ ] 7.5 Run the review with `/opsx:review backfill-cyclones`.
-- [ ] 7.6 Write `review.md`.
+- [x] 7.5 Run the review with `/opsx:review backfill-cyclones`.
+- [x] 7.6 Write `review.md`.
