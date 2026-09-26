@@ -151,10 +151,10 @@ Origin: spec-first
 - **AND** that layer comes right after the layer `recent-imagery`
 - **AND** the catalog metadata of that layer has the token `3` and the disposition `enabled-only`
 
-#### Scenario: Give the layer the production source and the elements of the page `osh-096`
-- **WHEN** a test builds the application layer in a page that has the elements of the panel
-- **AND** the fetch of the test answers the same-origin routes of the OSH systems
-- **AND** the test clicks the system on the globe
-- **THEN** the layer reads the systems from the route `/api/osh/systems`
-- **AND** the element `osh-panel` shows
-- **AND** the element `osh-panel-detail` holds the name of the system
+#### Scenario: Give the layer the production source and the hosts of the page `osh-096`
+- **WHEN** a test builds the application catalog in a page that has the hosts of the panel
+- **AND** the test replaces `fetch` with a function that answers the requests to the same-origin OSH routes
+- **AND** the test clicks the entity of the system with the name System A
+- **THEN** the OSH systems layer of the catalog reads the systems from the route `/api/osh/systems`
+- **AND** the element `osh-panel` has no `hidden` attribute
+- **AND** the element `osh-panel-detail` contains the name of the system

@@ -3678,8 +3678,8 @@
     },
     "src/data/lifecycle.js": {
       "loaded": true,
-      "lines": 177,
-      "branches": 100,
+      "lines": 184,
+      "branches": 102,
       "functions": 15,
       "totals": {
         "lines": 2324,

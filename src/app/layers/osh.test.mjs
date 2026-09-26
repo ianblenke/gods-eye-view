@@ -43,7 +43,7 @@ function withGlobal(t, name, value) {
   });
 }
 
-test('[osh-096] gives the application layer the production source and the elements of the page', async (t) => {
+test('[osh-096] gives the OSH systems layer of the catalog the production source and the hosts of the page', async (t) => {
   const elements = { 'osh-panel': { hidden: true }, 'osh-panel-detail': { innerHTML: '' }, 'osh-panel-video': {} };
   withGlobal(t, 'document', { addEventListener() {}, removeEventListener() {}, getElementById: (id) => elements[id] ?? null });
   const asked = [];
@@ -71,7 +71,14 @@ test('[osh-096] gives the application layer the production source and the elemen
     camera: { moveEnd: new Cesium.Event(), positionWC: Cesium.Cartesian3.fromDegrees(1, 2, 1_500_000) },
     dataSources: { add: (dataSource) => dataSource, remove: () => true },
   };
-  const layer = createApplicationOsh();
+  const lifetime = new AbortController();
+  t.after(() => lifetime.abort());
+  const catalog = createApplicationCatalog({
+    sources: createStandaloneLayerSources(),
+    signal: lifetime.signal,
+    surface: fixtureSurface(lifetime.signal),
+  });
+  const layer = catalog.get('osh-systems');
   t.after(() => layer.destroy(viewer));
   layer.init(viewer);
   layer.enable(viewer);
