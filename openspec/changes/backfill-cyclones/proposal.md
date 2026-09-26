@@ -76,4 +76,4 @@ None.
   - `src/data/lifecycle.js`: 177 lines and 100 branches not covered (184 and 102 before). Its total of branches: 568 (570 before).
   - `src/layers/wind/rendering.js`: total of branches 334 (333 before).
   - `src/overlays/worldOverlay.js`: total of branches 712 (711 before).
-- `cyclones-untagged-old-test`: The old test `aborting a pending add retains the prior complete source` in `rendering.test.mjs` has no tag. The gates stop a tagged test name with the word "prior" (they say "use before"). The rule of the owner is that an old test name does not change. So the test keeps its name and stays untraced. It checks the scenario `cyclones-016`. The owner decides in a later change if it gets a new name and a tag.
+- `cyclones-untagged-old-test`: One old test in `rendering.test.mjs` has no tag. It checks that an abort of a pending add keeps the complete data source of the scenario `cyclones-016`. One word of its name is on the list of words that the STE gate refuses in a tagged name. The rule of the owner is that an old test name does not change. So the test keeps its name and stays untraced. The owner decides in a later change if it gets a new name and a tag.
