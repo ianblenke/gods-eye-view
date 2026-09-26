@@ -1751,7 +1751,7 @@
     "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-009] accepts an open pending area"
   ],
   "qa-scripts-010": [
-    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-010] reports a landed pending area"
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-010] reports a pending area that has a capability folder"
   ],
   "qa-scripts-011": [
     "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-011] accepts one unmapped reason",
@@ -1800,7 +1800,7 @@
     "src/tooling/spec/gates.test.mjs › [qa-scripts-024] stops the gate for a QA header error"
   ],
   "qa-scripts-025": [
-    "src/tooling/spec/gates.test.mjs › [qa-scripts-025] stops for both covers errors and omits valid QA headers",
+    "src/tooling/spec/gates.test.mjs › [qa-scripts-025] stops for both covers errors and omits scripts with valid QA headers",
     "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-025] gives no advice for a file with a capability name",
     "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-025] gives no advice for invalid covers items",
     "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-025] sorts two covers errors for one script"
