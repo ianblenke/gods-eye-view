@@ -508,7 +508,6 @@
     "src/layers/cyclones/rendering.test.mjs › [cyclones-016] a failed add returns false, and does not throw, after an abort, a newer call or a clear",
     "src/layers/cyclones/rendering.test.mjs › [cyclones-016] a failed data-source add rejects the call, removes the new entities and keeps the earlier source",
     "src/layers/cyclones/rendering.test.mjs › [cyclones-016] a signal that aborted before the call rejects it and adds no data source",
-    "src/layers/cyclones/rendering.test.mjs › [cyclones-016] aborting a pending add retains the prior complete source",
     "src/layers/cyclones/rendering.test.mjs › [cyclones-016] superseded asynchronous additions cannot replace newer geometry"
   ],
   "cyclones-017": [
