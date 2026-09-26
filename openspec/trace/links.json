@@ -848,6 +848,13 @@
   "hud-markings-004": [
     "src/hudMarkings.test.mjs › [hud-markings-004] has no style rule for the removed element"
   ],
+  "layer-lifecycle-001": [
+    "src/data/manager.test.mjs › [layer-lifecycle-001] keep the layer when destroy returns false",
+    "src/data/manager.test.mjs › [layer-lifecycle-001] keep the layer when destroy throws"
+  ],
+  "layer-lifecycle-002": [
+    "src/data/manager.test.mjs › [layer-lifecycle-002] send the event after an activity listener error"
+  ],
   "osh-001": [
     "src/data/oshProxy.test.mjs › [osh-001] reports no key on the status route when OSH_URL is not set"
   ],

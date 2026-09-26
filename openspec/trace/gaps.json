@@ -2629,11 +2629,11 @@
     "src/data/lifecycle.js": {
       "loaded": true,
       "lines": 177,
-      "branches": 102,
+      "branches": 100,
       "functions": 15,
       "totals": {
         "lines": 2324,
-        "branches": 570,
+        "branches": 572,
         "functions": 116
       },
       "sha": "00c2c630a7456183964aff232cc2b0be6896b9e461bb6e82aa228327f10a433c",
