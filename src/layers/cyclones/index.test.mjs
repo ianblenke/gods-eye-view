@@ -6,7 +6,11 @@ import {
   releasePointer,
   isPointerFree,
 } from '../../data/inputOwnership.js';
-import { isOwnedByOtherLayer, registerPickOwner, unregisterPickOwner } from '../../data/pickRegistry.js';
+import {
+  isOwnedByOtherLayer,
+  registerPickOwner,
+  unregisterPickOwner,
+} from '../../data/pickRegistry.js';
 
 const time = '2026-09-16T03:00:00.000Z';
 const storm = (id = 'ep152026') => ({
@@ -762,7 +766,13 @@ test('[cyclones-019] the pick owner claims an id only after enable and before di
 });
 
 test('[cyclones-019] disable clears an earlier request error', async () => {
-  const layer = plainLayer({ feed: { getSnapshot: async () => { throw new Error('Lost source'); } } });
+  const layer = plainLayer({
+    feed: {
+      getSnapshot: async () => {
+        throw new Error('Lost source');
+      },
+    },
+  });
   layer.enable();
   await layer.update();
   assert.equal(layer.getStats().error, 'Lost source');
@@ -799,10 +809,18 @@ test('[cyclones-023] clear calls the row listener', async () => {
 test('[cyclones-023] refresh restores an unchanged selection to the renderer', async () => {
   let selection = null;
   const rendering = fakeRendering({
-    setSnapshot: async () => { selection = null; return true; },
-    setSelection: (id) => { selection = id; },
+    setSnapshot: async () => {
+      selection = null;
+      return true;
+    },
+    setSelection: (id) => {
+      selection = id;
+    },
   }).rendering;
-  const layer = plainLayer({ feed: { getSnapshot: async () => snapshot() }, rendering });
+  const layer = plainLayer({
+    feed: { getSnapshot: async () => snapshot() },
+    rendering,
+  });
   layer.enable();
   await layer.update();
   assert.equal(selection, 'ep152026');
@@ -814,7 +832,9 @@ test('[cyclones-023] refresh restores an unchanged selection to the renderer', a
 test('[cyclones-025] a truthy focus value does not queue a flight', async () => {
   const calls = [];
   const layer = plainLayer({ feed: { getSnapshot: async () => snapshot() } });
-  layer.attachShellServices({ runNavigation: (callback) => calls.push(callback) });
+  layer.attachShellServices({
+    runNavigation: (callback) => calls.push(callback),
+  });
   layer.enable();
   await layer.update();
   layer.setParams({ focus: 'yes' });
