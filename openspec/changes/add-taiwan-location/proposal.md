@@ -22,9 +22,10 @@ None.
 
 - Change `src/locations.js` and add tests in `src/locations.test.mjs`, `src/ui/locationControls.test.mjs` and `src/search/offlineGeocoders.test.mjs`.
 - Add this change folder. The format tool can change these files.
-- `src/locations.js` has a gap in `openspec/trace/gaps.json`: 288 lines, 46 branches and 16 functions.
-- This change adds data to that file. The tests can cover these new lines. The Docker gate must confirm the gap count.
-- The host cannot run the Docker gates or ratchet. The ledger stays as it is for this work.
+- `src/locations.js` has a gap in `openspec/trace/gaps.json`: 288 lines, 46 branches and 16 functions before this change.
+- This change adds 55 lines of data to that file, and the tests cover them. The ratchet command writes 45 branches not covered (46 before). The count of 288 lines and 16 functions does not change.
+- The ratchet command also writes the new totals of `src/locations.js` (1552 lines and 139 branches). It writes new totals for `src/ui/locationControls.js` too (36 branches, 34 before). This change does not edit that file, and only the counts of the branch records change.
+- The registry gets 5 new scenario IDs.
 
 ## Known limits
 
