@@ -15,7 +15,7 @@ This is a backfill change. It writes a spec from what the code does now. It tags
 ## What Changes
 
 - Add the capability `cyclones` with 9 requirements and the 25 scenarios `cyclones-001` to `cyclones-025`. Each requirement has `Origin: backfill`.
-- Tag the 32 old tests with scenario IDs. One old name also changes the word "prior" to "earlier", because the STE lint gives an error for "prior".
+- Tag the 32 old tests with scenario IDs. One old name also gets the word "earlier", because the STE lint refuses the word that it had.
 - Add 78 tests to the four existing test files. Each new test has a tag and at least one `node:assert` call.
 - Run a mutation of the code for each scenario, and record the test that fails. The task list has the mutations.
 - Change no production file. The change does not fix any defect and does not add any behavior.
