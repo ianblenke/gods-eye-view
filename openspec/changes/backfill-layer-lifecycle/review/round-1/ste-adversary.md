@@ -1,0 +1,3 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/proposal.md:29 At commit ba4175d6dea12165c065f5c3a0b105136ac20e51, “stops changing” uses an unnecessary -ing form. Write: “The uncovered count of this file is stable between runs.”
+- [ ] F2 minor src/data/manager.test.mjs:0 At commit ba4175d6dea12165c065f5c3a0b105136ac20e51, the new test names “when destroy returns false” and “when destroy throws” omit an article and noun. Write: “when the destroy function returns false” and “when the destroy function throws.”

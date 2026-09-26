@@ -26,7 +26,7 @@ None.
 - Open no ledger gap. Close 2 branches of `src/data/lifecycle.js` in the ledger: the entry on `main` has 102 branches not covered, and the ratchet command writes 100.
 - Keep the other counts of the entry: 177 lines and 15 functions not covered. The file stays below full coverage.
 - The ledger total of branches for this file changes from 570 to 572. The totals of lines (2324) and functions (116) stay.
-- The two catch blocks are now always covered, so the uncovered count of this file stops changing between runs.
+- The two catch blocks are now always covered, so the uncovered count of this file is stable between runs.
 - The ratchet command can add two IDs and their test links to `openspec/trace/`.
 
 ## Known limits and later changes
