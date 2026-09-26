@@ -2,7 +2,7 @@
  * @purpose Prove that weather layers release resources after use.
  * @covers cyclones,pending:wind,pending:weather
  * @run node scripts/qa-weather-teardown.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * Weather teardown and cross-layer regression probe.

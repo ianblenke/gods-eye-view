@@ -3,7 +3,7 @@
  * @purpose Prove that aircraft types get the correct images and scale.
  * @covers pending:local-adsb
  * @run node scripts/qa-sprites-b5.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-sprites-b5.mjs — throwaway QA harness for skylight Tasks 8+9

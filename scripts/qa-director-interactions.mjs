@@ -3,7 +3,7 @@
  * @purpose Prove that pointer and key actions control an authored scene.
  * @covers pending:director
  * @run node scripts/qa-director-interactions.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /** Real pointer/keyboard acceptance using a synthetic, self-authored feature pack. */
 import fs from 'node:fs';

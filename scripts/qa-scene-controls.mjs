@@ -3,7 +3,7 @@
  * @purpose Prove that scene controls handle project and play actions.
  * @covers pending:scenes
  * @run node scripts/qa-scene-controls.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /** Exercise installed Scene controls and real project/playback operations. */
 import fs from 'node:fs';

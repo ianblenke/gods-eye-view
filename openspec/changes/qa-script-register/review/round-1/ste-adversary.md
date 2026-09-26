@@ -1,0 +1,7 @@
+Verdict: FAIL
+- [ ] F1 major src/tooling/spec/gates.test.mjs:1201 At commit 4b9dee65d5301c1f0ee7244ad8e1c5ed2d149c09, “omits valid QA headers” says the gate omits headers, but the spec says it omits scripts. Write: “omits scripts with valid QA headers”.
+- [ ] F2 minor openspec/changes/archive/2026-09-26-qa-script-register/design.md:36 At commit 4b9dee65d5301c1f0ee7244ad8e1c5ed2d149c09, “including a blank line or a continuation line” uses a nontechnical *-ing* word. Write: “Reject a blank line or a continuation line too.”
+- [ ] F3 minor openspec/changes/archive/2026-09-26-qa-script-register/tasks.md:121 At commit 4b9dee65d5301c1f0ee7244ad8e1c5ed2d149c09, “Run … and inspect” gives two successive instructions in one task. Write two tasks: “Run `make ratchet CHANGE=qa-script-register`.” and “Inspect its 70 closed entries.”
+- [ ] F4 minor scripts/qa-draw-tool.mjs:3 At commit 4b9dee65d5301c1f0ee7244ad8e1c5ed2d149c09, “clean up” is a phrasal verb. Write: “Prove that draw controls accept pointer and key actions and release their resources.”
+- [ ] F5 minor scripts/qa-application.mjs:6 At commit 4b9dee65d5301c1f0ee7244ad8e1c5ed2d149c09, “a running app server” uses a nontechnical *-ing* word. This wording recurs in 62 headers. Write: “an active app server.”
+- [ ] F6 minor openspec/changes/archive/2026-09-26-qa-script-register/specs/qa-scripts/spec.md:43 At commit 4b9dee65d5301c1f0ee7244ad8e1c5ed2d149c09, “landed pending area” uses “landed” with an unclear technical meaning. Write: “pending area with a capability folder.”

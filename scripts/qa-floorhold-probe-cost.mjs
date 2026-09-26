@@ -3,7 +3,7 @@
  * @purpose Measure the cost of nearby floor probes.
  * @covers pending:local-adsb,pending:performance
  * @run node scripts/qa-floorhold-probe-cost.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * scripts/qa-floorhold-probe-cost.mjs — what does an unrationed adjacent-cell

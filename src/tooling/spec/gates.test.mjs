@@ -1198,7 +1198,7 @@ test('[qa-scripts-024] stops the gate for a QA header error', GUARDED_RUN, () =>
   });
 });
 
-test('[qa-scripts-025] stops for both covers errors and omits valid QA headers', GUARDED_RUN, () => {
+test('[qa-scripts-025] stops for both covers errors and omits scripts with valid QA headers', GUARDED_RUN, () => {
   withFixture((root) => {
     write(root, {
       'scripts/qa-example.mjs': QA_HEADER('unknown,pending:landed'),

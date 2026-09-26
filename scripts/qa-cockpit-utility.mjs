@@ -3,7 +3,7 @@
  * @purpose Prove that cockpit display and radio controls fit and respond.
  * @covers pending:application-shell,pending:radio
  * @run node scripts/qa-cockpit-utility.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /** Focused rendered proof for adaptive Cockpit Display/Radio layout. */
 import fs from 'node:fs';

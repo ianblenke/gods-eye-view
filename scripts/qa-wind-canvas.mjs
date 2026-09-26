@@ -2,7 +2,7 @@
  * @purpose Prove that wind pixels appear on the real canvas.
  * @covers pending:wind
  * @run node scripts/qa-wind-canvas.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /** Real-canvas wind regression. Run against this candidate's dev server. */
 import assert from 'node:assert/strict';

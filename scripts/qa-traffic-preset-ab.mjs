@@ -3,7 +3,7 @@
  * @purpose Compare traffic colors across visual styles.
  * @covers pending:traffic
  * @run node scripts/qa-traffic-preset-ab.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-traffic-preset-ab.mjs — A/B screenshot capture for preset-aware

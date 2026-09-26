@@ -3,7 +3,7 @@
  * @purpose Prove that traffic data follows city travel.
  * @covers pending:traffic
  * @run node scripts/qa-traffic-navigation.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 // Deterministic city-navigation exercise; road/flow responses are fixtures.
 import assert from 'node:assert/strict';

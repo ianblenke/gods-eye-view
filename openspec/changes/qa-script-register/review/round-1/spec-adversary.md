@@ -1,0 +1,4 @@
+Verdict: PASS
+- [ ] F1 minor scripts/spec/lib/qa-register.mjs:62 At commit 4b9dee65d5301c1f0ee7244ad8e1c5ed2d149c09, advice treats a file in a change’s `specs` folder as a capability. Check that each entry is a directory.
+- [ ] F2 minor openspec/changes/archive/2026-09-26-qa-script-register/design.md:36 At commit 4b9dee65d5301c1f0ee7244ad8e1c5ed2d149c09, the gate reports STE warnings in changed prose and test names. Resolve the warnings in changed files.
+- [ ] F3 minor openspec/changes/archive/2026-09-26-qa-script-register/review.md:1 At commit 4b9dee65d5301c1f0ee7244ad8e1c5ed2d149c09, the gate reports `REVIEW-MISSING` and fails. Complete the review record and rerun the gate.

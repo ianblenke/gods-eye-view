@@ -3,7 +3,7 @@
  * @purpose Capture the cable layer from fixed views for visual checks.
  * @covers pending:submarine-cables
  * @run node scripts/qa-cables-shot.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-cables-shot — capture the cables layer at two fixed cameras for

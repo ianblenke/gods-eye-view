@@ -3,7 +3,7 @@
  * @purpose Capture how focus changes aircraft and labels in the real view.
  * @covers pending:local-adsb,pending:overlays
  * @run node scripts/qa-focus-evidence.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * Moving visual evidence for focus de-emphasis and aircraft recession.

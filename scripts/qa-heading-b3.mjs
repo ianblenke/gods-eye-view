@@ -3,7 +3,7 @@
  * @purpose Prove that an aircraft turn changes its display course.
  * @covers pending:local-adsb
  * @run node scripts/qa-heading-b3.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-heading-b3.mjs — throwaway QA harness for skylight Task 4

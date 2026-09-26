@@ -3,7 +3,7 @@
  * @purpose Prove that ambient aircraft get the correct type image.
  * @covers pending:local-adsb
  * @run node scripts/qa-enrich-ambient.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-enrich-ambient.mjs — headless proof for AMBIENT fleet type enrichment

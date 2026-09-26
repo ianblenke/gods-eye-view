@@ -448,7 +448,7 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
       "[gap-ledger-090] stops the adopt command for a fault before it runs a test",
       "[gap-ledger-096 gap-ledger-097] stops the check for an adopt line when its commit is not a merged commit, or when the merged commit did not change its file",
       "[qa-scripts-024] stops the gate for a QA header error",
-      "[qa-scripts-025] stops for both covers errors and omits valid QA headers",
+      "[qa-scripts-025] stops for both covers errors and omits scripts with valid QA headers",
       "[qa-scripts-016] prints QA advice after Trace",
       "[qa-scripts-014] keeps the coverage gap for a QA script with a bad header"
   ]);

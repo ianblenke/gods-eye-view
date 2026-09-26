@@ -3,7 +3,7 @@
  * @purpose Prove that a sky pick does not stop view target setup.
  * @covers pending:application-shell
  * @run node scripts/qa-view-target-prewarm.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /**
  * Regression proof for the view-target prewarm crash.

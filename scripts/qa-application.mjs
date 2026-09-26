@@ -3,7 +3,7 @@
  * @purpose Prove that the app starts and releases browser resources.
  * @covers pending:application-shell
  * @run node scripts/qa-application.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /** Prove standalone startup and terminal resource ownership in a real browser. */
 import assert from 'node:assert/strict';

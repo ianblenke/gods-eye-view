@@ -3,7 +3,7 @@
  * @purpose Prove that the render governor stops idle work.
  * @covers pending:performance
  * @run node scripts/qa-perf.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-perf — render-governor regression gate (perf wave 2).

@@ -3,7 +3,7 @@
  * @purpose Prove that scene time and seek control work in the browser.
  * @covers pending:director,pending:scenes
  * @run node scripts/qa-director-timing.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /** Exercise scene-clock ownership and authored seek behavior in the composed browser app. */
 import fs from 'node:fs';

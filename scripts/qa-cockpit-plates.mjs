@@ -3,7 +3,7 @@
  * @purpose Prove that callout plates fit the image behind each label.
  * @covers pending:overlays
  * @run node scripts/qa-cockpit-plates.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * Rendered proof for backdrop-selective callout plates at GROUND LEVEL.
