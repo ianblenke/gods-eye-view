@@ -23,5 +23,5 @@
 
 - [x] 3.1 Run the ratchet command for this change.
 - [x] 3.2 Run the gates for this change.
-- [ ] 3.3 Run the two review agents.
-- [ ] 3.4 Write `review.md` with the review result.
+- [x] 3.3 Run the two review agents.
+- [x] 3.4 Write `review.md` with the review result.
