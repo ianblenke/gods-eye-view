@@ -15,7 +15,7 @@ Origin: spec-first
 - **THEN** its fetch URL is `/api/google/geocode?lat=...&lon=...`, with no key. The URL has no key when the page has a browser key too
 - **AND** it remembers a `configured:false` answer for the life of the provider, so a later call makes no fetch
 - **AND** it remembers an answer that has no HTTP error status, has a Google status and gives no place
-- **AND** a later call for the same coordinate, rounded to four decimals, then makes no fetch
+- **AND** a later call for the same coordinate, which the provider rounds to four decimals, makes no fetch
 - **AND** it does not remember an answer with an HTTP error status or with no Google status, so a later call fetches again
 - **AND** a fetch failure, or an answer that is not JSON, makes the reverse lookup reject
 - **AND** a configured answer gives the fields `formattedAddress`, `locality`, `region`, `country`, `types`, `labels` and `streetLabels`

@@ -152,7 +152,7 @@ Origin: spec-first
 - **AND** the catalog metadata of that layer has the token `3` and the disposition `enabled-only`
 
 #### Scenario: Give the layer the production source and the hosts of the page `osh-096`
-- **WHEN** a test builds the application catalog in a page that has the hosts of the panel
+- **WHEN** a test builds the application catalog in a page that has the elements `osh-panel`, `osh-panel-detail` and `osh-panel-video`
 - **AND** the test replaces `fetch` with a function that answers the requests to the same-origin OSH routes
 - **AND** the test clicks the entity of the system with the name System A
 - **THEN** the OSH systems layer of the catalog reads the systems from the route `/api/osh/systems`

@@ -43,7 +43,7 @@ function withGlobal(t, name, value) {
   });
 }
 
-test('[osh-096] gives the OSH systems layer of the catalog the production source and the hosts of the page', async (t) => {
+test('[osh-096] builds the OSH systems layer in the catalog with the production source and the hosts of the page', async (t) => {
   const elements = { 'osh-panel': { hidden: true }, 'osh-panel-detail': { innerHTML: '' }, 'osh-panel-video': {} };
   withGlobal(t, 'document', { addEventListener() {}, removeEventListener() {}, getElementById: (id) => elements[id] ?? null });
   const asked = [];

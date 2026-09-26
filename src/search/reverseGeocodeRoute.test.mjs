@@ -211,3 +211,12 @@ test('[credential-boundary-014] a later call makes no fetch after an HTTP 200 ZE
   assert.equal(secondPlace, null, 'the second call gives the null in the cache');
   assert.equal(calls, 1, 'the reverse lookup remembers a ZERO_RESULTS answer');
 });
+
+test('[credential-boundary-014] a coordinate that rounds to the same four decimals makes no fetch, and one that differs at the fourth decimal fetches', async () => {
+  const { provider, calls } = providerWith(async () => answer({ configured: true, status: 'ZERO_RESULTS', results: [] }));
+  await provider.reverseGeocode(30.26721, -97.74311);
+  await provider.reverseGeocode(30.26724, -97.74314);
+  assert.equal(calls.length, 1, 'a coordinate with the same four decimals uses the remembered answer');
+  await provider.reverseGeocode(30.2673, -97.7431);
+  assert.equal(calls.length, 2, 'a coordinate that differs at the fourth decimal fetches again');
+});

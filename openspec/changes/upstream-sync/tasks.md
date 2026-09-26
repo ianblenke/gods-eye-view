@@ -29,6 +29,8 @@ For each test below, run the named mutation. Report the test that fails in `revi
   - Mutation 2: do not remember the answer `configured:false`. The test must fail.
   - Mutation 3: remember an answer with an HTTP error status. The test must fail.
   - Mutation 4: do not remember an answer that has a Google status and gives no place. The test must fail.
+  - Mutation 5: round the coordinate to six decimals in the key of the memory. The test must fail.
+  - Mutation 6: round the coordinate to two decimals in the key of the memory. The test must fail.
 - [x] 2.6 Add `src/layers/osh/hosts.js` and `src/app/layers/osh.js` to the address scan of `[osh-034]`.
   - Mutation: put an address that looks real into `src/layers/osh/hosts.js`. The test must fail.
 - [x] 2.7 Add `src/sources/httpBody.js` to the scan of `[osh-005]`.
@@ -61,6 +63,9 @@ For each test below, run the named mutation. Report the test that fails in `revi
 - [x] 4.3 Run `make ratchet CHANGE=upstream-sync`.
 - [x] 4.4 Run `make lint`.
 - [x] 4.5 Correct each STE error.
-- [ ] 4.6 Run `make gates CHANGE=upstream-sync`. The only errors must be review errors, and errors of a count that changes between runs.
+- [ ] 4.6 Run `make gates CHANGE=upstream-sync`.
+  - The errors must be review errors, or errors of a count that changes between runs.
+  - The codes of the second kind are `LEDGER-LARGER-GAP`, `LEDGER-LOST-COVERAGE` and `LEDGER-STALE`.
+  - Write each error of the second kind, and its file, in `review.md`.
 - [ ] 4.7 Run the review with `/opsx:review upstream-sync`.
 - [ ] 4.8 Write `review.md`.
