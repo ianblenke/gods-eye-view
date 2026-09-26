@@ -1,0 +1,3 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-26-qa-script-register/tasks.md:35 At commit b20adaf1b97ec95cfed0b18a75896001ac85e02d, “test for pending area” lacks an article. Write: “test for a pending area”.
+- [ ] F2 minor openspec/changes/archive/2026-09-26-qa-script-register/review/round-1/skeptics.md:7 At commit b20adaf1b97ec95cfed0b18a75896001ac85e02d, “Named as the known limit” omits the actor. Write: “The lead named this limit `qa-advice-delta-files`.”

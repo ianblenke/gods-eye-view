@@ -118,3 +118,4 @@ The change closes the coverage entries below. The counts come from `openspec/tra
 - `qa-runtime`: The gate does not run a browser QA script. A separate browser run must prove its runtime behavior.
 - `qa-ratchet-noise`: The counts of `src/data/labelArbiter.js` and `src/data/lifecycle.js` change between runs (see `sync-counts-change-between-runs` of the change `upstream-sync`). No test of this change closes these gaps, and the ledger records the counts that the ratchet measured.
 - `qa-advice-delta-files`: The advice reads each entry of the `specs` folder of a change as a capability name. A file in that folder, and not a folder, gives a false name. The names of real deltas are folders, so this input is unusual.
+- `qa-pending-warning`: The word "pending" ends in -ing, so the STE lint gives warnings for it in this change. It is the name of a state of `@covers`, and this change does not add it to the list of allowed words.
