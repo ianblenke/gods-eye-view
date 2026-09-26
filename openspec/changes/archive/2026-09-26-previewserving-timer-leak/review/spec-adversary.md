@@ -1,0 +1,3 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-26-previewserving-timer-leak/proposal.md:16 At commit d13ac437ffc9d00f77e6b61e6910c49d8d38d72e, the cause of the CI `Timeout` remains unproved. The scratch mutation found an `Immediate`, and the original test did not leak locally. State this limit in the proposal’s Known Limits section.
+- [ ] F2 minor openspec/changes/archive/2026-09-26-previewserving-timer-leak/tasks.md:14 At commit d13ac437ffc9d00f77e6b61e6910c49d8d38d72e, the gate reported `REVIEW-MISSING` and failed. Complete both reviews, write `review.md`, and rerun the gate.

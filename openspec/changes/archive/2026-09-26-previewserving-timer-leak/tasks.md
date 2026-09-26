@@ -11,5 +11,5 @@
 ## 2. Gates and review
 
 - [x] 2.1 Run the full gates on Node 24.
-- [ ] 2.2 Run two review agents and read each verdict.
-- [ ] 2.3 Write the result in `review.md`.
+- [x] 2.2 Run two review agents and read each verdict.
+- [x] 2.3 Write the result in `review.md`.
