@@ -29,8 +29,9 @@ For each test below, run the named mutation. Report the test that fails in `revi
   - Mutation 2: do not remember the answer `configured:false`. The test must fail.
   - Mutation 3: remember an answer with an HTTP error status. The test must fail.
   - Mutation 4: do not remember an answer that has a Google status and gives no place. The test must fail.
-  - Mutation 5: round the coordinate to six decimals in the key of the memory. The test must fail.
-  - Mutation 6: round the coordinate to two decimals in the key of the memory. The test must fail.
+  - Mutation 5: round the coordinate to six decimal places in the key that the provider uses to remember an answer. The test must fail.
+  - Mutation 6: round the coordinate to two decimal places in that key. The test must fail.
+  - Mutation 7: build that key from the latitude only. The test must fail.
 - [x] 2.6 Add `src/layers/osh/hosts.js` and `src/app/layers/osh.js` to the address scan of `[osh-034]`.
   - Mutation: put an address that looks real into `src/layers/osh/hosts.js`. The test must fail.
 - [x] 2.7 Add `src/sources/httpBody.js` to the scan of `[osh-005]`.
@@ -47,7 +48,7 @@ For each test below, run the named mutation. Report the test that fails in `revi
 - [x] 3.4 Give the OSH layer the token `3`.
 - [x] 3.5 Write `src/app/layers/osh.js`.
 - [x] 3.6 Place the layer in the catalog until the tests of `osh-095` and `osh-096` pass.
-- [x] 3.7 Write the server route calls in `src/search/http.js` and `src/search/defaults.js` until the tests of `credential-boundary-014` pass.
+- [x] 3.7 Write the requests to the server route in `src/search/http.js` and `src/search/defaults.js` until the tests of `credential-boundary-014` pass.
 - [x] 3.8 Format the OSH files with the Prettier format of the upstream project.
 - [x] 3.9 List the OSH modules in `scripts/package-boundaries.json`.
 - [x] 3.10 Move `createOshPanelHosts` to `src/layers/osh/hosts.js`.
@@ -63,9 +64,10 @@ For each test below, run the named mutation. Report the test that fails in `revi
 - [x] 4.3 Run `make ratchet CHANGE=upstream-sync`.
 - [x] 4.4 Run `make lint`.
 - [x] 4.5 Correct each STE error.
-- [ ] 4.6 Run `make gates CHANGE=upstream-sync`.
+- [x] 4.6 Run `make gates CHANGE=upstream-sync`.
   - The errors must be review errors, or errors of a count that changes between runs.
+  - The files of the second kind are `server/providers/vessels/ais-store.js`, `src/data/lifecycle.js`, `src/data/labelArbiter.js` and `src/layers/wind/rendering.js`. An error for any other file stops the build.
   - The codes of the second kind are `LEDGER-LARGER-GAP`, `LEDGER-LOST-COVERAGE` and `LEDGER-STALE`.
   - Write each error of the second kind, and its file, in `review.md`.
-- [ ] 4.7 Run the review with `/opsx:review upstream-sync`.
-- [ ] 4.8 Write `review.md`.
+- [x] 4.7 Run the review with `/opsx:review upstream-sync`.
+- [x] 4.8 Write `review.md`.

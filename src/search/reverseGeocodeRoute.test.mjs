@@ -219,4 +219,6 @@ test('[credential-boundary-014] a coordinate that rounds to the same four decima
   assert.equal(calls.length, 1, 'a coordinate with the same four decimals uses the remembered answer');
   await provider.reverseGeocode(30.2673, -97.7431);
   assert.equal(calls.length, 2, 'a coordinate that differs at the fourth decimal fetches again');
+  await provider.reverseGeocode(30.2673, -97.7432);
+  assert.equal(calls.length, 3, 'a coordinate with another longitude at the same latitude fetches again');
 });
