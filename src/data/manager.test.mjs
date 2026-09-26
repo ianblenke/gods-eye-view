@@ -3490,3 +3490,79 @@ test('refreshLayerStats reaches presentation through the bare lifecycle', async 
   lifecycle.refreshLayerStats();
   assert.deepEqual(changes, ['status']);
 });
+
+test('[layer-lifecycle-001] keep the layer when destroy returns false', async () => {
+  const manager = new DataLayerManager({});
+  manager.register({ id: 'failed-layer' });
+  const entry = manager.layers.get('failed-layer');
+  entry.lifecycleState = 'disabling';
+  entry.module.destroy = () => {
+    entry.visibilityIntentEnabled = true;
+    return false;
+  };
+  const events = [];
+  manager.subscribeActivity((event) => events.push(event.type));
+  const warnings = [];
+  const originalWarn = console.warn;
+  console.warn = (...args) => warnings.push(args);
+  try {
+    assert.equal(await manager.destroyLayer('failed-layer'), false);
+    assert.equal(manager.layers.get('failed-layer'), entry);
+    assert.equal(entry.destroying, false);
+    assert.equal(entry.visibilityIntentEnabled, false);
+    assert.equal(entry.lifecycleState, 'disabled');
+    assert.deepEqual(events, ['status']);
+    assert.equal(warnings.length, 1);
+    assert.equal(warnings[0][0], '[Data] failed-layer destroy error:');
+    assert.equal(warnings[0][1].name, 'LifecycleRejectedError');
+  } finally {
+    console.warn = originalWarn;
+  }
+});
+
+test('[layer-lifecycle-001] keep the layer when destroy throws', async () => {
+  const manager = new DataLayerManager({});
+  const failure = new Error('destroy failed');
+  manager.register({ id: 'failed-layer' });
+  const entry = manager.layers.get('failed-layer');
+  entry.lifecycleState = 'disabling';
+  entry.module.destroy = () => {
+    entry.visibilityIntentEnabled = true;
+    throw failure;
+  };
+  const events = [];
+  manager.subscribeActivity((event) => events.push(event.type));
+  const warnings = [];
+  const originalWarn = console.warn;
+  console.warn = (...args) => warnings.push(args);
+  try {
+    assert.equal(await manager.destroyLayer('failed-layer'), false);
+    assert.equal(manager.layers.get('failed-layer'), entry);
+    assert.equal(entry.destroying, false);
+    assert.equal(entry.visibilityIntentEnabled, false);
+    assert.equal(entry.lifecycleState, 'disabled');
+    assert.deepEqual(events, ['status']);
+    assert.deepEqual(warnings, [['[Data] failed-layer destroy error:', failure]]);
+  } finally {
+    console.warn = originalWarn;
+  }
+});
+
+test('[layer-lifecycle-002] send the event after an activity listener error', async () => {
+  const { LayerLifecycle } = await import('./lifecycle.js');
+  const lifecycle = new LayerLifecycle({});
+  const failure = new Error('listener failed');
+  const events = [];
+  lifecycle.subscribeActivity(() => { throw failure; });
+  lifecycle.subscribeActivity((event) => events.push(event));
+  const warnings = [];
+  const originalWarn = console.warn;
+  console.warn = (...args) => warnings.push(args);
+  try {
+    lifecycle.refreshLayerStats();
+    assert.deepEqual(events, [{ type: 'status' }]);
+    assert.deepEqual(warnings, [['[Data] activity listener error:', failure]]);
+  } finally {
+    console.warn = originalWarn;
+  }
+});
