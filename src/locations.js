@@ -18,6 +18,61 @@ import { unavailablePlaceSearch } from './search/placeSearch.js';
  *   buildingHeight — estimated height of landmark center above ground (meters)
  */
 export const CITY_POIS = {
+  taiwan: {
+    name: 'Taiwan',
+    groundElevation: 30,
+    viewBounds: {
+      southwest: { lat: 21.8, lng: 119.3 },
+      northeast: { lat: 25.4, lng: 122.1 },
+    },
+    pois: [
+      {
+        name: 'Taiwan',
+        lat: 23.7,
+        lon: 121.0,
+        alt: 700000,
+        pitch: -60,
+        heading: 0,
+        buildingHeight: 30,
+      },
+      {
+        name: 'Taipei 101',
+        lat: 25.0339,
+        lon: 121.5645,
+        alt: 700,
+        pitch: -22,
+        heading: 200,
+        buildingHeight: 300,
+      },
+      {
+        name: 'Presidential Office Building',
+        lat: 25.04,
+        lon: 121.5122,
+        alt: 450,
+        pitch: -25,
+        heading: 90,
+        buildingHeight: 60,
+      },
+      {
+        name: 'Sun Moon Lake',
+        lat: 23.859,
+        lon: 120.916,
+        alt: 6000,
+        pitch: -30,
+        heading: 0,
+        buildingHeight: 30,
+      },
+      {
+        name: 'Taroko Gorge',
+        lat: 24.1559,
+        lon: 121.62,
+        alt: 8000,
+        pitch: -28,
+        heading: 90,
+        buildingHeight: 30,
+      },
+    ],
+  },
   austin: {
     name: 'Austin',
     groundElevation: 150, // meters above WGS84 ellipsoid

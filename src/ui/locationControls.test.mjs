@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { LocationControls } from './locationControls.js';
+import { CITY_POIS } from '../locations.js';
 
 function node() {
   const classes = new Set();
@@ -146,4 +147,30 @@ test('location and POI keys route once while form controls retain typing', () =>
   f.doc.fire('keydown', { key: 'Q', target: { matches: () => true } });
   f.elements.resetButtons[1].fire('click');
   assert.deepEqual(f.calls, [['poi', 'a', 1], ['reset']]);
+});
+
+test('[location-presets-003] shows the Taiwan pill first', () => {
+  const f = fixture();
+  f.controls.destroy();
+  const controls = new LocationControls({
+    elements: f.elements,
+    cities: CITY_POIS,
+    getExpandedCity: () => null,
+    onCity: () => {},
+    onPoi: () => {},
+    onSearch: () => {},
+    onReset: () => {},
+    doc: f.doc,
+  });
+  const pills = f.elements.pills.children;
+  assert.equal(pills.length, Object.keys(CITY_POIS).length);
+  assert.deepEqual(
+    pills.map((pill) => pill.dataset.locationId),
+    Object.keys(CITY_POIS),
+  );
+  assert.equal(pills[0].dataset.locationId, 'taiwan');
+  assert.equal(pills[0].textContent, 'Taiwan');
+  assert.equal(pills[1].dataset.locationId, 'austin');
+  assert.equal(pills[1].textContent, 'Austin');
+  controls.destroy();
 });
