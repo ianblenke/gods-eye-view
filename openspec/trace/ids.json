@@ -540,7 +540,7 @@
     "change": "credential-boundary"
   },
   "credential-boundary-014": {
-    "hash": "ad94a3d0aeb5b3791c9dd531a13d4ec619c1fe8e6cfc681502db02d6fc6756d9",
+    "hash": "43252ef09d3fc76cb43bbb46e00a086799e87a9a1200a973aeef043cb11a6ba8",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
@@ -1415,7 +1415,7 @@
     "change": "upstream-sync"
   },
   "osh-096": {
-    "hash": "538bda2b8f9906ea807a5b11e1cffe80a86f13bbfe7f86a9a7954b165c8d84ae",
+    "hash": "e7f79849573f5fef8dd619d5a5e4a48fa9147fb5e9db209900fec282c6751031",
     "since": "2026-09-26",
     "change": "upstream-sync"
   },
