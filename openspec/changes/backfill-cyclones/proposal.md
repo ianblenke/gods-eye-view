@@ -10,13 +10,13 @@ The upstream project has no scenario IDs. The 32 tests of the layer have no tag.
 - `source.js` has 3 lines, 16 branches and 2 functions that no test covers.
 - The four test files have 32 untraced tests.
 
-This is a backfill change. It writes a spec from what the code does now. It tags the old tests and adds tests until each file is complete.
+This is a backfill change. It writes a spec from what the code does now. It tags the old tests and adds tests for each line, branch and function that a test can reach.
 
 ## What Changes
 
 - Add the capability `cyclones` with 9 requirements and the 25 scenarios `cyclones-001` to `cyclones-025`. Each requirement has `Origin: backfill`.
-- Tag the 32 old tests with scenario IDs. One old name also gets the word "earlier", because the STE lint refuses the word that it had.
-- Add 78 tests to the four existing test files. Each new test has a tag and at least one `node:assert` call.
+- Tag the 32 old tests with scenario IDs. The tag is the only change of an old name.
+- Add 78 tests to the four test files of the layer. Each new test has a tag and at least one `node:assert` call.
 - Run a mutation of the code for each scenario, and record the test that fails. The task list has the mutations.
 - Change no production file. The change does not fix any defect and does not add any behavior.
 
@@ -69,4 +69,5 @@ None.
 - `cyclones-fake-viewer`: the tests of `index.js` and of `rendering.js` use a fake viewer, a fake click handler and a fake Cesium object. Only one test of `rendering.js` uses the real Cesium library. No test runs the layer in a browser.
 - `cyclones-shared-overlay-state`: one test of `labels.js` uses the shared world overlay with no host option. It reads the entry count of the source `weather-cyclones` in module state. A later test in the same process that uses the same source would change the count.
 - `cyclones-link-text-error`: a link text that is not a URL makes the validator throw a `TypeError` from the `URL` class, and not the error `Malformed cyclone snapshot`. The spec and the test say this. A person can decide to change it in a later change.
-- `cyclones-info-coverage`: the row controls of a `null` snapshot show a default coverage text, and the text does not say that coverage is missing. The tests check the text. They do not judge it.
+- `cyclones-info-coverage`: the row controls of a `null` snapshot show a default coverage text, and the text does not say that coverage data is not available. The tests check the text. They do not judge it.
+- `cyclones-old-test-names`: the 32 old tests keep their names, and each one got only a tag. Some of these names have words that end in -ing or passive verbs, and the STE lint gives warnings for them. The rule of the owner is that an old test name does not change. A later change can decide.

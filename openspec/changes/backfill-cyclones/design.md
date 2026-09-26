@@ -20,8 +20,8 @@ The ledger has gaps for all four files, and 32 untraced tests. The tests use `no
 
 - Do not change a production file. A defect that the tests show goes to the report of the change.
 - Do not add a behavior or change a text of the layer.
-- Do not rename an old test, except for the tag and for one word that the STE lint refuses.
-- Do not add a new test file. The four existing test files stay the place for the tests.
+- Do not rename an old test, except to add its tag.
+- Do not add a new test file. Keep the tests in the four test files.
 
 ## Decisions
 
@@ -57,7 +57,7 @@ V8 counts the end of the `try`, `catch` and `finally` statement of `update()` in
 
 ### D6 Redundant guards
 
-Some guards of the code repeat another guard. A mutation that removes such a guard cannot fail a test. The proposal lists them as known limits, and the tasks name each surviving mutation.
+Some guards of the code repeat another guard. A mutation that removes such a guard cannot fail a test. The proposal lists them as known limits, and it names each mutation that no test fails.
 
 ## How the gates measure the requirement
 

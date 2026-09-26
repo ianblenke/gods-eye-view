@@ -583,7 +583,7 @@ test('[cyclones-016] superseded asynchronous additions cannot replace newer geom
   assert.equal(h.rendering.getDiagnostics().storms, 0);
   h.rendering.destroy();
 });
-test('[cyclones-016] aborting a pending add retains the earlier complete source', async () => {
+test('[cyclones-016] aborting a pending add retains the prior complete source', async () => {
   const h = harness({ deferred: true });
   const initial = h.rendering.setSnapshot({ storms: [storm()] });
   h.completions.shift()();
@@ -751,7 +751,7 @@ test('[cyclones-014] a refresh keeps one horizon listener', async () => {
   h.rendering.destroy();
 });
 
-test('[cyclones-017] clear stops selection from changing a removed center', async () => {
+test('[cyclones-017] after clear, a selection change leaves the removed center as it was', async () => {
   const h = harness();
   await h.rendering.setSnapshot({ storms: [storm()] });
   const center = h.sources[0].entities.values.find((entity) => entity.id === 'cyclone:ep152026:center');
