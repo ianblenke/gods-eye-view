@@ -118,7 +118,7 @@
 
 ## 5. Gates and review
 
-- [ ] 5.1 Run `make ratchet CHANGE=qa-script-register` and inspect its 70 closed entries.
-- [ ] 5.2 Run `make gates CHANGE=qa-script-register` and correct non-review errors.
+- [x] 5.1 Run `make ratchet CHANGE=qa-script-register` and inspect its 70 closed entries.
+- [x] 5.2 Run `make gates CHANGE=qa-script-register` and correct non-review errors.
 - [ ] 5.3 Run `/opsx:review qa-script-register` with both review agents.
 - [ ] 5.4 Write `review.md` with the passed review and tree hash.
