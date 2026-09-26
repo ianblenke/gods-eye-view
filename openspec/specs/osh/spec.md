@@ -344,8 +344,8 @@ Origin: spec-first
 
 #### Scenario: Register the layer with a stable token `osh-033`
 - **WHEN** the test reads the production layer registry
-- **THEN** it has an entry `{id:'osh-systems', token:'o', disposition:'enabled-only'}`
-- **AND** the registry has 17 entries, sorted by id
+- **THEN** it has an entry `{id:'osh-systems', token:'3', disposition:'enabled-only'}`
+- **AND** the registry has 29 entries, sorted by id
 - **AND** `src/data/localLayers.js` includes the OSH systems layer
 
 #### Scenario: Read the three lists per refresh, and stay correct when the features or the locations are unavailable `osh-046`
@@ -849,10 +849,28 @@ Origin: spec-first
 - **AND** the world overlay places a label or a card clear of an element of the list when it can
 
 #### Scenario: Keep the panel in the page and hidden at the start `osh-094`
-- **WHEN** a test reads `index.html` and `style.css`
-- **THEN** `index.html` has one element with the id `osh-panel` and the attribute `hidden`
+- **WHEN** a test expands `index.html` with its component templates, as the build does, and reads `style.css` with the files that it imports
+- **THEN** the page has one `aside` element with the id `osh-panel` and the attribute `hidden`
 - **AND** that element has the class `osh-panel`
 - **AND** the elements with the ids `osh-panel-video` and `osh-panel-detail` are inside that element
 - **AND** each of the three ids is on one element only
-- **AND** `style.css` gives the display `none` to an element that has the class `osh-panel` and the attribute `hidden`
+- **AND** the style sheets give the display `none` to an element that has the class `osh-panel` and the attribute `hidden`
+
+### Requirement: Application catalog
+The application catalog MUST build the OSH systems layer with the production OSH source and the hosts of the page. It MUST place that layer right after the recent-imagery layer.
+Origin: spec-first
+
+#### Scenario: Build the layer in the application catalog `osh-095`
+- **WHEN** a test builds the application catalog with the standalone layer inputs
+- **THEN** the catalog has one layer with the id `osh-systems`
+- **AND** that layer comes right after the layer `recent-imagery`
+- **AND** the catalog metadata of that layer has the token `3` and the disposition `enabled-only`
+
+#### Scenario: Give the layer the production source and the hosts of the page `osh-096`
+- **WHEN** a test builds the application catalog in a page that has the elements `osh-panel`, `osh-panel-detail` and `osh-panel-video`
+- **AND** the test replaces `fetch` with a function that answers the requests to the same-origin OSH routes
+- **AND** the test clicks the entity of the system with the name System A
+- **THEN** the OSH systems layer of the catalog reads the systems from the route `/api/osh/systems`
+- **AND** the element `osh-panel` has no `hidden` attribute
+- **AND** the element `osh-panel-detail` contains the name of the system
 
