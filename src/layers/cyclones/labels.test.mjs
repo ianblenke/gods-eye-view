@@ -6,10 +6,13 @@ import {
   CYCLONE_OVERLAY_COHORT_LIMIT,
   CYCLONE_OVERLAY_SOURCE_ID,
   createCycloneLabels,
+  cycloneLeadEntry,
   cycloneOverlayEntries,
+  cycloneStormEntry,
   cycloneStormIdFromEntryId,
 } from './labels.js';
 import {
+  getWorldOverlayDiagnostics,
   normalizeOverlayEntry,
   paintLaneForOverlayEntry,
   WORLD_OVERLAY_PAINT_LANES,
@@ -41,7 +44,7 @@ const storms = () => [
 ];
 const byId = (entries) => new Map(entries.map((entry) => [entry.id, entry]));
 
-test('storm cards join the fire and vessel card tier with fire-card clearance', () => {
+test('[cyclones-009] storm cards join the fire and vessel card tier with fire-card clearance', () => {
   const input = storms();
   const entries = byId(cycloneOverlayEntries(input, 'al062026'));
   assert.deepEqual(
@@ -108,7 +111,7 @@ test('storm cards join the fire and vessel card tier with fire-card clearance', 
   assert.ok(none[0].priority > none[1].priority, 'stronger storm ranks first');
 });
 
-test('entries satisfy the shared host contract and keep the 4,000 km lead-hour rule', () => {
+test('[cyclones-009] entries satisfy the shared host contract and keep the 4,000 km lead-hour rule', () => {
   const entries = cycloneOverlayEntries(storms(), 'al062026').map((entry) =>
     normalizeOverlayEntry(CYCLONE_OVERLAY_SOURCE_ID, entry),
   );
@@ -141,7 +144,7 @@ test('entries satisfy the shared host contract and keep the 4,000 km lead-hour r
   );
 });
 
-test('publisher republishes on snapshots and selection changes, and hides on clear', () => {
+test('[cyclones-010] publisher republishes on snapshots and selection changes, and hides on clear', () => {
   const calls = [];
   const host = {
     setEntries: (...args) => calls.push(['entries', ...args]),
@@ -192,9 +195,130 @@ test('publisher republishes on snapshots and selection changes, and hides on cle
   assert.equal(calls.length, 2, 'a cleared publisher stays quiet');
 });
 
-test('storm identity resolves from card and lead-hour ids only', () => {
+test('[cyclones-011] storm identity resolves from card and lead-hour ids only', () => {
   assert.equal(cycloneStormIdFromEntryId('storm:al062026'), 'al062026');
   assert.equal(cycloneStormIdFromEntryId('lead:al062026:24'), 'al062026');
   for (const value of ['vessel:123', 'storm:', 'lead:', '', null, undefined])
+    assert.equal(cycloneStormIdFromEntryId(value), null, String(value));
+});
+
+test('[cyclones-009] card priority is 1000 plus the wind, the largest safe integer for the selected storm and 500 minus the lead hours for a lead label', () => {
+  const [fay, fifteen] = storms();
+  assert.equal(cycloneStormEntry(fay, false).priority, 1050);
+  assert.equal(cycloneStormEntry(fifteen, false).priority, 1000);
+  assert.equal(cycloneStormEntry(fay, true).priority, 9007199254740991);
+  assert.equal(
+    cycloneStormEntry({ ...fay, windKt: 'not a number' }, false).priority,
+    1000,
+  );
+  assert.equal(cycloneLeadEntry('al062026', fay.forecasts[0]).priority, 488);
+  assert.equal(cycloneLeadEntry('al062026', fay.forecasts[1]).priority, 476);
+  assert.equal(CYCLONE_LEAD_LABEL_MAX_DISTANCE_M, 4000000);
+});
+
+test('[cyclones-009] a card with no classification has no detail line, and a selected storm with no forecast list has no lead-hour label', () => {
+  const bare = { id: 'al012026', name: 'Bare', position: anchor(-50, 25) };
+  const card = cycloneStormEntry(bare, false);
+  assert.deepEqual(card.details, []);
+  assert.equal(card.title, 'Bare');
+  assert.equal(card.id, 'storm:al012026');
+  assert.equal(card.priority, 1000);
+  assert.deepEqual(
+    cycloneOverlayEntries([bare], 'al012026').map((entry) => entry.id),
+    ['storm:al012026'],
+  );
+  assert.deepEqual(cycloneOverlayEntries([], 'al012026'), []);
+  assert.deepEqual(
+    cycloneOverlayEntries([{ ...bare, forecasts: [] }], 'al012026').map(
+      (entry) => entry.id,
+    ),
+    ['storm:al012026'],
+  );
+});
+
+test('[cyclones-010] the publisher limits the cohort to 64 and the collision capacity to the ambient count', () => {
+  assert.equal(CYCLONE_OVERLAY_COHORT_LIMIT, 64);
+  assert.equal(CYCLONE_OVERLAY_SOURCE_ID, 'weather-cyclones');
+  const calls = [];
+  const labels = createCycloneLabels({
+    host: {
+      setEntries: (...args) => calls.push(['entries', ...args]),
+      setVisible: (...args) => calls.push(['visible', ...args]),
+      clearSource: (...args) => calls.push(['clear', ...args]),
+    },
+  });
+  const many = Array.from({ length: 70 }, (_, index) => ({
+    id: `al${String(index).padStart(2, '0')}2026`,
+    name: `Storm ${index}`,
+    position: anchor(-60, 20),
+  }));
+  labels.setSnapshot(many, null);
+  assert.deepEqual(calls.at(-1)[3], {
+    cohortLimit: 64,
+    collisionCapacity: 64,
+    moving: false,
+  });
+  labels.setSnapshot(many.slice(0, 5), 'al002026');
+  assert.deepEqual(calls.at(-1)[3], {
+    cohortLimit: 64,
+    collisionCapacity: 4,
+    moving: false,
+  });
+});
+
+test('[cyclones-010] a snapshot with no selection argument keeps the selection, and clear forgets it', () => {
+  const calls = [];
+  const labels = createCycloneLabels({
+    host: {
+      setEntries: (source, entries) => calls.push(entries),
+      setVisible() {},
+      clearSource() {},
+    },
+  });
+  labels.setSelection('ep152026');
+  assert.deepEqual(calls, []);
+  labels.setSnapshot(storms());
+  assert.deepEqual(
+    calls.at(-1).map((entry) => [entry.id, entry.variant]),
+    [
+      ['storm:al062026', 'card'],
+      ['storm:ep152026', 'selected'],
+      ['lead:ep152026:12', 'card'],
+    ],
+  );
+  labels.setSnapshot(storms(), 'al062026');
+  labels.setSnapshot(storms());
+  assert.equal(calls.at(-1)[0].variant, 'selected');
+  labels.clear();
+  labels.setSnapshot(storms());
+  assert.deepEqual(
+    calls.at(-1).map((entry) => entry.variant),
+    ['card', 'card'],
+  );
+});
+
+test('[cyclones-010] with no host option the publisher uses the shared world overlay', () => {
+  const entries = () =>
+    getWorldOverlayDiagnostics().entriesBySource[CYCLONE_OVERLAY_SOURCE_ID];
+  const labels = createCycloneLabels();
+  labels.setSnapshot(storms(), 'al062026');
+  assert.equal(entries(), 4);
+  labels.setSelection('ep152026');
+  assert.equal(entries(), 3);
+  labels.clear();
+  assert.equal(entries(), 0);
+});
+
+test('[cyclones-011] only the prefixes storm and lead, in lower case and at the start, give a storm id', () => {
+  assert.equal(cycloneStormIdFromEntryId('storm:al062026:extra'), 'al062026');
+  assert.equal(cycloneStormIdFromEntryId('lead:al062026:'), 'al062026');
+  assert.equal(cycloneStormIdFromEntryId('storm:a:b:c'), 'a');
+  for (const value of [
+    'xstorm:al062026',
+    'STORM:al062026',
+    'storms:al062026',
+    5,
+    {},
+  ])
     assert.equal(cycloneStormIdFromEntryId(value), null, String(value));
 });
