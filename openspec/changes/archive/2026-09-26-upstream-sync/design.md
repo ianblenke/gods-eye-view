@@ -1,20 +1,20 @@
 ## Context
 
-The fork and the upstream project share the commit `3ca81fb`, from 2026-09-13. Since then, the upstream project accepted 61 pull requests, and the fork added the OSH layers, the video relay and the spec gates. Both sides changed 32 files. A person checked these files and resolved the conflicts by hand.
+The fork and the upstream project share the commit `3ca81fb`, from 2026-09-13. Since then, the upstream project accepted 61 pull requests, and the fork added the OSH layers, the video relay and the spec gates. Both sides changed 32 files. The author of this change checked these files and resolved the conflicts by hand.
 
-The merged commit is `b210ab0`. This change makes one merge commit, and the change `ledger-adopt` gives the gates the command that this merge commit needs. The proposal names the roles: the owner, the person who accepts this change on `main`, and the author of this change.
+The merged commit is `b210ab0`. This change makes one merge commit, and the change `ledger-adopt` gives the gates the command that this merge commit needs. The proposal names the roles: the owner and the author of this change.
 
 ## Goals and non-goals
 
 - Bring the upstream code into the fork. The OSH layers and the credential boundary must work as before.
 - Make the tree of the merge commit pass the gates, with an exact record of each gap that the merge commit brings.
 - Do not write specs for the upstream features. The backfill changes do that.
-- Keep the behavior of the OSH layers and of the geocoders as it was in the fork. The known limits `sync-share-token` and `sync-third-geocoder-call` name two changes.
+- Keep the behavior of the OSH layers and of the geocoders as it was in the fork. There are two differences: the share-link token of the OSH layer (`sync-share-token`) and the third request of a forward lookup (`sync-third-geocoder-call`).
 - Change only how the OSH layers and the geocoders connect to the application.
 
 ## D1 The merge commit
 
-The merge commit has the newest commit of the fork as its first parent and `b210ab0` as its second parent. A person resolved the conflicts by hand. The resolution follows one rule: the structure of the application comes from the upstream project, and the fork adds its own modules to that structure.
+The merge commit has the newest commit of the fork as its first parent and `b210ab0` as its second parent. The author of this change resolved the conflicts by hand. The resolution follows one rule: the structure of the application comes from the upstream project, and the fork adds its own modules to that structure.
 
 The rule gives these results. The page `index.html` is the shell of the upstream project, and the component templates of the page contain the markup. The layers of the application come from `src/app/constructCatalog.js`. The file `src/data/localLayers.js` stays for the test of `osh-033` only. The OSH files follow the Prettier format of the upstream project.
 
@@ -34,7 +34,7 @@ The upstream project rewrote the place search and the reverse geocoder, and its 
 
 The HTTP geospatial provider remembers an answer `configured:false` for the life of the provider. It also remembers, for one coordinate, an answer that has no HTTP error status, has a Google status and gives no place. It does not remember an answer with an HTTP error status or with no Google status.
 
-The 13 tests of `credential-boundary-014` moved from `src/voice/gevActions.test.mjs` to `src/search/reverseGeocodeRoute.test.mjs`, because the code moved to the provider. A 14th test of the fork checked the cache that the fork had in `src/voice/gevActions.js`. The clone does not have this test (the known limit `sync-dropped-reverse-cache-test`). The scenario text of `credential-boundary-014` names the HTTP geospatial provider, and not the voice actions.
+The 13 tests of `credential-boundary-014` moved from `src/voice/gevActions.test.mjs` to `src/search/reverseGeocodeRoute.test.mjs`, because the code moved to the provider. A 14th test of the fork checked the cache that the fork had in `src/voice/gevActions.js`. The tree of the merge commit does not have this test (the known limit `sync-dropped-reverse-cache-test`). The scenario text of `credential-boundary-014` names the HTTP geospatial provider, and not the voice actions.
 
 A forward lookup that finds no place makes three requests: to the server route, to Photon and to the local Nominatim route `/api/geocode`.
 
@@ -54,7 +54,7 @@ The tree of the merge commit has files with gaps that the fork did not have. The
 
 The command needs one run of all the tests. After that, the ratchet command runs the tests again and writes the registry and the links. The gates then check the tree against the base ledger, with the adopted count of each file.
 
-A file that a person resolved by hand can have a gap that the resolution added. The person who accepts this change on `main` reads the Git diff between the merged commit and HEAD for these files. That person also reads the diff of the three code files that the known limit `sync-files-edited-after-the-merge` names. Rule 21 of `AGENTS.md` says that this person must check that the upstream remote has the merged commit, and must record the result in `review.md`.
+A file that the author resolved by hand can have a gap that the resolution added. The owner reads the Git diff between the merged commit and HEAD for these files. The owner also reads the diff of the three code files that the known limit `sync-files-edited-after-the-merge` names. Rule 21 of `AGENTS.md` says that the owner must check that the upstream remote has the merged commit, and must record the result in `review.md`.
 
 ## How the gates measure the requirement
 
