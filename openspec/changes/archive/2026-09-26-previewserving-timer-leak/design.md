@@ -4,9 +4,9 @@ The gate starts each test file in a child process. The guard records each live `
 
 ## Decision
 
-The change edits `src/tooling/previewServing.test.mjs` only. The test waits 60 ms after each Vite server close. The test keeps each assertion and name.
+The change edits `src/tooling/previewServing.test.mjs` only. The test waits 60 ms after each Vite server closes. The test keeps each assertion and name.
 
-Vite sets a 50 ms crawl timer after a dev request. Its `cancel()` sets a flag but does not clear an armed timer. A scratch `async_hooks` hook found this timer live after `server.close()`. The hook also found an undici `Immediate` after a local `fetch` request. The 60 ms wait gives both resources time to end.
+Vite sets a 50 ms crawl timer after a dev request. Its `cancel()` sets a flag but does not clear an armed timer. A temporary `async_hooks` hook found this timer live after `server.close()`. The hook also found an undici `Immediate` after a local `fetch` request. The 60 ms wait gives both resources time to end.
 
 ## Evidence
 
@@ -16,7 +16,7 @@ Before the change, 30 plain runs had 0 leaks and 0 failures. Before the change, 
 
 After the change, 30 plain runs had 0 leaks and 0 failures. After the change, 100 loaded runs had 0 leaks and 0 failures. These runs used the gate trace reporter.
 
-A scratch dev test exits at once after server close. With the wait removed, its guard found an `Immediate` in five of five runs. With the wait, its guard found no leak in five of five runs. The scratch test does not prove the source of the CI `Timeout`.
+A temporary development test exits immediately after the server closes. With the wait removed, its guard found an `Immediate` in five of five runs. With the wait, its guard found no leak in five of five runs. The scratch test does not prove the source of the CI `Timeout`.
 
 Ten plain runs of `src/voice/gevActions.test.mjs` had no leak and no failure. No timer stack links that file to the Vite test.
 

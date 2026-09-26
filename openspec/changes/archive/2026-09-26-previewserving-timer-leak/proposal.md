@@ -17,3 +17,4 @@ The test waits 60 ms after each Vite server close. The change keeps each test na
 - `ci-load`: A local CPU load does not give the same load as the CI runner.
 - `local-rate`: The unchanged test left no live timer in 100 loaded runs on this host.
 - `voice-test`: Ten plain runs of `src/voice/gevActions.test.mjs` had no leak. Its earlier `Immediate` needs separate proof before a fix.
+- `timer-owner`: The exact owner of the `Timeout` in the CI run is not proved. The CI record has no stack. The local hook found a Vite timer and an `Immediate` of `undici`, and the unchanged test did not leak on this host.
