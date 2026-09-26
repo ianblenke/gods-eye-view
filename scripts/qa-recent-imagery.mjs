@@ -3,7 +3,7 @@
  * @purpose Prove that image search, compare modes and controls work.
  * @covers pending:recent-imagery
  * @run node scripts/qa-recent-imagery.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /**
  * Rendered acceptance for DATA ▸ Recent Imagery against the real NASA

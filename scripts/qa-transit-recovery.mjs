@@ -2,7 +2,7 @@
  * @purpose Prove that transit data recovers after a camera move.
  * @covers pending:transit
  * @run node scripts/qa-transit-recovery.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /** Camera-jump regression against an existing server; never starts a server. */
 import puppeteer from 'puppeteer';

@@ -3,7 +3,7 @@
  * @purpose Prove that weather controls and storm selection work together.
  * @covers cyclones,pending:wind,pending:weather
  * @run node scripts/qa-weather-journey.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-weather-journey — drive the Weather layers the way a person would and

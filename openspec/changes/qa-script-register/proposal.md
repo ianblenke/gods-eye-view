@@ -117,3 +117,4 @@ The change closes the coverage entries below. The counts come from `openspec/tra
 - `qa-loaded-flag`: The ratchet removes the entry and its `loaded` value. Five loaded helper scripts lose that ledger fact.
 - `qa-runtime`: The gate does not run a browser QA script. A separate browser run must prove its runtime behavior.
 - `qa-ratchet-noise`: The counts of `src/data/labelArbiter.js` change between runs (see `sync-counts-change-between-runs` of the change `upstream-sync`). No test of this change closes that gap, and the ledger records the count that the ratchet measured.
+- `qa-advice-delta-files`: The advice reads each entry of the `specs` folder of a change as a capability name. A file in that folder, and not a folder, gives a false name. The names of real deltas are folders, so this input is unusual.

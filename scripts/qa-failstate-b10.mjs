@@ -3,7 +3,7 @@
  * @purpose Prove that a failed feed shows a visible error state.
  * @covers pending:application-shell
  * @run node scripts/qa-failstate-b10.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-failstate-b10.mjs

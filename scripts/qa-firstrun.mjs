@@ -3,7 +3,7 @@
  * @purpose Prove that first run choices activate the correct layers and view.
  * @covers pending:application-shell
  * @run node scripts/qa-firstrun.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-firstrun — the mission launcher's contract, proved in the real app.

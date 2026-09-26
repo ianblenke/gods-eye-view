@@ -3,7 +3,7 @@
  * @purpose Prove that pack import, display and resource cleanup work.
  * @covers pending:director
  * @run node scripts/qa-director-packs.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /** Synthetic, self-authored assets exercise import, rendering and pack resource lifetime. */
 import fs from 'node:fs';

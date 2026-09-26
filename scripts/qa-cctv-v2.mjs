@@ -2,7 +2,7 @@
  * @purpose Prove that camera markers and feeds work in the real browser.
  * @covers pending:cctv
  * @run node scripts/qa-cctv-v2.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /**
  * qa-cctv-v2.mjs — CCTV v2 subsystem proof harness

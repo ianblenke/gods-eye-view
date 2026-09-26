@@ -3,7 +3,7 @@
  * @purpose Prove that radio markers and media controls work in the browser.
  * @covers pending:radio
  * @run node scripts/qa-radio.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /**
  * Deterministic browser proof for the Radio companion layer.

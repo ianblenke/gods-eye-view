@@ -3,7 +3,7 @@
  * @purpose Prove that an author can share a scene with local assets.
  * @covers pending:director
  * @run node scripts/qa-director-sharing.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /** Sharing/authoring acceptance with local synthetic assets and real installed controls. */
 import fs from 'node:fs';

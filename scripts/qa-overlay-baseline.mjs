@@ -3,7 +3,7 @@
  * @purpose Measure the cost of world overlays in fixed views.
  * @covers pending:overlays,pending:performance
  * @run node scripts/qa-overlay-baseline.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * Phase 0 world-overlay baseline harness.

@@ -3,7 +3,7 @@
  * @purpose Prove that vessel cards use the shared overlay host.
  * @covers pending:vessels,pending:overlays
  * @run node scripts/qa-vessel-cards.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-vessel-cards.mjs — operator-side visual proof harness for AIS cards in

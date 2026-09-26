@@ -3,7 +3,7 @@
  * @purpose Prove that the fire layer shows live data and failed feed states.
  * @covers pending:firms
  * @run node scripts/qa-firms.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-firms.mjs — headless proof for the LIVE NASA FIRMS fires layer.

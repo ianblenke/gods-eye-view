@@ -3,7 +3,7 @@
  * @purpose Prove that a voice route gives the intended camera path.
  * @covers pending:voice,pending:directions
  * @run node scripts/qa-flyroute-cinema.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * fly_route cinematic evidence — drives the REAL voice runner headlessly and

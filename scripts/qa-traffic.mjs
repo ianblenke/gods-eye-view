@@ -3,7 +3,7 @@
  * @purpose Prove that live traffic and keyless states work.
  * @covers pending:traffic
  * @run node scripts/qa-traffic.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-traffic.mjs — headless proof for the TomTom live-flow traffic layer.

@@ -3,7 +3,7 @@
  * @purpose Prove that detection labels stay within their display limit.
  * @covers pending:overlays
  * @run node scripts/qa-labels.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * Deterministic QA for the detection overlay's bounded two-lane label pipeline.

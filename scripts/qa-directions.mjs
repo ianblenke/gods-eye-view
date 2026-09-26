@@ -3,7 +3,7 @@
  * @purpose Prove that route controls, map picks and camera travel work.
  * @covers pending:directions
  * @run node scripts/qa-directions.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * Browser proof of the Directions layer: real chip clicks, real globe clicks,

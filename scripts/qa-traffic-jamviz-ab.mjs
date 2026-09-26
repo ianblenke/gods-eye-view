@@ -3,7 +3,7 @@
  * @purpose Compare traffic display modes from the same view.
  * @covers pending:traffic
  * @run node scripts/qa-traffic-jamviz-ab.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-traffic-jamviz-ab.mjs — A/B screenshot capture for the jam-viz

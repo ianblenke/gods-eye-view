@@ -1,8 +1,5 @@
-# qa-scripts Specification
+## ADDED Requirements
 
-## Purpose
-Keep the reason for each browser QA script in the specs. Give each script a header with its purpose and the capabilities that it covers. Stop the build for a header that is not valid. Tell an author which QA scripts matter to a change.
-## Requirements
 ### Requirement: QA script header
 The register MUST check the first block comment of each tracked file with the name `scripts/qa-*.mjs`.
 Origin: spec-first
@@ -43,7 +40,7 @@ Origin: spec-first
 - **WHEN** a pending item names an area without a folder in `openspec/specs/`
 - **THEN** the register reports no covers error for that item
 
-#### Scenario: Reject a landed pending area `qa-scripts-010`
+#### Scenario: Reject a pending area that has a capability folder `qa-scripts-010`
 - **WHEN** a pending item names an area with a folder in `openspec/specs/`
 - **THEN** the register reports `QA-COVERS-LANDED` for the script
 
@@ -155,4 +152,3 @@ Origin: spec-first
 #### Scenario: Reject a continuation line `qa-scripts-028`
 - **WHEN** a header has a text line after one of its tag lines
 - **THEN** the register reports `QA-HEADER` for the script
-

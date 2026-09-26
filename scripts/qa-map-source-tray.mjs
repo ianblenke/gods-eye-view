@@ -3,7 +3,7 @@
  * @purpose Prove that the map source tray works across layouts and key states.
  * @covers pending:application-shell
  * @run node scripts/qa-map-source-tray.mjs
- * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
 /** Focused browser proof for the responsive, accessible Map Source tray. */
 import fs from 'node:fs';

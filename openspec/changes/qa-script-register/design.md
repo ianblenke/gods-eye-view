@@ -33,7 +33,7 @@ covers list: ^ITEM(?:,ITEM)*$
 
 `ITEM` is one capability item or one pending item. The unmapped item replaces the full list. A comma has no space on either side. A purpose is one sentence with a final mark. The register checks its shape, not its grammar or truth.
 
-Each of the four tags occurs exactly once. The values cannot be empty. Reject any other line, including a blank line or a continuation line.
+Each of the four tags occurs exactly once. The values cannot be empty. Reject any other line. A blank line and a continuation line are other lines.
 
 Example:
 
@@ -62,7 +62,7 @@ B: <script>: <item> has no capability folder in openspec/specs/.
 C: <script>: replace pending:<area> with <area>; its capability folder exists.
 ```
 
-A script with a valid header can still have an unknown or landed covers item. It leaves the code inventory, but the covers error stops the gate. A script with a bad header stays in the inventory. The gate reports its header error and coverage gap.
+A script with a valid header can still have an unknown covers item, or a pending item that has a capability folder. It leaves the code inventory, but the covers error stops the gate. A script with a bad header stays in the inventory. The gate reports its header error and coverage gap.
 
 ## D3 Coverage inventory and ledger
 
@@ -118,7 +118,7 @@ The table gives the exact covers value and the proposed purpose sentence for eac
 | `scripts/qa-director-packs.mjs` | `pending:director` | Prove that pack import, display and resource cleanup work. |
 | `scripts/qa-director-sharing.mjs` | `pending:director` | Prove that an author can share a scene with local assets. |
 | `scripts/qa-director-timing.mjs` | `pending:director,pending:scenes` | Prove that scene time and seek control work in the browser. |
-| `scripts/qa-draw-tool.mjs` | `pending:annotations` | Prove that draw controls accept pointer and key actions and clean up. |
+| `scripts/qa-draw-tool.mjs` | `pending:annotations` | Prove that draw controls accept pointer and key actions and release their resources. |
 | `scripts/qa-enrich-ambient.mjs` | `pending:local-adsb` | Prove that ambient aircraft get the correct type image. |
 | `scripts/qa-failstate-b10.mjs` | `pending:application-shell` | Prove that a failed feed shows a visible error state. |
 | `scripts/qa-firms.mjs` | `pending:firms` | Prove that the fire layer shows live data and failed feed states. |

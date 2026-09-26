@@ -2,7 +2,7 @@
  * @purpose Prove that transit headings show stop and travel states.
  * @covers pending:transit
  * @run node scripts/qa-transit-heading.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 import puppeteer from 'puppeteer';
 

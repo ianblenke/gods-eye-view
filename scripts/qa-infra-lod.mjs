@@ -3,7 +3,7 @@
  * @purpose Prove that infrastructure markers stay within the view limit.
  * @covers pending:datacenters,pending:dams,pending:submarine-cables
  * @run node scripts/qa-infra-lod.mjs
- * @needs A browser and a running app server.
+ * @needs A browser and an app server that runs.
  */
 /**
  * qa-infra-lod — browser checks for the local-infrastructure LOD declutter.
