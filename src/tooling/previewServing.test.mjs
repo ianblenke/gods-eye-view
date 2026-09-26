@@ -159,6 +159,7 @@ test('real dev and built-preview servers serve provider JSON and terminate unkno
       }
     } finally {
       await server.close();
+      await new Promise((resolve) => setTimeout(resolve, 60));
     }
   }
 });
@@ -229,6 +230,7 @@ test('[credential-boundary-007] the real dev and preview servers answer the geoc
       );
     } finally {
       await server.close();
+      await new Promise((resolve) => setTimeout(resolve, 60));
     }
   }
   assert.deepEqual(
