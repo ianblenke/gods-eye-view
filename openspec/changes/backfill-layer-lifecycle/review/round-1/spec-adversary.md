@@ -1,0 +1,4 @@
+Verdict: FAIL
+- [ ] F1 critical src/data/manager.test.mjs:3556 At commit ba4175d6dea12165c065f5c3a0b105136ac20e51, the test does not prove that the next listener gets the same event. Save the event received by the first listener and compare object identity.
+- [ ] F2 minor openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/proposal.md:29 At commit ba4175d6dea12165c065f5c3a0b105136ac20e51, the gate warns about “changing.” Reword the sentence to remove the warning.
+- [ ] F3 minor openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/review.md:1 At commit ba4175d6dea12165c065f5c3a0b105136ac20e51, the gate reports REVIEW-MISSING. Record both reviews in `review.md`, then rerun the gate.

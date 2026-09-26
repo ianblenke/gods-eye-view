@@ -3491,7 +3491,7 @@ test('refreshLayerStats reaches presentation through the bare lifecycle', async 
   assert.deepEqual(changes, ['status']);
 });
 
-test('[layer-lifecycle-001] keep the layer when destroy returns false', async () => {
+test('[layer-lifecycle-001] keep the layer when the destroy function returns false', async () => {
   const manager = new DataLayerManager({});
   manager.register({ id: 'failed-layer' });
   const entry = manager.layers.get('failed-layer');
@@ -3520,7 +3520,7 @@ test('[layer-lifecycle-001] keep the layer when destroy returns false', async ()
   }
 });
 
-test('[layer-lifecycle-001] keep the layer when destroy throws', async () => {
+test('[layer-lifecycle-001] keep the layer when the destroy function throws', async () => {
   const manager = new DataLayerManager({});
   const failure = new Error('destroy failed');
   manager.register({ id: 'failed-layer' });
@@ -3553,14 +3553,20 @@ test('[layer-lifecycle-002] send the event after an activity listener error', as
   const lifecycle = new LayerLifecycle({});
   const failure = new Error('listener failed');
   const events = [];
-  lifecycle.subscribeActivity(() => { throw failure; });
+  let first = null;
+  lifecycle.subscribeActivity((event) => {
+    first = event;
+    throw failure;
+  });
   lifecycle.subscribeActivity((event) => events.push(event));
   const warnings = [];
   const originalWarn = console.warn;
   console.warn = (...args) => warnings.push(args);
   try {
     lifecycle.refreshLayerStats();
-    assert.deepEqual(events, [{ type: 'status' }]);
+    assert.equal(events.length, 1);
+    assert.equal(events[0], first);
+    assert.deepEqual(events[0], { type: 'status' });
     assert.deepEqual(warnings, [['[Data] activity listener error:', failure]]);
   } finally {
     console.warn = originalWarn;

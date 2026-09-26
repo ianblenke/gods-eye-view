@@ -14,6 +14,7 @@
   - Tag the test with `[layer-lifecycle-002]`.
   - Mutation: Remove the catch for an activity listener error. The test must fail.
   - Mutation: Change the activity warning text. The test must fail.
+  - Mutation: Pass a copy of the event to each listener. The test must fail.
 - [x] 2.3 Run the selected test set 20 times plain and 20 times with CPU load.
 - [x] 2.4 Run each mutation and record each test that fails.
 - [x] 2.5 Run STE lint, format check, and the new tests.
