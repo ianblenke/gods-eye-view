@@ -1534,7 +1534,7 @@
     "src/app/layers/osh.test.mjs › [osh-095] builds the OSH systems layer in the application catalog right after the recent-imagery layer"
   ],
   "osh-096": [
-    "src/app/layers/osh.test.mjs › [osh-096] gives the application layer the production source and the elements of the page"
+    "src/app/layers/osh.test.mjs › [osh-096] gives the OSH systems layer of the catalog the production source and the hosts of the page"
   ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"

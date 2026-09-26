@@ -3634,11 +3634,11 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 18,
-      "branches": 52,
+      "branches": 50,
       "functions": 0,
       "totals": {
         "lines": 1228,
-        "branches": 407,
+        "branches": 405,
         "functions": 58
       },
       "sha": "fe25755fea99ad22dd3c17fd9f443b6b2ba002b1894facad2226fc4f7ac17087",
@@ -3678,8 +3678,8 @@
     },
     "src/data/lifecycle.js": {
       "loaded": true,
-      "lines": 184,
-      "branches": 102,
+      "lines": 177,
+      "branches": 100,
       "functions": 15,
       "totals": {
         "lines": 2324,
@@ -8123,7 +8123,7 @@
       "functions": 2,
       "totals": {
         "lines": 801,
-        "branches": 333,
+        "branches": 334,
         "functions": 44
       },
       "sha": "40dbe3a0e93baf1cd45bd151f2d548e9d9ead6050c9472d7aaeded3a5ed7bdbd",
