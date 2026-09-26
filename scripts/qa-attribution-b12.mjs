@@ -1,4 +1,10 @@
 /**
+ * @purpose Prove that data and map credits stay visible in each display mode.
+ * @covers pending:overlays,pending:application-shell
+ * @run node scripts/qa-attribution-b12.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-attribution-b12.mjs — visual + state proof for Batch 12 (data attribution).
  *
  * Findings H10 + H11 (docs/pre-ship-audit-2026-07-01.md):

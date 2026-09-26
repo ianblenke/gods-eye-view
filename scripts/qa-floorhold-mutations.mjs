@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that floor tests detect each named defect.
+ * @covers pending:local-adsb
+ * @run node scripts/qa-floorhold-mutations.mjs
+ * @needs Node and a writable project tree.
+ */
+/**
  * Are the floor-hold pins actually load-bearing?
  *
  * A pin that is red only when you delete the whole feature proves very little.

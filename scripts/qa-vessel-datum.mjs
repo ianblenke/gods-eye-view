@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that vessel height matches the visible water surface.
+ * @covers pending:vessels
+ * @run node scripts/qa-vessel-datum.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-vessel-datum.mjs — assertion harness for the AIS vessel vertical-datum
  * pass (docs/superpowers/specs/2026-07-27-vessel-datum-design.md).
  *

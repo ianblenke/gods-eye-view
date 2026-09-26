@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that voice text selects the intended app action.
+ * @covers pending:voice
+ * @run node scripts/qa-voice-routing.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-voice-routing.mjs — voice-surface QA harness (overnight 2026-07-27).
  *
  * Two independent layers:

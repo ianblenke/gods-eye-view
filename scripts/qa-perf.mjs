@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that the render governor stops idle work.
+ * @covers pending:performance
+ * @run node scripts/qa-perf.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-perf — render-governor regression gate (perf wave 2).
  *
  * Asserts the governor's observable contract with RELATIVE frame-count

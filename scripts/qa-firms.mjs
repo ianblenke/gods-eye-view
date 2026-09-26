@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that the fire layer shows live data and failed feed states.
+ * @covers pending:firms
+ * @run node scripts/qa-firms.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-firms.mjs — headless proof for the LIVE NASA FIRMS fires layer.
  *
  * Drives the REAL app in headless Chromium against a dev server with a

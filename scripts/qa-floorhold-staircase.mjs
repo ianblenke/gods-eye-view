@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that a ground contact reaches its floor without a visible jump.
+ * @covers pending:local-adsb
+ * @run node scripts/qa-floorhold-staircase.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * scripts/qa-floorhold-staircase.mjs — what a grounded contact DOES while its
  * floor data arrives, tick by tick.
  *

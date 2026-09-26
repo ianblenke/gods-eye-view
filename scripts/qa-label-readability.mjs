@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Capture label contrast over a bright map surface.
+ * @covers pending:overlays
+ * @run node scripts/qa-label-readability.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-label-readability.mjs — before/after evidence capture for ambient label
  * legibility over bright ground.
  *

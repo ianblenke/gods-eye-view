@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that live traffic and keyless states work.
+ * @covers pending:traffic
+ * @run node scripts/qa-traffic.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-traffic.mjs — headless proof for the TomTom live-flow traffic layer.
  *
  * Drives the REAL app in headless Chromium against a dev server that has a

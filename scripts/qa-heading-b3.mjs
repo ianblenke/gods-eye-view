@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that an aircraft turn changes its display course.
+ * @covers pending:local-adsb
+ * @run node scripts/qa-heading-b3.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-heading-b3.mjs — throwaway QA harness for skylight Task 4
  * (path-derived, rate-limited display course; Batch 3 overnight run).
  *

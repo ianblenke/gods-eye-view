@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that traffic data follows city travel.
+ * @covers pending:traffic
+ * @run node scripts/qa-traffic-navigation.mjs
+ * @needs A browser and a running app server.
+ */
 // Deterministic city-navigation exercise; road/flow responses are fixtures.
 import assert from 'node:assert/strict';
 import puppeteer from 'puppeteer';

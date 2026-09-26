@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that infrastructure markers stay within the view limit.
+ * @covers pending:datacenters,pending:dams,pending:submarine-cables
+ * @run node scripts/qa-infra-lod.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-infra-lod — browser checks for the local-infrastructure LOD declutter.
  *
  * Datacenters and dams use a bounded active-stem set. Cables are loaded for

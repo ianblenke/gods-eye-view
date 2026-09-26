@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that UI disposal releases each owned resource.
+ * @covers pending:application-shell
+ * @run node scripts/qa-ui-disposal.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 /** Exercise the real UI disposal path, including unrelated resource owners. */
 import puppeteer from 'puppeteer';
 const browser = await puppeteer.launch({

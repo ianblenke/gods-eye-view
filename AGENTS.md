@@ -32,6 +32,7 @@ Each rule below comes from a defect that reached this project. Obey each one.
 19. Look at the file again before you report a correction as complete. Give the output of the search that shows it. A report of work that is not done costs a reviewer a full round, and it is worse than slow work.
 20. Look for the fault that your own correction adds. A correction to prose frequently adds a new fault to the same file. Run `make lint` after each group of corrections.
 21. Use the ledger command `adopt` only for code that a merge commit brought from the upstream project. Do not use it for code that a person wrote in this project. The person who merges a change that uses `adopt` must check the merge commit of that change. The upstream remote must have the second parent of that merge commit. That person must also record the result in `review.md`.
+22. For a spec change, read the QA lines in the gate output. Avoid a conflict with a listed purpose. Add a header to each new QA script.
 
 ## Gates
 

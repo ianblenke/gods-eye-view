@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that ambient aircraft get the correct type image.
+ * @covers pending:local-adsb
+ * @run node scripts/qa-enrich-ambient.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-enrich-ambient.mjs — headless proof for AMBIENT fleet type enrichment
  * (fleet-enrichment widening of skylight Task 14).
  *

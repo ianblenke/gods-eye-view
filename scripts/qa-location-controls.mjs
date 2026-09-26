@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that location controls handle result order and errors.
+ * @covers pending:application-shell
+ * @run node scripts/qa-location-controls.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 /** Location UI acceptance; controlled search results isolate UI races from geocoder availability. */
 import fs from 'node:fs';
 import puppeteer from 'puppeteer';

@@ -1183,3 +1183,59 @@ test('[gap-ledger-096 gap-ledger-097] stops the check for an adopt line when its
     assert.doesNotMatch(check.output, /LEDGER-ADOPT-[A-Z]+ src\/merged\.js/, 'a line that gap-ledger-095 rejects gives no adopt error');
   });
 });
+
+const QA_HEADER = (covers) => `/**\n * @purpose Prove that the layer works.\n * @covers ${covers}\n * @run node scripts/qa-example.mjs\n * @needs A browser and a server.\n */\nexport {};\n`;
+
+test('[qa-scripts-024] stops the gate for a QA header error', GUARDED_RUN, () => {
+  withFixture((root) => {
+    write(root, { 'scripts/qa-example.mjs': 'export {};\n' });
+    git(root, 'add', 'scripts/qa-example.mjs');
+    const result = run(root, ['check']);
+    assert.equal(result.status, 1);
+    assert.match(result.output, /ERROR QA-HEADER scripts\/qa-example\.mjs/);
+    assert.match(result.output, /scripts\/qa-example\.mjs: add one first block/);
+    assert.match(result.output, /Coverage: [0-9]+ files, [0-9]+ complete, [1-9][0-9]* not loaded/);
+  });
+});
+
+test('[qa-scripts-025] stops for both covers errors and omits valid QA headers', GUARDED_RUN, () => {
+  withFixture((root) => {
+    write(root, {
+      'scripts/qa-example.mjs': QA_HEADER('unknown,pending:landed'),
+      'openspec/specs/landed/spec.md': '## Requirements\n\n### Requirement: Landed\nThis area MUST work.\nOrigin: backfill\n',
+    });
+    git(root, 'add', 'scripts/qa-example.mjs', 'openspec/specs/landed/spec.md');
+    const result = run(root, ['check']);
+    assert.equal(result.status, 1);
+    assert.match(result.output, /ERROR QA-COVERS-UNKNOWN scripts\/qa-example\.mjs/);
+    assert.match(result.output, /ERROR QA-COVERS-LANDED scripts\/qa-example\.mjs/);
+    assert.match(result.output, /Coverage: 1 files,/);
+  });
+});
+
+test('[qa-scripts-016] prints QA advice after Trace', GUARDED_RUN, () => {
+  withFixture((root) => {
+    write(root, {
+      'scripts/qa-example.mjs': QA_HEADER('demo'),
+      'openspec/changes/add-demo/specs/demo/spec.md': SPEC,
+      'openspec/specs/demo/spec.md': SPEC.replace('## ADDED Requirements', '## Requirements'),
+    });
+    git(root, 'add', 'scripts/qa-example.mjs', 'openspec/specs/demo/spec.md');
+    const result = run(root, ['check', '--change', 'add-demo']);
+    assert.match(result.output, /Trace: [^\n]+\nQA: scripts\/qa-example\.mjs covers demo: Prove that the layer works\./);
+  });
+});
+
+test('[qa-scripts-014] keeps the coverage gap for a QA script with a bad header', GUARDED_RUN, () => {
+  withFixture((root) => {
+    const openSpec = (_root, args) => ({ status: 0, error: null, stdout: args[0] === '--version' ? '1.3.1\n' : '{"items":[]}' });
+    const initial = run(root, ['init'], { openSpec });
+    assert.equal(initial.status, 0, initial.output);
+    write(root, { 'scripts/qa-example.mjs': 'export {};\n' });
+    git(root, 'add', 'scripts/qa-example.mjs');
+    const result = run(root, ['check'], { openSpec });
+    assert.equal(result.status, 1);
+    assert.match(result.output, /ERROR QA-HEADER scripts\/qa-example\.mjs/);
+    assert.match(result.output, /ERROR LEDGER-NEW-COVERAGE-GAP scripts\/qa-example\.mjs/);
+  });
+});

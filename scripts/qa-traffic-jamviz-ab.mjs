@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Compare traffic display modes from the same view.
+ * @covers pending:traffic
+ * @run node scripts/qa-traffic-jamviz-ab.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-traffic-jamviz-ab.mjs — A/B screenshot capture for the jam-viz
  * congestion prototypes (feat/traffic-jam-viz).
  *

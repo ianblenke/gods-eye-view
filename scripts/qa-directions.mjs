@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that route controls, map picks and camera travel work.
+ * @covers pending:directions
+ * @run node scripts/qa-directions.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * Browser proof of the Directions layer: real chip clicks, real globe clicks,
  * a real route from the real proxy, a real camera flight.
  *

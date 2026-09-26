@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that first run choices activate the correct layers and view.
+ * @covers pending:application-shell
+ * @run node scripts/qa-firstrun.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-firstrun — the mission launcher's contract, proved in the real app.
  *
  * The unit suite pins the show policy and the mission table against fakes. This

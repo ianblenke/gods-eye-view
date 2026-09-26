@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that scene media starts and stops with scene time.
+ * @covers pending:scenes
+ * @run node scripts/qa-nepal-media-playback.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 // Composed-app media policy/lifecycle checks. Pinokio UA is a policy fixture,
 // not native-host acceptance; the YouTube SDK clock below is deterministic.
 import assert from 'node:assert/strict';

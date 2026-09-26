@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that keys and value controls change the real app.
+ * @covers pending:application-shell
+ * @run node scripts/qa-visual-input.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 /** Browser acceptance for application shortcuts and generated parameter controls. */
 import fs from 'node:fs';
 import puppeteer from 'puppeteer';

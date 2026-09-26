@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Compare traffic colors across visual styles.
+ * @covers pending:traffic
+ * @run node scripts/qa-traffic-preset-ab.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-traffic-preset-ab.mjs — A/B screenshot capture for preset-aware
  * traffic dot styling (owner field finding 2026-07-23: NVG/FLIR/CRT
  * post-FX crush the green/amber/red congestion coding).

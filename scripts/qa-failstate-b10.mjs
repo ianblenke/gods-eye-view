@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that a failed feed shows a visible error state.
+ * @covers pending:application-shell
+ * @run node scripts/qa-failstate-b10.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-failstate-b10.mjs
  *
  * Targeted proof for Batch 10 — the "silent-failure" theme (finding H3 + H9).

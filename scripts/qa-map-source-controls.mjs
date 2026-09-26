@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that map source controls show the true active source.
+ * @covers pending:application-shell
+ * @run node scripts/qa-map-source-controls.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 /** Browser acceptance for Map Source control lifecycle and truthful selection. */
 import fs from 'node:fs';
 import puppeteer from 'puppeteer';

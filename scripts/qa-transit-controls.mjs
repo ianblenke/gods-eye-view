@@ -1,3 +1,9 @@
+/**
+ * @purpose Prove that transit controls give clear pass and fail results.
+ * @covers pending:transit
+ * @run node --test src/tooling/transitQa.test.mjs
+ * @needs Node and the transit test files.
+ */
 const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 export const BOSTON = {
   id: 'boston',

@@ -1,3 +1,9 @@
+/**
+ * @purpose Compare aircraft display height with the visible terrain mesh.
+ * @covers pending:local-adsb
+ * @run node scripts/qa-floor-verify.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 // scripts/qa-floor-verify.mjs — live floor verification at AUS (round 5).
 // Pins the camera at Austin airport, enables flights, waits ~3 polls, then
 // measures every nearby contact's render height against the ACTUAL rendered

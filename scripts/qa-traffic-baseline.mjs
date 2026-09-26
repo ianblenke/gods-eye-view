@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Measure traffic cache work after map travel.
+ * @covers pending:traffic,pending:performance
+ * @run node scripts/qa-traffic-baseline.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-traffic-baseline.mjs — Traffic Phase 0 causal-chain capture.
  *
  * Drives four client/cache conditions and prints the User Timing segments

@@ -1,4 +1,10 @@
 /**
+ * @purpose Run the release browser checks and report their results.
+ * @covers pending:application-shell
+ * @run node scripts/qa-l9-matrix.mjs
+ * @needs Node, a browser, an app server and feed keys for live checks.
+ */
+/**
  * qa-l9-matrix.mjs — the L9 release-candidate QA matrix, in one command.
  *
  * L9 = the final live keyed end-to-end QA pass

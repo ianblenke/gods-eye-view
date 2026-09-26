@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that the layer panel owns and releases its controls.
+ * @covers pending:application-shell
+ * @run node scripts/qa-layer-panel.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 /** Browser proof of Layers panel replacement and subscription ownership. */
 import puppeteer from 'puppeteer';
 const browser = await puppeteer.launch({

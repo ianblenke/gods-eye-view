@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Measure cable frame cost with the layer on and off.
+ * @covers pending:submarine-cables,pending:performance
+ * @run node scripts/qa-cables-render-probe.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-cables-render-probe — replicates the owner-side perf probe methodology
  * for the cables layer (relative numbers; SwiftShader when run headless):
  *

@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Capture how focus changes aircraft and labels in the real view.
+ * @covers pending:local-adsb,pending:overlays
+ * @run node scripts/qa-focus-evidence.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * Moving visual evidence for focus de-emphasis and aircraft recession.
  *
  * The operator owns the live dev server; this script never starts one:
