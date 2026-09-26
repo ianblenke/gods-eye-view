@@ -724,6 +724,43 @@ test('[cyclones-012] each entity has the size, the color and the width of its ki
   h.rendering.destroy();
 });
 
+test('[cyclones-012] the staged center starts at 9 px', async () => {
+  const h = harness();
+  let size;
+  h.viewer.dataSources.add = (source) => {
+    size = source.entities.values.find((entity) => entity.id === 'cyclone:ep152026:center').point.pixelSize;
+    h.sources.push(source);
+    return Promise.resolve(source);
+  };
+  await h.rendering.setSnapshot({ storms: [storm()] });
+  assert.equal(size, 9);
+  h.rendering.destroy();
+});
+
+test('[cyclones-014] a refresh keeps one horizon listener', async () => {
+  const h = harness();
+  let adds = 0;
+  const original = h.viewer.scene.preRender.addEventListener;
+  h.viewer.scene.preRender.addEventListener = (listener) => {
+    adds++;
+    return original(listener);
+  };
+  await h.rendering.setSnapshot({ storms: [storm()] });
+  await h.rendering.setSnapshot({ storms: [storm()] });
+  assert.equal(adds, 1);
+  h.rendering.destroy();
+});
+
+test('[cyclones-017] clear stops selection from changing a removed center', async () => {
+  const h = harness();
+  await h.rendering.setSnapshot({ storms: [storm()] });
+  const center = h.sources[0].entities.values.find((entity) => entity.id === 'cyclone:ep152026:center');
+  h.rendering.clear();
+  h.rendering.setSelection('ep152026');
+  assert.equal(center.point.pixelSize, 9);
+  h.rendering.destroy();
+});
+
 test('[cyclones-012] the data source has the layer name, and a refresh removes the earlier one with its entities', async () => {
   const h = harness();
   const names = [];

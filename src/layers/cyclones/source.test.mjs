@@ -474,6 +474,27 @@ test('[cyclones-003] the validator rejects a wrong snapshot shape or storm ident
   );
 });
 
+test('[cyclones-003] a stale geometry status is invalid even without geometry', () => {
+  const value = fixture();
+  value.storms[0].geometryStatus = 'stale';
+  assert.throws(() => validateCycloneSnapshot(value), MALFORMED);
+});
+
+test('[cyclones-004] a missing movement direction is invalid', () => {
+  const value = fixture();
+  delete value.storms[0].movement.directionDegrees;
+  assert.throws(() => validateCycloneSnapshot(value), MALFORMED);
+});
+
+test('[cyclones-005] a point type stays invalid with a valid polygon shape', () => {
+  const value = current();
+  value.storms[0].track = {
+    type: 'Point',
+    coordinates: value.storms[0].cone.coordinates,
+  };
+  assert.throws(() => validateCycloneSnapshot(value), MALFORMED);
+});
+
 const tooLong = (limit) => 'a'.repeat(limit + 1);
 test('[cyclones-004] the validator rejects a wrong text and accepts a text on its limit', () => {
   const fields = [

@@ -6,7 +6,7 @@ import {
   releasePointer,
   isPointerFree,
 } from '../../data/inputOwnership.js';
-import { isOwnedByOtherLayer } from '../../data/pickRegistry.js';
+import { isOwnedByOtherLayer, registerPickOwner, unregisterPickOwner } from '../../data/pickRegistry.js';
 
 const time = '2026-09-16T03:00:00.000Z';
 const storm = (id = 'ep152026') => ({
@@ -759,6 +759,67 @@ test('[cyclones-019] the pick owner claims an id only after enable and before di
   bare.enable();
   assert.equal(isOwnedByOtherLayer('flights', 'owned'), false);
   bare.destroy();
+});
+
+test('[cyclones-019] disable clears an earlier request error', async () => {
+  const layer = plainLayer({ feed: { getSnapshot: async () => { throw new Error('Lost source'); } } });
+  layer.enable();
+  await layer.update();
+  assert.equal(layer.getStats().error, 'Lost source');
+  layer.disable();
+  assert.equal(layer.getStats().error, null);
+  layer.destroy();
+});
+
+test('[cyclones-019] a second enable does not replace another pick owner', () => {
+  const layer = plainLayer({ feed: { getSnapshot: async () => snapshot() } });
+  layer.enable();
+  registerPickOwner('weather-cyclones', (id) => id === 'outside');
+  try {
+    layer.enable();
+    assert.equal(isOwnedByOtherLayer('flights', 'outside'), true);
+  } finally {
+    layer.destroy();
+    unregisterPickOwner('weather-cyclones');
+  }
+});
+
+test('[cyclones-023] clear calls the row listener', async () => {
+  const layer = plainLayer({ feed: { getSnapshot: async () => snapshot() } });
+  let notices = 0;
+  layer.setRowControlsListener(() => notices++);
+  layer.enable();
+  await layer.update();
+  const before = notices;
+  layer.setParams({ clear: true });
+  assert.equal(notices, before + 1);
+  layer.destroy();
+});
+
+test('[cyclones-023] refresh restores an unchanged selection to the renderer', async () => {
+  let selection = null;
+  const rendering = fakeRendering({
+    setSnapshot: async () => { selection = null; return true; },
+    setSelection: (id) => { selection = id; },
+  }).rendering;
+  const layer = plainLayer({ feed: { getSnapshot: async () => snapshot() }, rendering });
+  layer.enable();
+  await layer.update();
+  assert.equal(selection, 'ep152026');
+  await layer.update();
+  assert.equal(selection, 'ep152026');
+  layer.destroy();
+});
+
+test('[cyclones-025] a truthy focus value does not queue a flight', async () => {
+  const calls = [];
+  const layer = plainLayer({ feed: { getSnapshot: async () => snapshot() } });
+  layer.attachShellServices({ runNavigation: (callback) => calls.push(callback) });
+  layer.enable();
+  await layer.update();
+  layer.setParams({ focus: 'yes' });
+  assert.equal(calls.length, 0);
+  layer.destroy();
 });
 
 test('[cyclones-019] the layer installs no click handler without a canvas or without a Cesium handler class', () => {

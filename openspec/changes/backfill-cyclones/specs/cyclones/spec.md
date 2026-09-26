@@ -336,6 +336,7 @@ Origin: backfill
 - **AND** that function does nothing after an unavailable snapshot, a failed request, `disable()` or `destroy()`
 - **AND** only the function that the newest focus request queued flies, and a focus request for the selected storm flies again
 - **AND** the layer queues no flight without a shell service, without a focus sphere, or without a selected storm
+- **AND** a `focus` value other than `true` queues no flight
 - **AND** with `advisory` the layer opens the advisory URL of the selected storm in a new tab with the option `noopener,noreferrer`
 - **AND** the layer opens no link when the selected storm has no advisory URL
 - **AND** a layer after `disable()` flies nowhere and opens no link

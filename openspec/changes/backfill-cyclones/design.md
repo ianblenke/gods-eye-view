@@ -66,6 +66,13 @@ Some guards of the code repeat another guard. A mutation that removes such a gua
 - The STE lint checks the prose of this change and the names of the tagged tests.
 - The mutation checks are manual. The tasks record each mutation and the test that fails.
 
+## Related browser QA scripts
+
+- `scripts/qa-weather-journey.mjs`: It uses the page controls to show cyclones, select a storm and view it from the camera.
+- `scripts/qa-weather-teardown.mjs`: It selects a storm and checks that scene resources return to the first count after weather layers stop.
+- Not in the spec: The journey records screenshots and render counts while other weather layers and cyclones appear together.
+- Not in the spec: The teardown compares render rates, long tasks and console errors of other layers after weather use.
+
 ## Files that the change adds or changes
 
 - `src/layers/cyclones/source.test.mjs`, `src/layers/cyclones/labels.test.mjs`, `src/layers/cyclones/rendering.test.mjs` and `src/layers/cyclones/index.test.mjs`: the tags and the new tests.
