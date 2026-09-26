@@ -318,7 +318,7 @@ Origin: backfill
 - **AND** a click on a cyclone entity selects its storm
 - **AND** a click on empty map, on 3D Tiles content or on a tileset primitive clears the selection
 - **AND** a click on an entity of another layer, or on another primitive, changes nothing
-- **AND** the layer uses the overlay hit that a `pointerup`, `mouseup` or `touchend` event recorded within 1 px of the click
+- **AND** the layer uses the overlay hit that a `pointerup`, `mouseup` or `touchend` event recorded less than 1 px from the click on each axis
 - **AND** one record serves one click only
 - **AND** a `pointerdown`, `mousedown`, `touchstart`, `pointercancel` or `touchcancel` event clears the record
 - **AND** a release event with no finite coordinates records nothing and clears the earlier record
