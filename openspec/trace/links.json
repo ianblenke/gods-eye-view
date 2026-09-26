@@ -508,15 +508,15 @@
     "src/layers/cyclones/rendering.test.mjs › [cyclones-016] a failed add returns false, and does not throw, after an abort, a newer call or a clear",
     "src/layers/cyclones/rendering.test.mjs › [cyclones-016] a failed data-source add rejects the call, removes the new entities and keeps the earlier source",
     "src/layers/cyclones/rendering.test.mjs › [cyclones-016] a signal that aborted before the call rejects it and adds no data source",
-    "src/layers/cyclones/rendering.test.mjs › [cyclones-016] aborting a pending add retains the earlier complete source",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-016] aborting a pending add retains the prior complete source",
     "src/layers/cyclones/rendering.test.mjs › [cyclones-016] superseded asynchronous additions cannot replace newer geometry"
   ],
   "cyclones-017": [
     "src/layers/cyclones/rendering.test.mjs › [cyclones-013 cyclones-016 cyclones-017] labels publish committed anchors to the shared overlay and follow selection and clear",
     "src/layers/cyclones/rendering.test.mjs › [cyclones-014 cyclones-017] horizon listener follows committed nonempty snapshots and clear/destroy",
     "src/layers/cyclones/rendering.test.mjs › [cyclones-017] a destroyed viewer gets no render request and a destroyed data source list gets no removal",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-017] after clear, a selection change leaves the removed center as it was",
     "src/layers/cyclones/rendering.test.mjs › [cyclones-017] clear removes the data source, resets the counts and the selection and hides the labels",
-    "src/layers/cyclones/rendering.test.mjs › [cyclones-017] clear stops selection from changing a removed center",
     "src/layers/cyclones/rendering.test.mjs › [cyclones-017] destroy clears once and a second destroy does nothing"
   ],
   "cyclones-018": [

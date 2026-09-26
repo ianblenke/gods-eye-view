@@ -45,7 +45,7 @@ None.
   - Untraced tests: 32 before, 0 after. That is 11 in `index.test.mjs`, 4 in `labels.test.mjs`, 12 in `rendering.test.mjs` and 5 in `source.test.mjs`.
 - The ledger keeps one entry for the layer: `index.js` with 1 branch. The entries of the three other files leave the ledger.
 - The registry gets 25 new scenario IDs.
-- The ratchet command also wrote history lines for two files that this change does not edit. `src/data/labelArbiter.js` has 50 branches not covered, and it had 52 before. This count changes between runs (`sync-counts-change-between-runs` of the change `upstream-sync`). The total number of branches of `src/data/labelArbiter.js` and of `src/overlays/worldOverlay.js` changed in the same run.
+- The ratchet command also wrote history lines for four files that this change does not edit: `src/data/labelArbiter.js`, `src/data/lifecycle.js`, `src/layers/wind/rendering.js` and `src/overlays/worldOverlay.js`. The counts of these files change between runs (`sync-counts-change-between-runs` of the change `upstream-sync`). No test of this change closes these gaps. The known limit `cyclones-ratchet-noise` gives the values.
 - The ledger total of branches of `src/layers/cyclones/index.js` changes from 193 to 240.
 
 ## Known limits and later changes
@@ -71,3 +71,8 @@ None.
 - `cyclones-link-text-error`: a link text that is not a URL makes the validator throw a `TypeError` from the `URL` class, and not the error `Malformed cyclone snapshot`. The spec and the test say this. A person can decide to change it in a later change.
 - `cyclones-info-coverage`: the row controls of a `null` snapshot show a default coverage text, and the text does not say that coverage data is not available. The tests check the text. They do not judge it.
 - `cyclones-old-test-names`: the 32 old tests keep their names, and each one got only a tag. Some of these names have words that end in -ing or passive verbs, and the STE lint gives warnings for them. The rule of the owner is that an old test name does not change. A later change can decide.
+- `cyclones-ratchet-noise`: The ratchet command wrote new values for four files that this change does not edit. The history of the change `upstream-sync` shows other values for the same files in earlier runs.
+  - `src/data/labelArbiter.js`: 50 branches not covered (52 before). Its total of branches: 405 (407 before).
+  - `src/data/lifecycle.js`: 177 lines and 100 branches not covered (184 and 102 before). Its total of branches: 568 (570 before).
+  - `src/layers/wind/rendering.js`: total of branches 334 (333 before).
+  - `src/overlays/worldOverlay.js`: total of branches 712 (711 before).
