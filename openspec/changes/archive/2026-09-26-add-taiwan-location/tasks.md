@@ -20,7 +20,7 @@
 
 ## 3. Gates and review
 
-- [ ] 3.1 Run the ratchet command in the Docker image.
-- [ ] 3.2 Run the gates in the Docker image.
+- [x] 3.1 Run the ratchet command in the Docker image.
+- [x] 3.2 Run the gates in the Docker image.
 - [ ] 3.3 Get two review agent verdicts.
 - [ ] 3.4 Write `review.md` with the tree hash and verdicts.
