@@ -540,7 +540,7 @@
     "change": "credential-boundary"
   },
   "credential-boundary-014": {
-    "hash": "fc4c69e32ea0ac4049ffab3737862131a1a84788dc1c7cd9dd2387a4bb0e1733",
+    "hash": "f993874253ab4a16b41d81cc62ed8fe0f3fe2b48cefa8412c1746e73c7a457a0",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
@@ -1100,7 +1100,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "8b59360b33079573f3534ca08f0bdb138aad62169d941f668144c19ad1673415",
+    "hash": "65581634838bfee7ffd7f9d39a035d00167a113fbd2ef4eb60b78c0c827c1851",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -1405,9 +1405,19 @@
     "change": "osh-camera-video"
   },
   "osh-094": {
-    "hash": "50c0fe69a7b809e27c24c19315971888fdb9a5610e5a9aa44e5ddbd0be861198",
+    "hash": "58d999b0a97f6554a7b70b69d88cba590c2d4e27ccc95b044a4fd89603081001",
     "since": "2026-09-25",
     "change": "osh-camera-video"
+  },
+  "osh-095": {
+    "hash": "c03f02ca322d31c6d28513dd6b54ce03f01ce4409f6b667ddfca37b437c6f12a",
+    "since": "2026-09-26",
+    "change": "upstream-sync"
+  },
+  "osh-096": {
+    "hash": "64cb084b4f793b0e2863867045c73069b6841ea5356bb714a061c27b88fdb020",
+    "since": "2026-09-26",
+    "change": "upstream-sync"
   },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
