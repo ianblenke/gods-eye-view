@@ -3678,12 +3678,12 @@
     },
     "src/data/lifecycle.js": {
       "loaded": true,
-      "lines": 184,
-      "branches": 102,
+      "lines": 177,
+      "branches": 100,
       "functions": 15,
       "totals": {
         "lines": 2324,
-        "branches": 570,
+        "branches": 568,
         "functions": 116
       },
       "sha": "00c2c630a7456183964aff232cc2b0be6896b9e461bb6e82aa228327f10a433c",
@@ -8078,7 +8078,7 @@
       "functions": 2,
       "totals": {
         "lines": 801,
-        "branches": 333,
+        "branches": 334,
         "functions": 44
       },
       "sha": "40dbe3a0e93baf1cd45bd151f2d548e9d9ead6050c9472d7aaeded3a5ed7bdbd",
