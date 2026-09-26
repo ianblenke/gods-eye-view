@@ -849,8 +849,8 @@
     "src/hudMarkings.test.mjs › [hud-markings-004] has no style rule for the removed element"
   ],
   "layer-lifecycle-001": [
-    "src/data/manager.test.mjs › [layer-lifecycle-001] keep the layer when destroy returns false",
-    "src/data/manager.test.mjs › [layer-lifecycle-001] keep the layer when destroy throws"
+    "src/data/manager.test.mjs › [layer-lifecycle-001] keep the layer when the destroy function returns false",
+    "src/data/manager.test.mjs › [layer-lifecycle-001] keep the layer when the destroy function throws"
   ],
   "layer-lifecycle-002": [
     "src/data/manager.test.mjs › [layer-lifecycle-002] send the event after an activity listener error"

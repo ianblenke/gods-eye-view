@@ -27,6 +27,7 @@ None.
 - Keep the other counts of the entry: 177 lines and 15 functions not covered. The file stays below full coverage.
 - The ledger total of branches for this file changes from 570 to 572. The totals of lines (2324) and functions (116) stay.
 - The two catch blocks are now always covered, so the uncovered count of this file is stable between runs.
+- The ratchet command also wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit. Its branches not covered are 52 (50 on `main`), and its total of branches is 407 (405 on `main`). This is the known limit `branch-record-change`.
 - The ratchet command can add two IDs and their test links to `openspec/trace/`.
 
 ## Known limits and later changes
