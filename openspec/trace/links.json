@@ -1720,6 +1720,100 @@
   "osh-096": [
     "src/app/layers/osh.test.mjs › [osh-096] builds the OSH systems layer in the catalog with the production source and the hosts of the page"
   ],
+  "qa-scripts-001": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-001] accepts a shebang and reads all four tags"
+  ],
+  "qa-scripts-002": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-002] rejects code before the first block"
+  ],
+  "qa-scripts-003": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-003] rejects an absent tag"
+  ],
+  "qa-scripts-004": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-004] rejects a repeated tag"
+  ],
+  "qa-scripts-005": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-005] rejects a purpose without a final mark",
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-005] rejects an empty needs value",
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-005] rejects an empty tag"
+  ],
+  "qa-scripts-006": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-006] rejects a covers item with a space"
+  ],
+  "qa-scripts-007": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-007] accepts a capability folder"
+  ],
+  "qa-scripts-008": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-008] rejects a file that has a capability name",
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-008] reports an unknown capability"
+  ],
+  "qa-scripts-009": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-009] accepts an open pending area"
+  ],
+  "qa-scripts-010": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-010] reports a landed pending area"
+  ],
+  "qa-scripts-011": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-011] accepts one unmapped reason",
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-011] gives no advice for an unmapped reason"
+  ],
+  "qa-scripts-012": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-012] rejects an unmapped list"
+  ],
+  "qa-scripts-013": [
+    "src/tooling/spec/inventory.test.mjs › [qa-scripts-013] omits a QA script with a valid header"
+  ],
+  "qa-scripts-014": [
+    "src/tooling/spec/gates.test.mjs › [qa-scripts-014] keeps the coverage gap for a QA script with a bad header",
+    "src/tooling/spec/inventory.test.mjs › [qa-scripts-014] keeps a QA script with a bad header"
+  ],
+  "qa-scripts-015": [
+    "src/tooling/spec/inventory.test.mjs › [qa-scripts-015] keeps other code files"
+  ],
+  "qa-scripts-016": [
+    "src/tooling/spec/gates.test.mjs › [qa-scripts-016] prints QA advice after Trace",
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-016] gives delta advice with the script purpose"
+  ],
+  "qa-scripts-017": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-017] gives advice for a backfill area"
+  ],
+  "qa-scripts-018": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-018] gives no match advice for an unknown change",
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-018] gives the no match line"
+  ],
+  "qa-scripts-019": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-019] gives no advice without a change"
+  ],
+  "qa-scripts-020": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-020] tells authors to read advice and add a header"
+  ],
+  "qa-scripts-021": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-021] gives QA lines to the spec adversary"
+  ],
+  "qa-scripts-022": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-022] asks the spec adversary to read each QA check"
+  ],
+  "qa-scripts-023": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-023] checks all tracked QA scripts in this repository"
+  ],
+  "qa-scripts-024": [
+    "src/tooling/spec/gates.test.mjs › [qa-scripts-024] stops the gate for a QA header error"
+  ],
+  "qa-scripts-025": [
+    "src/tooling/spec/gates.test.mjs › [qa-scripts-025] stops for both covers errors and omits valid QA headers",
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-025] gives no advice for a file with a capability name",
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-025] gives no advice for invalid covers items",
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-025] sorts two covers errors for one script"
+  ],
+  "qa-scripts-026": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-026] gives advice from an archived change"
+  ],
+  "qa-scripts-027": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-027] sorts advice by script then capability"
+  ],
+  "qa-scripts-028": [
+    "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-028] rejects a header continuation line"
+  ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
   ],

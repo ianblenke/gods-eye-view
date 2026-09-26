@@ -1544,6 +1544,146 @@
     "since": "2026-09-26",
     "change": "upstream-sync"
   },
+  "qa-scripts-001": {
+    "hash": "3b33d8de81e3c696fa245d10f8a0a7cd6a69e45d241f104c62abb43579367d2e",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-002": {
+    "hash": "13260551701958ac5464e76b5ac3654e1a6557b5337e8ed24a208bd8a0fb1a24",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-003": {
+    "hash": "74786d699b305443fe5cb59fe2c2e02922bf9e98b81c95e3b4f5744d397ad36f",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-004": {
+    "hash": "af7c6cb7b29a7eba265fdb7fce8bd52a1d69a13d8c33d437c85a53bf45b132ef",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-005": {
+    "hash": "c6ce44aeb3ca75c9a2ca8a24b962bf9c08355a1313902b332a064c8b62c457cd",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-006": {
+    "hash": "b563033736c7473d17d31b2446d694af19d5285006b9ea74ae994e573c198724",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-007": {
+    "hash": "593a76df595f4ea511612839e341413548dacc6bbfd42151a5a61d0a059d245e",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-008": {
+    "hash": "c373ca8ebe8914bbb50a3f80a583e2766c77230cc8afdfe6760e59489e3e10bd",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-009": {
+    "hash": "ba84fe1dc19626fe0bcc2faaf630e5cca862117fea49399319f04a22f44c8671",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-010": {
+    "hash": "2bcc52fa2b671ed350818da566153a3473fb25abf478e1f676e52104dead1f8c",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-011": {
+    "hash": "de977df91774acba913b732e4563999b4af799bab107d2371422ccc3463d3c0f",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-012": {
+    "hash": "faa143ad96ad09f348901d5384629b531ffd3ecd5dfb336a293a1fc6273b90f9",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-013": {
+    "hash": "128646646d0a2b5586ff6f751f405095ab48018c2ba858305627a007fd085e80",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-014": {
+    "hash": "2bd40fbfeeb29b6db62327c3e0376603bda2ad4443616c4bfc0c0216e5f5813e",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-015": {
+    "hash": "672f8d3ddeb40019293d2e7978a261f9497a9391dbd7a0dea0f398970f26d9be",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-016": {
+    "hash": "e1982278dd9e591aaf5f61ade0c263ed755b50d2321cd84af9b494af7ecd6831",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-017": {
+    "hash": "709f09a96e98399b5abde5ddb1a2e94303e3f0b6cbbb96713f5fea8d66083438",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-018": {
+    "hash": "dcfa515fd2432b0df5c4e4c96c498b9b365f0d273ac136dc7e7b81822479af7d",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-019": {
+    "hash": "da54b70b49541cd548767e1fad71f4bf1f607fadd8b3d6dfe300bde8be9368a6",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-020": {
+    "hash": "a495df8ef3c4a4c7aa136e6bbcdc008994db7a2055bc8cda10fddce3135f9842",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-021": {
+    "hash": "137c6c5cbf35d61d7c33fef83320cc94d01cda396f48116bafab7e4ecd753726",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-022": {
+    "hash": "b5bf1585bc46951d2761239baf383da4569d976257489acd1199c873051aaa05",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-023": {
+    "hash": "e8db48cf46a098cbb10afabd371e36d776c8e637f42246062e8a2031d9474d4c",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-024": {
+    "hash": "28f5776bf3c3e16745719a669279b7ec441b8bb95af05adc24bbbaa5513bb9f8",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-025": {
+    "hash": "9c2feb50d030f25f0018c6c883b57e069d273f8c4d20743c881ecfa037dcbfd9",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-026": {
+    "hash": "ca52cd264a325d4cba4775619de06856a8f4a870d3ccd90d7854c908ae7d633f",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-027": {
+    "hash": "1c56ffb6719e459d6226b96271177511d5888b2f70db97faa42082258d596dab",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
+  "qa-scripts-028": {
+    "hash": "e585e8ee6773c59e13f699a5264e0826c1164de6de2e04af3513e63c6d9f2975",
+    "since": "2026-09-26",
+    "change": "qa-script-register"
+  },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
     "since": "2026-09-14",

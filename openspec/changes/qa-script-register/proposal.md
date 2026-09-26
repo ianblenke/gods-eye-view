@@ -100,7 +100,8 @@ The change closes the coverage entries below. The counts come from `openspec/tra
 
 - Untraced tests closed: none.
 - Gaps opened: none.
-- The ratchet removes the 70 entries and records 70 coverage history lines.
+- The ratchet removes the 70 entries. It records 74 history lines: 70 for the removed entries, and 4 that the next bullet names.
+- The other 4 history lines are for two files. `scripts/spec/gates.mjs` gets a new hash and new totals, because this change edits it. `src/data/labelArbiter.js` has 50 branches not covered (52 before), and its total of branches is 405 (407 before). This change does not edit that file (known limit `qa-ratchet-noise`).
 - The change adds a delta spec, a register module, gate and inventory changes, tests and 70 headers.
 - The change also changes `AGENTS.md`, the review command and the spec adversary prompt.
 - The ratchet changes the trace ledger, ID registry, links and history files.
@@ -115,3 +116,4 @@ The change closes the coverage entries below. The counts come from `openspec/tra
 - `qa-ledger-history`: The present ratchet writes the reason `file removed` for an excluded script, even though its file stays tracked.
 - `qa-loaded-flag`: The ratchet removes the entry and its `loaded` value. Five loaded helper scripts lose that ledger fact.
 - `qa-runtime`: The gate does not run a browser QA script. A separate browser run must prove its runtime behavior.
+- `qa-ratchet-noise`: The counts of `src/data/labelArbiter.js` change between runs (see `sync-counts-change-between-runs` of the change `upstream-sync`). No test of this change closes that gap, and the ledger records the count that the ratchet measured.
