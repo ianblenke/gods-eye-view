@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that first run tests detect each named defect.
+ * @covers pending:application-shell
+ * @run node scripts/qa-firstrun-mutations.mjs
+ * @needs Node and a writable project tree.
+ */
+/**
  * Are the first-run launcher's pins actually load-bearing?
  *
  * A pin that only goes red when you delete the whole feature proves very little.

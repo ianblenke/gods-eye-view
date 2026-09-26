@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Measure weather frame cost across fixed views.
+ * @covers pending:wind,pending:weather,pending:performance
+ * @run node scripts/qa-weather-perf.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-weather-perf — matched-route throughput and idle-work measurement for the
  * Weather layers (Wind, Rain radar, Satellite clouds, Lightning density).
  *

@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that aircraft types get the correct images and scale.
+ * @covers pending:local-adsb
+ * @run node scripts/qa-sprites-b5.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-sprites-b5.mjs — throwaway QA harness for skylight Tasks 8+9
  * (type-aware billboard silhouettes + per-class 2D/3D scale; Batch 5).
  *

@@ -39,8 +39,8 @@ export function isTestFile(file) {
 }
 
 /** Code files in the coverage inventory. */
-export function codeInventory(tracked) {
-  return tracked.filter(isCodeFile);
+export function codeInventory(tracked, validQaScripts = new Set()) {
+  return tracked.filter((file) => isCodeFile(file) && !validQaScripts.has(file));
 }
 
 /** Tracked test files. */

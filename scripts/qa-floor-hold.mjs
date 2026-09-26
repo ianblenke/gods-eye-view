@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that a ground contact keeps its floor during a terrain fault.
+ * @covers pending:local-adsb
+ * @run node scripts/qa-floor-hold.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
+/**
  * scripts/qa-floor-hold.mjs — a grounded contact holds its floor through a
  * terrain-proxy outage (owner incident, 2026-08-21).
  *

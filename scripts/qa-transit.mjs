@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that the transit layer and context controls work.
+ * @covers pending:transit
+ * @run node scripts/qa-transit.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 import { runTransitHeadingRegression } from './qa-transit-heading.mjs';
 import {
   boundPageEvaluations,

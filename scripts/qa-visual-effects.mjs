@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that display effects change and release their state.
+ * @covers pending:overlays
+ * @run node scripts/qa-visual-effects.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 /** Rendered acceptance for style transitions and effect-state ownership. */
 import fs from 'node:fs';
 import puppeteer from 'puppeteer';

@@ -1,4 +1,10 @@
 /**
+ * @purpose Prove that aircraft height uses the correct terrain datum.
+ * @covers pending:local-adsb
+ * @run node scripts/qa-height-datum.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
+/**
  * qa-height-datum.mjs — height/vertical-datum fix numeric proof harness
  * (docs/plans/2026-07-05-entity-height-datum-fix.md Task 8).
  *

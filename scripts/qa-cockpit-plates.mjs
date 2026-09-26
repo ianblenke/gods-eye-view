@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that callout plates fit the image behind each label.
+ * @covers pending:overlays
+ * @run node scripts/qa-cockpit-plates.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * Rendered proof for backdrop-selective callout plates at GROUND LEVEL.
  *
  * The owner's scenario: a cockpit sitting at JFK, where the geoid runs ~34 m

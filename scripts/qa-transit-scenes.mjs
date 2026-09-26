@@ -1,3 +1,9 @@
+/**
+ * @purpose Prove that transit scenes use private data and release resources.
+ * @covers pending:transit,pending:scenes
+ * @run node --test src/tooling/transitQa.test.mjs
+ * @needs Node and the transit test files.
+ */
 import { getRegisteredTransitFeed } from '../src/data/transitFeeds.js';
 
 // Not registered or active: camera discovery and live polls never own this feed.

@@ -16,7 +16,7 @@ The review agents can only read files. You write their output to files. Copy the
 3. Run `make gates CHANGE=<name>` again. Keep the output. Run `git diff --stat origin/main`. Keep the output.
 4. Run `git status --porcelain`. Keep the output.
 5. Find the scope of the round. The first round of a change has the scope `full`. Each later round has the scope `diff <commit>`, with the Git commit of the round before. Keep the scope and the number of the round.
-6. Start the `spec-adversary` agent. Give it the change name, the gate output, the diff output and the scope. For a scope with a diff, give it the diff since that commit.
+6. Start the `spec-adversary` agent. Give it the change name, the gate output, the diff output, the scope and the QA lines from the gate output. For a scope with a diff, give it the diff since that commit.
 7. Start the `ste-adversary` agent at the same time. Give it the change name, the STE warnings from the gate output, the names of the new tests and the scope.
 8. Run `git status --porcelain` again. If the output is not the same as the output of step 4, stop. Tell the user that an agent changed a file.
 9. Write the output of each agent to `review/spec-adversary.md` and `review/ste-adversary.md` in the archived change folder. Before a new round, move the output of the earlier round to `review/round-<n>/`.

@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Capture the cable layer from fixed views for visual checks.
+ * @covers pending:submarine-cables
+ * @run node scripts/qa-cables-shot.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-cables-shot — capture the cables layer at two fixed cameras for
  * before/after visual-identity comparison. Writes to gitignored qa-shots/.
  * Usage: node scripts/qa-cables-shot.mjs [--url http://localhost:4214] [--tag before]

@@ -4,89 +4,117 @@
 
 ## 2. Tests before code
 
-- [ ] 2.1 Write `[qa-scripts-001]` test for valid shebang and tags with a temporary folder where possible.
+- [x] 2.1 Write `[qa-scripts-001]` test for valid shebang and tags with a temporary folder where possible.
+  - Mutation IDs: `001-shebang`, `001-needs`.
   - Mutation: Make the parser reject the optional shebang. The test must fail.
   - Mutation: Make the parser omit the needs tag from its result. The test must fail.
-- [ ] 2.2 Write `[qa-scripts-002]` test for first block with a temporary folder where possible.
+- [x] 2.2 Write `[qa-scripts-002]` test for first block with a temporary folder where possible.
+  - Mutation IDs: `002-first`.
   - Mutation: Let the parser skip code before the first block. The test must fail.
-- [ ] 2.3 Write `[qa-scripts-003]` test for absent tag with a temporary folder where possible.
+- [x] 2.3 Write `[qa-scripts-003]` test for absent tag with a temporary folder where possible.
+  - Mutation IDs: `003-absent`.
   - Mutation: Let the parser accept a header without the needs tag. The test must fail.
-- [ ] 2.4 Write `[qa-scripts-004]` test for repeated tag with a temporary folder where possible.
+- [x] 2.4 Write `[qa-scripts-004]` test for repeated tag with a temporary folder where possible.
+  - Mutation IDs: `004-repeat`.
   - Mutation: Let the parser accept two purpose tags. The test must fail.
-- [ ] 2.5 Write `[qa-scripts-005]` test for empty tag with a temporary folder where possible.
+- [x] 2.5 Write `[qa-scripts-005]` test for empty tag with a temporary folder where possible.
+  - Mutation IDs: `005-empty`, `005-purpose`.
   - Mutation: Let the parser accept an empty run value. The test must fail.
-- [ ] 2.6 Write `[qa-scripts-006]` test for bad covers item with a temporary folder where possible.
+- [x] 2.6 Write `[qa-scripts-006]` test for bad covers item with a temporary folder where possible.
+  - Mutation IDs: `006-space`.
   - Mutation: Let the parser accept a covers item with a space. The test must fail.
-- [ ] 2.7 Write `[qa-scripts-007]` test for capability folder with a temporary folder where possible.
+- [x] 2.7 Write `[qa-scripts-007]` test for capability folder with a temporary folder where possible.
+  - Mutation IDs: `007-folder`.
   - Mutation: Make the folder check reject a capability folder that exists. The test must fail.
-- [ ] 2.8 Write `[qa-scripts-008]` test for unknown capability with a temporary folder where possible.
+- [x] 2.8 Write `[qa-scripts-008]` test for unknown capability with a temporary folder where possible.
+  - Mutation IDs: `008-unknown`, `008-file`.
   - Mutation: Make the folder check accept a capability folder that does not exist. The test must fail.
-- [ ] 2.9 Write `[qa-scripts-009]` test for open pending area with a temporary folder where possible.
+- [x] 2.9 Write `[qa-scripts-009]` test for open pending area with a temporary folder where possible.
+  - Mutation IDs: `009-open`.
   - Mutation: Make the pending check reject an area without a folder. The test must fail.
-- [ ] 2.10 Write `[qa-scripts-010]` test for landed pending area with a temporary folder where possible.
+- [x] 2.10 Write `[qa-scripts-010]` test for landed pending area with a temporary folder where possible.
+  - Mutation IDs: `010-landed`.
   - Mutation: Make the pending check accept an area with a folder. The test must fail.
-- [ ] 2.11 Write `[qa-scripts-011]` test for unmapped reason with a temporary folder where possible.
+- [x] 2.11 Write `[qa-scripts-011]` test for unmapped reason with a temporary folder where possible.
+  - Mutation IDs: `011-unmapped`.
   - Mutation: Make the parser reject one unmapped item with a reason. The test must fail.
-- [ ] 2.12 Write `[qa-scripts-012]` test for unmapped list with a temporary folder where possible.
+- [x] 2.12 Write `[qa-scripts-012]` test for unmapped list with a temporary folder where possible.
+  - Mutation IDs: `012-list`.
   - Mutation: Make the parser accept an unmapped item beside a capability. The test must fail.
-- [ ] 2.13 Write `[qa-scripts-013]` test for valid script omission with a temporary folder where possible.
+- [x] 2.13 Write `[qa-scripts-013]` test for valid script omission with a temporary folder where possible.
+  - Mutation IDs: `013-omit`.
   - Mutation: Keep a valid QA script in codeInventory. The test must fail.
-- [ ] 2.14 Write `[qa-scripts-014]` test for invalid script retention with a temporary folder where possible.
+- [x] 2.14 Write `[qa-scripts-014]` test for invalid script retention with a temporary folder where possible.
+  - Mutation IDs: `014-keep`, `014-gap`.
   - Mutation: Omit an invalid QA script from codeInventory. The test must fail.
   - Mutation: Suppress the coverage gap for an invalid QA script. The test must fail.
-- [ ] 2.15 Write `[qa-scripts-015]` test for other code retention with a temporary folder where possible.
+- [x] 2.15 Write `[qa-scripts-015]` test for other code retention with a temporary folder where possible.
+  - Mutation IDs: `015-other`.
   - Mutation: Omit a non-QA code file from codeInventory. The test must fail.
-- [ ] 2.16 Write `[qa-scripts-016]` test for delta advice with a temporary folder where possible.
+- [x] 2.16 Write `[qa-scripts-016]` test for delta advice with a temporary folder where possible.
+  - Mutation IDs: `016-delta`, `016-purpose`, `016-order`, `016-after-trace`.
   - Mutation: Skip delta folder matches. The test must fail.
   - Mutation: Remove the purpose from a QA line. The test must fail.
   - Mutation: Print advice before Trace. The test must fail.
-- [ ] 2.17 Write `[qa-scripts-017]` test for backfill advice with a temporary folder where possible.
+- [x] 2.17 Write `[qa-scripts-017]` test for backfill advice with a temporary folder where possible.
+  - Mutation IDs: `017-backfill`, `017-prefix`, `017-advice-open`.
   - Mutation: Skip the backfill name match. The test must fail.
   - Mutation: Keep the pending prefix in a QA line. The test must fail.
-- [ ] 2.18 Write `[qa-scripts-018]` test for no match advice with a temporary folder where possible.
+- [x] 2.18 Write `[qa-scripts-018]` test for no match advice with a temporary folder where possible.
+  - Mutation IDs: `018-no-match`.
   - Mutation: Suppress the no-match QA line. The test must fail.
-- [ ] 2.19 Write `[qa-scripts-019]` test for no change advice with a temporary folder where possible.
+- [x] 2.19 Write `[qa-scripts-019]` test for no change advice with a temporary folder where possible.
+  - Mutation IDs: `019-no-change`.
   - Mutation: Print the no-match QA line without a change. The test must fail.
-- [ ] 2.20 Write `[qa-scripts-020]` test for author rule with a temporary folder where possible.
+- [x] 2.20 Write `[qa-scripts-020]` test for author rule with a temporary folder where possible.
+  - Mutation IDs: `020-lines`, `020-conflict`, `020-header`.
   - Mutation: Remove the QA line instruction from rule 22. The test must fail.
   - Mutation: Remove the purpose conflict instruction from rule 22. The test must fail.
   - Mutation: Remove the new header instruction from rule 22. The test must fail.
-- [ ] 2.21 Write `[qa-scripts-021]` test for review command input with a temporary folder where possible.
+- [x] 2.21 Write `[qa-scripts-021]` test for review command input with a temporary folder where possible.
+  - Mutation IDs: `021-input`.
   - Mutation: Remove QA lines from the spec adversary input in the review command. The test must fail.
-- [ ] 2.22 Write `[qa-scripts-022]` test for adversary check with a temporary folder where possible.
+- [x] 2.22 Write `[qa-scripts-022]` test for adversary check with a temporary folder where possible.
+  - Mutation IDs: `022-purpose`, `022-checks`, `022-conflict`.
   - Mutation: Remove the purpose read from check 11. The test must fail.
   - Mutation: Remove the script check read from check 11. The test must fail.
   - Mutation: Remove the conflict or absent scenario instruction from check 11. The test must fail.
-- [ ] 2.23 Write `[qa-scripts-023]` test that checks all tracked QA scripts of this repository.
+- [x] 2.23 Write `[qa-scripts-023]` test that checks all tracked QA scripts of this repository.
+  - Mutation IDs: `023-skip`.
   - Mutation: Make the register skip one tracked QA script in the repository. The test must fail.
-- [ ] 2.24 Write `[qa-scripts-024]` test for gate failure after a header error.
+- [x] 2.24 Write `[qa-scripts-024]` test for gate failure after a header error.
+  - Mutation IDs: `024-errors`, `024-path`.
   - Mutation: Remove QA header errors from the gate error list. The test must fail.
   - Mutation: Remove the script path from the error. The test must fail.
-- [ ] 2.25 Write `[qa-scripts-025]` test for both covers errors and inventory omission.
+- [x] 2.25 Write `[qa-scripts-025]` test for both covers errors and inventory omission.
+  - Mutation IDs: `025-unknown`, `025-landed`, `025-omit`, `025-path-unknown`, `025-path-landed`, `025-advice-invalid`, `025-advice-pending`, `025-advice-file`.
   - Mutation: Remove `QA-COVERS-UNKNOWN` from the gate error list. The test must fail.
   - Mutation: Remove `QA-COVERS-LANDED` from the gate error list. The test must fail.
   - Mutation: Remove the script path from a covers error. The test must fail.
   - Mutation: Keep a valid script with a covers error in the inventory. The test must fail.
-- [ ] 2.26 Write `[qa-scripts-026]` test for advice from an archived change.
+- [x] 2.26 Write `[qa-scripts-026]` test for advice from an archived change.
+  - Mutation IDs: `026-archive`.
   - Mutation: Make the advice code search only active changes. The test must fail.
-- [ ] 2.27 Write `[qa-scripts-027]` test for two capabilities and line order.
+- [x] 2.27 Write `[qa-scripts-027]` test for two capabilities and line order.
+  - Mutation IDs: `027-first`, `027-order`.
   - Mutation: Print only the first capability of each script. The test must fail.
   - Mutation: Sort advice by capability before script path. The test must fail.
-- [ ] 2.28 Write `[qa-scripts-028]` test for a header continuation line.
+- [x] 2.28 Write `[qa-scripts-028]` test for a header continuation line.
+  - Mutation IDs: `028-continuation`.
   - Mutation: Let the parser skip a text line after a tag. The test must fail.
 
 ## 3. Register and gate code
 
-- [ ] 3.1 Add the register module with header, covers and advice checks.
-- [ ] 3.2 Wire the register errors and advice into `scripts/spec/gates.mjs`.
-- [ ] 3.3 Pass valid QA scripts to `codeInventory` in `scripts/spec/lib/inventory.mjs`.
+- [x] 3.1 Add the register module with header, covers and advice checks.
+- [x] 3.2 Wire the register errors and advice into `scripts/spec/gates.mjs`.
+- [x] 3.3 Pass valid QA scripts to `codeInventory` in `scripts/spec/lib/inventory.mjs`.
 
 ## 4. Process text and headers
 
-- [ ] 4.1 Add rule 22 to `AGENTS.md` for QA advice, purpose conflicts and new headers.
-- [ ] 4.2 Give QA lines to the spec adversary in the review command.
-- [ ] 4.3 Add check 11 for QA scripts to the spec adversary prompt.
-- [ ] 4.4 Add the 70 headers from the design table to the tracked QA scripts.
+- [x] 4.1 Add rule 22 to `AGENTS.md` for QA advice, purpose conflicts and new headers.
+- [x] 4.2 Give QA lines to the spec adversary in the review command.
+- [x] 4.3 Add check 11 for QA scripts to the spec adversary prompt.
+- [x] 4.4 Add the 70 headers from the design table to the tracked QA scripts.
 
 ## 5. Gates and review
 

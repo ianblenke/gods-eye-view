@@ -1,4 +1,10 @@
 /**
+ * @purpose Prove that a weather frame swap keeps the globe visible.
+ * @covers pending:weather
+ * @run node scripts/qa-weather-swap.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * Weather history-swap probe: does the scene keep drawing while a draped
  * weather frame is replaced? Runs against a live dev server, turns on one
  * observed product at the Earth view, steps Earlier and plays history while

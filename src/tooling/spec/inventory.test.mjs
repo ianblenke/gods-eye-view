@@ -102,3 +102,15 @@ test('[coverage-gate-029] stops when Git cannot list the files', () => {
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test('[qa-scripts-013] omits a QA script with a valid header', () => {
+  assert.deepEqual(codeInventory(['scripts/qa-example.mjs'], new Set(['scripts/qa-example.mjs'])), []);
+});
+
+test('[qa-scripts-014] keeps a QA script with a bad header', () => {
+  assert.deepEqual(codeInventory(['scripts/qa-example.mjs'], new Set()), ['scripts/qa-example.mjs']);
+});
+
+test('[qa-scripts-015] keeps other code files', () => {
+  assert.deepEqual(codeInventory(['src/main.js', 'scripts/qa-example.mjs'], new Set(['scripts/qa-example.mjs'])), ['src/main.js']);
+});

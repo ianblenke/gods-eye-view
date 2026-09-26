@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that draw controls accept pointer and key actions and clean up.
+ * @covers pending:annotations
+ * @run node scripts/qa-draw-tool.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 /** Rendered acceptance for DISPLAY ▸ Draw: real clicks, real keys, real teardown. */
 import fs from 'node:fs';
 import path from 'node:path';

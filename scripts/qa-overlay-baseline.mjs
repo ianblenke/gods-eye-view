@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Measure the cost of world overlays in fixed views.
+ * @covers pending:overlays,pending:performance
+ * @run node scripts/qa-overlay-baseline.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * Phase 0 world-overlay baseline harness.
  *
  * The harness intentionally measures the current implementation without

@@ -27,7 +27,7 @@ needs value: ^\S[^\r\n]*$
 slug: ^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$
 capability item: ^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$
 pending item: ^pending:[a-z][a-z0-9]*(?:-[a-z0-9]+)*$
-unmapped item: ^unmapped: \S(?:.*\S)?$
+unmapped item: ^unmapped: [^,\s](?:[^,]*[^,\s])?$
 covers list: ^ITEM(?:,ITEM)*$
 ```
 

@@ -1,3 +1,9 @@
+/**
+ * @purpose Prove that transit headings show stop and travel states.
+ * @covers pending:transit
+ * @run node scripts/qa-transit-heading.mjs
+ * @needs A browser and a running app server.
+ */
 import puppeteer from 'puppeteer';
 
 /** Prove parked and moving headings in the real scene, without live feeds. */

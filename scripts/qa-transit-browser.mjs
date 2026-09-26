@@ -1,3 +1,9 @@
+/**
+ * @purpose Keep browser actions within time limits for transit checks.
+ * @covers pending:transit
+ * @run node --test src/tooling/transitQa.test.mjs
+ * @needs Node and the transit test files.
+ */
 /** Bound page promises as well as CDP itself; labels identify a stalled section. */
 export function boundPageEvaluations(page, defaultTimeoutMs = 30000) {
   const evaluate = page.evaluate.bind(page);

@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that microphone input drives voice controls.
+ * @covers pending:voice
+ * @run node scripts/qa-voice-wav.mjs
+ * @needs A browser, an app server and the voice WAV fixture.
+ */
+/**
  * Credentialed AI voice acceptance using a prerecorded Chromium microphone.
  *
  * Run: node scripts/qa-voice-wav.mjs http://localhost:4189 [--push-to-talk]

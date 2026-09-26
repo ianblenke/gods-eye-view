@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that route tests detect each named camera defect.
+ * @covers pending:voice,pending:directions
+ * @run node scripts/qa-flyroute-mutations.mjs
+ * @needs Node and a writable project tree.
+ */
+/**
  * Are the fly_route pins actually load-bearing?
  *
  * A pin that is red only when you delete the whole feature proves very little.

@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that imported camera paths and camera control agree.
+ * @covers pending:director
+ * @run node scripts/qa-director-camera.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 /** Verify imported camera directions through real rendering and camera authority handoffs. */
 import fs from 'node:fs';
 import path from 'node:path';

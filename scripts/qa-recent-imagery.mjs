@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that image search, compare modes and controls work.
+ * @covers pending:recent-imagery
+ * @run node scripts/qa-recent-imagery.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
+/**
  * Rendered acceptance for DATA ▸ Recent Imagery against the real NASA
  * endpoints (CMR catalog, GIBS tiles, Worldview snapshots): the rail panel,
  * USE VIEW and the live preview, the three modes (IMAGE, VS BASEMAP, A / B)

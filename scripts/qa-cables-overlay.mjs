@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that cable labels use the shared host and leave no idle work.
+ * @covers pending:submarine-cables,pending:overlays,pending:performance
+ * @run node scripts/qa-cables-overlay.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-cables-overlay — submarine-cable label path measurement + contract gate.
  *
  * Two jobs:

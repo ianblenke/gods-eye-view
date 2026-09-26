@@ -8,6 +8,7 @@ import { ALLOCATION_TEST_FILES } from '../run-unit-tests.mjs';
 import { planCi } from './lib/ci.mjs';
 import { contentHash, findCoverageFlags, findIgnoreComments, findTestImports, measureCoverage, parseLcov, untrueFiles } from './lib/coverage.mjs';
 import { changedByCommit, diffNames, headCommit, listFilesAt, mergeParents, readFileAt, resolveCommit, resolveMergeBase } from './lib/git.mjs';
+import { qaAdvice, readQaRegister } from './lib/qa-register.mjs';
 import { checkUntracked, codeInventory, isTestFile, listTrackedFiles, listUntrackedFiles, testInventory } from './lib/inventory.mjs';
 import {
   HISTORY_FILE,
@@ -185,7 +186,9 @@ function checkFailedRuns(runs, results, recordsByRun) {
 function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
   const errors = [];
   const tracked = listTrackedFiles(root).filter((file) => existsSync(path.join(root, file)));
-  const inventory = codeInventory(tracked);
+  const qaRegister = readQaRegister({ root, tracked });
+  errors.push(...qaRegister.errors);
+  const inventory = codeInventory(tracked, qaRegister.validQaScripts);
   const testFiles = testInventory(tracked);
   const read = (file) => readFileSync(path.join(root, file), 'utf8');
   errors.push(...checkUntracked(listUntrackedFiles(root)));
@@ -279,7 +282,7 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
   errors.push(...trace.errors);
   writeTraceReport(root, trace.report);
 
-  return { errors, inventory, testFiles, records, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
+  return { errors, inventory, qaScripts: qaRegister.scripts, testFiles, records, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
 }
 
 function location(item) {
@@ -448,6 +451,7 @@ export function runGates({
   const measured = measure({ root, spawn, env, allocationFiles, change, openSpec });
   const { counts } = measured.trace.report;
   log(`Trace: ${counts.scenarios} scenarios, ${counts.verified} verified, ${counts.pending} open. ${counts.tests} tests, ${counts.traced} traced, ${counts.untraced} untraced.`);
+  for (const line of qaAdvice({ root, change, scripts: measured.qaScripts })) log(line);
   const notLoaded = measured.coverage.filter((item) => !item.loaded && !item.complete).length;
   const complete = measured.coverage.filter((item) => item.complete).length;
   log(`Coverage: ${measured.coverage.length} files, ${complete} complete, ${notLoaded} not loaded, ${measured.untrue.size} untrue.`);

@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that camera controls use the selected source and terrain.
+ * @covers pending:application-shell
+ * @run node scripts/qa-camera-controls.mjs
+ * @needs A browser and a running app server. QA_BASE_URL can set the app URL.
+ */
 /** Camera-panel browser acceptance with controlled sources, images and terrain. */
 import fs from 'node:fs';
 import puppeteer from 'puppeteer';

@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that weather controls and storm selection work together.
+ * @covers cyclones,pending:wind,pending:weather
+ * @run node scripts/qa-weather-journey.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * qa-weather-journey — drive the Weather layers the way a person would and
  * keep the evidence: numbered screenshots plus per-step layer diagnostics.
  *

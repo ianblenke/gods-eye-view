@@ -43,6 +43,8 @@ Do each check. Record each problem as a finding.
 9. **Origin.** A requirement with `Origin: spec-first` must have its spec in the change. Its test tasks must be before its code tasks in `tasks.md`. A change that only adds specs and tests for old code must use the name `backfill-<capability>`.
 10. **Known limits.** Read the section "Known limits and later changes" in the proposal. Report a gap that is not in the gates and not in that section.
 
+11. **QA scripts.** Read each listed script purpose and its checks. Ask for a scenario that conflicts with the checks or a proved behavior with no scenario.
+
 ## Output
 
 Use this format. The caller copies it into `review/spec-adversary.md`.

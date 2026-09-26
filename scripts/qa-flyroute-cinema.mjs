@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that a voice route gives the intended camera path.
+ * @covers pending:voice,pending:directions
+ * @run node scripts/qa-flyroute-cinema.mjs
+ * @needs A browser and a running app server.
+ */
+/**
  * fly_route cinematic evidence — drives the REAL voice runner headlessly and
  * measures the REAL camera (Cesium heading/pitch/roll + position) every
  * rendered frame, so the proof is the shot the owner will watch, not our own
