@@ -1064,6 +1064,16 @@
     "since": "2026-09-16",
     "change": "remove-classification-banner"
   },
+  "layer-lifecycle-001": {
+    "hash": "6fcdeafbbe7444a86d71f413b7316ea58cefb11c86f6538757d6bf65de2c0a12",
+    "since": "2026-09-26",
+    "change": "backfill-layer-lifecycle"
+  },
+  "layer-lifecycle-002": {
+    "hash": "fdc7af4b4dc998dda9c1f56e51aaf5e748a337862ba0e3d8e2006a4169cbe92f",
+    "since": "2026-09-26",
+    "change": "backfill-layer-lifecycle"
+  },
   "osh-001": {
     "hash": "f03ccb41a7a278d75f8d994cf5005dcc4d6660b42d2d42420c6824c0c4814255",
     "since": "2026-09-17",
