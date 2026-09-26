@@ -583,7 +583,7 @@ test('[cyclones-016] superseded asynchronous additions cannot replace newer geom
   assert.equal(h.rendering.getDiagnostics().storms, 0);
   h.rendering.destroy();
 });
-test('[cyclones-016] aborting a pending add retains the prior complete source', async () => {
+test('aborting a pending add retains the prior complete source', async () => {
   const h = harness({ deferred: true });
   const initial = h.rendering.setSnapshot({ storms: [storm()] });
   h.completions.shift()();

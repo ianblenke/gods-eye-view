@@ -105,7 +105,7 @@ The mutation log records the test files that fail for each renderer change.
   - Mutation 2: map each entity to the first storm of the snapshot. The test must fail.
   - Mutation 3: return the entity id, and not `null`, for an unknown entity. The test must fail.
 - [x] 4.5 Write three tests for `cyclones-016` in `rendering.test.mjs`. The test name starts with `[cyclones-016]`.
-  - Tag six old tests with `[cyclones-016]`.
+  - Tag five old tests with `[cyclones-016]`. One old test stays untagged, see the known limit `cyclones-untagged-old-test`.
   - Mutation 1: remove the test of `generation` after the add. The test must fail.
   - Mutation 2: remove the removal of the new data source after a replaced call. The test must fail.
   - Mutation 3: return `false`, and do not throw, when the add fails for the newest call. The test must fail.
