@@ -554,6 +554,131 @@
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
+  "cyclones-001": {
+    "hash": "66b1f031cbf46738d3d303d18e8cc31b6ddee0744e2237f07fe3bf48f45ba2c7",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-002": {
+    "hash": "09bfbbafb71fc04babe31ca567b928b847ad16529378daee0e9d577db324fc80",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-003": {
+    "hash": "813aaba29eea994180c46e9c2ff73fd7139938156dc9c3942c29e8951928ccb6",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-004": {
+    "hash": "5d4ff736f39f75a0f5d8bf0d454e83491b8678a0769029d6087bc54dd9bdd7bc",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-005": {
+    "hash": "1d8e15ab2e16811fdb565a38ebca5dffff36a2db5fd7066bb4816afb34fd40ea",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-006": {
+    "hash": "ae6c8876e2e123b3c24179bde3754dc85f9a7457e79abe2af11844cc14f4d97a",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-007": {
+    "hash": "aba90b3aa095853431b4861e96ae1686d799e53311f359e2e362928b246e0133",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-008": {
+    "hash": "a638a7824f0ef175d1d95ae72865896c0a6489e251d9182a43c60b00ceb11224",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-009": {
+    "hash": "143c2691fd6e96cfa47a254734d71eecc7e9068419db07e0ae9ce83eaecadace",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-010": {
+    "hash": "1ef482507975247c2e9bffb62d228adf2c643b0abeba0cc668c37216704baa54",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-011": {
+    "hash": "a19ffb509bd041b4084e31c519cf0f55c4917079a3a5e33c8662b7e556254230",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-012": {
+    "hash": "67aa8054a5247186fd58462969c4146e2853a02c1b9a4ef9f03fcdae7982dd6a",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-013": {
+    "hash": "1658556726ce4c057fd9d36de65fd26cdd323eb26de89a552797befc0bc2d9bd",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-014": {
+    "hash": "6739305978097688b5b1e5a56a06e3ac1efb5e712b9897d89927f3f2744fadce",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-015": {
+    "hash": "f17e6d7c7463d8480f4ad93a7bc1a7a5adaa2ce2a56f2a05b19fa0dc6b9a2330",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-016": {
+    "hash": "3d0d8fa06a5d19c63bda5d4c260f0c4b6dc327db67e2919083ba50e15149a946",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-017": {
+    "hash": "abde18944868a16e90474fbab136dde079b214aa888a9d1b401b7accb35531a8",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-018": {
+    "hash": "a11462b82772eea5e63c86255470ab24d5c62ec565b9dcdcee52ebb329e5b02b",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-019": {
+    "hash": "5dd2ebc267f9409d804e9e21db8f1005c2c62932e2296f9a665ab8f67b466b8b",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-020": {
+    "hash": "7ddae05a935e9e14eee5679a3805fdd3f07432394479fde822225bbac61ccf9a",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-021": {
+    "hash": "9cf87df8a9cb34e833acaecd12ec8fde0f9487bd16f9673a24701688a1a08472",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-022": {
+    "hash": "b6a4bd4cf84eb94573b7f560d0d2cc97b4b5a52a655c1e13f5b27477fc59d4bb",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-023": {
+    "hash": "7737b5607e5ae15701a3309afb710658730f444d2cac16a80ddd8a67a8a7425b",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-024": {
+    "hash": "1582fb0c0077ad2ba25d0ab93888a5f55767c09038a56686b6e7e2c115186150",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
+  "cyclones-025": {
+    "hash": "af59220bc81928adadef3e2f72a4ec3f5bac5025f835d867dc745bbd9a131baa",
+    "since": "2026-09-26",
+    "change": "backfill-cyclones"
+  },
   "gap-ledger-001": {
     "hash": "d926236986707c5770e366ba46ec70d9e7431ee9daf231b24b1d4d14e242705c",
     "since": "2026-09-14",

@@ -408,6 +408,190 @@
   "credential-boundary-016": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-016] the server key stays out of the bundle and out of main.js, and a failure names it"
   ],
+  "cyclones-001": [
+    "src/layers/cyclones/source.test.mjs › [cyclones-001] a track of one line and a cone of one polygon keep their types",
+    "src/layers/cyclones/source.test.mjs › [cyclones-001] cyclone projection preserves MultiPolygon holes/dateline and separates advisory from position time",
+    "src/layers/cyclones/source.test.mjs › [cyclones-001] the projection holds exactly the named fields, as copies, with the normal form of each link"
+  ],
+  "cyclones-002": [
+    "src/layers/cyclones/source.test.mjs › [cyclones-002] successful empty coverage is distinct from unavailable"
+  ],
+  "cyclones-003": [
+    "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] mismatched, malformed or unbounded cyclone geometry is rejected whole",
+    "src/layers/cyclones/source.test.mjs › [cyclones-003] a stale geometry status is invalid even without geometry",
+    "src/layers/cyclones/source.test.mjs › [cyclones-003] the validator rejects a wrong snapshot shape or storm identity"
+  ],
+  "cyclones-004": [
+    "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] mismatched, malformed or unbounded cyclone geometry is rejected whole",
+    "src/layers/cyclones/source.test.mjs › [cyclones-004] a missing movement direction is invalid",
+    "src/layers/cyclones/source.test.mjs › [cyclones-004] an advisory number of up to three digits and one capital letter is the only form accepted",
+    "src/layers/cyclones/source.test.mjs › [cyclones-004] the validator rejects a link that is not an official NHC link and accepts each official form",
+    "src/layers/cyclones/source.test.mjs › [cyclones-004] the validator rejects a number outside its range and accepts each end of the range",
+    "src/layers/cyclones/source.test.mjs › [cyclones-004] the validator rejects a time that has no exact ISO form or no real date",
+    "src/layers/cyclones/source.test.mjs › [cyclones-004] the validator rejects a wrong text and accepts a text on its limit"
+  ],
+  "cyclones-005": [
+    "src/layers/cyclones/source.test.mjs › [cyclones-003 cyclones-004 cyclones-005] mismatched, malformed or unbounded cyclone geometry is rejected whole",
+    "src/layers/cyclones/source.test.mjs › [cyclones-005] a point type stays invalid with a valid polygon shape",
+    "src/layers/cyclones/source.test.mjs › [cyclones-005] the validator rejects a track or a cone of a wrong form",
+    "src/layers/cyclones/source.test.mjs › [cyclones-005] the validator rejects geometry that does not fit the status of its storm",
+    "src/layers/cyclones/source.test.mjs › [cyclones-005] the validator rejects more than 500 forecast points or more than 25,000 coordinates"
+  ],
+  "cyclones-006": [
+    "src/layers/cyclones/source.test.mjs › [cyclones-006 cyclones-007 cyclones-008] source is lazy and fixed-origin, caps bytes, and honors pre-abort",
+    "src/layers/cyclones/source.test.mjs › [cyclones-006] a body that is not a valid snapshot makes the call reject",
+    "src/layers/cyclones/source.test.mjs › [cyclones-006] a source with no fetch option calls the global fetch and returns the validated snapshot"
+  ],
+  "cyclones-007": [
+    "src/layers/cyclones/source.test.mjs › [cyclones-006 cyclones-007 cyclones-008] source is lazy and fixed-origin, caps bytes, and honors pre-abort",
+    "src/layers/cyclones/source.test.mjs › [cyclones-007] a response with a failed status cancels its body and rejects with the status",
+    "src/layers/cyclones/source.test.mjs › [cyclones-007] the limit of 4,194,304 bytes applies to the declared length and to the streamed bytes"
+  ],
+  "cyclones-008": [
+    "src/layers/cyclones/source.test.mjs › [cyclones-006 cyclones-007 cyclones-008] source is lazy and fixed-origin, caps bytes, and honors pre-abort",
+    "src/layers/cyclones/source.test.mjs › [cyclones-008] a caller abort after the body read still rejects the call",
+    "src/layers/cyclones/source.test.mjs › [cyclones-008] a caller abort during the request aborts it with the reason of the caller",
+    "src/layers/cyclones/source.test.mjs › [cyclones-008] a finished call leaves no deadline timer and no listener on the caller signal",
+    "src/layers/cyclones/source.test.mjs › [cyclones-008] source deadline cancels request and removes timer on completion",
+    "src/layers/cyclones/source.test.mjs › [cyclones-008] the default deadline is 15,000 ms and it aborts the request with a timeout error"
+  ],
+  "cyclones-009": [
+    "src/layers/cyclones/labels.test.mjs › [cyclones-009] a card with no classification has no detail line, and a selected storm with no forecast list has no lead-hour label",
+    "src/layers/cyclones/labels.test.mjs › [cyclones-009] card priority is 1000 plus the wind, the largest safe integer for the selected storm and 500 minus the lead hours for a lead label",
+    "src/layers/cyclones/labels.test.mjs › [cyclones-009] entries satisfy the shared host contract and keep the 4,000 km lead-hour rule",
+    "src/layers/cyclones/labels.test.mjs › [cyclones-009] storm cards join the fire and vessel card tier with fire-card clearance"
+  ],
+  "cyclones-010": [
+    "src/layers/cyclones/labels.test.mjs › [cyclones-010] a snapshot with no selection argument keeps the selection, and clear forgets it",
+    "src/layers/cyclones/labels.test.mjs › [cyclones-010] publisher republishes on snapshots and selection changes, and hides on clear",
+    "src/layers/cyclones/labels.test.mjs › [cyclones-010] the publisher limits the cohort to 64 and the collision capacity to the ambient count",
+    "src/layers/cyclones/labels.test.mjs › [cyclones-010] with no host option the publisher uses the shared world overlay"
+  ],
+  "cyclones-011": [
+    "src/layers/cyclones/labels.test.mjs › [cyclones-011] only the prefixes storm and lead, in lower case and at the start, give a storm id",
+    "src/layers/cyclones/labels.test.mjs › [cyclones-011] storm identity resolves from card and lead-hour ids only"
+  ],
+  "cyclones-012": [
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-012] a coherent storm with no track and no cone draws only its points",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-012] a forecast point at lead hour 0 has no entity and no lead-hour label",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-012] a track of one line and a cone of one polygon each give one line and one polygon",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-012] each entity has the size, the color and the width of its kind",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-012] only a storm with the status current and equal advisory numbers has coherent geometry",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-012] pending or mismatched advisory geometry never renders even when supplied",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-012] static entities preserve polygon parts, holes and geographic seam coordinates",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-012] the data source has the layer name, and a refresh removes the earlier one with its entities",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-012] the focus sphere covers the whole storm, keeps a radius of at least 500,000 m and is null for an unknown storm",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-012] the staged center starts at 9 px"
+  ],
+  "cyclones-013": [
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-013 cyclones-016 cyclones-017] labels publish committed anchors to the shared overlay and follow selection and clear",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-013] the selected storm has a gold point of 12 px and each other storm has a blue point of 9 px"
+  ],
+  "cyclones-014": [
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-014 cyclones-016] late asynchronous additions never restore a cleared or destroyed horizon listener",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-014 cyclones-017] horizon listener follows committed nonempty snapshots and clear/destroy",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-014] a refresh keeps one horizon listener",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-014] horizon culling updates only changed entities and keeps selection independent",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-014] real Cesium culls far storms and retains partially visible extents with either globe visibility",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-014] the renderer tests a storm with no shapes by its point only, and the occluders use the WGS84 minimum radius"
+  ],
+  "cyclones-015": [
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-015 cyclones-016] registry IDs switch only when the next coherent data source commits",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-015] a pick maps each entity to its own storm, and an id that is not a string is not owned",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-015] picking accepts exact current owned entities, never prefixes or superseded identities"
+  ],
+  "cyclones-016": [
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-013 cyclones-016 cyclones-017] labels publish committed anchors to the shared overlay and follow selection and clear",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-014 cyclones-016] late asynchronous additions never restore a cleared or destroyed horizon listener",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-015 cyclones-016] registry IDs switch only when the next coherent data source commits",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-016] a data-source add settling after disable is removed, without a new owner",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-016] a failed add returns false, and does not throw, after an abort, a newer call or a clear",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-016] a failed data-source add rejects the call, removes the new entities and keeps the earlier source",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-016] a signal that aborted before the call rejects it and adds no data source",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-016] aborting a pending add retains the earlier complete source",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-016] superseded asynchronous additions cannot replace newer geometry"
+  ],
+  "cyclones-017": [
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-013 cyclones-016 cyclones-017] labels publish committed anchors to the shared overlay and follow selection and clear",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-014 cyclones-017] horizon listener follows committed nonempty snapshots and clear/destroy",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-017] a destroyed viewer gets no render request and a destroyed data source list gets no removal",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-017] clear removes the data source, resets the counts and the selection and hides the labels",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-017] clear stops selection from changing a removed center",
+    "src/layers/cyclones/rendering.test.mjs › [cyclones-017] destroy clears once and a second destroy does nothing"
+  ],
+  "cyclones-018": [
+    "src/layers/cyclones/index.test.mjs › [cyclones-018] a call with no snapshot source throws a TypeError",
+    "src/layers/cyclones/index.test.mjs › [cyclones-018] the layer has a fixed identity"
+  ],
+  "cyclones-019": [
+    "src/layers/cyclones/index.test.mjs › [cyclones-019 cyclones-024] map selection yields to pointer owners and owns only its enabled handler",
+    "src/layers/cyclones/index.test.mjs › [cyclones-019] a layer that never had a viewer can enable, disable and destroy",
+    "src/layers/cyclones/index.test.mjs › [cyclones-019] a second enable does not replace another pick owner",
+    "src/layers/cyclones/index.test.mjs › [cyclones-019] disable aborts the request, resets the state and clears the renderer, and destroy releases the renderer once",
+    "src/layers/cyclones/index.test.mjs › [cyclones-019] disable clears an earlier request error",
+    "src/layers/cyclones/index.test.mjs › [cyclones-019] disable destroys the click handler once, and never when Cesium destroyed it already",
+    "src/layers/cyclones/index.test.mjs › [cyclones-019] the layer installs no click handler without a canvas or without a Cesium handler class",
+    "src/layers/cyclones/index.test.mjs › [cyclones-019] the pick owner claims an id only after enable and before disable, when the renderer owns it exactly"
+  ],
+  "cyclones-020": [
+    "src/layers/cyclones/index.test.mjs › [cyclones-020 cyclones-021] empty successful coverage, unavailable source and stale advisory are different states",
+    "src/layers/cyclones/index.test.mjs › [cyclones-020] a caller abort during the request aborts it, and the layer removes its listener when the call ends",
+    "src/layers/cyclones/index.test.mjs › [cyclones-020] a disable, a newer request or an abort while the renderer stages stops the update",
+    "src/layers/cyclones/index.test.mjs › [cyclones-020] a failed request sets the error to its message or to the default text, clears the state and returns true",
+    "src/layers/cyclones/index.test.mjs › [cyclones-020] a failure of a request that a newer request or an abort replaced changes nothing",
+    "src/layers/cyclones/index.test.mjs › [cyclones-020] an unavailable snapshot clears the renderer, drops the selection and sets the error to its reason or to the default text",
+    "src/layers/cyclones/index.test.mjs › [cyclones-020] an update that the renderer does not apply returns false and keeps the earlier snapshot",
+    "src/layers/cyclones/index.test.mjs › [cyclones-020] disabled and superseded sources cannot publish late advisories even if they ignore abort",
+    "src/layers/cyclones/index.test.mjs › [cyclones-020] external cancellation and acquisition failure cannot install or retain unlabeled advisory geometry",
+    "src/layers/cyclones/index.test.mjs › [cyclones-020] the listener runs at the start of a request and at the end of the newest request, and the load flag holds between",
+    "src/layers/cyclones/index.test.mjs › [cyclones-020] update does nothing for a disabled or destroyed layer"
+  ],
+  "cyclones-021": [
+    "src/layers/cyclones/index.test.mjs › [cyclones-020 cyclones-021] empty successful coverage, unavailable source and stale advisory are different states",
+    "src/layers/cyclones/index.test.mjs › [cyclones-021 cyclones-025] advisory selection uses accessible row descriptors and shared camera handoff",
+    "src/layers/cyclones/index.test.mjs › [cyclones-021] a code that names an inherited property of an object shows as it is",
+    "src/layers/cyclones/index.test.mjs › [cyclones-021] a storm with no wind, pressure or time shows Unavailable, and a geometry that waits shows the advisory number",
+    "src/layers/cyclones/index.test.mjs › [cyclones-021] a storm with the geometry status unavailable shows the text Track/cone unavailable",
+    "src/layers/cyclones/index.test.mjs › [cyclones-021] classification display expands known codes without altering the source or guessing unknown meanings",
+    "src/layers/cyclones/index.test.mjs › [cyclones-021] the detail counts the active storms when the layer has no selected storm, and it names the empty and the unavailable state",
+    "src/layers/cyclones/index.test.mjs › [cyclones-021] the row controls before the first update show the unavailable state and the default coverage",
+    "src/layers/cyclones/index.test.mjs › [cyclones-021] the row controls of a selected storm with a coherent track and cone",
+    "src/layers/cyclones/index.test.mjs › [cyclones-021] the status shows the error first, then the stale text, then the wait text, then the geometry text"
+  ],
+  "cyclones-022": [
+    "src/layers/cyclones/index.test.mjs › [cyclones-022] getDiagnostics joins the renderer diagnostics with the state of the layer",
+    "src/layers/cyclones/index.test.mjs › [cyclones-022] getStats reports a stale snapshot, an empty snapshot and an unavailable snapshot",
+    "src/layers/cyclones/index.test.mjs › [cyclones-022] getStats reports the count, the times, the flags and the source of each state"
+  ],
+  "cyclones-023": [
+    "src/layers/cyclones/index.test.mjs › [cyclones-023 cyclones-025] only the latest queued focus runs and an unchanged selection survives refresh",
+    "src/layers/cyclones/index.test.mjs › [cyclones-023] clear calls the row listener",
+    "src/layers/cyclones/index.test.mjs › [cyclones-023] clearing while a refreshed data source is staging cannot reselect a storm",
+    "src/layers/cyclones/index.test.mjs › [cyclones-023] refresh preserves selection intent, including explicit clears and missing storms",
+    "src/layers/cyclones/index.test.mjs › [cyclones-023] refresh restores an unchanged selection to the renderer",
+    "src/layers/cyclones/index.test.mjs › [cyclones-023] setParams ignores an id that is not a string or not in the snapshot, and it does nothing after disable or destroy"
+  ],
+  "cyclones-024": [
+    "src/layers/cyclones/index.test.mjs › [cyclones-019 cyclones-024] map selection yields to pointer owners and owns only its enabled handler",
+    "src/layers/cyclones/index.test.mjs › [cyclones-024] a captured hit serves a click within 1 px in both axes and no other click",
+    "src/layers/cyclones/index.test.mjs › [cyclones-024] a click on 3D Tiles content or on a tileset primitive clears the selection, and another primitive does not",
+    "src/layers/cyclones/index.test.mjs › [cyclones-024] a click on a storm card or lead-hour label selects that storm without picking",
+    "src/layers/cyclones/index.test.mjs › [cyclones-024] a click with no position does nothing, and one capture serves one click only",
+    "src/layers/cyclones/index.test.mjs › [cyclones-024] a release with no finite coordinates records nothing and clears the earlier record",
+    "src/layers/cyclones/index.test.mjs › [cyclones-024] each release event records the overlay hit, and each press or cancel event clears it"
+  ],
+  "cyclones-025": [
+    "src/layers/cyclones/index.test.mjs › [cyclones-021 cyclones-025] advisory selection uses accessible row descriptors and shared camera handoff",
+    "src/layers/cyclones/index.test.mjs › [cyclones-023 cyclones-025] only the latest queued focus runs and an unchanged selection survives refresh",
+    "src/layers/cyclones/index.test.mjs › [cyclones-025] a truthy focus value does not queue a flight",
+    "src/layers/cyclones/index.test.mjs › [cyclones-025] an unavailable snapshot and a failed request cancel the queued focus",
+    "src/layers/cyclones/index.test.mjs › [cyclones-025] queued focus is revoked by selection changes, clears, refresh fallback and teardown",
+    "src/layers/cyclones/index.test.mjs › [cyclones-025] the flight goes to the focus sphere, the shell gets its result, and the listener runs when the services change",
+    "src/layers/cyclones/index.test.mjs › [cyclones-025] the layer opens the advisory link only for a selected storm that has one",
+    "src/layers/cyclones/index.test.mjs › [cyclones-025] the layer queues no flight without a shell service, without a focus sphere or without a selected storm",
+    "src/layers/cyclones/index.test.mjs › [cyclones-025] with no global matchMedia and no global open the focus uses the full duration and the link does nothing",
+    "src/layers/cyclones/index.test.mjs › [cyclones-025] with no options the layer reads the global matchMedia and opens the advisory with the global open"
+  ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec"

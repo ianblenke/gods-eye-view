@@ -3634,11 +3634,11 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 18,
-      "branches": 52,
+      "branches": 50,
       "functions": 0,
       "totals": {
         "lines": 1228,
-        "branches": 407,
+        "branches": 405,
         "functions": 58
       },
       "sha": "fe25755fea99ad22dd3c17fd9f443b6b2ba002b1894facad2226fc4f7ac17087",
@@ -5419,59 +5419,14 @@
     "src/layers/cyclones/index.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 24,
-      "functions": 2,
-      "totals": {
-        "lines": 447,
-        "branches": 193,
-        "functions": 34
-      },
-      "sha": "c74a04e2347924e075cac7539e6084a84fc4fae79772336e8b86e889812ac0f6",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/cyclones/labels.js": {
-      "loaded": true,
-      "lines": 0,
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 180,
-        "branches": 38,
-        "functions": 10
+        "lines": 447,
+        "branches": 240,
+        "functions": 34
       },
-      "sha": "18187e4b7387afad59686daa378716599f2f5e611953820b0531eb3d81d82af4",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/cyclones/rendering.js": {
-      "loaded": true,
-      "lines": 4,
-      "branches": 8,
-      "functions": 0,
-      "totals": {
-        "lines": 314,
-        "branches": 80,
-        "functions": 22
-      },
-      "sha": "96735f4112ba7a3b6a31e9f3b019cf2ee7c8106e7a912a9257c77a56f4e35503",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/cyclones/source.js": {
-      "loaded": true,
-      "lines": 3,
-      "branches": 16,
-      "functions": 2,
-      "totals": {
-        "lines": 245,
-        "branches": 101,
-        "functions": 22
-      },
-      "sha": "bb48008f868177e2e4a63cc5c11539dcc774dacdeba3010f8fa393b76367c729",
+      "sha": "c74a04e2347924e075cac7539e6084a84fc4fae79772336e8b86e889812ac0f6",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -8408,7 +8363,7 @@
       "functions": 4,
       "totals": {
         "lines": 2847,
-        "branches": 711,
+        "branches": 712,
         "functions": 95
       },
       "sha": "7918300a0d1faaad43aece1e544eba511cfa9ccceac5a251a36c2d03c0d84471",
@@ -15402,62 +15357,6 @@
         "missing decoder uses honest failure fallback once": 1,
         "native HLS releases its client lease without response-header access": 1,
         "switch during lazy import never starts the stale decoder": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/cyclones/index.test.mjs": {
-      "names": {
-        "a click on a storm card or lead-hour label selects that storm without picking": 1,
-        "advisory selection uses accessible row descriptors and shared camera handoff": 1,
-        "classification display expands known codes without altering the source or guessing unknown meanings": 1,
-        "clearing while a refreshed data source is staging cannot reselect a storm": 1,
-        "disabled and superseded sources cannot publish late advisories even if they ignore abort": 1,
-        "empty successful coverage, unavailable source and stale advisory are different states": 1,
-        "external cancellation and acquisition failure cannot install or retain unlabeled advisory geometry": 1,
-        "map selection yields to pointer owners and owns only its enabled handler": 1,
-        "only the latest queued focus runs and an unchanged selection survives refresh": 1,
-        "queued focus is revoked by selection changes, clears, refresh fallback and teardown": 1,
-        "refresh preserves selection intent, including explicit clears and missing storms": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/cyclones/labels.test.mjs": {
-      "names": {
-        "entries satisfy the shared host contract and keep the 4,000 km lead-hour rule": 1,
-        "publisher republishes on snapshots and selection changes, and hides on clear": 1,
-        "storm cards join the fire and vessel card tier with fire-card clearance": 1,
-        "storm identity resolves from card and lead-hour ids only": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/cyclones/rendering.test.mjs": {
-      "names": {
-        "a data-source add settling after disable is removed, without a new owner": 1,
-        "aborting a pending add retains the prior complete source": 1,
-        "horizon culling updates only changed entities and keeps selection independent": 1,
-        "horizon listener follows committed nonempty snapshots and clear/destroy": 1,
-        "labels publish committed anchors to the shared overlay and follow selection and clear": 1,
-        "late asynchronous additions never restore a cleared or destroyed horizon listener": 1,
-        "pending or mismatched advisory geometry never renders even when supplied": 1,
-        "picking accepts exact current owned entities, never prefixes or superseded identities": 1,
-        "real Cesium culls far storms and retains partially visible extents with either globe visibility": 1,
-        "registry IDs switch only when the next coherent data source commits": 1,
-        "static entities preserve polygon parts, holes and geographic seam coordinates": 1,
-        "superseded asynchronous additions cannot replace newer geometry": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/cyclones/source.test.mjs": {
-      "names": {
-        "cyclone projection preserves MultiPolygon holes/dateline and separates advisory from position time": 1,
-        "mismatched, malformed or unbounded cyclone geometry is rejected whole": 1,
-        "source deadline cancels request and removes timer on completion": 1,
-        "source is lazy and fixed-origin, caps bytes, and honors pre-abort": 1,
-        "successful empty coverage is distinct from unavailable": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
