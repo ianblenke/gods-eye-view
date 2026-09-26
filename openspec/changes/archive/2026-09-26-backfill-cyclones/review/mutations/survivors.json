@@ -1,0 +1,172 @@
+[
+ {
+  "id": "003f",
+  "file": "src/layers/cyclones/source.js",
+  "old": "!['current', 'pending', 'unavailable'].includes(raw.geometryStatus)",
+  "new": "![ 'current', 'pending', 'unavailable', 'stale'].includes(raw.geometryStatus)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004o",
+  "file": "src/layers/cyclones/source.js",
+  "old": "number(raw.movement?.directionDegrees, 0, 360)",
+  "new": "number(raw.movement?.directionDegrees ?? null, 0, 360)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005h",
+  "file": "src/layers/cyclones/source.js",
+  "old": "allowed.includes(value?.type)",
+  "new": "(allowed.includes(value?.type) || value?.type === 'Point')",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005l",
+  "file": "src/layers/cyclones/source.js",
+  "old": "      if (++budget.coordinates > 25_000) throw malformed();\n      return {",
+  "new": "      if (++budget.coordinates > 25_000_000) throw malformed();\n      return {",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012b",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "pixelSize: CYCLONE_MARKER_PX.storm,",
+  "new": "pixelSize: CYCLONE_MARKER_PX.selected,",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "014f",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "    if (removePreRender) return;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017i",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      centers.clear();\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017j",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      entityIds.clear();\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019b",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      unregisterPickOwner('weather-cyclones');\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019m",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      error = null;\n      snapshot = null;\n      selectedId = null;\n      selectionIntent",
+  "new": "      snapshot = null;\n      selectedId = null;\n      selectionIntent",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019n",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      if (!destroyed && !enabled) {",
+  "new": "      if (!destroyed) {",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023h",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        selectionIntent = 'cleared';\n        select(null);\n        notify();",
+  "new": "        selectionIntent = 'cleared';\n        select(null);",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023j",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        else rendering.setSelection(selectedId);",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024p",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        !enabled ||\n        destroyed ||\n        clickHandler",
+  "new": "        destroyed ||\n        clickHandler",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025k",
+  "file": "src/layers/cyclones/index.js",
+  "old": "params.focus === true && storm && runNavigation",
+  "new": "params.focus && storm && runNavigation",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025m",
+  "file": "src/layers/cyclones/index.js",
+  "old": "              selectedId !== storm.id\n",
+  "new": "              false\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025n",
+  "file": "src/layers/cyclones/index.js",
+  "old": "              !enabled ||\n              destroyed ||\n              generation",
+  "new": "              generation",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ }
+]

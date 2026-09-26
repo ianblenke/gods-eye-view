@@ -1,0 +1,2587 @@
+[
+ {
+  "id": "001a",
+  "file": "src/layers/cyclones/source.js",
+  "old": "return [...pair];",
+  "new": "return pair;",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "001b",
+  "file": "src/layers/cyclones/source.js",
+  "old": "advisoryUrl: officialLink(raw.advisoryUrl),",
+  "new": "advisoryUrl: raw.advisoryUrl,",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "001c",
+  "file": "src/layers/cyclones/source.js",
+  "old": "return { type: value.type, coordinates };",
+  "new": "return { ...value, coordinates };",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "001d",
+  "file": "src/layers/cyclones/source.js",
+  "old": "positionAt: time(raw.positionAt),",
+  "new": "positionAt: time(raw.issuedAt),",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "001e",
+  "file": "src/layers/cyclones/source.js",
+  "old": "      movement: {\n        directionDegrees: number(raw.movement?.directionDegrees, 0, 360),\n        speedKt: number(raw.movement?.speedKt, 0, 200),\n      },",
+  "new": "      movement: raw.movement,",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "001f",
+  "file": "src/layers/cyclones/source.js",
+  "old": "      return {\n        position: position(point.position),\n        tauHours,",
+  "new": "      return {\n        ...point,\n        position: position(point.position),\n        tauHours,",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "002a",
+  "file": "src/layers/cyclones/source.js",
+  "old": "if (value.unavailable && storms.length) throw malformed();",
+  "new": "void 0;",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "002b",
+  "file": "src/layers/cyclones/source.js",
+  "old": "    unavailable: value.unavailable,\n",
+  "new": "    unavailable: false,\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "003a",
+  "file": "src/layers/cyclones/source.js",
+  "old": "value.storms.length > 32",
+  "new": "value.storms.length > 33",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "003b",
+  "file": "src/layers/cyclones/source.js",
+  "old": "      seen.has(raw.id) ||\n",
+  "new": "      false ||\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "003c",
+  "file": "src/layers/cyclones/source.js",
+  "old": "/^(?:al|ep|cp)\\d{6}$/.test(raw?.id)",
+  "new": "/^(?:al|ep|cp)\\d{6}/.test(raw?.id)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "003d",
+  "file": "src/layers/cyclones/source.js",
+  "old": "raw.basin !== raw.id.slice(0, 2).toUpperCase()",
+  "new": "raw.basin.toLowerCase() !== raw.id.slice(0, 2)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "003e",
+  "file": "src/layers/cyclones/source.js",
+  "old": "    typeof value.stale !== 'boolean' ||\n",
+  "new": "    false ||\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "003f",
+  "file": "src/layers/cyclones/source.js",
+  "old": "!['current', 'pending', 'unavailable'].includes(raw.geometryStatus)",
+  "new": "![ 'current', 'pending', 'unavailable', 'stale'].includes(raw.geometryStatus)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004a",
+  "file": "src/layers/cyclones/source.js",
+  "old": "    value.length > max ||\n",
+  "new": "    value.length > max + 1 ||\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004b",
+  "file": "src/layers/cyclones/source.js",
+  "old": "    !value.trim() ||\n",
+  "new": "    false ||\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004c",
+  "file": "src/layers/cyclones/source.js",
+  "old": "/[\\u0000-\\u001f<>]/.test(value)",
+  "new": "/[\\u0000-\\u001f<]/.test(value)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004d",
+  "file": "src/layers/cyclones/source.js",
+  "old": "value < low || value > high",
+  "new": "value < low || value >= high",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004e",
+  "file": "src/layers/cyclones/source.js",
+  "old": "    !Number.isFinite(Date.parse(value)) ||\n",
+  "new": "    false ||\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004f",
+  "file": "src/layers/cyclones/source.js",
+  "old": "    !/^\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d{3}Z$/.test(value) ||\n",
+  "new": "    false ||\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004g",
+  "file": "src/layers/cyclones/source.js",
+  "old": "/^(?:0|[1-9]\\d{0,2})[A-Z]?$/",
+  "new": "/^(?:0|[1-9]\\d{0,3})[A-Z]?$/",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004h",
+  "file": "src/layers/cyclones/source.js",
+  "old": "    url.username ||\n",
+  "new": "    false ||\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004i",
+  "file": "src/layers/cyclones/source.js",
+  "old": "    url.password ||\n",
+  "new": "    false ||\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004j",
+  "file": "src/layers/cyclones/source.js",
+  "old": "    url.hash\n",
+  "new": "    false\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004k",
+  "file": "src/layers/cyclones/source.js",
+  "old": "url.origin !== 'https://www.nhc.noaa.gov'",
+  "new": "!url.origin.startsWith('https://www.nhc.noaa.gov')",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004l",
+  "file": "src/layers/cyclones/source.js",
+  "old": "      : url.search || !/^\\/text\\/[A-Z0-9]+\\.shtml$/.test(url.pathname)",
+  "new": "      : !/^\\/text\\/[A-Z0-9]+\\.shtml$/.test(url.pathname)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004m",
+  "file": "src/layers/cyclones/source.js",
+  "old": "    outlook\n      ? !/",
+  "new": "    !outlook\n      ? !/",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004n",
+  "file": "src/layers/cyclones/source.js",
+  "old": "if (!value || value.longitude === null || value.latitude === null)",
+  "new": "if (!value)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004o",
+  "file": "src/layers/cyclones/source.js",
+  "old": "number(raw.movement?.directionDegrees, 0, 360)",
+  "new": "number(raw.movement?.directionDegrees ?? null, 0, 360)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "004p",
+  "file": "src/layers/cyclones/source.js",
+  "old": "reason: value.reason === null ? null : text(value.reason, 240),",
+  "new": "reason: value.reason === null ? null : value.reason,",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005a",
+  "file": "src/layers/cyclones/source.js",
+  "old": "(track || cone || forecastPoints.length)",
+  "new": "(track || cone)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005b",
+  "file": "src/layers/cyclones/source.js",
+  "old": "(!track || !cone || !forecastPoints.length)",
+  "new": "(!track || !cone)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005c",
+  "file": "src/layers/cyclones/source.js",
+  "old": "geometryAdvisoryNumber !== advisoryNumber",
+  "new": "(geometryAdvisoryNumber ?? advisoryNumber) !== advisoryNumber",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005d",
+  "file": "src/layers/cyclones/source.js",
+  "old": "result[0][1] !== result.at(-1)[1]",
+  "new": "false",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005e",
+  "file": "src/layers/cyclones/source.js",
+  "old": "if (++budget.coordinates > 25_000) throw malformed();\n    return [...pair];",
+  "new": "if (++budget.coordinates > 25_001) throw malformed();\n    return [...pair];",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005f",
+  "file": "src/layers/cyclones/source.js",
+  "old": "(budget.points += raw.forecastPoints.length) > 500",
+  "new": "(budget.points += raw.forecastPoints.length) > 501",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005g",
+  "file": "src/layers/cyclones/source.js",
+  "old": "items.length < min || items.length > max",
+  "new": "items.length < min || items.length > max + 1",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005h",
+  "file": "src/layers/cyclones/source.js",
+  "old": "allowed.includes(value?.type)",
+  "new": "(allowed.includes(value?.type) || value?.type === 'Point')",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005i",
+  "file": "src/layers/cyclones/source.js",
+  "old": "pair.length !== 2 ||",
+  "new": "pair.length < 2 ||",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005j",
+  "file": "src/layers/cyclones/source.js",
+  "old": "tauHours === null || taus.has(tauHours)",
+  "new": "taus.has(tauHours)",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005k",
+  "file": "src/layers/cyclones/source.js",
+  "old": "tauHours === null || taus.has(tauHours)",
+  "new": "tauHours === null",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005l",
+  "file": "src/layers/cyclones/source.js",
+  "old": "      if (++budget.coordinates > 25_000) throw malformed();\n      return {",
+  "new": "      if (++budget.coordinates > 25_000_000) throw malformed();\n      return {",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "005m",
+  "file": "src/layers/cyclones/source.js",
+  "old": "      !Array.isArray(raw.forecastPoints) ||\n",
+  "new": "      false ||\n",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "006a",
+  "file": "src/layers/cyclones/source.js",
+  "old": "fetchImpl('/api/cyclones', {",
+  "new": "fetchImpl('/api/cyclone', {",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "006b",
+  "file": "src/layers/cyclones/source.js",
+  "old": "          redirect: 'error',",
+  "new": "          redirect: 'follow',",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "006c",
+  "file": "src/layers/cyclones/source.js",
+  "old": "          cache: 'no-store',",
+  "new": "          cache: 'default',",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "006d",
+  "file": "src/layers/cyclones/source.js",
+  "old": "fetchImpl = (...args) => globalThis.fetch(...args),",
+  "new": "fetchImpl = globalThis.fetch,",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "006e",
+  "file": "src/layers/cyclones/source.js",
+  "old": "return validateCycloneSnapshot(result);",
+  "new": "return result;",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "007a",
+  "file": "src/layers/cyclones/source.js",
+  "old": "if (!response.ok) {",
+  "new": "if (false) {",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "007b",
+  "file": "src/layers/cyclones/source.js",
+  "old": "          await response.body?.cancel();\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "007c",
+  "file": "src/layers/cyclones/source.js",
+  "old": "throw new Error(`Cyclone HTTP ${response.status}`);",
+  "new": "throw new Error('Cyclone HTTP');",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "007d",
+  "file": "src/layers/cyclones/source.js",
+  "old": "export const CYCLONE_RESPONSE_LIMIT = 4 * 1024 * 1024;",
+  "new": "export const CYCLONE_RESPONSE_LIMIT = 4 * 1024 * 1000;",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "008a",
+  "file": "src/layers/cyclones/source.js",
+  "old": "timeoutMs = 15_000,",
+  "new": "timeoutMs = 15_001,",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "008b",
+  "file": "src/layers/cyclones/source.js",
+  "old": "        signal?.throwIfAborted();\n        const response",
+  "new": "        const response",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "008c",
+  "file": "src/layers/cyclones/source.js",
+  "old": "        clearTimeout(timer);\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "008d",
+  "file": "src/layers/cyclones/source.js",
+  "old": "        signal?.removeEventListener('abort', abort);\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "008e",
+  "file": "src/layers/cyclones/source.js",
+  "old": "        controller.signal.throwIfAborted();\n        return validateCycloneSnapshot(result);",
+  "new": "        return validateCycloneSnapshot(result);",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "008f",
+  "file": "src/layers/cyclones/source.js",
+  "old": "const abort = () => controller.abort(signal.reason);",
+  "new": "const abort = () => controller.abort();",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "008g",
+  "file": "src/layers/cyclones/source.js",
+  "old": "new Error('Cyclone request timed out')",
+  "new": "new Error('Cyclone request stopped')",
+  "test": [
+   "src/layers/cyclones/source.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009a",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "STORM_PRIORITY + (Number(storm.windKt) || 0)",
+  "new": "STORM_PRIORITY + 0",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009b",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "LEAD_PRIORITY - point.tauHours",
+  "new": "LEAD_PRIORITY + point.tauHours",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009c",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "Math.max(12, markerPx + 8)",
+  "new": "Math.max(12, markerPx + 9)",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009d",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "Math.max(2, gapPx - 6)",
+  "new": "Math.max(2, gapPx - 5)",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009e",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "for (const point of storm.forecasts || [])",
+  "new": "for (const point of storm.forecasts)",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009f",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "    maxDistance: CYCLONE_LEAD_LABEL_MAX_DISTANCE_M,",
+  "new": "    maxDistance: Number.POSITIVE_INFINITY,",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009g",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "CYCLONE_LEAD_LABEL_MAX_DISTANCE_M = 4_000_000;",
+  "new": "CYCLONE_LEAD_LABEL_MAX_DISTANCE_M = 4_000_001;",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009h",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "distanceFadeStartRatio: 1,",
+  "new": "distanceFadeStartRatio: 0.5,",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009i",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "collisionGroup: 'ambient-card',",
+  "new": "collisionGroup: 'other-card',",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009j",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "details: storm.classification ? [storm.classification] : [],",
+  "new": "details: [storm.classification],",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009k",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "    if (!selected) continue;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "009l",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "      : STORM_PRIORITY + (Number(storm.windKt) || 0),",
+  "new": "      : STORM_PRIORITY + 0 + (Number(storm.windKt) || 0) + 1,",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "010a",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "collisionCapacity: Math.min(CYCLONE_OVERLAY_COHORT_LIMIT, ambient),",
+  "new": "collisionCapacity: Math.max(CYCLONE_OVERLAY_COHORT_LIMIT, ambient),",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "010b",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "      if (id === selectedId) return;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "010c",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "setSnapshot(nextStorms, nextSelectedId = selectedId) {",
+  "new": "setSnapshot(nextStorms, nextSelectedId = null) {",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "010d",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "CYCLONE_OVERLAY_COHORT_LIMIT = 64;",
+  "new": "CYCLONE_OVERLAY_COHORT_LIMIT = 65;",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "010e",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "      selectedId = null;\n      if (!published) return;",
+  "new": "      if (!published) return;",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "010f",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "  setEntries: setOverlayEntries,",
+  "new": "  setEntries: () => {},",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "010g",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "    host.setVisible(CYCLONE_OVERLAY_SOURCE_ID, true);\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "010h",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "      host.clearSource(CYCLONE_OVERLAY_SOURCE_ID);\n      host.setVisible(CYCLONE_OVERLAY_SOURCE_ID, false);",
+  "new": "      host.setVisible(CYCLONE_OVERLAY_SOURCE_ID, false);",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "010i",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "      if (published) publish();",
+  "new": "      publish();",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "010j",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "    for (const entry of entries) if (!entry.protected) ambient++;",
+  "new": "    for (const entry of entries) ambient++;",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "011a",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "/^(?:storm|lead):([^:]+)(?::|$)/",
+  "new": "/(?:storm|lead):([^:]+)(?::|$)/",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "011b",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "/^(?:storm|lead):([^:]+)(?::|$)/",
+  "new": "/^(?:storm|lead):([^:]*)(?::|$)/",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "011c",
+  "file": "src/layers/cyclones/labels.js",
+  "old": "/^(?:storm|lead):([^:]+)(?::|$)/",
+  "new": "/^(?:storm|lead):([^:]+)(?::)/",
+  "test": [
+   "src/layers/cyclones/labels.test.mjs",
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012a",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "if (point.tauHours === 0) continue;",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012b",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "pixelSize: CYCLONE_MARKER_PX.storm,",
+  "new": "pixelSize: CYCLONE_MARKER_PX.selected,",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012c",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "width: 2.5,",
+  "new": "width: 2,",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012d",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "blue.withAlpha(0.16)",
+  "new": "blue.withAlpha(0.2)",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012e",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "blue.withAlpha(0.55)",
+  "new": "blue.withAlpha(0.5)",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012f",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "Math.max(sphere.radius, 500_000)",
+  "new": "Math.min(sphere.radius, 500_000)",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012g",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "              extent.push(...positions);\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012h",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "    storm.geometryStatus === 'current' &&",
+  "new": "    storm.geometryStatus !== 'pending' &&",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012i",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": ": storm.track?.coordinates || [];",
+  "new": ": storm.track.coordinates;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012j",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "        remove(source);\n        source = next;",
+  "new": "        source = next;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012k",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "new C.CustomDataSource('weather-cyclones')",
+  "new": "new C.CustomDataSource('weather-cyclone')",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012l",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "viewer.dataSources.remove(value, true);",
+  "new": "viewer.dataSources.remove(value);",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012m",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": ".slice(1)\n",
+  "new": ".slice(0)\n",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012n",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": ": storm.cone?.coordinates || [];",
+  "new": ": storm.cone.coordinates;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "012p",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "width: 1,\n                      material: blue.withAlpha(0.55),",
+  "new": "width: 2,\n                      material: blue.withAlpha(0.55),",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "013a",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "entity.point.color = stormId === id ? gold : blue;",
+  "new": "entity.point.color = stormId === id ? blue : gold;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "013b",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "stormId === id ? CYCLONE_MARKER_PX.selected : CYCLONE_MARKER_PX.storm;",
+  "new": "stormId === id ? CYCLONE_MARKER_PX.storm : CYCLONE_MARKER_PX.selected;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "013c",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "    labels.setSelection(id);\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "013d",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "        select(selected);\n        return true;",
+  "new": "        select(null);\n        return true;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "013f",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "    labels.setSelection(id);\n    render();",
+  "new": "    labels.setSelection(id);",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "014a",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      if (!storm.shapes.length) continue;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "014b",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "const show = pointOccluder.isPointVisible(position);\n        if (entity.show !== show) {",
+  "new": "const show = pointOccluder.isPointVisible(position);\n        if (true) {",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "014c",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "    if (changed) render();",
+  "new": "    render();",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "014d",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "const show = sphereOccluder.isBoundingSphereVisible(storm.sphere);",
+  "new": "const show = true;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "014e",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "C.Ellipsoid.WGS84.minimumRadius",
+  "new": "C.Ellipsoid.WGS84.maximumRadius",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "014f",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "    if (removePreRender) return;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "014g",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      removePreRender?.();\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "014h",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "const show = pointOccluder.isPointVisible(position);",
+  "new": "const show = !pointOccluder.isPointVisible(position);",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "014j",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "    sphereOccluder.cameraPosition = viewer.camera.positionWC;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "015a",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "return source !== null && typeof id === 'string' && entityIds.has(id);",
+  "new": "return source !== null && typeof id === 'string' && id.startsWith('cyclone:');",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "015b",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "nextEntityStorms.set(entity, storm.id);",
+  "new": "nextEntityStorms.set(entity, snapshot.storms[0].id);",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "015c",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "            nextEntityIds.add(entity.id);\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "015d",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "        entityIds = nextEntityIds;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "015e",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "        entityStorms = nextEntityStorms;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "015f",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "? entityStorms.get(entity) || null",
+  "new": "? entityStorms.get(entity) ?? entity.id",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016a",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "if (destroyed || generation !== owner || signal?.aborted) {",
+  "new": "if (destroyed || signal?.aborted) {",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016b",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "if (destroyed || generation !== owner || signal?.aborted) {",
+  "new": "if (destroyed || generation !== owner) {",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016c",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "if (destroyed || generation !== owner || signal?.aborted) {\n          remove(next);\n          return false;",
+  "new": "if (destroyed || generation !== owner || signal?.aborted) {\n          return false;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016d",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "if (signal?.aborted || generation !== owner || destroyed) return false;",
+  "new": "if (signal?.aborted || destroyed) return false;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016e",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "if (signal?.aborted || generation !== owner || destroyed) return false;",
+  "new": "if (generation !== owner || destroyed) return false;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016f",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "        throw error;",
+  "new": "        return false;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016g",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      signal?.throwIfAborted();\n      if (destroyed) return false;",
+  "new": "      if (destroyed) return false;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016h",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "const owner = ++generation;",
+  "new": "const owner = generation;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016i",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      if (destroyed) return false;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016j",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "        remove(source);\n        source = next;",
+  "new": "        source = next;",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "016k",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      } catch (error) {\n        remove(next);\n",
+  "new": "      } catch (error) {\n",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017a",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      ++generation;\n      horizonStorms = [];",
+  "new": "      horizonStorms = [];",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017b",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      selected = null;\n      counts = { storms: 0, tracks: 0, cones: 0, forecastPoints: 0 };\n      render();",
+  "new": "      counts = { storms: 0, tracks: 0, cones: 0, forecastPoints: 0 };\n      render();",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017c",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      spheres.clear();\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017d",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      if (destroyed) return;\n      this.clear();",
+  "new": "      this.clear();",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017e",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "if (!viewer.isDestroyed?.()) viewer.scene.requestRender();",
+  "new": "viewer.scene.requestRender();",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017f",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "if (!viewer.dataSources.isDestroyed?.())",
+  "new": "if (true)",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017g",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "dataSources: Number(!!source),",
+  "new": "dataSources: Number(!source),",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017h",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      labels.clear();\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017i",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      centers.clear();\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017j",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      entityIds.clear();\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017k",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "        timerActive: false,",
+  "new": "        timerActive: true,",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "017l",
+  "file": "src/layers/cyclones/rendering.js",
+  "old": "      destroyed = true;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/rendering.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "018a",
+  "file": "src/layers/cyclones/index.js",
+  "old": "updateInterval: 300_000,",
+  "new": "updateInterval: 300_001,",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "018b",
+  "file": "src/layers/cyclones/index.js",
+  "old": "    id: 'weather-cyclones',\n    name: 'Cyclone advisories',",
+  "new": "    id: 'weather-cyclone',\n    name: 'Cyclone advisories',",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "018c",
+  "file": "src/layers/cyclones/index.js",
+  "old": "if (typeof feed?.getSnapshot !== 'function')",
+  "new": "if (!feed)",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "018d",
+  "file": "src/layers/cyclones/index.js",
+  "old": "throw new TypeError('Cyclones require a snapshot source');",
+  "new": "throw new Error('Cyclones require a snapshot source');",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "018e",
+  "file": "src/layers/cyclones/index.js",
+  "old": "rendering = createRendering({ viewer, cesium, overlayHost });",
+  "new": "rendering = createRendering({ viewer, cesium });",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "018f",
+  "file": "src/layers/cyclones/index.js",
+  "old": "    name: 'Cyclone advisories',",
+  "new": "    name: 'Cyclone advisory',",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "018g",
+  "file": "src/layers/cyclones/index.js",
+  "old": "    source: 'NOAA NHC / CPHC',\n    updateInterval",
+  "new": "    source: 'NOAA',\n    updateInterval",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019a",
+  "file": "src/layers/cyclones/index.js",
+  "old": "(id) => enabled && rendering?.ownsPickId?.(id) === true,",
+  "new": "(id) => enabled && Boolean(rendering?.ownsPickId?.(id)),",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019b",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      unregisterPickOwner('weather-cyclones');\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019c",
+  "file": "src/layers/cyclones/index.js",
+  "old": "    removeClickCapture?.();\n    removeClickCapture = null;",
+  "new": "    removeClickCapture = null;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019d",
+  "file": "src/layers/cyclones/index.js",
+  "old": "if (owner && !owner.isDestroyed?.()) owner.destroy();",
+  "new": "if (owner) owner.destroy();",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019e",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      request?.abort();\n      request = null;\n      loading = false;",
+  "new": "      request = null;\n      loading = false;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019f",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      selectionIntent = 'auto';\n      ++navigationGeneration;\n      rendering?.clear();",
+  "new": "      ++navigationGeneration;\n      rendering?.clear();",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019g",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      rendering?.destroy();\n      rendering = null;",
+  "new": "      rendering = null;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019h",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      !viewer?.scene?.canvas ||\n",
+  "new": "      false ||\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019i",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      typeof cesium.ScreenSpaceEventHandler !== 'function'",
+  "new": "      false",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019k",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        installSelection();\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019l",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      snapshot = null;\n      selectedId = null;\n      selectionIntent = 'auto';",
+  "new": "      selectedId = null;\n      selectionIntent = 'auto';",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019m",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      error = null;\n      snapshot = null;\n      selectedId = null;\n      selectionIntent",
+  "new": "      snapshot = null;\n      selectedId = null;\n      selectionIntent",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019n",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      if (!destroyed && !enabled) {",
+  "new": "      if (!destroyed) {",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "019o",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      destroyed = true;\n      rendering?.destroy();",
+  "new": "      rendering?.destroy();",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020a",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      if (!enabled || destroyed) return false;\n      request?.abort();",
+  "new": "      if (destroyed) return false;\n      request?.abort();",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020b",
+  "file": "src/layers/cyclones/index.js",
+  "old": "error = next.reason || 'Cyclone advisories unavailable';",
+  "new": "error = next.reason;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020c",
+  "file": "src/layers/cyclones/index.js",
+  "old": "error = cause?.message || 'Cyclone advisories unavailable';",
+  "new": "error = cause?.message;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020d",
+  "file": "src/layers/cyclones/index.js",
+  "old": "          !applied ||\n",
+  "new": "          false ||\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020e",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        if (request === controller) {\n          request = null;",
+  "new": "        if (true) {\n          request = null;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020f",
+  "file": "src/layers/cyclones/index.js",
+  "old": "          rendering.clear();\n          snapshot = next;",
+  "new": "          snapshot = next;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020g",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        rendering?.clear();\n        snapshot = null;",
+  "new": "        snapshot = null;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020h",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      signal?.addEventListener('abort', abort, { once: true });\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020i",
+  "file": "src/layers/cyclones/index.js",
+  "old": "const abort = () => controller.abort(signal.reason);",
+  "new": "const abort = () => controller.abort();",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020j",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      loading = true;\n      notify();",
+  "new": "      loading = true;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020k",
+  "file": "src/layers/cyclones/index.js",
+  "old": "if (controller.signal.aborted || request !== controller) return false;",
+  "new": "if (request !== controller) return false;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020m",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        signal?.removeEventListener('abort', abort);\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020n",
+  "file": "src/layers/cyclones/index.js",
+  "old": "          snapshot = next;\n          selectedId = null;\n          ++navigationGeneration;\n          error",
+  "new": "          snapshot = next;\n          ++navigationGeneration;\n          error",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020o",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        snapshot = null;\n        selectedId = null;\n        ++navigationGeneration;\n        return true;",
+  "new": "        selectedId = null;\n        ++navigationGeneration;\n        return true;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020p",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        error = null;\n        if (!snapshot.storms.some",
+  "new": "        if (!snapshot.storms.some",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "020q",
+  "file": "src/layers/cyclones/index.js",
+  "old": "if (signal?.aborted) controller.abort(signal.reason);\n      request = controller;",
+  "new": "request = controller;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021a",
+  "file": "src/layers/cyclones/index.js",
+  "old": "? 'Cached advisory \u00b7 stale source'",
+  "new": "? 'Cached advisory'",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021b",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      const status =\n        error ||\n",
+  "new": "      const status =\n        null ||\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021c",
+  "file": "src/layers/cyclones/index.js",
+  "old": "`Track/cone awaiting advisory ${storm.advisoryNumber}`",
+  "new": "`Track/cone awaiting advisory`",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021d",
+  "file": "src/layers/cyclones/index.js",
+  "old": "? 'No active NHC/CPHC systems'",
+  "new": "? 'No active systems'",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021e",
+  "file": "src/layers/cyclones/index.js",
+  "old": "value === null ? 'Unavailable' : `${value} ${unit}`",
+  "new": "value === null ? 'Unavailable' : `${value}${unit}`",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021f",
+  "file": "src/layers/cyclones/index.js",
+  "old": "PTC: 'Potential tropical cyclone',",
+  "new": "PTC: 'Potential cyclone',",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021g",
+  "file": "src/layers/cyclones/index.js",
+  "old": "Object.hasOwn(CLASSIFICATION_NAMES, code)",
+  "new": "code in CLASSIFICATION_NAMES",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021h",
+  "file": "src/layers/cyclones/index.js",
+  "old": "${snapshot.storms.length === 1 ? '' : 's'}${storm",
+  "new": "${snapshot.storms.length === 1 ? 's' : ''}${storm",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021h2",
+  "file": "src/layers/cyclones/index.js",
+  "old": "${snapshot.storms.length === 1 ? '' : 's'}`\n            : loading",
+  "new": "${snapshot.storms.length === 1 ? 's' : ''}`\n            : loading",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021i",
+  "file": "src/layers/cyclones/index.js",
+  "old": "ordinal: index + 1,",
+  "new": "ordinal: index,",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021j",
+  "file": "src/layers/cyclones/index.js",
+  "old": "active: item.id === selectedId,",
+  "new": "active: true,",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021k",
+  "file": "src/layers/cyclones/index.js",
+  "old": "params: { stormId: item.id, focus: true },",
+  "new": "params: { stormId: item.id, focus: false },",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021l",
+  "file": "src/layers/cyclones/index.js",
+  "old": "color: '#7fe6ed44'",
+  "new": "color: '#7fe6ed55'",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021m",
+  "file": "src/layers/cyclones/index.js",
+  "old": "value.slice(5, 16)",
+  "new": "value.slice(5, 15)",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021p",
+  "file": "src/layers/cyclones/index.js",
+  "old": "snapshot?.stale\n          ? 'Cached advisory \u00b7 stale source'",
+  "new": "false\n          ? 'Cached advisory \u00b7 stale source'",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021q",
+  "file": "src/layers/cyclones/index.js",
+  "old": "          : loading\n            ? 'Loading advisories\u2026'\n            : storm && !coherentCycloneGeometry(storm)",
+  "new": "          : false\n            ? 'Loading advisories\u2026'\n            : storm && !coherentCycloneGeometry(storm)",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021r",
+  "file": "src/layers/cyclones/index.js",
+  "old": "            : 'Track/cone unavailable');",
+  "new": "            : 'Track/cone gone');",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021s",
+  "file": "src/layers/cyclones/index.js",
+  "old": "? 'Track and cone match this advisory'",
+  "new": "? 'Track and cone match'",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021t",
+  "file": "src/layers/cyclones/index.js",
+  "old": "actions: storm?.advisoryUrl",
+  "new": "actions: storm",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021u",
+  "file": "src/layers/cyclones/index.js",
+  "old": "          : 'Advisories unavailable';",
+  "new": "          : 'Advisories gone';",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021v",
+  "file": "src/layers/cyclones/index.js",
+  "old": "${geometry}${status && status !== geometry ? '\\n' + status : ''}",
+  "new": "${geometry}${status ? '\\n' + status : ''}",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021w",
+  "file": "src/layers/cyclones/index.js",
+  "old": "${snapshot?.coverage || COVERAGE}",
+  "new": "${COVERAGE}",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "021y",
+  "file": "src/layers/cyclones/index.js",
+  "old": "'Atlantic \u00b7 E/C Pacific'",
+  "new": "'Atlantic'",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "022a",
+  "file": "src/layers/cyclones/index.js",
+  "old": "? Date.parse(storm.issuedAt)",
+  "new": "? snapshot?.fetchedAt",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "022b",
+  "file": "src/layers/cyclones/index.js",
+  "old": "advisoryAt: storm?.issuedAt || null,",
+  "new": "advisoryAt: null,",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "022c",
+  "file": "src/layers/cyclones/index.js",
+  "old": "snapshot && !snapshot.unavailable && !snapshot.storms.length,",
+  "new": "snapshot && !snapshot.storms.length,",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "022d",
+  "file": "src/layers/cyclones/index.js",
+  "old": "stale: Boolean(snapshot?.stale),",
+  "new": "stale: false,",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "022e",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        timerActive: false,\n      };\n    },\n    destroy() {",
+  "new": "      };\n    },\n    destroy() {",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "022f",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        source: 'NOAA NHC / CPHC',\n        advisoryAt",
+  "new": "        source: 'NOAA',\n        advisoryAt",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "022g",
+  "file": "src/layers/cyclones/index.js",
+  "old": "count: snapshot?.storms.length || 0,",
+  "new": "count: 0,",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "022h",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        requestPending: !!request,",
+  "new": "        requestPending: false,",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "022i",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        selectionActive: clickHandler !== null,",
+  "new": "        selectionActive: false,",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023a",
+  "file": "src/layers/cyclones/index.js",
+  "old": "            selectionIntent === 'cleared'\n",
+  "new": "            false\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023b",
+  "file": "src/layers/cyclones/index.js",
+  "old": "if (params.clear === true || params.stormId === null) {",
+  "new": "if (params.clear || params.stormId === null) {",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023c",
+  "file": "src/layers/cyclones/index.js",
+  "old": "snapshot?.storms.some((storm) => storm.id === params.stormId)",
+  "new": "true",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023d",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        selectionIntent = 'user';",
+  "new": "        selectionIntent = 'auto';",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023e",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      if (!enabled || destroyed) return;\n      if (params.clear",
+  "new": "      if (params.clear",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023g",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        select(params.stormId);\n        notify();",
+  "new": "        select(params.stormId);",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023h",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        selectionIntent = 'cleared';\n        select(null);\n        notify();",
+  "new": "        selectionIntent = 'cleared';\n        select(null);",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023j",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        else rendering.setSelection(selectedId);",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023k",
+  "file": "src/layers/cyclones/index.js",
+  "old": "snapshot.storms[0]?.id || null",
+  "new": "null",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "023l",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        selectionIntent = 'cleared';\n        select(null);",
+  "new": "        select(null);",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024a",
+  "file": "src/layers/cyclones/index.js",
+  "old": "Math.abs(nativeHit.x - click.position.x) < 1 &&",
+  "new": "Math.abs(nativeHit.x - click.position.x) < 2 &&",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024b",
+  "file": "src/layers/cyclones/index.js",
+  "old": "< 1 &&\n        Math.abs(nativeHit.y",
+  "new": "< 1 ||\n        Math.abs(nativeHit.y",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024c",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      if (hit.sourceId === VESSEL_OVERLAY_SOURCE_ID) return;\n",
+  "new": "",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024d",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        if (id) layer.setParams({ stormId: id });\n        return;",
+  "new": "        if (id) layer.setParams({ stormId: id });",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024e",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      else if (isSurfacePick(picked)) layer.setParams({ clear: true });",
+  "new": "      else layer.setParams({ clear: true });",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024f",
+  "file": "src/layers/cyclones/index.js",
+  "old": "const point = event.changedTouches?.[0] || event;",
+  "new": "const point = event;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024g",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      if (!Number.isFinite(point.clientX) || !Number.isFinite(point.clientY))\n        return;",
+  "new": "      if (!Number.isFinite(point.clientX)) return;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024h",
+  "file": "src/layers/cyclones/index.js",
+  "old": "    const capture = (event) => {\n      capturedHit = null;\n",
+  "new": "    const capture = (event) => {\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024i",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      'pointercancel',\n      'touchcancel',\n",
+  "new": "      'pointercancel',\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024j",
+  "file": "src/layers/cyclones/index.js",
+  "old": "const events = ['pointerup', 'mouseup', 'touchend'];",
+  "new": "const events = ['pointerup', 'touchend'];",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024k",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        !isPointerFree() ||\n",
+  "new": "        false ||\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024l",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        clickHandler !== owner ||\n",
+  "new": "        false ||\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024m",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        !click?.position\n",
+  "new": "        false\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024n",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      const nativeHit = capturedHit;\n      capturedHit = null;",
+  "new": "      const nativeHit = capturedHit;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024o",
+  "file": "src/layers/cyclones/index.js",
+  "old": "if (hit.sourceId === CYCLONE_OVERLAY_SOURCE_ID) {",
+  "new": "if (hit.sourceId !== CYCLONE_OVERLAY_SOURCE_ID) {",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024p",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        !enabled ||\n        destroyed ||\n        clickHandler",
+  "new": "        destroyed ||\n        clickHandler",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024q",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      'pointerdown',\n      'mousedown',\n",
+  "new": "      'pointerdown',\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024r",
+  "file": "src/layers/cyclones/index.js",
+  "old": "picked.primitive instanceof cesium.Cesium3DTileset",
+  "new": "true",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024s",
+  "file": "src/layers/cyclones/index.js",
+  "old": "(picked.content !== undefined ||",
+  "new": "(false ||",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "024t",
+  "file": "src/layers/cyclones/index.js",
+  "old": "    (picked.id === undefined &&",
+  "new": "    (true &&",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025a",
+  "file": "src/layers/cyclones/index.js",
+  "old": "                ? 0\n                : 1.4,",
+  "new": "                ? 1.4\n                : 0,",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025b",
+  "file": "src/layers/cyclones/index.js",
+  "old": "              generation !== navigationGeneration ||\n",
+  "new": "              false ||\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025c",
+  "file": "src/layers/cyclones/index.js",
+  "old": "const generation = ++navigationGeneration;",
+  "new": "const generation = navigationGeneration;",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025d",
+  "file": "src/layers/cyclones/index.js",
+  "old": "            return viewer.camera.flyToBoundingSphere(sphere, {",
+  "new": "            viewer.camera.flyToBoundingSphere(sphere, {",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025e",
+  "file": "src/layers/cyclones/index.js",
+  "old": "if (params.advisory === true && storm?.advisoryUrl)",
+  "new": "if (params.advisory === true)",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025f",
+  "file": "src/layers/cyclones/index.js",
+  "old": "        if (sphere) {",
+  "new": "        if (true) {",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025g",
+  "file": "src/layers/cyclones/index.js",
+  "old": "params.focus === true && storm && runNavigation",
+  "new": "params.focus === true && storm",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025h",
+  "file": "src/layers/cyclones/index.js",
+  "old": "typeof services?.runNavigation === 'function'",
+  "new": "services?.runNavigation",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025i",
+  "file": "src/layers/cyclones/index.js",
+  "old": "'_blank', 'noopener,noreferrer'",
+  "new": "'_blank', 'noopener'",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025j",
+  "file": "src/layers/cyclones/index.js",
+  "old": "globalThis.matchMedia?.bind(globalThis)",
+  "new": "globalThis.matchMedia",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025k",
+  "file": "src/layers/cyclones/index.js",
+  "old": "params.focus === true && storm && runNavigation",
+  "new": "params.focus && storm && runNavigation",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025l",
+  "file": "src/layers/cyclones/index.js",
+  "old": "      if (params.advisory === true && storm?.advisoryUrl)\n        openLink(storm.advisoryUrl);",
+  "new": "      if (params.advisory === true && storm?.advisoryUrl)\n        openLink(storm.advisoryUrl + '#');",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025m",
+  "file": "src/layers/cyclones/index.js",
+  "old": "              selectedId !== storm.id\n",
+  "new": "              false\n",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025n",
+  "file": "src/layers/cyclones/index.js",
+  "old": "              !enabled ||\n              destroyed ||\n              generation",
+  "new": "              generation",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ },
+ {
+  "id": "025o",
+  "file": "src/layers/cyclones/index.js",
+  "old": "matchMedia?.('(prefers-reduced-motion: reduce)')",
+  "new": "matchMedia?.('(prefers-color-scheme: dark)')",
+  "test": [
+   "src/layers/cyclones/index.test.mjs"
+  ],
+  "image": "gods-eye-view:upstream"
+ }
+]

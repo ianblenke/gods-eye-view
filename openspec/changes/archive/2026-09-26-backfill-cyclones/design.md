@@ -57,7 +57,7 @@ V8 counts the end of the `try`, `catch` and `finally` statement of `update()` in
 
 ### D6 Redundant guards
 
-Some guards of the code repeat another guard. A mutation that removes such a guard cannot fail a test. The proposal lists them as known limits, and it names each mutation that no test fails.
+Some guards of the code repeat another guard. A mutation that removes such a guard cannot fail a test. The proposal lists them as known limits. It names each mutation for which all tests pass.
 
 ## How the gates measure the requirement
 
