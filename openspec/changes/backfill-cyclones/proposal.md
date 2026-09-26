@@ -15,7 +15,7 @@ This is a backfill change. It writes a spec from what the code does now. It tags
 ## What Changes
 
 - Add the capability `cyclones` with 9 requirements and the 25 scenarios `cyclones-001` to `cyclones-025`. Each requirement has `Origin: backfill`.
-- Tag the 32 old tests with scenario IDs. The tag is the only change of an old name.
+- Tag 31 of the 32 old tests with scenario IDs. The tag is the only change of an old name. One old test gets no tag (`cyclones-untagged-old-test`).
 - Add 78 tests to the four test files of the layer. Each new test has a tag and at least one `node:assert` call.
 - Run a mutation of the code for each scenario, and record the test that fails. The task list has the mutations.
 - Change no production file. The change does not fix any defect and does not add any behavior.
@@ -42,8 +42,8 @@ None.
   - `src/layers/cyclones/labels.js` branches: 1 before, 0 after.
   - `src/layers/cyclones/rendering.js` lines: 4 before, 0 after. Its branches: 8 before, 0 after.
   - `src/layers/cyclones/source.js` lines: 3 before, 0 after. Its branches: 16 before, 0 after. Its functions: 2 before, 0 after.
-  - Untraced tests: 32 before, 0 after. That is 11 in `index.test.mjs`, 4 in `labels.test.mjs`, 12 in `rendering.test.mjs` and 5 in `source.test.mjs`.
-- The ledger keeps one entry for the layer: `index.js` with 1 branch. The entries of the three other files leave the ledger.
+  - Untraced tests: 32 before, 1 after. `index.test.mjs` has 11 before and 0 after, `labels.test.mjs` has 4 and 0, `rendering.test.mjs` has 12 and 1, and `source.test.mjs` has 5 and 0.
+- The ledger keeps two entries for the layer: `index.js` with 1 branch, and `rendering.test.mjs` with 1 untraced test. The entries of the other files leave the ledger.
 - The registry gets 25 new scenario IDs.
 - The ratchet command also wrote history lines for four files that this change does not edit: `src/data/labelArbiter.js`, `src/data/lifecycle.js`, `src/layers/wind/rendering.js` and `src/overlays/worldOverlay.js`. The counts of these files change between runs (`sync-counts-change-between-runs` of the change `upstream-sync`). No test of this change closes these gaps. The known limit `cyclones-ratchet-noise` gives the values.
 - The ledger total of branches of `src/layers/cyclones/index.js` changes from 193 to 240.
@@ -70,9 +70,10 @@ None.
 - `cyclones-shared-overlay-state`: one test of `labels.js` uses the shared world overlay with no host option. It reads the entry count of the source `weather-cyclones` in module state. A later test in the same process that uses the same source would change the count.
 - `cyclones-link-text-error`: a link text that is not a URL makes the validator throw a `TypeError` from the `URL` class, and not the error `Malformed cyclone snapshot`. The spec and the test say this. A person can decide to change it in a later change.
 - `cyclones-info-coverage`: the row controls of a `null` snapshot show a default coverage text, and the text does not say that coverage data is not available. The tests check the text. They do not judge it.
-- `cyclones-old-test-names`: the 32 old tests keep their names, and each one got only a tag. Some of these names have words that end in -ing or passive verbs, and the STE lint gives warnings for them. The rule of the owner is that an old test name does not change. A later change can decide.
+- `cyclones-old-test-names`: the 31 old tests with a tag keep their names, and each one got only a tag. Some of these names have words that end in -ing or passive verbs, and the STE lint gives warnings for them. The rule of the owner is that an old test name does not change. A later change can decide.
 - `cyclones-ratchet-noise`: The ratchet command wrote new values for four files that this change does not edit. The history of the change `upstream-sync` shows other values for the same files in earlier runs.
   - `src/data/labelArbiter.js`: 50 branches not covered (52 before). Its total of branches: 405 (407 before).
   - `src/data/lifecycle.js`: 177 lines and 100 branches not covered (184 and 102 before). Its total of branches: 568 (570 before).
   - `src/layers/wind/rendering.js`: total of branches 334 (333 before).
   - `src/overlays/worldOverlay.js`: total of branches 712 (711 before).
+- `cyclones-untagged-old-test`: The old test `aborting a pending add retains the prior complete source` in `rendering.test.mjs` has no tag. The gates stop a tagged test name with the word "prior" (they say "use before"). The rule of the owner is that an old test name does not change. So the test keeps its name and stays untraced. It checks the scenario `cyclones-016`. The owner decides in a later change if it gets a new name and a tag.
