@@ -15,6 +15,7 @@ import {
   PLACE_ANCHOR_OFFSET_RATIO,
   flyToGlobeView,
   flyToPresetLocation,
+  CITY_POIS,
   geocodeNavigationMode,
   regionFramingPlan,
   REGION_SWATH_SPAN_KM,
@@ -592,4 +593,48 @@ test('search without an authority hook preserves the existing caller contract', 
   const result = await runSearch(viewer, {});
   assert.equal(result.navigationMode, 'city-overview');
   assert.equal(viewer.flights.length, 1);
+});
+
+
+test('[location-presets-001] puts Taiwan before Austin', () => {
+  assert.deepEqual(Object.keys(CITY_POIS).slice(0, 2), ['taiwan', 'austin']);
+});
+
+test('[location-presets-002] gives Taiwan five valid places', () => {
+  const city = CITY_POIS.taiwan;
+  assert.equal(city.name, 'Taiwan');
+  assert.equal(city.groundElevation, 30);
+  assert.deepEqual(city.viewBounds, {
+    southwest: { lat: 21.8, lng: 119.3 },
+    northeast: { lat: 25.4, lng: 122.1 },
+  });
+  assert.deepEqual(city.pois, [
+    { name: 'Taiwan', lat: 23.7, lon: 121.0, alt: 700000, pitch: -60, heading: 0, buildingHeight: 30 },
+    { name: 'Taipei 101', lat: 25.0339, lon: 121.5645, alt: 700, pitch: -22, heading: 200, buildingHeight: 300 },
+    { name: 'Presidential Office Building', lat: 25.04, lon: 121.5122, alt: 450, pitch: -25, heading: 90, buildingHeight: 60 },
+    { name: 'Sun Moon Lake', lat: 23.859, lon: 120.916, alt: 6000, pitch: -30, heading: 0, buildingHeight: 30 },
+    { name: 'Taroko Gorge', lat: 24.1559, lon: 121.62, alt: 8000, pitch: -28, heading: 90, buildingHeight: 30 },
+  ]);
+  assert.equal(city.pois.length, 5);
+  assert.equal(city.pois[0].name, 'Taiwan');
+  assert.ok(city.pois[0].alt >= 500000);
+  for (const poi of city.pois) {
+    for (const key of ['lat', 'lon', 'alt', 'pitch', 'heading', 'buildingHeight'])
+      assert.equal(Number.isFinite(poi[key]), true);
+    assert.ok(poi.lat >= city.viewBounds.southwest.lat && poi.lat <= city.viewBounds.northeast.lat);
+    assert.ok(poi.lon >= city.viewBounds.southwest.lng && poi.lon <= city.viewBounds.northeast.lng);
+  }
+});
+
+test('[location-presets-004] flies to the island view', () => {
+  const viewer = stubViewer();
+  const result = flyToPresetLocation(viewer, 'taiwan');
+  assert.equal(viewer.flights.length, 1);
+  assert.equal(result.range, 700000);
+  assert.equal(viewer.flights[0].offset.range, 700000);
+  assert.ok(Math.abs(Cesium.Math.toDegrees(viewer.flights[0].offset.pitch) + 60) < 1e-8);
+  assert.equal(Cesium.Math.toDegrees(viewer.flights[0].offset.heading), 0);
+  const point = Cesium.Cartographic.fromCartesian(result.targetPosition);
+  assert.ok(Math.abs(Cesium.Math.toDegrees(point.latitude) - 23.7) < 1e-8);
+  assert.ok(Math.abs(Cesium.Math.toDegrees(point.longitude) - 121.0) < 1e-8);
 });
