@@ -4,7 +4,7 @@ Round 1 read the whole change. Both agents ran as read-only `codex` runs with th
 
 ## Spec adversary
 
-- F1 minor: correct. `qaAdvice` reads each entry of the `specs` folder of a change as a capability name, and a file there gives a false name. The names of real deltas are folders, so the input is unusual. Named as the known limit `qa-advice-delta-files`.
+- F1 minor: correct. `qaAdvice` reads each entry of the `specs` folder of a change as a capability name, and a file there gives a false name. The names of real deltas are folders, so the input is unusual. The lead named this limit `qa-advice-delta-files`.
 - F2 minor: the lead corrected the warnings that the STE adversary named. The other warnings come from old files that this change does not edit.
 - F3 minor: not a defect. The error `REVIEW-MISSING` is the reason for the review.
 

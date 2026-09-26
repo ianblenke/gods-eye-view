@@ -32,7 +32,7 @@
 - [x] 2.9 Write `[qa-scripts-009]` test for open pending area with a temporary folder where possible.
   - Mutation IDs: `009-open`.
   - Mutation: Make the pending check reject an area without a folder. The test must fail.
-- [x] 2.10 Write `[qa-scripts-010]` test for pending area that has a capability folder, with a temporary folder where possible.
+- [x] 2.10 Write `[qa-scripts-010]` test for a pending area that has a capability folder, with a temporary folder where possible.
   - Mutation IDs: `010-landed`.
   - Mutation: Make the pending check accept an area with a folder. The test must fail.
 - [x] 2.11 Write `[qa-scripts-011]` test for unmapped reason with a temporary folder where possible.
@@ -122,5 +122,5 @@
   - Inspect its 70 closed entries.
 - [x] 5.2 Run `make gates CHANGE=qa-script-register`.
   - Correct each error that is not a review error.
-- [ ] 5.3 Run `/opsx:review qa-script-register` with both review agents.
-- [ ] 5.4 Write `review.md` with the passed review and tree hash.
+- [x] 5.3 Run `/opsx:review qa-script-register` with both review agents.
+- [x] 5.4 Write `review.md` with the passed review and tree hash.

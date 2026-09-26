@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-26-qa-script-register/specs/qa-scripts/spec.md:43 At commit b20adaf1b97ec95cfed0b18a75896001ac85e02d, the gate still warns about “pending” in this changed heading and other changed lines. Teach the STE check that “pending” names a covers state, or revise the affected prose.

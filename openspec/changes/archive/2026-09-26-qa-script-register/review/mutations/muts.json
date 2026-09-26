@@ -1,0 +1,502 @@
+[
+  {
+    "id": "001-shebang",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "source = text.replace(/^#![^\\r\\n]*\\r?\\n/, '');",
+    "new": "source = text;",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-001"
+  },
+  {
+    "id": "001-needs",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "needs: values.needs",
+    "new": "needs: undefined",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-001"
+  },
+  {
+    "id": "002-first",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "source.match(/^\\/\\*(?:\\*?\\r?\\n)",
+    "new": "source.match(/\\/\\*(?:\\*?\\r?\\n)",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-002"
+  },
+  {
+    "id": "003-absent",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "['purpose', 'covers', 'run', 'needs']",
+    "new": "['purpose', 'covers', 'run']",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-003"
+  },
+  {
+    "id": "004-repeat",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (!tag || Object.hasOwn(values, tag[1])) return null;",
+    "new": "if (!tag) return null;",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-004"
+  },
+  {
+    "id": "005-empty",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "(\\S.*)$/",
+    "new": "(.*)$/",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-005"
+  },
+  {
+    "id": "005-purpose",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "[^.!?\\r\\n]*[.!?]$",
+    "new": "[^\\r\\n]*$",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-005"
+  },
+  {
+    "id": "006-space",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "!/^(?:pending:)?[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(item)",
+    "new": "false",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-006"
+  },
+  {
+    "id": "007-folder",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "const exists = existsSync(folder) && statSync(folder).isDirectory();",
+    "new": "const exists = false;",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-007"
+  },
+  {
+    "id": "008-unknown",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (!pending && !exists) errors.push",
+    "new": "if (false) errors.push",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-008"
+  },
+  {
+    "id": "009-open",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (pending && exists) errors.push",
+    "new": "if (pending) errors.push",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-009"
+  },
+  {
+    "id": "010-landed",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (pending && exists) errors.push",
+    "new": "if (false) errors.push",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-010"
+  },
+  {
+    "id": "011-unmapped",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (item.startsWith('unmapped: ')) continue;",
+    "new": "if (false) continue;",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-011"
+  },
+  {
+    "id": "012-list",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "[^,\\s](?:[^,]*[^,\\s])?",
+    "new": "\\S(?:.*\\S)?",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-012"
+  },
+  {
+    "id": "013-omit",
+    "file": "scripts/spec/lib/inventory.mjs",
+    "old": "&& !validQaScripts.has(file)",
+    "new": "&& true",
+    "test": [
+      "src/tooling/spec/inventory.test.mjs"
+    ],
+    "pattern": "qa-scripts-013"
+  },
+  {
+    "id": "014-keep",
+    "file": "scripts/spec/lib/inventory.mjs",
+    "old": "isCodeFile(file) && !validQaScripts.has(file)",
+    "new": "isCodeFile(file) && !file.startsWith('scripts/qa-')",
+    "test": [
+      "src/tooling/spec/inventory.test.mjs"
+    ],
+    "pattern": "qa-scripts-014"
+  },
+  {
+    "id": "015-other",
+    "file": "scripts/spec/lib/inventory.mjs",
+    "old": "isCodeFile(file) && !validQaScripts.has(file)",
+    "new": "isCodeFile(file) && file.startsWith('scripts/') && !validQaScripts.has(file)",
+    "test": [
+      "src/tooling/spec/inventory.test.mjs"
+    ],
+    "pattern": "qa-scripts-015"
+  },
+  {
+    "id": "016-delta",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "capabilities.has(name) ||",
+    "new": "false ||",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-016"
+  },
+  {
+    "id": "016-purpose",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "${script.purpose}",
+    "new": "missing purpose",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-016"
+  },
+  {
+    "id": "016-order",
+    "file": "scripts/spec/gates.mjs",
+    "old": "for (const line of qaAdvice({ root, change, scripts: measured.qaScripts })) log(line);",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "qa-scripts-016"
+  },
+  {
+    "id": "017-backfill",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "pending && name === backfill",
+    "new": "false && name === backfill",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-017"
+  },
+  {
+    "id": "017-prefix",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "covers ${name}:",
+    "new": "covers ${item}:",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-017"
+  },
+  {
+    "id": "018-no-match",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "['QA: no script covers the capabilities of this change.']",
+    "new": "[]",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-018"
+  },
+  {
+    "id": "019-no-change",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (!change) return [];",
+    "new": "if (!change) return ['QA: no script covers the capabilities of this change.'];",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-019"
+  },
+  {
+    "id": "020-lines",
+    "file": "AGENTS.md",
+    "old": "read the QA lines",
+    "new": "read the gate output",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-020"
+  },
+  {
+    "id": "020-conflict",
+    "file": "AGENTS.md",
+    "old": "Avoid a conflict with a listed purpose.",
+    "new": "Read a listed purpose.",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-020"
+  },
+  {
+    "id": "020-header",
+    "file": "AGENTS.md",
+    "old": "Add a header to each new QA script.",
+    "new": "Add each new QA script.",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-020"
+  },
+  {
+    "id": "021-input",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "and the QA lines from the gate output",
+    "new": "",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-021"
+  },
+  {
+    "id": "022-purpose",
+    "file": ".claude/agents/spec-adversary.md",
+    "old": "script purpose and its checks",
+    "new": "script name and its checks",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-022"
+  },
+  {
+    "id": "022-checks",
+    "file": ".claude/agents/spec-adversary.md",
+    "old": "purpose and its checks",
+    "new": "purpose",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-022"
+  },
+  {
+    "id": "022-conflict",
+    "file": ".claude/agents/spec-adversary.md",
+    "old": "Ask for a scenario that conflicts with the checks or a proved behavior with no scenario.",
+    "new": "Ask for a scenario.",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-022"
+  },
+  {
+    "id": "023-skip",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "/^scripts\\/qa-.*\\.mjs$/",
+    "new": "/^scripts\\/qa-(?!application).*\\.mjs$/",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-023"
+  },
+  {
+    "id": "024-errors",
+    "file": "scripts/spec/gates.mjs",
+    "old": "errors.push(...qaRegister.errors);",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "qa-scripts-024"
+  },
+  {
+    "id": "024-path",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "`${file}: add one first block",
+    "new": "`add one first block",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "qa-scripts-024"
+  },
+  {
+    "id": "025-unknown",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (!pending && !exists) errors.push",
+    "new": "if (false) errors.push",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "qa-scripts-025"
+  },
+  {
+    "id": "025-landed",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (pending && exists) errors.push",
+    "new": "if (false) errors.push",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "qa-scripts-025"
+  },
+  {
+    "id": "025-omit",
+    "file": "scripts/spec/gates.mjs",
+    "old": "codeInventory(tracked, qaRegister.validQaScripts)",
+    "new": "codeInventory(tracked)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "qa-scripts-025"
+  },
+  {
+    "id": "026-archive",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "const folder = changeFolder(root, change);",
+    "new": "const folder = `openspec/changes/${change}`;",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-026"
+  },
+  {
+    "id": "027-first",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "for (const item of script.covers) {",
+    "new": "for (const item of script.covers.slice(0, 1)) {",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-027"
+  },
+  {
+    "id": "027-order",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "a.file.localeCompare(b.file) || a.capability.localeCompare(b.capability)",
+    "new": "a.capability.localeCompare(b.capability) || a.file.localeCompare(b.file)",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-027"
+  },
+  {
+    "id": "028-continuation",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (!tag || Object.hasOwn(values, tag[1])) return null;",
+    "new": "if (!tag) continue; if (Object.hasOwn(values, tag[1])) return null;",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-028"
+  },
+  {
+    "id": "014-gap",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const coverage = measureCoverage({ inventory, entries, readFile: read, untrue });",
+    "new": "const coverage = measureCoverage({ inventory, entries, readFile: read, untrue }).filter((item) => !item.file.startsWith('scripts/qa-'));",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "qa-scripts-014"
+  },
+  {
+    "id": "025-path-unknown",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "`${file}: ${item} has no capability folder in openspec/specs/.`",
+    "new": "`${item} has no capability folder in openspec/specs/.`",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-008"
+  },
+  {
+    "id": "025-path-landed",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "`${file}: replace ${item} with ${name}; its capability folder exists.`",
+    "new": "`replace ${item} with ${name}; its capability folder exists.`",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-010"
+  },
+  {
+    "id": "008-file",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "statSync(folder).isDirectory()",
+    "new": "true",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-008"
+  },
+  {
+    "id": "016-after-trace",
+    "file": "scripts/spec/gates.mjs",
+    "old": "  log(`Trace: ${counts.scenarios} scenarios, ${counts.verified} verified, ${counts.pending} open. ${counts.tests} tests, ${counts.traced} traced, ${counts.untraced} untraced.`);\n  for (const line of qaAdvice({ root, change, scripts: measured.qaScripts })) log(line);",
+    "new": "  for (const line of qaAdvice({ root, change, scripts: measured.qaScripts })) log(line);\n  log(`Trace: ${counts.scenarios} scenarios, ${counts.verified} verified, ${counts.pending} open. ${counts.tests} tests, ${counts.traced} traced, ${counts.untraced} untraced.`);",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "qa-scripts-016"
+  },
+  {
+    "id": "025-advice-invalid",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (pending === exists) continue;",
+    "new": "if (false) continue;",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-025"
+  },
+  {
+    "id": "025-advice-pending",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (pending === exists) continue;",
+    "new": "if (exists) continue;",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-025"
+  },
+  {
+    "id": "017-advice-open",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "if (pending === exists) continue;",
+    "new": "if (pending) continue;",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-017"
+  },
+  {
+    "id": "025-advice-file",
+    "file": "scripts/spec/lib/qa-register.mjs",
+    "old": "for (const item of script.covers) {\n      const pending = item.startsWith('pending:');\n      const name = pending ? item.slice(8) : item;\n      const folder = path.join(root, 'openspec/specs', name);\n      const exists = existsSync(folder) && statSync(folder).isDirectory();",
+    "new": "for (const item of script.covers) {\n      const pending = item.startsWith('pending:');\n      const name = pending ? item.slice(8) : item;\n      const folder = path.join(root, 'openspec/specs', name);\n      const exists = existsSync(folder);",
+    "test": [
+      "src/tooling/spec/qaRegister.test.mjs"
+    ],
+    "pattern": "qa-scripts-025"
+  }
+]
