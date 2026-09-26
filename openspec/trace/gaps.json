@@ -3634,11 +3634,11 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 18,
-      "branches": 50,
+      "branches": 52,
       "functions": 0,
       "totals": {
         "lines": 1228,
-        "branches": 405,
+        "branches": 407,
         "functions": 58
       },
       "sha": "fe25755fea99ad22dd3c17fd9f443b6b2ba002b1894facad2226fc4f7ac17087",
@@ -15357,6 +15357,13 @@
         "missing decoder uses honest failure fallback once": 1,
         "native HLS releases its client lease without response-header access": 1,
         "switch during lazy import never starts the stale decoder": 1
+      },
+      "origin": "upstream-sync",
+      "since": "2026-09-25"
+    },
+    "src/layers/cyclones/rendering.test.mjs": {
+      "names": {
+        "aborting a pending add retains the prior complete source": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
