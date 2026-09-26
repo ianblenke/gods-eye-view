@@ -48,6 +48,13 @@ None.
 
 ## Known limits and later changes
 
+- `cyclones-equivalent-mutants`:
+  - `005l`, `source.js`: The track and cone checks use the same coordinate count, so they reject every value above 25000.
+  - `017j`, `rendering.js`: After clear, the source is null, and the next snapshot replaces the set of entity IDs.
+  - `019b`, `index.js`: After disable, the pick owner returns false, and the next enable replaces its registry entry.
+  - `024p`, `index.js`: After disable, the click handler is null, so the owner check rejects each old click.
+  - `025m`, `index.js`: Each change of the selected storm also changes the navigation generation.
+  - `025n`, `index.js`: Disable and destroy change the navigation generation before a queued flight can run.
 - `cyclones-finally-continuation`: `index.js` has one branch that no test can reach. It is the end of the `try`, `catch` and `finally` statement in `update()`. Each path of the `try` and of the `catch` returns, so no path reaches the code after the `finally`. V8 counts this end as a branch with a count of 0. The change does not edit the code.
 - `cyclones-destroyed-guard-redundant`: `rendering.js` tests `destroyed` in two places of `setSnapshot()`, next to `generation !== owner`. `destroy()` calls `clear()`, and `clear()` raises `generation`. So the test of `destroyed` never decides alone. A mutation that removes it survives.
 - `cyclones-pick-guards-redundant`: `pickStorm()` tests `source`, `entity` and `typeof entity === 'object'`. `ownsPickId()` tests `source !== null` and `typeof id === 'string'`. A `WeakMap` and a `Set` give no match for the inputs that these tests exclude. A mutation that removes one of them survives.
