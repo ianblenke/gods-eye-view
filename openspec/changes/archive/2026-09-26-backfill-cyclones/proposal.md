@@ -45,6 +45,8 @@ None.
   - Untraced tests: 32 before, 0 after. That is 11 in `index.test.mjs`, 4 in `labels.test.mjs`, 12 in `rendering.test.mjs` and 5 in `source.test.mjs`.
 - The ledger keeps one entry for the layer: `index.js` with 1 branch. The entries of the three other files leave the ledger.
 - The registry gets 25 new scenario IDs.
+- The ratchet command also wrote history lines for two files that this change does not edit. `src/data/labelArbiter.js` has 50 branches not covered, and it had 52 before. This count changes between runs (`sync-counts-change-between-runs` of the change `upstream-sync`). The total number of branches of `src/data/labelArbiter.js` and of `src/overlays/worldOverlay.js` changed in the same run.
+- The ledger total of branches of `src/layers/cyclones/index.js` changes from 193 to 240.
 
 ## Known limits and later changes
 

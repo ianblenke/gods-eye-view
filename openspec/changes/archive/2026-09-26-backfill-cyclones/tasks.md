@@ -157,9 +157,9 @@ The mutation log records the test files that fail for each layer change.
 
 ## 7. Gates and review
 
-- [ ] 7.1 Run `make ratchet CHANGE=backfill-cyclones`.
+- [x] 7.1 Run `make ratchet CHANGE=backfill-cyclones`.
 - [x] 7.2 Run the STE lint with host Node.
 - [x] 7.3 Correct each STE error.
-- [ ] 7.4 Run `make gates CHANGE=backfill-cyclones`. The only errors must be review errors.
+- [x] 7.4 Run `make gates CHANGE=backfill-cyclones`. The only errors must be review errors.
 - [ ] 7.5 Run the review with `/opsx:review backfill-cyclones`.
 - [ ] 7.6 Write `review.md`.
