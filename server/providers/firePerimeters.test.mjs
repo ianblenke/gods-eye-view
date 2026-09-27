@@ -86,9 +86,21 @@ test('[perimeters-017] the proxy uses the host fetch by default', async () => {
 
 test('[perimeters-017] a property can mark a page limit', async () => {
   let calls = 0;
-  const request = route(async () => { calls++; return Response.json({ features: [], properties: { exceededTransferLimit: true } }); });
-  assert.equal((await request('/')).status, 200);
+  const feature = { id: 1, properties: { attr_UniqueFireIdentifier: 'one' }, geometry: { type: 'Polygon', coordinates: [[[0, 0], [1, 0], [1, 1], [0, 0]]] } };
+  const request = route(async () => { calls++; return Response.json({ features: [feature], properties: { exceededTransferLimit: false } }); });
+  const reply = await request('/');
+  assert.equal(reply.status, 200);
+  assert.equal(reply.body.rows.length, 1);
   assert.equal(calls, 1);
+  let continuedCalls = 0;
+  const continuedRequest = route(async () => {
+    continuedCalls++;
+    return Response.json({ features: [{ ...feature, id: continuedCalls, properties: { attr_UniqueFireIdentifier: String(continuedCalls) } }], properties: { exceededTransferLimit: true } });
+  });
+  const continuedReply = await continuedRequest('/');
+  assert.equal(continuedReply.status, 200);
+  assert.equal(continuedReply.body.rows.length, 5);
+  assert.equal(continuedCalls, 5);
 });
 
 test('[perimeters-019] an empty route uses the feed and an unknown route fails', async () => {
@@ -100,12 +112,15 @@ test('[perimeters-019] an empty route uses the feed and an unknown route fails',
 test('[perimeters-019] a reply on a closed client has no body', async () => {
   let handler;
   firePerimetersProxy({ fetchImpl: async () => Response.json({ features: [] }) }).configureServer({ middlewares: { use(_path, value) { handler = value; } } });
-  const reply = { destroyed: true, writeHead() { throw new Error('write'); }, end() { throw new Error('end'); } };
+  let wrote = false;
+  let ended = false;
+  const reply = { destroyed: true, writeHead() { wrote = true; }, end() { ended = true; } };
   await handler({ method: 'GET', url: '/', socket: {} }, reply);
-  assert.equal(reply.destroyed, true);
+  assert.equal(wrote, false);
+  assert.equal(ended, false);
 });
 
-test('[perimeters-019] too many distinct page requests give busy status', async () => {
+test('[perimeters-019] too many distinct page requests give a busy status', async () => {
   let release;
   const hold = new Promise((resolve) => { release = resolve; });
   const request = route(async () => { await hold; return new Response('<meta property="og:updated_time" content="2026-09-01T00:00:00Z">'); });
@@ -145,7 +160,7 @@ test('[perimeters-018] a valid index has an array response', async () => {
   assert.deepEqual(reply.body, [{ incident_id: '2' }]);
 });
 
-test('[perimeters-019] a post request gets method error', async () => {
+test('[perimeters-019] a POST request gets a method error', async () => {
   const request = route(async () => { throw new Error('unexpected fetch'); });
   const reply = await request('/', 'test', 'POST');
   assert.equal(reply.status, 405);

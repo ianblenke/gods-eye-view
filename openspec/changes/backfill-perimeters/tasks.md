@@ -38,10 +38,12 @@
   - Mutation: Discard the rows from the snapshot source. The test must fail.
 - [x] 2.17 Add tests for `perimeters-017`.
   - Mutation: Stop the feed after four pages. The test must fail.
+  - Mutation `perimeters-017-property`: Change the property condition in `server/providers/firePerimeters.js`. The test must fail.
 - [x] 2.18 Add tests for `perimeters-018`.
   - Mutation: Reject each index response. The test must fail.
 - [x] 2.19 Add tests for `perimeters-019`.
   - Mutation: Send status 200 for a bad method. The test must fail.
+  - Mutation `perimeters-019-closed`: Remove the closed reply check in `server/providers/firePerimeters.js`. The test must fail.
 - [x] 2.20 Tag the old feed page and size tests for `perimeters-020`.
   - Mutation: Stop the feed after four pages in `server/providers/firePerimeters.js`.
 - [x] 2.21 Tag the old feed failure tests for `perimeters-021`.
