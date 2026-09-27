@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Transport abort error
-A fetch function can reject with an `AbortError`. No external abort signal aborts the request. `readResponse()` MUST then reject with the same error object.
+`readResponse()` MUST reject with the same error object when a fetch function rejects with an `AbortError` and no external abort signal aborts the request.
 Origin: backfill
 
 #### Scenario: Keep the transport abort error `live-sources-001`
