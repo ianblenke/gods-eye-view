@@ -1074,6 +1074,11 @@
     "since": "2026-09-26",
     "change": "backfill-layer-lifecycle"
   },
+  "live-sources-001": {
+    "hash": "e51654ed9c6f90b6696661c46d354db1daf2b6be3a36a292469e734fb0b246ab",
+    "since": "2026-09-27",
+    "change": "backfill-live-sources"
+  },
   "location-presets-001": {
     "hash": "0522fe9936ceec4087e54a6ddebd46847313b613e50b7fdc5deef7ed94569f5b",
     "since": "2026-09-27",
