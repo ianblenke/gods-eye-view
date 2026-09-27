@@ -33,15 +33,22 @@ const response = (payload, headers = {}, status = 200) =>
 
 test('[live-sources-001] a transport abort error stays the same error', async () => {
   const abort = new DOMException('fixture', 'AbortError');
+  const controller = new AbortController();
   await assert.rejects(
-    readResponse(async () => {
-      throw abort;
-    }, '/fixture'),
+    readResponse(
+      async () => {
+        assert.equal(controller.signal.aborted, false);
+        throw abort;
+      },
+      '/fixture',
+      { signal: controller.signal },
+    ),
     (error) => {
       assert.equal(error, abort);
       return true;
     },
   );
+  assert.equal(controller.signal.aborted, false);
 });
 
 test('civil observations retain identity, separate altitude datums and source epochs', () => {

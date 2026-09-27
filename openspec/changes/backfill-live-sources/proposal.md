@@ -20,7 +20,7 @@ None.
 
 ## Impact
 
-- Open no ledger gap and close no ledger gap. The ledger already records full coverage for this file.
+- Open no ledger gap and close no ledger gap. The file has no ledger entry, because the gate measures it at full coverage.
 - The ratchet can change the untraced test count for this file. The lead will report the exact ledger effect.
 - Add the change documents and one test to the project.
 
