@@ -1,0 +1,5 @@
+Verdict: FAIL
+- [ ] F1 critical openspec/changes/archive/2026-09-27-backfill-live-sources/specs/live-sources/spec.md:8 At commit 34a3b330ec5039666bd1cc305ccb7830439dba59, the scenario also covers a signal that aborts during fetch. In that case, line 92 can throw a different error. Limit the scenario to an active or absent signal, and make the test establish that condition.
+- [ ] F2 minor openspec/changes/archive/2026-09-27-backfill-live-sources/proposal.md:23 At commit 34a3b330ec5039666bd1cc305ccb7830439dba59, the ledger has no coverage entry for `contract.js`. Correct the claim that it records full coverage. No ledger gap opens or closes.
+- [ ] F3 minor openspec/changes/archive/2026-09-27-backfill-live-sources/design.md:22 At commit 34a3b330ec5039666bd1cc305ccb7830439dba59, the gate warns that “missing” may breach STE. Revise the phrase or resolve the warning.
+- [ ] F4 minor openspec/changes/archive/2026-09-27-backfill-live-sources/tasks.md:16 At commit 34a3b330ec5039666bd1cc305ccb7830439dba59, the gate reports `REVIEW-MISSING` and fails. Complete both reviews, write `review.md`, and rerun the gate.

@@ -19,7 +19,7 @@ The current tests cover signal aborts. They do not call the true arm of the `Abo
 
 ## Goals
 
-- Add one test for the missing transport abort path.
+- Add one test for the transport abort path that no test covers.
 - Check that the rejected object is the same error object.
 
 ## Non-goals
