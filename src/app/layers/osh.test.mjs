@@ -89,3 +89,80 @@ test('[osh-096] builds the OSH systems layer in the catalog with the production 
   assert.equal(elements['osh-panel'].hidden, false, 'the panel element shows');
   assert.match(elements['osh-panel-detail'].innerHTML, /System A/, 'the detail element holds the name of the system');
 });
+
+/** A minimal element that view.js's render() can build and fill. */
+function fixtureElement(tagName) {
+  return {
+    tagName,
+    children: [],
+    textContent: '',
+    hidden: false,
+    append(...nodes) { this.children.push(...nodes); },
+    replaceChildren(...nodes) { this.children = [...nodes]; },
+    addEventListener() {},
+    focus() {},
+  };
+}
+
+test('[osh-control-032] builds a real command view only when the page has the control panel host', async (t) => {
+  const elements = { 'osh-panel': { hidden: true }, 'osh-panel-detail': { innerHTML: '' }, 'osh-panel-video': {}, 'osh-panel-control': fixtureElement('div') };
+  const documentImpl = { addEventListener() {}, removeEventListener() {}, getElementById: (id) => elements[id] ?? null, createElement: fixtureElement };
+  withGlobal(t, 'document', documentImpl);
+  const targetsBody = { enabled: false, reason: 'control_off', targets: [] };
+  const bodies = {
+    '/api/osh/systems': { systems: [{ id: 'sys-fixture-1', uid: 'urn:a', name: 'System A', description: null, lon: 1, lat: 2, alt: 0 }] },
+    '/api/osh/fois': { fois: [] },
+    '/api/osh/locations': { locations: [] },
+    '/api/osh/datastreams?system=sys-fixture-1': { datastreams: [] },
+    '/api/control/osh/targets': targetsBody,
+  };
+  const asked = [];
+  withGlobal(t, 'fetch', async (path) => {
+    asked.push(path);
+    return { ok: true, status: 200, json: async () => bodies[path] };
+  });
+  let click = null;
+  const setInputAction = Cesium.ScreenSpaceEventHandler.prototype.setInputAction;
+  Cesium.ScreenSpaceEventHandler.prototype.setInputAction = function (action, type) {
+    if (type === Cesium.ScreenSpaceEventType.LEFT_CLICK) click = action;
+    return setInputAction.call(this, action, type);
+  };
+  t.after(() => {
+    Cesium.ScreenSpaceEventHandler.prototype.setInputAction = setInputAction;
+  });
+  const viewer = {
+    scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick: () => ({ id: { id: 'osh:sys-fixture-1' } }) },
+    camera: { moveEnd: new Cesium.Event(), positionWC: Cesium.Cartesian3.fromDegrees(1, 2, 1_500_000) },
+    dataSources: { add: (dataSource) => dataSource, remove: () => true },
+  };
+  const layer = createApplicationOsh();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  click({ position: {} });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.ok(asked.includes('/api/control/osh/targets'), 'a real command view reads the control targets route');
+  assert.equal(elements['osh-panel-control'].hidden, true, 'the flag is off, so the view keeps its host hidden');
+});
+
+test('[osh-control-032] builds the layer with no command view when the page has no control panel host', async (t) => {
+  const elements = { 'osh-panel': { hidden: true }, 'osh-panel-detail': { innerHTML: '' }, 'osh-panel-video': {} };
+  withGlobal(t, 'document', { addEventListener() {}, removeEventListener() {}, getElementById: (id) => elements[id] ?? null });
+  const asked = [];
+  withGlobal(t, 'fetch', async (path) => {
+    asked.push(path);
+    return { ok: true, status: 200, json: async () => ({ systems: [], fois: [], locations: [] }) };
+  });
+  const viewer = {
+    scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick: () => null },
+    camera: { moveEnd: new Cesium.Event(), positionWC: Cesium.Cartesian3.fromDegrees(1, 2, 1_500_000) },
+    dataSources: { add: (dataSource) => dataSource, remove: () => true },
+  };
+  const layer = createApplicationOsh();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  layer.enable(viewer);
+  await layer.update(viewer);
+  assert.equal(asked.includes('/api/control/osh/targets'), false, 'with no command view, the layer never reads the control targets route');
+});
