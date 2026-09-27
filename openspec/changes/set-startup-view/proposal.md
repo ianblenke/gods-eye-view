@@ -21,16 +21,14 @@ None.
 
 ## Impact
 
-- Change `src/camera.js`, `src/app/controls.js`, `src/standalone/controls.js`, and `docs/CURRENT-STATE.md`.
+- Change `src/camera.js`, `src/app/controls.js`, and `docs/CURRENT-STATE.md`.
 - Add `src/app/startView.test.mjs` and the four documents in this change folder.
 - The ledger has open gaps for `src/camera.js` and `src/app/controls.js` at commit `ba9555a`.
-- The new tests cover the new functions of `src/camera.js`. Its gap stays at 21 lines and 2 functions.
-- The tests now import `src/app/controls.js` and run its call of `startApplicationView()`.
-- The lead reports the ledger effect for `src/app/controls.js` and `src/standalone/controls.js`.
+- The new tests cover the new functions of `src/camera.js`. Its gap stays at 21 lines and 2 functions not covered. Its totals are 144 lines, 12 branches and 8 functions.
+- `controls.js` still has no test that imports it (ledger entry `loaded: false`). It has 50 lines not covered (51 before), because one call replaces the old `if` block.
+- No test runs its one call of `startApplicationView`.
 - The registry gets 5 new scenario IDs.
-- The ratchet command also wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit.
-- The ratchet reports different coverage totals for `src/data/labelArbiter.js` in different runs.
-- The lead put the entry and the history of that file back to the content of `main`. This is a text edit, with no measurement.
+- The ratchet command also wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit. The ratchet reports different coverage totals for `src/data/labelArbiter.js` in different runs. The lead put the entry and the history of that file back to the content of `main`. This is a text edit, with no measurement.
 
 ## Known limits
 
@@ -42,5 +40,5 @@ None.
 - `qa-labels.mjs`: Its comment waits for the Austin flight.
 - `qa-floor-verify.mjs`: Its comment says that it cancels the start flight before a view over Austin.
 - `flight-timing-kept`: The 25000 m start height and 4 s flight come from the old flight.
-- `controls-mgrs-import`: Node 26 cannot import `StyleManager` from `src/ui/composition.js`. No test imports `src/standalone/controls.js`.
 - `no-browser-view`: No browser view of the result was run.
+- `controls-call-untested`: No test runs the one call of `startApplicationView` in `src/app/controls.js`. A test needs to import that file, and it cannot: its import of `StyleManager` loads the package `mgrs`, which fails on Node 26. The gates also refuse to edit a file and load it for the first time in one change (`LEDGER-NO-BASELINE`). A later change can make `mgrs` load, then load `controls.js` with a test, and only after that edit it.

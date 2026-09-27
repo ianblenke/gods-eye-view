@@ -1,15 +1,14 @@
 ## ADDED Requirements
 
 ### Requirement: Default camera pose
-The app MUST start the default camera flight at the Taiwan pose when no share state exists.
+The function `startApplicationView` MUST fly the camera to the Taiwan pose when no share state exists.
 Origin: spec-first
 
 #### Scenario: Fly to the Taiwan pose `startup-view-001`
-- **WHEN** the app has no share state
-- **THEN** the app calls `flyToStartView()`
+- **WHEN** `startApplicationView` runs with no share state
+- **THEN** the camera gets the default flight
 - **AND** the flight ends at longitude 120.6485, latitude 24.18, and height 217 m
 - **AND** the flight uses heading 0, pitch -35 degrees, and roll 0
-- **AND** the app gives its viewer to the controls
 
 ### Requirement: Flight start
 The default camera flight MUST start above the Taiwan pose after a 500 ms pause.
@@ -32,19 +31,18 @@ Origin: spec-first
 - **AND** a destroyed viewer gets no flight
 
 ### Requirement: Share view priority
-The app MUST keep the share view when share state exists.
+The function `startApplicationView` MUST keep the share view when share state exists.
 Origin: spec-first
 
 #### Scenario: Keep a share view `startup-view-004`
-- **WHEN** the app has share state
-- **THEN** the app does not start the default flight
+- **WHEN** `startApplicationView` runs with share state
+- **THEN** it does not start the default flight
 - **AND** the loader shows `Restoring shared view...`
 
 ### Requirement: Default loader text
-The app MUST show the Taiwan flight text when the default flight starts.
+The function `startApplicationView` MUST show the Taiwan flight text when it starts the default flight.
 Origin: spec-first
 
 #### Scenario: Show the Taiwan flight text `startup-view-005`
-- **WHEN** the app starts the default flight
+- **WHEN** `startApplicationView` starts the default flight
 - **THEN** the loader shows `Flying to Taiwan...`
-- **AND** the app gives the flight stop function to `defer`

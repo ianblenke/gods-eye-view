@@ -19,9 +19,6 @@
 - [x] 2.6 Add the new camera flight and change the app call.
 - [x] 2.7 Run each mutation and the host tests.
 - [x] 2.8 Run STE lint and the format check.
-- [x] 2.9 Test the app call of `startApplicationView()` with fake controls, a fake scene, and a fake cloud controller.
-- [x] 2.10 Give `StyleManager` in `src/standalone/controls.js` and add the cloud controller input.
-- [x] 2.11 Run the new mutations and host checks.
 
 ## 3. Gates and review
 
