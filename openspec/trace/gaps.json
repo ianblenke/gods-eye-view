@@ -661,21 +661,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "server/providers/firePerimeters.js": {
-      "loaded": true,
-      "lines": 6,
-      "branches": 6,
-      "functions": 1,
-      "totals": {
-        "lines": 232,
-        "branches": 94,
-        "functions": 15
-      },
-      "sha": "ab56dbced4ab939af03f86c0167e842e2521fa335e92d6454318b535c565e29b",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "server/providers/firms.js": {
       "loaded": true,
       "lines": 21,
@@ -5446,77 +5431,17 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/perimeters/cards.js": {
+    "src/layers/perimeters/index.js": {
       "loaded": true,
       "lines": 0,
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 157,
-        "branches": 57,
-        "functions": 8
-      },
-      "sha": "c115a50051f03d18a8c4b4837771d7e4fe667aa4adc814c26dc808e1929ced10",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/perimeters/inciweb.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 4,
-      "functions": 2,
-      "totals": {
-        "lines": 173,
-        "branches": 56,
-        "functions": 14
-      },
-      "sha": "c0bd5609f06caa6f61d1afb864e1a0f3ef64224fe1d481101441d97898d0fd9a",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/perimeters/index.js": {
-      "loaded": true,
-      "lines": 7,
-      "branches": 17,
-      "functions": 2,
-      "totals": {
         "lines": 448,
-        "branches": 109,
+        "branches": 141,
         "functions": 34
       },
       "sha": "ebb05499582710632ebb138bfba299e3d91dae65494bcef97998d3b3a84df12f",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/perimeters/records.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 4,
-      "functions": 0,
-      "totals": {
-        "lines": 94,
-        "branches": 62,
-        "functions": 5
-      },
-      "sha": "33f56ea87d68a7dc972f6f0a9bbb1cfeba7cf1c39d98ac7d2ad225683ed72c04",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/perimeters/source.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 1,
-      "totals": {
-        "lines": 23,
-        "branches": 11,
-        "functions": 3
-      },
-      "sha": "a8784299dee5de58a0e0cf6182be1aac90be1e8abddb7abff5a3975fce375463",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -11807,29 +11732,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/data/firePerimetersProxy.test.mjs": {
-      "names": {
-        "InciWeb index and publication reads enforce their smaller caps": 1,
-        "InciWeb index preserves the fixed POST, caches for one hour and serves stale arrays": 1,
-        "a failed refresh serves the last good perimeter snapshot as stale": 1,
-        "an explicit transfer-limit false stops paging; a fresh cache does not fetch": 1,
-        "bad publication ids and non-GET requests never fetch upstream": 1,
-        "concurrent requests share one upstream operation for every route": 1,
-        "configurePreviewServer: paging stops at five pages and normalizes the combined snapshot": 1,
-        "configureServer: paging stops at five pages and normalizes the combined snapshot": 1,
-        "direct 200 incident pages work, including one missing timestamp": 1,
-        "incident pages without valid timestamps fail closed and are not cached": 1,
-        "malformed WFIGS data does not become a cached empty snapshot": 1,
-        "oversized streamed and declared bodies produce sanitized 502 responses": 1,
-        "publication HTML streams are capped at 2 MiB": 1,
-        "publication redirects share a signal, cancel the redirect body and force HTTPS": 1,
-        "publication timestamps, thirty-minute TTL and oldest-entry eviction": 1,
-        "the per-client limit stops a loop while another client can read the cache": 1,
-        "unsafe publication redirect locations fail before a second fetch": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/data/firmsAdapt.test.mjs": {
       "names": {
         "adapter maps a proxy record into the internal fire-record shape": 1,
@@ -14471,83 +14373,6 @@
         "military ground records leave model-owned placement alone and warm the same floor cell": 1,
         "military records keep bounded partial retention and release metadata only after removal admission": 1,
         "military records preserve feet for aviation, metres for rendering and source epochs": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/perimeters/cards.test.mjs": {
-      "names": {
-        "a card without a link is not interactive": 1,
-        "a complex member names its complex on the card": 1,
-        "a full incident row renders name, size, containment, and ages": 1,
-        "a known InciWeb page adds a link line to the card": 1,
-        "costs near a unit boundary promote to the larger unit": 1,
-        "missing attributes degrade to available facts instead of placeholders": 1,
-        "partial incident details render only the facts that exist": 1,
-        "the card anchors at the centroid of the largest polygon": 1,
-        "the selected card claims the selected paint lane, not the ambient lane": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/perimeters/inciweb.test.mjs": {
-      "names": {
-        "a complex member falls back to its complex page": 1,
-        "a node link exposes its publication id": 1,
-        "a unique candidate in the wrong state is rejected, not linked": 1,
-        "ambiguous titles disambiguate by state, then newest id": 1,
-        "incidents resolve by exact normalized title to a node link": 1,
-        "publication currency accepts pages created around or after discovery": 1,
-        "the index source rejects failures and honors cancellation": 1,
-        "the index source requests the same-origin full catalog": 1,
-        "the publication source fetches timestamps and honors cancellation": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/perimeters/ownership.test.mjs": {
-      "names": {
-        "a complex member resolves to its complex page from the catalog": 1,
-        "a hanging InciWeb index fetch never blocks the perimeter refresh": 1,
-        "a matched incident card carries the InciWeb line and click-through": 1,
-        "a refresh that drops the selected incident also drops its card": 1,
-        "a stale or unverifiable publication yields no link": 1,
-        "an InciWeb outage never breaks the perimeter refresh": 1,
-        "an unmatched incident renders no InciWeb line and card clicks stay inert": 1,
-        "analyst records expose incident facts without geometry payloads": 1,
-        "clicking a perimeter publishes its incident card; empty space clears it": 1,
-        "containment legend uses the existing thresholds, colours and incident counts": 1,
-        "disable removes the click handler, pick ownership, and any card": 1,
-        "each perimeter polygon renders as one filled entity with its fire line": 1,
-        "incident-link verification aborts on destroy and ignores late completion": 1,
-        "incident-link verification aborts on disable and ignores late completion": 1,
-        "incident-link verification aborts on selection and ignores late completion": 1,
-        "late refresh cannot publish after disable or destroy": 1,
-        "unchanged snapshots retain entity identity even if source ordering changes": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/perimeters/records.test.mjs": {
-      "names": {
-        "a duplicate incident id keeps the first occurrence and skips the rest": 1,
-        "a feed that is not a feature collection is rejected as a whole": 1,
-        "a missing unique fire identifier falls back to the feature id": 1,
-        "a perimeter with no rings is skipped rather than rendered empty": 1,
-        "a valid snapshot yields one row per incident with polygons preserved": 1,
-        "an invalid feature is skipped so one bad incident cannot blank the layer": 1,
-        "optional attributes normalize to null rather than leaking undefined": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/perimeters/source.test.mjs": {
-      "names": {
-        "a malformed successful response is never accepted as an empty snapshot": 1,
-        "a successful response yields normalized perimeter rows": 1,
-        "a truncated response pages until the feed is complete": 1,
-        "an upstream failure surfaces its HTTP status": 1,
-        "response-body completion honors cancellation without replacing records": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"

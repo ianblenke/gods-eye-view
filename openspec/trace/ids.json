@@ -1584,6 +1584,141 @@
     "since": "2026-09-26",
     "change": "upstream-sync"
   },
+  "perimeters-001": {
+    "hash": "c950b2d41849c79df6aa9123d35a0cf495b873a7c0356228c03968863777d80d",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-002": {
+    "hash": "8741793c24e94d23dd3d5db0ba18ba9cb767798b866200dda70409d45ed7a9e3",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-003": {
+    "hash": "c696a67e4af7369f68ccd3f243107a19166a6e4130ea6740c2ff680707469845",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-004": {
+    "hash": "1e8d69907e3f49bb560bb3b2fe383b114b84a649eeaa06b83eb5c5700f4048ce",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-005": {
+    "hash": "91349949ffc381ff56c1389e4a316cf20b25a370ae64fcbe283a0521def69f36",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-006": {
+    "hash": "8252021cdf99eb4154b0e9f99268cbb68c1d6c554fee0a4174f253c6cba04976",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-007": {
+    "hash": "069eaab07d0eb933ba786ff5d4217c1efd9a0b794dbaa961a1f83f6741409224",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-008": {
+    "hash": "11f5752c6024dbbb7d8d01e64da877fc87992ba535e5588904afa0d470ad22bd",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-009": {
+    "hash": "c67bb8a27560b7defdbd10ebe46d9c5469d017327cc0bf35723637490162af18",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-010": {
+    "hash": "f17d08acef3b2640482669ceaecb03ca2235002768b5c5a5fd4401e5dfd9e063",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-011": {
+    "hash": "7a99bdae3f388c63349345aea117ce34371ed89be2967f35a4f1c23e5a4ac28e",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-012": {
+    "hash": "3de7430f3facd607e16478dacfd39359f2cb91f875925be49ac7b31378f56f2b",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-013": {
+    "hash": "690bcc31b33b7bd9a3dc728f670c70a6ea0fa823d1043c994a08b9dbf9d6dfa1",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-014": {
+    "hash": "e7cf7c6397fb80735af32f612e9a464357e91ab776d2894e80cbe05b13e2c80f",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-015": {
+    "hash": "b8359cb533c4955008cb789e940d01e4352086e95a89a3cc095ea31ce9d51037",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-016": {
+    "hash": "6015c82e6885aa28041aae6b05e4ee529095673371ffa504ad0360df93d8ad13",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-017": {
+    "hash": "f149d872f41acb36175e9533bb5b1d2c4389802dea4d234ef30298e0141c2ce0",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-018": {
+    "hash": "e058165df9363d203616cc40f72fb836db7bcdac0d2d1853ef37b7f310848bd6",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-019": {
+    "hash": "1adbdab0990abc67bd74894ad10a9fb9ee60be4fa26006db29d58e15707948e2",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-020": {
+    "hash": "075c5c1c669a34c6fef8fac07e685b7f2d09b18efa772e11c2a9493ef6e4f4cf",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-021": {
+    "hash": "37f724e35811df1e5f5d28ccb446db1dd4fc8278d2093f88adc1ff13a93eb359",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-022": {
+    "hash": "5873cc475c80f2af398ff46f2f2c48b10778fc13e6869efd4f337f6b020cbd25",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-023": {
+    "hash": "11530953364c7c6d12b1e3e6e03187b9e117d44eddd113c3eea3b769fdb5dce8",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-024": {
+    "hash": "a6cb3420269f3ec46d131684b77206775681854807b492d505d905fdec946249",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-025": {
+    "hash": "cf4158e664a9649f0d62a7be3b2665bf0797fe4d8411370db82d1632a1fd76e3",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-026": {
+    "hash": "157c1fbf8efe9cfd3749f7149df407192503949d95cfb4f6ee59b785425337a2",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
+  "perimeters-027": {
+    "hash": "baf89bbba8af0a912a580b627c95c284f1a9b9c2bb84485b875abfca4986a61b",
+    "since": "2026-09-27",
+    "change": "backfill-perimeters"
+  },
   "qa-scripts-001": {
     "hash": "3b33d8de81e3c696fa245d10f8a0a7cd6a69e45d241f104c62abb43579367d2e",
     "since": "2026-09-26",
