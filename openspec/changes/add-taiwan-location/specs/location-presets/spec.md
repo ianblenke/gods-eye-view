@@ -40,7 +40,7 @@ Origin: spec-first
 - **AND** it uses range 700000 m, pitch -60 degrees and heading 0 degrees
 
 ### Requirement: Preset search
-The preset geocoder MUST answer the city name and id with the preset view bounds.
+The preset geocoder MUST answer a search for the city name or id with the preset view bounds.
 Origin: spec-first
 
 #### Scenario: Find Taiwan by name or id `location-presets-005`
