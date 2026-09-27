@@ -1866,13 +1866,13 @@
     "server/providers/firePerimeters.test.mjs › [perimeters-018] the index rejects a bad list"
   ],
   "perimeters-019": [
+    "server/providers/firePerimeters.test.mjs › [perimeters-019] a POST request gets a method error",
     "server/providers/firePerimeters.test.mjs › [perimeters-019] a failed feed cancels its body",
     "server/providers/firePerimeters.test.mjs › [perimeters-019] a failed page cancels its body",
-    "server/providers/firePerimeters.test.mjs › [perimeters-019] a post request gets method error",
     "server/providers/firePerimeters.test.mjs › [perimeters-019] a reply on a closed client has no body",
     "server/providers/firePerimeters.test.mjs › [perimeters-019] an absent route uses the perimeter feed",
     "server/providers/firePerimeters.test.mjs › [perimeters-019] an empty route uses the feed and an unknown route fails",
-    "server/providers/firePerimeters.test.mjs › [perimeters-019] too many distinct page requests give busy status"
+    "server/providers/firePerimeters.test.mjs › [perimeters-019] too many distinct page requests give a busy status"
   ],
   "perimeters-020": [
     "src/data/firePerimetersProxy.test.mjs › [perimeters-020] an explicit transfer-limit false stops paging; a fresh cache does not fetch",
