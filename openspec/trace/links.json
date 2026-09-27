@@ -1746,6 +1746,167 @@
   "osh-096": [
     "src/app/layers/osh.test.mjs › [osh-096] builds the OSH systems layer in the catalog with the production source and the hosts of the page"
   ],
+  "perimeters-001": [
+    "src/layers/perimeters/source.test.mjs › [perimeters-001] a live signal accepts a complete source response",
+    "src/layers/perimeters/source.test.mjs › [perimeters-001] a successful response yields normalized perimeter rows",
+    "src/layers/perimeters/source.test.mjs › [perimeters-001] a truncated response pages until the feed is complete",
+    "src/layers/perimeters/source.test.mjs › [perimeters-001] the default source calls the host fetch"
+  ],
+  "perimeters-002": [
+    "src/layers/perimeters/source.test.mjs › [perimeters-002] a malformed successful response is never accepted as an empty snapshot",
+    "src/layers/perimeters/source.test.mjs › [perimeters-002] an abort after a source read rejects",
+    "src/layers/perimeters/source.test.mjs › [perimeters-002] an upstream failure surfaces its HTTP status",
+    "src/layers/perimeters/source.test.mjs › [perimeters-002] response-body completion honors cancellation without replacing records"
+  ],
+  "perimeters-003": [
+    "src/layers/perimeters/records.test.mjs › [perimeters-003] a missing unique fire identifier falls back to the feature id",
+    "src/layers/perimeters/records.test.mjs › [perimeters-003] a valid snapshot yields one row per incident with polygons preserved",
+    "src/layers/perimeters/records.test.mjs › [perimeters-003] optional attributes normalize to null rather than leaking undefined"
+  ],
+  "perimeters-004": [
+    "src/layers/perimeters/records.test.mjs › [perimeters-004] a bad multi polygon list has no row",
+    "src/layers/perimeters/records.test.mjs › [perimeters-004] a duplicate incident id keeps the first occurrence and skips the rest",
+    "src/layers/perimeters/records.test.mjs › [perimeters-004] a feed that is not a feature collection is rejected as a whole",
+    "src/layers/perimeters/records.test.mjs › [perimeters-004] a nonarray position has no row",
+    "src/layers/perimeters/records.test.mjs › [perimeters-004] a perimeter with no rings is skipped rather than rendered empty",
+    "src/layers/perimeters/records.test.mjs › [perimeters-004] a polygon object has no row",
+    "src/layers/perimeters/records.test.mjs › [perimeters-004] an invalid feature is skipped so one bad incident cannot blank the layer",
+    "src/layers/perimeters/records.test.mjs › [perimeters-004] bad rings and polygon lists leave no rows"
+  ],
+  "perimeters-005": [
+    "src/layers/perimeters/cards.test.mjs › [perimeters-005] the card anchors at the centroid of the largest polygon"
+  ],
+  "perimeters-006": [
+    "src/layers/perimeters/cards.test.mjs › [perimeters-006] a card without a link is not interactive",
+    "src/layers/perimeters/cards.test.mjs › [perimeters-006] a complex member names its complex on the card",
+    "src/layers/perimeters/cards.test.mjs › [perimeters-006] a full incident row renders name, size, containment, and ages",
+    "src/layers/perimeters/cards.test.mjs › [perimeters-006] a known InciWeb page adds a link line to the card",
+    "src/layers/perimeters/cards.test.mjs › [perimeters-006] a negative age has no age text",
+    "src/layers/perimeters/cards.test.mjs › [perimeters-006] costs near a unit boundary promote to the larger unit",
+    "src/layers/perimeters/cards.test.mjs › [perimeters-006] full containment is green and a low cost has no text",
+    "src/layers/perimeters/cards.test.mjs › [perimeters-006] missing attributes degrade to available facts instead of placeholders",
+    "src/layers/perimeters/cards.test.mjs › [perimeters-006] partial incident details render only the facts that exist",
+    "src/layers/perimeters/cards.test.mjs › [perimeters-006] the selected card claims the selected paint lane, not the ambient lane"
+  ],
+  "perimeters-007": [
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-007] a complex member falls back to its complex page",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-007] a match with no id has no node link",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-007] a node link exposes its publication id",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-007] a unique candidate in the wrong state is rejected, not linked",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-007] ambiguous titles disambiguate by state, then newest id",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-007] incidents resolve by exact normalized title to a node link",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-007] the newest duplicate id wins in either order"
+  ],
+  "perimeters-008": [
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-008] a page with no useful dates is old",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-008] a recent page with no origin date is current",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-008] publication currency accepts pages created around or after discovery"
+  ],
+  "perimeters-009": [
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-009] an abort after each InciWeb read rejects",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-009] both sources accept a live signal",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-009] default InciWeb sources call the host fetch",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-009] the index source rejects failures and honors cancellation",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-009] the index source requests the same-origin full catalog",
+    "src/layers/perimeters/inciweb.test.mjs › [perimeters-009] the publication source fetches timestamps and honors cancellation"
+  ],
+  "perimeters-010": [
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-010] a polygon hole has its own ring",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-010] containment legend uses the existing thresholds, colours and incident counts",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-010] each perimeter polygon renders as one filled entity with its fire line"
+  ],
+  "perimeters-011": [
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-011] an equal snapshot republishes the selected card",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-011] analyst records expose incident facts without geometry payloads",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-011] analyst records obey a limit and hidden state",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-011] unchanged snapshots retain entity identity even if source ordering changes"
+  ],
+  "perimeters-012": [
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-012] a failed request reports its error",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-012] a layer with no card service draws its rows",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-012] a second update aborts a first failed request",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-012] a source error with no message has a default text",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-012] disable removes the click handler, pick ownership, and any card",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-012] late refresh cannot publish after disable or destroy",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-012] the layer checks its source and one init"
+  ],
+  "perimeters-013": [
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-013] a busy pointer keeps the card state",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-013] a card without an opener stays inert",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-013] a refresh that drops the selected incident also drops its card",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-013] an unknown perimeter pick clears the card",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-013] clicking a perimeter publishes its incident card; empty space clears it"
+  ],
+  "perimeters-014": [
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-014] a complex member resolves to its complex page from the catalog",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-014] a late catalog result can add a link to the selected card",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-014] a link card has an activation action",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-014] a matched incident card carries the InciWeb line and click-through",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-014] a pending page check starts only once",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-014] a stale or unverifiable publication yields no link",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-014] an unmatched incident renders no InciWeb line and card clicks stay inert"
+  ],
+  "perimeters-015": [
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-015] incident-link verification aborts on destroy and ignores late completion",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-015] incident-link verification aborts on disable and ignores late completion",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-015] incident-link verification aborts on selection and ignores late completion"
+  ],
+  "perimeters-016": [
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-016] a hanging InciWeb index fetch never blocks the perimeter refresh",
+    "src/layers/perimeters/ownership.test.mjs › [perimeters-016] an InciWeb outage never breaks the perimeter refresh"
+  ],
+  "perimeters-017": [
+    "server/providers/firePerimeters.test.mjs › [perimeters-017] a property can mark a page limit",
+    "server/providers/firePerimeters.test.mjs › [perimeters-017] a zero length page stops the feed request",
+    "server/providers/firePerimeters.test.mjs › [perimeters-017] the feed stops after five full pages",
+    "server/providers/firePerimeters.test.mjs › [perimeters-017] the proxy uses the host fetch by default"
+  ],
+  "perimeters-018": [
+    "server/providers/firePerimeters.test.mjs › [perimeters-018] a valid index has an array response",
+    "server/providers/firePerimeters.test.mjs › [perimeters-018] the index rejects a bad list"
+  ],
+  "perimeters-019": [
+    "server/providers/firePerimeters.test.mjs › [perimeters-019] a failed feed cancels its body",
+    "server/providers/firePerimeters.test.mjs › [perimeters-019] a failed page cancels its body",
+    "server/providers/firePerimeters.test.mjs › [perimeters-019] a post request gets method error",
+    "server/providers/firePerimeters.test.mjs › [perimeters-019] a reply on a closed client has no body",
+    "server/providers/firePerimeters.test.mjs › [perimeters-019] an absent route uses the perimeter feed",
+    "server/providers/firePerimeters.test.mjs › [perimeters-019] an empty route uses the feed and an unknown route fails",
+    "server/providers/firePerimeters.test.mjs › [perimeters-019] too many distinct page requests give busy status"
+  ],
+  "perimeters-020": [
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-020] an explicit transfer-limit false stops paging; a fresh cache does not fetch",
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-020] configurePreviewServer: paging stops at five pages and normalizes the combined snapshot",
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-020] configureServer: paging stops at five pages and normalizes the combined snapshot",
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-020] oversized streamed and declared bodies produce sanitized 502 responses"
+  ],
+  "perimeters-021": [
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-021] a failed refresh serves the last good perimeter snapshot as stale",
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-021] malformed WFIGS data does not become a cached empty snapshot"
+  ],
+  "perimeters-022": [
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-022] concurrent requests share one upstream operation for every route"
+  ],
+  "perimeters-023": [
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-023] bad publication ids and non-GET requests never fetch upstream"
+  ],
+  "perimeters-024": [
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-024] InciWeb index and publication reads enforce their smaller caps",
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-024] InciWeb index preserves the fixed POST, caches for one hour and serves stale arrays"
+  ],
+  "perimeters-025": [
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-025] direct 200 incident pages work, including one missing timestamp",
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-025] incident pages without valid timestamps fail closed and are not cached",
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-025] publication HTML streams are capped at 2 MiB",
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-025] publication timestamps, thirty-minute TTL and oldest-entry eviction"
+  ],
+  "perimeters-026": [
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-026] the per-client limit stops a loop while another client can read the cache"
+  ],
+  "perimeters-027": [
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-027] publication redirects share a signal, cancel the redirect body and force HTTPS",
+    "src/data/firePerimetersProxy.test.mjs › [perimeters-027] unsafe publication redirect locations fail before a second fetch"
+  ],
   "qa-scripts-001": [
     "src/tooling/spec/qaRegister.test.mjs › [qa-scripts-001] accepts a shebang and reads all four tags"
   ],
