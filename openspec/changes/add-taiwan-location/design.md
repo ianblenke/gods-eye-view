@@ -6,7 +6,7 @@
 
 - Put Taiwan to the left of Austin in the command dock.
 - Give the pill an island view and four local places.
-- Keep typed Taiwan search on the preset view bounds.
+- Keep Taiwan search results inside the preset view bounds.
 
 ## Non-goals
 
@@ -40,4 +40,4 @@ The STE lint checks this prose and each new test name. The host tests check the 
 
 ## Related browser QA scripts
 
-No QA line from a gate run is available in this host. No new QA script is part of this change.
+The gate reports that no QA script covers this change. No new QA script is part of this change.

@@ -1,0 +1,3 @@
+Verdict: FAIL
+- [ ] F1 critical src/locations.test.mjs:631 At commit 9979384040d684852ecd96587811def174d6d544, the flight test calls `flyToPresetLocation` directly. The Taiwan pill test uses an empty click handler, so neither test proves that clicking the pill starts the specified flight. Click the pill in a test and assert the destination and camera values.
+- [ ] F2 minor openspec/changes/archive/2026-09-26-add-taiwan-location/tasks.md:25 At commit 9979384040d684852ecd96587811def174d6d544, the gate output ends with `REVIEW-MISSING`; the gate run failed. Complete the reviews, write `review.md`, and rerun the gates.

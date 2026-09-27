@@ -9,6 +9,8 @@
   - Mutation: Set the Taiwan pill name to another name. The test must fail.
 - [x] 1.5 Write the flight test for `location-presets-004`.
   - Mutation: Change the first POI range to 1000 m. The test must fail.
+  - Write a second test in `locationControls.test.mjs` that clicks the Taiwan pill and checks the flight.
+  - Mutation: Pass `austin` to the city handler of the pill. The test must fail.
 - [x] 1.6 Write the search test for `location-presets-005`.
   - Mutation: Change the preset name to another name. The test must fail.
 
