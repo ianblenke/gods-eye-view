@@ -1,0 +1,3 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-09-27-backfill-perimeters/proposal.md:33 At commit ad3d99698e9a4aaa73307c6a767d8f5c42bf2fba, “Its count changes between runs” does not identify which count changes. Write: “The branch count for this file changes between runs.”
+- [ ] F2 minor openspec/changes/archive/2026-09-27-backfill-perimeters/proposal.md:33 At commit ad3d99698e9a4aaa73307c6a767d8f5c42bf2fba, “put the entry and the history of that file back” uses the phrasal verb “put back.” Write: “set the entry and the history of that file to the values in `main`.”
