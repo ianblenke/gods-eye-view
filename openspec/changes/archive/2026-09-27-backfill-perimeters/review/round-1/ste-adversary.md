@@ -1,0 +1,5 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-27-backfill-perimeters/specs/perimeters/spec.md:58 At commit c5549fb96b0892492b753dffab99ac9ae0010220, “the currency check” uses “currency” for page age. Write: “the page age check”.
+- [ ] F2 minor openspec/changes/archive/2026-09-27-backfill-perimeters/specs/perimeters/spec.md:83 At commit c5549fb96b0892492b753dffab99ac9ae0010220, “after stop or end” omits the subject of those actions. Write: “after the layer stops or ends”.
+- [ ] F3 minor server/providers/firePerimeters.test.mjs:108 At commit c5549fb96b0892492b753dffab99ac9ae0010220, “give busy status” omits an article. Write: “give a busy status”.
+- [ ] F4 minor server/providers/firePerimeters.test.mjs:148 At commit c5549fb96b0892492b753dffab99ac9ae0010220, “a post request gets method error” omits an article and does not use the technical name `POST`. Write: “a POST request gets a method error”.
