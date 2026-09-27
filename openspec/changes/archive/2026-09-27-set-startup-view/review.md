@@ -6,7 +6,7 @@ Date: 2026-09-27
 Gates: make gates CHANGE=set-startup-view passed
 Rounds: 3
 Scope: diff c1abb1ab654d6218b67000c7173d865b0620ef63
-Reviewed-Tree: 7de604a6fe67de42e67b13c70e669825235e38d1b262da991fde4682ee322dd2
+Reviewed-Tree: d912e97e7e45daf3124b42a35e8aaff8062f2d0ce262d474b4111d5f191fd70a
 
 ## Findings
 
@@ -28,7 +28,7 @@ Reviewed-Tree: 7de604a6fe67de42e67b13c70e669825235e38d1b262da991fde4682ee322dd2
 
 ## Evidence
 
-- [x] The gates run before this file (`make gates CHANGE=set-startup-view`, after the archive of round 2) showed `Trace: 444 scenarios, 444 verified, 0 open`, `Ledger: 0 entries do not match the current gaps` and `STE: 0 errors`. Its only error was `REVIEW-MISSING`. After that run, only text of the proposal and the review records changed. The gates run after this file is the final check.
+- [x] The gates run before this file (`make gates CHANGE=set-startup-view`, after the archive of round 2) showed `Trace: 444 scenarios, 444 verified, 0 open`, `Ledger: 0 entries do not match the current gaps` and `STE: 0 errors`. Its only error was `REVIEW-MISSING`. After that run, only text of the proposal (one word of the known limit that the gates asked for) and the review records changed. The gates run after this file is the final check.
 - [x] The lead ran these checks of the CI job on the tree, in the Docker image `gods-eye-view:upstream`: `npm run format:check`, `npm run check:boundaries` and `npm run doctor`. The lead did not run `npm run build` and `npm test`; the gates run all 6275 tests. The lead did not open the application in a browser.
 
 ## Coverage of the changed code files
