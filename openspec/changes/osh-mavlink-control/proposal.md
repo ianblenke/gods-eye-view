@@ -22,9 +22,9 @@ This change adds one narrow path for commands, apart from the OSH provider. The 
 
 ### The scope of this round
 
-This round writes only this proposal and the design. Discovery (D9) is now done. The owner's third OSH account reads the control streams and their command schemas. The owner picked 8 commands for the first table (D4). So this round names the real command names, fields and files, in place of the placeholders of the first draft.
+Discovery (D9) is now done. The owner's third OSH account reads the control streams and their command schemas. The owner picked 8 commands for the first table (D4). This round names the real command names, fields and files, in place of the placeholders of the first draft. It also writes `specs/osh-control/spec.md` and `tasks.md` from the finished design.
 
-This round still writes no spec, no task list, no test and no code. The next round writes `specs/osh-control/spec.md` and `tasks.md` from this design, then the tests and the code. The lead does not merge or archive this change with documents only. A change with no spec and no task list is not complete under the steps of `AGENTS.md`.
+This round still writes no test and no code. The next round does the tasks in order, test before code, then runs the gates and the two reviews. The lead does not merge or archive this change with documents only. A change with no test and no code is not complete under the steps of `AGENTS.md`.
 
 ## Capabilities
 
@@ -40,7 +40,8 @@ None. The scenarios `osh-004`, `osh-005` and `osh-006` keep their text and their
 
 This round:
 
-- Adds `proposal.md` and `design.md` to `openspec/changes/osh-mavlink-control/`. It changes no code, no test, no spec and no configuration file.
+- Adds `proposal.md`, `design.md`, `specs/osh-control/spec.md` and `tasks.md` to `openspec/changes/osh-mavlink-control/`. It changes no code and no test.
+- Adds 29 scenarios, `osh-control-001` to `osh-control-030`; `osh-control-012` is retired, because the first table has no field of the one type it would check.
 - Opens no gap and closes no gap in `openspec/trace`. It changes no file of the ledger.
 
 The later round, as the design plans it:
