@@ -28,7 +28,7 @@ None.
 - `controls.js` still has no test that imports it (ledger entry `loaded: false`). It has 50 lines not covered (51 before), because one call replaces the old `if` block.
 - No test runs its one call of `startApplicationView`.
 - The registry gets 5 new scenario IDs.
-- The ratchet command also wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit. Its count changes between runs. The lead put the entry and the history of that file back to the content of `main`, as a change of two text files with no measurement.
+- The ratchet command also wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit. Its count changes between runs. The lead put the entry and the history of that file back to the content of `main`. This is a text edit, with no measurement.
 
 ## Known limits
 
