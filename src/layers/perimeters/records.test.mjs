@@ -35,7 +35,7 @@ function feature(overrides = {}) {
   };
 }
 
-test('a valid snapshot yields one row per incident with polygons preserved', () => {
+test('[perimeters-003] a valid snapshot yields one row per incident with polygons preserved', () => {
   const rows = normalizeFirePerimeterSnapshot({
     features: [
       feature(),
@@ -71,14 +71,14 @@ test('a valid snapshot yields one row per incident with polygons preserved', () 
   assert.equal(rows[1].polygons.length, 2);
 });
 
-test('a missing unique fire identifier falls back to the feature id', () => {
+test('[perimeters-003] a missing unique fire identifier falls back to the feature id', () => {
   const rows = normalizeFirePerimeterSnapshot({
     features: [feature({ properties: { attr_UniqueFireIdentifier: null } })],
   });
   assert.equal(rows[0].stableId, '1');
 });
 
-test('optional attributes normalize to null rather than leaking undefined', () => {
+test('[perimeters-003] optional attributes normalize to null rather than leaking undefined', () => {
   const rows = normalizeFirePerimeterSnapshot({
     features: [
       feature({
@@ -137,13 +137,13 @@ test('optional attributes normalize to null rather than leaking undefined', () =
   );
 });
 
-test('a feed that is not a feature collection is rejected as a whole', () => {
+test('[perimeters-004] a feed that is not a feature collection is rejected as a whole', () => {
   for (const payload of [null, {}, { features: null }, { features: {} }]) {
     assert.equal(normalizeFirePerimeterSnapshot(payload), null);
   }
 });
 
-test('an invalid feature is skipped so one bad incident cannot blank the layer', () => {
+test('[perimeters-004] an invalid feature is skipped so one bad incident cannot blank the layer', () => {
   const good = feature({
     id: 2,
     properties: { attr_UniqueFireIdentifier: 'good' },
@@ -173,7 +173,7 @@ test('an invalid feature is skipped so one bad incident cannot blank the layer',
   }
 });
 
-test('a duplicate incident id keeps the first occurrence and skips the rest', () => {
+test('[perimeters-004] a duplicate incident id keeps the first occurrence and skips the rest', () => {
   const rows = normalizeFirePerimeterSnapshot({
     features: [
       feature(),
@@ -189,7 +189,7 @@ test('a duplicate incident id keeps the first occurrence and skips the rest', ()
   assert.equal(rows[0].acres, 512.5);
 });
 
-test('a perimeter with no rings is skipped rather than rendered empty', () => {
+test('[perimeters-004] a perimeter with no rings is skipped rather than rendered empty', () => {
   const rows = normalizeFirePerimeterSnapshot({
     features: [
       feature({ geometry: { type: 'Polygon', coordinates: [] } }),
@@ -198,4 +198,79 @@ test('a perimeter with no rings is skipped rather than rendered empty', () => {
   });
   assert.equal(rows.length, 1);
   assert.equal(rows[0].stableId, 'other');
+});
+
+test('[perimeters-004] bad rings and polygon lists leave no rows', () => {
+  const bad = [
+    [ring.slice(0, 3)],
+    [
+      [
+        [181, 0],
+        [0, 0],
+        [0, 1],
+        [181, 0],
+      ],
+    ],
+    [
+      [
+        [0, 91],
+        [0, 0],
+        [0, 1],
+        [0, 91],
+      ],
+    ],
+    [[[0], [0, 0], [0, 1], [0]]],
+  ];
+  for (const coordinates of bad) {
+    assert.deepEqual(
+      normalizeFirePerimeterSnapshot({
+        features: [feature({ geometry: { type: 'Polygon', coordinates } })],
+      }),
+      [],
+    );
+  }
+  for (const coordinates of [null, [null], [ring, null]]) {
+    assert.deepEqual(
+      normalizeFirePerimeterSnapshot({
+        features: [feature({ geometry: { type: 'Polygon', coordinates } })],
+      }),
+      [],
+    );
+  }
+});
+
+test('[perimeters-004] a nonarray position has no row', () => {
+  assert.deepEqual(
+    normalizeFirePerimeterSnapshot({
+      features: [
+        feature({
+          geometry: {
+            type: 'Polygon',
+            coordinates: [[[0, 0], [0, 1], null, [0, 0]]],
+          },
+        }),
+      ],
+    }),
+    [],
+  );
+});
+
+test('[perimeters-004] a polygon object has no row', () => {
+  assert.deepEqual(
+    normalizeFirePerimeterSnapshot({
+      features: [feature({ geometry: { type: 'Polygon', coordinates: {} } })],
+    }),
+    [],
+  );
+});
+
+test('[perimeters-004] a bad multi polygon list has no row', () => {
+  assert.deepEqual(
+    normalizeFirePerimeterSnapshot({
+      features: [
+        feature({ geometry: { type: 'MultiPolygon', coordinates: {} } }),
+      ],
+    }),
+    [],
+  );
 });

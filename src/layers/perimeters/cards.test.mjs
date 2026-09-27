@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { perimeterAnchorDegrees, buildIncidentCard } from './cards.js';
+import {
+  perimeterAnchorDegrees,
+  buildIncidentCard,
+  containmentAccent,
+} from './cards.js';
 
 const square = [
   [-108.2, 35.0],
@@ -16,13 +20,13 @@ const tiny = [
   [-107.01, 34.0],
 ];
 
-test('the card anchors at the centroid of the largest polygon', () => {
+test('[perimeters-005] the card anchors at the centroid of the largest polygon', () => {
   const anchor = perimeterAnchorDegrees([[tiny], [square]]);
   assert.ok(Math.abs(anchor.lon - -108.1) < 1e-9);
   assert.ok(Math.abs(anchor.lat - 35.1) < 1e-9);
 });
 
-test('a full incident row renders name, size, containment, and ages', () => {
+test('[perimeters-006] a full incident row renders name, size, containment, and ages', () => {
   const now = 1758000000000;
   const card = buildIncidentCard(
     {
@@ -55,7 +59,7 @@ test('a full incident row renders name, size, containment, and ages', () => {
   assert.equal(typeof card.accent, 'string');
 });
 
-test('missing attributes degrade to available facts instead of placeholders', () => {
+test('[perimeters-006] missing attributes degrade to available facts instead of placeholders', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -79,7 +83,7 @@ test('missing attributes degrade to available facts instead of placeholders', ()
   assert.deepEqual(card.details, ['containment unknown · RX']);
 });
 
-test('a known InciWeb page adds a link line to the card', () => {
+test('[perimeters-006] a known InciWeb page adds a link line to the card', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -107,7 +111,7 @@ test('a known InciWeb page adds a link line to the card', () => {
   assert.match(card.accessibilityLabel, /InciWeb/);
 });
 
-test('the selected card claims the selected paint lane, not the ambient lane', () => {
+test('[perimeters-006] the selected card claims the selected paint lane, not the ambient lane', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -135,7 +139,7 @@ test('the selected card claims the selected paint lane, not the ambient lane', (
   assert.equal('collisionGroup' in card, false);
 });
 
-test('costs near a unit boundary promote to the larger unit', () => {
+test('[perimeters-006] costs near a unit boundary promote to the larger unit', () => {
   const base = {
     stableId: 'x',
     name: 'Any',
@@ -162,7 +166,7 @@ test('costs near a unit boundary promote to the larger unit', () => {
   assert.equal(costLine(4200000), '$4.2M to date');
 });
 
-test('a complex member names its complex on the card', () => {
+test('[perimeters-006] a complex member names its complex on the card', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -186,7 +190,7 @@ test('a complex member names its complex on the card', () => {
   assert.ok(card.details.includes('part of Rowe Creek Complex'));
 });
 
-test('a card without a link is not interactive', () => {
+test('[perimeters-006] a card without a link is not interactive', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -209,7 +213,7 @@ test('a card without a link is not interactive', () => {
   assert.equal(card.interactive, false);
 });
 
-test('partial incident details render only the facts that exist', () => {
+test('[perimeters-006] partial incident details render only the facts that exist', () => {
   const card = buildIncidentCard(
     {
       stableId: 'x',
@@ -234,4 +238,41 @@ test('partial incident details render only the facts that exist', () => {
     'Human cause',
     'Catron County · $85K to date',
   ]);
+});
+
+test('[perimeters-006] full containment is green and a low cost has no text', () => {
+  assert.equal(containmentAccent(100), '#8bc34a');
+  const card = buildIncidentCard(
+    {
+      stableId: 'a',
+      name: '',
+      containedPct: 100,
+      costToDate: 999,
+      polygons: [],
+    },
+    0,
+  );
+  assert.equal(card.title, 'FIRE · Unnamed incident');
+  assert.equal(card.accent, '#8bc34a');
+  assert.equal(
+    card.details.some((part) => part.includes('to date')),
+    false,
+  );
+});
+
+test('[perimeters-006] a negative age has no age text', () => {
+  const card = buildIncidentCard(
+    {
+      stableId: 'a',
+      name: 'A',
+      containedPct: 0,
+      discoveredTime: 100,
+      updatedTime: 100,
+    },
+    0,
+  );
+  assert.equal(
+    card.details.some((part) => part.includes('ago')),
+    false,
+  );
 });

@@ -20,7 +20,7 @@ const validPayload = {
   ],
 };
 
-test('a successful response yields normalized perimeter rows', async () => {
+test('[perimeters-001] a successful response yields normalized perimeter rows', async () => {
   let requested;
   const source = createWfigsPerimeterSource({
     fetchImpl: async (url) => {
@@ -36,7 +36,7 @@ test('a successful response yields normalized perimeter rows', async () => {
   assert.equal(requested, '/api/fire-perimeters');
 });
 
-test('a truncated response pages until the feed is complete', async () => {
+test('[perimeters-001] a truncated response pages until the feed is complete', async () => {
   const pageRing = (id) => ({
     id,
     geometry: { type: 'Polygon', coordinates: [ring] },
@@ -81,14 +81,14 @@ test('a truncated response pages until the feed is complete', async () => {
   assert.deepEqual(requests, [null, '1', '2']);
 });
 
-test('an upstream failure surfaces its HTTP status', async () => {
+test('[perimeters-002] an upstream failure surfaces its HTTP status', async () => {
   const source = createWfigsPerimeterSource({
     fetchImpl: async () => ({ ok: false, status: 503 }),
   });
   await assert.rejects(source.getSnapshot(), /WFIGS HTTP 503/);
 });
 
-test('a malformed successful response is never accepted as an empty snapshot', async () => {
+test('[perimeters-002] a malformed successful response is never accepted as an empty snapshot', async () => {
   for (const payload of [{}, { rows: null }, { rows: {} }]) {
     const source = createWfigsPerimeterSource({
       fetchImpl: async () => Response.json(payload),
@@ -97,7 +97,7 @@ test('a malformed successful response is never accepted as an empty snapshot', a
   }
 });
 
-test('response-body completion honors cancellation without replacing records', async () => {
+test('[perimeters-002] response-body completion honors cancellation without replacing records', async () => {
   const abort = new AbortController();
   const source = createWfigsPerimeterSource({
     fetchImpl: async () => ({
@@ -114,4 +114,45 @@ test('response-body completion honors cancellation without replacing records', a
   await assert.rejects(source.getSnapshot({ signal: abort.signal }), {
     name: 'AbortError',
   });
+});
+
+test('[perimeters-001] the default source calls the host fetch', async () => {
+  const oldFetch = globalThis.fetch;
+  let path;
+  globalThis.fetch = async (url) => {
+    path = url;
+    return Response.json({ rows: [] });
+  };
+  try {
+    const rows = await createWfigsPerimeterSource().getSnapshot();
+    assert.equal(path, '/api/fire-perimeters');
+    assert.deepEqual(rows, []);
+  } finally {
+    globalThis.fetch = oldFetch;
+  }
+});
+
+test('[perimeters-002] an abort after a source read rejects', async () => {
+  const controller = new AbortController();
+  const source = createWfigsPerimeterSource({
+    fetchImpl: async () => ({
+      ok: true,
+      headers: new Headers(),
+      text: async () => {
+        controller.abort();
+        return '{"rows":[]}';
+      },
+    }),
+  });
+  await assert.rejects(source.getSnapshot({ signal: controller.signal }), {
+    name: 'AbortError',
+  });
+});
+
+test('[perimeters-001] a live signal accepts a complete source response', async () => {
+  const signal = new AbortController().signal;
+  const source = createWfigsPerimeterSource({
+    fetchImpl: async () => Response.json({ rows: [] }),
+  });
+  assert.deepEqual(await source.getSnapshot({ signal }), []);
 });
