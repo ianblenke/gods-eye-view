@@ -79,6 +79,7 @@ export function createOshLayer({
   detailHost = null,
   panelHost = null,
   videoHost = null,
+  commandView = null,
   createPlayer = createVideoPlayer,
   createView = createVideoView,
   documentImpl = globalThis.document,
@@ -189,6 +190,7 @@ export function createOshLayer({
     _selectedId = null;
     _selectedFeatureId = null;
     stopPolling();
+    commandView?.clear();
     writeDetail(null);
   }
 
@@ -432,6 +434,14 @@ export function createOshLayer({
     _selectedId = systemId;
     _selectedFeatureId = featureId;
     stopPolling();
+    if (systemId) {
+      const record =
+        _systemRecords.get(systemId) || _placedSystemById.get(systemId);
+      void commandView?.show({
+        systemId,
+        systemName: record?.name || record?.streamSystemName || systemId,
+      });
+    } else commandView?.clear();
     if (systemId) {
       _pollTimer = setInterval(() => {
         void pollSelected();
@@ -849,6 +859,7 @@ export function createOshLayer({
       _request = null;
       _enabled = false;
       clearSelection();
+      commandView?.clear();
       removeClickHandler();
       if (_dataSource && viewer) {
         viewer.dataSources.remove(_dataSource, true);

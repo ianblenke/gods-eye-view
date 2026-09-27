@@ -45,6 +45,16 @@
   display: none;
 }
 
+#osh-panel-control[hidden] {
+  display: none;
+}
+
+#osh-panel-control button,
+#osh-panel-control input,
+#osh-panel-control select {
+  margin: 4px;
+}
+
 /* A host with no content takes no room, so it leaves no gap. */
 .osh-panel > :empty {
   display: none;
