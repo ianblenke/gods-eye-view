@@ -47,7 +47,7 @@ const catalog = [
   },
 ];
 
-test('incidents resolve by exact normalized title to a node link', () => {
+test('[perimeters-007] incidents resolve by exact normalized title to a node link', () => {
   // Title formats vary: with/without a 'Fire' suffix, with/without a year
   // prefix ('2026 Coleman Creek'). All normalize to the WFIGS name.
   assert.equal(
@@ -81,7 +81,7 @@ test('incidents resolve by exact normalized title to a node link', () => {
   );
 });
 
-test('a unique candidate in the wrong state is rejected, not linked', () => {
+test('[perimeters-007] a unique candidate in the wrong state is rejected, not linked', () => {
   // The catalog is all-time and nationwide: a current Arizona "Willow"
   // must not link to the only "Willow Fire" on file when it's a Montana
   // incident.
@@ -102,7 +102,7 @@ test('a unique candidate in the wrong state is rejected, not linked', () => {
   );
 });
 
-test('ambiguous titles disambiguate by state, then newest id', () => {
+test('[perimeters-007] ambiguous titles disambiguate by state, then newest id', () => {
   const twoCoyotes = [
     {
       incident_id: '100',
@@ -142,7 +142,7 @@ test('ambiguous titles disambiguate by state, then newest id', () => {
   );
 });
 
-test('a complex member falls back to its complex page', () => {
+test('[perimeters-007] a complex member falls back to its complex page', () => {
   assert.equal(
     findInciwebLink(catalog, {
       name: 'Crosswhite',
@@ -170,7 +170,7 @@ test('a complex member falls back to its complex page', () => {
   );
 });
 
-test('a node link exposes its publication id', () => {
+test('[perimeters-007] a node link exposes its publication id', () => {
   assert.equal(
     inciwebNodeId('https://inciweb.wildfire.gov/node/329195'),
     '329195',
@@ -179,7 +179,7 @@ test('a node link exposes its publication id', () => {
   assert.equal(inciwebNodeId(null), null);
 });
 
-test('publication currency accepts pages created around or after discovery', () => {
+test('[perimeters-008] publication currency accepts pages created around or after discovery', () => {
   const day = 24 * 3600000;
   const discovery = 1785000000000;
   // Created shortly before discovery (page opened as the fire started).
@@ -224,7 +224,7 @@ test('publication currency accepts pages created around or after discovery', () 
   );
 });
 
-test('the publication source fetches timestamps and honors cancellation', async () => {
+test('[perimeters-009] the publication source fetches timestamps and honors cancellation', async () => {
   let requested;
   const source = createInciwebPublicationSource({
     fetchImpl: async (url) => {
@@ -283,7 +283,7 @@ test('the publication source fetches timestamps and honors cancellation', async 
   );
 });
 
-test('the index source requests the same-origin full catalog', async () => {
+test('[perimeters-009] the index source requests the same-origin full catalog', async () => {
   let request;
   const source = createInciwebIndexSource({
     fetchImpl: async (url, options) => {
@@ -302,7 +302,7 @@ test('the index source requests the same-origin full catalog', async () => {
   assert.equal(request.options.body, undefined);
 });
 
-test('the index source rejects failures and honors cancellation', async () => {
+test('[perimeters-009] the index source rejects failures and honors cancellation', async () => {
   const failing = createInciwebIndexSource({
     fetchImpl: async () => ({ ok: false, status: 503 }),
   });
@@ -330,5 +330,117 @@ test('the index source rejects failures and honors cancellation', async () => {
   });
   await assert.rejects(cancelled.getIndex({ signal: abort.signal }), {
     name: 'AbortError',
+  });
+});
+
+test('[perimeters-007] a match with no id has no node link', () => {
+  assert.equal(
+    resolveInciwebNodeLink([{ incident_title: 'Test', incident_id: null }], {
+      name: 'Test',
+      state: null,
+    }),
+    null,
+  );
+  assert.equal(
+    resolveInciwebNodeLink(
+      [{ incident_title: 'Test', incident_id: '1', tau: 'US' }],
+      { name: 'Test', state: 'US-AZ' },
+    ),
+    null,
+  );
+});
+
+test('[perimeters-008] a page with no useful dates is old', () => {
+  assert.equal(
+    isCurrentPublication(
+      { createdMs: null, changedMs: null },
+      { discoveredTime: null, nowMs: 0 },
+    ),
+    false,
+  );
+});
+
+test('[perimeters-009] default InciWeb sources call the host fetch', async () => {
+  const oldFetch = globalThis.fetch;
+  const paths = [];
+  globalThis.fetch = async (url) => {
+    paths.push(url);
+    return Response.json(
+      url.endsWith('/index') ? [] : { createdMs: 1, changedMs: 2 },
+    );
+  };
+  try {
+    assert.deepEqual(await createInciwebIndexSource().getIndex(), []);
+    assert.deepEqual(
+      await createInciwebPublicationSource().getPublication('2'),
+      { createdMs: 1, changedMs: 2 },
+    );
+    assert.deepEqual(paths, [
+      '/api/fire-perimeters/inciweb/index',
+      '/api/fire-perimeters/inciweb/publication/2',
+    ]);
+  } finally {
+    globalThis.fetch = oldFetch;
+  }
+});
+
+test('[perimeters-009] an abort after each InciWeb read rejects', async () => {
+  for (const [create, call, payload] of [
+    [createInciwebIndexSource, 'getIndex', '[]'],
+    [createInciwebPublicationSource, 'getPublication', '{}'],
+  ]) {
+    const controller = new AbortController();
+    const source = create({
+      fetchImpl: async () => ({
+        ok: true,
+        headers: new Headers(),
+        text: async () => {
+          controller.abort();
+          return payload;
+        },
+      }),
+    });
+    await assert.rejects(
+      call === 'getIndex'
+        ? source.getIndex({ signal: controller.signal })
+        : source.getPublication('2', { signal: controller.signal }),
+      { name: 'AbortError' },
+    );
+  }
+});
+
+test('[perimeters-007] the newest duplicate id wins in either order', () => {
+  const rows = [
+    { incident_title: 'A Fire', incident_id: '9', tau: 'AZ' },
+    { incident_title: 'A Fire', incident_id: '2', tau: 'AZ' },
+  ];
+  assert.equal(
+    resolveInciwebNodeLink(rows, { name: 'A', state: 'US-AZ' }),
+    'https://inciweb.wildfire.gov/node/9',
+  );
+});
+
+test('[perimeters-008] a recent page with no origin date is current', () => {
+  assert.equal(
+    isCurrentPublication(
+      { createdMs: null, changedMs: 500 },
+      { discoveredTime: null, nowMs: 500 },
+    ),
+    true,
+  );
+});
+
+test('[perimeters-009] both sources accept a live signal', async () => {
+  const signal = new AbortController().signal;
+  const index = createInciwebIndexSource({
+    fetchImpl: async () => Response.json([]),
+  });
+  const page = createInciwebPublicationSource({
+    fetchImpl: async () => Response.json({ createdMs: 1 }),
+  });
+  assert.deepEqual(await index.getIndex({ signal }), []);
+  assert.deepEqual(await page.getPublication('1', { signal }), {
+    createdMs: 1,
+    changedMs: null,
   });
 });

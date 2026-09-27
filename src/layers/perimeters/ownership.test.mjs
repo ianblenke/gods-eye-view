@@ -7,7 +7,10 @@ function harness(
   {
     pick = () => null,
     inciwebIndex = null,
+    inciwebGetIndex = null,
+    pointerFree = () => true,
     cardHit = () => null,
+    allowOpen = true,
     publication = async () => ({
       createdMs: 1757000000000,
       changedMs: 1757900000000,
@@ -60,12 +63,14 @@ function harness(
       registerPickOwner: (layerId, predicate) => owners.set(layerId, predicate),
       unregisterPickOwner: (layerId) => owners.delete(layerId),
     },
-    pointer: { isPointerFree: () => true },
-    inciwebSource: inciwebIndex
-      ? { getIndex: async () => inciwebIndex }
-      : { getIndex: async () => [] },
+    pointer: { isPointerFree: pointerFree },
+    inciwebSource: inciwebGetIndex
+      ? { getIndex: inciwebGetIndex }
+      : inciwebIndex
+        ? { getIndex: async () => inciwebIndex }
+        : { getIndex: async () => [] },
     inciwebPublications: { getPublication: publication },
-    openExternal: (url) => opened.push(url),
+    openExternal: allowOpen ? (url) => opened.push(url) : null,
   });
   layer.init(viewer);
   layer.enable(viewer);
@@ -97,7 +102,7 @@ const row = {
   polygons: [[ring]],
 };
 
-test('each perimeter polygon renders as one filled entity with its fire line', async () => {
+test('[perimeters-010] each perimeter polygon renders as one filled entity with its fire line', async () => {
   const h = harness({
     getSnapshot: async () => [
       row,
@@ -115,7 +120,7 @@ test('each perimeter polygon renders as one filled entity with its fire line', a
   assert.equal(h.layer.getStats().count, 2);
 });
 
-test('late refresh cannot publish after disable or destroy', async () => {
+test('[perimeters-012] late refresh cannot publish after disable or destroy', async () => {
   for (const action of ['disable', 'destroy']) {
     let resolve, signal;
     const h = harness({
@@ -137,7 +142,7 @@ test('late refresh cannot publish after disable or destroy', async () => {
   }
 });
 
-test('clicking a perimeter publishes its incident card; empty space clears it', async () => {
+test('[perimeters-013] clicking a perimeter publishes its incident card; empty space clears it', async () => {
   let pickResult = null;
   const h = harness(
     { getSnapshot: async () => [row] },
@@ -174,7 +179,7 @@ test('clicking a perimeter publishes its incident card; empty space clears it', 
   assert.equal(h.overlay.entries.get('fire-perimeters')?.length ?? 0, 0);
 });
 
-test('disable removes the click handler, pick ownership, and any card', async () => {
+test('[perimeters-012] disable removes the click handler, pick ownership, and any card', async () => {
   const h = harness(
     { getSnapshot: async () => [row] },
     { pick: () => ({ id: 'fire-perimeter:2026-NMGNF-000123:0' }) },
@@ -187,7 +192,7 @@ test('disable removes the click handler, pick ownership, and any card', async ()
   assert.equal(h.overlay.entries.has('fire-perimeters'), false);
 });
 
-test('a refresh that drops the selected incident also drops its card', async () => {
+test('[perimeters-013] a refresh that drops the selected incident also drops its card', async () => {
   let rows = [row];
   const h = harness(
     { getSnapshot: async () => rows },
@@ -201,7 +206,7 @@ test('a refresh that drops the selected incident also drops its card', async () 
   assert.equal(h.overlay.entries.get('fire-perimeters')?.length ?? 0, 0);
 });
 
-test('a matched incident card carries the InciWeb line and click-through', async () => {
+test('[perimeters-014] a matched incident card carries the InciWeb line and click-through', async () => {
   const inciwebIndex = [
     {
       incident_id: '329300',
@@ -243,7 +248,7 @@ test('a matched incident card carries the InciWeb line and click-through', async
   );
 });
 
-test('an unmatched incident renders no InciWeb line and card clicks stay inert', async () => {
+test('[perimeters-014] an unmatched incident renders no InciWeb line and card clicks stay inert', async () => {
   let cardHitResult = null;
   const h = harness(
     { getSnapshot: async () => [row] },
@@ -267,7 +272,7 @@ test('an unmatched incident renders no InciWeb line and card clicks stay inert',
   assert.equal(h.overlay.entries.get('fire-perimeters').length, 1);
 });
 
-test('a complex member resolves to its complex page from the catalog', async () => {
+test('[perimeters-014] a complex member resolves to its complex page from the catalog', async () => {
   const h = harness(
     { getSnapshot: async () => [row] },
     {
@@ -290,7 +295,7 @@ test('a complex member resolves to its complex page from the catalog', async () 
   assert.equal(entries[0].details.at(-1), 'InciWeb ↗ · click card to open');
 });
 
-test('a stale or unverifiable publication yields no link', async () => {
+test('[perimeters-014] a stale or unverifiable publication yields no link', async () => {
   const inciwebIndex = [
     {
       incident_id: '100',
@@ -331,7 +336,7 @@ test('a stale or unverifiable publication yields no link', async () => {
   }
 });
 
-test('a hanging InciWeb index fetch never blocks the perimeter refresh', async () => {
+test('[perimeters-016] a hanging InciWeb index fetch never blocks the perimeter refresh', async () => {
   const h = harness({ getSnapshot: async () => [row] }, { inciwebIndex: null });
   // Replace the index source with one that never resolves.
   h.layer.destroy(h.viewer);
@@ -377,7 +382,7 @@ test('a hanging InciWeb index fetch never blocks the perimeter refresh', async (
   layer.destroy(viewer);
 });
 
-test('an InciWeb outage never breaks the perimeter refresh', async () => {
+test('[perimeters-016] an InciWeb outage never breaks the perimeter refresh', async () => {
   const h = harness({ getSnapshot: async () => [row] });
   const failing = createFirePerimetersLayer({
     source: { getSnapshot: async () => [row] },
@@ -417,7 +422,7 @@ test('an InciWeb outage never breaks the perimeter refresh', async () => {
   h.layer.destroy(h.viewer);
 });
 
-test('analyst records expose incident facts without geometry payloads', async () => {
+test('[perimeters-011] analyst records expose incident facts without geometry payloads', async () => {
   const h = harness({ getSnapshot: async () => [row] });
   await h.layer.update(h.viewer);
   const records = h.layer.getAnalystRecords();
@@ -438,7 +443,7 @@ test('analyst records expose incident facts without geometry payloads', async ()
   assert.equal('polygons' in records[0], false);
 });
 
-test('unchanged snapshots retain entity identity even if source ordering changes', async () => {
+test('[perimeters-011] unchanged snapshots retain entity identity even if source ordering changes', async () => {
   let rows = [row, { ...row, stableId: 'other' }];
   const h = harness({ getSnapshot: async () => rows });
   await h.layer.update();
@@ -475,7 +480,7 @@ test('unchanged snapshots retain entity identity even if source ordering changes
   h.layer.destroy();
 });
 
-test('containment legend uses the existing thresholds, colours and incident counts', async () => {
+test('[perimeters-010] containment legend uses the existing thresholds, colours and incident counts', async () => {
   const values = [null, -1, 0, 0.5, 49.9, 50, 99.9, 100, 101];
   const h = harness({
     getSnapshot: async () =>
@@ -514,7 +519,7 @@ test('containment legend uses the existing thresholds, colours and incident coun
 });
 
 for (const action of ['disable', 'destroy', 'selection']) {
-  test(`incident-link verification aborts on ${action} and ignores late completion`, async () => {
+  test(`[perimeters-015] incident-link verification aborts on ${action} and ignores late completion`, async () => {
     let finish, signal;
     let pick = { id: `fire-perimeter:${row.stableId}:0` };
     const h = harness(
@@ -552,3 +557,222 @@ for (const action of ['disable', 'destroy', 'selection']) {
     if (action !== 'destroy') h.layer.destroy();
   });
 }
+
+test('[perimeters-012] the layer checks its source and one init', () => {
+  assert.throws(() => createFirePerimetersLayer(), TypeError);
+  const h = harness({ getSnapshot: async () => [] });
+  assert.equal(h.layer.id, 'fire-perimeters');
+  assert.equal(h.layer.updateInterval, 300000);
+  assert.throws(() => h.layer.init(h.viewer), /already initialized/);
+  h.layer.destroy();
+});
+
+test('[perimeters-011] analyst records obey a limit and hidden state', async () => {
+  const h = harness({
+    getSnapshot: async () => [row, { ...row, stableId: 'second' }],
+  });
+  assert.deepEqual(h.layer.getAnalystRecords(), []);
+  assert.equal(await h.layer.update(), true);
+  assert.equal(h.layer.getAnalystRecords(1).length, 1);
+  assert.equal(h.layer.getAnalystRecords(Infinity).length, 2);
+  h.layer.disable();
+  assert.deepEqual(h.layer.getAnalystRecords(), []);
+  h.layer.destroy();
+});
+
+test('[perimeters-010] a polygon hole has its own ring', async () => {
+  const h = harness({
+    getSnapshot: async () => [{ ...row, polygons: [[ring, ring]] }],
+  });
+  assert.equal(await h.layer.update(), true);
+  assert.equal(
+    h.sources[0].entities.values[0].polygon.hierarchy.getValue().holes.length,
+    1,
+  );
+  h.layer.destroy();
+});
+
+test('[perimeters-012] a failed request reports its error', async () => {
+  const h = harness({
+    getSnapshot: async () => {
+      throw new Error('feed down');
+    },
+  });
+  assert.equal(await h.layer.update(), false);
+  assert.equal(h.layer.getStats().error, 'feed down');
+  h.layer.disable();
+  assert.equal(await h.layer.update(), false);
+  h.layer.destroy();
+});
+
+test('[perimeters-014] a link card has an activation action', async () => {
+  const h = harness(
+    { getSnapshot: async () => [row] },
+    {
+      pick: () => ({ id: `fire-perimeter:${row.stableId}:0` }),
+      inciwebIndex: [
+        { incident_id: '42', incident_title: row.name, tau: 'NM' },
+      ],
+      publication: async () => ({
+        createdMs: row.discoveredTime,
+        changedMs: row.updatedTime,
+      }),
+    },
+  );
+  assert.equal(await h.layer.update(), true);
+  h.clicks.handler({ position: { x: 1, y: 1 } });
+  await new Promise(setImmediate);
+  const card = h.overlay.entries.get('fire-perimeters')[0];
+  assert.equal(card.activate(), true);
+  assert.deepEqual(h.opened, ['https://inciweb.wildfire.gov/node/42']);
+  h.layer.destroy();
+});
+
+test('[perimeters-013] a card without an opener stays inert', async () => {
+  const h = harness(
+    { getSnapshot: async () => [row] },
+    {
+      allowOpen: false,
+      pick: () => ({ id: `fire-perimeter:${row.stableId}:0` }),
+      inciwebIndex: [
+        { incident_id: '42', incident_title: row.name, tau: 'NM' },
+      ],
+      publication: async () => ({
+        createdMs: row.discoveredTime,
+        changedMs: row.updatedTime,
+      }),
+    },
+  );
+  assert.equal(await h.layer.update(), true);
+  h.clicks.handler({ position: { x: 1, y: 1 } });
+  await new Promise(setImmediate);
+  assert.equal(h.overlay.entries.get('fire-perimeters')[0].interactive, false);
+  h.layer.destroy();
+});
+
+test('[perimeters-012] a source error with no message has a default text', async () => {
+  const h = harness({
+    getSnapshot: async () => {
+      throw {};
+    },
+  });
+  assert.equal(await h.layer.update(), false);
+  assert.equal(h.layer.getStats().error, 'Perimeter source unavailable');
+  h.layer.destroy();
+});
+
+test('[perimeters-011] an equal snapshot republishes the selected card', async () => {
+  const h = harness(
+    { getSnapshot: async () => [row] },
+    { pick: () => ({ id: `fire-perimeter:${row.stableId}:0` }) },
+  );
+  assert.equal(await h.layer.update(), true);
+  h.clicks.handler({ position: { x: 1, y: 1 } });
+  const first = h.overlay.entries.get('fire-perimeters');
+  assert.equal(await h.layer.update(), true);
+  assert.notEqual(h.overlay.entries.get('fire-perimeters'), first);
+  h.layer.destroy();
+});
+
+test('[perimeters-012] a layer with no card service draws its rows', async () => {
+  const viewer = { dataSources: { add() {}, remove() {} } };
+  const layer = createFirePerimetersLayer({
+    source: { getSnapshot: async () => [row] },
+  });
+  layer.init(viewer);
+  layer.enable();
+  assert.equal(await layer.update(), true);
+  assert.equal(layer.getStats().count, 1);
+  layer.destroy();
+});
+
+test('[perimeters-014] a late catalog result can add a link to the selected card', async () => {
+  let release;
+  const h = harness(
+    { getSnapshot: async () => [row] },
+    {
+      pick: () => ({ id: `fire-perimeter:${row.stableId}:0` }),
+      inciwebGetIndex: () =>
+        new Promise((resolve) => {
+          release = resolve;
+        }),
+      publication: async () => ({
+        createdMs: row.discoveredTime,
+        changedMs: row.updatedTime,
+      }),
+    },
+  );
+  assert.equal(await h.layer.update(), true);
+  h.clicks.handler({ position: { x: 1, y: 1 } });
+  release([{ incident_id: '42', incident_title: row.name, tau: 'NM' }]);
+  await new Promise(setImmediate);
+  assert.equal(h.overlay.entries.get('fire-perimeters')[0].interactive, true);
+  h.layer.destroy();
+});
+
+test('[perimeters-014] a pending page check starts only once', async () => {
+  let checks = 0;
+  const h = harness(
+    { getSnapshot: async () => [row] },
+    {
+      pick: () => ({ id: `fire-perimeter:${row.stableId}:0` }),
+      inciwebIndex: [
+        { incident_id: '42', incident_title: row.name, tau: 'NM' },
+      ],
+      publication: async () => {
+        checks++;
+        return new Promise(() => {});
+      },
+    },
+  );
+  assert.equal(await h.layer.update(), true);
+  await new Promise(setImmediate);
+  h.clicks.handler({ position: { x: 1, y: 1 } });
+  assert.equal(await h.layer.update(), true);
+  assert.equal(checks, 1);
+  h.layer.destroy();
+});
+
+test('[perimeters-013] an unknown perimeter pick clears the card', async () => {
+  let pick = { id: `fire-perimeter:${row.stableId}:0` };
+  const h = harness({ getSnapshot: async () => [row] }, { pick: () => pick });
+  assert.equal(await h.layer.update(), true);
+  h.clicks.handler({ position: { x: 1, y: 1 } });
+  pick = { id: 'fire-perimeter:other:0' };
+  h.clicks.handler({ position: { x: 1, y: 1 } });
+  assert.equal(h.overlay.entries.get('fire-perimeters').length, 0);
+  h.layer.destroy();
+});
+
+test('[perimeters-013] a busy pointer keeps the card state', async () => {
+  const h = harness(
+    { getSnapshot: async () => [row] },
+    {
+      pick: () => ({ id: `fire-perimeter:${row.stableId}:0` }),
+      pointerFree: () => false,
+    },
+  );
+  assert.equal(await h.layer.update(), true);
+  h.clicks.handler({ position: { x: 1, y: 1 } });
+  assert.equal(h.overlay.entries.has('fire-perimeters'), false);
+  h.layer.destroy();
+});
+
+test('[perimeters-012] a second update aborts a first failed request', async () => {
+  let rejectFirst;
+  let calls = 0;
+  const h = harness({
+    getSnapshot: () =>
+      ++calls === 1
+        ? new Promise((_resolve, reject) => {
+            rejectFirst = reject;
+          })
+        : Promise.resolve([row]),
+  });
+  const first = h.layer.update();
+  assert.equal(await h.layer.update(), true);
+  rejectFirst(new Error('late'));
+  assert.equal(await first, false);
+  assert.equal(h.layer.getStats().count, 1);
+  h.layer.destroy();
+});
