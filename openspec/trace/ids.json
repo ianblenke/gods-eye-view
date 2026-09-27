@@ -2099,31 +2099,6 @@
     "since": "2026-09-16",
     "change": "simplify-ledger"
   },
-  "startup-view-001": {
-    "hash": "cf534ed0f53b8f67a2ac53a244b2ed7b06305b30c5fde45fe3d6ed4bc7e629f6",
-    "since": "2026-09-27",
-    "change": "set-startup-view"
-  },
-  "startup-view-002": {
-    "hash": "9a70acb685b8435a647d1234c43b3d790dcb657fac3e62d8585e6a73d57f1d65",
-    "since": "2026-09-27",
-    "change": "set-startup-view"
-  },
-  "startup-view-003": {
-    "hash": "eeda5ffb5c3628fbba4198ac88b67ce47a55f2c43595419861460d5549cabac6",
-    "since": "2026-09-27",
-    "change": "set-startup-view"
-  },
-  "startup-view-004": {
-    "hash": "b39373e7d1cff86941bc299ea357f6fc455b29510a500be3ea4d05b4daa7092a",
-    "since": "2026-09-27",
-    "change": "set-startup-view"
-  },
-  "startup-view-005": {
-    "hash": "55ea9c563cd3c102cf5d972dc27ac817aa9311020fc3aaaf9effdfe475a0f006",
-    "since": "2026-09-27",
-    "change": "set-startup-view"
-  },
   "ste-lint-001": {
     "hash": "6cf27754c7f72012bb06e5ce4e6db5767612760d487b71d51aa7a7f4fb4a933d",
     "since": "2026-09-14",
