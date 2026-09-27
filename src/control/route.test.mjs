@@ -311,14 +311,20 @@ test('[osh-control-027] Cancel a redirected response body', async () => {
 
 test('[osh-control-027] Stop a command response body at the 15 second limit', async () => {
   const realSetTimeout = globalThis.setTimeout;
+  const realClearTimeout = globalThis.clearTimeout;
   mock.timers.enable({ apis: ['setTimeout'] });
+  let guard;
   try {
     const response = new Response(new ReadableStream({ start(controller) { controller.enqueue(new Uint8Array([123])); } }), { status: 201 });
     const promise = oshPostCommand(async () => response, new URL('https://fixture.invalid/api/controlstreams/cs-fixture-one/commands'), { headers: {}, body: { parameters: { rtl: true } } });
     await Promise.resolve();
     mock.timers.tick(15_000);
-    await assert.rejects(Promise.race([promise, new Promise((_resolve, reject) => realSetTimeout(() => reject(new Error('no abort')), 100))]), { name: 'TimeoutError' });
-  } finally { mock.timers.reset(); }
+    const guardPromise = new Promise((_resolve, reject) => { guard = realSetTimeout(() => reject(new Error('no abort')), 100); });
+    await assert.rejects(Promise.race([promise, guardPromise]), { name: 'TimeoutError' });
+  } finally {
+    realClearTimeout(guard);
+    mock.timers.reset();
+  }
 });
 
 test('[osh-control-027] Stop a command response body above 64 KiB', async () => {
