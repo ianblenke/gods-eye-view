@@ -1,0 +1,2 @@
+Verdict: FAIL
+- [ ] F1 critical src/sources/live/contract.test.mjs:44 At commit b62ef5e63986b350604ffebcfbe95ba8aba80a9e, the test supplies an external signal, so it does not test the scenario’s “no external abort signal” condition. Omit the signal option and assert that the fetch function receives no signal, or revise the scenario to specify an active signal.

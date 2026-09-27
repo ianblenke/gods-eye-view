@@ -1,0 +1,2 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-09-27-backfill-live-sources/specs/live-sources/spec.md:4 At commit `b62ef5e63986b350604ffebcfbe95ba8aba80a9e`, “with no external abort signal” conflicts with the test, which passes a live signal. The same phrase appears in the scenario and the main spec. Write: “When a fetch function rejects with an `AbortError` and no external abort signal aborts the request, `readResponse()` MUST reject with the same error object that the fetch function gave.” Use that condition in the scenario too.
