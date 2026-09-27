@@ -1473,15 +1473,15 @@
     },
     "src/app/controls.js": {
       "loaded": false,
-      "lines": 51,
+      "lines": 50,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 51,
+        "lines": 50,
         "branches": null,
         "functions": null
       },
-      "sha": "078aebd7983cff3d5c6973d74d36deb486140e54ab130ce15b4bffb3d68a7d09",
+      "sha": "8ef19f1cd03a8f69d7317efcdcd006c0f02a6fc8568a91dbde68f9e3605c7292",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -1777,11 +1777,11 @@
       "branches": 0,
       "functions": 2,
       "totals": {
-        "lines": 82,
-        "branches": 3,
-        "functions": 4
+        "lines": 144,
+        "branches": 12,
+        "functions": 8
       },
-      "sha": "44a93bc244a0f438b874a1606c4fbd2de5df82b03e88e5d3793cf253f0884649",
+      "sha": "763e7d6df3fc5948b5fd8b2035cbcc83ed09e803e14e050b76ff06541c786139",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
