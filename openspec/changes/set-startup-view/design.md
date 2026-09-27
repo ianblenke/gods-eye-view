@@ -7,7 +7,7 @@ The share link parser uses the URL hash. A valid latitude and longitude set shar
 
 - Set the default camera pose to longitude 120.6485, latitude 24.18, and height 217 m.
 - Use heading 0, pitch -35 degrees, and roll 0 for the final view.
-- Keep share state above the default flight in the choice of view.
+- Give the share view priority over the default flight.
 
 ## Non-goals
 
@@ -29,11 +29,11 @@ The owner gave roll 360 degrees. That angle is the same as zero degrees. The con
 `startApplicationView()` in `src/camera.js` selects the start flight from `hasShareState`.
 It sets the loader text and gives the flight stop function to `defer` when no share state exists.
 `src/app/controls.js` calls this function with the viewer, share state, loader, and `defer`.
-`src/app/startView.test.mjs` calls this function with a fake viewer, loader, and `defer`.
+`src/app/startView.test.mjs` imports `src/app/controls.js` and runs its call of `startApplicationView()`.
+The test gives fake controls, a fake scene, and a fake cloud controller to `createApplicationControls()`.
+`src/standalone/controls.js` gives `StyleManager` to `createApplicationControls()`.
 
-Host Node cannot import the full controls module because the installed `mgrs` module lacks a named export.
-`controls.js` still has no test that imports it (ledger entry `loaded: false`).
-No test runs its one call of `startApplicationView`.
+`controls-mgrs-import`: Node 26 cannot import `StyleManager` from `src/ui/composition.js`, so no test imports `src/standalone/controls.js`.
 No old test needs an edit. `src/app/startupCamera.test.mjs` stays as it is.
 
 ### Check each result
@@ -44,7 +44,7 @@ The start view test records the call to the camera, the loader text, and the sto
 ## Gate checks
 
 - The trace gate checks five IDs and the assert calls in `src/app/startView.test.mjs`.
-- The coverage gate checks `src/camera.js`. The old `src/app/controls.js` gap stays. No test imports it.
+- The coverage gate checks `src/camera.js` and `src/app/controls.js`. The lead reports the ledger effect.
 - The STE lint checks this change and its tagged test names.
 - The host tests and mutation log check each scenario. The host uses Node 26; the full gate uses Node 24.
 
