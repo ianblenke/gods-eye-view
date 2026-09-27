@@ -185,8 +185,12 @@ test('[location-presets-004] a click on the Taiwan pill flies to the island view
     camera: {
       positionCartographic: { longitude: 0, latitude: 0, height: 1200 },
       cancelFlight() {},
-      flyTo(options) { flights.push(options); },
-      flyToBoundingSphere(sphere, options) { flights.push({ sphere, ...options }); },
+      flyTo(options) {
+        flights.push(options);
+      },
+      flyToBoundingSphere(sphere, options) {
+        flights.push({ sphere, ...options });
+      },
       lookAt() {},
       lookAtTransform() {},
     },
@@ -210,7 +214,9 @@ test('[location-presets-004] a click on the Taiwan pill flies to the island view
   assert.deepEqual(ids, ['taiwan']);
   assert.equal(flights.length, 1);
   assert.equal(flights[0].offset.range, 700000);
-  assert.ok(Math.abs(Cesium.Math.toDegrees(flights[0].offset.pitch) + 60) < 1e-8);
+  assert.ok(
+    Math.abs(Cesium.Math.toDegrees(flights[0].offset.pitch) + 60) < 1e-8,
+  );
   assert.equal(Cesium.Math.toDegrees(flights[0].offset.heading), 0);
   const point = Cesium.Cartographic.fromCartesian(result.targetPosition);
   assert.ok(Math.abs(Cesium.Math.toDegrees(point.latitude) - 23.7) < 1e-8);
