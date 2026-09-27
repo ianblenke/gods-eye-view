@@ -65,5 +65,5 @@
 
 - [x] 3.1 Run the ratchet command.
 - [x] 3.2 Run the full gates.
-- [ ] 3.3 Run the two review agents.
-- [ ] 3.4 Write review.md with their results.
+- [x] 3.3 Run the two review agents.
+- [x] 3.4 Write review.md with their results.
