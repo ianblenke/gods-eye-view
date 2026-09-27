@@ -81,39 +81,75 @@ When the route is off, it sends zero upstream requests. `GET /api/control/osh/ta
 
 ### D3 The target allowlist
 
-The format of the value is a comma list of pairs:
+D9 found that one system has many control streams, one for each command, not one control stream for the whole system. The format changes from a pair to a single id:
 
 ```
-OSH_CONTROL_TARGETS=<system-id>:<controlstream-id>,<system-id>:<controlstream-id>
+OSH_CONTROL_TARGETS=<system-id>,<system-id>
 ```
 
-Each pair is one target. Each id must match `OSH_ID_PATTERN` of `server/providers/osh/ids.js`, the pattern of `osh-020`. The pattern has no `:` and no `,`, so a separator cannot occur inside an id.
+Each id must match `OSH_ID_PATTERN` of `server/providers/osh/ids.js`, the pattern of `osh-020`. The pattern has no `,`, so a separator cannot occur inside an id.
 
 The parser removes white space at the two ends of each entry. When one entry is bad, the parser refuses the full list with the reason `bad_targets`. Its warning names only the position of that entry. When a system id occurs two times, the parser also refuses the full list.
 
-Each system has one control stream in the list. D9 can show that a drone has more than one control stream. The later round then changes this format in its spec, before it writes code.
+The browser sends a system id and a command name. It never sends a control stream id. The targets route answers the system ids of the list. For each system, it also gives the D4 command names that system's control streams support.
 
-The browser never sends a control stream id. It sends a system id, and the server finds the paired control stream in the list. The targets route answers the system ids of the list, and for each one the commands of the table (D4). It never answers a control stream id.
+Before the first command to a target, the server reads the control streams of that system with one GET, `systems/<system-id>/controlstreams`. For each control stream, it reads the schema with one more GET. It matches the schema's command name (the field `parametersSchema.name`) to a name in the table of D4. This builds a map from a command name to a control-stream id, for that one system. The server keeps the map in memory until the process stops. The server refuses a command with the reason `command_not_found` when the system has no control stream whose schema name matches.
 
-Before the first command to a target, the server reads the record of the control stream with one GET. The read goes through `oshGet()` with the command account. The server refuses the target, with the reason `target_mismatch`, when the record does not name the paired system as its parent. D9 records the field that names the parent. The server keeps the result for each target until the process stops.
-
-The repository holds no real id. `.env.example` shows the format only with the placeholder `<system-id>:<controlstream-id>` in a comment. Each new key in `.env.example` has an empty value. Each test fixture uses ids that start with `sys-fixture-` or `cs-fixture-`.
+The repository holds no real id. `.env.example` shows the format only with the placeholder `<system-id>` in a comment. Each new key in `.env.example` has an empty value. Each test fixture uses system ids that start with `sys-fixture-` and control-stream ids that start with `cs-fixture-`.
 
 ### D4 The command table
 
-`commands.js` holds the frozen table `OSH_CONTROL_COMMANDS`. Each entry names one command. For each field of that command, the entry gives the type and the allowed values. This example shows the shape with placeholder names only, because D9 has not found the real names:
+D9 found 11 command names on the SITL fleet. The owner picked 8 for the first table. `mavShellControl` sends a free text shell command to the platform. The owner set it aside for a later, separate review, with its own safeguards.
+
+`UnmannedControlMission` and `QGroundControlPlan` each upload a full mission. The owner set both aside too. Their shape does not fit the flat field model below. One is a nested list of waypoint records. The other is one large text blob. Each of these three needs its own later design.
+
+`commands.js` holds the frozen table `OSH_CONTROL_COMMANDS`, with the real names and fields that D9 found:
 
 ```js
 export const OSH_CONTROL_COMMANDS = Object.freeze({
-  '<command-a>': { fields: {} },
-  '<command-b>': {
-    fields: { '<field-x>': { type: 'number', min: 0, max: 100, unit: 'm' } },
+  mavEnableLocationControl: {
+    fields: { EnableLocationControl: { type: 'boolean' } },
   },
-  '<command-c>': {
-    fields: { '<field-y>': { type: 'token', values: ['<value-1>', '<value-2>'] } },
+  mavControl: {
+    fields: {
+      Latitude: { type: 'number', min: -90, max: 90, unit: 'deg' },
+      Longitude: { type: 'number', min: -180, max: 180, unit: 'deg' },
+      AltitudeAGL: { type: 'number', min: 1, max: 120, unit: 'm' },
+      returnToStart: { type: 'boolean' },
+      hoverSeconds: { type: 'number', min: 0, max: 600, unit: 's' },
+      heading: { type: 'number', min: 0, max: 360, unit: 'deg' },
+    },
+  },
+  offboardControl: {
+    fields: {
+      vx: { type: 'number', min: -10, max: 10, unit: 'm/s' },
+      vy: { type: 'number', min: -10, max: 10, unit: 'm/s' },
+      vz: { type: 'number', min: -5, max: 5, unit: 'm/s' },
+      yawRate: { type: 'number', min: -90, max: 90, unit: 'deg/s' },
+    },
+  },
+  mavRTLControl: {
+    fields: { rtl: { type: 'boolean' } },
+  },
+  mavTakeoffControl: {
+    fields: { TakeoffAltitudeAGL: { type: 'number', min: 1, max: 120, unit: 'm' } },
+  },
+  mavPauseMissionControl: {
+    fields: { Resume: { type: 'boolean' } },
+  },
+  mavFlightModeControl: {
+    fields: { FlightMode: { type: 'number', min: 0, max: 25 } },
+  },
+  mavLandingControl: {
+    fields: { disarm: { type: 'boolean' } },
   },
 });
 ```
+
+Two notes on this table, both to check with the owner before the first live command:
+
+- The schema of the owner's server gives a unit for each number field, but no range and no enum. Each `min`/`max` above is a first, careful guess by the lead, not a value the schema publishes. The owner can widen a range after a real flight test.
+- The schema marks `TakeoffAltitudeAGL` as unitless, but its name matches the pattern of `mavControl`'s `AltitudeAGL`, which the schema marks in metres. The table assumes metres for `TakeoffAltitudeAGL` too. `mavFlightModeControl`'s `FlightMode` has no named values in the schema. The range `0` to `25` is a wide guess. The panel takes a plain number, not a mode name. This stays true until the owner confirms the vehicle firmware and its own mode list.
 
 The validator applies these rules. The first rule that fails gives the reason code.
 
@@ -125,11 +161,11 @@ The validator applies these rules. The first rule that fails gives the reason co
 - A `token` field takes one text of its `values`, in the same letter case.
 - A `boolean` field takes `true` or `false` only.
 
-No other field type exists in the first table. The server builds the upstream body from the table and the checked values, in the shape that D9 records. It never copies an object from the browser into the upstream body.
+No other field type exists in the first table. The server builds the upstream body from the table and the checked values, in the shape that D10 names. It never copies an object from the browser into the upstream body.
 
-The table holds names only. It never holds a definition URN with the vendor segment of the owner's server. When the upstream body needs such a URN, the server reads it from the schema at run time. Before the first command to a target, the server reads the schema of the control stream with one GET. It refuses the command, with the reason `schema_mismatch`, when a table field of that command has no field of the same name in the schema.
+The table holds names only. It never holds a definition URN with the vendor segment of the owner's server. When the upstream body needs such a URN, the server reads it from the schema at run time, through the map that D3 builds. It refuses the command with the reason `schema_mismatch` in one case. A table field of that command has no field of the same name in the resolved schema.
 
-The table starts empty. So the route refuses each command with `unknown_command` until the later round adds entries. The owner selects the first entries after D9. Probable candidates are the MAVLink commands for arm, takeoff to a height, land and return. The table never holds a command that changes a stored parameter, clears a mission or restarts the drone.
+The table never holds `mavShellControl`, a command that changes a stored parameter, or a command that clears a mission or restarts the drone.
 
 ### D5 The confirmation step in the camera panel
 
@@ -208,27 +244,27 @@ The account must not have these rights:
 
 An account with the right to delete also got `403` for each control stream read. So on this server, the right to delete does not include the right to read control streams, or the control streams do not exist. If the server cannot give the rights above without the right to delete, the later round does not start. The owner then decides again.
 
-### D9 The next discovery step
+### D9 The next discovery step — DONE 2026-09-27
 
-The lead does these steps in one session, after the owner reports that the server exposes the control streams. Each request is a GET.
+The lead did these steps in one session, with a third OSH account (the owner's word: "operator access"). Each request was a GET; no POST was sent.
 
-1. Ask the owner to confirm that the command account exists with the rights of D8.
-2. Make sure that `.env` has `OSH_CONTROL_USERNAME` and `OSH_CONTROL_PASSWORD`. Report only their presence and their length.
-3. Keep `OSH_CONTROL_ENABLED` absent from `.env` for the full session.
-4. Send each request from a shell with the command account, not from the app.
-5. Write each measured value only in the notes of the lead, outside the repository.
-6. Read `systems/<system-id>/controlstreams` for one SITL system. Expect `200` and a list.
-7. If the response is `403` again, stop the session and tell the owner.
-8. Record the field names of one item, and the number of control streams of that system.
-9. Read `controlstreams/<controlstream-id>` for each control stream. Record the field that names the parent system.
-10. Read `controlstreams/<controlstream-id>/schema`, the same path shape as the schema read of `osh-053`.
-11. Record each field of the schema: its name, type, unit, allowed values or range, and whether it is optional.
-12. Read `controlstreams/<controlstream-id>/commands?limit=1`. An old command, if one exists, shows the body that the server keeps.
-13. Read the list of step 6 again with the account of `OSH_USERNAME`. Record whether that account now gets `200`.
-14. Send no POST in this session.
-15. Write the command table of D4 with the owner. Then write `specs/osh-control/spec.md` and `tasks.md`.
+1. The owner confirmed a new account with, in the owner's words, operator rights.
+2. The lead used `.env.admin`, a file the owner added, in place of `OSH_CONTROL_USERNAME`/`OSH_CONTROL_PASSWORD`; the later round moves its values to those two keys. Reported only presence and length.
+3. `OSH_CONTROL_ENABLED` stayed absent from `.env` for the full session.
+4. Each request ran from a script outside the app, never through the app itself.
+5. Each measured value is in the notes of the lead, outside the repository; this file holds no real id.
+6. `systems/<system-id>/controlstreams` gave `200` and a list, for the three systems that run a MAVSDK driver. The other SITL-related systems (cameras and one video candidate) gave `200` with an empty list; they carry no control stream.
+7. The response was not `403` with this account.
+8. Each of the three driver systems has many control streams, one for each command; the field `parametersSchema.name` names the command. The exact count is a number from the owner's server. It stays out of this file and the repository. The eight commands of D4's table are all present.
+9. The lead did not read `controlstreams/<controlstream-id>` on its own. The schema read of step 10 already carries the command name. D3's per-system scan makes the parent-system link implicit. So a separate parent field was not needed.
+10. `controlstreams/<controlstream-id>/schema` gave `200` for every control stream tried, the same path shape as the schema read of `osh-053`.
+11. Each schema field's name, type and unit are in D4's table and its two notes. No schema field carried an allowed-values list or a range; D4 says where the lead set a range by its own judgement instead.
+12. Not read. Not needed once the schema itself gave the field names and types.
+13. The list of step 6, read again with the two accounts of the first two sessions (`.env` and `.env.writer`), still gave `403` on all systems. So the old `403` came from the rights of the account, not from absent control streams.
+14. No POST was sent in this session.
+15. The command table of D4 is written, with the owner's choice of 8 commands. `specs/osh-control/spec.md` and `tasks.md` come next.
 
-Step 13 tells whether the old `403` came from the rights of the account or from absent control streams. The first real command comes only after the gates and the two reviews pass. The owner sends it from the panel, and watches the SITL console.
+Step 13 is answered: two accounts without the new rights still get `403`; the third, with the new rights, gets `200`. The first real command comes only after the gates and the two reviews pass. The owner sends it from the panel, and watches the SITL console.
 
 ### D10 The upstream POST
 
@@ -276,7 +312,7 @@ Changed in this round: only this file and `proposal.md`.
 
 ## Risks / Trade-offs
 
-1. **A pair in `.env` names the control stream of a different system.** Guard: the parent check of D3, before the first command to that target.
+1. **The server names two control streams with the same command name, under one system.** The map of D3 keeps the last one it reads. Guard: none in code; the owner checks this against the real fleet before the flag goes on, and D9's own read found no such case.
 2. **The schema on the server changes after the table exists.** Guard: the schema check of D4, before the first command to a target in each process.
 3. **The command account has more rights than D8 lists.** No code can find this. The scan and the allowlists limit what the code sends, not what the account can do. The owner examines the account against D8.
 4. **A timeout hides whether the command arrived.** The route answers `failed` and never tries again. The owner reads the telemetry before the next command.
@@ -285,9 +321,14 @@ Changed in this round: only this file and `proposal.md`.
 
 ## Open Questions
 
-- Which commands, fields and value ranges does the first command table hold? The owner decides after D9.
+Answered by D9 and the owner, 2026-09-27:
+- Which commands does the first table hold? **8, listed in D4.** `mavShellControl` (a free text shell command), and the two mission-upload commands (`UnmannedControlMission`, `QGroundControlPlan`), wait for their own later design.
+- Does a drone have more than one control stream? **Yes, one for each command.** D3's format and its lookup now match this.
+- Do the two other OSH accounts now read control streams? **No, still `403`.** The block was rights, not an absent feature.
+
+Still open, not yet asked of the owner:
 - Can the OSH server limit an account to named control streams, or only to types of resources?
-- Does the owner open the app from another machine? If not, the compose file can publish the port on `127.0.0.1` only while the flag is on.
-- Does a drone have more than one control stream? D3 allows one control stream for each system.
+- Does the owner open the app from another machine? If not, the compose file can publish the port on `127.0.0.1` only while the flag is on. Until answered, the later round binds to `127.0.0.1` by default, as the safer choice.
 - Does the server answer a POST with the id of the command or a status link? If so, a later change can show the status in the panel.
 - Are four commands for each system and eight commands in total, for each minute, the correct limits for the owner?
+- What vehicle firmware and mode list does the fleet run? This decides the real range and the names, if any, for `mavFlightModeControl`'s `FlightMode` field, and confirms the metre assumption for `TakeoffAltitudeAGL` (see D4).
