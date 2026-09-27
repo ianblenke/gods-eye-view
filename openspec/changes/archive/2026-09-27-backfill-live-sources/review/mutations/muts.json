@@ -1,0 +1,10 @@
+[
+  {
+    "id": "live-sources-001-abort-arm",
+    "file": "src/sources/live/contract.js",
+    "old": "if (error?.name === 'AbortError') throw error;",
+    "new": "if (false) throw error;",
+    "test": ["src/sources/live/contract.test.mjs"],
+    "pattern": "live-sources-001"
+  }
+]
