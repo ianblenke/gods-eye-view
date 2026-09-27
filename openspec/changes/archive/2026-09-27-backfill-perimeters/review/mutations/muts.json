@@ -1,0 +1,292 @@
+[
+  {
+    "id": "perimeters-001",
+    "file": "src/layers/perimeters/source.js",
+    "old": "fetchImpl('/api/fire-perimeters', { signal })",
+    "new": "fetchImpl('/api/bad-perimeters', { signal })",
+    "test": [
+      "src/layers/perimeters/source.test.mjs"
+    ],
+    "pattern": "\\[perimeters-001\\]"
+  },
+  {
+    "id": "perimeters-002",
+    "file": "src/layers/perimeters/source.js",
+    "old": "throw new Error('Malformed perimeter snapshot');",
+    "new": "throw new Error('Bad snapshot');",
+    "test": [
+      "src/layers/perimeters/source.test.mjs"
+    ],
+    "pattern": "\\[perimeters-002\\]"
+  },
+  {
+    "id": "perimeters-003",
+    "file": "src/layers/perimeters/records.js",
+    "old": "acres: finiteOrNull(properties.attr_IncidentSize),",
+    "new": "acres: null,",
+    "test": [
+      "src/layers/perimeters/records.test.mjs"
+    ],
+    "pattern": "\\[perimeters-003\\]"
+  },
+  {
+    "id": "perimeters-004",
+    "file": "src/layers/perimeters/records.js",
+    "old": "ring.length < 4",
+    "new": "ring.length < 3",
+    "test": [
+      "src/layers/perimeters/records.test.mjs"
+    ],
+    "pattern": "\\[perimeters-004\\]"
+  },
+  {
+    "id": "perimeters-005",
+    "file": "src/layers/perimeters/cards.js",
+    "old": "if (area > bestArea)",
+    "new": "if (area < bestArea)",
+    "test": [
+      "src/layers/perimeters/cards.test.mjs"
+    ],
+    "pattern": "\\[perimeters-005\\]"
+  },
+  {
+    "id": "perimeters-006",
+    "file": "src/layers/perimeters/cards.js",
+    "old": "return '#8bc34a';",
+    "new": "return '#ff3b30';",
+    "test": [
+      "src/layers/perimeters/cards.test.mjs"
+    ],
+    "pattern": "\\[perimeters-006\\]"
+  },
+  {
+    "id": "perimeters-007",
+    "file": "src/layers/perimeters/inciweb.js",
+    "old": ".replace(/ fire$/, '')",
+    "new": ".replace(/ blaze$/, '')",
+    "test": [
+      "src/layers/perimeters/inciweb.test.mjs"
+    ],
+    "pattern": "\\[perimeters-007\\]"
+  },
+  {
+    "id": "perimeters-008",
+    "file": "src/layers/perimeters/inciweb.js",
+    "old": "nowMs - changedMs <= CHANGED_WITHIN_MS",
+    "new": "nowMs - changedMs < 0",
+    "test": [
+      "src/layers/perimeters/inciweb.test.mjs"
+    ],
+    "pattern": "\\[perimeters-008\\]"
+  },
+  {
+    "id": "perimeters-009",
+    "file": "src/layers/perimeters/inciweb.js",
+    "old": "fetchImpl('/api/fire-perimeters/inciweb/index', {",
+    "new": "fetchImpl('/api/fire-perimeters/inciweb/bad', {",
+    "test": [
+      "src/layers/perimeters/inciweb.test.mjs"
+    ],
+    "pattern": "\\[perimeters-009\\]"
+  },
+  {
+    "id": "perimeters-010",
+    "file": "src/layers/perimeters/index.js",
+    "old": "id: `fire-perimeter:${row.stableId}:${index}`",
+    "new": "id: `bad-perimeter:${row.stableId}:${index}`",
+    "test": [
+      "src/layers/perimeters/ownership.test.mjs"
+    ],
+    "pattern": "\\[perimeters-010\\]"
+  },
+  {
+    "id": "perimeters-011",
+    "file": "src/layers/perimeters/index.js",
+    "old": "lat: anchor.lat,",
+    "new": "lat: 0,",
+    "test": [
+      "src/layers/perimeters/ownership.test.mjs"
+    ],
+    "pattern": "\\[perimeters-011\\]"
+  },
+  {
+    "id": "perimeters-012",
+    "file": "src/layers/perimeters/index.js",
+    "old": "updateInterval: 300000,",
+    "new": "updateInterval: 300001,",
+    "test": [
+      "src/layers/perimeters/ownership.test.mjs"
+    ],
+    "pattern": "\\[perimeters-012\\]"
+  },
+  {
+    "id": "perimeters-013",
+    "file": "src/layers/perimeters/index.js",
+    "old": "if (pointer && !pointer.isPointerFree()) return;",
+    "new": "if (false) return;",
+    "test": [
+      "src/layers/perimeters/ownership.test.mjs"
+    ],
+    "pattern": "\\[perimeters-013\\]"
+  },
+  {
+    "id": "perimeters-014",
+    "file": "src/layers/perimeters/index.js",
+    "old": "openExternal(link);\n        return true;",
+    "new": "openExternal(link);\n        return false;",
+    "test": [
+      "src/layers/perimeters/ownership.test.mjs"
+    ],
+    "pattern": "\\[perimeters-014\\]"
+  },
+  {
+    "id": "perimeters-015",
+    "file": "src/layers/perimeters/index.js",
+    "old": "_linkRequest?.controller.abort();",
+    "new": "_linkRequest?.controller.signal;",
+    "test": [
+      "src/layers/perimeters/ownership.test.mjs"
+    ],
+    "pattern": "\\[perimeters-015\\]"
+  },
+  {
+    "id": "perimeters-016",
+    "file": "src/layers/perimeters/index.js",
+    "old": "const rows = await source.getSnapshot({ signal: request.signal });",
+    "new": "const rows = [];",
+    "test": [
+      "src/layers/perimeters/ownership.test.mjs"
+    ],
+    "pattern": "\\[perimeters-016\\]"
+  },
+  {
+    "id": "perimeters-017",
+    "file": "server/providers/firePerimeters.js",
+    "old": "const MAX_PAGES = 5;",
+    "new": "const MAX_PAGES = 4;",
+    "test": [
+      "server/providers/firePerimeters.test.mjs"
+    ],
+    "pattern": "\\[perimeters-017\\]"
+  },
+  {
+    "id": "perimeters-017-property",
+    "file": "server/providers/firePerimeters.js",
+    "old": "payload?.properties?.exceededTransferLimit === true;",
+    "new": "payload?.properties?.exceededTransferLimit === false;",
+    "test": [
+      "server/providers/firePerimeters.test.mjs"
+    ],
+    "pattern": "a property can mark a page limit"
+  },
+  {
+    "id": "perimeters-018",
+    "file": "server/providers/firePerimeters.js",
+    "old": "if (!Array.isArray(rows)) throw new Error('invalid_index');",
+    "new": "if (true) throw new Error('invalid_index');",
+    "test": [
+      "server/providers/firePerimeters.test.mjs"
+    ],
+    "pattern": "\\[perimeters-018\\]"
+  },
+  {
+    "id": "perimeters-019",
+    "file": "server/providers/firePerimeters.js",
+    "old": "return json(405, { error: 'method_not_allowed' });",
+    "new": "return json(200, { error: 'method_not_allowed' });",
+    "test": [
+      "server/providers/firePerimeters.test.mjs"
+    ],
+    "pattern": "\\[perimeters-019\\]"
+  },
+  {
+    "id": "perimeters-019-closed",
+    "file": "server/providers/firePerimeters.js",
+    "old": "if (res.destroyed) return;",
+    "new": "if (false) return;",
+    "test": [
+      "server/providers/firePerimeters.test.mjs"
+    ],
+    "pattern": "a reply on a closed client has no body"
+  },
+  {
+    "id": "perimeters-020",
+    "file": "server/providers/firePerimeters.js",
+    "old": "const MAX_PAGES = 5;",
+    "new": "const MAX_PAGES = 4;",
+    "test": [
+      "src/data/firePerimetersProxy.test.mjs"
+    ],
+    "pattern": "\\[perimeters-020\\]"
+  },
+  {
+    "id": "perimeters-021",
+    "file": "server/providers/firePerimeters.js",
+    "old": "key === 'perimeters' && stale ? { ...value, stale: true } : value",
+    "new": "key === 'perimeters' && stale ? { ...value, stale: false } : value",
+    "test": [
+      "src/data/firePerimetersProxy.test.mjs"
+    ],
+    "pattern": "\\[perimeters-021\\]"
+  },
+  {
+    "id": "perimeters-022",
+    "file": "server/providers/firePerimeters.js",
+    "old": "coalesceProxyRequest(inFlight, key, async () => {",
+    "new": "coalesceProxyRequest(new Map(), key, async () => {",
+    "test": [
+      "src/data/firePerimetersProxy.test.mjs"
+    ],
+    "pattern": "\\[perimeters-022\\]"
+  },
+  {
+    "id": "perimeters-023",
+    "file": "server/providers/firePerimeters.js",
+    "old": "if (req.method !== 'GET')",
+    "new": "if (false)",
+    "test": [
+      "src/data/firePerimetersProxy.test.mjs"
+    ],
+    "pattern": "\\[perimeters-023\\]"
+  },
+  {
+    "id": "perimeters-024",
+    "file": "server/providers/firePerimeters.js",
+    "old": "body: JSON.stringify({ title: '' }),",
+    "new": "body: JSON.stringify({ title: 'bad' }),",
+    "test": [
+      "src/data/firePerimetersProxy.test.mjs"
+    ],
+    "pattern": "\\[perimeters-024\\]"
+  },
+  {
+    "id": "perimeters-025",
+    "file": "server/providers/firePerimeters.js",
+    "old": "ttl = 1_800_000;",
+    "new": "ttl = 1_800_001;",
+    "test": [
+      "src/data/firePerimetersProxy.test.mjs"
+    ],
+    "pattern": "\\[perimeters-025\\]"
+  },
+  {
+    "id": "perimeters-026",
+    "file": "server/providers/firePerimeters.js",
+    "old": "if (!allow(clientKey(req)))",
+    "new": "if (!allow('shared'))",
+    "test": [
+      "src/data/firePerimetersProxy.test.mjs"
+    ],
+    "pattern": "\\[perimeters-026\\]"
+  },
+  {
+    "id": "perimeters-027",
+    "file": "server/providers/firePerimeters.js",
+    "old": "url.protocol = 'https:';",
+    "new": "url.protocol = 'http:';",
+    "test": [
+      "src/data/firePerimetersProxy.test.mjs"
+    ],
+    "pattern": "\\[perimeters-027\\]"
+  }
+]
