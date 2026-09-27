@@ -2095,6 +2095,21 @@
     "src/tooling/spec/specs.test.mjs › [spec-trace-054] gives the scenarios of a main requirement that an active change removes",
     "src/tooling/spec/trace.test.mjs › [spec-trace-054] does not stop for a main scenario that an active change removes"
   ],
+  "startup-view-001": [
+    "src/app/startView.test.mjs › [startup-view-001] flies to the Taiwan pose"
+  ],
+  "startup-view-002": [
+    "src/app/startView.test.mjs › [startup-view-002] starts high above Taiwan after 500 ms"
+  ],
+  "startup-view-003": [
+    "src/app/startView.test.mjs › [startup-view-003] stops a late flight and skips a dead viewer"
+  ],
+  "startup-view-004": [
+    "src/app/startView.test.mjs › [startup-view-004] keeps the share view"
+  ],
+  "startup-view-005": [
+    "src/app/startView.test.mjs › [startup-view-005] shows the Taiwan flight text"
+  ],
   "ste-lint-001": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-001] checks each Markdown file in openspec"
   ],

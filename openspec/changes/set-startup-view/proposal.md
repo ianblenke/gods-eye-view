@@ -24,9 +24,11 @@ None.
 - Change `src/camera.js`, `src/app/controls.js`, and `docs/CURRENT-STATE.md`.
 - Add `src/app/startView.test.mjs` and the four documents in this change folder.
 - The ledger has open gaps for `src/camera.js` and `src/app/controls.js` at commit `ba9555a`.
-- Tests can close some camera gaps. `controls.js` still has no test that imports it (ledger entry `loaded: false`).
+- The new functions of `src/camera.js` are covered. Its gap stays at 21 lines and 2 functions not covered. Its totals are 144 lines, 12 branches and 8 functions.
+- `controls.js` still has no test that imports it (ledger entry `loaded: false`). It has 50 lines not covered (51 before), because one call replaces the old `if` block.
 - No test runs its one call of `startApplicationView`.
-- The ratchet command must record any gap closure and new scenario links.
+- The registry gets 5 new scenario IDs.
+- The ratchet command also wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit. Its count changes between runs. The lead put the entry and the history of that file back to the content of `main`, as a change of two text files with no measurement.
 
 ## Known limits
 
