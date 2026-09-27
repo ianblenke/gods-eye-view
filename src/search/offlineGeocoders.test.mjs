@@ -9,6 +9,7 @@ import assert from 'node:assert/strict';
 import { createCoordinateGeocoder } from './coordinateGeocoder.js';
 import { createPresetGeocoder } from './presetGeocoder.js';
 import { createPlaceSearch } from './placeSearch.js';
+import { CITY_POIS } from '../locations.js';
 
 const PRESETS = {
   austin: {
@@ -187,5 +188,20 @@ test('a cancelled search stops the offline providers too', async () => {
       geocoder.geocode('austin', { signal: controller.signal }),
       (error) => error.name === 'AbortError',
     );
+  }
+});
+
+test('[location-presets-005] finds Taiwan by name or id', async () => {
+  const geocoder = createPresetGeocoder({ presets: CITY_POIS });
+  for (const query of ['Taiwan', 'taiwan']) {
+    const result = await geocoder.geocode(query);
+    assert.equal(result.answered, true);
+    assert.equal(result.place.name, 'Taiwan');
+    assert.equal(result.place.lat, 23.7);
+    assert.equal(result.place.lng, 121.0);
+    assert.deepEqual(result.place.viewport, {
+      southwest: { lat: 21.8, lng: 119.3 },
+      northeast: { lat: 25.4, lng: 122.1 },
+    });
   }
 });

@@ -1,0 +1,62 @@
+[
+ {
+  "id": "location-presets-001",
+  "file": "src/locations.js",
+  "old": "  taiwan: {\n    name: 'Taiwan',\n    groundElevation: 30,\n    viewBounds: {\n      southwest: { lat: 21.8, lng: 119.3 },\n      northeast: { lat: 25.4, lng: 122.1 },\n    },\n    pois: [\n      {\n        name: 'Taiwan',\n        lat: 23.7,\n        lon: 121.0,\n        alt: 700000,\n        pitch: -60,\n        heading: 0,\n        buildingHeight: 30,\n      },\n      {\n        name: 'Taipei 101',\n        lat: 25.0339,\n        lon: 121.5645,\n        alt: 700,\n        pitch: -22,\n        heading: 200,\n        buildingHeight: 300,\n      },\n      {\n        name: 'Presidential Office Building',\n        lat: 25.04,\n        lon: 121.5122,\n        alt: 450,\n        pitch: -25,\n        heading: 90,\n        buildingHeight: 60,\n      },\n      {\n        name: 'Sun Moon Lake',\n        lat: 23.859,\n        lon: 120.916,\n        alt: 6000,\n        pitch: -30,\n        heading: 0,\n        buildingHeight: 30,\n      },\n      {\n        name: 'Taroko Gorge',\n        lat: 24.1559,\n        lon: 121.62,\n        alt: 8000,\n        pitch: -28,\n        heading: 90,\n        buildingHeight: 30,\n      },\n    ],\n  },\n  austin: {\n    name: 'Austin',\n    groundElevation: 150, // meters above WGS84 ellipsoid\n    viewBounds: {\n      southwest: { lat: 30.1, lng: -97.95 },\n      northeast: { lat: 30.52, lng: -97.55 },\n    },\n    pois: [\n      {\n        name: 'Texas State Capitol',\n        lat: 30.2747,\n        lon: -97.7403,\n        alt: 550,\n        pitch: -28,\n        heading: 180,\n        buildingHeight: 35,\n      },\n      {\n        name: 'Frost Bank Tower',\n        lat: 30.2674,\n        lon: -97.7434,\n        alt: 550,\n        pitch: -22,\n        heading: 30,\n        buildingHeight: 80,\n      },\n      {\n        name: 'Pennybacker Bridge',\n        lat: 30.3451,\n        lon: -97.7951,\n        alt: 500,\n        pitch: -25,\n        heading: 90,\n        buildingHeight: 40,\n      },\n      {\n        name: 'The Jenga Tower',\n        lat: 30.2642,\n        lon: -97.75,\n        alt: 500,\n        pitch: -18,\n        heading: 45,\n        buildingHeight: 60,\n      },\n      {\n        name: 'UT Tower',\n        lat: 30.2862,\n        lon: -97.7394,\n        alt: 500,\n        pitch: -22,\n        heading: 180,\n        buildingHeight: 50,\n      },\n    ],\n  },\n",
+  "new": "  austin: {\n    name: 'Austin',\n    groundElevation: 150, // meters above WGS84 ellipsoid\n    viewBounds: {\n      southwest: { lat: 30.1, lng: -97.95 },\n      northeast: { lat: 30.52, lng: -97.55 },\n    },\n    pois: [\n      {\n        name: 'Texas State Capitol',\n        lat: 30.2747,\n        lon: -97.7403,\n        alt: 550,\n        pitch: -28,\n        heading: 180,\n        buildingHeight: 35,\n      },\n      {\n        name: 'Frost Bank Tower',\n        lat: 30.2674,\n        lon: -97.7434,\n        alt: 550,\n        pitch: -22,\n        heading: 30,\n        buildingHeight: 80,\n      },\n      {\n        name: 'Pennybacker Bridge',\n        lat: 30.3451,\n        lon: -97.7951,\n        alt: 500,\n        pitch: -25,\n        heading: 90,\n        buildingHeight: 40,\n      },\n      {\n        name: 'The Jenga Tower',\n        lat: 30.2642,\n        lon: -97.75,\n        alt: 500,\n        pitch: -18,\n        heading: 45,\n        buildingHeight: 60,\n      },\n      {\n        name: 'UT Tower',\n        lat: 30.2862,\n        lon: -97.7394,\n        alt: 500,\n        pitch: -22,\n        heading: 180,\n        buildingHeight: 50,\n      },\n    ],\n  },\n  taiwan: {\n    name: 'Taiwan',\n    groundElevation: 30,\n    viewBounds: {\n      southwest: { lat: 21.8, lng: 119.3 },\n      northeast: { lat: 25.4, lng: 122.1 },\n    },\n    pois: [\n      {\n        name: 'Taiwan',\n        lat: 23.7,\n        lon: 121.0,\n        alt: 700000,\n        pitch: -60,\n        heading: 0,\n        buildingHeight: 30,\n      },\n      {\n        name: 'Taipei 101',\n        lat: 25.0339,\n        lon: 121.5645,\n        alt: 700,\n        pitch: -22,\n        heading: 200,\n        buildingHeight: 300,\n      },\n      {\n        name: 'Presidential Office Building',\n        lat: 25.04,\n        lon: 121.5122,\n        alt: 450,\n        pitch: -25,\n        heading: 90,\n        buildingHeight: 60,\n      },\n      {\n        name: 'Sun Moon Lake',\n        lat: 23.859,\n        lon: 120.916,\n        alt: 6000,\n        pitch: -30,\n        heading: 0,\n        buildingHeight: 30,\n      },\n      {\n        name: 'Taroko Gorge',\n        lat: 24.1559,\n        lon: 121.62,\n        alt: 8000,\n        pitch: -28,\n        heading: 90,\n        buildingHeight: 30,\n      },\n    ],\n  },\n",
+  "test": [
+   "src/locations.test.mjs"
+  ],
+  "pattern": "location-presets-001"
+ },
+ {
+  "id": "location-presets-002",
+  "file": "src/locations.js",
+  "old": "name: 'Taroko Gorge',\n        lat: 24.1559",
+  "new": "name: 'Taroko Gorge',\n        lat: 26.1559",
+  "test": [
+   "src/locations.test.mjs"
+  ],
+  "pattern": "location-presets-002"
+ },
+ {
+  "id": "location-presets-003",
+  "file": "src/locations.js",
+  "old": "  taiwan: {\n    name: 'Taiwan',",
+  "new": "  taiwan: {\n    name: 'Formosa',",
+  "test": [
+   "src/ui/locationControls.test.mjs"
+  ],
+  "pattern": "location-presets-003"
+ },
+ {
+  "id": "location-presets-004",
+  "file": "src/locations.js",
+  "old": "name: 'Taiwan',\n        lat: 23.7,\n        lon: 121.0,\n        alt: 700000",
+  "new": "name: 'Taiwan',\n        lat: 23.7,\n        lon: 121.0,\n        alt: 1000",
+  "test": [
+   "src/locations.test.mjs"
+  ],
+  "pattern": "location-presets-004"
+ },
+ {
+  "id": "location-presets-005",
+  "file": "src/locations.js",
+  "old": "southwest: { lat: 21.8, lng: 119.3 }",
+  "new": "southwest: { lat: 20.8, lng: 119.3 }",
+  "test": [
+   "src/search/offlineGeocoders.test.mjs"
+  ],
+  "pattern": "location-presets-005"
+ },
+ {
+  "id": "004-click-id",
+  "file": "src/ui/locationControls.js",
+  "old": "this.bind(pill, 'click', () => onCity(id));",
+  "new": "this.bind(pill, 'click', () => onCity('austin'));",
+  "test": [
+   "src/ui/locationControls.test.mjs"
+  ],
+  "pattern": "location-presets-004"
+ }
+]

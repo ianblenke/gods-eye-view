@@ -1,0 +1,4 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-09-26-add-taiwan-location/design.md:43 At commit 9979384040d684852ecd96587811def174d6d544, “No QA line from a gate run is available” disagrees with the gate output, which has a QA line. Write: “The gate reports that no QA script covers this change.”
+- [ ] F2 major openspec/changes/archive/2026-09-26-add-taiwan-location/specs/location-presets/spec.md:43 At commit 9979384040d684852ecd96587811def174d6d544, “answer the city name and id” can mean that the response contains both values, but the scenario describes two search inputs. Write: “The preset geocoder MUST answer a search for the city name or id with the preset view bounds.”
+- [ ] F3 minor openspec/changes/archive/2026-09-26-add-taiwan-location/design.md:9 At commit 9979384040d684852ecd96587811def174d6d544, “typed Taiwan search” uses a verb as an adjective. Write: “Keep Taiwan search results inside the preset view bounds.”

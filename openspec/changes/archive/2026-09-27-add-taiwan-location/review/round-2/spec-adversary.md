@@ -1,0 +1,2 @@
+Verdict: FAIL
+- [ ] F1 major openspec/trace/history.jsonl:1575 At commit bd15c48735e7f512108f928562c3c5a94171edea, this change records two fewer uncovered branches in `src/data/labelArbiter.js`, but changes no test for that file. The proposal attributes the difference to counts that vary between runs. Restore the prior gap and rerun the ratchet with stable counts, or show a test in this change that closes those branches.
