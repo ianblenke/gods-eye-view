@@ -1075,7 +1075,7 @@
     "change": "backfill-layer-lifecycle"
   },
   "live-sources-001": {
-    "hash": "0884bbc0b1451d9a7c27ea6971ead06d947032e1842d2c3338ae9e174f1d9746",
+    "hash": "1b9df754aff902f7aaa3e52e3355b2542a1a1b48dc8e1306bcc5a432ea74a3a1",
     "since": "2026-09-27",
     "change": "backfill-live-sources"
   },
