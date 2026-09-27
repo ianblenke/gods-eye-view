@@ -1620,7 +1620,7 @@
     "change": "backfill-perimeters"
   },
   "perimeters-008": {
-    "hash": "11f5752c6024dbbb7d8d01e64da877fc87992ba535e5588904afa0d470ad22bd",
+    "hash": "31ebb8a9cf85c98c7ae06b181575c910a85cfcead45b3dd04d7810c9c4075fcc",
     "since": "2026-09-27",
     "change": "backfill-perimeters"
   },
@@ -1640,7 +1640,7 @@
     "change": "backfill-perimeters"
   },
   "perimeters-012": {
-    "hash": "3de7430f3facd607e16478dacfd39359f2cb91f875925be49ac7b31378f56f2b",
+    "hash": "c56d73e5448a323db976c546f0397c8036f69dd55a2990bc0d3a40d87d5bac96",
     "since": "2026-09-27",
     "change": "backfill-perimeters"
   },
@@ -1665,12 +1665,12 @@
     "change": "backfill-perimeters"
   },
   "perimeters-017": {
-    "hash": "f149d872f41acb36175e9533bb5b1d2c4389802dea4d234ef30298e0141c2ce0",
+    "hash": "9ccf7f0dc2a1959e6f0de596f11638f329cdace69764f5f4dfb2ef98c3bc3800",
     "since": "2026-09-27",
     "change": "backfill-perimeters"
   },
   "perimeters-018": {
-    "hash": "e058165df9363d203616cc40f72fb836db7bcdac0d2d1853ef37b7f310848bd6",
+    "hash": "4caaa7b55a2d720924f22fd25d85da13927689731983b4cf1c0d150e4f934db9",
     "since": "2026-09-27",
     "change": "backfill-perimeters"
   },

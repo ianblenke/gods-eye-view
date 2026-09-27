@@ -30,6 +30,7 @@ The ledger has these gaps before this change. The target after the change is zer
 - `source.js`: 0 lines, 1 branch and 1 function before; 0 each after. `source.test.mjs` has 5 untraced tests before; 0 after.
 - `firePerimeters.js`: 6 lines, 6 branches and 1 function before; 0 each after. Its old test file is `src/data/firePerimetersProxy.test.mjs`, with 17 untraced tests before and 0 after. The change tags these tests and adds 13 tests in `server/providers/firePerimeters.test.mjs` for the two uncovered upstream error paths.
 - This change opens no gap. The lead can record closed gaps with the ratchet command.
+- The ratchet command also wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit. Its count changes between runs. The lead put the entry and the history of that file back to the content of `main`, as a text edit with no measurement.
 
 ## Known limits and later changes
 
