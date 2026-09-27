@@ -1,0 +1,5 @@
+Verdict: FAIL
+- [ ] F1 critical src/app/controls.js:42 At commit e51a2df5668225107fed167effcc7d8abfc065fd, no test runs this call. A wrong argument or a removed call would pass the tests. Add a test that exercises `createApplicationControls()` and checks the startup view choice.
+- [ ] F2 critical src/app/startView.test.mjs:63 At commit e51a2df5668225107fed167effcc7d8abfc065fd, the test checks the flight result but does not establish that the app calls `flyToStartView()`, as scenario `startup-view-001` requires. Test that call or change the scenario to specify only observable behavior.
+- [ ] F3 minor openspec/changes/archive/2026-09-27-set-startup-view/proposal.md:27 At commit e51a2df5668225107fed167effcc7d8abfc065fd, the gate warns that “are covered” uses passive voice. Rewrite the sentence in active voice.
+- [ ] F4 minor openspec/changes/archive/2026-09-27-set-startup-view/review.md:1 At commit e51a2df5668225107fed167effcc7d8abfc065fd, the gate reports `REVIEW-MISSING` and ends with `Gates failed with 1 errors.` Complete the reviews, add `review.md`, and rerun the gates.

@@ -1,5 +1,4 @@
 import { catalogControlServices } from './catalog.js';
-import { StyleManager } from '../ui/composition.js';
 import { startApplicationView } from '../camera.js';
 import { initCockpitCloudEffects } from '../cockpitCloudEffects.js';
 
@@ -7,11 +6,12 @@ import { initCockpitCloudEffects } from '../cockpitCloudEffects.js';
 export function createApplicationControls({
   scene: { viewer, mapStackController, operations },
   loaderStatus,
-  Controls = StyleManager,
+  Controls,
   services,
   catalog,
   placeSearch,
   defer,
+  initCloudEffects = initCockpitCloudEffects,
 }) {
   // Initialize the style manager (post-processing, HUD, locations, share links)
   const styleManager = new Controls(viewer, {
@@ -34,7 +34,7 @@ export function createApplicationControls({
   // clouds use a separate, capped low-resolution GPU pass that never attaches
   // Cesium fog or post-process stages and is fully stopped in map mode.
   const weatherEffects = null;
-  const cockpitCloudEffects = initCockpitCloudEffects(viewer, {
+  const cockpitCloudEffects = initCloudEffects(viewer, {
     weatherService: operations.requests.weather,
   });
   defer(() => cockpitCloudEffects?.destroy());

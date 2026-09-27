@@ -1,8 +1,5 @@
-# startup-view Specification
+## ADDED Requirements
 
-## Purpose
-Start the application at a known view when the page loads. Fly to the Taiwan view when the page has no share link. Keep the share link view when the page has one.
-## Requirements
 ### Requirement: Default camera pose
 The app MUST start the default camera flight at the Taiwan pose when no share state exists.
 Origin: spec-first
@@ -12,6 +9,7 @@ Origin: spec-first
 - **THEN** the app calls `flyToStartView()`
 - **AND** the flight ends at longitude 120.6485, latitude 24.18, and height 217 m
 - **AND** the flight uses heading 0, pitch -35 degrees, and roll 0
+- **AND** the app gives its viewer to the controls
 
 ### Requirement: Flight start
 The default camera flight MUST start above the Taiwan pose after a 500 ms pause.
@@ -49,4 +47,4 @@ Origin: spec-first
 #### Scenario: Show the Taiwan flight text `startup-view-005`
 - **WHEN** the app starts the default flight
 - **THEN** the loader shows `Flying to Taiwan...`
-
+- **AND** the app gives the flight stop function to `defer`

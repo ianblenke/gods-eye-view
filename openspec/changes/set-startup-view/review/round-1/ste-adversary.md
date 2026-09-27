@@ -1,0 +1,6 @@
+Verdict: FAIL
+- [ ] F1 major openspec/changes/archive/2026-09-27-set-startup-view/proposal.md:31 At commit e51a2df5668225107fed167effcc7d8abfc065fd, “Its count changes between runs” does not identify what is counted. Write: “The ratchet reports different coverage totals for `src/data/labelArbiter.js` in different runs.”
+- [ ] F2 minor openspec/changes/archive/2026-09-27-set-startup-view/proposal.md:27 At commit e51a2df5668225107fed167effcc7d8abfc065fd, “are covered” uses passive voice. Write: “The new tests cover the new functions of `src/camera.js`.”
+- [ ] F3 minor openspec/changes/archive/2026-09-27-set-startup-view/design.md:10 At commit e51a2df5668225107fed167effcc7d8abfc065fd, “above” has a different meaning from its spatial use in the same document. Write: “Give the share view priority over the default flight.”
+- [ ] F4 minor openspec/changes/archive/2026-09-27-set-startup-view/tasks.md:13 At commit e51a2df5668225107fed167effcc7d8abfc065fd, “timer clear” uses a verb as a noun. Write: “Remove the call that clears the timer.”
+- [ ] F5 minor src/app/startView.test.mjs:92 At commit e51a2df5668225107fed167effcc7d8abfc065fd, “dead viewer” uses “dead” for a software object. Write: “stops a late flight and skips a destroyed viewer”.
