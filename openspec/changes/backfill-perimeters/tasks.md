@@ -42,6 +42,22 @@
   - Mutation: Reject each index response. The test must fail.
 - [x] 2.19 Add tests for `perimeters-019`.
   - Mutation: Send status 200 for a bad method. The test must fail.
+- [x] 2.20 Tag the old feed page and size tests for `perimeters-020`.
+  - Mutation: Stop the feed after four pages in `server/providers/firePerimeters.js`.
+- [x] 2.21 Tag the old feed failure tests for `perimeters-021`.
+  - Mutation: Do not mark stale feed rows in `server/providers/firePerimeters.js`.
+- [x] 2.22 Tag the old shared request test for `perimeters-022`.
+  - Mutation: Use a new request map for each call in `server/providers/firePerimeters.js`.
+- [x] 2.23 Tag the old input test for `perimeters-023`.
+  - Mutation: Skip the method check in `server/providers/firePerimeters.js`.
+- [x] 2.24 Tag the old index tests for `perimeters-024`.
+  - Mutation: Change the fixed POST body in `server/providers/firePerimeters.js`.
+- [x] 2.25 Tag the old page tests for `perimeters-025`.
+  - Mutation: Extend the page cache time by one millisecond in `server/providers/firePerimeters.js`.
+- [x] 2.26 Tag the old client limit test for `perimeters-026`.
+  - Mutation: Use one key for all clients in `server/providers/firePerimeters.js`.
+- [x] 2.27 Tag the old redirect tests for `perimeters-027`.
+  - Mutation: Keep HTTP for a page redirect in `server/providers/firePerimeters.js`.
 
 ## 3. Gates and review
 

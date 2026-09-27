@@ -119,3 +119,79 @@ Origin: backfill
 - **WHEN** a client sends a bad method, route, id or too many requests
 - **THEN** the proxy sends a status and an error without upstream data
 - **AND** a bad upstream response gives a sanitized error
+
+### Requirement: Feed request bounds
+The proxy MUST read no more than five feed pages and MUST set a size limit for each response.
+Origin: backfill
+
+#### Scenario: Page and bound the WFIGS feed `perimeters-020`
+- **WHEN** the feed has more rows after a page
+- **THEN** the proxy reads up to five pages and combines the normalized rows
+- **AND** a false transfer flag stops the next page
+- **AND** a fresh cache stops a new fetch
+- **AND** a body above the feed size limit gives status 502 and stops the body read
+
+### Requirement: Feed failure cache
+The proxy MUST keep the last good feed result and MUST reject bad feed data.
+Origin: backfill
+
+#### Scenario: Keep good rows after a feed error `perimeters-021`
+- **WHEN** a feed refresh fails or returns a bad payload
+- **THEN** the proxy serves the last good rows as stale data if they exist
+- **AND** it does not cache a bad payload as an empty result
+
+### Requirement: Shared upstream work
+The proxy MUST share one active request for each route.
+Origin: backfill
+
+#### Scenario: Share concurrent requests `perimeters-022`
+- **WHEN** two clients request the same route at the same time
+- **THEN** the proxy starts one upstream operation for that route
+
+### Requirement: Request input
+The proxy MUST check the method and publication id before it fetches upstream data.
+Origin: backfill
+
+#### Scenario: Reject bad input before a fetch `perimeters-023`
+- **WHEN** a client sends a bad publication id or a method other than GET
+- **THEN** the proxy sends status 400 or 405 and makes no upstream request
+
+### Requirement: InciWeb index bounds
+The proxy MUST use a fixed POST for the index and MUST limit its response size.
+Origin: backfill
+
+#### Scenario: Cache and bound the index `perimeters-024`
+- **WHEN** a client requests the InciWeb index
+- **THEN** the proxy sends the fixed POST body and caches the rows for one hour
+- **AND** it can serve stale rows after an upstream error
+- **AND** an index body above its size limit gives status 502
+
+### Requirement: Incident page cache
+The proxy MUST cache a page only if it has a valid origin or change time and MUST limit the page body size.
+Origin: backfill
+
+#### Scenario: Cache and bound an incident page `perimeters-025`
+- **WHEN** a client requests an incident page
+- **THEN** the proxy accepts a direct page with at least one valid time
+- **AND** it caches a valid page for 30 minutes and removes the oldest entry above 256 entries
+- **AND** it does not cache a page with no valid time
+- **AND** a page body above its size limit gives status 502 and stops the body read
+
+### Requirement: Client rate limit
+The proxy MUST count requests for each client on its routes.
+Origin: backfill
+
+#### Scenario: Limit one client `perimeters-026`
+- **WHEN** a client sends more than 60 feed requests in one minute
+- **THEN** the proxy sends status 429 to that client
+- **AND** another client can read the cache
+
+### Requirement: Publication redirects
+The proxy MUST check a publication redirect before it reads the page.
+Origin: backfill
+
+#### Scenario: Follow a safe page redirect `perimeters-027`
+- **WHEN** a publication route returns a redirect
+- **THEN** the proxy stops the redirect body and uses one abort signal for both requests
+- **AND** it fetches a safe location through HTTPS
+- **AND** it rejects an unsafe location before a second fetch
