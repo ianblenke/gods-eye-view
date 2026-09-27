@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readResponse } from './contract.js';
 import {
   createOpenSkySource,
   createAdsbLolSource,
@@ -29,6 +30,19 @@ const aircraft = [
 ];
 const response = (payload, headers = {}, status = 200) =>
   Response.json(payload, { headers, status });
+
+test('[live-sources-001] a transport abort error stays the same error', async () => {
+  const abort = new DOMException('fixture', 'AbortError');
+  await assert.rejects(
+    readResponse(async () => {
+      throw abort;
+    }, '/fixture'),
+    (error) => {
+      assert.equal(error, abort);
+      return true;
+    },
+  );
+});
 
 test('civil observations retain identity, separate altitude datums and source epochs', () => {
   const snapshot = openSkySnapshot(
