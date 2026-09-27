@@ -8,7 +8,7 @@ The OSH provider sends only GET requests. `osh-004` records each upstream call a
 
 A second rule of the project limits the design. No tracked file holds a host name, a system id, a stream id, a count or a place name of the owner's server. Each fixture is synthetic.
 
-The read-only discovery of 2026-09-27 found a blocker. No account can read a control stream today, so the command schema is unknown. The proposal gives the facts in `control-streams-unreadable`. This design stays abstract where it depends on the schema, and D9 gives the next step.
+The read-only discovery of 2026-09-27 found the command schema. D9 gives the full session and D4 gives the table it fed. Two accounts still cannot read a control stream; a third account, with different rights, can. D9 also found one earlier command in the server's own history, sent by that same third account outside this project's code. It shows the real command envelope, and D10 uses it.
 
 ## Goals / Non-Goals
 
@@ -158,12 +158,13 @@ The validator applies these rules. The first rule that fails gives the reason co
 - `command` is an own key of the table. Else the reason is `unknown_command`.
 - `parameters` is an object with exactly the fields of that command, with no extra key and no absent key. Else the reason is `bad_parameter`.
 - A `number` field takes a finite number from `min` to `max`, both included. The validator never changes a text into a number.
-- A `token` field takes one text of its `values`, in the same letter case.
 - A `boolean` field takes `true` or `false` only.
 
-No other field type exists in the first table. The server builds the upstream body from the table and the checked values, in the shape that D10 names. It never copies an object from the browser into the upstream body.
+No field of the first table's 8 commands needs a third type. A later table can add a `token` type for a command that needs one, with its own rule and its own test. This round adds no field of that type, and no rule for it.
 
-The table holds names only. It never holds a definition URN with the vendor segment of the owner's server. When the upstream body needs such a URN, the server reads it from the schema at run time, through the map that D3 builds. It refuses the command with the reason `schema_mismatch` in one case. A table field of that command has no field of the same name in the resolved schema.
+D9's read of one real, earlier command showed the upstream body plain: `{"parameters": {...}}`. It held the checked field names and values of the command, and no vendor-specific URN of any kind. The server sends exactly this shape. It never copies an object from the browser straight into the upstream body, and it never adds a field the table did not check.
+
+Before the first command to a target in each process, the server also checks the resolved control stream's schema, through the map that D3 builds. It refuses the command with the reason `schema_mismatch` in one case. A table field of that command then has no field of the same name in the schema.
 
 The table never holds `mavShellControl`, a command that changes a stored parameter, or a command that clears a mission or restarts the drone.
 
@@ -175,7 +176,9 @@ The command block extends the camera panel, `aside#osh-panel` in `src/ui/templat
 
 The scenario for this input is in `osh-control`, and no OSH scenario changes. If a review wants it in the `osh` spec, it goes there as an ADDED requirement, never as a MODIFIED one.
 
-`show()` reads the targets route, which sends no upstream request. When the route answers `enabled:false`, or the system is not a target, the view keeps the host hidden. Otherwise, the block shows one button for each command of the table. It also shows one input for each field, with the range or the values that the targets route gives.
+`show()` reads the targets route, which sends no upstream request; it only checks the flag and the static list of D3 and D4. When the route answers `enabled:false`, or the system is not a target, the view keeps the host hidden. Otherwise, the block shows one button for each of the table's 8 commands. For each field, it also shows one input, with the range or the values of the same table. The server checks the sent parameters against this table too.
+
+The targets route does not yet know whether a system's real control streams support all 8 commands. D3's resolve-by-schema step runs only when a real command is sent. So the block can offer a command that the server later refuses with `command_not_found` or `schema_mismatch`. The confirmation step of this section shows that outcome like any other refusal.
 
 A click on a command button sends nothing. It opens the confirmation step in the block. The step shows the name and the id of the system, the command, and each value with its unit. It has two buttons, "Send command" and "Cancel". The focus goes to "Cancel", so the Enter key does not send the command.
 
@@ -258,17 +261,19 @@ The lead did these steps in one session, with a third OSH account (the owner's w
 8. Each of the three driver systems has many control streams, one for each command; the field `parametersSchema.name` names the command. The exact count is a number from the owner's server. It stays out of this file and the repository. The eight commands of D4's table are all present.
 9. The lead did not read `controlstreams/<controlstream-id>` on its own. The schema read of step 10 already carries the command name. D3's per-system scan makes the parent-system link implicit. So a separate parent field was not needed.
 10. `controlstreams/<controlstream-id>/schema` gave `200` for every control stream tried, the same path shape as the schema read of `osh-053`.
-11. Each schema field's name, type and unit are in D4's table and its two notes. No schema field carried an allowed-values list or a range; D4 says where the lead set a range by its own judgement instead.
-12. Not read. Not needed once the schema itself gave the field names and types.
+11. Each schema field's name, type and unit are in D4's table and its two notes. No schema field carried an allowed-values list or a range; D4 says where the lead set a range by its own judgement instead. Every schema also named its `commandFormat` as `application/json`; D10 uses this fact directly.
+12. Read, on a second pass: `controlstreams/<controlstream-id>/commands?limit=1`. Ten of the eleven control streams had no earlier command. One had exactly one, sent by the third account outside this project's own code, before this design existed. Its record gave the real envelope: an `id`, a `controlstream@id`, an `issueTime`, a `sender`, and a `currentStatus` of `COMPLETED`. It also held a `parameters` object with the checked field of that command. D10 takes its POST body shape, `{"parameters": ...}`, from this record.
 13. The list of step 6, read again with the two accounts of the first two sessions (`.env` and `.env.writer`), still gave `403` on all systems. So the old `403` came from the rights of the account, not from absent control streams.
 14. No POST was sent in this session.
 15. The command table of D4 is written, with the owner's choice of 8 commands. `specs/osh-control/spec.md` and `tasks.md` come next.
 
-Step 13 is answered: two accounts without the new rights still get `403`; the third, with the new rights, gets `200`. The first real command comes only after the gates and the two reviews pass. The owner sends it from the panel, and watches the SITL console.
+Step 13 is answered: two accounts without the new rights still get `403`; the third, with the new rights, gets `200`. The first real command from this project's own code comes only after the gates and the two reviews pass. The owner sends it from the panel, and watches the SITL console.
+
+**A new finding from step 12:** the `sender` field of a command record held the calling account's own user name. The server echoed it back in clear text. No script printed it beyond one lead-only terminal, and it is not in this file, in memory, or in the repository. A later discovery script must redact any field whose value could match a known `.env` value, before it prints a record's structure.
 
 ### D10 The upstream POST
 
-`oshPostCommand(fetchImpl, url, {headers, body})` is the one upstream call site of the capability. It sends the method `'POST'` with `redirect: 'manual'`. Its `Content-Type` is the command format that D9 records. It uses the timeout `OSH_REQUEST_TIMEOUT_MS` of `get.js`, 15 seconds, and it reads at most 64 KiB of the response body.
+`oshPostCommand(fetchImpl, url, {headers, body})` is the one upstream call site of the capability. It sends the method `'POST'` with `redirect: 'manual'`. Its `Content-Type` is `application/json`, the `commandFormat` that every schema of D9 named. Its body is `{"parameters": <checked parameters object>}`, the shape that D9's one real, earlier command confirmed. It uses the timeout `OSH_REQUEST_TIMEOUT_MS` of `get.js`, 15 seconds, and it reads at most 64 KiB of the response body.
 
 A response with a status from 300 to 399 is a failure, as `osh-013` says for `oshGet()`. The function never tries a second time, never shares one request between two callers, and keeps no cache. A timeout does not tell whether the server received the command. So the route answers `failed` with `upstreamStatus:null`, and the owner decides the next command.
 
