@@ -1,0 +1,74 @@
+[
+ {
+  "id": "startup-view-001-lat",
+  "file": "src/camera.js",
+  "old": "  latitude: 24.18,",
+  "new": "  latitude: 25.18,",
+  "test": [
+   "src/app/startView.test.mjs"
+  ]
+ },
+ {
+  "id": "startup-view-001-height",
+  "file": "src/camera.js",
+  "old": "  heightM: 217,",
+  "new": "  heightM: 218,",
+  "test": [
+   "src/app/startView.test.mjs"
+  ]
+ },
+ {
+  "id": "startup-view-001-wire",
+  "file": "src/camera.js",
+  "old": "defer(flyToStartView(viewer));",
+  "new": "defer(flyToAustin(viewer));",
+  "test": [
+   "src/app/startView.test.mjs"
+  ]
+ },
+ {
+  "id": "startup-view-002-delay",
+  "file": "src/camera.js",
+  "old": "export function flyToStartView(viewer) {\n  viewer.camera.setView({\n    destination: Cesium.Cartesian3.fromDegrees(\n      START_VIEW.longitude,\n      START_VIEW.latitude,\n      25000,\n    ),\n    orientation: {\n      heading: Cesium.Math.toRadians(START_VIEW.headingDeg),\n      pitch: Cesium.Math.toRadians(-90),\n      roll: Cesium.Math.toRadians(START_VIEW.rollDeg),\n    },\n  });\n\n  const timer = setTimeout(() => {\n    if (viewer.isDestroyed()) return;\n    viewer.camera.flyTo({\n      destination: Cesium.Cartesian3.fromDegrees(\n        START_VIEW.longitude,\n        START_VIEW.latitude,\n        START_VIEW.heightM,\n      ),\n      orientation: {\n        heading: Cesium.Math.toRadians(START_VIEW.headingDeg),\n        pitch: Cesium.Math.toRadians(START_VIEW.pitchDeg),\n        roll: Cesium.Math.toRadians(START_VIEW.rollDeg),\n      },\n      duration: 4.0,\n      easingFunction: Cesium.EasingFunction.CUBIC_IN_OUT,\n    });\n  }, 500);\n  return () => {\n    clearTimeout(timer);\n    if (!viewer.isDestroyed()) viewer.camera.cancelFlight();\n  };\n}\n",
+  "new": "export function flyToStartView(viewer) {\n  viewer.camera.setView({\n    destination: Cesium.Cartesian3.fromDegrees(\n      START_VIEW.longitude,\n      START_VIEW.latitude,\n      25000,\n    ),\n    orientation: {\n      heading: Cesium.Math.toRadians(START_VIEW.headingDeg),\n      pitch: Cesium.Math.toRadians(-90),\n      roll: Cesium.Math.toRadians(START_VIEW.rollDeg),\n    },\n  });\n\n  const timer = setTimeout(() => {\n    if (viewer.isDestroyed()) return;\n    viewer.camera.flyTo({\n      destination: Cesium.Cartesian3.fromDegrees(\n        START_VIEW.longitude,\n        START_VIEW.latitude,\n        START_VIEW.heightM,\n      ),\n      orientation: {\n        heading: Cesium.Math.toRadians(START_VIEW.headingDeg),\n        pitch: Cesium.Math.toRadians(START_VIEW.pitchDeg),\n        roll: Cesium.Math.toRadians(START_VIEW.rollDeg),\n      },\n      duration: 4.0,\n      easingFunction: Cesium.EasingFunction.CUBIC_IN_OUT,\n    });\n  }, 5000);\n  return () => {\n    clearTimeout(timer);\n    if (!viewer.isDestroyed()) viewer.camera.cancelFlight();\n  };\n}\n",
+  "test": [
+   "src/app/startView.test.mjs"
+  ]
+ },
+ {
+  "id": "startup-view-003-clear",
+  "file": "src/camera.js",
+  "old": "export function flyToStartView(viewer) {\n  viewer.camera.setView({\n    destination: Cesium.Cartesian3.fromDegrees(\n      START_VIEW.longitude,\n      START_VIEW.latitude,\n      25000,\n    ),\n    orientation: {\n      heading: Cesium.Math.toRadians(START_VIEW.headingDeg),\n      pitch: Cesium.Math.toRadians(-90),\n      roll: Cesium.Math.toRadians(START_VIEW.rollDeg),\n    },\n  });\n\n  const timer = setTimeout(() => {\n    if (viewer.isDestroyed()) return;\n    viewer.camera.flyTo({\n      destination: Cesium.Cartesian3.fromDegrees(\n        START_VIEW.longitude,\n        START_VIEW.latitude,\n        START_VIEW.heightM,\n      ),\n      orientation: {\n        heading: Cesium.Math.toRadians(START_VIEW.headingDeg),\n        pitch: Cesium.Math.toRadians(START_VIEW.pitchDeg),\n        roll: Cesium.Math.toRadians(START_VIEW.rollDeg),\n      },\n      duration: 4.0,\n      easingFunction: Cesium.EasingFunction.CUBIC_IN_OUT,\n    });\n  }, 500);\n  return () => {\n    clearTimeout(timer);\n    if (!viewer.isDestroyed()) viewer.camera.cancelFlight();\n  };\n}\n",
+  "new": "export function flyToStartView(viewer) {\n  viewer.camera.setView({\n    destination: Cesium.Cartesian3.fromDegrees(\n      START_VIEW.longitude,\n      START_VIEW.latitude,\n      25000,\n    ),\n    orientation: {\n      heading: Cesium.Math.toRadians(START_VIEW.headingDeg),\n      pitch: Cesium.Math.toRadians(-90),\n      roll: Cesium.Math.toRadians(START_VIEW.rollDeg),\n    },\n  });\n\n  const timer = setTimeout(() => {\n    if (viewer.isDestroyed()) return;\n    viewer.camera.flyTo({\n      destination: Cesium.Cartesian3.fromDegrees(\n        START_VIEW.longitude,\n        START_VIEW.latitude,\n        START_VIEW.heightM,\n      ),\n      orientation: {\n        heading: Cesium.Math.toRadians(START_VIEW.headingDeg),\n        pitch: Cesium.Math.toRadians(START_VIEW.pitchDeg),\n        roll: Cesium.Math.toRadians(START_VIEW.rollDeg),\n      },\n      duration: 4.0,\n      easingFunction: Cesium.EasingFunction.CUBIC_IN_OUT,\n    });\n  }, 500);\n  return () => {\n    void timer;\n    if (!viewer.isDestroyed()) viewer.camera.cancelFlight();\n  };\n}\n",
+  "test": [
+   "src/app/startView.test.mjs"
+  ]
+ },
+ {
+  "id": "startup-view-004-share",
+  "file": "src/camera.js",
+  "old": "if (!hasShareState) {",
+  "new": "if (hasShareState) {",
+  "test": [
+   "src/app/startView.test.mjs"
+  ]
+ },
+ {
+  "id": "startup-view-005-text",
+  "file": "src/camera.js",
+  "old": "loaderStatus.textContent = 'Flying to Taiwan...';",
+  "new": "loaderStatus.textContent = 'Flying to Austin, TX...';",
+  "test": [
+   "src/app/startView.test.mjs"
+  ]
+ },
+ {
+  "id": "startup-view-005-defer",
+  "file": "src/camera.js",
+  "old": "defer(flyToStartView(viewer));",
+  "new": "flyToStartView(viewer);",
+  "test": [
+   "src/app/startView.test.mjs"
+  ]
+ }
+]
