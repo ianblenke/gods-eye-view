@@ -855,6 +855,9 @@
   "layer-lifecycle-002": [
     "src/data/manager.test.mjs › [layer-lifecycle-002] send the event after an activity listener error"
   ],
+  "live-sources-001": [
+    "src/sources/live/contract.test.mjs › [live-sources-001] a transport abort error stays the same error"
+  ],
   "location-presets-001": [
     "src/locations.test.mjs › [location-presets-001] puts Taiwan before Austin"
   ],
