@@ -13,7 +13,7 @@ This change adds one narrow path for commands, apart from the OSH provider. The 
 - Add the capability `osh-control` in new files. No new file is in the set that `osh-005` scans (design D1).
 - Add the flag `OSH_CONTROL_ENABLED`. The command route stays off unless the flag has the exact value `true` (D2).
 - Add a separate command account, `OSH_CONTROL_USERNAME` and `OSH_CONTROL_PASSWORD`. The owner makes this account on the server, and it cannot delete (D8). The route stays off when this account has the user name of `OSH_USERNAME`.
-- Add the target allowlist `OSH_CONTROL_TARGETS`. Each entry pairs one system with one of its control streams. Only `.env` holds the real identifiers (D3).
+- Add the target allowlist `OSH_CONTROL_TARGETS`, a list of system ids. The route finds each system's own control stream for a command by its schema name, at run time. Only `.env` holds the real identifiers (D3).
 - Send a command only as a POST to one path template, `controlstreams/<id>/commands`, for a control stream of the allowlist. A test scans the new files and proves that no file names DELETE, PUT or PATCH (D1, D10).
 - Accept only a command that the command table names, with the fields and value ranges of the table. Refuse each other command, key and value (D4).
 - Show a command block in the camera panel for a system of the allowlist. The browser sends a command only after a second click on a confirmation step (D5).
@@ -22,9 +22,9 @@ This change adds one narrow path for commands, apart from the OSH provider. The 
 
 ### The scope of this round
 
-This round writes only this proposal and the design. The command schema of the server is unknown, because the server refuses each read of a control stream. The known limit `control-streams-unreadable` gives the facts. So this round writes no spec, no task list, no test and no code.
+This round writes only this proposal and the design. Discovery (D9) is now done. The owner's third OSH account reads the control streams and their command schemas. The owner picked 8 commands for the first table (D4). So this round names the real command names, fields and files, in place of the placeholders of the first draft.
 
-A later round of this same change adds the spec, the tasks, the tests and the code. It starts when the discovery step D9 records the schema. The lead does not merge or archive this change with documents only. A change with no spec and no task list is not complete under the steps of `AGENTS.md`. The decisions D1 to D8 do not depend on the schema, so one review can then read them together with the spec.
+This round still writes no spec, no task list, no test and no code. The next round writes `specs/osh-control/spec.md` and `tasks.md` from this design, then the tests and the code. The lead does not merge or archive this change with documents only. A change with no spec and no task list is not complete under the steps of `AGENTS.md`.
 
 ## Capabilities
 
@@ -52,15 +52,11 @@ The later round, as the design plans it:
 
 ## Known limits and later changes
 
-- `control-streams-unreadable`: this blocker stops the later round. These are the facts:
-  - On 2026-09-27 the lead read the server with GET requests only, with the approval of the owner.
-  - The lead used two different accounts. One account can create and delete. The owner calls the second account an admin account.
-  - Both accounts read the system list with no error.
-  - Both accounts got `403 Permission denied` for each read of the control streams of a system. This was true for each system that the lead tried.
-  - A read of the control stream collection with no system answered `400`. That response tells nothing about the cause.
-  - Two accounts fail in the same way, so the cause is probably on the server and not in the credentials. The server possibly has no control stream for these systems, or it does not expose them.
-  - The owner examines the admin console of the server. The next step is the GET-only discovery of D9.
-- `command-schema-unknown`: the names, the types and the value ranges of the command fields are unknown. This round does not guess them. So no scenario can name an exact command body yet, and this round has no `tasks.md` and no `specs/`.
+- `control-streams-unreadable`: closed 2026-09-27. Two accounts got `403` on every control-stream read; a third, newer account (the owner's word: "operator") reads them with no error. D9 records the full session.
+- `command-schema-unknown`: closed 2026-09-27. D9 read the schema of each control stream on the SITL fleet. D4 gives the 8 command names and fields that the owner picked for the first table.
+- `shell-command-deferred`: the server also offers `mavShellControl`, a free text shell command to the platform. The owner set this aside for its own later review, with its own safeguards. This table never gains that command without a new proposal.
+- `mission-upload-deferred`: the server also offers `UnmannedControlMission` (a nested list of waypoint records) and `QGroundControlPlan` (one large text field). The owner set both aside; their shape does not fit the flat field model of D4. A later change gives them their own design.
+- `command-ranges-assumed`: the schema of each number field names a unit, but no range and no allowed values. D4's `min` and `max` values are a first guess by the lead, not values the schema publishes. `TakeoffAltitudeAGL`'s unit assumes metres, by the pattern of `mavControl`'s own `AltitudeAGL` field. `mavFlightModeControl`'s range has no named modes; the panel takes a plain number until the owner names the vehicle firmware and its mode list.
 - `command-account-unconfirmed`: the command account does not exist yet. D8 lists the rights that the account needs and the rights that it must not have. No command code uses any account before the owner confirms that list.
 - `osh-005-stays`: no OSH scenario changes. Two new scenarios of `osh-control` give the proof in place of an edit to `osh-005`. The first scans the new files for the one POST call site and for the names of the other methods. The second proves that no file of the `osh-005` set imports a new file.
 - `osh-005-text-and-test`: the text of `osh-005` names `server/providers/common/http.js`. Its test also reads `src/sources/httpBody.js`, since the upstream merge. This change does not edit `osh-005`. The later round must not put a POST helper in either file, because `osh-005` scans both.
