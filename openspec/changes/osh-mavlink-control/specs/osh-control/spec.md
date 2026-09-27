@@ -120,6 +120,11 @@ Origin: spec-first
 - **AND** the layer calls the view's `clear` method at deselection and at destroy
 - **AND** a layer with no command view selects and destroys the same as before
 
+#### Scenario: Build a real command view only when the page has its host `osh-control-032`
+- **WHEN** the application builds the OSH layer, and the page has an element with the id `osh-panel-control`
+- **THEN** the layer gets a command view built from that element, the browser client, and the page's own document
+- **AND** the application builds the layer with no command view when that element is absent
+
 ### Requirement: Command rate limit
 The route MUST limit commands by system id and across all systems.
 Origin: spec-first
