@@ -1074,6 +1074,31 @@
     "since": "2026-09-26",
     "change": "backfill-layer-lifecycle"
   },
+  "location-presets-001": {
+    "hash": "0522fe9936ceec4087e54a6ddebd46847313b613e50b7fdc5deef7ed94569f5b",
+    "since": "2026-09-27",
+    "change": "add-taiwan-location"
+  },
+  "location-presets-002": {
+    "hash": "6243d2449e84f0e423cd1d8d8af0deddd5c243980559ebf98edfbcc8a050b92f",
+    "since": "2026-09-27",
+    "change": "add-taiwan-location"
+  },
+  "location-presets-003": {
+    "hash": "b3711c9e08987811f478277ba95515a7cfb9b0429f710120c1fe38d7874a6fca",
+    "since": "2026-09-27",
+    "change": "add-taiwan-location"
+  },
+  "location-presets-004": {
+    "hash": "a1665612018aee5dbd6c3a60c94ad75b74378b0d29ece9446a6545c00a8bf81c",
+    "since": "2026-09-27",
+    "change": "add-taiwan-location"
+  },
+  "location-presets-005": {
+    "hash": "c968fed5cdea7a4e784fd46ee5f1c758f4d9bbf751eb68d4cbb46752b2f0b278",
+    "since": "2026-09-27",
+    "change": "add-taiwan-location"
+  },
   "osh-001": {
     "hash": "f03ccb41a7a278d75f8d994cf5005dcc4d6660b42d2d42420c6824c0c4814255",
     "since": "2026-09-17",

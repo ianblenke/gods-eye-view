@@ -855,6 +855,22 @@
   "layer-lifecycle-002": [
     "src/data/manager.test.mjs › [layer-lifecycle-002] send the event after an activity listener error"
   ],
+  "location-presets-001": [
+    "src/locations.test.mjs › [location-presets-001] puts Taiwan before Austin"
+  ],
+  "location-presets-002": [
+    "src/locations.test.mjs › [location-presets-002] gives Taiwan five valid places"
+  ],
+  "location-presets-003": [
+    "src/ui/locationControls.test.mjs › [location-presets-003] shows the Taiwan pill first"
+  ],
+  "location-presets-004": [
+    "src/locations.test.mjs › [location-presets-004] flies to the island view",
+    "src/ui/locationControls.test.mjs › [location-presets-004] a click on the Taiwan pill flies to the island view"
+  ],
+  "location-presets-005": [
+    "src/search/offlineGeocoders.test.mjs › [location-presets-005] finds Taiwan by name or id"
+  ],
   "osh-001": [
     "src/data/oshProxy.test.mjs › [osh-001] reports no key on the status route when OSH_URL is not set"
   ],

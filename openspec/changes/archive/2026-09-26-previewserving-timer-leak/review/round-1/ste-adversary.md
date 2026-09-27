@@ -1,0 +1,4 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-26-previewserving-timer-leak/design.md:7 At commit d13ac437ffc9d00f77e6b61e6910c49d8d38d72e, “after each Vite server close” uses a verb as a noun. Write: “after each Vite server closes.”
+- [ ] F2 minor openspec/changes/archive/2026-09-26-previewserving-timer-leak/design.md:9 At commit d13ac437ffc9d00f77e6b61e6910c49d8d38d72e, “A scratch `async_hooks` hook” uses “scratch” outside its approved meaning. Write: “A temporary `async_hooks` hook.”
+- [ ] F3 minor openspec/changes/archive/2026-09-26-previewserving-timer-leak/design.md:19 At commit d13ac437ffc9d00f77e6b61e6910c49d8d38d72e, “A scratch dev test exits at once after server close” uses “scratch” outside its approved meaning and omits an article. Write: “A temporary development test exits immediately after the server closes.”
