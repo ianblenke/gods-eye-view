@@ -91,7 +91,7 @@ Each id must match `OSH_ID_PATTERN` of `server/providers/osh/ids.js`, the patter
 
 The parser removes white space at the two ends of each entry. When one entry is bad, the parser refuses the full list with the reason `bad_targets`. Its warning names only the position of that entry. When a system id occurs two times, the parser also refuses the full list.
 
-The browser sends a system id and a command name. It never sends a control stream id. The targets route answers the system ids of the list. For each system, it also gives the D4 command names that system's control streams support.
+The browser sends a system id and a command name. It never sends a control stream id. When the flag is off, the targets route answers `200` with `{enabled:false, reason:'control_off', targets:[]}`. Otherwise it answers `200` with `{enabled:true, targets:[{system, commands}]}`, one entry for each system id of the list. `commands` is the full, static table of D4, with each command's fields, types, units, and ranges or values, the same for every system. The route reads no control stream to build this answer.
 
 Before the first command to a target, the server reads the control streams of that system with one GET, `systems/<system-id>/controlstreams`. For each control stream, it reads the schema with one more GET. It matches the schema's command name (the field `parametersSchema.name`) to a name in the table of D4. This builds a map from a command name to a control-stream id, for that one system. The server keeps the map in memory until the process stops. The server refuses a command with the reason `command_not_found` when the system has no control stream whose schema name matches.
 
