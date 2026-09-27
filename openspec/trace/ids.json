@@ -1584,6 +1584,161 @@
     "since": "2026-09-26",
     "change": "upstream-sync"
   },
+  "osh-control-001": {
+    "hash": "c22955dcb2e55c0f5213a8895ef6b035ebc233ac3baf901dc952e5715ab97548",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-002": {
+    "hash": "44711b75abd07da2c5e808e8887132a047726f26aba8a890fa3c62492f0e38c5",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-003": {
+    "hash": "18334b6c29d4851d4748472b425292dbfbdb33cb9d77139a9ebb98a909bc2540",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-004": {
+    "hash": "adfefaa8921b043a2cc4881296abd6a3ad1c7cce98e5dbbfb1f5812d52ed6aa4",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-005": {
+    "hash": "499c6fd5dda388b4edafbc619063abd187407ecc5347fce0f2a286624a6a9f07",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-006": {
+    "hash": "75543c10420b2d4afbd4b981d58b4350010062563b6a8e4ad0e5c7b075aebb9e",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-007": {
+    "hash": "19634dbaa07dffab38af576eaa420b3b29aae53473e0469c765896f495757ea6",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-008": {
+    "hash": "ee4d11a91347cb2880b8e1a45580cd01fa3cdfb451a308afb3b36c6ed9e3a8d1",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-009": {
+    "hash": "5a85c465f20f78e88f39f31e9947f0833fb430ce5013a40f8e2369c6869001c5",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-010": {
+    "hash": "981053a2466beac1d3196a3b2b3a47b284247c818f7db19f0e0a902b57644c8b",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-011": {
+    "hash": "49bc1ddb76950b832a9cda48983d841d3f70159716cd4c3dfe347b2708506e2b",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-013": {
+    "hash": "ab55d043dc66618f517284b043dee344244b5951bd392094c03c3077507d9383",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-014": {
+    "hash": "b1fd002ef205066310cbc5f3c24fd853d8f2dd20ae81d2d6b50805898fb9d045",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-015": {
+    "hash": "ede70a8cbe51deb5d2202089c6dde2bffa82c7cd39181db395ccbaeee01f2d73",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-016": {
+    "hash": "39006097294cdbfd081775989634abe2290c7fa2e7d0f46ec98ef08cbd9578c8",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-017": {
+    "hash": "a0c34d473aefb54f395a70e4040097f21fab7a7e5552ebd1668efcd18a5e2235",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-018": {
+    "hash": "4958c264bcb2bffa5077ee64f84a77c34805be4ac60208c25654320eccca0ea4",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-019": {
+    "hash": "6898be571e157570acdbb73158e401d9dd84f39994386db4e6875c4c6d39c862",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-020": {
+    "hash": "c2490d6aa78f670f4da2476466cc88a0cc8a3f2955c70daac88587baa7a77a89",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-021": {
+    "hash": "95f8df614064fe26b0384646df21f8858d5e018ab89e9abbaf90bd3c7e2edfea",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-022": {
+    "hash": "0e98f1df8bb19e42d47979f966962902fe3360e672b42340c6f04003039d5db9",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-023": {
+    "hash": "41a081f73442adf2a5ca32cca48f8a426a9068c0f052e86ac1eb3b777624d8e6",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-024": {
+    "hash": "32f3b85c88276561bf2f76b7dbd469fb9b9f7067af45492eb1b7486f525e8177",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-025": {
+    "hash": "777554b0c1b9ad1597c82e7c92a1a803b559484cf3b25bc01baf6dd8db29a1b2",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-026": {
+    "hash": "7eb766b67890c1ba57dc1337d4470ab2b341f4ec7df7ffcff06c1b53985cb886",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-027": {
+    "hash": "0692685d7650c16208690a80b1c126efc2bb97402a97ac422f1297bd7ab499ed",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-028": {
+    "hash": "11db1a8a38f1039f066a7611e6b68f59d9a98c1615ba5225ed21c94388ee3446",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-029": {
+    "hash": "88c5ae4dbb7fc1240ff7bbcef80d9f38bf09ab52b2214cbb48614772dd9f1b5d",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-030": {
+    "hash": "015bf2033b807a2b44d9c265164dbc2cd9cd2051243d8577d7cd83607305cf9d",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-031": {
+    "hash": "d76e19f559acdcc600b93da4bcf77c7e71eb82959d72a769685a450ae0af1a20",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-032": {
+    "hash": "6e154d9bce42e94994cdef76ac63b27bcc37e64d39baa409cb8ae6fd3cafb6ba",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
   "perimeters-001": {
     "hash": "c950b2d41849c79df6aa9123d35a0cf495b873a7c0356228c03968863777d80d",
     "since": "2026-09-27",
