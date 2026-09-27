@@ -1746,6 +1746,136 @@
   "osh-096": [
     "src/app/layers/osh.test.mjs › [osh-096] builds the OSH systems layer in the catalog with the production source and the hosts of the page"
   ],
+  "osh-control-001": [
+    "src/control/route.test.mjs › [osh-control-001] Keep the route off without the exact flag",
+    "src/control/route.test.mjs › [osh-control-001] Pass unknown paths to the next middleware and refuse another method"
+  ],
+  "osh-control-002": [
+    "src/control/route.test.mjs › [osh-control-002] Refuse the same command account"
+  ],
+  "osh-control-003": [
+    "src/control/route.test.mjs › [osh-control-003] Refuse a blank URL and accept a distinct account",
+    "src/control/route.test.mjs › [osh-control-003] Refuse absent route inputs in order"
+  ],
+  "osh-control-004": [
+    "src/control/route.test.mjs › [osh-control-004] Refuse a bad target and warn with its position only",
+    "src/control/route.test.mjs › [osh-control-004] Use a position-only warning with the default sink"
+  ],
+  "osh-control-005": [
+    "src/control/route.test.mjs › [osh-control-005] Refuse a repeated target"
+  ],
+  "osh-control-006": [
+    "src/control/route.test.mjs › [osh-control-006] Refuse an absent command stream",
+    "src/control/route.test.mjs › [osh-control-006] Resolve streams by schema name and keep the map",
+    "src/control/route.test.mjs › [osh-control-006] Skip invalid streams and unreadable schemas"
+  ],
+  "osh-control-007": [
+    "src/control/route.test.mjs › [osh-control-007 osh-control-008 osh-control-009] Refuse bad command bodies before a read",
+    "src/control/table.test.mjs › [osh-control-007] Refuse a body that is not a small exact object"
+  ],
+  "osh-control-008": [
+    "src/control/route.test.mjs › [osh-control-007 osh-control-008 osh-control-009] Refuse bad command bodies before a read",
+    "src/control/table.test.mjs › [osh-control-008] Refuse a system outside the target list"
+  ],
+  "osh-control-009": [
+    "src/control/route.test.mjs › [osh-control-007 osh-control-008 osh-control-009] Refuse bad command bodies before a read",
+    "src/control/table.test.mjs › [osh-control-009] Refuse a command that is not an own table key"
+  ],
+  "osh-control-010": [
+    "src/control/table.test.mjs › [osh-control-010] Refuse extra absent wrong type and non-object parameters"
+  ],
+  "osh-control-011": [
+    "src/control/table.test.mjs › [osh-control-011] Refuse numbers outside the finite inclusive range"
+  ],
+  "osh-control-013": [
+    "src/control/table.test.mjs › [osh-control-013] Refuse a boolean field with a non-boolean value"
+  ],
+  "osh-control-014": [
+    "src/control/route.test.mjs › [osh-control-014] Refuse a command when the schema lacks a table field",
+    "src/control/table.test.mjs › [osh-control-014] Refuse a field absent from the resolved schema"
+  ],
+  "osh-control-015": [
+    "src/control/table.test.mjs › [osh-control-015] Keep the exact eight command definitions"
+  ],
+  "osh-control-016": [
+    "src/layers/oshControl/client.test.mjs › [osh-control-016] Read the static targets from the same origin",
+    "src/layers/oshControl/client.test.mjs › [osh-control-016] Send one browser POST to the fixed same-origin path",
+    "src/layers/oshControl/view.test.mjs › [osh-control-016 osh-control-017] Show and clear the optional command view with the layer selection",
+    "src/layers/oshControl/view.test.mjs › [osh-control-016] Confirm a command before the browser sends it",
+    "src/layers/oshControl/view.test.mjs › [osh-control-016] Show a failed command and block a second click while it waits",
+    "src/layers/oshControl/view.test.mjs › [osh-control-016] Show a refused command result"
+  ],
+  "osh-control-017": [
+    "src/layers/oshControl/view.test.mjs › [osh-control-016 osh-control-017] Show and clear the optional command view with the layer selection",
+    "src/layers/oshControl/view.test.mjs › [osh-control-017] Close confirmation on Cancel selection clear and time limit",
+    "src/layers/oshControl/view.test.mjs › [osh-control-017] Ignore an old target answer after a clear",
+    "src/layers/oshControl/view.test.mjs › [osh-control-017] Keep the host hidden for a disabled or absent target",
+    "src/layers/oshControl/view.test.mjs › [osh-control-017] Keep the host hidden when the targets read fails"
+  ],
+  "osh-control-018": [
+    "src/control/route.test.mjs › [osh-control-018] Enforce four commands per system and eight in total per minute",
+    "src/control/route.test.mjs › [osh-control-018] Give a rate limit response with Retry-After"
+  ],
+  "osh-control-019": [
+    "src/control/route.test.mjs › [osh-control-019] Give busy during one open upstream call",
+    "src/control/route.test.mjs › [osh-control-019] Keep one command in flight for each system"
+  ],
+  "osh-control-020": [
+    "src/control/log.test.mjs › [osh-control-020] Append and rotate one generation of the command log",
+    "src/control/log.test.mjs › [osh-control-020] Record safe refused accepted sent and failed lines",
+    "src/control/log.test.mjs › [osh-control-020] Recover the append queue after a write failure"
+  ],
+  "osh-control-021": [
+    "src/control/log.test.mjs › [osh-control-021] Stop before POST when the accepted log fails",
+    "src/control/route.test.mjs › [osh-control-021] Give log_failed before an upstream command"
+  ],
+  "osh-control-022": [
+    "src/control/scan.test.mjs › [osh-control-022] Keep one upstream POST and one browser fetch call site"
+  ],
+  "osh-control-023": [
+    "src/control/scan.test.mjs › [osh-control-023] Keep imports outside the old scan set"
+  ],
+  "osh-control-024": [
+    "src/control/route.test.mjs › [osh-control-024] Build only the literal commands path with no query",
+    "src/control/route.test.mjs › [osh-control-024] Refuse a command URL with credentials in its root"
+  ],
+  "osh-control-025": [
+    "src/control/route.test.mjs › [osh-control-025] Reject each unsafe command URL component"
+  ],
+  "osh-control-026": [
+    "src/control/route.test.mjs › [osh-control-026] Give a small failed result when the upstream POST fails",
+    "src/control/route.test.mjs › [osh-control-026] Return only the small command result fields"
+  ],
+  "osh-control-027": [
+    "src/control/log.test.mjs › [osh-control-027] Record redirect timeout and network failure reasons",
+    "src/control/route.test.mjs › [osh-control-027] Cancel a redirected response body",
+    "src/control/route.test.mjs › [osh-control-027] Fail a redirect or timeout without a second POST",
+    "src/control/route.test.mjs › [osh-control-027] Refuse a missing API root or failed control stream read",
+    "src/control/route.test.mjs › [osh-control-027] Return failed with no upstream status after a POST timeout",
+    "src/control/route.test.mjs › [osh-control-027] Return from a POST with no response body",
+    "src/control/route.test.mjs › [osh-control-027] Stop a command response body above 64 KiB",
+    "src/control/route.test.mjs › [osh-control-027] Stop a command response body at the 15 second limit"
+  ],
+  "osh-control-028": [
+    "src/control/route.test.mjs › [osh-control-028] Accept local hosts with the matching origin",
+    "src/control/route.test.mjs › [osh-control-028] Refuse a cross-origin or untrusted-host POST",
+    "src/control/route.test.mjs › [osh-control-028] Refuse malformed host values"
+  ],
+  "osh-control-029": [
+    "src/control/route.test.mjs › [osh-control-029] Refuse a POST without JSON content type"
+  ],
+  "osh-control-030": [
+    "src/control/route.test.mjs › [osh-control-030] Give the same static table to each target without a read"
+  ],
+  "osh-control-031": [
+    "src/data/oshLayer.test.mjs › [osh-control-031] a layer with no command view selects and destroys the same as before",
+    "src/data/oshLayer.test.mjs › [osh-control-031] the command view gets the location name for an unheld system, and the id when neither name is set",
+    "src/data/oshLayer.test.mjs › [osh-control-031] the layer calls the optional command view at select, deselect and destroy"
+  ],
+  "osh-control-032": [
+    "src/app/layers/osh.test.mjs › [osh-control-032] builds a real command view only when the page has the control panel host",
+    "src/app/layers/osh.test.mjs › [osh-control-032] builds the layer with no command view when the page has no control panel host"
+  ],
   "perimeters-001": [
     "src/layers/perimeters/source.test.mjs › [perimeters-001] a live signal accepts a complete source response",
     "src/layers/perimeters/source.test.mjs › [perimeters-001] a successful response yields normalized perimeter rows",
