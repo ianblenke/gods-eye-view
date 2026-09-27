@@ -865,7 +865,8 @@
     "src/ui/locationControls.test.mjs › [location-presets-003] shows the Taiwan pill first"
   ],
   "location-presets-004": [
-    "src/locations.test.mjs › [location-presets-004] flies to the island view"
+    "src/locations.test.mjs › [location-presets-004] flies to the island view",
+    "src/ui/locationControls.test.mjs › [location-presets-004] a click on the Taiwan pill flies to the island view"
   ],
   "location-presets-005": [
     "src/search/offlineGeocoders.test.mjs › [location-presets-005] finds Taiwan by name or id"

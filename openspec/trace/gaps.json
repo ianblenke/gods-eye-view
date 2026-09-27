@@ -2584,11 +2584,11 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 18,
-      "branches": 52,
+      "branches": 50,
       "functions": 0,
       "totals": {
         "lines": 1228,
-        "branches": 407,
+        "branches": 405,
         "functions": 58
       },
       "sha": "fe25755fea99ad22dd3c17fd9f443b6b2ba002b1894facad2226fc4f7ac17087",
@@ -9035,10 +9035,10 @@
       "loaded": true,
       "lines": 18,
       "branches": 7,
-      "functions": 8,
+      "functions": 7,
       "totals": {
         "lines": 163,
-        "branches": 36,
+        "branches": 37,
         "functions": 21
       },
       "sha": "8ac3dbf2ac21e1063e49a9881518372aac8ffdd140ac36a79447ce96a56544b4",
