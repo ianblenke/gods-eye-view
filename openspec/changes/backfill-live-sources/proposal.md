@@ -27,5 +27,6 @@ None.
 ## Known limits
 
 - `live-sources-lcov-merge`: The gate can omit or duplicate a line record across runs. The cause is not yet clear.
+- `live-sources-ratchet-noise`: The ratchet command wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit. Its count changes between runs. The lead put the entry and the history of that file back to the content of `main`, as a text edit with no measurement.
 - The [research report](/home/ianblenke/docker/gev-tools/ci-stability/report-1.md#coverage-path) describes how Node merges per-process lcov data. It also describes how `parseLcov()` selects the worst duplicate record.
 - This test covers one real path. It can leave some coverage count changes.
