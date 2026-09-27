@@ -1,8 +1,7 @@
-# perimeters Specification
+# Fire perimeters specification
 
-## Purpose
-Show fire perimeters from the WFIGS feed. Link an incident card to InciWeb when it applies. Own the perimeter entities and their selection on the globe.
-## Requirements
+## ADDED Requirements
+
 ### Requirement: Perimeter snapshot
 The source MUST return rows from a valid same-origin response and MUST reject a bad response.
 Origin: backfill
@@ -56,7 +55,7 @@ Origin: backfill
 
 #### Scenario: Check publication time `perimeters-008`
 - **WHEN** a matched page has valid dates
-- **THEN** the currency check uses its origin date or recent change date
+- **THEN** the page age check uses its origin date or recent change date
 - **AND** it rejects a page with no usable date
 
 #### Scenario: Read an InciWeb catalog or page `perimeters-009`
@@ -81,7 +80,7 @@ Origin: backfill
 #### Scenario: Own the layer life cycle `perimeters-012`
 - **WHEN** the layer starts, stops or ends
 - **THEN** it shows or hides the data source and the card
-- **AND** a late response after stop or end changes no entities
+- **AND** a late response after the layer stops or ends changes no entities
 
 #### Scenario: Select an incident on a map click `perimeters-013`
 - **WHEN** a person clicks a perimeter or empty map space
@@ -105,16 +104,15 @@ Origin: backfill
 The proxy MUST use fixed upstream routes, a bounded read and a cache for each route.
 Origin: backfill
 
-#### Scenario: Page and cache the perimeter feed `perimeters-017`
+#### Scenario: Page the perimeter feed `perimeters-017`
 - **WHEN** a client requests the perimeter route
 - **THEN** the proxy reads at most five pages and returns normalized rows
-- **AND** a fresh cache prevents another upstream request
-- **AND** a failed refresh can return stale rows
+- **AND** the transfer limit property controls the next page read
 
-#### Scenario: Serve an InciWeb index and page `perimeters-018`
-- **WHEN** a client requests an index or a numeric page id
-- **THEN** the proxy returns valid data and caches it
-- **AND** it rejects an unsafe page redirect
+#### Scenario: Serve an InciWeb index `perimeters-018`
+- **WHEN** a client requests the index
+- **THEN** the proxy returns rows when the response is an array
+- **AND** the proxy rejects a response that is not an array
 
 #### Scenario: Reject a bad proxy request `perimeters-019`
 - **WHEN** a client sends a bad method, route, id or too many requests
@@ -196,4 +194,3 @@ Origin: backfill
 - **THEN** the proxy stops the redirect body and uses one abort signal for both requests
 - **AND** it fetches a safe location through HTTPS
 - **AND** it rejects an unsafe location before a second fetch
-
