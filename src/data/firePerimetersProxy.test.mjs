@@ -58,7 +58,7 @@ function install(options = {}, hook = 'configureServer') {
 }
 
 for (const hook of ['configureServer', 'configurePreviewServer']) {
-  test(`${hook}: paging stops at five pages and normalizes the combined snapshot`, async () => {
+  test(`[perimeters-020] ${hook}: paging stops at five pages and normalizes the combined snapshot`, async () => {
     const calls = [];
     const request = install(
       {
@@ -88,7 +88,7 @@ for (const hook of ['configureServer', 'configurePreviewServer']) {
   });
 }
 
-test('an explicit transfer-limit false stops paging; a fresh cache does not fetch', async () => {
+test('[perimeters-020] an explicit transfer-limit false stops paging; a fresh cache does not fetch', async () => {
   let calls = 0;
   const request = install({
     fetchImpl: async () => {
@@ -104,7 +104,7 @@ test('an explicit transfer-limit false stops paging; a fresh cache does not fetc
   assert.equal(calls, 1);
 });
 
-test('a failed refresh serves the last good perimeter snapshot as stale', async () => {
+test('[perimeters-021] a failed refresh serves the last good perimeter snapshot as stale', async () => {
   let clock = 0,
     calls = 0;
   const request = install({
@@ -123,7 +123,7 @@ test('a failed refresh serves the last good perimeter snapshot as stale', async 
   assert.equal(res.body.rows[0].stableId, 'fire');
 });
 
-test('oversized streamed and declared bodies produce sanitized 502 responses', async () => {
+test('[perimeters-020] oversized streamed and declared bodies produce sanitized 502 responses', async () => {
   for (const declared of [true, false]) {
     let cancelled = false;
     const request = install({
@@ -151,7 +151,7 @@ test('oversized streamed and declared bodies produce sanitized 502 responses', a
   }
 });
 
-test('malformed WFIGS data does not become a cached empty snapshot', async () => {
+test('[perimeters-021] malformed WFIGS data does not become a cached empty snapshot', async () => {
   let calls = 0;
   const request = install({
     fetchImpl: async () => {
@@ -164,7 +164,7 @@ test('malformed WFIGS data does not become a cached empty snapshot', async () =>
   assert.equal(calls, 2);
 });
 
-test('concurrent requests share one upstream operation for every route', async () => {
+test('[perimeters-022] concurrent requests share one upstream operation for every route', async () => {
   for (const [path, payload] of [
     ['/', { features: [] }],
     ['/inciweb/index', []],
@@ -194,7 +194,7 @@ test('concurrent requests share one upstream operation for every route', async (
   }
 });
 
-test('bad publication ids and non-GET requests never fetch upstream', async () => {
+test('[perimeters-023] bad publication ids and non-GET requests never fetch upstream', async () => {
   let calls = 0;
   const request = install({
     fetchImpl: async () => {
@@ -211,7 +211,7 @@ test('bad publication ids and non-GET requests never fetch upstream', async () =
   assert.equal(calls, 0);
 });
 
-test('InciWeb index preserves the fixed POST, caches for one hour and serves stale arrays', async () => {
+test('[perimeters-024] InciWeb index preserves the fixed POST, caches for one hour and serves stale arrays', async () => {
   let clock = 0,
     calls = 0;
   const rows = [{ incident_id: '42', incident_title: 'Fire' }];
@@ -237,7 +237,7 @@ test('InciWeb index preserves the fixed POST, caches for one hour and serves sta
   assert.equal(stale.headers['X-Data-Stale'], 'true');
 });
 
-test('publication timestamps, thirty-minute TTL and oldest-entry eviction', async () => {
+test('[perimeters-025] publication timestamps, thirty-minute TTL and oldest-entry eviction', async () => {
   let clock = 0;
   const calls = [];
   const request = install({
@@ -266,7 +266,7 @@ test('publication timestamps, thirty-minute TTL and oldest-entry eviction', asyn
   assert.equal(calls.at(-2), 'https://inciweb.wildfire.gov/node/1');
 });
 
-test('InciWeb index and publication reads enforce their smaller caps', async () => {
+test('[perimeters-024] InciWeb index and publication reads enforce their smaller caps', async () => {
   for (const [path, cap] of [
     ['/inciweb/index', 4 * 1024 * 1024],
     ['/inciweb/publication/1', 2 * 1024 * 1024],
@@ -279,7 +279,7 @@ test('InciWeb index and publication reads enforce their smaller caps', async () 
   }
 });
 
-test('the per-client limit stops a loop while another client can read the cache', async () => {
+test('[perimeters-026] the per-client limit stops a loop while another client can read the cache', async () => {
   let calls = 0;
   const request = install({
     fetchImpl: async () => {
@@ -293,7 +293,7 @@ test('the per-client limit stops a loop while another client can read the cache'
   assert.equal(calls, 1);
 });
 
-test('publication redirects share a signal, cancel the redirect body and force HTTPS', async () => {
+test('[perimeters-027] publication redirects share a signal, cancel the redirect body and force HTTPS', async () => {
   for (const status of [301, 302, 303, 307, 308]) {
     const calls = [];
     const redirect = new Response('redirect', {
@@ -326,7 +326,7 @@ test('publication redirects share a signal, cancel the redirect body and force H
   }
 });
 
-test('unsafe publication redirect locations fail before a second fetch', async () => {
+test('[perimeters-027] unsafe publication redirect locations fail before a second fetch', async () => {
   for (const location of [
     'https://evil.example/x',
     '/a/../x',
@@ -348,7 +348,7 @@ test('unsafe publication redirect locations fail before a second fetch', async (
   }
 });
 
-test('incident pages without valid timestamps fail closed and are not cached', async () => {
+test('[perimeters-025] incident pages without valid timestamps fail closed and are not cached', async () => {
   for (const html of [
     '<html>No markers</html>',
     incidentHtml.replaceAll(/2026-[^"]+/g, 'invalid'),
@@ -366,7 +366,7 @@ test('incident pages without valid timestamps fail closed and are not cached', a
   }
 });
 
-test('direct 200 incident pages work, including one missing timestamp', async () => {
+test('[perimeters-025] direct 200 incident pages work, including one missing timestamp', async () => {
   for (const [html, expected] of [
     [incidentHtml, incidentTimes],
     [
@@ -390,7 +390,7 @@ test('direct 200 incident pages work, including one missing timestamp', async ()
   }
 });
 
-test('publication HTML streams are capped at 2 MiB', async () => {
+test('[perimeters-025] publication HTML streams are capped at 2 MiB', async () => {
   let cancelled = false;
   const request = install({
     fetchImpl: async () =>

@@ -1,6 +1,6 @@
 ## Context
 
-The layer reads WFIGS rows through a server proxy. It shows polygons and a selected incident card. InciWeb data can add a link to the card. The ledger has code gaps and 47 old tests with no tag.
+The layer reads WFIGS rows through a server proxy. It shows polygons and a selected incident card. InciWeb data can add a link to the card. The ledger has code gaps and 64 old tests with no tag. The proxy has 17 old tests in `src/data/firePerimetersProxy.test.mjs`.
 
 ## Goals
 
@@ -17,7 +17,7 @@ The layer reads WFIGS rows through a server proxy. It shows polygons and a selec
 
 ### D1 One capability
 
-The five layer files and the provider make one fire perimeter feature. The spec has one capability and 19 scenarios.
+The five layer files and the provider make one fire perimeter feature. The spec has one capability and 27 scenarios.
 
 ### D2 Test doubles
 
@@ -33,4 +33,4 @@ None found.
 
 ## Files
 
-The change adds this folder and `server/providers/firePerimeters.test.mjs`. It changes the five test files in `src/layers/perimeters/`. The lead can later update `openspec/trace/`.
+The change adds this folder and `server/providers/firePerimeters.test.mjs`. It changes the five test files in `src/layers/perimeters/` and tags the old tests in `src/data/firePerimetersProxy.test.mjs`. The lead can later update `openspec/trace/`.

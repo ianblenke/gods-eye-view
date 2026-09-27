@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { firePerimetersProxy } from './firePerimeters.js';
-import '../../src/data/firePerimetersProxy.test.mjs';
 
 function route(fetchImpl) {
   let handler;
