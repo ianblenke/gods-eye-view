@@ -1,0 +1,3 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-27-add-taiwan-location/proposal.md:29 At commit bd15c48735e7f512108f928562c3c5a94171edea, “Its functions not covered are 7” uses passive voice. Write: “The tests do not cover 7 of its functions (8 before).”
+- [ ] F2 minor openspec/changes/archive/2026-09-27-add-taiwan-location/proposal.md:30 At commit bd15c48735e7f512108f928562c3c5a94171edea, “Its branches not covered are 50” uses passive voice. Write: “The tests do not cover 50 of its branches (52 before).”
