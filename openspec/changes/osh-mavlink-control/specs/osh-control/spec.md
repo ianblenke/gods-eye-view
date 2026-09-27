@@ -109,6 +109,17 @@ Origin: spec-first
 - **WHEN** the owner clicks `Cancel`, changes the system, clears the view, or waits 30 seconds
 - **THEN** the view closes the confirmation and sends no command
 
+### Requirement: OSH layer wiring
+The OSH layer MUST call an optional command view at selection, deselection, and destroy.
+Origin: spec-first
+
+#### Scenario: Show the view for a selected system, with its name `osh-control-031`
+- **WHEN** the owner selects a system, and a command view is present
+- **THEN** the layer calls the view's `show` method with the system id and its name
+- **AND** a system with no held record uses the name of its location, or its id if neither name exists
+- **AND** the layer calls the view's `clear` method at deselection and at destroy
+- **AND** a layer with no command view selects and destroys the same as before
+
 ### Requirement: Command rate limit
 The route MUST limit commands by system id and across all systems.
 Origin: spec-first

@@ -3858,3 +3858,86 @@ test('[osh-088] the detail that the layer writes shows Video for a video datastr
     assert.doesNotMatch(blocks[1], /Video/);
   });
 });
+
+// --- osh-control-031: the optional command view of the osh-control capability ---
+
+test('[osh-control-031] the layer calls the optional command view at select, deselect and destroy', async (t) => {
+  const source = fakeSource({ systems: [SYSTEM_A], datastreams: [] });
+  const calls = [];
+  const commandView = {
+    show: async (args) => calls.push(['show', args]),
+    clear: () => calls.push(['clear']),
+  };
+  const layer = createOshLayer({ source, commandView });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    viewer.scene.pick = () => ({ id: 'osh:sys-fixture-1' });
+    getClick()({ position: {} });
+    await flush();
+    assert.deepEqual(calls.at(-1), [
+      'show',
+      { systemId: 'sys-fixture-1', systemName: 'System A' },
+    ]);
+    viewer.scene.pick = () => null;
+    getClick()({ position: {} });
+    await flush();
+    assert.deepEqual(calls.at(-1), ['clear']);
+  });
+  layer.destroy(viewer);
+  assert.deepEqual(calls.at(-1), ['clear']);
+});
+
+test('[osh-control-031] the command view gets the location name for an unheld system, and the id when neither name is set', async (t) => {
+  const source = fakeSource({
+    systems: [],
+    fois: [],
+    locations: [aircraftLocation(), aircraftLocation({ systemId: 'sys-fixture-none', systemName: null, datastreamId: 'ds-fixture-none' })],
+  });
+  const calls = [];
+  const commandView = {
+    show: async (args) => calls.push(args),
+    clear: () => {},
+  };
+  const layer = createOshLayer({ source, commandView });
+  const { viewer } = fakeViewer();
+  const { setPicked } = viewerPickHelper(viewer);
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    setPicked('osh:sys-fixture-9');
+    getClick()({ position: {} });
+    await flush();
+    assert.deepEqual(calls.at(-1), {
+      systemId: 'sys-fixture-9',
+      systemName: 'Fixture Aircraft',
+    });
+    setPicked('osh:sys-fixture-none');
+    getClick()({ position: {} });
+    await flush();
+    assert.deepEqual(calls.at(-1), {
+      systemId: 'sys-fixture-none',
+      systemName: 'sys-fixture-none',
+    });
+  });
+});
+
+test('[osh-control-031] a layer with no command view selects and destroys the same as before', async (t) => {
+  const source = fakeSource({ systems: [SYSTEM_A], datastreams: [] });
+  const layer = createOshLayer({ source });
+  const { viewer } = fakeViewer();
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-1');
+    assert.equal(layer.getStats().selectedId, 'sys-fixture-1');
+  });
+  layer.destroy(viewer);
+});

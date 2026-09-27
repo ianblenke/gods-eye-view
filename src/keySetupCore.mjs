@@ -106,6 +106,15 @@ export const KEY_SETUP_KEYS = Object.freeze([
     envVars: Object.freeze(['LL2_API_TOKEN']),
     tier: 'free',
   }),
+  Object.freeze({
+    id: 'osh-control',
+    title: 'OSH COMMAND ACCOUNT',
+    unlocks: 'Send commands to selected systems',
+    getUrl: 'https://www.opensensorhub.org/',
+    envVars: Object.freeze(['OSH_CONTROL_PASSWORD']),
+    tier: 'free',
+    hidden: true,
+  }),
 ]);
 
 /** Hostnames a Provider Settings request may arrive under or originate from. */
