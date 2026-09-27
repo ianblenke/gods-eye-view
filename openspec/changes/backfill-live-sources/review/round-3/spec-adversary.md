@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-27-backfill-live-sources/specs/live-sources/spec.md:4 At commit f36df0b5d0974926373e5c33e625ed7f7a10ab41, the first requirement sentence lacks MUST, contrary to `openspec/config.yaml`. Put MUST in the first sentence here and in the active spec.
