@@ -1,0 +1,2 @@
+Verdict: PASS
+- [ ] F1 minor openspec/changes/archive/2026-09-27-set-startup-view/review.md:1 At commit c1abb1ab654d6218b67000c7173d865b0620ef63, the gate reports `REVIEW-MISSING`. Complete the reviews, add `review.md`, and rerun the gates.

@@ -41,4 +41,4 @@ None.
 - `qa-floor-verify.mjs`: Its comment says that it cancels the start flight before a view over Austin.
 - `flight-timing-kept`: The 25000 m start height and 4 s flight come from the old flight.
 - `no-browser-view`: No browser view of the result was run.
-- `controls-call-untested`: No test runs the one call of `startApplicationView` in `src/app/controls.js`. A test needs to import that file, and it cannot: its import of `StyleManager` loads the package `mgrs`, which fails on Node 26. The gates also refuse to edit a file and load it for the first time in one change (`LEDGER-NO-BASELINE`). A later change can make `mgrs` load, then load `controls.js` with a test, and only after that edit it.
+- `controls-call-untested`: No test runs the one call of `startApplicationView` in `src/app/controls.js`. A test cannot import `controls.js`, because that file imports `StyleManager`, which loads the package `mgrs`. The package fails on Node 26. The gates also refuse to edit a file and load it for the first time in one change (`LEDGER-NO-BASELINE`). A later change can make `mgrs` load and add a test that imports `controls.js`. A subsequent change can edit `controls.js`.
