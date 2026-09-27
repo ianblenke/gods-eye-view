@@ -1,8 +1,17 @@
 import * as Cesium from 'cesium';
 
+export const START_VIEW = {
+  longitude: 120.6485,
+  latitude: 24.18,
+  heightM: 217,
+  headingDeg: 0,
+  pitchDeg: -35,
+  rollDeg: 0,
+};
+
 /**
  * Camera presets for notable locations.
- * Phase 1 default: fly to Austin, TX on load.
+ * The Austin preset stays available for direct callers.
  */
 export const CAMERA_PRESETS = {
   austin: {
@@ -79,4 +88,57 @@ export function flyToAustin(viewer) {
     clearTimeout(timer);
     if (!viewer.isDestroyed()) viewer.camera.cancelFlight();
   };
+}
+
+/** Start a camera flight above Taiwan and return its cancel function. */
+export function flyToStartView(viewer) {
+  viewer.camera.setView({
+    destination: Cesium.Cartesian3.fromDegrees(
+      START_VIEW.longitude,
+      START_VIEW.latitude,
+      25000,
+    ),
+    orientation: {
+      heading: Cesium.Math.toRadians(START_VIEW.headingDeg),
+      pitch: Cesium.Math.toRadians(-90),
+      roll: Cesium.Math.toRadians(START_VIEW.rollDeg),
+    },
+  });
+
+  const timer = setTimeout(() => {
+    if (viewer.isDestroyed()) return;
+    viewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(
+        START_VIEW.longitude,
+        START_VIEW.latitude,
+        START_VIEW.heightM,
+      ),
+      orientation: {
+        heading: Cesium.Math.toRadians(START_VIEW.headingDeg),
+        pitch: Cesium.Math.toRadians(START_VIEW.pitchDeg),
+        roll: Cesium.Math.toRadians(START_VIEW.rollDeg),
+      },
+      duration: 4.0,
+      easingFunction: Cesium.EasingFunction.CUBIC_IN_OUT,
+    });
+  }, 500);
+  return () => {
+    clearTimeout(timer);
+    if (!viewer.isDestroyed()) viewer.camera.cancelFlight();
+  };
+}
+
+/** Set the start view and loader text for the application. */
+export function startApplicationView({
+  viewer,
+  hasShareState,
+  loaderStatus,
+  defer,
+}) {
+  if (!hasShareState) {
+    loaderStatus.textContent = 'Flying to Taiwan...';
+    defer(flyToStartView(viewer));
+  } else {
+    loaderStatus.textContent = 'Restoring shared view...';
+  }
 }

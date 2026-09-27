@@ -938,6 +938,9 @@ The standalone entry now composes scene setup, controls, layer registration and
 tools through the reusable application lifecycle. Map defaults, layer order,
 share restoration, voice setup and the running debug handle retain their behavior.
 The welcome card still waits for restoration and the loading-cover transition.
+With no share state, the camera starts 25000 m above Taiwan. After 500 ms, it flies for 4 s to longitude 120.6485, latitude 24.18, and height 217 m.
+The final heading is 0 degrees, pitch is -35 degrees, and roll is 0 degrees. The loader shows `Flying to Taiwan...`.
+A share link keeps its view and shows `Restoring shared view...`.
 
 Startup failure cleans up acquired resources. Explicit application destruction
 aborts construction, cancels pending playback/annotations and delayed welcome UI,
