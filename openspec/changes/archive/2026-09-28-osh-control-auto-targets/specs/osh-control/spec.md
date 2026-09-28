@@ -20,30 +20,6 @@ Origin: spec-first
 - **THEN** the route gives `no_key` or `no_account`, in that order
 - **AND** the route sends no upstream request
 
-### Requirement: Target allowlist
-The route MUST check the real server for the one system id the browser names, and resolve a real command through its schema name.
-Origin: spec-first
-
-#### Scenario: Resolve a command by schema name `osh-control-006`
-- **WHEN** a target has control streams with schemas that name commands in `parametersSchema.name`
-- **THEN** the route maps each matching command name to that stream id for the process lifetime
-- **AND** the route gives `command_not_found` when no schema name matches the requested command
-
-#### Scenario: Refuse a malformed system id `osh-control-033`
-- **WHEN** the commands route or the targets route gets a `system` value that does not match `OSH_ID_PATTERN`
-- **THEN** the route refuses it with `bad_body`
-- **AND** the route sends no upstream request
-
-#### Scenario: Give the live command list for one system `osh-control-034`
-- **WHEN** the flag is `true` and the targets route gets a system id of the right shape
-- **THEN** the route reads that system's real control streams and their schemas
-- **AND** it answers `200` with `{enabled:true, reason:null, commands:{...}}`, one entry for each table command a real control stream of that system supports
-- **AND** a system with no matching control stream gets an empty `commands` object, not an error
-
-#### Scenario: Give upstream_failed when the control-stream read fails `osh-control-035`
-- **WHEN** the targets route gets a system id of the right shape, but the control-stream read of that system fails
-- **THEN** it answers `200` with `{enabled:true, reason:'upstream_failed', commands:{}}`
-
 ### Requirement: Command table and validator
 The route MUST accept only the eight table commands and the exact fields and values of each command.
 Origin: spec-first
@@ -90,3 +66,35 @@ This change retires `osh-control-012`. The first command table has no `token` fi
 | `mavPauseMissionControl` | `Resume`: boolean |
 | `mavFlightModeControl` | `FlightMode`: number 0..25 |
 | `mavLandingControl` | `disarm`: boolean |
+
+## ADDED Requirements
+
+### Requirement: Target resolution
+The route MUST check the real server for the one system id the browser names, and resolve a real command through its schema name.
+Origin: spec-first
+
+#### Scenario: Resolve a command by schema name `osh-control-006`
+- **WHEN** a target has control streams with schemas that name commands in `parametersSchema.name`
+- **THEN** the route maps each matching command name to that stream id for the process lifetime
+- **AND** the route gives `command_not_found` when no schema name matches the requested command
+
+#### Scenario: Refuse a system id of the wrong shape `osh-control-033`
+- **WHEN** the commands route or the targets route gets a `system` value that does not match `OSH_ID_PATTERN`
+- **THEN** the route refuses it with `bad_body`
+- **AND** the route sends no upstream request
+
+#### Scenario: Give the live command list for one system `osh-control-034`
+- **WHEN** the flag is `true` and the targets route gets a system id of the right shape
+- **THEN** the route reads that system's real control streams and their schemas
+- **AND** it answers `200` with `{enabled:true, reason:null, commands:{...}}`, one entry for each table command a real control stream of that system supports
+- **AND** a system with no control stream that matches gets an empty `commands` object, not an error
+
+#### Scenario: Give upstream_failed when the control-stream read fails `osh-control-035`
+- **WHEN** the targets route gets a system id of the right shape, but the control-stream read of that system fails
+- **THEN** it answers `200` with `{enabled:true, reason:'upstream_failed', commands:{}}`
+
+## REMOVED Requirements
+
+### Requirement: Target allowlist
+**Reason**: This change replaces the owner-curated list with a live, per-request check. There is no list any more, so the new requirement "Target resolution" above uses that name instead, not "allowlist." This change retires the scenarios `osh-control-004`, `osh-control-005` and `osh-control-030`.
+**Migration**: Remove `OSH_CONTROL_TARGETS` from `.env`. The targets route now takes a `system` query value instead.

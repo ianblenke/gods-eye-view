@@ -13,7 +13,7 @@
 - [x] 2.2 Remove `parseTargets` from `targets.js` and the `systems` field from `routeConfig`'s answer.
 - [x] 2.3 Remove `OSH_CONTROL_TARGETS` from `.env.example`.
 
-## 3. The malformed-id check
+## 3. The wrong-shape id check
 
 - [x] 3.1 Write the `[osh-control-033]` test for a `system` value that fails `OSH_ID_PATTERN`, on both routes, in `src/control/route.test.mjs`.
   - Mutation: Skip the shape check before the live read. The test must fail.
@@ -30,9 +30,9 @@
 
 ## 5. Resolve every command of one system
 
-- [x] 5.1 Write the `[osh-control-034]` test: matching control streams give exactly those commands, in `src/control/route.test.mjs`.
+- [x] 5.1 Write the `[osh-control-034]` test: control streams that match give exactly those commands, in `src/control/route.test.mjs`.
   - Mutation: Return one entry for every table command, matched or not. The test must fail.
-- [x] 5.2 Write the `[osh-control-034]` test: a system with no matching control stream gets an empty `commands` object, not an error.
+- [x] 5.2 Write the `[osh-control-034]` test: a system with no control stream that matches gets an empty `commands` object, not an error.
   - Mutation: Answer an error for a system with no match. The test must fail.
 - [x] 5.3 Write the `[osh-control-035]` test: a failed control-stream read gives `upstream_failed`, not a crash or an empty answer with no reason.
   - Mutation: Swallow the read failure and answer as if the system had no match. The test must fail.

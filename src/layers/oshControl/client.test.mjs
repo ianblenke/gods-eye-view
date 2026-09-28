@@ -14,7 +14,7 @@ test('[osh-control-016] Send one browser POST to the fixed same-origin path', as
   assert.deepEqual(JSON.parse(calls[0].options.body), { system: 'sys-fixture-one', command: 'mavRTLControl', parameters: { rtl: true } });
 });
 
-test('[osh-control-016] Read the static targets from the same origin', async () => {
+test('[osh-control-034] Build the targets query string with the system id', async () => {
   const paths = [];
   const client = createOshControlClient({ fetchImpl: async (url) => { paths.push(url); return Response.json({ enabled: false, reason: 'control_off', commands: {} }); } });
   assert.deepEqual(await client.targets('sys fixture/one'), { enabled: false, reason: 'control_off', commands: {} });
