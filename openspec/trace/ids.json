@@ -1734,6 +1734,11 @@
     "since": "2026-09-28",
     "change": "osh-control-auto-targets"
   },
+  "osh-control-036": {
+    "hash": "90ca7a2cd2a8087d818b5264300d5129a8ffdd2372b919a98db04665722c8f7d",
+    "since": "2026-09-28",
+    "change": "backfill-osh-control-options"
+  },
   "perimeters-001": {
     "hash": "c950b2d41849c79df6aa9123d35a0cf495b873a7c0356228c03968863777d80d",
     "since": "2026-09-27",
