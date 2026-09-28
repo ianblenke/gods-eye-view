@@ -1730,7 +1730,7 @@
     "change": "osh-mavlink-control"
   },
   "osh-control-031": {
-    "hash": "5efa6e0fb3c37e720b9dd001b923a8ac5f28f0809678a412dc27d38d2c649807",
+    "hash": "def666b0a3c8f86e5ee4f594f54c03110441d3473bac4680d30b1ce149c2cbac",
     "since": "2026-09-27",
     "change": "osh-mavlink-control"
   },
