@@ -96,5 +96,5 @@ Origin: spec-first
 ## REMOVED Requirements
 
 ### Requirement: Target allowlist
-**Reason**: This change replaces the owner-curated list with a live, per-request check. There is no list any more, so the new requirement "Target resolution" above uses that name instead, not "allowlist." This change retires the scenarios `osh-control-004`, `osh-control-005` and `osh-control-030`.
+**Reason**: This change replaces the owner-typed list with a live, per-request check. There is no list any more, so the new requirement "Target resolution" above uses that name instead, not "allowlist." This change retires the scenarios `osh-control-004`, `osh-control-005` and `osh-control-030`.
 **Migration**: Remove `OSH_CONTROL_TARGETS` from `.env`. The targets route now takes a `system` query value instead.
