@@ -11,7 +11,7 @@
 
 ## 3. Gates and review
 
-- [ ] 3.1 Run `make ratchet CHANGE=backfill-osh-control-options` and inspect the command verdict.
-- [ ] 3.2 Run `make gates CHANGE=backfill-osh-control-options` and inspect the command verdict and QA lines.
+- [x] 3.1 Run `make ratchet CHANGE=backfill-osh-control-options` and inspect the command verdict.
+- [x] 3.2 Run `make gates CHANGE=backfill-osh-control-options` and inspect the command verdict and QA lines.
 - [ ] 3.3 Run `/opsx:review backfill-osh-control-options` with both review agents.
 - [ ] 3.4 Write `review.md` with the passed reviews and tree hash.
