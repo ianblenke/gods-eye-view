@@ -1,3 +1,5 @@
+import { OSH_ID_PATTERN } from '../osh/ids.js';
+
 export const OSH_CONTROL_COMMANDS = Object.freeze({
   mavEnableLocationControl: {
     fields: { EnableLocationControl: { type: 'boolean' } },
@@ -48,7 +50,6 @@ function schemaHasField(schema, name) {
 
 export function validateCommand(
   body,
-  targets,
   schema = null,
   byteLength = Buffer.byteLength(JSON.stringify(body)),
 ) {
@@ -63,8 +64,8 @@ export function validateCommand(
       .match(/^command,parameters,system$/)
   )
     return { reason: 'bad_body' };
-  if (typeof body.system !== 'string' || !targets.includes(body.system))
-    return { reason: 'not_a_target' };
+  if (typeof body.system !== 'string' || !OSH_ID_PATTERN.test(body.system))
+    return { reason: 'bad_body' };
   if (
     typeof body.command !== 'string' ||
     !Object.hasOwn(OSH_CONTROL_COMMANDS, body.command)
