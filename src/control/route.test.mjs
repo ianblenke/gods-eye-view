@@ -1,7 +1,7 @@
 import test, { mock } from 'node:test';
 import assert from 'node:assert/strict';
 import { oshControlProxy, createCommandGate, isSameOriginCommand } from '../../server/providers/osh-control.js';
-import { resolveCommand, parseTargets } from '../../server/providers/osh-control/targets.js';
+import { resolveCommand, resolveTargets, routeConfig } from '../../server/providers/osh-control/targets.js';
 import { oshCommandUrl, assertCommandUrl } from '../../server/providers/osh-control/url.js';
 import { oshPostCommand } from '../../server/providers/osh-control/post.js';
 
@@ -21,7 +21,7 @@ function route(env, fetchImpl = async () => { throw new Error('unexpected upstre
   };
 }
 
-const enabled = { OSH_CONTROL_ENABLED: 'true', OSH_URL: 'https://fixture.invalid/', OSH_CONTROL_USERNAME: 'operator', OSH_CONTROL_PASSWORD: 'fixture-secret', OSH_USERNAME: 'reader', OSH_CONTROL_TARGETS: 'sys-fixture-one' };
+const enabled = { OSH_CONTROL_ENABLED: 'true', OSH_URL: 'https://fixture.invalid/', OSH_CONTROL_USERNAME: 'operator', OSH_CONTROL_PASSWORD: 'fixture-secret', OSH_USERNAME: 'reader' };
 const commandBody = { system: 'sys-fixture-one', command: 'mavRTLControl', parameters: { rtl: true } };
 function upstream(options = {}) {
   return async (url, request) => {
@@ -35,7 +35,7 @@ function upstream(options = {}) {
 test('[osh-control-001] Keep the route off without the exact flag', async () => {
   for (const flag of [undefined, '', '1', 'yes', 'TRUE']) {
     const call = route({ ...enabled, OSH_CONTROL_ENABLED: flag });
-    assert.deepEqual((await call('GET', '/targets')).body, { enabled: false, reason: 'control_off', targets: [] });
+    assert.deepEqual((await call('GET', '/targets')).body, { enabled: false, reason: 'control_off', commands: {} });
     const result = await call('POST', '/commands', {});
     assert.equal(result.status, 403);
     assert.deepEqual(result.body, { error: 'control_off' });
@@ -44,42 +44,24 @@ test('[osh-control-001] Keep the route off without the exact flag', async () => 
 
 test('[osh-control-002] Refuse the same command account', async () => {
   const call = route({ ...enabled, OSH_CONTROL_USERNAME: ' Operator ', OSH_USERNAME: 'operator' });
-  const result = await call('POST', '/commands', {});
+  const result = await call('POST', '/commands', { ...commandBody, system: 'bad id' });
   assert.equal(result.status, 403);
   assert.deepEqual(result.body, { error: 'same_account' });
 });
 
 test('[osh-control-003] Refuse absent route inputs in order', async () => {
-  for (const [change, reason] of [[{ OSH_URL: '::' }, 'no_key'], [{ OSH_CONTROL_USERNAME: '' }, 'no_account'], [{ OSH_CONTROL_PASSWORD: '' }, 'no_account'], [{ OSH_CONTROL_TARGETS: '' }, 'no_targets']]) {
+  for (const [change, reason] of [[{ OSH_URL: '::' }, 'no_key'], [{ OSH_CONTROL_USERNAME: '' }, 'no_account'], [{ OSH_CONTROL_PASSWORD: '' }, 'no_account']]) {
     const call = route({ ...enabled, ...change });
     const result = await call('POST', '/commands', {});
     assert.equal(result.status, 403);
     assert.deepEqual(result.body, { error: reason });
   }
-  // Two inputs are bad at once, so only the order of the checks can tell
-  // which reason wins. This bad URL and empty account both come before the
-  // empty target list; the target check must never run first.
+  // Two inputs are bad at once. Check the order of the route checks.
   const urlAndAccount = await route({ ...enabled, OSH_URL: '::', OSH_CONTROL_USERNAME: '' })('POST', '/commands', {});
   assert.deepEqual(urlAndAccount.body, { error: 'no_key' });
-  const accountAndTargets = await route({ ...enabled, OSH_CONTROL_USERNAME: '', OSH_CONTROL_TARGETS: '' })('POST', '/commands', {});
-  assert.deepEqual(accountAndTargets.body, { error: 'no_account' });
-});
-
-test('[osh-control-004] Refuse a bad target and warn with its position only', async () => {
-  const warnings = [];
-  let middleware;
-  oshControlProxy({ env: { ...enabled, OSH_CONTROL_TARGETS: 'sys-fixture-one,secret invalid' }, warn: (line) => warnings.push(line), fetchImpl: async () => { throw new Error('unexpected upstream call'); }, log: async () => {} }).configureServer({ middlewares: { use(_path, handler) { middleware = handler; } } });
-  const result = { statusCode: 200, setHeader() {}, end(value) { this.body = JSON.parse(value); } };
-  await middleware({ method: 'GET', url: '/targets' }, result);
-  assert.deepEqual(result.body, { enabled: false, reason: 'bad_targets', targets: [] });
-  assert.equal(warnings.length, 1);
-  assert.match(warnings[0], /position 2/);
-  assert.equal(warnings[0].includes('secret'), false);
-});
-
-test('[osh-control-005] Refuse a repeated target', async () => {
-  const call = route({ ...enabled, OSH_CONTROL_TARGETS: 'sys-fixture-one,sys-fixture-one' });
-  assert.deepEqual((await call('GET', '/targets')).body, { enabled: false, reason: 'bad_targets', targets: [] });
+  const absentAccount = await route({ ...enabled, OSH_CONTROL_USERNAME: '' })('POST', '/commands', {});
+  assert.deepEqual(absentAccount.body, { error: 'no_account' });
+  assert.equal(routeConfig(enabled).reason, null);
 });
 
 test('[osh-control-006] Resolve streams by schema name and keep the map', async () => {
@@ -97,16 +79,58 @@ test('[osh-control-006] Resolve streams by schema name and keep the map', async 
   assert.equal((await resolveCommand({ cache, root, system: 'sys-fixture-one', command: 'mavTakeoffControl', headers: {}, fetchImpl })).id, 'cs-fixture-right');
   assert.equal(await resolveCommand({ cache, root, system: 'sys-fixture-one', command: 'mavLandingControl', headers: {}, fetchImpl }), null);
   assert.equal(calls.length, 3);
+  const targets = await resolveTargets({ cache, root, system: 'sys-fixture-one', headers: {}, fetchImpl });
+  assert.equal(targets.get('mavTakeoffControl').id, 'cs-fixture-right');
+  assert.equal(calls.length, 3, 'resolveTargets reads the shared cache, so it makes no new call');
 });
 
-test('[osh-control-030] Give the same static table to each target without a GET', async () => {
-  const call = route({ ...enabled, OSH_CONTROL_TARGETS: 'sys-fixture-one,sys-fixture-two' });
-  const result = await call('GET', '/targets');
+test('[osh-control-033] Refuse a system id of the wrong shape before a read on both routes', async () => {
+  let reads = 0;
+  const call = route(enabled, async () => { reads += 1; throw new Error('unexpected read'); });
+  for (const system of ['', 'bad/id', 'bad id', 'x'.repeat(65)]) {
+    assert.deepEqual((await call('GET', `/targets?system=${encodeURIComponent(system)}`)).body, { enabled: true, reason: 'bad_body', commands: {} });
+    assert.deepEqual((await call('POST', '/commands', { ...commandBody, system })).body, { error: 'bad_body' });
+  }
+  assert.deepEqual((await call('GET', '/targets')).body, { enabled: true, reason: 'bad_body', commands: {} });
+  assert.equal(reads, 0);
+});
+
+test('[osh-control-034] Give only commands with a control stream that matches', async () => {
+  const calls = [];
+  const fetchImpl = async (url, options) => {
+    calls.push(String(url));
+    if (options.method === 'POST') return new Response(null, { status: 201 });
+    if (String(url).includes('/systems?')) return Response.json({ items: [] });
+    if (String(url).endsWith('/controlstreams')) return Response.json({ items: [{ id: 'cs-rtl' }, { id: 'cs-other' }, { id: 'cs-takeoff' }] });
+    if (String(url).endsWith('/cs-rtl/schema')) return Response.json({ parametersSchema: { name: 'mavRTLControl', fields: [{ name: 'rtl' }] } });
+    if (String(url).endsWith('/cs-takeoff/schema')) return Response.json({ parametersSchema: { name: 'mavTakeoffControl', fields: [{ name: 'TakeoffAltitudeAGL' }] } });
+    return Response.json({ parametersSchema: { name: 'notInTable', fields: [] } });
+  };
+  const call = route(enabled, fetchImpl);
+  const result = await call('GET', '/targets?system=sys-fixture-one');
   assert.equal(result.status, 200);
   assert.equal(result.body.enabled, true);
-  assert.deepEqual(result.body.targets.map((target) => target.system), ['sys-fixture-one', 'sys-fixture-two']);
-  assert.equal(Object.keys(result.body.targets[0].commands).length, 8);
-  assert.deepEqual(result.body.targets[0].commands, result.body.targets[1].commands);
+  assert.equal(result.body.reason, null);
+  assert.deepEqual(Object.keys(result.body.commands).sort(), ['mavRTLControl', 'mavTakeoffControl']);
+  assert.deepEqual(result.body.commands.mavRTLControl, { fields: { rtl: { type: 'boolean' } } });
+  assert.equal((await call('POST', '/commands', commandBody)).body.outcome, 'sent');
+  assert.equal(calls.filter((url) => url.endsWith('/controlstreams')).length, 1);
+});
+
+test('[osh-control-034] Give an empty commands object when no stream matches', async () => {
+  const call = route(enabled, upstream({ list: Response.json({ items: [] }) }));
+  const result = await call('GET', '/targets?system=sys-fixture-one');
+  assert.equal(result.status, 200);
+  assert.deepEqual(result.body, { enabled: true, reason: null, commands: {} });
+});
+
+test('[osh-control-035] Give upstream_failed when the control-stream read fails', async () => {
+  const call = route(enabled, upstream({ list: new Response(null, { status: 503 }) }));
+  const result = await call('GET', '/targets?system=sys-fixture-one');
+  assert.equal(result.status, 200);
+  assert.deepEqual(result.body, { enabled: true, reason: 'upstream_failed', commands: {} });
+  const noRoot = route(enabled, async () => new Response(null, { status: 503 }));
+  assert.deepEqual((await noRoot('GET', '/targets?system=sys-fixture-one')).body, { enabled: true, reason: 'upstream_failed', commands: {} });
 });
 
 test('[osh-control-018] Enforce four commands for each system and eight for all systems within one minute', () => {
@@ -202,11 +226,10 @@ test('[osh-control-029] Refuse a POST without JSON content type', async () => {
   }
 });
 
-test('[osh-control-007 osh-control-008 osh-control-009] Refuse bad command bodies before a read', async () => {
+test('[osh-control-007 osh-control-009] Refuse bad command bodies before a read', async () => {
   const call = route(enabled);
   assert.deepEqual((await call('POST', '/commands')).body, { error: 'bad_body' });
   assert.deepEqual((await call('POST', '/commands', { ...commandBody, extra: true })).body, { error: 'bad_body' });
-  assert.deepEqual((await call('POST', '/commands', { ...commandBody, system: 'sys-fixture-other' })).body, { error: 'not_a_target' });
   assert.deepEqual((await call('POST', '/commands', { ...commandBody, command: 'mavShellControl' })).body, { error: 'unknown_command' });
   assert.deepEqual((await call('POST', '/commands', { ...commandBody, parameters: { rtl: 'true' } })).body, { error: 'bad_parameter' });
   assert.deepEqual((await call('POST', '/commands', { ...commandBody, parameters: { rtl: 'x'.repeat(4096) } })).body, { error: 'bad_body' });
@@ -293,13 +316,9 @@ test('[osh-control-001] Pass unknown paths to the next middleware and refuse ano
 });
 
 test('[osh-control-003] Refuse a blank URL and accept a distinct account', async () => {
-  assert.deepEqual((await route({ ...enabled, OSH_URL: '' })('GET', '/targets')).body, { enabled: false, reason: 'no_key', targets: [] });
+  assert.deepEqual((await route({ ...enabled, OSH_URL: '' })('GET', '/targets')).body, { enabled: false, reason: 'no_key', commands: {} });
   const result = await route({ ...enabled, OSH_USERNAME: '' })('GET', '/targets');
   assert.equal(result.body.enabled, true);
-});
-
-test('[osh-control-004] Use a position-only warning with the default sink', () => {
-  assert.deepEqual(parseTargets('bad id'), { reason: 'bad_targets', systems: [] });
 });
 
 test('[osh-control-006] Skip invalid streams and unreadable schemas', async () => {
