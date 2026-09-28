@@ -267,7 +267,7 @@ The lead did these steps in one session, with a third OSH account (the owner's w
 14. The lead sent no POST in this session.
 15. The lead wrote the command table of D4, with the owner's choice of 8 commands. `specs/osh-control/spec.md` and `tasks.md` come next.
 
-This answers step 13: two accounts without the new rights still get `403`; the third, with the new rights, gets `200`. The first real command from this project's own code comes only after the gates and the two reviews pass. The owner sends it from the panel, and watches the SITL console.
+The discovery session answers step 13: two accounts without the new rights still get `403`; the third, with the new rights, gets `200`. The first real command from this project's own code comes only after the gates and the two reviews pass. The owner sends it from the panel, and watches the SITL console.
 
 **A new finding from step 12:** the `sender` field of a command record held the calling account's own user name. The server echoed it back in clear text. No script printed it beyond one lead-only terminal, and it is not in this file, in memory, or in the repository. A later discovery script must redact any field whose value could match a known `.env` value, before it prints a record's structure.
 
@@ -315,7 +315,7 @@ Changed: `server/providers/local.js`, `src/layers/osh/index.js`, `src/app/layers
 
 ## Risks / Trade-offs
 
-1. **The server names two control streams with the same command name, under one system.** The map of D3 keeps the last one it reads. Guard: none in code; the owner checks this against the real fleet before the flag goes on, and D9's own read found no such case.
+1. **The server names two control streams with the same command name, under one system.** The map of D3 keeps the last one it reads. Guard: none in code; the owner checks this against the real fleet before the flag goes on, and D9's own check found no such case.
 2. **The schema on the server changes after the table exists.** Guard: the schema check of D4, before the first command to a target in each process.
 3. **The command account has more rights than D8 lists.** No code can find this. The scan and the allowlists limit what the code sends, not what the account can do. The owner examines the account against D8.
 4. **A timeout hides whether the command arrived.** The route answers `failed` and never tries again. The owner reads the telemetry before the next command.
