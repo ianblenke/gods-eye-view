@@ -1,7 +1,7 @@
 # osh-control Specification
 
 ## Purpose
-Let the owner send one table command to one real drone system of the OpenSensorHub server. The owner does this from the camera panel, after a second click of confirmation. Keep this path off unless the owner sets a flag and a separate command account. Refuse every command and every system id that the table and a live schema check do not both name exactly. Log each command, sent or refused, without a credential.
+Let the owner send one table command to one real drone system of the OpenSensorHub server. The owner does this from the camera panel, after a second click of confirmation. Keep this path off unless the owner sets a flag and a separate command account. Refuse every command that is not an exact entry of the table. Refuse every system id that a live schema check does not name exactly. Log each command, sent or refused, without a credential.
 ## Requirements
 ### Requirement: Route conditions
 The command route MUST use the flag, URL, and command account at request time.
@@ -22,30 +22,6 @@ Origin: spec-first
 - **WHEN** the flag is `true`, but the URL is invalid or an account field is absent
 - **THEN** the route gives `no_key` or `no_account`, in that order
 - **AND** the route sends no upstream request
-
-### Requirement: Target allowlist
-The route MUST check the real server for the one system id the browser names, and resolve a real command through its schema name.
-Origin: spec-first
-
-#### Scenario: Resolve a command by schema name `osh-control-006`
-- **WHEN** a target has control streams with schemas that name commands in `parametersSchema.name`
-- **THEN** the route maps each matching command name to that stream id for the process lifetime
-- **AND** the route gives `command_not_found` when no schema name matches the requested command
-
-#### Scenario: Refuse a malformed system id `osh-control-033`
-- **WHEN** the commands route or the targets route gets a `system` value that does not match `OSH_ID_PATTERN`
-- **THEN** the route refuses it with `bad_body`
-- **AND** the route sends no upstream request
-
-#### Scenario: Give the live command list for one system `osh-control-034`
-- **WHEN** the flag is `true` and the targets route gets a system id of the right shape
-- **THEN** the route reads that system's real control streams and their schemas
-- **AND** it answers `200` with `{enabled:true, reason:null, commands:{...}}`, one entry for each table command a real control stream of that system supports
-- **AND** a system with no matching control stream gets an empty `commands` object, not an error
-
-#### Scenario: Give upstream_failed when the control-stream read fails `osh-control-035`
-- **WHEN** the targets route gets a system id of the right shape, but the control-stream read of that system fails
-- **THEN** it answers `200` with `{enabled:true, reason:'upstream_failed', commands:{}}`
 
 ### Requirement: Command table and validator
 The route MUST accept only the eight table commands and the exact fields and values of each command.
@@ -201,4 +177,28 @@ Origin: spec-first
 #### Scenario: Refuse a POST without JSON content type `osh-control-029`
 - **WHEN** `Content-Type` is not `application/json`
 - **THEN** the route answers `403` with `{error:'cross_origin'}`
+
+### Requirement: Target resolution
+The route MUST check the real server for the one system id the browser names, and resolve a real command through its schema name.
+Origin: spec-first
+
+#### Scenario: Resolve a command by schema name `osh-control-006`
+- **WHEN** a target has control streams with schemas that name commands in `parametersSchema.name`
+- **THEN** the route maps each matching command name to that stream id for the process lifetime
+- **AND** the route gives `command_not_found` when no schema name matches the requested command
+
+#### Scenario: Refuse a system id of the wrong shape `osh-control-033`
+- **WHEN** the commands route or the targets route gets a `system` value that does not match `OSH_ID_PATTERN`
+- **THEN** the route refuses it with `bad_body`
+- **AND** the route sends no upstream request
+
+#### Scenario: Give the live command list for one system `osh-control-034`
+- **WHEN** the flag is `true` and the targets route gets a system id of the right shape
+- **THEN** the route reads that system's real control streams and their schemas
+- **AND** it answers `200` with `{enabled:true, reason:null, commands:{...}}`, one entry for each table command a real control stream of that system supports
+- **AND** a system with no control stream that matches gets an empty `commands` object, not an error
+
+#### Scenario: Give upstream_failed when the control-stream read fails `osh-control-035`
+- **WHEN** the targets route gets a system id of the right shape, but the control-stream read of that system fails
+- **THEN** it answers `200` with `{enabled:true, reason:'upstream_failed', commands:{}}`
 

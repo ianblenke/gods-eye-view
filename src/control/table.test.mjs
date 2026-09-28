@@ -11,8 +11,8 @@ test('[osh-control-007] Refuse a body that is not a small exact object', () => {
   assert.equal(check(good, 4096).reason, null);
 });
 
-test('[osh-control-033] Refuse a malformed system id', () => {
-  for (const system of ['', 'bad/id', 'bad id', 'x'.repeat(65)]) {
+test('[osh-control-033] Refuse a system id of the wrong shape', () => {
+  for (const system of ['', 'bad/id', 'bad id', 'x'.repeat(65), 42, true, ['sys-fixture-one']]) {
     assert.equal(check({ ...good, system }).reason, 'bad_body');
   }
 });

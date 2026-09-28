@@ -1787,7 +1787,6 @@
     "src/control/table.test.mjs › [osh-control-015] Keep the exact eight command definitions"
   ],
   "osh-control-016": [
-    "src/layers/oshControl/client.test.mjs › [osh-control-016] Read the static targets from the same origin",
     "src/layers/oshControl/client.test.mjs › [osh-control-016] Send one browser POST to the fixed same-origin path",
     "src/layers/oshControl/view.test.mjs › [osh-control-016 osh-control-017] Show and clear the optional command view with the layer selection",
     "src/layers/oshControl/view.test.mjs › [osh-control-016] Confirm a command before the browser sends it",
@@ -1863,12 +1862,13 @@
     "src/app/layers/osh.test.mjs › [osh-control-032] builds the layer with no command view when the page has no control panel host"
   ],
   "osh-control-033": [
-    "src/control/route.test.mjs › [osh-control-033] Refuse a malformed system id before a read on both routes",
-    "src/control/table.test.mjs › [osh-control-033] Refuse a malformed system id"
+    "src/control/route.test.mjs › [osh-control-033] Refuse a system id of the wrong shape before a read on both routes",
+    "src/control/table.test.mjs › [osh-control-033] Refuse a system id of the wrong shape"
   ],
   "osh-control-034": [
-    "src/control/route.test.mjs › [osh-control-034] Give an empty command object when no stream matches",
-    "src/control/route.test.mjs › [osh-control-034] Give only commands with a matching control stream"
+    "src/control/route.test.mjs › [osh-control-034] Give an empty commands object when no stream matches",
+    "src/control/route.test.mjs › [osh-control-034] Give only commands with a control stream that matches",
+    "src/layers/oshControl/client.test.mjs › [osh-control-034] Build the targets query string with the system id"
   ],
   "osh-control-035": [
     "src/control/route.test.mjs › [osh-control-035] Give upstream_failed when the control-stream read fails"

@@ -84,7 +84,7 @@ test('[osh-control-006] Resolve streams by schema name and keep the map', async 
   assert.equal(calls.length, 3, 'resolveTargets reads the shared cache, so it makes no new call');
 });
 
-test('[osh-control-033] Refuse a malformed system id before a read on both routes', async () => {
+test('[osh-control-033] Refuse a system id of the wrong shape before a read on both routes', async () => {
   let reads = 0;
   const call = route(enabled, async () => { reads += 1; throw new Error('unexpected read'); });
   for (const system of ['', 'bad/id', 'bad id', 'x'.repeat(65)]) {
@@ -95,7 +95,7 @@ test('[osh-control-033] Refuse a malformed system id before a read on both route
   assert.equal(reads, 0);
 });
 
-test('[osh-control-034] Give only commands with a matching control stream', async () => {
+test('[osh-control-034] Give only commands with a control stream that matches', async () => {
   const calls = [];
   const fetchImpl = async (url, options) => {
     calls.push(String(url));
@@ -117,7 +117,7 @@ test('[osh-control-034] Give only commands with a matching control stream', asyn
   assert.equal(calls.filter((url) => url.endsWith('/controlstreams')).length, 1);
 });
 
-test('[osh-control-034] Give an empty command object when no stream matches', async () => {
+test('[osh-control-034] Give an empty commands object when no stream matches', async () => {
   const call = route(enabled, upstream({ list: Response.json({ items: [] }) }));
   const result = await call('GET', '/targets?system=sys-fixture-one');
   assert.equal(result.status, 200);
