@@ -63,6 +63,8 @@ test('[osh-control-016] Show a refused command result', async () => {
   const host = documentImpl.createElement('div');
   const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: target.commands }), send: async () => ({ outcome: 'refused', reason: 'command_not_found' }) } });
   await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
+  const select = nodes(host).find((node) => node.tagName === 'select');
+  assert.deepEqual(select.children.map((option) => option.value), ['false', 'true']);
   byText(host, 'mavRTLControl').click();
   await byText(host, 'Send command').onclick();
   assert.equal(byText(host, 'command_not_found')?.textContent, 'command_not_found');

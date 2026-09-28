@@ -36,6 +36,13 @@ export function createOshCommandView({ host, client, documentImpl }) {
           `${name}${field.unit ? ` (${field.unit})` : ''}`,
         );
         const input = element(field.type === 'boolean' ? 'select' : 'input');
+        if (field.type === 'boolean') {
+          const falseOption = element('option', 'false');
+          falseOption.value = 'false';
+          const trueOption = element('option', 'true');
+          trueOption.value = 'true';
+          input.append(falseOption, trueOption);
+        }
         input.value = field.type === 'boolean' ? 'false' : String(field.min);
         if (field.type === 'number') {
           input.type = 'number';
