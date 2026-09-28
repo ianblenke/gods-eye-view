@@ -149,13 +149,28 @@ test('[osh-control-032] builds a real command view only when the page has the co
 test('[osh-control-032] builds the layer with no command view when the page has no control panel host', async (t) => {
   const elements = { 'osh-panel': { hidden: true }, 'osh-panel-detail': { innerHTML: '' }, 'osh-panel-video': {} };
   withGlobal(t, 'document', { addEventListener() {}, removeEventListener() {}, getElementById: (id) => elements[id] ?? null });
+  const bodies = {
+    '/api/osh/systems': { systems: [{ id: 'sys-fixture-1', uid: 'urn:a', name: 'System A', description: null, lon: 1, lat: 2, alt: 0 }] },
+    '/api/osh/fois': { fois: [] },
+    '/api/osh/locations': { locations: [] },
+    '/api/osh/datastreams?system=sys-fixture-1': { datastreams: [] },
+  };
   const asked = [];
   withGlobal(t, 'fetch', async (path) => {
     asked.push(path);
-    return { ok: true, status: 200, json: async () => ({ systems: [], fois: [], locations: [] }) };
+    return { ok: true, status: 200, json: async () => bodies[path] ?? { systems: [], fois: [], locations: [] } };
+  });
+  let click = null;
+  const setInputAction = Cesium.ScreenSpaceEventHandler.prototype.setInputAction;
+  Cesium.ScreenSpaceEventHandler.prototype.setInputAction = function (action, type) {
+    if (type === Cesium.ScreenSpaceEventType.LEFT_CLICK) click = action;
+    return setInputAction.call(this, action, type);
+  };
+  t.after(() => {
+    Cesium.ScreenSpaceEventHandler.prototype.setInputAction = setInputAction;
   });
   const viewer = {
-    scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick: () => null },
+    scene: { canvas: { addEventListener() {}, removeEventListener() {} }, pick: () => ({ id: { id: 'osh:sys-fixture-1' } }) },
     camera: { moveEnd: new Cesium.Event(), positionWC: Cesium.Cartesian3.fromDegrees(1, 2, 1_500_000) },
     dataSources: { add: (dataSource) => dataSource, remove: () => true },
   };
@@ -164,5 +179,8 @@ test('[osh-control-032] builds the layer with no command view when the page has 
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
-  assert.equal(asked.includes('/api/control/osh/targets'), false, 'with no command view, the layer never reads the control targets route');
+  click({ position: {} });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(elements['osh-panel-detail'].innerHTML.includes('System A'), true, 'the selection itself still works with no command view');
+  assert.equal(asked.includes('/api/control/osh/targets'), false, 'with no command view, a selection never reads the control targets route');
 });

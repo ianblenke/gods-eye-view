@@ -4,7 +4,7 @@ The OpenSensorHub server of the owner has ArduPilot SITL drones. A MAVSDK driver
 
 The Connected Systems API of OSH carries commands to a system. A client sends one command as a POST request to the commands path of a control stream. The driver then gives the command to the drone as a MAVLink message.
 
-Today the OSH provider sends only GET requests, by design. The scenarios `osh-004`, `osh-005` and `osh-006` make this rule. The OSH account in `.env` can create and delete streams on a real server. So a defect or a bad test must never send a request that changes the server.
+Today the OSH provider sends only GET requests, by design. The scenarios `osh-004`, `osh-005` and `osh-006` give this rule. The OSH account in `.env` can create and delete streams on a real server. So a defect or a bad test must never send a request that changes the server.
 
 This change adds one narrow path for commands, apart from the OSH provider. The path is off by default, and it uses a separate account that cannot delete. The GET-only rule of the OSH provider stays as it is.
 
@@ -20,11 +20,9 @@ This change adds one narrow path for commands, apart from the OSH provider. The 
 - Limit the rate of commands for each system and for all systems together. Use the rate limiter of `server/providers/common/rate-limit.js` (D6).
 - Write each command request to a command log, sent or refused. The log never holds a credential, a URL or a raw request body (D7).
 
-### The scope of this round
+### How this change was written
 
-Discovery (D9) is now done. The owner's third OSH account reads the control streams and their command schemas. The owner picked 8 commands for the first table (D4). This round names the real command names, fields and files, in place of the placeholders of the first draft. It also writes `specs/osh-control/spec.md` and `tasks.md` from the finished design.
-
-This round still writes no test and no code. The next round does the tasks in order, test before code, then runs the gates and the two reviews. The lead does not merge or archive this change with documents only. A change with no test and no code is not complete under the steps of `AGENTS.md`.
+Discovery (D9) found the command schema on 2026-09-27, after two OSH accounts failed and a third succeeded. The owner picked 8 commands for the first table (D4), in place of the placeholders of the first draft. This change then wrote `specs/osh-control/spec.md` and `tasks.md` from the finished design, then did the tasks in order, test before code, as `AGENTS.md` needs.
 
 ## Capabilities
 
@@ -38,18 +36,13 @@ None. The scenarios `osh-004`, `osh-005` and `osh-006` keep their text and their
 
 ## Impact
 
-This round:
-
-- Adds `proposal.md`, `design.md`, `specs/osh-control/spec.md` and `tasks.md` to `openspec/changes/osh-mavlink-control/`. It changes no code and no test.
-- Adds 29 scenarios, `osh-control-001` to `osh-control-030`; `osh-control-012` is retired, because the first table has no field of the one type it would check.
-- Opens no gap and closes no gap in `openspec/trace`. It changes no file of the ledger.
-
-The later round, as the design plans it:
-
-- New server files: `server/providers/osh-control.js` and five files in `server/providers/osh-control/`. Each new file has full coverage.
-- New browser files: `client.js` and `view.js` in `src/layers/oshControl/`. Each new file has full coverage.
-- Changed files: `server/providers/local.js`, `src/layers/osh/index.js`, `src/app/layers/osh.js`, `src/ui/templates/context.html`, `src/ui/styles/osh-panel.css`, `.env.example` and `scripts/package-boundaries.json`.
-- The later round writes new code only. It uses no `adopt` entry, and it expects no waiver.
+- Adds `proposal.md`, `design.md`, `specs/osh-control/spec.md` and `tasks.md` to `openspec/changes/osh-mavlink-control/`.
+- Adds 31 scenarios, `osh-control-001` to `osh-control-032`. This change retires `osh-control-012`, because the first table has no field of the one type it would check.
+- Adds new server files: `server/providers/osh-control.js` and five files in `server/providers/osh-control/`. Each new file has full coverage.
+- Adds new browser files: `client.js` and `view.js` in `src/layers/oshControl/`. Each new file has full coverage.
+- Changes `server/providers/local.js`, `src/layers/osh/index.js`, `src/app/layers/osh.js`, `src/keySetupCore.mjs`, `src/ui/templates/context.html`, `src/ui/styles/osh-panel.css`, `.env.example` and `scripts/package-boundaries.json`. Each changed file keeps full coverage.
+- Opens no new gap and closes no gap in `openspec/trace`.
+- Uses no `adopt` entry, and expects no waiver.
 
 ## Known limits and later changes
 

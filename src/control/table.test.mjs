@@ -21,7 +21,7 @@ test('[osh-control-009] Refuse a command that is not an own table key', () => {
   assert.equal(check({ ...good, command: 'mavShellControl' }).reason, 'unknown_command');
 });
 
-test('[osh-control-010] Refuse extra absent wrong type and non-object parameters', () => {
+test('[osh-control-010] Refuse extra, absent, wrong-type, and non-object parameters', () => {
   for (const parameters of [{ rtl: true, extra: 1 }, {}, { rtl: 'true' }, { wrong: true }, null, [], 'yes']) assert.equal(check({ ...good, parameters }).reason, 'bad_parameter');
 });
 

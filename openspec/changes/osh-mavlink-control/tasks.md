@@ -23,7 +23,7 @@
   - Mutation: Match a command to a stream by position instead of `parametersSchema.name`; the lookup test must fail.
 - [x] 3.4 Test the static command table of an enabled target. Write the [osh-control-030] test in `src/control/route.test.mjs` with a `node:assert` method.
   - Mutation: Read a control stream before the targets route answers; the no-upstream-call test must fail.
-- [x] 3.5 Implement target parsing, the static targets response, and per-system schema lookup in `targets.js`, `url.js`, and `osh-control.js` for `[osh-control-004 osh-control-005 osh-control-006 osh-control-030]`.
+- [x] 3.5 Implement target parsing, the targets response, and the schema lookup for each system in `targets.js`, `url.js`, and `osh-control.js` for `[osh-control-004 osh-control-005 osh-control-006 osh-control-030]`.
 
 ## 4. Command table and validator
 
@@ -37,7 +37,7 @@
   - Mutation: Ignore an extra parameter key; the `bad_parameter` test must fail.
 - [x] 4.5 Test non-finite numbers, bounds, and numeric text. Write the [osh-control-011] test in `src/control/table.test.mjs` with a `node:assert` method.
   - Mutation: Remove the finite-number check; the `bad_parameter` test must fail.
-- [x] 4.6 `osh-control-012` is retired; the first table has no `token` field, so write no task for it.
+- [x] 4.6 This change retires `osh-control-012`; the first table has no `token` field, so write no task for it.
 - [x] 4.7 Test boolean fields with non-boolean values. Write the [osh-control-013] test in `src/control/table.test.mjs` with a `node:assert` method.
   - Mutation: Accept `1` as a boolean; the `bad_parameter` test must fail.
 - [x] 4.8 Test a table field absent from the resolved schema. Write the [osh-control-014] test in `src/control/table.test.mjs` with a `node:assert` method.
@@ -58,7 +58,7 @@
 - [x] 5.5 Test the layer's calls to `show` and `clear`. Write the [osh-control-031] test in `src/data/oshLayer.test.mjs` with a `node:assert` method.
   - Mutation: Remove the `commandView?.show` call at selection; the select test must fail.
 - [x] 5.6 Wire the optional `commandView` input into `src/layers/osh/index.js` for `[osh-control-031]`.
-- [x] 5.7 Test the command view builds only with its host. Write the [osh-control-032] test in `src/app/layers/osh.test.mjs` with a `node:assert` method.
+- [x] 5.7 Confirm the app builds the view only with a host. Write the [osh-control-032] test in `src/app/layers/osh.test.mjs` with a `node:assert` method.
   - Mutation: Build the command view even with no host element; the no-host test must fail.
 - [x] 5.8 Build the command view in `createApplicationOsh()` of `src/app/layers/osh.js` for `[osh-control-032]`.
 
@@ -96,7 +96,7 @@
   - Mutation: Copy the upstream body into the browser result; the result-shape test must fail.
 - [x] 9.4 Test redirect failure and timeout with no retry. Write the [osh-control-027] test in `src/control/route.test.mjs` with a `node:assert` method.
   - Mutation: Treat status 302 as success; the redirect test must fail.
-- [x] 9.5 Implement the checked URL, POST, timeout, and small response in `url.js`, `post.js`, and `osh-control.js` for `[osh-control-024 osh-control-025 osh-control-026 osh-control-027]`.
+- [x] 9.5 Implement the checked URL, the POST, and the response handling in `url.js`, `post.js`, and `osh-control.js` for `[osh-control-024 osh-control-025 osh-control-026 osh-control-027]`.
 
 ## 10. Origin check
 

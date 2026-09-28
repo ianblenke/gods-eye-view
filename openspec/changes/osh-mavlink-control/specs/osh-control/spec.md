@@ -69,7 +69,7 @@ Origin: spec-first
 - **THEN** the route refuses it with `bad_parameter`
 - **AND** the route does not change text into a number
 
-`osh-control-012` is retired. The first command table has no `token` field, so no test can check a `token` rule. A later table adds this scenario back, with its own test, when a command needs one.
+This change retires `osh-control-012`. The first command table has no `token` field, so no test can check a `token` rule. A later table adds this scenario back, with its own test, when a command needs one.
 
 #### Scenario: Refuse a value that is not a boolean `osh-control-013`
 - **WHEN** a boolean field has a value other than `true` or `false`
@@ -109,16 +109,16 @@ Origin: spec-first
 - **WHEN** the owner clicks `Cancel`, changes the system, clears the view, or waits 30 seconds
 - **THEN** the view closes the confirmation and sends no command
 
-### Requirement: OSH layer wiring
-The OSH layer MUST call an optional command view at selection, deselection, and destroy.
+### Requirement: OSH layer command view
+The OSH layer MUST call an optional command view at selection, deselection, and destruction.
 Origin: spec-first
 
 #### Scenario: Show the view for a selected system, with its name `osh-control-031`
 - **WHEN** the owner selects a system, and a command view is present
 - **THEN** the layer calls the view's `show` method with the system id and its name
 - **AND** a system with no held record uses the name of its location, or its id if neither name exists
-- **AND** the layer calls the view's `clear` method at deselection and at destroy
-- **AND** a layer with no command view selects and destroys the same as before
+- **AND** the layer calls the view's `clear` method at deselection and at `destroy()`
+- **AND** a layer with no command view keeps its own selection and `destroy()` behaviour
 
 #### Scenario: Build a real command view only when the page has its host `osh-control-032`
 - **WHEN** the application builds the OSH layer, and the page has an element with the id `osh-panel-control`
@@ -133,7 +133,7 @@ Origin: spec-first
 - **WHEN** a system has four commands or all systems have eight commands in a 60 second window
 - **THEN** the next command gets `429`, `Retry-After: 60`, and `{error:'rate_limited'}`
 
-#### Scenario: Keep one command in flight per system `osh-control-019`
+#### Scenario: Keep one command in flight for each system `osh-control-019`
 - **WHEN** a second command arrives for a system with an open upstream command call
 - **THEN** the second command gets `409` with `{error:'busy'}`
 - **AND** the route sends no second upstream command

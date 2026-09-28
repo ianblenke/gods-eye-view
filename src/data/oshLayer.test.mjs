@@ -3861,7 +3861,7 @@ test('[osh-088] the detail that the layer writes shows Video for a video datastr
 
 // --- osh-control-031: the optional command view of the osh-control capability ---
 
-test('[osh-control-031] the layer calls the optional command view at select, deselect and destroy', async (t) => {
+test('[osh-control-031] the layer calls the optional command view at selection, deselection, and destruction', async (t) => {
   const source = fakeSource({ systems: [SYSTEM_A], datastreams: [] });
   const calls = [];
   const commandView = {
@@ -3891,7 +3891,7 @@ test('[osh-control-031] the layer calls the optional command view at select, des
   assert.deepEqual(calls.at(-1), ['clear']);
 });
 
-test('[osh-control-031] the command view gets the location name for an unheld system, and the id when neither name is set', async (t) => {
+test('[osh-control-031] the command view gets the location name for a system with no held record, and the id when neither name is set', async (t) => {
   const source = fakeSource({
     systems: [],
     fois: [],
