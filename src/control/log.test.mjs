@@ -5,7 +5,7 @@ import { mkdtemp, readFile, writeFile, rm, stat } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 
-test('[osh-control-020] Record safe refused accepted sent and failed lines', async () => {
+test('[osh-control-020] Record safe refused, accepted, sent, and failed lines', async () => {
   const lines = [];
   const log = createCommandLog({ append: async (line) => lines.push(line) });
   const event = { requestId: 'fixture-request', client: '127.0.0.1', system: 'sys-fixture-one', controlStream: 'cs-fixture-one', command: 'mavRTLControl', parameters: { rtl: true }, body: 'raw-secret', Authorization: 'secret-header', url: 'https://secret.invalid/' };
@@ -54,7 +54,7 @@ test('[osh-control-020] Recover the append queue after a write failure', async (
   assert.equal(calls, 2);
 });
 
-test('[osh-control-027] Record redirect timeout and network failure reasons', async () => {
+test('[osh-control-027] Record redirect, timeout, and network failure reasons', async () => {
   const log = createCommandLog({ append: async () => {} });
   for (const [error, reason, status] of [
     [Object.assign(new Error('redirect'), { code: 'OSH_REDIRECT', status: 302 }), 'redirect', 302],

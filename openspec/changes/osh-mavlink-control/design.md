@@ -40,7 +40,7 @@ The new server files:
 
 - `server/providers/osh-control.js`: the plugin `oshControlProxy()`. It installs the routes under `/api/control/osh` on the dev server and the preview server.
 - `server/providers/osh-control/post.js`: the only upstream call site of the capability. `oshPostCommand()` sends one POST request and no other method.
-- `server/providers/osh-control/url.js`: the URL builders and their safety checks, for the command path and the two reads of D3 and D4.
+- `server/providers/osh-control/url.js`: the URL builders and their safety checks, for the command path and the two GET calls of D3 and D4.
 - `server/providers/osh-control/targets.js`: reads the flag, the command account and the target allowlist.
 - `server/providers/osh-control/commands.js`: the command table and its validator.
 - `server/providers/osh-control/log.js`: the command log.
@@ -162,7 +162,7 @@ The validator applies these rules. The first rule that fails gives the reason co
 
 No field of the first table's 8 commands needs a third type. A later table can add a `token` type for a command that needs one, with its own rule and its own test. This round adds no field of that type, and no rule for it.
 
-D9's read of one real, earlier command showed the upstream body plain: `{"parameters": {...}}`. It held the checked field names and values of the command, and no vendor-specific URN of any kind. The server sends exactly this shape. It never copies an object from the browser straight into the upstream body, and it never adds a field the table did not check.
+D9's GET of one real, earlier command showed the upstream body plain: `{"parameters": {...}}`. It held the checked field names and values of the command, and no vendor-specific URN of any kind. The server sends exactly this shape. It never copies an object from the browser straight into the upstream body, and it never adds a field the table did not check.
 
 Before the first command to a target in each process, the server also checks the resolved control stream's schema, through the map that D3 builds. It refuses the command with the reason `schema_mismatch` in one case. A table field of that command then has no field of the same name in the schema.
 
@@ -170,7 +170,7 @@ The table never holds `mavShellControl`, a command that changes a stored paramet
 
 ### D5 The confirmation step in the camera panel
 
-The command block extends the camera panel, `aside#osh-panel` in `src/ui/templates/context.html`. The template gets one new element, `<div id="osh-panel-control" hidden>`, after `#osh-panel-detail`. `osh-094` stays true, because each of its three ids is still on one element.
+The command block adds to the camera panel, `aside#osh-panel` in `src/ui/templates/context.html`. The template gets one new element, `<div id="osh-panel-control" hidden>`, after `#osh-panel-detail`. `osh-094` stays true, because each of its three ids is still on one element.
 
 `view.js` exports `createOshCommandView({host, client, documentImpl})`. The view has two methods, `show({systemId, systemName})` and `clear()`. The OSH layer gets one optional input, `commandView`. The layer calls `show()` at each change of the selected system, and `clear()` when the selection ends or at `destroy()`. With no `commandView`, the layer does the same as before.
 
@@ -178,7 +178,7 @@ The scenario for this input is in `osh-control`, and no OSH scenario changes. If
 
 `show()` reads the targets route, which sends no upstream request; it only checks the flag and the static list of D3 and D4. When the route answers `enabled:false`, or the system is not a target, the view keeps the host hidden. Otherwise, the block shows one button for each of the table's 8 commands. For each field, it also shows one input, with the range or the values of the same table. The server checks the sent parameters against this table too.
 
-The targets route does not yet know whether a system's real control streams support all 8 commands. D3's resolve-by-schema step runs only when a real command is sent. So the block can offer a command that the server later refuses with `command_not_found` or `schema_mismatch`. The confirmation step of this section shows that outcome like any other refusal.
+The targets route does not yet know whether a system's real control streams offer all 8 commands. D3's resolve-by-schema step runs only when the browser sends a real command. So the block can offer a command that the server later refuses with `command_not_found` or `schema_mismatch`. The confirmation step of this section shows that outcome like any other refusal.
 
 A click on a command button sends nothing. It opens the confirmation step in the block. The step shows the name and the id of the system, the command, and each value with its unit. It has two buttons, "Send command" and "Cancel". The focus goes to "Cancel", so the Enter key does not send the command.
 
@@ -194,7 +194,7 @@ const allow = makeRateLimiter({ windowMs: 60_000, max: 4, globalMax: 8 });
 
 The key of the limiter is the system id of the target, not the client address. The risk of a command is a risk to one drone, and `globalMax` limits all drones together. The route writes `clientKey(req)` to the command log only.
 
-The route applies its checks in this order. First come the method, the origin check of D11, and the conditions of D2. Then come the validator rules of D4, in their order. Then come the rate limit and the check for one command in flight. Last come the two reads of D3 and D4 for a new target, the `accepted` log line and the POST. So a bad body never uses the budget of a drone.
+The route applies its checks in this order. First come the method, the origin check of D11, and the conditions of D2. Then come the validator rules of D4, in their order. Then come the rate limit and the check for one command in flight. Last come the two GET calls of D3 and D4 for a new target, the `accepted` log line and the POST. So a bad body never uses the budget of a drone.
 
 Over the limit, the route answers `429` with `Retry-After: 60` and `{error:'rate_limited'}`, as `firePerimeters.js` does. It also writes a `refused` log line.
 
@@ -249,25 +249,25 @@ An account with the right to delete also got `403` for each control stream read.
 
 ### D9 The next discovery step — DONE 2026-09-27
 
-The lead did these steps in one session, with a third OSH account (the owner's word: "operator access"). Each request was a GET; no POST was sent.
+The lead did these steps in one session, with a third OSH account (the owner's word: "operator access"). Each request was a GET; the lead sent no POST.
 
 1. The owner confirmed a new account with, in the owner's words, operator rights.
-2. The lead used `.env.admin`, a file the owner added, in place of `OSH_CONTROL_USERNAME`/`OSH_CONTROL_PASSWORD`; the later round moves its values to those two keys. Reported only presence and length.
+2. The lead used `.env.admin`, a file the owner added, in place of `OSH_CONTROL_USERNAME`/`OSH_CONTROL_PASSWORD`; a later deployment step moves its values to those two keys. Reported only presence and length.
 3. `OSH_CONTROL_ENABLED` stayed absent from `.env` for the full session.
 4. Each request ran from a script outside the app, never through the app itself.
 5. Each measured value is in the notes of the lead, outside the repository; this file holds no real id.
 6. `systems/<system-id>/controlstreams` gave `200` and a list, for the three systems that run a MAVSDK driver. The other SITL-related systems (cameras and one video candidate) gave `200` with an empty list; they carry no control stream.
 7. The response was not `403` with this account.
 8. Each of the three driver systems has many control streams, one for each command; the field `parametersSchema.name` names the command. The exact count is a number from the owner's server. It stays out of this file and the repository. The eight commands of D4's table are all present.
-9. The lead did not read `controlstreams/<controlstream-id>` on its own. The schema read of step 10 already carries the command name. D3's per-system scan makes the parent-system link implicit. So a separate parent field was not needed.
-10. `controlstreams/<controlstream-id>/schema` gave `200` for every control stream tried, the same path shape as the schema read of `osh-053`.
+9. The lead did not read `controlstreams/<controlstream-id>` on its own. The schema GET of step 10 already carries the command name. D3's scan of each system makes the parent-system link implicit. So a separate parent field was not needed.
+10. `controlstreams/<controlstream-id>/schema` gave `200` for every control stream tried, the same path shape as `osh-053`'s own schema GET.
 11. Each schema field's name, type and unit are in D4's table and its two notes. No schema field carried an allowed-values list or a range; D4 says where the lead set a range by its own judgement instead. Every schema also named its `commandFormat` as `application/json`; D10 uses this fact directly.
 12. Read, on a second pass: `controlstreams/<controlstream-id>/commands?limit=1`. Ten of the eleven control streams had no earlier command. One had exactly one, sent by the third account outside this project's own code, before this design existed. Its record gave the real envelope: an `id`, a `controlstream@id`, an `issueTime`, a `sender`, and a `currentStatus` of `COMPLETED`. It also held a `parameters` object with the checked field of that command. D10 takes its POST body shape, `{"parameters": ...}`, from this record.
 13. The list of step 6, read again with the two accounts of the first two sessions (`.env` and `.env.writer`), still gave `403` on all systems. So the old `403` came from the rights of the account, not from absent control streams.
-14. No POST was sent in this session.
-15. The command table of D4 is written, with the owner's choice of 8 commands. `specs/osh-control/spec.md` and `tasks.md` come next.
+14. The lead sent no POST in this session.
+15. The lead wrote the command table of D4, with the owner's choice of 8 commands. `specs/osh-control/spec.md` and `tasks.md` come next.
 
-Step 13 is answered: two accounts without the new rights still get `403`; the third, with the new rights, gets `200`. The first real command from this project's own code comes only after the gates and the two reviews pass. The owner sends it from the panel, and watches the SITL console.
+This answers step 13: two accounts without the new rights still get `403`; the third, with the new rights, gets `200`. The first real command from this project's own code comes only after the gates and the two reviews pass. The owner sends it from the panel, and watches the SITL console.
 
 **A new finding from step 12:** the `sender` field of a command record held the calling account's own user name. The server echoed it back in clear text. No script printed it beyond one lead-only terminal, and it is not in this file, in memory, or in the repository. A later discovery script must redact any field whose value could match a known `.env` value, before it prints a record's structure.
 
@@ -277,7 +277,7 @@ Step 13 is answered: two accounts without the new rights still get `403`; the th
 
 A response with a status from 300 to 399 is a failure, as `osh-013` says for `oshGet()`. The function never tries a second time, never shares one request between two callers, and keeps no cache. A timeout does not tell whether the server received the command. So the route answers `failed` with `upstreamStatus:null`, and the owner decides the next command.
 
-`oshCommandUrl(root, controlStreamId)` builds the root path plus `controlstreams/<id>/commands`, with no query. `assertCommandUrl()` throws for another origin, prefix, path or query. It also throws for a user name, a password or a fragment, as the checks of `osh-021` and `osh-064` do. The two reads of D3 and D4 get the same pair of a builder and a check.
+`oshCommandUrl(root, controlStreamId)` builds the root path plus `controlstreams/<id>/commands`, with no query. `assertCommandUrl()` throws for another origin, prefix, path or query. It also throws for a user name, a password or a fragment, as the checks of `osh-021` and `osh-064` do. The two GET calls of D3 and D4 get the same pair of a builder and a check.
 
 The route finds the API root with its own `createOshBase()` from `server/providers/osh/base.js`, with the command account. The probes are GET requests. The route shares no state with the OSH provider.
 
@@ -295,9 +295,9 @@ The command route refuses a POST with `403` and `{error:'cross_origin'}` unless 
 
 The first condition stops a page of another site whose domain name points to the address of this machine. That page sends its own domain name in `Host`. The second condition stops a page of another origin. A direct HTTP client can send any header, so the flag and the published port are the guards against it (the known limit `lan-exposure`).
 
-### D12 How the gates measure the later round
+### D12 How the gates measure this change
 
-Coverage: each new file has full line, branch and function coverage. Each branch that the change adds to a changed file has a test. The later round adds no ledger entry.
+Coverage: each new file has full line, branch and function coverage. Each branch that this change adds to a changed file has a test.
 
 Trace: each test names the `osh-control` scenario IDs that it checks, at most three for each test. No new test file has a name that starts with `osh`, and no new test file is in a folder named `osh`. So the pinned count of `osh-034` stays at 18. The proposed test files are `src/control/route.test.mjs`, `src/control/scan.test.mjs`, `src/control/table.test.mjs`, `src/control/log.test.mjs`, and two test files in `src/layers/oshControl/`.
 
@@ -309,11 +309,9 @@ No test sends a request to a real server. Each test gives a fake `fetchImpl` and
 
 ### Files
 
-New, in the later round: `server/providers/osh-control.js`, `server/providers/osh-control/post.js`, `server/providers/osh-control/url.js`, `server/providers/osh-control/targets.js`, `server/providers/osh-control/commands.js`, `server/providers/osh-control/log.js`, `src/layers/oshControl/client.js`, `src/layers/oshControl/view.js`, the test files of D12, `openspec/changes/osh-mavlink-control/tasks.md` and `openspec/changes/osh-mavlink-control/specs/osh-control/spec.md`.
+New: `server/providers/osh-control.js`, `server/providers/osh-control/post.js`, `server/providers/osh-control/url.js`, `server/providers/osh-control/targets.js`, `server/providers/osh-control/commands.js`, `server/providers/osh-control/log.js`, `src/layers/oshControl/client.js`, `src/layers/oshControl/view.js`, the test files of D12, `openspec/changes/osh-mavlink-control/tasks.md` and `openspec/changes/osh-mavlink-control/specs/osh-control/spec.md`.
 
-Changed, in the later round: `server/providers/local.js`, `src/layers/osh/index.js`, `src/app/layers/osh.js`, `src/ui/templates/context.html`, `src/ui/styles/osh-panel.css`, `.env.example` and `scripts/package-boundaries.json`.
-
-Changed in this round: only this file and `proposal.md`.
+Changed: `server/providers/local.js`, `src/layers/osh/index.js`, `src/app/layers/osh.js`, `src/keySetupCore.mjs`, `src/data/oshLayer.test.mjs`, `src/app/layers/osh.test.mjs`, `src/ui/templates/context.html`, `src/ui/styles/osh-panel.css`, `.env.example` and `scripts/package-boundaries.json`.
 
 ## Risks / Trade-offs
 

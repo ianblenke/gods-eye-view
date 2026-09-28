@@ -56,6 +56,13 @@ test('[osh-control-003] Refuse absent route inputs in order', async () => {
     assert.equal(result.status, 403);
     assert.deepEqual(result.body, { error: reason });
   }
+  // Two inputs are bad at once, so only the order of the checks can tell
+  // which reason wins. This bad URL and empty account both come before the
+  // empty target list; the target check must never run first.
+  const urlAndAccount = await route({ ...enabled, OSH_URL: '::', OSH_CONTROL_USERNAME: '' })('POST', '/commands', {});
+  assert.deepEqual(urlAndAccount.body, { error: 'no_key' });
+  const accountAndTargets = await route({ ...enabled, OSH_CONTROL_USERNAME: '', OSH_CONTROL_TARGETS: '' })('POST', '/commands', {});
+  assert.deepEqual(accountAndTargets.body, { error: 'no_account' });
 });
 
 test('[osh-control-004] Refuse a bad target and warn with its position only', async () => {
@@ -92,7 +99,7 @@ test('[osh-control-006] Resolve streams by schema name and keep the map', async 
   assert.equal(calls.length, 3);
 });
 
-test('[osh-control-030] Give the same static table to each target without a read', async () => {
+test('[osh-control-030] Give the same static table to each target without a GET', async () => {
   const call = route({ ...enabled, OSH_CONTROL_TARGETS: 'sys-fixture-one,sys-fixture-two' });
   const result = await call('GET', '/targets');
   assert.equal(result.status, 200);
@@ -102,7 +109,7 @@ test('[osh-control-030] Give the same static table to each target without a read
   assert.deepEqual(result.body.targets[0].commands, result.body.targets[1].commands);
 });
 
-test('[osh-control-018] Enforce four commands per system and eight in total per minute', () => {
+test('[osh-control-018] Enforce four commands for each system and eight for all systems within one minute', () => {
   const gate = createCommandGate();
   for (let index = 0; index < 4; index += 1) { assert.equal(gate.enter('sys-fixture-one'), null); gate.leave('sys-fixture-one'); }
   assert.equal(gate.enter('sys-fixture-one'), 'rate_limited');
@@ -150,7 +157,16 @@ test('[osh-control-026] Return only the small command result fields', async () =
   assert.equal(result.body.outcome, 'sent');
   assert.equal(result.body.upstreamStatus, 201);
   assert.equal(JSON.stringify(result.body).includes('upstream-secret'), false);
-  assert.equal(calls.filter((item) => item.options.method === 'POST').length, 1);
+  const posts = calls.filter((item) => item.options.method === 'POST');
+  assert.equal(posts.length, 1);
+  const [{ options: postOptions }] = posts;
+  assert.equal(
+    postOptions.headers.Authorization,
+    `Basic ${Buffer.from(`${enabled.OSH_CONTROL_USERNAME}:${enabled.OSH_CONTROL_PASSWORD}`).toString('base64')}`,
+  );
+  assert.equal(postOptions.headers['Content-Type'], 'application/json');
+  assert.equal(postOptions.redirect, 'manual');
+  assert.deepEqual(JSON.parse(postOptions.body), { parameters: { rtl: true } });
 });
 
 test('[osh-control-027] Fail a redirect or timeout without a second POST', async () => {
@@ -247,14 +263,14 @@ test('[osh-control-026] Give a small failed result when the upstream POST fails'
   assert.equal(result.body.upstreamStatus, 500);
 });
 
-test('[osh-control-027] Refuse a missing API root or failed control stream read', async () => {
+test('[osh-control-027] Refuse an absent API root or a failed control stream GET', async () => {
   const noRoot = route(enabled, async () => new Response(null, { status: 503 }));
   assert.deepEqual((await noRoot('POST', '/commands', commandBody)).body, { error: 'upstream_failed' });
   const badList = route(enabled, upstream({ list: new Response(null, { status: 503 }) }));
   assert.deepEqual((await badList('POST', '/commands', commandBody)).body, { error: 'upstream_failed' });
 });
 
-test('[osh-control-028] Accept local hosts with the matching origin', () => {
+test('[osh-control-028] Accept local hosts when the origin equals the host', () => {
   for (const host of ['localhost:5173', '127.0.0.1:5173', '[::1]:5173', 'drone.local:5173']) assert.equal(isSameOriginCommand({ headers: { host, origin: `http://${host}`, 'content-type': 'application/json' }, socket: {} }), true);
   assert.equal(isSameOriginCommand({ headers: { host: 'localhost:5173', origin: 'https://localhost:5173', 'content-type': 'application/json' }, socket: { encrypted: true } }), true);
 });

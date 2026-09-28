@@ -30,7 +30,7 @@ test('[osh-control-016] Confirm a command before the browser sends it', async ()
   assert.deepEqual(sends[0], { system: 'sys-fixture-one', command: 'mavTakeoffControl', parameters: { TakeoffAltitudeAGL: 1 } });
 });
 
-test('[osh-control-017] Close confirmation on Cancel selection clear and time limit', async () => {
+test('[osh-control-017] Close confirmation on Cancel, a selection change, a clear, and the time limit', async () => {
   mock.timers.enable({ apis: ['setTimeout'] });
   try {
     const documentImpl = fakeDocument();
@@ -78,7 +78,7 @@ test('[osh-control-017] Keep the host hidden for a disabled or absent target', a
   assert.equal(host.hidden, true);
 });
 
-test('[osh-control-017] Ignore an old target answer after a clear', async () => {
+test('[osh-control-017] Ignore an old target answer after `clear()`', async () => {
   const documentImpl = fakeDocument();
   const host = documentImpl.createElement('div');
   let release;
@@ -107,7 +107,7 @@ test('[osh-control-016] Show a failed command and block a second click while it 
   assert.equal(byText(host, 'failed')?.textContent, 'failed');
 });
 
-test('[osh-control-017] Keep the host hidden when the targets read fails', async () => {
+test('[osh-control-017] Keep the host hidden when the targets GET fails', async () => {
   const documentImpl = fakeDocument();
   const host = documentImpl.createElement('div');
   const view = createOshCommandView({ host, documentImpl, client: { targets: async () => { throw new Error('fixture failure'); }, send: async () => { throw new Error('unexpected'); } } });
