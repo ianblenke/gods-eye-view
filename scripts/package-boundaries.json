@@ -2008,7 +2008,9 @@
       "src/data/oshVideo.js",
       "src/layers/osh/videoPlayer.js",
       "src/layers/osh/index.js",
-      "src/app/layers/osh.js"
+      "src/app/layers/osh.js",
+      "src/layers/oshControl/client.js",
+      "src/layers/oshControl/view.js"
     ],
     "external": [
       "hls.js",
@@ -2477,7 +2479,9 @@
       "src/data/oshVideo.js",
       "src/layers/osh/videoPlayer.js",
       "src/layers/osh/index.js",
-      "src/app/layers/osh.js"
+      "src/app/layers/osh.js",
+      "src/layers/oshControl/client.js",
+      "src/layers/oshControl/view.js"
     ],
     "external": [
       "hls.js",
