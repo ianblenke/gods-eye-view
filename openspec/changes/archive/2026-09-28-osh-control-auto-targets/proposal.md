@@ -30,5 +30,5 @@ None.
 
 ## Known limits and later changes
 
-- No code in this app stops a system the owner never meant to expose from matching a table command by schema name alone. The schema-name match is now the only gate that decides which system gets through; no owner-typed list decides this anymore. The command table stays narrow: 8 commands, none of them the shell command or a mission upload. The confirmation step still needs a second click, and the command log still records every attempt.
+- No code in this app can stop a system the owner never meant to expose if its control stream matches a table command. The schema-name match is now the only gate that decides which system gets through; no owner-typed list decides this anymore. The command table stays narrow: 8 commands, none of them the shell command or a mission upload. The confirmation step still needs a second click, and the command log still records every attempt.
 - The route now reads a system's control streams and schemas live on each selection. The old design proved the fixed table needed no GET; this change removes that property on purpose. A per-system cache limits this to one round trip per system for the life of the process.
