@@ -1635,7 +1635,7 @@
     "change": "osh-mavlink-control"
   },
   "osh-control-011": {
-    "hash": "49bc1ddb76950b832a9cda48983d841d3f70159716cd4c3dfe347b2708506e2b",
+    "hash": "9045ebf04056efb1604ae9b37a1feb3ed24918b2baccdd4400e6f09b63e7d516",
     "since": "2026-09-27",
     "change": "osh-mavlink-control"
   },
@@ -1670,7 +1670,7 @@
     "change": "osh-mavlink-control"
   },
   "osh-control-019": {
-    "hash": "6898be571e157570acdbb73158e401d9dd84f39994386db4e6875c4c6d39c862",
+    "hash": "ddaf3db757cb7388a9d70a92238d34d317be75e414253adc1a5881b2d8232153",
     "since": "2026-09-27",
     "change": "osh-mavlink-control"
   },
@@ -1730,12 +1730,12 @@
     "change": "osh-mavlink-control"
   },
   "osh-control-031": {
-    "hash": "d76e19f559acdcc600b93da4bcf77c7e71eb82959d72a769685a450ae0af1a20",
+    "hash": "5efa6e0fb3c37e720b9dd001b923a8ac5f28f0809678a412dc27d38d2c649807",
     "since": "2026-09-27",
     "change": "osh-mavlink-control"
   },
   "osh-control-032": {
-    "hash": "6e154d9bce42e94994cdef76ac63b27bcc37e64d39baa409cb8ae6fd3cafb6ba",
+    "hash": "5f9ccac5bd7a2029e729819dc917b0cbca746b015388251ba3348466eaa384af",
     "since": "2026-09-27",
     "change": "osh-mavlink-control"
   },
