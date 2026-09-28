@@ -24,10 +24,8 @@ Origin: spec-first
 The route MUST check the real server for the one system id the browser names, and resolve a real command through its schema name.
 Origin: spec-first
 
-This change retires `osh-control-004` and `osh-control-005`. The route no longer parses a list of system ids from `.env`, so a bad or a repeated entry in one cannot occur.
-
 #### Scenario: Resolve a command by schema name `osh-control-006`
-- **WHEN** a system has control streams with schemas that name commands in `parametersSchema.name`
+- **WHEN** a target has control streams with schemas that name commands in `parametersSchema.name`
 - **THEN** the route maps each matching command name to that stream id for the process lifetime
 - **AND** the route gives `command_not_found` when no schema name matches the requested command
 
@@ -35,8 +33,6 @@ This change retires `osh-control-004` and `osh-control-005`. The route no longer
 - **WHEN** the commands route or the targets route gets a `system` value that does not match `OSH_ID_PATTERN`
 - **THEN** the route refuses it with `bad_body`
 - **AND** the route sends no upstream request
-
-This change retires `osh-control-030`. The targets route no longer gives one static table for a fixed list. It now gives a live answer for one system, in `osh-control-034` and `osh-control-035`.
 
 #### Scenario: Give the live command list for one system `osh-control-034`
 - **WHEN** the flag is `true` and the targets route gets a system id of the right shape
@@ -55,8 +51,6 @@ Origin: spec-first
 #### Scenario: Refuse a bad body `osh-control-007`
 - **WHEN** the body is not one JSON object of at most 4096 bytes with exactly `system`, `command`, and `parameters`
 - **THEN** the route refuses it with `bad_body`
-
-This change retires `osh-control-008`. The route no longer keeps a system list, so it no longer refuses a system for being outside one.
 
 #### Scenario: Refuse a command outside the table `osh-control-009`
 - **WHEN** the body names a command that is not an own key of `OSH_CONTROL_COMMANDS`

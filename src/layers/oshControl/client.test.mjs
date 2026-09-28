@@ -16,7 +16,7 @@ test('[osh-control-016] Send one browser POST to the fixed same-origin path', as
 
 test('[osh-control-016] Read the static targets from the same origin', async () => {
   const paths = [];
-  const client = createOshControlClient({ fetchImpl: async (url) => { paths.push(url); return Response.json({ enabled: false, reason: 'control_off', targets: [] }); } });
-  assert.deepEqual(await client.targets(), { enabled: false, reason: 'control_off', targets: [] });
-  assert.deepEqual(paths, ['/api/control/osh/targets']);
+  const client = createOshControlClient({ fetchImpl: async (url) => { paths.push(url); return Response.json({ enabled: false, reason: 'control_off', commands: {} }); } });
+  assert.deepEqual(await client.targets('sys fixture/one'), { enabled: false, reason: 'control_off', commands: {} });
+  assert.deepEqual(paths, ['/api/control/osh/targets?system=sys%20fixture%2Fone']);
 });

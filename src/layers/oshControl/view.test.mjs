@@ -17,9 +17,11 @@ test('[osh-control-016] Confirm a command before the browser sends it', async ()
   const documentImpl = fakeDocument();
   const host = documentImpl.createElement('div');
   const sends = [];
-  const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, targets: [target] }), send: async (body) => { sends.push(body); return { outcome: 'sent' }; } } });
+  const targetRequests = [];
+  const view = createOshCommandView({ host, documentImpl, client: { targets: async (systemId) => { targetRequests.push(systemId); return { enabled: true, commands: target.commands }; }, send: async (body) => { sends.push(body); return { outcome: 'sent' }; } } });
   await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
   assert.equal(host.hidden, false);
+  assert.deepEqual(targetRequests, ['sys-fixture-one']);
   byText(host, 'mavTakeoffControl').click();
   assert.equal(sends.length, 0);
   assert.equal(nodes(host).some((node) => node.textContent.includes('Fixture drone') && node.textContent.includes('sys-fixture-one')), true);
@@ -36,7 +38,7 @@ test('[osh-control-017] Close confirmation on Cancel, a selection change, a clea
     const documentImpl = fakeDocument();
     const host = documentImpl.createElement('div');
     const sends = [];
-    const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, targets: [target] }), send: async (body) => sends.push(body) } });
+    const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: target.commands }), send: async (body) => sends.push(body) } });
     await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
     byText(host, 'mavRTLControl').click();
     byText(host, 'Cancel').click();
@@ -59,7 +61,7 @@ test('[osh-control-017] Close confirmation on Cancel, a selection change, a clea
 test('[osh-control-016] Show a refused command result', async () => {
   const documentImpl = fakeDocument();
   const host = documentImpl.createElement('div');
-  const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, targets: [target] }), send: async () => ({ outcome: 'refused', reason: 'command_not_found' }) } });
+  const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: target.commands }), send: async () => ({ outcome: 'refused', reason: 'command_not_found' }) } });
   await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
   byText(host, 'mavRTLControl').click();
   await byText(host, 'Send command').onclick();
@@ -69,11 +71,11 @@ test('[osh-control-016] Show a refused command result', async () => {
 test('[osh-control-017] Keep the host hidden for a disabled or absent target', async () => {
   const documentImpl = fakeDocument();
   const host = documentImpl.createElement('div');
-  let answer = { enabled: false, targets: [target] };
+  let answer = { enabled: false, commands: target.commands };
   const view = createOshCommandView({ host, documentImpl, client: { targets: async () => answer, send: async () => { throw new Error('unexpected'); } } });
   await view.show({ systemId: 'sys-fixture-one' });
   assert.equal(host.hidden, true);
-  answer = { enabled: true, targets: [target] };
+  answer = { enabled: true, commands: {} };
   await view.show({ systemId: 'sys-fixture-two' });
   assert.equal(host.hidden, true);
 });
@@ -85,7 +87,7 @@ test('[osh-control-017] Ignore an old target answer after `clear()`', async () =
   const view = createOshCommandView({ host, documentImpl, client: { targets: () => new Promise((resolve) => { release = resolve; }), send: async () => { throw new Error('unexpected'); } } });
   const showing = view.show({ systemId: 'sys-fixture-one' });
   view.clear();
-  release({ enabled: true, targets: [target] });
+  release({ enabled: true, commands: target.commands });
   await showing;
   assert.equal(host.hidden, true);
 });
@@ -95,7 +97,7 @@ test('[osh-control-016] Show a failed command and block a second click while it 
   const host = documentImpl.createElement('div');
   let release;
   let sends = 0;
-  const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, targets: [target] }), send: () => { sends += 1; return new Promise((_resolve, reject) => { release = reject; }); } } });
+  const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: target.commands }), send: () => { sends += 1; return new Promise((_resolve, reject) => { release = reject; }); } } });
   await view.show({ systemId: 'sys-fixture-one' });
   byText(host, 'mavRTLControl').click();
   const sending = byText(host, 'Send command').onclick();

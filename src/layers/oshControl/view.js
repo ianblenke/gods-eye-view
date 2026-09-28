@@ -125,11 +125,12 @@ export function createOshCommandView({ host, client, documentImpl }) {
       systemName = name || systemId;
       render();
       const current = generation;
-      const result = await client.targets().catch(() => null);
+      const result = await client.targets(systemId).catch(() => null);
       if (current !== generation || !result) return;
-      target = result.enabled
-        ? result.targets.find((item) => item.system === systemId) || null
-        : null;
+      target =
+        result.enabled && Object.keys(result.commands).length
+          ? { system: systemId, commands: result.commands }
+          : null;
       render();
     },
     clear() {
