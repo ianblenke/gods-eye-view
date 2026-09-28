@@ -118,7 +118,7 @@ Origin: spec-first
 - **THEN** the layer calls the view's `show` method with the system id and its name
 - **AND** a system with no held record uses the name of its location, or its id if neither name exists
 - **AND** the layer calls the view's `clear` method at deselection and at `destroy()`
-- **AND** a layer with no command view keeps its own selection and `destroy()` behaviour
+- **AND** a layer with no command view selects and destroys the same as before
 
 #### Scenario: Build a real command view only when the page has its host `osh-control-032`
 - **WHEN** the application builds the OSH layer, and the page has an element with the id `osh-panel-control`

@@ -58,7 +58,7 @@
 - [x] 5.5 Test the layer's calls to `show` and `clear`. Write the [osh-control-031] test in `src/data/oshLayer.test.mjs` with a `node:assert` method.
   - Mutation: Remove the `commandView?.show` call at selection; the select test must fail.
 - [x] 5.6 Wire the optional `commandView` input into `src/layers/osh/index.js` for `[osh-control-031]`.
-- [x] 5.7 Confirm the app builds the view only with a host. Write the [osh-control-032] test in `src/app/layers/osh.test.mjs` with a `node:assert` method.
+- [x] 5.7 Test the app builds the view only with a host. Write the [osh-control-032] test in `src/app/layers/osh.test.mjs` with a `node:assert` method.
   - Mutation: Build the command view even with no host element; the no-host test must fail.
 - [x] 5.8 Build the command view in `createApplicationOsh()` of `src/app/layers/osh.js` for `[osh-control-032]`.
 
