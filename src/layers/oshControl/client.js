@@ -4,8 +4,10 @@ export function createOshControlClient({ fetchImpl }) {
     return response.json();
   }
   return {
-    async targets() {
-      return request('/api/control/osh/targets');
+    async targets(systemId) {
+      return request(
+        `/api/control/osh/targets?system=${encodeURIComponent(systemId)}`,
+      );
     },
     async send(body) {
       return request('/api/control/osh/commands', {

@@ -2,9 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { OSH_CONTROL_COMMANDS, validateCommand } from '../../server/providers/osh-control/commands.js';
 
-const targets = ['sys-fixture-one'];
 const good = { system: 'sys-fixture-one', command: 'mavRTLControl', parameters: { rtl: true } };
-const check = (body, bytes = Buffer.byteLength(JSON.stringify(body))) => validateCommand(body, targets, null, bytes);
+const check = (body, bytes = Buffer.byteLength(JSON.stringify(body))) => validateCommand(body, null, bytes);
 
 test('[osh-control-007] Refuse a body that is not a small exact object', () => {
   for (const body of [null, [], 'text', { ...good, extra: true }, { system: good.system, command: good.command }, { command: good.command, parameters: good.parameters }]) assert.equal(check(body).reason, 'bad_body');
@@ -12,8 +11,10 @@ test('[osh-control-007] Refuse a body that is not a small exact object', () => {
   assert.equal(check(good, 4096).reason, null);
 });
 
-test('[osh-control-008] Refuse a system outside the target list', () => {
-  assert.equal(check({ ...good, system: 'sys-fixture-other' }).reason, 'not_a_target');
+test('[osh-control-033] Refuse a malformed system id', () => {
+  for (const system of ['', 'bad/id', 'bad id', 'x'.repeat(65)]) {
+    assert.equal(check({ ...good, system }).reason, 'bad_body');
+  }
 });
 
 test('[osh-control-009] Refuse a command that is not an own table key', () => {
@@ -64,12 +65,12 @@ test('[osh-control-014] Refuse a field absent from the resolved schema', () => {
       { type: 'Vector', name: 'locationVectorLLA', coordinates: [{ name: 'Latitude' }, { name: 'Longitude' }] },
     ],
   };
-  assert.equal(validateCommand(mavControlBody, targets, fullSchema).reason, null);
-  assert.equal(validateCommand(mavControlBody, targets, missingOneCoordinate).reason, 'schema_mismatch');
-  assert.equal(validateCommand(good, targets, { fields: [{ name: 'different' }] }).reason, 'schema_mismatch');
-  assert.equal(validateCommand(good, targets, { fields: [] }).reason, 'schema_mismatch');
-  assert.equal(validateCommand(good, targets, {}).reason, 'schema_mismatch');
-  assert.equal(validateCommand(good, targets, { fields: [{ type: 'Boolean', name: 'rtl' }] }).reason, null);
+  assert.equal(validateCommand(mavControlBody, fullSchema).reason, null);
+  assert.equal(validateCommand(mavControlBody, missingOneCoordinate).reason, 'schema_mismatch');
+  assert.equal(validateCommand(good, { fields: [{ name: 'different' }] }).reason, 'schema_mismatch');
+  assert.equal(validateCommand(good, { fields: [] }).reason, 'schema_mismatch');
+  assert.equal(validateCommand(good, {}).reason, 'schema_mismatch');
+  assert.equal(validateCommand(good, { fields: [{ type: 'Boolean', name: 'rtl' }] }).reason, null);
 });
 
 test('[osh-control-015] Keep the exact eight command definitions', () => {

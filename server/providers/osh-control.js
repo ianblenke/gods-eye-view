@@ -1,8 +1,9 @@
 import {
   routeConfig,
-  staticTargets,
+  resolveTargets,
   resolveCommand,
 } from './osh-control/targets.js';
+import { OSH_CONTROL_COMMANDS } from './osh-control/commands.js';
 import { makeRateLimiter } from './common/rate-limit.js';
 import { clientKey } from './common/rate-limit.js';
 import { oshPostCommand } from './osh-control/post.js';
@@ -12,6 +13,7 @@ import { createOshBase } from './osh/base.js';
 import { runLoggedCommand } from './osh-control/log.js';
 import { randomUUID } from 'node:crypto';
 import { isIP } from 'node:net';
+import { OSH_ID_PATTERN } from './osh/ids.js';
 
 export function isSameOriginCommand(req) {
   if (req.headers['content-type'] !== 'application/json') return false;
@@ -68,12 +70,41 @@ export function oshControlProxy({ env, fetchImpl, warn, log }) {
       };
       const config = routeConfig(env, warn);
       if (path === '/targets' && req.method === 'GET') {
-        send(
-          200,
-          config.reason
-            ? { enabled: false, reason: config.reason, targets: [] }
-            : { enabled: true, targets: staticTargets(config.systems) },
-        );
+        if (config.reason) {
+          send(200, { enabled: false, reason: config.reason, commands: {} });
+          return;
+        }
+        const systems = new URL(
+          req.url,
+          'http://localhost',
+        ).searchParams.getAll('system');
+        if (systems.length !== 1 || !OSH_ID_PATTERN.test(systems[0])) {
+          send(200, { enabled: true, reason: 'bad_body', commands: {} });
+          return;
+        }
+        try {
+          const headers = {
+            Authorization: `Basic ${Buffer.from(`${config.username}:${config.password}`).toString('base64')}`,
+          };
+          const state = await base.resolveRoot(config.url, headers);
+          if (!state.root) throw new Error('API root read failed');
+          const resolved = await resolveTargets({
+            cache,
+            root: state.root,
+            system: systems[0],
+            headers,
+            fetchImpl,
+          });
+          const commands = Object.fromEntries(
+            [...resolved.keys()].map((name) => [
+              name,
+              OSH_CONTROL_COMMANDS[name],
+            ]),
+          );
+          send(200, { enabled: true, reason: null, commands });
+        } catch {
+          send(200, { enabled: true, reason: 'upstream_failed', commands: {} });
+        }
         return;
       }
       if (path === '/commands' && req.method === 'POST') {
@@ -107,12 +138,7 @@ export function oshControlProxy({ env, fetchImpl, warn, log }) {
           await refuse(400, 'bad_body');
           return;
         }
-        const checked = validateCommand(
-          body,
-          config.systems,
-          null,
-          Buffer.byteLength(raw),
-        );
+        const checked = validateCommand(body, null, Buffer.byteLength(raw));
         if (checked.reason) {
           await refuse(400, checked.reason);
           return;
@@ -146,7 +172,6 @@ export function oshControlProxy({ env, fetchImpl, warn, log }) {
           }
           const schemaCheck = validateCommand(
             body,
-            config.systems,
             stream.schema,
             Buffer.byteLength(raw),
           );

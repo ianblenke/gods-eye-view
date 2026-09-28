@@ -3,23 +3,7 @@ import { oshGet } from '../osh/get.js';
 import { OSH_CONTROL_COMMANDS } from './commands.js';
 import { oshControlStreamsUrl, oshControlSchemaUrl } from './url.js';
 
-export function parseTargets(raw, warn = () => {}) {
-  if (!String(raw || '').trim()) return { reason: 'no_targets', systems: [] };
-  const systems = String(raw)
-    .split(',')
-    .map((item) => item.trim());
-  const seen = new Set();
-  for (let index = 0; index < systems.length; index += 1) {
-    if (!OSH_ID_PATTERN.test(systems[index]) || seen.has(systems[index])) {
-      warn(`[osh-control] bad target at position ${index + 1}`);
-      return { reason: 'bad_targets', systems: [] };
-    }
-    seen.add(systems[index]);
-  }
-  return { reason: null, systems };
-}
-
-export function routeConfig(env, warn) {
+export function routeConfig(env, _warn) {
   if (env.OSH_CONTROL_ENABLED !== 'true') return { reason: 'control_off' };
   try {
     new URL(String(env.OSH_URL || ''));
@@ -36,26 +20,18 @@ export function routeConfig(env, warn) {
       .toLowerCase()
   )
     return { reason: 'same_account' };
-  const targets = parseTargets(env.OSH_CONTROL_TARGETS, warn);
-  if (targets.reason) return { reason: targets.reason };
   return {
     reason: null,
     username,
     password,
-    systems: targets.systems,
     url: String(env.OSH_URL).trim(),
   };
 }
 
-export function staticTargets(systems) {
-  return systems.map((system) => ({ system, commands: OSH_CONTROL_COMMANDS }));
-}
-
-export async function resolveCommand({
+export async function resolveTargets({
   cache,
   root,
   system,
-  command,
   headers,
   fetchImpl,
 }) {
@@ -78,5 +54,10 @@ export async function resolveCommand({
     }
     cache.set(system, map);
   }
-  return cache.get(system).get(command) || null;
+  return cache.get(system);
+}
+
+export async function resolveCommand({ command, ...options }) {
+  const targets = await resolveTargets(options);
+  return targets.get(command) || null;
 }

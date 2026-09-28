@@ -108,13 +108,13 @@ test('[osh-control-032] builds a real command view only when the page has the co
   const elements = { 'osh-panel': { hidden: true }, 'osh-panel-detail': { innerHTML: '' }, 'osh-panel-video': {}, 'osh-panel-control': fixtureElement('div') };
   const documentImpl = { addEventListener() {}, removeEventListener() {}, getElementById: (id) => elements[id] ?? null, createElement: fixtureElement };
   withGlobal(t, 'document', documentImpl);
-  const targetsBody = { enabled: false, reason: 'control_off', targets: [] };
+  const targetsBody = { enabled: false, reason: 'control_off', commands: {} };
   const bodies = {
     '/api/osh/systems': { systems: [{ id: 'sys-fixture-1', uid: 'urn:a', name: 'System A', description: null, lon: 1, lat: 2, alt: 0 }] },
     '/api/osh/fois': { fois: [] },
     '/api/osh/locations': { locations: [] },
     '/api/osh/datastreams?system=sys-fixture-1': { datastreams: [] },
-    '/api/control/osh/targets': targetsBody,
+    '/api/control/osh/targets?system=sys-fixture-1': targetsBody,
   };
   const asked = [];
   withGlobal(t, 'fetch', async (path) => {
@@ -142,7 +142,7 @@ test('[osh-control-032] builds a real command view only when the page has the co
   await layer.update(viewer);
   click({ position: {} });
   await new Promise((resolve) => setImmediate(resolve));
-  assert.ok(asked.includes('/api/control/osh/targets'), 'a real command view reads the control targets route');
+  assert.ok(asked.includes('/api/control/osh/targets?system=sys-fixture-1'), 'a real command view reads the control targets route for the picked system');
   assert.equal(elements['osh-panel-control'].hidden, true, 'the flag is off, so the view keeps its host hidden');
 });
 
@@ -182,5 +182,5 @@ test('[osh-control-032] builds the layer with no command view when the page has 
   click({ position: {} });
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(elements['osh-panel-detail'].innerHTML.includes('System A'), true, 'the selection itself still works with no command view');
-  assert.equal(asked.includes('/api/control/osh/targets'), false, 'with no command view, a selection never reads the control targets route');
+  assert.equal(asked.some((path) => path.startsWith('/api/control/osh/targets')), false, 'with no command view, a selection never reads the control targets route');
 });
