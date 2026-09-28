@@ -1,15 +1,15 @@
 ## Context
 
-The merged `osh-control` design gives each command field a browser input. A boolean field gets a `<select>`. `view.js` set the `<select>`'s `.value` to `'false'`, but it never added `<option>` elements.
+The merged `osh-control` design gives each command field a browser input. A field of type `boolean` gets a `<select>`. `view.js` set the `<select>`'s `.value` to `'false'`, but it never added `<option>` elements.
 
-A real browser ignores a `.value` write on a `<select>` with no options. The dropdown stayed empty. The fault is fixed on `main` at commit `924adb3`. This change adds the missing scenario and its own dedicated test.
+A real browser ignores a `.value` write on a `<select>` with no options. The select stayed empty. Commit `924adb3` fixes the fault on `main`. This change adds the missing scenario and its own dedicated test.
 
 ## Goals / Non-Goals
 
 **Goals:**
 
-- State the scenario that the fault broke: a boolean field's control MUST let the owner pick `true` or `false`.
-- Add one test that checks the real, checkable fact the old test fixture missed: the rendered `<select>` has an `<option>` for each value.
+- State the scenario that the fault broke: a command field of type `boolean` MUST let the owner select `true` or `false`.
+- Add one test for the real fact that the old test fixture missed. The rendered `<select>` must have an `<option>` for each value, and a test can check this.
 
 **Non-Goals:**
 
@@ -24,7 +24,7 @@ A real browser ignores a `.value` write on a `<select>` with no options. The dro
 
 ### D2 A new, dedicated test
 
-One existing test already checks the rendered `<option>` values, added by the hotfix. That test keeps its own scenario ID, from before this change. This change adds one small, separate test, tagged `[osh-control-036]`, for direct evidence of the new scenario.
+One existing test already checks the rendered `<option>` values, added by the fast fix. That test keeps its own scenario ID, from before this change. This change adds one small, separate test, tagged `[osh-control-036]`, for direct evidence of the new scenario.
 
 ## Risks / Trade-offs
 
