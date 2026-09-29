@@ -55,3 +55,4 @@ Origin: spec-first
 - **AND** the view shows the matched system's own name, not the selected system's name
 - **AND** when the selected system's own name has no number, or no system matches, the layer starts no video
 - **AND** the layer starts no video when the matched system's own datastreams have no datastream with `video: true`
+- **AND** the layer starts no video when the matched system's own datastreams answer needs a key

@@ -3902,6 +3902,49 @@ test('[osh-097] starts no video when the matched system has no video datastream 
   });
 });
 
+test('[osh-097] starts no video when the matched system\'s own datastreams answer needs a key', async (t) => {
+  const datastreamsArgs = [];
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [NUMBERED_SYSTEM, LINKED_CAMERA_SYSTEM], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getDatastreams({ system } = {}) {
+      datastreamsArgs.push(system);
+      if (system === 'sys-fixture-11') {
+        return {
+          keyRequired: true,
+          datastreams: [{ id: 'ds-fixture-v5', systemId: 'sys-fixture-11', name: 'Stream', video: true }],
+        };
+      }
+      return { keyRequired: false, datastreams: [] };
+    },
+    async getObservation() {
+      return { keyRequired: false, observation: null };
+    },
+    openVideo(id, callbacks) {
+      return { id, callbacks, closed: 0 };
+    },
+  };
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-10');
+    assert.deepEqual(datastreamsArgs, ['sys-fixture-10', 'sys-fixture-11']);
+    assert.equal(
+      parts.calls.views.length,
+      0,
+      'a key-required answer for the matched system starts no video, even with a video record present',
+    );
+    assert.equal(parts.calls.players.length, 0);
+  });
+});
+
 test('[osh-097] starts no video when no system\'s name matches the selected system\'s own number', async (t) => {
   const source = fakeSource({
     systems: [NUMBERED_SYSTEM, { ...LINKED_CAMERA_SYSTEM, name: 'Camera 6' }],
@@ -3921,7 +3964,7 @@ test('[osh-097] starts no video when no system\'s name matches the selected syst
   });
 });
 
-test('[osh-097] starts no video when the matched camera\'s own datastreams read fails', async (t) => {
+test('[osh-097] starts no video when the call to read the matched camera\'s own datastreams fails', async (t) => {
   const datastreamsArgs = [];
   const source = {
     async getSystems() {
@@ -3952,7 +3995,7 @@ test('[osh-097] starts no video when the matched camera\'s own datastreams read 
   });
 });
 
-test('[osh-097] stops the fallback with no video when the selection ends during the matched camera\'s own read', async (t) => {
+test('[osh-097] stops the fallback with no video when the selection ends while the layer reads the matched camera\'s own datastreams', async (t) => {
   let resolveCameraDatastreams;
   const cameraDatastreamsPromise = new Promise((resolve) => {
     resolveCameraDatastreams = resolve;
