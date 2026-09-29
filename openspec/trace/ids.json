@@ -1740,12 +1740,12 @@
     "change": "backfill-osh-control-options"
   },
   "osh-control-037": {
-    "hash": "927f752b84f201a9a87562b66ac12ca18f72a681923d52f79ca0c0169e525236",
+    "hash": "ef9e8f52c7700de762d4f43bf948623ea795d406c712768a245368b532c5d0b9",
     "since": "2026-09-29",
     "change": "osh-control-panel-layout"
   },
   "osh-control-038": {
-    "hash": "5f3e6f013903ba39b7b9dc13d4661aae51c19bcd807c880c6b1f925f963514d9",
+    "hash": "ffb10124cf6b10771fea1d8aa92a92e09de3c1fa292687aaa218d04c7be05c88",
     "since": "2026-09-29",
     "change": "osh-control-panel-layout"
   },
