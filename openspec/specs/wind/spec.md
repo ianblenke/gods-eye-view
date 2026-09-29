@@ -69,7 +69,7 @@ Origin: backfill
 
 #### Scenario: Keep an inspection point `wind-014`
 - **WHEN** the person changes a model, field or unit
-- **THEN** the point stays fixed until dismissal or disable
+- **THEN** the point stays fixed until the person dismisses it or disables inspection
 
 #### Scenario: Show wind controls `wind-015`
 - **WHEN** the layer has a selected forecast
@@ -115,7 +115,7 @@ Origin: backfill
 - **WHEN** the relief owner starts and ends
 - **THEN** it sets and restores the globe material
 
-#### Scenario: Adapt relief to terrain and viewer `wind-022`
+#### Scenario: Adjust relief for terrain and viewer `wind-022`
 - **WHEN** terrain normals or the viewer changes
 - **THEN** the relief owner uses the new state
 
@@ -129,7 +129,7 @@ Origin: backfill
 
 #### Scenario: Keep particles on screen `wind-024`
 - **WHEN** the camera or canvas changes
-- **THEN** the renderer changes its particles and omits hidden paths
+- **THEN** the renderer changes its particles and does not draw hidden paths
 
 #### Scenario: Pause and resume frame work `wind-025`
 - **WHEN** motion or document state changes
@@ -145,7 +145,7 @@ Origin: backfill
 
 #### Scenario: Keep canvas strokes local `wind-028`
 - **WHEN** the map projection has a seam
-- **THEN** the renderer omits a long stroke across the view
+- **THEN** the renderer does not draw a long stroke across the view
 
 #### Scenario: Keep glyph speed stable `wind-029`
 - **WHEN** frame time changes
@@ -155,13 +155,13 @@ Origin: backfill
 - **WHEN** the renderer has GPU support or the view width changes
 - **THEN** it uses one scheduler and builds geometry or uses the canvas
 
-#### Scenario: Report GPU readiness `wind-031`
+#### Scenario: Report that the GPU is ready `wind-031`
 - **WHEN** GPU geometry becomes ready
-- **THEN** the renderer reports readiness once
+- **THEN** the renderer reports once that it is ready
 
 #### Scenario: Keep GPU geometry without new wind `wind-032`
 - **WHEN** only scalar data changes or the next field is absent
-- **THEN** the renderer keeps its wind geometry and phase until a clear
+- **THEN** the renderer keeps its wind geometry and phase until the layer clears it
 
 #### Scenario: Rebuild changed GPU geometry `wind-033`
 - **WHEN** a wind grid or model property changes

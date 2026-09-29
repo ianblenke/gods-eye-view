@@ -374,6 +374,36 @@ test('[wind-025] pause keeps a static field, redraws changed views only, and rem
   h.rendering.destroy();
 });
 
+for (const [label, apply] of Object.entries({
+  'camera position y': (h) => {
+    h.viewer.scene.camera.positionWC.y = 5;
+  },
+  'camera position z': (h) => {
+    h.viewer.scene.camera.positionWC.z = 5;
+  },
+  pitch: (h) => {
+    h.viewer.scene.camera.pitch = 1;
+  },
+  roll: (h) => {
+    h.viewer.scene.camera.roll = 1;
+  },
+})) {
+  test(`[wind-025] a changed ${label} repaints anchored static marks`, () => {
+    const h = harness();
+    h.rendering.attach();
+    h.rendering.setField(FIELD);
+    h.rendering.start();
+    h.callbacks.shift()(16);
+    h.rendering.setOptions({ paused: true });
+    const painted = h.strokes.length;
+    apply(h);
+    h.preRender.emit();
+    assert.ok(h.strokes.length > painted);
+    h.rendering.stop();
+    h.rendering.destroy();
+  });
+}
+
 test('[wind-025] reduced motion and hidden documents never retain an animation callback', () => {
   const h = harness({ reducedMotion: true });
   h.rendering.attach();
@@ -868,12 +898,38 @@ test('[wind-032] scalar snapshots retain identical GPU wind geometry and animati
 
 for (const [label, change] of Object.entries({
   model: { model: 'ifs' },
+  units: { units: 'mph' },
   cycle: { cycle: { runIso: '2026-09-15T06:00:00Z' } },
   validTime: {
     cycle: { runIso: '2026-09-15T00:00:00Z', validIso: '2026-09-15T04:00:00Z' },
   },
+  forecastHour: {
+    cycle: {
+      runIso: '2026-09-15T00:00:00Z',
+      validIso: '2026-09-15T03:00:00Z',
+      forecastHour: 6,
+    },
+  },
+  date: {
+    cycle: {
+      runIso: '2026-09-15T00:00:00Z',
+      validIso: '2026-09-15T03:00:00Z',
+      date: '2026-09-15',
+    },
+  },
+  hour: {
+    cycle: {
+      runIso: '2026-09-15T00:00:00Z',
+      validIso: '2026-09-15T03:00:00Z',
+      hour: 6,
+    },
+  },
   grid: { grid: { ...FIELD, lo1: -180 } },
   spacing: { grid: { ...FIELD, dx: 180 } },
+  gridWidth: { grid: { ...FIELD, nx: 2 } },
+  gridHeight: { grid: { ...FIELD, ny: 2 } },
+  gridTop: { grid: { ...FIELD, la1: 45 } },
+  gridRowSpacing: { grid: { ...FIELD, dy: 90 } },
   revisedU: { u: Float32Array.from([11]) },
   revisedV: { v: Float32Array.from([1]) },
   level: { level: '100m' },
@@ -1221,7 +1277,7 @@ test('[wind-024] camera bounds can fail without loss of the canvas', () => {
   h.rendering.destroy();
 });
 
-test('[wind-026] missing imagery support gives a status', () => {
+test('[wind-026] absent imagery support gives a status', () => {
   const h = harness();
   h.rendering.attach();
   h.rendering.setOptions({ overlay: 'speed' });
@@ -1359,7 +1415,7 @@ test('[wind-023] canvas accepts native point classes and old scene listeners', (
   h.rendering.destroy();
 });
 
-test('[wind-024] invalid map projections omit paths', () => {
+test('[wind-024] invalid map projections do not draw paths', () => {
   const h = harness({ projected: () => ({ x: NaN, y: 100 }) });
   h.rendering.attach();
   h.rendering.setField(FIELD);
@@ -1370,7 +1426,7 @@ test('[wind-024] invalid map projections omit paths', () => {
   h.rendering.destroy();
 });
 
-test('[wind-024] invalid wind coordinates omit paths', () => {
+test('[wind-024] invalid wind coordinates do not draw paths', () => {
   const h = harness();
   h.rendering.attach();
   h.rendering.setField({ ...FIELD, u: Float32Array.of(NaN) });
@@ -1710,7 +1766,7 @@ test('[wind-024] absent camera height keeps a field frame', () => {
   h.rendering.destroy();
 });
 
-test('[wind-024] backlit particles omit their strokes', () => {
+test('[wind-024] backlit particles do not draw their strokes', () => {
   const h = harness();
   h.cesium.Cartesian3.fromDegrees = () => ({ x: 1, y: 0, z: 0 });
   h.viewer.scene.camera.positionWC = { x: 0, y: 0, z: 0 };

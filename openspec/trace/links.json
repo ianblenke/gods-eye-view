@@ -2616,18 +2616,22 @@
     "src/layers/wind/rendering.test.mjs › [wind-024] absent camera height keeps a field frame",
     "src/layers/wind/rendering.test.mjs › [wind-024] absent globe occluder keeps canvas flow",
     "src/layers/wind/rendering.test.mjs › [wind-024] absent viewer stops a canvas frame",
-    "src/layers/wind/rendering.test.mjs › [wind-024] backlit particles omit their strokes",
+    "src/layers/wind/rendering.test.mjs › [wind-024] backlit particles do not draw their strokes",
     "src/layers/wind/rendering.test.mjs › [wind-024] camera bounds can fail without loss of the canvas",
     "src/layers/wind/rendering.test.mjs › [wind-024] canvas uses container size when scene size is absent",
     "src/layers/wind/rendering.test.mjs › [wind-024] empty camera bounds keep a static field",
     "src/layers/wind/rendering.test.mjs › [wind-024] invalid camera cosine uses a visible fallback",
-    "src/layers/wind/rendering.test.mjs › [wind-024] invalid map projections omit paths",
-    "src/layers/wind/rendering.test.mjs › [wind-024] invalid wind coordinates omit paths",
+    "src/layers/wind/rendering.test.mjs › [wind-024] invalid map projections do not draw paths",
+    "src/layers/wind/rendering.test.mjs › [wind-024] invalid wind coordinates do not draw paths",
     "src/layers/wind/rendering.test.mjs › [wind-024] steady frames preserve canvas dimensions and resize adjusts the particle budget",
     "src/layers/wind/rendering.test.mjs › [wind-024] wind rendering skips particles hidden by the globe",
     "src/layers/wind/rendering.test.mjs › [wind-024] zero view size makes one canvas pixel"
   ],
   "wind-025": [
+    "src/layers/wind/rendering.test.mjs › [wind-025] a changed camera position y repaints anchored static marks",
+    "src/layers/wind/rendering.test.mjs › [wind-025] a changed camera position z repaints anchored static marks",
+    "src/layers/wind/rendering.test.mjs › [wind-025] a changed pitch repaints anchored static marks",
+    "src/layers/wind/rendering.test.mjs › [wind-025] a changed roll repaints anchored static marks",
     "src/layers/wind/rendering.test.mjs › [wind-025] absent motion media keeps live flow",
     "src/layers/wind/rendering.test.mjs › [wind-025] pause keeps a static field, redraws changed views only, and removes listeners on stop",
     "src/layers/wind/rendering.test.mjs › [wind-025] reduced motion and hidden documents never retain an animation callback"
@@ -2635,13 +2639,13 @@
   "wind-026": [
     "src/layers/wind/rendering.test.mjs › [wind-026] a bad image provider leaves no installed image",
     "src/layers/wind/rendering.test.mjs › [wind-026] absent globe collection reports an error",
+    "src/layers/wind/rendering.test.mjs › [wind-026] absent imagery support gives a status",
     "src/layers/wind/rendering.test.mjs › [wind-026] canvas fallback retains scalar base alpha at low camera height",
     "src/layers/wind/rendering.test.mjs › [wind-026] globe field uses the scene image collection",
     "src/layers/wind/rendering.test.mjs › [wind-026] image clears after its collection ends",
     "src/layers/wind/rendering.test.mjs › [wind-026] image moves to another globe collection",
     "src/layers/wind/rendering.test.mjs › [wind-026] image without a destroy method can clear",
     "src/layers/wind/rendering.test.mjs › [wind-026] imagery errors replace a field status",
-    "src/layers/wind/rendering.test.mjs › [wind-026] missing imagery support gives a status",
     "src/layers/wind/rendering.test.mjs › [wind-026] scalar imagery builds once, survives pause, replaces cleanly, and releases on clear"
   ],
   "wind-027": [
@@ -2671,12 +2675,20 @@
   "wind-033": [
     "src/layers/wind/rendering.test.mjs › [wind-033] GPU flow rejects an absent vector",
     "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed cycle",
+    "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed date",
+    "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed forecastHour",
     "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed grid",
+    "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed gridHeight",
+    "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed gridRowSpacing",
+    "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed gridTop",
+    "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed gridWidth",
+    "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed hour",
     "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed level",
     "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed model",
     "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed revisedU",
     "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed revisedV",
     "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed spacing",
+    "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed units",
     "src/layers/wind/rendering.test.mjs › [wind-033] GPU geometry rebuilds on changed validTime"
   ],
   "wind-034": [
