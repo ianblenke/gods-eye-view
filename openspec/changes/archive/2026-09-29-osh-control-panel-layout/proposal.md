@@ -1,11 +1,11 @@
 ## Why
 
-The command view draws every command's fields as plain, unstyled text next to their inputs. Nothing marks where one command's fields end and the next begins. An owner reported that the field labels are unclear. The owner could not tell one command's field from another's.
+The command view draws every command's fields as plain, unstyled text next to their inputs. No element marks where one command's fields end and the next begins. An owner reported that the field labels are not clear. The owner could not see the difference between one command's field and another's.
 
 ## What Changes
 
 - Wraps each command's fields and its send button in one visible group, with the command's own name as the group's heading.
-- Puts one field on its own line within a group, instead of a run of labels with no line break.
+- Puts one field on its own line within a group, instead of a list of labels with no line break.
 - Adds CSS for the group and its line spacing. The command's own send button keeps its exact current text and click behaviour.
 
 ## Capabilities
