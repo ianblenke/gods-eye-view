@@ -303,6 +303,27 @@
     ],
     "external": []
   },
+  "osh-control-provider": {
+    "runtime": "node",
+    "exports": ["./server/providers/osh-control"],
+    "modules": [
+      "server/providers/osh-control.js",
+      "server/providers/osh-control/targets.js",
+      "server/providers/osh-control/commands.js",
+      "server/providers/osh-control/url.js",
+      "server/providers/osh-control/post.js",
+      "server/providers/osh-control/log.js",
+      "server/providers/osh/base.js",
+      "server/providers/osh/get.js",
+      "server/providers/osh/ids.js",
+      "server/providers/common/http.js",
+      "server/providers/common/rate-limit.js",
+      "server/providers/common/source-root.js",
+      "src/sources/httpBody.js",
+      "src/sources/rateLimit.js"
+    ],
+    "external": []
+  },
   "standalone-key-setup": {
     "runtime": "node",
     "exports": ["./server/standalone/key-setup"],
@@ -1986,8 +2007,11 @@
       "src/layers/osh/detail.js",
       "src/data/oshVideo.js",
       "src/layers/osh/videoPlayer.js",
+      "src/layers/osh/cameraLink.js",
       "src/layers/osh/index.js",
-      "src/app/layers/osh.js"
+      "src/app/layers/osh.js",
+      "src/layers/oshControl/client.js",
+      "src/layers/oshControl/view.js"
     ],
     "external": [
       "hls.js",
@@ -2455,8 +2479,11 @@
       "src/layers/osh/source.js",
       "src/data/oshVideo.js",
       "src/layers/osh/videoPlayer.js",
+      "src/layers/osh/cameraLink.js",
       "src/layers/osh/index.js",
-      "src/app/layers/osh.js"
+      "src/app/layers/osh.js",
+      "src/layers/oshControl/client.js",
+      "src/layers/oshControl/view.js"
     ],
     "external": [
       "hls.js",
@@ -2989,6 +3016,7 @@
       "src/data/oshObservations.js",
       "src/data/oshSystems.js",
       "src/data/oshVideo.js",
+      "src/layers/osh/cameraLink.js",
       "src/layers/osh/detail.js",
       "src/layers/osh/hosts.js",
       "src/layers/osh/index.js",

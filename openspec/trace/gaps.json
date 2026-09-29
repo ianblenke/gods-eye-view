@@ -3517,11 +3517,11 @@
       "branches": 8,
       "functions": 0,
       "totals": {
-        "lines": 504,
+        "lines": 513,
         "branches": 145,
         "functions": 22
       },
-      "sha": "55c0d039ce1519435f7f19a3d8e7a0dab05d3a21b7bffa24ca352e2600d81bbe",
+      "sha": "3e7ebdb97330431f743752c51fedb99bbb89e3ccbc638a80699ea4bc1b8c384f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3533,7 +3533,7 @@
       "functions": 1,
       "totals": {
         "lines": 419,
-        "branches": 119,
+        "branches": 120,
         "functions": 16
       },
       "sha": "a82d7bf5bf70b43e8f4981ef75b8f62dd55275c7d20cb63fb34d9c297cd94845",
@@ -8044,11 +8044,11 @@
     "src/sources/rateLimit.js": {
       "loaded": true,
       "lines": 3,
-      "branches": 2,
+      "branches": 1,
       "functions": 0,
       "totals": {
         "lines": 31,
-        "branches": 15,
+        "branches": 16,
         "functions": 4
       },
       "sha": "0d958d3d0e7825da3819d86e6dd7921c60520fdada48628cf83c6cfa3da94e16",

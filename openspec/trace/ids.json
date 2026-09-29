@@ -1584,6 +1584,176 @@
     "since": "2026-09-26",
     "change": "upstream-sync"
   },
+  "osh-097": {
+    "hash": "9c49ceaeb849a9d83e32dae667ab79b1231903477623fa1be10068a10c1749ac",
+    "since": "2026-09-29",
+    "change": "osh-camera-link"
+  },
+  "osh-control-001": {
+    "hash": "b84fdbd2da655141a144647af6ca90b170dda2ff16acffa501823f0ccf7cfa1c",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-002": {
+    "hash": "ec06ea6dbd69a1e79400be752aea8146a7086993398321d1b6a9202cc432c0e7",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-003": {
+    "hash": "3086f2e1732d9bd6515d17783bca565350a1496c0af127d0ddfc356abe13b58c",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-006": {
+    "hash": "8bf629d1c29e6d8121956f22f26cb25f5db83881b009810cd2ec06f564e980b6",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-007": {
+    "hash": "19634dbaa07dffab38af576eaa420b3b29aae53473e0469c765896f495757ea6",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-009": {
+    "hash": "5a85c465f20f78e88f39f31e9947f0833fb430ce5013a40f8e2369c6869001c5",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-010": {
+    "hash": "981053a2466beac1d3196a3b2b3a47b284247c818f7db19f0e0a902b57644c8b",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-011": {
+    "hash": "9045ebf04056efb1604ae9b37a1feb3ed24918b2baccdd4400e6f09b63e7d516",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-013": {
+    "hash": "ab55d043dc66618f517284b043dee344244b5951bd392094c03c3077507d9383",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-014": {
+    "hash": "b1fd002ef205066310cbc5f3c24fd853d8f2dd20ae81d2d6b50805898fb9d045",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-015": {
+    "hash": "ede70a8cbe51deb5d2202089c6dde2bffa82c7cd39181db395ccbaeee01f2d73",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-016": {
+    "hash": "39006097294cdbfd081775989634abe2290c7fa2e7d0f46ec98ef08cbd9578c8",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-017": {
+    "hash": "a0c34d473aefb54f395a70e4040097f21fab7a7e5552ebd1668efcd18a5e2235",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-018": {
+    "hash": "4958c264bcb2bffa5077ee64f84a77c34805be4ac60208c25654320eccca0ea4",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-019": {
+    "hash": "ddaf3db757cb7388a9d70a92238d34d317be75e414253adc1a5881b2d8232153",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-020": {
+    "hash": "c2490d6aa78f670f4da2476466cc88a0cc8a3f2955c70daac88587baa7a77a89",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-021": {
+    "hash": "95f8df614064fe26b0384646df21f8858d5e018ab89e9abbaf90bd3c7e2edfea",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-022": {
+    "hash": "0e98f1df8bb19e42d47979f966962902fe3360e672b42340c6f04003039d5db9",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-023": {
+    "hash": "41a081f73442adf2a5ca32cca48f8a426a9068c0f052e86ac1eb3b777624d8e6",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-024": {
+    "hash": "32f3b85c88276561bf2f76b7dbd469fb9b9f7067af45492eb1b7486f525e8177",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-025": {
+    "hash": "777554b0c1b9ad1597c82e7c92a1a803b559484cf3b25bc01baf6dd8db29a1b2",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-026": {
+    "hash": "7eb766b67890c1ba57dc1337d4470ab2b341f4ec7df7ffcff06c1b53985cb886",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-027": {
+    "hash": "0692685d7650c16208690a80b1c126efc2bb97402a97ac422f1297bd7ab499ed",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-028": {
+    "hash": "11db1a8a38f1039f066a7611e6b68f59d9a98c1615ba5225ed21c94388ee3446",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-029": {
+    "hash": "88c5ae4dbb7fc1240ff7bbcef80d9f38bf09ab52b2214cbb48614772dd9f1b5d",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-031": {
+    "hash": "def666b0a3c8f86e5ee4f594f54c03110441d3473bac4680d30b1ce149c2cbac",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-032": {
+    "hash": "5f9ccac5bd7a2029e729819dc917b0cbca746b015388251ba3348466eaa384af",
+    "since": "2026-09-27",
+    "change": "osh-mavlink-control"
+  },
+  "osh-control-033": {
+    "hash": "71483addc8e85b770ca68333799b9e3adf21419a492a5b904a893ea510700540",
+    "since": "2026-09-28",
+    "change": "osh-control-auto-targets"
+  },
+  "osh-control-034": {
+    "hash": "0a76e264bf9eaad83f6d4f8b6b77dc01a81929e6d2f71a10051e7d95f3b67906",
+    "since": "2026-09-28",
+    "change": "osh-control-auto-targets"
+  },
+  "osh-control-035": {
+    "hash": "d83b1036d6d33f64ea6d4a10698ca234f221f547a075668fcee83dc78ed1891f",
+    "since": "2026-09-28",
+    "change": "osh-control-auto-targets"
+  },
+  "osh-control-036": {
+    "hash": "8b7a2d253eb73e3c9a07d98d872bdacd6ebc7f76805cd6005995b7db53b42c34",
+    "since": "2026-09-28",
+    "change": "backfill-osh-control-options"
+  },
+  "osh-control-037": {
+    "hash": "ef9e8f52c7700de762d4f43bf948623ea795d406c712768a245368b532c5d0b9",
+    "since": "2026-09-29",
+    "change": "osh-control-panel-layout"
+  },
+  "osh-control-038": {
+    "hash": "ffb10124cf6b10771fea1d8aa92a92e09de3c1fa292687aaa218d04c7be05c88",
+    "since": "2026-09-29",
+    "change": "osh-control-panel-layout"
+  },
   "perimeters-001": {
     "hash": "c950b2d41849c79df6aa9123d35a0cf495b873a7c0356228c03968863777d80d",
     "since": "2026-09-27",
