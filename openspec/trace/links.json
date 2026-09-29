@@ -1755,7 +1755,7 @@
     "src/data/oshLayer.test.mjs › [osh-097] stops the fallback with no video when the selection ends while the layer reads the matched camera's own datastreams",
     "src/layers/osh/cameraLink.test.mjs › [osh-097] finds the first camera with the same first number token",
     "src/layers/osh/cameraLink.test.mjs › [osh-097] matches camera without regard to letter case",
-    "src/layers/osh/cameraLink.test.mjs › [osh-097] returns null when no candidate has both the number token and camera",
+    "src/layers/osh/cameraLink.test.mjs › [osh-097] returns null when no candidate has both the number token and the word \"camera\"",
     "src/layers/osh/cameraLink.test.mjs › [osh-097] returns null when the selected name has no number token"
   ],
   "osh-control-001": [
