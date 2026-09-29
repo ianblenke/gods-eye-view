@@ -2528,5 +2528,215 @@
     "hash": "e5a686414fba01f923780624df61d0a45cf711332983d47c18fbe1b98cf1fffb",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
+  },
+  "wind-001": {
+    "hash": "25376818102333bb788cde47843c2dce37362cebf4f938da44726885f94e75ac",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-002": {
+    "hash": "8038e3e118d795c1e0d90a37b3afff306cef73cb1d65493b1274c036582721a2",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-003": {
+    "hash": "9c7e350538805deea06db60316294a3a1b82a8b57958a779a704d5ab59dcab71",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-004": {
+    "hash": "3df6850d2db9fbe3a5c58114c9a6a750a19260741b778b12fa32283d1c9e4207",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-005": {
+    "hash": "ad89e154afbd566e9d41c5eb2b0df243815dc9b91773787a3bf59d8fa8baa8c2",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-006": {
+    "hash": "37e9532ed8a303008da9691489651495d38adb2d29400fae5a5a5f6ee9ff742c",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-007": {
+    "hash": "bd0764f55e11de628b65fca74bfaaf7539a633865492c87b9288c44a96a1d5b3",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-008": {
+    "hash": "1fd5f1140813e19ef1a25a44d3bbe4d9ce8a82c20e4cff530b881934cd3c1d9c",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-009": {
+    "hash": "713af4411efb9a51f5d3b7344d37e28d5fcb77b71e6c29c5a9dcdc362f066e18",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-010": {
+    "hash": "12ad7bda210529f5f27ecb566b63d5d65b7966d8291f31fd6994dcae5ebac587",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-011": {
+    "hash": "b25ad228b8efd01642e063944d137c547656a12ae89bf2d36f42057a592be6d7",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-012": {
+    "hash": "6281832d131e8fb7affe10072a760cd5df094bacabfba47f591cbd22baa13f24",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-013": {
+    "hash": "8576bcebca372cb630ea85c78f03c1d57dd4a7f856c7e9555271ae8a7f8f74fd",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-014": {
+    "hash": "8b8fe4ecf82881725b7b0d04536d4b2d2743c6cf0761311ee8c1230ff6ce755b",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-015": {
+    "hash": "af70f871076df4339ced695e77eaad3809389cd8c98d74660bbe31ea4b98f239",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-016": {
+    "hash": "604f89cbdf72687020c8478ceaa2193739f1d88689c01d44b7c53591106d5c5e",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-017": {
+    "hash": "8512f17d31da81baf0136b1a6302f87b322c2e96a2ccfe02e3442b4ddc00d46d",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-018": {
+    "hash": "077e1140dafedba8c20b75dc648c816c55ec8795e3b399049f75f8db0cbd812f",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-019": {
+    "hash": "763f2be97764076384cca91bbdd076a7bad021c978b56c6487d02522ff09f836",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-020": {
+    "hash": "7dc0d3b0747f8391cc877d6f4a15d94bc6d267d4681c293b62963ed5d3f60f38",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-021": {
+    "hash": "75e33cc197849f9f86af94dbcd77ecfc2ad93cd4d262aa98c3167e94daa062a5",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-022": {
+    "hash": "62c5da6d019df736e00244184985a810ece3121f94bfb675541627de19891592",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-023": {
+    "hash": "65bbe4d8d45a6960c1ee53846181da61c834d7d11e2a2662dab3f21bf0ea21e5",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-024": {
+    "hash": "2e97089802abd8bf11da3ea6eafc7d786fc37f79adaa7ab563d6aed70178be9c",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-025": {
+    "hash": "3ff92184ba1801332f5f00317535d2e0c3fae5e47b58637469861f374b3ea5c5",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-026": {
+    "hash": "5632702f537fd516eb6aa34b696210ed018eb90c0a222abc30efb7bdfb33baa0",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-027": {
+    "hash": "9d1e5c726e637c035b636528748404e46dedadef4eeb5f3921beccb9c6675022",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-028": {
+    "hash": "91bc30df7c5378827c854f263eb26cd5cc47ec731b88638f902f99c249d2f61e",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-029": {
+    "hash": "b6d7025fa76c1d38975bf5034cf2713b8312ab631d9b0e4d6c0ae15e104ee292",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-030": {
+    "hash": "31a1b92c2af699008c7501b4a2400e0be77ae0065813e33c050c01e617be7808",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-031": {
+    "hash": "336223f118335c9709bc06390749f1bdc2a7e0088aa9f6e549765658ebbd1265",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-032": {
+    "hash": "a758020c81446a174f3a076087a33c318d4544674ee84733e829385a003e9e25",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-033": {
+    "hash": "b533a252a6f12e20614d74f01ee7e3dc14bedcf62217c473e2ca3155db9a6479",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-034": {
+    "hash": "555672a0fe26e1a75c2081fe586f1d2c5a0c6825c09bfa07d7ca11133ef791bd",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-035": {
+    "hash": "1503d09613097ac450722dcaf08d7b3e751f72a9c79e3c83b75f5cc8dd1aaf32",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-036": {
+    "hash": "ac785f5172c943efdded345d19ed793d1e285e32934222fa775a0cf271a3272c",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-037": {
+    "hash": "ef33faa94aee3a841063e5d218a46a499cc6e0c2a9a2798acdfba48b9ceae8be",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-038": {
+    "hash": "65fae28a941ba2aff441664ecfb0e790cdeb1757e806039f683487b031fa764f",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-039": {
+    "hash": "d36377d811d86146ce92adc7736f5c950a2ba311f7cf6b28645f3762976e30ba",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-040": {
+    "hash": "224efb83700255e2e769d3f5a887212cb5e68db55fb3cf28aec92d9e59baa36c",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-041": {
+    "hash": "ed91d17784595db267dd1a88aa56d6b869a781823fa0515768b719a8a8bf86aa",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
+  },
+  "wind-042": {
+    "hash": "0172a882e03e4ae5b9103f99e535967cd105f96480e437793e0462506af6309f",
+    "since": "2026-09-29",
+    "change": "backfill-wind"
   }
 }

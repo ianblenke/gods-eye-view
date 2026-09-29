@@ -91,7 +91,7 @@
 
 ## 3. Gates and review
 
-- [ ] 3.1 Run the ratchet command.
+- [x] 3.1 Run the ratchet command.
 - [ ] 3.2 Run the full gates.
 - [ ] 3.3 Run the two review agents.
 - [ ] 3.4 Write review.md with their results.
