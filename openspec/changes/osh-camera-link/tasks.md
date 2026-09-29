@@ -1,20 +1,20 @@
 ## 1. Match a camera by name and number
 
 - [x] 1.1 Write the `[osh-097]` tests for `findLinkedCameraSystem()` in a new file `src/layers/osh/cameraLink.test.mjs`.
-  - Assert it returns the system whose name has the same first digit run as the selected name. That system's own name also has "camera", read without regard to letter case.
+  - Assert it returns the system whose name has the same first number token as the selected name. That system's own name also has "camera", read without regard to letter case.
   - Assert it returns `null` when the selected name has no digit.
-  - Assert it returns `null` when no candidate's name has both the same digit run and the word "camera".
+  - Assert it returns `null` when no candidate's name has both the same number token and the word "camera".
   - Assert it skips a candidate with no name, and a candidate whose own id equals the selected id.
   - Assert it returns the first candidate that matches, in the order `systemRecords` gives them, when more than one candidate matches.
-  - Mutation: Match a name's last digit run instead of its first. Give a candidate an earlier, different number and a later number equal to the selected one. The test must fail without the fix.
+  - Mutation: Match a name's last number token instead of its first. Give a candidate an earlier, different number and a later number equal to the selected one. The test must fail without the fix.
   - Mutation: Compare "camera" with letter case. A candidate named `Camera 3` must still match when the selected name is `unit 3`. The test must fail without the fix.
 - [x] 1.2 Write `findLinkedCameraSystem()` in `src/layers/osh/cameraLink.js`.
   - It takes the selected id, the selected name, and the system records.
-  - Read the first digit run of the selected name with a digit pattern.
+  - Read the first number token of the selected name with a digit pattern.
   - Return `null` at once when it finds none.
   - Read the system records in their own given order.
   - Skip a record with no `name` or with the selected id.
-  - Return the first record whose own first digit run equals the selected one, and whose own name has "camera", read without regard to letter case.
+  - Return the first record whose own first number token equals the selected one, and whose own name has "camera", read without regard to letter case.
   - Return `null` when no record matches.
 
 ## 2. Start the matched camera's video as a fallback
@@ -31,16 +31,19 @@
   - Show a selected system with no video datastream of its own.
   - Show no system record that matches it.
   - Assert the layer reads no further datastreams, and starts no video stream.
-  - Also written: a test for a failed read of the matched camera's own datastreams.
-  - Also written: a test for a stale generation during that read, design D4's own guard. Both start no video.
+  - Also written: a test for a failed call to read the matched camera's own datastreams.
+  - Also written: a test for a stale generation while the layer reads them, design D4's own guard. Both start no video.
   - Also written: a test for a matched system whose own datastreams have no `video: true` record, per round-1 review finding F1. It starts no video.
   - Also strengthened: the success test in 2.1 now has a third, unrelated system with its own video datastream, listed before the matched one. This proves the layer picks the matched system's own datastream, per round-1 review finding F3.
+  - Also written: a test for a matched system whose own datastreams answer needs a key. It starts no video.
+  - Found by the team lead, not a named review finding. The round-1 fix for F1 gave this test an empty `datastreams` array.
+  - That array hid a check the test never proved: a mutation that removed the `keyRequired` guard still passed. The new fixture gives a `video: true` record, so the guard is the only thing that stops the video.
 - [x] 2.3 Change `openStreams()` in `src/layers/osh/index.js`: make it `async`.
   - When the selected system's own states have a `video: true` state, keep the current behaviour unchanged.
   - Otherwise, read the selected system's own record.
   - Call `findLinkedCameraSystem()`.
   - When it returns a record, read that record's own datastreams. Find its first `video: true` datastream. Start the video session for it with the matched record's own name.
-  - Stop the fallback, with no video started, when the poll's own generation is stale after the read.
+  - Stop the fallback, with no video started, when the poll's own generation is stale after the layer reads the datastreams.
 - [x] 2.4 Change the one call site of `openStreams()` in `pollSelected()` to `await` it.
 
 ## 3. Confirm the carried scenarios still pass

@@ -36,16 +36,18 @@ The search reads `_systemRecords`, every system record the layer read, not only 
 
 When more than one system matches, the layer keeps the first one in the iteration order of `_systemRecords`. A `Map` keeps insertion order, so the first system the layer read from the server wins. This is deterministic, and it needs no new sort.
 
-### D4 A second datastreams read, only as a fallback
+### D4 A second datastreams call, only as a fallback
 
-`openStreams()` still checks the selected system's own states first. Only when none of them carries video does the layer search for a system that matches. When it finds one, it calls `source.getDatastreams()` for that system's id. This keeps the normal case, a system with its own video, at one datastreams read.
+`openStreams()` still checks the selected system's own states first. Only when none of them carries video does the layer search for a system that matches. When it finds one, it calls `source.getDatastreams()` for that system's id. This keeps the normal case, a system with its own video, at one call to read datastreams.
+
+The layer starts no video when that call fails, or when it needs a key. It also starts no video when the matched system's own datastreams have no `video: true` record. This matches the same guards `osh-030`'s own poll already uses when it reads the selected system's own datastreams.
 
 The matched system's video session opens the same way `osh-087` already opens one: one stream, one player, one view, closed with the selection. The view's own name comes from the matched system's record, not the selected system's.
 
 ## Risks / Trade-offs
 
 1. **A number that appears in more than one system's name for an unrelated reason.** Mitigation: the match also needs the word "camera" in the candidate's own name. This narrows a false match to a system whose own name has the word "camera" and carries the same number by chance.
-2. **The extra datastreams read adds one request when no camera matches.** Mitigation: this read happens only once per selection, only when the selected system has no video of its own. It is the same cost the layer already pays today, for a system with no video datastream of its own.
+2. **The extra call that reads datastreams adds one request when no camera matches.** Mitigation: the layer reads the extra datastreams only once per selection, only when the selected system has no video of its own. It is the same cost the layer already pays today, for a system with no video datastream of its own.
 
 ## How the gates measure this change
 
