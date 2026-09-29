@@ -4027,7 +4027,7 @@ test('[osh-097] stops the fallback with no video when the selection ends while t
     layer.enable(viewer);
     await layer.update(viewer);
     await pickAndSettle(getClick, viewer, 'osh:sys-fixture-10');
-    assert.deepEqual(datastreamsArgs, ['sys-fixture-10', 'sys-fixture-11'], 'the camera read is in flight');
+    assert.deepEqual(datastreamsArgs, ['sys-fixture-10', 'sys-fixture-11'], 'the call for the matched camera\'s own datastreams is pending');
     layer.disable();
     resolveCameraDatastreams({
       keyRequired: false,
