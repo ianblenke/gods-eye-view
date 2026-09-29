@@ -1747,9 +1747,10 @@
     "src/app/layers/osh.test.mjs › [osh-096] builds the OSH systems layer in the catalog with the production source and the hosts of the page"
   ],
   "osh-097": [
-    "src/data/oshLayer.test.mjs › [osh-097] plays a linked camera's video when the selected system has none of its own",
+    "src/data/oshLayer.test.mjs › [osh-097] plays the matched camera's video when the selected system has none of its own",
     "src/data/oshLayer.test.mjs › [osh-097] starts no video when no system's name matches the selected system's own number",
     "src/data/oshLayer.test.mjs › [osh-097] starts no video when the matched camera's own datastreams read fails",
+    "src/data/oshLayer.test.mjs › [osh-097] starts no video when the matched system has no video datastream of its own",
     "src/data/oshLayer.test.mjs › [osh-097] stops the fallback with no video when the selection ends during the matched camera's own read",
     "src/layers/osh/cameraLink.test.mjs › [osh-097] finds the first camera with the same first number",
     "src/layers/osh/cameraLink.test.mjs › [osh-097] matches camera without regard to letter case",
