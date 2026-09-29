@@ -21,7 +21,7 @@ function field(u = 12, v = 0) {
   };
 }
 
-test('streamline bake is deterministic, equal-area and strictly bounded', () => {
+test('[wind-040] streamline bake is deterministic, equal-area and strictly bounded', () => {
   const first = bakeWindStreamlines(field(), { count: 24 });
   assert.deepEqual(first, bakeWindStreamlines(field(), { count: 24 }));
   assert.equal(first.length, 24);
@@ -49,7 +49,7 @@ test('streamline bake is deterministic, equal-area and strictly bounded', () => 
   assert.ok(oversized.every((path) => path.coordinates.length <= 33));
 });
 
-test('bake stops at poles, seams, missing and calm data without invalid geometry', () => {
+test('[wind-041] bake stops at poles, seams, missing and calm data without invalid geometry', () => {
   assert.deepEqual(bakeWindStreamlines(field(0, 0)), []);
   assert.deepEqual(bakeWindStreamlines(field(NaN, 1)), []);
   assert.deepEqual(bakeWindStreamlines(null), []);
@@ -64,7 +64,7 @@ test('bake stops at poles, seams, missing and calm data without invalid geometry
   }
 });
 
-test('midpoint integration bends paths with a changing northward component', () => {
+test('[wind-040] midpoint integration bends paths with a changing northward component', () => {
   const snapshot = field(20, 0);
   snapshot.v = new Float32Array([
     -20, -10, 0, 10, -20, -10, 0, 10, -20, -10, 0, 10,
@@ -77,7 +77,7 @@ test('midpoint integration bends paths with a changing northward component', () 
   assert.ok(path.coordinates.at(-1)[1] > middle[1]);
 });
 
-test('regional grouping preserves every baked path and ordering within each cell', () => {
+test('[wind-042] regional grouping preserves every baked path and ordering within each cell', () => {
   const paths = bakeWindStreamlines(field());
   const before = structuredClone(paths);
   const groups = groupWindPaths(paths);
@@ -97,7 +97,7 @@ test('regional grouping preserves every baked path and ordering within each cell
   assert.deepEqual(groupWindPaths([]), []);
 });
 
-test('grouping uses the middle coordinate, wraps longitude and clamps polar cell edges', () => {
+test('[wind-042] grouping uses the middle coordinate, wraps longitude and clamps polar cell edges', () => {
   const path = (lon, lat) => ({
     coordinates: [
       [-15, -15],
@@ -119,4 +119,32 @@ test('grouping uses the middle coordinate, wraps longitude and clamps polar cell
   assert.equal(groupWindPaths([a, north], 90).length, 2);
   for (const size of [0, -30, NaN, Infinity, 181])
     assert.throws(() => groupWindPaths([], size), RangeError);
+});
+
+test('[wind-040] path defaults replace invalid counts and time', () => {
+  assert.ok(bakeWindStreamlines(field(), { count: NaN, steps: 1, stepSeconds: NaN }).length > 7000);
+  assert.equal(bakeWindStreamlines(field(), { count: 1, steps: NaN, stepSeconds: 1 }).length, 1);
+  assert.equal(bakeWindStreamlines(field(), { count: 1, steps: 1, stepSeconds: 0 }).length, 1);
+  assert.equal(bakeWindStreamlines(field(), { count: 1, steps: 1, stepSeconds: 5000 }).length, 1);
+});
+
+test('[wind-041] invalid midpoint samples stop a path', () => {
+  const grid = field(10, 1);
+  grid.v.fill(NaN);
+  assert.deepEqual(bakeWindStreamlines(grid, { count: 1 }), []);
+  const calm = field(0.1, 0);
+  assert.deepEqual(bakeWindStreamlines(calm, { count: 1 }), []);
+});
+
+test('[wind-041] path stops when wind changes after its seed', () => {
+  const changing = (badAt, badValue) => {
+    let reads = 0;
+    const grid = field();
+    grid.u = new Proxy({}, { get() { return Math.floor(reads++ / 4) === badAt ? badValue : 10; } });
+    return grid;
+  };
+  assert.equal(bakeWindStreamlines(changing(1, NaN), { count: 1 })[0].coordinates.length, 17);
+  assert.equal(bakeWindStreamlines(changing(2, NaN), { count: 1 })[0].coordinates.length, 17);
+  assert.equal(bakeWindStreamlines(changing(1, 0), { count: 1 })[0].coordinates.length, 17);
+  assert.equal(bakeWindStreamlines(changing(2, 0), { count: 1 })[0].coordinates.length, 17);
 });

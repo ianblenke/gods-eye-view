@@ -26,6 +26,7 @@ function harness({ width = 1000 } = {}) {
     constructor(options) {
       this.uniforms = options.fabric.uniforms;
       this.source = options.fabric.source;
+      this.translucent = options.translucent;
     }
     destroy() {
       assert.ok(!this.destroyed, 'owned resource destroyed once');
@@ -152,12 +153,13 @@ const field = () => ({
   v: new Float32Array(12),
 });
 
-test('GPU owner builds regional native batches; ticks update uniforms without rebuilding geometry', () => {
+test('[wind-005] GPU owner builds regional native batches; ticks update uniforms without rebuilding geometry', () => {
   const h = harness();
   assert.equal(h.owner.setField(field()), true);
   assert.equal(h.members.size, 72);
   const batch = [...h.members][0];
   assert.equal(batch.allowPicking, false);
+  assert.equal(batch.appearance.material.translucent(), true);
   assert.equal(batch.asynchronous, true);
   assert.ok(batch.appearance.vertexShaderSource.includes('v_windFacing = dot'));
   assert.ok(
@@ -240,7 +242,7 @@ test('GPU owner builds regional native batches; ticks update uniforms without re
   }
 });
 
-test('replacement, clear and destroy dispose every owned cell and the shared material', () => {
+test('[wind-006] replacement, clear and destroy dispose every owned cell and the shared material', () => {
   const h = harness();
   const assertDisposed = (batches) => {
     assert.equal(batches.length, 72);
@@ -268,7 +270,7 @@ test('replacement, clear and destroy dispose every owned cell and the shared mat
   assert.equal(h.owner.setField(field()), false);
 });
 
-test('unsupported or failed geometry cleanly requests the existing fallback', () => {
+test('[wind-007] unsupported or failed geometry cleanly requests the existing fallback', () => {
   const missing = createWindGpuRendering({
     cesium: {},
     getViewer: () => ({ scene: {} }),
@@ -285,14 +287,14 @@ test('unsupported or failed geometry cleanly requests the existing fallback', ()
   assert.match(h.owner.getDiagnostics().error, /test build failure/);
 });
 
-test('narrow canvases use a lower bounded path budget', () => {
+test('[wind-005] narrow canvases use a lower bounded path budget', () => {
   const h = harness({ width: 390 });
   assert.equal(h.owner.setField(field()), true);
   assert.ok(h.owner.getParticleCount() <= 1200);
   assert.ok(h.owner.getParticleCount() > 1000);
 });
 
-test('cell visibility combines horizon, frustum and height with shared fade uniforms', () => {
+test('[wind-008] cell visibility combines horizon, frustum and height with shared fade uniforms', () => {
   const h = harness();
   h.owner.setField(field());
   const batches = [...h.members];
@@ -347,7 +349,7 @@ test('cell visibility combines horizon, frustum and height with shared fade unif
   );
 });
 
-test('real Cesium sphere culling hides far hemisphere with globe hidden and rejects a sky-facing view', () => {
+test('[wind-008] real Cesium sphere culling hides far hemisphere with globe hidden and rejects a sky-facing view', () => {
   const h = harness();
   h.C.Occluder = Occluder;
   h.owner.setField(field());
@@ -377,7 +379,7 @@ test('real Cesium sphere culling hides far hemisphere with globe hidden and reje
   h.owner.destroy();
 });
 
-test('a failed later cell build releases already installed cells and shared material', () => {
+test('[wind-006] a failed later cell build releases already installed cells and shared material', () => {
   const h = harness();
   const NativePrimitive = h.C.Primitive;
   const built = [];
@@ -396,4 +398,65 @@ test('a failed later cell build releases already installed cells and shared mate
     assert.equal(batch.appearance.material.destroyed, true);
   }
   assert.match(h.owner.getDiagnostics().error, /later cell failed/);
+});
+
+test('[wind-007] GPU owner rejects empty fields and other scene modes', () => {
+  const h = harness();
+  h.C.SceneMode = { SCENE3D: 3 };
+  h.scene.mode = 2;
+  assert.equal(h.owner.supported(), false);
+  h.scene.mode = 3;
+  assert.equal(h.owner.supported(), true);
+  assert.equal(h.owner.setField(null), false);
+  assert.equal(h.owner.setField({ ...field(), u: new Float32Array(12), v: new Float32Array(12) }), false);
+  h.owner.destroy();
+  assert.equal(h.owner.supported(), false);
+});
+
+test('[wind-006] GPU owner releases cells without a destroy method', () => {
+  const h = harness();
+  assert.equal(h.owner.setField(field()), true);
+  for (const cell of h.members) {
+    cell.isDestroyed = () => false;
+    cell.destroy = undefined;
+  }
+  h.scene.primitives.remove = (cell) => h.members.delete(cell);
+  h.owner.clear();
+  assert.equal(h.members.size, 0);
+  assert.equal(h.owner.getDiagnostics().pathCount, 0);
+});
+
+test('[wind-007] GPU owner reports a bad shader and a non-error build', () => {
+  const h = harness();
+  h.C.PolylineMaterialAppearance = class { static VERTEX_FORMAT = {}; constructor(options) { this.material = options.material; this.vertexShaderSource = 'bad shader'; } };
+  assert.equal(h.owner.setField(field()), false);
+  assert.equal(h.owner.getDiagnostics().error, 'Wind polyline shader entry unavailable');
+  h.C.Material = class { constructor() { throw 'bad build'; } };
+  assert.equal(h.owner.setField(field()), false);
+  assert.equal(h.owner.getDiagnostics().error, 'Wind geometry unavailable');
+});
+
+test('[wind-005] GPU owner starts in pause and uses a clock fallback', () => {
+  const h = harness();
+  const prior = globalThis.performance;
+  try {
+    Object.defineProperty(globalThis, 'performance', { configurable: true, value: undefined });
+    h.owner.setOptions({ paused: true });
+    assert.equal(h.owner.setField(field()), true);
+    const batch = [...h.members][0];
+    assert.equal(batch.appearance.material.uniforms.ghostAlpha, 0.34);
+    assert.equal(h.owner.getDiagnostics().buildMs >= 0, true);
+  } finally {
+    Object.defineProperty(globalThis, 'performance', { configurable: true, value: prior });
+    h.owner.destroy();
+  }
+});
+
+test('[wind-006] GPU owner destroys a cell after collection removal', () => {
+  const h = harness({ width: 320 });
+  assert.equal(h.owner.setField(field()), true);
+  h.scene.primitives.remove = (cell) => h.members.delete(cell);
+  h.owner.clear();
+  assert.equal(h.members.size, 0);
+  assert.equal(h.owner.getDiagnostics().cellCount, 0);
 });

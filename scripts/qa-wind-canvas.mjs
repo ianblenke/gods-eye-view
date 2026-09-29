@@ -1,6 +1,6 @@
 /**
  * @purpose Prove that wind pixels appear on the real canvas.
- * @covers pending:wind
+ * @covers wind
  * @run node scripts/qa-wind-canvas.mjs
  * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */

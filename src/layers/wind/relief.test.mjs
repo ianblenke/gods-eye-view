@@ -51,7 +51,7 @@ test('relief acquires once and restores the exact prior empty material on clear'
   }
 });
 
-test('pre-existing and replacement material owners are never overwritten', () => {
+test('[wind-022] pre-existing and replacement material owners are never overwritten', () => {
   const other = { name: 'other-owner' };
   const f = fixture({ material: other });
   assert.equal(f.relief.attach(), false);
@@ -69,7 +69,7 @@ test('pre-existing and replacement material owners are never overwritten', () =>
   assert.equal(f.globe.material, other);
 });
 
-test('missing terrain normals uses curvature only and upgrades when normals exist', () => {
+test('[wind-022] missing terrain normals uses curvature only and upgrades when normals exist', () => {
   const f = fixture({ normals: false });
   assert.equal(f.relief.attach(), true);
   assert.equal(f.relief.getDiagnostics().mode, 'globe curvature');
@@ -86,7 +86,7 @@ test('missing terrain normals uses curvature only and upgrades when normals exis
   assert.equal(f.globe.material, undefined);
 });
 
-test('moving to a new viewer releases the old globe and owns only the new one', () => {
+test('[wind-021] moving to a new viewer releases the old globe and owns only the new one', () => {
   const f = fixture();
   f.relief.attach();
   const old = f.globe;
@@ -98,4 +98,48 @@ test('moving to a new viewer releases the old globe and owns only the new one', 
   assert.equal(next.material, f.materials[1]);
   f.relief.destroy();
   assert.equal(next.material, null);
+});
+
+test('[wind-021] relief reports an absent globe and a bad material', () => {
+  const absent = createWindRelief({ cesium: {}, getViewer: () => null });
+  assert.equal(absent.attach(), false);
+  assert.equal(absent.getDiagnostics().reason, 'Globe material unavailable');
+  let calls = 0;
+  const globe = { material: null, terrainProvider: {} };
+  const fail = createWindRelief({ cesium: { Material: class { constructor() { calls++; throw new Error('bad'); } } }, getViewer: () => ({ scene: { globe } }) });
+  assert.equal(fail.attach(), false);
+  assert.equal(calls, 1);
+  assert.equal(fail.getDiagnostics().reason, 'Relief material unavailable');
+  assert.equal(globe.material, null);
+  fail.destroy();
+  assert.equal(fail.getDiagnostics().reason, 'Destroyed');
+});
+
+test('[wind-021] relief skips a dead material on clear', () => {
+  const f = fixture();
+  assert.equal(f.relief.attach(), true);
+  f.materials[0].destroyed = true;
+  f.relief.clear();
+  assert.equal(f.globe.material, undefined);
+  assert.equal(f.relief.getDiagnostics().active, false);
+});
+
+test('[wind-021] relief clears a material with no life check', () => {
+  let destroyed = 0;
+  const globe = { material: null, terrainProvider: {} };
+  const viewer = { scene: { globe, requestRender() {} } };
+  const relief = createWindRelief({ cesium: { Material: class { destroy() { destroyed++; } } }, getViewer: () => viewer });
+  assert.equal(relief.attach(), true);
+  relief.destroy();
+  relief.destroy();
+  assert.equal(destroyed, 1);
+  assert.equal(globe.material, null);
+});
+
+test('[wind-021] relief checks a live viewer', () => {
+  const f = fixture();
+  f.viewer.isDestroyed = () => false;
+  assert.equal(f.relief.attach(), true);
+  assert.equal(f.relief.getDiagnostics().active, true);
+  f.relief.destroy();
 });

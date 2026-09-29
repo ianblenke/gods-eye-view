@@ -12,7 +12,7 @@ const response = (value) =>
       ? JSON.stringify(value)
       : value,
   );
-test('wind source splits a bounded field and preserves unavailable responses', async () => {
+test('[wind-036] wind source splits a bounded field and preserves unavailable responses', async () => {
   const source = createWindSource({
     fetchImpl: async (url) =>
       response(
@@ -29,7 +29,7 @@ test('wind source splits a bounded field and preserves unavailable responses', a
   });
   assert.equal((await unavailable.getSnapshot()).unavailable, true);
 });
-test('wind source rejects foreign URLs, excessive grids and non-finite values', async () => {
+test('[wind-037] wind source rejects foreign URLs, excessive grids and non-finite values', async () => {
   for (const bad of [
     { ...manifest, gridUrl: 'https://example.com/exfil' },
     { ...manifest, grid: { ...manifest.grid, nx: 1e9 } },
@@ -54,7 +54,7 @@ test('wind source rejects foreign URLs, excessive grids and non-finite values', 
   });
   await assert.rejects(source.getSnapshot(), /Malformed/);
 });
-test('wind source timeout aborts the underlying fetch', async () => {
+test('[wind-038] wind source timeout aborts the underlying fetch', async () => {
   const source = createWindSource({
     timeoutMs: 5,
     fetchImpl: (_, { signal }) =>
@@ -67,7 +67,7 @@ test('wind source timeout aborts the underlying fetch', async () => {
   await assert.rejects(source.getSnapshot(), /timed out/);
 });
 
-test('wind source requests optional companions and splits exact U/V/scalar byte regions', async () => {
+test('[wind-036] wind source requests optional companions and splits exact U/V/scalar byte regions', async () => {
   for (const [overlay, units, level, expected] of [
     ['temperature', '°C', '2 m above ground', [-5, 25]],
     ['pressure', 'hPa', 'mean sea level', [995, 1025]],
@@ -105,7 +105,7 @@ test('wind source requests optional companions and splits exact U/V/scalar byte 
   }
 });
 
-test('wind source rejects scalar contract mismatches before fetching a grid', async () => {
+test('[wind-037] wind source rejects scalar contract mismatches before fetching a grid', async () => {
   const base = {
     ...manifest,
     overlay: 'temperature',
@@ -153,7 +153,7 @@ test('wind source rejects scalar contract mismatches before fetching a grid', as
   );
 });
 
-test('wind source bounds optional scalar length and rejects non-finite scalar values', async () => {
+test('[wind-037] wind source bounds optional scalar length and rejects non-finite scalar values', async () => {
   const variant = {
     ...manifest,
     overlay: 'pressure',
@@ -178,7 +178,7 @@ test('wind source bounds optional scalar length and rejects non-finite scalar va
   }
 });
 
-test('cancelling an optional scalar stream cancels the active grid body', async () => {
+test('[wind-038] cancelling an optional scalar stream cancels the active grid body', async () => {
   const variant = {
     ...manifest,
     overlay: 'pressure',
@@ -217,7 +217,7 @@ test('cancelling an optional scalar stream cancels the active grid body', async 
   assert.equal(cancelled, true);
 });
 
-test('wind source retains usable wind when the requested scalar is unavailable', async () => {
+test('[wind-039] wind source retains usable wind when the requested scalar is unavailable', async () => {
   for (const overlay of ['temperature', 'pressure']) {
     const partial = {
       ...manifest,
@@ -241,5 +241,25 @@ test('wind source retains usable wind when the requested scalar is unavailable',
     assert.equal(result.scalarError, partial.scalarError);
     assert.deepEqual([...result.u], [1, 2]);
     assert.deepEqual([...result.v], [3, 4]);
+  }
+});
+
+test('[wind-037] source rejects bad model and HTTP replies', async () => {
+  const source = createWindSource({ fetchImpl: async () => new Response('', { status: 503 }) });
+  await assert.rejects(source.getSnapshot({ model: 'bad' }), /Unknown wind model/);
+  await assert.rejects(source.getSnapshot(), /Wind HTTP 503/);
+  const second = createWindSource({ fetchImpl: async (url) => url.includes('manifest') ? response(manifest) : new Response('', { status: 502 }) });
+  await assert.rejects(second.getSnapshot(), /Wind HTTP 502/);
+});
+
+test('[wind-036] default fetch reads an unavailable manifest', async () => {
+  const oldFetch = globalThis.fetch;
+  const urls = [];
+  try {
+    globalThis.fetch = async (url) => { urls.push(url); return response({ unavailable: true }); };
+    assert.equal((await createWindSource().getSnapshot()).unavailable, true);
+    assert.deepEqual(urls, ['/api/wind/manifest?model=gfs']);
+  } finally {
+    globalThis.fetch = oldFetch;
   }
 });
