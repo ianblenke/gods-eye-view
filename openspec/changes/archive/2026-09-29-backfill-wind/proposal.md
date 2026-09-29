@@ -7,7 +7,7 @@ The wind layer has no backfill spec. The ledger records code gaps and old tests 
 - Add the `wind` capability with 42 scenarios.
 - Tag old wind tests and add tests for code gaps.
 - Change four browser QA script headers to name `wind`.
-- Change no production layer file.
+- Do not change a production layer file.
 
 ## Capabilities
 
@@ -40,8 +40,11 @@ The ten test files have 86 untraced tests before and one after. This change open
 
 - The host Node version can give counts that differ from the gate image. The lead will check final counts.
 - One old relief test has the banned word `prior`. It keeps its name and has no scenario tag.
-- The branch total of `rendering.js` can change between V8 runs. One residual branch at line 515 is unreachable.
-- `index.js` line 177 has a continuation after the catch. Each path returns before this point.
+- The branch total of `rendering.js` can change between V8 runs. The branch at line 515 cannot run.
+- `index.js` line 177 has code that runs after the catch. Each path returns before this point.
 - `streamlines.js` line 31 checks a middle latitude above 88.5 degrees. Seed latitude stays below 88 degrees, and a half step adds at most 0.375 degrees.
-- `rendering.js` line 515 checks for old listeners on attach. Only start calls attach, and stop clears listeners before the next start.
+- `rendering.js` line 515 checks for old listeners on attach. Only `start` calls `attach`, and `stop` clears listeners before the next `start`.
 - The four browser QA scripts get only a change to `@covers`. The scripts do not run in this change.
+- Known limit `wind-old-test-names`: five old test names keep words this review would replace, in `index.test.mjs`, `rendering.test.mjs`, `relief.test.mjs` and `gpuRendering.test.mjs`. The rule of the owner is that an old test name does not change. New prose for the same scenarios uses the replacement words instead.
+- Known limit `wind-old-test-subjects`: many old test names start with a subject, such as "wind source" or "GPU owner", instead of a plain description. This style choice predates this change in most of the ten wind files. A rename to fix it alone is out of scope here.
+- Known limit `wind-tag-or-add`: each task in section 2 says "Tag or add tests for wind-XXX." These words already appear in the merged change `backfill-perimeters`. A stricter rule would split it into two steps. But each scenario needs only the action that applies, so "and" would overstate most tasks.

@@ -43,7 +43,7 @@
 - [x] 2.19 Tag or add tests for `wind-019`.
   - Mutation: Return zero wind speed in the production file. The test must fail.
 - [x] 2.20 Tag or add tests for `wind-020`.
-  - Mutation: Use bad as the unit chip id prefix in the production file. The test must fail.
+  - Mutation: Use bad as the id prefix of the unit chip in the production file. The test must fail.
 - [x] 2.21 Tag or add tests for `wind-021`.
   - Mutation: Set the owned relief material to null in the production file. The test must fail.
 - [x] 2.22 Tag or add tests for `wind-022`.
@@ -51,7 +51,7 @@
 - [x] 2.23 Tag or add tests for `wind-023`.
   - Mutation: Clear each request for an animation frame in the production file. The test must fail.
 - [x] 2.24 Tag or add tests for `wind-024`.
-  - Mutation: Double the canvas particle budget divisor in the production file. The test must fail.
+  - Mutation: Double the budget divisor for canvas particles in the production file. The test must fail.
 - [x] 2.25 Tag or add tests for `wind-025`.
   - Mutation: Ignore pause and reduced motion in the production file. The test must fail.
 - [x] 2.26 Tag or add tests for `wind-026`.
@@ -73,7 +73,7 @@
 - [x] 2.34 Tag or add tests for `wind-034`.
   - Mutation: Skip the GPU frame schedule in the production file. The test must fail.
 - [x] 2.35 Tag or add tests for `wind-035`.
-  - Mutation: Give the shell no field image in the production file. The test must fail.
+  - Mutation: Do not give the shell a field image in the production file. The test must fail.
 - [x] 2.36 Tag or add tests for `wind-036`.
   - Mutation: Request a bad wind manifest route in the production file. The test must fail.
 - [x] 2.37 Tag or add tests for `wind-037`.
@@ -92,6 +92,6 @@
 ## 3. Gates and review
 
 - [x] 3.1 Run the ratchet command.
-- [ ] 3.2 Run the full gates.
+- [x] 3.2 Run the full gates.
 - [ ] 3.3 Run the two review agents.
 - [ ] 3.4 Write review.md with their results.
