@@ -1746,6 +1746,18 @@
   "osh-096": [
     "src/app/layers/osh.test.mjs › [osh-096] builds the OSH systems layer in the catalog with the production source and the hosts of the page"
   ],
+  "osh-097": [
+    "src/data/oshLayer.test.mjs › [osh-097] plays the matched camera's video when the selected system has none of its own",
+    "src/data/oshLayer.test.mjs › [osh-097] starts no video when no system's name matches the selected system's own number",
+    "src/data/oshLayer.test.mjs › [osh-097] starts no video when the call to read the matched camera's own datastreams fails",
+    "src/data/oshLayer.test.mjs › [osh-097] starts no video when the matched system has no video datastream of its own",
+    "src/data/oshLayer.test.mjs › [osh-097] starts no video when the matched system's own datastreams answer needs a key",
+    "src/data/oshLayer.test.mjs › [osh-097] stops the fallback with no video when the selection ends while the layer reads the matched camera's own datastreams",
+    "src/layers/osh/cameraLink.test.mjs › [osh-097] finds the first camera with the same first number token",
+    "src/layers/osh/cameraLink.test.mjs › [osh-097] matches camera without regard to letter case",
+    "src/layers/osh/cameraLink.test.mjs › [osh-097] returns null when no candidate has both the number token and the word \"camera\"",
+    "src/layers/osh/cameraLink.test.mjs › [osh-097] returns null when the selected name has no number token"
+  ],
   "osh-control-001": [
     "src/control/route.test.mjs › [osh-control-001] Keep the route off without the exact flag",
     "src/control/route.test.mjs › [osh-control-001] Pass unknown paths to the next middleware and refuse another method"
