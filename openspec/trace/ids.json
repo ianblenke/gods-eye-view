@@ -1585,7 +1585,7 @@
     "change": "upstream-sync"
   },
   "osh-097": {
-    "hash": "a84bf1dc2594265aece8da4c6d3132fad123431c9f44dad29201cbedaecf4b4a",
+    "hash": "38bdad197d10599b225c44037b98527f687e372e816129d318989a3260b663d3",
     "since": "2026-09-29",
     "change": "osh-camera-link"
   },
