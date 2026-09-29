@@ -70,6 +70,20 @@ test('[osh-control-016] Show a refused command result', async () => {
   assert.equal(byText(host, 'command_not_found')?.textContent, 'command_not_found');
 });
 
+test('[osh-control-036] Build the true and false options for a command field of type boolean', async () => {
+  const documentImpl = fakeDocument();
+  const host = documentImpl.createElement('div');
+  const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: target.commands }), send: async () => ({ outcome: 'sent' }) } });
+  await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
+  const select = nodes(host).find((node) => node.tagName === 'select');
+  assert.equal(select.children.length, 2);
+  assert.equal(select.children[0].value, 'false');
+  assert.equal(select.children[0].textContent, 'false');
+  assert.equal(select.children[1].value, 'true');
+  assert.equal(select.children[1].textContent, 'true');
+  assert.equal(select.value, 'false');
+});
+
 test('[osh-control-017] Keep the host hidden for a disabled or absent target', async () => {
   const documentImpl = fakeDocument();
   const host = documentImpl.createElement('div');
