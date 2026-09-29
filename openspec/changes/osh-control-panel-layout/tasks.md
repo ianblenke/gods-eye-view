@@ -7,7 +7,7 @@
 - [x] 1.2 Change `view.js`'s `render()`: make `row` a `fieldset`.
   - Append a `legend` as its first child, with the class `osh-command-legend`.
 - [x] 1.3 Add a `byButtonText` helper to `view.test.mjs`.
-  - The legend and the send button now share one text, so plain `byText` can no longer tell them apart.
+  - The legend and the send button now share one text, so plain `byText` can no longer identify one from the other.
   - Update every carried test that clicks a command button by its own name to use `byButtonText`, for `[osh-control-016 osh-control-017]`. Their own assertions stay the same.
 
 ## 2. Put one field on its own line

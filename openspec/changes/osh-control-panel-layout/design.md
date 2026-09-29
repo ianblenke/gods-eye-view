@@ -22,7 +22,7 @@
 
 `row` becomes a `fieldset` element. Its first child is a `legend` with the command's own name. A `fieldset` and a `legend` are the standard HTML group for related form controls. A screen reader reads the `legend` before each control inside it.
 
-The send button keeps the command name as its own text. `byText(host, command)` still finds the button, not the legend. `byText` returns the first match, and the button is defined after the fields. The legend has that same text too. `view.js` gives the legend a class, `osh-command-legend`, and gives the button no class. A future test can then tell them apart if this becomes ambiguous.
+The send button keeps the command name as its own text. `byText(host, command)` still finds the button, not the legend. `byText` returns the first match, and the button is defined after the fields. The legend has that same text too. `view.js` gives the legend a class, `osh-command-legend`, and gives the button no class. A future test can then identify each one separately if this becomes unclear.
 
 ### D2 One field on its own line
 
@@ -35,7 +35,7 @@ Each field's `label` keeps holding its own input, and gets a class, `osh-command
 ## Risks / Trade-offs
 
 1. **A duplicate command name, once as the legend and once as the button.** Mitigation: this is the same trade the D1 decision accepts, to keep the button's click target unchanged. A shorter, generic button label (`Send`) was considered and rejected. Scenario `osh-control-016`'s own carried tests click the button by its command-name text.
-2. **A narrow panel (240px at its smallest) still wraps a long field name plus its unit.** Mitigation: `osh-command-field` is `display: block`, not a fixed width. A long label wraps inside its own line and does not push another field's line out of place.
+2. **A narrow panel (240px at its smallest) still breaks a long field name plus its unit onto a further line.** Mitigation: `osh-command-field` is `display: block`, not a fixed width. A long label breaks onto its own extra line and does not push another field's line out of place.
 
 ## How the gates measure this change
 

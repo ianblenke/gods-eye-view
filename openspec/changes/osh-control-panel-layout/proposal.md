@@ -1,6 +1,6 @@
 ## Why
 
-The confirmation panel draws every command's fields as plain, unstyled text next to their inputs. Nothing marks where one command's fields end and the next begins. An owner reported that the field labels read as unclear, and could not tell one command's field from another's.
+The command view draws every command's fields as plain, unstyled text next to their inputs. Nothing marks where one command's fields end and the next begins. An owner reported that the field labels are unclear. The owner could not tell one command's field from another's.
 
 ## What Changes
 
@@ -16,7 +16,7 @@ None.
 
 ### Modified Capabilities
 
-- `osh-control`: the confirmation panel's field layout groups each command's controls and puts one field on its own line.
+- `osh-control`: the command view's field layout groups each command's controls and puts one field on its own line.
 
 ## Impact
 
