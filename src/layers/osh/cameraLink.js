@@ -1,5 +1,9 @@
 /** Find the first camera with the selected system's first number. */
-export function findLinkedCameraSystem({ selectedId, selectedName, systemRecords }) {
+export function findLinkedCameraSystem({
+  selectedId,
+  selectedName,
+  systemRecords,
+}) {
   const number = selectedName?.match(/\d+/)?.[0];
   if (!number) return null;
   for (const record of systemRecords) {

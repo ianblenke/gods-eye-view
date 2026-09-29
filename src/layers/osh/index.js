@@ -317,12 +317,15 @@ export function createOshLayer({
       systemRecords: _systemRecords.values(),
     });
     if (!linkedRecord) return;
-    const result = await source.getDatastreams({ system: linkedRecord.id }).catch(() => null);
+    const result = await source
+      .getDatastreams({ system: linkedRecord.id })
+      .catch(() => null);
     if (generation !== _pollGeneration || !result || result.keyRequired) return;
     const linkedVideo = result.datastreams.find(
       (record) => record.systemId === linkedRecord.id && record.video === true,
     );
-    if (linkedVideo) openVideoSession(linkedVideo, generation, linkedRecord.name);
+    if (linkedVideo)
+      openVideoSession(linkedVideo, generation, linkedRecord.name);
   }
 
   /**
