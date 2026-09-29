@@ -35,6 +35,7 @@
 
 - [x] 3.1 Run `src/data/oshLayer.test.mjs` in full (146 tests). Confirm `[osh-086]`, `[osh-087]`, `[osh-088]`, `[osh-089]`, `[osh-093]` and `[osh-094]`'s own tests pass with no change to their own assertions.
 - [x] 3.2 Confirm `src/layers/osh/index.js` and the new `src/layers/osh/cameraLink.js` keep 100% line, branch and function coverage, across the full set of test files that import `createOshLayer` (`src/data/oshLayer.test.mjs`, `src/data/osh.test.mjs`, `src/layers/oshControl/view.test.mjs`) plus `cameraLink.test.mjs`.
+- [x] 3.3 `make ratchet` failed `[osh-034] no OSH test file has a real address` in `src/data/oshRepositoryHygiene.test.mjs`: a hard-coded file count, 18, changed to 19 because the new `cameraLink.test.mjs` sits in an `osh/` directory. Updated the literal, per the test's own failure message. Re-ran all `[osh-034]` tests (8 tests) to confirm the new file carries no real address and no non-fixture vendor URN.
 
 ## 4. Gates and review
 
