@@ -179,7 +179,9 @@ test('[osh-control-037] Group each command under its own name', async () => {
   assert.ok(fieldset, 'the command row is a fieldset');
   assert.equal(fieldset.children[0].tagName, 'legend');
   assert.equal(fieldset.children[0].textContent, 'mavRTLControl');
-  assert.equal(byButtonText(host, 'mavRTLControl')?.textContent, 'mavRTLControl');
+  const button = byButtonText(fieldset, 'mavRTLControl');
+  assert.ok(button, 'the send button is inside the fieldset');
+  assert.equal(fieldset.children.includes(button), true);
 });
 
 test('[osh-control-038] Put one field on its own line', async () => {
@@ -188,7 +190,8 @@ test('[osh-control-038] Put one field on its own line', async () => {
   const manyFields = { system: 'sys-fixture-one', commands: { mavControl: { fields: { Latitude: { type: 'number', min: -90, max: 90 }, Longitude: { type: 'number', min: -180, max: 180 } } } } };
   const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: manyFields.commands }), send: async () => ({ outcome: 'sent' }) } });
   await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
-  const labels = nodes(host).filter((node) => node.tagName === 'label');
+  const fieldset = nodes(host).find((node) => node.tagName === 'fieldset');
+  const labels = nodes(fieldset).filter((node) => node.tagName === 'label');
   assert.equal(labels.length, 2);
   for (const label of labels) assert.equal(label.className, 'osh-command-field');
 });
