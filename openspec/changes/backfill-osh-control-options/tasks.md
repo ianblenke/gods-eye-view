@@ -1,6 +1,6 @@
 ## 1. Backfill the new scenario's test
 
-- [x] 1.1 Write the `[osh-control-036]` test in `view.test.mjs`. Show a target with a boolean field.
+- [x] 1.1 Write the `[osh-control-036]` test in `view.test.mjs`. Show a target with a command field of type `boolean`.
   - Assert the rendered `select` has a `false` option, then a `true` option.
   - Mutation: Remove the append call that adds the options in `view.js`. The test must fail.
 - [x] 1.2 Confirm the existing `[osh-control-016]` test, whose own assertion the fast fix added, keeps its own tag.
