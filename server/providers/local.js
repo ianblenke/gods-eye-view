@@ -21,6 +21,8 @@ import { trackBackfillProxies } from './aircraft/tracks.js';
 import { openAiRealtimeProxy } from './openai.js';
 import { googlePlacesContextProxy } from './places.js';
 import { oshProxy } from './osh.js';
+import { oshControlProxy } from './osh-control.js';
+import { createCommandLog } from './osh-control/log.js';
 import { keySetupEndpoint } from '../standalone/key-setup.js';
 import { weatherProxy } from './weather.js';
 import { firePerimetersProxy } from './firePerimeters.js';
@@ -53,6 +55,12 @@ function localProviderPlugins() {
     openAiRealtimeProxy(),
     googlePlacesContextProxy(),
     oshProxy(),
+    oshControlProxy({
+      env: process.env,
+      fetchImpl: globalThis.fetch,
+      warn: console.warn,
+      log: createCommandLog(),
+    }),
     windProxy(),
     weatherProxy(),
     cycloneProxy(),

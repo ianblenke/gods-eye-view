@@ -26,6 +26,7 @@ const PROVIDER_FILES = [
   'src/layers/osh/detail.js',
   'src/layers/osh/videoPlayer.js',
   'src/layers/osh/hosts.js',
+  'src/layers/osh/cameraLink.js',
   'src/app/layers/osh.js',
 ];
 
@@ -219,7 +220,7 @@ test('[osh-034] no OSH test file has a real address', () => {
   const files = oshTestFiles();
   assert.equal(
     files.length,
-    18,
+    19,
     'the discovered OSH test file count changed; update this number and check the new file too',
   );
   for (const file of files) {

@@ -128,6 +128,9 @@
     "./server/providers/osh": {
       "node": "./server/providers/osh.js"
     },
+    "./server/providers/osh-control": {
+      "node": "./server/providers/osh-control.js"
+    },
     "./server/standalone/key-setup": {
       "node": "./server/standalone/key-setup.js"
     },

@@ -4,6 +4,7 @@ import { placeOshEntities } from '../../data/oshSystems.js';
 import { isOshObservationFresh } from '../../data/oshObservations.js';
 import { horizonOccluder } from '../../data/iconOrientation.js';
 import { createVideoPlayer, createVideoView } from './videoPlayer.js';
+import { findLinkedCameraSystem } from './cameraLink.js';
 export { createOshSource } from './source.js';
 export { createOshPanelHosts } from './hosts.js';
 export { renderOshDetail, writeOshDetail } from './detail.js';
@@ -79,6 +80,7 @@ export function createOshLayer({
   detailHost = null,
   panelHost = null,
   videoHost = null,
+  commandView = null,
   createPlayer = createVideoPlayer,
   createView = createVideoView,
   documentImpl = globalThis.document,
@@ -189,6 +191,7 @@ export function createOshLayer({
     _selectedId = null;
     _selectedFeatureId = null;
     stopPolling();
+    commandView?.clear();
     writeDetail(null);
   }
 
@@ -294,30 +297,47 @@ export function createOshLayer({
    * Open the video and the live streams, once for each selection (osh-072,
    * osh-087). The video datastreams leave the live streams: they have no
    * observation to stream, and they must not use one of the three slots.
+   * When the selected system has no video of its own, this reads a linked
+   * camera's own datastreams and plays its video instead (osh-097).
    */
-  function openStreams(states, generation) {
+  async function openStreams(states, generation) {
     if (_liveOpened) return;
     _liveOpened = true;
-    openVideoSession(
-      states.find((state) => state.video),
-      generation,
-    );
+    const ownVideo = states.find((state) => state.video);
+    if (ownVideo) openVideoSession(ownVideo, generation);
     openLiveStreams(
       states.filter((state) => !state.video),
       generation,
     );
+    if (ownVideo) return;
+    const selectedRecord = _systemRecords.get(_selectedId);
+    const linkedRecord = findLinkedCameraSystem({
+      selectedId: _selectedId,
+      selectedName: selectedRecord?.name,
+      systemRecords: _systemRecords.values(),
+    });
+    if (!linkedRecord) return;
+    const result = await source
+      .getDatastreams({ system: linkedRecord.id })
+      .catch(() => null);
+    if (generation !== _pollGeneration || !result || result.keyRequired) return;
+    const linkedVideo = result.datastreams.find(
+      (record) => record.systemId === linkedRecord.id && record.video === true,
+    );
+    if (linkedVideo)
+      openVideoSession(linkedVideo, generation, linkedRecord.name);
   }
 
   /**
    * Play the first video datastream of the system: one view, one player and
    * one stream, closed with the selection (osh-087).
    */
-  function openVideoSession(state, generation) {
+  function openVideoSession(state, generation, systemName = null) {
     if (!state || typeof source.openVideo !== 'function' || !videoHost) return;
     const view = createView({
       document: documentImpl,
       host: videoHost,
-      name: state.name || state.id,
+      name: systemName || state.name || state.id,
     });
     let playerStatus = '';
     const player = createPlayer({
@@ -399,7 +419,8 @@ export function createOshLayer({
       state.video = datastream.video === true;
       return state;
     });
-    openStreams(states, generation);
+    await openStreams(states, generation);
+    if (generation !== _pollGeneration) return;
     for (const state of states) {
       // A video datastream has no observation to read (osh-074).
       if (state.video) continue;
@@ -432,6 +453,14 @@ export function createOshLayer({
     _selectedId = systemId;
     _selectedFeatureId = featureId;
     stopPolling();
+    if (systemId) {
+      const record =
+        _systemRecords.get(systemId) || _placedSystemById.get(systemId);
+      void commandView?.show({
+        systemId,
+        systemName: record?.name || record?.streamSystemName || systemId,
+      });
+    } else commandView?.clear();
     if (systemId) {
       _pollTimer = setInterval(() => {
         void pollSelected();
@@ -849,6 +878,7 @@ export function createOshLayer({
       _request = null;
       _enabled = false;
       clearSelection();
+      commandView?.clear();
       removeClickHandler();
       if (_dataSource && viewer) {
         viewer.dataSources.remove(_dataSource, true);
