@@ -182,6 +182,9 @@ test('[osh-control-037] Group each command under its own name', async () => {
   const button = byButtonText(fieldset, 'mavRTLControl');
   assert.ok(button, 'the send button is inside the fieldset');
   assert.equal(fieldset.children.includes(button), true);
+  const label = nodes(fieldset).find((node) => node.tagName === 'label');
+  assert.ok(label, 'the field label is inside the fieldset');
+  assert.equal(fieldset.children.includes(label), true);
 });
 
 test('[osh-control-038] Put one field on its own line', async () => {

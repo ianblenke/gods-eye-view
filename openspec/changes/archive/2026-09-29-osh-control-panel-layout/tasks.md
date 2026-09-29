@@ -2,12 +2,14 @@
 
 - [x] 1.1 Write the `[osh-control-037]` test in `view.test.mjs`. Show a target with one command.
   - Assert the command's row is a `fieldset` whose first child is a `legend` with the command's own name.
-  - Assert the button's own text is still the command's own name.
+  - Assert the button's own text is still the command's own name, and assert the button is a child of the fieldset.
+  - Assert the command's own field `label` is also a child of the fieldset.
   - Mutation: Keep `row` as a plain `div`, with no `legend`. The test must fail.
+  - Mutation: Append the field `label` outside the fieldset. The test must fail.
 - [x] 1.2 Change `view.js`'s `render()`: make `row` a `fieldset`.
   - Append a `legend` as its first child, with the class `osh-command-legend`.
 - [x] 1.3 Add a `byButtonText` helper to `view.test.mjs`.
-  - The legend and the send button now share one text, so plain `byText` can no longer identify one from the other.
+  - The legend and the send button now share one text. Plain `byText` can no longer show which one is the legend and which is the button.
   - Update every carried test that clicks a command button by its own name to use `byButtonText`, for `[osh-control-016 osh-control-017]`. Their own assertions stay the same.
 
 ## 2. Put one field on its own line
