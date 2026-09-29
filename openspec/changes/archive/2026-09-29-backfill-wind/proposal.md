@@ -35,6 +35,7 @@ The ledger has these gaps at commit `9ee5019`. The after counts come from host N
 - `streamlines.js`: 0 lines, 8 branches and 0 functions before; 0 lines, 1 branch and 0 functions after. `streamlines.test.mjs`: 5 untraced tests before; 0 after.
 
 The ten test files have 86 untraced tests before and one after. This change opens no new gap. The lead will record closed gaps with the ratchet command.
+- The ratchet command also wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit. The branch count for this file changes between runs. The lead set the entry for that file back to the values in `main`, as a text edit with no measurement.
 
 ## Known limits and later changes
 
@@ -45,6 +46,6 @@ The ten test files have 86 untraced tests before and one after. This change open
 - `streamlines.js` line 31 checks a middle latitude above 88.5 degrees. Seed latitude stays below 88 degrees, and a half step adds at most 0.375 degrees.
 - `rendering.js` line 515 checks for old listeners on attach. Only `start` calls `attach`, and `stop` clears listeners before the next `start`.
 - The four browser QA scripts get only a change to `@covers`. The scripts do not run in this change.
-- Known limit `wind-old-test-names`: five old test names keep words this review would replace, in `index.test.mjs`, `rendering.test.mjs`, `relief.test.mjs` and `gpuRendering.test.mjs`. The rule of the owner is that an old test name does not change. New prose for the same scenarios uses the replacement words instead.
-- Known limit `wind-old-test-subjects`: many old test names start with a subject, such as "wind source" or "GPU owner", instead of a plain description. This style choice predates this change in most of the ten wind files. A rename to fix it alone is out of scope here.
-- Known limit `wind-tag-or-add`: each task in section 2 says "Tag or add tests for wind-XXX." These words already appear in the merged change `backfill-perimeters`. A stricter rule would split it into two steps. But each scenario needs only the action that applies, so "and" would overstate most tasks.
+- Known limit `wind-old-test-names`: eight old test names keep words that this review replaces, in `index.test.mjs`, `rendering.test.mjs`, `relief.test.mjs`, `gpuRendering.test.mjs` and `streamlines.test.mjs`. The rule of the owner is that an old test name does not change. New prose for the same scenarios uses the replacement words instead.
+- Known limit `wind-old-test-subjects`: many old test names start with a subject, such as "wind source" or "GPU owner", instead of a plain description. This style choice came before this change in most of the ten wind files. This change does not rename the tests only to fix that.
+- Known limit `wind-tag-or-add`: each task in section 2 says "Tag or add tests for wind-XXX." These words already appear in the merged change `backfill-perimeters`. A rule with two steps splits it. But each scenario needs only the action that applies, so "and" overstates most tasks.
