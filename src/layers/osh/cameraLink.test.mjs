@@ -23,7 +23,7 @@ test('[osh-097] returns null when the selected name has no number token', () => 
   assert.equal(findLinkedCameraSystem({ selectedId: 'unit', selectedName: 'unit', systemRecords: [{ id: 'camera', name: 'Camera 3' }] }), null);
 });
 
-test('[osh-097] returns null when no candidate has both the number token and camera', () => {
+test('[osh-097] returns null when no candidate has both the number token and the word "camera"', () => {
   assert.equal(findLinkedCameraSystem({ selectedId: 'unit', selectedName: 'unit 3', systemRecords: [
     { id: 'a', name: 'Camera 4' },
     { id: 'b', name: 'Sensor 3' },

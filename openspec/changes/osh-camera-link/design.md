@@ -47,7 +47,7 @@ The matched system's video session opens the same way `osh-087` already opens on
 ## Risks / Trade-offs
 
 1. **A number that appears in more than one system's name for an unrelated reason.** Mitigation: the match also needs the word "camera" in the candidate's own name. This narrows a false match to a system whose own name has the word "camera" and carries the same number by chance.
-2. **The extra call that reads datastreams adds one request when no camera matches.** Mitigation: the layer reads the extra datastreams only once per selection, only when the selected system has no video of its own. It is the same cost the layer already pays today, for a system with no video datastream of its own.
+2. **The extra call that reads datastreams adds one request when a camera matches.** Mitigation: the layer reads the extra datastreams only once per selection, only when the selected system has no video of its own. It is the same cost the layer already pays today, for a system with no video datastream of its own.
 
 ## How the gates measure this change
 
