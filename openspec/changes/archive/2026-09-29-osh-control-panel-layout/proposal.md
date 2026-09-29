@@ -22,3 +22,7 @@ None.
 
 - Changes `src/layers/oshControl/view.js` and `src/ui/styles/osh-panel.css`.
 - Opens no gap in `openspec/trace`. The changed file keeps full line, branch and function coverage.
+
+## Known limits and later changes
+
+- Scenario `osh-control-038` says a field's label and input are the only content of their own line. This test checks that claim with a CSS class (`osh-command-field`), not a real layout measurement. The test harness's fake DOM has no layout engine, so it cannot prove a real visual line break. Accepted by Ian Blenke.
