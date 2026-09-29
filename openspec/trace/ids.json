@@ -1735,7 +1735,7 @@
     "change": "osh-control-auto-targets"
   },
   "osh-control-036": {
-    "hash": "90ca7a2cd2a8087d818b5264300d5129a8ffdd2372b919a98db04665722c8f7d",
+    "hash": "b24ecbda9aad728ee587ed151f3df2402199dc6b53beb5b5eb18d3d14870dbd3",
     "since": "2026-09-28",
     "change": "backfill-osh-control-options"
   },

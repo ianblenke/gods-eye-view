@@ -1874,7 +1874,7 @@
     "src/control/route.test.mjs › [osh-control-035] Give upstream_failed when the control-stream read fails"
   ],
   "osh-control-036": [
-    "src/layers/oshControl/view.test.mjs › [osh-control-036] Render a real true and false choice for a boolean field"
+    "src/layers/oshControl/view.test.mjs › [osh-control-036] Build a true and false option for a boolean field"
   ],
   "perimeters-001": [
     "src/layers/perimeters/source.test.mjs › [perimeters-001] a live signal accepts a complete source response",
