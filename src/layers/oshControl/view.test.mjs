@@ -70,7 +70,7 @@ test('[osh-control-016] Show a refused command result', async () => {
   assert.equal(byText(host, 'command_not_found')?.textContent, 'command_not_found');
 });
 
-test('[osh-control-036] Build a true and false option for a boolean field', async () => {
+test('[osh-control-036] Build the true and false options for a command field of type boolean', async () => {
   const documentImpl = fakeDocument();
   const host = documentImpl.createElement('div');
   const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: target.commands }), send: async () => ({ outcome: 'sent' }) } });

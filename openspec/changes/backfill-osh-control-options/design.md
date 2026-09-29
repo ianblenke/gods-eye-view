@@ -1,6 +1,6 @@
 ## Context
 
-The merged `osh-control` design gives each command field a browser input. A field of type `boolean` gets a `<select>`. `view.js` set the `<select>`'s `.value` to `'false'`, but it never added `<option>` elements.
+The merged `osh-control` design gives each command field a browser input. A command field of type `boolean` gets a `<select>`. `view.js` set the `<select>`'s `.value` to `'false'`, but it never added `<option>` elements.
 
 A real browser ignores a `.value` write on a `<select>` with no options. The select stayed empty. Commit `924adb3` fixes the fault on `main`. This change adds the missing scenario and its own dedicated test.
 
