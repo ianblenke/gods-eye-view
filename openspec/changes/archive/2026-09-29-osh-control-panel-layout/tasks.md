@@ -28,7 +28,7 @@
 
 ## 4. Gates and review
 
-- [ ] 4.1 Run `make ratchet CHANGE=osh-control-panel-layout` and inspect the command verdict.
-- [ ] 4.2 Run `make gates CHANGE=osh-control-panel-layout` and inspect the command verdict and QA lines.
+- [x] 4.1 Run `make ratchet CHANGE=osh-control-panel-layout` and inspect the command verdict.
+- [x] 4.2 Run `make gates CHANGE=osh-control-panel-layout` and inspect the command verdict and QA lines.
 - [ ] 4.3 Run `/opsx:review osh-control-panel-layout` with both review agents.
 - [ ] 4.4 Write `review.md` with the passed reviews and tree hash.
