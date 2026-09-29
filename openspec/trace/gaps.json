@@ -6856,44 +6856,14 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/wind/fields.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 6,
-      "functions": 0,
-      "totals": {
-        "lines": 171,
-        "branches": 48,
-        "functions": 13
-      },
-      "sha": "76f05a8641c25c1ccde7d9e2f2d2af2c5b27bcb367bd3a843bc7029e2b356d08",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/gpuRendering.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 6,
-      "functions": 1,
-      "totals": {
-        "lines": 277,
-        "branches": 63,
-        "functions": 15
-      },
-      "sha": "3759c6bfe55ec770feb3ac8522ed9ca856f700282020f2fa1c3ff75f53d860b6",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/layers/wind/index.js": {
       "loaded": true,
-      "lines": 15,
-      "branches": 19,
-      "functions": 5,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
       "totals": {
         "lines": 452,
-        "branches": 225,
+        "branches": 263,
         "functions": 32
       },
       "sha": "21d428b48036365d468913ef8265e0b6c59405ab9a040c1d92269ddbff345887",
@@ -6901,59 +6871,14 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/wind/inspection.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 9,
-      "functions": 0,
-      "totals": {
-        "lines": 167,
-        "branches": 35,
-        "functions": 7
-      },
-      "sha": "9c9f6aeffe7d612e87d2d6103365a1f72404b33d4b5b1dec2e7871fae2a947ed",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/presentation.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 55,
-        "branches": 17,
-        "functions": 4
-      },
-      "sha": "305169aa7c9890b41a44aa0e6f689f367423edd5a14ac9ec658f26d7ba9c1874",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/relief.js": {
-      "loaded": true,
-      "lines": 4,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 113,
-        "branches": 46,
-        "functions": 8
-      },
-      "sha": "3a0ff605797fcc5be33ee21150e6d327e4bc379fdcd5cdd035d09fbe4c6079f0",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/layers/wind/rendering.js": {
       "loaded": true,
-      "lines": 25,
-      "branches": 48,
-      "functions": 2,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
       "totals": {
         "lines": 801,
-        "branches": 334,
+        "branches": 379,
         "functions": 44
       },
       "sha": "40dbe3a0e93baf1cd45bd151f2d548e9d9ead6050c9472d7aaeded3a5ed7bdbd",
@@ -6961,29 +6886,14 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/wind/source.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 3,
-      "functions": 1,
-      "totals": {
-        "lines": 105,
-        "branches": 65,
-        "functions": 5
-      },
-      "sha": "6f4f90ea0680d8eda79424936fac2e9e2deddb10cce1f35b3ca1d34f3986860c",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/layers/wind/streamlines.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 8,
+      "branches": 1,
       "functions": 0,
       "totals": {
         "lines": 137,
-        "branches": 42,
+        "branches": 47,
         "functions": 3
       },
       "sha": "c51aa80d93344d7c2bf1eaa78eb3406d0d3a8b62ab53f9f18a2152a7d311dbd6",
@@ -14883,148 +14793,9 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/wind/fields.test.mjs": {
-      "names": {
-        "hot-loop sampling fills the supplied output without allocating a replacement": 1,
-        "raster samples geographic pixel centers, not the source zero-longitude origin": 1,
-        "scalar samples preserve normalized units, geometry, poles and the date-line seam": 1,
-        "temperature uses a fixed Celsius scale with visible everyday gradients": 1,
-        "trail decay is independent of frame cadence and palette lookup clamps endpoints": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/gpuRendering.test.mjs": {
-      "names": {
-        "GPU owner builds regional native batches; ticks update uniforms without rebuilding geometry": 1,
-        "a failed later cell build releases already installed cells and shared material": 1,
-        "cell visibility combines horizon, frustum and height with shared fade uniforms": 1,
-        "narrow canvases use a lower bounded path budget": 1,
-        "real Cesium sphere culling hides far hemisphere with globe hidden and rejects a sky-facing view": 1,
-        "replacement, clear and destroy dispose every owned cell and the shared material": 1,
-        "unsupported or failed geometry cleanly requests the existing fallback": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/index.test.mjs": {
-      "names": {
-        "a pending companion does not claim that it is already unavailable": 1,
-        "an imagery failure appears in status and cannot retain a misleading field legend": 1,
-        "external and owned cancellation both cancel source work; queued switches stop on disable": 1,
-        "forecast valid time and source age stay distinct": 1,
-        "local appearance and units reuse the loaded field; optional scalar requests remain separate": 1,
-        "local appearance changes preserve an in-flight first load": 1,
-        "missing optional scalar retains valid wind and labels the field unavailable": 1,
-        "observed history labels wind as a forecast without changing its data or parameters": 1,
-        "re-enable and an appearance change cannot reuse a released renderer field": 1,
-        "renderer readiness pushes fresh loading stats and controls to the displayed row": 1,
-        "sample stays fixed across model, field and unit changes; dismissal and disable clear marker": 1,
-        "switching models clears old data and ignores an abort-insensitive late source": 1,
-        "weather summary describes the selected forecast and count remains numeric": 1,
-        "wind unit chips appear only alongside a speed legend, including canvas trails": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/inspection.test.mjs": {
-      "names": {
-        "center inspection uses a fixed forecast reading without double-converting scalar units": 1,
-        "inspection marker follows only its captured point, hides beyond limb, and releases its listener": 1,
-        "wind directions describe the source of the flow and calm is not north": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/model.test.mjs": {
-      "names": {
-        "advectParticle moves and constrains particles": 1,
-        "sampleWind interpolates, wraps, clamps, and rejects non-finite input": 1,
-        "windColor returns a monotonic ramp string": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/presentation.test.mjs": {
-      "names": {
-        "captured reading reformats without changing its sample and produces a portable result block": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/layers/wind/relief.test.mjs": {
       "names": {
-        "missing terrain normals uses curvature only and upgrades when normals exist": 1,
-        "moving to a new viewer releases the old globe and owns only the new one": 1,
-        "pre-existing and replacement material owners are never overwritten": 1,
         "relief acquires once and restores the exact prior empty material on clear": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/rendering.test.mjs": {
-      "names": {
-        "GPU flow uses one scheduler, rebuilds only across viewport budgets, and pauses cleanly": 1,
-        "GPU geometry rebuilds on changed cycle": 1,
-        "GPU geometry rebuilds on changed grid": 1,
-        "GPU geometry rebuilds on changed level": 1,
-        "GPU geometry rebuilds on changed model": 1,
-        "GPU geometry rebuilds on changed revisedU": 1,
-        "GPU geometry rebuilds on changed revisedV": 1,
-        "GPU geometry rebuilds on changed spacing": 1,
-        "GPU geometry rebuilds on changed validTime": 1,
-        "GPU height suspension resumes from camera moveEnd without preRender": 1,
-        "GPU height suspension resumes from camera preRender without preRender": 1,
-        "GPU readiness notifies the row once even with paused=false": 1,
-        "GPU readiness notifies the row once even with paused=true": 1,
-        "a large camera move immediately refills the newly visible region": 1,
-        "canvas fallback retains scalar base alpha at low camera height": 1,
-        "pause keeps a static field, redraws changed views only, and removes listeners on stop": 1,
-        "pressure canvas fallback shows the shell at street level without changing globe alpha": 1,
-        "pressure imagery fades with log camera height and resumes from idle": 1,
-        "pressure shell alpha follows the height fade in 0.1 steps on moveEnd, install or rehome": 1,
-        "projection discontinuities cannot produce long strokes across the viewport": 1,
-        "reduced motion and hidden documents never retain an animation callback": 1,
-        "scalar field becomes a raised shell on 3D Tiles and survives no-host events": 1,
-        "scalar imagery builds once, survives pause, replaces cleanly, and releases on clear": 1,
-        "scalar installation with no host reports hidden and installs on restore": 1,
-        "scalar snapshots retain identical GPU wind geometry and animation phase": 1,
-        "speed canvas fallback shows the shell at street level without changing globe alpha": 1,
-        "speed imagery fades with log camera height and resumes from idle": 1,
-        "speed shell alpha follows the height fade in 0.1 steps on moveEnd, install or rehome": 1,
-        "steady frames preserve canvas dimensions and resize adjusts the particle budget": 1,
-        "temperature canvas fallback shows the shell at street level without changing globe alpha": 1,
-        "temperature imagery fades with log camera height and resumes from idle": 1,
-        "temperature shell alpha follows the height fade in 0.1 steps on moveEnd, install or rehome": 1,
-        "wind rendering owns the canvas and particle lifecycle": 1,
-        "wind rendering skips particles hidden by the globe": 1,
-        "wind rendering starts before a field and still draws once one arrives": 1,
-        "world-anchored wind glyphs remain readable at low FPS without accelerating particles": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/source.test.mjs": {
-      "names": {
-        "cancelling an optional scalar stream cancels the active grid body": 1,
-        "wind source bounds optional scalar length and rejects non-finite scalar values": 1,
-        "wind source rejects foreign URLs, excessive grids and non-finite values": 1,
-        "wind source rejects scalar contract mismatches before fetching a grid": 1,
-        "wind source requests optional companions and splits exact U/V/scalar byte regions": 1,
-        "wind source retains usable wind when the requested scalar is unavailable": 1,
-        "wind source splits a bounded field and preserves unavailable responses": 1,
-        "wind source timeout aborts the underlying fetch": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/wind/streamlines.test.mjs": {
-      "names": {
-        "bake stops at poles, seams, missing and calm data without invalid geometry": 1,
-        "grouping uses the middle coordinate, wraps longitude and clamps polar cell edges": 1,
-        "midpoint integration bends paths with a changing northward component": 1,
-        "regional grouping preserves every baked path and ordering within each cell": 1,
-        "streamline bake is deterministic, equal-area and strictly bounded": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
