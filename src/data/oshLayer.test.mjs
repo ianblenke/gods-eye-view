@@ -3840,6 +3840,133 @@ test('[osh-074] a system that holds only a video datastream gets no poll and no 
   });
 });
 
+// --- osh-097: a linked camera's video when the selected system has none ---
+
+const NUMBERED_SYSTEM = { id: 'sys-fixture-10', uid: 'urn:numbered-fixture', name: 'Unit 5', description: null, lon: 1, lat: 2, alt: 0 };
+const LINKED_CAMERA_SYSTEM = { id: 'sys-fixture-11', uid: 'urn:camera-fixture', name: 'Camera 5', description: null, lon: 1, lat: 2, alt: 0 };
+
+test('[osh-097] plays a linked camera\'s video when the selected system has none of its own', async (t) => {
+  const source = fakeSource({
+    systems: [NUMBERED_SYSTEM, LINKED_CAMERA_SYSTEM],
+    video: true,
+    datastreams: [
+      { id: 'ds-fixture-10', systemId: 'sys-fixture-10', name: 'D1' },
+      videoDatastream({ id: 'ds-fixture-v3', systemId: 'sys-fixture-11', name: 'Stream' }),
+    ],
+  });
+  const { layer, parts, videoHost, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-10');
+    assert.deepEqual(source.calls.datastreamsArgs, ['sys-fixture-10', 'sys-fixture-11']);
+    assert.deepEqual(
+      source.calls.video.map((stream) => stream.id),
+      ['ds-fixture-v3'],
+    );
+    assert.equal(parts.calls.views.length, 1);
+    assert.equal(parts.calls.players.length, 1);
+    assert.equal(parts.calls.views[0].options.host, videoHost);
+    assert.equal(parts.calls.views[0].options.name, 'Camera 5', 'the view shows the matched system\'s own name');
+  });
+});
+
+test('[osh-097] starts no video when no system\'s name matches the selected system\'s own number', async (t) => {
+  const source = fakeSource({
+    systems: [NUMBERED_SYSTEM, { ...LINKED_CAMERA_SYSTEM, name: 'Camera 6' }],
+    datastreams: [{ id: 'ds-fixture-10', systemId: 'sys-fixture-10', name: 'D1' }],
+  });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-10');
+    assert.deepEqual(source.calls.datastreamsArgs, ['sys-fixture-10'], 'the layer reads no further datastreams');
+    assert.equal(source.calls.video.length, 0);
+    assert.equal(parts.calls.views.length, 0);
+    assert.equal(parts.calls.players.length, 0);
+  });
+});
+
+test('[osh-097] starts no video when the matched camera\'s own datastreams read fails', async (t) => {
+  const datastreamsArgs = [];
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [NUMBERED_SYSTEM, LINKED_CAMERA_SYSTEM], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getDatastreams({ system } = {}) {
+      datastreamsArgs.push(system);
+      if (system === 'sys-fixture-11') throw new Error('fixture failure');
+      return { keyRequired: false, datastreams: [] };
+    },
+    async getObservation() {
+      return { keyRequired: false, observation: null };
+    },
+  };
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-10');
+    assert.deepEqual(datastreamsArgs, ['sys-fixture-10', 'sys-fixture-11']);
+    assert.equal(parts.calls.views.length, 0);
+    assert.equal(parts.calls.players.length, 0);
+  });
+});
+
+test('[osh-097] stops the fallback with no video when the selection ends during the matched camera\'s own read', async (t) => {
+  let resolveCameraDatastreams;
+  const cameraDatastreamsPromise = new Promise((resolve) => {
+    resolveCameraDatastreams = resolve;
+  });
+  const datastreamsArgs = [];
+  const source = {
+    async getSystems() {
+      return { keyRequired: false, systems: [NUMBERED_SYSTEM, LINKED_CAMERA_SYSTEM], stale: false };
+    },
+    async getFois() {
+      return { keyRequired: false, fois: [], truncated: false };
+    },
+    async getDatastreams({ system } = {}) {
+      datastreamsArgs.push(system);
+      if (system === 'sys-fixture-11') return cameraDatastreamsPromise;
+      return { keyRequired: false, datastreams: [] };
+    },
+    async getObservation() {
+      return { keyRequired: false, observation: null };
+    },
+    openVideo(id, callbacks) {
+      return { id, callbacks, closed: 0 };
+    },
+  };
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-10');
+    assert.deepEqual(datastreamsArgs, ['sys-fixture-10', 'sys-fixture-11'], 'the camera read is in flight');
+    layer.disable();
+    resolveCameraDatastreams({
+      keyRequired: false,
+      datastreams: [{ id: 'ds-fixture-v4', systemId: 'sys-fixture-11', video: true }],
+    });
+    await flush();
+    assert.equal(parts.calls.views.length, 0, 'a stale generation starts no video');
+    assert.equal(parts.calls.players.length, 0);
+  });
+});
+
 test('[osh-088] the detail that the layer writes shows Video for a video datastream and No data for the others', async (t) => {
   const source = fakeSource({ video: true, datastreams: [videoDatastream(), ...liveDatastreams(1)] });
   const { layer, detailHost, viewer } = videoLayer({ source });
