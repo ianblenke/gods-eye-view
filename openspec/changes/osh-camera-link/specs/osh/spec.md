@@ -44,13 +44,14 @@ Origin: spec-first
 - **AND** each of the three ids is on one element only
 - **AND** the style sheets give the display `none` to an element that has the class `osh-panel` and the attribute `hidden`
 
-#### Scenario: Play a linked camera's video when the selected system has none `osh-097`
+#### Scenario: Play the matched camera's video when the selected system has none `osh-097`
 - **WHEN** the datastreams of the selected system have no datastream with `video: true`
 - **THEN** the layer finds a system record with the same number token as the selected system's own name
 - **AND** a number token is the first run of digits in a name
-- **AND** the found system's own name also has the word "camera"
+- **AND** the matched system's own name also has the word "camera"
 - **AND** when more than one system matches, the layer keeps the first one in the order it read the system records
 - **AND** when a system matches, the layer reads its datastreams
 - **AND** the layer starts the video of the matched system's first datastream with `video: true`, the same way `osh-087` starts one
 - **AND** the view shows the matched system's own name, not the selected system's name
 - **AND** when the selected system's own name has no number, or no system matches, the layer starts no video
+- **AND** the layer starts no video when the matched system's own datastreams have no datastream with `video: true`

@@ -3840,17 +3840,19 @@ test('[osh-074] a system that holds only a video datastream gets no poll and no 
   });
 });
 
-// --- osh-097: a linked camera's video when the selected system has none ---
+// --- osh-097: the matched camera's video when the selected system has none ---
 
 const NUMBERED_SYSTEM = { id: 'sys-fixture-10', uid: 'urn:numbered-fixture', name: 'Unit 5', description: null, lon: 1, lat: 2, alt: 0 };
 const LINKED_CAMERA_SYSTEM = { id: 'sys-fixture-11', uid: 'urn:camera-fixture', name: 'Camera 5', description: null, lon: 1, lat: 2, alt: 0 };
+const UNRELATED_VIDEO_SYSTEM = { id: 'sys-fixture-12', uid: 'urn:unrelated-video-fixture', name: 'Other 5', description: null, lon: 3, lat: 4, alt: 0 };
 
-test('[osh-097] plays a linked camera\'s video when the selected system has none of its own', async (t) => {
+test('[osh-097] plays the matched camera\'s video when the selected system has none of its own', async (t) => {
   const source = fakeSource({
-    systems: [NUMBERED_SYSTEM, LINKED_CAMERA_SYSTEM],
+    systems: [NUMBERED_SYSTEM, LINKED_CAMERA_SYSTEM, UNRELATED_VIDEO_SYSTEM],
     video: true,
     datastreams: [
       { id: 'ds-fixture-10', systemId: 'sys-fixture-10', name: 'D1' },
+      videoDatastream({ id: 'ds-fixture-v-unrelated', systemId: 'sys-fixture-12', name: 'Other Stream' }),
       videoDatastream({ id: 'ds-fixture-v3', systemId: 'sys-fixture-11', name: 'Stream' }),
     ],
   });
@@ -3865,11 +3867,38 @@ test('[osh-097] plays a linked camera\'s video when the selected system has none
     assert.deepEqual(
       source.calls.video.map((stream) => stream.id),
       ['ds-fixture-v3'],
+      'only the matched system\'s own video datastream opens, not the unrelated one earlier in the list',
     );
     assert.equal(parts.calls.views.length, 1);
     assert.equal(parts.calls.players.length, 1);
     assert.equal(parts.calls.views[0].options.host, videoHost);
     assert.equal(parts.calls.views[0].options.name, 'Camera 5', 'the view shows the matched system\'s own name');
+  });
+});
+
+test('[osh-097] starts no video when the matched system has no video datastream of its own', async (t) => {
+  const source = fakeSource({
+    systems: [NUMBERED_SYSTEM, LINKED_CAMERA_SYSTEM],
+    datastreams: [
+      { id: 'ds-fixture-10', systemId: 'sys-fixture-10', name: 'D1' },
+      { id: 'ds-fixture-11', systemId: 'sys-fixture-11', name: 'D2' },
+    ],
+  });
+  const { layer, parts, viewer } = videoLayer({ source });
+  t.after(() => layer.destroy(viewer));
+  layer.init(viewer);
+  await withClickCapture(async (getClick) => {
+    layer.enable(viewer);
+    await layer.update(viewer);
+    await pickAndSettle(getClick, viewer, 'osh:sys-fixture-10');
+    assert.deepEqual(
+      source.calls.datastreamsArgs,
+      ['sys-fixture-10', 'sys-fixture-11'],
+      'the layer reads the matched system\'s own datastreams',
+    );
+    assert.equal(source.calls.video.length, 0);
+    assert.equal(parts.calls.views.length, 0);
+    assert.equal(parts.calls.players.length, 0);
   });
 });
 

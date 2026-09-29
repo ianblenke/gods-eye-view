@@ -26,6 +26,7 @@ const PROVIDER_FILES = [
   'src/layers/osh/detail.js',
   'src/layers/osh/videoPlayer.js',
   'src/layers/osh/hosts.js',
+  'src/layers/osh/cameraLink.js',
   'src/app/layers/osh.js',
 ];
 

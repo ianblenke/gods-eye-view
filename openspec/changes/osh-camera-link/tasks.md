@@ -1,4 +1,4 @@
-## 1. Match a linked camera by name and number
+## 1. Match a camera by name and number
 
 - [x] 1.1 Write the `[osh-097]` tests for `findLinkedCameraSystem()` in a new file `src/layers/osh/cameraLink.test.mjs`.
   - Assert it returns the system whose name has the same first digit run as the selected name. That system's own name also has "camera", read without regard to letter case.
@@ -10,12 +10,14 @@
   - Mutation: Compare "camera" with letter case. A candidate named `Camera 3` must still match when the selected name is `unit 3`. The test must fail without the fix.
 - [x] 1.2 Write `findLinkedCameraSystem()` in `src/layers/osh/cameraLink.js`.
   - It takes the selected id, the selected name, and the system records.
-  - Read the first digit run of the selected name with a digit pattern; return `null` at once when it finds none.
-  - Read the system records in their own given order; skip a record with no `name` or with the selected id.
+  - Read the first digit run of the selected name with a digit pattern.
+  - Return `null` at once when it finds none.
+  - Read the system records in their own given order.
+  - Skip a record with no `name` or with the selected id.
   - Return the first record whose own first digit run equals the selected one, and whose own name has "camera", read without regard to letter case.
   - Return `null` when no record matches.
 
-## 2. Start the linked camera's video as a fallback
+## 2. Start the matched camera's video as a fallback
 
 - [x] 2.1 Write the `[osh-097]` test in `src/data/oshLayer.test.mjs`.
   - This is the real test file for `src/layers/osh/index.js`. An earlier draft named a file that did not exist; this corrects it.
@@ -31,9 +33,12 @@
   - Assert the layer reads no further datastreams, and starts no video stream.
   - Also written: a test for a failed read of the matched camera's own datastreams.
   - Also written: a test for a stale generation during that read, design D4's own guard. Both start no video.
+  - Also written: a test for a matched system whose own datastreams have no `video: true` record, per round-1 review finding F1. It starts no video.
+  - Also strengthened: the success test in 2.1 now has a third, unrelated system with its own video datastream, listed before the matched one. This proves the layer picks the matched system's own datastream, per round-1 review finding F3.
 - [x] 2.3 Change `openStreams()` in `src/layers/osh/index.js`: make it `async`.
   - When the selected system's own states have a `video: true` state, keep the current behaviour unchanged.
-  - Otherwise, read the selected system's own record and call `findLinkedCameraSystem()`.
+  - Otherwise, read the selected system's own record.
+  - Call `findLinkedCameraSystem()`.
   - When it returns a record, read that record's own datastreams. Find its first `video: true` datastream. Start the video session for it with the matched record's own name.
   - Stop the fallback, with no video started, when the poll's own generation is stale after the read.
 - [x] 2.4 Change the one call site of `openStreams()` in `pollSelected()` to `await` it.
