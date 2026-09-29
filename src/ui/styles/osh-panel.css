@@ -55,6 +55,26 @@
   margin: 4px;
 }
 
+/* Each command's own fieldset groups its fields and its send button under
+   the command's own name (osh-control-037, osh-control-038). */
+#osh-panel-control fieldset {
+  display: flex;
+  flex-direction: column;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--panel-radius);
+}
+
+#osh-panel-control .osh-command-legend {
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+#osh-panel-control .osh-command-field {
+  display: block;
+}
+
 /* A host with no content takes no room, so it leaves no gap. */
 .osh-panel > :empty {
   display: none;
