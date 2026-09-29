@@ -12,6 +12,9 @@ function fakeDocument() {
 const target = { system: 'sys-fixture-one', commands: { mavRTLControl: { fields: { rtl: { type: 'boolean' } } }, mavTakeoffControl: { fields: { TakeoffAltitudeAGL: { type: 'number', min: 1, max: 120, unit: 'm' } } } } };
 function nodes(root) { return [root, ...root.children.flatMap(nodes)]; }
 function byText(root, text) { return nodes(root).find((node) => node.textContent === text); }
+// A command's own legend and its own send button share one text, the command
+// name (osh-control-037). This finds the button specifically.
+function byButtonText(root, text) { return nodes(root).find((node) => node.tagName === 'button' && node.textContent === text); }
 
 test('[osh-control-016] Confirm a command before the browser sends it', async () => {
   const documentImpl = fakeDocument();
@@ -22,7 +25,7 @@ test('[osh-control-016] Confirm a command before the browser sends it', async ()
   await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
   assert.equal(host.hidden, false);
   assert.deepEqual(targetRequests, ['sys-fixture-one']);
-  byText(host, 'mavTakeoffControl').click();
+  byButtonText(host, 'mavTakeoffControl').click();
   assert.equal(sends.length, 0);
   assert.equal(nodes(host).some((node) => node.textContent.includes('Fixture drone') && node.textContent.includes('sys-fixture-one')), true);
   assert.equal(nodes(host).some((node) => node.textContent.includes('mavTakeoffControl') && node.textContent.includes('m')), true);
@@ -40,18 +43,18 @@ test('[osh-control-017] Close confirmation on Cancel, a selection change, a clea
     const sends = [];
     const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: target.commands }), send: async (body) => sends.push(body) } });
     await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
-    byText(host, 'mavRTLControl').click();
+    byButtonText(host, 'mavRTLControl').click();
     byText(host, 'Cancel').click();
     assert.equal(byText(host, 'Send command'), undefined);
-    byText(host, 'mavRTLControl').click();
+    byButtonText(host, 'mavRTLControl').click();
     await view.show({ systemId: 'sys-fixture-two', systemName: 'Other' });
     assert.equal(byText(host, 'Send command'), undefined);
     await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
-    byText(host, 'mavRTLControl').click();
+    byButtonText(host, 'mavRTLControl').click();
     view.clear();
     assert.equal(host.hidden, true);
     await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
-    byText(host, 'mavRTLControl').click();
+    byButtonText(host, 'mavRTLControl').click();
     mock.timers.tick(30_000);
     assert.equal(byText(host, 'Send command'), undefined);
     assert.equal(sends.length, 0);
@@ -65,7 +68,7 @@ test('[osh-control-016] Show a refused command result', async () => {
   await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
   const select = nodes(host).find((node) => node.tagName === 'select');
   assert.deepEqual(select.children.map((option) => option.value), ['false', 'true']);
-  byText(host, 'mavRTLControl').click();
+  byButtonText(host, 'mavRTLControl').click();
   await byText(host, 'Send command').onclick();
   assert.equal(byText(host, 'command_not_found')?.textContent, 'command_not_found');
 });
@@ -115,9 +118,9 @@ test('[osh-control-016] Show a failed command and block a second click while it 
   let sends = 0;
   const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: target.commands }), send: () => { sends += 1; return new Promise((_resolve, reject) => { release = reject; }); } } });
   await view.show({ systemId: 'sys-fixture-one' });
-  byText(host, 'mavRTLControl').click();
+  byButtonText(host, 'mavRTLControl').click();
   const sending = byText(host, 'Send command').onclick();
-  byText(host, 'mavRTLControl').click();
+  byButtonText(host, 'mavRTLControl').click();
   await byText(host, 'Send command').onclick();
   assert.equal(sends, 1);
   release(new Error('fixture failure'));
@@ -164,4 +167,28 @@ test('[osh-control-016 osh-control-017] Show and clear the optional command view
   picked = null;
   clickAction({ position: {} });
   assert.deepEqual(events.at(-1), ['clear']);
+});
+
+test('[osh-control-037] Group each command under its own name', async () => {
+  const documentImpl = fakeDocument();
+  const host = documentImpl.createElement('div');
+  const oneCommand = { system: 'sys-fixture-one', commands: { mavRTLControl: { fields: { rtl: { type: 'boolean' } } } } };
+  const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: oneCommand.commands }), send: async () => ({ outcome: 'sent' }) } });
+  await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
+  const fieldset = nodes(host).find((node) => node.tagName === 'fieldset');
+  assert.ok(fieldset, 'the command row is a fieldset');
+  assert.equal(fieldset.children[0].tagName, 'legend');
+  assert.equal(fieldset.children[0].textContent, 'mavRTLControl');
+  assert.equal(byButtonText(host, 'mavRTLControl')?.textContent, 'mavRTLControl');
+});
+
+test('[osh-control-038] Put one field on its own line', async () => {
+  const documentImpl = fakeDocument();
+  const host = documentImpl.createElement('div');
+  const manyFields = { system: 'sys-fixture-one', commands: { mavControl: { fields: { Latitude: { type: 'number', min: -90, max: 90 }, Longitude: { type: 'number', min: -180, max: 180 } } } } };
+  const view = createOshCommandView({ host, documentImpl, client: { targets: async () => ({ enabled: true, commands: manyFields.commands }), send: async () => ({ outcome: 'sent' }) } });
+  await view.show({ systemId: 'sys-fixture-one', systemName: 'Fixture drone' });
+  const labels = nodes(host).filter((node) => node.tagName === 'label');
+  assert.equal(labels.length, 2);
+  for (const label of labels) assert.equal(label.className, 'osh-command-field');
 });
