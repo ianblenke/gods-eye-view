@@ -8,22 +8,29 @@
   - Assert it returns the first candidate that matches, in the order `systemRecords` gives them, when more than one candidate matches.
   - Mutation: Match a name's last digit run instead of its first. Give a candidate an earlier, different number and a later number equal to the selected one. The test must fail without the fix.
   - Mutation: Compare "camera" with letter case. A candidate named `Camera 3` must still match when the selected name is `unit 3`. The test must fail without the fix.
-- [x] 1.2 Write `findLinkedCameraSystem({ selectedId, selectedName, systemRecords })` in `src/layers/osh/cameraLink.js`.
-  - Read the first digit run of `selectedName` with a digit pattern; return `null` at once when it finds none.
-  - Read `systemRecords` in its own given order; skip a record with no `name` or with the id `selectedId`.
+- [x] 1.2 Write `findLinkedCameraSystem()` in `src/layers/osh/cameraLink.js`.
+  - It takes the selected id, the selected name, and the system records.
+  - Read the first digit run of the selected name with a digit pattern; return `null` at once when it finds none.
+  - Read the system records in their own given order; skip a record with no `name` or with the selected id.
   - Return the first record whose own first digit run equals the selected one, and whose own name has "camera", read without regard to letter case.
   - Return `null` when no record matches.
 
 ## 2. Start the linked camera's video as a fallback
 
-- [x] 2.1 Write the `[osh-097]` test in `src/data/oshLayer.test.mjs`, the real test file for `src/layers/osh/index.js` (a task 2.1 draft named `src/layers/osh/index.test.mjs`, a file that did not exist; corrected here). Show a selected system with no video datastream of its own, and a second system record whose name matches it.
+- [x] 2.1 Write the `[osh-097]` test in `src/data/oshLayer.test.mjs`.
+  - This is the real test file for `src/layers/osh/index.js`. An earlier draft named a file that did not exist; this corrects it.
+  - Show a selected system with no video datastream of its own.
+  - Show a second system record whose name matches it.
   - Assert the layer reads the datastreams of the matched system.
   - Assert the layer starts one video stream, one player and one view for the matched system's own first `video: true` datastream.
   - Assert the view's own name is the matched system's own name, not the selected system's name or the datastream's own name.
   - Mutation: Keep the view's own name as the datastream's own name. The test must fail.
-- [x] 2.2 Write the `[osh-097]` test for no match, in `src/data/oshLayer.test.mjs`. Show a selected system with no video datastream of its own, and no system record that matches it.
+- [x] 2.2 Write the `[osh-097]` test for no match, in `src/data/oshLayer.test.mjs`.
+  - Show a selected system with no video datastream of its own.
+  - Show no system record that matches it.
   - Assert the layer reads no further datastreams, and starts no video stream.
-  - Also written: a test for a failed read of the matched camera's own datastreams, and a test for a stale generation during that read (design D4's own guard), each with no video started.
+  - Also written: a test for a failed read of the matched camera's own datastreams.
+  - Also written: a test for a stale generation during that read, design D4's own guard. Both start no video.
 - [x] 2.3 Change `openStreams()` in `src/layers/osh/index.js`: make it `async`.
   - When the selected system's own states have a `video: true` state, keep the current behaviour unchanged.
   - Otherwise, read the selected system's own record and call `findLinkedCameraSystem()`.
@@ -33,9 +40,16 @@
 
 ## 3. Confirm the carried scenarios still pass
 
-- [x] 3.1 Run `src/data/oshLayer.test.mjs` in full (146 tests). Confirm `[osh-086]`, `[osh-087]`, `[osh-088]`, `[osh-089]`, `[osh-093]` and `[osh-094]`'s own tests pass with no change to their own assertions.
-- [x] 3.2 Confirm `src/layers/osh/index.js` and the new `src/layers/osh/cameraLink.js` keep 100% line, branch and function coverage, across the full set of test files that import `createOshLayer` (`src/data/oshLayer.test.mjs`, `src/data/osh.test.mjs`, `src/layers/oshControl/view.test.mjs`) plus `cameraLink.test.mjs`.
-- [x] 3.3 `make ratchet` failed `[osh-034] no OSH test file has a real address` in `src/data/oshRepositoryHygiene.test.mjs`: a hard-coded file count, 18, changed to 19 because the new `cameraLink.test.mjs` sits in an `osh/` directory. Updated the literal, per the test's own failure message. Re-ran all `[osh-034]` tests (8 tests) to confirm the new file carries no real address and no non-fixture vendor URN.
+- [x] 3.1 Run `src/data/oshLayer.test.mjs` in full.
+  - It has 146 tests. Confirm `[osh-086]`, `[osh-087]`, `[osh-088]`, `[osh-089]`, `[osh-093]` and `[osh-094]`'s own tests pass with no change to their own assertions.
+- [x] 3.2 Confirm `src/layers/osh/index.js` and `src/layers/osh/cameraLink.js` keep 100% coverage.
+  - This means full line, branch and function coverage.
+  - Measure it across every test file that imports `createOshLayer`: `src/data/oshLayer.test.mjs`, `src/data/osh.test.mjs`, `src/layers/oshControl/view.test.mjs` and `cameraLink.test.mjs`.
+- [x] 3.3 `make ratchet` failed a hard-coded file count in `src/data/oshRepositoryHygiene.test.mjs`.
+  - Test `[osh-034]` checks that no OSH test file has a real address.
+  - The count, 18, did not include the new `cameraLink.test.mjs`, in an `osh/` directory.
+  - Changed the count to 19, per the test's own failure message.
+  - Re-ran all `[osh-034]` tests, 8 tests, to confirm the new file has no real address and no non-fixture vendor URN.
 
 ## 4. Gates and review
 
