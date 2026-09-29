@@ -28,13 +28,17 @@ export function createOshCommandView({ host, client, documentImpl }) {
     host.hidden = false;
     const content = [element('div', `${systemName} (${target.system})`)];
     for (const [command, definition] of Object.entries(target.commands)) {
-      const row = element('div');
+      const row = element('fieldset');
+      const legend = element('legend', command);
+      legend.className = 'osh-command-legend';
+      row.append(legend);
       const inputs = {};
       for (const [name, field] of Object.entries(definition.fields)) {
         const label = element(
           'label',
           `${name}${field.unit ? ` (${field.unit})` : ''}`,
         );
+        label.className = 'osh-command-field';
         const input = element(field.type === 'boolean' ? 'select' : 'input');
         if (field.type === 'boolean') {
           const falseOption = element('option', 'false');

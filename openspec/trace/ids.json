@@ -1739,6 +1739,16 @@
     "since": "2026-09-28",
     "change": "backfill-osh-control-options"
   },
+  "osh-control-037": {
+    "hash": "ef9e8f52c7700de762d4f43bf948623ea795d406c712768a245368b532c5d0b9",
+    "since": "2026-09-29",
+    "change": "osh-control-panel-layout"
+  },
+  "osh-control-038": {
+    "hash": "ffb10124cf6b10771fea1d8aa92a92e09de3c1fa292687aaa218d04c7be05c88",
+    "since": "2026-09-29",
+    "change": "osh-control-panel-layout"
+  },
   "perimeters-001": {
     "hash": "c950b2d41849c79df6aa9123d35a0cf495b873a7c0356228c03968863777d80d",
     "since": "2026-09-27",
