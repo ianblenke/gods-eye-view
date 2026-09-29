@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * @purpose Measure weather frame cost across fixed views.
- * @covers pending:wind,pending:weather,pending:performance
+ * @covers wind,pending:weather,pending:performance
  * @run node scripts/qa-weather-perf.mjs
  * @needs A browser and an app server that runs.
  */

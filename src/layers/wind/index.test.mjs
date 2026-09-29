@@ -21,7 +21,7 @@ function harness(feed, diagnostics = {}) {
   layer.enable();
   return { layer, calls };
 }
-test('forecast valid time and source age stay distinct', () => {
+test('[wind-009] forecast valid time and source age stay distinct', () => {
   assert.equal(formatWindValidTime('invalid'), null);
   assert.equal(
     formatWindValidTime('2026-01-05T06:30:00Z'),
@@ -32,7 +32,7 @@ test('forecast valid time and source age stay distinct', () => {
     Date.parse('2026-09-14T12:00:00Z'),
   );
 });
-test('switching models clears old data and ignores an abort-insensitive late source', async () => {
+test('[wind-010] switching models clears old data and ignores an abort-insensitive late source', async () => {
   const pending = [];
   const { layer, calls } = harness({
     getSnapshot: (args) =>
@@ -58,7 +58,7 @@ test('switching models clears old data and ignores an abort-insensitive late sou
   );
   layer.destroy();
 });
-test('external and owned cancellation both cancel source work; queued switches stop on disable', async () => {
+test('[wind-010] external and owned cancellation both cancel source work; queued switches stop on disable', async () => {
   let signal;
   const { layer } = harness({
     getSnapshot: (args) => {
@@ -95,7 +95,7 @@ const complete = (model, extra = {}) => ({
   v: new Float32Array(4).fill(3),
   ...extra,
 });
-test('local appearance and units reuse the loaded field; optional scalar requests remain separate', async () => {
+test('[wind-011] local appearance and units reuse the loaded field; optional scalar requests remain separate', async () => {
   const requests = [];
   const { layer, calls } = harness({
     getSnapshot: async (args) => {
@@ -135,7 +135,7 @@ test('local appearance and units reuse the loaded field; optional scalar request
   assert.equal(layer.getRowControls().legend.at(-1).label, '1050+');
   layer.destroy();
 });
-test('local appearance changes preserve an in-flight first load', async () => {
+test('[wind-011] local appearance changes preserve an in-flight first load', async () => {
   const requests = [];
   const { layer } = harness({
     getSnapshot: (args) =>
@@ -153,7 +153,7 @@ test('local appearance changes preserve an in-flight first load', async () => {
   assert.equal(layer.getStats().loading, false);
   layer.destroy();
 });
-test('re-enable and an appearance change cannot reuse a released renderer field', async () => {
+test('[wind-011] re-enable and an appearance change cannot reuse a released renderer field', async () => {
   const requests = [];
   const { layer, calls } = harness({
     getSnapshot: (args) =>
@@ -182,7 +182,7 @@ test('re-enable and an appearance change cannot reuse a released renderer field'
   assert.equal(layer.getStats().loading, false);
   layer.destroy();
 });
-test('missing optional scalar retains valid wind and labels the field unavailable', async () => {
+test('[wind-012] missing optional scalar retains valid wind and labels the field unavailable', async () => {
   const { layer } = harness({
     getSnapshot: async () =>
       complete('gfs', {
@@ -200,7 +200,7 @@ test('missing optional scalar retains valid wind and labels the field unavailabl
   layer.destroy();
 });
 
-test('a pending companion does not claim that it is already unavailable', async () => {
+test('[wind-012] a pending companion does not claim that it is already unavailable', async () => {
   let resolve;
   const { layer } = harness({
     getSnapshot: (args) =>
@@ -228,7 +228,7 @@ test('a pending companion does not claim that it is already unavailable', async 
   assert.match(layer.getRowControls().info, /Selected field unavailable/);
   layer.destroy();
 });
-test('an imagery failure appears in status and cannot retain a misleading field legend', async () => {
+test('[wind-013] an imagery failure appears in status and cannot retain a misleading field legend', async () => {
   const diagnostics = { imageryError: null };
   const { layer } = harness(
     { getSnapshot: async () => complete('gfs') },
@@ -241,7 +241,7 @@ test('an imagery failure appears in status and cannot retain a misleading field 
   assert.deepEqual(layer.getRowControls().legend, []);
   layer.destroy();
 });
-test('renderer readiness pushes fresh loading stats and controls to the displayed row', async () => {
+test('[wind-013] renderer readiness pushes fresh loading stats and controls to the displayed row', async () => {
   let ready = false;
   let statusChanged;
   const rendering = {
@@ -287,7 +287,7 @@ test('renderer readiness pushes fresh loading stats and controls to the displaye
   layer.destroy();
 });
 
-test('weather summary describes the selected forecast and count remains numeric', async () => {
+test('[wind-015] weather summary describes the selected forecast and count remains numeric', async () => {
   const { layer } = harness({ getSnapshot: async () => complete('gfs') });
   await layer.update();
   assert.equal(typeof layer.getStats().count, 'number');
@@ -301,7 +301,7 @@ test('weather summary describes the selected forecast and count remains numeric'
   layer.destroy();
 });
 
-test('sample stays fixed across model, field and unit changes; dismissal and disable clear marker', async () => {
+test('[wind-014] sample stays fixed across model, field and unit changes; dismissal and disable clear marker', async () => {
   const nodes = [];
   let listener;
   let samples = 0;
@@ -378,7 +378,7 @@ test('sample stays fixed across model, field and unit changes; dismissal and dis
   layer.destroy();
 });
 
-test('observed history labels wind as a forecast without changing its data or parameters', async () => {
+test('[wind-009] observed history labels wind as a forecast without changing its data or parameters', async () => {
   const { createWeatherClock } = await import('../weather/clock.js');
   const clock = createWeatherClock();
   const layer = createWindLayer({ feed: { getSnapshot: async () => snapshot('gfs') }, clock });
@@ -399,7 +399,7 @@ test('observed history labels wind as a forecast without changing its data or pa
   clock.destroy();
 });
 
-test('wind unit chips appear only alongside a speed legend, including canvas trails', async () => {
+test('[wind-015] wind unit chips appear only alongside a speed legend, including canvas trails', async () => {
   let renderMode = 'gpu-streamlines'; let imageryError = null;
   const layer = createWindLayer({ feed: { getSnapshot: async () => complete('gfs') }, createRendering: () => ({ attach() {}, start() {}, clear() {}, setField() {}, setOptions() {}, getDiagnostics: () => ({ renderMode, imageryError }), stop() {}, destroy() {} }) });
   layer.init({ container: {} }); layer.enable(); await layer.update();
@@ -410,5 +410,184 @@ test('wind unit chips appear only alongside a speed legend, including canvas tra
   renderMode = 'gpu-streamlines'; layer.setParams({ overlay: 'speed' }); assert.equal(unitChips().length, 3);
   imageryError = 'Unavailable'; assert.deepEqual(unitChips(), []); imageryError = null;
   for (const overlay of ['pressure', 'temperature', 'none']) { layer.setParams({ overlay }); assert.deepEqual(unitChips(), []); }
+  layer.destroy();
+});
+
+test('[wind-009] layer needs a source and reports absent data', () => {
+  assert.throws(() => createWindLayer(), /Wind requires a snapshot source/);
+  assert.deepEqual(windStats({ unavailable: true }), { count: 0, lastUpdate: null, error: 'Wind unavailable' });
+  assert.equal(windStats({ reason: 'No grid' }).error, 'No grid');
+});
+
+test('[wind-013] layer gives renderer the current imagery host', async () => {
+  let options;
+  const actions = [];
+  const renderer = { attach() {}, rehome() { actions.push('rehome'); }, setOptions() {}, start() {}, stop() {}, clear() {}, destroy() {} };
+  const layer = createWindLayer({ feed: { getSnapshot: async () => ({ unavailable: true }) }, createRendering: (value) => { options = value; return renderer; } });
+  const viewer = { container: {}, imageryLayers: { id: 'globe' }, scene: { imageryLayers: { id: 'scene' } } };
+  layer.init(viewer);
+  assert.equal(options.getViewer(), viewer);
+  assert.deepEqual(options.getHost(), { collection: viewer.imageryLayers, kind: 'globe' });
+  layer.attachShellServices({ imageryHost: () => ({ collection: 'tiles', kind: 'tiles' }) });
+  assert.deepEqual(options.getHost(), { collection: 'tiles', kind: 'tiles' });
+  layer.attachShellServices({ imageryHost: null });
+  assert.equal(options.getHost().collection, viewer.imageryLayers);
+  delete viewer.imageryLayers;
+  assert.equal(options.getHost().collection, viewer.scene.imageryLayers);
+  layer.enable();
+  assert.equal(await layer.update(), true);
+  assert.equal(actions.length, 3);
+  layer.destroy();
+});
+
+test('[wind-012] unavailable snapshot clears the renderer', async () => {
+  const { layer, calls } = harness({ getSnapshot: async () => ({ unavailable: true, reason: 'No wind' }) });
+  assert.equal(await layer.update(), true);
+  assert.equal(layer.getStats().error, 'No wind');
+  assert.equal(calls.some(([name]) => name === 'clear'), true);
+  layer.destroy();
+});
+
+test('[wind-013] source error reaches status and renderer counts', async () => {
+  const { layer } = harness({ getSnapshot: async () => { throw new Error('Grid error'); } });
+  assert.equal(await layer.update(), true);
+  assert.equal(layer.getStats().error, 'Grid error');
+  assert.match(layer.getRowControls().info, /Grid error/);
+  layer.destroy();
+  assert.deepEqual(layer.getDiagnostics(), {});
+  assert.equal(layer.getParticleCount(), 0);
+});
+
+test('[wind-013] layer reads renderer counts and reduced motion', () => {
+  const diagnostics = { reducedMotion: true, renderMode: 'gpu-streamlines', gpu: { pathCount: 1, ready: false } };
+  const { layer } = harness({ getSnapshot: async () => complete('gfs') }, diagnostics);
+  assert.equal(layer.getRowControls().chips.find((chip) => chip.id === 'motion').label, 'Reduced motion');
+  assert.equal(layer.getRowControls().chips.find((chip) => chip.id === 'motion').disabled, true);
+  layer.destroy();
+});
+
+test('[wind-010] update skips disabled state and aborts old work', async () => {
+  const pending = [];
+  const { layer } = harness({ getSnapshot: ({ signal }) => new Promise((resolve, reject) => { pending.push({ signal, resolve, reject }); }) });
+  const first = layer.update();
+  const second = layer.update();
+  assert.equal(pending[0].signal.aborted, true);
+  pending[0].reject(new Error('old request'));
+  assert.equal(await first, false);
+  pending[1].resolve(complete('gfs'));
+  assert.equal(await second, true);
+  layer.disable();
+  assert.equal(await layer.update(), false);
+  layer.destroy();
+});
+
+test('[wind-013] source error without a message uses a fixed status', async () => {
+  const { layer } = harness({ getSnapshot: async () => { throw null; } });
+  assert.equal(await layer.update(), true);
+  assert.equal(layer.getStats().error, 'Wind source unavailable');
+  layer.setRowControlsListener('bad');
+  layer.destroy();
+});
+
+test('[wind-012] stale wind appears in row and stats', async () => {
+  const { layer } = harness({ getSnapshot: async () => complete('gfs', { stale: true }) });
+  assert.equal(await layer.update(), true);
+  assert.equal(layer.getRowControls().summary.status, 'Cached forecast · stale');
+  assert.match(layer.getRowControls().info, /STALE/);
+  assert.equal(layer.getStats().stale, true);
+  layer.destroy();
+});
+
+test('[wind-013] renderer optional status methods can be absent', () => {
+  const layer = createWindLayer({ feed: { getSnapshot: async () => complete('gfs') }, createRendering: () => ({ attach() {}, setOptions() {}, start() {}, stop() {}, clear() {}, destroy() {}, getParticleCount: () => 0 }) });
+  layer.init({ container: {} });
+  layer.enable();
+  assert.deepEqual(layer.getDiagnostics(), {});
+  assert.equal(layer.getParticleCount(), 0);
+  layer.destroy();
+});
+
+test('[wind-010] an old abort signal stops an update', async () => {
+  let calls = 0;
+  const { layer } = harness({ getSnapshot: async () => { calls++; return complete('gfs'); } });
+  const controller = new AbortController();
+  controller.abort(new Error('old signal'));
+  assert.equal(await layer.update(null, { signal: controller.signal }), false);
+  assert.equal(calls, 0);
+  layer.destroy();
+});
+
+test('[wind-014] empty center readout has no saved point', async () => {
+  const { layer } = harness({ getSnapshot: async () => complete('gfs') });
+  assert.equal(await layer.update(), true);
+  layer.setParams({ inspect: true });
+  assert.equal(layer.getRowControls().summary.reading.coordinates, 'No surface reading');
+  layer.destroy();
+});
+
+test('[wind-014] readout uses an absent time and stale source label', async () => {
+  const old = complete('gfs', { stale: true, cycle: {} });
+  const { layer } = harness({ getSnapshot: async () => old });
+  assert.equal(await layer.update(), true);
+  layer.setParams({ inspect: true });
+  const readout = layer.getRowControls().summary.reading;
+  assert.equal(readout.validTime, 'Unavailable');
+  assert.equal(readout.status, 'Cached forecast · stale');
+  layer.destroy();
+});
+
+test('[wind-011] a new scalar choice requests a new field', async () => {
+  const requests = [];
+  const { layer } = harness({ getSnapshot: async (args) => { requests.push(args.overlay); return complete('gfs', args.overlay === 'temperature' ? { scalar: { kind: 'temperature', units: '°C', values: new Float32Array(4) } } : {}); } });
+  assert.equal(await layer.update(), true);
+  layer.setParams({ overlay: 'temperature' });
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.deepEqual(requests, ['none', 'temperature']);
+  layer.destroy();
+});
+
+test('[wind-013] renderer null diagnostics use an empty result', () => {
+  const { layer } = harness({ getSnapshot: async () => complete('gfs') });
+  layer.destroy();
+  assert.deepEqual(layer.getDiagnostics(), {});
+});
+
+test('[wind-011] a scalar switch checks the current scalar kind', async () => {
+  const requests = [];
+  const { layer } = harness({ getSnapshot: async (args) => { requests.push(args.overlay); return complete('gfs', { scalar: { kind: args.overlay, units: '°C', values: new Float32Array(4) } }); } });
+  layer.setParams({ overlay: 'temperature' });
+  await Promise.resolve();
+  await Promise.resolve();
+  layer.setParams({ overlay: 'pressure' });
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.deepEqual(requests, ['temperature', 'pressure']);
+  layer.destroy();
+});
+
+test('[wind-011] a speed choice starts an absent field', async () => {
+  let calls = 0;
+  const { layer } = harness({ getSnapshot: async () => { calls++; return complete('gfs'); } });
+  layer.setParams({ overlay: 'speed' });
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(calls, 1);
+  layer.destroy();
+});
+
+test('[wind-013] null renderer diagnostics give an empty result', () => {
+  const layer = createWindLayer({ feed: { getSnapshot: async () => complete('gfs') }, createRendering: () => ({ attach() {}, setOptions() {}, start() {}, stop() {}, clear() {}, destroy() {}, getDiagnostics: () => null }) });
+  layer.init({ container: {} });
+  assert.deepEqual(layer.getDiagnostics(), {});
+  layer.destroy();
+});
+
+test('[wind-012] absent scalar sets the row status', async () => {
+  const { layer } = harness({ getSnapshot: async () => complete('gfs') });
+  layer.setParams({ overlay: 'temperature' });
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(layer.getRowControls().summary.status, 'Selected field unavailable');
   layer.destroy();
 });
