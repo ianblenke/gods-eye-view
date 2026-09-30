@@ -86,7 +86,7 @@ The audit checks each compound condition and loop key.
 - `src/layers/recentImagery/thumbnails.js:121`: An AbortError that the loader did not start leaves the day entry in the cache. A later request does not restart it.
 - `src/layers/recentImagery/model.js:331`: The model accepts an inherited product key, such as `__proto__`.
 - `src/ui/recentImagery.js:304`: The panel restores the scroll position after the DETAILS card tries to show the card.
-- `src/layers/recentImagery/model.js:401`: An incorrect footprint with a nonfinite latitude can produce full coverage.
+- `src/layers/recentImagery/model.js:401`: An incorrect footprint with a latitude that is not finite can produce full coverage.
 The lead changes the QA header after the archive creates the capability folder.
 
 - Known limit `recent-imagery-untagged-old-test`: one old test in `src/ui/recentImagery.test.mjs` has a title of 26 words. The gate limit for a tagged title is 25 words. The owner rule keeps an old test name, so this test stays without a tag. Its title starts with "the notice line shows the refusal".
@@ -277,6 +277,6 @@ the notice line shows the refusal, then errors, then CLEAR, then the Esri note; 
 ```
 
 
-- The tests for the nonfinite latitude and for the AbortError entry must change if the code changes.
-The model test with tag `recent-imagery-013` accepts a nonfinite latitude.
+- The tests for the latitude that is not finite and for the AbortError entry must change if the code changes.
+The model test with tag `recent-imagery-013` accepts a latitude that is not finite.
 The thumbnail test with tags `recent-imagery-023 recent-imagery-026` maps an AbortError to the unknown state.
