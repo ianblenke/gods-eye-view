@@ -2,7 +2,13 @@
 
 The feature searches satellite days for a globe box. It shows pinned days and a swipe divider.
 This backfill records code at commit `3a919b7`.
-The change has 52 scenarios, 391 tests and 831 mutation checks.
+The change has 52 scenarios, 433 tests and 876 mutation checks.
+
+The test declaration sweep finds 432 declarations; the path loop gives 433 tests.
+The scenario heading sweep finds 52 scenarios.
+The `untracedTests` entries in `openspec/trace/gaps.json` give 93 old tests.
+The entries in `muts.json` and `muts3.json` give 828 and 48 mutation checks, for a total of 876.
+
 
 ## Goals
 
@@ -13,7 +19,7 @@ The change has 52 scenarios, 391 tests and 831 mutation checks.
 ## Non-goals
 
 - Change production code.
-- Change a provider or a browser QA script.
+- Change a provider, or change a browser QA script except its `@covers` line.
 
 ## Decisions
 
@@ -29,7 +35,9 @@ STE checks prose and tagged names. The lead runs the ratchet, gates and review.
 
 ## Related browser QA scripts
 
-- `scripts/qa-recent-imagery.mjs` checks search, pins, compare modes, export controls, map handover, share state and panel layout.
+- `scripts/qa-recent-imagery.mjs` checks search, pins, compare modes, export controls, map change, share state and panel layout.
+  The script also checks CCTV stability at two window sizes and measures layout shifts across transitions.
+  The QA checks do not have a scenario.
 
 ## Files
 
@@ -44,7 +52,7 @@ It changes these test files:
 - `src/ui/recentImagery.test.mjs`
 
 It adds `src/layers/recentImagery/testDoubles.test.mjs`.
-The helper tests exercise stock input handlers and globe value helpers.
+The helper tests call the standard input handlers and the helpers that give globe values.
 They also check response status codes and day cloud ranges.
 The lead updates the trace ledger after the host checks.
 

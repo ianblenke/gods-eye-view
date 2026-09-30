@@ -295,7 +295,7 @@ test('[recent-imagery-005] CMR pages follow the CMR-Search-After cursor up to 2,
   assert.equal(noCursor.truncated, true);
 });
 
-test('[recent-imagery-001] absent catalog fields use distinct defaults', () => {
+test('[recent-imagery-001] absent catalog fields use different defaults', () => {
   const native = ummItem();
   native.meta = { 'native-id': 'native-day' };
   const blank = ummItem();
@@ -312,7 +312,7 @@ test('[recent-imagery-001] absent catalog fields use distinct defaults', () => {
   );
 });
 
-test('[recent-imagery-004] invalid box and absent fetch fail before source work', async () => {
+test('[recent-imagery-004] an invalid box and an absent fetch fail before source work', async () => {
   assert.throws(() => cmrSearchUrl({ product: 'S30', box: null }), /finite/);
   await assert.rejects(searchHls({ box: BOX, fetchImpl: null }), /fetch/);
   await assert.rejects(
@@ -343,7 +343,7 @@ test('[recent-imagery-001] absent cloud attributes stay unknown', () => {
   assert.equal(parseCmrUmm({ items: [item] }, 'S30').granules[0].cloud, null);
 });
 
-test('[recent-imagery-001] invalid rectangle edge prevents a footprint', () => {
+test('[recent-imagery-001] an invalid rectangle edge does not allow a footprint', () => {
   const item = ummItem({ polygon: null, rectangle: [NaN, 0, 1, 1] });
   assert.equal(
     parseCmrUmm({ items: [item] }, 'S30').granules[0].footprint,
@@ -439,7 +439,7 @@ test('[recent-imagery-005] the hit-count condition alone ends the page read', as
   assert.equal(result.truncated, false);
 });
 
-test('[recent-imagery-004] a clock refusal names its error type and cause', async () => {
+test('[recent-imagery-004] a clock error names its error type and cause', async () => {
   await assert.rejects(
     searchHls({
       box: BOX,
@@ -503,4 +503,20 @@ test('[recent-imagery-001] a nonfinite polygon latitude alone removes its point'
     [1, 0],
     [1, 1],
   ]);
+});
+
+test('[recent-imagery-001] a rectangle with three valid corners does not give a footprint', () => {
+  let reads = 0;
+  const west = {
+    valueOf() {
+      reads += 1;
+      return reads === 1 ? NaN : -98;
+    },
+  };
+  const { granules } = parseCmrUmm(
+    { items: [ummItem({ polygon: null, rectangle: [west, 30, -97, 31] })] },
+    'S30',
+  );
+  assert.equal(granules[0].footprint, null);
+  assert.equal(reads, 2);
 });

@@ -1245,6 +1245,7 @@ function snapshotPanel(initial, options = {}) {
       calls.push(['empty', value]);
     },
   };
+  options.setupLayer?.(layer, calls);
   const readout = createRecentImageryPanel({
     container: dom.body,
     layer,
@@ -1262,7 +1263,7 @@ function snapshotPanel(initial, options = {}) {
   };
 }
 
-test('[recent-imagery-043 recent-imagery-044] absent panel input and thumbnail state use explicit DOM values', async () => {
+test('[recent-imagery-043 recent-imagery-044] absent panel input and an absent thumbnail state use known DOM values', async () => {
   assert.equal(createRecentImageryPanel(), null);
   const f = fixture();
   await f.ready();
@@ -1334,7 +1335,7 @@ test('[recent-imagery-045 recent-imagery-050] strip keys and dimensions keep foc
   f.layer.destroy();
 });
 
-test('[recent-imagery-048] export failure and late data do not create a download', async () => {
+test('[recent-imagery-048] an export failure and late data do not create a download', async () => {
   const f = fixture({ fetchImpl: async () => undefined });
   await f.ready();
   assert.equal(await f.readout.exportImage(), false);
@@ -1362,7 +1363,7 @@ test('[recent-imagery-048] export failure and late data do not create a download
   g.layer.destroy();
 });
 
-test('[recent-imagery-047] divider callbacks use globe width and spoken side labels', async () => {
+test('[recent-imagery-047] divider callbacks use globe width and screen reader side labels', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setMode('basemap');
@@ -1383,7 +1384,7 @@ test('[recent-imagery-047] divider callbacks use globe width and spoken side lab
   f.layer.destroy();
 });
 
-test('[recent-imagery-043 recent-imagery-048 recent-imagery-049] panel owns its class, details title and export filename', async () => {
+test('[recent-imagery-043 recent-imagery-048 recent-imagery-049] the panel owns its class, details title and export filename', async () => {
   const f = fixture();
   await f.ready();
   assert.equal(f.root.className, 'recent-imagery-readout');
@@ -1431,7 +1432,7 @@ test('[recent-imagery-049] details with real dimensions open the card', async ()
   f.layer.destroy();
 });
 
-test('[recent-imagery-044 recent-imagery-049] panel details use absent and overview facts', async () => {
+test('[recent-imagery-044 recent-imagery-049] the panel details use absent and overview facts', async () => {
   const f = fixture();
   await f.ready();
   const base = f.snap();
@@ -1495,7 +1496,7 @@ test('[recent-imagery-044 recent-imagery-049] panel details use absent and overv
   f.layer.destroy();
 });
 
-test('[recent-imagery-048] default export URL functions own and release a large PNG', async () => {
+test('[recent-imagery-048] the default export URL functions own and release a large PNG', async () => {
   const f = fixture();
   await f.ready();
   const base = f.snap();
@@ -1531,7 +1532,7 @@ test('[recent-imagery-048] default export URL functions own and release a large 
   f.layer.destroy();
 });
 
-test('[recent-imagery-045] Enter repeat does not ask for another preview', async () => {
+test('[recent-imagery-045] an Enter repeat does not ask for another preview', async () => {
   const f = fixture();
   await f.ready();
   const p = snapshotPanel(f.snap());
@@ -1546,7 +1547,7 @@ test('[recent-imagery-045] Enter repeat does not ask for another preview', async
   f.layer.destroy();
 });
 
-test('[recent-imagery-045 recent-imagery-048] export action and layer clear use panel callbacks', async () => {
+test('[recent-imagery-045 recent-imagery-048] the export action and the layer CLEAR action use panel callbacks', async () => {
   const f = fixture();
   await f.ready();
   f.byAction('export-a').click();
@@ -1560,7 +1561,7 @@ test('[recent-imagery-045 recent-imagery-048] export action and layer clear use 
   f.layer.destroy();
 });
 
-test('[recent-imagery-043 recent-imagery-047] panel uses the default frame callback and ignores late state', async () => {
+test('[recent-imagery-043 recent-imagery-047] the panel uses the default frame callback and ignores late state', async () => {
   const f = fixture();
   await f.ready();
   const base = f.snap();
@@ -1597,7 +1598,7 @@ test('[recent-imagery-043 recent-imagery-047] panel uses the default frame callb
   f.layer.destroy();
 });
 
-test('[recent-imagery-048] thrown export value appears as an error', async () => {
+test('[recent-imagery-048] a thrown export value appears as an error', async () => {
   const f = fixture({
     fetchImpl: async () => {
       throw 'source-error';
@@ -1681,7 +1682,7 @@ test('[recent-imagery-048] zero snapshot spans still request a finite image size
   f.layer.destroy();
 });
 
-test('[recent-imagery-048] export rejection after panel destroy does not add a notice', async () => {
+test('[recent-imagery-048] an export rejection after panel destroy does not add a notice', async () => {
   let reject;
   const f = fixture({
     fetchImpl: () =>
@@ -1775,7 +1776,7 @@ test('[recent-imagery-044] an empty thumbnail host gets a new image', async () =
   f.layer.destroy();
 });
 
-test('[recent-imagery-044] new catalog cards can append to an empty strip host', async () => {
+test('[recent-imagery-044] new catalog cards can go into an empty strip host', async () => {
   const f = fixture();
   await f.ready();
   f.strip.find((node) => node.classList.contains('ri-strip-empty')).remove();
@@ -1823,7 +1824,7 @@ test('[recent-imagery-049] details show both independent notes', async () => {
   f.layer.destroy();
 });
 
-test('[recent-imagery-043] the panel clears both day image sources when it stops', async () => {
+test('[recent-imagery-043] the panel clears both day image URLs when it stops', async () => {
   const f = fixture();
   await f.ready();
   f.thumbnails.get = (key) => ({ status: 'present', objectUrl: `blob:${key}` });
@@ -1905,12 +1906,12 @@ function auditScroll(
   return { requests, header };
 }
 
-test('[recent-imagery-043] an absent layer alone prevents a panel', async () => {
+test('[recent-imagery-043] an absent layer alone does not allow a panel', async () => {
   const dom = fakeDocument();
   assert.equal(createRecentImageryPanel({ container: dom.body }), null);
 });
 
-test('[recent-imagery-043] an absent document factory alone prevents a panel', async () => {
+test('[recent-imagery-043] an absent document factory alone does not allow a panel', async () => {
   const dom = fakeDocument();
   dom.document.createElement = null;
   assert.equal(
@@ -1927,7 +1928,7 @@ test('[recent-imagery-044] one day uses the singular count label', async () => {
   p.readout.destroy();
 });
 
-test('[recent-imagery-046] a lone B pin gives the other side hint', async () => {
+test('[recent-imagery-046] a single B pin gives the other side hint', async () => {
   const s = await auditPanelState();
   s.mode = 'ab';
   s.pins.b.key = L16;
@@ -1948,7 +1949,7 @@ test('[recent-imagery-045] a box refusal alone keeps CLEAR active', async () => 
   p.readout.destroy();
 });
 
-test('[recent-imagery-046] an error alone prevents the information style', async () => {
+test('[recent-imagery-046] an error alone does not allow the information style', async () => {
   const s = await auditPanelState();
   s.error = 'Failed';
   const p = auditPanel(s);
@@ -1956,7 +1957,7 @@ test('[recent-imagery-046] an error alone prevents the information style', async
   p.readout.destroy();
 });
 
-test('[recent-imagery-046] an empty notice alone prevents the information style', async () => {
+test('[recent-imagery-046] an empty notice alone does not allow the information style', async () => {
   const s = await auditPanelState();
   s.error = null;
   s.notice = null;
@@ -1989,7 +1990,7 @@ test('[recent-imagery-044] an absent image URL alone keeps the placeholder', asy
   p.readout.destroy();
 });
 
-test('[recent-imagery-044] a stable thumbnail reuses its sole image', async () => {
+test('[recent-imagery-044] a stable thumbnail uses the same image element again', async () => {
   const s = await auditPanelState();
   s.candidates = [
     {
@@ -2006,7 +2007,7 @@ test('[recent-imagery-044] a stable thumbnail reuses its sole image', async () =
   p.readout.destroy();
 });
 
-test('[recent-imagery-044] an unchanged thumbnail URL does not set the image source again', async () => {
+test('[recent-imagery-044] an unchanged thumbnail URL does not set the image URL again', async () => {
   const s = await auditPanelState();
   s.candidates = [
     {
@@ -2031,7 +2032,7 @@ test('[recent-imagery-044] an unchanged thumbnail URL does not set the image sou
   p.readout.destroy();
 });
 
-test('[recent-imagery-044] an error status alone clears the old image source', async () => {
+test('[recent-imagery-044] an error status alone clears the old image URL', async () => {
   const s = await auditPanelState();
   s.candidates = [
     {
@@ -2057,7 +2058,7 @@ test('[recent-imagery-044] an active day request has the busy flag', async () =>
   p.readout.destroy();
 });
 
-test('[recent-imagery-044] an inactive B chip has a false spoken state', async () => {
+test('[recent-imagery-044] an inactive B chip has a false screen reader state', async () => {
   const s = await auditPanelState();
   s.candidates = [{ ...s.candidates[1], pinned: 'b', preview: false }];
   const p = auditPanel(s);
@@ -2070,7 +2071,7 @@ test('[recent-imagery-044] an inactive B chip has a false spoken state', async (
   p.readout.destroy();
 });
 
-test('[recent-imagery-044] an A and B pin has its spoken slot', async () => {
+test('[recent-imagery-044] an A and B pin has its screen reader slot', async () => {
   const s = await auditPanelState();
   s.mode = 'ab';
   s.candidates = [{ ...s.candidates[1], pinned: 'a', preview: false }];
@@ -2083,7 +2084,7 @@ test('[recent-imagery-044] an A and B pin has its spoken slot', async () => {
   p.readout.destroy();
 });
 
-test('[recent-imagery-044] a preview day has its spoken state', async () => {
+test('[recent-imagery-044] a preview day has its screen reader state', async () => {
   const s = await auditPanelState();
   s.mode = 'image';
   s.candidates = [{ ...s.candidates[1], pinned: null, preview: true }];
@@ -2096,7 +2097,7 @@ test('[recent-imagery-044] a preview day has its spoken state', async () => {
   p.readout.destroy();
 });
 
-test('[recent-imagery-044] a plain day has only its spoken facts', async () => {
+test('[recent-imagery-044] a plain day has only its screen reader facts', async () => {
   const s = await auditPanelState();
   s.mode = 'image';
   s.candidates = [{ ...s.candidates[1], pinned: null, preview: false }];
@@ -2109,7 +2110,7 @@ test('[recent-imagery-044] a plain day has only its spoken facts', async () => {
   p.readout.destroy();
 });
 
-test('[recent-imagery-044] a recommended day has its spoken rank', async () => {
+test('[recent-imagery-044] a recommended day has its screen reader rank', async () => {
   const s = await auditPanelState();
   s.mode = 'image';
   s.candidates = [{ ...s.candidates[1], pinned: null, preview: false }];
@@ -2263,7 +2264,7 @@ test('[recent-imagery-044] an image row has the active style', async () => {
   p.readout.destroy();
 });
 
-test('[recent-imagery-044] an A and B pin has its spoken removal action', async () => {
+test('[recent-imagery-044] an A and B pin has its screen reader removal action', async () => {
   const s = await auditPanelState();
   s.mode = 'ab';
   const p = auditPanel(s);
@@ -2308,7 +2309,7 @@ test('[recent-imagery-048] A and B gives its A button the correct title', async 
   p.readout.destroy();
 });
 
-test('[recent-imagery-049] equal acquisition times have one spoken time', async () => {
+test('[recent-imagery-049] equal acquisition times have one screen reader time', async () => {
   const s = await auditPanelState();
   s.focus = {
     ...s.focus,
@@ -2344,7 +2345,7 @@ test('[recent-imagery-049] an absent granule cloud has no cloud suffix', async (
   p.readout.destroy();
 });
 
-test('[recent-imagery-049] an inactive overview source alone prevents its scale note', async () => {
+test('[recent-imagery-049] an inactive overview source alone does not allow its scale note', async () => {
   const s = await auditPanelState();
   s.sources.viirs = false;
   const p = auditPanel(s);
@@ -2352,7 +2353,7 @@ test('[recent-imagery-049] an inactive overview source alone prevents its scale 
   p.readout.destroy();
 });
 
-test('[recent-imagery-049] a large box alone prevents its overview scale note', async () => {
+test('[recent-imagery-049] a large box alone does not allow its overview scale note', async () => {
   const s = await auditPanelState();
   s.boxSizeKm = { width: 30, height: 30 };
   const p = auditPanel(s);
@@ -2418,7 +2419,7 @@ test('[recent-imagery-049] a card below the viewport requests the minimum offset
   p.readout.destroy();
 });
 
-test('[recent-imagery-049] a zero viewport height alone prevents a scroll request', async () => {
+test('[recent-imagery-049] a zero viewport height alone does not allow a scroll request', async () => {
   const s = await auditPanelState();
   const p = auditPanel(s),
     view = auditScroll(p, { height: 0 });
@@ -2427,7 +2428,7 @@ test('[recent-imagery-049] a zero viewport height alone prevents a scroll reques
   p.readout.destroy();
 });
 
-test('[recent-imagery-049] absent card dimensions alone prevent a scroll request', async () => {
+test('[recent-imagery-049] absent card dimensions alone do not allow a scroll request', async () => {
   const s = await auditPanelState();
   const p = auditPanel(s),
     view = auditScroll(p, { cardRect: false });
@@ -2456,7 +2457,7 @@ test('[recent-imagery-049] an open DETAILS card does not request scroll again', 
   p.readout.destroy();
 });
 
-test('[recent-imagery-047] a basemap divider has its spoken name', async () => {
+test('[recent-imagery-047] a basemap divider has its screen reader name', async () => {
   const s = await auditPanelState();
   s.mode = 'basemap';
   s.comparison.active = true;
@@ -2469,7 +2470,7 @@ test('[recent-imagery-047] a basemap divider has its spoken name', async () => {
   p.readout.destroy();
 });
 
-test('[recent-imagery-047] an A and B divider has its spoken name', async () => {
+test('[recent-imagery-047] an A and B divider has its screen reader name', async () => {
   const s = await auditPanelState();
   s.mode = 'ab';
   s.comparison.active = true;
@@ -2526,7 +2527,7 @@ test('[recent-imagery-048] an absent slot image alone does not add an error', as
   p.readout.destroy();
 });
 
-test('[recent-imagery-045] an absent viewport width alone prevents a strip scroll action', async () => {
+test('[recent-imagery-045] an absent viewport width alone does not allow a strip scroll action', async () => {
   const state = await auditPanelState(),
     p = auditPanel(state),
     strip = p.byId('ri-strip');
@@ -2626,7 +2627,7 @@ test('[recent-imagery-045] S does not pin a day in A and B mode', async () => {
   f.layer.destroy();
 });
 
-test('[recent-imagery-045] another key outside the strip keeps the preview intact', async () => {
+test('[recent-imagery-045] another key outside the strip keeps the preview', async () => {
   const f = fixture();
   await f.ready();
   const event = f.byId('ri-opacity').dispatch('keydown', { key: 'x' });
@@ -2708,4 +2709,195 @@ test('[recent-imagery-048] A and B mode exports its B pin', async () => {
   assert.equal(await p.readout.exportImage('b'), true);
   assert.equal(auditAction(p, 'export-b').disabled, false);
   p.readout.destroy();
+});
+
+test('[recent-imagery-044] a preview slot without a key has the empty state', async () => {
+  const s = await auditPanelState();
+  s.preview = { ...s.preview, slot: 'a', key: null };
+  const p = auditPanel(s);
+  assert.equal(p.byId('ri-slot-a').dataset.state, 'empty');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] an absent box size does not add the overview scale note', async () => {
+  const s = await auditPanelState();
+  s.boxSizeKm = null;
+  const p = auditPanel(s);
+  assert.equal(Boolean(auditLine(p, 'overview-scale')), false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] an absent box does not add the overview scale note', async () => {
+  const s = await auditPanelState();
+  s.box = null;
+  s.boxSizeKm = { width: 1, height: 1 };
+  const p = auditPanel(s);
+  assert.equal(Boolean(auditLine(p, 'overview-scale')), false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-048] an export without a box does not call fetch', async () => {
+  const s = await auditPanelState();
+  s.box = null;
+  let fetches = 0;
+  const p = auditPanel(s, {
+    fetchImpl: async () => {
+      fetches += 1;
+      return response();
+    },
+  });
+  assert.equal(await p.readout.exportImage('a'), false);
+  assert.equal(fetches, 0);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-045] a chip without a card does not call the layer', async () => {
+  const p = auditPanel(await auditPanelState());
+  p.calls.length = 0;
+  const chip = { disabled: false, dataset: { slot: 'a' } };
+  const target = {
+    closest: (selector) => (selector === '.ri-chip' ? chip : null),
+  };
+  assert.doesNotThrow(() => p.readout.root.dispatch('click', { target }));
+  assert.deepEqual(p.calls, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-045] a disabled SWAP control does not call the layer', async () => {
+  const p = auditPanel(await auditPanelState(), {
+    setupLayer: (layer, calls) => {
+      layer.swapSides = () => calls.push(['swap']);
+    },
+  });
+  const swap = auditNode(p, 'ri-swap');
+  assert.equal(swap.disabled, true);
+  p.calls.length = 0;
+  swap.dispatch('click');
+  assert.deepEqual(p.calls, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-046] a disabled ZOOM IN control does not call the layer', async () => {
+  const p = auditPanel(await auditPanelState());
+  const zoom = auditNode(p, 'ri-zoom-in');
+  assert.equal(zoom.disabled, true);
+  p.calls.length = 0;
+  zoom.dispatch('click');
+  assert.deepEqual(p.calls, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-045] an empty day key does not pin or remove the export error', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s, {
+    fetchImpl: async () => {
+      throw new Error('test error');
+    },
+  });
+  assert.equal(await p.readout.exportImage('a'), false);
+  s.candidates[s.focusIndex] = {
+    ...s.candidates[s.focusIndex],
+    thumbnail: { status: 'empty' },
+  };
+  p.emit(s);
+  p.calls.length = 0;
+  p.byId('ri-strip').dispatch('keydown', { key: 's' });
+  assert.equal(
+    p.calls.some(([type]) => type === 'pin'),
+    false,
+  );
+  p.emit(s);
+  assert.equal(
+    auditNode(p, 'ri-notice-text').textContent,
+    'Export failed · test error',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-047] an inactive comparison removes the divider with the same image keys', async () => {
+  const s = await auditPanelState();
+  s.comparison.active = true;
+  s.shown.swipe = 'basemap';
+  let removed = 0;
+  const p = auditPanel(s, {
+    createSplit: () => ({
+      setValue() {},
+      destroy() {
+        removed += 1;
+      },
+    }),
+  });
+  s.comparison.active = false;
+  p.emit(s);
+  assert.equal(removed, 1);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-051] a candidate without a card does not enter the visible range', async () => {
+  const s = await auditPanelState();
+  s.candidates = [{ ...s.candidates[0], key: null }];
+  const p = auditPanel(s);
+  p.byId('ri-strip').clientWidth = 100;
+  p.calls.length = 0;
+  p.byId('ri-strip').dispatch('scroll');
+  assert.equal(
+    p.calls.some(([type]) => type === 'range'),
+    false,
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-047] a snapshot value that destroys the panel does not create another divider', async () => {
+  const s = await auditPanelState();
+  s.comparison.active = true;
+  s.shown.swipe = 'basemap';
+  const p = auditPanel(s);
+  let stopped = false;
+  Object.defineProperty(s.candidates[1], 'product', {
+    get() {
+      if (!stopped) {
+        stopped = true;
+        p.readout.destroy();
+      }
+      return 'S30';
+    },
+  });
+  p.emit(s);
+  assert.equal(p.splits.length, 1);
+});
+
+test('[recent-imagery-051] a zero length candidate list does not enter the visible range', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  s.candidates = new Proxy(s.candidates, {
+    get(target, key, receiver) {
+      if (key === 'length') return 0;
+      if (key === 'forEach') return target.forEach.bind(target);
+      return Reflect.get(target, key, receiver);
+    },
+  });
+  p.byId('ri-strip').clientWidth = 100;
+  p.calls.length = 0;
+  p.byId('ri-strip').dispatch('scroll');
+  assert.equal(
+    p.calls.some(([type]) => type === 'range'),
+    false,
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-043] a snapshot callback that destroys the panel does not change its mode field', async () => {
+  const s = await auditPanelState();
+  let layer;
+  const p = auditPanel(s, {
+    setupLayer(value) {
+      layer = value;
+    },
+  });
+  layer.getSnapshot = () => {
+    p.readout.destroy();
+    return { ...s, mode: 'ab' };
+  };
+  p.emit(null);
+  assert.equal(p.readout.root.dataset.mode, 'image');
 });

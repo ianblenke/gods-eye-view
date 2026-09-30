@@ -1,10 +1,16 @@
 ## 1. The spec
 
-- [x] 1.1 Write the spec before tests.
+- [x] 1.1 Write the spec before you write the tests.
 
 ## 2. Tests and mutations
 
-The change has 52 scenarios, 391 tests and 831 mutation checks.
+The change has 52 scenarios, 433 tests and 876 mutation checks.
+
+The test declaration sweep finds 432 declarations; the path loop gives 433 tests.
+The scenario heading sweep finds 52 scenarios.
+The `untracedTests` entries in `openspec/trace/gaps.json` give 93 old tests.
+The entries in `muts.json` and `muts3.json` give 828 and 48 mutation checks, for a total of 876.
+
 
 - [x] 2.1 Add tests for `recent-imagery-001`.
   - Mutation: In `src/layers/recentImagery/catalog.js`, replace the first block with the second block. The test must fail.
@@ -575,7 +581,7 @@ const end = start + Number(card?.offsetWidth);
 
 ## 3. Checks
 
-- [x] 3.1 Complete the compound condition and loop key audit.
+- [x] 3.1 Audit each compound condition and each loop key.
 - [x] 3.2 Record the equivalent size guard mutation.
 - [x] 3.3 Check the host coverage limits with the gate image.
 
@@ -588,7 +594,7 @@ const end = start + Number(card?.offsetWidth);
 
 ## 5. Test helper
 
-- [x] 5.1 Test helper response and day values for `recent-imagery-052`.
+- [x] 5.1 Add tests for the response and day values of the helper, for `recent-imagery-052`.
 
 Mutation: In `src/layers/recentImagery/testDoubles.mjs`, replace the first block with the second block. The test must fail.
 
@@ -599,3 +605,13 @@ status = ok ? 200 : 500,
 ```js
 status = true ? 200 : 500,
 ```
+
+## 6. Round 3
+
+- [x] 6.1 Check the twelve public API cases with the new tests.
+- [x] 6.2 Check each new observable claim from the remaining mutation rows.
+- [x] 6.3 Record each equivalent claim in the proposal and the audit.
+- [x] 6.4 Retag the test doubles with `recent-imagery-052`.
+- [x] 6.5 Correct the timer title.
+- [x] 6.6 Remove the weaker opacity subscriber test.
+- [x] 6.7 Run the host test, mutation, coverage, prose and format checks.

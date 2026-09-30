@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-test('[recent-imagery-028] box tool doubles expose stock input and globe values', async () => {
+test('[recent-imagery-052] the box tool doubles give stock input and globe values', async () => {
   const { boxToolFakes } = await import('./testDoubles.mjs');
   const f = boxToolFakes();
   assert.equal(f.originalClick(), 'select');
@@ -19,7 +19,7 @@ test('[recent-imagery-028] box tool doubles expose stock input and globe values'
   assert.equal(f.fire('LEFT_DOWN', {}), undefined);
 });
 
-test('[recent-imagery-028] box tool double dispatches the live canvas handler', async () => {
+test('[recent-imagery-052] the box tool double sends the live canvas handler an event', async () => {
   const { boxToolFakes } = await import('./testDoubles.mjs');
   const f = boxToolFakes();
   const first = new f.cesium.ScreenSpaceEventHandler('canvas');
@@ -36,7 +36,7 @@ test('[recent-imagery-028] box tool double dispatches the live canvas handler', 
   assert.deepEqual(events, [12]);
 });
 
-test('[recent-imagery-028] renderer double moves both image slots to the next host', async () => {
+test('[recent-imagery-052] the renderer double moves both image slots to the next host', async () => {
   const { fakeRenderer, candidate, BOX } = await import('./testDoubles.mjs');
   const r = fakeRenderer();
   r.rebind({ kind: 'globe' });
@@ -47,7 +47,7 @@ test('[recent-imagery-028] renderer double moves both image slots to the next ho
   assert.equal(r.getOwned().b.kind, 'tileset');
 });
 
-test('[recent-imagery-028] thumbnail double calls both probe subscribers', async () => {
+test('[recent-imagery-052] the thumbnail double calls both probe subscribers', async () => {
   const { fakeThumbnails } = await import('./testDoubles.mjs');
   const t = fakeThumbnails();
   const first = [], second = [];
@@ -58,13 +58,13 @@ test('[recent-imagery-028] thumbnail double calls both probe subscribers', async
   assert.deepEqual(second, ['S30:2026-09-18']);
 });
 
-test('[recent-imagery-052] response doubles use distinct success and failure status codes', async () => {
+test('[recent-imagery-052] the response doubles use different success and failure status codes', async () => {
   const { response } = await import('./testDoubles.mjs');
   assert.equal(response().status, 200);
   assert.equal(response({ ok: false }).status, 500);
 });
 
-test('[recent-imagery-052] day doubles reserve cloud ranges for granule days', async () => {
+test('[recent-imagery-052] the day doubles give cloud ranges only to granule days', async () => {
   const { candidate } = await import('./testDoubles.mjs');
   assert.deepEqual(candidate('S30', '2026-09-18', 12).cloud, { min: 12, max: 12 });
   assert.equal(candidate('VIIRS', '2026-09-18', 12).cloud, null);
