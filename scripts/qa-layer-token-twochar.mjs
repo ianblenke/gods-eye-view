@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that a share link and a reload keep the first two-character layer token.
+ * @covers pending:application-shell
+ * @run node scripts/qa-layer-token-twochar.mjs
+ * @needs A browser and a local Vite server.
+ */
+/**
  * End-to-end share/reload proof for the first two-character token. The QA
  * layer and an exhausted-digit reservation scenario are injected into
  * dev-server responses in this isolated browser only. Neither belongs in a

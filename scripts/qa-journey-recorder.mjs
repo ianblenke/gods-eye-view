@@ -1,4 +1,10 @@
 /**
+ * @purpose Give screen recording and frame timing helpers to the journey scripts.
+ * @covers unmapped: shared support code for journey scripts and not a check
+ * @run Not run alone. The journey scripts import it.
+ * @needs Nothing. Other scripts import it.
+ */
+/**
  * qa-journey-recorder.mjs — shared support for journey QA gates (not a gate).
  *
  * - `createScreencast(page, dir)` records CDP `Page.startScreencast` frames

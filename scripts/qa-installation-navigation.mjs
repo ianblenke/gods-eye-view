@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that mapped installations give camera navigation and fast return visits.
+ * @covers pending:overlays
+ * @run node scripts/qa-installation-navigation.mjs http://localhost:4173
+ * @needs A browser and an app server that runs.
+ */
 /** Mapped installations: isolated camera navigation, cached revisits and Contacts release. */
 import fs from 'node:fs';
 import puppeteer from 'puppeteer';

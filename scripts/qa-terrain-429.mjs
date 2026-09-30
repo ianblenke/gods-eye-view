@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that the client retry loads terrain tiles that the server first throttles.
+ * @covers pending:performance
+ * @run QA_BASE_URL=http://localhost:4180 node scripts/qa-terrain-429.mjs
+ * @needs A browser and a keyless dev server on port 4180.
+ */
+/**
  * Keyless terrain throttling probe.
  *
  * On the keyless map source the browser fetches Re:Earth quantized-mesh tiles

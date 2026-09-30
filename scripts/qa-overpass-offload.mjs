@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that Traffic, Mapped Installations and ALPR work with no Overpass request.
+ * @covers pending:traffic,pending:overlays
+ * @run node scripts/qa-overpass-offload.mjs http://localhost:4173
+ * @needs A browser and an app server that runs.
+ */
+/**
  * qa-overpass-offload.mjs — keyless/keyed source replacement acceptance gate.
  *
  * Run: node scripts/qa-overpass-offload.mjs http://localhost:4173

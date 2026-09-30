@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that traffic dots keep their identity and hold still while the camera holds.
+ * @covers pending:traffic
+ * @run node scripts/qa-traffic-motion.mjs http://localhost:4186
+ * @needs A browser and an app server that runs.
+ */
+/**
  * Traffic motion acceptance: real-GPU Puppeteer, stable identities, stationary
  * camera holds and timestamped CDP JPEGs encoded with ffmpeg. No tile mocks.
  * Run: node scripts/qa-traffic-motion.mjs http://localhost:4186

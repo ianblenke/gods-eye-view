@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that search arrivals stay above the surface and Contacts list nearby installations.
+ * @covers pending:application-shell
+ * @run node scripts/qa-context-arrivals.mjs http://localhost:4173
+ * @needs A browser and an app server that runs.
+ */
+/**
  * qa-context-arrivals.mjs — search arrivals above the surface, and Contacts
  * listing mapped installations around a moving tracked aircraft.
  *
