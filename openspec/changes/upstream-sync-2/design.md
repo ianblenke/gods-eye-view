@@ -22,7 +22,7 @@ The upstream tests of the ledger assume that the digit `3` is free. The tests no
 
 The upstream project adds 13 QA scripts with no header. The register of the fork needs a header block for each script. The block has four lines: `@purpose`, `@covers`, `@run` and `@needs`. The two helper files `qa-journey-recorder.mjs` and `qa-installation-polish.mjs` are not checks. The first has the value `unmapped:`, and the second names the capability `pending:overlays`.
 
-## D4 Five tests that make the gates stop the build
+## D4 Four upstream tests that make the gates stop the build
 
 The test of the flight completion and cancellation hooks starts the camera ground guard. The guard polls with timers, and 1 timer stays live at the end of the process. The test now replaces `setTimeout` with the mock of `node:test`.
 
@@ -31,8 +31,6 @@ The tests of `src/data/militaryInstallations.test.mjs` start 4 timers of 1200 ms
 The test of the surface keys on unchanged frames counts calls of `Array.prototype.join` in a loop of 1000 frames. The gates wrap each `assert` call, and the wrapper calls `join`. The test now collects the differing frames in the loop and asserts after the loop.
 
 The test of the slow boundary lookup in `src/annotations/regionRing.test.mjs` asserts that the call returns in less than 1 second. The budget of the call is 50 ms. The gates run many test processes at the same time, and the test failed at this ceiling. The ceiling is now 10 seconds.
-
-The test of the traffic timing in `src/data/trafficTiming.test.mjs` loads the traffic module with Vite, because it changes the source of `src/layers/traffic/index.js`. A file that Vite loads counts as untrue in the gates. The new imports of the upstream traffic code made the Vite graph grow to 51 files. Seven of them did not change, and the ledger records them as true. The test now has a Vite plugin that loads each other relative import as a native module. Only `src/data/traffic.js` and `src/layers/traffic/index.js` stay in Vite.
 
 ## D5 What the command `adopt` adopts
 
