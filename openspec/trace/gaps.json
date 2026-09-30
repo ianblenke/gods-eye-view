@@ -5731,29 +5731,14 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/recentImagery/catalog.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 7,
-      "functions": 0,
-      "totals": {
-        "lines": 219,
-        "branches": 85,
-        "functions": 15
-      },
-      "sha": "e02fa5760acdfab8a86bd54da60995407b053d1be9086ed4b6aa4e0305ee13cf",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/layers/recentImagery/index.js": {
       "loaded": true,
-      "lines": 26,
-      "branches": 46,
-      "functions": 8,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
       "totals": {
         "lines": 1453,
-        "branches": 539,
+        "branches": 613,
         "functions": 110
       },
       "sha": "64b939384a04c19a320580936d8b4316c0a97a743629b398b7102d78597f6a59",
@@ -5764,11 +5749,11 @@
     "src/layers/recentImagery/model.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 16,
+      "branches": 2,
       "functions": 0,
       "totals": {
         "lines": 613,
-        "branches": 212,
+        "branches": 234,
         "functions": 62
       },
       "sha": "8fec6c5ebbc6c53394e5688dbcbdf648435e7c447c27caf32a2975d9d6497cba",
@@ -5776,44 +5761,14 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/recentImagery/rendering.js": {
-      "loaded": true,
-      "lines": 5,
-      "branches": 7,
-      "functions": 3,
-      "totals": {
-        "lines": 265,
-        "branches": 67,
-        "functions": 25
-      },
-      "sha": "d2351c1540482fddce899643dbbdd7d46b566d1fb0981aab4b772a9ff8e3bf90",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/recentImagery/testDoubles.mjs": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 0,
-      "functions": 4,
-      "totals": {
-        "lines": 368,
-        "branches": 101,
-        "functions": 78
-      },
-      "sha": "c5812c6c612cc74deeaed1c7601a51faaae7cc675cdf289be4162eae1415aaf6",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/layers/recentImagery/thumbnails.js": {
       "loaded": true,
-      "lines": 5,
-      "branches": 17,
-      "functions": 4,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
       "totals": {
         "lines": 279,
-        "branches": 77,
+        "branches": 94,
         "functions": 25
       },
       "sha": "14d1558a91a6ffb9807979096a2e92a50c2f2b9646b1b75fcd08835a8ff98708",
@@ -9109,11 +9064,11 @@
     "src/ui/railCards.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 3,
+      "branches": 2,
       "functions": 2,
       "totals": {
         "lines": 128,
-        "branches": 32,
+        "branches": 35,
         "functions": 10
       },
       "sha": "39626da6cf0736328cd00bc1fc7f3a5900883b943d31b7f574528d9fd82e4fef",
@@ -9153,12 +9108,12 @@
     },
     "src/ui/recentImagery.js": {
       "loaded": true,
-      "lines": 27,
-      "branches": 66,
-      "functions": 10,
+      "lines": 0,
+      "branches": 2,
+      "functions": 2,
       "totals": {
         "lines": 1083,
-        "branches": 389,
+        "branches": 486,
         "functions": 78
       },
       "sha": "15f886ef74932c6a7f35392e821bf21acc945ef0726fd9997d39fe9d9ce8e4f8",
@@ -14296,114 +14251,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/recentImagery/catalog.test.mjs": {
-      "names": {
-        "CMR pages follow the CMR-Search-After cursor up to 2,000 records and truncation stays honest": 1,
-        "an invalid box or clock is refused before any request": 1,
-        "both HLS collections fold with the VIIRS days; one failing product is reported, not fatal": 1,
-        "the CMR query names the collection, box, window and page size with literal commas": 1,
-        "umm_json granules carry id, times, scene cloud and a footprint ring": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/recentImagery/index.test.mjs": {
-      "names": {
-        "A / B: A pins, the focused day previews as B against it, B pins, and a day is in one slot only": 1,
-        "CLEAR after a re-lease hands Google 3D back and does not take Esri again": 1,
-        "CLEAR forgets the box, pins, preview, pending pick, opacity, split and the tool; mode and sources survive": 1,
-        "Escape order: clearPreview takes the preview off and keeps pins; nothing to clear says so": 1,
-        "IMAGE: SHOW pins a day, focus stops moving the map, a second SHOW moves the pin and unpinning drops the layer at once": 1,
-        "SWAP trades the sides of a live divider, again restores, never publishes and resets on a new comparison or CLEAR": 1,
-        "USE VIEW takes the camera rectangle and refuses a view over the cap instead of shrinking it": 1,
-        "VS BASEMAP: the day swipes on the left with no second layer; the preview swipes too; the lease borrows Esri": 1,
-        "ZOOM IN: an oversized box or view flies top-down to its centre at the height whose view is 400 km wide": 1,
-        "a card click previews at once; a repeat click is a no-op and focus follows": 1,
-        "a catalog failure is exposed and leaves nothing draped": 1,
-        "a catalog of partial-coverage days still yields a START HERE day, labelled partial": 1,
-        "a controller subscription moves the drape to the new host on every settled switch": 1,
-        "a lease that cannot reach the Esri map never shows the divider and says why": 1,
-        "a manual switch to Google 3D while a day is shown takes Esri back once and the divider stays": 1,
-        "a new box takes the old drapes down at once; pins the new catalog still lists survive": 1,
-        "a pinned day still being probed drapes once the probe says present": 1,
-        "a re-lease refused by another owner says so, drapes without a swipe and does not loop": 1,
-        "a refused box is loud, says its size and persists until a box succeeds; so does a tool refusal": 1,
-        "a refused lease is guidance and the images still drape without a swipe": 1,
-        "a valid box searches and previews the START HERE day alone in IMAGE mode": 1,
-        "alpha, split and visible range notify without re-rendering the row": 1,
-        "an automatic fallback to Google 3D drops the swipe instead of re-leasing Esri; a manual switch re-leases once (stats poll)": 1,
-        "an automatic fallback to Google 3D drops the swipe instead of re-leasing Esri; a manual switch re-leases once (subscription)": 1,
-        "an automatic overview that probes empty hands over to the next ranked day": 1,
-        "an empty day never drapes: the automatic preview re-ranks, a pick is refused and an empty pin is unpinned": 1,
-        "an unprobed day never drapes; a followed one previews once the probe says present, unless focus moved on": 1,
-        "any image on the map holds the Esri lease; the last image cleared hands Google 3D back": 1,
-        "arrow focus previews the focused present day after the 250 ms debounce; only the last of a burst drapes": 1,
-        "confirmed-empty days hide behind the toggle and focus keeps its key or moves to the nearest older card": 1,
-        "disable after a re-lease hands Google 3D back and does not take Esri again": 1,
-        "disable releases the lease, hides the drapes and cancels the tool; pins come back on enable": 1,
-        "pinning an offscreen day probes it at once": 1,
-        "restored pins outside the visible strip window are probed and swipe once present": 1,
-        "restored pins the catalog no longer lists are dropped and START HERE previews": 1,
-        "share links restore the box, both pins, the mode and a non-default split once, without publishing back": 1,
-        "the data-panel row carries only the two source chips": 1,
-        "the divider recentres on every new comparison but not while scrubbing the second day": 1,
-        "the focused day is the enriched strip entry, never the raw catalog candidate": 1,
-        "turning a source off hides its cards and drapes, disarms its pending preview and labels its pins \"Source off\"": 1,
-        "unpin then pin before the release settles recovers the lease": 1,
-        "with SELECT BOX armed, Escape clears the preview first and the next Escape cancels the tool": 1,
-        "without a host the drapes hide and say so; the stats poll rebinds when no subscription exists": 1,
-        "without a lease (another owner held it first) a switch to Google 3D takes nothing": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/recentImagery/model.test.mjs": {
-      "names": {
-        "GIBS templates put y before x; Worldview snapshots take south,west,north,east": 1,
-        "START HERE is the newest all-clear HLS day; unknown cloud is never clear": 1,
-        "START HERE prefers a day that covers the whole box over a newer sliver": 1,
-        "VIIRS lists the last 30 UTC days as unprobed full-coverage days": 1,
-        "ZOOM IN: the height whose top-down view is 400 km wide, clamped to 5–400 km; a box centre": 1,
-        "box width is the longitude span at the mid-latitude, never the shortest arc": 1,
-        "boxFromPin builds a 10 km square within 2% at any latitude and refuses what cannot validate": 1,
-        "coverage samples the box corners and centre against the union of footprints": 1,
-        "days and candidate keys are real UTC calendar days": 1,
-        "granules group into one candidate per product and UTC day, newest first": 1,
-        "merging sorts newest day first, then S30, L30, VIIRS, and the first key wins": 1,
-        "rectangles convert from radians and the share-link quantization round-trips": 1,
-        "the readout is one UTC line with age, sensor, resolution and scene cloud": 1,
-        "thumbnails load the focused card, then the visible cards outward, then the margins": 1,
-        "validateBox refuses dateline, polar, degenerate, invalid and oversized boxes": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/recentImagery/rendering.test.mjs": {
-      "names": {
-        "a slot drapes one GIBS provider bounded to the box; the same day only restyles it": 1,
-        "above the tile limit a request defers silently; its settlement asks for exactly one frame": 1,
-        "against the basemap slot a splits left with no second layer, and leaving the swipe only restyles it": 1,
-        "rapid replacement never owns more than two layers": 1,
-        "rebind rebuilds the owned layers on the new host and leaves the old one empty": 1,
-        "upstream deferrals from both slots share one delayed retry frame; destroy disarms it": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/layers/recentImagery/thumbnails.test.mjs": {
-      "names": {
-        "Data-Present decides the day: present with an object URL and sensing time, empty, or error": 1,
-        "a request queued behind an aborted fetch still starts once the abort settles": 1,
-        "at most maxInFlight fetches run and the queue drains by priority": 1,
-        "cancelAll aborts in-flight fetches and a late settle never leaks an object URL": 1,
-        "clear and destroy revoke every resident thumbnail": 1,
-        "decoded thumbnails are evicted least-recently-used and revoked; a read is not a use and an evicted day keeps what it learned": 1,
-        "reading every card in strip order (a snapshot) never decides who is evicted; evicted days stay known and come back on request": 1,
-        "requestOrdered loads the focused card first, then outward, then the margins": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/layers/satellites/source.test.mjs": {
       "names": {
         "satellite factories keep control state separate and construct without requests": 1,
@@ -16586,21 +16433,7 @@
     },
     "src/ui/recentImagery.test.mjs": {
       "names": {
-        "DETAILS is a collapsed rail card holding every note, and the empty-days toggle": 1,
-        "Escape clears the preview first, then cancels the box tool, then blurs the strip": 1,
-        "an oversized box offers ZOOM IN in a fixed slot at the end of the notice line; it asks the layer to fit": 1,
-        "cards carry thumbnail, date, sensor, cloud, START HERE and PREVIEW; the chips follow the mode without moving": 1,
-        "clicks: a card previews and focuses the strip, a chip pins, SELECT BOX toggles the tool, USE VIEW and CLEAR drive the layer": 1,
-        "destroy returns every listener, the divider and the panel state": 1,
-        "no control changes place in the tree, no block is hidden and every fixed-height block keeps its height class across every state (DOM-structure guard)": 1,
-        "opacity drives both images; EXPORT downloads the pin or the preview and EXPORT B only exists in A / B": 1,
-        "strip keys: arrows preview after the debounce, S / A / B pin, Enter previews, repeats are ignored": 1,
-        "the body is a fixed stack of seven blocks in a fixed order, each with a fixed height in the stylesheet": 1,
-        "the body scroll position survives renders even when DOM mutations reset it": 1,
-        "the divider exists only while a swipe is live, labelled A / B or IMAGE / BASEMAP; SWAP trades its sides and Space does nothing": 1,
-        "the notice line shows the refusal, then errors, then CLEAR, then the Esri note; the hint names the next step and that SWAP trades the sides": 1,
-        "the readout mounts in the rail body, hides while the layer is off and opens the panel once on first appearance": 1,
-        "the selection bar reads the mode, both rows and a preview, with × reserved when empty": 1
+        "the notice line shows the refusal, then errors, then CLEAR, then the Esri note; the hint names the next step and that SWAP trades the sides": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
