@@ -48,7 +48,7 @@ function fixture(options = {}) {
   return { loader, fetch, created, revoked };
 }
 
-test('Data-Present decides the day: present with an object URL and sensing time, empty, or error', async () => {
+test('[recent-imagery-023] Data-Present decides the day: present with an object URL and sensing time, empty, or error', async () => {
   const { loader, fetch, created } = fixture();
   const changes = [];
   loader.subscribe((key) => changes.push(key));
@@ -81,7 +81,7 @@ test('Data-Present decides the day: present with an object URL and sensing time,
   assert.equal(loader.get('nope').status, 'unknown');
 });
 
-test('at most maxInFlight fetches run and the queue drains by priority', async () => {
+test('[recent-imagery-024] at most maxInFlight fetches run and the queue drains by priority', async () => {
   const { loader, fetch } = fixture({ maxInFlight: 2 });
   loader.request(candidate('S30', '2026-09-10'), BOX, 5);
   loader.request(candidate('S30', '2026-09-11'), BOX, 1);
@@ -110,7 +110,7 @@ test('at most maxInFlight fetches run and the queue drains by priority', async (
   assert.match(fetch.calls[3].url, /TIME=2026-09-13/);
 });
 
-test('requestOrdered loads the focused card first, then outward, then the margins', () => {
+test('[recent-imagery-024] requestOrdered loads the focused card first, then outward, then the margins', () => {
   const { loader, fetch } = fixture({ maxInFlight: 10 });
   const candidates = Array.from({ length: 8 }, (_, i) =>
     candidate('S30', `2026-09-${String(10 + i).padStart(2, '0')}`),
@@ -127,7 +127,7 @@ test('requestOrdered loads the focused card first, then outward, then the margin
   assert.deepEqual(days, ['13', '14', '12', '15', '16', '11']);
 });
 
-test('decoded thumbnails are evicted least-recently-used and revoked; a read is not a use and an evicted day keeps what it learned', async () => {
+test('[recent-imagery-025] decoded thumbnails are evicted least-recently-used and revoked; a read is not a use and an evicted day keeps what it learned', async () => {
   const { loader, fetch, revoked } = fixture({
     maxInFlight: 10,
     maxDecoded: 2,
@@ -169,7 +169,7 @@ test('decoded thumbnails are evicted least-recently-used and revoked; a read is 
   assert.equal(fetch.calls.length, 4);
 });
 
-test('reading every card in strip order (a snapshot) never decides who is evicted; evicted days stay known and come back on request', async () => {
+test('[recent-imagery-025] reading every card in strip order (a snapshot) never decides who is evicted; evicted days stay known and come back on request', async () => {
   const { loader, fetch, revoked } = fixture({
     maxInFlight: 20,
     maxDecoded: 9,
@@ -226,7 +226,7 @@ test('reading every card in strip order (a snapshot) never decides who is evicte
   assert.equal(loader.stats().tracked, 20);
 });
 
-test('cancelAll aborts in-flight fetches and a late settle never leaks an object URL', async () => {
+test('[recent-imagery-026] cancelAll aborts in-flight fetches and a late settle never leaks an object URL', async () => {
   const { loader, fetch, created, revoked } = fixture({ maxInFlight: 1 });
   loader.request(candidate('S30', '2026-09-10'), BOX, 0);
   loader.request(candidate('S30', '2026-09-11'), BOX, 1);
@@ -246,7 +246,7 @@ test('cancelAll aborts in-flight fetches and a late settle never leaks an object
   assert.equal(loader.get('S30:2026-09-10').status, 'unknown');
 });
 
-test('clear and destroy revoke every resident thumbnail', async () => {
+test('[recent-imagery-027] clear and destroy revoke every resident thumbnail', async () => {
   const { loader, fetch, revoked } = fixture({ maxInFlight: 10 });
   loader.request(candidate('S30', '2026-09-10'), BOX, 0);
   loader.request(candidate('S30', '2026-09-11'), BOX, 1);
@@ -265,7 +265,7 @@ test('clear and destroy revoke every resident thumbnail', async () => {
   assert.equal(fetch.calls.length, 3, 'a destroyed loader fetches nothing');
 });
 
-test('a request queued behind an aborted fetch still starts once the abort settles', async () => {
+test('[recent-imagery-026] a request queued behind an aborted fetch still starts once the abort settles', async () => {
   // A response that arrives after the abort (the fetch ignored the signal).
   const calls = [];
   const fetchImpl = (url, { signal } = {}) =>
@@ -314,4 +314,296 @@ test('a request queued behind an aborted fetch still starts once the abort settl
     decoded: 0,
     tracked: 1,
   });
+});
+
+test('[recent-imagery-023 recent-imagery-027] the default loader owns its URLs and releases them', async () => {
+  const originalFetch = globalThis.fetch;
+  const originalCreate = URL.createObjectURL;
+  const originalRevoke = URL.revokeObjectURL;
+  const revoked = [];
+  globalThis.fetch = async () => ({
+    ok: true,
+    blob: async () => ({ size: 2 }),
+  });
+  URL.createObjectURL = () => 'blob:default';
+  URL.revokeObjectURL = (url) => revoked.push(url);
+  try {
+    const loader = createThumbnailLoader({ maxInFlight: 0, maxDecoded: 0 });
+    const off = loader.subscribe(null);
+    assert.equal(off(), undefined);
+    loader.request(null, BOX);
+    loader.request(candidate('S30', '2026-09-18'), null);
+    assert.equal(loader.stats().tracked, 0);
+    loader.request(candidate('S30', '2026-09-18'), BOX);
+    await settle();
+    assert.deepEqual(loader.get('S30:2026-09-18'), {
+      status: 'present',
+      objectUrl: 'blob:default',
+      acquisitionTime: null,
+      loading: false,
+    });
+    loader.destroy();
+    loader.destroy();
+    loader.request(candidate('S30', '2026-09-19'), BOX);
+    assert.equal(loader.stats().tracked, 0);
+    assert.deepEqual(revoked, ['blob:default']);
+  } finally {
+    globalThis.fetch = originalFetch;
+    URL.createObjectURL = originalCreate;
+    URL.revokeObjectURL = originalRevoke;
+  }
+});
+
+test('[recent-imagery-023 recent-imagery-027] a listener error or a URL error does not stop the release of images', async () => {
+  const f = fixture({
+    revokeObjectUrl: () => {
+      throw new Error('gone');
+    },
+  });
+  const warnings = [];
+  const warn = console.warn;
+  console.warn = (...args) => warnings.push(args[0]);
+  try {
+    const off = f.loader.subscribe(() => {
+      throw new Error('listener');
+    });
+    f.loader.request(candidate('S30', '2026-09-18'), BOX);
+    f.fetch.respond(0);
+    await settle();
+    assert.deepEqual(warnings, [
+      '[Data:RecentImagery] thumbnail listener failed:',
+    ]);
+    off();
+    f.loader.clear();
+    assert.equal(f.loader.stats().decoded, 0);
+  } finally {
+    console.warn = warn;
+  }
+});
+
+test('[recent-imagery-026] a stop after blob data does not make an image', async () => {
+  let finish;
+  const created = [];
+  const loader = createThumbnailLoader({
+    fetchImpl: async () => ({
+      ok: true,
+      blob: () =>
+        new Promise((resolve) => {
+          finish = resolve;
+        }),
+    }),
+    createObjectUrl: () => {
+      created.push('image');
+      return 'blob:late';
+    },
+  });
+  loader.request(candidate('S30', '2026-09-18'), BOX);
+  await settle();
+  loader.cancelAll();
+  finish({});
+  await settle();
+  assert.deepEqual(created, []);
+  assert.equal(loader.stats().inFlight, 0);
+  assert.equal(loader.get('S30:2026-09-18').status, 'unknown');
+});
+
+test('[recent-imagery-023 recent-imagery-026] fetch errors and stop errors have different states', async () => {
+  for (const name of ['Error', 'AbortError']) {
+    const loader = createThumbnailLoader({
+      fetchImpl: async () => {
+        throw Object.assign(new Error('fetch'), { name });
+      },
+    });
+    loader.request(candidate('S30', '2026-09-18'), BOX);
+    await settle();
+    assert.equal(
+      loader.get('S30:2026-09-18').status,
+      name === 'Error' ? 'error' : 'unknown',
+    );
+    assert.equal(loader.stats().inFlight, 0);
+    loader.destroy();
+  }
+});
+
+test('[recent-imagery-026] a callback that clears the loader revokes its late URL', async () => {
+  const revoked = [];
+  let loader;
+  loader = createThumbnailLoader({
+    fetchImpl: async () => response(),
+    createObjectUrl: () => {
+      loader.clear();
+      return 'blob:late';
+    },
+    revokeObjectUrl: (url) => revoked.push(url),
+  });
+  loader.request(candidate('S30', '2026-09-18'), BOX);
+  await settle();
+  assert.deepEqual(revoked, ['blob:late']);
+  assert.equal(loader.stats().tracked, 0);
+});
+
+test('[recent-imagery-026] a late empty response after a stop leaves the day unknown', async () => {
+  let finish;
+  const loader = createThumbnailLoader({
+    fetchImpl: () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+  });
+  loader.request(candidate('S30', '2026-09-18'), BOX);
+  loader.cancelAll();
+  finish({ ok: true, headers: { get: () => 'false' } });
+  await settle();
+  assert.equal(loader.get('S30:2026-09-18').status, 'unknown');
+  assert.equal(loader.stats().tracked, 0);
+});
+
+test('[recent-imagery-024] a duplicate active request uses one fetch', async () => {
+  const f = fixture();
+  f.loader.request(candidate('S30', '2026-09-18'), BOX);
+  f.loader.request(candidate('S30', '2026-09-18'), BOX);
+  assert.equal(f.fetch.calls.length, 1);
+  f.fetch.respond(0);
+  await settle();
+  assert.equal(f.loader.stats().decoded, 1);
+  f.loader.destroy();
+});
+
+test('[recent-imagery-026] a late settlement after destroy leaves the queue empty', async () => {
+  let finish;
+  const loader = createThumbnailLoader({
+    fetchImpl: () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+  });
+  loader.request(candidate('S30', '2026-09-18'), BOX);
+  loader.destroy();
+  finish(response());
+  await settle();
+  assert.equal(loader.stats().queued, 0);
+  assert.equal(loader.stats().tracked, 0);
+});
+
+test('[recent-imagery-023] each thumbnail subscriber gets the same day result', async () => {
+  const f = fixture();
+  const first = [],
+    second = [];
+  f.loader.subscribe((key) => first.push(key));
+  f.loader.subscribe((key) => second.push(key));
+  f.loader.request(candidate('S30', '2026-09-18'), BOX);
+  f.fetch.respond(0);
+  await settle();
+  assert.deepEqual(first, ['S30:2026-09-18']);
+  assert.deepEqual(second, ['S30:2026-09-18']);
+  f.loader.destroy();
+});
+
+test('[recent-imagery-025] an image eviction does not send a day update for an empty day', async () => {
+  const f = fixture({ maxDecoded: 1 }),
+    changes = [];
+  f.loader.subscribe((key) => changes.push(key));
+  f.loader.request(candidate('S30', '2026-09-10'), BOX);
+  f.fetch.respond(0, { present: 'false' });
+  await settle();
+  f.loader.request(candidate('S30', '2026-09-11'), BOX);
+  f.fetch.respond(1);
+  await settle();
+  changes.length = 0;
+  f.loader.request(candidate('S30', '2026-09-12'), BOX);
+  f.fetch.respond(2);
+  await settle();
+  assert.deepEqual(changes, ['S30:2026-09-11', 'S30:2026-09-12']);
+  f.loader.destroy();
+});
+
+test('[recent-imagery-023] a new successful fetch updates the acquisition time', async () => {
+  const f = fixture({ maxDecoded: 1 });
+  f.loader.request(candidate('S30', '2026-09-10'), BOX);
+  f.fetch.respond(0);
+  await settle();
+  f.loader.request(candidate('S30', '2026-09-11'), BOX);
+  f.fetch.respond(1);
+  await settle();
+  f.loader.request(candidate('S30', '2026-09-10'), BOX);
+  f.fetch.calls[2].resolve(
+    response({
+      headers: {
+        'Data-Present': 'true',
+        'Acquisition-Time': '2026-09-10T18:00:00Z',
+      },
+    }),
+  );
+  await settle();
+  assert.equal(
+    f.loader.get('S30:2026-09-10').acquisitionTime,
+    '2026-09-10T18:00:00Z',
+  );
+  f.loader.destroy();
+});
+
+test('[recent-imagery-023] a known empty day does not start another fetch', async () => {
+  const f = fixture();
+  f.loader.request(candidate('S30', '2026-09-10'), BOX);
+  f.fetch.respond(0, { present: 'false' });
+  await settle();
+  f.loader.request(candidate('S30', '2026-09-10'), BOX);
+  assert.equal(f.fetch.calls.length, 1);
+  f.loader.destroy();
+});
+
+test('[recent-imagery-026] a signal that stops the fetch does not send another day update', async () => {
+  const calls = [],
+    changes = [];
+  const f = fixture({
+    maxDecoded: 1,
+    fetchImpl: (url, { signal }) =>
+      new Promise((resolve, reject) => calls.push({ resolve, reject, signal })),
+  });
+  f.loader.subscribe((key) => changes.push(key));
+  f.loader.request(candidate('S30', '2026-09-10'), BOX);
+  calls[0].resolve(response());
+  await settle();
+  f.loader.request(candidate('S30', '2026-09-11'), BOX);
+  calls[1].resolve(response());
+  await settle();
+  f.loader.request(candidate('S30', '2026-09-10'), BOX);
+  changes.length = 0;
+  f.loader.cancelAll();
+  calls[2].reject(new Error('stopped'));
+  await settle();
+  assert.deepEqual(changes, []);
+  f.loader.destroy();
+});
+
+test('[recent-imagery-026] a URL callback while the loader clears images does not start a day that the loader removed', async () => {
+  let loader, finish;
+  let fetches = 0,
+    queued = false;
+  loader = createThumbnailLoader({
+    maxInFlight: 1,
+    fetchImpl: async () => {
+      fetches += 1;
+      if (fetches === 2)
+        return new Promise((resolve) => {
+          finish = resolve;
+        });
+      return response({ headers: { 'Data-Present': 'true' } });
+    },
+    createObjectUrl: () => 'blob:callback',
+    revokeObjectUrl: () => {
+      if (!queued) {
+        queued = true;
+        loader.request(candidate('VIIRS', '2026-09-15'), BOX);
+      }
+    },
+  });
+  loader.request(candidate('S30', '2026-09-18'), BOX);
+  await settle();
+  loader.request(candidate('L30', '2026-09-16'), BOX);
+  loader.clear();
+  finish(response());
+  await settle();
+  assert.equal(fetches, 2);
+  loader.destroy();
 });

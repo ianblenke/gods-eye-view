@@ -60,7 +60,7 @@ function ummItem({
   };
 }
 
-test('umm_json granules carry id, times, scene cloud and a footprint ring', () => {
+test('[recent-imagery-001] umm_json granules carry id, times, scene cloud and a footprint ring', () => {
   const { granules, hits } = parseCmrUmm(
     {
       hits: 9,
@@ -135,7 +135,7 @@ test('umm_json granules carry id, times, scene cloud and a footprint ring', () =
   assert.deepEqual(parseCmrUmm(null, 'S30'), { granules: [], hits: 0 });
 });
 
-test('the CMR query names the collection, box, window and page size with literal commas', () => {
+test('[recent-imagery-002] the CMR query names the collection, box, window and page size with literal commas', () => {
   assert.equal(
     cmrSearchUrl({
       product: 'S30',
@@ -166,7 +166,7 @@ function cmrFetch(handlers, calls = []) {
   };
 }
 
-test('both HLS collections fold with the VIIRS days; one failing product is reported, not fatal', async () => {
+test('[recent-imagery-003] both HLS collections fold with the VIIRS days; one failing product is reported, not fatal', async () => {
   const calls = [];
   const signal = new AbortController().signal;
   const result = await searchHls({
@@ -232,7 +232,7 @@ test('both HLS collections fold with the VIIRS days; one failing product is repo
   );
 });
 
-test('an invalid box or clock is refused before any request', async () => {
+test('[recent-imagery-004] an invalid box or clock is refused before any request', async () => {
   let called = false;
   const fetchImpl = async () => {
     called = true;
@@ -251,7 +251,7 @@ test('an invalid box or clock is refused before any request', async () => {
   assert.equal(called, false);
 });
 
-test('CMR pages follow the CMR-Search-After cursor up to 2,000 records and truncation stays honest', async () => {
+test('[recent-imagery-005] CMR pages follow the CMR-Search-After cursor up to 2,000 records and truncation stays honest', async () => {
   const items = (count) =>
     Array.from({ length: count }, (_, i) => ummItem({ conceptId: `G-${i}` }));
   const cursors = [];
@@ -293,4 +293,230 @@ test('CMR pages follow the CMR-Search-After cursor up to 2,000 records and trunc
   });
   assert.equal(noCursor.granules.length, 200);
   assert.equal(noCursor.truncated, true);
+});
+
+test('[recent-imagery-001] absent catalog fields use a default for each field', () => {
+  const native = ummItem();
+  native.meta = { 'native-id': 'native-day' };
+  const blank = ummItem();
+  blank.meta = {};
+  blank.umm.AdditionalAttributes = undefined;
+  assert.deepEqual(
+    parseCmrUmm({ items: [native, blank] }, 'L30').granules.map(
+      ({ id, cloud }) => [id, cloud],
+    ),
+    [
+      ['native-day', 12],
+      ['', null],
+    ],
+  );
+});
+
+test('[recent-imagery-004] an invalid box and an absent fetch fail before source work', async () => {
+  assert.throws(() => cmrSearchUrl({ product: 'S30', box: null }), /finite/);
+  await assert.rejects(searchHls({ box: BOX, fetchImpl: null }), /fetch/);
+  await assert.rejects(
+    fetchCmrPages({
+      product: 'S30',
+      url: 'fake',
+      fetchImpl: async () => undefined,
+    }),
+    /HTTP error from CMR/,
+  );
+  const result = await searchHls({
+    box: BOX,
+    days: 1,
+    now: '2026-09-21',
+    fetchImpl: async () => {
+      throw 'source-down';
+    },
+  });
+  assert.deepEqual(result.errors, [
+    { product: 'S30', message: 'source-down' },
+    { product: 'L30', message: 'source-down' },
+  ]);
+});
+
+test('[recent-imagery-001] absent cloud attributes stay unknown', () => {
+  const item = ummItem();
+  delete item.umm.AdditionalAttributes;
+  assert.equal(parseCmrUmm({ items: [item] }, 'S30').granules[0].cloud, null);
+});
+
+test('[recent-imagery-001] an invalid rectangle edge does not allow a footprint', () => {
+  const item = ummItem({ polygon: null, rectangle: [NaN, 0, 1, 1] });
+  assert.equal(
+    parseCmrUmm({ items: [item] }, 'S30').granules[0].footprint,
+    null,
+  );
+});
+
+test('[recent-imagery-005] the cursor condition alone ends the page read', async () => {
+  let calls = 0;
+  const result = await fetchCmrPages({
+    product: 'S30',
+    url: 'fake',
+    maxRecords: 2000,
+    fetchImpl: async () => {
+      calls += 1;
+      return response({
+        headers: { 'CMR-Search-After': null },
+        json: {
+          hits: 1000,
+          items: Array.from({ length: 200 }, () => ummItem()),
+        },
+      });
+    },
+  });
+  assert.equal(calls, 1);
+  assert.equal(result.granules.length, 200);
+  assert.equal(result.truncated, true);
+});
+
+test('[recent-imagery-005] the short-page condition alone ends the page read', async () => {
+  let calls = 0;
+  const result = await fetchCmrPages({
+    product: 'S30',
+    url: 'fake',
+    maxRecords: 2000,
+    fetchImpl: async () => {
+      calls += 1;
+      return response({
+        headers: { 'CMR-Search-After': 'next' },
+        json: {
+          hits: 1000,
+          items: Array.from({ length: 199 }, () => ummItem()),
+        },
+      });
+    },
+  });
+  assert.equal(calls, 1);
+  assert.equal(result.granules.length, 199);
+  assert.equal(result.truncated, true);
+});
+
+test('[recent-imagery-005] the record-cap condition alone ends the page read', async () => {
+  let calls = 0;
+  const result = await fetchCmrPages({
+    product: 'S30',
+    url: 'fake',
+    maxRecords: 200,
+    fetchImpl: async () => {
+      calls += 1;
+      return response({
+        headers: { 'CMR-Search-After': 'next' },
+        json: {
+          hits: 1000,
+          items: Array.from({ length: 200 }, () => ummItem()),
+        },
+      });
+    },
+  });
+  assert.equal(calls, 1);
+  assert.equal(result.granules.length, 200);
+  assert.equal(result.truncated, true);
+});
+
+test('[recent-imagery-005] the hit-count condition alone ends the page read', async () => {
+  let calls = 0;
+  const result = await fetchCmrPages({
+    product: 'S30',
+    url: 'fake',
+    maxRecords: 2000,
+    fetchImpl: async () => {
+      calls += 1;
+      return response({
+        headers: { 'CMR-Search-After': 'next' },
+        json: {
+          hits: 200,
+          items: Array.from({ length: 200 }, () => ummItem()),
+        },
+      });
+    },
+  });
+  assert.equal(calls, 1);
+  assert.equal(result.granules.length, 200);
+  assert.equal(result.truncated, false);
+});
+
+test('[recent-imagery-004] a clock error names its error type and cause', async () => {
+  await assert.rejects(
+    searchHls({
+      box: BOX,
+      now: 'never',
+      fetchImpl: async () => assert.fail('source call'),
+    }),
+    { name: 'TypeError', message: 'A valid clock is required' },
+  );
+});
+
+test('[recent-imagery-002] a Date clock keeps its millisecond value in each query', async () => {
+  const calls = [];
+  await searchHls({
+    box: BOX,
+    now: new Date('2026-09-21T12:00:00.123Z'),
+    fetchImpl: async (url) => {
+      calls.push(url);
+      return response({ json: { items: [] } });
+    },
+  });
+  assert.equal(calls.length, 2);
+  assert.equal(calls[0].includes('2026-09-21T12:00:00.123Z'), true);
+  assert.equal(calls[1].includes('2026-09-21T12:00:00.123Z'), true);
+});
+
+test('[recent-imagery-001] an empty cloud value alone stays unknown', () => {
+  assert.equal(
+    parseCmrUmm({ items: [ummItem({ cloud: '' })] }, 'S30').granules[0].cloud,
+    null,
+  );
+});
+
+test('[recent-imagery-001] a Date timestamp alone does not create a granule', () => {
+  assert.deepEqual(
+    parseCmrUmm(
+      { items: [ummItem({ begin: new Date('2026-09-18T17:12:01.000Z') })] },
+      'S30',
+    ).granules,
+    [],
+  );
+});
+
+test('[recent-imagery-001] a nonfinite polygon latitude alone removes its point', () => {
+  const parsed = parseCmrUmm(
+    {
+      items: [
+        ummItem({
+          polygon: [
+            [0, 0],
+            [1, 0],
+            [1, 1],
+            [0, NaN],
+          ],
+        }),
+      ],
+    },
+    'S30',
+  );
+  assert.deepEqual(parsed.granules[0].footprint, [
+    [0, 0],
+    [1, 0],
+    [1, 1],
+  ]);
+});
+
+test('[recent-imagery-001] a rectangle with three valid corners does not give a footprint', () => {
+  let reads = 0;
+  const west = {
+    valueOf() {
+      reads += 1;
+      return reads === 1 ? NaN : -98;
+    },
+  };
+  const { granules } = parseCmrUmm(
+    { items: [ummItem({ polygon: null, rectangle: [west, 30, -97, 31] })] },
+    'S30',
+  );
+  assert.equal(granules[0].footprint, null);
+  assert.equal(reads, 2);
 });
