@@ -23,7 +23,7 @@ For each test below, run the named mutation. Report the test that fails in `revi
 
 ## 3. Gates and review
 
-- [ ] 3.1 Run the command `make adopt` for this change, with the merge commit.
+- [ ] 3.1 Run the command `make adopt` for this change, from the merged commit.
 - [ ] 3.2 Run `make ratchet CHANGE=upstream-sync-2`.
 - [ ] 3.3 Run `make gates CHANGE=upstream-sync-2`.
 - [ ] 3.4 Run `/opsx:review upstream-sync-2`.
