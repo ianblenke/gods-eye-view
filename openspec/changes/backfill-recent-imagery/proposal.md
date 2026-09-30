@@ -26,10 +26,10 @@ The `untracedTests` entries in `openspec/trace/gaps.json` give 93 old tests.
 The entries in `muts.json` and `muts3.json` give 828 and 48 mutation checks, for a total of 876.
 
 
-The host uses Node 26.8.2. The lead must measure this tree in the gate image.
+The host uses Node 26.8.2. The ratchet in the gate image gave the same gaps as the host.
 
 The table gives ledger gaps before this change and host gaps after this change.
-The lead must measure the current tree in the gate image.
+The ledger from the gate image has the same counts as the host.
 
 | File | Before lines | After host lines | Before branches | After host branches | Before functions | After host functions |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
