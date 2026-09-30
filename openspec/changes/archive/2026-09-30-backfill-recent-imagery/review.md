@@ -37,8 +37,8 @@ Full agent reports: `review/round-2/spec-adversary.md`, `review/round-2/ste-adve
 Full agent reports: `review/spec-adversary.md`, `review/ste-adversary.md`.
 
 - [x] minor (spec-adversary, proposal.md:76) The claim `expression-065-left` rests on the `_auto` invariant, and no test pins it. Kept: it is a named Known limit in `proposal.md`.
-- [ ] minor (spec-adversary, index.test.mjs:2257) The new 065-right test does not prove the ranking of `S18` above `L16`. Its first assertion gives that ranking. No action. Accepted by Ian Blenke.
+- [x] minor (spec-adversary, index.test.mjs:2257) The new 065-right test does not prove the ranking of `S18` above `L16`. Its first assertion gives that ranking. No action. Accepted by Ian Blenke.
 - [x] minor (ste-adversary, proposal.md) "nonfinite" in three sentences of the proposal. Corrected to "not finite".
-- [ ] minor (ste-adversary, spec.md:364-365) "nonfinite" in the spec text of scenario 036. A spec edit needs a new ratchet and archive. Accepted by Ian Blenke.
-- [ ] minor (ste-adversary, spec.md:359) "does not send them back" and "publish" name one thing in two words. Accepted by Ian Blenke.
-- [ ] minor (ste-adversary, index.test.mjs:3204) The title states a condition that the spec AND line does not state. The spec claims less than the test proves. Accepted by Ian Blenke.
+- [x] minor (ste-adversary, spec.md:364-365) "nonfinite" in the spec text of scenario 036. A spec edit needs a new ratchet and archive. Accepted by Ian Blenke.
+- [x] minor (ste-adversary, spec.md:359) "does not send them back" and "publish" name one thing in two words. Accepted by Ian Blenke.
+- [x] minor (ste-adversary, index.test.mjs:3204) The title states a condition that the spec AND line does not state. The spec claims less than the test proves. Accepted by Ian Blenke.
