@@ -2603,7 +2603,8 @@
     "src/ui/recentImagery.test.mjs › [recent-imagery-046] an empty notice alone prevents the information style",
     "src/ui/recentImagery.test.mjs › [recent-imagery-046] an error alone prevents the information style",
     "src/ui/recentImagery.test.mjs › [recent-imagery-046] an oversized box offers ZOOM IN in a fixed slot at the end of the notice line; it asks the layer to fit",
-    "src/ui/recentImagery.test.mjs › [recent-imagery-046] the notice line shows the refusal, then errors, then CLEAR, then the Esri note; the hint names the next step and that SWAP trades the sides"
+    "src/ui/recentImagery.test.mjs › [recent-imagery-046] an oversized box shows its size limit, the warn style and the zoom in hint",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-046] the Esri note uses the information style"
   ],
   "recent-imagery-047": [
     "src/ui/recentImagery.test.mjs › [recent-imagery-043 recent-imagery-047] panel uses the default frame callback and ignores late state",
