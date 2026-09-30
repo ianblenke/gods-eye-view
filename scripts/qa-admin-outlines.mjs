@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that bundled outlines resolve with no geocode request and stay still.
+ * @covers pending:overlays
+ * @run node scripts/qa-admin-outlines.mjs http://localhost:4173
+ * @needs A browser and an app server that runs.
+ */
+/**
  * qa-admin-outlines.mjs — bundled state/province/county outlines, driven like a
  * user would drive them.
  *

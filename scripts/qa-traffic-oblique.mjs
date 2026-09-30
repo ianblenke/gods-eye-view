@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that the reticle covers traffic on oblique arrivals and on zoom revisits.
+ * @covers pending:traffic
+ * @run node scripts/qa-traffic-oblique.mjs http://localhost:4173
+ * @needs A browser and an app server that runs.
+ */
 /** Reticle coverage on oblique arrivals: source requests, toggle oracle and zoom revisits. */
 import fs from 'node:fs';
 import puppeteer from 'puppeteer';

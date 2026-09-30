@@ -1,3 +1,9 @@
+/**
+ * @purpose Prove that installation labels stay in place while the camera pans and an item is selected.
+ * @covers pending:overlays
+ * @run Not run alone. The script qa-military-names.mjs imports it.
+ * @needs A browser and an app server that runs.
+ */
 /** Shared browser assertions for installation label persistence and selection. */
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';

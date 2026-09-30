@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that named military areas keep the frame speed and give close identities.
+ * @covers pending:overlays
+ * @run node scripts/qa-military-names.mjs http://localhost:4173
+ * @needs A browser and an app server that runs.
+ */
 /** Named military areas: continent performance, close identities and a recorded zoom. */
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';

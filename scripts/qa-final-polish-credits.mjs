@@ -1,4 +1,10 @@
 #!/usr/bin/env node
+/**
+ * @purpose Prove that inline attribution stays for the display lifetime of each OSM layer.
+ * @covers pending:overlays
+ * @run node scripts/qa-final-polish-credits.mjs http://localhost:4173
+ * @needs A browser and an app server that runs.
+ */
 /** Persistent inline attribution through actual OSM layer display lifetimes. */
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';

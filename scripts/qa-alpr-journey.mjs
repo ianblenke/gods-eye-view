@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Prove that ALPR cameras show fast and stay stable along a camera journey.
+ * @covers pending:alpr
+ * @run node scripts/qa-alpr-journey.mjs http://localhost:4173
+ * @needs A browser and an app server that runs.
+ */
+/**
  * qa-alpr-journey.mjs — ALPR cameras on a realistic Austin camera journey.
  *
  * Run: node scripts/qa-alpr-journey.mjs http://localhost:4173 [--headful]

@@ -67,10 +67,10 @@ test('[qa-scripts-022] asks the spec adversary to read each QA check', () => {
 });
 test('[qa-scripts-023] checks all tracked QA scripts in this repository', () => {
   const tracked = listTrackedFiles(PROJECT).filter((file) => /^scripts\/qa-.*\.mjs$/.test(file));
-  assert.equal(tracked.length, 70);
+  assert.equal(tracked.length, 83);
   const result = readQaRegister({ root: PROJECT, tracked });
-  assert.equal(result.scripts.length, 70);
-  assert.equal(result.validQaScripts.size, 70);
+  assert.equal(result.scripts.length, 83);
+  assert.equal(result.validQaScripts.size, 83);
   assert.deepEqual(result.errors, []);
 });
 test('[qa-scripts-026] gives advice from an archived change', () => fixture(({ root, put, scan }) => { put(FILE, header('example')); put('openspec/specs/example/spec.md'); put('openspec/changes/archive/2026-09-26-add-example/specs/example/spec.md'); assert.deepEqual(qaAdvice({ root, change: 'add-example', scripts: scan().scripts }), ['QA: scripts/qa-example.mjs covers example: Prove that the layer works.']); }));
