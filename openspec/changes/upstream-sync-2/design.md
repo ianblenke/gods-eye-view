@@ -22,13 +22,15 @@ The upstream tests of the ledger assume that the digit `3` is free. The tests no
 
 The upstream project adds 13 QA scripts with no header. The register of the fork needs a header block for each script. The block has four lines: `@purpose`, `@covers`, `@run` and `@needs`. The two helper files `qa-journey-recorder.mjs` and `qa-installation-polish.mjs` are not checks. The first has the value `unmapped:`, and the second names the capability `pending:overlays`.
 
-## D4 Three upstream tests that make the gates stop the build
+## D4 Four upstream tests that make the gates stop the build
 
 The test of the flight completion and cancellation hooks starts the camera ground guard. The guard polls with timers, and 1 timer stays live at the end of the process. The test now replaces `setTimeout` with the mock of `node:test`.
 
 The tests of `src/data/militaryInstallations.test.mjs` start 4 timers of 1200 ms in `resolveGroundFloorCellsBounded`. The timers stay live at the end of the process. The file now waits 1300 ms after its last test.
 
 The test of the surface keys on unchanged frames counts calls of `Array.prototype.join` in a loop of 1000 frames. The gates wrap each `assert` call, and the wrapper calls `join`. The test now collects the differing frames in the loop and asserts after the loop.
+
+The test of the slow boundary lookup in `src/annotations/regionRing.test.mjs` asserts that the call returns in less than 1 second. The budget of the call is 50 ms. The gates run many test processes at the same time, and the test failed at this ceiling. The ceiling is now 10 seconds.
 
 ## D5 What the command `adopt` adopts
 
