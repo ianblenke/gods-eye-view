@@ -14,7 +14,7 @@ Reviewed-Tree: 10fcba7128e5efa9d76115e6462180b3c3766cdcd6fc01f239056ac2001b2f54
 
 Full agent reports: `review/round-1/spec-adversary.md`, `review/round-1/ste-adversary.md`.
 
-- [x] critical (spec-adversary) Four mutations of `index.js` and `recentImagery.js` (057-true, 058-right, 049-false, 077-right, 465-right) were called equivalent. Each is observable with a fake layer or a different call order. Corrected: a new killing test for each, proved by mutation.
+- [x] critical (spec-adversary) Five mutations of `index.js` and `recentImagery.js` (057-true, 058-right, 049-false, 077-right, 465-right) were called equivalent. Each is observable with a fake layer or a different call order. Corrected: a new killing test for each, proved by mutation.
 - [x] major (spec-adversary) Two more UI mutations (452-right, 454-right) were observable through the disabled controls. Corrected: new tests, proved by mutation.
 - [x] minor (spec-adversary) Five minor UI mutations (385, 422, 423, 444, 451) were observable with a stub snapshot. Corrected: new tests, proved by mutation.
 - [x] major (spec-adversary) Only one of the equivalent claims was in the Known limits. Corrected: every remaining equivalent claim has a bullet in `proposal.md`.
