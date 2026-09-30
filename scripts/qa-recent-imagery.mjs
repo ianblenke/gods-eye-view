@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * @purpose Prove that image search, compare modes and controls work.
- * @covers recent-imagery
+ * @covers pending:recent-imagery
  * @run node scripts/qa-recent-imagery.mjs
  * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
