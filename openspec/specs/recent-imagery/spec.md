@@ -1,0 +1,546 @@
+# recent-imagery Specification
+
+## Purpose
+TBD - created by archiving change backfill-recent-imagery. Update Purpose after archive.
+## Requirements
+### Requirement: Read granule facts
+The recent imagery feature MUST read granule facts.
+Origin: backfill
+
+#### Scenario: Read granule facts `recent-imagery-001`
+- **WHEN** CMR returns granule records
+- **THEN** the parser returns valid times, cloud values and footprint points
+
+### Requirement: Build catalog URLs
+The recent imagery feature MUST build catalog URLs.
+Origin: backfill
+
+#### Scenario: Build catalog URLs `recent-imagery-002`
+- **WHEN** the search has a product and box
+- **THEN** the URL names the collection, box, time window and page size
+- **AND** the page size is 200
+- **AND** a Date clock keeps its millisecond value
+
+### Requirement: Combine source results
+The recent imagery feature MUST combine source results.
+Origin: backfill
+
+#### Scenario: Combine source results `recent-imagery-003`
+- **WHEN** one HLS collection fails
+- **THEN** the search keeps the other collection and VIIRS days with an error entry
+
+### Requirement: Reject invalid search input
+The recent imagery feature MUST reject invalid search input.
+Origin: backfill
+
+#### Scenario: Reject invalid search input `recent-imagery-004`
+- **WHEN** the box or clock is invalid
+- **THEN** the search rejects the input before a request
+- **AND** a clock refusal gives a TypeError with a clock message
+
+### Requirement: Read catalog pages
+The recent imagery feature MUST read catalog pages.
+Origin: backfill
+
+#### Scenario: Read catalog pages `recent-imagery-005`
+- **WHEN** CMR returns full pages with a cursor
+- **THEN** the search sends the cursor and stops at the record cap
+- **AND** the default record cap is 2000
+
+### Requirement: Validate box bounds
+The recent imagery feature MUST validate box bounds.
+Origin: backfill
+
+#### Scenario: Validate box bounds `recent-imagery-006`
+- **WHEN** the box crosses a limit or has zero area
+- **THEN** the model returns the applicable refusal
+
+- **AND** the layer snapshot gives sizes for a valid box and null for an absent box
+
+### Requirement: Measure box and view size
+The recent imagery feature MUST measure box and view size.
+Origin: backfill
+
+#### Scenario: Measure box and view size `recent-imagery-007`
+- **WHEN** the model has a box or camera dimensions
+- **THEN** it measures the box span and bounds the fit height from 5000 to 400000 metres
+- **AND** the height calculation uses a 400 kilometre target for the view width
+- **AND** invalid view data uses a square view with a 60 degree field angle
+
+### Requirement: Make a box from a pin
+The recent imagery feature MUST make a box from a pin.
+Origin: backfill
+
+#### Scenario: Make a box from a pin `recent-imagery-008`
+- **WHEN** the model has a valid map pin
+- **THEN** it makes a 10 kilometre square or returns null if the box cannot pass validation
+
+### Requirement: Convert box coordinates
+The recent imagery feature MUST convert box coordinates.
+Origin: backfill
+
+#### Scenario: Convert box coordinates `recent-imagery-009`
+- **WHEN** the model gets radians or share coordinates
+- **THEN** it converts radians to degrees and rounds share coordinates at degrees times 100000
+
+### Requirement: Check calendar days
+The recent imagery feature MUST check calendar days.
+Origin: backfill
+
+#### Scenario: Check calendar days `recent-imagery-010`
+- **WHEN** the model gets a day or candidate key
+- **THEN** it accepts real UTC days and rejects invalid days or unknown products
+- **AND** it rejects invalid dates at both ends of the four digit year range
+- **AND** Date timestamps keep their UTC calendar value
+
+### Requirement: Group and order days
+The recent imagery feature MUST group and order days.
+Origin: backfill
+
+#### Scenario: Group and order days `recent-imagery-011`
+- **WHEN** granules or candidate lists share a day
+- **THEN** the model groups by product and day and keeps the first duplicate key
+- **AND** only finite cloud numbers form the cloud range
+- **AND** an unparseable start time prevents a time range
+
+### Requirement: List overview days
+The recent imagery feature MUST list overview days.
+Origin: backfill
+
+#### Scenario: List overview days `recent-imagery-012`
+- **WHEN** the model has a valid date
+- **THEN** it lists recent VIIRS days with unknown availability and full coverage
+
+### Requirement: Sample footprint coverage
+The recent imagery feature MUST sample footprint coverage.
+Origin: backfill
+
+#### Scenario: Sample footprint coverage `recent-imagery-013`
+- **WHEN** the model has finite footprint polygons and a box
+- **THEN** it checks the corners and center of a valid box against the polygon union
+- **AND** it reports full coverage if every sample passes a point test, or partial coverage if some samples do not
+- **AND** an invalid box or absent valid polygon gives unknown coverage
+
+### Requirement: Select START HERE
+The recent imagery feature MUST select START HERE.
+Origin: backfill
+
+#### Scenario: Select START HERE `recent-imagery-014`
+- **WHEN** the model has clear, cloudy, partial or overview days
+- **THEN** it selects whole box HLS coverage before partial coverage and excludes empty days
+- **AND** it rejects products with no model entry and HLS days without granules
+
+### Requirement: Format the day readout
+The recent imagery feature MUST format the day readout.
+Origin: backfill
+
+#### Scenario: Format the day readout `recent-imagery-015`
+- **WHEN** the model has a candidate
+- **THEN** it reports UTC time, age, sensor, resolution and scene cloud
+
+### Requirement: Build image URLs
+The recent imagery feature MUST build image URLs.
+Origin: backfill
+
+#### Scenario: Build image URLs `recent-imagery-016`
+- **WHEN** the model has a product, day and box
+- **THEN** it puts tile y before x and snapshot coordinates in south, west, north, east order
+
+### Requirement: Order thumbnail requests
+The recent imagery feature MUST order thumbnail requests.
+Origin: backfill
+
+#### Scenario: Order thumbnail requests `recent-imagery-017`
+- **WHEN** the strip has a focus and visible range
+- **THEN** the model puts focus first, then visible neighbors, then extra cards
+- **AND** the layer updates the request range if only its first or last card changes
+
+### Requirement: Own and restyle image slots
+The recent imagery feature MUST own and restyle image slots.
+Origin: backfill
+
+#### Scenario: Own and restyle image slots `recent-imagery-018`
+- **WHEN** a slot gets a day and then the same day
+- **THEN** the renderer owns one bounded provider and changes its alpha and split
+
+### Requirement: Bound image ownership
+The recent imagery feature MUST bound image ownership.
+Origin: backfill
+
+#### Scenario: Bound image ownership `recent-imagery-019`
+- **WHEN** slots get rapid day changes
+- **THEN** the renderer owns at most two layers and releases old layers
+
+- **AND** renderer destruction sends `recent-imagery-destroy` if either slot has an image
+- **AND** a destroyed renderer refuses an image after a host update
+
+### Requirement: Move images to a new host
+The recent imagery feature MUST move images to a new host.
+Origin: backfill
+
+#### Scenario: Move images to a new host `recent-imagery-020`
+- **WHEN** the image host changes
+- **THEN** the renderer rebuilds layers in the new collection and clears the old collection
+
+### Requirement: Limit tile requests
+The recent imagery feature MUST limit tile requests.
+Origin: backfill
+
+#### Scenario: Limit tile requests `recent-imagery-021`
+- **WHEN** tile requests reach the limit
+- **THEN** the renderer defers extra work and requests one frame when work settles
+
+### Requirement: Share one tile retry timer
+The recent imagery feature MUST share one tile retry timer.
+Origin: backfill
+
+#### Scenario: Share one tile retry timer `recent-imagery-022`
+- **WHEN** both providers defer tiles
+- **THEN** the renderer schedules one delayed frame and cancels it on destroy
+
+### Requirement: Read thumbnail proof
+The recent imagery feature MUST read thumbnail proof.
+Origin: backfill
+
+#### Scenario: Read thumbnail proof `recent-imagery-023`
+- **WHEN** a thumbnail response has Data-Present
+- **THEN** the loader reports present or empty and keeps acquisition time
+
+### Requirement: Bound and order thumbnail work
+The recent imagery feature MUST bound and order thumbnail work.
+Origin: backfill
+
+#### Scenario: Bound and order thumbnail work `recent-imagery-024`
+- **WHEN** thumbnail requests exceed the fetch limit
+- **THEN** the loader starts queued work by priority and uses the focus order
+- **AND** the smallest priority number starts first among queued requests
+
+### Requirement: Keep day proof after image eviction
+The recent imagery feature MUST keep day proof after image eviction.
+Origin: backfill
+
+#### Scenario: Keep day proof after image eviction `recent-imagery-025`
+- **WHEN** decoded images exceed the limit
+- **THEN** the loader revokes the least recently used images until the cache meets its limit and keeps the day proof
+- **AND** image eviction does not send a notice for an empty day
+
+- **AND** each subscriber gets the state change
+
+### Requirement: Cancel thumbnail work
+The recent imagery feature MUST cancel thumbnail work.
+Origin: backfill
+
+#### Scenario: Cancel thumbnail work `recent-imagery-026`
+- **WHEN** the loader cancels an active request
+- **THEN** it discards late results and starts queued work after the request settles
+
+### Requirement: Release thumbnail images
+The recent imagery feature MUST release thumbnail images.
+Origin: backfill
+
+#### Scenario: Release thumbnail images `recent-imagery-027`
+- **WHEN** the loader clears or ends
+- **THEN** it revokes all resident images
+
+### Requirement: Select or refuse a box
+The recent imagery feature MUST select or refuse a box.
+Origin: backfill
+
+#### Scenario: Select or refuse a box `recent-imagery-028`
+- **WHEN** the person selects a box or uses the view
+- **THEN** the layer searches a valid box and retains a refusal with a fit action for an oversized box
+
+- **AND** a nonfunction tool handler does not cause a callback
+- **AND** ZOOM IN returns null if the flight method or coordinate placement method is absent
+
+### Requirement: Search and preview a day
+The recent imagery feature MUST search and preview a day.
+Origin: backfill
+
+#### Scenario: Search and preview a day `recent-imagery-029`
+- **WHEN** the catalog returns days or an error
+- **THEN** the layer exposes the catalog result and previews START HERE for valid days
+- **AND** its overview note appears only for an unknown day from an active source
+- **AND** a repeated box starts another search after an empty catalog result
+- **AND** the snapshot has the UTC readout of its focus
+- **AND** an empty HLS snapshot does not read the clock for its readout
+
+- **AND** the same box does not start another search while an HLS request is active
+- **AND** enable does not repeat a search when the catalog has days
+
+### Requirement: Pin days in image slots
+The recent imagery feature MUST pin days in image slots.
+Origin: backfill
+
+#### Scenario: Pin days in image slots `recent-imagery-030`
+- **WHEN** the person assigns a day or selects a mode
+- **THEN** the day occupies at most one slot and replaces the previous pin
+- **AND** an invalid mode leaves the current mode intact
+- **AND** IMAGE can preview a day from the B pin
+
+### Requirement: Start and swap a comparison
+The recent imagery feature MUST start and swap a comparison.
+Origin: backfill
+
+#### Scenario: Start and swap a comparison `recent-imagery-031`
+- **WHEN** the person starts or swaps a live comparison
+- **THEN** the layer splits the images and resets a new comparison to the center
+- **AND** a lone B image cannot form an A and B comparison
+- **AND** BASEMAP without an A image has no swipe
+- **AND** two pins prevent another preview
+- **AND** a tileset host prevents a live swipe
+
+### Requirement: Hold and release the Esri lease
+The recent imagery feature MUST hold and release the Esri lease.
+Origin: backfill
+
+#### Scenario: Hold and release the Esri lease `recent-imagery-032`
+- **WHEN** the layer shows an image or clears the last image
+- **THEN** it holds the lease for the image and releases it when the last image leaves
+- **AND** the layer hides both image slots when it stops
+
+- **AND** its borrowed Esri flag needs a Google 3D origin and the same active map as the ready lease
+- **AND** a ready lease without a map ID does not mark Esri as borrowed
+
+- **AND** a new image gets a lease after a controller joins an empty scene
+
+### Requirement: Report comparison refusal
+The recent imagery feature MUST report comparison refusal.
+Origin: backfill
+
+#### Scenario: Report comparison refusal `recent-imagery-033`
+- **WHEN** the lease cannot serve a comparison
+- **THEN** the layer reports the refusal and keeps images without a swipe
+- **AND** the tileset host note waits for a successful lease
+- **AND** its suspended flag is true only after the lease is ready and a swipe exists
+
+### Requirement: Handle Google 3D handover
+The recent imagery feature MUST handle Google 3D handover.
+Origin: backfill
+
+#### Scenario: Handle Google 3D handover `recent-imagery-034`
+- **WHEN** the controller switches to Google 3D with imagery active
+- **THEN** the layer takes Esri for a manual switch and drops the swipe for an automatic switch
+- **AND** another notice for the same automatic switch does not send a new state notice
+
+### Requirement: Follow the image host
+The recent imagery feature MUST follow the image host.
+Origin: backfill
+
+#### Scenario: Follow the image host `recent-imagery-035`
+- **WHEN** the image host changes
+- **THEN** the layer moves drapes through the controller callback or stats poll
+- **AND** a change to the host collection or kind sends a state notice
+- **AND** the map callback does not move a host while the layer is off
+- **AND** its host error has a value only while the layer is on
+- **AND** an absent host gives "Hidden by this map source · choose a globe map" while the layer is on
+
+- **AND** an attached tileset does not move the host while the layer is off
+- **AND** an unchanged tileset host does not send another state notice
+- **AND** stats check the host if a subscription returns a nonfunction result
+
+### Requirement: Restore share state
+The recent imagery feature MUST restore share state.
+Origin: backfill
+
+#### Scenario: Restore share state `recent-imagery-036`
+- **WHEN** the layer gets share parameters or a new catalog
+- **THEN** it restores the box, pins, mode and split without a user publication and drops absent catalog pins
+- **AND** a direct control callback during this action does not publish user state
+
+- **AND** a null or nonfinite split parameter preserves the current divider value
+- **AND** a nonfinite split parameter does not change the divider source flag
+- **AND** a mode parameter with the current value does not send renderer work
+- **AND** a B parameter alone preserves the A pin
+- **AND** a malformed share pin key becomes null
+- **AND** an absent catalog pin alone does not change the current focus
+- **AND** a new catalog can remove either absent pin while it preserves the other pin
+- **AND** a parameter change does not send renderer work while the layer is off
+
+### Requirement: Control imagery sources
+The recent imagery feature MUST control imagery sources.
+Origin: backfill
+
+#### Scenario: Control imagery sources `recent-imagery-037`
+- **WHEN** the person switches a source off
+- **THEN** the layer hides its days and drapes and retains the source state on its pins
+- **AND** a source change keeps the preview timer for a day from the other source
+
+- **AND** a source change calls a valid row listener and ignores a nonfunction listener
+
+### Requirement: Publish local image controls
+The recent imagery feature MUST publish local image controls.
+Origin: backfill
+
+#### Scenario: Publish local image controls `recent-imagery-038`
+- **WHEN** the person changes opacity or the divider
+- **THEN** the layer changes image controls without a row update
+- **AND** its snapshot keeps the new opacity and divider value
+- **AND** each subscriber gets the current snapshot
+- **AND** a destroyed layer does not publish local changes
+- **AND** the layer does not call an absent state manager
+- **AND** a layer without subscribers does not read the clock for a state notice
+
+- **AND** one clock step can complete a divider publication and a focus preview
+
+### Requirement: Use thumbnail proof for drapes
+The recent imagery feature MUST use thumbnail proof for drapes.
+Origin: backfill
+
+#### Scenario: Use thumbnail proof for drapes `recent-imagery-039`
+- **WHEN** pins change or a probe changes a day or confirms its state
+- **THEN** the layer drapes present days and removes empty days from pins or automatic preview
+- **AND** a new pin drape sends a thumbnail notice and a full state notice
+
+- **AND** an unchanged probe does not repeat drape work on a globe when pins and previews stay the same
+- **AND** without a host, a probe for a new preview does not repeat renderer work
+- **AND** a followed day with new pixels sends a thumbnail notice and a full state notice
+- **AND** each pin outside the visible strip gets a direct thumbnail request
+
+### Requirement: Preview the focused day
+The recent imagery feature MUST preview the focused day.
+Origin: backfill
+
+#### Scenario: Preview the focused day `recent-imagery-040`
+- **WHEN** focus changes or the person clicks a day
+- **THEN** the layer debounces arrow focus and follows an unknown day until its probe proves present
+- **AND** arrow focus uses a 250 millisecond quiet period
+- **AND** focus on a pin clears the preview in the other slot
+
+- **AND** a probe does not start a followed preview after focus leaves that day
+- **AND** an unknown followed day keeps its probe wait state
+
+### Requirement: Clear previews and box state
+The recent imagery feature MUST clear previews and box state.
+Origin: backfill
+
+#### Scenario: Clear previews and box state `recent-imagery-041`
+- **WHEN** the person presses Escape or CLEAR
+- **THEN** Escape clears the preview first and CLEAR clears box state while mode and sources stay
+
+- **AND** `clearPreview` returns true for a followed day
+
+### Requirement: Keep focus across strip changes
+The recent imagery feature MUST keep focus across strip changes.
+Origin: backfill
+
+#### Scenario: Keep focus across strip changes `recent-imagery-042`
+- **WHEN** a day leaves the strip or a new box starts
+- **THEN** the layer keeps a valid focus or moves to the nearest card, with ties toward the older day
+- **AND** a new box removes old drapes at once
+
+### Requirement: Own the fixed panel
+The recent imagery feature MUST own the fixed panel.
+Origin: backfill
+
+#### Scenario: Own the fixed panel `recent-imagery-043`
+- **WHEN** the layer starts or ends
+- **THEN** the panel uses fixed blocks and returns listeners and panel state on destroy
+- **AND** an absent document factory or layer returns no panel
+- **AND** panel cleanup clears each thumbnail URL
+
+### Requirement: Show day cards and slots
+The recent imagery feature MUST show day cards and slots.
+Origin: backfill
+
+#### Scenario: Show day cards and slots `recent-imagery-044`
+- **WHEN** the layer has candidate and pin state
+- **THEN** the panel shows day facts, pin chips and mode slot labels
+- **AND** it gives spoken labels for card state, mode controls and export actions
+- **AND** IMAGE keeps the B pin controls inactive
+- **AND** a stable thumbnail keeps one image element
+- **AND** an empty strip names its box, search, day and source state
+
+- **AND** an empty day outside the map leaves the strip after its probe
+
+### Requirement: Use panel keys and clicks
+The recent imagery feature MUST use panel keys and clicks.
+Origin: backfill
+
+#### Scenario: Use panel keys and clicks `recent-imagery-045`
+- **WHEN** the person uses the strip keys or controls
+- **THEN** the panel asks the layer to preview, pin or clear and applies Escape in order
+- **AND** key repeat does not send another Enter preview request
+- **AND** a pin action without a card key does not call the layer
+- **AND** a state change during an arrow action can clear the strip without a scroll error
+- **AND** an absent viewport width prevents a strip scroll action
+
+- **AND** Enter and pin keys on an empty strip do not start a preview or pin
+- **AND** an arrow key on an empty strip keeps its default action
+- **AND** S does not pin a day in A and B mode
+- **AND** a key outside the strip clears the preview only for Escape
+- **AND** Escape outside the strip cancels an active tool or clears a future preview
+- **AND** an inactive B unpin control keeps the stored B pin
+- **AND** a click outside ZOOM IN does not ask for a flight
+
+### Requirement: Show guidance and the fit action
+The recent imagery feature MUST show guidance and the fit action.
+Origin: backfill
+
+#### Scenario: Show guidance and the fit action `recent-imagery-046`
+- **WHEN** the panel has state for the layer
+- **THEN** the panel shows the notice and offers ZOOM IN for an oversized box
+- **AND** it uses the warning style for an error and the information style for a notice
+- **AND** its hint tells the person to zoom in or draw a smaller box for an oversized selection
+
+### Requirement: Own the swipe divider
+The recent imagery feature MUST own the swipe divider.
+Origin: backfill
+
+#### Scenario: Own the swipe divider `recent-imagery-047`
+- **WHEN** a comparison becomes live
+- **THEN** the panel creates the divider with mode labels and trades labels on SWAP
+
+- **AND** a refresh with the same divider does not create another divider
+
+### Requirement: Export the slot image
+The recent imagery feature MUST export the slot image.
+Origin: backfill
+
+#### Scenario: Export the slot image `recent-imagery-048`
+- **WHEN** the panel has images or an export request
+- **THEN** either shown image enables the opacity control
+- **AND** an export request for a valid pin or preview downloads a PNG and revokes its object URL
+- **AND** a duplicate export request returns false while the first export is active
+- **AND** an active export request disables its button
+- **AND** IMAGE does not export a stored B pin
+- **AND** A and B mode exports a valid B pin
+
+### Requirement: Show image details
+The recent imagery feature MUST show image details.
+Origin: backfill
+
+#### Scenario: Show image details `recent-imagery-049`
+- **WHEN** the person opens DETAILS
+- **THEN** the panel shows each note and the empty day control
+- **AND** an offscreen DETAILS card causes a scroll request
+- **AND** a refresh does not repeat the scroll request
+- **AND** absent viewport or card dimensions prevent the request
+
+### Requirement: Keep panel scroll position
+The recent imagery feature MUST keep panel scroll position.
+Origin: backfill
+
+#### Scenario: Keep panel scroll position `recent-imagery-050`
+- **WHEN** the panel refreshes its content
+- **THEN** it restores the body scroll position
+
+### Requirement: Report visible cards
+The panel MUST report the visible range of day cards to the layer.
+Origin: backfill
+
+#### Scenario: Report visible cards `recent-imagery-051`
+- **WHEN** the strip scrolls across day cards
+- **THEN** the panel reports the first and last visible card
+- **AND** it treats absent card dimensions as zero
+- **AND** it does not report a range if every card lies outside the view
+
+### Requirement: Supply test values
+The recent imagery test helper MUST supply response and day values.
+Origin: backfill
+
+#### Scenario: Supply test values `recent-imagery-052`
+- **WHEN** a test requests response or day values
+- **THEN** successful and failed responses have default status codes 200 and 500
+- **AND** a granule day has a cloud range, but an overview day has no cloud range
+

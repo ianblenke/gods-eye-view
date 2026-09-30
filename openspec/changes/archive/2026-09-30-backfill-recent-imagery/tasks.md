@@ -577,12 +577,12 @@ const end = start + Number(card?.offsetWidth);
 
 - [x] 3.1 Complete the compound condition and loop key audit.
 - [x] 3.2 Record the equivalent size guard mutation.
-- [ ] 3.3 Check the host coverage limits with the gate image.
+- [x] 3.3 Check the host coverage limits with the gate image.
 
 ## 4. Gates and review
 
-- [ ] 4.1 Run the ratchet for this change.
-- [ ] 4.2 Run the gates for this change.
+- [x] 4.1 Run the ratchet for this change.
+- [x] 4.2 Run the gates for this change.
 - [ ] 4.3 Run both review agents.
 - [ ] 4.4 Record the tree and verdict in review.md.
 
