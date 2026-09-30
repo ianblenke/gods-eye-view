@@ -14,7 +14,7 @@ This change merges the upstream branch. The merged commit is `e7707d9`, the newe
 - Keep the OSH layer. Its share-link token is `3`. Add the row `["osh-systems", "3"]` to the token ledger `src/data/layerStateTokenReservations.json` of the upstream project.
 - Change the test fixtures of the token ledger. The digit `3` is now in use, so the next free digit is `4`. The ledger has 29 rows, and not 28.
 - Add a QA header to the 13 new upstream QA scripts. The test `qa-scripts-023` counts 83 scripts, and not 70.
-- Fix three upstream tests that make the gates stop the build. Two of them leave live timers. One of them counts calls of `Array.prototype.join`, and the assertion counter of the gates calls that function.
+- Fix four upstream tests that make the gates stop the build. Two of them leave live timers. One of them counts calls of `Array.prototype.join`, and the assertion counter of the gates calls that function. One of them has a time ceiling that is too small when the gates run many test processes.
 - Run the ledger command `adopt` for the files that the merge commit brings from the upstream project, and that have a gap.
 
 ## Capabilities
@@ -38,4 +38,5 @@ None. No scenario text changes.
 
 - `sync2-no-specs`: This change writes no spec for the new upstream code. A backfill change writes each one.
 - `sync2-timer-fixes-in-tests`: The timers stay in the production code. The functions `guardCameraAboveGround` and `resolveGroundFloorCellsBounded` do not clear their timers when the work ends first. The fix is in the tests, so the production code stays equal to the code of the upstream project.
+- `sync2-ceiling-not-measured`: The ceiling in the test of the slow boundary lookup is now 10 seconds, and it was 1 second. The ceiling finds only a very large increase of the time.
 - `sync2-qa-purposes`: The 13 new QA headers name capabilities with the prefix `pending:`. A backfill change replaces each name after its capability has a folder.
