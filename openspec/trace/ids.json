@@ -2029,6 +2029,266 @@
     "since": "2026-09-26",
     "change": "qa-script-register"
   },
+  "recent-imagery-001": {
+    "hash": "8867e4cc7fc704d7dd494bdd0ccac1c7d3e06513eec68418291fe2af001e5eb3",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-002": {
+    "hash": "b6e1d680353cda563a732ddc8cb94152a4259fea79981ec71b47e37829979cd6",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-003": {
+    "hash": "7e6f65fd001670223c1e8bb2a9db6a5a10dbe84df874b6e45602d094e9a8bab7",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-004": {
+    "hash": "af8f946d4639ded9e15d164cea2b31a184eed390c03bf8ccbdcad742d27a378a",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-005": {
+    "hash": "a3b75573ee7294588a8a0001839a66fc67b4e7e3acde197e16c1c3005f9e1215",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-006": {
+    "hash": "32caaf60a844a3603f812b11302bf6d24390b1ff688753aaaa48a8615ab11984",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-007": {
+    "hash": "9b7170eb6556ba8c4b120d022ee32141573a1ba74066694acaf0769fd12259fa",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-008": {
+    "hash": "68ce2cffec6ec0f69b03fd043a4c474c6830d176fea457cd488678166f7dcd75",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-009": {
+    "hash": "ebc3d5d57c651006158cceea06bf9d405fa88733341c52922f35d555380540e9",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-010": {
+    "hash": "45adf1c05f816b40d843d61c1847794289f707b9ed33151bcfc7bebe38061765",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-011": {
+    "hash": "85d0d05d06808c6b20e373a49a115d1fd61c407cd8798f6465316dab6cc5a9c3",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-012": {
+    "hash": "907a94832b95b0dd7fb1a71dcc1153ca0d1241352a2d6fa103220edf791fcd6b",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-013": {
+    "hash": "78e07bdd62bde9124d07b2fed627c30ab24edc329dc7ff367bb9bcc7ac65466d",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-014": {
+    "hash": "185aa113b52f8e40a08e07164f51bb4646415d27793bc57f61b79ef4d84e2553",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-015": {
+    "hash": "993f6c6697a9f3c982debef085a8e3821bdfb59dd7575c792e457b08deb12b56",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-016": {
+    "hash": "7006da3ced82190bbdc2d03fa00a720785c70fe162367a65ecf118ee53b224eb",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-017": {
+    "hash": "fd50cb5c49678f4e9a09312668c75dafdd7d9e5a9c5615234232f0a6333f3ca4",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-018": {
+    "hash": "11d0da9e4bd518b160be037ffe22774bfc4f6f352bcb3afb3a64148f8f8fdff3",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-019": {
+    "hash": "4b22aec4a7863835317be88ddef8dd01a86027e36021240c4cbccfe077150776",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-020": {
+    "hash": "5d0afd17078b5d91365625ba934169d596d19650e65d9f3652e1bb3868b75b12",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-021": {
+    "hash": "9ac7046327f50256cba0677f0e0ea213cb342e6832c73efe721f36b36bd5f635",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-022": {
+    "hash": "9304d1fd4aa3f8835241ceed6f723228e49ed76144fb3d5e17d1f213ece3e3d6",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-023": {
+    "hash": "699ce2d050979e32fefb3f25a446daa8f3cae711b9fa0b4c8a1a278f1789b790",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-024": {
+    "hash": "6c0b4e02937bd17613410d5aab4824774c82889202806a8f56b9ada19f454f70",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-025": {
+    "hash": "231a399d69686e26c993a95103c2fd224168809116e9c57f68c40195c8962583",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-026": {
+    "hash": "c1ee036b854a9307f0f51be9029a81db8f2d760bcccecac08c6ec3c75d1b165d",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-027": {
+    "hash": "5cd2ac4be14cd4352a54dfd52d0af8bf7ede535e3046616836eea7bba612b9dc",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-028": {
+    "hash": "3c1a7678a5555538dbb2383b8490a1eae210351578526242958055da335ea9c0",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-029": {
+    "hash": "dad6a382dd0944eb5d33b9562f3628d17c8ac9206aa8362f8ce83a2722147480",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-030": {
+    "hash": "123b8b94306e5490b703918f157d8781afe9590c5798566e44a42ac0ca2b4d11",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-031": {
+    "hash": "ecf9d44807a68d7a6066d2a844023d2f0f88f66037004553922af971804b8290",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-032": {
+    "hash": "2b4cbd9ed39103fd9859782601cdb6ecd1be05d96a592b149aaaa8da625785ec",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-033": {
+    "hash": "72e8ed6b8407ae7eb85065496f16d43b18dda6fbe8b0b178dbd53246a8fa5e66",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-034": {
+    "hash": "ed3de3f6a11ac346fc5f7a02e881f8be31d8532883a82df5b40f533cac80f9a6",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-035": {
+    "hash": "645290e21a50f52b6adb30d96e2204caef8650910ad2eb710f9477b2cd549704",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-036": {
+    "hash": "2aebb8a8d9295cfab6d14a9812ed0cd948b84a3fa2bc51e06f345bc58eb3f902",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-037": {
+    "hash": "2ce2120335f6ee9ef69f6fa4559b2cfea31325c86a94869a0e70c4cbdca4d78f",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-038": {
+    "hash": "195f13a7ecdf64d16a01e0ad4aabfb8b0a72170910bf722f5185af0ed1ed104a",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-039": {
+    "hash": "b1cc8d64aebfb2160a428ed203603fd512ffb4f3c3881d07d921a8740d88a332",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-040": {
+    "hash": "7a34e9cae369b4d92123eb75e7f85ca3b0383eca2b48342f796a11bd86e9e04b",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-041": {
+    "hash": "94945c822b5b446490999721446635deaebeefd155868b3cef76c7320909ffd6",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-042": {
+    "hash": "87eb908d6552fc0da00b9ed41e6edc1ba0af16d451075ec8470e0ee19b4852a7",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-043": {
+    "hash": "f90b50f770af4cefef341cfe8d8452ea9c87ae708868fcf5b96364f55ac57c4d",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-044": {
+    "hash": "3d56a83bbc9f3e38b11238396f153eb4c17a646d82af70721a18ce9f213591df",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-045": {
+    "hash": "de4cafa8924318849bb54dacc38fd7248b3306a885e4a2150b0d000e8770080a",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-046": {
+    "hash": "cdc776c8f0bd42dd27ecdc29073a80b0f5c2ee947ece124897afa34633a2e8be",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-047": {
+    "hash": "5dd3456c656d3fb8d7139c4f58ef3b3d4b39e5c62f5e4eb29b1f7b392dfc32f6",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-048": {
+    "hash": "844e175984e2f5294b20abb12f85ca3d158b8a69ee74f552631b984015191fed",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-049": {
+    "hash": "3f63428f7a6265f9274662b2179187cfb0f3d381144690d29b285f907312ea1a",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-050": {
+    "hash": "c68ba1d260b9f4a1ec859218a0594404737e132057d4bac50dc5e9df679b7e41",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-051": {
+    "hash": "a9b1ef137cfcaeffc0e722e6c77edfcc88c53ced7f86dc3a9d2bf94bcbf5fa85",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-052": {
+    "hash": "f7c9f3ea93f3232a0c4ee226258ddd24af6f07eccef52ac77d1af158bf94b87d",
+    "since": "2026-09-30",
+    "change": "backfill-recent-imagery"
+  },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",
     "since": "2026-09-14",
