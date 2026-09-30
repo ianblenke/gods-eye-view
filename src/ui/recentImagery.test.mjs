@@ -17,6 +17,7 @@ import {
 const S18 = 'S30:2026-09-18';
 const L16 = 'L30:2026-09-16';
 const V21 = 'VIIRS:2026-09-21';
+const V15 = 'VIIRS:2026-09-15';
 
 // ---- a small DOM double ------------------------------------------------------
 class FakeClassList {
@@ -356,7 +357,7 @@ function part(f, id, name) {
 }
 
 // ---- tests ---------------------------------------------------------------------
-test('the readout mounts in the rail body, hides while the layer is off and opens the panel once on first appearance', async () => {
+test('[recent-imagery-043] the readout mounts in the rail body, hides while the layer is off and opens the panel once on first appearance', async () => {
   const f = fixture();
   assert.equal(f.root.parentNode, f.body);
   assert.equal(f.panel.hidden, true);
@@ -383,7 +384,7 @@ test('the readout mounts in the rail body, hides while the layer is off and open
   assert.equal(g.collapse.clicked, 0);
 });
 
-test('the body is a fixed stack of seven blocks in a fixed order, each with a fixed height in the stylesheet', () => {
+test('[recent-imagery-043] the body is a fixed stack of seven blocks in a fixed order, each with a fixed height in the stylesheet', () => {
   const f = fixture();
   assert.deepEqual(
     f.root.children.map((node) => node.id || node.className),
@@ -429,7 +430,7 @@ test('the body is a fixed stack of seven blocks in a fixed order, each with a fi
  * height keeps the class the stylesheet fixes it by). The live gate
  * `scripts/qa-recent-imagery.mjs` measures the real rectangles.
  */
-test('no control changes place in the tree, no block is hidden and every fixed-height block keeps its height class across every state (DOM-structure guard)', async () => {
+test('[recent-imagery-043] no control changes place in the tree, no block is hidden and every fixed-height block keeps its height class across every state (DOM-structure guard)', async () => {
   const f = fixture();
   const cssRule = (file, selector) => {
     const css = readFileSync(new URL(file, import.meta.url), 'utf8');
@@ -638,7 +639,7 @@ test('no control changes place in the tree, no block is hidden and every fixed-h
   assert.equal(states.length, 12);
 });
 
-test('cards carry thumbnail, date, sensor, cloud, START HERE and PREVIEW; the chips follow the mode without moving', async () => {
+test('[recent-imagery-044] cards carry thumbnail, date, sensor, cloud, START HERE and PREVIEW; the chips follow the mode without moving', async () => {
   const f = fixture();
   await f.ready();
   f.thumbnails.setStatus(S18, 'present');
@@ -716,7 +717,7 @@ test('cards carry thumbnail, date, sensor, cloud, START HERE and PREVIEW; the ch
   assert.equal(f.part(f.card(V21), 'ri-card-cloud').textContent, 'no imagery');
 });
 
-test('the selection bar reads the mode, both rows and a preview, with × reserved when empty', async () => {
+test('[recent-imagery-044] the selection bar reads the mode, both rows and a preview, with × reserved when empty', async () => {
   const f = fixture();
   await f.ready();
   const modes = f.root.findAll((node) =>
@@ -773,15 +774,15 @@ test('the selection bar reads the mode, both rows and a preview, with × reserve
   assert.equal(f.snap().mode, 'image');
 });
 
-test('strip keys: arrows preview after the debounce, S / A / B pin, Enter previews, repeats are ignored', async () => {
+test('[recent-imagery-045] strip keys: arrows preview after the debounce, S / A / B pin, Enter previews, repeats are ignored', async () => {
   const f = fixture();
   await f.ready();
   f.key('ArrowRight');
-  assert.equal(f.snap().focus.key, L16);
+  assert.equal(f.snap().focus.key, 'L30:2026-09-16');
   f.timers.flush();
-  assert.equal(f.snap().preview.key, L16);
+  assert.equal(f.snap().preview.key, 'L30:2026-09-16');
   f.key('Home');
-  assert.equal(f.snap().focus.key, V21);
+  assert.equal(f.snap().focus.key, 'VIIRS:2026-09-21');
   f.key('End');
   assert.equal(f.snap().focus.index, 3);
   f.key('ArrowLeft');
@@ -791,31 +792,42 @@ test('strip keys: arrows preview after the debounce, S / A / B pin, Enter previe
   f.key('b');
   assert.equal(f.snap().pins.b.key, null, 'no B outside A / B');
   f.key('A');
-  assert.equal(f.snap().pins.a.key, L16);
+  assert.equal(f.snap().pins.a.key, 'L30:2026-09-16');
   f.key('a');
   assert.equal(f.snap().pins.a.key, null, 'A again unpins');
   f.layer.setMode('ab');
   f.key('a');
   f.key('ArrowLeft');
   f.key('b');
-  assert.deepEqual([f.snap().pins.a.key, f.snap().pins.b.key], [L16, S18]);
+  assert.deepEqual(
+    [f.snap().pins.a.key, f.snap().pins.b.key],
+    ['L30:2026-09-16', 'S30:2026-09-18'],
+  );
   f.key('a', { metaKey: true });
-  assert.equal(f.snap().pins.a.key, L16, 'modified keys are not ours');
+  assert.equal(
+    f.snap().pins.a.key,
+    'L30:2026-09-16',
+    'modified keys are not ours',
+  );
   f.layer.setAssignment('a', null);
   f.layer.setAssignment('b', null);
   f.key('Enter');
-  assert.equal(f.snap().preview.key, S18, 'Enter previews the focused day');
+  assert.equal(
+    f.snap().preview.key,
+    'S30:2026-09-18',
+    'Enter previews the focused day',
+  );
 });
 
-test('clicks: a card previews and focuses the strip, a chip pins, SELECT BOX toggles the tool, USE VIEW and CLEAR drive the layer', async () => {
+test('[recent-imagery-045] clicks: a card previews and focuses the strip, a chip pins, SELECT BOX toggles the tool, USE VIEW and CLEAR drive the layer', async () => {
   const f = fixture();
   await f.ready();
   f.card(L16).click();
-  assert.equal(f.snap().preview.key, L16);
+  assert.equal(f.snap().preview.key, 'L30:2026-09-16');
   assert.equal(f.strip.focused, 1);
   assert.deepEqual(f.strip.focusOptions, { preventScroll: true });
   f.chip(S18, 'a').click();
-  assert.equal(f.snap().pins.a.key, S18);
+  assert.equal(f.snap().pins.a.key, 'S30:2026-09-18');
   const selectBox = f.byAction('select-box');
   selectBox.click();
   assert.deepEqual(f.tool.calls, ['start']);
@@ -834,7 +846,7 @@ test('clicks: a card previews and focuses the strip, a chip pins, SELECT BOX tog
   assert.equal(f.byAction('clear').disabled, true);
 });
 
-test('Escape clears the preview first, then cancels the box tool, then blurs the strip', async () => {
+test('[recent-imagery-045] Escape clears the preview first, then cancels the box tool, then blurs the strip', async () => {
   const f = fixture();
   await f.ready();
   f.tool.start();
@@ -854,7 +866,7 @@ test('Escape clears the preview first, then cancels the box tool, then blurs the
   assert.equal(idle.defaultPrevented, false);
 });
 
-test('the notice line shows the refusal, then errors, then CLEAR, then the Esri note; the hint names the next step and that SWAP trades the sides', async () => {
+test('[recent-imagery-046] the notice line shows the refusal, then errors, then CLEAR, then the Esri note; the hint names the next step and that SWAP trades the sides', async () => {
   const controller = fakeController();
   let active = 'photoreal';
   controller.getActiveId = () => active;
@@ -899,7 +911,7 @@ test('the notice line shows the refusal, then errors, then CLEAR, then the Esri 
   assert.equal(notice.classList.contains('info'), true);
 });
 
-test('an oversized box offers ZOOM IN in a fixed slot at the end of the notice line; it asks the layer to fit', async () => {
+test('[recent-imagery-046] an oversized box offers ZOOM IN in a fixed slot at the end of the notice line; it asks the layer to fit', async () => {
   const f = fixture();
   const flights = [];
   f.viewer.scene.canvas.clientHeight = 500;
@@ -948,7 +960,7 @@ test('an oversized box offers ZOOM IN in a fixed slot at the end of the notice l
   assert.deepEqual(reserved(), [true, true, 'true', false]);
 });
 
-test('the divider exists only while a swipe is live, labelled A / B or IMAGE / BASEMAP; SWAP trades its sides and Space does nothing', async () => {
+test('[recent-imagery-047] the divider exists only while a swipe is live, labelled A / B or IMAGE / BASEMAP; SWAP trades its sides and Space does nothing', async () => {
   const f = fixture();
   const swap = f.byId('ri-swap');
   const swapState = () => [
@@ -1032,7 +1044,7 @@ test('the divider exists only while a swipe is live, labelled A / B or IMAGE / B
   assert.deepEqual(swapState(), [true, true, 'true', 'false']);
 });
 
-test('opacity drives both images; EXPORT downloads the pin or the preview and EXPORT B only exists in A / B', async () => {
+test('[recent-imagery-048] opacity drives both images; EXPORT downloads the pin or the preview and EXPORT B only exists in A / B', async () => {
   const f = fixture();
   await f.ready();
   const exportA = f.byAction('export-a');
@@ -1087,7 +1099,7 @@ test('opacity drives both images; EXPORT downloads the pin or the preview and EX
   );
 });
 
-test('DETAILS is a collapsed rail card holding every note, and the empty-days toggle', async () => {
+test('[recent-imagery-049] DETAILS is a collapsed rail card holding every note, and the empty-days toggle', async () => {
   const f = fixture();
   await f.ready();
   const header = f
@@ -1121,7 +1133,7 @@ test('DETAILS is a collapsed rail card holding every note, and the empty-days to
   assert.equal(article.dataset.open, 'false');
 });
 
-test('the body scroll position survives renders even when DOM mutations reset it', async () => {
+test('[recent-imagery-050] the body scroll position survives renders even when DOM mutations reset it', async () => {
   const f = fixture();
   await f.ready();
   f.body.scrollTop = 120;
@@ -1135,7 +1147,7 @@ test('the body scroll position survives renders even when DOM mutations reset it
   assert.equal(f.body.scrollTop, 120);
 });
 
-test('destroy returns every listener, the divider and the panel state', async () => {
+test('[recent-imagery-043] destroy returns every listener, the divider and the panel state', async () => {
   const f = fixture();
   await f.ready();
   await f.settleLease();
@@ -1150,4 +1162,1516 @@ test('destroy returns every listener, the divider and the panel state', async ()
   f.layer.setMode('ab');
   assert.equal(f.splits.length, 1, 'no renders after destroy');
   f.readout.destroy();
+});
+
+function snapshotPanel(initial, options = {}) {
+  const dom = fakeDocument();
+  options.setupDom?.(dom);
+  if (options.noChrome) dom.document.getElementById = () => null;
+  let snapshot = initial;
+  let callback;
+  const calls = [];
+  const layer = {
+    getSnapshot: () => snapshot,
+    subscribe(fn) {
+      callback = fn;
+      return () => calls.push(['off']);
+    },
+    setToolHandler(fn) {
+      calls.push(['tool', Boolean(fn)]);
+    },
+    setVisibleRange(first, last) {
+      calls.push(['range', first, last]);
+    },
+    focus(index) {
+      calls.push(['focus', index]);
+    },
+    preview(key) {
+      calls.push(['preview', key]);
+    },
+    toggleAssignment(slot, key) {
+      calls.push(['pin', slot, key]);
+    },
+    setMode(mode) {
+      calls.push(['mode', mode]);
+    },
+    clearPreview() {
+      return false;
+    },
+    zoomToFit() {
+      calls.push(['zoom']);
+    },
+    setAlpha(value) {
+      calls.push(['alpha', value]);
+    },
+    setSplit(value) {
+      calls.push(['split', value]);
+    },
+    setShowUnavailable(value) {
+      calls.push(['empty', value]);
+    },
+  };
+  const readout = createRecentImageryPanel({
+    container: dom.body,
+    layer,
+    ...options,
+  });
+  return {
+    ...dom,
+    readout,
+    calls,
+    byId: (id) => readout.root.find((node) => node.id === id),
+    emit(next, reason = 'state') {
+      if (next) snapshot = next;
+      callback(next, reason);
+    },
+  };
+}
+
+test('[recent-imagery-043 recent-imagery-044] absent panel input and thumbnail state use explicit DOM values', async () => {
+  assert.equal(createRecentImageryPanel(), null);
+  const f = fixture();
+  await f.ready();
+  const s = f.snap();
+  const p = snapshotPanel(s);
+  const c = {
+    ...s.candidates[0],
+    thumbnail: { status: 'present', objectUrl: 'blob:thumb' },
+    cloud: { min: 2, max: 12 },
+    pending: true,
+    preview: false,
+  };
+  const next = {
+    ...s,
+    candidates: [c],
+    focus: c,
+    focusIndex: 0,
+    recommended: { key: c.key, reason: 'bad' },
+  };
+  p.emit(next);
+  const image = p.readout.root.find((node) => node.tagName === 'IMG');
+  assert.equal(image.src, 'blob:thumb');
+  assert.equal(image.hidden, false);
+  assert.equal(p.readout.root.textContent.includes('2–12% cloud'), true);
+  p.emit(
+    { ...next, candidates: [{ ...c, thumbnail: { status: 'unknown' } }] },
+    'thumbnail',
+  );
+  assert.equal(image.src, '');
+  assert.equal(image.hidden, true);
+  p.emit(next, 'thumbnail');
+  p.readout.destroy();
+  assert.equal(image.src, '');
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-045 recent-imagery-050] strip keys and dimensions keep focus local', async () => {
+  const f = fixture();
+  await f.ready();
+  const p = snapshotPanel(f.snap());
+  const strip = p.byId('ri-strip');
+  strip.clientWidth = 100;
+  const cards = strip.findAll((node) => node.classList.contains('ri-card'));
+  cards.forEach((card, index) => {
+    card.offsetLeft = index * 80;
+    card.offsetWidth = 80;
+  });
+  strip.scrollLeft = 100;
+  strip.dispatch('scroll');
+  assert.deepEqual(p.calls.at(-1), ['range', 1, 2]);
+  p.emit({ ...f.snap(), focusIndex: 0 });
+  strip.dispatch('keydown', { key: 'Home' });
+  assert.equal(strip.scrollLeft, 0);
+  p.emit({ ...f.snap(), focusIndex: 2 });
+  strip.dispatch('keydown', { key: 'End' });
+  assert.equal(strip.scrollLeft, 140);
+  const before = p.calls.length;
+  for (const extra of [{ ctrlKey: true }, { metaKey: true }, { altKey: true }])
+    strip.dispatch('keydown', { key: 'Enter', ...extra });
+  strip.dispatch('keydown', { key: '' });
+  assert.equal(p.calls.length, before);
+  p.byId('ri-mode').dispatch('keydown', { key: 'ArrowRight' });
+  assert.deepEqual(p.calls.at(-1), ['mode', 'basemap']);
+  p.byId('ri-mode').dispatch('keydown', { key: 'Space' });
+  assert.deepEqual(p.calls.at(-1), ['mode', 'basemap']);
+  p.readout.destroy();
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-048] export failure and late data do not create a download', async () => {
+  const f = fixture({ fetchImpl: async () => undefined });
+  await f.ready();
+  assert.equal(await f.readout.exportImage(), false);
+  assert.equal(
+    f.byId('ri-notice-text').textContent,
+    'Export failed · HTTP error',
+  );
+  assert.deepEqual(f.urls.created, []);
+  f.readout.destroy();
+  f.layer.destroy();
+  let finish;
+  const g = fixture({
+    fetchImpl: () =>
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+  });
+  await g.ready();
+  const work = g.readout.exportImage();
+  assert.equal(await g.readout.exportImage(), false);
+  g.readout.destroy();
+  finish(response());
+  assert.equal(await work, false);
+  assert.deepEqual(g.urls.created, []);
+  g.layer.destroy();
+});
+
+test('[recent-imagery-047] divider callbacks use globe width and spoken side labels', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.setMode('basemap');
+  await f.settleLease();
+  const options = f.splits.at(-1).options;
+  assert.equal(options.getViewportWidth(), 1000);
+  assert.equal(
+    options.formatValueText(40, 60),
+    'Image 40 percent, basemap 60 percent',
+  );
+  f.viewer.scene.canvas.clientWidth = 0;
+  assert.equal(options.getViewportWidth(), 1200);
+  f.document.documentElement.clientWidth = 0;
+  assert.equal(options.getViewportWidth(), 0);
+  options.onChange(0.4);
+  assert.equal(f.snap().split, 0.4);
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-043 recent-imagery-048 recent-imagery-049] panel owns its class, details title and export filename', async () => {
+  const f = fixture();
+  await f.ready();
+  assert.equal(f.root.className, 'recent-imagery-readout');
+  assert.equal(f.byId('ri-details').textContent.includes('Details'), true);
+  let download;
+  const create = f.document.createElement;
+  f.document.createElement = (tag) => {
+    const node = create(tag);
+    if (tag === 'a')
+      node.click = () => {
+        download = node.download;
+      };
+    return node;
+  };
+  assert.equal(await f.readout.exportImage(), true);
+  assert.equal(download, 'recent-imagery-S30-2026-09-18.png');
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-049] details with real dimensions open the card', async () => {
+  const f = fixture();
+  await f.ready();
+  f.body.clientHeight = 100;
+  f.body.clientTop = 2;
+  f.body.getBoundingClientRect = () => ({ top: 10 });
+  const header = f
+    .byId('ri-details')
+    .find((node) => node.classList.contains('rail-card-header'));
+  header.parentNode.getBoundingClientRect = () => ({ top: 120, height: 60 });
+  header.click();
+  assert.equal(header.parentNode.dataset.open, 'true');
+  assert.equal(f.body.scrollTop, 0);
+  header.click();
+  header.parentNode.getBoundingClientRect = () => ({ top: -10, height: 60 });
+  header.click();
+  assert.equal(header.parentNode.dataset.open, 'true');
+  assert.equal(f.body.scrollTop, 0);
+  header.click();
+  f.body.clientTop = 0;
+  f.body.scrollTop = 40;
+  header.click();
+  assert.equal(header.parentNode.dataset.open, 'true');
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-044 recent-imagery-049] panel details use absent and overview facts', async () => {
+  const f = fixture();
+  await f.ready();
+  const base = f.snap();
+  const c = {
+    ...base.candidates[0],
+    product: 'X30',
+    cloud: null,
+    timeRange: { start: 'bad' },
+    granules: [{ product: 'X30', timeStart: 'bad', cloud: null }],
+    coverage: null,
+    thumbnail: null,
+  };
+  const p = snapshotPanel({
+    ...base,
+    candidates: [c],
+    focus: c,
+    focusIndex: 0,
+    boxSizeKm: { width: NaN, height: 120 },
+    readout: null,
+  });
+  assert.equal(p.readout.root.textContent.includes('Box ? × 120 km'), true);
+  assert.equal(p.readout.root.textContent.includes('Coverage unknown'), true);
+  assert.equal(p.readout.root.textContent.includes('X30'), true);
+  const overview = {
+    ...c,
+    product: 'VIIRS',
+    timeRange: null,
+    granules: null,
+    thumbnail: { acquisitionTime: '2026-09-18T17:12:00Z' },
+  };
+  p.emit({
+    ...base,
+    candidates: [overview],
+    focus: overview,
+    focusIndex: 0,
+    pins: {
+      ...base.pins,
+      a: { key: c.key, candidate: c, sourceOff: true, label: 'Old image' },
+    },
+  });
+  assert.equal(p.readout.root.textContent.includes('Acquired 17:12Z'), true);
+  assert.equal(
+    p.readout.root.textContent.includes('Source off · Old image'),
+    true,
+  );
+  p.emit({ ...base, candidates: [], focus: null, hiddenCount: 1 });
+  assert.equal(
+    p.readout.root.textContent.includes('Every day is empty here'),
+    true,
+  );
+  p.emit({
+    ...base,
+    candidates: [],
+    focus: null,
+    sources: { hls: false, viirs: false },
+    hiddenCount: 0,
+  });
+  assert.equal(p.readout.root.textContent.includes('Sources off'), true);
+  p.readout.destroy();
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-048] default export URL functions own and release a large PNG', async () => {
+  const f = fixture();
+  await f.ready();
+  const base = f.snap();
+  const create = URL.createObjectURL;
+  const revoke = URL.revokeObjectURL;
+  const revoked = [];
+  const fetches = [];
+  URL.createObjectURL = () => 'blob:large';
+  URL.revokeObjectURL = (url) => revoked.push(url);
+  try {
+    const p = snapshotPanel(
+      {
+        ...base,
+        box: { west: 0, south: 0, east: 2, north: 1 },
+        boxSizeKm: { width: 222, height: 111 },
+      },
+      {
+        fetchImpl: async (url) => {
+          fetches.push(url);
+          return response();
+        },
+      },
+    );
+    assert.equal(await p.readout.exportImage(), true);
+    assert.match(fetches[0], /WIDTH=2048&HEIGHT=1024/);
+    assert.deepEqual(revoked, ['blob:large']);
+    p.readout.destroy();
+  } finally {
+    URL.createObjectURL = create;
+    URL.revokeObjectURL = revoke;
+  }
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-045] Enter repeat does not ask for another preview', async () => {
+  const f = fixture();
+  await f.ready();
+  const p = snapshotPanel(f.snap());
+  p.byId('ri-strip').dispatch('keydown', { key: 'Enter' });
+  p.byId('ri-strip').dispatch('keydown', { key: 'Enter', repeat: true });
+  assert.deepEqual(
+    p.calls.filter(([call]) => call === 'preview'),
+    [['preview', 'S30:2026-09-18']],
+  );
+  p.readout.destroy();
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-045 recent-imagery-048] export action and layer clear use panel callbacks', async () => {
+  const f = fixture();
+  await f.ready();
+  f.byAction('export-a').click();
+  await settle();
+  assert.deepEqual(f.urls.revoked, ['blob:export']);
+  f.tool.start();
+  f.layer.clear();
+  assert.equal(f.tool.isActive(), false);
+  assert.equal(f.tool.calls.includes('cancel:layer'), true);
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-043 recent-imagery-047] panel uses the default frame callback and ignores late state', async () => {
+  const f = fixture();
+  await f.ready();
+  const base = f.snap();
+  let callback;
+  let renders = 0;
+  const p = snapshotPanel(
+    {
+      ...base,
+      comparison: { active: true },
+      shown: { ...base.shown, swipe: 'basemap' },
+    },
+    {
+      viewer: {
+        scene: {
+          requestRender() {
+            renders += 1;
+          },
+        },
+      },
+      createSplit: (options) => {
+        callback = options.requestRender;
+        return { setValue() {}, destroy() {} };
+      },
+    },
+  );
+  callback();
+  assert.equal(renders, 1);
+  p.emit(null, 'alpha');
+  p.readout.destroy();
+  p.emit({ ...base, mode: 'ab' });
+  assert.equal(p.readout.root.dataset.mode, 'image');
+  assert.equal(p.calls.filter(([call]) => call === 'off').length, 1);
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-048] thrown export value appears as an error', async () => {
+  const f = fixture({
+    fetchImpl: async () => {
+      throw 'source-error';
+    },
+  });
+  await f.ready();
+  assert.equal(await f.readout.exportImage(), false);
+  assert.equal(
+    f.byId('ri-notice-text').textContent,
+    'Export failed · source-error',
+  );
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-043 recent-imagery-044] absent chrome and source facts keep the panel usable', async () => {
+  const f = fixture();
+  await f.ready();
+  const base = f.snap();
+  const c = { ...base.candidates[0], product: '', pinned: 'b' };
+  const p = snapshotPanel(
+    {
+      ...base,
+      candidates: [c],
+      focus: c,
+      focusIndex: 0,
+      boxSizeKm: { width: 11 },
+    },
+    { noChrome: true },
+  );
+  assert.equal(p.readout.root.hidden, false);
+  assert.equal(p.readout.root.textContent.includes('Box 11.0 × ? km'), true);
+  assert.equal(
+    p.readout.root.find((node) => node.classList.contains('ri-card-sensor'))
+      .textContent,
+    '',
+  );
+  const label = p.readout.root
+    .find((node) => node.classList.contains('ri-card'))
+    .getAttribute('aria-label');
+  assert.equal(label.includes('pinned'), false);
+  assert.equal(label.includes('shown'), false);
+  p.emit({
+    ...base,
+    pins: {
+      ...base.pins,
+      a: {
+        key: c.key,
+        candidate: c,
+        label: 'Day',
+        sourceOff: false,
+        drapable: false,
+      },
+    },
+  });
+  assert.equal(p.readout.root.textContent.includes('Day · loading'), true);
+  p.readout.destroy();
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-048] zero snapshot spans still request a finite image size', async () => {
+  const f = fixture();
+  await f.ready();
+  const fetches = [];
+  const p = snapshotPanel(
+    { ...f.snap(), box: { west: 0, south: 0, east: 0, north: 0 } },
+    {
+      fetchImpl: async (url) => {
+        fetches.push(url);
+        return response();
+      },
+      createObjectUrl: () => 'blob:square',
+      revokeObjectUrl: () => {},
+    },
+  );
+  assert.equal(await p.readout.exportImage(), true);
+  assert.match(fetches[0], /WIDTH=1024&HEIGHT=1024/);
+  p.readout.destroy();
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-048] export rejection after panel destroy does not add a notice', async () => {
+  let reject;
+  const f = fixture({
+    fetchImpl: () =>
+      new Promise((resolve, fail) => {
+        reject = fail;
+      }),
+  });
+  await f.ready();
+  const work = f.readout.exportImage();
+  const notice = f.byId('ri-notice-text');
+  const before = notice.textContent;
+  f.readout.destroy();
+  reject(new Error('late'));
+  assert.equal(await work, false);
+  assert.equal(notice.textContent, before);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-051] absent card dimensions use zero for the visible range', async () => {
+  const f = fixture();
+  await f.ready();
+  const p = snapshotPanel(f.snap());
+  const strip = p.byId('ri-strip');
+  strip.clientWidth = 100;
+  strip.scrollLeft = 1;
+  strip.dispatch('scroll');
+  assert.deepEqual(
+    p.calls.filter(([call]) => call === 'range'),
+    [],
+  );
+  strip.scrollLeft = 0;
+  strip.dispatch('scroll');
+  assert.deepEqual(
+    p.calls.filter(([call]) => call === 'range'),
+    [['range', 0, 3]],
+  );
+  p.readout.destroy();
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-045] a pin action without a card key does not call the layer', async () => {
+  const f = fixture();
+  await f.ready();
+  let calls = 0;
+  const assign = f.layer.toggleAssignment;
+  f.layer.toggleAssignment = (...args) => {
+    calls += 1;
+    return assign(...args);
+  };
+  const chip = f.chip(S18, 'a');
+  f.card(S18).dataset.key = '';
+  chip.click();
+  assert.equal(calls, 0);
+  assert.equal(f.snap().pins.a.key, null);
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-045] a focus callback that clears the layer keeps strip scroll fixed', async () => {
+  const f = fixture();
+  await f.ready();
+  f.strip.clientWidth = 100;
+  f.strip.scrollLeft = 10;
+  f.card(L16).offsetWidth = 100;
+  f.card(L16).offsetLeft = 200;
+  const off = f.layer.subscribe((snapshot) => {
+    if (snapshot.box && snapshot.focus?.key === L16) f.layer.clear();
+  });
+  assert.doesNotThrow(() => f.key('ArrowRight'));
+  assert.equal(f.snap().candidates.length, 0);
+  assert.equal(f.strip.scrollLeft, 10);
+  off();
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-044] an empty thumbnail host gets a new image', async () => {
+  const f = fixture();
+  await f.ready();
+  const host = f.part(f.card(S18), 'ri-thumb');
+  for (const child of [...host.children]) child.remove();
+  const get = f.thumbnails.get;
+  f.thumbnails.get = (key) =>
+    key === S18 ? { status: 'present', objectUrl: 'blob:rebuilt' } : get(key);
+  f.thumbnails.probe(S18, 'present');
+  assert.equal(host.children.length, 1);
+  assert.equal(host.children[0].src, 'blob:rebuilt');
+  assert.equal(Object.hasOwn(host.children[0], 'src'), true);
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-044] new catalog cards can append to an empty strip host', async () => {
+  const f = fixture();
+  await f.ready();
+  f.strip.find((node) => node.classList.contains('ri-strip-empty')).remove();
+  f.layer.setBox({ ...BOX, east: -97.6 });
+  f.catalog.resolveLast();
+  await settle();
+  assert.deepEqual(
+    f.strip.children.map((node) => node.dataset.key),
+    [
+      'VIIRS:2026-09-21',
+      'S30:2026-09-18',
+      'L30:2026-09-16',
+      'VIIRS:2026-09-15',
+    ],
+  );
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-044] a new catalog removes both old day cards', async () => {
+  const f = fixture();
+  await f.ready();
+  assert.equal(f.cards().length, 4);
+  f.layer.setBox({ ...BOX, east: -97.69 });
+  f.catalog.resolveLast([]);
+  await settle();
+  assert.equal(f.cards().length, 0);
+  assert.equal(f.card(S18), undefined);
+  assert.equal(f.card(L16), undefined);
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-049] details show both independent notes', async () => {
+  const f = fixture();
+  await f.ready();
+  const p = snapshotPanel({
+    ...f.snap(),
+    notes: ['First note', 'Second note'],
+  });
+  assert.equal(p.byId('ri-details').textContent.includes('First note'), true);
+  assert.equal(p.byId('ri-details').textContent.includes('Second note'), true);
+  p.readout.destroy();
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-043] the panel clears both day image sources when it stops', async () => {
+  const f = fixture();
+  await f.ready();
+  f.thumbnails.get = (key) => ({ status: 'present', objectUrl: `blob:${key}` });
+  f.layer.setShowUnavailable(true);
+  const images = f
+    .cards()
+    .map((card) => card.find((node) => node.tagName === 'IMG'));
+  assert.equal(images[0].src, 'blob:VIIRS:2026-09-21');
+  assert.equal(images[1].src, 'blob:S30:2026-09-18');
+  f.readout.destroy();
+  assert.equal(images[0].src, '');
+  assert.equal(images[1].src, '');
+  f.layer.destroy();
+});
+
+async function auditPanelState() {
+  const catalog = fakeCatalog();
+  const layer = createRecentImageryLayer({
+    catalog,
+    renderer: fakeRenderer(),
+    thumbnails: fakeThumbnails(),
+    host: () => ({ collection: {}, kind: 'globe' }),
+    now: () => new Date('2026-09-21T15:00:00Z'),
+  });
+  layer.setSources({ viirs: true });
+  layer.init({ camera: {} });
+  layer.enable();
+  layer.setBox(BOX);
+  catalog.resolveLast();
+  await settle();
+  const state = layer.getSnapshot();
+  layer.destroy();
+  return state;
+}
+function auditPanel(state, options = {}) {
+  const splits = [];
+  const p = snapshotPanel(state, {
+    createSplit: (value) => {
+      splits.push(value);
+      return { setValue() {}, destroy() {} };
+    },
+    fetchImpl: async () => response(),
+    createObjectUrl: () => 'blob:audit',
+    revokeObjectUrl() {},
+    ...options,
+  });
+  return { ...p, splits };
+}
+const auditNode = (p, cls) =>
+  p.readout.root.find((node) => node.classList.contains(cls));
+const auditAction = (p, id) =>
+  p.readout.root.find((node) => node.dataset.actionId === id);
+const auditCard = (p) => auditNode(p, 'ri-card');
+const auditLine = (p, id) =>
+  p.readout.root.find((node) => node.dataset.lineId === id);
+function auditScroll(
+  p,
+  { height = 100, top = 90, cardHeight = 20, cardRect = true } = {},
+) {
+  const requests = [];
+  let scroll = 0;
+  Object.defineProperty(p.body, 'scrollTop', {
+    configurable: true,
+    get: () => scroll,
+    set: (value) => {
+      requests.push(value);
+      scroll = value;
+    },
+  });
+  p.body.clientHeight = height;
+  p.body.clientTop = 0;
+  p.body.getBoundingClientRect = () => ({ top: 0 });
+  const header = auditNode(p, 'rail-card-header');
+  if (cardRect)
+    header.parentNode.getBoundingClientRect = () => ({
+      top,
+      height: cardHeight,
+    });
+  return { requests, header };
+}
+
+test('[recent-imagery-043] an absent layer alone prevents a panel', async () => {
+  const dom = fakeDocument();
+  assert.equal(createRecentImageryPanel({ container: dom.body }), null);
+});
+
+test('[recent-imagery-043] an absent document factory alone prevents a panel', async () => {
+  const dom = fakeDocument();
+  dom.document.createElement = null;
+  assert.equal(
+    createRecentImageryPanel({ container: dom.body, layer: {} }),
+    null,
+  );
+});
+
+test('[recent-imagery-044] one day uses the singular count label', async () => {
+  const s = await auditPanelState();
+  s.candidates = [s.candidates[1]];
+  const p = auditPanel(s);
+  assert.equal(p.count.textContent, '1 DAY');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-046] a lone B pin gives the other side hint', async () => {
+  const s = await auditPanelState();
+  s.mode = 'ab';
+  s.pins.b.key = L16;
+  const p = auditPanel(s);
+  assert.equal(
+    p.byId('ri-hint').textContent,
+    '← → preview the other side · A or B pins it',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-045] a box refusal alone keeps CLEAR active', async () => {
+  const s = await auditPanelState();
+  s.box = null;
+  s.boxError = 'Box edges must be finite';
+  const p = auditPanel(s);
+  assert.equal(auditAction(p, 'clear').disabled, false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-046] an error alone prevents the information style', async () => {
+  const s = await auditPanelState();
+  s.error = 'Failed';
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-notice').classList.contains('info'), false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-046] an empty notice alone prevents the information style', async () => {
+  const s = await auditPanelState();
+  s.error = null;
+  s.notice = null;
+  s.borrowedEsri = false;
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-notice').classList.contains('info'), false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an unknown day status alone keeps its placeholder', async () => {
+  const s = await auditPanelState();
+  s.candidates = [
+    {
+      ...s.candidates[1],
+      thumbnail: { status: 'unknown', objectUrl: 'blob:1' },
+    },
+  ];
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-thumb-text').hidden, false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an absent image URL alone keeps the placeholder', async () => {
+  const s = await auditPanelState();
+  s.candidates = [
+    { ...s.candidates[1], thumbnail: { status: 'present', objectUrl: null } },
+  ];
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-thumb-text').hidden, false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] a stable thumbnail reuses its sole image', async () => {
+  const s = await auditPanelState();
+  s.candidates = [
+    {
+      ...s.candidates[1],
+      thumbnail: { status: 'present', objectUrl: 'blob:1' },
+    },
+  ];
+  const p = auditPanel(s);
+  p.emit(s, 'thumbnail');
+  assert.equal(
+    p.readout.root.findAll((node) => node.tagName === 'IMG').length,
+    1,
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an unchanged thumbnail URL does not set the image source again', async () => {
+  const s = await auditPanelState();
+  s.candidates = [
+    {
+      ...s.candidates[1],
+      thumbnail: { status: 'present', objectUrl: 'blob:1' },
+    },
+  ];
+  const p = auditPanel(s);
+  const image = auditNode(p, 'ri-thumb-img'),
+    writes = [];
+  let src = image.src;
+  Object.defineProperty(image, 'src', {
+    configurable: true,
+    get: () => src,
+    set: (value) => {
+      writes.push(value);
+      src = value;
+    },
+  });
+  p.emit(s, 'thumbnail');
+  assert.deepEqual(writes, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an error status alone clears the old image source', async () => {
+  const s = await auditPanelState();
+  s.candidates = [
+    {
+      ...s.candidates[1],
+      thumbnail: { status: 'present', objectUrl: 'blob:1' },
+    },
+  ];
+  const p = auditPanel(s),
+    image = auditNode(p, 'ri-thumb-img');
+  s.candidates = [
+    { ...s.candidates[0], thumbnail: { status: 'error', objectUrl: 'blob:1' } },
+  ];
+  p.emit(s, 'thumbnail');
+  assert.equal(image.src, '');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an active day request has the busy flag', async () => {
+  const s = await auditPanelState();
+  s.candidates = [{ ...s.candidates[1], preview: false, pending: true }];
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-card-flag').textContent, 'LOADING');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an inactive B chip has a false spoken state', async () => {
+  const s = await auditPanelState();
+  s.candidates = [{ ...s.candidates[1], pinned: 'b', preview: false }];
+  const p = auditPanel(s);
+  assert.equal(
+    auditCard(p)
+      .find((node) => node.dataset.slot === 'b')
+      .getAttribute('aria-pressed'),
+    'false',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an A and B pin has its spoken slot', async () => {
+  const s = await auditPanelState();
+  s.mode = 'ab';
+  s.candidates = [{ ...s.candidates[1], pinned: 'a', preview: false }];
+  s.recommended = null;
+  const p = auditPanel(s);
+  assert.equal(
+    auditCard(p).getAttribute('aria-label'),
+    'Sep 18 · Sentinel-2 · 30 m · 12% cloud · pinned A',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] a preview day has its spoken state', async () => {
+  const s = await auditPanelState();
+  s.mode = 'image';
+  s.candidates = [{ ...s.candidates[1], pinned: null, preview: true }];
+  s.recommended = null;
+  const p = auditPanel(s);
+  assert.equal(
+    auditCard(p).getAttribute('aria-label'),
+    'Sep 18 · Sentinel-2 · 30 m · 12% cloud · preview',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] a plain day has only its spoken facts', async () => {
+  const s = await auditPanelState();
+  s.mode = 'image';
+  s.candidates = [{ ...s.candidates[1], pinned: null, preview: false }];
+  s.recommended = null;
+  const p = auditPanel(s);
+  assert.equal(
+    auditCard(p).getAttribute('aria-label'),
+    'Sep 18 · Sentinel-2 · 30 m · 12% cloud',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] a recommended day has its spoken rank', async () => {
+  const s = await auditPanelState();
+  s.mode = 'image';
+  s.candidates = [{ ...s.candidates[1], pinned: null, preview: false }];
+  s.recommended = { key: S18, reason: 'clear' };
+  const p = auditPanel(s);
+  assert.equal(
+    auditCard(p).getAttribute('aria-label'),
+    'Sep 18 · Sentinel-2 · 30 m · 12% cloud · start here',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] a full strip has an empty status label', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-strip-empty').textContent, '');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an absent box gives its strip status', async () => {
+  const s = await auditPanelState();
+  s.candidates = [];
+  s.box = null;
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-strip-empty').textContent, 'No box');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an active search gives its strip status', async () => {
+  const s = await auditPanelState();
+  s.candidates = [];
+  s.searching = true;
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-strip-empty').textContent, 'Searching');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] active sources give the empty imagery status', async () => {
+  const s = await auditPanelState();
+  s.candidates = [];
+  s.sources = { hls: true, viirs: true };
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-strip-empty').textContent, 'No imagery');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an active HLS source alone gives the empty imagery status', async () => {
+  const s = await auditPanelState();
+  s.candidates = [];
+  s.sources = { hls: true, viirs: false };
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-strip-empty').textContent, 'No imagery');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an active VIIRS source alone gives the empty imagery status', async () => {
+  const s = await auditPanelState();
+  s.candidates = [];
+  s.sources = { hls: false, viirs: true };
+  const p = auditPanel(s);
+  assert.equal(auditNode(p, 'ri-strip-empty').textContent, 'No imagery');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] the active mode alone has the zero tab index', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  const buttons = p.readout.root.findAll((node) =>
+    node.classList.contains('ri-mode-btn'),
+  );
+  assert.equal(buttons[0].tabIndex, 0);
+  assert.equal(buttons[1].tabIndex, -1);
+  assert.equal(buttons[2].tabIndex, -1);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] the A preview does not fill the B row', async () => {
+  const s = await auditPanelState();
+  s.mode = 'ab';
+  const p = auditPanel(s);
+  assert.equal(
+    p.byId('ri-slot-b').find((node) => node.classList.contains('ri-slot-value'))
+      .textContent,
+    'Not set',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] IMAGE keeps the stored B pin controls inactive', async () => {
+  const s = await auditPanelState();
+  s.pins.b = {
+    ...s.pins.b,
+    key: L16,
+    candidate: s.candidates[2],
+    drapable: true,
+    sourceOff: false,
+    label: 'Day B',
+  };
+  const p = auditPanel(s);
+  assert.equal(p.byId('ri-slot-b').dataset.state, 'empty');
+  assert.equal(p.byId('ri-unpin-b').disabled, true);
+  assert.equal(auditAction(p, 'export-b').disabled, true);
+  assert.equal(await p.readout.exportImage('b'), false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] a source off pin loses its image controls', async () => {
+  const s = await auditPanelState();
+  s.pins.a = {
+    ...s.pins.a,
+    key: S18,
+    candidate: s.candidates[1],
+    drapable: false,
+    sourceOff: false,
+    label: 'Day A',
+  };
+  s.preview = { key: null, slot: null };
+  const p = auditPanel(s);
+  assert.equal(p.byId('ri-slot-a').classList.contains('lit'), true);
+  s.pins.a = { ...s.pins.a, sourceOff: true };
+  p.emit(s);
+  assert.equal(p.byId('ri-slot-a').classList.contains('lit'), false);
+  assert.equal(p.byId('ri-slot-a').textContent.includes(' · loading'), false);
+  assert.equal(auditAction(p, 'export-a').disabled, true);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] a pin without day facts has only its day label', async () => {
+  const s = await auditPanelState();
+  s.pins.a = {
+    ...s.pins.a,
+    key: S18,
+    candidate: null,
+    drapable: false,
+    sourceOff: false,
+    label: 'Day A',
+  };
+  const p = auditPanel(s);
+  assert.equal(
+    p.byId('ri-slot-a').find((node) => node.classList.contains('ri-slot-value'))
+      .textContent,
+    'Day A',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an image row has the active style', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  assert.equal(p.byId('ri-slot-a').classList.contains('lit'), true);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-044] an A and B pin has its spoken removal action', async () => {
+  const s = await auditPanelState();
+  s.mode = 'ab';
+  const p = auditPanel(s);
+  assert.equal(p.byId('ri-unpin-a').getAttribute('aria-label'), 'Unpin A');
+  assert.equal(p.byId('ri-unpin-b').getAttribute('aria-label'), 'Unpin B');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-047] an inactive swipe keeps its swap state false', async () => {
+  const s = await auditPanelState();
+  s.comparison.active = false;
+  s.swapped = true;
+  const p = auditPanel(s);
+  assert.equal(p.byId('ri-swap').classList.contains('active'), false);
+  assert.equal(p.byId('ri-swap').getAttribute('aria-pressed'), 'false');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-047] an unchanged swipe keeps its swap state false', async () => {
+  const s = await auditPanelState();
+  s.comparison.active = true;
+  s.swapped = false;
+  const p = auditPanel(s);
+  assert.equal(p.byId('ri-swap').classList.contains('active'), false);
+  assert.equal(p.byId('ri-swap').getAttribute('aria-pressed'), 'false');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-048] IMAGE gives its button the correct title', async () => {
+  const s = await auditPanelState();
+  s.mode = 'image';
+  const p = auditPanel(s);
+  assert.equal(auditAction(p, 'export-a').title, 'Download the image as a PNG');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-048] A and B gives its A button the correct title', async () => {
+  const s = await auditPanelState();
+  s.mode = 'ab';
+  const p = auditPanel(s);
+  assert.equal(auditAction(p, 'export-a').title, 'Download A as a PNG');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] equal acquisition times have one spoken time', async () => {
+  const s = await auditPanelState();
+  s.focus = {
+    ...s.focus,
+    timeRange: { start: '2026-09-18T17:12:00Z', end: '2026-09-18T17:12:00Z' },
+  };
+  const p = auditPanel(s);
+  assert.equal(
+    auditLine(p, 'acquired').textContent,
+    'Acquired 17:12Z · Coverage full',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] an invalid granule time has an empty time label', async () => {
+  const s = await auditPanelState();
+  s.focus = {
+    ...s.focus,
+    granules: [{ id: 'Scene', timeStart: 'bad', cloud: null }],
+  };
+  const p = auditPanel(s);
+  assert.equal(auditLine(p, 'granule-0').textContent, 'Scene · ');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] an absent granule cloud has no cloud suffix', async () => {
+  const s = await auditPanelState();
+  s.focus = {
+    ...s.focus,
+    granules: [{ id: 'Scene', timeStart: '2026-09-18T17:12:00Z', cloud: null }],
+  };
+  const p = auditPanel(s);
+  assert.equal(auditLine(p, 'granule-0').textContent, 'Scene · 17:12Z');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] an inactive overview source alone prevents its scale note', async () => {
+  const s = await auditPanelState();
+  s.sources.viirs = false;
+  const p = auditPanel(s);
+  assert.equal(Boolean(auditLine(p, 'overview-scale')), false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] a large box alone prevents its overview scale note', async () => {
+  const s = await auditPanelState();
+  s.boxSizeKm = { width: 30, height: 30 };
+  const p = auditPanel(s);
+  assert.equal(Boolean(auditLine(p, 'overview-scale')), false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] a focused day has its compact readout', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  assert.equal(
+    auditNode(p, 'rail-card-compact').textContent,
+    'Sep 18, 2026 17:12Z · 3 days ago · Sentinel-2 via HLS · 30 m · 12% scene cloud',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] an absent focus has the generic details title', async () => {
+  const s = await auditPanelState();
+  s.focus = null;
+  s.readout = '';
+  const p = auditPanel(s);
+  assert.equal(
+    auditNode(p, 'rail-card-compact').textContent,
+    'Times, coverage, sources',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] the empty day control stays active while it shows empty days', async () => {
+  const s = await auditPanelState();
+  s.showUnavailable = true;
+  s.hiddenCount = 0;
+  const p = auditPanel(s);
+  assert.equal(auditAction(p, 'toggle-empty').disabled, false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] a card above the viewport requests its upper edge', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s),
+    view = auditScroll(p, { top: -10 });
+  view.header.click();
+  assert.equal(view.requests[0], -10);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] a tall card requests its upper edge', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s),
+    view = auditScroll(p, { top: 10, cardHeight: 120 });
+  view.header.click();
+  assert.equal(view.requests[0], 10);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] a card below the viewport requests the minimum offset', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s),
+    view = auditScroll(p, { top: 90 });
+  view.header.click();
+  assert.equal(view.requests[0], 10);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] a zero viewport height alone prevents a scroll request', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s),
+    view = auditScroll(p, { height: 0 });
+  view.header.click();
+  assert.deepEqual(view.requests, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] absent card dimensions alone prevent a scroll request', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s),
+    view = auditScroll(p, { cardRect: false });
+  assert.doesNotThrow(() => view.header.click());
+  assert.deepEqual(view.requests, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] a closed DETAILS card does not request scroll', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s),
+    view = auditScroll(p);
+  p.emit(s);
+  assert.deepEqual(view.requests, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-049] an open DETAILS card does not request scroll again', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s),
+    view = auditScroll(p);
+  view.header.click();
+  view.requests.length = 0;
+  p.emit(s);
+  assert.deepEqual(view.requests, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-047] a basemap divider has its spoken name', async () => {
+  const s = await auditPanelState();
+  s.mode = 'basemap';
+  s.comparison.active = true;
+  s.shown.swipe = 'basemap';
+  const p = auditPanel(s);
+  assert.equal(
+    p.splits[0].ariaLabel,
+    'Recent imagery against the basemap divider',
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-047] an A and B divider has its spoken name', async () => {
+  const s = await auditPanelState();
+  s.mode = 'ab';
+  s.comparison.active = true;
+  s.shown.swipe = 'ab';
+  const p = auditPanel(s);
+  assert.equal(p.splits[0].ariaLabel, 'Recent imagery A and B divider');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-043] an open panel keeps its state at first appearance', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s, {
+    setupDom: (dom) => dom.panel.classList.remove('collapsed'),
+  });
+  assert.equal(p.collapse.clicked, 0);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-043] the default panel choice opens a collapsed panel', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s, {
+    setupDom: (dom) => {
+      dom.panel.dataset.collapsedPreference = 'default';
+    },
+  });
+  assert.equal(p.collapse.clicked, 1);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-048] a second export does not start another fetch', async () => {
+  const s = await auditPanelState(),
+    calls = [];
+  const p = auditPanel(s, {
+    fetchImpl: () => new Promise((resolve) => calls.push(resolve)),
+  });
+  const first = p.readout.exportImage('a'),
+    second = p.readout.exportImage('a');
+  try {
+    assert.equal(calls.length, 1);
+    assert.equal(auditAction(p, 'export-a').disabled, true);
+  } finally {
+    calls.forEach((resolve) => resolve(response()));
+    await Promise.allSettled([first, second]);
+    p.readout.destroy();
+  }
+});
+
+test('[recent-imagery-048] an absent slot image alone does not add an error', async () => {
+  const s = await auditPanelState();
+  s.preview = { key: null, slot: null };
+  const p = auditPanel(s);
+  assert.equal(await p.readout.exportImage('a'), false);
+  assert.equal(auditNode(p, 'ri-notice-text').textContent, '');
+  p.readout.destroy();
+});
+
+test('[recent-imagery-045] an absent viewport width alone prevents a strip scroll action', async () => {
+  const state = await auditPanelState(),
+    p = auditPanel(state),
+    strip = p.byId('ri-strip');
+  const card = p.readout.root.find(
+    (node) =>
+      node.classList.contains('ri-card') &&
+      node.dataset.key === state.candidates[state.focusIndex].key,
+  );
+  card.offsetWidth = 80;
+  card.offsetLeft = 0;
+  strip.clientWidth = 0;
+  let left = 100;
+  const requests = [];
+  Object.defineProperty(strip, 'scrollLeft', {
+    configurable: true,
+    get: () => left,
+    set: (value) => {
+      requests.push(value);
+      left = value;
+    },
+  });
+  strip.dispatch('keydown', { key: 'Home' });
+  assert.deepEqual(requests, []);
+  assert.equal(strip.scrollLeft, 100);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-048] an A image alone enables opacity', async () => {
+  const s = await auditPanelState(),
+    p = auditPanel(s);
+  assert.equal(p.byId('ri-opacity').disabled, false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-048] a B image alone enables opacity', async () => {
+  const s = await auditPanelState();
+  s.mode = 'ab';
+  s.shown = { a: null, b: L16, swipe: 'none' };
+  s.preview = { key: null, slot: null };
+  s.pins.b = {
+    ...s.pins.b,
+    key: L16,
+    candidate: s.candidates[2],
+    drapable: true,
+    sourceOff: false,
+    label: 'Day B',
+  };
+  const p = auditPanel(s);
+  assert.equal(p.byId('ri-opacity').disabled, false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-047] the same divider state does not create another divider', async () => {
+  const s = await auditPanelState();
+  s.mode = 'basemap';
+  s.comparison.active = true;
+  s.shown.swipe = 'basemap';
+  const p = auditPanel(s);
+  p.emit(s, 'state');
+  assert.equal(p.splits.length, 1);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-045] an empty strip ignores Enter and pin keys', async () => {
+  const s = await auditPanelState();
+  s.candidates = [];
+  s.focusIndex = -1;
+  s.focus = null;
+  const p = auditPanel(s);
+  for (const key of ['Enter', 'a', 's', 'b'])
+    assert.doesNotThrow(() => p.byId('ri-strip').dispatch('keydown', { key }));
+  assert.deepEqual(
+    p.calls.filter(([name]) => ['preview', 'pin'].includes(name)),
+    [],
+  );
+  p.readout.destroy();
+});
+
+test('[recent-imagery-045] an arrow key on an empty strip keeps its default action', async () => {
+  const s = await auditPanelState();
+  s.candidates = [];
+  s.focusIndex = -1;
+  s.focus = null;
+  const p = auditPanel(s);
+  const event = p.byId('ri-strip').dispatch('keydown', { key: 'ArrowRight' });
+  assert.equal(event.defaultPrevented, false);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-045] S does not pin a day in A and B mode', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.setMode('ab');
+  f.strip.dispatch('keydown', { key: 's' });
+  assert.equal(f.snap().pins.a.key, null);
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-045] another key outside the strip keeps the preview intact', async () => {
+  const f = fixture();
+  await f.ready();
+  const event = f.byId('ri-opacity').dispatch('keydown', { key: 'x' });
+  assert.equal(event.defaultPrevented, false);
+  assert.equal(f.snap().preview.key, 'S30:2026-09-18');
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-045] Escape outside the strip cancels an active tool', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.clearPreview();
+  f.tool.start();
+  const event = f.byId('ri-opacity').dispatch('keydown', { key: 'Escape' });
+  assert.equal(event.defaultPrevented, true);
+  assert.equal(f.tool.isActive(), false);
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-045] Escape outside the strip clears a future preview', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.clearPreview();
+  f.layer.preview(V15);
+  const event = f.byId('ri-opacity').dispatch('keydown', { key: 'Escape' });
+  assert.equal(event.defaultPrevented, true);
+  assert.equal(f.snap().preview.pending, null);
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-044] an empty day outside the map leaves the strip', async () => {
+  const f = fixture();
+  await f.ready();
+  f.thumbnails.probe(V15, 'empty');
+  assert.equal(Boolean(f.card(V15)), false);
+  assert.equal(Boolean(f.card(S18)), true);
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-045] a click outside ZOOM IN does not ask for a flight', async () => {
+  const s = await auditPanelState();
+  s.boxError = 'Box too wide';
+  s.zoomToFit = true;
+  const p = auditPanel(s);
+  p.calls.length = 0;
+  p.byId('ri-notice-text').dispatch('click');
+  assert.deepEqual(p.calls, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-045] an inactive B unpin control keeps the stored B pin', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.setMode('ab');
+  f.layer.setAssignment('b', L16);
+  f.layer.setMode('image');
+  f.byId('ri-unpin-b').dispatch('click');
+  assert.equal(f.snap().pins.b.key, 'L30:2026-09-16');
+  f.readout.destroy();
+  f.layer.destroy();
+});
+
+test('[recent-imagery-048] A and B mode exports its B pin', async () => {
+  const s = await auditPanelState();
+  s.mode = 'ab';
+  s.pins.b = {
+    ...s.pins.b,
+    key: L16,
+    candidate: s.candidates[2],
+    drapable: true,
+    sourceOff: false,
+    label: 'Day B',
+  };
+  const p = auditPanel(s);
+  assert.equal(await p.readout.exportImage('b'), true);
+  assert.equal(auditAction(p, 'export-b').disabled, false);
+  p.readout.destroy();
 });
