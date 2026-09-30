@@ -1,0 +1,97 @@
+## 1. The spec
+
+- [x] 1.1 Write the proposal, design and spec before tests.
+
+## 2. Tests and mutations
+
+- [x] 2.1 Tag or add tests for `wind-001`.
+  - Mutation: Return zero for each finite scalar in the production file. The test must fail.
+- [x] 2.2 Tag or add tests for `wind-002`.
+  - Mutation: Start field pixels at minus 90 degrees in the production file. The test must fail.
+- [x] 2.3 Tag or add tests for `wind-003`.
+  - Mutation: Set trail half life to 0.75 seconds in the production file. The test must fail.
+- [x] 2.4 Tag or add tests for `wind-004`.
+  - Mutation: Set the temperature minimum to minus 30 Celsius in the production file. The test must fail.
+- [x] 2.5 Tag or add tests for `wind-005`.
+  - Mutation: Set paused GPU ghost alpha to 0.99 in the production file. The test must fail.
+- [x] 2.6 Tag or add tests for `wind-006`.
+  - Mutation: Leave one cell in the GPU cell array in the production file. The test must fail.
+- [x] 2.7 Tag or add tests for `wind-007`.
+  - Mutation: Use a different bad shader error in the production file. The test must fail.
+- [x] 2.8 Tag or add tests for `wind-008`.
+  - Mutation: Set low GPU fade height to 25000 meters in the production file. The test must fail.
+- [x] 2.9 Tag or add tests for `wind-009`.
+  - Mutation: Use BAD instead of UTC in valid time in the production file. The test must fail.
+- [x] 2.10 Tag or add tests for `wind-010`.
+  - Mutation: Start with the IFS model in the production file. The test must fail.
+- [x] 2.11 Tag or add tests for `wind-011`.
+  - Mutation: Start with the speed field in the production file. The test must fail.
+- [x] 2.12 Tag or add tests for `wind-012`.
+  - Mutation: Use Bad field for absent scalar status in the production file. The test must fail.
+- [x] 2.13 Tag or add tests for `wind-013`.
+  - Mutation: Use Bad motion for reduced motion text in the production file. The test must fail.
+- [x] 2.14 Tag or add tests for `wind-014`.
+  - Mutation: Clear the saved sample position in the production file. The test must fail.
+- [x] 2.15 Tag or add tests for `wind-015`.
+  - Mutation: Use Bad for the count label in the production file. The test must fail.
+- [x] 2.16 Tag or add tests for `wind-016`.
+  - Mutation: Return North for calm wind in the production file. The test must fail.
+- [x] 2.17 Tag or add tests for `wind-017`.
+  - Mutation: Hide each inspection marker in the production file. The test must fail.
+- [x] 2.18 Tag or add tests for `wind-018`.
+  - Mutation: Set sampled east wind to zero in the production file. The test must fail.
+- [x] 2.19 Tag or add tests for `wind-019`.
+  - Mutation: Return zero wind speed in the production file. The test must fail.
+- [x] 2.20 Tag or add tests for `wind-020`.
+  - Mutation: Use bad as the id prefix of the unit chip in the production file. The test must fail.
+- [x] 2.21 Tag or add tests for `wind-021`.
+  - Mutation: Set the owned relief material to null in the production file. The test must fail.
+- [x] 2.22 Tag or add tests for `wind-022`.
+  - Mutation: Set relief mode to bad in the production file. The test must fail.
+- [x] 2.23 Tag or add tests for `wind-023`.
+  - Mutation: Clear each request for an animation frame in the production file. The test must fail.
+- [x] 2.24 Tag or add tests for `wind-024`.
+  - Mutation: Double the budget divisor for canvas particles in the production file. The test must fail.
+- [x] 2.25 Tag or add tests for `wind-025`.
+  - Mutation: Ignore pause and reduced motion in the production file. The test must fail.
+- [x] 2.26 Tag or add tests for `wind-026`.
+  - Mutation: Set globe field alpha to 0.3 in the production file. The test must fail.
+- [x] 2.27 Tag or add tests for `wind-027`.
+  - Mutation: Set low field fade height to 300000 meters in the production file. The test must fail.
+- [x] 2.28 Tag or add tests for `wind-028`.
+  - Mutation: Set the stroke distance limit to 10000 pixels in the production file. The test must fail.
+- [x] 2.29 Tag or add tests for `wind-029`.
+  - Mutation: Set stroke time to zero in the production file. The test must fail.
+- [x] 2.30 Tag or add tests for `wind-030`.
+  - Mutation: Disable GPU flow after a narrow view in the production file. The test must fail.
+- [x] 2.31 Tag or add tests for `wind-031`.
+  - Mutation: Skip the GPU ready state report in the production file. The test must fail.
+- [x] 2.32 Tag or add tests for `wind-032`.
+  - Mutation: Disable same wind reuse in the production file. The test must fail.
+- [x] 2.33 Tag or add tests for `wind-033`.
+  - Mutation: Accept a changed model key as equal in the production file. The test must fail.
+- [x] 2.34 Tag or add tests for `wind-034`.
+  - Mutation: Skip the GPU frame schedule in the production file. The test must fail.
+- [x] 2.35 Tag or add tests for `wind-035`.
+  - Mutation: Do not give the shell a field image in the production file. The test must fail.
+- [x] 2.36 Tag or add tests for `wind-036`.
+  - Mutation: Request a bad wind manifest route in the production file. The test must fail.
+- [x] 2.37 Tag or add tests for `wind-037`.
+  - Mutation: Use Bad wind manifest for the bad manifest error in the production file. The test must fail.
+- [x] 2.38 Tag or add tests for `wind-038`.
+  - Mutation: Use Bad timeout for timeout errors in the production file. The test must fail.
+- [x] 2.39 Tag or add tests for `wind-039`.
+  - Mutation: Reject an absent optional scalar in the production file. The test must fail.
+- [x] 2.40 Tag or add tests for `wind-040`.
+  - Mutation: Set the path step limit to eight in the production file. The test must fail.
+- [x] 2.41 Tag or add tests for `wind-041`.
+  - Mutation: Skip the bad wind check in each path step in the production file. The test must fail.
+- [x] 2.42 Tag or add tests for `wind-042`.
+  - Mutation: Use only the column for a path cell id in the production file. The test must fail.
+
+## 3. Gates and review
+
+- [x] 3.1 Run the ratchet command.
+- [x] 3.2 Run the full gates.
+- [ ] 3.3 Run the two review agents.
+- [ ] 3.4 Write review.md with their results.
