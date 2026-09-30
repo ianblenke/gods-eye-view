@@ -14,7 +14,7 @@ This change merges the upstream branch. The merged commit is `e7707d9`, the newe
 - Keep the OSH layer. Its share-link token is `3`. Add the row `["osh-systems", "3"]` to the token ledger `src/data/layerStateTokenReservations.json` of the upstream project.
 - Change the test fixtures of the token ledger. The digit `3` is now in use, so the next free digit is `4`. The ledger has 29 rows, and not 28.
 - Add a QA header to the 13 new upstream QA scripts. The test `qa-scripts-023` counts 83 scripts, and not 70.
-- Fix four upstream tests that make the gates stop the build. Two of them leave live timers. One of them counts calls of `Array.prototype.join`, and the assertion counter of the gates calls that function. One of them has a time ceiling that is too small when the gates run many test processes.
+- Fix five tests that make the gates stop the build. Two of them leave live timers. One of them counts calls of `Array.prototype.join`, and the assertion counter of the gates calls that function. One of them has a time ceiling that is too small when the gates run many test processes. One of them loads 51 modules through Vite, and the gates then count seven unchanged files as untrue.
 - Run the ledger command `adopt` for the files that the merge commit brings from the upstream project, and that have a gap.
 
 ## Capabilities

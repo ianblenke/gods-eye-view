@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { readLayerSource } from '../testSupport/readLayerSource.mjs';
 import test from 'node:test';
-import { fileURLToPath } from 'node:url';
+import { dirname, resolve as resolvePath } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { getTrafficTimingDiagnostics } from './traffic.js';
 
@@ -167,6 +168,17 @@ test('traffic timing pairs real ordering to the scheduling change and guards re-
       optimizeDeps: { noDiscovery: true, include: [] },
       server: { middlewareMode: true, watch: null },
       plugins: [{
+        // Only the two files below need Vite. Every other module loads natively, so
+        // the gates can check its source. A file that Vite loads counts as untrue.
+        name: 'traffic-timing-native-imports',
+        enforce: 'pre',
+        resolveId(source, importer) {
+          if (!importer || !source.startsWith('.') || !source.endsWith('.js')) return null;
+          const path = resolvePath(dirname(importer.split('?')[0]), source);
+          if (path.endsWith('/src/layers/traffic/index.js')) return null;
+          return { id: pathToFileURL(path).href, external: true };
+        },
+      }, {
         name: 'traffic-timing-test-hooks',
         transform(code, id) {
           if (!id.endsWith('/src/layers/traffic/index.js')) return null;

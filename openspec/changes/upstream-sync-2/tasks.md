@@ -24,6 +24,9 @@ For each test below, run the named mutation. Report the test that fails in `revi
 - [ ] 2.6 Raise the time ceiling of the slow boundary lookup test to 10 seconds.
   - Mutation: make the lookup wait for the slow source. The test must fail.
 
+- [ ] 2.7 Load only two files of the traffic timing test through Vite.
+  - Mutation: name `src/layers/traffic/state.js` in the plugin, and not `index.js`. The test must fail.
+
 ## 3. Gates and review
 
 - [ ] 3.1 Run the command `make adopt` for this change, from the merged commit.
