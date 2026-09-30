@@ -20,7 +20,7 @@ const snapshot = {
   },
 };
 
-test('scalar samples preserve normalized units, geometry, poles and the date-line seam', () => {
+test('[wind-001] scalar samples preserve normalized units, geometry, poles and the date-line seam', () => {
   assert.equal(sampleScalar(snapshot, 0, 90, 'speed'), 5);
   assert.equal(sampleScalar(snapshot, 0, 90, 'temperature'), 0);
   assert.equal(sampleScalar(snapshot, 90, -90, 'temperature'), 0);
@@ -43,7 +43,7 @@ test('scalar samples preserve normalized units, geometry, poles and the date-lin
   assert.equal(sampleScalar(snapshot, Infinity, 0, 'speed'), null);
 });
 
-test('raster samples geographic pixel centers, not the source zero-longitude origin', () => {
+test('[wind-002] raster samples geographic pixel centers, not the source zero-longitude origin', () => {
   const raster = createFieldRaster(snapshot, 'temperature', 4, 2);
   const shifted = {
     ...snapshot,
@@ -63,7 +63,7 @@ test('raster samples geographic pixel centers, not the source zero-longitude ori
   assert.equal(createFieldRaster(snapshot, 'speed', 4000, 2000), null);
 });
 
-test('trail decay is independent of frame cadence and palette lookup clamps endpoints', () => {
+test('[wind-003] trail decay is independent of frame cadence and palette lookup clamps endpoints', () => {
   const remaining30 = (1 - trailEraseAlpha(1 / 30)) ** 30;
   const remaining60 = (1 - trailEraseAlpha(1 / 60)) ** 60;
   assert.ok(Math.abs(remaining30 - remaining60) < 1e-12);
@@ -73,7 +73,7 @@ test('trail decay is independent of frame cadence and palette lookup clamps endp
   assert.notEqual(windTrailColor(0), windTrailColor(30));
 });
 
-test('hot-loop sampling fills the supplied output without allocating a replacement', () => {
+test('[wind-018] hot-loop sampling fills the supplied output without allocating a replacement', () => {
   const result = {};
   assert.equal(
     sampleWind(
@@ -88,7 +88,7 @@ test('hot-loop sampling fills the supplied output without allocating a replaceme
 });
 
 
-test('temperature uses a fixed Celsius scale with visible everyday gradients', () => {
+test('[wind-004] temperature uses a fixed Celsius scale with visible everyday gradients', () => {
   const spec = WIND_FIELDS.temperature;
   assert.equal(spec.units, '°C');
   assert.deepEqual(
@@ -111,4 +111,28 @@ test('temperature uses a fixed Celsius scale with visible everyday gradients', (
   }
   assert.deepEqual(colorAt(-60), colorAt(-40), 'only color saturates below the fixed scale');
   assert.deepEqual(colorAt(60), colorAt(50), 'only color saturates above the fixed scale');
+});
+
+test('[wind-001] scalar read rejects absent and invalid data', () => {
+  assert.equal(sampleScalar(null, 0, 0), null);
+  assert.equal(sampleScalar(snapshot, 0, 0), -5);
+  assert.equal(sampleScalar({ ...snapshot, scalar: { ...snapshot.scalar, values: new Float32Array(8).fill(NaN) } }, 0, 0, 'temperature'), null);
+  assert.equal(windTrailColor(NaN), windTrailColor(0));
+});
+
+test('[wind-002] field image rejects invalid bounds and absent pixels', () => {
+  assert.equal(createFieldRaster(snapshot, 'temperature', 1, 2), null);
+  assert.equal(createFieldRaster(snapshot, 'pressure', 2, 2), null);
+  assert.equal(createFieldRaster({ ...snapshot, scalar: { ...snapshot.scalar, values: new Float32Array(8).fill(NaN) } }, 'temperature', 2, 2), null);
+  const flat = { ...snapshot.grid, u: snapshot.u, v: snapshot.v };
+  const image = createFieldRaster(flat, 'speed', 2, 2);
+  assert.equal(image.rgba.length, 16);
+  assert.equal(image.rgba[3] > 0, true);
+  assert.equal(createFieldRaster(null, 'speed'), null);
+});
+
+test('[wind-002] pressure image uses a scalar alpha', () => {
+  const pressure = { ...snapshot, scalar: { kind: 'pressure', units: 'hPa', values: new Float32Array(8).fill(1013) } };
+  assert.equal(createFieldRaster(pressure, 'pressure', 2, 2).rgba[3], 61);
+  assert.equal(sampleScalar({ ...snapshot, u: new Float32Array(8).fill(NaN) }, 0, 0, 'speed'), null);
 });
