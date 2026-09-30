@@ -370,15 +370,19 @@ test('surface keys reuse identity without building arrays or strings on unchange
     joins++;
     return originalJoin.apply(this, args);
   };
+  // Collect the keys inside the counted loop and assert after it. The gates wrap
+  // each assert call, and that wrapper calls Array.prototype.join.
+  const differing = [];
   try {
     for (let i = 0; i < 1000; i++) {
       scene.postRender.raiseEvent();
-      assert.equal(trafficSurfaceKey(scene), first);
+      if (trafficSurfaceKey(scene) !== first) differing.push(i);
     }
   } finally {
     Array.prototype.map = originalMap;
     Array.prototype.join = originalJoin;
   }
+  assert.deepEqual(differing, []);
   assert.equal(maps, 0);
   assert.equal(joins, 0);
   tiles[1].show = false;
