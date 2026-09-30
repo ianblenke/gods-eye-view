@@ -4,7 +4,7 @@
 
 ## 2. Tests and mutations
 
-The change has 52 scenarios, 389 tests and 828 mutation checks.
+The change has 52 scenarios, 391 tests and 831 mutation checks.
 
 - [x] 2.1 Add tests for `recent-imagery-001`.
   - Mutation: In `src/layers/recentImagery/catalog.js`, replace the first block with the second block. The test must fail.
