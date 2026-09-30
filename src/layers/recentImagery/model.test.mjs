@@ -589,7 +589,7 @@ test('[recent-imagery-008] an invalid pin size alone returns null', async () => 
   assert.equal(boxFromPin(0, 0, '10'), null);
 });
 
-test('[recent-imagery-008] an invalid pin positive-size alone returns null', async () => {
+test('[recent-imagery-008] an invalid pin size that is not positive alone returns null', async () => {
   assert.equal(boxFromPin(0, 0, -1), null);
 });
 

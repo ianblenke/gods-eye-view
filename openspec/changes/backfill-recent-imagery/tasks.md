@@ -4,12 +4,12 @@
 
 ## 2. Tests and mutations
 
-The change has 52 scenarios, 433 tests and 876 mutation checks.
+The change has 52 scenarios, 434 tests and 877 mutation checks.
 
-The test declaration sweep finds 432 declarations; the path loop gives 433 tests.
+The test declaration sweep finds 433 declarations; the path loop gives 434 tests.
 The scenario heading sweep finds 52 scenarios.
 The `untracedTests` entries in `openspec/trace/gaps.json` give 93 old tests.
-The entries in `muts.json` and `muts3.json` give 828 and 48 mutation checks, for a total of 876.
+The entries in `muts.json` and `muts3.json` give 828 and 49 mutation checks, for a total of 877.
 
 
 - [x] 2.1 Add tests for `recent-imagery-001`.
@@ -582,7 +582,7 @@ const end = start + Number(card?.offsetWidth);
 ## 3. Checks
 
 - [x] 3.1 Audit each compound condition and each loop key.
-- [x] 3.2 Record the equivalent size guard mutation.
+- [x] 3.2 Record the mutation of the size guard. It gives the same result.
 - [x] 3.3 Check the host coverage limits with the gate image.
 
 ## 4. Gates and review
@@ -609,9 +609,9 @@ status = true ? 200 : 500,
 ## 6. Round 3
 
 - [x] 6.1 Check the twelve public API cases with the new tests.
-- [x] 6.2 Check each new observable claim from the remaining mutation rows.
+- [x] 6.2 Check each new observable claim from the other mutation rows.
 - [x] 6.3 Record each equivalent claim in the proposal and the audit.
-- [x] 6.4 Retag the test doubles with `recent-imagery-052`.
+- [x] 6.4 Change the tag of the test doubles to `recent-imagery-052`.
 - [x] 6.5 Correct the timer title.
 - [x] 6.6 Remove the weaker opacity subscriber test.
 - [x] 6.7 Run the host test, mutation, coverage, prose and format checks.

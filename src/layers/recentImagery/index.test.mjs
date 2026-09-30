@@ -1442,7 +1442,7 @@ test('[recent-imagery-041] with SELECT BOX armed, Escape clears the preview firs
   await tool.destroy();
 });
 
-test('[recent-imagery-029 recent-imagery-038] listener and publication errors keep the layer state valid', async () => {
+test('[recent-imagery-029 recent-imagery-038] errors in a listener and errors when the layer publishes keep the layer state valid', async () => {
   const f = fixture();
   const warnings = [];
   const warn = console.warn;
@@ -1699,7 +1699,7 @@ test('[recent-imagery-028] a change to north starts a new search', async () => {
   f.layer.destroy();
 });
 
-test('[recent-imagery-037] the hls source alone changes its state', async () => {
+test('[recent-imagery-037] the HLS source alone changes its state', async () => {
   const f = fixture();
   await f.ready();
   assert.equal(f.layer.setSources({ hls: false }), true);
@@ -1708,7 +1708,7 @@ test('[recent-imagery-037] the hls source alone changes its state', async () => 
   f.layer.destroy();
 });
 
-test('[recent-imagery-037] the viirs source alone changes its state', async () => {
+test('[recent-imagery-037] the VIIRS source alone changes its state', async () => {
   const f = fixture();
   await f.ready();
   assert.equal(f.layer.setSources({ viirs: false }), true);
@@ -1738,7 +1738,7 @@ test('[recent-imagery-029] an unknown source product does not enter the strip', 
   f.layer.destroy();
 });
 
-test('[recent-imagery-040 recent-imagery-041] a late focus callback cannot restore a cancelled preview', async () => {
+test('[recent-imagery-040 recent-imagery-041] a late focus callback cannot restore a canceled preview', async () => {
   const f = fixture();
   await f.ready();
   f.layer.focus(2);
@@ -2254,6 +2254,23 @@ test('[recent-imagery-031] two pins do not allow another preview', async () => {
   f.layer.destroy();
 });
 
+test('[recent-imagery-039] an empty automatic preview does not choose a day that a pin holds', async () => {
+  const f = fixture();
+  f.layer.setParams({ ...LINK_BOX, b: L16, mode: 1 });
+  f.layer.enable();
+  f.catalog.resolveLast([CANDIDATES[1], CANDIDATES[2]]);
+  await settle();
+  assert.equal(f.snap().mode, 'basemap');
+  assert.equal(f.snap().auto.key, S18, 'START HERE previews in slot A');
+  f.layer.setMode('ab');
+  f.thumbnails.probe(S18, 'empty');
+  assert.equal(f.snap().pins.b.key, L16);
+  assert.equal(f.snap().auto, null, 'the B pin day is not chosen again');
+  assert.equal(f.snap().preview.key, null);
+  assert.equal(f.snap().preview.pending, null);
+  f.layer.destroy();
+});
+
 test('[recent-imagery-031] a single B image cannot form an A and B comparison', async () => {
   const f = fixture();
   await f.ready();
@@ -2377,7 +2394,7 @@ test('[recent-imagery-033] IMAGE does not show the tileset swipe note', async ()
   f.layer.destroy();
 });
 
-test('[recent-imagery-029] an absent overview day alone does not allow its pass note', async () => {
+test('[recent-imagery-029] an absent overview day alone does not allow its overview note', async () => {
   const f = fixture();
   await f.ready([candidate('S30', '2026-09-18', 12)]);
   assert.equal(
@@ -2391,7 +2408,7 @@ test('[recent-imagery-029] an absent overview day alone does not allow its pass 
   f.layer.destroy();
 });
 
-test('[recent-imagery-029] an inactive overview source alone does not allow its pass note', async () => {
+test('[recent-imagery-029] an inactive overview source alone does not allow its overview note', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setSources({ viirs: false });
@@ -2726,7 +2743,7 @@ test('[recent-imagery-032] an absent lease map ID alone leaves the borrowed flag
   f.layer.destroy();
 });
 
-test('[recent-imagery-028] a nonfunction tool handler does not stop CLEAR', async () => {
+test('[recent-imagery-028] a tool handler that is not a function does not stop CLEAR', async () => {
   const f = fixture();
   f.layer.setToolHandler({});
   assert.doesNotThrow(() => f.layer.clear());
@@ -2745,7 +2762,7 @@ test('[recent-imagery-037] a source change calls its row listener', async () => 
   f.layer.destroy();
 });
 
-test('[recent-imagery-037] a source change ignores a nonfunction row listener', async () => {
+test('[recent-imagery-037] a source change ignores a row listener that is not a function', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setRowControlsListener({});
@@ -2868,7 +2885,7 @@ test('[recent-imagery-036] share parameters do not send renderer work while the 
   f.layer.destroy();
 });
 
-test('[recent-imagery-038 recent-imagery-040] one clock step completes both divider publication and focus preview', async () => {
+test('[recent-imagery-038 recent-imagery-040] one clock step completes both the divider update and the focus preview', async () => {
   const f = fixture();
   await f.ready();
   f.controller.lease.settle();
@@ -2990,7 +3007,7 @@ test('[recent-imagery-039] an empty automatic preview sends renderer work once w
   f.layer.destroy();
 });
 
-test('[recent-imagery-035] stats check the host after a nonfunction subscription result', async () => {
+test('[recent-imagery-035] stats check the host after a subscription result that is not a function', async () => {
   const controller = fakeController();
   controller.subscribe = () => ({});
   const f = fixture({ controller });
@@ -3149,7 +3166,7 @@ test('[recent-imagery-042] a null candidate key moves focus to the first card wi
   f.layer.destroy();
 });
 
-test('[recent-imagery-030] a mode with different numeric results does not change the mode', async () => {
+test('[recent-imagery-030] a mode value that reads as an integer and then as a fraction does not change the mode', async () => {
   const f = fixture();
   await f.ready();
   let reads = 0;
@@ -3184,7 +3201,7 @@ test('[recent-imagery-042] an equal distance before the old focus does not repla
   f.layer.destroy();
 });
 
-test('[recent-imagery-042] the hidden count stays zero with different source lists when empty days show', async () => {
+test('[recent-imagery-042] the hidden count stays zero when empty days show, even if the day filter gives different results on each call', async () => {
   const f = fixture();
   const days = [...CANDIDATES];
   await f.ready(days);
@@ -3198,7 +3215,7 @@ test('[recent-imagery-042] the hidden count stays zero with different source lis
   f.layer.destroy();
 });
 
-test('[recent-imagery-036] a share mode whose second value is null does not change the current mode', async () => {
+test('[recent-imagery-036] a share mode that reads as AB and then as null does not change the current mode', async () => {
   const f = fixture();
   await f.ready();
   let reads = 0;
@@ -3257,14 +3274,14 @@ async function layerAfterRendererCallback({ pin = true } = {}) {
   return f;
 }
 
-test('[recent-imagery-035] a map callback after the layer calls DESTROY does not change the host after a renderer callback', async () => {
+test('[recent-imagery-035] a map callback after the layer calls DESTROY does not change the host, even if a renderer callback calls ENABLE', async () => {
   const f = await layerAfterRendererCallback();
   f.hostState.kind = 'tileset';
   f.layer.getStats();
   assert.equal(f.diag().host, 'globe');
 });
 
-test('[recent-imagery-040] a focus timer after the layer calls DESTROY does not change the preview after a renderer callback', async () => {
+test('[recent-imagery-040] a focus timer after the layer calls DESTROY does not change the preview, even if a renderer callback calls ENABLE', async () => {
   const f = await layerAfterRendererCallback({ pin: false });
   f.layer.focus(2);
   f.timers.flush();
