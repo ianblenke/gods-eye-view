@@ -16,9 +16,9 @@ The feature searches satellite days for a globe box, pins days A and B, compares
 
 ## Impact
 
-The ledger has 93 old tests in this area. All 93 now have tags.
-The area now has 389 tests. The test sweep finds zero tests without tags.
-The change has 52 scenarios, 389 tests and 828 mutation checks.
+The ledger has 93 old tests in this area. 92 now have tags. One old test stays without a tag.
+The area now has 391 tests. The test sweep finds one test without a tag, the old test in the known limits.
+The change has 52 scenarios, 391 tests and 831 mutation checks.
 
 Host Node 26 coverage differs from the Node version for the gates. The lead must check the gate image.
 
@@ -60,7 +60,9 @@ The audit checks each compound condition and loop key.
 - `src/layers/recentImagery/model.js:401`: A malformed footprint with a nonfinite latitude can produce full coverage.
 The lead changes the QA header after the archive creates the capability folder.
 
-No old test has a banned word. No old test stays without a tag.
+- Known limit `recent-imagery-untagged-old-test`: one old test in `src/ui/recentImagery.test.mjs` has a title of 26 words. The gate limit for a tagged title is 25 words. The owner rule keeps an old test name, so this test stays without a tag. Its title starts with "the notice line shows the refusal". Two new tests carry the claims of `recent-imagery-046` instead.
+
+No old test has a banned word. One old test stays without a tag.
 The title sweep flags 29 old names for verb form, passive voice or length.
 The owner rule keeps these names. The list gives each name and its file.
 

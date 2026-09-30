@@ -866,7 +866,7 @@ test('[recent-imagery-045] Escape clears the preview first, then cancels the box
   assert.equal(idle.defaultPrevented, false);
 });
 
-test('[recent-imagery-046] the notice line shows the refusal, then errors, then CLEAR, then the Esri note; the hint names the next step and that SWAP trades the sides', async () => {
+test('the notice line shows the refusal, then errors, then CLEAR, then the Esri note; the hint names the next step and that SWAP trades the sides', async () => {
   const controller = fakeController();
   let active = 'photoreal';
   controller.getActiveId = () => active;
@@ -909,6 +909,40 @@ test('[recent-imagery-046] the notice line shows the refusal, then errors, then 
   f.byAction('clear').click();
   assert.equal(noticeText.textContent, 'Box and images cleared');
   assert.equal(notice.classList.contains('info'), true);
+});
+
+test('[recent-imagery-046] an oversized box shows its size limit, the warn style and the zoom in hint', () => {
+  const f = fixture();
+  const notice = f.byId('ri-notice');
+  f.layer.enable();
+  f.layer.setBox({ west: 0, south: 0, east: 20, north: 20 });
+  assert.equal(
+    f.byId('ri-notice-text').textContent,
+    'Box is 2,226 km wide · limit 1,000 km',
+  );
+  assert.equal(notice.classList.contains('warn'), true);
+  assert.equal(notice.classList.contains('info'), false);
+  assert.equal(f.byId('ri-hint').textContent, 'Zoom in or draw a smaller box');
+});
+
+test('[recent-imagery-046] the Esri note uses the information style', async () => {
+  const controller = fakeController();
+  let active = 'photoreal';
+  controller.getActiveId = () => active;
+  const f = fixture({ controller });
+  f.layer.enable();
+  f.layer.setBox(BOX);
+  f.catalog.resolveLast();
+  await settle();
+  active = 'esri-imagery';
+  controller.lease.settle({ status: 'ready', activeId: active });
+  await settle();
+  assert.equal(
+    f.byId('ri-notice-text').textContent,
+    'Imagery on Esri · Google 3D returns when cleared',
+  );
+  assert.equal(f.byId('ri-notice').classList.contains('info'), true);
+  assert.equal(f.byId('ri-notice').classList.contains('warn'), false);
 });
 
 test('[recent-imagery-046] an oversized box offers ZOOM IN in a fixed slot at the end of the notice line; it asks the layer to fit', async () => {
