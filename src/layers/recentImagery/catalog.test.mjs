@@ -295,7 +295,7 @@ test('[recent-imagery-005] CMR pages follow the CMR-Search-After cursor up to 2,
   assert.equal(noCursor.truncated, true);
 });
 
-test('[recent-imagery-001] absent catalog fields use different defaults', () => {
+test('[recent-imagery-001] absent catalog fields use a default for each field', () => {
   const native = ummItem();
   native.meta = { 'native-id': 'native-day' };
   const blank = ummItem();

@@ -9,7 +9,7 @@ Origin: backfill
 #### Scenario: Read granule facts `recent-imagery-001`
 - **WHEN** CMR returns granule records
 - **THEN** the parser returns valid times, cloud values and footprint points
-- **AND** the rectangle path rejects a ring with only three valid corners.
+- **AND** the rectangle path rejects a ring with only three valid corners
 
 ### Requirement: Build catalog URLs
 The recent imagery feature MUST build catalog URLs.
@@ -153,7 +153,7 @@ Origin: backfill
 - **WHEN** the strip has a focus and visible range
 - **THEN** the model puts focus first, then visible neighbors, then extra cards
 - **AND** the layer updates the request range if only its first or last card changes
-- **AND** the thumbnail order has each index once even if the visible bounds give different numeric values.
+- **AND** the thumbnail order has each index once even if the visible bounds give different numeric values
 
 ### Requirement: Own and restyle image slots
 The recent imagery feature MUST own and restyle image slots.
@@ -170,7 +170,7 @@ Origin: backfill
 #### Scenario: Bound image ownership `recent-imagery-019`
 - **WHEN** slots get rapid day changes
 - **THEN** the renderer owns at most two layers and releases old layers
-- **AND** renderer destruction sends `recent-imagery-destroy` if either slot has an image
+- **AND** the renderer sends `recent-imagery-destroy` when it stops, if either slot has an image
 - **AND** a destroyed renderer rejects an image after a host update
 
 ### Requirement: Move images to a new host
@@ -231,7 +231,7 @@ Origin: backfill
 #### Scenario: Cancel thumbnail work `recent-imagery-026`
 - **WHEN** the loader cancels an active request
 - **THEN** it discards late results and starts queued work after the request settles
-- **AND** a URL callback while the loader clears images does not start a queued day that the call removed.
+- **AND** a URL callback while the loader clears images does not start a queued day that the call removed
 
 ### Requirement: Release thumbnail images
 The recent imagery feature MUST release thumbnail images.
@@ -248,7 +248,7 @@ Origin: backfill
 #### Scenario: Select or reject a box `recent-imagery-028`
 - **WHEN** the person selects a box or uses the view
 - **THEN** the layer searches a valid box and keeps a refusal with a fit action for an oversized box
-- **AND** a nonfunction tool handler does not cause a callback
+- **AND** a tool handler that is not a function does not cause a callback
 - **AND** ZOOM IN returns null if the flight method or coordinate placement method is absent
 
 ### Requirement: Search and preview a day
@@ -263,9 +263,9 @@ Origin: backfill
 - **AND** the snapshot has the UTC readout of its focus
 - **AND** an empty HLS snapshot does not read the clock for its readout
 - **AND** the same box does not start another search while an HLS request is active
-- **AND** enable does not repeat a search when the catalog has days
-- **AND** a preview with a null key does not remove the current image.
-- **AND** a search result that disables the layer does not show an image or request thumbnails.
+- **AND** ENABLE does not repeat a search when the catalog has days
+- **AND** a preview with a null key does not remove the current image
+- **AND** a search result that disables the layer does not show an image or request thumbnails
 
 ### Requirement: Pin days in image slots
 The recent imagery feature MUST pin days in image slots.
@@ -276,8 +276,8 @@ Origin: backfill
 - **THEN** the day occupies at most one slot and replaces the previous pin
 - **AND** an invalid mode does not change the current mode
 - **AND** IMAGE can preview a day from the B pin
-- **AND** a mode value with a noninteger second numeric result does not change the mode
-- **AND** a disabled layer rejects a preview even if its search result still has that day.
+- **AND** a mode value that reads as an integer and then as a fraction does not change the mode
+- **AND** a disabled layer rejects a preview even if its search result still has that day
 
 ### Requirement: Start and swap a comparison
 The recent imagery feature MUST start and swap a comparison.
@@ -290,11 +290,11 @@ Origin: backfill
 - **AND** BASEMAP without an A image has no swipe
 - **AND** two pins do not allow another preview
 - **AND** a tileset host does not allow a live swipe
-- **AND** the change from IMAGE to AB does not show the B preview in slot A.
-- **AND** the change from IMAGE to AB keeps a single B image without a swipe.
+- **AND** the change from IMAGE to AB does not show the B preview in slot A
+- **AND** the change from IMAGE to AB keeps a single B image without a swipe
 - **AND** a thumbnail callback that changes the mode to IMAGE does not leave an AB swipe
-- **AND** dESTROY does not allow SWAP even if a renderer callback calls ENABLE.
-- **AND** the layer rejects SWAP after a lease callback and a renderer callback destroy it.
+- **AND** DESTROY does not allow SWAP even if a renderer callback calls ENABLE
+- **AND** the layer rejects SWAP after a lease callback and a renderer callback destroy it
 - **AND** a preview timer does not add a null slot after a thumbnail callback fills both pins
 
 ### Requirement: Hold and release the Esri lease
@@ -308,11 +308,11 @@ Origin: backfill
 - **AND** its borrowed Esri flag needs a Google 3D origin and the same active map as the ready lease
 - **AND** a ready lease without a map ID does not mark Esri as borrowed
 - **AND** a new image gets a lease after a controller joins an empty scene
-- **AND** a controller that joins after an image appears does not get a comparison lease on the next mode change.
-- **AND** a lease that completes after its controller destroys the layer does not activate a comparison.
-- **AND** a new lease without a result does not mark Esri as borrowed after an old map result.
-- **AND** a ready result without a lease does not mark Esri as borrowed.
-- **AND** a map callback does not end a lease while an earlier lease waits to end.
+- **AND** a controller that joins after an image appears does not get a comparison lease on the next mode change
+- **AND** a lease that completes after its controller destroys the layer does not activate a comparison
+- **AND** a new lease without a result does not mark Esri as borrowed after an old map result
+- **AND** a ready result without a lease does not mark Esri as borrowed
+- **AND** a map callback does not end a lease while an earlier lease waits to end
 
 ### Requirement: Report comparison refusal
 The recent imagery feature MUST report comparison refusal.
@@ -323,7 +323,7 @@ Origin: backfill
 - **THEN** the layer reports the refusal and keeps images without a swipe
 - **AND** the tileset host note waits for a successful lease
 - **AND** its suspended flag is true only after the lease is ready and a swipe exists
-- **AND** a ready result that causes a rejected lease does not activate a swipe.
+- **AND** a ready result that causes a rejected lease does not activate a swipe
 
 ### Requirement: Handle a change to Google 3D
 The recent imagery feature MUST handle a change to Google 3D.
@@ -333,8 +333,8 @@ Origin: backfill
 - **WHEN** the controller switches to Google 3D with imagery active
 - **THEN** the layer takes Esri for a manual switch and removes the swipe for an automatic switch
 - **AND** another controller update for the same automatic switch does not send a new state update
-- **AND** dESTROY does not allow another Esri lease on a map change, even if a renderer callback calls ENABLE.
-- **AND** a controller callback that removes both images does not read the switch generation.
+- **AND** DESTROY does not allow another Esri lease on a map change, even if a renderer callback calls ENABLE
+- **AND** a controller callback that removes both images does not read the switch generation
 
 ### Requirement: Follow the image host
 The recent imagery feature MUST follow the image host.
@@ -349,8 +349,8 @@ Origin: backfill
 - **AND** an absent host gives "Hidden by this map source · choose a globe map" while the layer is on
 - **AND** an attached tileset does not move the host while the layer is off
 - **AND** an unchanged tileset host does not send another state update
-- **AND** stats check the host if a subscription returns a nonfunction result
-- **AND** a map callback after the layer calls DESTROY does not change the host, even if a renderer callback calls ENABLE.
+- **AND** stats check the host if a subscription returns a result that is not a function
+- **AND** a map callback after the layer calls DESTROY does not change the host, even if a renderer callback calls ENABLE
 
 ### Requirement: Restore share state
 The recent imagery feature MUST restore share state.
@@ -358,18 +358,18 @@ Origin: backfill
 
 #### Scenario: Restore share state `recent-imagery-036`
 - **WHEN** the layer gets share parameters or a new catalog
-- **THEN** it restores the box, pins, mode and split without a user publication and removes absent catalog pins
+- **THEN** it restores the box, pins, mode and split, does not send them back, and removes absent catalog pins
 - **AND** a direct control callback during this action does not publish user state
-- **AND** a null or nonfinite split parameter preserves the current divider value
+- **AND** a null or nonfinite split parameter keeps the current divider value
 - **AND** a nonfinite split parameter does not change the divider source flag
 - **AND** a mode parameter with the current value does not send renderer work
-- **AND** a B parameter alone preserves the A pin
+- **AND** a B parameter alone keeps the A pin
 - **AND** an incorrect share pin key becomes null
 - **AND** an absent catalog pin alone does not change the current focus
-- **AND** a new catalog can remove either absent pin while it preserves the other pin
+- **AND** a new catalog can remove either absent pin while it keeps the other pin
 - **AND** a parameter change does not send renderer work while the layer is off
-- **AND** a new search keeps focus on the B pin when slot A is empty.
-- **AND** a share mode whose second value is null does not change the current mode
+- **AND** a new search keeps focus on the B pin when slot A is empty
+- **AND** a share mode that reads as AB and then as null does not change the current mode
 
 ### Requirement: Control imagery sources
 The recent imagery feature MUST control imagery sources.
@@ -379,7 +379,7 @@ Origin: backfill
 - **WHEN** the person switches a source off
 - **THEN** the layer hides its days and drapes and keeps the source state on its pins
 - **AND** a source change keeps the preview timer for a day from the other source
-- **AND** a source change calls a valid row listener and ignores a nonfunction listener
+- **AND** a source change calls a valid row listener and ignores a listener that is not a function
 - **AND** a source that becomes active keeps the preview that waits after a catalog product change
 
 ### Requirement: Publish local image controls
@@ -394,7 +394,7 @@ Origin: backfill
 - **AND** a destroyed layer does not publish local changes
 - **AND** the layer does not call an absent state manager
 - **AND** a layer without subscribers does not read the clock for a state update
-- **AND** one clock step can complete a divider publication and a focus preview
+- **AND** one clock step can complete a divider update and a focus preview
 
 ### Requirement: Use thumbnail proof for drapes
 The recent imagery feature MUST use thumbnail proof for drapes.
@@ -408,6 +408,7 @@ Origin: backfill
 - **AND** without a host, a probe for a new preview does not repeat renderer work
 - **AND** a followed day with new pixels sends a thumbnail update and a full state update
 - **AND** each pin outside the visible strip gets a direct thumbnail request
+- **AND** an empty automatic preview does not choose a day that a pin holds
 
 ### Requirement: Preview the focused day
 The recent imagery feature MUST preview the focused day.
@@ -420,8 +421,8 @@ Origin: backfill
 - **AND** focus on a pin clears the preview in the other slot
 - **AND** a probe does not start a followed preview after focus leaves that day
 - **AND** an unknown followed day keeps its probe wait state
-- **AND** a focus timer after the layer calls DESTROY does not change the preview, even if a renderer callback calls ENABLE.
-- **AND** a disabled layer does not set a preview timer even if its search result still has the focused day.
+- **AND** a focus timer after the layer calls DESTROY does not change the preview, even if a renderer callback calls ENABLE
+- **AND** a disabled layer does not set a preview timer even if its search result still has the focused day
 
 ### Requirement: Clear previews and box state
 The recent imagery feature MUST clear previews and box state.
@@ -431,7 +432,7 @@ Origin: backfill
 - **WHEN** the person presses Escape or CLEAR
 - **THEN** Escape clears the preview first and CLEAR clears box state while mode and sources stay
 - **AND** `clearPreview` returns true for a followed day
-- **AND** a search result that clears the box does not show an image or request thumbnails.
+- **AND** a search result that clears the box does not show an image or request thumbnails
 
 ### Requirement: Keep focus across strip changes
 The recent imagery feature MUST keep focus across strip changes.
@@ -441,7 +442,7 @@ Origin: backfill
 - **WHEN** a day leaves the strip or a new box starts
 - **THEN** the layer keeps a valid focus or moves to the nearest card, with ties toward the older day
 - **AND** a new box removes old drapes at once
-- **AND** focus on a null candidate key moves to the first card with a key.
+- **AND** focus on a null candidate key moves to the first card with a key
 - **AND** a null candidate key does not cause an error or add a preview timer
 - **AND** an equal distance with an index before the old focus does not replace the first nearest card
 - **AND** the hidden count is zero when the panel shows empty days
@@ -455,7 +456,7 @@ Origin: backfill
 - **THEN** the panel uses fixed blocks and returns listeners and panel state on destroy
 - **AND** an absent document factory or layer returns no panel
 - **AND** panel cleanup clears each thumbnail URL
-- **AND** a snapshot callback that destroys the panel does not change its mode field.
+- **AND** a snapshot callback that destroys the panel does not change its mode field
 
 ### Requirement: Show day cards and slots
 The recent imagery feature MUST show day cards and slots.
@@ -469,7 +470,7 @@ Origin: backfill
 - **AND** a stable thumbnail keeps one image element
 - **AND** an empty strip names its box, search, day and source state
 - **AND** an empty day outside the map leaves the strip after its probe
-- **AND** a preview slot without a key has the empty state.
+- **AND** a preview slot without a key has the empty state
 
 ### Requirement: Use panel keys and clicks
 The recent imagery feature MUST use panel keys and clicks.
@@ -489,9 +490,9 @@ Origin: backfill
 - **AND** Escape outside the strip cancels an active tool or clears a future preview
 - **AND** an inactive B unpin control keeps the stored B pin
 - **AND** a click outside ZOOM IN does not ask for a flight
-- **AND** an empty day does not accept a key to pin it or remove the export error.
-- **AND** a disabled SWAP control does not call the layer.
-- **AND** a chip without a card does not call the layer or cause an error.
+- **AND** an empty day does not accept a key to pin it or remove the export error
+- **AND** a disabled SWAP control does not call the layer
+- **AND** a chip without a card does not call the layer or cause an error
 
 ### Requirement: Show guidance and the fit action
 The recent imagery feature MUST show guidance and the fit action.
@@ -502,7 +503,7 @@ Origin: backfill
 - **THEN** the panel shows the notice and offers ZOOM IN for an oversized box
 - **AND** it uses the warning style for an error and the information style for a notice
 - **AND** its hint tells the person to zoom in or draw a smaller box for an oversized selection
-- **AND** a disabled ZOOM IN control does not call the layer.
+- **AND** a disabled ZOOM IN control does not call the layer
 
 ### Requirement: Own the swipe divider
 The recent imagery feature MUST own the swipe divider.
@@ -512,8 +513,8 @@ Origin: backfill
 - **WHEN** a comparison becomes live
 - **THEN** the panel creates the divider with mode labels and trades labels on SWAP
 - **AND** a refresh with the same divider does not create another divider
-- **AND** an inactive comparison removes the divider even if the shown image keys stay the same.
-- **AND** a snapshot value that destroys the panel while it refreshes does not create another divider.
+- **AND** an inactive comparison removes the divider even if the shown image keys stay the same
+- **AND** a snapshot value that destroys the panel while it refreshes does not create another divider
 
 ### Requirement: Export the slot image
 The recent imagery feature MUST export the slot image.
@@ -527,7 +528,7 @@ Origin: backfill
 - **AND** an active export request disables its button
 - **AND** IMAGE does not export a stored B pin
 - **AND** A and B mode exports a valid B pin
-- **AND** an export without a box does not call fetch.
+- **AND** an export without a box does not call fetch
 
 ### Requirement: Show image details
 The recent imagery feature MUST show image details.
@@ -539,7 +540,7 @@ Origin: backfill
 - **AND** an offscreen DETAILS card causes a scroll request
 - **AND** a refresh does not repeat the scroll request
 - **AND** absent viewport or card dimensions do not allow the request
-- **AND** the overview scale note needs a box and a positive box size.
+- **AND** the overview scale note needs a box and a positive box size
 
 ### Requirement: Keep panel scroll position
 The recent imagery feature MUST keep panel scroll position.
@@ -559,7 +560,7 @@ Origin: backfill
 - **AND** it treats absent card dimensions as zero
 - **AND** it does not report a range if every card lies outside the view
 - **AND** a candidate without a card does not enter the visible range
-- **AND** a zero length candidate list does not enter the visible range even if its forEach method supplies cards.
+- **AND** a zero length candidate list does not enter the visible range even if its forEach method supplies cards
 
 ### Requirement: Supply test values
 The recent imagery test helper MUST supply response and day values.
@@ -569,6 +570,6 @@ Origin: backfill
 - **WHEN** a test requests helper values
 - **THEN** successful and failed responses have default status codes 200 and 500
 - **AND** a granule day has a cloud range, but an overview day has no cloud range
-- **AND** the box tool doubles give input results, globe values and the live canvas event handler.
-- **AND** the renderer double moves both image slots to the next host.
-- **AND** the thumbnail double sends both subscribers the probe key.
+- **AND** the box tool doubles give input results, globe values and the live canvas event handler
+- **AND** the renderer double moves both image slots to the next host
+- **AND** the thumbnail double sends both subscribers the probe key

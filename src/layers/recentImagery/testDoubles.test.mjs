@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-test('[recent-imagery-052] the box tool doubles give stock input and globe values', async () => {
+test('[recent-imagery-052] the box tool doubles give standard input and globe values', async () => {
   const { boxToolFakes } = await import('./testDoubles.mjs');
   const f = boxToolFakes();
   assert.equal(f.originalClick(), 'select');

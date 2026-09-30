@@ -2,12 +2,12 @@
 
 The feature searches satellite days for a globe box. It shows pinned days and a swipe divider.
 This backfill records code at commit `3a919b7`.
-The change has 52 scenarios, 433 tests and 876 mutation checks.
+The change has 52 scenarios, 434 tests and 877 mutation checks.
 
-The test declaration sweep finds 432 declarations; the path loop gives 433 tests.
+The test declaration sweep finds 433 declarations; the path loop gives 434 tests.
 The scenario heading sweep finds 52 scenarios.
 The `untracedTests` entries in `openspec/trace/gaps.json` give 93 old tests.
-The entries in `muts.json` and `muts3.json` give 828 and 48 mutation checks, for a total of 876.
+The entries in `muts.json` and `muts3.json` give 828 and 49 mutation checks, for a total of 877.
 
 
 ## Goals

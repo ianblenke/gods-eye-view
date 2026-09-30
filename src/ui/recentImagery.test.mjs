@@ -1496,7 +1496,7 @@ test('[recent-imagery-044 recent-imagery-049] the panel details use absent and o
   f.layer.destroy();
 });
 
-test('[recent-imagery-048] the default export URL functions own and release a large PNG', async () => {
+test('[recent-imagery-048] the default export URL helpers own and release a large PNG', async () => {
   const f = fixture();
   await f.ready();
   const base = f.snap();
@@ -2217,7 +2217,7 @@ test('[recent-imagery-044] IMAGE keeps the stored B pin controls inactive', asyn
   p.readout.destroy();
 });
 
-test('[recent-imagery-044] a source off pin loses its image controls', async () => {
+test('[recent-imagery-044] a pin whose source is off loses its image controls', async () => {
   const s = await auditPanelState();
   s.pins.a = {
     ...s.pins.a,
