@@ -217,7 +217,7 @@ test('[recent-imagery-018] against the basemap slot a splits left with no second
   assert.deepEqual(renders, ['recent-imagery-show', 'recent-imagery-look']);
 });
 
-test('[recent-imagery-018 recent-imagery-020] invalid slot input and host changes release owned images', () => {
+test('[recent-imagery-018 recent-imagery-020] invalid slot input and host changes release the owned images', () => {
   const f = fixture();
   assert.equal(f.renderer.showSlot('a', null, BOX), false);
   assert.equal(f.renderer.showSlot('a', S30, null), false);
@@ -239,7 +239,7 @@ test('[recent-imagery-018 recent-imagery-020] invalid slot input and host change
   assert.equal(f.renderer.showSlot('a', S30, BOX), false);
 });
 
-test('[recent-imagery-018] absent split enum sets an own zero value', () => {
+test('[recent-imagery-018] an absent split enum sets a zero value on the slot itself', () => {
   const cesium = fakeCesium();
   delete cesium.SplitDirection;
   const renderer = createRecentImageryRenderer({ cesium });
@@ -251,7 +251,7 @@ test('[recent-imagery-018] absent split enum sets an own zero value', () => {
   renderer.destroy();
 });
 
-test('[recent-imagery-019] replacement destroys the old layer in both slots', () => {
+test('[recent-imagery-019] a replacement destroys the old layer in both slots', () => {
   const f = fixture();
   for (const slot of ['a', 'b']) {
     f.renderer.showSlot(slot, S30, BOX);
@@ -263,7 +263,7 @@ test('[recent-imagery-019] replacement destroys the old layer in both slots', ()
   assert.equal(f.globe.layers.length, 0);
 });
 
-test('[recent-imagery-022] default retry timer ends and cancels with the renderer', async () => {
+test('[recent-imagery-022] the default provider returns undefined and the renderer owns zero layers', async () => {
   const renderer = createRecentImageryRenderer({
     cesium: fakeCesium(() => undefined),
   });
@@ -321,7 +321,7 @@ test('[recent-imagery-018] a change to north replaces the provider', async () =>
   f.renderer.destroy();
 });
 
-test('[recent-imagery-020] host change moves slot a alone', () => {
+test('[recent-imagery-020] a host change moves slot a alone', () => {
   const f = fixture();
   f.renderer.showSlot('a', S30, BOX);
   const old = f.globe.layers[0];
@@ -333,7 +333,7 @@ test('[recent-imagery-020] host change moves slot a alone', () => {
   f.renderer.destroy();
 });
 
-test('[recent-imagery-020] host change moves slot b alone', () => {
+test('[recent-imagery-020] a host change moves slot b alone', () => {
   const f = fixture();
   f.renderer.showSlot('b', S30, BOX);
   const old = f.globe.layers[0];
@@ -368,7 +368,7 @@ test('[recent-imagery-018] the same alpha value does not add a frame', async () 
   f.renderer.destroy();
 });
 
-test('[recent-imagery-020] the same host leaves the current image intact', async () => {
+test('[recent-imagery-020] the same host does not change the current image', async () => {
   const f = fixture();
   f.renderer.showSlot('a', S30, BOX);
   f.renderer.rebind({ collection: f.globe, kind: 'globe' });
@@ -400,7 +400,7 @@ test('[recent-imagery-019] an A image alone asks for a frame at renderer destruc
   ]);
 });
 
-test('[recent-imagery-019] a destroyed renderer still refuses an image after a host update', () => {
+test('[recent-imagery-019] a destroyed renderer still rejects an image after a host update', () => {
   const f = fixture();
   f.renderer.destroy();
   f.renderer.rebind({ collection: f.globe, kind: 'globe' });

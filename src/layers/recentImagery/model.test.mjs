@@ -463,7 +463,7 @@ test('[recent-imagery-006] each independent box limit rejects its box', () => {
   );
 });
 
-test('[recent-imagery-008 recent-imagery-010] invalid pin data and absent day return null', () => {
+test('[recent-imagery-008 recent-imagery-010] invalid pin data and an absent day return null', () => {
   assert.equal(boxFromPin(0, NaN), null);
   assert.equal(boxFromPin(0, 0, NaN), null);
   assert.equal(boxFromPin(0, 0, 0), null);
@@ -472,7 +472,7 @@ test('[recent-imagery-008 recent-imagery-010] invalid pin data and absent day re
   assert.equal(utcDay(null), null);
 });
 
-test('[recent-imagery-011 recent-imagery-013] absent lists and footprints have explicit results', () => {
+test('[recent-imagery-011 recent-imagery-013] absent lists and footprints have known results', () => {
   assert.deepEqual(groupGranulesByDay(null), []);
   assert.deepEqual(mergeCandidates([null, [null, {}]]), []);
   assert.equal(coverageFor(null, BOX), 'unknown');
@@ -496,7 +496,7 @@ test('[recent-imagery-011 recent-imagery-013] absent lists and footprints have e
   assert.equal(day.timeRange, null);
 });
 
-test('[recent-imagery-015] absent times and invalid clock keep the readout bounded', () => {
+test('[recent-imagery-015] absent times and an invalid clock keep the readout bounded', () => {
   const c = {
     product: 'S30',
     day: '2026-09-18',
@@ -510,7 +510,7 @@ test('[recent-imagery-015] absent times and invalid clock keep the readout bound
   assert.equal(formatCandidateReadout(null), '');
 });
 
-test('[recent-imagery-016] unknown products and absent snapshot box fail', () => {
+test('[recent-imagery-016] unknown products and an absent snapshot box fail', () => {
   assert.throws(
     () => wvsSnapshotUrl({ product: 'bad', box: BOX }),
     /Unknown imagery product/,
@@ -577,19 +577,19 @@ test('[recent-imagery-006] the tall limit alone rejects the box', async () => {
   );
 });
 
-test('[recent-imagery-008] invalid pin longitude alone returns null', async () => {
+test('[recent-imagery-008] an invalid pin longitude alone returns null', async () => {
   assert.equal(boxFromPin('0', 0, 10), null);
 });
 
-test('[recent-imagery-008] invalid pin latitude alone returns null', async () => {
+test('[recent-imagery-008] an invalid pin latitude alone returns null', async () => {
   assert.equal(boxFromPin(0, '0', 10), null);
 });
 
-test('[recent-imagery-008] invalid pin size alone returns null', async () => {
+test('[recent-imagery-008] an invalid pin size alone returns null', async () => {
   assert.equal(boxFromPin(0, 0, '10'), null);
 });
 
-test('[recent-imagery-008] invalid pin positive-size alone returns null', async () => {
+test('[recent-imagery-008] an invalid pin positive-size alone returns null', async () => {
   assert.equal(boxFromPin(0, 0, -1), null);
 });
 
@@ -625,7 +625,7 @@ test('[recent-imagery-013] a nonfinite latitude can produce a full result', () =
   assert.equal(coverageFor(candidate, BOX), 'full');
 });
 
-test('[recent-imagery-013] sloped footprint uses its latitude span', () => {
+test('[recent-imagery-013] a sloped footprint uses its latitude span', () => {
   const candidate = {
     granules: [
       {
@@ -719,7 +719,7 @@ test('[recent-imagery-010] a Date timestamp keeps the zero year', async () => {
   assert.equal(utcDay(new Date('0000-09-18T17:12:00.000Z')), '0000-09-18');
 });
 
-test('[recent-imagery-011] an unparseable start alone prevents the time range', async () => {
+test('[recent-imagery-011] a start time that the model cannot read alone gives no time range', async () => {
   const day = groupGranulesByDay([
     granule({ timeStart: new Date('-000001-09-18T17:12:00.000Z') }),
   ])[0];
@@ -846,4 +846,22 @@ test('[recent-imagery-015] equal times alone keep one readout time', async () =>
 
 test('[recent-imagery-017] the first card rejects negative neighbors', async () => {
   assert.deepEqual(thumbnailOrder(0, 0, 0, 3, 2), [0, 1, 2]);
+});
+
+test('[recent-imagery-017] the thumbnail order has each index once with different numeric bounds', () => {
+  let firstReads = 0,
+    lastReads = 0;
+  const first = {
+    valueOf() {
+      firstReads += 1;
+      return firstReads === 1 ? 5 : 1;
+    },
+  };
+  const last = {
+    valueOf() {
+      lastReads += 1;
+      return lastReads === 1 ? 6 : 3;
+    },
+  };
+  assert.deepEqual(thumbnailOrder(5, first, last, 10, 2), [5, 4, 3]);
 });

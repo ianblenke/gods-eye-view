@@ -8,7 +8,7 @@ The feature searches satellite days for a globe box, pins days A and B, compares
 - Add a spec for current behavior.
 - Tag old tests and add tests for code paths.
 - Check assertions with mutations.
-- Do not change production code or browser QA scripts.
+- Do not change production code. Change only the `@covers` line of `scripts/qa-recent-imagery.mjs`.
 
 ## Capabilities
 
@@ -17,53 +17,86 @@ The feature searches satellite days for a globe box, pins days A and B, compares
 ## Impact
 
 The ledger has 93 old tests in this area. 92 now have tags. One old test stays without a tag.
-The area now has 391 tests. The test sweep finds one test without a tag, the old test in the known limits.
-The change has 52 scenarios, 391 tests and 831 mutation checks.
+The area now has 433 tests. The test sweep finds one test without a tag, the old test in the known limits.
+The change has 52 scenarios, 433 tests and 876 mutation checks.
 
-Host Node 26 coverage can differ from the gate image. The ratchet in the gate image left the same gaps.
+The test declaration sweep finds 432 declarations; the path loop gives 433 tests.
+The scenario heading sweep finds 52 scenarios.
+The `untracedTests` entries in `openspec/trace/gaps.json` give 93 old tests.
+The entries in `muts.json` and `muts3.json` give 828 and 48 mutation checks, for a total of 876.
+
+
+The host uses Node 26.8.2. The lead must measure this tree in the gate image.
 
 The table gives ledger gaps before this change and host gaps after this change.
-The ledger from the gate image has the same counts as the host.
+The lead must measure the current tree in the gate image.
 
 | File | Before lines | After host lines | Before branches | After host branches | Before functions | After host functions |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | `src/layers/recentImagery/catalog.js` | 0 | 0 | 7 | 0 | 0 | 0 |
 | `src/layers/recentImagery/model.js` | 0 | 0 | 16 | 2 | 0 | 0 |
 | `src/layers/recentImagery/rendering.js` | 5 | 0 | 7 | 0 | 3 | 0 |
-| `src/layers/recentImagery/thumbnails.js` | 5 | 0 | 17 | 2 | 4 | 0 |
-| `src/layers/recentImagery/index.js` | 26 | 0 | 46 | 2 | 8 | 0 |
-| `src/ui/recentImagery.js` | 27 | 0 | 66 | 4 | 10 | 2 |
+| `src/layers/recentImagery/thumbnails.js` | 5 | 0 | 17 | 1 | 4 | 0 |
+| `src/layers/recentImagery/index.js` | 26 | 0 | 46 | 1 | 8 | 0 |
+| `src/ui/recentImagery.js` | 27 | 0 | 66 | 2 | 10 | 2 |
 | `src/layers/recentImagery/testDoubles.mjs` | 0 | 0 | 0 | 0 | 4 | 0 |
 
 The ratchet command also wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit. The branch count for this file changes between runs. The lead set the entry for that file back to the values in `main`, as a text edit with no measurement.
 
 ## Known limits and later changes
 
-- Known limit `recent-imagery-ledger-history`: two history lines for `src/data/labelArbiter.js` still show the drift that this change corrected (before 52, after 50 branches). The entry in the ledger has the correct value. The two history lines do not have the correct value.
-The host run covers all lines. These branches and functions have no path through the current API and DOM state.
+- Known limit `recent-imagery-ledger-history`: two history lines for `src/data/labelArbiter.js` record branches 52 to 50 and totals 407 to 405. The ledger entry has 52 branches. The branch count of this file changes between runs.
+The host run covers all lines. The following paths are accepted limits for this change.
 
-- `src/layers/recentImagery/model.js:239`: The branch at line 239 cannot run. The date pattern makes the UTC value finite.
-- `src/layers/recentImagery/model.js:316`: The branch at line 316 cannot run. Each day bucket has a granule before this call.
-- `src/layers/recentImagery/thumbnails.js:69`: The branch at line 69 cannot run. The caller supplies an entry with an object URL.
-- `src/layers/recentImagery/thumbnails.js:151`: The branch at line 151 cannot run. Queue removal also removes the entry before the next pump.
-- `src/layers/recentImagery/index.js:292`: The branch at line 292 cannot run. Pin assignment clears the automatic preview state before this call.
-- `src/layers/recentImagery/index.js:472`: The branch at line 472 cannot run. The layer releases the lease before this callback can see an empty pair.
-- `src/ui/recentImagery.js:122`: The branch at line 122 cannot run. Each panel element has a children collection.
-- `src/ui/recentImagery.js:410`: The branch at line 410 cannot run. The strip creates each entry before it updates the card.
-- `src/ui/recentImagery.js:835`: The branch at line 835 cannot run. Each subscription checks the destroy state before it calls render.
-- `src/ui/recentImagery.js:900`: The branch at line 900 cannot run. Each path in the export try and catch blocks returns.
-- `src/ui/recentImagery.js:183`: The function at line 183 cannot run. The action card has no parameter control to call this function.
-- `src/ui/recentImagery.js:269`: The function at line 269 cannot run. The action card has no parameter control to call this function.
+- `src/layers/recentImagery/model.js:239`: No input can reach the branch at line 239. The two callers test the date pattern before this call.
+- `src/layers/recentImagery/model.js:316`: No input can reach the branch at line 316. Each day bucket has a granule before this call.
+- `src/layers/recentImagery/thumbnails.js:69`: No input can reach the branch at line 69. The caller supplies an entry with an object URL.
+- `src/layers/recentImagery/index.js:292`: No input can reach the branch at line 292. Pin assignment clears the automatic preview state before this call.
+- `src/ui/recentImagery.js:122`: No input can reach the branch at line 122. Each panel element has a children collection.
+- `src/ui/recentImagery.js:900`: No input can reach the branch at line 900. Each path in the export try and catch blocks returns.
+- `src/ui/recentImagery.js:183`: No call can reach the function at line 183. The action card has no parameter control to call this function.
+- `src/ui/recentImagery.js:269`: No call can reach the function at line 269. The action card has no parameter control to call this function.
 
 The audit checks each compound condition and loop key.
-- `src/layers/recentImagery/model.js:195`: The nonpositive pin size guard is equivalent. Later box checks reject the same inputs.
+- Known limit `recent-imagery-008-positive-size`: `src/layers/recentImagery/model.js:195`, `sideKm <= 0`. The guard gives the same result as the later check at line 127. The box checks reject negative sizes at line 127 and zero sizes at line 136 after the function creates numeric box edges (`src/layers/recentImagery/model.js:127`).
+- Known limit `expression-007-right`: `src/layers/recentImagery/catalog.js:66`, `value === undefined`. The guard gives the same result as the later check at line 69. The finite check rejects undefined because its numeric result is NaN (`src/layers/recentImagery/catalog.js:69`).
+- Known limit `expression-065-left`: `src/layers/recentImagery/index.js:292`, `!previewSlot()`. No input can reach the branch at line 292. The free slot check cannot reject an input because the private automatic preview callers first remove their pins; this is an accepted unreachable path (`src/layers/recentImagery/index.js:292`).
+- Known limit `expression-065-right`: `src/layers/recentImagery/index.js:292`, `activeSlotOf(key)`. No input can reach the branch at line 292. The active pin check cannot reject an input because the private automatic preview callers first remove their pins; this is an accepted unreachable path (`src/layers/recentImagery/index.js:292`).
+- Known limit `expression-083-left`: `src/layers/recentImagery/index.js:468`, `!_enabled || _destroyed`. The guard gives the same result as the later check at line 469. The lease and plan checks reject interrupted calls; the map callback guard rejects later calls after DESTROY (`src/layers/recentImagery/index.js:469`).
+- Known limit `expression-084-left`: `src/layers/recentImagery/index.js:468`, `!_enabled`. The guard gives the same result as the later check at line 469. The lease and plan checks reject interrupted calls; the map callback guard rejects later disabled calls (`src/layers/recentImagery/index.js:469`).
+- Known limit `expression-084-right`: `src/layers/recentImagery/index.js:468`, `_destroyed`. The guard gives the same result as the later check at line 469. The lease and plan checks reject interrupted calls; the map callback guard rejects later calls after DESTROY (`src/layers/recentImagery/index.js:469`).
+- Known limit `expression-121-left`: `src/layers/recentImagery/index.js:740`, `_enabled`. The guard gives the same result as the later check at line 236. The plan check rejects a disabled layer because that enabled flag is private (`src/layers/recentImagery/index.js:236`).
+- Known limit `expression-207-left`: `src/layers/recentImagery/model.js:69`, `typeof value === 'number'`. The guard gives the same result as the later check at line 69. The finite check rejects each value that is not a number without numeric conversion, including objects and custom conversion methods (`src/layers/recentImagery/model.js:69`).
+- Known limit `expression-218-right`: `src/layers/recentImagery/model.js:195`, `sideKm <= 0`. The guard gives the same result as the later check at line 127. The box checks reject negative sizes at line 127 and zero sizes at line 136 after the function creates numeric box edges (`src/layers/recentImagery/model.js:127`).
+- Known limit `expression-223-left`: `src/layers/recentImagery/model.js:246`, `Number.isFinite(time)`. The guard gives the same result as the later check at line 238. The date pattern check bounds the numeric UTC result to a finite value because both callers pass primitive date strings (`src/layers/recentImagery/model.js:238`).
+- Known limit `expression-236-true`: `src/layers/recentImagery/model.js:316`, `granules.length`. No input can reach the branch at line 316. The bucket check always has a granule because the private loop creates each bucket from a granule; this is an accepted unreachable path (`src/layers/recentImagery/model.js:316`).
+- Known limit `expression-284-right`: `src/layers/recentImagery/rendering.js:227`, `!destroyed`. The guard gives the same result as the later check at line 223. The record check rejects the input because DESTROY removes both private records at line 260 before another REBIND call (`src/layers/recentImagery/rendering.js:223`).
+- Known limit `expression-293-true`: `src/layers/recentImagery/thumbnails.js:69`, `keep?.objectUrl`. No input can reach the branch at line 69. The object URL check calls the private function only with a URL; this is an accepted unreachable path (`src/layers/recentImagery/thumbnails.js:142`).
+- Known limit `loop-70-thumbnails`: `src/layers/recentImagery/thumbnails.js:70`, `the image loop`. The guard gives the same result as the later check at line 71. The limit check in `src/layers/recentImagery/thumbnails.js:71` stops after one image because each completed request adds one URL before the next private request result.
+- Known limit `default-323-dom-children`: `src/ui/recentImagery.js:122`, `root?.children || []`. No input can reach the branch at line 122. The element factory in `src/ui/recentImagery.js:156` supplies DOM elements with children; this is the accepted unreachable fallback at line 122.
+- Known limit `expression-343-left`: `src/ui/recentImagery.js:429`, `entry.image`. The guard gives the same result as the later check at line 423. The shown check creates the private image first; otherwise both URLs are null and the URL check at line 429 rejects the input (`src/ui/recentImagery.js:423`).
+- Known limit `expression-135-left`: `src/layers/recentImagery/index.js:815`, `Boolean(_followKey)`. The guard gives the same result as the later check at line 191. The candidate key check rejects a null follow key before external calls (`src/layers/recentImagery/index.js:191`).
+- Known limit `expression-151-true`: `src/layers/recentImagery/index.js:939`, `box`. The guard gives the same result as the later check at line 123. The box check rejects null because normalization at line 79 rejects it before any external property access (`src/layers/recentImagery/model.js:123`).
+- Known limit `expression-153-true`: `src/layers/recentImagery/index.js:971`, `_boxError`. The guard gives the same result as the later check at line 974. The target check rejects the input because private paths remove the box error and target together at line 705 (`src/layers/recentImagery/index.js:974`).
+- Known limit `expression-166-left`: `src/layers/recentImagery/index.js:1098`, `next`. The guard gives the same result as the later check at line 1100. The assignment gives the same null result because both private slots already contain null; fakes cannot change the private slots directly (`src/layers/recentImagery/index.js:1100`).
+- Known limit `expression-173-true`: `src/layers/recentImagery/index.js:1243`, `shown.preview`. The guard gives the same result as the later check at line 767. The image key check maps null and undefined to null because the private plan at line 235 has no property for either key (`src/layers/recentImagery/index.js:767`).
+- Known limit `expression-180-left`: `src/layers/recentImagery/index.js:1269`, `_boxError`. The guard gives the same result as the later check at line 1269. The target check rejects the input because private paths remove the box error and target together at line 705 (`src/layers/recentImagery/index.js:1269`).
+- Known limit `expression-198-left`: `src/layers/recentImagery/index.js:1390`, `_assigned.a`. The guard gives the same result as the later check at line 1390. The assignment gives the same null result because both private slots already contain null; fakes cannot change the private slots directly (`src/layers/recentImagery/index.js:1390`).
+- Known limit `expression-200-left`: `src/layers/recentImagery/index.js:1394`, `pinned`. The guard gives the same result as the later check at line 191. The candidate key check rejects a null pin before external calls (`src/layers/recentImagery/index.js:191`).
+- Known limit `expression-299-right`: `src/layers/recentImagery/thumbnails.js:129`, `destroyed`. The guard gives the same result as the later check at line 129. The cancelled and entry identity checks reject late results because DESTROY stops controllers and removes the private entries at line 274 (`src/layers/recentImagery/thumbnails.js:129`).
+- Known limit `expression-170-left`: `src/layers/recentImagery/index.js:1188`, `!_enabled`. The guard gives the same result as the later check at line 236. The plan check rejects a disabled layer because that enabled flag is private (`src/layers/recentImagery/index.js:236`).
 - `src/layers/recentImagery/thumbnails.js:121`: An unsolicited AbortError leaves an entry. A later request does not restart it.
 - `src/layers/recentImagery/model.js:331`: The model accepts an inherited product key, such as `__proto__`.
 - `src/ui/recentImagery.js:304`: Panel render restores scroll after DETAILS tries to reveal the card.
-- `src/layers/recentImagery/model.js:401`: A malformed footprint with a nonfinite latitude can produce full coverage.
+- `src/layers/recentImagery/model.js:401`: An incorrect footprint with a nonfinite latitude can produce full coverage.
 The lead changes the QA header after the archive creates the capability folder.
 
-- Known limit `recent-imagery-untagged-old-test`: one old test in `src/ui/recentImagery.test.mjs` has a title of 26 words. The gate limit for a tagged title is 25 words. The owner rule keeps an old test name, so this test stays without a tag. Its title starts with "the notice line shows the refusal". Two new tests carry the claims of `recent-imagery-046` instead.
+- Known limit `recent-imagery-untagged-old-test`: one old test in `src/ui/recentImagery.test.mjs` has a title of 26 words. The gate limit for a tagged title is 25 words. The owner rule keeps an old test name, so this test stays without a tag. Its title starts with "the notice line shows the refusal".
+
+The same old test checks the box, search, pin and comparison hints.
+The test also checks the text that CLEAR gives. The claims do not have a scenario.
+
+New tests tagged `recent-imagery-046` carry the claims of the untagged title instead.
 
 No old test has a banned word. One old test stays without a tag.
 
@@ -245,3 +278,7 @@ strip keys: arrows preview after the debounce, S / A / B pin, Enter previews, re
 the notice line shows the refusal, then errors, then CLEAR, then the Esri note; the hint names the next step and that SWAP trades the sides
 ```
 
+
+- The two tests for possible defects 4 and 1 must change if the code changes.
+The model test with tag `recent-imagery-013` accepts a nonfinite latitude.
+The thumbnail test with tags `recent-imagery-023 recent-imagery-026` maps an AbortError to the unknown state.

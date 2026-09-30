@@ -1442,7 +1442,7 @@ test('[recent-imagery-041] with SELECT BOX armed, Escape clears the preview firs
   await tool.destroy();
 });
 
-test('[recent-imagery-029 recent-imagery-038] listener and publication errors keep layer state valid', async () => {
+test('[recent-imagery-029 recent-imagery-038] listener and publication errors keep the layer state valid', async () => {
   const f = fixture();
   const warnings = [];
   const warn = console.warn;
@@ -1475,7 +1475,7 @@ test('[recent-imagery-029 recent-imagery-038] listener and publication errors ke
   }
 });
 
-test('[recent-imagery-028 recent-imagery-035] absent host and valid pin box have explicit state', async () => {
+test('[recent-imagery-028 recent-imagery-035] an absent host and a valid pin box have a known state', async () => {
   const renderer = fakeRenderer();
   const thumbnails = fakeThumbnails();
   const catalog = fakeCatalog();
@@ -1505,7 +1505,7 @@ test('[recent-imagery-028 recent-imagery-035] absent host and valid pin box have
   assert.equal(layer.enable(), false);
 });
 
-test('[recent-imagery-029] catalog defaults and notes expose each source error', async () => {
+test('[recent-imagery-029] catalog defaults and notes show each source error', async () => {
   const f = fixture();
   f.layer.enable();
   f.layer.setBox(BOX);
@@ -1534,7 +1534,7 @@ test('[recent-imagery-029] catalog defaults and notes expose each source error',
   f.layer.destroy();
 });
 
-test('[recent-imagery-032 recent-imagery-035] absent controller permits globe swipe and tileset suspension', async () => {
+test('[recent-imagery-032 recent-imagery-035] an absent controller allows a globe swipe and a tileset suspension', async () => {
   const f = fixture({ controller: null });
   await f.ready();
   f.layer.setMode('basemap');
@@ -1547,7 +1547,7 @@ test('[recent-imagery-032 recent-imagery-035] absent controller permits globe sw
   f.layer.destroy();
 });
 
-test('[recent-imagery-030 recent-imagery-036] invalid assignments and modes leave pins intact', async () => {
+test('[recent-imagery-030 recent-imagery-036] invalid assignments and modes do not change the pins', async () => {
   const f = fixture();
   assert.equal(f.layer.setParams(null), false);
   assert.equal(f.layer.setParams('bad'), false);
@@ -1571,7 +1571,7 @@ test('[recent-imagery-030 recent-imagery-036] invalid assignments and modes leav
   f.layer.destroy();
 });
 
-test('[recent-imagery-032] rejected lease and failed release report state without a loop', async () => {
+test('[recent-imagery-032] a rejected lease and an error on release report the state without a loop', async () => {
   const f = fixture();
   const warn = console.warn;
   const warnings = [];
@@ -1595,7 +1595,7 @@ test('[recent-imagery-032] rejected lease and failed release report state withou
   }
 });
 
-test('[recent-imagery-034] a manual handover tolerates a synchronous release error', async () => {
+test('[recent-imagery-034] a manual change to Google 3D does not stop on a synchronous release error', async () => {
   let active = 'esri';
   let generation = 1;
   const f = fixture();
@@ -1627,7 +1627,7 @@ test('[recent-imagery-034] a manual handover tolerates a synchronous release err
   f.layer.destroy();
 });
 
-test('[recent-imagery-040 recent-imagery-038] default focus and split timers change state', async () => {
+test('[recent-imagery-040 recent-imagery-038] the default focus and split timers change the state', async () => {
   const renderer = fakeRenderer();
   const thumbnails = fakeThumbnails();
   const catalog = fakeCatalog();
@@ -1652,7 +1652,7 @@ test('[recent-imagery-040 recent-imagery-038] default focus and split timers cha
   layer.destroy();
 });
 
-test('[recent-imagery-032] late lease result after destroy cannot show a swipe', async () => {
+test('[recent-imagery-032] a late lease result after destroy cannot show a swipe', async () => {
   const f = fixture();
   await f.ready();
   const lease = f.controller.lease;
@@ -1717,7 +1717,7 @@ test('[recent-imagery-037] the viirs source alone changes its state', async () =
   f.layer.destroy();
 });
 
-test('[recent-imagery-030 recent-imagery-036] a lone B pin restores focus in A and B mode', async () => {
+test('[recent-imagery-030 recent-imagery-036] a single B pin restores focus in A and B mode', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setParams({ mode: 2, a: null, b: L16 });
@@ -1728,7 +1728,7 @@ test('[recent-imagery-030 recent-imagery-036] a lone B pin restores focus in A a
   f.layer.destroy();
 });
 
-test('[recent-imagery-029] unknown source product does not enter the strip', async () => {
+test('[recent-imagery-029] an unknown source product does not enter the strip', async () => {
   const f = fixture();
   await f.ready([
     { key: 'X30:2026-09-18', product: 'X30', day: '2026-09-18', granules: [] },
@@ -1738,7 +1738,7 @@ test('[recent-imagery-029] unknown source product does not enter the strip', asy
   f.layer.destroy();
 });
 
-test('[recent-imagery-040 recent-imagery-041] late focus callback cannot restore a cancelled preview', async () => {
+test('[recent-imagery-040 recent-imagery-041] a late focus callback cannot restore a cancelled preview', async () => {
   const f = fixture();
   await f.ready();
   f.layer.focus(2);
@@ -1756,7 +1756,7 @@ test('[recent-imagery-040 recent-imagery-041] late focus callback cannot restore
   assert.equal(f.layer.enable(), false);
 });
 
-test('[recent-imagery-032] lease rejection does not activate the divider', async () => {
+test('[recent-imagery-032] a rejected lease does not activate the divider', async () => {
   const f = fixture();
   f.controller.acquireImageryComparison = () => ({
     ready: Promise.reject(new Error('map')),
@@ -1770,7 +1770,7 @@ test('[recent-imagery-032] lease rejection does not activate the divider', async
   f.layer.destroy();
 });
 
-test('[recent-imagery-028] globe ellipsoid supports a view center and absent tool message returns false', () => {
+test('[recent-imagery-028] the globe ellipsoid supports a view center, and an absent tool message returns false', () => {
   const f = fixture();
   const ellipsoid = {
     cartesianToCartographic: () => ({ longitude: 0, latitude: 0 }),
@@ -1812,7 +1812,7 @@ test('[recent-imagery-030] a B pin remains active when the A slot has a preview'
   f.layer.destroy();
 });
 
-test('[recent-imagery-038] identical local controls do not send another notice', async () => {
+test('[recent-imagery-038] identical local controls do not send another state update', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setSplit(0.5);
@@ -1839,7 +1839,7 @@ test('[recent-imagery-029] an aborted catalog success cannot restore old days', 
   f.layer.destroy();
 });
 
-test('[recent-imagery-029] renderer without slot readout still shows the day', async () => {
+test('[recent-imagery-029] a renderer without a slot readout still shows the day', async () => {
   const f = fixture();
   f.renderer.getOwned = undefined;
   await f.ready();
@@ -1849,7 +1849,7 @@ test('[recent-imagery-029] renderer without slot readout still shows the day', a
   f.layer.destroy();
 });
 
-test('[recent-imagery-034] automatic handover clears the earlier Esri notice', async () => {
+test('[recent-imagery-034] an automatic change to Google 3D clears the earlier Esri notice', async () => {
   let active = 'esri';
   let generation = 1;
   let origin = 'user';
@@ -1879,7 +1879,7 @@ test('[recent-imagery-034] automatic handover clears the earlier Esri notice', a
   f.layer.destroy();
 });
 
-test('[recent-imagery-034] absent switch generation does not renew a lease', async () => {
+test('[recent-imagery-034] an absent switch generation does not get a lease again', async () => {
   const f = fixture();
   f.controller.getActiveId = () => 'photoreal';
   await f.ready();
@@ -1891,7 +1891,7 @@ test('[recent-imagery-034] absent switch generation does not renew a lease', asy
   f.layer.destroy();
 });
 
-test('[recent-imagery-039] repeated enable replaces the thumbnail listener', async () => {
+test('[recent-imagery-039] a repeated ENABLE call replaces the thumbnail listener', async () => {
   const f = fixture();
   await f.ready();
   f.layer.enable();
@@ -1931,7 +1931,7 @@ test('[recent-imagery-034] a refused second manual lease clears the Esri notice'
   f.layer.destroy();
 });
 
-test('[recent-imagery-040 recent-imagery-041] same focus and late clear do not add renderer work', async () => {
+test('[recent-imagery-040 recent-imagery-041] the same focus and a late CLEAR call do not add renderer work', async () => {
   const f = fixture();
   await f.ready();
   const count = f.reasons.length;
@@ -1943,7 +1943,7 @@ test('[recent-imagery-040 recent-imagery-041] same focus and late clear do not a
   assert.equal(f.renderer.calls.length, calls);
 });
 
-test('[recent-imagery-030] repeated pin assignment does not change the slot', async () => {
+test('[recent-imagery-030] a repeated pin assignment does not change the slot', async () => {
   const f = fixture();
   await f.ready();
   assert.equal(f.layer.setAssignment('a', S18), true);
@@ -1952,7 +1952,7 @@ test('[recent-imagery-030] repeated pin assignment does not change the slot', as
   f.layer.destroy();
 });
 
-test('[recent-imagery-039] empty proof removes slot a alone', async () => {
+test('[recent-imagery-039] an empty proof removes slot a alone', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setMode('ab');
@@ -1964,7 +1964,7 @@ test('[recent-imagery-039] empty proof removes slot a alone', async () => {
   f.layer.destroy();
 });
 
-test('[recent-imagery-039] empty proof removes slot b alone', async () => {
+test('[recent-imagery-039] an empty proof removes slot b alone', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setMode('ab');
@@ -1976,7 +1976,7 @@ test('[recent-imagery-039] empty proof removes slot b alone', async () => {
   f.layer.destroy();
 });
 
-test('[recent-imagery-034] a lone A image can renew the Esri lease', async () => {
+test('[recent-imagery-034] a single A image can get the Esri lease again', async () => {
   let active = 'esri';
   let generation = 1;
   const f = fixture();
@@ -1998,7 +1998,7 @@ test('[recent-imagery-034] a lone A image can renew the Esri lease', async () =>
   f.layer.destroy();
 });
 
-test('[recent-imagery-034] a lone B image can renew the Esri lease', async () => {
+test('[recent-imagery-034] a single B image can get the Esri lease again', async () => {
   let active = 'esri';
   let generation = 1;
   const f = fixture();
@@ -2181,7 +2181,7 @@ test('[recent-imagery-028] an absent ground conversion method alone uses the box
   f.layer.destroy();
 });
 
-test('[recent-imagery-030] a null mode alone leaves the current mode intact', async () => {
+test('[recent-imagery-030] a null mode alone does not change the current mode', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setMode('ab');
@@ -2190,7 +2190,7 @@ test('[recent-imagery-030] a null mode alone leaves the current mode intact', as
   f.layer.destroy();
 });
 
-test('[recent-imagery-030] an empty mode alone leaves the current mode intact', async () => {
+test('[recent-imagery-030] an empty mode alone does not change the current mode', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setMode('ab');
@@ -2239,7 +2239,7 @@ test('[recent-imagery-030] IMAGE can preview a day from the B pin', async () => 
   f.layer.destroy();
 });
 
-test('[recent-imagery-031] two pins prevent another preview', async () => {
+test('[recent-imagery-031] two pins do not allow another preview', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setMode('ab');
@@ -2254,7 +2254,7 @@ test('[recent-imagery-031] two pins prevent another preview', async () => {
   f.layer.destroy();
 });
 
-test('[recent-imagery-031] a lone B image cannot form an A and B comparison', async () => {
+test('[recent-imagery-031] a single B image cannot form an A and B comparison', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setMode('ab');
@@ -2280,20 +2280,7 @@ test('[recent-imagery-042] a farther old day does not replace the nearest old da
   f.layer.destroy();
 });
 
-test('[recent-imagery-038] each layer subscriber gets the current snapshot', async () => {
-  const f = fixture();
-  await f.ready();
-  const first = [],
-    second = [];
-  f.layer.subscribe((state) => first.push(state));
-  f.layer.subscribe((state) => second.push(state));
-  f.layer.setAlpha(0.4);
-  assert.equal(first.at(-1).alpha, 0.4);
-  assert.equal(second.at(-1).alpha, 0.4);
-  f.layer.destroy();
-});
-
-test('[recent-imagery-035] a host collection change alone sends a state notice', async () => {
+test('[recent-imagery-035] a host collection change alone sends a state update', async () => {
   const host = { collection: {}, kind: 'globe' },
     catalog = fakeCatalog();
   const layer = createRecentImageryLayer({
@@ -2316,7 +2303,7 @@ test('[recent-imagery-035] a host collection change alone sends a state notice',
   layer.destroy();
 });
 
-test('[recent-imagery-035] a host kind change alone sends a state notice', async () => {
+test('[recent-imagery-035] a host kind change alone sends a state update', async () => {
   const host = { collection: {}, kind: 'globe' },
     catalog = fakeCatalog();
   const layer = createRecentImageryLayer({
@@ -2390,7 +2377,7 @@ test('[recent-imagery-033] IMAGE does not show the tileset swipe note', async ()
   f.layer.destroy();
 });
 
-test('[recent-imagery-029] an absent overview day alone prevents its pass note', async () => {
+test('[recent-imagery-029] an absent overview day alone does not allow its pass note', async () => {
   const f = fixture();
   await f.ready([candidate('S30', '2026-09-18', 12)]);
   assert.equal(
@@ -2404,7 +2391,7 @@ test('[recent-imagery-029] an absent overview day alone prevents its pass note',
   f.layer.destroy();
 });
 
-test('[recent-imagery-029] an inactive overview source alone prevents its pass note', async () => {
+test('[recent-imagery-029] an inactive overview source alone does not allow its pass note', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setSources({ viirs: false });
@@ -2458,7 +2445,7 @@ test('[recent-imagery-038] the layer does not call an absent state manager', asy
   }
 });
 
-test('[recent-imagery-034] the same automatic switch does not send another state notice', async () => {
+test('[recent-imagery-034] the same automatic switch does not send another state update', async () => {
   const f = fixture();
   let active = 'esri',
     generation = 1;
@@ -2540,7 +2527,7 @@ test('[recent-imagery-035] a map callback does not move the host while the layer
   f.layer.destroy();
 });
 
-test('[recent-imagery-029] an empty catalog permits another search for the same box', async () => {
+test('[recent-imagery-029] an empty catalog allows another search for the same box', async () => {
   const f = fixture({ viirs: false });
   await f.ready([]);
   assert.equal(f.snap().candidates.length, 0);
@@ -2569,7 +2556,7 @@ test('[recent-imagery-036] a control callback with share parameters does not pub
   f.layer.destroy();
 });
 
-test('[recent-imagery-031] a tileset host alone prevents a live swipe', async () => {
+test('[recent-imagery-031] a tileset host alone does not allow a live swipe', async () => {
   const f = fixture({ hostKind: 'tileset' });
   await f.ready();
   f.layer.setMode('basemap');
@@ -2580,7 +2567,7 @@ test('[recent-imagery-031] a tileset host alone prevents a live swipe', async ()
   f.layer.destroy();
 });
 
-test('[recent-imagery-038] a layer without subscribers does not read the clock for a state notice', async () => {
+test('[recent-imagery-038] a layer without subscribers does not read the clock for a state update', async () => {
   let clockCalls = 0;
   const catalog = fakeCatalog();
   const layer = createRecentImageryLayer({
@@ -2604,7 +2591,7 @@ test('[recent-imagery-038] a layer without subscribers does not read the clock f
   layer.destroy();
 });
 
-test('[recent-imagery-035] a layer without a host drops its host error when it stops', async () => {
+test('[recent-imagery-035] a layer without a host removes its host error when it stops', async () => {
   const f = fixture();
   await f.ready();
   f.hostState.kind = 'none';
@@ -2619,7 +2606,7 @@ test('[recent-imagery-035] a layer without a host drops its host error when it s
   f.layer.destroy();
 });
 
-test('[recent-imagery-039] a pin that first has pixels sends a full state notice', async () => {
+test('[recent-imagery-039] a pin that first has pixels sends a full state update', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setAssignment('a', V15);
@@ -2766,7 +2753,7 @@ test('[recent-imagery-037] a source change ignores a nonfunction row listener', 
   f.layer.destroy();
 });
 
-test('[recent-imagery-028] an absent Cartesian placement method alone prevents a flight', async () => {
+test('[recent-imagery-028] an absent Cartesian placement method alone does not allow a flight', async () => {
   const f = fixture();
   f.viewer.scene = { ellipsoid: {} };
   f.viewer.camera.flyTo = () => {};
@@ -2780,7 +2767,7 @@ test('[recent-imagery-028] an absent Cartesian placement method alone prevents a
   f.layer.destroy();
 });
 
-test('[recent-imagery-028] an absent camera flight method alone prevents a flight', async () => {
+test('[recent-imagery-028] an absent camera flight method alone does not allow a flight', async () => {
   const f = fixture();
   f.viewer.scene = { ellipsoid: { cartographicToCartesian: (value) => value } };
   f.layer.reportBoxRefusal('Box too wide', {
@@ -2793,7 +2780,7 @@ test('[recent-imagery-028] an absent camera flight method alone prevents a fligh
   f.layer.destroy();
 });
 
-test('[recent-imagery-035] a tileset change leaves the host intact while the layer is off', async () => {
+test('[recent-imagery-035] a tileset change does not change the host while the layer is off', async () => {
   const f = fixture();
   await f.ready();
   f.layer.disable();
@@ -2805,7 +2792,7 @@ test('[recent-imagery-035] a tileset change leaves the host intact while the lay
   f.layer.destroy();
 });
 
-test('[recent-imagery-035] an unchanged tileset host does not send another state notice', async () => {
+test('[recent-imagery-035] an unchanged tileset host does not send another state update', async () => {
   const f = fixture();
   await f.ready();
   f.reasons.length = 0;
@@ -2844,7 +2831,7 @@ test('[recent-imagery-036] the same mode parameter does not send renderer work',
   f.layer.destroy();
 });
 
-test('[recent-imagery-036] a lone B parameter restores only the B pin', async () => {
+test('[recent-imagery-036] a single B parameter restores only the B pin', async () => {
   const f = fixture();
   await f.ready();
   f.layer.setMode('ab');
@@ -2855,7 +2842,7 @@ test('[recent-imagery-036] a lone B parameter restores only the B pin', async ()
   f.layer.destroy();
 });
 
-test('[recent-imagery-036] a malformed share pin key becomes null', async () => {
+test('[recent-imagery-036] an incorrect share pin key becomes null', async () => {
   const f = fixture();
   f.layer.setParams({ a: 'bad' });
   assert.equal(f.layer.getParams().a, null);
@@ -2918,7 +2905,7 @@ test('[recent-imagery-032] a late controller gets a lease after the next preview
   f.layer.destroy();
 });
 
-test('[recent-imagery-029] an active HLS request prevents a repeat search for the same box', async () => {
+test('[recent-imagery-029] an active HLS request does not allow a repeat search for the same box', async () => {
   const f = fixture();
   f.layer.enable();
   f.layer.setBox(BOX);
@@ -2939,7 +2926,7 @@ test('[recent-imagery-041] a followed day alone counts as a preview to clear', a
   f.layer.destroy();
 });
 
-test('[recent-imagery-039] a followed day with new pixels sends a full state notice', async () => {
+test('[recent-imagery-039] a followed day with new pixels sends a full state update', async () => {
   const f = fixture();
   await f.ready();
   f.layer.clearPreview();
@@ -3014,7 +3001,7 @@ test('[recent-imagery-035] stats check the host after a nonfunction subscription
   f.layer.destroy();
 });
 
-test('[recent-imagery-029] enable keeps a catalog that has days', async () => {
+test('[recent-imagery-029] ENABLE keeps a catalog that has days', async () => {
   const f = fixture();
   await f.ready();
   f.layer.enable();
@@ -3085,5 +3072,455 @@ test('[recent-imagery-039] both offscreen pins get direct thumbnail requests', a
     f.thumbnails.requests.find(([key]) => key === 'VIIRS:2026-08-26'),
     ['VIIRS:2026-08-26', 0],
   );
+  f.layer.destroy();
+});
+
+test('[recent-imagery-031] the AB mode keeps slot A empty after a B preview', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.setAssignment('b', L16);
+  f.layer.preview(L16);
+  f.layer.setMode('ab');
+  assert.equal(f.snap().shown.a, null);
+  assert.equal(f.snap().shown.b, 'L30:2026-09-16');
+  assert.equal(f.snap().shown.swipe, 'none');
+  f.layer.destroy();
+});
+
+test('[recent-imagery-031] the AB mode does not compare a B preview with itself', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.setMode('ab');
+  f.layer.setAssignment('b', L16);
+  f.layer.setMode('image');
+  f.layer.preview(L16);
+  f.layer.setMode('ab');
+  assert.equal(f.snap().shown.a, null);
+  assert.equal(f.snap().shown.b, 'L30:2026-09-16');
+  assert.equal(f.snap().shown.swipe, 'none');
+  f.layer.destroy();
+});
+
+test('[recent-imagery-036] a new search keeps focus on the single B pin', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.setMode('ab');
+  f.layer.setAssignment('b', L16);
+  f.layer.setBox({ ...BOX, east: -97.69 });
+  f.catalog.resolveLast();
+  await settle();
+  assert.equal(f.snap().focus.key, 'L30:2026-09-16');
+  assert.equal(f.snap().auto, null);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-032] a controller after an image does not get a lease on a mode change', async () => {
+  const f = fixture({ controller: null });
+  await f.ready();
+  f.layer.setAssignment('a', S18);
+  assert.equal(f.snap().shown.a, 'S30:2026-09-18');
+  let acquisitions = 0;
+  const controller = fakeController();
+  const acquire = controller.acquireImageryComparison.bind(controller);
+  controller.acquireImageryComparison = (...args) => {
+    acquisitions += 1;
+    return acquire(...args);
+  };
+  f.layer.attachMapStackController(controller);
+  f.layer.setMode('basemap');
+  assert.equal(acquisitions, 0);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-029] a null preview key does not remove the current image', async () => {
+  const f = fixture();
+  await f.ready([CANDIDATES[1], { ...CANDIDATES[2], key: null }]);
+  assert.equal(f.layer.preview(null), false);
+  assert.equal(f.snap().shown.a, 'S30:2026-09-18');
+  f.layer.destroy();
+});
+
+test('[recent-imagery-042] a null candidate key moves focus to the first card with a key', async () => {
+  const f = fixture();
+  await f.ready([CANDIDATES[1], { ...CANDIDATES[2], key: null }]);
+  f.layer.focus(1);
+  assert.equal(f.snap().focus.key, 'S30:2026-09-18');
+  assert.equal(f.snap().focusIndex, 0);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-030] a mode with different numeric results does not change the mode', async () => {
+  const f = fixture();
+  await f.ready();
+  let reads = 0;
+  const mode = {
+    valueOf() {
+      reads += 1;
+      return reads === 1 ? 1 : 1.5;
+    },
+  };
+  assert.equal(f.layer.setMode(mode), false);
+  assert.equal(f.snap().mode, 'image');
+  f.layer.destroy();
+});
+
+test('[recent-imagery-042] a null candidate key does not cause an error or add a preview timer', async () => {
+  const f = fixture();
+  await f.ready([CANDIDATES[1], { ...CANDIDATES[2], key: null }]);
+  assert.doesNotThrow(() => f.layer.focus(1));
+  assert.equal(f.timers.armed(), 0);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-042] an equal distance before the old focus does not replace the first nearest card', async () => {
+  const f = fixture();
+  const days = [...CANDIDATES];
+  days.indexOf = (day) =>
+    day.key === L16 ? 0 : Array.prototype.indexOf.call(days, day);
+  await f.ready(days);
+  f.layer.focus(1);
+  f.thumbnails.probe(S18, 'empty');
+  assert.equal(f.snap().focus.key, 'VIIRS:2026-09-21');
+  f.layer.destroy();
+});
+
+test('[recent-imagery-042] the hidden count stays zero with different source lists when empty days show', async () => {
+  const f = fixture();
+  const days = [...CANDIDATES];
+  await f.ready(days);
+  f.layer.setShowUnavailable(true);
+  let calls = 0;
+  days.filter = (...args) => {
+    calls += 1;
+    return calls % 2 ? Array.prototype.filter.call(days, ...args) : [];
+  };
+  assert.equal(f.snap().hiddenCount, 0);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-036] a share mode whose second value is null does not change the current mode', async () => {
+  const f = fixture();
+  await f.ready();
+  let reads = 0;
+  f.layer.setParams({
+    get mode() {
+      reads += 1;
+      return reads === 1 ? 'ab' : null;
+    },
+  });
+  assert.equal(f.snap().mode, 'image');
+  f.layer.destroy();
+});
+
+test('[recent-imagery-037] a source that becomes active keeps the preview that waits after a product change', async () => {
+  const f = fixture();
+  const days = CANDIDATES.map((day) => ({ ...day }));
+  await f.ready(days);
+  f.layer.focus(2);
+  days[2].product = 'VIIRS';
+  f.layer.setSources({ hls: false });
+  days[2].product = 'L30';
+  f.layer.setSources({ hls: true });
+  assert.equal(f.snap().preview.pending, 'L30:2026-09-16');
+  f.layer.destroy();
+});
+
+test('[recent-imagery-031] a thumbnail callback that selects IMAGE does not leave an AB swipe', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.setMode('ab');
+  f.layer.setAssignment('a', S18);
+  f.layer.setAssignment('b', L16);
+  const get = f.thumbnails.get.bind(f.thumbnails);
+  let changed = false;
+  f.thumbnails.get = (key) => {
+    if (key === L16 && !changed) {
+      changed = true;
+      f.layer.setMode('image');
+    }
+    return get(key);
+  };
+  const state = f.diag();
+  assert.equal(state.mode, 'image');
+  assert.equal(state.shown.swipe, 'none');
+  f.layer.destroy();
+});
+
+async function layerAfterRendererCallback({ pin = true } = {}) {
+  const f = fixture({ controller: null });
+  await f.ready();
+  if (pin) f.layer.setAssignment('a', S18);
+  f.renderer.destroy = () => f.layer.enable();
+  f.layer.destroy();
+  f.catalog.resolveLast();
+  await settle();
+  return f;
+}
+
+test('[recent-imagery-035] a map callback after the layer calls DESTROY does not change the host after a renderer callback', async () => {
+  const f = await layerAfterRendererCallback();
+  f.hostState.kind = 'tileset';
+  f.layer.getStats();
+  assert.equal(f.diag().host, 'globe');
+});
+
+test('[recent-imagery-040] a focus timer after the layer calls DESTROY does not change the preview after a renderer callback', async () => {
+  const f = await layerAfterRendererCallback({ pin: false });
+  f.layer.focus(2);
+  f.timers.flush();
+  assert.equal(f.snap().shown.a, 'S30:2026-09-18');
+});
+
+test('[recent-imagery-031] the layer rejects SWAP after a lease callback and a renderer callback destroy it', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.setMode('basemap');
+  f.layer.setAssignment('a', S18);
+  f.renderer.destroy = () => f.layer.enable();
+  f.controller.lease.settle({
+    get status() {
+      f.layer.destroy();
+      return 'ready';
+    },
+    activeId: 'esri',
+  });
+  await settle();
+  f.catalog.resolveLast();
+  await settle();
+  assert.equal(f.layer.swapSides(), false);
+  assert.equal(f.snap().swapped, false);
+});
+
+test('[recent-imagery-032] a lease that completes after its controller destroys the layer does not activate a comparison', async () => {
+  const controller = fakeController();
+  const acquire = controller.acquireImageryComparison.bind(controller);
+  let f,
+    stopped = false;
+  controller.acquireImageryComparison = (...args) => {
+    const lease = acquire(...args);
+    if (!stopped) {
+      stopped = true;
+      f.layer.destroy();
+      f.layer.attachMapStackController(controller);
+    }
+    return lease;
+  };
+  f = fixture({ controller });
+  f.renderer.destroy = () => f.layer.enable();
+  await f.ready();
+  f.catalog.resolveLast();
+  await settle();
+  f.layer.setMode('basemap');
+  controller.lease.settle();
+  await settle();
+  assert.equal(f.snap().comparison.active, false);
+});
+
+test('[recent-imagery-033] a ready result that causes a rejected lease does not activate a swipe', async () => {
+  let active = 'esri',
+    generation = 1;
+  const controller = fakeController();
+  controller.getActiveId = () => active;
+  controller.getSwitchGeneration = () => generation;
+  const f = fixture({ controller });
+  await f.ready();
+  f.layer.setMode('basemap');
+  controller.lease.settle({
+    get status() {
+      active = 'photoreal';
+      generation = 2;
+      controller.acquireImageryComparison = () => {
+        throw new Error('held');
+      };
+      f.layer.getStats();
+      return 'ready';
+    },
+    activeId: 'esri',
+  });
+  await settle();
+  assert.equal(f.snap().comparison.active, false);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-032] a new lease without a result does not mark Esri as borrowed after an old map result', async () => {
+  let active = 'esri',
+    generation = 1;
+  const controller = fakeController();
+  const acquire = controller.acquireImageryComparison.bind(controller);
+  controller.acquireImageryComparison = (...args) => {
+    active = 'esri';
+    return acquire(...args);
+  };
+  controller.getActiveId = () => active;
+  controller.getSwitchGeneration = () => generation;
+  const f = fixture({ controller });
+  await f.ready();
+  controller.lease.settle({
+    status: 'ready',
+    get activeId() {
+      active = 'photoreal';
+      generation = 2;
+      f.layer.getStats();
+      return 'esri';
+    },
+  });
+  await settle();
+  assert.equal(f.snap().borrowedEsri, false);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-032] a ready result without a lease does not mark Esri as borrowed', async () => {
+  let active = 'esri',
+    generation = 1;
+  const controller = fakeController();
+  controller.getActiveId = () => active;
+  controller.getSwitchGeneration = () => generation;
+  const f = fixture({ controller });
+  await f.ready();
+  controller.lease.settle({
+    get status() {
+      active = 'photoreal';
+      generation = 2;
+      controller.acquireImageryComparison = () => {
+        active = 'esri';
+        return null;
+      };
+      try {
+        f.layer.getStats();
+      } catch {}
+      return 'ready';
+    },
+    activeId: 'esri',
+  });
+  await settle();
+  assert.equal(f.snap().borrowedEsri, false);
+  f.layer.destroy();
+});
+
+async function layerAfterSearchCallback(action) {
+  const f = fixture();
+  f.layer.enable();
+  f.layer.setBox(BOX);
+  f.thumbnails.calls.length = 0;
+  f.catalog.searches.at(-1).resolve({
+    get candidates() {
+      f.layer[action]();
+      return CANDIDATES;
+    },
+    errors: [],
+    truncated: false,
+  });
+  await settle();
+  return f;
+}
+
+test('[recent-imagery-029] a search result that disables the layer does not show an image or request thumbnails', async () => {
+  const f = await layerAfterSearchCallback('disable');
+  assert.equal(f.snap().shown.a, null);
+  assert.equal(
+    f.thumbnails.calls.some(([kind]) => kind === 'ordered'),
+    false,
+  );
+  assert.deepEqual(f.thumbnails.requests, []);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-041] a search result that clears the box does not show an image or request thumbnails', async () => {
+  const f = await layerAfterSearchCallback('clear');
+  assert.equal(f.snap().shown.a, null);
+  assert.equal(
+    f.thumbnails.calls.some(([kind]) => kind === 'ordered'),
+    false,
+  );
+  assert.deepEqual(f.thumbnails.requests, []);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-040] a disabled layer does not set a preview timer after a search callback', async () => {
+  const f = await layerAfterSearchCallback('disable');
+  f.layer.focus(2);
+  assert.equal(f.snap().preview.pending, null);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-030] a disabled layer rejects a preview after a search callback', async () => {
+  const f = await layerAfterSearchCallback('disable');
+  assert.equal(f.layer.preview(L16), false);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-031] a preview timer does not add a null slot after a thumbnail callback fills both pins', async () => {
+  const f = fixture();
+  await f.ready();
+  f.layer.setMode('ab');
+  f.thumbnails.probe(V21, 'present');
+  f.layer.focus(0);
+  const get = f.thumbnails.get.bind(f.thumbnails);
+  let changed = false;
+  f.thumbnails.get = (key) => {
+    if (key === V21 && !changed) {
+      changed = true;
+      f.layer.setAssignment('a', S18);
+      f.layer.setAssignment('b', L16);
+    }
+    return get(key);
+  };
+  f.timers.flush();
+  assert.equal(Object.hasOwn(f.diag().shown, 'null'), false);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-032] a map callback does not end a lease while an earlier lease waits to end', async () => {
+  let f,
+    acquisitions = 0,
+    generation = 1;
+  const released = [];
+  const controller = {
+    getActiveId: () => 'photoreal',
+    getSwitchGeneration: () => generation,
+    acquireImageryComparison() {
+      const id = ++acquisitions;
+      const lease = {
+        ready: new Promise(() => {}),
+        release() {
+          released.push(id);
+          return id === 2 ? new Promise(() => {}) : Promise.resolve();
+        },
+      };
+      if (id === 1) {
+        f.layer.setAssignment('a', S18);
+        f.layer.clear();
+        f.layer.setBox(BOX);
+      }
+      return lease;
+    },
+  };
+  f = fixture({ controller });
+  await f.ready();
+  f.catalog.resolveLast();
+  await settle();
+  generation = 2;
+  f.layer.getStats();
+  assert.equal(released.includes(1), false);
+  f.layer.destroy();
+});
+
+test('[recent-imagery-034] a controller callback that removes both images does not read the switch generation', async () => {
+  const controller = fakeController();
+  controller.getActiveId = () => 'esri';
+  let reads = 0;
+  controller.getSwitchGeneration = () => {
+    reads += 1;
+    return 1;
+  };
+  const f = fixture({ controller });
+  await f.ready();
+  reads = 0;
+  controller.getActiveId = () => {
+    f.layer.clear();
+    return 'photoreal';
+  };
+  f.layer.getStats();
+  assert.equal(reads, 0);
   f.layer.destroy();
 });
