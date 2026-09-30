@@ -66,7 +66,9 @@ The lead changes the QA header after the archive creates the capability folder.
 - Known limit `recent-imagery-untagged-old-test`: one old test in `src/ui/recentImagery.test.mjs` has a title of 26 words. The gate limit for a tagged title is 25 words. The owner rule keeps an old test name, so this test stays without a tag. Its title starts with "the notice line shows the refusal". Two new tests carry the claims of `recent-imagery-046` instead.
 
 No old test has a banned word. One old test stays without a tag.
-The title sweep flags 29 old names for verb form, passive voice or length.
+
+The title sweep lists 29 old names. The gates flag 23 of them for -ing words or passive voice. The gates do not flag 3 with a hyphenated -ing word. Two start with "disable" as a noun. One has 26 words and stays untagged.
+
 The owner rule keeps these names. The list gives each name and its file.
 
 - `src/layers/recentImagery/catalog.test.mjs` (passive voice):
