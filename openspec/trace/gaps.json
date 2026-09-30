@@ -16431,6 +16431,13 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/ui/recentImagery.test.mjs": {
+      "names": {
+        "the notice line shows the refusal, then errors, then CLEAR, then the Esri note; the hint names the next step and that SWAP trades the sides": 1
+      },
+      "origin": "upstream-sync",
+      "since": "2026-09-25"
+    },
     "src/ui/sceneControls.test.mjs": {
       "names": {
         "Scene Escape and recording presentation follow playback and release on destruction": 1,

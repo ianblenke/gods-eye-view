@@ -20,10 +20,10 @@ The ledger has 93 old tests in this area. 92 now have tags. One old test stays w
 The area now has 391 tests. The test sweep finds one test without a tag, the old test in the known limits.
 The change has 52 scenarios, 391 tests and 831 mutation checks.
 
-Host Node 26 coverage differs from the Node version for the gates. The lead must check the gate image.
+Host Node 26 coverage can differ from the gate image. The ratchet in the gate image left the same gaps.
 
 The table gives ledger gaps before this change and host gaps after this change.
-The host counts do not give the gate verdict.
+The ledger from the gate image has the same counts as the host.
 
 | File | Before lines | After host lines | Before branches | After host branches | Before functions | After host functions |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -35,8 +35,11 @@ The host counts do not give the gate verdict.
 | `src/ui/recentImagery.js` | 27 | 0 | 66 | 4 | 10 | 2 |
 | `src/layers/recentImagery/testDoubles.mjs` | 0 | 0 | 0 | 0 | 4 | 0 |
 
+The ratchet command also wrote two history lines for `src/data/labelArbiter.js`, which this change does not edit. The branch count for this file changes between runs. The lead set the entry for that file back to the values in `main`, as a text edit with no measurement.
+
 ## Known limits and later changes
 
+- Known limit `recent-imagery-ledger-history`: two history lines for `src/data/labelArbiter.js` still show the drift that this change corrected (before 52, after 50 branches). The entry in the ledger has the correct value. The two history lines do not have the correct value.
 The host run covers all lines. These branches and functions have no path through the current API and DOM state.
 
 - `src/layers/recentImagery/model.js:239`: The branch at line 239 cannot run. The date pattern makes the UTC value finite.
