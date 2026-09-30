@@ -38,7 +38,10 @@ function fakeCollection() {
   return {
     layers,
     addImageryProvider(provider) {
-      const layer = { provider, alpha: 1, splitDirection: 0 };
+      const layer = Object.assign(
+        Object.create({ alpha: 1, splitDirection: 0 }),
+        { provider },
+      );
       layers.push(layer);
       return layer;
     },
@@ -70,7 +73,7 @@ function fixture({ requestImage, maxTileRequests } = {}) {
   return { renderer, globe, renders, timers, tileFrames };
 }
 
-test('a slot drapes one GIBS provider bounded to the box; the same day only restyles it', () => {
+test('[recent-imagery-018] a slot drapes one GIBS provider bounded to the box; the same day only restyles it', () => {
   const { renderer, globe, renders } = fixture();
   assert.equal(renderer.showSlot('a', S30, BOX, { alpha: 0.8 }), true);
   const [layer] = globe.layers;
@@ -80,7 +83,12 @@ test('a slot drapes one GIBS provider bounded to the box; the same day only rest
   );
   assert.deepEqual(layer.provider.options.subdomains, ['a', 'b', 'c']);
   assert.equal(layer.provider.options.credit, 'NASA GIBS');
-  assert.deepEqual(layer.provider.options.rectangle, BOX);
+  assert.deepEqual(layer.provider.options.rectangle, {
+    west: -97.8,
+    south: 30.2,
+    east: -97.7,
+    north: 30.3,
+  });
   assert.equal(layer.alpha, 0.8);
   assert.deepEqual(renders, ['recent-imagery-show']);
   assert.deepEqual(renderer.getOwned().a, {
@@ -105,7 +113,7 @@ test('a slot drapes one GIBS provider bounded to the box; the same day only rest
   assert.equal(globe.layers[1].alpha, 1, 'alpha clamps to 0–1');
 });
 
-test('rapid replacement never owns more than two layers', () => {
+test('[recent-imagery-019] rapid replacement never owns more than two layers', () => {
   const { renderer, globe } = fixture();
   const days = [S30, L30, VIIRS];
   for (let i = 0; i < 10; i += 1) {
@@ -119,7 +127,7 @@ test('rapid replacement never owns more than two layers', () => {
   assert.equal(globe.layers.length, 0);
 });
 
-test('rebind rebuilds the owned layers on the new host and leaves the old one empty', () => {
+test('[recent-imagery-020] rebind rebuilds the owned layers on the new host and leaves the old one empty', () => {
   const { renderer, globe } = fixture();
   renderer.showSlot('a', S30, BOX, { alpha: 0.6, splitDirection: 'left' });
   renderer.showSlot('b', L30, BOX, { splitDirection: 'right' });
@@ -144,7 +152,7 @@ test('rebind rebuilds the owned layers on the new host and leaves the old one em
   assert.equal(renderer.showSlot('a', S30, BOX), false, 'destroyed');
 });
 
-test('above the tile limit a request defers silently; its settlement asks for exactly one frame', async () => {
+test('[recent-imagery-021] above the tile limit a request defers silently; its settlement asks for exactly one frame', async () => {
   const { renderer, globe, timers, tileFrames } = fixture({
     maxTileRequests: 1,
   });
@@ -163,7 +171,7 @@ test('above the tile limit a request defers silently; its settlement asks for ex
   assert.ok(provider.requestImage(200, 0, 1) instanceof Promise);
 });
 
-test('upstream deferrals from both slots share one delayed retry frame; destroy disarms it', () => {
+test('[recent-imagery-022] upstream deferrals from both slots share one delayed retry frame; destroy disarms it', () => {
   let throwNext = false;
   const { renderer, globe, timers, tileFrames } = fixture({
     maxTileRequests: 1,
@@ -181,7 +189,7 @@ test('upstream deferrals from both slots share one delayed retry frame; destroy 
   // for a frame of its own: one timer holds the single retry.
   assert.equal(tileFrames(), 0);
   assert.equal(timers.armed(), 1);
-  assert.equal([...timers.pending.values()][0].ms, TILE_RETRY_DELAY_MS);
+  assert.equal([...timers.pending.values()][0].ms, 250);
   timers.flush();
   assert.equal(tileFrames(), 1);
   // A throwing provider releases its slot too.
@@ -195,7 +203,7 @@ test('upstream deferrals from both slots share one delayed retry frame; destroy 
   assert.equal(tileFrames(), 1);
 });
 
-test('against the basemap slot a splits left with no second layer, and leaving the swipe only restyles it', () => {
+test('[recent-imagery-018] against the basemap slot a splits left with no second layer, and leaving the swipe only restyles it', () => {
   const { renderer, globe, renders } = fixture();
   renderer.showSlot('a', S30, BOX, { splitDirection: 'left' });
   renderer.hideSlot('b');
@@ -207,4 +215,195 @@ test('against the basemap slot a splits left with no second layer, and leaving t
   assert.deepEqual(globe.layers, [layer], 'no rebuild for a new look');
   assert.equal(layer.splitDirection, 0);
   assert.deepEqual(renders, ['recent-imagery-show', 'recent-imagery-look']);
+});
+
+test('[recent-imagery-018 recent-imagery-020] invalid slot input and host changes release owned images', () => {
+  const f = fixture();
+  assert.equal(f.renderer.showSlot('a', null, BOX), false);
+  assert.equal(f.renderer.showSlot('a', S30, null), false);
+  f.renderer.showSlot('a', S30, BOX, { alpha: 'bad', splitDirection: 'bad' });
+  const layer = f.globe.layers[0];
+  assert.equal(Object.hasOwn(layer, 'alpha'), true);
+  assert.equal(layer.alpha, 1);
+  assert.equal(layer.splitDirection, 0);
+  f.renderer.setAlpha('a', 0.25);
+  assert.equal(layer.alpha, 0.25);
+  assert.equal(f.renders.at(-1), 'recent-imagery-alpha');
+  f.globe.remove = () => {
+    throw new Error('gone');
+  };
+  f.renderer.rebind(null);
+  assert.equal(f.renderer.ownedCount(), 0);
+  f.renderer.destroy();
+  f.renderer.destroy();
+  assert.equal(f.renderer.showSlot('a', S30, BOX), false);
+});
+
+test('[recent-imagery-018] absent split enum sets an own zero value', () => {
+  const cesium = fakeCesium();
+  delete cesium.SplitDirection;
+  const renderer = createRecentImageryRenderer({ cesium });
+  const collection = fakeCollection();
+  renderer.rebind({ collection, kind: 'globe' });
+  renderer.showSlot('a', S30, BOX);
+  assert.equal(Object.hasOwn(collection.layers[0], 'splitDirection'), true);
+  assert.equal(collection.layers[0].splitDirection, 0);
+  renderer.destroy();
+});
+
+test('[recent-imagery-019] replacement destroys the old layer in both slots', () => {
+  const f = fixture();
+  for (const slot of ['a', 'b']) {
+    f.renderer.showSlot(slot, S30, BOX);
+    const layer = f.globe.layers.at(-1);
+    f.renderer.showSlot(slot, L30, BOX);
+    assert.equal(layer.destroyed, true);
+  }
+  f.renderer.destroy();
+  assert.equal(f.globe.layers.length, 0);
+});
+
+test('[recent-imagery-022] default retry timer ends and cancels with the renderer', async () => {
+  const renderer = createRecentImageryRenderer({
+    cesium: fakeCesium(() => undefined),
+  });
+  const collection = fakeCollection();
+  renderer.rebind({ collection, kind: 'globe' });
+  renderer.showSlot('a', S30, BOX);
+  assert.equal(collection.layers[0].provider.requestImage(0, 0, 0), undefined);
+  await new Promise((resolve) => setTimeout(resolve, 260));
+  assert.equal(collection.layers[0].provider.requestImage(0, 0, 0), undefined);
+  renderer.destroy();
+  assert.equal(renderer.ownedCount(), 0);
+});
+
+test('[recent-imagery-018] a change to west replaces the provider', async () => {
+  const f = fixture();
+  f.renderer.showSlot('a', S30, BOX);
+  const first = f.globe.layers[0];
+  f.renderer.showSlot('a', S30, { ...BOX, west: -97.81 });
+  assert.equal(first.destroyed, true);
+  assert.equal(f.globe.layers.length, 1);
+  assert.equal(f.globe.layers[0].provider.options.rectangle.west, -97.81);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-018] a change to south replaces the provider', async () => {
+  const f = fixture();
+  f.renderer.showSlot('a', S30, BOX);
+  const first = f.globe.layers[0];
+  f.renderer.showSlot('a', S30, { ...BOX, south: 30.19 });
+  assert.equal(first.destroyed, true);
+  assert.equal(f.globe.layers.length, 1);
+  assert.equal(f.globe.layers[0].provider.options.rectangle.south, 30.19);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-018] a change to east replaces the provider', async () => {
+  const f = fixture();
+  f.renderer.showSlot('a', S30, BOX);
+  const first = f.globe.layers[0];
+  f.renderer.showSlot('a', S30, { ...BOX, east: -97.69 });
+  assert.equal(first.destroyed, true);
+  assert.equal(f.globe.layers.length, 1);
+  assert.equal(f.globe.layers[0].provider.options.rectangle.east, -97.69);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-018] a change to north replaces the provider', async () => {
+  const f = fixture();
+  f.renderer.showSlot('a', S30, BOX);
+  const first = f.globe.layers[0];
+  f.renderer.showSlot('a', S30, { ...BOX, north: 30.31 });
+  assert.equal(first.destroyed, true);
+  assert.equal(f.globe.layers.length, 1);
+  assert.equal(f.globe.layers[0].provider.options.rectangle.north, 30.31);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-020] host change moves slot a alone', () => {
+  const f = fixture();
+  f.renderer.showSlot('a', S30, BOX);
+  const old = f.globe.layers[0];
+  const next = fakeCollection();
+  f.renderer.rebind({ collection: next, kind: 'tileset' });
+  assert.equal(old.destroyed, true);
+  assert.equal(f.globe.layers.length, 0);
+  assert.equal(next.layers.length, 1);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-020] host change moves slot b alone', () => {
+  const f = fixture();
+  f.renderer.showSlot('b', S30, BOX);
+  const old = f.globe.layers[0];
+  const next = fakeCollection();
+  f.renderer.rebind({ collection: next, kind: 'tileset' });
+  assert.equal(old.destroyed, true);
+  assert.equal(f.globe.layers.length, 0);
+  assert.equal(next.layers.length, 1);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-018] an alpha change alone updates the current image', async () => {
+  const f = fixture();
+  f.renderer.showSlot('a', S30, BOX, { alpha: 0.8 });
+  f.renderer.showSlot('a', S30, BOX, { alpha: 0.5 });
+  assert.equal(f.globe.layers[0].alpha, 0.5);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-018] an empty slot ignores an alpha change', async () => {
+  const f = fixture();
+  assert.doesNotThrow(() => f.renderer.setAlpha('a', 0.5));
+  assert.deepEqual(f.renders, []);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-018] the same alpha value does not add a frame', async () => {
+  const f = fixture();
+  f.renderer.showSlot('a', S30, BOX, { alpha: 0.5 });
+  f.renderer.setAlpha('a', 0.5);
+  assert.deepEqual(f.renders, ['recent-imagery-show']);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-020] the same host leaves the current image intact', async () => {
+  const f = fixture();
+  f.renderer.showSlot('a', S30, BOX);
+  f.renderer.rebind({ collection: f.globe, kind: 'globe' });
+  assert.deepEqual(f.renders, ['recent-imagery-show']);
+  assert.equal(f.globe.layers.length, 1);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-020] a host collection change replaces the current slot', async () => {
+  const f = fixture(),
+    host = { collection: f.globe, kind: 'globe' };
+  f.renderer.rebind(host);
+  f.renderer.showSlot('a', S30, BOX);
+  const next = fakeCollection();
+  host.collection = next;
+  f.renderer.showSlot('a', S30, BOX);
+  assert.equal(f.globe.layers.length, 0);
+  assert.equal(next.layers.length, 1);
+  f.renderer.destroy();
+});
+
+test('[recent-imagery-019] an A image alone asks for a frame at renderer destruction', () => {
+  const f = fixture();
+  f.renderer.showSlot('a', S30, BOX);
+  f.renderer.destroy();
+  assert.deepEqual(f.renders, [
+    'recent-imagery-show',
+    'recent-imagery-destroy',
+  ]);
+});
+
+test('[recent-imagery-019] a destroyed renderer still refuses an image after a host update', () => {
+  const f = fixture();
+  f.renderer.destroy();
+  f.renderer.rebind({ collection: f.globe, kind: 'globe' });
+  assert.equal(f.renderer.showSlot('a', S30, BOX), false);
+  assert.equal(f.globe.layers.length, 0);
 });
