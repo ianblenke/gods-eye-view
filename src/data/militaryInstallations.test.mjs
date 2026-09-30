@@ -1,5 +1,5 @@
 import { readLayerSource } from '../testSupport/readLayerSource.mjs';
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   approximateSurfaceDistanceM,
@@ -10,6 +10,9 @@ import {
   installationWithinViewport,
 } from './militaryInstallations.js';
 import militaryInstallationsLayer from './militaryInstallations.js';
+
+// A bounded ground floor resolve leaves a 1200 ms deadline timer. Let each one end.
+after(() => new Promise((resolve) => setTimeout(resolve, 1300)));
 import {
   _clearMeshFloorCellsForTest,
   cachedGroundFloor,

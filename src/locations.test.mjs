@@ -544,7 +544,9 @@ test('globe and city-overview flights name the world frame explicitly', () => {
   assert.equal(cityViewer.flights[0].endTransform, Cesium.Matrix4.IDENTITY);
 });
 
-test('city and landmark flights expose completion and cancellation hooks', () => {
+test('city and landmark flights expose completion and cancellation hooks', (t) => {
+  // The flight completion starts the camera ground guard, which polls with timers.
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   const overviewViewer = stubViewer();
   const overviewEvents = [];
   flyToPresetLocation(overviewViewer, 'austin', {
