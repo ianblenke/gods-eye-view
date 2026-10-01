@@ -27,7 +27,6 @@ The test titles that changed do not exist at base `253a07d`.
 - T13: `gates.test.mjs`: [gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow a reached file with the base content.
 - T14: `gates.test.mjs`: [gap-ledger-107] The command writes no entry for a file that only base edges reach.
 - T15: `gates.test.mjs`: [gap-ledger-108] The command and gate allow a path with a new middle edge.
-
 - T16: `importReach.test.mjs`: [gap-ledger-109] The command and gate refuse an edge that only HEAD has.
 - T17: `gates.test.mjs`: [gap-ledger-109] The command writes no entry for an edge that only HEAD has.
 
@@ -52,7 +51,6 @@ Test T3 also checks that the command rejects a base entry with no `untrue` field
 | gap-ledger-106 | Record the reached field | T2, T13 | L-reached-mark, L-changed-shape |
 | gap-ledger-107 | Reject a path with only base edges | T8, T14 | G-all-new, G-first-hop, G-state-start |
 | gap-ledger-108 | Allow a path with a new middle edge | T9, T10, T11, T15 | G-base-head-files, G-base-head-content, G-state, G-state-propagate, C-base-head-content |
-
 | gap-ledger-109 | Reject a path with only an author-added new edge | T16, T17 | G-from-head-content, G-from-operand, C-from-head-content |
 
 ## Mutations
@@ -65,7 +63,7 @@ The scratch directory is `/home/ianblenke/docker/gev-tools/ledger-adopt-reached/
 The final logs are `round3-mutations-final.log` and `round3-lead2-final.log`.
 The runner restores each code file after each mutation.
 
-The sandbox mutation run supplied no test names. It supplies no evidence for this table.
+The sandbox mutation run gave no test names. It gives no evidence for this table.
 The focused test run stopped before the end. It has no verdict.
 Each row below names a test that failed in the final host run.
 
@@ -140,9 +138,9 @@ The full suite log has 44 test names absent from the coverage log.
 Separate coverage runs passed all 69 ledger tests and 33 review tests.
 These runs overlap the main coverage run, so their counts do not add to the suite count.
 
-The three coverage logs contain every test name from the full suite log.
-The other logs are `round3-ledger-coverage.log` and `round3-review-coverage.log`.
-The coverage logs are `round3-coverage-final.log` and `round3-coverage-detail.json`.
+The coverage logs contain every test name from the full suite log.
+The coverage run has the log `round3-coverage-final.log` and the file `round3-coverage-detail.json`.
+The ledger run and the review run have the logs `round3-ledger-coverage.log` and `round3-review-coverage.log`.
 
 | File | Lines | Branches | Functions | Covered branches |
 | --- | --- | --- | --- | --- |
@@ -179,15 +177,13 @@ These items do not give a new review verdict.
 - [x] FINDING minor STE 13: Rename T14 to state that the command writes no entry. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
 - [x] FINDING minor STE 14: Rename T12 with a capital article and the term reached adopt line. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
 - [x] FINDING minor STE 15: Use mutation files. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
-
 - [x] FINDING minor STE 16: Use the requested sentence about the review folder. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
 
 ## Checks and lead work
 
 The format write and check commands passed for 1115 source files.
 The STE lint reports 0 errors.
-The git status command lists 11 changed files.
-Each file is in `scripts/spec`, `src/tooling/spec` or the change folder.
+Each changed file is in `scripts/spec`, `src/tooling/spec` or the change folder.
 
 The calibrated gates, ratchet and review tasks stay open for the lead.
 The review folder is not changed in this round.

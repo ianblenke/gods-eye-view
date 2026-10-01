@@ -8,7 +8,7 @@ Use `moduleImports` on tracked script module files. Resolve relative specifiers 
 
 Read each tracked module once in each graph when the command or gate needs the import descendants. Read the base graph from the tracked code files of the base commit. The current graph is the HEAD graph. Read it from the current tracked code files.
 
-This costs one file read and one parse per module per graph. Read the merged commit graph from its tracked code files on first use. Cache descendants for each merged commit.
+This costs one file read and one parse per module per graph. Read the merged commit graph from the tracked code files of the merged commit on first use. Cache descendants for each merged commit.
 
 Search states that contain a file and a boolean `usedNewEdge`. Start each changed code file with that boolean false. Follow the edges of the current graph.
 

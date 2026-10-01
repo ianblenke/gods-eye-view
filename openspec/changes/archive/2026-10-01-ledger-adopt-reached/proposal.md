@@ -29,12 +29,12 @@ Change the gate, ledger library, import descendants library and spec tests. This
 - The gate does not compare the adopt line counts for `lines`, `branches` and `functions` with the measurement. Changed files have the same limit for these counts.
 - The gate omits the base totals check for a file with a valid reached adopt line. The content hash check stays active.
 - For lines, the ledger allowance cannot exceed the larger of the base count and the adopted count. A reached file has no waiver allowance.
-- For non-null branch and function counts above the base count, the gate allows adopted counts or no decrease in the covered counts of the base.
+- A non-null branch or function count above the base count needs an adopted count, or no decrease in the covered count of the base entry.
 - An entry absent from the base must stay within every adopted count. A measurement above the ledger allowance still stops the build.
-
-- A changed file that is new or renamed has no base entry. Each edge of it in the merged commit graph is new.
+- A changed file that is new or renamed has no base entry. Each edge that the file has in the merged commit graph is new, when the file is in the merged commit tree.
 - The rule treats a moved file as a renamed file. A reviewer must check its edges.
 - Edges are pairs of resolved files. A change to specifier text alone does not make an edge new.
 - The same import under another specifier is not new.
 - A base file list that lacks a file needed by the base graph makes edges look new.
-- The base, merged commit and HEAD graphs resolve imports over different file sets.
+- The base, merged commit and HEAD graphs resolve imports against different sets of files.
+- The merged commit graph and the base graph cover whole trees. They are not diffs from the merge base. An old upstream edge that the fork removed counts as new, and an author who adds the same edge at HEAD can use it.
