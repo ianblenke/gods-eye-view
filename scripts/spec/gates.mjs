@@ -480,7 +480,7 @@ export function runGates({
   let reachOf;
   const reachedByCommit = new Map();
   const reachedValid = (file, from, changed) => {
-    if (!reachOf) reachOf = importReach({ files: [...codeFiles], readFile: (name) => readFileSync(path.join(root, name), 'utf8') });
+    if (!reachOf) reachOf = importReach({ files: [...codeFiles], readFile: (name) => readFileSync(path.join(root, name), 'utf8'), baseFiles: listFilesAt(root, base), readBaseFile: (name) => readFileAt(root, base, name) });
     if (!reachedByCommit.has(from)) reachedByCommit.set(from, reachOf(changed));
     return adoptableReached({ file, codeFiles, sameAsBase, current: measured.current, baseLedger, reached: reachedByCommit.get(from) });
   };

@@ -100,24 +100,29 @@ Origin: spec-first
 
 #### Scenario: Record a reached file with untrue coverage `gap-ledger-100`
 - **WHEN** you run `adopt` with correct options and a merged commit
-- **AND** a tracked code file has the base content and current untrue coverage
-- **AND** the base ledger has no entry for the file, or its entry has false untrue coverage
-- **AND** an import path from a code file that the merged commit changed reaches the file
+- **AND** a tracked code file has the same content as in the base commit and measured untrue coverage
+- **AND** the base ledger has no entry for the file, or its entry has an `untrue` mark that is false
+- **AND** a path of static or literal dynamic relative imports leads from a code file that the merged commit changed to the file
+- **AND** at least one edge of that path is absent in the base import graph
+- **AND** an edge is the pair of the code file with the import and the resolved imported file
 - **THEN** the command writes the measured gap and one adopt line for the file
+- **AND** the adopt line has `untrue: true` and `untraced: 0`
 - **AND** the entry keeps its origin and date when an entry exists
 
 #### Scenario: Reject a reached file with true coverage `gap-ledger-101`
-- **WHEN** an unchanged reached file has true coverage
+- **WHEN** a file with the same content as in the base commit has an import path but true coverage
 - **THEN** the command writes no entry or history line for the file
-- **AND** the command also rejects a file whose base entry has untrue coverage
+- **AND** the command also rejects a file whose base entry has untrue coverage or no `untrue` field
 
 #### Scenario: Reject a file without an import path `gap-ledger-102`
-- **WHEN** an unchanged code file has new untrue coverage but no import path from a changed code file
+- **WHEN** a code file has the same content as in the base commit and measured untrue coverage
+- **AND** no import path with a new edge leads from a code file that the merged commit changed to the file
 - **THEN** the command writes no entry or history line for the file
 - **AND** a test file cannot supply the import path or become a reached file
 
 #### Scenario: Use the old rule for other content `gap-ledger-103`
-- **WHEN** a reached file has content that differs from the base content
+- **WHEN** a file has an import path with a new edge from a code file that the merged commit changed
+- **AND** its content is not equal to its content in the base commit
 - **THEN** the command rejects the reached exception for that file
 - **AND** the old rule adopts its gap only when the merged commit changed the file
 
@@ -125,13 +130,15 @@ Origin: spec-first
 - **WHEN** a reached adopt line has all the conditions of `gap-ledger-100`
 - **THEN** the gate allows a ledger entry up to its adopted counts
 - **AND** the gate allows a new entry or a rise above the base entry
-- **AND** the gate rejects a count above that limit
+- **AND** the gate stops the build for a count above that limit
 - **AND** the gate allows the measured null branch and function counts and the new total counts
+- **AND** the gate does not stop the build for the untrue coverage of the file with the base content
 
-#### Scenario: Reject a false reached line `gap-ledger-105`
-- **WHEN** a reached adopt line lacks a condition of `gap-ledger-100`
+#### Scenario: Stop for a reached line that is not valid `gap-ledger-105`
+- **WHEN** a reached adopt line lacks a condition of `gap-ledger-100`, including its new-edge condition
+- **AND** a line also lacks a condition when `untrue` is not true or `untraced` is not 0
 - **THEN** the gate reports `LEDGER-ADOPT-REACHED` and names the file
-- **AND** the line supplies no adopted counts
+- **AND** a reached line that is not valid gives no adopted count
 - **AND** this rule replaces the commit and file errors for a reached line
 
 #### Scenario: Record the reached mark `gap-ledger-106`
@@ -139,3 +146,15 @@ Origin: spec-first
 - **THEN** the line has boolean `reached: true` and boolean `untrue: true`
 - **AND** the line has the same other fields as an old adopt line
 - **AND** a line for a changed file has no reached field
+
+#### Scenario: Reject a path with only base edges `gap-ledger-107`
+- **WHEN** a code file has the base content and measured untrue coverage
+- **AND** every edge of each import path from a code file that the merged commit changed exists in the base graph
+- **THEN** the command writes no entry or history line for that file
+- **AND** the gate stops the build with `LEDGER-ADOPT-REACHED` for a reached adopt line that names the file
+
+#### Scenario: Allow a path with a new middle edge `gap-ledger-108`
+- **WHEN** a code file has all the other conditions of `gap-ledger-100`
+- **AND** its import path has a new edge between edges that exist in the base graph
+- **THEN** the command writes the entry and adopt line for the file
+- **AND** the gate allows the valid reached adopt line
