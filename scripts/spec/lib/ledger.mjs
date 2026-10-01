@@ -286,9 +286,10 @@ export function adoptsOf(history, baseHistory, change) {
  * @param {object[]} input.adopts - The adopt lines from `adoptsOf`.
  * @param {(from: string) => boolean} input.isMergedCommit - True for a parent, other than the first parent, of a merge commit after the base.
  * @param {(from: string) => Set<string>} input.changedFiles - The files that the commit changed since its merge base with the base.
+ * @param {(file: string, from: string, changed: Set<string>) => boolean} [input.reachedValid] - Check the reached conditions against the tree and base.
  * @returns {{valid: object[], errors: object[]}}
  */
-export function checkAdopts({ adopts, isMergedCommit, changedFiles }) {
+export function checkAdopts({ adopts, isMergedCommit, changedFiles, reachedValid = () => false }) {
   const valid = [];
   const errors = [];
   const changed = new Map();
@@ -296,7 +297,10 @@ export function checkAdopts({ adopts, isMergedCommit, changedFiles }) {
     const { file, from } = line;
     const merged = isMergedCommit(from);
     if (merged && !changed.has(from)) changed.set(from, changedFiles(from));
-    if (!merged) {
+    if (line.reached === true) {
+      if (merged && line.untrue === true && line.untraced === 0 && reachedValid(file, from, changed.get(from))) valid.push(line);
+      else errors.push({ code: 'LEDGER-ADOPT-REACHED', file, message: `The reached adopt line for ${file} lacks the base content, new untrue coverage, import path or merged commit` });
+    } else if (!merged) {
       errors.push({ code: 'LEDGER-ADOPT-FROM', file, message: `The adopt line for ${file} names the commit ${from}, and no merge commit after the base commit brought that commit` });
     } else if (!changed.get(from).has(file)) {
       errors.push({ code: 'LEDGER-ADOPT-FILE', file, message: `The adopt line for ${file} names the commit ${from}, and that commit did not change ${file} since its merge base with the base commit` });
@@ -324,6 +328,7 @@ export function adoptedCounts(lines) {
       functions: Math.max(before.functions, line.functions ?? 0),
       untraced: Math.max(before.untraced, line.untraced),
       untrue: before.untrue || line.untrue === true,
+      ...(before.reached || line.reached === true ? { reached: true } : {}),
     });
   }
   return counts;
@@ -468,7 +473,7 @@ export function compareLedger({ ledger, current, sameAsBase = () => false, waive
  * @param {string} [input.change] - The checked change. A changed total count with a changed covered
  *   count needs a history line with this name.
  * @param {Map<string, object>} [input.adopted] - The adopted counts of the checked change, from `adoptedCounts`.
- *   A file with other content than the base has an allowance up to its adopted count. The larger of this
+ *   A changed file or a valid reached file has an allowance up to its adopted count. The larger of this
  *   count and the base count plus the waived count applies. See the requirement "Adoption of merged code".
  * @returns {object[]} Errors.
  */
@@ -487,8 +492,8 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
     .filter((line) => Boolean(change) && line.change === change);
   const totalsHistory = new Set(changeLines.filter((line) => line.metric === 'totals').map((line) => line.file));
   const moreThan = (entry, base, metric) => entry[metric] !== null && base[metric] !== null && entry[metric] > base[metric];
-  // The adopted counts of a file with other content than the base. A file with the base content has none.
-  const adoptedFor = (file) => (sameAsBase(file) ? undefined : adopted.get(file));
+  // Valid reached lines also supply counts for a file with base content.
+  const adoptedFor = (file) => (sameAsBase(file) && !adopted.get(file)?.reached ? undefined : adopted.get(file));
   const adoptedNote = (count) => (count > 0 ? ` The adopted count is ${count}.` : '');
   for (const [file, entry] of Object.entries(ledger.coverage)) {
     const base = baseLedger.coverage[file];
@@ -521,6 +526,7 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
     if (
       unchanged &&
       JSON.stringify(entry.totals ?? null) !== JSON.stringify(base.totals ?? null) &&
+      !ceiling.reached &&
       !totalsHistory.has(file) &&
       !totalsAgreeOnCoverage(entry, base)
     ) {
@@ -536,7 +542,7 @@ export function compareWithBase({ ledger, baseLedger, retired, baseRetired, hist
           const extra = waivedMetric > 0 ? ` A waiver allows ${waivedMetric} more.` : '';
           error('LEDGER-MORE-THAN-BASE', file, `${file} changed, and the ledger allows ${entry[metric]} ${metric}. The base ledger allows ${baseAllowed[metric]}.${extra}${adoptedNote(ceiling[metric])}`);
         }
-      } else if (covered === null || baseCovered === null || covered < baseCovered) {
+      } else if (entry[metric] > ceiling[metric] && (covered === null || baseCovered === null || covered < baseCovered)) {
         error('LEDGER-MORE-THAN-BASE', file, `The ledger allows ${entry[metric]} ${metric} for ${file} with ${covered} covered ${metric}. The base ledger allows ${base[metric]} with ${baseCovered} covered.`);
       }
     }
@@ -659,18 +665,21 @@ export function ratchetLedger({ ledger, current, inventory, testFiles, change, c
  * @param {string} input.date - Today's date.
  * @param {string} input.commit - Head commit hash.
  * @param {string} input.from - The merged commit.
+ * @param {(file: string) => boolean} [input.reached] - True for a file with the reached conditions.
  * @returns {{ledger: object, history: object[]}}
  */
-export function adoptLedger({ ledger, current, eligible, change, date, commit, from }) {
+export function adoptLedger({ ledger, current, eligible, reached = () => false, change, date, commit, from }) {
   const coverage = { ...ledger.coverage };
   const untracedTests = { ...ledger.untracedTests };
   const history = [];
   const record = (file, counts) => history.push({ date, change, commit, kind: 'adopt', file, from, ...counts });
   for (const [file, gap] of current.coverage) {
-    if (!eligible(file)) continue;
+    const changedFile = eligible(file);
+    const reachedFile = !changedFile && reached(file);
+    if (!changedFile && !reachedFile) continue;
     const entry = ledger.coverage[file];
     coverage[file] = { ...gap, origin: entry ? entry.origin : change, since: entry ? entry.since : date };
-    record(file, { lines: gap.lines, branches: gap.branches, functions: gap.functions, untraced: 0, untrue: gap.untrue });
+    record(file, { lines: gap.lines, branches: gap.branches, functions: gap.functions, untraced: 0, untrue: gap.untrue, ...(reachedFile ? { reached: true } : {}) });
   }
   for (const [file, names] of current.untraced) {
     if (!eligible(file)) continue;
