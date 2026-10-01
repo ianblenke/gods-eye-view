@@ -1808,7 +1808,7 @@
       "functions": 2,
       "totals": {
         "lines": 198,
-        "branches": 54,
+        "branches": 53,
         "functions": 10
       },
       "sha": "9eb5668b04b1ab0df80f67a589bacff4a5103cecbf78571ae3364c0a92f006d3",
