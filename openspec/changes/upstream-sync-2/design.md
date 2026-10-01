@@ -36,6 +36,23 @@ The test of the slow boundary lookup in `src/annotations/regionRing.test.mjs` as
 
 The command `adopt` adopts a file when the merge commit changed it since the merge base. The content of the file must differ from its content in the base. The tool records the gaps of these files with the change name.
 
+## D6 The reached files
+
+The merge commit does not change seven files, but the gates count them as untrue. The test `src/data/trafficTiming.test.mjs` loads the traffic module with Vite. The new imports of the upstream code made the Vite graph larger. The command `adopt` records these seven files as reached files. Each has an import path from a changed file that uses an edge of the merged commit that the base lacks.
+
+## Mutation results
+
+Each mutation ran in the gate image, and the file was restored after it.
+
+| Task | Mutation | Result |
+|---|---|---|
+| 2.1 | Remove the row `osh-systems` from the token ledger. | `layerState.test.mjs` and `layerStateTokenLedger.test.mjs` fail. |
+| 2.2 | Remove the `@covers` line of `scripts/qa-terrain-429.mjs`. | `[qa-scripts-023]` fails. |
+| 2.3 | Remove the mock of `setTimeout` in the test of the flight hooks. | A live timer remains at the end of the process. |
+| 2.4 | Remove the wait after the last test of `militaryInstallations.test.mjs`. | Four live timers remain. |
+| 2.5 | Make `trafficSurfaceKey` build the key for each call. | The test of the surface keys fails. |
+| 2.6 | Make `resolveRegionRingForQuery` wait for the lookup. | The test does not end, and the run stops it after 120 seconds. |
+
 ## How the gates measure the requirement
 
 The gates run on the merge tree. The ledger must record each gap, and the history must name this change.
