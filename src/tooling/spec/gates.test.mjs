@@ -1239,3 +1239,25 @@ test('[qa-scripts-014] keeps the coverage gap for a QA script with a bad header'
     assert.match(result.output, /ERROR LEDGER-NEW-COVERAGE-GAP scripts\/qa-example\.mjs/);
   });
 });
+
+test('[gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate accept a reached file with base content', GUARDED_RUN, () => {
+  withMergeFixture((root) => {
+    write(root, { 'src/merged.js': "import './legacy.js';\n" + BRANCH_SRC('merged') });
+    const stub = (command, args, options) => {
+      const result = spawnSync(command, args, options);
+      writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ violations: [{ file: 'src/legacy.js' }], checked: [], assertions: [], leaks: [] }) + '\n');
+      return result;
+    };
+    passes(root, ['adopt', '--change', 'sync', '--from', 'up'], { spawn: stub });
+    const ledger = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8'));
+    assert.deepEqual(ledger.coverage['src/legacy.js'], { loaded: false, lines: 4, branches: null, functions: null, totals: { lines: 4, branches: null, functions: null }, sha: 'a375defeef081c39e15e8d4581da7b3da6bca0af070a8bf501b029762b70c3df', untrue: true, origin: 'pre-spec', since: '2026-09-13' });
+    const line = historyLines(root).find((item) => item.file === 'src/legacy.js');
+    assert.deepEqual(line, { date: '2026-09-13', change: 'sync', commit: git(root, 'rev-parse', 'HEAD'), kind: 'adopt', file: 'src/legacy.js', from: git(root, 'rev-parse', 'up'), lines: 4, branches: null, functions: null, untraced: 0, untrue: true, reached: true });
+    const check = run(root, ['check', '--change', 'sync'], { spawn: stub });
+    assert.doesNotMatch(check.output, /ERROR [A-Z-]+ src\/legacy\.js/);
+    assert.doesNotMatch(check.output, /ERROR LEDGER-TOTALS-NOT-BASE src\/legacy\.js/);
+    // A later source edit breaks the reached condition without a new measurement fault.
+    write(root, { 'src/legacy.js': BRANCH_SRC('legacy', '  if (a > 9) return 9;\n') });
+    assert.match(run(root, ['check', '--change', 'sync'], { spawn: stub }).output, /ERROR LEDGER-ADOPT-REACHED src\/legacy\.js/);
+  });
+});
