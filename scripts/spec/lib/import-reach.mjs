@@ -27,10 +27,11 @@ function importGraph(files, readFile) {
   return edges;
 }
 
-/** Return descendants whose import path uses an edge absent in the base graph. */
-export function importReach({ files, readFile, baseFiles, readBaseFile }) {
+/** Return descendants whose import path uses a merged edge absent in the base graph. */
+export function importReach({ files, readFile, baseFiles, readBaseFile, fromFiles, readFromFile }) {
   const edges = importGraph(files, readFile);
   const baseEdges = importGraph(baseFiles, readBaseFile);
+  const fromEdges = importGraph(fromFiles, readFromFile);
   return (changed) => {
     const visited = new Set();
     const reached = new Set();
@@ -41,7 +42,7 @@ export function importReach({ files, readFile, baseFiles, readBaseFile }) {
       if (visited.has(state)) continue;
       visited.add(state);
       for (const target of edges.get(file) ?? []) {
-        const newEdge = usedNewEdge || !(baseEdges.get(file) ?? []).includes(target);
+        const newEdge = usedNewEdge || ((fromEdges.get(file) ?? []).includes(target) && !(baseEdges.get(file) ?? []).includes(target));
         if (newEdge) reached.add(target);
         queue.push([target, newEdge]);
       }

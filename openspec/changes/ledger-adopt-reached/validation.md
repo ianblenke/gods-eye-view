@@ -1,6 +1,6 @@
 ## Tree and runtime
 
-Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
+Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
 Base requirement commit: `253a07d0d7449eaaa5dcf24d276c24540f852f43`.
 Host Node: `26.8.2`.
 
@@ -8,7 +8,7 @@ Host Node: `26.8.2`.
 
 New tests are in `src/tooling/spec/importReach.test.mjs`, `src/tooling/spec/ledger.test.mjs` and `src/tooling/spec/gates.test.mjs`.
 The fixed list in `src/tooling/spec/testGuard.test.mjs` has the new command test names.
-The two test titles that changed do not exist at base `253a07d`.
+The test titles that changed do not exist at base `253a07d`.
 
 ## Test names
 
@@ -19,22 +19,24 @@ The two test titles that changed do not exist at base `253a07d`.
 - T5: `importReach.test.mjs`: [gap-ledger-103] The rule rejects other content for the reached exception.
 - T6: `importReach.test.mjs`: [gap-ledger-104] The gate allows valid reached counts and rejects a larger count.
 - T7: `importReach.test.mjs`: [gap-ledger-105] The gate stops for each false reached condition and names the file.
-- T8: `importReach.test.mjs`: [gap-ledger-107] The command and gate reject a path with only base edges.
+- T8: `importReach.test.mjs`: [gap-ledger-107] The command writes no gap and the gate stops the build for a path with only base edges.
 - T9: `importReach.test.mjs`: [gap-ledger-108] The command and gate allow a new edge between base edges.
 - T10: `importReach.test.mjs`: [gap-ledger-108] The search visits both states of a file in a cycle.
 - T11: `importReach.test.mjs`: [gap-ledger-108] The base graph resolves imports only to base files.
-- T12: `ledger.test.mjs`: [gap-ledger-096 gap-ledger-097] a reached line follows the reached rule and not the commit and file rules.
+- T12: `ledger.test.mjs`: [gap-ledger-096 gap-ledger-097] The gate follows the reached rule for a reached adopt line, not the commit and file rules.
 - T13: `gates.test.mjs`: [gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow a reached file with the base content.
-- T14: `gates.test.mjs`: [gap-ledger-107] The command writes no reached gap for a base import path.
+- T14: `gates.test.mjs`: [gap-ledger-107] The command writes no entry for a file that only base edges reach.
 - T15: `gates.test.mjs`: [gap-ledger-108] The command and gate allow a path with a new middle edge.
+
+- T16: `importReach.test.mjs`: [gap-ledger-109] The command and gate refuse an edge that only HEAD has.
+- T17: `gates.test.mjs`: [gap-ledger-109] The command writes no entry for an edge that only HEAD has.
 
 ## Scenarios
 
-The delta has 20 scenarios, from `gap-ledger-089` through `gap-ledger-108`.
-Scenarios 107 and 108 are new in this round.
-The loaded tree has 609 unique scenario IDs and no spec error.
+The delta has 21 scenarios, from `gap-ledger-089` through `gap-ledger-109`.
+Scenario 109 is new in this round.
 The requirement text is identical to the base text.
-The test also checks that the rule rejects a base entry with no `untrue` field.
+Test T3 also checks that the command rejects a base entry with no `untrue` field.
 
 | Scenario | Title | Tests | Mutations |
 | --- | --- | --- | --- |
@@ -45,27 +47,27 @@ The test also checks that the rule rejects a base entry with no `untrue` field.
 | gap-ledger-101 | Reject a reached file with true coverage | T3 | R-current, R-base, R-base-missing |
 | gap-ledger-102 | Reject a file without an import path | T1, T4 | R-code, R-path, G-test-target |
 | gap-ledger-103 | Use the old rule for other content | T5 | R-content, L-old-unchanged |
-| gap-ledger-104 | Allow a valid reached line | T6, T13 | L-count-mark, L-limit, L-untrue-allowance |
-| gap-ledger-105 | Stop for a reached line that is not valid | T7 | L-merged, L-mark, L-untraced, L-invalid-count |
-| gap-ledger-106 | Record the reached mark | T2, T13 | L-reached-mark, L-changed-shape |
+| gap-ledger-104 | Allow a valid reached adopt line | T6, T13 | L-count-mark, L-limit, L-untrue-allowance |
+| gap-ledger-105 | Stop for a reached adopt line that is not valid | T7 | L-merged, L-mark, L-untraced, L-invalid-count |
+| gap-ledger-106 | Record the reached field | T2, T13 | L-reached-mark, L-changed-shape |
 | gap-ledger-107 | Reject a path with only base edges | T8, T14 | G-all-new, G-first-hop, G-state-start |
 | gap-ledger-108 | Allow a path with a new middle edge | T9, T10, T11, T15 | G-base-head-files, G-base-head-content, G-state, G-state-propagate, C-base-head-content |
 
+| gap-ledger-109 | Reject a path with only an author-added new edge | T16, T17 | G-from-head-content, G-from-operand, C-from-head-content |
+
 ## Mutations
 
-The final main battery has 43 KILLED results. The separate lead mutation `P-reached-branch` is also KILLED.
-These are 44 distinct mutations. All 32 mutations in the lead copy are also KILLED.
-Each final log ends with `SURVIVORS: []`. No final mutation timed out.
+The final main run has 51 KILLED results. The separate lead mutation is also KILLED.
+These are 52 distinct mutations. Each final log ends with `SURVIVORS: []`. No final mutation timed out.
 
-The first batch had one survivor, `C-base-head-content`. The new middle-edge command test detects that fault.
-The final batch repeats all 43 main mutations with the new test.
+The mutation files are `muts.json` and `muts-lead2.json`.
+The scratch directory is `/home/ianblenke/docker/gev-tools/ledger-adopt-reached/`.
+The final logs are `round3-mutations-final.log` and `round3-lead2-final.log`.
 The runner restores each code file after each mutation.
 
-The scratch directory is `/home/ianblenke/docker/gev-tools/ledger-adopt-reached/`.
-The spec files are `muts.json`, `muts-lead2.json` and `muts-lead.json`.
-The final logs are `round2-mutations-final.log`, `round2-lead2-final.log` and `round2-lead-copy.log`.
-
-Each row below names at least one test that failed for that mutation.
+The sandbox mutation run supplied no test names. It supplies no evidence for this table.
+The focused test run stopped before the end. It has no verdict.
+Each row below names a test that failed in the final host run.
 
 | Mutation | Result | Test that failed |
 | --- | --- | --- |
@@ -104,7 +106,7 @@ Each row below names at least one test that failed for that mutation.
 | G-all-new | KILLED | T8 |
 | G-first-hop | KILLED | T8 |
 | G-base-head-files | KILLED | T11 |
-| G-base-head-content | KILLED | T11 |
+| G-base-head-content | KILLED | T9 |
 | G-state | KILLED | T10 |
 | G-state-start | KILLED | T8 |
 | G-state-propagate | KILLED | T9 |
@@ -112,71 +114,81 @@ Each row below names at least one test that failed for that mutation.
 | L-old-unchanged | KILLED | T5 |
 | L-invalid-count | KILLED | T7 |
 | C-base-head-content | KILLED | T15 |
+| G-from-head-content | KILLED | T16 |
+| G-from-operand | KILLED | T16 |
+| C-from-head-content | KILLED | T17 |
+| C-from-base-content | KILLED | T15 |
+| G-path-from | KILLED | T16 |
+| G-from-head-files | KILLED | T16 |
+| G-base-head-reader | KILLED | T9 |
+| C-from-base-files | KILLED | T13 |
 | P-reached-branch | KILLED | T12 |
 
 ## Host tests and coverage
 
-The exact full test command passed all 380 tests, with 0 failures and 0 skips.
-The command uses one process per test file.
-The scratch log `round2-tests-final.log` contains these final totals.
+The full suite passed 382 tests, with 0 failures and 0 skips.
+The command is `node --test --test-force-exit src/tooling/spec/*.test.mjs`.
+It uses one process per test file.
+The log is `round3-tests-final.log` in the scratch directory.
 
-The final coverage command passed, with 364 tests, 0 failures and 0 skips.
-The 16 review tests appear only in the exact full test log.
-A separate host coverage run passed all 33 review tests, with 0 failures and 0 skips.
-Its scratch log is `round2-review-coverage.log`.
+The change adds 17 tests above base `253a07d`.
+The count command is `python3 /home/ianblenke/docker/gev-tools/ledger-adopt-reached/count-change-tests.py`.
 
-The two coverage logs contain every test name from the exact full test log.
-That full run passed 380 tests.
-The scratch log `round2-coverage-final.log` contains the coverage verdict.
-The scratch file `round2-coverage-detail.json` contains the branch counts and line numbers.
+The coverage run returned exit status 0.
+Its report has 338 passed tests, 0 failures and 0 skips.
+The full suite log has 44 test names absent from the coverage log.
+Separate coverage runs passed all 69 ledger tests and 33 review tests.
+These runs overlap the main coverage run, so their counts do not add to the suite count.
+
+The three coverage logs contain every test name from the full suite log.
+The other logs are `round3-ledger-coverage.log` and `round3-review-coverage.log`.
+The coverage logs are `round3-coverage-final.log` and `round3-coverage-detail.json`.
 
 | File | Lines | Branches | Functions | Covered branches |
 | --- | --- | --- | --- | --- |
 | scripts/spec/gates.mjs | 100.00% | 99.52% | 100.00% | 206/207 |
-| scripts/spec/lib/import-reach.mjs | 100.00% | 100.00% | 100.00% | 33/33 |
+| scripts/spec/lib/import-reach.mjs | 100.00% | 100.00% | 100.00% | 35/35 |
 | scripts/spec/lib/ledger.mjs | 100.00% | 100.00% | 100.00% | 417/417 |
 
 The one branch gap is at `scripts/spec/gates.mjs:388`, in the waiver error response with `file || ''`.
-This branch existed before this change. The identical source line is at base `253a07d`, line 387.
-
-The base ledger records one branch gap for this file. The final host run also has one branch gap.
-No branch gap opens. The gate has 206 of 207 branches covered.
-The Git library has no code change in this round.
-
+This branch existed before this change, at base `253a07d`, line 387.
+The Git library has no code change.
 
 ## Review corrections
 
-Each item below names the commit that supplied the tree for this round.
-These items record corrections. They do not give a new review verdict.
+Each item records a correction to the tree of commit `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+These items do not give a new review verdict.
 
-- [x] FINDING blocker Spec 1: Add the base graph, the new-edge search states, scenarios 107 and 108, and their operand mutations. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor Spec 2: State the count and totals limits, and the exact allowance bounds, in the proposal. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor Spec 3: State the resolution limits and the search count of 0 unsupported code imports in the proposal. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor Spec 4: State the old-ledger limit for an absent `untrue` field in the proposal. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor Spec 5: Add the untrue allowance to scenario 104, its test, and mutation `L-untrue-allowance`. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor Spec 6: Assert the old-rule refusal in scenario 103 with a real eligible callback; mutation `L-old-unchanged` detects it. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor Spec 7: Replace the old counts with the final evidence, and name the branch gap in this report. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING blocker STE 1: Name all three new-test files and add scenarios 096 and 097 to the table. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING blocker STE 2: State the required `untrue` and `untraced` values in scenarios 100 and 105. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING blocker STE 3: Keep the requirement text; explain scenarios 096, 097 and 105 in the design, and test the absence of adopted counts. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING blocker STE 4: Use adopt lines, history lines and coverage counts as separate terms in the design. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor STE 5: State that the gate allows the entry and totals when the reached adopt line is valid. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor STE 6: Use import descendants instead of the noun reach in the design and proposal. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor STE 7: Add the articles, define measured coverage, and use the same phrase in scenarios 100 and 102 and the design. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor STE 8: Use stops the build for the gate and the requested title for scenario 105. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor STE 9: Define the content comparisons in scenarios 101 to 103; scenario 103 no longer calls other content a reached file. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor STE 10: Split the mutation instructions into sentences and start each sub-item with a verb. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor STE 11: Add the article before boolean and state that this change opens no gap and closes no gap. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor STE 12: State that the test checks the rule refusal for a base entry with no `untrue` field. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor STE 13: Rename both new tests, update the fixed list and mutation patterns, and repeat the mutations. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
-- [x] FINDING minor STE 14: Use the instruction: Do not change the code that measures coverage. Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
+- [x] FINDING blocker Spec 1: Use a merged commit edge absent in the base graph; keep the path in HEAD and cache descendants per commit. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor Spec 2: State the rule for new, renamed and moved files, and the required review of their edges. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor Spec 3: State the resolved-pair comparison, specifier limits, incomplete base file list and different graph file sets. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor Spec 4: Repeat each mutation and name its failed test from the new host log. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor Spec 5: Remove the unsupported-import search claim. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING blocker STE 1: Name Test T3 and its command refusal for a base entry with no untrue field. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING blocker STE 2: Use one suite count and count the 17 tests of this change with the named command. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 3: Use field for untrue and reached, and state the false field value. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 4: Define an edge as a pair of two code files. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 5: Add the new edge to the import path condition of scenario 101. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 6: Use reached adopt line for the line with the true reached field. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 7: Define the current graph as HEAD and name the tracked code files of the base commit. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 8: Use the requested terms for validity, allowances, base counts and covered counts. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 9: Put one instruction in each task. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 10: Use test names in the fixed guard list task. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 11: Rename T8 to state the command and gate results; update the test list. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 12: Add the cycle and base file results to scenario 108. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 13: Rename T14 to state that the command writes no entry. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 14: Rename T12 with a capital article and the term reached adopt line. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+- [x] FINDING minor STE 15: Use mutation files. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
+
+- [x] FINDING minor STE 16: Use the requested sentence about the review folder. Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
 
 ## Checks and lead work
 
-The host format write and check commands passed for 1115 source files.
-The STE lint command reports 0 errors after each group of prose corrections.
-The final STE lint reports 0 errors and 344 warnings.
+The format write and check commands passed for 1115 source files.
+The STE lint reports 0 errors.
+The git status command lists 11 changed files.
+Each file is in `scripts/spec`, `src/tooling/spec` or the change folder.
 
 The calibrated gates, ratchet and review tasks stay open for the lead.
-The review folder has no edit in this round.
-The merge owner must still check the upstream second parent under rule 21 when this change uses adopt.
+The review folder is not changed in this round.
+The merge owner must check the upstream second parent under rule 21 when this change uses adopt.

@@ -452,8 +452,9 @@ test('[coverage-gate-046] gives a skip reason on a Node version without getTestC
       "[qa-scripts-016] prints QA advice after Trace",
       "[qa-scripts-014] keeps the coverage gap for a QA script with a bad header",
       "[gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow a reached file with the base content",
-      "[gap-ledger-107] The command writes no reached gap for a base import path",
-      "[gap-ledger-108] The command and gate allow a path with a new middle edge"
+      "[gap-ledger-107] The command writes no entry for a file that only base edges reach",
+      "[gap-ledger-108] The command and gate allow a path with a new middle edge",
+      "[gap-ledger-109] The command writes no entry for an edge that only HEAD has"
   ]);
   // Each test that needs the guard to count assertions gets its skip option from the real
   // node:test module. So the skip option is false on a Node version with the function.
