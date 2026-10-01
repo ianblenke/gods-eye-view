@@ -1808,7 +1808,7 @@
       "functions": 2,
       "totals": {
         "lines": 198,
-        "branches": 54,
+        "branches": 53,
         "functions": 10
       },
       "sha": "9eb5668b04b1ab0df80f67a589bacff4a5103cecbf78571ae3364c0a92f006d3",
@@ -2659,11 +2659,11 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 15,
-      "branches": 46,
+      "branches": 48,
       "functions": 0,
       "totals": {
         "lines": 1271,
-        "branches": 431,
+        "branches": 433,
         "functions": 61
       },
       "sha": "da178072243462227e064ffcc3f0d79ac2956bf4de7a066d01ac82756d51b184",
