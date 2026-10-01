@@ -168,12 +168,12 @@
     },
     "scripts/module-analysis.mjs": {
       "loaded": true,
-      "lines": 2,
+      "lines": 0,
       "branches": 1,
-      "functions": 1,
+      "functions": 0,
       "totals": {
         "lines": 80,
-        "branches": 37,
+        "branches": 38,
         "functions": 4
       },
       "sha": "fef22efe635392132f4caab06d152ea9b9944f7360140d85e01512c072ae6691",
@@ -367,11 +367,11 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 578,
-        "branches": 201,
-        "functions": 61
+        "lines": 591,
+        "branches": 206,
+        "functions": 64
       },
-      "sha": "3342429dc7b92099eb4d7fe11e236d7c045705234fac9fb246857c33efba0a0d",
+      "sha": "39bde806ddcf4dddd92624a702960338a5eb22ec6b226c21c93b71bf290bfe75",
       "untrue": false,
       "origin": "ledger-waiver",
       "since": "2026-09-22"
