@@ -859,11 +859,11 @@
     "server/providers/overpass/cache.js": {
       "loaded": true,
       "lines": 20,
-      "branches": 3,
+      "branches": 2,
       "functions": 2,
       "totals": {
         "lines": 137,
-        "branches": 28,
+        "branches": 29,
         "functions": 7
       },
       "sha": "6345d39c9b3bc513c6fd7d837155d7db6026c7b94b455cb20012e43b7219dd37",
@@ -888,12 +888,12 @@
     },
     "server/providers/overpass/query.js": {
       "loaded": true,
-      "lines": 28,
-      "branches": 16,
+      "lines": 17,
+      "branches": 14,
       "functions": 3,
       "totals": {
         "lines": 151,
-        "branches": 28,
+        "branches": 29,
         "functions": 6
       },
       "sha": "eedb38f8a97e297c15207d10d8cbabed306c806bc3773bbd0b51933a1060c5c9",
@@ -978,12 +978,12 @@
     },
     "server/providers/regional/briefing.js": {
       "loaded": true,
-      "lines": 80,
-      "branches": 6,
-      "functions": 3,
+      "lines": 40,
+      "branches": 14,
+      "functions": 0,
       "totals": {
         "lines": 155,
-        "branches": 18,
+        "branches": 29,
         "functions": 9
       },
       "sha": "c38bd39e05e5ad5ef7c71e6ef44ab2a8169d39f52e959c003516b8314bda16e0",
@@ -991,29 +991,14 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "server/providers/regional/http.js": {
-      "loaded": true,
-      "lines": 3,
-      "branches": 0,
-      "functions": 1,
-      "totals": {
-        "lines": 56,
-        "branches": 7,
-        "functions": 4
-      },
-      "sha": "1cbe6b3daeb9f462f982644cedf1d13bce1ce99161fa26d9f5294fdd7834d38d",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
-    },
     "server/providers/regional/news.js": {
       "loaded": true,
-      "lines": 104,
-      "branches": 0,
-      "functions": 4,
+      "lines": 58,
+      "branches": 5,
+      "functions": 3,
       "totals": {
         "lines": 112,
-        "branches": 1,
+        "branches": 7,
         "functions": 4
       },
       "sha": "e187fea054fdfd1cc4f26430114cd705c3e064e396decc7a2ac332249e935f0c",
@@ -1398,12 +1383,12 @@
     },
     "src/annotations/resolver.js": {
       "loaded": true,
-      "lines": 359,
-      "branches": 123,
+      "lines": 342,
+      "branches": 122,
       "functions": 16,
       "totals": {
         "lines": 2117,
-        "branches": 448,
+        "branches": 447,
         "functions": 68
       },
       "sha": "54a9e17145050b54cbd3590c7dd2ecfa9e2e31e7a4d195008ceae53e02b8a1b2",
@@ -1557,21 +1542,6 @@
         "functions": 17
       },
       "sha": "47b3cc27e58c0b070ebe31ff5e6195ca75c5a1aca0d5b1c127b5ca0fbbf7fb11",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/app/layers/alprCameras.js": {
-      "loaded": true,
-      "lines": 3,
-      "branches": 0,
-      "functions": 1,
-      "totals": {
-        "lines": 31,
-        "branches": 2,
-        "functions": 2
-      },
-      "sha": "0d620edb6a5b465bb93ad5ae2ffaca9a602cd960d58939803a4a1d138a9dc77a",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -1838,7 +1808,7 @@
       "functions": 2,
       "totals": {
         "lines": 198,
-        "branches": 53,
+        "branches": 54,
         "functions": 10
       },
       "sha": "9eb5668b04b1ab0df80f67a589bacff4a5103cecbf78571ae3364c0a92f006d3",
@@ -2689,11 +2659,11 @@
     "src/data/labelArbiter.js": {
       "loaded": true,
       "lines": 15,
-      "branches": 48,
+      "branches": 46,
       "functions": 0,
       "totals": {
         "lines": 1271,
-        "branches": 433,
+        "branches": 431,
         "functions": 61
       },
       "sha": "da178072243462227e064ffcc3f0d79ac2956bf4de7a066d01ac82756d51b184",
@@ -3004,32 +2974,17 @@
     "src/data/regionalModel.js": {
       "loaded": true,
       "lines": 6,
-      "branches": 18,
+      "branches": 19,
       "functions": 0,
       "totals": {
         "lines": 154,
-        "branches": 67,
+        "branches": 68,
         "functions": 9
       },
       "sha": "f37d0ad19b4f08f68c2ea7497f4f16b14c8a7221374d79a3824e6fa719ec7f11",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/data/retryableLoad.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 0,
-      "functions": 1,
-      "totals": {
-        "lines": 91,
-        "branches": 11,
-        "functions": 6
-      },
-      "sha": "a0f9a3d4bb65d76baf2d13ab62b00518bff2f0f84fc4474837cc27e3bd79ae34",
-      "untrue": false,
-      "origin": "pre-spec",
-      "since": "2026-09-15"
     },
     "src/data/routePlausible.js": {
       "loaded": true,
@@ -3841,21 +3796,6 @@
       "origin": "upstream-sync-2",
       "since": "2026-10-01"
     },
-    "src/layers/alpr/visuals.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 106,
-        "branches": 29,
-        "functions": 7
-      },
-      "sha": "5c6dcd1e4c85c78006e6634c8df3fb21168f0cb6a725a4fcea78f1eeaf86f625",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/layers/awareness/controls.js": {
       "loaded": true,
       "lines": 20,
@@ -3933,12 +3873,12 @@
     },
     "src/layers/awareness/model.js": {
       "loaded": true,
-      "lines": 3,
+      "lines": 0,
       "branches": 5,
-      "functions": 1,
+      "functions": 0,
       "totals": {
         "lines": 251,
-        "branches": 45,
+        "branches": 46,
         "functions": 14
       },
       "sha": "ab2c6a8bc8729b60b25c44a4f102084ff276889c3daa652352551a9368f1e05d",
@@ -7403,7 +7343,7 @@
       "functions": 2,
       "totals": {
         "lines": 1153,
-        "branches": 305,
+        "branches": 306,
         "functions": 42
       },
       "sha": "68014effdeb1ad1d6d55aecc81e3b054b1d830b7b6f2d9a4cca1cc29d4a57c46",
@@ -8163,12 +8103,12 @@
     },
     "src/sources/overpass.js": {
       "loaded": true,
-      "lines": 13,
-      "branches": 5,
+      "lines": 11,
+      "branches": 4,
       "functions": 0,
       "totals": {
         "lines": 48,
-        "branches": 16,
+        "branches": 17,
         "functions": 1
       },
       "sha": "36098d3582a2858ee9479f19d1a9ee073173a16aade1a3c0b05376cf7d5d1b0e",
