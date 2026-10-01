@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { importReach, adoptableReached } from './lib/import-reach.mjs';
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -474,6 +475,17 @@ export function runGates({
   const baseHistoryText = readFileAt(root, base, HISTORY_FILE) ?? '';
   const waivers = waiversOf(historyText, baseHistoryText, change);
 
+  const baseLedger = parseLedger(readFileAt(root, base, LEDGER_FILE));
+  const codeFiles = new Set(codeInventory(listTrackedFiles(root)));
+  const reachedByCommit = new Map();
+  const reachedValid = (file, from, changed) => {
+    if (!reachedByCommit.has(from)) {
+      const reachOf = importReach({ files: [...codeFiles], readFile: (name) => readFileSync(path.join(root, name), 'utf8'), baseFiles: listFilesAt(root, base), readBaseFile: (name) => readFileAt(root, base, name), fromFiles: listFilesAt(root, from), readFromFile: (name) => readFileAt(root, from, name) });
+      reachedByCommit.set(from, reachOf(changed));
+    }
+    return adoptableReached({ file, codeFiles, sameAsBase, current: measured.current, baseLedger, reached: reachedByCommit.get(from) });
+  };
+
   if (command === 'adopt') {
     if (measured.errors.length > 0) return report(log, measured.errors);
     const merged = changedByCommit(root, base, fromCommit);
@@ -481,6 +493,7 @@ export function runGates({
       ledger,
       current: measured.current,
       eligible: (file) => merged.has(file) && !sameAsBase(file),
+      reached: (file) => reachedValid(file, fromCommit, merged),
       change,
       date,
       commit: headCommit(root),
@@ -534,10 +547,11 @@ export function runGates({
     adopts: adoptsOf(historyText, baseHistoryText, change),
     isMergedCommit: (from) => mergedCommits.has(from),
     changedFiles: (from) => changedByCommit(root, base, from),
+    reachedValid,
   });
   const baseErrors = compareWithBase({
     ledger,
-    baseLedger: parseLedger(readFileAt(root, base, LEDGER_FILE)),
+    baseLedger,
     retired: [...measured.specs.retired],
     baseRetired: JSON.parse(readFileAt(root, base, RETIRED_FILE) ?? '[]'),
     history: historyText,
