@@ -1079,7 +1079,7 @@ test('[gap-ledger-096 gap-ledger-097] separates the valid adopt lines from the l
   assert.deepEqual(asked, ['up1'], 'the function asks one time for the files of a commit, and not for a commit that the merge did not bring');
 });
 
-test('[gap-ledger-096 gap-ledger-097] a reached line follows the reached rule and not the commit and file rules', () => {
+test('[gap-ledger-096 gap-ledger-097] The gate follows the reached rule for a reached adopt line, not the commit and file rules', () => {
   const lines = [
     ADOPT('src/r1.js', { reached: true, untrue: true, from: 'lost' }),
     ADOPT('src/r2.js', { reached: true, untrue: true }),

@@ -1,18 +1,22 @@
 ## Context
 
-Read commit: `7e715d9a5a3e5948a7491f51efc1555b927ace58`.
+Read commit: `02ec7d340b7b2d978eb3c203f5c7a424cf5e5e58`.
 
 ## Decision
 
 Use `moduleImports` on tracked script module files. Resolve relative specifiers against tracked code files. Try the exact path, `.js`, `.mjs`, `/index.js` and `/index.mjs`, in that order. Ignore packages and builtins. HTML and shell files supply no import edges. A parse error supplies no import edges.
 
-Read each tracked module once in each graph when the command or gate needs the import descendants. Read the base graph from the base commit and its tracked code files. Read the other graph from the current tracked code files. This costs one file read and one parse per module per graph. Cache descendants for each merged commit.
+Read each tracked module once in each graph when the command or gate needs the import descendants. Read the base graph from the tracked code files of the base commit. The current graph is the HEAD graph. Read it from the current tracked code files.
 
-Search states that contain a file and a boolean `usedNewEdge`. Start each changed code file with that boolean false. Follow current edges.
+This costs one file read and one parse per module per graph. Read the merged commit graph from its tracked code files on first use. Cache descendants for each merged commit.
 
-Set the boolean true when an edge is absent in the base graph. A file is reached only in a state with that boolean true. Visit each state once, so a cycle ends. Count dynamic imports with literal specifiers and re-exports as import edges.
+Search states that contain a file and a boolean `usedNewEdge`. Start each changed code file with that boolean false. Follow the edges of the current graph.
 
-A reached file must have the base content and measured untrue coverage. Measured means the measurement from this command or gate run. Its base entry must have an `untrue` mark that is false, or the entry must be absent. A changed code file must reach it through an import path with at least one new edge. The command checks the merged commit before it measures coverage. The gate checks all these conditions again.
+Set the boolean true when an edge exists in the merged commit graph and is absent in the base graph. A file is reached only in a state with that boolean true. Visit each state once, so a cycle ends. Count dynamic imports with literal specifiers and re-exports as import edges.
+
+A reached file must have the base content and measured untrue coverage. Measured means the measurement from this command or gate run. Its base entry must have an `untrue` field that is false, or the entry must be absent. A changed code file must reach it through an import path. The path must use an edge of the merged commit graph absent in the base graph.
+
+The command checks the merged commit before it measures coverage. The gate checks all these conditions again.
 
 The ledger library writes the field `reached` only on the adopt lines of reached files. Each adopt line is a history line. Coverage counts are the measured gaps. The gate reports `LEDGER-ADOPT-REACHED` for any reached adopt line that is not valid. Only valid adopt lines supply counts.
 

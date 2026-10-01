@@ -477,11 +477,12 @@ export function runGates({
 
   const baseLedger = parseLedger(readFileAt(root, base, LEDGER_FILE));
   const codeFiles = new Set(codeInventory(listTrackedFiles(root)));
-  let reachOf;
   const reachedByCommit = new Map();
   const reachedValid = (file, from, changed) => {
-    if (!reachOf) reachOf = importReach({ files: [...codeFiles], readFile: (name) => readFileSync(path.join(root, name), 'utf8'), baseFiles: listFilesAt(root, base), readBaseFile: (name) => readFileAt(root, base, name) });
-    if (!reachedByCommit.has(from)) reachedByCommit.set(from, reachOf(changed));
+    if (!reachedByCommit.has(from)) {
+      const reachOf = importReach({ files: [...codeFiles], readFile: (name) => readFileSync(path.join(root, name), 'utf8'), baseFiles: listFilesAt(root, base), readBaseFile: (name) => readFileAt(root, base, name), fromFiles: listFilesAt(root, from), readFromFile: (name) => readFileAt(root, from, name) });
+      reachedByCommit.set(from, reachOf(changed));
+    }
     return adoptableReached({ file, codeFiles, sameAsBase, current: measured.current, baseLedger, reached: reachedByCommit.get(from) });
   };
 

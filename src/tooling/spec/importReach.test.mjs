@@ -27,7 +27,7 @@ test('[gap-ledger-100 gap-ledger-102] The import paths reach only tracked code d
     ['src/page.html', '<html></html>'],
     ['src/dynamic.js', 'import(name);'],
   ]);
-  const graph = importReach({ files: [...sources.keys()], readFile: (file) => sources.get(file), baseFiles: [], readBaseFile: () => { throw new Error("No base files"); } });
+  const graph = importReach({ files: [...sources.keys()], readFile: (file) => sources.get(file), fromFiles: [...sources.keys()], readFromFile: (file) => sources.get(file), baseFiles: [], readBaseFile: () => { throw new Error("No base files"); } });
   assert.deepEqual([...graph(new Set(['src/root.js', 'src/spec.test.mjs', 'absent']))].sort(), ['src/folder/index.js', 'src/leaf.js', 'src/mid.mjs', 'src/other/index.mjs', 'src/plain.js', 'src/root.js']);
   assert.deepEqual([...graph(new Set(['src/alone.js', 'src/bad.js', 'src/page.html', 'src/dynamic.js']))], []);
   assert.equal(rule(), true);
@@ -115,9 +115,9 @@ test('[gap-ledger-105] The gate stops for each false reached condition and names
   }
 });
 
-const descendants = (head, base) => importReach({ files: [...head.keys()], readFile: (file) => head.get(file), baseFiles: [...base.keys()], readBaseFile: (file) => base.get(file) });
+const descendants = (head, base, from = head) => importReach({ files: [...head.keys()], readFile: (file) => head.get(file), fromFiles: [...from.keys()], readFromFile: (file) => from.get(file), baseFiles: [...base.keys()], readBaseFile: (file) => base.get(file) });
 
-test('[gap-ledger-107] The command and gate reject a path with only base edges', () => {
+test('[gap-ledger-107] The command writes no gap and the gate stops the build for a path with only base edges', () => {
   const base = new Map([['src/root.js', "import './mid.js';"], ['src/mid.js', "import './leaf.js';"], [FILE, 'export const value = 1;']]);
   const head = new Map(base);
   head.set('src/root.js', "import './mid.js'; export const value = 2;");
@@ -152,4 +152,29 @@ test('[gap-ledger-108] The base graph resolves imports only to base files', () =
   const base = new Map([['src/root.js', "import './new.js';"]]);
   const head = new Map([...base, ['src/new.js', "import './leaf.js';"], [FILE, 'export const value = 1;']]);
   assert.deepEqual([...descendants(head, base)(new Set(['src/root.js']))].sort(), ['src/leaf.js', 'src/new.js']);
+});
+
+ test('[gap-ledger-109] The command and gate refuse an edge that only HEAD has', () => {
+  const base = new Map([['src/root.js', "import './mid.js';"], ['src/mid.js', 'export const value = 1;'], [FILE, 'export const value = 1;']]);
+  const from = new Map(base);
+  from.set('src/root.js', "import './mid.js'; export const value = 2;");
+  const head = new Map(from);
+  head.set('src/mid.js', "import './leaf.js';");
+  const reached = descendants(head, base, from)(new Set(['src/root.js']));
+  assert.deepEqual([...reached], []);
+  assert.deepEqual(record(() => rule({ reached })).history, []);
+  assert.equal(record(() => rule({ reached })).ledger.coverage[FILE].lines, 1);
+  const checked = check({ reachedValid: () => rule({ reached }) });
+  assert.deepEqual(checked.valid, []);
+  assert.deepEqual(checked.errors.map((error) => error.code), ['LEDGER-ADOPT-REACHED']);
+  from.delete('src/mid.js');
+  assert.deepEqual([...descendants(head, base, from)(new Set(['src/root.js']))], []);
+  from.set('src/mid.js', "import './leaf.js';");
+  from.delete(FILE);
+  assert.deepEqual([...descendants(head, base, from)(new Set(['src/root.js']))], []);
+  from.set(FILE, 'export const value = 1;');
+  // A merged edge that HEAD removes cannot supply a current path.
+  from.set('src/mid.js', "import './leaf.js';");
+  head.set('src/mid.js', 'export const value = 1;');
+  assert.deepEqual([...descendants(head, base, from)(new Set(['src/root.js']))], []);
 });

@@ -1041,7 +1041,7 @@ const SYNC_CHANGE = {
  * The merge commit is the head. The work branch also adds its own files with gaps. The working tree keeps the base
  * content of `src/legacy.js`, which `up` changed.
  */
-function withMergeFixture(body, base = {}) {
+function withMergeFixture(body, base = {}, upstream = {}) {
   return withFixture(
     (root) => {
       passes(root, ['init']);
@@ -1055,6 +1055,7 @@ function withMergeFixture(body, base = {}) {
         'src/legacy.js': BRANCH_SRC('legacy', '  if (a > 9) return 9;\n'),
         'src/math.test.mjs': MATH_TEST('adds two numbers', "test('adds negative numbers', () => {\n  assert.equal(add(-1, -2), -3);\n});"),
       });
+      write(root, upstream);
       commitAll(root, 'upstream work');
       git(root, 'checkout', '-q', 'work');
       write(root, { ...SYNC_CHANGE, 'src/own.js': BRANCH_SRC('own'), 'src/own.test.mjs': UNIT_TEST('own', 'runs own') });
@@ -1242,7 +1243,6 @@ test('[qa-scripts-014] keeps the coverage gap for a QA script with a bad header'
 
 test('[gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow a reached file with the base content', GUARDED_RUN, () => {
   withMergeFixture((root) => {
-    write(root, { 'src/merged.js': "import './legacy.js';\n" + BRANCH_SRC('merged') });
     const stub = (command, args, options) => {
       const result = spawnSync(command, args, options);
       writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ violations: [{ file: 'src/legacy.js' }], checked: [], assertions: [], leaks: [] }) + '\n');
@@ -1259,10 +1259,10 @@ test('[gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow 
     // A later source edit breaks the reached condition without a new measurement fault.
     write(root, { 'src/legacy.js': BRANCH_SRC('legacy', '  if (a > 9) return 9;\n') });
     assert.match(run(root, ['check', '--change', 'sync'], { spawn: stub }).output, /ERROR LEDGER-ADOPT-REACHED src\/legacy\.js/);
-  });
+  }, {}, { 'src/merged.js': "import './legacy.js';\n" + BRANCH_SRC('merged') });
 });
 
-test('[gap-ledger-107] The command writes no reached gap for a base import path', GUARDED_RUN, () => {
+test('[gap-ledger-107] The command writes no entry for a file that only base edges reach', GUARDED_RUN, () => {
   withMergeFixture((root) => {
     const stub = (command, args, options) => {
       const result = spawnSync(command, args, options);
@@ -1280,7 +1280,6 @@ test('[gap-ledger-107] The command writes no reached gap for a base import path'
 
 test('[gap-ledger-108] The command and gate allow a path with a new middle edge', GUARDED_RUN, () => {
   withMergeFixture((root) => {
-    write(root, { 'src/mid.js': "import './next.js';\n" + BRANCH_SRC('mid') });
     const stub = (command, args, options) => {
       const result = spawnSync(command, args, options);
       writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ violations: [{ file: 'src/leaf.js' }], checked: [], assertions: [], leaks: [] }) + '\n');
@@ -1297,5 +1296,24 @@ test('[gap-ledger-108] The command and gate allow a path with a new middle edge'
     'src/mid.js': BRANCH_SRC('mid'), 'src/mid.test.mjs': UNIT_TEST('mid', 'runs mid'),
     'src/next.js': "import './leaf.js';\n" + BRANCH_SRC('next'), 'src/next.test.mjs': UNIT_TEST('next', 'runs next'),
     'src/leaf.js': BRANCH_SRC('leaf'), 'src/leaf.test.mjs': UNIT_TEST('leaf', 'runs leaf'),
+  }, { 'src/mid.js': "import './next.js';\n" + BRANCH_SRC('mid') });
+});
+
+test('[gap-ledger-109] The command writes no entry for an edge that only HEAD has', GUARDED_RUN, () => {
+  withMergeFixture((root) => {
+    write(root, { 'src/merged.js': "import './legacy.js';\n" + BRANCH_SRC('merged') });
+    const stub = (command, args, options) => {
+      const result = spawnSync(command, args, options);
+      writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ violations: [{ file: 'src/legacy.js' }], checked: [], assertions: [], leaks: [] }) + '\n');
+      return result;
+    };
+    const before = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/legacy.js'];
+    passes(root, ['adopt', '--change', 'sync', '--from', 'up'], { spawn: stub });
+    assert.deepEqual(JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/legacy.js'], before);
+    assert.equal(historyLines(root).some((line) => line.file === 'src/legacy.js'), false);
+    appendFileSync(path.join(root, 'openspec/trace/history.jsonl'), JSON.stringify(ADOPT_LINE(root, 'src/legacy.js', { lines: 4, branches: null, functions: null, untraced: 0, untrue: true, reached: true })) + '\n');
+    const result = run(root, ['check', '--change', 'sync'], { spawn: stub });
+    assert.equal(result.status, 1);
+    assert.match(result.output, /ERROR LEDGER-ADOPT-REACHED src\/legacy\.js/);
   });
 });
