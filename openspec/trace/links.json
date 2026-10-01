@@ -806,6 +806,7 @@
   ],
   "gap-ledger-091": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-089 gap-ledger-091] adopts the gaps of the merged files and gives no error in the ratchet command and in the check",
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-091 gap-ledger-101] The rule rejects true coverage and old untrue coverage",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-091] adopts no gap of a file that the merged commit did not change"
   ],
   "gap-ledger-092": [
@@ -823,11 +824,13 @@
   "gap-ledger-096": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-096 gap-ledger-097] stops the check for an adopt line when its commit is not a merged commit, or when the merged commit did not change its file",
     "src/tooling/spec/git.test.mjs › [gap-ledger-090 gap-ledger-096] finds the merged commits after the base commit and not the first parents or the merge commits before the base commit",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-096 gap-ledger-097] a reached line follows the reached rule and not the commit and file rules",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-096 gap-ledger-097] separates the valid adopt lines from the lines with a wrong commit or a wrong file"
   ],
   "gap-ledger-097": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-096 gap-ledger-097] stops the check for an adopt line when its commit is not a merged commit, or when the merged commit did not change its file",
     "src/tooling/spec/git.test.mjs › [gap-ledger-097] finds the files that a commit changed since its merge base with the base commit",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-096 gap-ledger-097] a reached line follows the reached rule and not the commit and file rules",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-096 gap-ledger-097] separates the valid adopt lines from the lines with a wrong commit or a wrong file"
   ],
   "gap-ledger-098": [
@@ -835,6 +838,42 @@
   ],
   "gap-ledger-099": [
     "src/tooling/spec/ciFiles.test.mjs › [gap-ledger-099] runs the adopt command with make"
+  ],
+  "gap-ledger-100": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow a reached file with the base content",
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-100 gap-ledger-102] The import paths reach only tracked code descendants",
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-100 gap-ledger-106] The ledger records the reached gap and its own marks"
+  ],
+  "gap-ledger-101": [
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-091 gap-ledger-101] The rule rejects true coverage and old untrue coverage"
+  ],
+  "gap-ledger-102": [
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-100 gap-ledger-102] The import paths reach only tracked code descendants",
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-102] The rule rejects absent paths and files outside the code set"
+  ],
+  "gap-ledger-103": [
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-103] The rule rejects other content for the reached exception"
+  ],
+  "gap-ledger-104": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow a reached file with the base content",
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-104] The gate allows valid reached counts and rejects a larger count"
+  ],
+  "gap-ledger-105": [
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-105] The gate stops for each false reached condition and names the file"
+  ],
+  "gap-ledger-106": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow a reached file with the base content",
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-100 gap-ledger-106] The ledger records the reached gap and its own marks"
+  ],
+  "gap-ledger-107": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-107] The command writes no reached gap for a base import path",
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-107] The command and gate reject a path with only base edges"
+  ],
+  "gap-ledger-108": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-108] The command and gate allow a path with a new middle edge",
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-108] The base graph resolves imports only to base files",
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-108] The command and gate allow a new edge between base edges",
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-108] The search visits both states of a file in a cycle"
   ],
   "hud-markings-001": [
     "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"
