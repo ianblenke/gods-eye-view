@@ -1,5 +1,5 @@
 /**
- * @purpose Give screen recording and frame timing helpers to the journey scripts.
+ * @purpose Give the journey scripts helpers that record the screen and time the frames.
  * @covers unmapped: shared support code for journey scripts and not a check
  * @run Not run alone. The journey scripts import it.
  * @needs Nothing. Other scripts import it.

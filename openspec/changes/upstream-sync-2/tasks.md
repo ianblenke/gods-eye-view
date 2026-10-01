@@ -13,16 +13,15 @@ For each test below, run the named mutation. Report the test that fails in `revi
 - [x] 2.1 Count 29 rows in the token ledger tests.
   - Mutation: remove the row `osh-systems` from the token ledger. A test must fail.
 - [x] 2.2 Count 83 QA scripts in `qa-scripts-023`.
-  - Mutation: remove the header of `scripts/qa-terrain-429.mjs`. The test must fail.
+  - Mutation: remove the `@covers` line of the header of `scripts/qa-terrain-429.mjs`. The test must fail.
 - [x] 2.3 Stop the timer leak in the test of the flight hooks.
   - Mutation: remove the mock of `setTimeout`. The gates must report a live timer.
 - [x] 2.4 Stop the timer leak in `militaryInstallations.test.mjs`.
   - Mutation: remove the wait after the last test. The gates must report a live timer.
 - [x] 2.5 Assert after the loop in the test of the surface keys.
-  - Mutation: make `trafficSurfaceKey` give a new key for each call. The test must fail.
-
+  - Mutation: make `trafficSurfaceKey` build the key for each call. The test must fail.
 - [x] 2.6 Raise the time ceiling of the slow boundary lookup test to 10 seconds.
-  - Mutation: make the lookup wait for the slow source. The test must fail.
+  - Mutation: make `resolveRegionRingForQuery` wait for the lookup. The run must stop the test at its time limit.
 
 ## 3. Gates and review
 

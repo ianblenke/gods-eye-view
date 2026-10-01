@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @purpose Prove that bundled outlines resolve with no geocode request and stay still.
+ * @purpose Prove that bundled outlines load without a geocode request and do not move.
  * @covers pending:overlays
  * @run node scripts/qa-admin-outlines.mjs http://localhost:4173
  * @needs A browser and an app server that runs.

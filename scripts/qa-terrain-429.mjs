@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @purpose Prove that the client retry loads terrain tiles that the server first throttles.
+ * @purpose Prove that the client loads terrain tiles again after the server first throttles them.
  * @covers pending:performance
  * @run QA_BASE_URL=http://localhost:4180 node scripts/qa-terrain-429.mjs
  * @needs A browser and a keyless dev server on port 4180.

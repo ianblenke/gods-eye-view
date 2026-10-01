@@ -1,8 +1,8 @@
 ## Why
 
-The upstream project has 5 commits that the fork does not have. They change 211 files, and 181 of them are in `src/`, `server/` or `build/`. The count of 211 is the count of the files that the upstream branch changed since the commit `b210ab0` of the first sync.
+The upstream project has 5 commits that the fork does not have. They change 211 files, and 181 of them are in `src/`, `server/` or `build/`. The author counted the files with the command `git diff` and the option `--name-only`, between the commit `b210ab0` of the first sync and `e7707d9`.
 
-The most important commit stops the public Overpass service as a default source. Traffic roads, mapped installations and ALPR cameras stay empty in an old install until the fork has this code.
+The most important commit stops the public Overpass service as a default source. Traffic roads, mapped installations and ALPR cameras stay empty in an old installation until the fork has this code.
 
 The owner of the project accepts this change on `main`. Rule 21 of `AGENTS.md` calls the owner "the person who merges a change".
 
@@ -30,20 +30,20 @@ None. No scenario text changes.
 ## Impact
 
 - The merge has 3 files with conflicts: `.env.example`, `scripts/package-boundaries.json` and `src/locations.test.mjs`. Both sides only add lines to each of them.
-- The upstream project and the fork both changed 19 files. The author of this change checked each one.
+- The upstream project and the fork both changed 19 files since `b210ab0`. The author found them with the command `comm -12` on the two lists of changed files, and checked each one.
 - The upstream project adds the environment variable `OVERPASS_UPSTREAMS`. It is optional and has no credential.
 - The first run of the gates on the merge commit gave 248 errors. Most of them are gaps in the ledger for the code of the upstream project.
 
 ## Known limits and later changes
 
 - `sync2-reached-files`: Seven files did not change in the merge, and the gates count them as untrue. They are `src/data/geoid.js`, `src/data/groundFloor.js`, `src/data/terrainHeights.js`, `src/sources/featureSource.js`, `src/sources/featureGeometry.js`, `src/sources/overpassFeaturesRecords.js` and `src/services/application.js`.
-- `sync2-vite-test`: The upstream test `src/data/trafficTiming.test.mjs` loads the traffic module with Vite, because it needs `import.meta.env.DEV`. Vite-loaded files count as untrue. The adopt command records the seven files as reached files, under the rule of the change `ledger-adopt-reached`.
+- `sync2-vite-test`: The upstream test `src/data/trafficTiming.test.mjs` loads the traffic module with Vite, because it needs `import.meta.env.DEV`. Vite-loaded files count as untrue. The command `adopt` records the seven files as reached files, under the rule of the change `ledger-adopt-reached`.
 - `sync2-count-flips`: The branch counts of some changed files change between runs of the same tree. The ratchet and the gates then measure different counts, and the gates stop with `LEDGER-STALE` or `LEDGER-LARGER-GAP`. The count tolerance covers only files with the base content.
   - The file `src/cameraGroundGuard.js` has a total of 53 or 54 branches and 10 not covered.
   - The file `src/data/labelArbiter.js` has 46 or 48 branches not covered and 385 covered.
-  - The file `src/annotations/resolver.js` has 342 or 359 lines not covered.
+  - The file `src/annotations/resolver.js` has 342 or 359 lines not covered. Two earlier runs did not show this difference.
   - The first sync had the same limit. The gates of the push to `main` use the tolerance, because the merged tree is the base.
 - `sync2-no-specs`: This change writes no spec for the new upstream code. A backfill change writes each one.
-- `sync2-timer-fixes-in-tests`: The timers stay in the production code. The functions `guardCameraAboveGround` and `resolveGroundFloorCellsBounded` do not clear their timers when the work ends first. The fix is in the tests, so the production code stays equal to the code of the upstream project.
-- `sync2-ceiling-not-measured`: The ceiling in the test of the slow boundary lookup is now 10 seconds, and it was 1 second. The ceiling finds only a very large increase of the time.
-- `sync2-qa-purposes`: The 13 new QA headers name capabilities with the prefix `pending:`. A backfill change replaces each name after its capability has a folder.
+- `sync2-timer-fixes-in-tests`: The timers stay in the production code. The functions `guardCameraAboveGround` and `resolveGroundFloorCellsBounded` do not clear their timers when the work ends first. The tests correct the problem, so the production code stays equal to the code of the upstream project. The mock in the test of the flight hooks stops the polling of the guard in that test. The wait of 1300 ms hides the leaked timers and does not prove that they end. It also adds 1.3 seconds to the file.
+- `sync2-ceiling-not-measured`: The ceiling in the test of the slow boundary lookup is now 10 seconds, and it was 1 second. The ceiling detects only a very large increase in time.
+- `sync2-qa-purposes`: The 13 new QA headers name capabilities with the prefix `pending:`, and the header of `qa-journey-recorder.mjs` has `unmapped:`. A backfill change replaces each `pending:` name after its capability has a folder.
