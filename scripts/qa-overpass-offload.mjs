@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * @purpose Prove that Traffic, Mapped Installations and ALPR work with no Overpass request.
- * @covers pending:traffic,pending:overlays
+ * @purpose Prove that Traffic, Mapped Installations and ALPR work and the page does not send an Overpass request.
+ * @covers pending:traffic,pending:overlays,pending:alpr
  * @run node scripts/qa-overpass-offload.mjs http://localhost:4173
  * @needs A browser and an app server that runs.
  */

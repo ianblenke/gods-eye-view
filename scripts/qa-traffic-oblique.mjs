@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @purpose Prove that the reticle covers traffic on oblique arrivals and on zoom revisits.
+ * @purpose Prove that the reticle area includes traffic after oblique arrivals and after the camera zooms to a place again.
  * @covers pending:traffic
  * @run node scripts/qa-traffic-oblique.mjs http://localhost:4173
  * @needs A browser and an app server that runs.

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * @purpose Prove that a share link and a reload keep the first two-character layer token.
+ * @purpose Prove that a share link and a new page load keep the first two-character layer token.
  * @covers pending:application-shell
- * @run node scripts/qa-layer-token-twochar.mjs
- * @needs A browser and a local Vite server.
+ * @run QA_BASE_URL=http://127.0.0.1:4173 node scripts/qa-layer-token-twochar.mjs
+ * @needs A browser and a local Vite server. The variable QA_BASE_URL sets the URL.
  */
 /**
  * End-to-end share/reload proof for the first two-character token. The QA

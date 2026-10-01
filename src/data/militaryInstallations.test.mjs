@@ -11,7 +11,7 @@ import {
 } from './militaryInstallations.js';
 import militaryInstallationsLayer from './militaryInstallations.js';
 
-// A bounded ground floor resolve leaves a 1200 ms deadline timer. Let each one end.
+// A bounded ground floor lookup leaves a 1200 ms deadline timer. Wait until each timer ends.
 after(() => new Promise((resolve) => setTimeout(resolve, 1300)));
 import {
   _clearMeshFloorCellsForTest,

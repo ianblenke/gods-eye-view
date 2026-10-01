@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @purpose Prove that traffic dots keep their identity and hold still while the camera holds.
+ * @purpose Prove that traffic dots keep their identity and stay in place while the camera does not move.
  * @covers pending:traffic
  * @run node scripts/qa-traffic-motion.mjs http://localhost:4186
  * @needs A browser and an app server that runs.
