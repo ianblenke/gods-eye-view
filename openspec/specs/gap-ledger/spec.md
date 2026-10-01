@@ -415,7 +415,7 @@ Origin: spec-first
 - **AND** the command runs no test and does not change `openspec/trace/gaps.json` or `openspec/trace/history.jsonl`
 
 #### Scenario: Adopt no gap of a file that the merged commit did not change `gap-ledger-091`
-- **WHEN** you run the ledger command `adopt` with correct options
+- **WHEN** you run the ledger command `adopt` with correct options for a file without the conditions of `gap-ledger-100`
 - **AND** a code file has a not-covered count above 0, or a test file has untraced tests
 - **AND** the content of the file is equal to its content in the base commit, or the merged commit did not change the file
 - **THEN** the command writes no entry and no history line for that file
@@ -457,12 +457,14 @@ Origin: spec-first
 #### Scenario: Stop for an adopt line with a commit that is not a merged commit `gap-ledger-096`
 - **WHEN** an adopt line of the checked change names a commit that is not a merged commit
 - **AND** the scenario `gap-ledger-095` does not reject the line
+- **AND** the line does not have the field `reached` with the value `true`
 - **THEN** the gate stops the build with the code `LEDGER-ADOPT-FROM`
 - **AND** the adopted count of the file does not include that line
 
 #### Scenario: Stop for an adopt line with a file that the merged commit did not change `gap-ledger-097`
 - **WHEN** an adopt line of the checked change names a merged commit and a file
 - **AND** the scenario `gap-ledger-095` does not reject the line
+- **AND** the line does not have the field `reached` with the value `true`
 - **AND** the file has the same content in the merged commit as at the merge base of that commit and the base commit
 - **THEN** the gate stops the build with the code `LEDGER-ADOPT-FILE`
 - **AND** the adopted count of the file does not include that line
@@ -478,4 +480,46 @@ Origin: spec-first
 - **WHEN** a test reads `Makefile`
 - **THEN** the target `adopt` runs the gate command `adopt` in the Docker image with the options `CHANGE`, `BASE` and `FROM`
 - **AND** the target uses the same copy and copy-back steps as the target `ratchet`
+
+#### Scenario: Record a reached file with untrue coverage `gap-ledger-100`
+- **WHEN** you run `adopt` with correct options and a merged commit
+- **AND** a tracked code file has the base content and current untrue coverage
+- **AND** the base ledger has no entry for the file, or its entry has false untrue coverage
+- **AND** an import path from a code file that the merged commit changed reaches the file
+- **THEN** the command writes the measured gap and one adopt line for the file
+- **AND** the entry keeps its origin and date when an entry exists
+
+#### Scenario: Reject a reached file with true coverage `gap-ledger-101`
+- **WHEN** an unchanged reached file has true coverage
+- **THEN** the command writes no entry or history line for the file
+- **AND** the command also rejects a file whose base entry has untrue coverage
+
+#### Scenario: Reject a file without an import path `gap-ledger-102`
+- **WHEN** an unchanged code file has new untrue coverage but no import path from a changed code file
+- **THEN** the command writes no entry or history line for the file
+- **AND** a test file cannot supply the import path or become a reached file
+
+#### Scenario: Use the old rule for other content `gap-ledger-103`
+- **WHEN** a reached file has content that differs from the base content
+- **THEN** the command rejects the reached exception for that file
+- **AND** the old rule adopts its gap only when the merged commit changed the file
+
+#### Scenario: Allow a valid reached line `gap-ledger-104`
+- **WHEN** a reached adopt line has all the conditions of `gap-ledger-100`
+- **THEN** the gate allows a ledger entry up to its adopted counts
+- **AND** the gate allows a new entry or a rise above the base entry
+- **AND** the gate rejects a count above that limit
+- **AND** the gate allows the measured null branch and function counts and the new total counts
+
+#### Scenario: Reject a false reached line `gap-ledger-105`
+- **WHEN** a reached adopt line lacks a condition of `gap-ledger-100`
+- **THEN** the gate reports `LEDGER-ADOPT-REACHED` and names the file
+- **AND** the line supplies no adopted counts
+- **AND** this rule replaces the commit and file errors for a reached line
+
+#### Scenario: Record the reached mark `gap-ledger-106`
+- **WHEN** the command writes an adopt line for a reached file
+- **THEN** the line has boolean `reached: true` and boolean `untrue: true`
+- **AND** the line has the same other fields as an old adopt line
+- **AND** a line for a changed file has no reached field
 
