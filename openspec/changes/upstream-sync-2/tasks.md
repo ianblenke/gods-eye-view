@@ -10,24 +10,24 @@
 
 For each test below, run the named mutation. Report the test that fails in `review.md`.
 
-- [ ] 2.1 Count 29 rows in the token ledger tests.
+- [x] 2.1 Count 29 rows in the token ledger tests.
   - Mutation: remove the row `osh-systems` from the token ledger. A test must fail.
-- [ ] 2.2 Count 83 QA scripts in `qa-scripts-023`.
+- [x] 2.2 Count 83 QA scripts in `qa-scripts-023`.
   - Mutation: remove the header of `scripts/qa-terrain-429.mjs`. The test must fail.
-- [ ] 2.3 Stop the timer leak in the test of the flight hooks.
+- [x] 2.3 Stop the timer leak in the test of the flight hooks.
   - Mutation: remove the mock of `setTimeout`. The gates must report a live timer.
-- [ ] 2.4 Stop the timer leak in `militaryInstallations.test.mjs`.
+- [x] 2.4 Stop the timer leak in `militaryInstallations.test.mjs`.
   - Mutation: remove the wait after the last test. The gates must report a live timer.
-- [ ] 2.5 Assert after the loop in the test of the surface keys.
+- [x] 2.5 Assert after the loop in the test of the surface keys.
   - Mutation: make `trafficSurfaceKey` give a new key for each call. The test must fail.
 
-- [ ] 2.6 Raise the time ceiling of the slow boundary lookup test to 10 seconds.
+- [x] 2.6 Raise the time ceiling of the slow boundary lookup test to 10 seconds.
   - Mutation: make the lookup wait for the slow source. The test must fail.
 
 ## 3. Gates and review
 
-- [ ] 3.1 Run the command `make adopt` for this change, from the merged commit.
-- [ ] 3.2 Run `make ratchet CHANGE=upstream-sync-2`.
+- [x] 3.1 Run the command `make adopt` for this change, from the merged commit.
+- [x] 3.2 Run `make ratchet CHANGE=upstream-sync-2`.
 - [ ] 3.3 Run `make gates CHANGE=upstream-sync-2`.
 - [ ] 3.4 Run `/opsx:review upstream-sync-2`.
 - [ ] 3.5 Write `review.md` with the tree hash.
