@@ -2,10 +2,6 @@
 
 ### Requirement: Adoption of merged code
 The ledger command `adopt` MUST record the gaps of the files that a merge commit brought into the tree. The gates MUST allow a ledger entry above the base entry, up to the adopted count of each metric. The adopted count of a metric for a file is the largest count in its valid adopt lines, and 0 with no such line. A merged commit is a parent, other than the first parent, of a merge commit between the base commit and HEAD. An adopt line is valid when the scenarios `gap-ledger-095`, `gap-ledger-096` and `gap-ledger-097` do not reject it.
-
-Scenario `gap-ledger-089` describes the old path. The reached exception in `gap-ledger-100` also permits these gaps. The gate checks reached lines with `gap-ledger-105`. Scenarios `gap-ledger-096` and `gap-ledger-097` apply to lines without boolean `reached: true`. For a valid reached line, `gap-ledger-104` replaces the checks in `gap-ledger-021`, `gap-ledger-032`, `gap-ledger-048` and `gap-ledger-056`.
-
-The old rule for a valid line applies to lines without boolean `reached: true`. A reached line is valid only when `gap-ledger-095` and `gap-ledger-105` do not reject it.
 Origin: spec-first
 
 #### Scenario: Record the gaps of the merged files `gap-ledger-089`
@@ -77,12 +73,14 @@ Origin: spec-first
 #### Scenario: Stop for an adopt line with a commit that is not a merged commit `gap-ledger-096`
 - **WHEN** an adopt line of the checked change names a commit that is not a merged commit
 - **AND** the scenario `gap-ledger-095` does not reject the line
+- **AND** the line does not have the field `reached` with the value `true`
 - **THEN** the gate stops the build with the code `LEDGER-ADOPT-FROM`
 - **AND** the adopted count of the file does not include that line
 
 #### Scenario: Stop for an adopt line with a file that the merged commit did not change `gap-ledger-097`
 - **WHEN** an adopt line of the checked change names a merged commit and a file
 - **AND** the scenario `gap-ledger-095` does not reject the line
+- **AND** the line does not have the field `reached` with the value `true`
 - **AND** the file has the same content in the merged commit as at the merge base of that commit and the base commit
 - **THEN** the gate stops the build with the code `LEDGER-ADOPT-FILE`
 - **AND** the adopted count of the file does not include that line

@@ -9,8 +9,10 @@
 - [x] Keep the test for `gap-ledger-093`.
 - [x] Keep the test for `gap-ledger-094`.
 - [x] Keep the test for `gap-ledger-095`.
-- [x] Keep the test for `gap-ledger-096`.
-- [x] Keep the test for `gap-ledger-097`.
+- [x] Change `gap-ledger-096` to skip a reached line, and test the skip.
+  - Mutation: skip the reached branch of `checkAdopts`. The test must fail.
+- [x] Change `gap-ledger-097` to skip a reached line, and test the skip.
+  - Mutation: skip the reached branch of `checkAdopts`. The test must fail.
 - [x] Keep the test for `gap-ledger-098`.
 - [x] Keep the test for `gap-ledger-099`.
 - [x] Write the test for `gap-ledger-100` before its code.
