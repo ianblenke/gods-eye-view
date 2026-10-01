@@ -1041,7 +1041,7 @@ const SYNC_CHANGE = {
  * The merge commit is the head. The work branch also adds its own files with gaps. The working tree keeps the base
  * content of `src/legacy.js`, which `up` changed.
  */
-function withMergeFixture(body) {
+function withMergeFixture(body, base = {}) {
   return withFixture(
     (root) => {
       passes(root, ['init']);
@@ -1063,7 +1063,7 @@ function withMergeFixture(body) {
       git(root, 'checkout', '-q', 'main', '--', 'src/legacy.js');
       return body(root);
     },
-    { base: { 'src/legacy.js': BRANCH_SRC('legacy'), 'src/legacy.test.mjs': UNIT_TEST('legacy', 'runs legacy') } },
+    { base: { 'src/legacy.js': BRANCH_SRC('legacy'), 'src/legacy.test.mjs': UNIT_TEST('legacy', 'runs legacy'), ...base } },
   );
 }
 
@@ -1240,7 +1240,7 @@ test('[qa-scripts-014] keeps the coverage gap for a QA script with a bad header'
   });
 });
 
-test('[gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate accept a reached file with base content', GUARDED_RUN, () => {
+test('[gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow a reached file with the base content', GUARDED_RUN, () => {
   withMergeFixture((root) => {
     write(root, { 'src/merged.js': "import './legacy.js';\n" + BRANCH_SRC('merged') });
     const stub = (command, args, options) => {
@@ -1259,5 +1259,43 @@ test('[gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate accept
     // A later source edit breaks the reached condition without a new measurement fault.
     write(root, { 'src/legacy.js': BRANCH_SRC('legacy', '  if (a > 9) return 9;\n') });
     assert.match(run(root, ['check', '--change', 'sync'], { spawn: stub }).output, /ERROR LEDGER-ADOPT-REACHED src\/legacy\.js/);
+  });
+});
+
+test('[gap-ledger-107] The command writes no reached gap for a base import path', GUARDED_RUN, () => {
+  withMergeFixture((root) => {
+    const stub = (command, args, options) => {
+      const result = spawnSync(command, args, options);
+      writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ violations: [{ file: 'src/leaf.js' }], checked: [], assertions: [], leaks: [] }) + '\n');
+      return result;
+    };
+    const before = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/leaf.js'];
+    passes(root, ['adopt', '--change', 'sync', '--from', 'up'], { spawn: stub });
+    assert.deepEqual(JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/leaf.js'], before);
+    assert.equal(historyLines(root).some((line) => line.file === 'src/leaf.js'), false);
+    appendFileSync(path.join(root, 'openspec/trace/history.jsonl'), JSON.stringify(ADOPT_LINE(root, 'src/leaf.js', { lines: 4, branches: null, functions: null, untraced: 0, untrue: true, reached: true })) + '\n');
+    assert.match(run(root, ['check', '--change', 'sync'], { spawn: stub }).output, /ERROR LEDGER-ADOPT-REACHED src\/leaf\.js/);
+  }, { 'src/legacy.js': "import './leaf.js';\n" + BRANCH_SRC('legacy'), 'src/leaf.js': BRANCH_SRC('leaf'), 'src/leaf.test.mjs': UNIT_TEST('leaf', 'runs leaf') });
+});
+
+test('[gap-ledger-108] The command and gate allow a path with a new middle edge', GUARDED_RUN, () => {
+  withMergeFixture((root) => {
+    write(root, { 'src/mid.js': "import './next.js';\n" + BRANCH_SRC('mid') });
+    const stub = (command, args, options) => {
+      const result = spawnSync(command, args, options);
+      writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ violations: [{ file: 'src/leaf.js' }], checked: [], assertions: [], leaks: [] }) + '\n');
+      return result;
+    };
+    passes(root, ['adopt', '--change', 'sync', '--from', 'up'], { spawn: stub });
+    const entry = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/leaf.js'];
+    assert.equal(entry.untrue, true);
+    assert.equal(entry.lines, 4);
+    assert.equal(historyLines(root).find((line) => line.file === 'src/leaf.js').reached, true);
+    assert.doesNotMatch(run(root, ['check', '--change', 'sync'], { spawn: stub }).output, /ERROR [A-Z-]+ src\/leaf\.js/);
+  }, {
+    'src/legacy.js': "import './mid.js';\n" + BRANCH_SRC('legacy'),
+    'src/mid.js': BRANCH_SRC('mid'), 'src/mid.test.mjs': UNIT_TEST('mid', 'runs mid'),
+    'src/next.js': "import './leaf.js';\n" + BRANCH_SRC('next'), 'src/next.test.mjs': UNIT_TEST('next', 'runs next'),
+    'src/leaf.js': BRANCH_SRC('leaf'), 'src/leaf.test.mjs': UNIT_TEST('leaf', 'runs leaf'),
   });
 });

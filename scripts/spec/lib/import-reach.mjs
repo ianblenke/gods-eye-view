@@ -2,8 +2,8 @@ import path from 'node:path';
 import { moduleImports } from '../../module-analysis.mjs';
 import { isCodeFile } from './inventory.mjs';
 
-/** Read tracked modules once. Return the import descendants of changed code files. */
-export function importReach({ files, readFile }) {
+/** Read the import graph of tracked code modules. */
+function importGraph(files, readFile) {
   const code = new Set(files.filter(isCodeFile));
   const edges = new Map();
   for (const file of code) {
@@ -24,17 +24,26 @@ export function importReach({ files, readFile }) {
     }
     edges.set(file, targets);
   }
+  return edges;
+}
+
+/** Return descendants whose import path uses an edge absent in the base graph. */
+export function importReach({ files, readFile, baseFiles, readBaseFile }) {
+  const edges = importGraph(files, readFile);
+  const baseEdges = importGraph(baseFiles, readBaseFile);
   return (changed) => {
     const visited = new Set();
     const reached = new Set();
-    const queue = [...changed];
+    const queue = [...changed].map((file) => [file, false]);
     while (queue.length > 0) {
-      const file = queue.pop();
-      if (visited.has(file)) continue;
-      visited.add(file);
+      const [file, usedNewEdge] = queue.pop();
+      const state = `${file}:${usedNewEdge}`;
+      if (visited.has(state)) continue;
+      visited.add(state);
       for (const target of edges.get(file) ?? []) {
-        reached.add(target);
-        queue.push(target);
+        const newEdge = usedNewEdge || !(baseEdges.get(file) ?? []).includes(target);
+        if (newEdge) reached.add(target);
+        queue.push([target, newEdge]);
       }
     }
     return reached;
