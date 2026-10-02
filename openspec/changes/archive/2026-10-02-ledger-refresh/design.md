@@ -1,16 +1,16 @@
 ## Context
 
-The ledger entries of two changed files do not match the counts that CI measured on `main`.
+The ledger entries of two files do not match the counts that CI measured on `main`.
 
 ## Goals and non-goals
 
-- Make the ledger match a current measurement.
+- Make the ledger show the counts of a current run.
 - Do not change code, tests or scenarios.
 
 ## D1 The ratchet command
 
-The ratchet command measures all files and writes the counts. This change checks the diff of the ledger and keeps only the lines that the ratchet writes for the stale entries and for closed gaps.
+The ratchet command measures all files and writes the counts. This change keeps each line that the command writes, for all 13 files. The proposal lists the files.
 
-## How the gates measure this change
+## Gates on this tree
 
-The gates run on the tree of this change. The ledger must show the counts of the run, except for files with changing counts.
+The ledger must show the counts of the run. The two limits `refresh-may-flip` and `refresh-cause` name the exception.
