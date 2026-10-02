@@ -40,10 +40,11 @@ None. No scenario text changes.
 
 - `sync2-reached-files`: Seven files did not change in the merge, and the gates count them as untrue. They are `src/data/geoid.js`, `src/data/groundFloor.js`, `src/data/terrainHeights.js`, `src/sources/featureSource.js`, `src/sources/featureGeometry.js`, `src/sources/overpassFeaturesRecords.js` and `src/services/application.js`.
 - `sync2-vite-test`: The upstream test `src/data/trafficTiming.test.mjs` loads the traffic module with Vite, because it needs `import.meta.env.DEV`. Vite-loaded files count as untrue. The command `adopt` records the seven files as reached files, under the rule of the change `ledger-adopt-reached`.
-- `sync2-count-flips`: The branch counts of some changed files change between runs of the same tree. The ratchet and the gates then measure different counts, and the gates stop with `LEDGER-STALE` or `LEDGER-LARGER-GAP`. The count tolerance covers only files with the base content.
+- `sync2-count-flips`: The counts of some changed files change between runs of the same tree. The ratchet and the gates then measure different counts, and the gates stop with `LEDGER-STALE` or `LEDGER-LARGER-GAP`. The count tolerance covers only files with the base content. The next items are the files that showed this fault.
   - The file `src/cameraGroundGuard.js` has a total of 53 or 54 branches and 10 not covered.
   - The file `src/data/labelArbiter.js` has 46 or 48 branches not covered and 385 covered.
   - The file `src/annotations/resolver.js` has 342 or 359 lines not covered. Two earlier runs did not show this difference.
+  - The file `src/app/layers/alprCameras.js` has 3 or 0 lines not covered.
   - The first sync had the same limit. The gates of the push to `main` use the tolerance, because the merged tree is the base.
 - `sync2-no-final-ratchet`: The last two runs of the ratchet command stopped with `LEDGER-LARGER-GAP` on `src/annotations/resolver.js`. The file had 359 lines not covered, and the ledger has 342. The ledger holds the values of the run of the command `adopt`. This change adds no test and no scenario, so the ratchet records nothing new.
 - `sync2-no-specs`: This change writes no spec for the new upstream code. A backfill change writes each one.
