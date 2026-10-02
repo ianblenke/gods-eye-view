@@ -46,21 +46,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "scripts/build-admin-packs.mjs": {
-      "loaded": false,
-      "lines": 759,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 759,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "1c1a2c3161f6f9ef977afe9b225291d372df52b25dc9a05eaa20e447543e78df",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "scripts/build-sf-neighborhoods.mjs": {
       "loaded": false,
       "lines": 145,
@@ -90,21 +75,6 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "scripts/check-layer-state-tokens.mjs": {
-      "loaded": true,
-      "lines": 6,
-      "branches": 4,
-      "functions": 0,
-      "totals": {
-        "lines": 131,
-        "branches": 12,
-        "functions": 3
-      },
-      "sha": "cf74cdcab01f67f1ba9694843379c47cc8542c3461465a4997b0cc316e9753b3",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "scripts/check-package-boundaries.mjs": {
       "loaded": true,
@@ -210,21 +180,6 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "scripts/next-layer-state-token.mjs": {
-      "loaded": false,
-      "lines": 22,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 22,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "8302f0fce27b8d5bc1e84ce67a6951dc5e5c34838d014cc4963b07bf99f4c694",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "scripts/opensky-import-client.sh": {
       "loaded": false,
@@ -753,15 +708,15 @@
     },
     "server/providers/military-installations.js": {
       "loaded": true,
-      "lines": 122,
-      "branches": 6,
+      "lines": 116,
+      "branches": 8,
       "functions": 3,
       "totals": {
-        "lines": 246,
-        "branches": 18,
+        "lines": 215,
+        "branches": 16,
         "functions": 8
       },
-      "sha": "8fcd193368e51e8e9c5d104e3122f29a72995be7280a0d0f0d55cbd9afb0e35b",
+      "sha": "cde627d8a75fdcefbf2d905c3fd5715d371db7df0ccc931bd9557be3f8c5a283",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -843,15 +798,15 @@
     },
     "server/providers/overpass.js": {
       "loaded": true,
-      "lines": 44,
-      "branches": 7,
+      "lines": 53,
+      "branches": 8,
       "functions": 0,
       "totals": {
-        "lines": 250,
-        "branches": 43,
+        "lines": 219,
+        "branches": 22,
         "functions": 8
       },
-      "sha": "674e10209bb932b108541f78eeaa692988426b77f8606f6a6d2569bed77a980f",
+      "sha": "8ce9b0517270f1fcdd4f2645cdd9a179f011212ffb13a883ee1b502d74b2386c",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -907,11 +862,11 @@
       "branches": 4,
       "functions": 1,
       "totals": {
-        "lines": 206,
-        "branches": 65,
-        "functions": 8
+        "lines": 158,
+        "branches": 36,
+        "functions": 5
       },
-      "sha": "6623ad00cb224618d7fe6d10b2c2eaa4368a33e4cb70b9a9e59518d2d5de75af",
+      "sha": "fb6a1178a7f796c9e41627557ea2da89a3bef49be29e086258ceaf9fcaab95f0",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1027,11 +982,11 @@
       "branches": 9,
       "functions": 2,
       "totals": {
-        "lines": 265,
-        "branches": 56,
-        "functions": 20
+        "lines": 288,
+        "branches": 57,
+        "functions": 21
       },
-      "sha": "5abf5a2977365e286061fb73db7cbfd6de7336f949668939c741a15d9c53a17b",
+      "sha": "e4dba911dc26deb7ba3490bf9b356263660257533e7262c07ce9290809b9e565",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1323,15 +1278,15 @@
     },
     "src/annotations/annotationEngine.js": {
       "loaded": true,
-      "lines": 620,
-      "branches": 60,
-      "functions": 27,
+      "lines": 708,
+      "branches": 84,
+      "functions": 28,
       "totals": {
-        "lines": 1597,
-        "branches": 232,
+        "lines": 1569,
+        "branches": 240,
         "functions": 70
       },
-      "sha": "ae6e12c345f4eddad3ab9db250efd5f339cfeb02ab2ccdc1bc3963c7e5f1a7b2",
+      "sha": "3c719614b766ffdc8b967442c763de5169dc1eb3b5729bc27517446fbdbead01",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1368,15 +1323,15 @@
     },
     "src/annotations/hybridAnnotationRenderer.js": {
       "loaded": true,
-      "lines": 29,
+      "lines": 25,
       "branches": 8,
       "functions": 1,
       "totals": {
-        "lines": 162,
+        "lines": 158,
         "branches": 29,
         "functions": 7
       },
-      "sha": "f5a43207c6091b088df2e6dd21cc27d37819b992f2259270ba26591d8c954bc3",
+      "sha": "5978a615db56ba2a42c34c1806b25487b38d4eb75e73a15546e34daa40d90225",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1398,45 +1353,45 @@
     },
     "src/annotations/resolver.js": {
       "loaded": true,
-      "lines": 342,
-      "branches": 122,
-      "functions": 16,
+      "lines": 471,
+      "branches": 109,
+      "functions": 13,
       "totals": {
-        "lines": 2117,
-        "branches": 447,
-        "functions": 68
+        "lines": 1973,
+        "branches": 395,
+        "functions": 58
       },
-      "sha": "54a9e17145050b54cbd3590c7dd2ecfa9e2e31e7a4d195008ceae53e02b8a1b2",
+      "sha": "d2385ff52712e565e1e88a363ceb105aad652ecaeed55a66b4ee19f9fc59d91e",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/annotations/screenAnnotationRenderer.js": {
       "loaded": true,
-      "lines": 270,
-      "branches": 54,
+      "lines": 252,
+      "branches": 51,
       "functions": 9,
       "totals": {
-        "lines": 881,
-        "branches": 132,
+        "lines": 857,
+        "branches": 129,
         "functions": 30
       },
-      "sha": "d6df0de6f50d16b67ce4ec30162c5adbcd3742431ddb04ef68b48bec331b61a6",
+      "sha": "9acfe602bc3b62b8b38b25c9bd3b46c78929b49dd9f34d0e142ac100c22b5699",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/annotations/worldAnnotationRenderer.js": {
       "loaded": true,
-      "lines": 229,
-      "branches": 13,
-      "functions": 14,
+      "lines": 295,
+      "branches": 9,
+      "functions": 16,
       "totals": {
-        "lines": 539,
-        "branches": 31,
-        "functions": 26
+        "lines": 542,
+        "branches": 21,
+        "functions": 24
       },
-      "sha": "e78ccd76db1eba7a1354de9fcf6bb0c0eaa9ae64365cc048b55c37787dd551fc",
+      "sha": "69a8a9a510d53811481c291fd551e5ad66663c00bce1f9e2354fac558432aa9f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1496,7 +1451,7 @@
         "branches": 16,
         "functions": 4
       },
-      "sha": "241f4d8284ff4ca39ff2a2b17739dab7d42134772e90e287a963ce21bf83ccbe",
+      "sha": "55fb406965f0bc48c717b5247377ac6e0c5749a49f05dfbc472c640e5c51fde4",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -1636,21 +1591,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/app/layers/militaryInstallations.js": {
-      "loaded": true,
-      "lines": 4,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 36,
-        "branches": 6,
-        "functions": 3
-      },
-      "sha": "7d400fca6b35dd743f875027f7bb032cc8dd03e6272217f7d5059b8440dd17b8",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/app/layers/perimeters.js": {
       "loaded": true,
       "lines": 0,
@@ -1683,30 +1623,30 @@
     },
     "src/app/layers/traffic.js": {
       "loaded": false,
-      "lines": 12,
+      "lines": 11,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 12,
+        "lines": 11,
         "branches": null,
         "functions": null
       },
-      "sha": "d56fc25fe185e5ad792f9ec6b0200b716e68363d9850b04f05f9fcf80c86d2d4",
+      "sha": "a3cbfedd5f49a83b2b8717164466ec77f0411a327208d443d46f47cdb8055554",
       "untrue": true,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/app/operations.js": {
       "loaded": true,
-      "lines": 9,
+      "lines": 8,
       "branches": 1,
       "functions": 1,
       "totals": {
-        "lines": 50,
+        "lines": 49,
         "branches": 5,
         "functions": 2
       },
-      "sha": "abcd1702ace066ecf0d9987da0ae1a085eb65ef001b62cd3111946ade91f0fc6",
+      "sha": "3709f073c70cf4e07e7d7f85b2ca5ab9d77f3128aa71f39d4c1f7b643dfe1c35",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -1830,21 +1770,6 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/cameraGroundGuard.js": {
-      "loaded": true,
-      "lines": 5,
-      "branches": 10,
-      "functions": 2,
-      "totals": {
-        "lines": 198,
-        "branches": 53,
-        "functions": 10
-      },
-      "sha": "9eb5668b04b1ab0df80f67a589bacff4a5103cecbf78571ae3364c0a92f006d3",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/cameraVerbs.js": {
       "loaded": true,
@@ -2071,21 +1996,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/data/adminBoundaries.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 19,
-      "functions": 1,
-      "totals": {
-        "lines": 821,
-        "branches": 241,
-        "functions": 49
-      },
-      "sha": "f95e1498acc9f9270157e7a5bc676038869a05cc00b864ae3ee60a6539df8656",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/data/adsbLolFallback.js": {
       "loaded": true,
       "lines": 0,
@@ -2176,21 +2086,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/data/alprCameras.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 0,
-      "functions": 2,
-      "totals": {
-        "lines": 16,
-        "branches": 1,
-        "functions": 2
-      },
-      "sha": "79c02def335ea141e2d16080dda8a8cccd413fa0f38d22768ac9fedfbb6df2d7",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/data/analystEngine.js": {
       "loaded": true,
       "lines": 12,
@@ -2238,15 +2133,15 @@
     },
     "src/data/bhoteKoshiLocator.js": {
       "loaded": true,
-      "lines": 60,
-      "branches": 14,
+      "lines": 70,
+      "branches": 15,
       "functions": 28,
       "totals": {
-        "lines": 1218,
+        "lines": 1214,
         "branches": 212,
         "functions": 96
       },
-      "sha": "f6fb93e53fb0f4d12be26b5b504f81439280a9b1554e21956c77988b45b239d7",
+      "sha": "407bedd52739b537487fdd957bb0b3fc493d81728d2aad3ccc8e4575b2e440ca",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -2433,15 +2328,15 @@
     },
     "src/data/dataCredits.js": {
       "loaded": false,
-      "lines": 468,
+      "lines": 436,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 468,
+        "lines": 436,
         "branches": null,
         "functions": null
       },
-      "sha": "7a325d075e74083359ad840d4eb4aff392473e2dca1590f394132e5301c31c2c",
+      "sha": "20bd5741bf0099cf8e1bf7d1c15abc2eccaf4c86223546b9c25bb07232d4d33e",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2568,15 +2463,15 @@
     },
     "src/data/flowMatch.js": {
       "loaded": false,
-      "lines": 294,
+      "lines": 251,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 294,
+        "lines": 251,
         "branches": null,
         "functions": null
       },
-      "sha": "9cb9ff9fec2fc312efa6e219f1a52de3eba6b424f981ec8f86cbbc37f5ca980f",
+      "sha": "056b7fe90cb584ca677a9d0fea67582e8d5a9df25a9759475a0d69bb29899d7c",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2612,34 +2507,19 @@
       "since": "2026-09-15"
     },
     "src/data/geoid.js": {
-      "loaded": false,
-      "lines": 99,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 14,
+      "branches": 1,
+      "functions": 3,
       "totals": {
         "lines": 99,
-        "branches": null,
-        "functions": null
+        "branches": 3,
+        "functions": 4
       },
       "sha": "d4673a156760f2f9b6f0d98f8eda8fceaf1c4e60f1d9d4837a78aefd17a060ca",
-      "untrue": true,
+      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/data/groundFloor.js": {
-      "loaded": false,
-      "lines": 32,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 32,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "1fa448540bdb2f536cd27549691ba2504c2c2bb0071f89f3a5728546bb784113",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/data/gtfsRealtime.js": {
       "loaded": true,
@@ -2677,26 +2557,26 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 35,
-        "branches": 32,
+        "lines": 22,
+        "branches": 19,
         "functions": 1
       },
-      "sha": "4658712e8bdafc5ccf4724c06385fae4a6f8baab9413a59d4f53bf93904dffe7",
+      "sha": "aa6ede86852e5fae116b0f04b70c01f5013377be645a6b276b89f10057d30dcb",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/data/labelArbiter.js": {
       "loaded": true,
-      "lines": 15,
-      "branches": 46,
+      "lines": 18,
+      "branches": 52,
       "functions": 0,
       "totals": {
-        "lines": 1271,
-        "branches": 431,
-        "functions": 61
+        "lines": 1228,
+        "branches": 407,
+        "functions": 58
       },
-      "sha": "da178072243462227e064ffcc3f0d79ac2956bf4de7a066d01ac82756d51b184",
+      "sha": "fe25755fea99ad22dd3c17fd9f443b6b2ba002b1894facad2226fc4f7ac17087",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2718,15 +2598,15 @@
     },
     "src/data/layerState.js": {
       "loaded": true,
-      "lines": 107,
-      "branches": 81,
+      "lines": 93,
+      "branches": 72,
       "functions": 5,
       "totals": {
-        "lines": 1775,
-        "branches": 472,
-        "functions": 107
+        "lines": 1571,
+        "branches": 399,
+        "functions": 101
       },
-      "sha": "4c93bd0d7e23d238e5443f40f5fb026cbdf1a73d5b8b2adc8b8efa25a8750af0",
+      "sha": "a218250ba4b2060a4b49a97e50a218f4615a4e8208c3d9ed401b2a70342867c4",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2737,11 +2617,11 @@
       "branches": 100,
       "functions": 15,
       "totals": {
-        "lines": 2328,
-        "branches": 573,
+        "lines": 2324,
+        "branches": 572,
         "functions": 116
       },
-      "sha": "a5d06cef52480b4aea4d0b051e7f2ac8b54e451fce7ba8063fc4a798d1a3d987",
+      "sha": "00c2c630a7456183964aff232cc2b0be6896b9e461bb6e82aa228327f10a433c",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -2765,13 +2645,13 @@
       "loaded": true,
       "lines": 21,
       "branches": 45,
-      "functions": 5,
+      "functions": 6,
       "totals": {
-        "lines": 1367,
-        "branches": 363,
+        "lines": 1383,
+        "branches": 358,
         "functions": 57
       },
-      "sha": "d05d84914b9b861fddb5113713f9dd8ffde653115fd2999efae3e94fab47c278",
+      "sha": "41ba92e1c9bcf72788337e5738195fc792d71e286f46ea86643312d0977b3520",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2851,36 +2731,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/data/militaryInstallations.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 0,
-      "functions": 1,
-      "totals": {
-        "lines": 25,
-        "branches": 1,
-        "functions": 1
-      },
-      "sha": "86ff5e5f3d26eba368b09536d5b2460c908d5dd36d6a6dee8dbac02fa2dc888f",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/data/militaryNames.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 115,
-        "branches": 35,
-        "functions": 11
-      },
-      "sha": "061f667f864ec3026f163180ebd8fcc76cc96bc198c092edb7350d64a0b85501",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/data/modelVisualAnchor.js": {
       "loaded": true,
       "lines": 0,
@@ -2914,14 +2764,14 @@
     "src/data/naturalEarthRegions.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 13,
+      "branches": 11,
       "functions": 0,
       "totals": {
-        "lines": 363,
-        "branches": 87,
-        "functions": 18
+        "lines": 327,
+        "branches": 72,
+        "functions": 16
       },
-      "sha": "c169addeed3768383d80a13d186f44a3bd1fcdf7bff34612e1a21c7444bb1762",
+      "sha": "1dda588f699247896780a85ee314b52cb53056e8915b815cdcc0a10a6ce5125d",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3091,21 +2941,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/data/terrainHeights.js": {
-      "loaded": false,
-      "lines": 10,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 10,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "33774cd3e5c02f6b66d96c68dcb794879c8fba95f0f3621b6beb300b95461585",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/data/terrainHeightsProxy.js": {
       "loaded": true,
       "lines": 12,
@@ -3153,15 +2988,15 @@
     },
     "src/data/trackedReadout.js": {
       "loaded": true,
-      "lines": 3,
-      "branches": 15,
+      "lines": 2,
+      "branches": 14,
       "functions": 0,
       "totals": {
-        "lines": 307,
-        "branches": 81,
+        "lines": 311,
+        "branches": 79,
         "functions": 21
       },
-      "sha": "a9203de51bfbd89d9f45c8b2430d8d135e9160d834dc635e7c8d7d6dab44f348",
+      "sha": "1f2973eeb42813151603a62befc4030d5e249fd1e6cb74315a053f88290fa37f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3736,62 +3571,47 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/alpr/floors.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 82,
-        "branches": 24,
-        "functions": 8
-      },
-      "sha": "be08743e3f582e4838b49d7c23ae159db8012b8ded1afde73d99182eace838c3",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/layers/alpr/index.js": {
       "loaded": true,
-      "lines": 22,
-      "branches": 18,
+      "lines": 16,
+      "branches": 8,
       "functions": 3,
       "totals": {
-        "lines": 461,
-        "branches": 127,
-        "functions": 18
+        "lines": 387,
+        "branches": 94,
+        "functions": 16
       },
-      "sha": "f62eae916407b5cb85af257203039f9880dd091ca57af231f69b5855eb979440",
+      "sha": "fe8fd0917bf9ace1104d9f243c4c98c386a5b19d7a7a8ce5b790aeb6020cd838",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/layers/alpr/overlay.js": {
       "loaded": true,
-      "lines": 28,
-      "branches": 17,
+      "lines": 11,
+      "branches": 13,
       "functions": 1,
       "totals": {
-        "lines": 444,
-        "branches": 124,
-        "functions": 26
+        "lines": 298,
+        "branches": 85,
+        "functions": 19
       },
-      "sha": "7e9e73e379ff236166fea39ac5e733c481a0ebb3d4c334205288dabd59fc8cbb",
+      "sha": "bdf4e3ab99dfa68fc3efa510e3caa6b432ac5a8f22138a82049528644a7662f3",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/layers/alpr/presentation.js": {
       "loaded": true,
-      "lines": 28,
-      "branches": 22,
-      "functions": 5,
+      "lines": 14,
+      "branches": 17,
+      "functions": 0,
       "totals": {
-        "lines": 655,
-        "branches": 209,
-        "functions": 36
+        "lines": 462,
+        "branches": 153,
+        "functions": 20
       },
-      "sha": "55d2946faba1abdca30dbf887b3ff88f95826c7e11d2ef7bb6f76f45b98085f4",
+      "sha": "e1edc80c6870b2f4aee11c91e022ea67dd2b064f9cf27ca42d1f2633ff099fcc",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -3813,33 +3633,18 @@
     },
     "src/layers/alpr/source.js": {
       "loaded": true,
-      "lines": 33,
-      "branches": 16,
-      "functions": 4,
+      "lines": 3,
+      "branches": 2,
+      "functions": 0,
       "totals": {
-        "lines": 273,
-        "branches": 72,
-        "functions": 22
+        "lines": 84,
+        "branches": 28,
+        "functions": 4
       },
-      "sha": "c481aab3d5663e9571b318de03a32c71c351f88fe7008232c0e6c3632c539231",
+      "sha": "548e30035d39ccff0191f4b597b7ba6942f4be970a3738d331e75df16f02630f",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/layers/alpr/tileRecords.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 6,
-      "functions": 0,
-      "totals": {
-        "lines": 43,
-        "branches": 11,
-        "functions": 2
-      },
-      "sha": "adee1c48c60132d56528ee58882f8b015639be12d1903483ef19ab818dbf4062",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/layers/alpr/visuals.js": {
       "loaded": true,
@@ -3862,11 +3667,11 @@
       "branches": 3,
       "functions": 1,
       "totals": {
-        "lines": 127,
-        "branches": 21,
+        "lines": 126,
+        "branches": 20,
         "functions": 11
       },
-      "sha": "6b15f600fdab2247e11d54ab36a5406001e4de7774b976eeac8a31c8cb05cc7c",
+      "sha": "fdf346afd6ad22b7f28176b1cae567a84e6b803e15cd769cd2e15a35b5c5fed0",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3918,15 +3723,15 @@
     },
     "src/layers/awareness/lifecycle.js": {
       "loaded": true,
-      "lines": 1,
-      "branches": 8,
-      "functions": 0,
+      "lines": 7,
+      "branches": 6,
+      "functions": 1,
       "totals": {
-        "lines": 264,
-        "branches": 53,
+        "lines": 263,
+        "branches": 50,
         "functions": 14
       },
-      "sha": "3dea581136e52b6c4d944f54fdac125a7683344321a66a49cba9f1a2f5ddbb5f",
+      "sha": "b872fdf38fe3eb5933e5b723fdb2afec24e04245dadd53355f05f3793b6456a9",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3963,15 +3768,15 @@
     },
     "src/layers/awareness/panel.js": {
       "loaded": true,
-      "lines": 45,
+      "lines": 51,
       "branches": 8,
-      "functions": 2,
+      "functions": 3,
       "totals": {
-        "lines": 256,
-        "branches": 75,
-        "functions": 22
+        "lines": 249,
+        "branches": 69,
+        "functions": 20
       },
-      "sha": "879a37caabcf5cddfc9195a3d4aac5f8a448b139338805bfe9d5135be7ed2bf7",
+      "sha": "705a320d9b08361d9eec2b2d8e2b773d3a0926cf3340a8ffb813330b821b36a1",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3979,14 +3784,14 @@
     "src/layers/awareness/queries.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 7,
+      "branches": 6,
       "functions": 0,
       "totals": {
-        "lines": 183,
-        "branches": 50,
-        "functions": 13
+        "lines": 164,
+        "branches": 37,
+        "functions": 12
       },
-      "sha": "f28ae4d75ed6a80c7de029344a8e0b57eece6f77c87fe0f879eed3fc9d7c6890",
+      "sha": "2212de99cd1ac17b58486978993f24982c94864a6a4c41f6dd1bb8d66b43ae5c",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4008,15 +3813,15 @@
     },
     "src/layers/awareness/subject.js": {
       "loaded": true,
-      "lines": 0,
+      "lines": 36,
       "branches": 13,
-      "functions": 0,
+      "functions": 1,
       "totals": {
-        "lines": 460,
-        "branches": 83,
+        "lines": 447,
+        "branches": 81,
         "functions": 21
       },
-      "sha": "876c909fa20748ba197ea2ee51b7e3be7fc187a6787509619b632405c5548739",
+      "sha": "db75cae45f08371aabed899cf98bc15a3bab8f964bc760d7a3c8d27c723bc042",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4398,15 +4203,15 @@
     },
     "src/layers/cctv/lifecycle.js": {
       "loaded": true,
-      "lines": 278,
-      "branches": 20,
-      "functions": 12,
+      "lines": 307,
+      "branches": 17,
+      "functions": 11,
       "totals": {
-        "lines": 479,
-        "branches": 28,
-        "functions": 19
+        "lines": 471,
+        "branches": 23,
+        "functions": 16
       },
-      "sha": "bf856ecf2aacb74716c92e503d3c40849bbe9c30a2ba92e02b700862fe7858ea",
+      "sha": "396bf44cd785c984d9dc46dcac88468935f81b27a9fdcabcce4dd0fe0ac1f595",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -4563,15 +4368,15 @@
     },
     "src/layers/directions/index.js": {
       "loaded": true,
-      "lines": 277,
-      "branches": 32,
-      "functions": 16,
+      "lines": 440,
+      "branches": 38,
+      "functions": 22,
       "totals": {
-        "lines": 1434,
-        "branches": 264,
-        "functions": 71
+        "lines": 1432,
+        "branches": 250,
+        "functions": 68
       },
-      "sha": "5b9f701872582740d985805d55cd1b24efd354a5af44b3e220949b6522d43975",
+      "sha": "1928a12588e01dcd0f7434f91644b86e68f2c34e658676c9ff016e575352720d",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -4998,15 +4803,15 @@
     },
     "src/layers/installations/controls.js": {
       "loaded": true,
-      "lines": 3,
-      "branches": 6,
-      "functions": 2,
+      "lines": 2,
+      "branches": 5,
+      "functions": 1,
       "totals": {
-        "lines": 217,
-        "branches": 44,
-        "functions": 9
+        "lines": 126,
+        "branches": 16,
+        "functions": 6
       },
-      "sha": "2940e0bc8c3aef1456c94a8fb956da5a310e9f66cf37b0f19e683c70f2eec893",
+      "sha": "2dd51fd340b00b23f78282e684ac96078ca591c9d13aa47bf514a2055e1fedc3",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5017,26 +4822,26 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 45,
+        "lines": 43,
         "branches": 3,
         "functions": 1
       },
-      "sha": "d296ad188e3a781f057c3d6b01feac4c40619e92dbbb1c8be7325720f3f9d6c5",
+      "sha": "9b7fc050cb09c5fffc096a484443f2734c8c3a91d925a17b547fe54a8d30458f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/installations/ingestion.js": {
       "loaded": true,
-      "lines": 80,
-      "branches": 7,
-      "functions": 2,
+      "lines": 70,
+      "branches": 10,
+      "functions": 1,
       "totals": {
-        "lines": 318,
-        "branches": 74,
-        "functions": 24
+        "lines": 208,
+        "branches": 41,
+        "functions": 9
       },
-      "sha": "00c6e390f2b94e0384b0f8a1005b37d700ac2bda461743b3c70240ac0404e244",
+      "sha": "87c91d37a421d1b65c71bed11825c9a2f874d6455dbcbc72f6c7ef5dc1c0a672",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5044,14 +4849,14 @@
     "src/layers/installations/lifecycle.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 0,
+      "branches": 1,
       "functions": 1,
       "totals": {
-        "lines": 107,
-        "branches": 16,
-        "functions": 11
+        "lines": 62,
+        "branches": 7,
+        "functions": 6
       },
-      "sha": "e9d36d65d3ece8fbb6c48c4cd1408305b29c689e39590db7de61a47aac01e08a",
+      "sha": "9b9b7e83be2386eee74c1087ba5e3f20de22abf5f41b757573a120b77cf8b33b",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5062,41 +4867,26 @@
       "branches": 4,
       "functions": 0,
       "totals": {
-        "lines": 153,
-        "branches": 41,
-        "functions": 11
+        "lines": 149,
+        "branches": 35,
+        "functions": 9
       },
-      "sha": "774830adfc89bd643836147b88f977b39c8e7d927320f222f41d0f2d20a50d76",
+      "sha": "16a4a6b5aabc6521664886c37c4a480009e7c17290c9b8e3528930dbd193bc92",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/installations/namedMarkers.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 3,
-      "functions": 0,
-      "totals": {
-        "lines": 224,
-        "branches": 58,
-        "functions": 15
-      },
-      "sha": "7e2a3b00a87bcaff1a1614e36afe5edcbdf650f1768f9a9ce62983bb4985278b",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/layers/installations/rendering.js": {
       "loaded": true,
-      "lines": 0,
-      "branches": 9,
+      "lines": 10,
+      "branches": 7,
       "functions": 2,
       "totals": {
-        "lines": 363,
-        "branches": 106,
-        "functions": 28
+        "lines": 195,
+        "branches": 44,
+        "functions": 13
       },
-      "sha": "8b31eed2cbed86fe56037f8ecfdc00599003cc19730639fd2d882d0e864c47e7",
+      "sha": "761403a2792c3a7092fc8c8bdfd6b0ec240f127a5e25d155754ddd1b781d1f8f",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -5104,44 +4894,44 @@
     "src/layers/installations/selection.js": {
       "loaded": true,
       "lines": 0,
-      "branches": 4,
+      "branches": 3,
       "functions": 0,
       "totals": {
-        "lines": 84,
-        "branches": 34,
-        "functions": 7
+        "lines": 46,
+        "branches": 17,
+        "functions": 4
       },
-      "sha": "2392cc7b0232c942b77cced3e55e104e4f0c39a2f23fc2575856ad9c64b1b6d3",
+      "sha": "2215be3f6e27b7a29a5cdd1410e83fd35e61d6143c3866d4ec8a47146f895080",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/installations/source.js": {
       "loaded": true,
-      "lines": 13,
-      "branches": 9,
+      "lines": 3,
+      "branches": 5,
       "functions": 0,
       "totals": {
-        "lines": 274,
-        "branches": 95,
-        "functions": 22
+        "lines": 95,
+        "branches": 41,
+        "functions": 6
       },
-      "sha": "f5e1a4c92f508d0020aa67c041964a14e1cf94bb2c79eaa2b8990da09b736d26",
+      "sha": "695f2ff13b8f74653ee11008daa3253153dbd109740217ff52c986e0e541d668",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/installations/viewport.js": {
       "loaded": true,
-      "lines": 4,
-      "branches": 3,
-      "functions": 1,
+      "lines": 13,
+      "branches": 2,
+      "functions": 2,
       "totals": {
-        "lines": 127,
-        "branches": 35,
-        "functions": 12
+        "lines": 84,
+        "branches": 16,
+        "functions": 7
       },
-      "sha": "dcb5d82cd6e3740380b9574640e21a943b9b9f0e00d69038532bf7ad73053ceb",
+      "sha": "d283398e265708e508e9e9c8d938a9aba4cfbd5df5d1c3f542260ab270a7a32a",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6273,165 +6063,150 @@
     },
     "src/layers/traffic/animation.js": {
       "loaded": false,
-      "lines": 344,
+      "lines": 314,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 344,
+        "lines": 314,
         "branches": null,
         "functions": null
       },
-      "sha": "037234b5d280e681a108c21980522cb273e8a1b34b64fe11c9a6a0fda668aff1",
+      "sha": "5aed45b70482c22c04663fce1128e8f66420128ca2784876658e516586686ddc",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/controls.js": {
       "loaded": false,
-      "lines": 350,
+      "lines": 189,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 350,
+        "lines": 189,
         "branches": null,
         "functions": null
       },
-      "sha": "9f2649239a4456ce29e01e8173b0724b697cb5b7b63dcec3d25074e1b06b4f9a",
+      "sha": "ae51e095269bfb1b27e4a8e3c7efbfcc8aabf2152d624c98315354f065b5f4de",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/flow.js": {
       "loaded": false,
-      "lines": 559,
+      "lines": 215,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 559,
+        "lines": 215,
         "branches": null,
         "functions": null
       },
-      "sha": "3141322855ca56fd4ec4106c4954525cabb60d55dc84e43a901c8c47c1c26773",
+      "sha": "7a28f4d0b034f85ba320d89f03890744b1639eb43dfaac569aaf1014369020ed",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/flowDecode.js": {
       "loaded": false,
-      "lines": 83,
+      "lines": 70,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 83,
+        "lines": 70,
         "branches": null,
         "functions": null
       },
-      "sha": "da53b848b163c31e81fa172567083278e8178094c34762a28966959f1c59af3b",
+      "sha": "c3eabddd7d68e53980629b0f64611df8f9364fb31e71b00016e219e10d93a6e5",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/flowSource.js": {
       "loaded": false,
-      "lines": 47,
+      "lines": 97,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 47,
+        "lines": 97,
         "branches": null,
         "functions": null
       },
-      "sha": "beb69a0acbe62825bb039b239d209c9c9d5750e62a06af16154534ddac76e7a8",
+      "sha": "54bea3e7cec07c322ef498314e09b7f3df552c720ab4b156fbc3f8aac5e46822",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/traffic/footprint.js": {
-      "loaded": false,
-      "lines": 166,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 166,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "872089255bc23a02271bba49de475b896f28002c0d18c8a480175fbdde434330",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/layers/traffic/index.js": {
       "loaded": false,
-      "lines": 65,
+      "lines": 63,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 65,
+        "lines": 63,
         "branches": null,
         "functions": null
       },
-      "sha": "73b7ff6a4332a7103e5a37efafc390f0ff2c7a872d1a92c24244629cb4c9ed2c",
+      "sha": "7a0a1e66e6ecff5a160a614017e6b1485c2fc3320e7b7509d5e2295524329869",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/ingestion.js": {
       "loaded": false,
-      "lines": 646,
+      "lines": 362,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 646,
+        "lines": 362,
         "branches": null,
         "functions": null
       },
-      "sha": "bdce40e4a87500bd9828033f17384cd137c8d642715d41c5551ea679fb4fe3e6",
+      "sha": "3db5606803669cd78f34984b7042013036b5ce50464aa5f8e0dd4c1e09908481",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/lifecycle.js": {
       "loaded": false,
-      "lines": 207,
+      "lines": 197,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 207,
+        "lines": 197,
         "branches": null,
         "functions": null
       },
-      "sha": "eae2ea6d0915dc62ecbb3b56dd75a9349ef4c10e429da24f0a82d90f885795f7",
+      "sha": "1f56c76b6a5f7e66d98d998137cc07e3d6ca70cde7a501de3499a1fef8e4e34f",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/model.js": {
       "loaded": false,
-      "lines": 381,
+      "lines": 369,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 381,
+        "lines": 369,
         "branches": null,
         "functions": null
       },
-      "sha": "9c6c86c799ad5555fc7895b94f061ce6ac8b1e4af579b9d829e89b6445653639",
+      "sha": "8a78153a3ab45b53ebd0be18cb6776a7ef2ce5e0a380f055a0468d66a0d7b9cb",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/policy.js": {
       "loaded": false,
-      "lines": 187,
+      "lines": 215,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 187,
+        "lines": 215,
         "branches": null,
         "functions": null
       },
-      "sha": "e4b678b4e1214b6fe0fa4affd06277323f095ef1402eec3a826addafb6708eef",
+      "sha": "c195714abf8e3de448ede1c8abacb53d173e347a3e2ce0c9702c04b471cae122",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6446,67 +6221,37 @@
         "branches": null,
         "functions": null
       },
-      "sha": "3b339a019c711dc2ee04af6a9d33d48babc44182d92055ed525b8e7689d48c85",
+      "sha": "1c3895dea11ec0206588117585f7296f40707dab749c8e38eeda35e3fc79dd65",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/traffic/retention.js": {
-      "loaded": false,
-      "lines": 256,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 256,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "cf882a06df5f0ecd738addb36d3963ed185ec8b6dc7dd18c6fb772347005729e",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/layers/traffic/roadModes.js": {
-      "loaded": false,
-      "lines": 247,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 247,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "27e1d9be0f1ebf4d580edfaf17674e9ba7a7684de2876c9a2826deec5bba1842",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/layers/traffic/source.js": {
       "loaded": false,
-      "lines": 374,
+      "lines": 142,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 374,
+        "lines": 142,
         "branches": null,
         "functions": null
       },
-      "sha": "58b026fdb4afc4efa8171fbe7119b6ec4a1b94a00a55685d9a0bf94694003cbb",
+      "sha": "8a5b59ec89c09376807c3a2827dad528f23376916a30131f48bcb5624df23155",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/traffic/state.js": {
       "loaded": false,
-      "lines": 299,
+      "lines": 280,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 299,
+        "lines": 280,
         "branches": null,
         "functions": null
       },
-      "sha": "5a0aba8af8c87e52f5a8045fe245a88278e7ca8f25f91ec757589ca3c08a496e",
+      "sha": "8269435b5d615699057741f73e81bf3436a567d2341b8f34962ad6c67e16b49a",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6521,37 +6266,22 @@
         "branches": null,
         "functions": null
       },
-      "sha": "a77eba606fdcb9e3751539bf3bcabbe4fd7be85116eb1aa245f5a37db79c0409",
+      "sha": "3af8b06e3ef063f4f8229ba38ac23d2c9c304806f822ec2c42e8c086b44a822a",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/layers/traffic/surface.js": {
-      "loaded": false,
-      "lines": 435,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 435,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "94b137f752addecaaa5a6e5808db53a375a53dde8fbb9b7254eee97213114826",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/layers/traffic/timing.js": {
       "loaded": false,
-      "lines": 420,
+      "lines": 470,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 420,
+        "lines": 470,
         "branches": null,
         "functions": null
       },
-      "sha": "7e6d9aebeef7bcdc81fd9cc03a8c81a7c6327e6c442c87528399ed5883491aaa",
+      "sha": "b5827c655d1995c195373970a4923e9f1a39cf251a79db0e3b01177ce9920c85",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -6566,7 +6296,7 @@
         "branches": null,
         "functions": null
       },
-      "sha": "294f7efe78809e32ee17d7dcf56b616409fdbd0f3285c1741e656dd36ef64fcd",
+      "sha": "13e1dcaa07edd8d419c4ba8f0827fc3440fde23d234d743443a4d5a4c35bc29c",
       "untrue": true,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7143,15 +6873,15 @@
     },
     "src/locations.js": {
       "loaded": true,
-      "lines": 244,
-      "branches": 53,
-      "functions": 14,
+      "lines": 288,
+      "branches": 45,
+      "functions": 16,
       "totals": {
-        "lines": 1604,
-        "branches": 174,
-        "functions": 38
+        "lines": 1552,
+        "branches": 139,
+        "functions": 37
       },
-      "sha": "fa334f6e95cf61761a4952706ff3d86e9ecbd805f342e03f7cdbe763b1be6ca5",
+      "sha": "ed9faff7116bfbc202cd3be25f6e80ececee9f70370a73cca89094d8b49ca153",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7308,33 +7038,18 @@
     },
     "src/maps/terrain.js": {
       "loaded": true,
-      "lines": 13,
+      "lines": 6,
       "branches": 2,
-      "functions": 1,
+      "functions": 0,
       "totals": {
-        "lines": 64,
-        "branches": 12,
-        "functions": 4
+        "lines": 35,
+        "branches": 11,
+        "functions": 2
       },
-      "sha": "ae101a44f1767253be6e3f855a792573879ce447146ad480fea627373b073705",
+      "sha": "53e4cafb81287d8fe88691b3fba22373bcd45da11d38292b7284c6830bb48c68",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/maps/terrainRetry.js": {
-      "loaded": true,
-      "lines": 1,
-      "branches": 1,
-      "functions": 2,
-      "totals": {
-        "lines": 154,
-        "branches": 43,
-        "functions": 9
-      },
-      "sha": "903581eb493ca02e6782fb173abda09828be9ed67be266a70b9bbf5dbe3c46d7",
-      "untrue": false,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/navigationPolicy.js": {
       "loaded": true,
@@ -7369,14 +7084,14 @@
     "src/overlays/worldOverlay.js": {
       "loaded": true,
       "lines": 76,
-      "branches": 91,
+      "branches": 94,
       "functions": 4,
       "totals": {
-        "lines": 2859,
-        "branches": 726,
+        "lines": 2847,
+        "branches": 712,
         "functions": 95
       },
-      "sha": "fbfc7dc55d6254eddf6489120e81957e9f95a2fd36c3c21513153c45c2be15e7",
+      "sha": "7918300a0d1faaad43aece1e544eba511cfa9ccceac5a251a36c2d03c0d84471",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7507,11 +7222,11 @@
       "branches": 143,
       "functions": 43,
       "totals": {
-        "lines": 2483,
+        "lines": 2481,
         "branches": 622,
         "functions": 195
       },
-      "sha": "fccd26fee27961bbe988eb54223f37f2b7593fb0a574490f9cc4ac39a9806883",
+      "sha": "a78b9657313f5ae1c60a2a76aa81c76189a594103be535c4941747033d3a2356",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -7892,32 +7607,32 @@
       "since": "2026-09-25"
     },
     "src/services/application.js": {
-      "loaded": false,
-      "lines": 47,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 15,
+      "branches": 0,
+      "functions": 1,
       "totals": {
         "lines": 47,
-        "branches": null,
-        "functions": null
+        "branches": 3,
+        "functions": 3
       },
       "sha": "5526c0aec5f2934f28449b161a559dcf94152847a1b1572ea135355fbceec685",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/services/groundFloor.js": {
-      "loaded": false,
-      "lines": 666,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 3,
+      "branches": 18,
+      "functions": 2,
       "totals": {
-        "lines": 666,
-        "branches": null,
-        "functions": null
+        "lines": 661,
+        "branches": 144,
+        "functions": 27
       },
-      "sha": "8b61e7e777cbb3e3f4ef76f055de28e59d0320125ee824aec49d9989e4b6c931",
-      "untrue": true,
+      "sha": "6abad30b10c313437156817c7fd14b71b83356f2b7278711c1b7f347e25853ef",
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -7952,32 +7667,32 @@
       "since": "2026-09-25"
     },
     "src/services/requests.js": {
-      "loaded": false,
-      "lines": 192,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 3,
+      "branches": 7,
+      "functions": 0,
       "totals": {
-        "lines": 192,
-        "branches": null,
-        "functions": null
+        "lines": 137,
+        "branches": 40,
+        "functions": 12
       },
-      "sha": "c3b630a7bf6fee10c9d9e7589209a56ff8f55aed6858a3557bb341b8783ce8b4",
-      "untrue": true,
+      "sha": "ce851643fde5215000655ae81c3055fedc1524b06d057c6d5986ab7c01800123",
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/services/terrainHeights.js": {
-      "loaded": false,
-      "lines": 361,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 2,
+      "functions": 0,
       "totals": {
-        "lines": 361,
-        "branches": null,
-        "functions": null
+        "lines": 354,
+        "branches": 61,
+        "functions": 12
       },
-      "sha": "8386fc18fb029294bd2aaeacfe28cededccde9bd61354c09610820c3514eb3e8",
-      "untrue": true,
+      "sha": "370caad97beec8f2e2bd08dc6b90c3144adc78261ddf2af8d25727f44ee62c62",
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -8011,63 +7726,33 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/sources/capability.js": {
-      "loaded": false,
-      "lines": 21,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 21,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "c778bcc4a60ca3a1689de7c3e6c7c8378fc5f7d1a0353fef4b56327153270e62",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/sources/featureGeometry.js": {
-      "loaded": false,
-      "lines": 272,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 106,
+      "branches": 13,
+      "functions": 5,
       "totals": {
         "lines": 272,
-        "branches": null,
-        "functions": null
+        "branches": 44,
+        "functions": 20
       },
       "sha": "74a5147e5ce2c4f985015ab68c2c07dc7f667595e92e98fdbf03af2bbb3ceff3",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/sources/featureSource.js": {
-      "loaded": false,
-      "lines": 20,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 20,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "c573266530ab2b37fa3f69aa04eb515f075d632e47bd6600ec7ac114ccb17bb9",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/sources/httpBody.js": {
-      "loaded": false,
-      "lines": 126,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 2,
+      "branches": 3,
+      "functions": 2,
       "totals": {
-        "lines": 126,
-        "branches": null,
-        "functions": null
+        "lines": 115,
+        "branches": 52,
+        "functions": 10
       },
-      "sha": "218ecab589b781b3542cfc589ca7a9b9a8b8b1055621ffe163df27ef68fc58b8",
-      "untrue": true,
+      "sha": "289106f37df1c9736623ae9a36f75aef581c00bec44a3bc522ccc74136345622",
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -8116,21 +7801,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/sources/militaryTileGeometry.js": {
-      "loaded": false,
-      "lines": 352,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 352,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "d8319cbe97d4ccc6d05bec433dd3bd465e5af504017c5a426c214df5620b4414",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/sources/nominatim.js": {
       "loaded": true,
       "lines": 0,
@@ -8145,21 +7815,6 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/sources/openFreeMap.js": {
-      "loaded": false,
-      "lines": 227,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 227,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "76692e013c19fbcb6bf4740857a3a8c6ee92b074def1409b7980475e8029aa50",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/sources/overpass.js": {
       "loaded": true,
@@ -8177,32 +7832,32 @@
       "since": "2026-09-25"
     },
     "src/sources/overpassFeatures.js": {
-      "loaded": false,
-      "lines": 232,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 0,
+      "branches": 2,
+      "functions": 1,
       "totals": {
-        "lines": 232,
-        "branches": null,
-        "functions": null
+        "lines": 191,
+        "branches": 27,
+        "functions": 14
       },
-      "sha": "424aeb4f2519e8fff57dab2a8f68172ceddd709f07714c261b5ada039952b0bf",
-      "untrue": true,
+      "sha": "2d12003c0d1c6080b51edeeb1d89d6bbc87a34106260734cfc7a6802ece54b68",
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/sources/overpassFeaturesRecords.js": {
-      "loaded": false,
-      "lines": 76,
-      "branches": null,
-      "functions": null,
+      "loaded": true,
+      "lines": 2,
+      "branches": 6,
+      "functions": 1,
       "totals": {
         "lines": 76,
-        "branches": null,
-        "functions": null
+        "branches": 37,
+        "functions": 11
       },
       "sha": "02c76a9d56f7949f0b788aee02fdaabdab33910f4a92c23f3d2cd5c8bac4e4b9",
-      "untrue": true,
+      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -8220,21 +7875,6 @@
       "untrue": true,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/sources/phaseTiming.js": {
-      "loaded": false,
-      "lines": 9,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 9,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "069bf655c7b48e2f31855dd203e8b138099a07cd779db0b9cfe2b9c2a3bca4c8",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/sources/radioBrowser.js": {
       "loaded": true,
@@ -8265,21 +7905,6 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/sources/requestDeadline.js": {
-      "loaded": false,
-      "lines": 43,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 43,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "12c5d18c2a3de111ca266f2d03640bc6bc8efe6601440b72bdcb120c62bbed69",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/sources/sourceSlot.js": {
       "loaded": false,
@@ -8340,21 +7965,6 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/sources/vectorTiles.js": {
-      "loaded": false,
-      "lines": 408,
-      "branches": null,
-      "functions": null,
-      "totals": {
-        "lines": 408,
-        "branches": null,
-        "functions": null
-      },
-      "sha": "223fb40b8aebb339b4b67a6d0d394f20d1c22645a4b622fff02ed7cf41ead562",
-      "untrue": true,
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/sources/windBody.js": {
       "loaded": true,
@@ -8467,11 +8077,11 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 47,
+        "lines": 45,
         "branches": 3,
         "functions": 1
       },
-      "sha": "88fa19faaa414f8478d9cb084fac50c0060f5d31d575d6085ade3b528ae3648f",
+      "sha": "6855098f2ec2b7d12921b73b77148a648b4b9afa336b2d1533118fdf92497d2e",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -8876,7 +8486,7 @@
         "branches": 1,
         "functions": 4
       },
-      "sha": "5d2fe61432daa5b6804e46ad2de31a785cefc1748dda2c43c95f4e9fee7361b2",
+      "sha": "f97d9af0961fe39309dff80153bb784b82a48df55685e203dfe01947963df90d",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -9213,15 +8823,15 @@
     },
     "src/ui/locationNavigation.js": {
       "loaded": true,
-      "lines": 209,
+      "lines": 205,
       "branches": 18,
       "functions": 21,
       "totals": {
-        "lines": 432,
+        "lines": 428,
         "branches": 47,
         "functions": 36
       },
-      "sha": "a13b1783f531a21350aef1fee52f2d0a866543ab4da73762479f7258847c8a38",
+      "sha": "c4ed82286c7e167b2aa4bc79a4af89f40a7cdd6fbe6611b556e57d9970622696",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -9258,15 +8868,15 @@
     },
     "src/ui/navigationController.js": {
       "loaded": true,
-      "lines": 36,
-      "branches": 8,
-      "functions": 5,
+      "lines": 42,
+      "branches": 20,
+      "functions": 7,
       "totals": {
-        "lines": 271,
-        "branches": 29,
+        "lines": 268,
+        "branches": 38,
         "functions": 23
       },
-      "sha": "cfde97cd03b2368c28cabeaca0b9fdb605f2afd1c7a90beb5cdaeee61a751d74",
+      "sha": "528b37cc84bd6ad014d54e8034100ebed8a736720bc8b4acbdccafadfc3a244d",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -9635,13 +9245,13 @@
       "loaded": true,
       "lines": 112,
       "branches": 5,
-      "functions": 5,
+      "functions": 6,
       "totals": {
-        "lines": 224,
-        "branches": 25,
+        "lines": 208,
+        "branches": 16,
         "functions": 13
       },
-      "sha": "d5101ddf7b9f1d867da663d45319fa98b22892d28557131360bfd1d1543732dc",
+      "sha": "1b588d177cb27bca1881e07c2db4fcde690d14ed952bf31be557854f35060be9",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -10202,19 +9812,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/annotations/adminOutline.test.mjs": {
-      "names": {
-        "\"Texas\", \"Travis County, Texas\" and \"Bavaria\" outline offline": 1,
-        "Georgia resolves from camera geography without a geocoder": 1,
-        "country asks and geocoded country scopes use the bundled outline": 1,
-        "duplicate county names go to the one near the camera": 1,
-        "multi-part outlines carry every part and hole": 1,
-        "non-admin asks and entity facts keep the existing path": 1,
-        "the engine keeps every part on the mark, drawn at once or upgraded": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/annotations/annotationEngine.test.mjs": {
       "names": {
         "a late annotation resolver cannot redraw after destruction": 1,
@@ -10336,10 +9933,8 @@
     "src/annotations/regionRing.test.mjs": {
       "names": {
         "region ring: Natural Earth names resolve without a geocoder": 1,
-        "region ring: a geocoder-typed state resolves from the bundled pack": 1,
         "region ring: a slow admin-boundary lookup returns region-timeout within the budget": 1,
-        "region ring: an unbounded budget waits for the lookup": 1,
-        "region ring: bundled states and counties resolve without a geocoder": 1
+        "region ring: an unbounded budget waits for the lookup": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -10475,32 +10070,6 @@
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/cameraGroundGuard.test.mjs": {
-      "names": {
-        "a buried camera is lifted clear of the surface": 1,
-        "a camera resting on the surface is lifted to a usable height": 1,
-        "a well-framed arrival is left alone": 1,
-        "an unmeasurable surface is never acted on": 1,
-        "arrival guard relinquishes and removes hooks on Director": 1,
-        "arrival guard relinquishes and removes hooks on UI": 1,
-        "arrival guard relinquishes and removes hooks on app-stop": 1,
-        "arrival guard relinquishes and removes hooks on flyTo": 1,
-        "arrival guard relinquishes and removes hooks on flyToBoundingSphere": 1,
-        "arrival guard relinquishes and removes hooks on follow": 1,
-        "arrival guard relinquishes and removes hooks on keyboard": 1,
-        "arrival guard relinquishes and removes hooks on layer-destroy": 1,
-        "arrival guard relinquishes and removes hooks on layer-disable": 1,
-        "arrival guard relinquishes and removes hooks on setView": 1,
-        "arrival guard relinquishes and removes hooks on tracking": 1,
-        "sub-metre noise never triggers a nudge": 1,
-        "the clearance frames a subject without turning into an overflight": 1,
-        "the guard leaves a clear view untouched": 1,
-        "the guard lifts a buried arrival once the surface answers": 1,
-        "the guard waits for streaming tiles and yields to a newer arrival": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/cameraHandoff.test.mjs": {
       "names": {
@@ -10828,7 +10397,6 @@
     },
     "src/creditAttribution.test.mjs": {
       "names": {
-        "OSM-derived layers never force the desktop credit row into a stack": 1,
         "a pinned tray still stacks above its sibling at narrow widths": 1,
         "custom properties inside modelled offsets are provably non-negative": 1,
         "every open dock tray clears the required credit at every modelled viewport": 1,
@@ -10905,31 +10473,6 @@
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/data/adminBoundaries.test.mjs": {
-      "names": {
-        "\"Washington\" is the state; \"Washington County\" is a county near the camera": 1,
-        "Texas, TX and \"State of Texas\" name the same unit": 1,
-        "Travis County with and without its state": 1,
-        "UK constituent countries retain their own identity and extent from any camera": 1,
-        "a bare name that is also a country or a large city is left to a geocoder": 1,
-        "bare names: only prominent units, no generic words, codes as codes": 1,
-        "countries resolve aliases, keep substantial islands and disambiguate Georgia by scope and geography": 1,
-        "county equivalents: parishes, boroughs, independent cities, and non-US counties": 1,
-        "county queries compare US and international names before choosing a geography": 1,
-        "geocoder-confirmed lookup: the named unit that contains the point": 1,
-        "holes: Berlin is cut out of Brandenburg": 1,
-        "holes: an independent city is cut out of its county": 1,
-        "multipolygons: every island is a part, and containment follows the parts": 1,
-        "names normalize across accents, punctuation and \"Saint\"": 1,
-        "non-admin asks never match": 1,
-        "packs load lazily, once, and only the pack an ask needs": 1,
-        "packs: public-domain provenance, schema, and size budgets": 1,
-        "provinces and states abroad resolve by English and local names": 1,
-        "rings decode from deltas and are open": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/data/adsbLolFallback.test.mjs": {
       "names": {
@@ -11196,12 +10739,10 @@
     },
     "src/data/alprCameras.test.mjs": {
       "names": {
-        "OSM attribution stays inline while ALPR displays and follows toggles": 1,
+        "OSM attribution introduces displayed data for five seconds, then stays discoverable in the overflow": 1,
         "a cancelled older request cannot overwrite a newer request with a late network error": 1,
         "a late network failure after disable cannot resurrect retries or an error state": 1,
-        "a non-retryable capability error does not arm the ALPR retry timer": 1,
         "a refresh cannot reclaim selection from another layer or an explicit clear": 1,
-        "a repeated move inside an outstanding query keeps the displayed marker set until commit": 1,
         "all manufacturers share one ALPR title and color; only supplied metadata appears underneath": 1,
         "alprRetryDelayMs: doubles from a 30s floor to a 240s ceiling": 1,
         "boxContains: a nudged view stays inside its snapped box; a real pan leaves it": 1,
@@ -11209,15 +10750,13 @@
         "clicking the selected camera or empty map deselects, including after refresh": 1,
         "destinationPointDeg: due-north offset increases latitude, keeps longitude": 1,
         "disable removes contexts and highlight; cache reuse after re-enable does not reselect": 1,
+        "disabling midway through the introduction cancels its timer before a new enable": 1,
         "duplicate nodes render once with a count that agrees with the entity set": 1,
         "empty mapped coverage, stale data and a saturated response remain distinct": 1,
         "ground-centered orbits ignore horizon rectangles while sky, distant and dateline views stay bounded": 1,
         "invalid OSM ids and out-of-range coordinates never become camera entities": 1,
         "invalid or partial successful payloads are failures, not an empty all-clear": 1,
         "isAlprSurveillanceType: accepts semicolon multi-values and mixed case, rejects other cameras": 1,
-        "loaded cameras outside the view say so instead of looking unloaded": 1,
-        "map-source changes reposition all ALPR entities and saved native appearances in place": 1,
-        "markers sit on the cached floor; unknown floors clamp only until they resolve": 1,
         "moves inside a pending query do not restart it; moving to another city cancels it": 1,
         "nearby camera moves reuse the snapped query but count and register only in-view nodes": 1,
         "nearby count and discovery control frame a real loaded camera without fetching or stealing tracking": 1,
@@ -11230,11 +10769,9 @@
         "orbit cache hits and metadata refreshes preserve marker geometry and selection events": 1,
         "retry clears the old terminal error while the new request is loading": 1,
         "selected readout samples the rendered ground, not zero elevation or the direction line midpoint": 1,
-        "slow ALPR floors share real terrain requests across preparation, render and pans; disable aborts": 1,
         "snapAlprBox: snaps outward to the query grid and clamps to valid ranges": 1,
         "state, country and dateline views never request data; returning to the city reuses its cache": 1,
         "two factories keep their requests, records and destruction independent": 1,
-        "unsupported ALPR coverage suppresses the nearby count and names the extract region": 1,
         "zooming out hides local markers, releases selection and makes no unbounded request": 1
       },
       "origin": "upstream-sync",
@@ -11859,11 +11396,8 @@
     },
     "src/data/dataCredits.test.mjs": {
       "names": {
-        "OpenStreetMap has one generic data credit with separate tile and names distributors": 1,
         "adsbdb is credited and carries its published route-data restriction": 1,
-        "every credit carries a unique key and some markup to render": 1,
-        "inline OSM attribution persists until its last display owner leaves": 1,
-        "tile attribution follows source changes and viewers have independent ownership": 1
+        "every credit carries a unique key and some markup to render": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -12249,7 +11783,6 @@
     },
     "src/data/flowMatch.test.mjs": {
       "names": {
-        "a full-coverage flow line matches both travel directions; one-side does not": 1,
         "a road with flow on only a short stretch (< half its samples) stays null": 1,
         "closure propagates to the matched road": 1,
         "closure propagates when only PART of the road is closed": 1,
@@ -12261,8 +11794,7 @@
         "median: odd count picks the middle": 1,
         "median: single value and empty": 1,
         "multiple roads: results stay parallel to the input array": 1,
-        "one-way rejects opposite closure and two travel directions retain separate congestion": 1,
-        "opposite-direction flow matches only the reverse travel direction)": 1,
+        "opposite-direction flow still matches (two-way bearing fold)": 1,
         "parallel flow offset by more than 35 m does not match": 1,
         "perpendicular decoy at the same location does NOT match": 1,
         "sparse-vertex flow polylines (long coord pairs) still match everywhere": 1
@@ -12496,7 +12028,6 @@
     },
     "src/data/installationFeedback.test.mjs": {
       "names": {
-        "a counted result names what was found and where": 1,
         "first fetch, retry, cached data and success have distinct copy": 1,
         "only known failure reasons get specific attribution": 1,
         "retry copy follows the real deadline and does not promise an overdue timer fired": 1
@@ -12541,7 +12072,6 @@
         "Elastic redistributes unused capacity": 1,
         "Weighted is deterministic, representative, and work-conserving": 1,
         "a re-solve retries the remembered corner before the first listed placement": 1,
-        "a source ceiling bounds shared-domain winners and exit fades without evicting incumbents": 1,
         "a stateless candidate keeps no corner, no cooldown, and no fades": 1,
         "arbiter is registration-order independent and represents both layers": 1,
         "candidate anchors are cached once as scalar coordinates for queue scans": 1,
@@ -12558,7 +12088,6 @@
         "saturated vertical-only candidates are dismissed without repeated spread-queue revisits": 1,
         "selected-key membership is republished in place across solves": 1,
         "semantic priority outranks spatial separation for new labels": 1,
-        "stateless labels yield occupied slots and re-rank by area on each solve": 1,
         "the pooled state list is invalidated when states are dropped": 1,
         "the pooled state list is never handed out to callers": 1,
         "uncapped demand drives quotas while the solve input remains bounded": 1,
@@ -12604,7 +12133,6 @@
         "a shared subject that has not arrived yet is held pending, never declared gone": 1,
         "a v2 link written before the flip still means what its author saw: 3D OFF": 1,
         "absent share payload restores local state without rewriting it": 1,
-        "all production layers and options round-trip through a v2 share URL": 1,
         "ambiguous cross-family tracking IDs fail closed instead of racing feed arrival": 1,
         "an explicit parameter change revokes the pending watch, not just its controller": 1,
         "an oversized enabled-layer field fails closed instead of decoding a prefix": 1,
@@ -12623,7 +12151,6 @@
         "late target resolution after coordinator destroy cannot clear state or publish status": 1,
         "later explicit params during init replace options without cancelling visibility": 1,
         "later explicit visibility during delayed restore wins for that layer only": 1,
-        "malformed enabled-layer lists reject the entire payload": 1,
         "manager forwards passive restore origin into module parameter application": 1,
         "mirrored option owners decode into the owner owner-options bucket": 1,
         "newer explicit tracked target cancels stale shared resolution without clearing the winner": 1,
@@ -12656,20 +12183,6 @@
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/data/layerStateTokenLedger.test.mjs": {
-      "names": {
-        "PR B manually replaces provisional 0 with 4 after PR A publishes 0": 1,
-        "allocation batches cross the last digit and base-36 pair boundaries in order": 1,
-        "an isolated valid two-character fixture round-trips an l field beyond the old 64-character cap": 1,
-        "checker fails closed on unknown or malformed published ledgers": 1,
-        "checker reads a complete future base ledger and rejects retired-token reuse": 1,
-        "pre-ledger published ownership is independent of the candidate mapping": 1,
-        "published retired digits and competing PRs advance the merge-time allocation": 1,
-        "reservation ledger is complete, pinned, and rejects duplicate or malformed rows": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/data/localGeojson.analyst.test.mjs": {
       "names": {
@@ -12958,7 +12471,6 @@
         "a mapped installation subject is always present — static data is never culled": 1,
         "a moving camera refreshes Contacts more than once inside one parked interval": 1,
         "a moving view over failed feeds takes no continuous-render hold": 1,
-        "a selected installation card keeps every member name and escapes source text": 1,
         "a settled vessel feed reporting a real empty viewport recovers to 0": 1,
         "a still-answered feed keeps its count through later polls that set loading again": 1,
         "a vessel feed still connecting after the lifecycle settles reads as unknown, not an all-clear": 1,
@@ -12979,7 +12491,6 @@
         "history navigation applies layer and aircraft-class filters in both directions": 1,
         "installation summaries disclose viewport-scoped coverage": 1,
         "installation summaries keep the full navigation cohort beyond the former 5,000 cap": 1,
-        "installation summaries name a subject window instead of the viewport": 1,
         "intermittent pose-bin crossings cannot refresh faster than the motion floor": 1,
         "layer hasContact answers presence in O(1) and declines when unloaded": 1,
         "motion ends only after the pose has been unchanged through the settle window": 1,
@@ -13066,17 +12577,14 @@
     "src/data/militaryInstallations.test.mjs": {
       "names": {
         "Context focus past the render cap selects for real instead of flying blind": 1,
-        "a Contacts anchor replaces the viewport and ignores small subject moves": 1,
         "a failed load buys the frame its status change needs": 1,
         "a floor that lands after the render deadline lifts the dots off the ellipsoid": 1,
         "a footprint-less relation just outside the viewport still renders": 1,
         "a legacy cached response with no saturation flag still triggers the exact retry": 1,
         "a legacy-shaped payload at the cap fires the exact-viewport retry end to end": 1,
-        "a merged installation stays visible when only its second fragment intersects": 1,
         "a saturated snapped tile refetches the exact viewport before rendering": 1,
         "a still-saturated exact viewport is reported honestly instead of implied complete": 1,
         "an unsaturated response never pays for a second upstream ask": 1,
-        "background installation paints neither reopen Contacts nor resurrect a cleared selection": 1,
         "cheap installation distance prefilter is local and antimeridian-safe": 1,
         "clearing a stale installation highlight does not clear or reclaim another layer selection": 1,
         "clicking a selected installation again or empty map clears it through refresh": 1,
@@ -13090,24 +12598,11 @@
         "switching sites keeps the new selection through refresh and disable clears it": 1,
         "the retry is wired to every lifecycle edge, not just declared": 1,
         "the unavailable retry backs off 30s to a 240s ceiling and restarts clean": 1,
-        "unchanged installations keep their entities across reloads": 1,
         "viewport membership keeps intersecting footprints and drops the snap ring": 1,
         "zoom-out aborts an active installation request and returns non-loading guidance": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/data/militaryNames.test.mjs": {
-      "names": {
-        "a close view keeps the parent name inside its polygon when the usual label is off-screen": 1,
-        "a merged title uses the largest named member and exposes all other member names": 1,
-        "checked-in OpenFreeMap fixtures retain typed OSM feature ids and geographical identity": 1,
-        "the separately licensed pack has unique typed identities, areas, names and a pinned lean output": 1,
-        "wide views rank and thin names within a bounded viewport, including the dateline": 1,
-        "wide-view counts report visible points rather than retained off-screen candidates": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/data/militaryRegistry.test.mjs": {
       "names": {
@@ -13610,19 +13105,6 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/data/sharedOsmDisplays.test.mjs": {
-      "names": {
-        "Directions introduces the shared OSM credit when the requested route draws": 1,
-        "Nepal locator introduces the shared OSM credit": 1,
-        "Warendorf webcam display introduces the shared OSM credit": 1,
-        "dams introduce the shared OSM credit when data displays": 1,
-        "datacenters introduce the shared OSM credit when data displays": 1,
-        "optional Overpass ALPR adapter uses the shared contributor wording": 1,
-        "voice route geometry introduces the shared OSM credit": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/data/spriteOrder.test.mjs": {
       "names": {
         "flights, AIS, and FIRMS enable paths are wired through the shared sprite restorer": 1,
@@ -13814,7 +13296,7 @@
       "names": {
         "civilian and military trail heads use the lower-centre model anchor and weak-texture tint": 1,
         "selected camera readout carries tactical animation and fixed badge clearance": 1,
-        "selection lifecycle leaves installations to their own entry and retains ALPR cards": 1,
+        "selection lifecycle ignores vessels, accepts installations, and clears without stale cards": 1,
         "the tracked card anchors to the visual position without repurposing the display accessor": 1,
         "tracked entity publishes a protected host entry backed by the frame cache": 1,
         "tracked entry factory pins the production protected-lane policy": 1,
@@ -13849,8 +13331,7 @@
         "the manager reads keyless as FALLBACK and an outage as DEGRADED": 1,
         "the rendered steady-state meta line carries the SIMULATED copy": 1,
         "the shipped layer boots keyless-honest before any status check": 1,
-        "traffic can be destroyed before its first enable and destroyed repeatedly": 1,
-        "zero matched dots never claims live coverage": 1
+        "traffic can be destroyed before its first enable and destroyed repeatedly": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -14508,11 +13989,8 @@
     "src/layers/alpr/overlay.test.mjs": {
       "names": {
         "a selected camera without a bearing gets its badge and brackets, never a fabricated wedge": 1,
-        "a still view replaces floor anchors with the rendered surface, within the floor window": 1,
         "adapter labels never claim a custom source is public OSM data": 1,
         "an unresolved surface preserves the native marker; the horizon removes overlay hits": 1,
-        "overlay glyphs and native badges shrink alike with distance": 1,
-        "repeated paints of a still view never rewrite marker properties": 1,
         "surface changes invalidate cached anchors, and disable/disposal release painting and hits": 1,
         "the overlay bounds its cohort and promotes selection while leaving farther cameras native": 1
       },
@@ -14521,36 +13999,15 @@
     },
     "src/layers/alpr/source.test.mjs": {
       "names": {
-        "a whole-city view loads cameras and reports the tiles it covers": 1,
+        "Overpass normalization returns camera records and preserves limited/stale coverage": 1,
         "an unsuccessful source response releases its body before reporting an error": 1,
-        "cancellation while reading TileJSON is preserved even if fetch ignores it": 1,
-        "coarser tiles never move a camera a finer tile already placed": 1,
-        "each view reads the finest attributed extract zoom that fits 16 tiles": 1,
-        "extract detail tiles map OSM records and repeated pans reuse decoded tiles": 1,
-        "outside extract coverage is an explicit no-data state without Overpass": 1,
+        "cancellation during body parsing rejects even when the transport ignores it": 1,
         "provider attribution escapes markup and rejects executable links": 1,
         "source snapshots reject malformed coordinates and duplicate identities": 1,
-        "the explicit Overpass factory posts the unchanged query to its API transport": 1,
-        "the source rejects invalid and unbounded queries before fetching": 1,
-        "the tile adapter never passes public URLs through an injected API transport": 1,
-        "wide detail view returns zoom guidance before any fetch and can retry a smaller view": 1
+        "the source rejects invalid and unbounded queries before fetching": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/layers/awareness/anchor.test.mjs": {
-      "names": {
-        "passive Contacts releases its installation anchor and subject refresh cannot reclaim it": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/layers/awareness/queries.test.mjs": {
-      "names": {
-        "Contacts excludes square corners and measures from the current moving subject": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/layers/bikeshare/proxyRoute.test.mjs": {
       "names": {
@@ -14659,84 +14116,12 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/installations/lifecycle.test.mjs": {
-      "names": {
-        "enable restores cached installation credits before a refresh: empty": 1,
-        "enable restores cached installation credits before a refresh: place:base": 1,
-        "enable restores cached installation credits before a refresh: tile:base": 1,
-        "enable restores cached installation credits before a refresh: way:123": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/layers/installations/namedMarkers.test.mjs": {
-      "names": {
-        "Contacts camera motion reprojects and declutters existing labels without source loads or primitive replacement": 1,
-        "Contacts can select a point outside the normal title cap or an unnamed polygon": 1,
-        "canonical aliases transfer named marker ownership without replacing primitives": 1,
-        "selection promotes exactly one entry and deselection restores that same label": 1,
-        "the bounded host cohort ranks wide points and polygon titles by area": 1,
-        "wide and polygon titles use the Data Centers entry contract and persistent shared domain": 1,
-        "wide named markers retain primitives until close polygons publish with the same identity": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/layers/installations/namesLoading.test.mjs": {
-      "names": {
-        "close polygons publish immediately while a wide consumer can cancel its independent names wait": 1,
-        "late names cannot publish to a superseded view": 1,
-        "late names enrich the current published polygons": 1,
-        "shared names body deadline aborts and releases the retryable loader": 1,
-        "shared names response deadline aborts and releases the retryable loader": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/layers/installations/navigation.test.mjs": {
-      "names": {
-        "an aborting real ingestion cannot clear the next scheduled view key": 1,
-        "camera changes debounce, deduplicate moveEnd, cancel superseded loads and recover from wide views": 1,
-        "wide views refresh screen decluttering when the globe rectangle stays unchanged": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/layers/installations/selection.test.mjs": {
-      "names": {
-        "destroy removes all installation context listeners": 1,
-        "entity selection and clear still release the installation card and fill": 1,
-        "flights programmatic selection clears the installation card and fill (context first: false)": 1,
-        "flights programmatic selection clears the installation card and fill (context first: true)": 1,
-        "military programmatic selection clears the installation card and fill (context first: false)": 1,
-        "military programmatic selection clears the installation card and fill (context first: true)": 1,
-        "satellites programmatic selection clears the installation card and fill (context first: false)": 1,
-        "satellites programmatic selection clears the installation card and fill (context first: true)": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/layers/installations/selectionFill.test.mjs": {
-      "names": {
-        "geometry rebuild and canonical alias migration preserve shared selection before pruning": 1,
-        "selected multipart footprints classify Google tiles with one constant translucent material and holes": 1,
-        "surface changes reclassify selected geometry and disable tears down fills and subscription": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/layers/installations/source.test.mjs": {
       "names": {
-        "a Contacts window fits the tile cap at z9 from the tropics to the Arctic": 1,
-        "a wide-view pack failure names the unavailable data without an API fallback": 1,
-        "installation API transports never receive vector-tile URLs": 1,
         "installation response parsing respects cancellation before any follow-on search": 1,
-        "installation tiles never drop below z9, where military areas exist": 1,
         "malformed installation and place snapshots are never accepted as empty success": 1,
         "mapped-site sources normalize records and derive saturation from legacy cache metadata": 1,
-        "mapped-site sources validate viewport bounds and preserve the exact retry key": 1,
-        "the military-only decoder keeps Camp Mabry and skips road geometry": 1,
-        "too-wide tile views use bundled named points without requesting tiles": 1
+        "mapped-site sources validate viewport bounds and preserve the exact retry key": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -14868,172 +14253,33 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/layers/traffic/deadline.test.mjs": {
-      "names": {
-        "a road pass abort invalidates queued tiles and terrain publication without a newer generation": 1,
-        "a road pass timeout invalidates queued tiles and terrain publication without a newer generation": 1,
-        "detail deadline retains painted coarse roads and schedules bounded retry": 1,
-        "off-screen camera-plane height correction settles without holding public loading (-175)": 1,
-        "off-screen camera-plane height correction settles without holding public loading (-200)": 1,
-        "off-screen camera-plane height correction settles without holding public loading (-300)": 1,
-        "road body deadline releases an uncooperative transport and ignores late callbacks": 1,
-        "road request deadline releases an uncooperative transport and ignores late callbacks": 1,
-        "superseding a stalled pass aborts promptly without clearing newer loading": 1,
-        "visible corrections use the pixel limit without the off-screen world-speed cap": 1,
-        "visible height steps stay pixel-limited outside the margin or across the near plane (200)": 1,
-        "visible height steps stay pixel-limited outside the margin or across the near plane (2000)": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/layers/traffic/footprint.test.mjs": {
-      "names": {
-        "coarse roads retain far segments but never duplicate a detailed tile core": 1,
-        "footprint selection excludes bbox corners and orders tiles nearest first": 1,
-        "oblique horizon bearings are bounded and tile caps hold at city latitudes": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/layers/traffic/motion.test.mjs": {
-      "names": {
-        "density and replacement changes are bounded; removed roads fade out and teardown cancels pending work": 1,
-        "flow closing a queued road cannot leave a population reconciliation loop": 1,
-        "grounded vehicles respect mesh occlusion even after live congestion changes": 1,
-        "height refinement eases retained waypoints vertically without changing road or dot progress": 1,
-        "identity distinguishes sources and opposing directions but ignores flow and height": 1,
-        "incremental tiles, reordered snapshots and flow changes retain existing dot identities and progress": 1,
-        "large height corrections obey a screen-pixel bound and reuse projection scratch objects": 1,
-        "major previews merge and never retry missing mesh ahead of the detail pass": 1,
-        "measured preview heights select elevated detail roads before surface admission": 1,
-        "one-way departures fade before a new identity enters; segment crossings preserve metre speed": 1,
-        "provisional opposite-direction heights cannot overwrite a measured sibling during selection": 1,
-        "retained road density follows the settled view without requiring a toggle": 1,
-        "small previews merge without evicting other retained roads until a completed snapshot": 1,
-        "stopped vehicles still follow smooth height refinement without moving along the road": 1,
-        "street and city budgets are bounded and zoom changes do not increase the city population": 1,
-        "street spacing follows clearance above local ground in elevated cities": 1,
-        "unresolved major roads cannot prevent the detailed request": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/layers/traffic/navigation.test.mjs": {
       "names": {
         "a declined road request reaches the row as the reason, not as a shrug": 1,
-        "a settled footprint loads new tiles even when the camera centre stays put": 1,
-        "a stalled TomTom status never blocks road acquisition or first simulated dots": 1,
         "a superseded road response cannot release the current request controller": 1,
         "an unclassified road failure keeps the general line": 1,
         "arrival below the camera change threshold loads the final city and unsubscribes on disable": 1,
-        "coverage changes at the same center reload and disabling invalidates coverage without dropping source caches": 1,
-        "explicit enable starts roads without the camera debounce": 1,
         "leaving traffic altitude cancels queued and in-flight work": 1,
-        "moveEnd starts the destination request without another gesture debounce": 1,
-        "not-configured roads stop both parked retries and the enable-time kick": 1,
         "parked failures back off and disabling cancels the scheduled retry": 1,
-        "partial coverage retries while coarse roads render, then stops after three retries": 1,
-        "traffic recovers a failed destination request after another city has loaded": 1,
-        "traffic surface observers belong to enable and leave no listener after disable or destroy": 1
+        "traffic recovers a failed destination request after another city has loaded": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/layers/traffic/roadModes.test.mjs": {
-      "names": {
-        "Hybrid keeps TomTom and the unmatched OSM side street, with simulated fill": 1,
-        "Hybrid retains TomTom on OSM outage with a named warning; TomTom failure never invents roads": 1,
-        "Hybrid streams OSM before flow settles then replaces duplicates with TomTom": 1,
-        "TomTom and Hybrid loads skip the OSM snapshot cache; TomTom skips the detail pass": 1,
-        "TomTom-only skips OSM requests; keyless selection requests OSM and labels fallback": 1,
-        "a first keyed load whose flow fails never caches simulated fill as OSM roads": 1,
-        "a flow snapshot that misses the pass deadline cannot hold roads": 1,
-        "a full-coverage TomTom line is two-way and covers both OSM directions": 1,
-        "a partly covered OSM road keeps only its uncovered stretch": 1,
-        "an uncovered sliver shorter than 40 m is dropped with its duplicate": 1,
-        "bearing and distance reject nearby crossing and separate OSM roads": 1,
-        "flow application preserves direct values and leaves Hybrid fill simulated": 1,
-        "frontage roads beside a TomTom motorway survive; same-class duplicates do not": 1,
-        "only explicit origins clear the query override; restores keep it": 1,
-        "opposite-direction carriageways and the reverse half of two-way roads survive": 1,
-        "private, parking, walking and unknown flow never animate or suppress a public OSM road": 1,
-        "road modes have key-aware defaults, explicit overrides and keyless fallback": 1,
-        "road-source params persist in existing layer-state lo field and local storage": 1,
-        "row chips use real params; query overrides passive restore and user can change it": 1,
-        "status names the drawn road source for each mode": 1,
-        "uncertain flow values still dedupe OSM; every TomTom road and closure survives": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/layers/traffic/source.test.mjs": {
       "names": {
-        "Austin TomTom fixture matches congestion onto OFM detail roads without changing geometry": 1,
-        "OSM keyed loads run z12 then z14 and reuse road snapshots while refreshing flow": 1,
-        "OpenFreeMap metadata 406 retains its reason through the road source": 1,
-        "OpenFreeMap metadata 429 retains its reason through the road source": 1,
-        "OpenFreeMap metadata 503 retains its reason through the road source": 1,
-        "OpenFreeMap metadata 504 retains its reason through the road source": 1,
-        "OpenFreeMap metadata network retains its reason through the road source": 1,
-        "OpenFreeMap metadata timeout retains its reason through the road source": 1,
-        "OpenFreeMap tile 406 retains its reason through the road source": 1,
-        "OpenFreeMap tile 429 retains its reason through the road source": 1,
-        "OpenFreeMap tile 503 retains its reason through the road source": 1,
-        "OpenFreeMap tile 504 retains its reason through the road source": 1,
-        "OpenFreeMap tile network retains its reason through the road source": 1,
-        "OpenFreeMap tile timeout retains its reason through the road source": 1,
-        "TomTom buffers are clipped before caching and preserve direction and flow attributes": 1,
         "a cancelled flow body cannot refill its source cache": 1,
-        "a failed detail pass keeps major roads and exposes separate degraded status": 1,
-        "an OpenFreeMap refusal is named by status, and keeps the status beside the words": 1,
-        "failed detail cores retain real coarse roads while successful cores replace them": 1,
+        "an Overpass refusal is named by status, and keeps the status beside the words": 1,
+        "antimeridian clamps produce road bounds accepted on either side": 1,
         "flow caches and diagnostics belong to their constructed source": 1,
-        "footprint requests preserve HTTP failures and cancellation semantics": 1,
-        "keyed and keyless geometry is identical OpenFreeMap data, independent of TomTom failures": 1,
-        "late closures hide and stop dots; coverage counts shown matched dots, and reopening restores them": 1,
         "malformed availability is an unavailable source rather than a keyless response": 1,
-        "near detail starts and streams while distant coarse tiles are still pending": 1,
-        "parsed road cache evicts old views by byte budget and never retains partial snapshots": 1,
-        "permanent metadata failures remain non-retryable through the road error wrapper": 1,
-        "refresh failure removes cached matches and reports simulated flow": 1,
-        "reticle road requests pass exact bounded tiles and retain distant coarse roads": 1,
-        "road parsing defers surface reads to the cancellable preparation pass": 1,
-        "road requests validate bounds and select z12/z14 immutable tile passes": 1,
-        "road tile replies respect cancellation even when the tile source ignores it": 1,
-        "superseded flow cannot apply matches after a camera move or disable": 1,
-        "traffic construction is inert and parameters belong to each layer": 1,
-        "traffic separates API and public tile transports, including the default tile fetch": 1,
-        "traffic status is session-cached after settlement, but cancelled discovery can restart": 1,
-        "z14 detail at 51.5 stays centered within the sixteen-tile cap": 1,
-        "z14 detail at 60 stays centered within the sixteen-tile cap": 1
+        "road body parsing retains the source request cancellation signal": 1,
+        "road requests have finite bounds and retain the two-pass query": 1,
+        "road sources decode direction and coordinates before scene construction": 1,
+        "traffic construction is inert and parameters belong to each layer": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/layers/traffic/streaming.test.mjs": {
-      "names": {
-        "Hybrid source and ingestion replace snapshots with flow after tiles": 1,
-        "Hybrid source and ingestion replace snapshots with flow before tiles": 1,
-        "keyless default source and ingestion replace snapshots with flow after tiles": 1,
-        "keyless default source and ingestion replace snapshots with flow before tiles": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/layers/traffic/surface.test.mjs": {
-      "names": {
-        "a camera jump cannot certify old rendered depth or cache coarse heights as settled": 1,
-        "cached heights follow detail and provider; same-detail revisits sample nothing": 1,
-        "detail bands double with distance and ignore a missing camera": 1,
-        "height stations preserve bends while bounding sample spacing along the road": 1,
-        "per-vertex mesh heights follow terrain, reject invalid samples, and leave shared cache unmodified": 1,
-        "rendered road depth is geographically checked, bounded, and avoids mesh redraws": 1,
-        "surface keys reuse identity without building arrays or strings on unchanged frames": 1,
-        "surface points preserve bends, bound spacing, and split rather than decimate long roads": 1,
-        "visible-globe roads floor each vertex without mesh picks": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/layers/transit/lifecycle.test.mjs": {
       "names": {
@@ -15466,7 +14712,6 @@
         "a final authority veto returns cancellation without issuing a flight": 1,
         "a globe flight without callbacks still flies (both hooks are optional)": 1,
         "a metro fallback straddling the antimeridian frames a metro box, not a hemisphere": 1,
-        "a precise search without an outline frames against the resolved ground, not sea level": 1,
         "a well-centred region search still frames its whole bounds": 1,
         "admin types win over area types when both present": 1,
         "an antimeridian REGION frames its own span, not four times it": 1,
@@ -15640,21 +14885,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/maps/terrainRetry.test.mjs": {
-      "names": {
-        "Cesium copies the policy onto every derived tile resource and honours its verdicts": 1,
-        "Retry-After extends the wait, case-insensitively and capped": 1,
-        "a burst shares one cooldown and trickles out with jitter instead of re-bursting": 1,
-        "a throttled tile waits out an escalating backoff before Cesium re-requests it": 1,
-        "a tile cancelled before or during its wait is not re-requested": 1,
-        "one attempt never waits past the maximum backoff plus spread": 1,
-        "only throttled and gateway replies retry; everything else fails fast": 1,
-        "parseRetryAfter reads delay-seconds and HTTP dates, ignores garbage": 1,
-        "the default resource carries the policy without any injected clock": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/materialSymbolsSubset.test.mjs": {
       "names": {
         "every glyph the sources render is in the icon_names subset": 1,
@@ -15688,15 +14918,6 @@
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
-    },
-    "src/noCesiumLabels.test.mjs": {
-      "names": {
-        "runtime world text uses the world-overlay host, never new Cesium labels": 1,
-        "schemas, UI label lookups, comments and strings are not Cesium labels": 1,
-        "the guard catches label APIs and entity graphics, including aliases and multiline options": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/nominatimGeocode.test.mjs": {
       "names": {
@@ -15740,7 +14961,6 @@
         "every exported entry point is inert after destroy": 1,
         "genuine chrome changes still invalidate: add, remove, and own-attribute flips": 1,
         "inlined host alpha binding matches combinedOverlayAlpha across channel ranges": 1,
-        "installation titles share persistent card arbitration and retain a bounded Contacts cohort": 1,
         "lifecycle is idempotent and teardown removes listeners, observers, and DOM": 1,
         "no ancestor isolates the detection surface, so `screen` reaches the scene": 1,
         "opt-in anchor separation thins a co-located cohort before the arbiter sees it": 1,
@@ -15749,7 +14969,6 @@
         "pinned CCTV chrome may paint before frame one while ordinary safe-top policy still yields": 1,
         "position getters snapshot once per frame and cockpit-gated sources disappear": 1,
         "projection records never retain keys for entries that are no longer live": 1,
-        "promoting an ambient entry to selected paints it once with no fading duplicate": 1,
         "protected tracked entry bypasses ambient quota and excludes its paint footprint": 1,
         "published paint rectangles are scoped to the publishing key and frame": 1,
         "safe-top yield culls an uncontested ambient entry at projection, with a below-band control": 1,
@@ -15820,32 +15039,19 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/overpassOffload.test.mjs": {
-      "names": {
-        "a server without the status probe still answers through the query itself": 1,
-        "an unconfigured server is probed once and never sent a feature query": 1,
-        "annotation capability miss keeps its pin and exposes the unavailable label without a synthetic ring": 1,
-        "configured URL credentials stay server-side and never appear in returned metadata": 1,
-        "configured refusal response has a safe JSON body, Retry-After and no URL header": 1,
-        "default handlers serve expired caches with original dates and no upstream header or refresh": 1,
-        "feature capability misses stop source calls and deferred outline retry waits": 1,
-        "installation capability miss switches to tiles once, including later viewport loads": 1,
-        "lazy configuration validates HTTP(S), allows private hosts, replaces defaults and never exposes bad values": 1,
-        "the shared transport refuses an unset chain without calling fetch": 1,
-        "zero egress: every Overpass consumer reaches real default handlers, and regional context never calls Nominatim": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/overpassProxy.test.mjs": {
       "names": {
-        "406 and 429 honor Retry-After across different queries without more egress": 1,
-        "HTTP-date Retry-After is respected, and absent delays use bounded backoff": 1,
+        "a mirror that refuses the old label serves the same query under the identifying one": 1,
+        "a mirror that throws is no different from one that refuses": 1,
+        "a refusal every mirror agrees on is reported, not swallowed": 1,
+        "a refusal moves to the next mirror instead of ending the fan-out": 1,
         "coalesced outage callers both receive last-good data, never a cached refusal": 1,
-        "configured failover accepts empty data and keeps the application identity": 1,
         "disk cache rejects old refusals for fresh and stale reads but preserves last-good data": 1,
+        "every mirror is asked with a User-Agent that identifies the application": 1,
         "only a 2xx that is neither rate-limited nor a runtime error is data": 1,
-        "production reader rejects oversized, malformed and runtime-failure bodies": 1
+        "production reader rotates past oversized, runtime-error and rate-limited bodies": 1,
+        "the first mirror to answer wins, and the rest are left alone": 1,
+        "when every mirror is unreachable the caller gets a throw, not a payload": 1
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -16364,7 +15570,7 @@
         "application or caller cancellation rejects late provider and body results": 1,
         "compatible HTTP endpoints retain units and never place a server credential in browser requests": 1,
         "each operation can use an independent provider without coupling forward search": 1,
-        "regional place lookup uses bundled Natural Earth with networking unavailable": 1,
+        "regional reverse geocoding uses the configured Nominatim endpoint and projection": 1,
         "routing middleware uses configured OSRM servers while retaining request bounds and profile": 1,
         "unsupported operations and invalid coordinates never initiate a request": 1
       },
@@ -16414,9 +15620,6 @@
     },
     "src/services/requests.test.mjs": {
       "names": {
-        "a caller cancelled while the probe is pending stops waiting at once": 1,
-        "a failed probe is retried after its backoff, not on every query": 1,
-        "a stalled capability probe times out and queries proceed; no re-probe during backoff": 1,
         "boundary throttle status survives empty or invalid error bodies": 1,
         "independent compatible endpoints receive normalized requests without changing global fetch": 1,
         "lifetime cancellation discards a late response body even from an uncooperative transport": 1
@@ -16480,7 +15683,6 @@
         "incoming state suppresses premature hash replacement until restoration": 1,
         "keyhole fade controls default and round-trip as normalized percentages": 1,
         "legacy Panoptic and Sparse hashes migrate to canonical profiles": 1,
-        "malformed v2 layer lists mark the whole incoming share payload invalid": 1,
         "newer navigation suppresses delayed share camera while non-camera state still restores": 1,
         "newer visual, map, and individual panel actions suppress only their owned restore lanes": 1,
         "non-finite camera coordinates fail closed without reserving restoration": 1,
@@ -16533,49 +15735,13 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
-    "src/sources/militaryTileGeometry.test.mjs": {
-      "names": {
-        "a pan that hides connecting parcels keeps one marker with its known installation id": 1,
-        "centroid outside a concave footprint snaps inside instead of landing in the gap": 1,
-        "cold names reconcile selection through enrichment, identical groups at another zoom and wide-point handoff": 1,
-        "distinct named bases separated by one seam quantization step retain separate identities on revisit": 1,
-        "holes remain holes and disconnected pieces of one mapped feature have one id": 1,
-        "joining known groups also updates aliases for their currently offscreen parcels": 1,
-        "named A+B to B to A+B preserves canonical identity, parent title and selection": 1,
-        "quantization gaps within a tile stay separate; coarse identities do not fuse detailed sites": 1,
-        "tile cores discard buffers and their artificial outline edges": 1,
-        "touching parcels and tile fragments merge with weighted interior centroid and stable pan ids": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
-    "src/sources/openFreeMap.test.mjs": {
-      "names": {
-        "Camp Mabry tile emits an unnamed polygon and its centroid marker": 1,
-        "Capitol, greenbelt and commercial property fixtures exclude non-public driving space": 1,
-        "OpenMapTiles class mapping and reverse oneway preserve the animated-road contract": 1,
-        "TileJSON is resolved once and decoded tile LRU prevents per-pan refetch": 1,
-        "destroying a tile source aborts in-flight bodies and prevents stale cache refill": 1,
-        "public road admission rejects paths, private access, service areas and tunnels": 1,
-        "real z14 and z12 Austin tiles decode only drivable roads": 1,
-        "shared TileJSON survives one camera cancellation and aborts when its last owner leaves": 1,
-        "tile buffer clipping rejects slivers and does not join disconnected lines": 1,
-        "tile reads cap view size, concurrency and retained bytes, and reject oversized bodies": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
-    },
     "src/sources/overpassFeatures.test.mjs": {
       "names": {
         "Overpass adapter owns all feature query expressions and normalizes returned records": 1,
         "annotation retries transient feature failures but caches definitive misses": 1,
         "annotation selection accepts another feature provider with no query transport": 1,
-        "annotations outline a neighborhood or street area mapped as a relation": 1,
-        "focus footprints keep relation members and centers": 1,
-        "neighborhood and street-area lookups keep relation member geometry": 1,
         "provider preserves empty, transient and throttled responses and rejects late canceled data": 1,
-        "relation normalization keeps the largest closed outer and rejects a missing boundary": 1,
-        "the geometry output box is a bounded square around the point": 1
+        "relation normalization keeps the largest closed outer and rejects a missing boundary": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -16597,21 +15763,6 @@
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
-    },
-    "src/sources/vectorTiles.test.mjs": {
-      "names": {
-        "TileJSON 503 retries after cooldown and caches only success": 1,
-        "TileJSON network retries after cooldown and caches only success": 1,
-        "TileJSON timeout retries after cooldown and caches only success": 1,
-        "final subscriber cancellation aborts the owned request; completed tiles publish before a straggler": 1,
-        "invalid TileJSON is permanent only until clear": 2,
-        "overlapping callers share XYZ; cancelling one keeps the other alive": 1,
-        "oversized declared tile cancels body and aborts request before release": 1,
-        "oversized streaming tile cancels body and aborts request before release": 1,
-        "polygon-selected tiles keep nearest-first order and cached revisits issue zero requests": 1
-      },
-      "origin": "upstream-sync-2",
-      "since": "2026-10-01"
     },
     "src/splitFlap.test.mjs": {
       "names": {
@@ -17290,7 +16441,6 @@
     "src/ui/shellLifecycle.test.mjs": {
       "names": {
         "UI lifetime revokes listeners and nested presentation work synchronously": 1,
-        "busy traffic completion is polled promptly without accelerating idle or global reads": 1,
         "feedback disposal clears toast and polling work and rejects retained notices": 1,
         "one-time UI listeners and cancelled notice timers release their registrations": 1,
         "panel disposal cancels a live drag without saving or accepting later pointer movement": 1,
