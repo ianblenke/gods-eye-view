@@ -1,0 +1,16 @@
+Verdict: FAIL
+
+- [ ] FINDING major design.md:12 "keeps only the lines that the ratchet writes for the stale entries and for closed gaps" -> "keeps only the lines for `alprCameras.js` and `resolver.js`". Closed gaps appear nowhere else. The proposal (line 9) says the ratchet writes both files. The design says the ratchet measures all files and that you keep a subset. The documents do not agree on the scope.
+- [ ] FINDING major tasks.md:4 "Keep only the lines of the ratchet." -> "Remove each line that is not for `alprCameras.js` or `resolver.js`." The ratchet writes every line of the diff, so "only the lines of the ratchet" has no meaning. The task also gives two instructions in one task. Split it into two tasks: "Read the diff of the ledger." and "Remove each line ...".
+- [ ] FINDING major proposal.md:24-25 "changes for the entries that the ratchet writes" -> "changes for the two files, and for each gap that the ratchet closes". It conflicts with "Keep only" in design D1 and task 1.2. Make Impact, What Changes, D1 and task 1.2 name the same set of lines.
+- [ ] FINDING major design.md:3 "two changed files" -> "two files". The files do not change; the counts change. "Changed" can mean a changed file in the diff.
+- [ ] FINDING major design.md:14-16 "How the gates measure this change ... except for files with changing counts" -> "Gates on this tree". The title is unclear. Write: "The ledger must show the counts of the run. The two limits `refresh-may-flip` and `refresh-cause` name the exception." "changing" is an -ing word, and the exception does not point to the limits.
+- [ ] FINDING minor proposal.md:3 "after the merge `d9ccf91`" -> "after merge commit `d9ccf91`". "Merge" is a verb used as a noun.
+- [ ] FINDING minor proposal.md:5 "the ledger has 3" and "the ledger has 359" -> "the ledger records 3" and "the ledger records 359". "Has" is vague. Also write "The difference is more than the tolerance." Name the tolerance value, or write "the tolerance of the gates".
+- [ ] FINDING minor proposal.md:3 "The Spec gates job of CI" -> "The CI job `Spec gates`". This avoids a group of three nouns and a doubtful capital letter.
+- [ ] FINDING minor proposal.md:25 "gets the lines of the ratchet" -> "receives the lines that the ratchet adds". "Gets" has many meanings.
+- [ ] FINDING minor proposal.md:30 "the changing counts" -> "the counts that change". "Changing" is an -ing word. Also "The cause can be coverage of a test process that the gates lose" is a guess with an unclear meaning. Write: "The gates can lose the coverage data of a test process in some runs. This can be the cause."
+- [ ] FINDING minor design.md:8 "Make the ledger match a current measurement." -> "Make the ledger show the counts of a current run." "Measurement" is a verb used as a noun, and "match" is vague.
+- [ ] FINDING minor proposal.md:29 "`refresh-may-flip`: The counts ... can stop again." -> the name "flip" is not STE and "refresh" is a noun, but both are in the ID, so I do not report them. In the text, "the gates can stop again" should name the error: "the gates can stop again with `LEDGER-STALE`".
+
+I did not find a limit problem in tasks 2.1 to 2.3. They start with a verb and give one instruction.
