@@ -29,4 +29,4 @@ For each test below, run the named mutation. Report the result of each mutation 
 - [x] 3.2 Run `make ratchet CHANGE=upstream-sync-2`. Two later runs stopped, as the limit `sync2-no-final-ratchet` says.
 - [ ] 3.3 Run `make gates CHANGE=upstream-sync-2`.
 - [ ] 3.4 Run `/opsx:review upstream-sync-2`.
-- [ ] 3.5 Write `review.md` with the tree hash.
+- [ ] 3.5 Write `review.md` with the tree hash, the facts of rule 21 and the acceptance of the noise.

@@ -10,7 +10,7 @@ The fork and the upstream project share the commit `b210ab0`, from the first syn
 
 ## D1 The merge commit
 
-The merge commit has two parents: the fork tip `253a07d` and the upstream tip `e7707d9`. The three conflicts only add lines on both sides. The merge keeps both sets of lines.
+The merge commit `b8ff1c4` has two parents: the fork tip `253a07d` and the upstream tip `e7707d9`. The command `git ls-remote` on the upstream remote returned `e7707d9` for `main`. The three conflicts only add lines on both sides. The merge keeps both sets of lines.
 
 ## D2 The share-link token of the OSH layer
 
