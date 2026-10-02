@@ -8,6 +8,8 @@ The owner of the project accepts this change on `main`. Rule 21 of `AGENTS.md` c
 
 This change merges the upstream branch. The merged commit is `e7707d9`, the newest commit of the upstream branch on 2026-09-30. The change makes the tree of the merge commit pass the gates. It does not write specs for the upstream features. The backfill changes do that.
 
+The merge commit is `b8ff1c4`. Its parents are `253a07d` and `e7707d9`. The command `git ls-remote` on the upstream remote returned `e7707d9` for `main`, so the second parent is on that remote.
+
 ## What Changes
 
 - Merge the upstream branch into the fork with one merge commit. The merged commit is the second parent of the merge commit.
@@ -43,8 +45,8 @@ None. No scenario text changes.
   - The file `src/data/labelArbiter.js` has 46 or 48 branches not covered and 385 covered.
   - The file `src/annotations/resolver.js` has 342 or 359 lines not covered. Two earlier runs did not show this difference.
   - The first sync had the same limit. The gates of the push to `main` use the tolerance, because the merged tree is the base.
-- `sync2-no-final-ratchet`: The last two runs of the ratchet command stopped with `LEDGER-LARGER-GAP` on `src/annotations/resolver.js`. The file had 359 lines not covered, and the ledger has 342. The ledger holds the values of the adopt run. This change adds no test and no scenario, so the ratchet records nothing new.
+- `sync2-no-final-ratchet`: The last two runs of the ratchet command stopped with `LEDGER-LARGER-GAP` on `src/annotations/resolver.js`. The file had 359 lines not covered, and the ledger has 342. The ledger holds the values of the run of the command `adopt`. This change adds no test and no scenario, so the ratchet records nothing new.
 - `sync2-no-specs`: This change writes no spec for the new upstream code. A backfill change writes each one.
-- `sync2-timer-fixes-in-tests`: The timers stay in the production code. The functions `guardCameraAboveGround` and `resolveGroundFloorCellsBounded` do not clear their timers when the work ends first. The tests correct the problem, so the production code stays equal to the code of the upstream project. The mock in the test of the flight hooks stops the polling of the guard in that test. The wait of 1300 ms hides the leaked timers and does not prove that they end. It also adds 1.3 seconds to the file.
-- `sync2-ceiling-not-measured`: The ceiling in the test of the slow boundary lookup is now 10 seconds, and it was 1 second. The ceiling detects only a very large increase in time.
-- `sync2-qa-purposes`: The 13 new QA headers name capabilities with the prefix `pending:`, and the header of `qa-journey-recorder.mjs` has `unmapped:`. A backfill change replaces each `pending:` name after its capability has a folder.
+- `sync2-timer-fixes-in-tests`: The timers stay in the production code. The functions `guardCameraAboveGround` and `resolveGroundFloorCellsBounded` do not clear their timers when the work ends first. The tests correct the problem, so the production code stays equal to the code of the upstream project. The mock in the test of the flight hooks stops the timers of the guard in that test. The wait of 1300 ms hides the timers that stay live and does not prove that they end. It also adds 1.3 seconds to the file.
+- `sync2-ceiling-not-measured`: The ceiling in the test of the slow boundary lookup is now 10 seconds, and it was 1 second. The ceiling detects only a very large increase in time. The mutation of task 2.6 stops the test with a time-out. It does not show that the assertion of the ceiling can fail.
+- `sync2-qa-purposes`: 12 of the 13 new QA headers name capabilities with the prefix `pending:`. The header of `qa-journey-recorder.mjs` has `unmapped:`. A backfill change replaces each `pending:` name after its capability has a folder.

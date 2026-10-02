@@ -8,7 +8,7 @@
 
 ## 2. The tests
 
-For each test below, run the named mutation. Report the test that fails in `review.md`.
+For each test below, run the named mutation. Report the result of each mutation in `review.md`.
 
 - [x] 2.1 Count 29 rows in the token ledger tests.
   - Mutation: remove the row `osh-systems` from the token ledger. A test must fail.
@@ -26,7 +26,7 @@ For each test below, run the named mutation. Report the test that fails in `revi
 ## 3. Gates and review
 
 - [x] 3.1 Run the command `make adopt` for this change, from the merged commit.
-- [x] 3.2 Run `make ratchet CHANGE=upstream-sync-2`.
+- [x] 3.2 Run `make ratchet CHANGE=upstream-sync-2`. Two later runs stopped, as the limit `sync2-no-final-ratchet` says.
 - [ ] 3.3 Run `make gates CHANGE=upstream-sync-2`.
 - [ ] 3.4 Run `/opsx:review upstream-sync-2`.
 - [ ] 3.5 Write `review.md` with the tree hash.
