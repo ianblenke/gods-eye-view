@@ -55,4 +55,4 @@ Each mutation ran in the gate image, and the author restored the file after it.
 
 ## How the gates measure this change
 
-The gates run on the merge tree. The ledger must record each gap, and the history must name this change.
+The gates run on the merge tree. The ledger must record each gap, except for the files in the limit `sync2-count-flips`. The history must name this change.

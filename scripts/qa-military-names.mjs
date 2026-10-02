@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @purpose Prove that named military areas keep a fast frame rate at continent scale and show their identities at close zoom.
+ * @purpose Prove that named military areas keep a fast frame rate at continent scale and show their identities when the camera is close.
  * @covers pending:overlays
  * @run node scripts/qa-military-names.mjs http://localhost:4173
  * @needs A browser and an app server that runs.

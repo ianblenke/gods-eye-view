@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @purpose Prove that ALPR cameras appear quickly and do not move along a camera journey.
+ * @purpose Prove that ALPR cameras appear quickly and do not change while the camera does not move.
  * @covers pending:alpr
  * @run node scripts/qa-alpr-journey.mjs http://localhost:4173
  * @needs A browser and an app server that runs.

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @purpose Prove that bundled outlines load without a geocode request and do not move.
+ * @purpose Prove that bundled outlines load without a geocode request and do not redraw while the camera does not move.
  * @covers pending:overlays
  * @run node scripts/qa-admin-outlines.mjs http://localhost:4173
  * @needs A browser and an app server that runs.
