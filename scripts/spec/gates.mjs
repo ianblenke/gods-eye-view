@@ -12,6 +12,9 @@ import { changedByCommit, diffNames, headCommit, listFilesAt, mergeParents, read
 import { qaAdvice, readQaRegister } from './lib/qa-register.mjs';
 import { checkUntracked, codeInventory, isTestFile, listTrackedFiles, listUntrackedFiles, testInventory } from './lib/inventory.mjs';
 import {
+  baselineFault,
+  rebaselineLedger,
+  checkRebaseline,
   HISTORY_FILE,
   LEDGER_FILE,
   RETIRED_FILE,
@@ -36,7 +39,8 @@ import { lintSpecs, tasksReader } from './lib/spec-lint.mjs';
 import { checkOpenSpec, runOpenSpec } from './lib/openspec.mjs';
 import { checkArchivedChange, listActiveChanges, loadSpecs } from './lib/specs.mjs';
 import { hasErrors, lintProject } from './lib/ste.mjs';
-import { GUARD_PRELOAD } from './lib/test-guard.mjs';
+import { addProcess, createCoverage, replaceLcov } from './lib/v8-merge.mjs';
+import { GUARD_PRELOAD, fileOfScriptUrl } from './lib/test-guard.mjs';
 import { assertionKey, evaluateTrace, writeTraceReport } from './lib/trace.mjs';
 
 const REPORTER = fileURLToPath(new URL('./lib/trace-reporter.mjs', import.meta.url));
@@ -44,9 +48,9 @@ const RUNNER = fileURLToPath(new URL('./lib/run-parallel.mjs', import.meta.url))
 const OUT_DIR = '.gev-cache/spec';
 const DEFAULT_BASE = 'origin/main';
 const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
-const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive', 'adopt']);
+const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive', 'adopt', 'rebaseline']);
 const OPTIONS = new Set(['--change', '--base', '--root', '--file', '--metric', '--lines', '--count', '--reason', '--from']);
-const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt> [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
+const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt|rebaseline> [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
 
 /**
  * Read the command line. Throws the usage text for a bad command line.
@@ -85,7 +89,7 @@ export function localEnvFiles(root, tracked) {
 }
 
 /** Make the node:test runs for the gates. */
-export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FILES, outDir }) {
+export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FILES, outDir, coverageDir = `${outDir}/v8` }) {
   const allocation = new Set(allocationFiles);
   const main = testFiles.filter((file) => !allocation.has(file));
   const runs = [];
@@ -93,6 +97,7 @@ export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FIL
     const rawOutput = `${outDir}/tests-main.jsonl`;
     runs.push({
       kind: 'main',
+      env: { NODE_V8_COVERAGE: coverageDir },
       output: `${rawOutput}.sync`,
       rawOutput,
       args: [
@@ -155,7 +160,8 @@ function readJsonLines(directory, files) {
 function executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash }) {
   const runsFile = path.join(resultsDir, 'runs.json');
   const resultsFile = path.join(resultsDir, 'results.json');
-  writeFileSync(runsFile, JSON.stringify(runs.map((run) => ({ args: run.args, cwd: root }))));
+  const baseEnv = childEnv(env, { outDir, root, inventoryHash });
+  writeFileSync(runsFile, JSON.stringify(runs.map((run) => ({ args: run.args, cwd: root, env: { ...baseEnv, ...run.env } }))));
   const result = spawn(process.execPath, [RUNNER, runsFile, resultsFile], { cwd: root, stdio: ['ignore', 'ignore', 'inherit'], env: childEnv(env, { outDir, root, inventoryHash }) });
   if (result.error || result.status !== 0 || !existsSync(resultsFile)) {
     const detail = result.error ? `: ${result.error.message}` : '';
@@ -183,6 +189,26 @@ function checkFailedRuns(runs, results, recordsByRun) {
   });
 }
 
+export function mergeRawCoverage({ root, directory, text, inventory }) {
+  if (!existsSync(directory)) return text;
+  const allowed = new Set(inventory);
+  const merged = createCoverage((url) => readFileSync(fileURLToPath(url), 'utf8'));
+  const accept = (url) => {
+    if (!url.startsWith('file:')) return false;
+    const file = fileOfScriptUrl(url, root);
+    if (!file) return false;
+    if (!allowed.has(file)) return false;
+    if (file.split('/').includes('node_modules')) return false;
+    if (file.endsWith('.test.mjs')) return false;
+    return !new URL(url).searchParams.get('node-test-mock');
+  };
+  for (const name of readdirSync(directory).sort()) {
+    if (!/^coverage-.*\.json$/.test(name)) continue;
+    addProcess(merged, JSON.parse(readFileSync(path.join(directory, name), 'utf8')), accept);
+  }
+  return replaceLcov(text, merged);
+}
+
 /** Run the tests and measure specs, trace and coverage. */
 function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
   const errors = [];
@@ -205,7 +231,7 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
   const inventoryText = JSON.stringify(hashes);
   writeFileSync(inventoryFile, inventoryText);
   const resultsDir = mkdtempSync(path.join(tmpdir(), 'gev-spec-results-'));
-  const runs = buildTestRuns({ testFiles, allocationFiles, outDir: resultsDir });
+  const runs = buildTestRuns({ testFiles, allocationFiles, outDir: resultsDir, coverageDir: path.join(outDir, 'v8') });
   // Each run's own trace reporter opens its `.sync` file lazily, on its first record, which
   // is not necessarily the first thing that touches that path: a test can write into it too
   // (src/tooling/spec/gates.test.mjs's [spec-trace-039 spec-trace-040] deliberately does, to
@@ -232,7 +258,12 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
   const recordsByRun = runs.map((run) => readJsonLines(resultsDir, [path.basename(run.output)]));
   const records = recordsByRun.flat();
   errors.push(...checkFailedRuns(runs, execution.results, recordsByRun));
-  const lcovText = existsSync(path.join(resultsDir, 'lcov.info')) ? readFileSync(path.join(resultsDir, 'lcov.info'), 'utf8') : null;
+  let lcovText = existsSync(path.join(resultsDir, 'lcov.info')) ? readFileSync(path.join(resultsDir, 'lcov.info'), 'utf8') : null;
+  if (lcovText !== null) {
+    lcovText = mergeRawCoverage({ root, directory: path.join(outDir, 'v8'), text: lcovText, inventory });
+    writeFileSync(path.join(resultsDir, 'lcov.info'), lcovText);
+  }
+  rmSync(path.join(outDir, 'v8'), { recursive: true, force: true });
   for (const file of [...named].filter((name) => existsSync(path.join(resultsDir, name)))) copyFileSync(path.join(resultsDir, file), path.join(outDir, file));
   rmSync(resultsDir, { recursive: true, force: true });
 
@@ -449,6 +480,15 @@ export function runGates({
     log(`CI: ${change ? `check the change ${change}` : 'check without a change'}.`);
   }
 
+  const baselineFolder = changeFolder(root, change);
+  const baselineOptions = { change, changeActive: Boolean(baselineFolder) && existsSync(path.join(root, baselineFolder, 'proposal.md')), diffFiles, baseFiles, history: readOptional(root, HISTORY_FILE) ?? '', baseHistory: readFileAt(root, base, HISTORY_FILE) ?? '' };
+  if (command === 'rebaseline') {
+    const fault = baselineFault({ ...baselineOptions, changeActive: existsSync(path.join(root, 'openspec/changes', String(change), 'proposal.md')) });
+    if (fault) return report(log, [{ code: 'GATES-REBASELINE', file: '', message: fault }]);
+    if (!existsSync(path.join(root, LEDGER_FILE))) return report(log, [{ code: 'GATES-REBASELINE', file: LEDGER_FILE, message: 'The baseline needs the ledger file.' }]);
+    if (readFileAt(root, base, LEDGER_FILE) === null) return report(log, [{ code: 'GATES-REBASELINE', file: LEDGER_FILE, message: 'The baseline needs the base ledger.' }]);
+  }
+
   const measured = measure({ root, spawn, env, allocationFiles, change, openSpec });
   const { counts } = measured.trace.report;
   log(`Trace: ${counts.scenarios} scenarios, ${counts.verified} verified, ${counts.pending} open. ${counts.tests} tests, ${counts.traced} traced, ${counts.untraced} untraced.`);
@@ -486,6 +526,16 @@ export function runGates({
     return adoptableReached({ file, codeFiles, sameAsBase, current: measured.current, baseLedger, reached: reachedByCommit.get(from) });
   };
 
+  if (command === 'rebaseline') {
+    if (measured.errors.length > 0) return report(log, measured.errors);
+    const result = rebaselineLedger({ ledger, baseLedger, coverage: measured.coverage, sameAsBase, change, date, commit: headCommit(root) });
+    if (result.history.length === 0) return report(log, [{ code: 'GATES-REBASELINE', file: LEDGER_FILE, message: 'The baseline gives no different metric values.' }]);
+    writeLedger(root, result.ledger);
+    appendHistory(root, result.history);
+    for (const file of result.files) log(`Baseline: ${file}.`);
+    return report(log, []);
+  }
+
   if (command === 'adopt') {
     if (measured.errors.length > 0) return report(log, measured.errors);
     const merged = changedByCommit(root, base, fromCommit);
@@ -505,7 +555,10 @@ export function runGates({
     return report(log, []);
   }
 
+  const baseline = checkRebaseline({ ...baselineOptions, change, ledger, baseLedger, coverage: measured.coverage, sameAsBase });
+
   if (command === 'ratchet') {
+    if (baseline.errors.length > 0) return report(log, baseline.errors);
     if (measured.errors.length > 0) return report(log, measured.errors);
     const registry = updateRegistry({
       registry: readRegistry(root),
@@ -551,7 +604,7 @@ export function runGates({
   });
   const baseErrors = compareWithBase({
     ledger,
-    baseLedger,
+    baseLedger: baseline.baseLedger,
     retired: [...measured.specs.retired],
     baseRetired: JSON.parse(readFileAt(root, base, RETIRED_FILE) ?? '[]'),
     history: historyText,
@@ -577,7 +630,7 @@ export function runGates({
   ];
   log(`Ledger: ${comparison.stale.length} entries do not match the current gaps.`);
   log(`STE: ${lint.errors.length} errors, ${lint.warnings.length} warnings.`);
-  return report(log, [...measured.errors, ...comparison.errors, ...baseErrors, ...adoption.errors, ...registryErrors, ...lint.errors, ...reviews], lint.warnings);
+  return report(log, [...measured.errors, ...comparison.errors, ...baseErrors, ...baseline.errors, ...adoption.errors, ...registryErrors, ...lint.errors, ...reviews], lint.warnings);
 }
 
 if (import.meta.url === pathToFileURL(path.resolve(String(process.argv[1]))).href) {
