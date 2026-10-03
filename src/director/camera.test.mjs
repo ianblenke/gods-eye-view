@@ -45,7 +45,7 @@ const fixture = () => ({
     },
   ],
 });
-test('version 4 retains anchor identity, references and explicit move edits through normalization', () => {
+test('[director-064] version 4 retains anchor identity, references and explicit move edits through normalization', () => {
   const raw = fixture();
   const project = normalizeProject(parseSceneDocument(JSON.stringify(raw)));
   assert.deepEqual(project.scenes[0].anchors, raw.scenes[0].anchors);
@@ -76,7 +76,7 @@ test('v3 unversioned bloom already uses scale 2 and is not migrated again in lat
   assert.equal(project.version, 6);
   assert.equal(project.scenes[0].shots[0].visual.bloom.intensity, 50);
 });
-test('move endpoints, easing, shortest arcs and hold agree with scene seeking', () => {
+test('[director-046 director-047 director-048] move endpoints, easing, shortest arcs and hold agree with scene seeking', () => {
   const scene = normalizeProject(parseSceneDocument(JSON.stringify(fixture())))
     .scenes[0];
   const move = resolveCameraMove(scene, scene.shots[0]);
@@ -108,7 +108,7 @@ test('move endpoints, easing, shortest arcs and hold agree with scene seeking', 
   );
   assert.deepEqual(sampleCameraMove(move, 1), move.to);
 });
-test('unknown anchors, duplicate IDs, mixed references, bad easing and unspecified altitude are rejected', () => {
+test('[director-052 director-054 director-055] unknown anchors, duplicate IDs, mixed references, bad easing and unspecified altitude are rejected', () => {
   for (const mutate of [
     (s) => {
       s.shots[0].camera.anchorId = 'missing';
@@ -150,4 +150,121 @@ test('unknown anchors, duplicate IDs, mixed references, bad easing and unspecifi
     () => parseSceneDocument(JSON.stringify(old)),
     /unsupported field/,
   );
+});
+
+test('[director-064] The version 1 camera stays an ordinary pose', () => {
+  const input = {
+    version: 1,
+    scenes: [
+      {
+        id: 'a',
+        shots: [
+          {
+            id: 's',
+            camera: { lat: 1, lon: 2, alt: 3, heading: 4, pitch: 0, roll: 6 },
+          },
+        ],
+      },
+    ],
+  };
+  const project = normalizeProject(parseSceneDocument(JSON.stringify(input)));
+  const shot = project.scenes[0].shots[0];
+  assert.deepEqual(shot.camera, {
+    lat: 1,
+    lon: 2,
+    alt: 3,
+    heading: 4,
+    pitch: 0,
+    roll: 6,
+  });
+  assert.equal(Object.hasOwn(shot, 'move'), false);
+  const again = normalizeProject(
+    parseSceneDocument(stringifySceneDocument(project)),
+  );
+  assert.deepEqual(again.scenes[0].shots[0].camera, {
+    lat: 1,
+    lon: 2,
+    alt: 3,
+    heading: 4,
+    pitch: 0,
+    roll: 6,
+  });
+});
+
+test('[director-064] The version 2 camera stays an ordinary pose', () => {
+  const input = {
+    version: 2,
+    scenes: [
+      {
+        id: 'a',
+        shots: [
+          {
+            id: 's',
+            camera: { lat: 1, lon: 2, alt: 3, heading: 4, pitch: 0, roll: 6 },
+          },
+        ],
+      },
+    ],
+  };
+  const project = normalizeProject(parseSceneDocument(JSON.stringify(input)));
+  const shot = project.scenes[0].shots[0];
+  assert.deepEqual(shot.camera, {
+    lat: 1,
+    lon: 2,
+    alt: 3,
+    heading: 4,
+    pitch: 0,
+    roll: 6,
+  });
+  assert.equal(Object.hasOwn(shot, 'move'), false);
+  const again = normalizeProject(
+    parseSceneDocument(stringifySceneDocument(project)),
+  );
+  assert.deepEqual(again.scenes[0].shots[0].camera, {
+    lat: 1,
+    lon: 2,
+    alt: 3,
+    heading: 4,
+    pitch: 0,
+    roll: 6,
+  });
+});
+
+test('[director-064] The version 3 camera stays an ordinary pose', () => {
+  const input = {
+    version: 3,
+    scenes: [
+      {
+        id: 'a',
+        shots: [
+          {
+            id: 's',
+            camera: { lat: 1, lon: 2, alt: 3, heading: 4, pitch: 0, roll: 6 },
+          },
+        ],
+      },
+    ],
+  };
+  const project = normalizeProject(parseSceneDocument(JSON.stringify(input)));
+  const shot = project.scenes[0].shots[0];
+  assert.deepEqual(shot.camera, {
+    lat: 1,
+    lon: 2,
+    alt: 3,
+    heading: 4,
+    pitch: 0,
+    roll: 6,
+  });
+  assert.equal(Object.hasOwn(shot, 'move'), false);
+  const again = normalizeProject(
+    parseSceneDocument(stringifySceneDocument(project)),
+  );
+  assert.deepEqual(again.scenes[0].shots[0].camera, {
+    lat: 1,
+    lon: 2,
+    alt: 3,
+    heading: 4,
+    pitch: 0,
+    roll: 6,
+  });
 });

@@ -70,7 +70,7 @@ const fixture = () => ({
   ],
 });
 
-test('all four inert actions survive validation, migration and export without executing content', () => {
+test('[director-063] all four inert actions survive validation, migration and export without executing content', () => {
   const input = fixture();
   const output = JSON.parse(
     stringifySceneDocument(
@@ -83,7 +83,7 @@ test('all four inert actions survive validation, migration and export without ex
   );
 });
 
-test('reject unknown fields, executable syntax, invalid references and missing reset baselines', () => {
+test('[director-056 director-060 director-061] reject unknown fields, executable syntax, invalid references and missing reset baselines', () => {
   const mutations = [
     (p) => (p.version = 5),
     (p) => {
@@ -126,7 +126,7 @@ test('reject unknown fields, executable syntax, invalid references and missing r
   }
 });
 
-test('pending actions cancel promptly, refuse overlap and cannot update a replacement session', async () => {
+test('[director-068 director-073 director-074] pending actions cancel promptly, refuse overlap and cannot update a replacement session', async () => {
   let resolve,
     signal,
     calls = 0;
@@ -158,7 +158,7 @@ test('pending actions cancel promptly, refuse overlap and cannot update a replac
   assert.equal(await session.dispatch('new'), false);
 });
 
-test('synchronous stop before execution prevents any side effect; rejection unlocks retry', async () => {
+test('[director-072 director-073] synchronous stop before execution prevents any side effect; rejection unlocks retry', async () => {
   let calls = 0;
   const session = createInteractionSession({
     execute: () => {
