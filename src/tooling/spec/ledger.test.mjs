@@ -4,6 +4,9 @@ import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import {
+  baselineFault,
+  rebaselineLedger,
+  checkRebaseline,
   adoptedCounts,
   adoptLedger,
   adoptsOf,
@@ -1180,4 +1183,121 @@ test('[gap-ledger-098] allows untrue coverage of an adopted file', () => {
   assert.deepEqual(withAdopted({ ledger: fresh, lines: [marked] }), []);
   assert.deepEqual(codes(withAdopted({ ledger: fresh, lines: [{ ...marked, untrue: false }] })), ['LEDGER-NOT-IN-BASE']);
   assert.deepEqual(codes(withAdopted({ ledger: fresh, lines: [marked], sameAsBase: () => true })), ['LEDGER-NOT-IN-BASE']);
+});
+
+
+const BASELINE_CHANGE = 'gates-coverage-race';
+const MERGE_FILE = 'scripts/spec/lib/v8-merge.mjs';
+function baselineContext(extra = {}) {
+  return { change: BASELINE_CHANGE, changeActive: true, diffFiles: [MERGE_FILE], baseFiles: new Set(), history: '', baseHistory: '', ...extra };
+}
+function baselineInput(extra = {}) {
+  return { ledger: ledgerWith({ coverage: { 'a.js': LOADED(1, 1, 1) } }), baseLedger: ledgerWith({ coverage: { 'a.js': LOADED(1, 1, 1) } }), coverage: [loaded('a.js', 3, 2, 0), loaded('b.js', 2, 0, 0), loaded('c.js', 0, 0, 0)], sameAsBase: () => true, change: BASELINE_CHANGE, date: '2026-10-03', commit: 'abc', ...extra };
+}
+
+test('[gap-ledger-110] The baseline records exact metric values and new gaps', () => {
+  const input = baselineInput();
+  const result = rebaselineLedger(input);
+  assert.equal(result.ledger.coverage['a.js'].lines, 3);
+  assert.equal(result.ledger.coverage['a.js'].branches, 2);
+  assert.equal(result.ledger.coverage['a.js'].functions, 0);
+  assert.equal(result.ledger.coverage['a.js'].origin, 'pre-spec');
+  assert.equal(result.ledger.coverage['b.js'].origin, 'gates-coverage-race');
+  assert.equal(result.ledger.coverage['b.js'].lines, 2);
+  assert.equal(Object.hasOwn(result.ledger.coverage, 'c.js'), false);
+  assert.deepEqual(result.files, ['a.js', 'b.js']);
+  assert.deepEqual(result.history[0], { date: '2026-10-03', commit: 'abc', change: 'gates-coverage-race', kind: 'rebaseline', file: 'a.js', sha: 'same', metric: 'lines', old: 1, new: 3, oldTotal: 100, newTotal: 100 });
+  assert.equal(result.history.length, 4);
+  assert.deepEqual(result.history[3], { date: '2026-10-03', commit: 'abc', change: 'gates-coverage-race', kind: 'rebaseline', file: 'b.js', sha: 'same', metric: 'lines', old: 0, new: 2, oldTotal: null, newTotal: 100 });
+  assert.equal(result.ledger.coverage['b.js'].since, '2026-10-03');
+  assert.equal(Object.hasOwn(result.ledger.coverage['b.js'], 'origin'), true);
+  assert.equal(input.ledger.coverage['a.js'].lines, 1);
+  const complete = rebaselineLedger(baselineInput({ coverage: [loaded('a.js', 0, 0, 0)] }));
+  assert.equal(Object.hasOwn(complete.ledger.coverage, 'a.js'), false);
+  assert.equal(complete.history.length, 3);
+  const totals = rebaselineLedger(baselineInput({ coverage: [loaded('a.js', 1, 1, 1, 'same', { lines: 101, branches: 100, functions: 10 })] }));
+  assert.equal(totals.history[0].oldTotal, 100);
+  assert.equal(totals.history[0].newTotal, 101);
+});
+
+test('[gap-ledger-111] The baseline rejects a different change or module state', () => {
+  assert.equal(baselineFault(baselineContext()), null);
+  for (const extra of [{ change: 'other' }, { change: undefined }, { changeActive: false }, { diffFiles: [] }, { baseFiles: new Set([MERGE_FILE]) }]) {
+    assert.equal(baselineFault(baselineContext(extra)), 'The baseline needs this active change and its new merge module.');
+  }
+});
+
+test('[gap-ledger-112] The other source content keeps its old ledger entry', () => {
+  const result = rebaselineLedger(baselineInput({ sameAsBase: (file) => file !== 'a.js', coverage: [loaded('a.js', 3, 2, 0), unloaded('b.js', 2), { ...loaded('c.js', 2, 0, 0), untrue: true }] }));
+  assert.equal(result.ledger.coverage['a.js'].lines, 1);
+  assert.equal(result.history.length, 0);
+});
+
+test('[gap-ledger-113] The valid history supplies the exact temporary base entries', () => {
+  const input = baselineInput();
+  const result = rebaselineLedger(input);
+  const history = '{"kind":"totals","change":"gates-coverage-race"}\n{"kind":"rebaseline","change":"other"}\n' + result.history.map(line => JSON.stringify(line)).join('\n') + '\n';
+  const checked = checkRebaseline({ ...baselineContext(), ...input, ledger: result.ledger, history });
+  assert.deepEqual(checked.errors, []);
+  assert.equal(checked.baseLedger.coverage['a.js'].lines, 3);
+  assert.equal(checked.baseLedger.coverage['b.js'].lines, 2);
+  assert.equal(input.baseLedger.coverage['a.js'].lines, 1);
+  const completeInput = baselineInput({ coverage: [loaded('a.js', 0, 0, 0)] });
+  const complete = rebaselineLedger(completeInput);
+  const closedHistory = complete.history.map(line => JSON.stringify(line)).join('\n') + '\n';
+  const closed = checkRebaseline({ ...baselineContext(), ...completeInput, ledger: complete.ledger, history: closedHistory });
+  assert.deepEqual(closed.errors, []);
+  assert.equal(Object.hasOwn(closed.baseLedger.coverage, 'a.js'), false);
+  assert.ok(checkRebaseline({ ...baselineContext(), ...completeInput, ledger: completeInput.ledger, history: closedHistory }).errors.some(e => e.code === 'LEDGER-REBASELINE'));
+  assert.deepEqual(compareWithBase({ ledger: result.ledger, baseLedger: checked.baseLedger, history, baseHistory: '', retired: [], baseRetired: [], change: BASELINE_CHANGE, sameAsBase: () => true }), []);
+  assert.ok(compareLedger({ ledger: result.ledger, current: gaps([loaded('a.js', 9, 2, 0), loaded('b.js', 2, 0, 0)]), sameAsBase: () => true }).errors.some(e => e.code === 'LEDGER-LARGER-GAP'));
+  assert.equal(checkRebaseline({ ...baselineContext(), ...input }).baseLedger.coverage['a.js'].lines, 1);
+});
+
+test('[gap-ledger-114] The false history gives no baseline allowance', () => {
+  const input = baselineInput();
+  const result = rebaselineLedger(input);
+  const text = lines => lines.map(line => JSON.stringify(line)).join('\n') + '\n';
+  const valid = { ...baselineContext(), ...input, ledger: result.ledger, history: text(result.history) };
+  for (const extra of [{ change: 'other' }, { changeActive: false }, { baseLedger: null }, { diffFiles: [] }, { baseFiles: new Set([MERGE_FILE]) }, { sameAsBase: () => false }, { baseHistory: text(result.history) }]) {
+    const checked = checkRebaseline({ ...valid, ...extra });
+    if (extra.baseLedger === null) assert.equal(checked.baseLedger, null);
+    else assert.equal(checked.baseLedger.coverage['a.js'].lines, 1);
+  }
+  for (const field of ['old', 'new', 'oldTotal', 'newTotal', 'sha', 'metric', 'file']) {
+    const lines = structuredClone(result.history);
+    lines[0][field] = 'bad';
+    const checked = checkRebaseline({ ...valid, history: text(lines) });
+    assert.ok(checked.errors.some(e => e.code === 'LEDGER-REBASELINE'));
+    assert.equal(checked.baseLedger.coverage['a.js'].lines, 1);
+  }
+  for (const lines of [result.history.slice(1), [...result.history, result.history[0]], [...result.history, { ...result.history[0], file: 'other.js' }]]) {
+    assert.ok(checkRebaseline({ ...valid, history: text(lines) }).errors.some(e => e.code === 'LEDGER-REBASELINE'));
+  }
+  const duplicateInput = { ...input, coverage: [input.coverage[0], ...input.coverage] };
+  const duplicate = rebaselineLedger(duplicateInput);
+  assert.ok(checkRebaseline({ ...baselineContext(), ...duplicateInput, ledger: duplicate.ledger, history: text(duplicate.history) }).errors.some(e => e.code === 'LEDGER-REBASELINE'));
+  const absent = structuredClone(result.ledger); delete absent.coverage['a.js'];
+  assert.ok(checkRebaseline({ ...valid, ledger: absent }).errors.some(e => e.code === 'LEDGER-REBASELINE'));
+  const low = structuredClone(result.ledger); low.coverage['a.js'].lines = 2;
+  assert.ok(checkRebaseline({ ...valid, ledger: low }).errors.some(e => e.code === 'LEDGER-REBASELINE'));
+  assert.ok(checkRebaseline({ ...valid, history: 'other\n' + valid.history, baseHistory: 'base\n' }).baseLedger.coverage['a.js'].lines === 1);
+});
+
+test('[gap-ledger-115] A second baseline step stops before tests', () => {
+  assert.equal(baselineFault(baselineContext({ history: '{"kind":"rebaseline","change":"gates-coverage-race"}\n' })), 'The change already records its baseline step.');
+  assert.equal(baselineFault(baselineContext({ history: '{"kind":"rebaseline","change":"other"}\n' })), null);
+  assert.equal(baselineFault(baselineContext({ history: '{"kind":"totals","change":"gates-coverage-race"}\n' })), null);
+  assert.equal(baselineFault(baselineContext({ history: 'other\n', baseHistory: 'base\n' })), 'The baseline needs the unchanged base history prefix.');
+});
+
+test('[gap-ledger-105 gap-ledger-106] The reached field follows its source record', () => {
+  const checked = checkAdopts({ adopts: [{ file: 'a.js', from: 'abc', reached: true, untrue: true, untraced: 0 }], isMergedCommit: () => true, changedFiles: () => new Set(['a.js']) });
+  assert.equal(checked.errors[0].code, 'LEDGER-ADOPT-REACHED');
+  const adopted = adoptedCounts([{ file: 'a.js', lines: 2, branches: 1, functions: 1, untraced: 0, untrue: true, reached: true }]);
+  assert.equal(adopted.get('a.js').reached, true);
+  assert.equal(Object.hasOwn(adopted.get('a.js'), 'reached'), true);
+  const result = adoptLedger({ ledger: ledgerWith(), current: gaps([unloaded('a.js', 2, 'same', true)]), eligible: () => false, reached: () => true, change: 'sync', date: '2026-10-03', commit: 'abc', from: 'def' });
+  assert.equal(result.history[0].reached, true);
+  assert.equal(Object.hasOwn(result.history[0], 'reached'), true);
 });

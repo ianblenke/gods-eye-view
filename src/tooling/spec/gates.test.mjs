@@ -5,7 +5,7 @@ import { appendFileSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readd
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { buildTestRuns, childEnv, parseArgs, runGates } from '../../../scripts/spec/gates.mjs';
+import { buildTestRuns, childEnv, mergeRawCoverage, parseArgs, runGates } from '../../../scripts/spec/gates.mjs';
 import { contentHash } from '../../../scripts/spec/lib/coverage.mjs';
 import { GUARD_PRELOAD, missingTestContext } from '../../../scripts/spec/lib/test-guard.mjs';
 
@@ -882,6 +882,10 @@ test('[gap-ledger-080] stops the waive command for a fault in its options', GUAR
     assert.equal(fault1.status, 1);
     assert.match(fault1.output, /ERROR GATES-WAIVE src\/math\.js Change "inactive" has no folder with a proposal\.md file/);
 
+    const absentFile = run(root, ['waive', '--change', 'add-demo', '--metric', 'branches', '--lines', '3', '--count', '1', '--reason', 'test']);
+    assert.equal(absentFile.status, 1);
+    assert.match(absentFile.output, /ERROR GATES-WAIVE Git does not track undefined/);
+
     // 2. File not tracked
     const fault2 = run(root, ['waive', '--change', 'add-demo', '--file', 'src/missing.js', '--metric', 'branches', '--lines', '3', '--count', '1', '--reason', 'test']);
     assert.equal(fault2.status, 1);
@@ -1316,4 +1320,204 @@ test('[gap-ledger-109] The command writes no entry for an edge that only HEAD ha
     assert.equal(result.status, 1);
     assert.match(result.output, /ERROR LEDGER-ADOPT-REACHED src\/legacy\.js/);
   });
+});
+
+test('[coverage-gate-064 coverage-gate-065] The gate assigns raw coverage and replaces loaded values', () => {
+  withFixture((root) => {
+    const calls = [];
+    const fakeSpawn = (command, args, options) => {
+      const runs = JSON.parse(readFileSync(args[1], 'utf8'));
+      calls.push(runs);
+      const directory = path.dirname(args[1]);
+      writeFileSync(args[2], JSON.stringify(runs.map(() => ({ status: 0, error: null }))));
+      writeFileSync(path.join(directory, 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:0\nBRF:1\nBRH:0\nFNF:1\nFNH:0\nend_of_record\nSF:${root}/unloaded.js\nLF:7\nLH:0\nend_of_record\n`);
+      const raw = runs[0].env.NODE_V8_COVERAGE;
+      mkdirSync(raw, { recursive: true });
+      const fn = { functionName: '', isBlockCoverage: true, ranges: [{ startOffset: 0, endOffset: 45, count: 1 }] };
+      writeFileSync(path.join(raw, 'coverage-1-1-0.json'), JSON.stringify({ result: [{ url: pathToFileURL(path.join(root, 'src/math.js')).href, functions: [fn] }, { url: pathToFileURL(path.join(root, 'src/math.test.mjs')).href, functions: [fn] }, { url: 'node:fs', functions: [fn] }, { url: 'file:///outside.js', functions: [fn] }, { url: pathToFileURL(path.join(root, 'node_modules/a.js')).href, functions: [fn] }, { url: pathToFileURL(path.join(root, 'src/math.js')).href + '?node-test-mock=1', functions: [fn] }] }));
+      return { status: 0 };
+    };
+    const result = run(root, ['init'], { spawn: fakeSpawn, allocationFiles: ['tools/other.test.mjs'], env: { A: 'value', NODE_V8_COVERAGE: '/wrong' }, openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : '{"items":[]}' }) });
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0][0].env.NODE_V8_COVERAGE, path.join(root, '.gev-cache/spec/v8'));
+    assert.equal(Object.hasOwn(calls[0][0].env, 'NODE_V8_COVERAGE'), true);
+    assert.equal(Object.hasOwn(calls[0][1].env, 'NODE_V8_COVERAGE'), false);
+    assert.equal(calls[0][0].env.A, 'value');
+    const lcov = readFileSync(path.join(root, '.gev-cache/spec/lcov.info'), 'utf8');
+    assert.match(lcov, /LF:3\nLH:3\nBRF:1\nBRH:1\nFNF:0\nFNH:0/);
+    assert.match(lcov, /unloaded\.js\nLF:7\nLH:0\nend_of_record/);
+    assert.doesNotMatch(lcov, /SF:.*math\.test|SF:.*outside|SF:.*node_modules/);
+    assert.doesNotMatch(result.output, /COVERAGE-EXTRA-RESULT/);
+  });
+});
+
+test('[gap-ledger-111 gap-ledger-115] The command rejects an absent bound before tests', () => {
+  withFixture((root) => {
+    const proposal = 'openspec/changes/gates-coverage-race/proposal.md';
+    write(root, { [proposal]: '## Why\n\nThe values must agree.\n', 'openspec/trace/gaps.json': '{"version":4,"coverage":{},"untracedTests":{}}\n' });
+    let calls = 0;
+    const spawn = () => { calls += 1; return { status: 9 }; };
+    for (const args of [['rebaseline'], ['rebaseline', '--change', 'other'], ['rebaseline', '--change', 'gates-coverage-race']]) {
+      assert.match(run(root, args, { spawn }).output, /GATES-REBASELINE/);
+    }
+    write(root, { 'scripts/spec/lib/v8-merge.mjs': 'export {};\n' });
+    git(root, 'add', 'scripts/spec/lib/v8-merge.mjs');
+    write(root, { 'openspec/trace/history.jsonl': '{"kind":"rebaseline","change":"gates-coverage-race"}\n' });
+    assert.match(run(root, ['rebaseline', '--change', 'gates-coverage-race'], { spawn }).output, /already records its baseline step/);
+    assert.equal(calls, 0);
+    assert.equal(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8'), '{"version":4,"coverage":{},"untracedTests":{}}\n');
+  });
+});
+
+test('[gap-ledger-110 gap-ledger-113 gap-ledger-115] The command records one step and retains data after a test error', () => {
+  const baseLedger = { version: 4, coverage: { 'src/math.js': { loaded: true, sha: '5b63136552577a64d788dc3cd4552739d0d60f9e1adb63ec4dfb6932d56fc75d', untrue: false, lines: 1, branches: 0, functions: 0, totals: { lines: 3, branches: 1, functions: 1 }, origin: 'pre-spec', since: '2026-01-01' } }, untracedTests: {} };
+  withFixture((root) => {
+    write(root, { 'scripts/spec/lib/v8-merge.mjs': 'export {};\n', 'openspec/changes/gates-coverage-race/proposal.md': '## Why\n\nThe values must agree.\n' });
+    git(root, 'add', 'scripts/spec/lib/v8-merge.mjs');
+    const file = path.join(root, 'openspec/trace/gaps.json');
+    const before = readFileSync(file, 'utf8');
+    let failed = true;
+    let coveredLines = 1;
+    const fakeSpawn = (command, args) => {
+      const runs = JSON.parse(readFileSync(args[1], 'utf8'));
+      const directory = path.dirname(args[1]);
+      writeFileSync(args[2], JSON.stringify(runs.map(() => ({ status: failed ? 1 : 0, error: null }))));
+      const records = ['src/math.test.mjs', 'tools/other.test.mjs'].map((file, index) => ({ file, name: index === 0 ? 'adds two numbers' : 'runs outside src', title: index === 0 ? 'adds two numbers' : 'runs outside src', kind: 'test', status: failed ? 'fail' : 'pass', tags: [], tagError: null, line: 4, column: 1, fullName: index === 0 ? 'adds two numbers' : 'runs outside src', leaf: true }));
+      writeFileSync(path.join(directory, 'tests-main.jsonl.sync'), records.map(record => JSON.stringify(record) + '\n').join(''));
+      writeFileSync(path.join(directory, 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:${coveredLines}\nBRF:1\nBRH:1\nFNF:1\nFNH:1\nend_of_record\nSF:${root}/scripts/spec/lib/v8-merge.mjs\nLF:1\nLH:1\nBRF:0\nBRH:0\nFNF:0\nFNH:0\nend_of_record\n`);
+      writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ checked: ['src/math.js', 'scripts/spec/lib/v8-merge.mjs'], violations: [], assertions: records.map(record => ({ file: record.file, fullName: record.fullName, count: 1 })), leaks: [] }) + '\n');
+      return { status: 0 };
+    };
+    const options = { spawn: fakeSpawn, openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : args[0] === 'show' ? '{"deltas":[]}' : '{"items":[]}' }) };
+    const error = run(root, ['rebaseline', '--change', 'gates-coverage-race'], options);
+    assert.equal(error.status, 1);
+    assert.match(error.output, /TRACE-FAILED-TEST/);
+    assert.equal(readFileSync(file, 'utf8'), before);
+    assert.equal(existsSync(path.join(root, 'openspec/trace/history.jsonl')), false);
+    failed = false;
+    coveredLines = 2;
+    const equal = run(root, ['rebaseline', '--change', 'gates-coverage-race'], options);
+    assert.equal(equal.status, 1);
+    assert.match(equal.output, /no different metric values/);
+    assert.equal(existsSync(path.join(root, 'openspec/trace/history.jsonl')), false);
+    coveredLines = 1;
+    const result = run(root, ['rebaseline', '--change', 'gates-coverage-race'], options);
+    assert.equal(result.status, 0, result.output);
+    assert.match(result.output, /Baseline: src\/math\.js\./);
+    const ledger = JSON.parse(readFileSync(file, 'utf8'));
+    assert.equal(ledger.coverage['src/math.js'].lines, 2);
+    const history = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8');
+    const line = JSON.parse(history.trim());
+    assert.equal(line.kind, 'rebaseline');
+    assert.equal(line.sha, '5b63136552577a64d788dc3cd4552739d0d60f9e1adb63ec4dfb6932d56fc75d');
+    assert.equal(line.old, 1);
+    assert.equal(line.new, 2);
+    assert.equal(line.change, 'gates-coverage-race');
+    assert.match(run(root, ['rebaseline', '--change', 'gates-coverage-race'], options).output, /already records its baseline step/);
+    assert.equal(readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8'), history);
+    coveredLines = 0;
+    assert.match(run(root, ['ratchet', '--change', 'gates-coverage-race'], options).output, /ERROR LEDGER-REBASELINE/);
+    assert.equal(JSON.parse(readFileSync(file, 'utf8')).coverage['src/math.js'].lines, 2);
+    coveredLines = 1;
+    const check = run(root, ['check', '--change', 'gates-coverage-race'], options);
+    assert.doesNotMatch(check.output, /ERROR LEDGER-(LARGER|MORE|NOT-IN-BASE|REBASELINE|TOTALS|HASH)/);
+  }, { base: { 'openspec/trace/gaps.json': JSON.stringify(baseLedger) + '\n' } });
+});
+
+
+test('[coverage-gate-065] The raw reader excludes test and dependency URLs', () => {
+  withFixture(root => {
+    const directory = path.join(root, 'raw');
+    mkdirSync(directory);
+    const fn = { functionName: '', isBlockCoverage: true, ranges: [{ startOffset: 0, endOffset: 45, count: 1 }] };
+    const urls = [pathToFileURL(path.join(root, 'src/math.js')).href, pathToFileURL(path.join(root, 'src/math.test.mjs')).href, pathToFileURL(path.join(root, 'node_modules/a.js')).href, 'file://host/a.js', path.join(root, 'src/math.js'), pathToFileURL(path.join(root, 'src/math.js')).href + '?node-test-mock=1', 'node:fs', pathToFileURL(path.join(root, 'absent.js')).href];
+    writeFileSync(path.join(directory, 'notes.txt'), 'not coverage');
+    writeFileSync(path.join(directory, 'coverage-1-1-0.json'), JSON.stringify({ result: urls.map(url => ({ url, functions: [fn] })) }));
+    const inventory = ['src/math.js', 'src/math.test.mjs', 'node_modules/a.js'];
+    assert.equal(mergeRawCoverage({ root, directory, inventory, text: '' }), `SF:${root}/src/math.js\nLF:3\nLH:3\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nend_of_record\n`);
+    assert.equal(mergeRawCoverage({ root, directory: path.join(root, 'none'), inventory, text: 'original' }), 'original');
+    assert.equal(mergeRawCoverage({ root, directory, inventory: [null], text: '' }), '');
+  });
+});
+
+
+test('[gap-ledger-114] The gate reports false baseline history', () => {
+  const baseLedger = { version: 4, coverage: { 'src/math.js': { loaded: true, sha: '5b63136552577a64d788dc3cd4552739d0d60f9e1adb63ec4dfb6932d56fc75d', untrue: false, lines: 1, branches: 0, functions: 0, totals: { lines: 3, branches: 1, functions: 1 }, origin: 'pre-spec', since: '2026-01-01' } }, untracedTests: {} };
+  withFixture(root => {
+    write(root, { 'scripts/spec/lib/v8-merge.mjs': 'export {};\n', 'openspec/changes/gates-coverage-race/proposal.md': '## Why\n\nThe values must agree.\n' });
+    git(root, 'add', 'scripts/spec/lib/v8-merge.mjs');
+    const current = structuredClone(baseLedger); current.coverage['src/math.js'].lines = 3;
+    writeFileSync(path.join(root, 'openspec/trace/gaps.json'), JSON.stringify(current));
+    writeFileSync(path.join(root, 'openspec/trace/history.jsonl'), JSON.stringify({ kind: 'rebaseline', change: 'gates-coverage-race', file: 'src/math.js', sha: '5b63136552577a64d788dc3cd4552739d0d60f9e1adb63ec4dfb6932d56fc75d', metric: 'lines', old: 1, new: 3, oldTotal: 3, newTotal: 3 }) + '\n');
+    const spawn = (command, args) => {
+      writeFileSync(args[2], '[{"status":0,"error":null}]');
+      writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:1\nBRF:1\nBRH:1\nFNF:1\nFNH:1\nend_of_record\n`);
+      writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), '{"checked":["src/math.js"],"violations":[],"assertions":[],"leaks":[]}\n');
+      return { status: 0 };
+    };
+    const result = run(root, ['check', '--change', 'gates-coverage-race'], { spawn, openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : args[0] === 'show' ? '{"deltas":[]}' : '{"items":[]}' }) });
+    assert.match(result.output, /ERROR LEDGER-REBASELINE/);
+    assert.match(result.output, /ERROR LEDGER-LARGER-THAN-BASE src\/math\.js/);
+    current.coverage['src/math.js'].lines = 2;
+    writeFileSync(path.join(root, 'openspec/trace/gaps.json'), JSON.stringify(current));
+    writeFileSync(path.join(root, 'openspec/trace/history.jsonl'), JSON.stringify({ kind: 'rebaseline', change: 'gates-coverage-race', file: 'src/math.js', sha: '5b63136552577a64d788dc3cd4552739d0d60f9e1adb63ec4dfb6932d56fc75d', metric: 'lines', old: 1, new: 2, oldTotal: 3, newTotal: 3 }) + '\n');
+    rmSync(path.join(root, 'openspec/changes/gates-coverage-race/proposal.md'));
+    assert.match(run(root, ['check', '--change', 'gates-coverage-race'], { spawn, openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : '{"items":[]}' }) }).output, /ERROR LEDGER-REBASELINE/);
+  }, { base: { 'openspec/trace/gaps.json': JSON.stringify(baseLedger) + '\n' } });
+});
+
+
+test('[gap-ledger-111] The command needs both ledger files before tests', () => {
+  withFixture(root => {
+    write(root, { 'scripts/spec/lib/v8-merge.mjs': 'export {};\n', 'openspec/changes/gates-coverage-race/proposal.md': '## Why\n\nThe values must agree.\n' });
+    git(root, 'add', 'scripts/spec/lib/v8-merge.mjs');
+    let calls = 0;
+    const spawn = () => { calls += 1; return { status: 9 }; };
+    assert.match(run(root, ['rebaseline', '--change', 'gates-coverage-race'], { spawn }).output, /The baseline needs the ledger file/);
+    write(root, { 'openspec/trace/gaps.json': '{"version":4,"coverage":{},"untracedTests":{}}\n' });
+    assert.match(run(root, ['rebaseline', '--change', 'gates-coverage-race'], { spawn }).output, /The baseline needs the base ledger/);
+    assert.equal(calls, 0);
+  });
+});
+
+test('[gap-ledger-115] The command retains the base history prefix', () => {
+  withFixture(root => {
+    write(root, { 'scripts/spec/lib/v8-merge.mjs': 'export {};\n', 'openspec/changes/gates-coverage-race/proposal.md': '## Why\n\nThe values must agree.\n', 'openspec/trace/history.jsonl': '{"kind":"waiver","change":"other"}\n' });
+    git(root, 'add', 'scripts/spec/lib/v8-merge.mjs');
+    let calls = 0;
+    const spawn = () => { calls += 1; return { status: 9 }; };
+    assert.match(run(root, ['rebaseline', '--change', 'gates-coverage-race'], { spawn }).output, /unchanged base history prefix/);
+    assert.equal(calls, 0);
+    assert.equal(readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8'), '{"kind":"waiver","change":"other"}\n');
+  }, { base: { 'openspec/trace/history.jsonl': '{"kind":"waiver","change":"old"}\n' } });
+});
+
+
+test('[coverage-gate-066] The gate removes raw files and retains output files', () => {
+  for (const mode of ['loaded', 'no-lcov', 'no-raw']) {
+    withFixture((root) => {
+      const fakeSpawn = (_command, args) => {
+        const runs = JSON.parse(readFileSync(args[1], 'utf8'));
+        writeFileSync(args[2], JSON.stringify(runs.map(() => ({ status: 0, error: null }))));
+        if (mode !== 'no-lcov') {
+          writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:0\nend_of_record\n`);
+        }
+        if (mode !== 'no-raw') {
+          const raw = runs[0].env.NODE_V8_COVERAGE;
+          mkdirSync(path.join(raw, 'nested'), { recursive: true });
+          writeFileSync(path.join(raw, 'nested/keep.txt'), 'raw');
+          writeFileSync(path.join(raw, 'coverage-1-1-0.json'), JSON.stringify({ result: [{
+            url: pathToFileURL(path.join(root, 'src/math.js')).href,
+            functions: [{ functionName: '', isBlockCoverage: true, ranges: [{ startOffset: 0, endOffset: 45, count: 1 }] }],
+          }] }));
+        }
+        return { status: 0 };
+      };
+      run(root, ['init'], { spawn: fakeSpawn, openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : '{"items":[]}' }) });
+      assert.equal(existsSync(path.join(root, '.gev-cache/spec/v8')), false);
+      assert.equal(existsSync(path.join(root, '.gev-cache/spec/inventory.json')), true);
+      assert.equal(existsSync(path.join(root, '.gev-cache/spec/results.json')), true);
+      if (mode === 'loaded') assert.match(readFileSync(path.join(root, '.gev-cache/spec/lcov.info'), 'utf8'), /LF:3\nLH:3/);
+    });
+  }
 });

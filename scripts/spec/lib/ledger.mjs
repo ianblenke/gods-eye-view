@@ -689,3 +689,81 @@ export function adoptLedger({ ledger, current, eligible, reached = () => false, 
   }
   return { ledger: { coverage, untracedTests }, history };
 }
+
+const MERGE_MODULE = 'scripts/spec/lib/v8-merge.mjs';
+const BASELINE_CHANGE = 'gates-coverage-race';
+
+function baselineContext({ change, changeActive, diffFiles, baseFiles }) {
+  if (change !== BASELINE_CHANGE) return false;
+  if (!changeActive) return false;
+  if (!diffFiles.includes(MERGE_MODULE)) return false;
+  return !baseFiles.has(MERGE_MODULE);
+}
+
+export function baselineFault(input) {
+  if (!input.history.startsWith(input.baseHistory)) return 'The baseline needs the unchanged base history prefix.';
+  if (!baselineContext(input)) return 'The baseline needs this active change and its new merge module.';
+  const lines = historyLinesOf(input.history, input.baseHistory, input.change);
+  if (lines.some((line) => line.kind === 'rebaseline' && line.change === input.change)) return 'The change already records its baseline step.';
+  return null;
+}
+
+export function rebaselineLedger({ ledger, baseLedger, coverage, sameAsBase, change, date, commit }) {
+  const next = { ...ledger, coverage: { ...ledger.coverage } };
+  const history = [];
+  const files = [];
+  for (const record of coverage) {
+    if (!sameAsBase(record.file)) continue;
+    if (!record.loaded) continue;
+    if (record.untrue) continue;
+    const base = baseLedger.coverage[record.file];
+    const gap = { loaded: true, sha: record.sha, untrue: false, lines: record.lines.uncovered, branches: record.branches.uncovered, functions: record.functions.uncovered, totals: totalsOf(record) };
+    const own = [];
+    for (const metric of METRICS) {
+      const old = base ? base[metric] : 0;
+      const oldTotal = base ? base.totals[metric] : null;
+      if (old === gap[metric]) {
+        if (!base) continue;
+        if (oldTotal === gap.totals[metric]) continue;
+      }
+      own.push({ date, commit, change, kind: 'rebaseline', file: record.file, sha: record.sha, metric, old, new: gap[metric], oldTotal, newTotal: gap.totals[metric] });
+    }
+    if (own.length === 0) continue;
+    history.push(...own);
+    files.push(record.file);
+    if (record.complete) delete next.coverage[record.file];
+    else {
+      const origin = base ? { origin: base.origin, since: base.since } : { origin: change, since: date };
+      next.coverage[record.file] = { ...gap, ...origin };
+    }
+  }
+  return { ledger: next, history, files };
+}
+
+export function checkRebaseline(input) {
+  const { history, baseHistory, change, baseLedger, ledger } = input;
+  const lines = historyLinesOf(history, baseHistory, change).filter((line) => line.kind === 'rebaseline' && line.change === change);
+  if (lines.length === 0) return { baseLedger, errors: [] };
+  const error = { code: 'LEDGER-REBASELINE', file: HISTORY_FILE, message: 'The baseline history does not match this change and its exact source values.' };
+  const invalid = () => ({ baseLedger, errors: [error] });
+  if (!baselineContext(input)) return invalid();
+  if (!baseLedger) return invalid();
+  const expected = rebaselineLedger({ ...input, change, ledger: baseLedger });
+  const fields = ['file', 'sha', 'metric', 'old', 'new', 'oldTotal', 'newTotal'];
+  const key = (line) => JSON.stringify(fields.map((field) => line[field]));
+  const actual = new Set(lines.map(key));
+  if (actual.size !== lines.length) return invalid();
+  if (expected.history.length !== lines.length) return invalid();
+  if (!expected.history.every((line) => actual.has(key(line)))) return invalid();
+  for (const file of expected.files) {
+    const entry = expected.ledger.coverage[file];
+    const current = ledger.coverage[file];
+    if (!entry) {
+      if (current) return invalid();
+    } else {
+      if (!current) return invalid();
+      if (!sameGap(current, entry)) return invalid();
+    }
+  }
+  return { baseLedger: expected.ledger, errors: [] };
+}
