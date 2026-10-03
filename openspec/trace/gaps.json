@@ -93,16 +93,16 @@
     },
     "scripts/check-layer-state-tokens.mjs": {
       "loaded": true,
-      "lines": 6,
-      "branches": 4,
+      "sha": "cf74cdcab01f67f1ba9694843379c47cc8542c3461465a4997b0cc316e9753b3",
+      "untrue": false,
+      "lines": 8,
+      "branches": 5,
       "functions": 0,
       "totals": {
         "lines": 131,
-        "branches": 12,
+        "branches": 14,
         "functions": 3
       },
-      "sha": "cf74cdcab01f67f1ba9694843379c47cc8542c3461465a4997b0cc316e9753b3",
-      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
     },
@@ -421,6 +421,21 @@
       "origin": "ledger-waiver",
       "since": "2026-09-22"
     },
+    "scripts/spec/lib/test-guard.mjs": {
+      "loaded": true,
+      "sha": "9451e6303105436c50adc39c30c65ef875c0871c318a6ca26a81e3a94f1ebe9f",
+      "untrue": false,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 318,
+        "branches": 151,
+        "functions": 39
+      },
+      "origin": "gates-coverage-race",
+      "since": "2026-10-03"
+    },
     "scripts/track-regression.mjs": {
       "loaded": false,
       "lines": 4218,
@@ -453,16 +468,16 @@
     },
     "server/providers/aircraft/adsb-lol.js": {
       "loaded": true,
-      "lines": 0,
-      "branches": 1,
+      "sha": "5a5424c05dec362820585c062cdfe0db0e2deb8faab163c4fa70ad641e065c3d",
+      "untrue": false,
+      "lines": 3,
+      "branches": 3,
       "functions": 1,
       "totals": {
         "lines": 158,
-        "branches": 36,
+        "branches": 40,
         "functions": 7
       },
-      "sha": "5a5424c05dec362820585c062cdfe0db0e2deb8faab163c4fa70ad641e065c3d",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -483,16 +498,16 @@
     },
     "server/providers/aircraft/opensky.js": {
       "loaded": true,
+      "sha": "934bcb697a3869c07e1d1940dc99a267c8b9c3e56e342117e404d4793cd4151f",
+      "untrue": false,
       "lines": 397,
-      "branches": 51,
+      "branches": 53,
       "functions": 5,
       "totals": {
         "lines": 701,
-        "branches": 88,
+        "branches": 92,
         "functions": 14
       },
-      "sha": "934bcb697a3869c07e1d1940dc99a267c8b9c3e56e342117e404d4793cd4151f",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -513,31 +528,31 @@
     },
     "server/providers/cctv.js": {
       "loaded": true,
-      "lines": 174,
-      "branches": 56,
+      "sha": "c30e17bac6eb1e733618382029760fe40cfc2764047ad064091f0f8a625f9e9f",
+      "untrue": false,
+      "lines": 175,
+      "branches": 60,
       "functions": 1,
       "totals": {
         "lines": 567,
-        "branches": 119,
+        "branches": 136,
         "functions": 11
       },
-      "sha": "c30e17bac6eb1e733618382029760fe40cfc2764047ad064091f0f8a625f9e9f",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "server/providers/cctv/cap.js": {
       "loaded": true,
+      "sha": "f491277f46b840730b8e746c4617e92058d37a10362f2f078d0fdcd4046cbdda",
+      "untrue": false,
       "lines": 0,
-      "branches": 1,
+      "branches": 2,
       "functions": 0,
       "totals": {
         "lines": 82,
-        "branches": 20,
+        "branches": 21,
         "functions": 6
       },
-      "sha": "f491277f46b840730b8e746c4617e92058d37a10362f2f078d0fdcd4046cbdda",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -573,16 +588,16 @@
     },
     "server/providers/cctv/media.js": {
       "loaded": true,
-      "lines": 25,
-      "branches": 24,
+      "sha": "18630b60b7baa34fc795f9d2d65483ec77f0940e6ba0c856caa104bff0964185",
+      "untrue": false,
+      "lines": 27,
+      "branches": 26,
       "functions": 2,
       "totals": {
         "lines": 560,
-        "branches": 127,
+        "branches": 145,
         "functions": 24
       },
-      "sha": "18630b60b7baa34fc795f9d2d65483ec77f0940e6ba0c856caa104bff0964185",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -618,16 +633,16 @@
     },
     "server/providers/cctv/sources.js": {
       "loaded": true,
+      "sha": "478d831772d4176a33ff49dbb9a03a10b0611583ffa00cde4f23f2f1a3518127",
+      "untrue": false,
       "lines": 411,
-      "branches": 93,
+      "branches": 107,
       "functions": 7,
       "totals": {
         "lines": 1703,
-        "branches": 345,
+        "branches": 408,
         "functions": 39
       },
-      "sha": "478d831772d4176a33ff49dbb9a03a10b0611583ffa00cde4f23f2f1a3518127",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -723,16 +738,16 @@
     },
     "server/providers/gbfs.js": {
       "loaded": true,
-      "lines": 18,
-      "branches": 5,
+      "sha": "31338dc97438b5de23a777fc2b7a780282a2a7eb7c8a6478ac56045d865f4906",
+      "untrue": false,
+      "lines": 27,
+      "branches": 9,
       "functions": 2,
       "totals": {
         "lines": 249,
-        "branches": 44,
+        "branches": 50,
         "functions": 8
       },
-      "sha": "31338dc97438b5de23a777fc2b7a780282a2a7eb7c8a6478ac56045d865f4906",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -828,31 +843,31 @@
     },
     "server/providers/openai/realtime.js": {
       "loaded": true,
-      "lines": 7,
-      "branches": 4,
+      "sha": "45557d8f03247cf2c4ba7243aef1cc66615b9d6a1af7df6f8cff88cfbe187c1f",
+      "untrue": false,
+      "lines": 9,
+      "branches": 6,
       "functions": 0,
       "totals": {
         "lines": 170,
-        "branches": 20,
+        "branches": 32,
         "functions": 5
       },
-      "sha": "45557d8f03247cf2c4ba7243aef1cc66615b9d6a1af7df6f8cff88cfbe187c1f",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "server/providers/overpass.js": {
       "loaded": true,
-      "lines": 44,
-      "branches": 7,
+      "sha": "674e10209bb932b108541f78eeaa692988426b77f8606f6a6d2569bed77a980f",
+      "untrue": false,
+      "lines": 51,
+      "branches": 8,
       "functions": 0,
       "totals": {
         "lines": 250,
-        "branches": 43,
+        "branches": 50,
         "functions": 8
       },
-      "sha": "674e10209bb932b108541f78eeaa692988426b77f8606f6a6d2569bed77a980f",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -888,16 +903,16 @@
     },
     "server/providers/overpass/query.js": {
       "loaded": true,
-      "lines": 17,
-      "branches": 14,
+      "sha": "eedb38f8a97e297c15207d10d8cbabed306c806bc3773bbd0b51933a1060c5c9",
+      "untrue": false,
+      "lines": 19,
+      "branches": 15,
       "functions": 3,
       "totals": {
         "lines": 151,
-        "branches": 29,
+        "branches": 30,
         "functions": 6
       },
-      "sha": "eedb38f8a97e297c15207d10d8cbabed306c806bc3773bbd0b51933a1060c5c9",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -918,46 +933,46 @@
     },
     "server/providers/places/google.js": {
       "loaded": true,
+      "sha": "d1a3217fecc988b69aecfe1307d2daa77fad499354bc4047a60b84f564c1fd1a",
+      "untrue": false,
       "lines": 35,
-      "branches": 10,
+      "branches": 11,
       "functions": 2,
       "totals": {
         "lines": 276,
-        "branches": 50,
+        "branches": 61,
         "functions": 10
       },
-      "sha": "d1a3217fecc988b69aecfe1307d2daa77fad499354bc4047a60b84f564c1fd1a",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "server/providers/places/routes.js": {
       "loaded": true,
-      "lines": 8,
-      "branches": 11,
+      "sha": "2fa9731cfec9673d8eded785d636478a0af86e578f785c9d87da4634ebd6e87a",
+      "untrue": false,
+      "lines": 10,
+      "branches": 14,
       "functions": 1,
       "totals": {
         "lines": 370,
-        "branches": 94,
+        "branches": 98,
         "functions": 19
       },
-      "sha": "2fa9731cfec9673d8eded785d636478a0af86e578f785c9d87da4634ebd6e87a",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "server/providers/radio/catalog.js": {
       "loaded": true,
-      "lines": 4,
-      "branches": 12,
+      "sha": "c41785695e2e53cf4948941aa354deb6c5d99b448037fa07068befc65b977d69",
+      "untrue": false,
+      "lines": 8,
+      "branches": 15,
       "functions": 2,
       "totals": {
         "lines": 394,
-        "branches": 108,
+        "branches": 111,
         "functions": 26
       },
-      "sha": "c41785695e2e53cf4948941aa354deb6c5d99b448037fa07068befc65b977d69",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -1143,16 +1158,16 @@
     },
     "server/providers/vessels/ais-store.js": {
       "loaded": true,
-      "lines": 40,
+      "sha": "71ec923cc8367686c7c90629f094beeaa22cb9a77b789376930290316121410d",
+      "untrue": false,
+      "lines": 44,
       "branches": 30,
       "functions": 2,
       "totals": {
         "lines": 310,
-        "branches": 76,
+        "branches": 74,
         "functions": 21
       },
-      "sha": "71ec923cc8367686c7c90629f094beeaa22cb9a77b789376930290316121410d",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -1233,16 +1248,16 @@
     },
     "server/providers/wind/grid.js": {
       "loaded": true,
+      "sha": "d2bc7718525f3f12bc87253a3d23e1662c5a29326ca8110a175e80a0fa8c7a61",
+      "untrue": false,
       "lines": 0,
-      "branches": 1,
+      "branches": 3,
       "functions": 0,
       "totals": {
         "lines": 172,
-        "branches": 66,
+        "branches": 70,
         "functions": 8
       },
-      "sha": "d2bc7718525f3f12bc87253a3d23e1662c5a29326ca8110a175e80a0fa8c7a61",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -1278,16 +1293,16 @@
     },
     "server/standalone/key-setup.js": {
       "loaded": true,
+      "sha": "7bf27bd465fdf3765134dfa003cf056778540dc679b6a59a267da05c6b9ba207",
+      "untrue": false,
       "lines": 53,
-      "branches": 25,
+      "branches": 26,
       "functions": 1,
       "totals": {
         "lines": 344,
-        "branches": 52,
+        "branches": 54,
         "functions": 22
       },
-      "sha": "7bf27bd465fdf3765134dfa003cf056778540dc679b6a59a267da05c6b9ba207",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -1308,31 +1323,31 @@
     },
     "src/annotations/annotationEngine.js": {
       "loaded": true,
-      "lines": 620,
-      "branches": 60,
+      "sha": "ae6e12c345f4eddad3ab9db250efd5f339cfeb02ab2ccdc1bc3963c7e5f1a7b2",
+      "untrue": false,
+      "lines": 683,
+      "branches": 95,
       "functions": 27,
       "totals": {
         "lines": 1597,
-        "branches": 232,
+        "branches": 284,
         "functions": 70
       },
-      "sha": "ae6e12c345f4eddad3ab9db250efd5f339cfeb02ab2ccdc1bc3963c7e5f1a7b2",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/annotations/drawMode.js": {
       "loaded": true,
+      "sha": "abaf6006629a1180992558f3d2bc326502f3c40a6d74ba95ac6bdf635aabef60",
+      "untrue": false,
       "lines": 3,
-      "branches": 15,
+      "branches": 16,
       "functions": 0,
       "totals": {
         "lines": 303,
-        "branches": 116,
+        "branches": 121,
         "functions": 24
       },
-      "sha": "abaf6006629a1180992558f3d2bc326502f3c40a6d74ba95ac6bdf635aabef60",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -1383,31 +1398,31 @@
     },
     "src/annotations/resolver.js": {
       "loaded": true,
-      "lines": 342,
-      "branches": 122,
+      "sha": "54a9e17145050b54cbd3590c7dd2ecfa9e2e31e7a4d195008ceae53e02b8a1b2",
+      "untrue": false,
+      "lines": 417,
+      "branches": 135,
       "functions": 16,
       "totals": {
         "lines": 2117,
-        "branches": 447,
+        "branches": 524,
         "functions": 68
       },
-      "sha": "54a9e17145050b54cbd3590c7dd2ecfa9e2e31e7a4d195008ceae53e02b8a1b2",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/annotations/screenAnnotationRenderer.js": {
       "loaded": true,
-      "lines": 270,
-      "branches": 54,
+      "sha": "d6df0de6f50d16b67ce4ec30162c5adbcd3742431ddb04ef68b48bec331b61a6",
+      "untrue": false,
+      "lines": 272,
+      "branches": 58,
       "functions": 9,
       "totals": {
         "lines": 881,
-        "branches": 132,
+        "branches": 140,
         "functions": 30
       },
-      "sha": "d6df0de6f50d16b67ce4ec30162c5adbcd3742431ddb04ef68b48bec331b61a6",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -1533,16 +1548,16 @@
     },
     "src/app/layerPresentation.js": {
       "loaded": true,
+      "sha": "47b3cc27e58c0b070ebe31ff5e6195ca75c5a1aca0d5b1c127b5ca0fbbf7fb11",
+      "untrue": false,
       "lines": 9,
-      "branches": 1,
+      "branches": 2,
       "functions": 3,
       "totals": {
         "lines": 94,
-        "branches": 33,
+        "branches": 34,
         "functions": 17
       },
-      "sha": "47b3cc27e58c0b070ebe31ff5e6195ca75c5a1aca0d5b1c127b5ca0fbbf7fb11",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -1803,31 +1818,31 @@
     },
     "src/cameraGroundGuard.js": {
       "loaded": true,
+      "sha": "9eb5668b04b1ab0df80f67a589bacff4a5103cecbf78571ae3364c0a92f006d3",
+      "untrue": false,
       "lines": 5,
       "branches": 10,
       "functions": 2,
       "totals": {
         "lines": 198,
-        "branches": 54,
+        "branches": 53,
         "functions": 10
       },
-      "sha": "9eb5668b04b1ab0df80f67a589bacff4a5103cecbf78571ae3364c0a92f006d3",
-      "untrue": false,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
     },
     "src/cameraVerbs.js": {
       "loaded": true,
-      "lines": 174,
-      "branches": 46,
+      "sha": "c75702426300dd14ed32c5fad3ce7616a57cabce509f0d33384d99570373a35d",
+      "untrue": false,
+      "lines": 180,
+      "branches": 48,
       "functions": 3,
       "totals": {
         "lines": 1550,
-        "branches": 276,
+        "branches": 292,
         "functions": 43
       },
-      "sha": "c75702426300dd14ed32c5fad3ce7616a57cabce509f0d33384d99570373a35d",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -1998,16 +2013,16 @@
     },
     "src/cyberSonar.js": {
       "loaded": true,
+      "sha": "ddf0ce1d9b4538d59bc8a88b72671d6115cb88eeeaf0b15b95d737480e99f356",
+      "untrue": false,
       "lines": 5,
-      "branches": 28,
+      "branches": 33,
       "functions": 1,
       "totals": {
         "lines": 562,
-        "branches": 179,
+        "branches": 196,
         "functions": 31
       },
-      "sha": "ddf0ce1d9b4538d59bc8a88b72671d6115cb88eeeaf0b15b95d737480e99f356",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -2071,6 +2086,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/data/aircraftClass.js": {
+      "loaded": true,
+      "sha": "65fd0bd592d798cd646bb1d6c32454237f20a26edb85eac3cb88a8a4dc641309",
+      "untrue": false,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 518,
+        "branches": 36,
+        "functions": 1
+      },
+      "origin": "gates-coverage-race",
+      "since": "2026-10-03"
+    },
     "src/data/aircraftIcons.js": {
       "loaded": true,
       "lines": 0,
@@ -2118,16 +2148,16 @@
     },
     "src/data/aisStreamAdapter.js": {
       "loaded": true,
+      "sha": "fb18ead79fb5303a91730bbccd28b0d3a162e208ae4aa9389a44dba8b6e69110",
+      "untrue": false,
       "lines": 26,
-      "branches": 16,
+      "branches": 18,
       "functions": 1,
       "totals": {
         "lines": 580,
-        "branches": 150,
+        "branches": 155,
         "functions": 36
       },
-      "sha": "fb18ead79fb5303a91730bbccd28b0d3a162e208ae4aa9389a44dba8b6e69110",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -2163,31 +2193,31 @@
     },
     "src/data/analystEngine.js": {
       "loaded": true,
+      "sha": "66281fcdc1a002aa5807cbdc129fc31fd7901a550c294cb29702cdc36b40aaa9",
+      "untrue": false,
       "lines": 12,
-      "branches": 14,
+      "branches": 17,
       "functions": 0,
       "totals": {
         "lines": 371,
-        "branches": 123,
+        "branches": 131,
         "functions": 16
       },
-      "sha": "66281fcdc1a002aa5807cbdc129fc31fd7901a550c294cb29702cdc36b40aaa9",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/data/bhoteKoshiEmbeddedMedia.js": {
       "loaded": true,
+      "sha": "8e2488c1839e884252b92cb9af1eab718438cbd7de91297aab14ebc69d097372",
+      "untrue": false,
       "lines": 431,
-      "branches": 75,
+      "branches": 76,
       "functions": 23,
       "totals": {
         "lines": 1097,
-        "branches": 247,
+        "branches": 254,
         "functions": 74
       },
-      "sha": "8e2488c1839e884252b92cb9af1eab718438cbd7de91297aab14ebc69d097372",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -2208,16 +2238,16 @@
     },
     "src/data/bhoteKoshiLocator.js": {
       "loaded": true,
-      "lines": 60,
-      "branches": 14,
+      "sha": "f6fb93e53fb0f4d12be26b5b504f81439280a9b1554e21956c77988b45b239d7",
+      "untrue": false,
+      "lines": 70,
+      "branches": 15,
       "functions": 28,
       "totals": {
         "lines": 1218,
-        "branches": 212,
+        "branches": 213,
         "functions": 96
       },
-      "sha": "f6fb93e53fb0f4d12be26b5b504f81439280a9b1554e21956c77988b45b239d7",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -2298,16 +2328,16 @@
     },
     "src/data/cctvLod.js": {
       "loaded": true,
+      "sha": "3b071cf9b5900c3d44eea7732d999f690e1e3b337d1786a10705083e6e323721",
+      "untrue": false,
       "lines": 1,
-      "branches": 32,
+      "branches": 33,
       "functions": 0,
       "totals": {
         "lines": 522,
-        "branches": 147,
+        "branches": 151,
         "functions": 23
       },
-      "sha": "3b071cf9b5900c3d44eea7732d999f690e1e3b337d1786a10705083e6e323721",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -2358,31 +2388,31 @@
     },
     "src/data/contactPlayback.js": {
       "loaded": true,
+      "sha": "0bafeee1de44ea9634607bdf7cff14f711d663a04aafef5cd4f513650c0e8d28",
+      "untrue": false,
       "lines": 8,
-      "branches": 18,
+      "branches": 20,
       "functions": 1,
       "totals": {
         "lines": 691,
-        "branches": 275,
+        "branches": 281,
         "functions": 40
       },
-      "sha": "0bafeee1de44ea9634607bdf7cff14f711d663a04aafef5cd4f513650c0e8d28",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/data/contactTrailRenderer.js": {
       "loaded": true,
+      "sha": "084fb77b82615f89863f1f4520b9c219abf41bebafd447695c3941f356f4a776",
+      "untrue": false,
       "lines": 6,
-      "branches": 4,
+      "branches": 6,
       "functions": 0,
       "totals": {
         "lines": 309,
-        "branches": 77,
+        "branches": 79,
         "functions": 12
       },
-      "sha": "084fb77b82615f89863f1f4520b9c219abf41bebafd447695c3941f356f4a776",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -2463,16 +2493,16 @@
     },
     "src/data/detectionPolicy.js": {
       "loaded": true,
+      "sha": "1a2346b27f0182050f5ed7bc2a71ec3a64b6717f130a281c2a0f3593d97a3edf",
+      "untrue": false,
       "lines": 3,
-      "branches": 14,
+      "branches": 15,
       "functions": 0,
       "totals": {
         "lines": 257,
-        "branches": 103,
+        "branches": 111,
         "functions": 11
       },
-      "sha": "1a2346b27f0182050f5ed7bc2a71ec3a64b6717f130a281c2a0f3593d97a3edf",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -2613,16 +2643,16 @@
     },
     "src/data/gtfsRealtime.js": {
       "loaded": true,
-      "lines": 0,
-      "branches": 5,
+      "sha": "9dde594b203d01bed8aa541a7b334cb35d33ec4616e4fc4aeef14803f718b376",
+      "untrue": false,
+      "lines": 2,
+      "branches": 8,
       "functions": 0,
       "totals": {
         "lines": 274,
-        "branches": 127,
+        "branches": 130,
         "functions": 14
       },
-      "sha": "9dde594b203d01bed8aa541a7b334cb35d33ec4616e4fc4aeef14803f718b376",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -2658,61 +2688,61 @@
     },
     "src/data/labelArbiter.js": {
       "loaded": true,
-      "lines": 15,
-      "branches": 46,
+      "sha": "da178072243462227e064ffcc3f0d79ac2956bf4de7a066d01ac82756d51b184",
+      "untrue": false,
+      "lines": 21,
+      "branches": 63,
       "functions": 0,
       "totals": {
         "lines": 1271,
-        "branches": 431,
+        "branches": 457,
         "functions": 61
       },
-      "sha": "da178072243462227e064ffcc3f0d79ac2956bf4de7a066d01ac82756d51b184",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/data/layerSnapshot.js": {
       "loaded": true,
+      "sha": "da5ea617fd8a733e15e9e0c4e9f4c51bb87ed554f1fbff9c5d041f9c0bd28095",
+      "untrue": false,
       "lines": 8,
-      "branches": 12,
+      "branches": 14,
       "functions": 1,
       "totals": {
         "lines": 253,
-        "branches": 69,
+        "branches": 78,
         "functions": 17
       },
-      "sha": "da5ea617fd8a733e15e9e0c4e9f4c51bb87ed554f1fbff9c5d041f9c0bd28095",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/data/layerState.js": {
       "loaded": true,
+      "sha": "4c93bd0d7e23d238e5443f40f5fb026cbdf1a73d5b8b2adc8b8efa25a8750af0",
+      "untrue": false,
       "lines": 107,
-      "branches": 81,
+      "branches": 83,
       "functions": 5,
       "totals": {
         "lines": 1775,
-        "branches": 472,
+        "branches": 482,
         "functions": 107
       },
-      "sha": "4c93bd0d7e23d238e5443f40f5fb026cbdf1a73d5b8b2adc8b8efa25a8750af0",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/data/lifecycle.js": {
       "loaded": true,
-      "lines": 177,
-      "branches": 100,
+      "sha": "a5d06cef52480b4aea4d0b051e7f2ac8b54e451fce7ba8063fc4a798d1a3d987",
+      "untrue": false,
+      "lines": 228,
+      "branches": 123,
       "functions": 15,
       "totals": {
         "lines": 2328,
-        "branches": 573,
+        "branches": 603,
         "functions": 116
       },
-      "sha": "a5d06cef52480b4aea4d0b051e7f2ac8b54e451fce7ba8063fc4a798d1a3d987",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -2733,16 +2763,16 @@
     },
     "src/data/localGeojsonCore.js": {
       "loaded": true,
-      "lines": 21,
-      "branches": 45,
+      "sha": "d05d84914b9b861fddb5113713f9dd8ffde653115fd2999efae3e94fab47c278",
+      "untrue": false,
+      "lines": 23,
+      "branches": 48,
       "functions": 5,
       "totals": {
         "lines": 1367,
-        "branches": 363,
+        "branches": 375,
         "functions": 57
       },
-      "sha": "d05d84914b9b861fddb5113713f9dd8ffde653115fd2999efae3e94fab47c278",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -2868,16 +2898,16 @@
     },
     "src/data/motionModel.js": {
       "loaded": true,
+      "sha": "f6e6ed5ca1155f9202235c4cd69bc4ef0c7bff38cb12d7bf8efea92e75cb0f49",
+      "untrue": false,
       "lines": 0,
-      "branches": 19,
+      "branches": 21,
       "functions": 0,
       "totals": {
         "lines": 502,
-        "branches": 111,
+        "branches": 115,
         "functions": 16
       },
-      "sha": "f6e6ed5ca1155f9202235c4cd69bc4ef0c7bff38cb12d7bf8efea92e75cb0f49",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -2988,31 +3018,31 @@
     },
     "src/data/routePlausible.js": {
       "loaded": true,
+      "sha": "d1e876ab6d8e4e4405eee26dc0d56c94362bd45344cdf73c25857fb723ae35c5",
+      "untrue": false,
       "lines": 2,
-      "branches": 1,
+      "branches": 2,
       "functions": 0,
       "totals": {
         "lines": 117,
-        "branches": 27,
+        "branches": 29,
         "functions": 5
       },
-      "sha": "d1e876ab6d8e4e4405eee26dc0d56c94362bd45344cdf73c25857fb723ae35c5",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/data/routeSteps.js": {
       "loaded": true,
+      "sha": "b0da4d6a692e3691a687421315482b8a81b24b3acbef4152e213be28677ed11d",
+      "untrue": false,
       "lines": 9,
-      "branches": 11,
+      "branches": 19,
       "functions": 0,
       "totals": {
         "lines": 222,
-        "branches": 100,
+        "branches": 111,
         "functions": 9
       },
-      "sha": "b0da4d6a692e3691a687421315482b8a81b24b3acbef4152e213be28677ed11d",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -3063,16 +3093,16 @@
     },
     "src/data/terrainHeightsProxy.js": {
       "loaded": true,
+      "sha": "ee24d71cda0109788aad0d006c886a9e3f3cabf054c701eb5a091dfba0985682",
+      "untrue": false,
       "lines": 12,
-      "branches": 10,
+      "branches": 11,
       "functions": 1,
       "totals": {
         "lines": 278,
-        "branches": 79,
+        "branches": 85,
         "functions": 14
       },
-      "sha": "ee24d71cda0109788aad0d006c886a9e3f3cabf054c701eb5a091dfba0985682",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -3108,16 +3138,16 @@
     },
     "src/data/trackedReadout.js": {
       "loaded": true,
+      "sha": "a9203de51bfbd89d9f45c8b2430d8d135e9160d834dc635e7c8d7d6dab44f348",
+      "untrue": false,
       "lines": 3,
-      "branches": 15,
+      "branches": 16,
       "functions": 0,
       "totals": {
         "lines": 307,
-        "branches": 81,
+        "branches": 84,
         "functions": 21
       },
-      "sha": "a9203de51bfbd89d9f45c8b2430d8d135e9160d834dc635e7c8d7d6dab44f348",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -3213,16 +3243,16 @@
     },
     "src/data/trailRenderer.js": {
       "loaded": true,
+      "sha": "4fd960fe1fd4a72bce9d42974dd5391558bde846831f89075639482e0839d908",
+      "untrue": false,
       "lines": 2,
-      "branches": 3,
+      "branches": 5,
       "functions": 0,
       "totals": {
         "lines": 141,
-        "branches": 20,
+        "branches": 24,
         "functions": 8
       },
-      "sha": "4fd960fe1fd4a72bce9d42974dd5391558bde846831f89075639482e0839d908",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -3333,16 +3363,16 @@
     },
     "src/director/camera.js": {
       "loaded": true,
+      "sha": "7b9435e50b2a07c292c0e4eebe38a3fc16d660ed897b71af1c43525e54f06a04",
+      "untrue": false,
       "lines": 0,
-      "branches": 5,
+      "branches": 6,
       "functions": 0,
       "totals": {
         "lines": 54,
-        "branches": 20,
+        "branches": 25,
         "functions": 6
       },
-      "sha": "7b9435e50b2a07c292c0e4eebe38a3fc16d660ed897b71af1c43525e54f06a04",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -3363,31 +3393,31 @@
     },
     "src/director/clock.js": {
       "loaded": true,
+      "sha": "eece358ee071fcdf8194cb4f947071f078e0e1dd9839c06b7787385a61c361a6",
+      "untrue": false,
       "lines": 12,
-      "branches": 11,
+      "branches": 12,
       "functions": 1,
       "totals": {
         "lines": 301,
-        "branches": 95,
+        "branches": 106,
         "functions": 29
       },
-      "sha": "eece358ee071fcdf8194cb4f947071f078e0e1dd9839c06b7787385a61c361a6",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/director/document.js": {
       "loaded": true,
+      "sha": "69b457d7f565784d5e3df42d538fea5bfea4633ed89550d0064744192fec0f85",
+      "untrue": false,
       "lines": 2,
-      "branches": 3,
+      "branches": 4,
       "functions": 0,
       "totals": {
         "lines": 186,
-        "branches": 56,
+        "branches": 58,
         "functions": 19
       },
-      "sha": "69b457d7f565784d5e3df42d538fea5bfea4633ed89550d0064744192fec0f85",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -3453,16 +3483,16 @@
     },
     "src/director/packs/manifest.js": {
       "loaded": true,
+      "sha": "33ea3ca51d576854eff4190214cd89422ed02535735f3c972d584332b0411f08",
+      "untrue": false,
       "lines": 2,
-      "branches": 4,
+      "branches": 5,
       "functions": 0,
       "totals": {
         "lines": 138,
-        "branches": 43,
+        "branches": 49,
         "functions": 13
       },
-      "sha": "33ea3ca51d576854eff4190214cd89422ed02535735f3c972d584332b0411f08",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -3633,46 +3663,46 @@
     },
     "src/keySetupCore.mjs": {
       "loaded": true,
+      "sha": "3e7ebdb97330431f743752c51fedb99bbb89e3ccbc638a80699ea4bc1b8c384f",
+      "untrue": false,
       "lines": 9,
-      "branches": 8,
+      "branches": 9,
       "functions": 0,
       "totals": {
         "lines": 513,
-        "branches": 145,
+        "branches": 147,
         "functions": 22
       },
-      "sha": "3e7ebdb97330431f743752c51fedb99bbb89e3ccbc638a80699ea4bc1b8c384f",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/keylessGeocoder.js": {
       "loaded": true,
+      "sha": "a82d7bf5bf70b43e8f4981ef75b8f62dd55275c7d20cb63fb34d9c297cd94845",
+      "untrue": false,
       "lines": 4,
       "branches": 5,
       "functions": 1,
       "totals": {
         "lines": 419,
-        "branches": 120,
+        "branches": 118,
         "functions": 16
       },
-      "sha": "a82d7bf5bf70b43e8f4981ef75b8f62dd55275c7d20cb63fb34d9c297cd94845",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/aircraft/classification.js": {
       "loaded": true,
+      "sha": "63c25df38dec4b014448368257912eb1e58f2cd6e1b0315d90527a01d7a18900",
+      "untrue": false,
       "lines": 0,
-      "branches": 7,
+      "branches": 8,
       "functions": 0,
       "totals": {
         "lines": 167,
-        "branches": 49,
+        "branches": 51,
         "functions": 13
       },
-      "sha": "63c25df38dec4b014448368257912eb1e58f2cd6e1b0315d90527a01d7a18900",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -3948,16 +3978,16 @@
     },
     "src/layers/awareness/subject.js": {
       "loaded": true,
-      "lines": 0,
-      "branches": 13,
+      "sha": "876c909fa20748ba197ea2ee51b7e3be7fc187a6787509619b632405c5548739",
+      "untrue": false,
+      "lines": 21,
+      "branches": 17,
       "functions": 0,
       "totals": {
         "lines": 460,
-        "branches": 83,
+        "branches": 94,
         "functions": 21
       },
-      "sha": "876c909fa20748ba197ea2ee51b7e3be7fc187a6787509619b632405c5548739",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -4503,16 +4533,16 @@
     },
     "src/layers/directions/index.js": {
       "loaded": true,
+      "sha": "5b9f701872582740d985805d55cd1b24efd354a5af44b3e220949b6522d43975",
+      "untrue": false,
       "lines": 277,
-      "branches": 32,
+      "branches": 35,
       "functions": 16,
       "totals": {
         "lines": 1434,
-        "branches": 264,
+        "branches": 282,
         "functions": 71
       },
-      "sha": "5b9f701872582740d985805d55cd1b24efd354a5af44b3e220949b6522d43975",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -4608,16 +4638,16 @@
     },
     "src/layers/firms/ingestion.js": {
       "loaded": true,
+      "sha": "2e7bc59112e2cfb0362e54777f30e8d36fce55e49c566636aa49b5e13e8959bc",
+      "untrue": false,
       "lines": 0,
-      "branches": 5,
+      "branches": 6,
       "functions": 0,
       "totals": {
         "lines": 111,
-        "branches": 24,
+        "branches": 32,
         "functions": 6
       },
-      "sha": "2e7bc59112e2cfb0362e54777f30e8d36fce55e49c566636aa49b5e13e8959bc",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -4788,16 +4818,16 @@
     },
     "src/layers/flights/ingestion.js": {
       "loaded": true,
-      "lines": 3,
-      "branches": 3,
+      "sha": "3ecba550a0df7f22f0987536bf7d768d61c171867b95c4414dcd5a4f6ec1c48f",
+      "untrue": false,
+      "lines": 6,
+      "branches": 6,
       "functions": 0,
       "totals": {
         "lines": 112,
-        "branches": 25,
+        "branches": 30,
         "functions": 3
       },
-      "sha": "3ecba550a0df7f22f0987536bf7d768d61c171867b95c4414dcd5a4f6ec1c48f",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -4863,46 +4893,46 @@
     },
     "src/layers/flights/queries.js": {
       "loaded": true,
-      "lines": 117,
-      "branches": 54,
+      "sha": "f522fb1ecc22ec0234b7b3b110dcefe5e97b1367eac39a3c688b44dafd028523",
+      "untrue": false,
+      "lines": 121,
+      "branches": 59,
       "functions": 9,
       "totals": {
         "lines": 952,
-        "branches": 191,
+        "branches": 207,
         "functions": 32
       },
-      "sha": "f522fb1ecc22ec0234b7b3b110dcefe5e97b1367eac39a3c688b44dafd028523",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/flights/records.js": {
       "loaded": true,
-      "lines": 6,
-      "branches": 2,
+      "sha": "162f6474ee8080e8746035c529384996587a24e797a878b62755fc05f4e55244",
+      "untrue": false,
+      "lines": 13,
+      "branches": 7,
       "functions": 0,
       "totals": {
         "lines": 283,
-        "branches": 47,
+        "branches": 56,
         "functions": 4
       },
-      "sha": "162f6474ee8080e8746035c529384996587a24e797a878b62755fc05f4e55244",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/layers/flights/rendering.js": {
       "loaded": true,
-      "lines": 418,
-      "branches": 38,
+      "sha": "0f1c2abc8b9f2e4e6976566219eb4b030c8180bb261294183e7bbf881ff42ac7",
+      "untrue": false,
+      "lines": 426,
+      "branches": 41,
       "functions": 6,
       "totals": {
         "lines": 1162,
-        "branches": 119,
+        "branches": 125,
         "functions": 33
       },
-      "sha": "0f1c2abc8b9f2e4e6976566219eb4b030c8180bb261294183e7bbf881ff42ac7",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -4938,16 +4968,16 @@
     },
     "src/layers/installations/controls.js": {
       "loaded": true,
+      "sha": "2940e0bc8c3aef1456c94a8fb956da5a310e9f66cf37b0f19e683c70f2eec893",
+      "untrue": false,
       "lines": 3,
-      "branches": 6,
+      "branches": 9,
       "functions": 2,
       "totals": {
         "lines": 217,
-        "branches": 44,
+        "branches": 57,
         "functions": 9
       },
-      "sha": "2940e0bc8c3aef1456c94a8fb956da5a310e9f66cf37b0f19e683c70f2eec893",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -4968,16 +4998,16 @@
     },
     "src/layers/installations/ingestion.js": {
       "loaded": true,
+      "sha": "00c6e390f2b94e0384b0f8a1005b37d700ac2bda461743b3c70240ac0404e244",
+      "untrue": false,
       "lines": 80,
-      "branches": 7,
+      "branches": 9,
       "functions": 2,
       "totals": {
         "lines": 318,
-        "branches": 74,
+        "branches": 90,
         "functions": 24
       },
-      "sha": "00c6e390f2b94e0384b0f8a1005b37d700ac2bda461743b3c70240ac0404e244",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -5058,16 +5088,16 @@
     },
     "src/layers/installations/source.js": {
       "loaded": true,
+      "sha": "f5e1a4c92f508d0020aa67c041964a14e1cf94bb2c79eaa2b8990da09b736d26",
+      "untrue": false,
       "lines": 13,
-      "branches": 9,
+      "branches": 10,
       "functions": 0,
       "totals": {
         "lines": 274,
-        "branches": 95,
+        "branches": 100,
         "functions": 22
       },
-      "sha": "f5e1a4c92f508d0020aa67c041964a14e1cf94bb2c79eaa2b8990da09b736d26",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -5358,16 +5388,16 @@
     },
     "src/layers/localAdsb/feedNames.js": {
       "loaded": true,
+      "sha": "aadd8c4896f7b7a37ea16faf32ed2265d11002ccf452950e705ccc96e9440a66",
+      "untrue": false,
       "lines": 0,
-      "branches": 1,
+      "branches": 2,
       "functions": 0,
       "totals": {
         "lines": 21,
-        "branches": 10,
+        "branches": 13,
         "functions": 2
       },
-      "sha": "aadd8c4896f7b7a37ea16faf32ed2265d11002ccf452950e705ccc96e9440a66",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -5418,16 +5448,16 @@
     },
     "src/layers/localAdsb/motion.js": {
       "loaded": true,
+      "sha": "19d721ad9a3279487e1a68e91263e433e6e8d460b7b49f1f6dc04049816a1358",
+      "untrue": false,
       "lines": 0,
-      "branches": 13,
+      "branches": 16,
       "functions": 0,
       "totals": {
         "lines": 427,
-        "branches": 100,
+        "branches": 105,
         "functions": 12
       },
-      "sha": "19d721ad9a3279487e1a68e91263e433e6e8d460b7b49f1f6dc04049816a1358",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -5476,6 +5506,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/layers/military/ingestion.js": {
+      "loaded": true,
+      "sha": "bfd68dc8c876dc510baa0030d36bbbf6fa5ce87a8a39a0b183de03bb08e4d00e",
+      "untrue": false,
+      "lines": 3,
+      "branches": 4,
+      "functions": 0,
+      "totals": {
+        "lines": 102,
+        "branches": 31,
+        "functions": 3
+      },
+      "origin": "gates-coverage-race",
+      "since": "2026-10-03"
+    },
     "src/layers/military/lifecycle.js": {
       "loaded": true,
       "lines": 197,
@@ -5508,61 +5553,61 @@
     },
     "src/layers/military/queries.js": {
       "loaded": true,
-      "lines": 49,
-      "branches": 61,
+      "sha": "82a63063ca149f1976b6cf7ae6d89c02508fc79c37ff4a4bb958e75a1d18308a",
+      "untrue": false,
+      "lines": 53,
+      "branches": 65,
       "functions": 7,
       "totals": {
         "lines": 823,
-        "branches": 189,
+        "branches": 205,
         "functions": 30
       },
-      "sha": "82a63063ca149f1976b6cf7ae6d89c02508fc79c37ff4a4bb958e75a1d18308a",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/military/records.js": {
       "loaded": true,
+      "sha": "af4798a98d441f4963744c147973bd44086c3b3ad15cacc308dcea5b0d3751c5",
+      "untrue": false,
       "lines": 0,
-      "branches": 2,
+      "branches": 5,
       "functions": 0,
       "totals": {
         "lines": 201,
-        "branches": 40,
+        "branches": 45,
         "functions": 4
       },
-      "sha": "af4798a98d441f4963744c147973bd44086c3b3ad15cacc308dcea5b0d3751c5",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/layers/military/rendering.js": {
       "loaded": true,
-      "lines": 391,
-      "branches": 37,
+      "sha": "34cc6115b96589c16cc9196a43b89761a801940dba659720ff1c48354274d2d6",
+      "untrue": false,
+      "lines": 399,
+      "branches": 39,
       "functions": 6,
       "totals": {
         "lines": 1107,
-        "branches": 120,
+        "branches": 129,
         "functions": 32
       },
-      "sha": "34cc6115b96589c16cc9196a43b89761a801940dba659720ff1c48354274d2d6",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/layers/military/snapshotRenderer.js": {
       "loaded": true,
-      "lines": 37,
-      "branches": 9,
+      "sha": "aac2899a69868bbcdf898d5800b2d2670bd729cfe948d27e024e1c8aef72c697",
+      "untrue": false,
+      "lines": 79,
+      "branches": 18,
       "functions": 0,
       "totals": {
         "lines": 295,
-        "branches": 23,
+        "branches": 36,
         "functions": 2
       },
-      "sha": "aac2899a69868bbcdf898d5800b2d2670bd729cfe948d27e024e1c8aef72c697",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -5580,6 +5625,21 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
+    },
+    "src/layers/osh/index.js": {
+      "loaded": true,
+      "sha": "b995edb9d833d5661d0484c31a741131b3ea1439a56fa5d03aa24141bb3a8407",
+      "untrue": false,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 914,
+        "branches": 287,
+        "functions": 62
+      },
+      "origin": "gates-coverage-race",
+      "since": "2026-10-03"
     },
     "src/layers/perimeters/index.js": {
       "loaded": true,
@@ -5748,16 +5808,16 @@
     },
     "src/layers/radio/playback.js": {
       "loaded": true,
+      "sha": "1bcbe7ecc3bdc152206163c62dfa1979d7008a264d6f2778bf522c28ac887a19",
+      "untrue": false,
       "lines": 71,
-      "branches": 44,
+      "branches": 45,
       "functions": 4,
       "totals": {
         "lines": 382,
-        "branches": 110,
+        "branches": 111,
         "functions": 22
       },
-      "sha": "1bcbe7ecc3bdc152206163c62dfa1979d7008a264d6f2778bf522c28ac887a19",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -5793,16 +5853,16 @@
     },
     "src/layers/radio/queries.js": {
       "loaded": true,
+      "sha": "e622689f7d4e8046e2b2d2370ddb85337229c43cc78f1a8d257dfbe128f8c9ad",
+      "untrue": false,
       "lines": 16,
-      "branches": 9,
+      "branches": 10,
       "functions": 0,
       "totals": {
         "lines": 152,
-        "branches": 45,
+        "branches": 46,
         "functions": 15
       },
-      "sha": "e622689f7d4e8046e2b2d2370ddb85337229c43cc78f1a8d257dfbe128f8c9ad",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -5928,16 +5988,16 @@
     },
     "src/layers/satellites/controls.js": {
       "loaded": true,
-      "lines": 119,
-      "branches": 28,
+      "sha": "ee5d6aa568a5d804a2289fda9cacc83a7f5c691ff1ec4888798df94a4eba6d1e",
+      "untrue": false,
+      "lines": 126,
+      "branches": 32,
       "functions": 5,
       "totals": {
         "lines": 562,
-        "branches": 102,
+        "branches": 108,
         "functions": 21
       },
-      "sha": "ee5d6aa568a5d804a2289fda9cacc83a7f5c691ff1ec4888798df94a4eba6d1e",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -5958,7 +6018,9 @@
     },
     "src/layers/satellites/ingestion.js": {
       "loaded": true,
-      "lines": 9,
+      "sha": "b52f8abeceb881d64caf6d208d0bacefc5bed18f4a49207ccdd46207cbaa6328",
+      "untrue": false,
+      "lines": 10,
       "branches": 14,
       "functions": 0,
       "totals": {
@@ -5966,8 +6028,6 @@
         "branches": 25,
         "functions": 7
       },
-      "sha": "b52f8abeceb881d64caf6d208d0bacefc5bed18f4a49207ccdd46207cbaa6328",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -6090,6 +6150,21 @@
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
+    },
+    "src/layers/submarineCables/bundledSource.js": {
+      "loaded": true,
+      "sha": "da5f316f2fc00f504c70fda823eba29a0e4326c3406e1b1b7ed2900c45abb859",
+      "untrue": false,
+      "lines": 2,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 42,
+        "branches": 11,
+        "functions": 4
+      },
+      "origin": "gates-coverage-race",
+      "since": "2026-10-03"
     },
     "src/layers/submarineCables/geometry.js": {
       "loaded": true,
@@ -6513,16 +6588,16 @@
     },
     "src/layers/transit/height.js": {
       "loaded": true,
+      "sha": "270ed48370947572185ed0df209fc6a05bb1637e8dae6349a7cd656c597e8aa0",
+      "untrue": false,
       "lines": 0,
-      "branches": 4,
+      "branches": 5,
       "functions": 0,
       "totals": {
         "lines": 257,
-        "branches": 74,
+        "branches": 81,
         "functions": 14
       },
-      "sha": "270ed48370947572185ed0df209fc6a05bb1637e8dae6349a7cd656c597e8aa0",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -6588,16 +6663,16 @@
     },
     "src/layers/transit/policy.js": {
       "loaded": true,
+      "sha": "791fe2e270eef27d0765b37a292945ad9077c2b45633692f3f196f7eadf6d9b1",
+      "untrue": false,
       "lines": 5,
-      "branches": 35,
+      "branches": 36,
       "functions": 0,
       "totals": {
         "lines": 565,
-        "branches": 115,
+        "branches": 137,
         "functions": 19
       },
-      "sha": "791fe2e270eef27d0765b37a292945ad9077c2b45633692f3f196f7eadf6d9b1",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -6753,16 +6828,16 @@
     },
     "src/layers/vessels/ingestion.js": {
       "loaded": true,
-      "lines": 0,
-      "branches": 5,
+      "sha": "03fb0f4cd1ab2360f6719caa0c8e85e37b7ecf4e072d2369bc0cf2e1c92369b5",
+      "untrue": false,
+      "lines": 3,
+      "branches": 7,
       "functions": 0,
       "totals": {
         "lines": 213,
-        "branches": 54,
+        "branches": 56,
         "functions": 7
       },
-      "sha": "03fb0f4cd1ab2360f6719caa0c8e85e37b7ecf4e072d2369bc0cf2e1c92369b5",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -6828,16 +6903,16 @@
     },
     "src/layers/vessels/rendering.js": {
       "loaded": true,
+      "sha": "1a79d5a809cc64fc0adaa2bd3af098b8829d3cd42b34e6798ae8a37c0bc421ad",
+      "untrue": false,
       "lines": 56,
-      "branches": 36,
+      "branches": 37,
       "functions": 4,
       "totals": {
         "lines": 518,
-        "branches": 121,
+        "branches": 130,
         "functions": 27
       },
-      "sha": "1a79d5a809cc64fc0adaa2bd3af098b8829d3cd42b34e6798ae8a37c0bc421ad",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -6978,16 +7053,16 @@
     },
     "src/layers/weather/shellRendering.js": {
       "loaded": true,
+      "sha": "d198125af0cb7c51d87ec7e9977626519e85bcb90714d9c18878c84950967f95",
+      "untrue": false,
       "lines": 0,
-      "branches": 12,
+      "branches": 13,
       "functions": 5,
       "totals": {
         "lines": 892,
-        "branches": 344,
+        "branches": 349,
         "functions": 78
       },
-      "sha": "d198125af0cb7c51d87ec7e9977626519e85bcb90714d9c18878c84950967f95",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -7158,16 +7233,16 @@
     },
     "src/maps/controller.js": {
       "loaded": true,
+      "sha": "9cbaf640b130da877c5fbc7343d2f8e5d2e4dd5148a37117721335e7c4fa572f",
+      "untrue": false,
       "lines": 1,
-      "branches": 10,
+      "branches": 14,
       "functions": 5,
       "totals": {
         "lines": 430,
-        "branches": 167,
+        "branches": 185,
         "functions": 45
       },
-      "sha": "9cbaf640b130da877c5fbc7343d2f8e5d2e4dd5148a37117721335e7c4fa572f",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -7291,6 +7366,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/nominatimGeocode.js": {
+      "loaded": true,
+      "sha": "58ff0c3bd43b3b7acf87ced83cb46767f778702c3556c62d7ce344332bb276aa",
+      "untrue": false,
+      "lines": 0,
+      "branches": 5,
+      "functions": 0,
+      "totals": {
+        "lines": 171,
+        "branches": 76,
+        "functions": 8
+      },
+      "origin": "gates-coverage-race",
+      "since": "2026-10-03"
+    },
     "src/orbit.js": {
       "loaded": false,
       "lines": 94,
@@ -7308,16 +7398,16 @@
     },
     "src/overlays/worldOverlay.js": {
       "loaded": true,
-      "lines": 76,
-      "branches": 91,
+      "sha": "fbfc7dc55d6254eddf6489120e81957e9f95a2fd36c3c21513153c45c2be15e7",
+      "untrue": false,
+      "lines": 77,
+      "branches": 107,
       "functions": 4,
       "totals": {
         "lines": 2859,
-        "branches": 726,
+        "branches": 759,
         "functions": 95
       },
-      "sha": "fbfc7dc55d6254eddf6489120e81957e9f95a2fd36c3c21513153c45c2be15e7",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -7338,31 +7428,31 @@
     },
     "src/overlays/worldOverlayDraw.js": {
       "loaded": true,
-      "lines": 48,
-      "branches": 82,
+      "sha": "68014effdeb1ad1d6d55aecc81e3b054b1d830b7b6f2d9a4cca1cc29d4a57c46",
+      "untrue": false,
+      "lines": 50,
+      "branches": 87,
       "functions": 2,
       "totals": {
         "lines": 1153,
-        "branches": 306,
+        "branches": 315,
         "functions": 42
       },
-      "sha": "68014effdeb1ad1d6d55aecc81e3b054b1d830b7b6f2d9a4cca1cc29d4a57c46",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/panelStackLayout.js": {
       "loaded": true,
+      "sha": "5dfc35cc9dd6554b642fec0dc4b130b909d7b49c0e1cd72d8a2f14d4b83ae06e",
+      "untrue": false,
       "lines": 0,
-      "branches": 15,
+      "branches": 16,
       "functions": 1,
       "totals": {
         "lines": 158,
-        "branches": 47,
+        "branches": 50,
         "functions": 13
       },
-      "sha": "5dfc35cc9dd6554b642fec0dc4b130b909d7b49c0e1cd72d8a2f14d4b83ae06e",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -7443,16 +7533,16 @@
     },
     "src/scenes/director.js": {
       "loaded": true,
-      "lines": 361,
-      "branches": 143,
+      "sha": "fccd26fee27961bbe988eb54223f37f2b7593fb0a574490f9cc4ac39a9806883",
+      "untrue": false,
+      "lines": 368,
+      "branches": 145,
       "functions": 43,
       "totals": {
         "lines": 2483,
-        "branches": 622,
+        "branches": 641,
         "functions": 195
       },
-      "sha": "fccd26fee27961bbe988eb54223f37f2b7593fb0a574490f9cc4ac39a9806883",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -7533,16 +7623,16 @@
     },
     "src/scenes/project.js": {
       "loaded": true,
+      "sha": "c1859e442ac868eea52c18f23054673de05285a7edd8be09525be8351d027920",
+      "untrue": false,
       "lines": 0,
-      "branches": 18,
+      "branches": 20,
       "functions": 0,
       "totals": {
         "lines": 404,
-        "branches": 151,
+        "branches": 153,
         "functions": 22
       },
-      "sha": "c1859e442ac868eea52c18f23054673de05285a7edd8be09525be8351d027920",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -7593,16 +7683,16 @@
     },
     "src/scenes/shotPresentation.js": {
       "loaded": true,
+      "sha": "78edcd224001408eeb5ef926112ae796613075a863278bfd082eb3f7dce98bb8",
+      "untrue": false,
       "lines": 15,
-      "branches": 15,
+      "branches": 18,
       "functions": 1,
       "totals": {
         "lines": 171,
-        "branches": 80,
+        "branches": 84,
         "functions": 15
       },
-      "sha": "78edcd224001408eeb5ef926112ae796613075a863278bfd082eb3f7dce98bb8",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -7803,16 +7893,16 @@
     },
     "src/search/placeSearch.js": {
       "loaded": true,
-      "lines": 2,
-      "branches": 3,
+      "sha": "a817bf9f3a850c4bf09a4707c3976b46feb9e4708bc29416ddf8e928d0a40511",
+      "untrue": false,
+      "lines": 4,
+      "branches": 5,
       "functions": 1,
       "totals": {
         "lines": 65,
-        "branches": 25,
+        "branches": 28,
         "functions": 3
       },
-      "sha": "a817bf9f3a850c4bf09a4707c3976b46feb9e4708bc29416ddf8e928d0a40511",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -8028,31 +8118,31 @@
     },
     "src/sources/live/standalone.js": {
       "loaded": true,
+      "sha": "a25cb162359fa278313a9538503d3cb118b6a3245445ad6eb4eb2450d413d1da",
+      "untrue": false,
       "lines": 2,
-      "branches": 10,
+      "branches": 11,
       "functions": 0,
       "totals": {
         "lines": 212,
-        "branches": 52,
+        "branches": 60,
         "functions": 17
       },
-      "sha": "a25cb162359fa278313a9538503d3cb118b6a3245445ad6eb4eb2450d413d1da",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
     "src/sources/live/vessels.js": {
       "loaded": true,
+      "sha": "3f14d3f4f7c0f164a798af26b84605e677f2bbdc61c57c4d917b76f28b83a58d",
+      "untrue": false,
       "lines": 0,
-      "branches": 6,
+      "branches": 7,
       "functions": 0,
       "totals": {
         "lines": 96,
-        "branches": 40,
+        "branches": 45,
         "functions": 6
       },
-      "sha": "3f14d3f4f7c0f164a798af26b84605e677f2bbdc61c57c4d917b76f28b83a58d",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -8178,31 +8268,31 @@
     },
     "src/sources/radioBrowser.js": {
       "loaded": true,
+      "sha": "2bb9989e9c87c3158e4eec7f22943da1c71c722c6801ac445f16261f3e4e4993",
+      "untrue": false,
       "lines": 2,
-      "branches": 8,
+      "branches": 10,
       "functions": 0,
       "totals": {
         "lines": 166,
-        "branches": 94,
+        "branches": 96,
         "functions": 10
       },
-      "sha": "2bb9989e9c87c3158e4eec7f22943da1c71c722c6801ac445f16261f3e4e4993",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/sources/rateLimit.js": {
       "loaded": true,
+      "sha": "0d958d3d0e7825da3819d86e6dd7921c60520fdada48628cf83c6cfa3da94e16",
+      "untrue": false,
       "lines": 3,
-      "branches": 1,
+      "branches": 2,
       "functions": 0,
       "totals": {
         "lines": 31,
-        "branches": 16,
+        "branches": 17,
         "functions": 4
       },
-      "sha": "0d958d3d0e7825da3819d86e6dd7921c60520fdada48628cf83c6cfa3da94e16",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -8238,16 +8328,16 @@
     },
     "src/sources/transitHistory.js": {
       "loaded": true,
+      "sha": "a23b757a7b9c487464bf4b767389f509fd88c3dddc9a655f958bf066db41da63",
+      "untrue": false,
       "lines": 4,
-      "branches": 1,
+      "branches": 2,
       "functions": 1,
       "totals": {
         "lines": 97,
-        "branches": 47,
+        "branches": 48,
         "functions": 4
       },
-      "sha": "a23b757a7b9c487464bf4b767389f509fd88c3dddc9a655f958bf066db41da63",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -8268,16 +8358,16 @@
     },
     "src/sources/transitService.js": {
       "loaded": true,
+      "sha": "3afaef62ea0f4a6fc5e54a6c8eeb0854849bedcde6e705e6ed70e5d1c77d8589",
+      "untrue": false,
       "lines": 24,
-      "branches": 14,
+      "branches": 17,
       "functions": 1,
       "totals": {
         "lines": 406,
-        "branches": 81,
+        "branches": 87,
         "functions": 10
       },
-      "sha": "3afaef62ea0f4a6fc5e54a6c8eeb0854849bedcde6e705e6ed70e5d1c77d8589",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -8838,16 +8928,16 @@
     },
     "src/ui/cockpitTrackingController.js": {
       "loaded": true,
+      "sha": "f878a6772b805385576794189cda6e3e68d4ed8088e0238ba3ddeb5c26b9d470",
+      "untrue": false,
       "lines": 76,
-      "branches": 49,
+      "branches": 51,
       "functions": 2,
       "totals": {
         "lines": 254,
-        "branches": 70,
+        "branches": 72,
         "functions": 9
       },
-      "sha": "f878a6772b805385576794189cda6e3e68d4ed8088e0238ba3ddeb5c26b9d470",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -9016,6 +9106,21 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/ui/displayPanelScroll.js": {
+      "loaded": true,
+      "sha": "45f01167c5114505666e5da0011acc940ee6d00dc28787fb9064a9cbf31f627f",
+      "untrue": false,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 6,
+        "branches": 7,
+        "functions": 1
+      },
+      "origin": "gates-coverage-race",
+      "since": "2026-10-03"
+    },
     "src/ui/frameRateMonitor.js": {
       "loaded": true,
       "lines": 0,
@@ -9078,16 +9183,16 @@
     },
     "src/ui/layerPanel.js": {
       "loaded": true,
-      "lines": 33,
-      "branches": 16,
+      "sha": "76123e187ebb7f27677221535735fac38d411166c87da74443d8713ba63e6d4d",
+      "untrue": false,
+      "lines": 35,
+      "branches": 22,
       "functions": 4,
       "totals": {
         "lines": 649,
-        "branches": 206,
+        "branches": 227,
         "functions": 39
       },
-      "sha": "76123e187ebb7f27677221535735fac38d411166c87da74443d8713ba63e6d4d",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -9123,16 +9228,16 @@
     },
     "src/ui/localSdrPresentation.js": {
       "loaded": true,
+      "sha": "93d06493d3d11dbfc17f8dab7242e703a493a83579b40e5ae901121ba95c13a7",
+      "untrue": false,
       "lines": 10,
-      "branches": 12,
+      "branches": 14,
       "functions": 0,
       "totals": {
         "lines": 146,
-        "branches": 64,
+        "branches": 66,
         "functions": 8
       },
-      "sha": "93d06493d3d11dbfc17f8dab7242e703a493a83579b40e5ae901121ba95c13a7",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -9198,16 +9303,16 @@
     },
     "src/ui/navigationController.js": {
       "loaded": true,
-      "lines": 36,
-      "branches": 8,
+      "sha": "cfde97cd03b2368c28cabeaca0b9fdb605f2afd1c7a90beb5cdaeee61a751d74",
+      "untrue": false,
+      "lines": 42,
+      "branches": 20,
       "functions": 5,
       "totals": {
         "lines": 271,
-        "branches": 29,
+        "branches": 41,
         "functions": 23
       },
-      "sha": "cfde97cd03b2368c28cabeaca0b9fdb605f2afd1c7a90beb5cdaeee61a751d74",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -9288,16 +9393,16 @@
     },
     "src/ui/panelRailGeometry.js": {
       "loaded": true,
+      "sha": "8ab7b2c6a1b0e33d1539068985ce84d7aaf43f4b834c6e8cdf7f117f93d3476a",
+      "untrue": false,
       "lines": 0,
-      "branches": 1,
+      "branches": 2,
       "functions": 0,
       "totals": {
         "lines": 78,
-        "branches": 13,
+        "branches": 14,
         "functions": 2
       },
-      "sha": "8ab7b2c6a1b0e33d1539068985ce84d7aaf43f4b834c6e8cdf7f117f93d3476a",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -9331,6 +9436,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "src/ui/radioPanelPlacement.js": {
+      "loaded": true,
+      "sha": "fc469c1d80dc75cc5cb6012fc2a488a1a551047588f7cad5d645f0aac546e772",
+      "untrue": false,
+      "lines": 0,
+      "branches": 1,
+      "functions": 0,
+      "totals": {
+        "lines": 17,
+        "branches": 22,
+        "functions": 1
+      },
+      "origin": "gates-coverage-race",
+      "since": "2026-10-03"
+    },
     "src/ui/radioPresentation.js": {
       "loaded": true,
       "lines": 325,
@@ -9363,31 +9483,31 @@
     },
     "src/ui/railCardBlocks.js": {
       "loaded": true,
-      "lines": 4,
-      "branches": 5,
+      "sha": "234b0ec47eaff8ec16ecf73c7ee0bdd99b89e645f846d64d9bf2eac6a3240e62",
+      "untrue": false,
+      "lines": 6,
+      "branches": 9,
       "functions": 0,
       "totals": {
         "lines": 295,
-        "branches": 112,
+        "branches": 118,
         "functions": 26
       },
-      "sha": "234b0ec47eaff8ec16ecf73c7ee0bdd99b89e645f846d64d9bf2eac6a3240e62",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/ui/railCards.js": {
       "loaded": true,
+      "sha": "39626da6cf0736328cd00bc1fc7f3a5900883b943d31b7f574528d9fd82e4fef",
+      "untrue": false,
       "lines": 0,
-      "branches": 2,
+      "branches": 3,
       "functions": 2,
       "totals": {
         "lines": 128,
-        "branches": 35,
+        "branches": 40,
         "functions": 10
       },
-      "sha": "39626da6cf0736328cd00bc1fc7f3a5900883b943d31b7f574528d9fd82e4fef",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -9708,16 +9828,16 @@
     },
     "src/voice/gevActions.js": {
       "loaded": true,
-      "lines": 1668,
-      "branches": 229,
+      "sha": "071d4c116517d64d2d8c340f7811d73dcec1439b62558800f7ab5458a2d4c3c4",
+      "untrue": false,
+      "lines": 1779,
+      "branches": 291,
       "functions": 66,
       "totals": {
         "lines": 4473,
-        "branches": 833,
+        "branches": 901,
         "functions": 165
       },
-      "sha": "071d4c116517d64d2d8c340f7811d73dcec1439b62558800f7ab5458a2d4c3c4",
-      "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
@@ -9768,31 +9888,31 @@
     },
     "src/voice/realtimeConnection.js": {
       "loaded": true,
-      "lines": 102,
-      "branches": 29,
+      "sha": "51a8c315dc3169b4e4a07c5307068ff994162a0a7bc5559602b7803623cdbe9a",
+      "untrue": false,
+      "lines": 106,
+      "branches": 31,
       "functions": 7,
       "totals": {
         "lines": 382,
-        "branches": 75,
+        "branches": 77,
         "functions": 28
       },
-      "sha": "51a8c315dc3169b4e4a07c5307068ff994162a0a7bc5559602b7803623cdbe9a",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/voice/realtimeController.js": {
       "loaded": true,
+      "sha": "a9028d1419d15453ab331ac0d5c3f425be0f03dfcf8f08ba11226c7d63568cc4",
+      "untrue": false,
       "lines": 16,
-      "branches": 11,
+      "branches": 12,
       "functions": 11,
       "totals": {
         "lines": 353,
-        "branches": 106,
+        "branches": 109,
         "functions": 79
       },
-      "sha": "a9028d1419d15453ab331ac0d5c3f425be0f03dfcf8f08ba11226c7d63568cc4",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
@@ -9825,6 +9945,21 @@
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
+    },
+    "src/voice/realtimeEvents.js": {
+      "loaded": true,
+      "sha": "11926da3cd2fe1de13cedfaaff64e6ee8cdabc2dbf3a3d3341022a8ce79a9a0b",
+      "untrue": false,
+      "lines": 0,
+      "branches": 4,
+      "functions": 0,
+      "totals": {
+        "lines": 45,
+        "branches": 19,
+        "functions": 1
+      },
+      "origin": "gates-coverage-race",
+      "since": "2026-10-03"
     },
     "src/voice/realtimeFacade.js": {
       "loaded": true,
@@ -9933,16 +10068,16 @@
     },
     "src/voice/realtimeTurns.js": {
       "loaded": true,
-      "lines": 31,
-      "branches": 25,
+      "sha": "30ffac0faf7df5ffd6df2cd5c95c25aea5839b67de4042ff3a8623d303b84461",
+      "untrue": false,
+      "lines": 78,
+      "branches": 40,
       "functions": 1,
       "totals": {
         "lines": 715,
-        "branches": 172,
+        "branches": 194,
         "functions": 26
       },
-      "sha": "30ffac0faf7df5ffd6df2cd5c95c25aea5839b67de4042ff3a8623d303b84461",
-      "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
