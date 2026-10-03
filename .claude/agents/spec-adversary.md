@@ -31,6 +31,7 @@ The review has a limit of three rounds. After the third round, each open finding
 ## Checks
 
 Do each check. Record each problem as a finding.
+Do not report a fault in word choice. The STE adversary checks the words.
 
 1. **Scenario and test.** For each scenario of the change, read each test that names its ID. The test must make the WHEN condition. The test must assert each THEN result and each AND result. A tag on a test that does not assert the result is a critical finding.
 2. **Weak tests.** Find tests that cannot fail. Examples are an assertion on a constant, a caught error that the test does not check, and a mock that returns the expected value. Also find assertions that are weaker than the THEN line.

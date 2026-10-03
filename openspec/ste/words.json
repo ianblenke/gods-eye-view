@@ -55,5 +55,12 @@
     "warning",
     "warnings",
     "wing"
+  ],
+  "nounVerbs": [
+    "abort",
+    "destroy",
+    "install",
+    "read",
+    "skip"
   ]
 }

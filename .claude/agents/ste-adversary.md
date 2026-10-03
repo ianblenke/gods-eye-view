@@ -59,6 +59,18 @@ Verdict: FAIL
 - [ ] S2 minor openspec/changes/example/proposal.md:9 "is removed" Voice. Write: "the command removes".
 ```
 
+Write "major" only with evidence in the finding.
+Give the two meanings, or describe the disagreement with the code, the specs or the other prose.
+Without that evidence, write "minor".
+A word class fault is minor unless it gives two meanings.
+Examples include a verb that the text uses as a noun, an `-ing` word and passive voice.
+Other examples include a vague verb and a word that STE does not approve.
+
+Write one finding for each class of fault in a file.
+Give each place in that finding.
+Do not report a preference about words.
+In round two and round three, report only faults in changed lines and new faults that a correction adds.
+
 Give each finding one of these severities:
 - **major**: The text has two possible meanings, or the text does not agree with the code, the specs or the other prose of the change.
 - **minor**: The text has one clear meaning, but it does not obey an STE rule.
