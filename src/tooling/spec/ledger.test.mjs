@@ -1241,6 +1241,14 @@ test('[gap-ledger-113] The valid history supplies the exact temporary base entri
   assert.deepEqual(checked.errors, []);
   assert.equal(checked.baseLedger.coverage['a.js'].lines, 3);
   assert.equal(checked.baseLedger.coverage['b.js'].lines, 2);
+  assert.equal(checked.baseLedger.coverage['b.js'].origin, 'gates-coverage-race');
+  assert.equal(Object.hasOwn(checked.baseLedger.coverage['b.js'], 'origin'), true);
+  assert.equal(checked.baseLedger.coverage['b.js'].loaded, true);
+  assert.equal(checked.baseLedger.coverage['b.js'].untrue, false);
+  assert.equal(checked.baseLedger.coverage['b.js'].sha, 'same');
+  assert.equal(Object.hasOwn(checked.baseLedger.coverage['b.js'], 'loaded'), true);
+  assert.equal(Object.hasOwn(checked.baseLedger.coverage['b.js'], 'untrue'), true);
+  assert.equal(Object.hasOwn(checked.baseLedger.coverage['b.js'], 'sha'), true);
   assert.equal(input.baseLedger.coverage['a.js'].lines, 1);
   const completeInput = baselineInput({ coverage: [loaded('a.js', 0, 0, 0)] });
   const complete = rebaselineLedger(completeInput);
@@ -1248,10 +1256,14 @@ test('[gap-ledger-113] The valid history supplies the exact temporary base entri
   const closed = checkRebaseline({ ...baselineContext(), ...completeInput, ledger: complete.ledger, history: closedHistory });
   assert.deepEqual(closed.errors, []);
   assert.equal(Object.hasOwn(closed.baseLedger.coverage, 'a.js'), false);
+  const partialBase = baselineInput({ baseLedger: ledgerWith({ coverage: { 'a.js': LOADED(1, 1, 0) } }), coverage: [loaded('a.js', 0, 0, 0)] });
+  const partial = rebaselineLedger(partialBase);
+  assert.deepEqual(checkRebaseline({ ...baselineContext(), ...partialBase, ledger: partial.ledger, history: partial.history.map(JSON.stringify).join('\n') + '\n' }).errors, []);
   assert.ok(checkRebaseline({ ...baselineContext(), ...completeInput, ledger: completeInput.ledger, history: closedHistory }).errors.some(e => e.code === 'LEDGER-REBASELINE'));
   assert.deepEqual(compareWithBase({ ledger: result.ledger, baseLedger: checked.baseLedger, history, baseHistory: '', retired: [], baseRetired: [], change: BASELINE_CHANGE, sameAsBase: () => true }), []);
   assert.ok(compareLedger({ ledger: result.ledger, current: gaps([loaded('a.js', 9, 2, 0), loaded('b.js', 2, 0, 0)]), sameAsBase: () => true }).errors.some(e => e.code === 'LEDGER-LARGER-GAP'));
   assert.equal(checkRebaseline({ ...baselineContext(), ...input }).baseLedger.coverage['a.js'].lines, 1);
+  assert.deepEqual(checkRebaseline({ ...baselineContext(), ...input }).errors, []);
 });
 
 test('[gap-ledger-114] The false history gives no baseline allowance', () => {
@@ -1279,7 +1291,7 @@ test('[gap-ledger-114] The false history gives no baseline allowance', () => {
   assert.ok(checkRebaseline({ ...baselineContext(), ...duplicateInput, ledger: duplicate.ledger, history: text(duplicate.history) }).errors.some(e => e.code === 'LEDGER-REBASELINE'));
   const absent = structuredClone(result.ledger); delete absent.coverage['a.js'];
   assert.ok(checkRebaseline({ ...valid, ledger: absent }).errors.some(e => e.code === 'LEDGER-REBASELINE'));
-  const low = structuredClone(result.ledger); low.coverage['a.js'].lines = 2;
+  const low = structuredClone(result.ledger); low.coverage['a.js'].lines = 8;
   assert.ok(checkRebaseline({ ...valid, ledger: low }).errors.some(e => e.code === 'LEDGER-REBASELINE'));
   assert.ok(checkRebaseline({ ...valid, history: 'other\n' + valid.history, baseHistory: 'base\n' }).baseLedger.coverage['a.js'].lines === 1);
 });
@@ -1300,4 +1312,144 @@ test('[gap-ledger-105 gap-ledger-106] The reached field follows its source recor
   const result = adoptLedger({ ledger: ledgerWith(), current: gaps([unloaded('a.js', 2, 'same', true)]), eligible: () => false, reached: () => true, change: 'sync', date: '2026-10-03', commit: 'abc', from: 'def' });
   assert.equal(result.history[0].reached, true);
   assert.equal(Object.hasOwn(result.history[0], 'reached'), true);
+});
+
+function toleranceBaseline(recorded, measured, base = loaded('a.js', 1, 1, 1)) {
+  const baseLedger = ledgerWith({ coverage: { 'a.js': { ...LOADED(base.lines.uncovered, base.branches.uncovered, base.functions.uncovered), totals: { lines: base.lines.total, branches: base.branches.total, functions: base.functions.total } } } });
+  const input = baselineInput({ baseLedger, ledger: baseLedger, coverage: [recorded] });
+  const result = rebaselineLedger(input);
+  return { ...baselineContext(), ...input, ledger: result.ledger, coverage: [measured], history: result.history.map(line => JSON.stringify(line)).join('\n') + '\n' };
+}
+function alterBaseline(input, field, value) {
+  const lines = input.history.trim().split('\n').map(JSON.parse);
+  lines[0][field] = value;
+  return { ...input, history: lines.map(line => JSON.stringify(line)).join('\n') + '\n' };
+}
+
+test('[gap-ledger-116] The real differences retain the recorded base', () => {
+  for (const [recorded, measured] of [
+    [loaded('a.js', 44, 30, 1, 'same', { lines: 310, branches: 74, functions: 10 }), loaded('a.js', 40, 30, 1, 'same', { lines: 310, branches: 76, functions: 10 })],
+    [loaded('a.js', 1, 10, 1, 'same', { lines: 100, branches: 53, functions: 10 }), loaded('a.js', 1, 10, 1, 'same', { lines: 100, branches: 54, functions: 10 })],
+  ]) {
+    const result = checkRebaseline(toleranceBaseline(recorded, measured));
+    assert.deepEqual(result.errors, []);
+  }
+  const result = checkRebaseline(toleranceBaseline(loaded('a.js', 44, 30, 1, 'same', { lines: 310, branches: 74, functions: 10 }), loaded('a.js', 40, 30, 1, 'same', { lines: 310, branches: 76, functions: 10 })));
+  assert.equal(result.baseLedger.coverage['a.js'].lines, 44);
+  assert.equal(result.baseLedger.coverage['a.js'].totals.branches, 74);
+  const camera = checkRebaseline(toleranceBaseline(loaded('a.js', 1, 10, 1, 'same', { lines: 100, branches: 53, functions: 10 }), loaded('a.js', 1, 10, 1, 'same', { lines: 100, branches: 54, functions: 10 })));
+  assert.equal(camera.baseLedger.coverage['a.js'].lines, 1);
+  assert.equal(camera.baseLedger.coverage['a.js'].branches, 10);
+  assert.equal(camera.baseLedger.coverage['a.js'].totals.branches, 53);
+});
+
+test('[gap-ledger-117] The next value exceeds the bound', () => {
+  const input = toleranceBaseline(loaded('a.js', 49, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }), loaded('a.js', 40, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }));
+  assert.deepEqual(codes(checkRebaseline(input)), ['LEDGER-REBASELINE']);
+  const covered = toleranceBaseline(loaded('a.js', 40, 1, 1, 'same', { lines: 319, branches: 100, functions: 10 }), loaded('a.js', 40, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }));
+  assert.deepEqual(codes(checkRebaseline(covered)), ['LEDGER-REBASELINE']);
+  const smaller = toleranceBaseline(loaded('a.js', 2, 1, 1, 'same', { lines: 25, branches: 100, functions: 10 }), loaded('a.js', 1, 1, 1, 'same', { lines: 24, branches: 100, functions: 10 }));
+  assert.deepEqual(codes(checkRebaseline(smaller)), ['LEDGER-REBASELINE']);
+});
+
+test('[gap-ledger-118] The small total permits no difference', () => {
+  const input = toleranceBaseline(loaded('a.js', 2, 1, 1, 'same', { lines: 24, branches: 100, functions: 10 }), loaded('a.js', 1, 1, 1, 'same', { lines: 24, branches: 100, functions: 10 }));
+  assert.deepEqual(codes(checkRebaseline(input)), ['LEDGER-REBASELINE']);
+});
+
+test('[gap-ledger-119] The source and old values stay exact', () => {
+  const input = toleranceBaseline(loaded('a.js', 3, 1, 1), loaded('a.js', 3, 1, 1));
+  for (const [field, value] of [['old', 2], ['oldTotal', 101], ['sha', 'other']]) {
+    assert.deepEqual(codes(checkRebaseline(alterBaseline(input, field, value))), ['LEDGER-REBASELINE']);
+  }
+  for (const extra of [{ sameAsBase: () => false }, { coverage: [loaded('a.js', 3, 1, 1, 'other')] }, { coverage: [unloaded('a.js', 3)] }, { coverage: [{ ...loaded('a.js', 3, 1, 1), untrue: true }] }]) {
+    assert.deepEqual(codes(checkRebaseline({ ...input, ...extra })), ['LEDGER-REBASELINE']);
+  }
+  const baseLedger = structuredClone(input.baseLedger); baseLedger.coverage['a.js'].sha = 'other';
+  assert.deepEqual(codes(checkRebaseline({ ...input, baseLedger })), ['LEDGER-REBASELINE']);
+});
+
+test('[gap-ledger-120] The later metric set retains its bound', () => {
+  const base = loaded('a.js', 40, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 });
+  const input = toleranceBaseline(loaded('a.js', 48, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }), base, base);
+  const result = checkRebaseline(input);
+  assert.deepEqual(result.errors, []);
+  assert.equal(result.baseLedger.coverage['a.js'].lines, 48);
+  const covered = checkRebaseline(toleranceBaseline(loaded('a.js', 40, 1, 1, 'same', { lines: 318, branches: 100, functions: 10 }), base, base));
+  assert.deepEqual(covered.errors, []);
+  assert.equal(covered.baseLedger.coverage['a.js'].totals.lines, 318);
+  assert.deepEqual(codes(checkRebaseline(alterBaseline(input, 'new', 49))), ['LEDGER-REBASELINE']);
+  const changed = { ...input, coverage: [loaded('a.js', 40, 10, 1, 'same', { lines: 310, branches: 100, functions: 10 })] };
+  assert.deepEqual(codes(checkRebaseline(changed)), ['LEDGER-REBASELINE']);
+});
+
+test('[gap-ledger-121] The ledger entry retains the same bound', () => {
+  const input = toleranceBaseline(loaded('a.js', 44, 2, 2, 'same', { lines: 310, branches: 100, functions: 10 }), loaded('a.js', 40, 2, 2, 'same', { lines: 310, branches: 100, functions: 10 }));
+  for (const [field, value] of [['lines', 48], ['totals', { lines: 314, branches: 100, functions: 10 }]]) {
+    const ledger = structuredClone(input.ledger); ledger.coverage['a.js'][field] = value;
+    assert.deepEqual(checkRebaseline({ ...input, ledger }).errors, []);
+  }
+  for (const [field, value] of [['lines', 49], ['branches', 7], ['functions', 3], ['totals', { lines: 323, branches: 100, functions: 10 }], ['loaded', false], ['sha', 'other'], ['untrue', true]]) {
+    const ledger = structuredClone(input.ledger); ledger.coverage['a.js'][field] = value;
+    assert.deepEqual(codes(checkRebaseline({ ...input, ledger })), ['LEDGER-REBASELINE']);
+  }
+});
+
+test('[gap-ledger-119] The metric values use whole numbers', () => {
+  const input = toleranceBaseline(loaded('a.js', 3, 0, 1, 'same', { lines: 100, branches: 0, functions: 10 }), loaded('a.js', 3, 0, 1, 'same', { lines: 100, branches: 0, functions: 10 }));
+  const lines = input.history.trim().split('\n').map(JSON.parse);
+  for (const field of ['new', 'newTotal']) {
+    const history = lines.map(line => JSON.stringify(line.metric === 'branches' ? { ...line, [field]: null } : line)).join('\n') + '\n';
+    assert.deepEqual(codes(checkRebaseline({ ...input, history })), ['LEDGER-REBASELINE']);
+  }
+});
+
+test('[gap-ledger-114] The snapshot retains each different metric', () => {
+  for (const base of [loaded('a.js', 0, 0, 0), loaded('a.js', 1, 1, 1)]) {
+    const input = toleranceBaseline(loaded('a.js', 2, 2, 1, 'same', { lines: 101, branches: 100, functions: 10 }), loaded('a.js', 2, 2, 1, 'same', { lines: 101, branches: 100, functions: 10 }), base);
+    const history = input.history.trim().split('\n').map(JSON.parse).filter(line => line.metric !== 'lines').map(JSON.stringify).join('\n') + '\n';
+    assert.deepEqual(codes(checkRebaseline({ ...input, history })), ['LEDGER-REBASELINE']);
+  }
+  const input = toleranceBaseline(loaded('a.js', 1, 2, 1, 'same', { lines: 101, branches: 100, functions: 10 }), loaded('a.js', 1, 2, 1, 'same', { lines: 101, branches: 100, functions: 10 }));
+  const history = input.history.trim().split('\n').map(JSON.parse).filter(line => line.metric !== 'lines').map(JSON.stringify).join('\n') + '\n';
+  assert.deepEqual(codes(checkRebaseline({ ...input, history })), ['LEDGER-REBASELINE']);
+});
+
+test('[gap-ledger-119] The source state has its own bound', () => {
+  const input = toleranceBaseline(loaded('a.js', 3, 1, 1), loaded('a.js', 3, 1, 1));
+  for (const [field, value] of [['loaded', false], ['untrue', true]]) {
+    const ledger = structuredClone(input.ledger); ledger.coverage['a.js'][field] = value;
+    const coverage = [{ ...input.coverage[0], [field]: value }];
+    assert.deepEqual(codes(checkRebaseline({ ...input, ledger, coverage })), ['LEDGER-REBASELINE']);
+  }
+  const baseLedger = ledgerWith();
+  const result = rebaselineLedger(baselineInput({ baseLedger, ledger: baseLedger, coverage: [loaded('b.js', 2, 0, 0)] }));
+  const valid = { ...baselineContext(), ...baselineInput(), baseLedger, ledger: result.ledger, coverage: [loaded('b.js', 2, 0, 0)], history: result.history.map(JSON.stringify).join('\n') + '\n' };
+  assert.deepEqual(codes(checkRebaseline(alterBaseline(valid, 'sha', 'other'))), ['LEDGER-REBASELINE']);
+});
+
+test('[gap-ledger-117] The history has its own metric bound', () => {
+  const input = toleranceBaseline(loaded('a.js', 44, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }), loaded('a.js', 40, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }));
+  assert.deepEqual(codes(checkRebaseline(alterBaseline(input, 'new', 49))), ['LEDGER-REBASELINE']);
+  assert.deepEqual(codes(checkRebaseline(alterBaseline(input, 'newTotal', 323))), ['LEDGER-REBASELINE']);
+});
+
+test('[gap-ledger-114] The metric name has its own bound', () => {
+  const baseLedger = ledgerWith({ coverage: { 'a.js': { ...LOADED(1, 1, 1), extra: 0, totals: { lines: 100, branches: 100, functions: 10, extra: 100 } } } });
+  const ledger = structuredClone(baseLedger); ledger.coverage['a.js'].extra = 3;
+  const coverage = [{ ...loaded('a.js', 1, 1, 1), extra: { total: 100, uncovered: 3 } }];
+  const history = JSON.stringify({ kind: 'rebaseline', change: 'gates-coverage-race', file: 'a.js', sha: 'same', metric: 'extra', old: 0, oldTotal: 100, new: 3, newTotal: 100 }) + '\n';
+  assert.deepEqual(codes(checkRebaseline({ ...baselineContext(), ...baselineInput(), baseLedger, ledger, coverage, history })), ['LEDGER-REBASELINE']);
+});
+
+test('[gap-ledger-113] The temporary base uses the true loaded source state', () => {
+  const baseLedger = ledgerWith({ coverage: { 'a.js': UNLOADED(1, { untrue: true }) } });
+  const input = baselineInput({ baseLedger, ledger: baseLedger, coverage: [loaded('a.js', 3, 2, 0)] });
+  const result = rebaselineLedger(input);
+  const checked = checkRebaseline({ ...baselineContext(), ...input, ledger: result.ledger, history: result.history.map(JSON.stringify).join('\n') + '\n' });
+  assert.deepEqual(checked.errors, []);
+  assert.equal(checked.baseLedger.coverage['a.js'].loaded, true);
+  assert.equal(checked.baseLedger.coverage['a.js'].untrue, false);
+  assert.equal(Object.hasOwn(checked.baseLedger.coverage['a.js'], 'loaded'), true);
+  assert.equal(Object.hasOwn(checked.baseLedger.coverage['a.js'], 'untrue'), true);
 });

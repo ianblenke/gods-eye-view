@@ -1521,3 +1521,27 @@ test('[coverage-gate-066] The gate removes raw files and retains output files', 
     });
   }
 });
+
+test('[gap-ledger-116 gap-ledger-117] The ratchet applies the count tolerance', () => {
+  const sha = '5b63136552577a64d788dc3cd4552739d0d60f9e1adb63ec4dfb6932d56fc75d';
+  const baseLedger = { version: 4, coverage: { 'src/math.js': { loaded: true, sha, untrue: false, lines: 1, branches: 0, functions: 0, totals: { lines: 310, branches: 1, functions: 1 }, origin: 'pre-spec', since: '2026-01-01' } }, untracedTests: {} };
+  withFixture(root => {
+    write(root, { 'scripts/spec/lib/v8-merge.mjs': 'export {};\n', 'openspec/changes/gates-coverage-race/proposal.md': '## Why\n\nThe values must agree.\n' });
+    git(root, 'add', 'scripts/spec/lib/v8-merge.mjs');
+    const current = structuredClone(baseLedger); current.coverage['src/math.js'].lines = 44;
+    writeFileSync(path.join(root, 'openspec/trace/gaps.json'), JSON.stringify(current));
+    const line = { kind: 'rebaseline', change: 'gates-coverage-race', file: 'src/math.js', sha, metric: 'lines', old: 1, new: 44, oldTotal: 310, newTotal: 310 };
+    const historyFile = path.join(root, 'openspec/trace/history.jsonl');
+    writeFileSync(historyFile, JSON.stringify(line) + '\n');
+    const spawn = (command, args) => {
+      writeFileSync(args[2], '[{"status":0,"error":null}]');
+      writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:310\nLH:270\nBRF:1\nBRH:1\nFNF:1\nFNH:1\nend_of_record\n`);
+      writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), '{"checked":["src/math.js"],"violations":[],"assertions":[],"leaks":[]}\n');
+      return { status: 0 };
+    };
+    const options = { spawn, openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : args[0] === 'show' ? '{"deltas":[]}' : '{"items":[]}' }) };
+    assert.doesNotMatch(run(root, ['ratchet', '--change', 'gates-coverage-race'], options).output, /ERROR LEDGER-REBASELINE/);
+    writeFileSync(historyFile, JSON.stringify({ ...line, new: 49 }) + '\n');
+    assert.match(run(root, ['ratchet', '--change', 'gates-coverage-race'], options).output, /ERROR LEDGER-REBASELINE/);
+  }, { base: { 'openspec/trace/gaps.json': JSON.stringify(baseLedger) + '\n' } });
+});

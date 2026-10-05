@@ -2,6 +2,7 @@
 
 ### Requirement: One-time coverage baseline
 The ledger MUST permit one explicit rebaseline step only in the change gates-coverage-race that first adds the exact merge module.
+The old values must equal the base values exactly. The new values must stay within the count tolerance of the current measurement.
 Origin: spec-first
 
 #### Scenario: The command records unchanged file values `gap-ledger-110`
@@ -29,14 +30,16 @@ Origin: spec-first
 
 - **WHEN** the checked change supplies valid rebaseline history for unchanged source files
 - **THEN** the gate uses the recorded entries for its base comparison
-- **AND** a later measurement above the ledger still stops the gate
-- **AND** the ratchet command stops when the baseline history differs from the exact measurement
+- **AND** the temporary base retains true loaded coverage when the old entry lacked true loaded coverage
+- **AND** a later measurement above the ledger by more than the count tolerance still stops the gate
+- **AND** the ratchet command stops when the baseline history differs from the current measurement by more than the count tolerance
 
 #### Scenario: The gate rejects false history `gap-ledger-114`
 
-- **WHEN** a rebaseline line lacks the checked change, module change, base content, exact old values or exact measured values
+- **WHEN** a rebaseline line lacks the checked change, module change, base content, exact old values or new values within the count tolerance
 - **THEN** the gate gives no allowance from that line
 - **AND** the gate retains its LEDGER errors and rejects incomplete metric sets and repeated file metric pairs
+- **AND** the gate rejects metric names outside lines, branches and functions
 
 #### Scenario: The command permits one explicit step `gap-ledger-115`
 
@@ -45,3 +48,35 @@ Origin: spec-first
 - **AND** the command changes no ledger file after a test error
 - **AND** the command stops when no metric differs
 - **AND** the command stops when the current history lacks the base history prefix
+
+#### Scenario: The real metric differences stay within tolerance `gap-ledger-116`
+
+- **WHEN** the history records lines 44 of 310, branches 30 of 74 and branches 10 of 53
+- **THEN** measurements 40 of 310, 30 of 76 and 10 of 54 permit that history
+
+#### Scenario: The boundary stops a larger difference `gap-ledger-117`
+
+- **WHEN** the history records 49 uncovered lines of 310 and the measurement gives 40
+- **THEN** the gate rejects the difference above the tolerance
+
+#### Scenario: Small totals permit no difference `gap-ledger-118`
+
+- **WHEN** the history records 2 uncovered items of 24 and the measurement gives 1
+- **THEN** the gate rejects the difference
+
+#### Scenario: The start values and source stay exact `gap-ledger-119`
+
+- **WHEN** the history changes an old value, old total or source hash
+- **THEN** the gate rejects each false value
+- **AND** the gate accepts only true loaded source files
+- **AND** the gate rejects metric values without whole numbers
+
+#### Scenario: An unchanged metric retains its bound `gap-ledger-120`
+
+- **WHEN** the history records a metric that equals the base in the current measurement
+- **THEN** the gate accepts a difference at the tolerance and rejects a larger difference
+
+#### Scenario: The ledger snapshot stays within tolerance `gap-ledger-121`
+
+- **WHEN** a ledger entry differs from the current measurement
+- **THEN** the gate accepts differences within tolerance and rejects larger differences and false source properties

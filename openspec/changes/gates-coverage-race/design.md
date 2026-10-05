@@ -38,7 +38,7 @@ The command name is `rebaseline`. It accepts only the active change `gates-cover
 
 The command changes only loaded source files with true coverage and base content. Each different metric gets a history line with old and new values and totals. Newly incomplete files get an entry. Complete files lose their gap entry. Each affected file appears in command output.
 
-The gate validates history against the base entries, current content and exact measurement. It accepts only complete metric sets without duplicate pairs. Valid entries supply a temporary base ledger to the existing comparison. The comparison rules and tolerance stay unchanged. The current ledger comparison still stops larger gaps.
+The gate validates history against the base entries, current content and measurement within the count tolerance. It accepts only complete metric sets without duplicate pairs. Valid entries supply a temporary base ledger to the existing comparison. The comparison rules and tolerance stay unchanged. The current ledger comparison still stops larger gaps.
 
 ## Evidence and limits
 
@@ -56,7 +56,7 @@ The retention command sets `NODE_V8_COVERAGE` and executes `node --test --experi
 
 ## Baseline sequence
 
-The lead executes rebaseline before ratchet. Ratchet cannot record the larger gaps that the exact merge reveals before the baseline step. Ratchet checks baseline history before it changes the ledger. A measurement that differs from this history stops that command. This exact check applies only to the bounded step of this change. The existing tolerance formulas and comparison rules stay unchanged.
+The lead executes rebaseline before ratchet. Ratchet cannot record the larger gaps that the exact merge reveals before the baseline step. Ratchet checks baseline history before it changes the ledger. A measurement outside the count tolerance of this history stops that command. This check applies only to the bounded step of this change. The existing tolerance formulas and comparison rules stay unchanged.
 
 ## Gate path cost
 
@@ -69,3 +69,23 @@ The gate deletes the raw folder after the merge because CI uploads the output fo
 The scratch command `node cleanup-summary.mjs` combines raw records from the complete host gate test measurement. It gives LF/LH 645/645, BRF/BRH 256/256 and FNF/FNH 69/69. The old waiver scenario `gap-ledger-080` permits this added test. The production error path stays unchanged.
 
 The scratch command `node parallel-summary.mjs` combines parent records and real CLI records from the isolated test folder. It gives LF/LH 35/35, BRF/BRH 9/9 and FNF/FNH 6/6. The scratch preload copies those records before test cleanup. The parent coverage report excludes that folder.
+
+## D1. Baseline tolerance
+
+The check uses the count tolerance. The command still records exact measurements. The source tree for this decision is commit `b70722b525182b0494e4cd7fe07f8719aae345bc`.
+
+Each history line keeps the active change and new module bounds. These bounds prevent use by another change. Each file retains true loaded coverage and unchanged content. Its hash equals the base hash when a base entry exists. A new gap lacks a base hash, so current content supplies its hash.
+
+Old values and old totals equal the base entry exactly. An absent base entry supplies zero and a null total. This preserves the start point. New values use the tolerance of the smaller total. Both uncovered and covered differences must stay within that tolerance. A larger total cannot increase the allowance.
+
+The check rejects repeated file metric pairs. It retains complete metric sets against the ledger snapshot that the command wrote. Every snapshot metric that differs from the base needs its history line. A complete snapshot needs the base metrics that became complete. This rule concerns the snapshot, so a later measurement cannot change its metric set.
+
+The check compares each affected ledger entry with the current measurement through the same metric predicate. Loaded state, source hash and true coverage stay exact. Valid history lines supply the temporary base entries. These entries use the true loaded source state, even when the old entry lacked that state. Metrics without history retain their base values. A new entry uses zero for metrics without history.
+
+## Known limits of D1
+
+The check does not compare the number or set of history lines with recomputed lines. A recorded metric can equal the base during a later measurement. A measured increase without history gets no baseline allowance. The normal comparison decides that case.
+
+A line for an unchanged measured metric can still supply an allowance. Its old values remain exact. Its new values stay at most one tolerance above the measurement. The temporary base comparison therefore retains this bounded allowance. The check does not prove that a recorded metric differed during the earlier measurement.
+
+The ledger snapshot also stays within one tolerance of the current measurement. The comparison rules stay unchanged. Host measurements do not establish image values. The trace files retain the image data.
