@@ -160,7 +160,7 @@ if (false) continue;
   Mutation: Use the second block. The test must fail.
 
 ```js
-return { baseLedger: expected.ledger, errors: [] };
+return { baseLedger: next, errors: [] };
 ```
 
 ```js
@@ -211,6 +211,32 @@ file: file || '/wrong', message: fault[1]
 
 - [x] 2.8 Check raw folder removal for `coverage-gate-066`.
   Mutation: Remove the raw folder deletion. The test must fail.
+
+- [x] 2.9 Write the tolerance spec and D1 before the tests.
+
+- [x] 2.10 Write the test for `gap-ledger-116` before its code.
+  Mutation: Use `<` for `<=`. The test must fail.
+
+- [x] 2.11 Write the test for `gap-ledger-117` before its code.
+  Mutation: Use `Math.max` for `Math.min`. The test must fail.
+
+- [x] 2.12 Write the test for `gap-ledger-118` before its code.
+  Mutation: Use ceil for floor. The test must fail.
+
+- [x] 2.13 Write the test for `gap-ledger-119` before its code.
+  Mutation: Remove the exact old value check. The test must fail.
+
+- [x] 2.14 Write the test for `gap-ledger-120` before its code.
+  Mutation: Restore the equal history length check. The test must fail.
+
+- [x] 2.15 Write the test for `gap-ledger-121` before its code.
+  Mutation: Remove the ledger metric check. The test must fail.
+
+- [x] 2.16 Apply the count tolerance to the baseline check.
+- [x] 2.17 Check each new operand with a mutation.
+- [x] 2.18 Execute the complete mutation file after the last code edit.
+- [x] 2.19 Execute each spec test file alone.
+- [x] 2.20 Measure ledger coverage and check prose and format.
 
 ## 3. Gates and review
 

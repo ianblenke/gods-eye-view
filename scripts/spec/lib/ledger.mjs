@@ -740,30 +740,73 @@ export function rebaselineLedger({ ledger, baseLedger, coverage, sameAsBase, cha
   return { ledger: next, history, files };
 }
 
+function baselineMetric(count, total, measured) {
+  if (!Number.isInteger(count)) return false;
+  if (!Number.isInteger(total)) return false;
+  const tolerance = toleranceOf(Math.min(total, measured.total));
+  return Math.abs(count - measured.uncovered) <= tolerance &&
+    Math.abs((total - count) - (measured.total - measured.uncovered)) <= tolerance;
+}
+
 export function checkRebaseline(input) {
   const { history, baseHistory, change, baseLedger, ledger } = input;
   const lines = historyLinesOf(history, baseHistory, change).filter((line) => line.kind === 'rebaseline' && line.change === change);
   if (lines.length === 0) return { baseLedger, errors: [] };
-  const error = { code: 'LEDGER-REBASELINE', file: HISTORY_FILE, message: 'The baseline history does not match this change and its exact source values.' };
+  const error = { code: 'LEDGER-REBASELINE', file: HISTORY_FILE, message: 'The baseline history does not match this change, its source or the count tolerance.' };
   const invalid = () => ({ baseLedger, errors: [error] });
   if (!baselineContext(input)) return invalid();
   if (!baseLedger) return invalid();
-  const expected = rebaselineLedger({ ...input, change, ledger: baseLedger });
-  const fields = ['file', 'sha', 'metric', 'old', 'new', 'oldTotal', 'newTotal'];
-  const key = (line) => JSON.stringify(fields.map((field) => line[field]));
-  const actual = new Set(lines.map(key));
-  if (actual.size !== lines.length) return invalid();
-  if (expected.history.length !== lines.length) return invalid();
-  if (!expected.history.every((line) => actual.has(key(line)))) return invalid();
-  for (const file of expected.files) {
-    const entry = expected.ledger.coverage[file];
+  const measured = new Map(input.coverage.map(record => [record.file, record]));
+  const pairs = new Set();
+  const next = { ...baseLedger, coverage: { ...baseLedger.coverage } };
+  const files = new Set();
+  for (const line of lines) {
+    const pair = JSON.stringify([line.file, line.metric]);
+    if (pairs.has(pair)) return invalid();
+    pairs.add(pair);
+    if (!METRICS.includes(line.metric)) return invalid();
+    const record = measured.get(line.file);
+    if (!record) return invalid();
+    if (!input.sameAsBase(line.file)) return invalid();
+    if (!record.loaded) return invalid();
+    if (record.untrue) return invalid();
+    if (line.sha !== record.sha) return invalid();
+    const base = baseLedger.coverage[line.file];
+    if (base && base.sha !== line.sha) return invalid();
+    const old = base ? base[line.metric] : 0;
+    const oldTotal = base ? base.totals[line.metric] : null;
+    if (line.old !== old) return invalid();
+    if (line.oldTotal !== oldTotal) return invalid();
+    if (!baselineMetric(line.new, line.newTotal, record[line.metric])) return invalid();
+    if (!files.has(line.file)) {
+      next.coverage[line.file] = base ? { ...base, loaded: true, untrue: false, totals: { ...base.totals } } : { loaded: true, sha: record.sha, untrue: false, lines: 0, branches: 0, functions: 0, totals: totalsOf(record), origin: change, since: line.date };
+      files.add(line.file);
+    }
+    next.coverage[line.file][line.metric] = line.new;
+    next.coverage[line.file].totals[line.metric] = line.newTotal;
+  }
+  for (const file of files) {
+    const entry = next.coverage[file];
     const current = ledger.coverage[file];
-    if (!entry) {
+    const base = baseLedger.coverage[file];
+    const record = measured.get(file);
+    for (const metric of METRICS) {
+      const old = base ? base[metric] : 0;
+      const value = current ? current[metric] : 0;
+      const total = current ? current.totals[metric] : entry.totals[metric];
+      const changed = value !== old || (Boolean(base) && total !== base.totals[metric]);
+      if (changed && !pairs.has(JSON.stringify([file, metric]))) return invalid();
+    }
+    if (METRICS.every(metric => entry[metric] === 0)) {
       if (current) return invalid();
+      delete next.coverage[file];
     } else {
       if (!current) return invalid();
-      if (!sameGap(current, entry)) return invalid();
+      if (current.loaded !== record.loaded) return invalid();
+      if (current.sha !== record.sha) return invalid();
+      if (Boolean(current.untrue) !== Boolean(record.untrue)) return invalid();
+      if (!METRICS.every(metric => baselineMetric(current[metric], current.totals[metric], record[metric]))) return invalid();
     }
   }
-  return { baseLedger: expected.ledger, errors: [] };
+  return { baseLedger: next, errors: [] };
 }
