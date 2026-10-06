@@ -113,7 +113,7 @@ test('[coverage-gate-062] The process permutations and groups give equal values'
   }
 });
 
-test('[coverage-gate-063] The module writes one lcov record per URL', () => {
+test('[coverage-gate-063] The merge module writes one lcov record per URL', () => {
   const result = state('aa', [{ result: [...data([fn('', [range(0, 2, 1)])], 'file:///repo/a.js?x').result, ...data([fn('', [range(0, 2, 0)])]).result] }]);
   assert.equal(coverageCounts(result).size, 2);
   assert.equal(coverageLcov(result), 'SF:/repo/a.js\nLF:1\nLH:0\nBRF:1\nBRH:0\nFNF:0\nFNH:0\nend_of_record\nSF:/repo/a.js\nLF:1\nLH:1\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nend_of_record\n');

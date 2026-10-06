@@ -6,6 +6,15 @@ The raw evidence rejects D2 of the archived race change. A fixed file order keep
 
 ## Process rules
 
+The lcov report names LF as lines found.
+The lcov report names LH as lines hit.
+The lcov report names BRF as branches found.
+The lcov report names BRH as branches hit.
+The lcov report names FNF as functions found.
+The lcov report names FNH as functions hit.
+
+SF names the source file.
+
 Node's `getLines` splits source after each line feed and keeps CRLF offsets. Node's `CoverageLine` excludes the line end characters from its extent. An empty line starts with a positive value. Other lines start with zero.
 
 Node's `getLines` applies the next-line state before the disabled state. It checks next-line comments only on lines without the ignore state. It checks enable and disable comments on every line. A status comment resets the next-line state after the current line.
@@ -18,7 +27,9 @@ Node's `summary` excludes the first function from FNF. Each later function with 
 
 ## Merge
 
-The pure module accepts process data and a source callback. Its state keeps per-URL line sets and function variants. State combination adds each covered line and identity to the result. This allows any process order or group order.
+The merge module is the file `scripts/spec/lib/v8-merge.mjs`.
+
+The merge module accepts process data and a source callback. Its state keeps per-URL line sets and function variants. State combination adds each covered line and identity to the result. This allows any process order or group order.
 
 The repository function `functionKey` copies Node's `mergeCoverageScripts` identity rule: the function name and first range extent. A branch identity adds its extent and occurrence index within equal extents. The index follows range order within one function. Different source URLs keep separate records.
 
@@ -32,9 +43,9 @@ For example, one process lists an outer positive range and an inner zero range. 
 The folder lies outside the repository root and output folder. Only the main process gets its path through `NODE_V8_COVERAGE`.
 `executeRuns` writes only each process overlay to `runs.json`. Allocation processes get no environment key.
 
-`runParallel` adds the overlay to its own environment. The guard keeps its existing rules.
+`runParallel` adds the overlay to its own environment. The guard obeys the same rules.
 A `finally` block removes only this raw folder after the coverage merge, also after an error or absent lcov text.
-If lcov text exists without raw coverage files, the gate adds `COVERAGE-RAW-MISSING` and keeps Node text for the other checks.
+If lcov text exists without raw coverage files, the gate adds `COVERAGE-RAW-MISSING` and still uses Node text for the other checks.
 
 The gate reads raw JSON files one at a time. It keeps only file URLs inside the root, outside node_modules and test files. It also excludes Node mock URLs. The gate replaces records for loaded URLs and keeps records for unloaded files. `parseLcov` still selects the worst record across URL variants.
 
@@ -42,7 +53,7 @@ The gate reads raw JSON files one at a time. It keeps only file URLs inside the 
 
 The command name is `rebaseline`. It accepts only the active change `gates-coverage-race`. The changed-file list must contain the merge module. The base tree must lack that module. History must lack an earlier rebaseline step of this change. These conditions prevent future changes from using the command.
 
-The command changes only loaded source files with true coverage and base content. Each different metric gets a history line with old and new values and totals. Newly uncovered files get an entry. Fully covered files lose their gap entry. Each affected file appears in command output.
+The command changes only loaded source files with true coverage and base content. Each different metric gets a history line with old and new values and totals. Files that now have uncovered items get an entry. Fully covered files lose their gap entry. Each affected file appears in command output.
 
 The gate validates history against the base entries, current content and measurement within the count tolerance. It accepts only line, branch and function metrics. It rejects repeated file metric pairs. Valid entries supply a temporary base ledger to the existing comparison. The comparison rules and tolerance stay unchanged. The current ledger comparison still stops larger gaps.
 
@@ -74,7 +85,7 @@ The lead runs rebaseline before ratchet. Before the rebaseline step, ratchet can
 
 The command `node bench.mjs` in scratch calls the gate merge on the raw folder. It processes 1308 files with 1056405189 bytes. It takes 46512.85 milliseconds and reaches 349052 KiB of resident memory. It writes 892 URL records.
 
-The gate removes the private raw folder after the coverage merge on every path. Other output files stay after a measurement without an error.
+The gate removes the raw folder after the coverage merge or after every error inside the measurement. Other output files stay after a measurement without an error.
 
 ## Earlier host coverage evidence
 
@@ -86,11 +97,11 @@ The earlier scratch command `node parallel-summary.mjs` combines parent records 
 
 The check uses the count tolerance. The command still records exact measurements. The source tree for this decision is commit `b70722b525182b0494e4cd7fe07f8719aae345bc`.
 
-Each history line keeps the active change and new module conditions. These conditions prevent use by another change. Each file keeps true loaded coverage and unchanged content. Its hash equals the base hash when a base entry exists. A new gap lacks a base hash, so current content supplies its hash.
+Each history line names the active change. The change must add the merge module. These conditions prevent use by another change. Each file keeps true loaded coverage and unchanged content. Its hash equals the base hash when a base entry exists. A new gap lacks a base hash, so current content supplies its hash.
 
-Old values and old totals equal the base entry exactly. An absent base entry supplies zero and a null total. This preserves the start point. New values use the tolerance of the smaller total. Both uncovered and covered differences must stay within that tolerance. A larger total cannot increase the allowance.
+Old values and old totals equal the base entry exactly. An absent base entry supplies zero and a null total. The start point stays exact. New values use the tolerance of the smaller total. Both uncovered and covered differences must stay within that tolerance. A larger total cannot increase the allowance.
 
-The check rejects repeated file metric pairs. It checks all three metrics against the ledger snapshot that the command wrote. Every snapshot metric that differs from the base needs its history line. A fully covered snapshot needs the base metrics that now hold zero uncovered items. This rule concerns the snapshot, so a later measurement cannot change its metric set.
+The check rejects repeated file metric pairs. It checks all three metrics against the ledger snapshot that the command wrote. Every snapshot metric that differs from the base needs its history line. For a fully covered file, each metric with uncovered items in the base needs a history line. This rule concerns the snapshot, so a later measurement cannot change its metric set.
 
 The check compares each affected ledger entry with the current measurement through the same metric predicate. Loaded state, source hash and true coverage stay exact. Valid history lines supply the temporary base entries. These entries use the true loaded source state, even when the old entry lacked that state. Metrics without history keep their base values. A new entry uses zero for metrics without history.
 
@@ -108,7 +119,7 @@ The image measurements in this section precede the corrections of review round o
 
 The lead ran `rebaseline` in the image. The scratch command `node round-1-evidence.mjs` reads 153 history lines for 111 files. 43 lines hold a line metric and 110 lines hold a branch metric. No line holds a function metric.
 
-The same scratch command shows that the ledger of 109 files rises and no uncovered value falls. It shows a total line rise of 552 and nine files without a base entry. The old merge hid their gaps.
+The same scratch command shows that the uncovered values of 109 files rise and no uncovered value falls. The uncovered lines rise by 552 in total. Nine files lack a base entry. The old merge hid their gaps.
 
 The number of fully covered files falls from 264 to 257. The scratch logs `sn-ratchet.log` and `rebaseline.log` give these two counts.
 
@@ -120,7 +131,8 @@ For `server/providers/vessels/ais-store.js`, the uncovered lines are 44 in one m
 
 For `src/cameraGroundGuard.js`, the branch total is 53 in one and 54 in the other. Two host measurements of the whole suite agree for every source file that this change does not edit.
 
-Some tests therefore run different code in the image from one measurement to the next. Known limit `image-test-timing`: this change does not find those tests. Decision D1 limits the effect with the count tolerance.
+Some tests therefore run different code in the image from one measurement to the next. Known limit `image-test-timing` includes the branch total of `src/cameraGroundGuard.js`, which alternates between 53 and 54.
+This change does not find those tests. Decision D1 limits the effect with the count tolerance.
 
 The ratchet command passed after D1 and wrote one history line. Three gate commands then measured the same tree.
 
@@ -133,16 +145,14 @@ One of these two commands also reported a failed test, `src/layers/traffic/navig
 ## Round one corrections
 
 The corrections start from commit `19d8d459bf9212d31300abfec3ce5cf9e628d6a7`.
-The lcov report names LF as lines found and LH as lines hit.
-It names BRF as branches found and BRH as branches hit.
-It names FNF as functions found and FNH as functions hit.
 
 For equal parent widths, the later listed range wins. The test uses a covered parent, an uncovered equal parent, and an absent inner branch.
 `combineCoverage` serves only the tests of scenario `coverage-gate-062`.
 The history check rejects a file without a base entry when all three measured uncovered values equal zero.
 
-The scratch command `python3 round-1-totals.py` prints the two files without uncovered rises.
-`src/cameraGroundGuard.js` keeps ten uncovered branches; its branch total falls from 54 to 53.
+The scratch command `python3 round-2-evidence.py` checks the current camera total and its history.
+The earlier command `python3 round-1-totals.py` prints the two files without uncovered increases.
+`src/cameraGroundGuard.js` still records ten uncovered branches. Its branch total now increases from 53 to 54.
 `src/keylessGeocoder.js` keeps five uncovered branches; its branch total falls from 120 to 118.
 These total changes explain the two files outside the set with uncovered rises.
 
@@ -153,24 +163,58 @@ The command `node round-1-module-summary.mjs` checks raw records with the reposi
 It gives LF/LH 651/651, BRF/BRH 268/268 and FNF/FNH 70/70 for the gates.
 It gives LF/LH 813/813, BRF/BRH 525/525 and FNF/FNH 95/95 for the ledger.
 It gives LF/LH 35/35, BRF/BRH 10/10 and FNF/FNH 6/6 for the parallel helper.
-It gives LF/LH 188/188, BRF/BRH 103/103 and FNF/FNH 19/19 for the coverage module.
+It gives LF/LH 188/188, BRF/BRH 103/103 and FNF/FNH 19/19 for the merge module.
 
 The gate records include its parent process and real CLI processes in the same folder.
 The parallel preload copies its real CLI records before the test removes their folder.
-The other modules each use the raw records of their test process.
+The ledger and merge module each use the raw records of their test process.
 
 The command `python3 round-1-report.py` reads the final command output for each spec test file.
 It gives 423 tests and 423 passes across 20 files, with no failure or cancelled test.
 Each test file uses its own process.
 
-The complete mutation command uses `mut-host.py` with the environment option `--test-isolation=none` and the complete `muts.json` file.
+The full mutation command uses `mut-host.py` with the environment option `--test-isolation=none` and the full `muts.json` file.
 The command `python3 round-1-final-audit.py` gives 207 KILLED rows and no open row.
 It names the failed test of each row.
-The complete command follows the last production change.
+The full command follows the last edit of a production file.
 
-The first complete gate test process stopped before the end, so it gives no verdict.
-A later complete process gave one failed test because an old fake process supplied no raw file.
-The corrected fake process supplies a raw file. The final complete process passes.
+The first full gate test process stopped before the end, so it gives no verdict.
+A later full process gave one failed test because an old fake process supplied no raw file.
+The corrected fake process supplies a raw file. The final full process passes.
 
-The first complete mutation command found one survivor after the helper no longer served scenario `coverage-gate-063`.
-The new two-URL group fixture in scenario `coverage-gate-062` kills that mutation. The second complete command passes.
+The first full mutation command found one survivor after the helper no longer served scenario `coverage-gate-063`.
+The new two-URL group fixture in scenario `coverage-gate-062` kills that mutation. The second full command passes.
+
+## Known limits of round two
+
+### raw-folder-reachable
+
+A test can write a `coverage-*.json` file into its own `process.env.NODE_V8_COVERAGE` folder. Node copies every file into the raw folder.
+
+A test can also search `os.tmpdir()` for `gev-spec-v8-*` or read the parent environment through `/proc/<parent pid>/environ`.
+
+The parent environment still holds the path. `mergeRawCoverage` merges every `coverage-*.json` file. Node's own merge had the same hole.
+This change closes only the `GEV_SPEC_OUT` path and the predictable path inside the repository.
+
+### raw-folder-after-kill
+
+After a kill signal, Ctrl-C or a time limit, the temporary folder can hold about one GB until the system clears it.
+The old folder in `.gev-cache/spec` disappeared at the next measurement. The `finally` block cannot remove files after process termination.
+The scratch command `python3 round-2-evidence.py` measures 1056405189 raw bytes.
+
+### rebaseline-flip-risk
+
+Image test times can change the uncovered value of a file without a base entry from one item to zero.
+The gate then rejects the whole history of the change. The tolerance of up to eight items otherwise allows that difference.
+The scratch command `python3 round-2-evidence.py` reads the ledger and its history at commit `0dfd0a78dc70893128abc0f009b731f81120589b`.
+
+The command gives 151 total branches and one uncovered branch for `scripts/spec/lib/test-guard.mjs`.
+
+The command gives 287 total branches and one uncovered branch for `src/layers/osh/index.js`.
+
+The command gives 36 total branches and one uncovered branch for `src/data/aircraftClass.js`.
+
+After this change joins main, these history lines belong to the base. This risk then ends.
+
+The scratch command `python3 round-2-evidence.py` shows the branch total of `src/cameraGroundGuard.js` changes from 53 to 54.
+The ledger records 54. This result corrects the earlier total under `image-test-timing`.

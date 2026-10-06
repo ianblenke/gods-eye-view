@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: One-time ledger command
-The ledger MUST allow one explicit rebaseline step only in the change gates-coverage-race that first adds the exact merge module.
+The ledger MUST allow one rebaseline step only in the change gates-coverage-race that first adds the exact merge module.
 The old values must equal the base values exactly. The new values must stay within the count tolerance of the current measurement.
 Origin: spec-first
 
@@ -36,12 +36,12 @@ Origin: spec-first
 
 #### Scenario: The gate rejects false history `gap-ledger-114`
 
-- **WHEN** a rebaseline line lacks the checked change, module change, base content, exact old values or new values within the count tolerance
+- **WHEN** a rebaseline line lacks the checked change, merge module change, base content, exact old values or new values within the count tolerance
 - **THEN** the gate gives no allowance from that line
-- **AND** the gate keeps its LEDGER errors and rejects sets without all three metrics and repeated file metric pairs
+- **AND** the gate gives its LEDGER errors and rejects sets without all three metrics and repeated file metric pairs
 - **AND** the gate rejects metric names outside lines, branches and functions
 
-#### Scenario: The command allows one explicit step `gap-ledger-115`
+#### Scenario: The command allows one step `gap-ledger-115`
 
 - **WHEN** the checked change already records a rebaseline step
 - **THEN** the command stops before any test
@@ -84,6 +84,6 @@ Origin: spec-first
 #### Scenario: A fully covered file gets no new allowance `gap-ledger-122`
 
 - **WHEN** a history line names a file without a base entry and all three measured uncovered values equal zero
-- **THEN** the gate rejects the line with LEDGER-REBASELINE
+- **THEN** the gate rejects the history of the change with LEDGER-REBASELINE
 - **AND** a gap in any metric prevents this rejection
 - **AND** a fully covered file with a base entry can close its gap

@@ -1498,24 +1498,27 @@ test('[gap-ledger-115] The command keeps the base history prefix', () => {
 });
 
 
-test('[coverage-gate-066 coverage-gate-067] The gate removes its private folder on each path', () => {
-  for (const mode of ['loaded', 'no-lcov', 'empty', 'absent', 'error']) {
+test('[coverage-gate-066 coverage-gate-067] The gate removes its raw folder and reports absent raw files', () => {
+  const rawNames = [];
+  for (const mode of ['loaded', 'no-lcov', 'no-lcov-no-raw', 'empty', 'absent', 'error']) {
     withFixture((root) => {
       let raw;
       const fakeSpawn = (_command, args) => {
         const runs = JSON.parse(readFileSync(args[1], 'utf8'));
         raw = runs[0].env.NODE_V8_COVERAGE;
+        rawNames.push(path.basename(raw));
+        assert.match(path.basename(raw), /^gev-spec-v8-.+$/);
         assert.equal(raw.startsWith(path.join(tmpdir(), 'gev-spec-v8-')), true);
         assert.equal(raw.startsWith(root + path.sep), false);
         writeFileSync(args[2], JSON.stringify(runs.map(() => ({ status: 0, error: null }))));
-        if (mode !== 'no-lcov') writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:0\nend_of_record\n`);
+        if (mode !== 'no-lcov' && mode !== 'no-lcov-no-raw') writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:0\nend_of_record\n`);
         if (mode === 'absent') rmSync(raw, { recursive: true });
-        else if (mode !== 'empty') {
+        else if (mode !== 'empty' && mode !== 'no-lcov-no-raw') {
           writeFileSync(path.join(raw, 'coverage-1-1-0.json'), mode === 'error' ? '{' : JSON.stringify({ result: [{
             url: pathToFileURL(path.join(root, 'src/math.js')).href,
             functions: [{ functionName: '', isBlockCoverage: true, ranges: [{ startOffset: 0, endOffset: 45, count: 1 }] }],
           }] }));
-        } else writeFileSync(path.join(raw, 'other.json'), '{}');
+        } else if (mode === 'empty') writeFileSync(path.join(raw, 'other.json'), '{}');
         return { status: 0 };
       };
       const options = { spawn: fakeSpawn, openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : '{"items":[]}' }) };
@@ -1536,6 +1539,8 @@ test('[coverage-gate-066 coverage-gate-067] The gate removes its private folder 
       assert.equal(existsSync(root), true);
     });
   }
+  assert.equal(rawNames.length, 6);
+  assert.equal(new Set(rawNames).size, 6);
 });
 
 test('[gap-ledger-116 gap-ledger-117] The ratchet applies the count tolerance', () => {

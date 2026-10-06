@@ -14,7 +14,7 @@ Node changes coverage values with the order of process files. Its range merge al
 ### Modified Capabilities
 
 - `coverage-gate`: add an exact process merge.
-- `gap-ledger`: add one explicit rebaseline step.
+- `gap-ledger`: add one rebaseline step.
 
 ## Impact
 
@@ -22,16 +22,46 @@ The change adds a merge module and tests. It changes the gates, parallel helper 
 
 Some uncovered values rise because the old Node merge reported coverage that no process recorded. The rebaseline step records each file by name.
 
-The raw folder lies outside the repository root and output folder. The gate removes it after the measurement on every path.
+The raw folder lies outside the repository root and output folder. The gate removes it after the measurement ends normally or after every error inside the measurement.
 
 ## Known limits
 
-The tolerance stays unchanged. The scratch command `node bench.mjs` measures 1056405189 raw bytes and 46512.85 milliseconds for the gate merge. Raw files exist only during the measurement, with about two GB on disk at the peak, because Node copies its temporary files. The scratch command `node round-1-evidence.mjs` totals 1056405189 raw bytes. Two copies can occupy 2112810378 bytes at the peak.
+The tolerance stays unchanged. The scratch command `node bench.mjs` measures 1056405189 raw bytes and 46512.85 milliseconds for the gate merge. Raw files can occupy about two GB at the peak because Node copies its temporary files. The scratch command `node round-1-evidence.mjs` totals 1056405189 raw bytes. Two copies can occupy 2112810378 bytes at the peak.
 
 Host values differ from image values. The design records the results of the image checks.
 
-D1 allows a recorded unchanged metric within one tolerance. It does not prove that the metric differed in the earlier measurement.
+Decision D1 of the design accepts a history line for an unchanged metric. Its new value can be one tolerance above the measurement. The check does not prove that the metric differed in the earlier measurement.
 
-Known limits `image-test-timing` and `traffic-navigation-timing` remain. The design records the image evidence.
-The command records a rise that a test removed in the same change causes. No gate compares removed tests.
-After this change joins main, the base holds the module. The `rebaseline` command stays in the tree but cannot run again.
+The known limits `image-test-timing` and `traffic-navigation-timing` remain. The design records the image evidence.
+The `rebaseline` command records an increase. A test that this change removes can cause it. No gate compares removed tests.
+
+After this change joins main, the base holds the merge module. The `rebaseline` command stays in the tree but cannot run again.
+
+### raw-folder-reachable
+
+A test can write a `coverage-*.json` file into its own `process.env.NODE_V8_COVERAGE` folder. Node copies every file into the raw folder.
+
+A test can also search `os.tmpdir()` for `gev-spec-v8-*` or read the parent environment through `/proc/<parent pid>/environ`.
+
+The parent environment still holds the path. `mergeRawCoverage` merges every `coverage-*.json` file. Node's own merge had the same hole.
+This change closes only the `GEV_SPEC_OUT` path and the predictable path inside the repository.
+
+### raw-folder-after-kill
+
+After a kill signal, Ctrl-C or a time limit, the temporary folder can hold about one GB until the system clears it.
+The old folder in `.gev-cache/spec` disappeared at the next measurement. The `finally` block cannot remove files after process termination.
+The scratch command `python3 round-2-evidence.py` measures 1056405189 raw bytes.
+
+### rebaseline-flip-risk
+
+Image test times can change the uncovered value of a file without a base entry from one item to zero.
+The gate then rejects the whole history of the change. The tolerance of up to eight items otherwise allows that difference.
+The scratch command `python3 round-2-evidence.py` reads the ledger and its history at commit `0dfd0a78dc70893128abc0f009b731f81120589b`.
+
+The command gives 151 total branches and one uncovered branch for `scripts/spec/lib/test-guard.mjs`.
+
+The command gives 287 total branches and one uncovered branch for `src/layers/osh/index.js`.
+
+The command gives 36 total branches and one uncovered branch for `src/data/aircraftClass.js`.
+
+After this change joins main, these history lines belong to the base. This risk then ends.
