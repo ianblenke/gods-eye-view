@@ -42,7 +42,7 @@ The gate validates history against the base entries, current content and measure
 
 ## Evidence and limits
 
-The oracle, raw retention experiment and performance results belong in the evidence report after their commands finish. The host does not establish image coverage values. The lead executes ratchet, rebaseline and gates in the prescribed image. The existing specification permits this lcov record replacement without a text change.
+The host does not establish image coverage values. The lead executes ratchet, rebaseline and gates in the prescribed image. The existing specification permits this lcov record replacement without a text change.
 
 ## Host evidence
 
@@ -89,3 +89,29 @@ The check does not compare the number or set of history lines with recomputed li
 A line for an unchanged measured metric can still supply an allowance. Its old values remain exact. Its new values stay at most one tolerance above the measurement. The temporary base comparison therefore retains this bounded allowance. The check does not prove that a recorded metric differed during the earlier measurement.
 
 The ledger snapshot also stays within one tolerance of the current measurement. The comparison rules stay unchanged. Host measurements do not establish image values. The trace files retain the image data.
+
+## Image evidence
+
+The command `rebaseline` recorded 153 history lines for 111 files in the prescribed image. 43 lines hold a line metric and 110 lines hold a branch metric. No line holds a function metric.
+
+109 files rise and no file falls. The line counts rise by 552 in total. Nine files had no ledger entry before, because the old merge hid their gaps.
+
+The count of complete files falls from 264 to 257. The scratch logs `sn-ratchet.log` and `rebaseline.log` give these two counts.
+
+The file `src/annotations/resolver.js` rises from 342 to 417 uncovered lines. This value equals the exact union of the host data.
+
+Two image measurements of the same tree agree on 150 of the 153 recorded values. The other three values belong to two files.
+
+For `server/providers/vessels/ais-store.js`, the uncovered lines are 44 in one measurement and 40 in the other. Its branch total is 74 in one and 76 in the other.
+
+For `src/cameraGroundGuard.js`, the branch total is 53 in one and 54 in the other. Two host measurements of the whole suite agree for every source file that this change does not edit.
+
+Some tests therefore execute different code in the image from one measurement to the next. Known limit `image-test-timing`: this change does not find those tests. Decision D1 bounds the effect with the count tolerance.
+
+The ratchet command passed after D1 and wrote one history line. Three gate commands then measured the same tree.
+
+The command with the change name gave only the error `REVIEW-MISSING`, and 0 ledger entries did not match. The two commands without the change name also gave 0 entries that did not match.
+
+Both commands without the change name gave the same ledger errors against the unchanged base. They do not apply the baseline history, so the new counts look like rises. The merge removes these errors, because the base then holds the new counts.
+
+One of these two commands also reported a failed test, `src/layers/traffic/navigation.test.mjs`. Known limit `traffic-navigation-timing`: that test failed once in three measurements. This change does not edit it.

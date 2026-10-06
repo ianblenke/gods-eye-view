@@ -6,7 +6,8 @@ Node changes coverage values with the order of process files. Its range merge al
 
 - Add an exact process union without Node internals or a new dependency.
 - Replace loaded lcov records after the main test process exits.
-- Add one bounded ledger baseline step for unchanged source files.
+- Delete the raw coverage folder after the merge.
+- Add one bounded ledger baseline step for unchanged source files. The check of its history uses the count tolerance.
 
 ## Capabilities
 
@@ -25,4 +26,4 @@ The gate deletes the raw folder after the merge because CI uploads the output fo
 
 ## Known limits
 
-The tolerance stays unchanged. The scratch command `node bench.mjs` measures 1056405189 raw bytes and 46512.85 milliseconds for the gate merge. Raw files exist only during the measurement, with about one GB on disk at the peak. The scratch Python command totals the raw JSON file sizes for this disk value. Host values differ from image values. The lead must execute the image checks before the merge.
+The tolerance stays unchanged. The scratch command `node bench.mjs` measures 1056405189 raw bytes and 46512.85 milliseconds for the gate merge. Raw files exist only during the measurement, with about one GB on disk at the peak. The scratch Python command totals the raw JSON file sizes for this disk value. Host values differ from image values. The design records the results of the image checks.
