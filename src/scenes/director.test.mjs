@@ -197,7 +197,7 @@ test('scene clock subscribers receive authoritative forward playback snapshots',
 });
 
 
-test('the Nepal evidence pack appends once and applies the approved corridor framing', () => {
+test('[director-159 director-173 director-158] the Nepal evidence pack appends once and applies the approved corridor framing', () => {
   const project = nepalProjectFixture();
   const originalShots = structuredClone(project.scenes[0].shots);
   const { director, restore } = makeDirector({ project });
@@ -320,7 +320,7 @@ test('the Nepal evidence pack appends once and applies the approved corridor fra
   }
 });
 
-test('installed v12 Nepal pack inserts ten points without replacing renamed cameras', () => {
+test('[director-160 director-165] installed v12 Nepal pack inserts ten points without replacing renamed cameras', () => {
   const first = makeDirector({ project: nepalProjectFixture() });
   let legacy;
   const recipe = getSceneAppendRecipeById('bhote-koshi-nepal-evidence-pack');
@@ -356,7 +356,7 @@ test('installed v12 Nepal pack inserts ten points without replacing renamed came
 });
 
 
-test('a legacy three-shot Nepal browser project bootstraps to the current 25-shot sequence', () => {
+test('[director-151 director-155] a legacy three-shot Nepal browser project bootstraps to the current 25-shot sequence', () => {
   const project = legacyThreeShotNepalProjectFixture();
   const originalIds = project.scenes[0].shots.map(({ id }) => id);
   const originalCameras = project.scenes[0].shots.map(({ camera }) => structuredClone(camera));
@@ -377,7 +377,7 @@ test('a legacy three-shot Nepal browser project bootstraps to the current 25-sho
   }
 });
 
-test('the Nepal evidence pack refuses a partial inventory without mutating the scene', () => {
+test('[director-166] the Nepal evidence pack refuses a partial inventory without mutating the scene', () => {
   const project = nepalProjectFixture();
   project.scenes[0].shots[3].title = 'Renamed Nearby Cities';
   const { director, restore } = makeDirector({ project });
@@ -397,7 +397,7 @@ test('the Nepal evidence pack refuses a partial inventory without mutating the s
   }
 });
 
-test('the Nepal pack upgrades the upper-valley shots without duplicating evidence beats', () => {
+test('[director-182 director-158] the Nepal pack upgrades the upper-valley shots without duplicating evidence beats', () => {
   const initial = makeDirector({ project: nepalProjectFixture() });
   initial.director.appendShotPack('scene-1', 'bhote-koshi-nepal-evidence-pack');
   const project = structuredClone(initial.director._project);
