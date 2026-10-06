@@ -1332,6 +1332,8 @@ test('[coverage-gate-064 coverage-gate-065] The gate assigns raw coverage and re
       writeFileSync(args[2], JSON.stringify(runs.map(() => ({ status: 0, error: null }))));
       writeFileSync(path.join(directory, 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:0\nBRF:1\nBRH:0\nFNF:1\nFNH:0\nend_of_record\nSF:${root}/unloaded.js\nLF:7\nLH:0\nend_of_record\n`);
       const raw = runs[0].env.NODE_V8_COVERAGE;
+      assert.equal(raw.startsWith(path.join(tmpdir(), 'gev-spec-v8-')), true);
+      assert.equal(raw.startsWith(root + path.sep), false);
       mkdirSync(raw, { recursive: true });
       const fn = { functionName: '', isBlockCoverage: true, ranges: [{ startOffset: 0, endOffset: 45, count: 1 }] };
       writeFileSync(path.join(raw, 'coverage-1-1-0.json'), JSON.stringify({ result: [{ url: pathToFileURL(path.join(root, 'src/math.js')).href, functions: [fn] }, { url: pathToFileURL(path.join(root, 'src/math.test.mjs')).href, functions: [fn] }, { url: 'node:fs', functions: [fn] }, { url: 'file:///outside.js', functions: [fn] }, { url: pathToFileURL(path.join(root, 'node_modules/a.js')).href, functions: [fn] }, { url: pathToFileURL(path.join(root, 'src/math.js')).href + '?node-test-mock=1', functions: [fn] }] }));
@@ -1339,10 +1341,12 @@ test('[coverage-gate-064 coverage-gate-065] The gate assigns raw coverage and re
     };
     const result = run(root, ['init'], { spawn: fakeSpawn, allocationFiles: ['tools/other.test.mjs'], env: { A: 'value', NODE_V8_COVERAGE: '/wrong' }, openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : '{"items":[]}' }) });
     assert.equal(calls.length, 1);
-    assert.equal(calls[0][0].env.NODE_V8_COVERAGE, path.join(root, '.gev-cache/spec/v8'));
+    assert.equal(calls[0][0].env.NODE_V8_COVERAGE.startsWith(path.join(tmpdir(), 'gev-spec-v8-')), true);
+    assert.equal(calls[0][0].env.NODE_V8_COVERAGE.startsWith(root + path.sep), false);
     assert.equal(Object.hasOwn(calls[0][0].env, 'NODE_V8_COVERAGE'), true);
-    assert.equal(Object.hasOwn(calls[0][1].env, 'NODE_V8_COVERAGE'), false);
-    assert.equal(calls[0][0].env.A, 'value');
+    assert.equal(Object.hasOwn(calls[0][1], 'env'), false);
+    assert.deepEqual(Object.keys(calls[0][0].env), ['NODE_V8_COVERAGE']);
+    assert.equal(Object.hasOwn(JSON.parse(readFileSync(path.join(root, '.gev-cache/spec/runs.json'), 'utf8'))[0].env, 'A'), false);
     const lcov = readFileSync(path.join(root, '.gev-cache/spec/lcov.info'), 'utf8');
     assert.match(lcov, /LF:3\nLH:3\nBRF:1\nBRH:1\nFNF:0\nFNH:0/);
     assert.match(lcov, /unloaded\.js\nLF:7\nLH:0\nend_of_record/);
@@ -1351,7 +1355,7 @@ test('[coverage-gate-064 coverage-gate-065] The gate assigns raw coverage and re
   });
 });
 
-test('[gap-ledger-111 gap-ledger-115] The command rejects an absent bound before tests', () => {
+test('[gap-ledger-111 gap-ledger-115] The command rejects an absent condition before tests', () => {
   withFixture((root) => {
     const proposal = 'openspec/changes/gates-coverage-race/proposal.md';
     write(root, { [proposal]: '## Why\n\nThe values must agree.\n', 'openspec/trace/gaps.json': '{"version":4,"coverage":{},"untracedTests":{}}\n' });
@@ -1369,7 +1373,7 @@ test('[gap-ledger-111 gap-ledger-115] The command rejects an absent bound before
   });
 });
 
-test('[gap-ledger-110 gap-ledger-113 gap-ledger-115] The command records one step and retains data after a test error', () => {
+test('[gap-ledger-110 gap-ledger-113 gap-ledger-115] The command records one step and keeps data after a test error', () => {
   const baseLedger = { version: 4, coverage: { 'src/math.js': { loaded: true, sha: '5b63136552577a64d788dc3cd4552739d0d60f9e1adb63ec4dfb6932d56fc75d', untrue: false, lines: 1, branches: 0, functions: 0, totals: { lines: 3, branches: 1, functions: 1 }, origin: 'pre-spec', since: '2026-01-01' } }, untracedTests: {} };
   withFixture((root) => {
     write(root, { 'scripts/spec/lib/v8-merge.mjs': 'export {};\n', 'openspec/changes/gates-coverage-race/proposal.md': '## Why\n\nThe values must agree.\n' });
@@ -1381,6 +1385,7 @@ test('[gap-ledger-110 gap-ledger-113 gap-ledger-115] The command records one ste
     const fakeSpawn = (command, args) => {
       const runs = JSON.parse(readFileSync(args[1], 'utf8'));
       const directory = path.dirname(args[1]);
+      writeFileSync(path.join(runs[0].env.NODE_V8_COVERAGE, 'coverage-1-1-0.json'), JSON.stringify({ result: [] }));
       writeFileSync(args[2], JSON.stringify(runs.map(() => ({ status: failed ? 1 : 0, error: null }))));
       const records = ['src/math.test.mjs', 'tools/other.test.mjs'].map((file, index) => ({ file, name: index === 0 ? 'adds two numbers' : 'runs outside src', title: index === 0 ? 'adds two numbers' : 'runs outside src', kind: 'test', status: failed ? 'fail' : 'pass', tags: [], tagError: null, line: 4, column: 1, fullName: index === 0 ? 'adds two numbers' : 'runs outside src', leaf: true }));
       writeFileSync(path.join(directory, 'tests-main.jsonl.sync'), records.map(record => JSON.stringify(record) + '\n').join(''));
@@ -1480,7 +1485,7 @@ test('[gap-ledger-111] The command needs both ledger files before tests', () => 
   });
 });
 
-test('[gap-ledger-115] The command retains the base history prefix', () => {
+test('[gap-ledger-115] The command keeps the base history prefix', () => {
   withFixture(root => {
     write(root, { 'scripts/spec/lib/v8-merge.mjs': 'export {};\n', 'openspec/changes/gates-coverage-race/proposal.md': '## Why\n\nThe values must agree.\n', 'openspec/trace/history.jsonl': '{"kind":"waiver","change":"other"}\n' });
     git(root, 'add', 'scripts/spec/lib/v8-merge.mjs');
@@ -1493,31 +1498,42 @@ test('[gap-ledger-115] The command retains the base history prefix', () => {
 });
 
 
-test('[coverage-gate-066] The gate removes raw files and retains output files', () => {
-  for (const mode of ['loaded', 'no-lcov', 'no-raw']) {
+test('[coverage-gate-066 coverage-gate-067] The gate removes its private folder on each path', () => {
+  for (const mode of ['loaded', 'no-lcov', 'empty', 'absent', 'error']) {
     withFixture((root) => {
+      let raw;
       const fakeSpawn = (_command, args) => {
         const runs = JSON.parse(readFileSync(args[1], 'utf8'));
+        raw = runs[0].env.NODE_V8_COVERAGE;
+        assert.equal(raw.startsWith(path.join(tmpdir(), 'gev-spec-v8-')), true);
+        assert.equal(raw.startsWith(root + path.sep), false);
         writeFileSync(args[2], JSON.stringify(runs.map(() => ({ status: 0, error: null }))));
-        if (mode !== 'no-lcov') {
-          writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:0\nend_of_record\n`);
-        }
-        if (mode !== 'no-raw') {
-          const raw = runs[0].env.NODE_V8_COVERAGE;
-          mkdirSync(path.join(raw, 'nested'), { recursive: true });
-          writeFileSync(path.join(raw, 'nested/keep.txt'), 'raw');
-          writeFileSync(path.join(raw, 'coverage-1-1-0.json'), JSON.stringify({ result: [{
+        if (mode !== 'no-lcov') writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:0\nend_of_record\n`);
+        if (mode === 'absent') rmSync(raw, { recursive: true });
+        else if (mode !== 'empty') {
+          writeFileSync(path.join(raw, 'coverage-1-1-0.json'), mode === 'error' ? '{' : JSON.stringify({ result: [{
             url: pathToFileURL(path.join(root, 'src/math.js')).href,
             functions: [{ functionName: '', isBlockCoverage: true, ranges: [{ startOffset: 0, endOffset: 45, count: 1 }] }],
           }] }));
-        }
+        } else writeFileSync(path.join(raw, 'other.json'), '{}');
         return { status: 0 };
       };
-      run(root, ['init'], { spawn: fakeSpawn, openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : '{"items":[]}' }) });
+      const options = { spawn: fakeSpawn, openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : '{"items":[]}' }) };
+      if (mode === 'error') assert.throws(() => run(root, ['init'], options), SyntaxError);
+      else {
+        const result = run(root, ['init'], options);
+        if (mode === 'empty' || mode === 'absent') {
+          assert.match(result.output, /ERROR COVERAGE-RAW-MISSING/);
+          assert.match(result.output, /^ERROR COVERAGE-RAW-MISSING The raw coverage files of the main run are absent, so the merge cannot replace the Node records$/m);
+          assert.match(readFileSync(path.join(root, '.gev-cache/spec/lcov.info'), 'utf8'), /LF:3\nLH:0/);
+        } else assert.doesNotMatch(result.output, /COVERAGE-RAW-MISSING/);
+        assert.equal(existsSync(path.join(root, '.gev-cache/spec/inventory.json')), true);
+        assert.equal(existsSync(path.join(root, '.gev-cache/spec/results.json')), true);
+        if (mode === 'loaded') assert.match(readFileSync(path.join(root, '.gev-cache/spec/lcov.info'), 'utf8'), /LF:3\nLH:3/);
+      }
+      assert.equal(existsSync(raw), false);
       assert.equal(existsSync(path.join(root, '.gev-cache/spec/v8')), false);
-      assert.equal(existsSync(path.join(root, '.gev-cache/spec/inventory.json')), true);
-      assert.equal(existsSync(path.join(root, '.gev-cache/spec/results.json')), true);
-      if (mode === 'loaded') assert.match(readFileSync(path.join(root, '.gev-cache/spec/lcov.info'), 'utf8'), /LF:3\nLH:3/);
+      assert.equal(existsSync(root), true);
     });
   }
 });

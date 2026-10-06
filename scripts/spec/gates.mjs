@@ -89,7 +89,7 @@ export function localEnvFiles(root, tracked) {
 }
 
 /** Make the node:test runs for the gates. */
-export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FILES, outDir, coverageDir = `${outDir}/v8` }) {
+export function buildTestRuns({ testFiles, allocationFiles = ALLOCATION_TEST_FILES, outDir, coverageDir }) {
   const allocation = new Set(allocationFiles);
   const main = testFiles.filter((file) => !allocation.has(file));
   const runs = [];
@@ -160,8 +160,7 @@ function readJsonLines(directory, files) {
 function executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash }) {
   const runsFile = path.join(resultsDir, 'runs.json');
   const resultsFile = path.join(resultsDir, 'results.json');
-  const baseEnv = childEnv(env, { outDir, root, inventoryHash });
-  writeFileSync(runsFile, JSON.stringify(runs.map((run) => ({ args: run.args, cwd: root, env: { ...baseEnv, ...run.env } }))));
+  writeFileSync(runsFile, JSON.stringify(runs.map((run) => ({ args: run.args, cwd: root, ...(run.env ? { env: run.env } : {}) }))));
   const result = spawn(process.execPath, [RUNNER, runsFile, resultsFile], { cwd: root, stdio: ['ignore', 'ignore', 'inherit'], env: childEnv(env, { outDir, root, inventoryHash }) });
   if (result.error || result.status !== 0 || !existsSync(resultsFile)) {
     const detail = result.error ? `: ${result.error.message}` : '';
@@ -231,90 +230,97 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
   const inventoryText = JSON.stringify(hashes);
   writeFileSync(inventoryFile, inventoryText);
   const resultsDir = mkdtempSync(path.join(tmpdir(), 'gev-spec-results-'));
-  const runs = buildTestRuns({ testFiles, allocationFiles, outDir: resultsDir, coverageDir: path.join(outDir, 'v8') });
-  // Each run's own trace reporter opens its `.sync` file lazily, on its first record, which
-  // is not necessarily the first thing that touches that path: a test can write into it too
-  // (src/tooling/spec/gates.test.mjs's [spec-trace-039 spec-trace-040] deliberately does, to
-  // check that the gate catches a forged record). Creating the file empty here, before any
-  // test process starts, lets the reporter open it in append mode and never truncate content
-  // a test already wrote.
-  for (const run of runs) writeFileSync(run.output, '');
-  const execution = executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash: contentHash(inventoryText) });
-  errors.push(...execution.errors);
-  if (!existsSync(inventoryFile) || readFileSync(inventoryFile, 'utf8') !== inventoryText) {
-    errors.push({ code: 'COVERAGE-INVENTORY-CHANGED', file: path.relative(root, inventoryFile), message: 'The inventory file changed during the test run' });
-  }
-
-  const named = new Set([
-    'runs.json',
-    'results.json',
-    'lcov.info',
-    ...runs.map((run) => path.basename(run.output)),
-    ...runs.map((run) => path.basename(run.rawOutput)),
-  ]);
-  for (const file of readdirSync(resultsDir).filter((name) => !named.has(name)).sort()) {
-    errors.push({ code: 'COVERAGE-EXTRA-RESULT', file, message: `The result folder has ${file}, but the gate did not name it. The gate does not read it.` });
-  }
-  const recordsByRun = runs.map((run) => readJsonLines(resultsDir, [path.basename(run.output)]));
-  const records = recordsByRun.flat();
-  errors.push(...checkFailedRuns(runs, execution.results, recordsByRun));
-  let lcovText = existsSync(path.join(resultsDir, 'lcov.info')) ? readFileSync(path.join(resultsDir, 'lcov.info'), 'utf8') : null;
-  if (lcovText !== null) {
-    lcovText = mergeRawCoverage({ root, directory: path.join(outDir, 'v8'), text: lcovText, inventory });
-    writeFileSync(path.join(resultsDir, 'lcov.info'), lcovText);
-  }
-  rmSync(path.join(outDir, 'v8'), { recursive: true, force: true });
-  for (const file of [...named].filter((name) => existsSync(path.join(resultsDir, name)))) copyFileSync(path.join(resultsDir, file), path.join(outDir, file));
-  rmSync(resultsDir, { recursive: true, force: true });
-
-  for (const file of inventory) {
-    if (contentHash(read(file)) !== hashes[file]) {
-      errors.push({ code: 'COVERAGE-FILE-CHANGED', file, message: `${file} changed during the test run` });
+  const coverageDir = mkdtempSync(path.join(tmpdir(), 'gev-spec-v8-'));
+  try {
+    const runs = buildTestRuns({ testFiles, allocationFiles, outDir: resultsDir, coverageDir });
+    // Each run's own trace reporter opens its `.sync` file lazily, on its first record, which
+    // is not necessarily the first thing that touches that path: a test can write into it too
+    // (src/tooling/spec/gates.test.mjs's [spec-trace-039 spec-trace-040] deliberately does, to
+    // check that the gate catches a forged record). Creating the file empty here, before any
+    // test process starts, lets the reporter open it in append mode and never truncate content
+    // a test already wrote.
+    for (const run of runs) writeFileSync(run.output, '');
+    const execution = executeRuns({ runs, root, outDir, resultsDir, env, spawn, inventoryHash: contentHash(inventoryText) });
+    errors.push(...execution.errors);
+    if (!existsSync(inventoryFile) || readFileSync(inventoryFile, 'utf8') !== inventoryText) {
+      errors.push({ code: 'COVERAGE-INVENTORY-CHANGED', file: path.relative(root, inventoryFile), message: 'The inventory file changed during the test run' });
     }
-  }
-  const guardResults = readJsonLines(outDir, readdirSync(outDir).filter((file) => /^guard-\d+\.jsonl$/.test(file)).sort());
-  for (const violation of guardResults.flatMap((result) => result.violations).filter((item) => !item.file)) {
-    errors.push({ code: violation.code, file: '', message: violation.message });
-  }
-  for (const leak of guardResults.flatMap((result) => result.leaks || [])) {
-    errors.push({ code: 'GATES-TEST-LEAK', file: leak.file, message: `A test process left a live timer: ${leak.resources.join(', ')}` });
-  }
-  const assertions = new Map();
-  for (const item of guardResults.flatMap((result) => result.assertions)) {
-    const key = assertionKey(item.file, item.fullName);
-    assertions.set(key, (assertions.get(key) || 0) + item.count);
-  }
-  const entries = parseLcov(lcovText ?? '', { root });
-  const untrue = untrueFiles({
-    entries,
-    inventory,
-    checked: new Set(guardResults.flatMap((result) => result.checked)),
-    violations: new Set(guardResults.flatMap((result) => result.violations.map((item) => item.file))),
-  });
-  const coverage = measureCoverage({ inventory, entries, readFile: read, untrue });
 
-  const specs = loadSpecs(root);
-  errors.push(...specs.errors);
-  const folder = change ? changeFolder(root, change) : null;
-  errors.push(...checkOpenSpec({ root, specs, run: (args) => openSpec(root, args) }));
-  errors.push(...lintSpecs({ requirements: specs.requirements, orphans: specs.orphans, changeIds: specs.changeIds, readTasks: tasksReader(root) }));
-  if (folder && folder.startsWith('openspec/changes/archive/')) {
-    const archived = checkArchivedChange(root, folder, specs);
-    const changeIds = new Map([[folder.slice('openspec/changes/'.length), archived.ids]]);
-    errors.push(...archived.errors, ...lintSpecs({ requirements: archived.requirements, orphans: archived.orphans, changeIds, readTasks: tasksReader(root) }));
-  }
-  const trace = evaluateTrace({
-    specs,
-    records,
-    assertions,
-    testFiles,
-    change,
-    changeFound: !change || folder !== null,
-  });
-  errors.push(...trace.errors);
-  writeTraceReport(root, trace.report);
+    const named = new Set([
+      'runs.json',
+      'results.json',
+      'lcov.info',
+      ...runs.map((run) => path.basename(run.output)),
+      ...runs.map((run) => path.basename(run.rawOutput)),
+    ]);
+    for (const file of readdirSync(resultsDir).filter((name) => !named.has(name)).sort()) {
+      errors.push({ code: 'COVERAGE-EXTRA-RESULT', file, message: `The result folder has ${file}, but the gate did not name it. The gate does not read it.` });
+    }
+    const recordsByRun = runs.map((run) => readJsonLines(resultsDir, [path.basename(run.output)]));
+    const records = recordsByRun.flat();
+    errors.push(...checkFailedRuns(runs, execution.results, recordsByRun));
+    let lcovText = existsSync(path.join(resultsDir, 'lcov.info')) ? readFileSync(path.join(resultsDir, 'lcov.info'), 'utf8') : null;
+    if (lcovText !== null) {
+      const rawFiles = existsSync(coverageDir) && readdirSync(coverageDir).some((name) => /^coverage-.*\.json$/.test(name));
+      if (!rawFiles) errors.push({ code: 'COVERAGE-RAW-MISSING', file: '', message: 'The raw coverage files of the main run are absent, so the merge cannot replace the Node records' });
+      lcovText = mergeRawCoverage({ root, directory: coverageDir, text: lcovText, inventory });
+      writeFileSync(path.join(resultsDir, 'lcov.info'), lcovText);
+    }
 
-  return { errors, inventory, qaScripts: qaRegister.scripts, testFiles, records, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
+    for (const file of [...named].filter((name) => existsSync(path.join(resultsDir, name)))) copyFileSync(path.join(resultsDir, file), path.join(outDir, file));
+    rmSync(resultsDir, { recursive: true, force: true });
+
+    for (const file of inventory) {
+      if (contentHash(read(file)) !== hashes[file]) {
+        errors.push({ code: 'COVERAGE-FILE-CHANGED', file, message: `${file} changed during the test run` });
+      }
+    }
+    const guardResults = readJsonLines(outDir, readdirSync(outDir).filter((file) => /^guard-\d+\.jsonl$/.test(file)).sort());
+    for (const violation of guardResults.flatMap((result) => result.violations).filter((item) => !item.file)) {
+      errors.push({ code: violation.code, file: '', message: violation.message });
+    }
+    for (const leak of guardResults.flatMap((result) => result.leaks || [])) {
+      errors.push({ code: 'GATES-TEST-LEAK', file: leak.file, message: `A test process left a live timer: ${leak.resources.join(', ')}` });
+    }
+    const assertions = new Map();
+    for (const item of guardResults.flatMap((result) => result.assertions)) {
+      const key = assertionKey(item.file, item.fullName);
+      assertions.set(key, (assertions.get(key) || 0) + item.count);
+    }
+    const entries = parseLcov(lcovText ?? '', { root });
+    const untrue = untrueFiles({
+      entries,
+      inventory,
+      checked: new Set(guardResults.flatMap((result) => result.checked)),
+      violations: new Set(guardResults.flatMap((result) => result.violations.map((item) => item.file))),
+    });
+    const coverage = measureCoverage({ inventory, entries, readFile: read, untrue });
+
+    const specs = loadSpecs(root);
+    errors.push(...specs.errors);
+    const folder = change ? changeFolder(root, change) : null;
+    errors.push(...checkOpenSpec({ root, specs, run: (args) => openSpec(root, args) }));
+    errors.push(...lintSpecs({ requirements: specs.requirements, orphans: specs.orphans, changeIds: specs.changeIds, readTasks: tasksReader(root) }));
+    if (folder && folder.startsWith('openspec/changes/archive/')) {
+      const archived = checkArchivedChange(root, folder, specs);
+      const changeIds = new Map([[folder.slice('openspec/changes/'.length), archived.ids]]);
+      errors.push(...archived.errors, ...lintSpecs({ requirements: archived.requirements, orphans: archived.orphans, changeIds, readTasks: tasksReader(root) }));
+    }
+    const trace = evaluateTrace({
+      specs,
+      records,
+      assertions,
+      testFiles,
+      change,
+      changeFound: !change || folder !== null,
+    });
+    errors.push(...trace.errors);
+    writeTraceReport(root, trace.report);
+
+    return { errors, inventory, qaScripts: qaRegister.scripts, testFiles, records, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
+  } finally {
+    rmSync(coverageDir, { recursive: true, force: true });
+  }
 }
 
 function location(item) {

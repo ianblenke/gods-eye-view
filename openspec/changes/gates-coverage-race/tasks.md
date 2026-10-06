@@ -1,247 +1,101 @@
 ## 1. Specs and tests
 
-- [x] 1.1 Write the proposal, design and added specs.
+- [x] 1.1 Write the delta specs and design before the tests.
 
-- [x] 1.2 Write the test for `coverage-gate-055` before its code.
-  Mutation: Use the second block. The test must fail.
+- [x] 1.2 Write the tests for `coverage-gate-055` first.
+  Mutation: Change the empty line value to zero. The test must fail.
 
-```js
-? 1 : 0
-```
+- [x] 1.3 Write the tests for `coverage-gate-056` first.
+  Mutation: Replace the explicit next-line number with the default. The test must fail.
 
-```js
-? 0 : 0
-```
+- [x] 1.4 Write the tests for `coverage-gate-057` first.
+  Mutation: Remove the later function condition. The test must fail.
 
-- [x] 1.3 Write the test for `coverage-gate-056` before its code.
-  Mutation: Use the second block. The test must fail.
+- [x] 1.5 Write the tests for `coverage-gate-058` first.
+  Mutation: Remove the positive line condition. The test must fail.
 
-```js
-match[1] ?? '1'
-```
+- [x] 1.6 Write the tests for `coverage-gate-059` first.
+  Mutation: Remove the function name from its identity. The test must fail.
 
-```js
-undefined ?? '1'
-```
+- [x] 1.7 Write the tests for `coverage-gate-060` first.
+  Mutation: Replace the parent width comparison `>` with `>=`. The test must fail.
 
-- [x] 1.4 Write the test for `coverage-gate-057` before its code.
-  Mutation: Use the second block. The test must fail.
+- [x] 1.8 Write the tests for `coverage-gate-061` first.
+  Mutation: Replace the occurrence value with zero. The test must fail.
 
-```js
-if (index > 0) item.counted = true;
-```
+- [x] 1.9 Write the tests for `coverage-gate-062` first.
+  Mutation: Use only the first coverage state. The test must fail.
 
-```js
-if (false) item.counted = true;
-```
+- [x] 1.10 Write the tests for `coverage-gate-063` first.
+  Mutation: Use only the first script. The test must fail.
 
-- [x] 1.5 Write the test for `coverage-gate-058` before its code.
-  Mutation: Use the second block. The test must fail.
+- [x] 1.11 Write the tests for `coverage-gate-064` first.
+  Mutation: Write the inherited environment to the runs file. The test must fail.
 
-```js
-lines[index].count > 0 || lines[index].ignore
-```
+- [x] 1.12 Write the tests for `coverage-gate-065` first.
+  Mutation: Remove the line that replaces the loaded records. The test must fail.
 
-```js
-lines[index].ignore
-```
+- [x] 1.13 Write the tests for `coverage-gate-066` first.
+  Mutation: Remove the line that deletes the private raw folder. The test must fail.
 
-- [x] 1.6 Write the test for `coverage-gate-059` before its code.
-  Mutation: Use the second block. The test must fail.
+- [x] 1.14 Write the tests for `coverage-gate-067` first.
+  Mutation: Remove the absent raw file error. The test must fail.
 
-```js
-[fn.functionName, fn.ranges[0].startOffset, fn.ranges[0].endOffset]
-```
+- [x] 1.15 Write the tests for `gap-ledger-110` first.
+  Mutation: Write zero for the new line value. The test must fail.
 
-```js
-[fn.ranges[0].startOffset, fn.ranges[0].endOffset]
-```
+- [x] 1.16 Write the tests for `gap-ledger-111` first.
+  Mutation: Remove the active change condition. The test must fail.
 
-- [x] 1.7 Write the test for `coverage-gate-060` before its code.
-  Mutation: Use the second block. The test must fail.
+- [x] 1.17 Write the tests for `gap-ledger-112` first.
+  Mutation: Remove the base content condition. The test must fail.
 
-```js
-return parent.covered;
-```
+- [x] 1.18 Write the tests for `gap-ledger-113` first.
+  Mutation: Return the original base ledger. The test must fail.
 
-```js
-return false;
-```
+- [x] 1.19 Write the tests for `gap-ledger-114` first.
+  Mutation: Remove the module conditions. The test must fail.
 
-- [x] 1.8 Write the test for `coverage-gate-061` before its code.
-  Mutation: Use the second block. The test must fail.
+- [x] 1.20 Write the tests for `gap-ledger-115` first.
+  Mutation: Remove the base history prefix check. The test must fail.
 
-```js
-occurrences.get(extent) ?? 0
-```
+- [x] 1.21 Write the tests for `gap-ledger-116` first.
+  Mutation: Replace the tolerance comparison `<=` with `<`. The test must fail.
 
-```js
-undefined ?? 0
-```
+- [x] 1.22 Write the tests for `gap-ledger-117` first.
+  Mutation: Replace `Math.min` with `Math.max`. The test must fail.
 
-- [x] 1.9 Write the test for `coverage-gate-062` before its code.
-  Mutation: Use the second block. The test must fail.
+- [x] 1.23 Write the tests for `gap-ledger-118` first.
+  Mutation: Replace floor with ceil. The test must fail.
 
-```js
-for (const state of states) {
-```
+- [x] 1.24 Write the tests for `gap-ledger-119` first.
+  Mutation: Remove the exact old value check. The test must fail.
 
-```js
-for (const state of states.slice(0, 1)) {
-```
+- [x] 1.25 Write the tests for `gap-ledger-120` first.
+  Mutation: Restore the equal history length check. The test must fail.
 
-- [x] 1.10 Write the test for `coverage-gate-063` before its code.
-  Mutation: Use the second block. The test must fail.
+- [x] 1.26 Write the tests for `gap-ledger-121` first.
+  Mutation: Remove the ledger metric check. The test must fail.
 
-```js
-for (const script of process.result) {
-```
-
-```js
-for (const script of process.result.slice(0, 1)) {
-```
-
-- [x] 1.11 Write the test for `coverage-gate-064` before its code.
-  Mutation: Use the second block. The test must fail.
-
-```js
-NODE_V8_COVERAGE: coverageDir
-```
-
-```js
-NODE_V8_COVERAGE: '/wrong'
-```
-
-- [x] 1.12 Write the test for `coverage-gate-065` before its code.
-  Mutation: Use the second block. The test must fail.
-
-```js
-return !loaded.has(source[1]);
-```
-
-```js
-return loaded.has(source[1]);
-```
-
-- [x] 1.13 Write the test for `gap-ledger-110` before its code.
-  Mutation: Use the second block. The test must fail.
-
-```js
-next.coverage[record.file] = { ...gap, ...origin };
-```
-
-```js
-next.coverage[record.file] = { ...gap, ...origin, lines: 0 };
-```
-
-- [x] 1.14 Write the test for `gap-ledger-111` before its code.
-  Mutation: Use the second block. The test must fail.
-
-```js
-if (change !== BASELINE_CHANGE) return false;
-```
-
-```js
-if (false) return false;
-```
-
-- [x] 1.15 Write the test for `gap-ledger-112` before its code.
-  Mutation: Use the second block. The test must fail.
-
-```js
-if (!sameAsBase(record.file)) continue;
-```
-
-```js
-if (false) continue;
-```
-
-- [x] 1.16 Write the test for `gap-ledger-113` before its code.
-  Mutation: Use the second block. The test must fail.
-
-```js
-return { baseLedger: next, errors: [] };
-```
-
-```js
-return { baseLedger, errors: [] };
-```
-
-- [x] 1.17 Write the test for `gap-ledger-114` before its code.
-  Mutation: Use the second block. The test must fail.
-
-```js
-if (!baselineContext(input)) return invalid();
-```
-
-```js
-if (false) return invalid();
-```
-
-- [x] 1.18 Write the test for `gap-ledger-115` before its code.
-  Mutation: Use the second block. The test must fail.
-
-```js
-if (!input.history.startsWith(input.baseHistory))
-```
-
-```js
-if (false)
-```
+- [x] 1.27 Write the tests for `gap-ledger-122` first.
+  Mutation: Remove the all-metrics-zero check. The test must fail.
 
 ## 2. Code and checks
 
-- [x] 2.1 Write the process union and gate interface.
-- [x] 2.2 Write the bounded baseline command and history checks.
-- [x] 2.3 Execute the oracle and raw retention experiment.
-- [x] 2.4 Check each compound operand with a mutation.
-- [x] 2.5 Measure host coverage and execute all spec tests.
-- [x] 2.6 Check prose and format.
-
-- [x] 2.7 Check the absent-file waiver case for `gap-ledger-080`.
-  Mutation: Use the second block. The test must fail.
-
-```js
-file: file || '', message: fault[1]
-```
-
-```js
-file: file || '/wrong', message: fault[1]
-```
-
-- [x] 2.8 Check raw folder removal for `coverage-gate-066`.
-  Mutation: Remove the raw folder deletion. The test must fail.
-
-- [x] 2.9 Write the tolerance spec and D1 before the tests.
-
-- [x] 2.10 Write the test for `gap-ledger-116` before its code.
-  Mutation: Use `<` for `<=`. The test must fail.
-
-- [x] 2.11 Write the test for `gap-ledger-117` before its code.
-  Mutation: Use `Math.max` for `Math.min`. The test must fail.
-
-- [x] 2.12 Write the test for `gap-ledger-118` before its code.
-  Mutation: Use ceil for floor. The test must fail.
-
-- [x] 2.13 Write the test for `gap-ledger-119` before its code.
-  Mutation: Remove the exact old value check. The test must fail.
-
-- [x] 2.14 Write the test for `gap-ledger-120` before its code.
-  Mutation: Restore the equal history length check. The test must fail.
-
-- [x] 2.15 Write the test for `gap-ledger-121` before its code.
-  Mutation: Remove the ledger metric check. The test must fail.
-
-- [x] 2.16 Apply the count tolerance to the baseline check.
-- [x] 2.17 Check each new operand with a mutation.
-- [x] 2.18 Execute the complete mutation file after the last code edit.
-- [x] 2.19 Execute each spec test file alone.
-- [x] 2.20 Measure ledger coverage and check prose and format.
+- [x] 2.1 Write the coverage merge and gate interface after the tests.
+- [x] 2.2 Write the rebaseline command and history checks after the tests.
+- [x] 2.3 Check each compound operand with a mutation.
+- [x] 2.4 Run the complete mutation file after the last production change.
+- [x] 2.5 Measure host coverage.
+- [x] 2.6 Run each spec test file alone.
+- [x] 2.7 Run the fresh temporary folder experiment.
+- [x] 2.8 Check prose.
+- [x] 2.9 Check format.
 
 ## 3. Gates and review
 
-- [ ] 3.1 Execute rebaseline in the image.
-- [ ] 3.2 Execute the ratchet in the image.
-- [ ] 3.3 Execute the gates in the image.
+- [ ] 3.1 Check the rebaseline evidence of the image.
+- [ ] 3.2 Ask the lead to run `make ratchet CHANGE=gates-coverage-race` in the image.
+- [ ] 3.3 Ask the lead to run `make gates CHANGE=gates-coverage-race` in the image.
 - [ ] 3.4 Get both review agent verdicts.
 - [ ] 3.5 Record the tree and verdicts in review.md.

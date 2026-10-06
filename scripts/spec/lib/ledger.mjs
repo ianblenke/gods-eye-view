@@ -772,6 +772,7 @@ export function checkRebaseline(input) {
     if (record.untrue) return invalid();
     if (line.sha !== record.sha) return invalid();
     const base = baseLedger.coverage[line.file];
+    if (!base && record.lines.uncovered === 0 && record.branches.uncovered === 0 && record.functions.uncovered === 0) return invalid();
     if (base && base.sha !== line.sha) return invalid();
     const old = base ? base[line.metric] : 0;
     const oldTotal = base ? base.totals[line.metric] : null;
