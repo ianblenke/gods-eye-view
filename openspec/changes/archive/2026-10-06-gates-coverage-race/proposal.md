@@ -22,7 +22,7 @@ The change adds a merge module and tests. It changes the gates, parallel helper 
 
 Some uncovered values rise because the old Node merge reported coverage that no process recorded. The rebaseline step records each file by name.
 
-The raw folder lies outside the repository root and output folder. The gate removes it after the measurement ends normally or after every error inside the measurement.
+The raw folder lies outside the repository root and output folder. The gate removes it after the measurement ends normally and after an error in the merge. The `finally` block also covers other errors inside the measurement; no test makes one.
 
 ## Known limits
 
@@ -43,12 +43,12 @@ A test can write a `coverage-*.json` file into its own `process.env.NODE_V8_COVE
 
 A test can also search `os.tmpdir()` for `gev-spec-v8-*` or read the parent environment through `/proc/<parent pid>/environ`.
 
-The parent environment still holds the path. `mergeRawCoverage` merges every `coverage-*.json` file. Node's own merge had the same hole.
+The parent environment still holds the path. `mergeRawCoverage` merges every `coverage-*.json` file. Node's own merge has the same fault.
 This change closes only the `GEV_SPEC_OUT` path and the predictable path inside the repository.
 
 ### raw-folder-after-kill
 
-After a kill signal, Ctrl-C or a time limit, the temporary folder can hold about one GB until the system clears it.
+After a kill signal, Ctrl-C or a time limit, two folders can stay in the temporary folder until the system clears them. They are the `node-coverage-*` folder of Node and the raw folder. Together they can reach up to about two GB.
 The old folder in `.gev-cache/spec` disappeared at the next measurement. The `finally` block cannot remove files after process termination.
 The scratch command `python3 round-2-evidence.py` measures 1056405189 raw bytes.
 
@@ -65,3 +65,18 @@ The command gives 287 total branches and one uncovered branch for `src/layers/os
 The command gives 36 total branches and one uncovered branch for `src/data/aircraftClass.js`.
 
 After this change joins main, these history lines belong to the base. This risk then ends.
+
+### finally-test-scope
+
+Scenario `coverage-gate-066` says that the gate removes the raw folder after an error inside the measurement. The tests make only one such error: an invalid raw file that fails the merge.
+The `try` block also covers errors before the merge. No test makes one, so a `try` block that starts later still passes the tests.
+
+### random-name-test-scope
+
+Scenario `coverage-gate-066` says that the folder name is random. Its test proves only that six measurements give different names with a non-empty suffix.
+A name that comes from a counter or a process number also passes the test.
+
+### history-122-test-scope
+
+The test of scenario `gap-ledger-122` uses a history with one line. Its check that the gate writes no entry cannot fail, because `invalid()` returns before any write.
+The effect today is nil, because the error stops the build in each case.
