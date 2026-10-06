@@ -104,7 +104,7 @@ The ledger snapshot also stays within one tolerance of the current measurement. 
 
 ## Image evidence
 
-These image measurements precede the round one corrections.
+The image measurements in this section precede the corrections of review round one.
 
 The lead ran `rebaseline` in the image. The scratch command `node round-1-evidence.mjs` reads 153 history lines for 111 files. 43 lines hold a line metric and 110 lines hold a branch metric. No line holds a function metric.
 
