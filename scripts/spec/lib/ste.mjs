@@ -175,7 +175,7 @@ function checkParagraph(paragraph, words) {
       findings.push(finding('STE-PASSIVE', 'warning', tokens[index].line, `Check for passive voice: "${lowered[index]} ${next}"`));
     }
   }
-  const nounVerbs = new Set(words.nounVerbs ?? []);
+  const nounVerbs = new Set(words.nounVerbs);
   for (let index = 0; index + 1 < tokens.length; index += 1) {
     const word = lowered[index + 1];
     if (DETERMINERS.has(tokens[index].text.toLowerCase()) && nounVerbs.has(word) && !/^["'“‘]/.test(tokens[index + 1].text)) {
