@@ -455,7 +455,7 @@ test('the Nepal pack upgrades the upper-valley shots without duplicating evidenc
 });
 
 
-test('an older default project gains the complete selectable Nepal scene once', () => {
+test('[director-117] an older default project gains the complete selectable Nepal scene once', () => {
   const project = legacyDefaultProjectWithoutNepalFixture();
   const { director, restore } = makeDirector({
     project,
@@ -473,7 +473,7 @@ test('an older default project gains the complete selectable Nepal scene once', 
   }
 });
 
-test('a previously installed Nepal scene stays deleted when its marker remains', () => {
+test('[director-119] a previously installed Nepal scene stays deleted when its marker remains', () => {
   const project = legacyDefaultProjectWithoutNepalFixture();
   project.installedBuiltInSceneIds = ['bhote-koshi-nepal-scene'];
   const { director, restore } = makeDirector({ project });
@@ -493,7 +493,7 @@ test('public defaults include Nepal without an extra standalone flood recipe', (
 });
 
 
-test('an existing public default project gains Nepal without replacing authored shots', () => {
+test('[director-118] an existing public default project gains Nepal without replacing authored shots', () => {
   const project = structuredClone(PROJECT_FIXTURE);
   project.scenes[0].id = 'flights-radar';
   const original = structuredClone(project.scenes[0].shots);
@@ -1546,7 +1546,7 @@ test('a delayed import cannot publish after disposal', async () => {
   } finally { restore(); }
 });
 
-test('invalid authored edits cannot persist an unreadable project over a good save', () => {
+test('[director-133] invalid authored edits cannot persist an unreadable project over a good save', () => {
   const { director, restore } = makeDirector();
   try {
     const before = localStorage.getItem('godsEyeView.sceneProject.v2');
