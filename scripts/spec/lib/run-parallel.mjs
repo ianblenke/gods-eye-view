@@ -7,7 +7,7 @@ import { pathToFileURL } from 'node:url';
 /**
  * Start each Node run at the same time and wait until each run stops.
  *
- * @param {{args: string[], cwd: string}[]} runs
+ * @param {{args: string[], cwd: string, env?: object}[]} runs
  * @param {{spawnProcess?: Function, env?: object}} [options]
  * @returns {Promise<{status: number|null, error: string|null}[]>}
  */
@@ -16,7 +16,7 @@ export function runParallel(runs, { spawnProcess = spawn, env = process.env } = 
     runs.map(
       (run) =>
         new Promise((resolve) => {
-          const child = spawnProcess(process.execPath, run.args, { cwd: run.cwd, env, stdio: ['ignore', 'ignore', 'inherit'] });
+          const child = spawnProcess(process.execPath, run.args, { cwd: run.cwd, env: run.env ? { ...env, ...run.env } : env, stdio: ['ignore', 'ignore', 'inherit'] });
           child.on('error', (error) => resolve({ status: null, error: error.message }));
           child.on('close', (status) => resolve({ status, error: null }));
         }),
