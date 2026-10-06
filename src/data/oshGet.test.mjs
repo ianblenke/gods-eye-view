@@ -534,7 +534,8 @@ test('[osh-036] oshPages() follows an accepted next link with the query that the
   assert.equal(requestedUrls[1].includes(';'), false, 'a raw, unescaped `;` must not reach the wire');
 });
 
-test('[osh-015] fails a request whose declared body exceeds the cap, with no parse', async () => {
+test('[osh-015] fails a request whose declared body exceeds the cap, with no parse', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   let pulls = 0;
   const stream = new ReadableStream(
     {
@@ -547,7 +548,7 @@ test('[osh-015] fails a request whose declared body exceeds the cap, with no par
   );
   const response = new Response(stream, { status: 200 });
   response.headers.set('Content-Length', String(OSH_MAX_BODY_BYTES + 1));
-  await assert.rejects(
+  const rejected = assert.rejects(
     oshGet(async () => response, 'https://osh.example/api/systems'),
     { code: 'OSH_TOO_LARGE' },
   );

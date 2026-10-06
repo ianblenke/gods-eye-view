@@ -9,6 +9,8 @@ import { promisify } from 'node:util';
 import { projectRoot } from '../scripts/project-root.mjs';
 import { inspectSetup } from '../scripts/setup-doctor.mjs';
 import { makeFixtureRoot } from './tooling/fixtureRoot.mjs';
+// Shell commands need a real deadline with room for CPU load.
+const launcherTimeoutMs = 30_000 * 20;
 const run = promisify(execFile);
 const sourceRoot = fileURLToPath(new URL('../', import.meta.url));
 
@@ -95,7 +97,7 @@ require('node:fs').writeFileSync(process.env.TEST_CAPTURE, JSON.stringify({ cwd:
             TEST_CAPTURE: capture,
             GOOGLE_MAPS_SERVER_API_KEY: 'fixture-exported-server',
           },
-          timeout: 30000,
+          timeout: launcherTimeoutMs,
         },
       );
       const result = JSON.parse(await readFile(capture, 'utf8'));

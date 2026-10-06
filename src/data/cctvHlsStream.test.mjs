@@ -6,6 +6,7 @@ import {
   parseHlsMedia,
   HLS_LIMITS,
 } from '../../server/providers/cctv/stream.js';
+const realSetTimeout = globalThis.setTimeout;
 const playlist =
   '#EXTM3U\n#EXT-X-MEDIA-SEQUENCE:12\n#EXTINF:2,\na.ts\n#EXTINF:2,\nb.ts\n#EXTINF:2,\nc.ts\n';
 const base = 'https://camera.example/live/list.m3u8';
@@ -107,7 +108,8 @@ test('shutdown cancels in-flight downloads and late responses cannot refill cach
   await assert.rejects(manager.ensure('a', base));
 });
 
-test('idle cleanup stops all polling without a background sweep', async () => {
+test('idle cleanup stops all polling without a background sweep', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   let calls = 0;
   const manager = createHlsPuller({
     limits: { ...HLS_LIMITS, idleMs: 15, pollMs: 100000 },
@@ -116,16 +118,20 @@ test('idle cleanup stops all polling without a background sweep', async () => {
       return new Response(url.endsWith('.m3u8') ? playlist : 'abc');
     },
   });
-  await manager.ensure('a', base);
-  await new Promise((r) => setTimeout(r, 50));
+  const entry = await manager.ensure('a', base);
+  await entry.polling;
+  t.mock.timers.tick(50);
+  await new Promise((resolve) => setImmediate(resolve));
   assert.deepEqual(manager.stats(), { sessions: 0, bytes: 0 });
   const stoppedCalls = calls;
-  await new Promise((r) => setTimeout(r, 30));
+  t.mock.timers.tick(100000);
+  await new Promise((resolve) => realSetTimeout(resolve, 5));
   assert.equal(calls, stoppedCalls);
   await manager.shutdown();
 });
 
-test('agency sequence rollback creates a monotonic local discontinuity', async () => {
+test('agency sequence rollback creates a monotonic local discontinuity', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   let current = playlist;
   const manager = createHlsPuller({
     limits: { ...HLS_LIMITS, pollMs: 5 },
@@ -133,11 +139,18 @@ test('agency sequence rollback creates a monotonic local discontinuity', async (
       new Response(url.endsWith('.m3u8') ? current : 'abc'),
   });
   const entry = await manager.ensure('a', base);
-  await manager.waitReady(entry);
+  await entry.polling;
+  assert.equal(await manager.waitReady(entry), true);
   const before = await manager.buildPlaylist(entry, 'a');
   assert.match(before, /seg_0\.ts/);
   current = playlist.replace('SEQUENCE:12', 'SEQUENCE:0');
-  await new Promise((r) => setTimeout(r, 30));
+  t.mock.timers.tick(30);
+  await entry.polling;
+  await new Promise((resolve) => setImmediate(resolve));
+  const changedPoll = entry.polling;
+  t.mock.timers.tick(5);
+  assert.notEqual(entry.polling, changedPoll);
+  await entry.polling;
   const after = await manager.buildPlaylist(entry, 'a');
   assert.match(
     after,
@@ -155,7 +168,8 @@ test('upstream discontinuity tags survive the media parser', () => {
   assert.equal(parsed[1].discontinuity, true);
 });
 
-test('a reused agency sequence with changed segment URI cannot remain stale', async () => {
+test('a reused agency sequence with changed segment URI cannot remain stale', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   let current = playlist;
   const manager = createHlsPuller({
     limits: { ...HLS_LIMITS, pollMs: 5 },
@@ -163,9 +177,16 @@ test('a reused agency sequence with changed segment URI cannot remain stale', as
       new Response(url.endsWith('.m3u8') ? current : 'abc'),
   });
   const entry = await manager.ensure('a', base);
-  await manager.waitReady(entry);
+  await entry.polling;
+  assert.equal(await manager.waitReady(entry), true);
   current = playlist.replaceAll('.ts', '.ts?generation=2');
-  await new Promise((r) => setTimeout(r, 30));
+  t.mock.timers.tick(30);
+  await entry.polling;
+  await new Promise((resolve) => setImmediate(resolve));
+  const changedPoll = entry.polling;
+  t.mock.timers.tick(5);
+  assert.notEqual(entry.polling, changedPoll);
+  await entry.polling;
   assert.match(
     await manager.buildPlaylist(entry, 'a'),
     /#EXT-X-DISCONTINUITY\n#EXTINF:2\.000,\n\/api\/cctv\/media\/a\/seg_3\.ts/,
@@ -207,7 +228,8 @@ test('two consumers share downloads but release and abandoned expiry are indepen
   await manager.shutdown();
 });
 
-test('an abandoned consumer expires while a renewed consumer keeps the session', async () => {
+test('an abandoned consumer expires while a renewed consumer keeps the session', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const manager = createHlsPuller({
     limits: { ...HLS_LIMITS, idleMs: 80, pollMs: 100000 },
     fetchImpl: async (url) =>
@@ -215,9 +237,13 @@ test('an abandoned consumer expires while a renewed consumer keeps the session',
   });
   const entry = await manager.ensure('camera', base, 'abandoned');
   await manager.ensure('camera', base, 'active');
-  await new Promise((r) => setTimeout(r, 50));
+  await entry.polling;
+  t.mock.timers.tick(50);
+  await new Promise((resolve) => setImmediate(resolve));
   await manager.ensure('camera', base, 'active');
-  await new Promise((r) => setTimeout(r, 50));
+  await entry.polling;
+  t.mock.timers.tick(50);
+  await new Promise((resolve) => setImmediate(resolve));
   assert.equal(entry.leases.has('abandoned'), false);
   assert.equal(entry.leases.has('active'), true);
   assert.equal(entry.controller.signal.aborted, false);
