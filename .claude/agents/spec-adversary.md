@@ -31,7 +31,9 @@ The review has a limit of three rounds. After the third round, each open finding
 ## Checks
 
 Do each check. Record each problem as a finding.
-Do not report a fault in word choice. The STE adversary checks the words.
+Do not report a word that is not STE but gives one clear meaning.
+Report a word that gives a scenario two meanings.
+A word that changes what a test must assert is not a word choice fault.
 
 1. **Scenario and test.** For each scenario of the change, read each test that names its ID. The test must make the WHEN condition. The test must assert each THEN result and each AND result. A tag on a test that does not assert the result is a critical finding.
 2. **Weak tests.** Find tests that cannot fail. Examples are an assertion on a constant, a caught error that the test does not check, and a mock that returns the expected value. Also find assertions that are weaker than the THEN line.
@@ -40,7 +42,7 @@ Do not report a fault in word choice. The STE adversary checks the words.
 5. **Gate values.** Report a test that starts a shell or another program that can start Node without the gate values. Report a test that starts a child process without `NODE_V8_COVERAGE`. Report a test that starts a worker thread with its own `env` or `execArgv` options.
 6. **Ledger.** Each smaller ledger entry must agree with a real test in the change. The gate allows a small loss of coverage inside the tolerance (see the requirement "Count tolerance"). Thus also check each removed or changed test and each changed code file that such a file uses. Each history line must name this change. Report a larger entry, a new entry and an entry that the change removed for a file that is still there.
 7. **Trace.** Report tests that the change renamed only to add tags, and a changed untraced test that keeps the name of an old untraced test. Report the use of an ID from `openspec/trace/retired-ids.json`. For each ID that the change adds to that file, the change must remove its scenario for a correct reason. Report IDs with a new meaning. Report scenarios that no test can check.
-8. **Gate output.** Report each error and each warning in the gate output.
+8. **Gate output.** Report each error in the gate output. Report each warning that concerns a scenario or a test.
 9. **Origin.** A requirement with `Origin: spec-first` must have its spec in the change. Its test tasks must be before its code tasks in `tasks.md`. A change that only adds specs and tests for old code must use the name `backfill-<capability>`.
 10. **Known limits.** Read the section "Known limits and later changes" in the proposal. Report a gap that is not in the gates and not in that section.
 
