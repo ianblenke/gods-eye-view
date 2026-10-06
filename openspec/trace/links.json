@@ -3162,7 +3162,8 @@
   ],
   "ste-lint-012": [
     "src/tooling/spec/gates.test.mjs › [ste-lint-011 ste-lint-012 ste-lint-016] checks only Markdown with the lint command",
-    "src/tooling/spec/ste.test.mjs › [ste-lint-012] gives a success status for warnings only"
+    "src/tooling/spec/ste.test.mjs › [ste-lint-012] gives a success status for warnings only",
+    "src/tooling/spec/ste.test.mjs › [ste-lint-023 ste-lint-012] The noun warning keeps a success result"
   ],
   "ste-lint-013": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-013] checks AGENTS.md, the agent files and the review command"
@@ -3185,6 +3186,27 @@
   ],
   "ste-lint-019": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-019] checks a review file that is not directly in a change folder"
+  ],
+  "ste-lint-020": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-020] The noun rule warns after each determiner"
+  ],
+  "ste-lint-021": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-021] The noun rule ignores a verb without a determiner"
+  ],
+  "ste-lint-022": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-022] The noun rule ignores code and quoted identifiers"
+  ],
+  "ste-lint-023": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-023 ste-lint-012] The noun warning keeps a success result"
+  ],
+  "ste-lint-024": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-024] The noun rule ignores a word outside the list"
+  ],
+  "ste-lint-025": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-025] The noun rule reads the file list for each check"
+  ],
+  "ste-lint-026": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-026] The noun rule ignores plural and possessive forms"
   ],
   "wind-001": [
     "src/layers/wind/fields.test.mjs › [wind-001] scalar read rejects absent and invalid data",
