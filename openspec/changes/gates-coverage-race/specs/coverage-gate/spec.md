@@ -2,15 +2,21 @@
 
 ### Requirement: Exact process coverage
 The coverage gate MUST replace loaded lcov records with the exact merge of per-process V8 coverage.
-The module `v8-merge.mjs` MUST give equal values for every process order and group order. Each process first supplies its own line values. A line contributes to the merge when any process covers it. Function identities use the name and first range extent. Branch identities also use the range extent and its occurrence within equal extents.
+
+The lcov report names LF as lines found.
+The lcov report names LH as lines hit.
+The lcov report names BRF as branches found.
+The lcov report names BRH as branches hit.
+The lcov report names FNF as functions found.
+The lcov report names FNH as functions hit.
+
+SF names the source file.
+
+The merge module MUST give equal values for every process order and group order. Each process first supplies its own line values. A line contributes to the merge when any process covers it. Function identities use the name and first range extent. Branch identities also use the range extent and its occurrence within equal extents.
 
 A listed branch uses its range value. An absent branch uses the innermost listed range that contains it. A function without block coverage supplies its first range value. An absent function supplies zero. The merge keeps every function identity and every block branch identity.
 
-The coverage module splits the source after each line feed and keeps CRLF offsets. Empty lines start with a positive value. Each later range replaces the value of each whole line that it contains. Ignored lines contribute to LH. Every block range contributes to BRF. Each function after the first contributes to FNF when it holds a range.
-
-The lcov report names LF as lines found and LH as lines hit.
-It names BRF as branches found and BRH as branches hit.
-It names FNF as functions found and FNH as functions hit.
+The merge module splits the source after each line feed and keeps CRLF offsets. Empty lines start with a positive value. Each later range replaces the value of each whole line that it contains. Ignored lines contribute to LH. Every block range contributes to BRF. Each function after the first contributes to FNF when it holds a range.
 
 Origin: spec-first
 
@@ -75,10 +81,10 @@ Origin: spec-first
 - **AND** the first URL gives LH 1 and BRH 1; the second gives LH 0 and BRH 0
 - **AND** Each order gives LF 3, LH 2, BRF 4, BRH 3, FNF 0 and FNH 0.
 
-#### Scenario: The module gives lcov records `coverage-gate-063`
+#### Scenario: The merge module gives lcov records `coverage-gate-063`
 
 - **WHEN** the merge holds separate source URLs
-- **THEN** the module writes SF, LF, LH, BRF, BRH, FNF and FNH records
+- **THEN** the merge module writes SF, LF, LH, BRF, BRH, FNF and FNH records
 - **AND** each URL keeps its own record and end marker
 - **AND** The two URL records each give LF 1, BRF 1 and FNF 0.
 
@@ -98,12 +104,13 @@ Origin: spec-first
 - **AND** The loaded fixture gives LF 3 and LH 3 in the gate test.
 - **AND** the replacement removes the old records for separate loaded paths.
 
-#### Scenario: The gate removes its private raw folder `coverage-gate-066`
+#### Scenario: The gate removes its raw folder `coverage-gate-066`
 
 - **WHEN** the gate measures coverage with lcov text, without lcov text, or with a coverage merge error
 - **THEN** its random raw folder lies in the system temporary folder, outside the root and output folder
 - **AND** only the main process gets that path
-- **AND** the raw folder does not exist after each path
+- **AND** each measurement uses a different name with a non-empty suffix after `gev-spec-v8-`
+- **AND** the raw folder does not exist after the measurement ends normally or after an error inside it
 - **AND** the gate keeps the other output files after a measurement without a coverage merge error
 
 #### Scenario: The gate reports absent raw files `coverage-gate-067`
@@ -111,5 +118,5 @@ Origin: spec-first
 - **WHEN** lcov text exists but the raw folder is absent or holds no coverage JSON file
 - **THEN** the gate gives COVERAGE-RAW-MISSING with an empty file name
 - **AND** the message states that absent raw files prevent replacement of the Node records
-- **AND** the gate keeps the Node text for the other checks
-- **AND** raw files prevent this error, and absent lcov text causes no such error
+- **AND** the gate still uses the Node text for the other checks
+- **AND** raw files prevent this error, and absent lcov text causes no such error, also with no raw files

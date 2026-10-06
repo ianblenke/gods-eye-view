@@ -1220,7 +1220,7 @@ test('[gap-ledger-110] The baseline records exact metric values and new gaps', (
   assert.equal(totals.history[0].newTotal, 101);
 });
 
-test('[gap-ledger-111] The baseline rejects a different change or module state', () => {
+test('[gap-ledger-111] The baseline rejects a different change or merge module state', () => {
   assert.equal(baselineFault(baselineContext()), null);
   for (const extra of [{ change: 'other' }, { change: undefined }, { changeActive: false }, { diffFiles: [] }, { baseFiles: new Set([MERGE_FILE]) }]) {
     assert.equal(baselineFault(baselineContext(extra)), 'The baseline needs this active change and its new merge module.');
@@ -1326,7 +1326,7 @@ function alterBaseline(input, field, value) {
   return { ...input, history: lines.map(line => JSON.stringify(line)).join('\n') + '\n' };
 }
 
-test('[gap-ledger-116] The real differences keep the recorded base', () => {
+test('[gap-ledger-116] The gate accepts the real differences', () => {
   for (const [recorded, measured] of [
     [loaded('a.js', 44, 30, 1, 'same', { lines: 310, branches: 74, functions: 10 }), loaded('a.js', 40, 30, 1, 'same', { lines: 310, branches: 76, functions: 10 })],
     [loaded('a.js', 1, 10, 1, 'same', { lines: 100, branches: 53, functions: 10 }), loaded('a.js', 1, 10, 1, 'same', { lines: 100, branches: 54, functions: 10 })],
@@ -1343,7 +1343,7 @@ test('[gap-ledger-116] The real differences keep the recorded base', () => {
   assert.equal(camera.baseLedger.coverage['a.js'].totals.branches, 53);
 });
 
-test('[gap-ledger-117] The next value is above the limit', () => {
+test('[gap-ledger-117] The new value is above the tolerance', () => {
   const input = toleranceBaseline(loaded('a.js', 49, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }), loaded('a.js', 40, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }));
   assert.deepEqual(codes(checkRebaseline(input)), ['LEDGER-REBASELINE']);
   const covered = toleranceBaseline(loaded('a.js', 40, 1, 1, 'same', { lines: 319, branches: 100, functions: 10 }), loaded('a.js', 40, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }));
@@ -1462,7 +1462,9 @@ test('[gap-ledger-122] A fully covered file gets no new history allowance', () =
     const entry = { ...LOADED(0, 0, 0), [metric]: 1, totals: { lines: 100, branches: 100, functions: 100 } };
     const line = { kind: 'rebaseline', change: 'gates-coverage-race', file: 'a.js', sha: 'same', metric, old: 0, oldTotal: null, new: 1, newTotal: 100 };
     const input = { ...baselineContext(), ...baselineInput(), baseLedger, ledger: ledgerWith({ coverage: { 'a.js': entry } }), coverage: [record], history: JSON.stringify(line) + '\n' };
-    assert.deepEqual(codes(checkRebaseline(input)), ['LEDGER-REBASELINE']);
+    const rejected = checkRebaseline(input);
+    assert.deepEqual(codes(rejected), ['LEDGER-REBASELINE']);
+    assert.deepEqual(rejected.baseLedger.coverage, {});
     record[metric].uncovered = 1;
     assert.deepEqual(checkRebaseline(input).errors, []);
   }
