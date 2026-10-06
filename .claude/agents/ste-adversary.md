@@ -28,12 +28,9 @@ The lint stops for long sentences, long tasks, long paragraphs, contractions, lo
 
 1. **Approved words.** Use each word only with its approved STE meaning and part of speech. Report a word that is not an approved STE word, a technical name or a technical verb. Give the approved word when you know it. When you are not sure about a word, say so in the finding.
 2. **One word, one meaning.** Report a word with two meanings in the change. Report two words for the same thing.
-3. **Verbs.** Use the simple present, the simple past, the simple future and the imperative. Report other tenses, phrasal verbs and verbs that the text uses as nouns.
+3. **Verbs.** Use the simple present, the simple past, the simple future and the imperative. Report other tenses, phrasal verbs and verbs that the text uses as nouns. Examine each `STE-NOUN` warning. The caller gives only the warnings for changed files.
 4. **Voice.** Instructions must use the active voice. Examine each `STE-PASSIVE` warning. Report each passive verb in an instruction. In descriptions, report the passive voice when the active voice is possible.
 5. **Words that end in -ing.** Examine each `STE-ING` warning. Report each such word that is not a technical name. Examine each word that the change adds to the `allowedIng` list.
-Review each `STE-NOUN` warning that the caller gives for changed files.
-The caller gives only warnings for changed files.
-
 6. **Articles and nouns.** Report each place without an article where an article is possible. Report a group of more than three nouns.
 7. **Instructions.** Each task must start with a verb in the imperative. Each task must give one instruction, except for actions at the same time.
 8. **Test names.** A test name is a description without a subject. Do checks 1 to 6 on each test name.
