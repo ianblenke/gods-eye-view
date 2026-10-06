@@ -1326,7 +1326,7 @@ function alterBaseline(input, field, value) {
   return { ...input, history: lines.map(line => JSON.stringify(line)).join('\n') + '\n' };
 }
 
-test('[gap-ledger-116] The real differences retain the recorded base', () => {
+test('[gap-ledger-116] The real differences keep the recorded base', () => {
   for (const [recorded, measured] of [
     [loaded('a.js', 44, 30, 1, 'same', { lines: 310, branches: 74, functions: 10 }), loaded('a.js', 40, 30, 1, 'same', { lines: 310, branches: 76, functions: 10 })],
     [loaded('a.js', 1, 10, 1, 'same', { lines: 100, branches: 53, functions: 10 }), loaded('a.js', 1, 10, 1, 'same', { lines: 100, branches: 54, functions: 10 })],
@@ -1343,7 +1343,7 @@ test('[gap-ledger-116] The real differences retain the recorded base', () => {
   assert.equal(camera.baseLedger.coverage['a.js'].totals.branches, 53);
 });
 
-test('[gap-ledger-117] The next value exceeds the bound', () => {
+test('[gap-ledger-117] The next value is above the limit', () => {
   const input = toleranceBaseline(loaded('a.js', 49, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }), loaded('a.js', 40, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }));
   assert.deepEqual(codes(checkRebaseline(input)), ['LEDGER-REBASELINE']);
   const covered = toleranceBaseline(loaded('a.js', 40, 1, 1, 'same', { lines: 319, branches: 100, functions: 10 }), loaded('a.js', 40, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }));
@@ -1369,7 +1369,7 @@ test('[gap-ledger-119] The source and old values stay exact', () => {
   assert.deepEqual(codes(checkRebaseline({ ...input, baseLedger })), ['LEDGER-REBASELINE']);
 });
 
-test('[gap-ledger-120] The later metric set retains its bound', () => {
+test('[gap-ledger-120] The unchanged metric stays within tolerance', () => {
   const base = loaded('a.js', 40, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 });
   const input = toleranceBaseline(loaded('a.js', 48, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }), base, base);
   const result = checkRebaseline(input);
@@ -1383,7 +1383,7 @@ test('[gap-ledger-120] The later metric set retains its bound', () => {
   assert.deepEqual(codes(checkRebaseline(changed)), ['LEDGER-REBASELINE']);
 });
 
-test('[gap-ledger-121] The ledger entry retains the same bound', () => {
+test('[gap-ledger-121] The ledger entry stays within tolerance', () => {
   const input = toleranceBaseline(loaded('a.js', 44, 2, 2, 'same', { lines: 310, branches: 100, functions: 10 }), loaded('a.js', 40, 2, 2, 'same', { lines: 310, branches: 100, functions: 10 }));
   for (const [field, value] of [['lines', 48], ['totals', { lines: 314, branches: 100, functions: 10 }]]) {
     const ledger = structuredClone(input.ledger); ledger.coverage['a.js'][field] = value;
@@ -1404,7 +1404,7 @@ test('[gap-ledger-119] The metric values use whole numbers', () => {
   }
 });
 
-test('[gap-ledger-114] The snapshot retains each different metric', () => {
+test('[gap-ledger-114] The snapshot keeps each different metric', () => {
   for (const base of [loaded('a.js', 0, 0, 0), loaded('a.js', 1, 1, 1)]) {
     const input = toleranceBaseline(loaded('a.js', 2, 2, 1, 'same', { lines: 101, branches: 100, functions: 10 }), loaded('a.js', 2, 2, 1, 'same', { lines: 101, branches: 100, functions: 10 }), base);
     const history = input.history.trim().split('\n').map(JSON.parse).filter(line => line.metric !== 'lines').map(JSON.stringify).join('\n') + '\n';
@@ -1415,7 +1415,7 @@ test('[gap-ledger-114] The snapshot retains each different metric', () => {
   assert.deepEqual(codes(checkRebaseline({ ...input, history })), ['LEDGER-REBASELINE']);
 });
 
-test('[gap-ledger-119] The source state has its own bound', () => {
+test('[gap-ledger-119] The gate checks the source properties', () => {
   const input = toleranceBaseline(loaded('a.js', 3, 1, 1), loaded('a.js', 3, 1, 1));
   for (const [field, value] of [['loaded', false], ['untrue', true]]) {
     const ledger = structuredClone(input.ledger); ledger.coverage['a.js'][field] = value;
@@ -1428,13 +1428,13 @@ test('[gap-ledger-119] The source state has its own bound', () => {
   assert.deepEqual(codes(checkRebaseline(alterBaseline(valid, 'sha', 'other'))), ['LEDGER-REBASELINE']);
 });
 
-test('[gap-ledger-117] The history has its own metric bound', () => {
+test('[gap-ledger-117] The gate checks each history metric', () => {
   const input = toleranceBaseline(loaded('a.js', 44, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }), loaded('a.js', 40, 1, 1, 'same', { lines: 310, branches: 100, functions: 10 }));
   assert.deepEqual(codes(checkRebaseline(alterBaseline(input, 'new', 49))), ['LEDGER-REBASELINE']);
   assert.deepEqual(codes(checkRebaseline(alterBaseline(input, 'newTotal', 323))), ['LEDGER-REBASELINE']);
 });
 
-test('[gap-ledger-114] The metric name has its own bound', () => {
+test('[gap-ledger-114] The gate rejects a false metric name', () => {
   const baseLedger = ledgerWith({ coverage: { 'a.js': { ...LOADED(1, 1, 1), extra: 0, totals: { lines: 100, branches: 100, functions: 10, extra: 100 } } } });
   const ledger = structuredClone(baseLedger); ledger.coverage['a.js'].extra = 3;
   const coverage = [{ ...loaded('a.js', 1, 1, 1), extra: { total: 100, uncovered: 3 } }];
@@ -1452,4 +1452,18 @@ test('[gap-ledger-113] The temporary base uses the true loaded source state', ()
   assert.equal(checked.baseLedger.coverage['a.js'].untrue, false);
   assert.equal(Object.hasOwn(checked.baseLedger.coverage['a.js'], 'loaded'), true);
   assert.equal(Object.hasOwn(checked.baseLedger.coverage['a.js'], 'untrue'), true);
+});
+
+test('[gap-ledger-122] A fully covered file gets no new history allowance', () => {
+  assert.deepEqual(checkRebaseline(toleranceBaseline(loaded('a.js', 0, 0, 0), loaded('a.js', 0, 0, 0))).errors, []);
+  for (const metric of ['lines', 'branches', 'functions']) {
+    const baseLedger = ledgerWith();
+    const record = loaded('a.js', 0, 0, 0, 'same', { lines: 100, branches: 100, functions: 100 });
+    const entry = { ...LOADED(0, 0, 0), [metric]: 1, totals: { lines: 100, branches: 100, functions: 100 } };
+    const line = { kind: 'rebaseline', change: 'gates-coverage-race', file: 'a.js', sha: 'same', metric, old: 0, oldTotal: null, new: 1, newTotal: 100 };
+    const input = { ...baselineContext(), ...baselineInput(), baseLedger, ledger: ledgerWith({ coverage: { 'a.js': entry } }), coverage: [record], history: JSON.stringify(line) + '\n' };
+    assert.deepEqual(codes(checkRebaseline(input)), ['LEDGER-REBASELINE']);
+    record[metric].uncovered = 1;
+    assert.deepEqual(checkRebaseline(input).errors, []);
+  }
 });

@@ -16,7 +16,7 @@ export function runParallel(runs, { spawnProcess = spawn, env = process.env } = 
     runs.map(
       (run) =>
         new Promise((resolve) => {
-          const child = spawnProcess(process.execPath, run.args, { cwd: run.cwd, env: run.env ?? env, stdio: ['ignore', 'ignore', 'inherit'] });
+          const child = spawnProcess(process.execPath, run.args, { cwd: run.cwd, env: run.env ? { ...env, ...run.env } : env, stdio: ['ignore', 'ignore', 'inherit'] });
           child.on('error', (error) => resolve({ status: null, error: error.message }));
           child.on('close', (status) => resolve({ status, error: null }));
         }),
