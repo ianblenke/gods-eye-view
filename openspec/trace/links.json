@@ -347,7 +347,7 @@
     "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-062] The process permutations and groups give equal values"
   ],
   "coverage-gate-063": [
-    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-063] The module writes one lcov record per URL"
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-063] The merge module writes one lcov record per URL"
   ],
   "coverage-gate-064": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-064 coverage-gate-065] The gate assigns raw coverage and replaces loaded values",
@@ -359,10 +359,10 @@
     "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-065] The replacement keeps unloaded lcov records"
   ],
   "coverage-gate-066": [
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-066 coverage-gate-067] The gate removes its private folder on each path"
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-066 coverage-gate-067] The gate removes its raw folder and reports absent raw files"
   ],
   "coverage-gate-067": [
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-066 coverage-gate-067] The gate removes its private folder on each path"
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-066 coverage-gate-067] The gate removes its raw folder and reports absent raw files"
   ],
   "credential-boundary-001": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] a fixture build exposes only the allowed sentinels",
@@ -931,7 +931,7 @@
   "gap-ledger-111": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-111 gap-ledger-115] The command rejects an absent condition before tests",
     "src/tooling/spec/gates.test.mjs › [gap-ledger-111] The command needs both ledger files before tests",
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-111] The baseline rejects a different change or module state"
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-111] The baseline rejects a different change or merge module state"
   ],
   "gap-ledger-112": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-112] The other source content keeps its old ledger entry"
@@ -955,12 +955,12 @@
   ],
   "gap-ledger-116": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-116 gap-ledger-117] The ratchet applies the count tolerance",
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-116] The real differences keep the recorded base"
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-116] The gate accepts the real differences"
   ],
   "gap-ledger-117": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-116 gap-ledger-117] The ratchet applies the count tolerance",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-117] The gate checks each history metric",
-    "src/tooling/spec/ledger.test.mjs › [gap-ledger-117] The next value is above the limit"
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-117] The new value is above the tolerance"
   ],
   "gap-ledger-118": [
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-118] The small total permits no difference"
