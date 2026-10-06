@@ -85,7 +85,7 @@ The lead runs rebaseline before ratchet. Before the rebaseline step, ratchet can
 
 The command `node bench.mjs` in scratch calls the gate merge on the raw folder. It processes 1308 files with 1056405189 bytes. It takes 46512.85 milliseconds and reaches 349052 KiB of resident memory. It writes 892 URL records.
 
-The gate removes the raw folder after the coverage merge or after every error inside the measurement. Other output files stay after a measurement without an error.
+The gate removes the raw folder after the coverage merge or after an error in the merge. The `finally` block also covers other errors inside the measurement; no test makes one. Other output files stay after a measurement without an error.
 
 ## Earlier host coverage evidence
 
@@ -131,7 +131,7 @@ For `server/providers/vessels/ais-store.js`, the uncovered lines are 44 in one m
 
 For `src/cameraGroundGuard.js`, the branch total is 53 in one and 54 in the other. Two host measurements of the whole suite agree for every source file that this change does not edit.
 
-Some tests therefore run different code in the image from one measurement to the next. Known limit `image-test-timing` includes the branch total of `src/cameraGroundGuard.js`, which alternates between 53 and 54.
+Some tests therefore run different code in the image from one measurement to the next. Known limit `image-test-timing` includes the branch total of `src/cameraGroundGuard.js`, which alternates between 53 and 54. The ledger records 54.
 This change does not find those tests. Decision D1 limits the effect with the count tolerance.
 
 The ratchet command passed after D1 and wrote one history line. Three gate commands then measured the same tree.
@@ -152,9 +152,10 @@ The history check rejects a file without a base entry when all three measured un
 
 The scratch command `python3 round-2-evidence.py` checks the current camera total and its history.
 The earlier command `python3 round-1-totals.py` prints the two files without uncovered increases.
-`src/cameraGroundGuard.js` still records ten uncovered branches. Its branch total now increases from 53 to 54.
+
+`src/cameraGroundGuard.js` still records ten uncovered branches. Its branch total fell from 54 to 53 in the history line of the `rebaseline` command. A later ratchet line records 54 again, so the net change against main is none.
 `src/keylessGeocoder.js` keeps five uncovered branches; its branch total falls from 120 to 118.
-These total changes explain the two files outside the set with uncovered rises.
+The recorded total changes explain why these two files have history lines but no higher uncovered values.
 
 ## Final host evidence of round one
 
@@ -182,7 +183,7 @@ The first full gate test process stopped before the end, so it gives no verdict.
 A later full process gave one failed test because an old fake process supplied no raw file.
 The corrected fake process supplies a raw file. The final full process passes.
 
-The first full mutation command found one survivor after the helper no longer served scenario `coverage-gate-063`.
+The first full mutation command found one survivor after `combineCoverage` no longer served scenario `coverage-gate-063`.
 The new two-URL group fixture in scenario `coverage-gate-062` kills that mutation. The second full command passes.
 
 ## Known limits of round two
@@ -193,12 +194,12 @@ A test can write a `coverage-*.json` file into its own `process.env.NODE_V8_COVE
 
 A test can also search `os.tmpdir()` for `gev-spec-v8-*` or read the parent environment through `/proc/<parent pid>/environ`.
 
-The parent environment still holds the path. `mergeRawCoverage` merges every `coverage-*.json` file. Node's own merge had the same hole.
+The parent environment still holds the path. `mergeRawCoverage` merges every `coverage-*.json` file. Node's own merge has the same fault.
 This change closes only the `GEV_SPEC_OUT` path and the predictable path inside the repository.
 
 ### raw-folder-after-kill
 
-After a kill signal, Ctrl-C or a time limit, the temporary folder can hold about one GB until the system clears it.
+After a kill signal, Ctrl-C or a time limit, two folders can stay in the temporary folder until the system clears them. They are the `node-coverage-*` folder of Node and the raw folder. Together they can reach up to about two GB.
 The old folder in `.gev-cache/spec` disappeared at the next measurement. The `finally` block cannot remove files after process termination.
 The scratch command `python3 round-2-evidence.py` measures 1056405189 raw bytes.
 
@@ -217,4 +218,4 @@ The command gives 36 total branches and one uncovered branch for `src/data/aircr
 After this change joins main, these history lines belong to the base. This risk then ends.
 
 The scratch command `python3 round-2-evidence.py` shows the branch total of `src/cameraGroundGuard.js` changes from 53 to 54.
-The ledger records 54. This result corrects the earlier total under `image-test-timing`.
+The ledger records 54.
