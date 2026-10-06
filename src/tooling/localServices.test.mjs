@@ -117,6 +117,14 @@ test('standalone service guards run in development and preview without upstream 
 });
 
 test('weather-only requests share upstream work and retain fresh and stale responses', async (t) => {
+  let finish;
+  let started;
+  const responseGate = new Promise((resolve) => {
+    finish = resolve;
+  });
+  const requestStarted = new Promise((resolve) => {
+    started = resolve;
+  });
   let now = Date.now();
   t.mock.method(Date, 'now', () => now);
   let calls = 0;
@@ -124,7 +132,8 @@ test('weather-only requests share upstream work and retain fresh and stale respo
     calls++;
     assert.equal(new URL(url).hostname, 'api.open-meteo.com');
     if (calls > 1) throw Error('offline');
-    await new Promise((resolve) => setTimeout(resolve, 10));
+    started();
+    await responseGate;
     return Response.json({
       current: {
         time: '2026-09-12T12:00',
@@ -136,10 +145,13 @@ test('weather-only requests share upstream work and retain fresh and stale respo
   });
   const handler = install(weatherEffectsProxy()).get('/api/weather-effects');
   const query = { url: '/?latitude=34.61&longitude=-112.43' };
-  const pair = await Promise.all([
+  const pending = Promise.all([
     request(handler, query),
     request(handler, query),
   ]);
+  await requestStarted;
+  finish();
+  const pair = await pending;
   assert.deepEqual(pair.map((r) => r.headers['x-weather-effects']).sort(), [
     'INFLIGHT',
     'MISS',

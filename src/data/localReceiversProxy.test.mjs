@@ -46,6 +46,9 @@ async function call(handler, method = 'GET') {
   return { ...res, json: JSON.parse(res.body) };
 }
 
+const realSetTimeout = globalThis.setTimeout;
+const realClearTimeout = globalThis.clearTimeout;
+
 test('LOCAL_RECEIVER_FEEDS accepts local http(s) aircraft.json feeds per band', () => {
   const { configured, feeds } = parseLocalReceiverFeeds(
     ` 1090=${FEED_1090} , 978=http://skyaware.local/skyaware978/data/aircraft.json,1090=https://192.168.1.20:8443/tar1090/data/aircraft.json`,
@@ -410,7 +413,8 @@ test('null-body statuses (204, 205, 304) from a named feed are a clean feed erro
   );
 });
 
-test('a stalled DNS lookup fails its feed at the deadline without holding other feeds or later polls', async () => {
+test('a stalled DNS lookup fails its feed at the deadline without holding other feeds or later polls', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   let clock = FIXTURE_NOW_MS;
   const lookups = [
     // Never answers.
@@ -433,25 +437,43 @@ test('a stalled DNS lookup fails its feed at the deadline without holding other 
       return respond();
     },
   });
-  const within = (promise) =>
-    Promise.race([
-      promise,
-      new Promise((resolve) => setTimeout(() => resolve('timed out'), 60)),
-    ]);
-  const first = await within(call(handler));
+  // A real guard stops a test with a missing clock callback under CPU load.
+  const guardMs = 60 * 20;
+  const within = async (promise) => {
+    let timer;
+    try {
+      return await Promise.race([
+        promise,
+        new Promise((resolve) => {
+          timer = realSetTimeout(() => resolve('timed out'), guardMs);
+        }),
+      ]);
+    } finally {
+      realClearTimeout(timer);
+    }
+  };
+  const firstPending = within(call(handler));
+  await new Promise((resolve) => setImmediate(resolve));
+  t.mock.timers.tick(20);
+  const first = await firstPending;
   assert.notEqual(first, 'timed out', 'the snapshot is not held by DNS');
   assert.deepEqual(
     first.json.feeds.map((feed) => feed.status),
     ['unreachable', 'live'],
   );
   clock += 2_000;
-  const second = await within(call(handler));
+  const secondPending = within(call(handler));
+  await new Promise((resolve) => setImmediate(resolve));
+  t.mock.timers.tick(20);
+  const second = await secondPending;
   assert.notEqual(second, 'timed out', 'a later poll is not held either');
   assert.deepEqual(
     second.json.feeds.map((feed) => feed.status),
     ['unreachable', 'live'],
   );
-  await new Promise((resolve) => setTimeout(resolve, 120));
+  t.mock.timers.tick(120);
+  await new Promise((resolve) => setImmediate(resolve));
+  await new Promise((resolve) => realSetTimeout(resolve, 5));
   assert.ok(
     fetched.every((url) => !url.includes('stalled.local')),
     'a late DNS answer is never fetched',

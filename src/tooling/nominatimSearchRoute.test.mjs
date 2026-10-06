@@ -160,19 +160,31 @@ test('a search reaches the upstream identified, and the answer is cached', async
 });
 
 test('identical searches in flight share one upstream call', async () => {
+  let finish;
+  let started;
+  const responseGate = new Promise((resolve) => {
+    finish = resolve;
+  });
+  const requestStarted = new Promise((resolve) => {
+    started = resolve;
+  });
   const request = mountGeocode();
   const query = `coalesce-${Date.now()}`;
   await withUpstream(
     async () => {
-      await new Promise((resolve) => setTimeout(resolve, 40));
+      started();
+      await responseGate;
       return jsonResponse(HIT);
     },
     async (calls) => {
-      const answers = await Promise.all([
+      const pending = Promise.all([
         request(`/api/geocode?q=${query}`),
         request(`/api/geocode?q=${query}`),
         request(`/api/geocode?q=${query}`),
       ]);
+      await requestStarted;
+      finish();
+      const answers = await pending;
       for (const answer of answers) assert.equal(answer.status, 200);
       assert.equal(calls.length, 1, 'one upstream call serves all three');
     },
