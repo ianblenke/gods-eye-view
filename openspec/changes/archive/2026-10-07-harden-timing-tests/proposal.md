@@ -23,7 +23,9 @@ The change adds no requirement and no scenario.
 The change edits test files and the change directory only.
 The change edits no production file and no scenario text.
 The change must not reduce covered production lines.
-No ledger file changes belong to this work.
+The ratchet command changed the ledger by one line.
+The branch total of `server/providers/cctv/stream.js` rises from 135 to 136.
+Its uncovered counts stay at 22 lines, 18 branches and 4 functions.
 
 ## Known limits
 

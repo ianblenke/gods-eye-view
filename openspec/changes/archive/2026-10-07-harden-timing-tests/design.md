@@ -15,7 +15,8 @@ The Test Anything Protocol (TAP) names the test report format.
 
 Tree commit from `git rev-parse HEAD`: `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
 The change edits tests and the change directory only.
-No requirement, scenario text, production file or ledger file changes.
+No requirement, scenario text or production file changes.
+The ratchet command changes one ledger total, which the proposal names.
 The supplied paths name eight files; the file paths define the scope.
 The requested `grep -rnE` search supplies the other audit files.
 The scratch audit gives each source line, margin and decision.
