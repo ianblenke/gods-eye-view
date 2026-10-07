@@ -1,0 +1,8 @@
+openspec/changes/fix-recent-imagery-defects/design.md
+openspec/changes/fix-recent-imagery-defects/evidence.md
+openspec/changes/fix-recent-imagery-defects/evidence/muts.json
+openspec/changes/fix-recent-imagery-defects/proposal.md
+openspec/changes/fix-recent-imagery-defects/specs/recent-imagery/spec.md
+openspec/changes/fix-recent-imagery-defects/tasks.md
+src/layers/recentImagery/thumbnails.test.mjs
+src/ui/recentImagery.test.mjs

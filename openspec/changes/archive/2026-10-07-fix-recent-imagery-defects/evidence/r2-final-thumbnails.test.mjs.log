@@ -1,0 +1,33 @@
+✔ [recent-imagery-023] Data-Present decides the day: present with an object URL and sensing time, empty, or error (41.347294ms)
+✔ [recent-imagery-024] at most maxInFlight fetches run and the queue drains by priority (9.100148ms)
+✔ [recent-imagery-024] requestOrdered loads the focused card first, then outward, then the margins (7.31953ms)
+✔ [recent-imagery-025] decoded thumbnails are evicted least-recently-used and revoked; a read is not a use and an evicted day keeps what it learned (14.177943ms)
+✔ [recent-imagery-025] reading every card in strip order (a snapshot) never decides who is evicted; evicted days stay known and come back on request (25.121487ms)
+✔ [recent-imagery-026] cancelAll aborts in-flight fetches and a late settle never leaks an object URL (6.405836ms)
+✔ [recent-imagery-027] clear and destroy revoke every resident thumbnail (5.513829ms)
+✔ [recent-imagery-026] a request queued behind an aborted fetch still starts once the abort settles (11.314106ms)
+✔ [recent-imagery-023 recent-imagery-027] the default loader owns its URLs and releases them (9.519927ms)
+✔ [recent-imagery-023 recent-imagery-027] a listener error or a URL error does not stop the release of images (6.97785ms)
+✔ [recent-imagery-026] a stop after blob data does not make an image (7.655157ms)
+✔ [recent-imagery-023 recent-imagery-026 recent-imagery-053] an Error and an AbortError from the fetch give different states (7.002962ms)
+✔ [recent-imagery-026] a callback that clears the loader revokes its late URL (3.029218ms)
+✔ [recent-imagery-026] a late empty response after a stop leaves the day unknown (5.575133ms)
+✔ [recent-imagery-024] a duplicate active request uses one fetch (5.364438ms)
+✔ [recent-imagery-026] a late settlement after destroy leaves the queue empty (4.503762ms)
+✔ [recent-imagery-023] each thumbnail subscriber gets the same day result (5.157106ms)
+✔ [recent-imagery-025] an image eviction does not send a day update for an empty day (8.17079ms)
+✔ [recent-imagery-023] a new successful fetch updates the acquisition time (4.824451ms)
+✔ [recent-imagery-023] a known empty day does not start another fetch (3.180289ms)
+✔ [recent-imagery-026] a signal that stops the fetch does not send another day update (6.841766ms)
+✔ [recent-imagery-026] a URL callback while the loader clears images does not start a day that the loader removed (5.078812ms)
+✔ [recent-imagery-053] the loader starts a new fetch after an external AbortError (6.149759ms)
+✔ [recent-imagery-053] an old fetch cannot remove a new entry (5.085806ms)
+✔ [recent-imagery-053] a day with present proof keeps its proof after a loader cancellation (9.692832ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 430.648705

@@ -66,6 +66,9 @@ export const PRODUCTS = Object.freeze({
   }),
 });
 
+const productOf = (key) =>
+  Object.hasOwn(PRODUCTS, key) ? PRODUCTS[key] : null;
+
 const finite = (value) => typeof value === 'number' && Number.isFinite(value);
 const toRadians = (degrees) => (degrees * Math.PI) / 180;
 const pad2 = (value) => String(value).padStart(2, '0');
@@ -328,7 +331,7 @@ export function groupGranulesByDay(granules) {
   const buckets = new Map();
   for (const granule of Array.isArray(granules) ? granules : []) {
     const day = utcDay(granule?.timeStart);
-    if (!PRODUCTS[granule?.product] || !day) continue;
+    if (!productOf(granule?.product) || !day) continue;
     const key = candidateKey(granule.product, day);
     if (!buckets.has(key))
       buckets.set(key, { product: granule.product, day, granules: [] });
@@ -399,8 +402,7 @@ function pointInPolygon(lon, lat, ring) {
     const [xi, yi] = ring[i];
     const [xj, yj] = ring[j];
     const crosses =
-      yi > lat !== yj > lat &&
-      lon < ((xj - xi) * (lat - yi)) / (yj - yi || Number.EPSILON) + xi;
+      yi > lat !== yj > lat && lon < ((xj - xi) * (lat - yi)) / (yj - yi) + xi;
     if (crosses) inside = !inside;
   }
   return inside;
@@ -418,7 +420,14 @@ export function coverageFor(candidate, box) {
   const normalized = normalizeBox(box);
   const footprints = (candidate?.granules || [])
     .map((granule) => granule?.footprint)
-    .filter((ring) => Array.isArray(ring) && ring.length >= 3);
+    .filter(
+      (ring) =>
+        Array.isArray(ring) &&
+        ring.length >= 3 &&
+        Array.from(ring).every(
+          (point) => finite(point?.[0]) && finite(point[1]),
+        ),
+    );
   if (!normalized || !footprints.length) return 'unknown';
   const { west, south, east, north } = normalized;
   const samples = [
@@ -455,8 +464,8 @@ export function rankLatest(
   const certain = !truncated;
   const present = (c) => c.availability !== 'empty';
   const hlsDay = (c) =>
-    PRODUCTS[c.product] &&
-    !PRODUCTS[c.product].overview &&
+    productOf(c.product) &&
+    !productOf(c.product).overview &&
     present(c) &&
     c.granules.length > 0;
   const coversBox = (c) => c.coverage !== 'partial';
@@ -505,7 +514,7 @@ function cloudLabel(cloud) {
  * @returns {string}
  */
 export function formatCandidateReadout(candidate, now = new Date()) {
-  const product = PRODUCTS[candidate?.product];
+  const product = productOf(candidate?.product);
   if (!product || !candidate?.day) return '';
   const [y, m, d] = candidate.day.split('-').map(Number);
   let when = `${MONTHS[m - 1]} ${d}, ${y}`;
@@ -534,7 +543,7 @@ export function formatCandidateReadout(candidate, now = new Date()) {
  * @returns {string}
  */
 export function gibsTemplate(product, day) {
-  const spec = PRODUCTS[product];
+  const spec = productOf(product);
   if (!spec) throw new TypeError(`Unknown imagery product: ${product}`);
   return `https://gibs-{s}.earthdata.nasa.gov/wmts/epsg3857/best/${spec.gibsLayer}/default/${day}/GoogleMapsCompatible_Level${spec.maxLevel}/{z}/{y}/{x}.${spec.format}`;
 }
@@ -553,7 +562,7 @@ export function wvsSnapshotUrl({
   height,
   format = 'image/png',
 }) {
-  const spec = PRODUCTS[product];
+  const spec = productOf(product);
   const normalized = normalizeBox(box);
   if (!spec) throw new TypeError(`Unknown imagery product: ${product}`);
   if (!normalized) throw new TypeError('A finite box is required');

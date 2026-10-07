@@ -1,0 +1,11 @@
+import { coverageFor as old } from './r2-base-model.mjs';
+import { coverageFor as current } from '/home/ianblenke/docker/gev-work/fix-ri/src/layers/recentImagery/model.js';
+import { BOX } from '/home/ianblenke/docker/gev-work/fix-ri/src/layers/recentImagery/testDoubles.mjs';
+for (const [name, footprint] of [
+  ['latitude partial', [[-120, NaN], [-121, 31], [-121, 30], [-120, 30]]],
+  ['latitude full', [[-121, NaN], [-120, 31], [-120, 30], [-121, 30]]],
+  ['longitude', [[NaN, 31], [-120, 31], [-120, 30], [-121, 30]]],
+]) {
+  const candidate = { granules: [{ footprint }] };
+  console.log(name, 'old', old(candidate, BOX), 'current', current(candidate, BOX));
+}

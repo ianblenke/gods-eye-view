@@ -1,0 +1,32 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { fileURLToPath } from 'node:url';
+const library = fs.readFileSync('scripts/spec/lib/v8-merge.mjs', 'utf8');
+const {createCoverage, addProcess, branchCovered} = await import('data:text/javascript;base64,' + Buffer.from(library + '\nexport { branchCovered };').toString('base64'));
+function gaps(directory) {
+  const state = createCoverage(url => fs.readFileSync(fileURLToPath(url), 'utf8'));
+  for (const file of fs.readdirSync(directory)) {
+    addProcess(state, JSON.parse(fs.readFileSync(`${directory}/${file}`, 'utf8')), url => url.endsWith('/src/ui/recentImagery.js'));
+  }
+  const result = {branches: [], functions: [], revealCardCovered: true};
+  for (const [, entry] of state.files) {
+    const line = offset => entry.source.slice(0, offset).split('\n').length;
+    for (const [key, item] of entry.functions) {
+      const [name, offset] = JSON.parse(key);
+      if (item.counted && !item.covered) result.functions.push([name, line(offset)]);
+      for (const branch of item.branches.values()) {
+        const covered = [...item.variants.values()].some(v => branchCovered(branch, v));
+        if (!covered) result.branches.push([name, line(branch.startOffset), line(branch.endOffset)]);
+        if (name === 'revealCard' && !covered) result.revealCardCovered = false;
+      }
+    }
+  }
+  result.branches.sort(); result.functions.sort();
+  return result;
+}
+const before = gaps('/home/ianblenke/docker/gev-tools/fix-ri/r1-single-v8');
+const after = gaps('/home/ianblenke/docker/gev-tools/fix-ri/r2-single-v8');
+console.log('round 1', JSON.stringify(before));
+console.log('round 2', JSON.stringify(after));
+assert.deepEqual(after, before);
+assert.equal(after.revealCardCovered, true);

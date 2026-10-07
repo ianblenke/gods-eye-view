@@ -125,6 +125,11 @@ export function createThumbnailLoader({
       entry.loading = false;
       entry.controller = null;
     }
+    if (cancelled) {
+      if (entries.get(entry.key) === entry) {
+        if (entry.status === 'unknown') entries.delete(entry.key);
+      }
+    }
     // Every settlement frees a slot, so a cancelled fetch pumps too.
     if (cancelled || destroyed || entries.get(entry.key) !== entry) {
       if (objectUrl) revokeObjectUrl(objectUrl);
