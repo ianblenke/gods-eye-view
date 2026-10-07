@@ -32,4 +32,4 @@ For this review I read the diff, the full text of proposal.md, design.md, tasks.
 
 The history lines for ais-store in `openspec/trace/history.jsonl` agree with proposal.md:55-57.
 
-Verdict: PASS. There are 10 minor findings and no major finding. The two round 2 majors are closed. Minor 1 (the letters A, C and D) is the one to fix first. The other nine are cosmetic or about wording.
+The verdict is PASS. There are 10 minor findings and no major finding. The two round 2 majors are closed. Minor 1 (the letters A, C and D) is the one to fix first. The other nine are cosmetic or about wording.
