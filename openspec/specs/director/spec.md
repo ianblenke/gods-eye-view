@@ -2,7 +2,7 @@
 
 ## Purpose
 The director capability states the public behavior of the scene director code.
-The capability covers the document module, the fields module, the author module, the clock, the timeline module and the playback module.
+The capability covers the document module, the fields module, the author module, the clock module, the timeline module and the playback module.
 Later backfill changes add the other parts of the scene director.
 ## Requirements
 ### Requirement: Document behavior
