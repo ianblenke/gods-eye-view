@@ -2655,7 +2655,7 @@
     "change": "backfill-recent-imagery"
   },
   "recent-imagery-050": {
-    "hash": "c0554f6e96846c42bc7573e3dfb6fd5280cc425bab760a4ea284e79b8d6320b9",
+    "hash": "61105e35fb54358f579d34cc5902d8b4db83e0d86cefd0364f9432a4ec1eb666",
     "since": "2026-09-30",
     "change": "backfill-recent-imagery"
   },
@@ -2670,22 +2670,22 @@
     "change": "backfill-recent-imagery"
   },
   "recent-imagery-053": {
-    "hash": "e5121d4e91a9972076fef3e1c5aca9d408006ec01fd8b9a6ecd0a492cbd13ba6",
+    "hash": "475bea12c436aa6f1674cd5fef739549edff86a00199a4ea8068fbb83565e286",
     "since": "2026-10-07",
     "change": "fix-recent-imagery-defects"
   },
   "recent-imagery-054": {
-    "hash": "c012fbcaf7c727c561df19be79d4fd6576fb55ebd66ca97251b411020b1bccdc",
+    "hash": "657c76ec9563a5564ea3c00ddaa024e26e42c6eef4ca68b5c1f7bbe3677495cd",
     "since": "2026-10-07",
     "change": "fix-recent-imagery-defects"
   },
   "recent-imagery-055": {
-    "hash": "61002f2aaef68ada8765d41047f614ae0fb4eedf675a46caec4b88b415bd43ef",
+    "hash": "6f60da0b94ac4737723338c9d4246fe8c4ac9ecf30b831604ef0772c7abb5a6e",
     "since": "2026-10-07",
     "change": "fix-recent-imagery-defects"
   },
   "recent-imagery-056": {
-    "hash": "57872e0677af25b95c29e9d608723924939271372ca34a83a024b4a84e7a482b",
+    "hash": "456ed1b486c64171f8acd9c6c84394c1d7228e5b6dca04141da0822580a0ed7f",
     "since": "2026-10-07",
     "change": "fix-recent-imagery-defects"
   },
