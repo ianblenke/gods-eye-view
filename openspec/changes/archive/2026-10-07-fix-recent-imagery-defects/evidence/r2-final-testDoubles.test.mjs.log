@@ -1,0 +1,14 @@
+✔ [recent-imagery-052] the box tool doubles give standard input and globe values (42.975037ms)
+✔ [recent-imagery-052] the box tool double sends the live canvas handler an event (3.264866ms)
+✔ [recent-imagery-052] the renderer double moves both image slots to the next host (4.187242ms)
+✔ [recent-imagery-052] the thumbnail double calls both probe subscribers (4.529146ms)
+✔ [recent-imagery-052] the response doubles use different success and failure status codes (5.574652ms)
+✔ [recent-imagery-052] the day doubles give cloud ranges only to granule days (5.431913ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 215.100199

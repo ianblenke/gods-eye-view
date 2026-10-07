@@ -1,0 +1,31 @@
+✔ [recent-imagery-018] a slot drapes one GIBS provider bounded to the box; the same day only restyles it (25.415083ms)
+✔ [recent-imagery-019] rapid replacement never owns more than two layers (6.607158ms)
+✔ [recent-imagery-020] rebind rebuilds the owned layers on the new host and leaves the old one empty (3.749625ms)
+✔ [recent-imagery-021] above the tile limit a request defers silently; its settlement asks for exactly one frame (3.987244ms)
+✔ [recent-imagery-022] upstream deferrals from both slots share one delayed retry frame; destroy disarms it (6.26406ms)
+✔ [recent-imagery-018] against the basemap slot a splits left with no second layer, and leaving the swipe only restyles it (2.682726ms)
+✔ [recent-imagery-018 recent-imagery-020] invalid slot input and host changes release the owned images (2.495161ms)
+✔ [recent-imagery-018] an absent split enum sets a zero value on the slot itself (1.745763ms)
+✔ [recent-imagery-019] a replacement destroys the old layer in both slots (2.389198ms)
+✔ [recent-imagery-022] the default provider returns undefined and the renderer owns zero layers (265.106498ms)
+✔ [recent-imagery-018] a change to west replaces the provider (2.837223ms)
+✔ [recent-imagery-018] a change to south replaces the provider (2.045561ms)
+✔ [recent-imagery-018] a change to east replaces the provider (1.758235ms)
+✔ [recent-imagery-018] a change to north replaces the provider (1.523474ms)
+✔ [recent-imagery-020] a host change moves slot a alone (1.479411ms)
+✔ [recent-imagery-020] a host change moves slot b alone (1.597693ms)
+✔ [recent-imagery-018] an alpha change alone updates the current image (1.638826ms)
+✔ [recent-imagery-018] an empty slot ignores an alpha change (2.086108ms)
+✔ [recent-imagery-018] the same alpha value does not add a frame (1.456598ms)
+✔ [recent-imagery-020] the same host does not change the current image (1.34818ms)
+✔ [recent-imagery-020] a host collection change replaces the current slot (1.553937ms)
+✔ [recent-imagery-019] an A image alone asks for a frame at renderer destruction (1.356194ms)
+✔ [recent-imagery-019] a destroyed renderer still rejects an image after a host update (0.923907ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6831.957841

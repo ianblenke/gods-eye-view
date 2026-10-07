@@ -407,7 +407,7 @@ test('[recent-imagery-026] a stop after blob data does not make an image', async
   assert.equal(loader.get('S30:2026-09-18').status, 'unknown');
 });
 
-test('[recent-imagery-023 recent-imagery-026] fetch errors and stop errors have different states', async () => {
+test('[recent-imagery-023 recent-imagery-026 recent-imagery-053] an Error and an AbortError from the fetch give different states', async () => {
   for (const name of ['Error', 'AbortError']) {
     const loader = createThumbnailLoader({
       fetchImpl: async () => {
@@ -416,6 +416,7 @@ test('[recent-imagery-023 recent-imagery-026] fetch errors and stop errors have 
     });
     loader.request(candidate('S30', '2026-09-18'), BOX);
     await settle();
+    assert.equal(loader.stats().tracked, name === 'Error' ? 1 : 0);
     assert.equal(
       loader.get('S30:2026-09-18').status,
       name === 'Error' ? 'error' : 'unknown',
@@ -606,4 +607,70 @@ test('[recent-imagery-026] a URL callback while the loader clears images does no
   await settle();
   assert.equal(fetches, 2);
   loader.destroy();
+});
+
+test('[recent-imagery-053] the loader starts a new fetch after an external AbortError', async () => {
+  let calls = 0;
+  const signalsAborted = [];
+  const loader = createThumbnailLoader({
+    fetchImpl: async (_url, { signal }) => {
+      calls += 1;
+      signalsAborted.push(signal.aborted);
+      if (calls === 1)
+        throw Object.assign(new Error('fetch'), { name: 'AbortError' });
+      return response();
+    },
+    createObjectUrl: () => 'blob:second',
+    revokeObjectUrl: () => {},
+  });
+  loader.request(candidate('S30', '2026-09-18'), BOX);
+  await settle();
+  assert.equal(loader.stats().tracked, 0);
+  loader.request(candidate('S30', '2026-09-18'), BOX);
+  await settle();
+  assert.equal(calls, 2);
+  assert.deepEqual(signalsAborted, [false, false]);
+  assert.equal(loader.get('S30:2026-09-18').objectUrl, 'blob:second');
+  loader.destroy();
+});
+
+test('[recent-imagery-053] an old fetch cannot remove a new entry', async () => {
+  const pending = [];
+  const loader = createThumbnailLoader({
+    fetchImpl: () =>
+      new Promise((resolve, reject) => pending.push({ resolve, reject })),
+    createObjectUrl: () => 'blob:new',
+    revokeObjectUrl: () => {},
+  });
+  loader.request(candidate('S30', '2026-09-18'), BOX);
+  loader.cancelAll();
+  loader.request(candidate('S30', '2026-09-18'), BOX);
+  pending[0].reject(Object.assign(new Error('old'), { name: 'AbortError' }));
+  await settle();
+  assert.equal(loader.stats().tracked, 1);
+  assert.equal(loader.get('S30:2026-09-18').loading, true);
+  pending[1].resolve(response());
+  await settle();
+  assert.equal(loader.get('S30:2026-09-18').objectUrl, 'blob:new');
+  loader.destroy();
+});
+
+test('[recent-imagery-053] a day with present proof keeps its proof after a loader cancellation', async () => {
+  const f = fixture({ maxDecoded: 1 });
+  f.loader.request(candidate('S30', '2026-09-18'), BOX);
+  f.fetch.respond(0);
+  await settle();
+  f.loader.request(candidate('L30', '2026-09-17'), BOX);
+  f.fetch.respond(1);
+  await settle();
+  f.loader.request(candidate('S30', '2026-09-18'), BOX);
+  f.loader.cancelAll();
+  await settle();
+  assert.equal(f.loader.get('S30:2026-09-18').status, 'present');
+  assert.equal(
+    f.loader.get('S30:2026-09-18').acquisitionTime,
+    '2026-09-18T17:12:00Z',
+  );
+  assert.equal(f.loader.get('S30:2026-09-18').objectUrl, null);
+  f.loader.destroy();
 });
