@@ -6,10 +6,10 @@ The current tests and source confirm the defects.
 
 ## Thumbnail decision
 
-The old test expects unknown status after external AbortError but does not request the day again.
-Remove the entry when the current fetch ends with external AbortError.
-A later request can then start another fetch.
-An old fetch must not remove a replacement entry.
+The old test expects unknown status after an external AbortError but does not request the day again.
+Remove the entry when the current fetch ends with an external AbortError and the entry status is unknown.
+The loader starts a new fetch when the caller requests the day again.
+An old fetch must not remove a new entry.
 
 ## Product decision
 
@@ -20,10 +20,10 @@ The candidate key parser already rejects parent keys.
 
 ## DETAILS decision
 
-The old test expects zero after the reveal writes the body position.
-Move the reveal after the function that restores the content position.
+The old test expects zero after the scroll request writes the body scroll position.
+Move the scroll request after the function that restores the body scroll position.
 Keep normal refresh behavior through `recent-imagery-050`.
-Change its scenario to state the DETAILS exception without a change to the first requirement sentence.
+Keep the base THEN line and add the order of the scroll request after DETAILS opens.
 The new scenario states the exact position from the dimensions in the old test.
 
 ## Footprint decision
@@ -43,7 +43,7 @@ The lint command checks prose and test titles.
 The format command checks file layout.
  
 The predispatch command checks the change before the lead receives it.
-The lead runs the image gates and the reviews.
+The lead runs the Docker gates and the reviews.
 
 ## Browser quality assurance (QA)
 
@@ -59,7 +59,7 @@ The panel leaves the fallback at `src/ui/recentImagery.js:122` and a branch at `
 The panel leaves functions at `src/ui/recentImagery.js:183` and `src/ui/recentImagery.js:269` without coverage.
 The host evidence records the results, rather than a gates verdict.
 
-## D5: Divisor default
+## Divisor default decision
 
 Remove the unreachable default of the divisor in `pointInPolygon`.
 For finite `yi` and `yj`, the cross condition needs different values.
@@ -72,7 +72,20 @@ Thus `yi !== yj`, and the divisor cannot equal zero.
 The default cannot change the result for finite coordinates.
 
 The search command `rg -n pointInPolygon src` shows one caller of the model function: `coverageFor`.
-The model function is not exported.
+The model does not export the function.
 Other search results name separate functions in other files.
 The footprint filter accepts only finite coordinates.
 No mutation is necessary because no default code remains.
+
+## Corrections of review round 1
+
+The tree read is commit `c913d8cf820a0d3947a0f5b120449f1946e3544e`.
+The safest decision keeps the body scroll position restore in every render.
+The scroll request follows that restore when DETAILS opens.
+The test card gives a height of zero while closed and 60 pixels while open.
+
+Separate tests cover an absent viewport height and an absent card rectangle.
+A sparse ring test covers an absent point.
+The thumbnail test records signal state and asserts that state after the fetch settles.
+The proposal names the other product readers with their actual input sources.
+No production correction is necessary for these review findings.
