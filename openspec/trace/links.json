@@ -634,6 +634,359 @@
     "src/layers/cyclones/index.test.mjs › [cyclones-025] with no global matchMedia and no global open the focus uses the full duration and the link does nothing",
     "src/layers/cyclones/index.test.mjs › [cyclones-025] with no options the layer reads the global matchMedia and opens the advisory with the global open"
   ],
+  "director-001": [
+    "src/director/document.test.mjs › [director-001] The export keeps authored text and time",
+    "src/director/document.test.mjs › [director-001] all built-in authored content exports and normalizes without edit loss"
+  ],
+  "director-002": [
+    "src/director/document.test.mjs › [director-002] The parser keeps an empty scene list",
+    "src/director/document.test.mjs › [director-002] an intentionally empty project stays empty"
+  ],
+  "director-003": [
+    "src/director/document.test.mjs › [director-003] The absent version allows legacy numeric text",
+    "src/director/document.test.mjs › [director-003] The legacy document accepts absent IDs",
+    "src/director/document.test.mjs › [director-003] missing legacy IDs become stable after the first saved migration",
+    "src/director/document.test.mjs › [director-003] v1/v2 bloom migrates once; IDs, edits, pack bindings and zero holds survive"
+  ],
+  "director-004": [
+    "src/director/document.test.mjs › [director-004] The validator rejects an unsupported version",
+    "src/director/document.test.mjs › [director-004] The version rejects an early anchors field",
+    "src/director/document.test.mjs › [director-004] The version rejects an early dataPackIds field",
+    "src/director/document.test.mjs › [director-004] The version rejects an early dataPacks field",
+    "src/director/document.test.mjs › [director-004] The version rejects an early interactions field",
+    "src/director/document.test.mjs › [director-004] The version rejects an early move field",
+    "src/director/document.test.mjs › [director-004] invalid shapes, versions, unknown fields and unsafe keys fail with field paths"
+  ],
+  "director-005": [
+    "src/director/documentFields.test.mjs › [director-005] The field check rejects each unsupported key",
+    "src/director/documentFields.test.mjs › [director-005] The object check rejects an array",
+    "src/director/documentFields.test.mjs › [director-005] The object check rejects null",
+    "src/director/documentFields.test.mjs › [director-005] The object check rejects text"
+  ],
+  "director-006": [
+    "src/director/documentFields.test.mjs › [director-006] The text check accepts the exact limit",
+    "src/director/documentFields.test.mjs › [director-006] The text check rejects blank text",
+    "src/director/documentFields.test.mjs › [director-006] The text check rejects excess length",
+    "src/director/documentFields.test.mjs › [director-006] The text check rejects numbers"
+  ],
+  "director-007": [
+    "src/director/documentFields.test.mjs › [director-007] The legacy blank text fails numeric checks",
+    "src/director/documentFields.test.mjs › [director-007] The legacy flag alone allows numeric text",
+    "src/director/documentFields.test.mjs › [director-007] The legacy number input keeps its type",
+    "src/director/documentFields.test.mjs › [director-007] The number check accepts both bounds",
+    "src/director/documentFields.test.mjs › [director-007] The number check rejects NaN",
+    "src/director/documentFields.test.mjs › [director-007] The number check rejects custom conversion objects",
+    "src/director/documentFields.test.mjs › [director-007] The number check rejects text",
+    "src/director/documentFields.test.mjs › [director-007] The number check rejects the lower excess",
+    "src/director/documentFields.test.mjs › [director-007] The number check rejects the upper excess"
+  ],
+  "director-008": [
+    "src/director/documentFields.test.mjs › [director-008] The optional check uses own fields only"
+  ],
+  "director-009": [
+    "src/director/documentFields.test.mjs › [director-009] The ID list checks every entry",
+    "src/director/documentFields.test.mjs › [director-009] The array check rejects excess entries",
+    "src/director/documentFields.test.mjs › [director-009] The array check rejects objects",
+    "src/director/documentFields.test.mjs › [director-009] The unique ID check keeps its set"
+  ],
+  "director-010": [
+    "src/director/documentFields.test.mjs › [director-010] The depth check rejects its next level",
+    "src/director/documentFields.test.mjs › [director-010] The node budget rejects its next value"
+  ],
+  "director-011": [
+    "src/director/documentFields.test.mjs › [director-011] The JSON accepts a null prototype",
+    "src/director/documentFields.test.mjs › [director-011] The JSON accepts an ordinary object",
+    "src/director/documentFields.test.mjs › [director-011] The JSON accepts arrays",
+    "src/director/documentFields.test.mjs › [director-011] The JSON boolean takes its own path",
+    "src/director/documentFields.test.mjs › [director-011] The JSON finite number takes its own path",
+    "src/director/documentFields.test.mjs › [director-011] The JSON null takes its own path",
+    "src/director/documentFields.test.mjs › [director-011] The JSON rejects a custom prototype",
+    "src/director/documentFields.test.mjs › [director-011] The JSON rejects an infinite number",
+    "src/director/documentFields.test.mjs › [director-011] The JSON rejects falsy nonobject values",
+    "src/director/documentFields.test.mjs › [director-011] The JSON rejects functions",
+    "src/director/documentFields.test.mjs › [director-011] The JSON rejects undefined"
+  ],
+  "director-012": [
+    "src/director/documentFields.test.mjs › [director-012] The JSON entry limit checks its boundary",
+    "src/director/documentFields.test.mjs › [director-012] The JSON rejects long field names",
+    "src/director/documentFields.test.mjs › [director-012] The JSON rejects the __proto__ key",
+    "src/director/documentFields.test.mjs › [director-012] The JSON rejects the constructor key",
+    "src/director/documentFields.test.mjs › [director-012] The JSON rejects the prototype key",
+    "src/director/documentFields.test.mjs › [director-012] The JSON text limit checks its boundary"
+  ],
+  "director-013": [
+    "src/director/document.test.mjs › [director-013] The parser rejects excess UTF8 bytes",
+    "src/director/document.test.mjs › [director-013] The parser rejects excess character length",
+    "src/director/document.test.mjs › [director-013] The parser rejects nontext input",
+    "src/director/document.test.mjs › [director-013] The parser reports invalid JSON",
+    "src/director/document.test.mjs › [director-013] document byte, nesting, collection, finite-number and string bounds are enforced"
+  ],
+  "director-014": [
+    "src/director/document.test.mjs › [director-014] The visual check rejects invalid mapStack",
+    "src/director/document.test.mjs › [director-014] The visual check rejects invalid style",
+    "src/director/document.test.mjs › [director-014] The visual check rejects invalid style parameters"
+  ],
+  "director-015": [
+    "src/director/document.test.mjs › [director-015] The visual bloom accepts its enabled field",
+    "src/director/document.test.mjs › [director-015] The visual bloom accepts its intensity field",
+    "src/director/document.test.mjs › [director-015] The visual bloom accepts its version field",
+    "src/director/document.test.mjs › [director-015] The visual bloom bounds its intensity field",
+    "src/director/document.test.mjs › [director-015] The visual bloom bounds its version field",
+    "src/director/document.test.mjs › [director-015] The visual check rejects invalid boolean type",
+    "src/director/document.test.mjs › [director-015] The visual check rejects invalid number type",
+    "src/director/document.test.mjs › [director-015] The visual check rejects invalid text type",
+    "src/director/document.test.mjs › [director-015] The visual detection accepts its allocation field",
+    "src/director/document.test.mjs › [director-015] The visual detection accepts its density field",
+    "src/director/document.test.mjs › [director-015] The visual detection accepts its fadePct field",
+    "src/director/document.test.mjs › [director-015] The visual detection accepts its mode field",
+    "src/director/document.test.mjs › [director-015] The visual detection accepts its outsideOpacityPct field",
+    "src/director/document.test.mjs › [director-015] The visual detection bounds its density field",
+    "src/director/document.test.mjs › [director-015] The visual detection bounds its fadePct field",
+    "src/director/document.test.mjs › [director-015] The visual detection bounds its outsideOpacityPct field",
+    "src/director/document.test.mjs › [director-015] The visual hud accepts its variant field",
+    "src/director/document.test.mjs › [director-015] The visual hud accepts its visible field",
+    "src/director/document.test.mjs › [director-015] The visual scope accepts its enabled field",
+    "src/director/document.test.mjs › [director-015] The visual scope accepts its featherPct field",
+    "src/director/document.test.mjs › [director-015] The visual scope bounds its featherPct field",
+    "src/director/document.test.mjs › [director-015] The visual sharpen accepts its enabled field",
+    "src/director/document.test.mjs › [director-015] The visual sharpen accepts its intensity field",
+    "src/director/document.test.mjs › [director-015] The visual sharpen bounds its intensity field",
+    "src/director/document.test.mjs › [director-015] captured scope and extended detection edits survive migration"
+  ],
+  "director-016": [
+    "src/director/document.test.mjs › [director-016] The document checks installed scene IDs",
+    "src/director/document.test.mjs › [director-016] The document checks its createdAt field",
+    "src/director/document.test.mjs › [director-016] The document checks its updatedAt field",
+    "src/director/document.test.mjs › [director-016] The pack bindings check every value",
+    "src/director/document.test.mjs › [director-016] The pack versions accept legacy text only",
+    "src/director/document.test.mjs › [director-016] The scene checks its releaseLayerIds field",
+    "src/director/document.test.mjs › [director-016] The scene checks its title field",
+    "src/director/document.test.mjs › [director-016] The shot checks its sourcePackId field",
+    "src/director/document.test.mjs › [director-016] The shot checks its sourcePackVersion field",
+    "src/director/document.test.mjs › [director-016] The shot checks its title field"
+  ],
+  "director-017": [
+    "src/director/document.test.mjs › [director-017] The shot checks its durationSec field",
+    "src/director/document.test.mjs › [director-017] The shot checks its holdSec field"
+  ],
+  "director-018": [
+    "src/director/document.test.mjs › [director-018] The layer check accepts boolean entries",
+    "src/director/document.test.mjs › [director-018] The layer check validates a second layer ID",
+    "src/director/document.test.mjs › [director-018] The layer entry needs a boolean state",
+    "src/director/document.test.mjs › [director-018] The layer parameters need an object",
+    "src/director/document.test.mjs › [director-018] The shot total spans scene boundaries"
+  ],
+  "director-019": [
+    "src/director/authoring.test.mjs › [director-019] The edit sets the anchors field",
+    "src/director/authoring.test.mjs › [director-019] The edit sets the camera field",
+    "src/director/authoring.test.mjs › [director-019] The edit sets the dataPackIds field",
+    "src/director/authoring.test.mjs › [director-019] The edit sets the dataPacks field",
+    "src/director/authoring.test.mjs › [director-019] The edit sets the durationSec field",
+    "src/director/authoring.test.mjs › [director-019] The edit sets the holdSec field",
+    "src/director/authoring.test.mjs › [director-019] The edit sets the interactions field",
+    "src/director/authoring.test.mjs › [director-019] The edit sets the move field"
+  ],
+  "director-020": [
+    "src/director/authoring.test.mjs › [director-020] The edit rejects an absent scene",
+    "src/director/authoring.test.mjs › [director-020] The edit rejects an absent shot",
+    "src/director/authoring.test.mjs › [director-020] The edit rejects unsupported scene details",
+    "src/director/authoring.test.mjs › [director-020] The edit rejects unsupported shot details"
+  ],
+  "director-021": [
+    "src/director/authoring.test.mjs › [director-021] The edit removes an absent anchors field",
+    "src/director/authoring.test.mjs › [director-021] The edit removes an absent camera field",
+    "src/director/authoring.test.mjs › [director-021] The edit removes an absent dataPackIds field",
+    "src/director/authoring.test.mjs › [director-021] The edit removes an absent dataPacks field",
+    "src/director/authoring.test.mjs › [director-021] The edit removes an absent durationSec field",
+    "src/director/authoring.test.mjs › [director-021] The edit removes an absent holdSec field",
+    "src/director/authoring.test.mjs › [director-021] The edit removes an absent interactions field",
+    "src/director/authoring.test.mjs › [director-021] The edit removes an absent move field"
+  ],
+  "director-022": [
+    "src/director/authoring.test.mjs › [director-022] The selection keeps only its scene",
+    "src/director/authoring.test.mjs › [director-022] The selection rejects an absent scene"
+  ],
+  "director-023": [
+    "src/director/clock.test.mjs › [director-023] The clock bounds and copies its snapshot",
+    "src/director/clock.test.mjs › [director-023] The clock rejects an absent scene",
+    "src/director/clock.test.mjs › [director-023] The clock rejects an absent shot",
+    "src/director/clock.test.mjs › [director-023] The clock uses zero progress for zero total",
+    "src/director/clock.test.mjs › [director-023] The clock warns when a subscriber fails",
+    "src/director/clock.test.mjs › [director-023] The destroyed publication does not make a snapshot",
+    "src/director/clock.test.mjs › [director-023] The publication notifies every subscriber",
+    "src/director/clock.test.mjs › [director-023] The snapshot access returns a copy"
+  ],
+  "director-024": [
+    "src/director/clock.test.mjs › [director-024] Stop releases every clock timer and queued callbacks cannot publish later",
+    "src/director/clock.test.mjs › [director-024] The stop notifies every subscriber",
+    "src/director/clock.test.mjs › [director-024] The stop rejects a destroyed clock state",
+    "src/director/clock.test.mjs › [director-024] The stop tolerates subscriber errors",
+    "src/director/clock.test.mjs › [director-024] The stop works before the first snapshot"
+  ],
+  "director-025": [
+    "src/director/clock.test.mjs › [director-025] Stop, abort and destroy settle long holds immediately and release their deadlines",
+    "src/director/clock.test.mjs › [director-025] The clock cancels every pending wait",
+    "src/director/clock.test.mjs › [director-025] The hold condition checks its current state first",
+    "src/director/clock.test.mjs › [director-025] The hold ends at its deadline",
+    "src/director/clock.test.mjs › [director-025] The hold generation stops a pending wait",
+    "src/director/clock.test.mjs › [director-025] The hold rejects destroyed state",
+    "src/director/clock.test.mjs › [director-025] The hold rejects flag state",
+    "src/director/clock.test.mjs › [director-025] The hold rejects signal state"
+  ],
+  "director-026": [
+    "src/director/clock.test.mjs › [director-026] The destroyed subscription does not add a listener",
+    "src/director/clock.test.mjs › [director-026] The subscription gives current copied state",
+    "src/director/clock.test.mjs › [director-026] The subscription rejects a nonfunction"
+  ],
+  "director-027": [
+    "src/director/clock.test.mjs › [director-027] The default timer callbacks report progress",
+    "src/director/clock.test.mjs › [director-027] The playback progress uses a one second minimum",
+    "src/director/clock.test.mjs › [director-027] The playback tick rejects destroyed state",
+    "src/director/clock.test.mjs › [director-027] The playback tick rejects replaced state",
+    "src/director/clock.test.mjs › [director-027] The playback tick rejects stopped state"
+  ],
+  "director-028": [
+    "src/director/clock.test.mjs › [director-028] The instant shot reports both endpoints",
+    "src/director/clock.test.mjs › [director-028] The shot progress works without scene state",
+    "src/director/clock.test.mjs › [director-028] The startShotProgress detaches its timer handle",
+    "src/director/clock.test.mjs › [director-028] direct-load progress finishes once and snapshots cannot mutate the clock"
+  ],
+  "director-029": [
+    "src/director/clock.test.mjs › [director-029] The old shot timer leaves its replacement intact",
+    "src/director/clock.test.mjs › [director-029] The shot guard 1 rejects destroyed",
+    "src/director/clock.test.mjs › [director-029] The shot guard 1 rejects flag",
+    "src/director/clock.test.mjs › [director-029] The shot guard 1 rejects playback",
+    "src/director/clock.test.mjs › [director-029] The shot guard 1 rejects signal",
+    "src/director/clock.test.mjs › [director-029] The shot guard 2 rejects destroyed",
+    "src/director/clock.test.mjs › [director-029] The shot guard 2 rejects flag",
+    "src/director/clock.test.mjs › [director-029] The shot guard 2 rejects generation",
+    "src/director/clock.test.mjs › [director-029] The shot guard 2 rejects playback",
+    "src/director/clock.test.mjs › [director-029] The shot guard 2 rejects signal",
+    "src/director/clock.test.mjs › [director-029] The shot guard 3 rejects destroyed",
+    "src/director/clock.test.mjs › [director-029] The shot guard 3 rejects flag",
+    "src/director/clock.test.mjs › [director-029] The shot guard 3 rejects generation",
+    "src/director/clock.test.mjs › [director-029] The shot guard 3 rejects playback",
+    "src/director/clock.test.mjs › [director-029] The shot guard 3 rejects signal",
+    "src/director/clock.test.mjs › [director-029] The shot progress guard 1 rejects destroyed",
+    "src/director/clock.test.mjs › [director-029] The shot progress guard 1 rejects generation",
+    "src/director/clock.test.mjs › [director-029] The shot progress guard 2 rejects destroyed",
+    "src/director/clock.test.mjs › [director-029] The shot progress guard 2 rejects generation",
+    "src/director/clock.test.mjs › [director-029] The shot progress guard 3 rejects destroyed",
+    "src/director/clock.test.mjs › [director-029] The shot progress guard 3 rejects generation",
+    "src/director/clock.test.mjs › [director-029] The shot start rejects a changed counter read"
+  ],
+  "director-030": [
+    "src/director/clock.test.mjs › [director-030] The scene clock bounds shot elapsed time",
+    "src/director/clock.test.mjs › [director-030] The scene guard 1 rejects destroyed",
+    "src/director/clock.test.mjs › [director-030] The scene guard 1 rejects flag",
+    "src/director/clock.test.mjs › [director-030] The scene guard 1 rejects signal",
+    "src/director/clock.test.mjs › [director-030] The scene guard 2 rejects destroyed",
+    "src/director/clock.test.mjs › [director-030] The scene guard 2 rejects flag",
+    "src/director/clock.test.mjs › [director-030] The scene guard 2 rejects generation",
+    "src/director/clock.test.mjs › [director-030] The scene guard 2 rejects signal",
+    "src/director/clock.test.mjs › [director-030] The scene guard 3 rejects destroyed",
+    "src/director/clock.test.mjs › [director-030] The scene guard 3 rejects flag",
+    "src/director/clock.test.mjs › [director-030] The scene guard 3 rejects playback",
+    "src/director/clock.test.mjs › [director-030] The scene guard 3 rejects signal",
+    "src/director/clock.test.mjs › [director-030] The scene start rejects a timing callback replacement",
+    "src/director/clock.test.mjs › [director-030] The startScene detaches its timer handle",
+    "src/director/clock.test.mjs › [director-030] a subscriber can Stop or replace the initial clock without the old start acquiring a timer",
+    "src/director/clock.test.mjs › [director-030] aborted starts and destruction during initial notification leave no timers or listeners",
+    "src/director/clock.test.mjs › [director-030] replacing a shot clock rejects the old callback without clearing the replacement"
+  ],
+  "director-031": [
+    "src/director/timeline.test.mjs › [director-031 director-034] scene time accounts for flight and hold; exact boundaries select the next shot",
+    "src/director/timeline.test.mjs › [director-031] The shot boundaries use cumulative durations"
+  ],
+  "director-032": [
+    "src/director/timeline.test.mjs › [director-032] The absent scene gives empty time",
+    "src/director/timeline.test.mjs › [director-032] The absent shot index gives empty time",
+    "src/director/timeline.test.mjs › [director-032] The seek bounds zero scene time",
+    "src/director/timeline.test.mjs › [director-032] The seek gives null without shots",
+    "src/director/timeline.test.mjs › [director-032] The zero duration gives finite progress",
+    "src/director/timeline.test.mjs › [director-032] The zero total bounds durationProgress",
+    "src/director/timeline.test.mjs › [director-032] The zero total bounds endProgress"
+  ],
+  "director-033": [
+    "src/director/timeline.test.mjs › [director-033] The camera bounds numeric progress",
+    "src/director/timeline.test.mjs › [director-033] The camera gives a zero start angle for invalid text",
+    "src/director/timeline.test.mjs › [director-033] The camera guard handles a falsy endpoint",
+    "src/director/timeline.test.mjs › [director-033] The camera guard returns null for falsy endpoints",
+    "src/director/timeline.test.mjs › [director-033] The camera returns null without endpoints",
+    "src/director/timeline.test.mjs › [director-033] The camera uses both cubic halves",
+    "src/director/timeline.test.mjs › [director-033] The camera uses its sole source",
+    "src/director/timeline.test.mjs › [director-033] The camera uses its sole target"
+  ],
+  "director-034": [
+    "src/director/timeline.test.mjs › [director-031 director-034] scene time accounts for flight and hold; exact boundaries select the next shot",
+    "src/director/timeline.test.mjs › [director-034] The seek bounds the hold fraction",
+    "src/director/timeline.test.mjs › [director-034] The seek chooses the final shot at the end",
+    "src/director/timeline.test.mjs › [director-034] The seek converts invalid progress to zero",
+    "src/director/timeline.test.mjs › [director-034] The seek defaults an absent flight time",
+    "src/director/timeline.test.mjs › [director-034] The seek uses authored flight time",
+    "src/director/timeline.test.mjs › [director-034] The seek uses only the first time boundary"
+  ],
+  "director-035": [
+    "src/director/timeline.test.mjs › [director-035] The seek samples a move that the shot gives",
+    "src/director/timeline.test.mjs › [director-035] The seek uses the first ordinary camera",
+    "src/director/timeline.test.mjs › [director-035] The seek uses the previous ordinary camera"
+  ],
+  "director-036": [
+    "src/director/playback.test.mjs › [director-036] The single scene queue excludes other scenes"
+  ],
+  "director-037": [
+    "src/director/playback.test.mjs › [director-037] The adapter receives the exact phase order",
+    "src/director/playback.test.mjs › [director-037] The playback accepts an absent complete callback",
+    "src/director/playback.test.mjs › [director-037] The playback calls the applyLayers phase",
+    "src/director/playback.test.mjs › [director-037] The playback calls the applyVisual phase",
+    "src/director/playback.test.mjs › [director-037] The playback calls the completeShot phase",
+    "src/director/playback.test.mjs › [director-037] The playback calls the hold phase",
+    "src/director/playback.test.mjs › [director-037] The playback calls the selectShot phase",
+    "src/director/playback.test.mjs › [director-037] The playback calls the settle phase",
+    "src/director/playback.test.mjs › [director-037] The playback calls the travel phase",
+    "src/director/playback.test.mjs › [director-037] playback sequences phases, releases only at scene changes, then releases the final scene"
+  ],
+  "director-038": [
+    "src/director/playback.test.mjs › [director-038] The empty queue leaves all resources untouched",
+    "src/director/playback.test.mjs › [director-038] The flag token stops work after applyLayers",
+    "src/director/playback.test.mjs › [director-038] The flag token stops work after applyVisual",
+    "src/director/playback.test.mjs › [director-038] The flag token stops work after completeShot",
+    "src/director/playback.test.mjs › [director-038] The flag token stops work after hold",
+    "src/director/playback.test.mjs › [director-038] The flag token stops work after selectShot",
+    "src/director/playback.test.mjs › [director-038] The flag token stops work after settle",
+    "src/director/playback.test.mjs › [director-038] The flag token stops work after travel",
+    "src/director/playback.test.mjs › [director-038] The handoff cancellation prevents the first shot",
+    "src/director/playback.test.mjs › [director-038] The playback rejects the flag token",
+    "src/director/playback.test.mjs › [director-038] The playback rejects the signal token",
+    "src/director/playback.test.mjs › [director-038] The signal token stops work after applyLayers",
+    "src/director/playback.test.mjs › [director-038] The signal token stops work after applyVisual",
+    "src/director/playback.test.mjs › [director-038] The signal token stops work after completeShot",
+    "src/director/playback.test.mjs › [director-038] The signal token stops work after hold",
+    "src/director/playback.test.mjs › [director-038] The signal token stops work after selectShot",
+    "src/director/playback.test.mjs › [director-038] The signal token stops work after settle",
+    "src/director/playback.test.mjs › [director-038] The signal token stops work after travel",
+    "src/director/playback.test.mjs › [director-038] cancellation during an inter-scene release never acquires the next scene",
+    "src/director/playback.test.mjs › [director-038] empty and pre-aborted runs never acquire or release adapter resources"
+  ],
+  "director-039": [
+    "src/director/playback.test.mjs › [director-039] The final scene stays when cleanup is off",
+    "src/director/playback.test.mjs › [director-039] The handoff accepts a previous scene before work",
+    "src/director/playback.test.mjs › [director-039] The playback keeps the same initial scene",
+    "src/director/playback.test.mjs › [director-039] The refused handoff stops the first shot",
+    "src/director/playback.test.mjs › [director-039] The same scene keeps resources between shots",
+    "src/director/playback.test.mjs › [director-039] The scene change releases the old scene"
+  ],
+  "director-040": [
+    "src/director/playback.test.mjs › [director-040] The phase failure keeps its error after cleanup",
+    "src/director/playback.test.mjs › [director-040] a cleanup failure rejects for the caller to restore its own controls",
+    "src/director/playback.test.mjs › [director-040] failure in applyLayers propagates after release, without later shots",
+    "src/director/playback.test.mjs › [director-040] failure in applyVisual propagates after release, without later shots",
+    "src/director/playback.test.mjs › [director-040] failure in completeShot propagates after release, without later shots",
+    "src/director/playback.test.mjs › [director-040] failure in hold propagates after release, without later shots",
+    "src/director/playback.test.mjs › [director-040] failure in selectShot propagates after release, without later shots",
+    "src/director/playback.test.mjs › [director-040] failure in settle propagates after release, without later shots",
+    "src/director/playback.test.mjs › [director-040] failure in travel propagates after release, without later shots"
+  ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec"

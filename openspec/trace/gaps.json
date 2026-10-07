@@ -3331,21 +3331,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/director/authoring.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 2,
-      "functions": 0,
-      "totals": {
-        "lines": 54,
-        "branches": 18,
-        "functions": 5
-      },
-      "sha": "29e12a29a49aabf3076932d3863da51478442c369683127968b2db9554d1671d",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/director/camera.js": {
       "loaded": true,
       "lines": 0,
@@ -3368,55 +3353,10 @@
       "functions": 0,
       "totals": {
         "lines": 88,
-        "branches": 28,
+        "branches": 29,
         "functions": 10
       },
       "sha": "88124895f8754a812f0939e008e9e2ed39c16da5ea4dd04145d22123d89e34fb",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/clock.js": {
-      "loaded": true,
-      "lines": 12,
-      "branches": 12,
-      "functions": 1,
-      "totals": {
-        "lines": 301,
-        "branches": 106,
-        "functions": 29
-      },
-      "sha": "eece358ee071fcdf8194cb4f947071f078e0e1dd9839c06b7787385a61c361a6",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/document.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 4,
-      "functions": 0,
-      "totals": {
-        "lines": 186,
-        "branches": 58,
-        "functions": 19
-      },
-      "sha": "69b457d7f565784d5e3df42d538fea5bfea4633ed89550d0064744192fec0f85",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/documentFields.js": {
-      "loaded": true,
-      "lines": 1,
-      "branches": 7,
-      "functions": 0,
-      "totals": {
-        "lines": 94,
-        "branches": 61,
-        "functions": 12
-      },
-      "sha": "c42f4671d7014a7f5cf161c944dec2935f4db0f47fe35917723442e21852db31",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -3552,21 +3492,6 @@
         "functions": 10
       },
       "sha": "b5545c8a7a7a9907b93cd6717e9a0e1ef2d4de87bf2daaeea4f47653fa3fbee3",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/timeline.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 10,
-      "functions": 0,
-      "totals": {
-        "lines": 110,
-        "branches": 41,
-        "functions": 12
-      },
-      "sha": "f8daf2743ab1510ad85829e40aa6ff3f94cdcc8b9f7eb9b792d01e94b9d60bef",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -14218,31 +14143,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/director/clock.test.mjs": {
-      "names": {
-        "Stop releases every clock timer and queued callbacks cannot publish later": 1,
-        "Stop, abort and destroy settle long holds immediately and release their deadlines": 1,
-        "a subscriber can Stop or replace the initial clock without the old start acquiring a timer": 1,
-        "aborted starts and destruction during initial notification leave no timers or listeners": 1,
-        "direct-load progress finishes once and snapshots cannot mutate the clock": 1,
-        "replacing a shot clock rejects the old callback without clearing the replacement": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/document.test.mjs": {
-      "names": {
-        "all built-in authored content exports and normalizes without edit loss": 1,
-        "an intentionally empty project stays empty": 1,
-        "captured scope and extended detection edits survive migration": 1,
-        "document byte, nesting, collection, finite-number and string bounds are enforced": 1,
-        "invalid shapes, versions, unknown fields and unsafe keys fail with field paths": 1,
-        "missing legacy IDs become stable after the first saved migration": 1,
-        "v1/v2 bloom migrates once; IDs, edits, pack bindings and zero holds survive": 1
-      },
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/director/interactions/interactions.test.mjs": {
       "names": {
         "actions preserve camera refusal, layer admission signal and explicit transition cap": 1,
@@ -14275,17 +14175,7 @@
     },
     "src/director/playback.test.mjs": {
       "names": {
-        "a cleanup failure rejects for the caller to restore its own controls": 1,
         "a prior scene must release before playback; a refused handoff starts no shot": 1,
-        "cancellation during an inter-scene release never acquires the next scene": 1,
-        "empty and pre-aborted runs never acquire or release adapter resources": 1,
-        "failure in applyLayers propagates after release, without later shots": 1,
-        "failure in applyVisual propagates after release, without later shots": 1,
-        "failure in completeShot propagates after release, without later shots": 1,
-        "failure in hold propagates after release, without later shots": 1,
-        "failure in selectShot propagates after release, without later shots": 1,
-        "failure in settle propagates after release, without later shots": 1,
-        "failure in travel propagates after release, without later shots": 1,
         "flag cancellation while awaiting applyLayers stops subsequent work and releases resources": 1,
         "flag cancellation while awaiting applyVisual stops subsequent work and releases resources": 1,
         "flag cancellation while awaiting completeShot stops subsequent work and releases resources": 1,
@@ -14294,7 +14184,6 @@
         "flag cancellation while awaiting settle stops subsequent work and releases resources": 1,
         "flag cancellation while awaiting travel stops subsequent work and releases resources": 1,
         "non-preview playback retains the final scene but still releases preceding scenes": 1,
-        "playback sequences phases, releases only at scene changes, then releases the final scene": 1,
         "queues rotate scenes, skip empty scenes, preserve shot identity and support a single scene": 1,
         "signal cancellation while awaiting applyLayers stops subsequent work and releases resources": 1,
         "signal cancellation while awaiting applyVisual stops subsequent work and releases resources": 1,
@@ -14325,8 +14214,7 @@
     },
     "src/director/timeline.test.mjs": {
       "names": {
-        "camera seeking preserves cubic easing and shortest-angle orientation": 1,
-        "scene time accounts for flight and hold; exact boundaries select the next shot": 1
+        "camera seeking preserves cubic easing and shortest-angle orientation": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
