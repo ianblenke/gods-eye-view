@@ -321,6 +321,49 @@
   "coverage-gate-054": [
     "src/tooling/spec/testGuard.test.mjs › [coverage-gate-054] does not change the standard output of another process"
   ],
+  "coverage-gate-055": [
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-055] A process keeps line offsets and inner zero values"
+  ],
+  "coverage-gate-056": [
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-056] The comments set and reset the line state"
+  ],
+  "coverage-gate-057": [
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-057] A process measures branches and later functions"
+  ],
+  "coverage-gate-058": [
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-058] The line merge keeps only process coverage"
+  ],
+  "coverage-gate-059": [
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-059] The function identities keep each name and extent"
+  ],
+  "coverage-gate-060": [
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-060] An absent branch uses the innermost parent value",
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-060] The later equal parent gives the absent branch value"
+  ],
+  "coverage-gate-061": [
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-061] The equal extents keep separate occurrences"
+  ],
+  "coverage-gate-062": [
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-062] The process permutations and groups give equal values"
+  ],
+  "coverage-gate-063": [
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-063] The merge module writes one lcov record per URL"
+  ],
+  "coverage-gate-064": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-064 coverage-gate-065] The gate assigns raw coverage and replaces loaded values",
+    "src/tooling/spec/runParallel.test.mjs › [coverage-gate-064] The main process alone receives raw coverage"
+  ],
+  "coverage-gate-065": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-064 coverage-gate-065] The gate assigns raw coverage and replaces loaded values",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-065] The raw reader excludes test and dependency URLs",
+    "src/tooling/spec/v8Merge.test.mjs › [coverage-gate-065] The replacement keeps unloaded lcov records"
+  ],
+  "coverage-gate-066": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-066 coverage-gate-067] The gate removes its raw folder and reports absent raw files"
+  ],
+  "coverage-gate-067": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-066 coverage-gate-067] The gate removes its raw folder and reports absent raw files"
+  ],
   "credential-boundary-001": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] a fixture build exposes only the allowed sentinels",
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] every secret sentinel stays out of the built output, by name"
@@ -859,11 +902,13 @@
     "src/tooling/spec/importReach.test.mjs › [gap-ledger-104] The gate allows valid reached counts and rejects a larger count"
   ],
   "gap-ledger-105": [
-    "src/tooling/spec/importReach.test.mjs › [gap-ledger-105] The gate stops for each false reached condition and names the file"
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-105] The gate stops for each false reached condition and names the file",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-105 gap-ledger-106] The reached field follows its source record"
   ],
   "gap-ledger-106": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow a reached file with the base content",
-    "src/tooling/spec/importReach.test.mjs › [gap-ledger-100 gap-ledger-106] The ledger records the reached gap and its own marks"
+    "src/tooling/spec/importReach.test.mjs › [gap-ledger-100 gap-ledger-106] The ledger records the reached gap and its own marks",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-105 gap-ledger-106] The reached field follows its source record"
   ],
   "gap-ledger-107": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-107] The command writes no entry for a file that only base edges reach",
@@ -878,6 +923,61 @@
   "gap-ledger-109": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-109] The command writes no entry for an edge that only HEAD has",
     "src/tooling/spec/importReach.test.mjs › [gap-ledger-109] The command and gate refuse an edge that only HEAD has"
+  ],
+  "gap-ledger-110": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-110 gap-ledger-113 gap-ledger-115] The command records one step and keeps data after a test error",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-110] The baseline records exact metric values and new gaps"
+  ],
+  "gap-ledger-111": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-111 gap-ledger-115] The command rejects an absent condition before tests",
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-111] The command needs both ledger files before tests",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-111] The baseline rejects a different change or merge module state"
+  ],
+  "gap-ledger-112": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-112] The other source content keeps its old ledger entry"
+  ],
+  "gap-ledger-113": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-110 gap-ledger-113 gap-ledger-115] The command records one step and keeps data after a test error",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-113] The temporary base uses the true loaded source state",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-113] The valid history supplies the exact temporary base entries"
+  ],
+  "gap-ledger-114": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-114] The gate reports false baseline history",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-114] The false history gives no baseline allowance",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-114] The gate rejects a false metric name",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-114] The snapshot keeps each different metric"
+  ],
+  "gap-ledger-115": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-110 gap-ledger-113 gap-ledger-115] The command records one step and keeps data after a test error",
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-111 gap-ledger-115] The command rejects an absent condition before tests",
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-115] The command keeps the base history prefix",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-115] A second baseline step stops before tests"
+  ],
+  "gap-ledger-116": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-116 gap-ledger-117] The ratchet applies the count tolerance",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-116] The gate accepts the real differences"
+  ],
+  "gap-ledger-117": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-116 gap-ledger-117] The ratchet applies the count tolerance",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-117] The gate checks each history metric",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-117] The new value is above the tolerance"
+  ],
+  "gap-ledger-118": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-118] The small total permits no difference"
+  ],
+  "gap-ledger-119": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-119] The gate checks the source properties",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-119] The metric values use whole numbers",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-119] The source and old values stay exact"
+  ],
+  "gap-ledger-120": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-120] The unchanged metric stays within tolerance"
+  ],
+  "gap-ledger-121": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-121] The ledger entry stays within tolerance"
+  ],
+  "gap-ledger-122": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-122] A fully covered file gets no new history allowance"
   ],
   "hud-markings-001": [
     "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"

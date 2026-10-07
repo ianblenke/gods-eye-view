@@ -87,3 +87,30 @@ test('[coverage-gate-022] runs real processes from a runs file and writes the re
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test('[coverage-gate-064] The main process alone receives raw coverage', async () => {
+  const { buildTestRuns, childEnv } = await import('../../../scripts/spec/gates.mjs');
+  const baseEnv = childEnv({ NODE_V8_COVERAGE: '/wrong', A: '1' }, { outDir: '/cache', root: '/repo', inventoryHash: 'hash' });
+  const runs = buildTestRuns({ testFiles: ['a.test.mjs', 'b.test.mjs'], allocationFiles: ['b.test.mjs'], outDir: '/cache', coverageDir: '/raw' });
+  const calls = [];
+  const pending = runParallel(runs, {
+    env: baseEnv,
+    spawnProcess(command, args, options) {
+      calls.push(options);
+      const child = new EventEmitter();
+      queueMicrotask(() => child.emit('close', 0));
+      return child;
+    },
+  });
+  await pending;
+  assert.equal(calls[0].env.NODE_V8_COVERAGE, '/raw');
+  assert.equal(Object.hasOwn(calls[0].env, 'NODE_V8_COVERAGE'), true);
+  assert.equal(calls[1].env.NODE_V8_COVERAGE, undefined);
+  assert.equal(calls[0].env.A, '1');
+  assert.equal(calls[1].env.A, '1');
+  const explicit = [];
+  await runParallel([{ args: [], cwd: '/repo', env: { X: 'own' } }], { env: { X: 'base', MARKER: 'secret' }, spawnProcess(command, args, options) { explicit.push(options.env); const child = new EventEmitter(); queueMicrotask(() => child.emit('close', 0)); return child; } });
+  assert.deepEqual(explicit, [{ X: 'own', MARKER: 'secret' }]);
+  await runParallel([{ args: [], cwd: '/repo' }], { env: { X: 'base', MARKER: 'secret' }, spawnProcess(command, args, options) { explicit.push(options.env); const child = new EventEmitter(); queueMicrotask(() => child.emit('close', 0)); return child; } });
+  assert.deepEqual(explicit, [{ X: 'own', MARKER: 'secret' }, { X: 'base', MARKER: 'secret' }]);
+});
