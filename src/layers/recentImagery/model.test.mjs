@@ -510,9 +510,13 @@ test('[recent-imagery-015] absent times and an invalid clock keep the readout bo
   assert.equal(formatCandidateReadout(null), '');
 });
 
-test('[recent-imagery-016] unknown products and an absent snapshot box fail', () => {
+test('[recent-imagery-016 recent-imagery-054] the URL builders throw for unknown products and an absent snapshot box', () => {
   assert.throws(
     () => wvsSnapshotUrl({ product: 'bad', box: BOX }),
+    /Unknown imagery product/,
+  );
+  assert.throws(
+    () => wvsSnapshotUrl({ product: '__proto__', box: BOX }),
     /Unknown imagery product/,
   );
   assert.throws(
@@ -593,7 +597,7 @@ test('[recent-imagery-008] an invalid pin size that is not positive alone return
   assert.equal(boxFromPin(0, 0, -1), null);
 });
 
-test('[recent-imagery-013] a nonfinite footprint point does not prove full box coverage', () => {
+test('[recent-imagery-013 recent-imagery-056] an invalid footprint point gives unknown coverage', () => {
   const candidate = {
     granules: [
       {
@@ -606,10 +610,10 @@ test('[recent-imagery-013] a nonfinite footprint point does not prove full box c
       },
     ],
   };
-  assert.equal(coverageFor(candidate, BOX), 'partial');
+  assert.equal(coverageFor(candidate, BOX), 'unknown');
 });
 
-test('[recent-imagery-013] a nonfinite latitude can produce a full result', () => {
+test('[recent-imagery-013 recent-imagery-056] a latitude that is not finite gives unknown coverage', () => {
   const candidate = {
     granules: [
       {
@@ -622,7 +626,7 @@ test('[recent-imagery-013] a nonfinite latitude can produce a full result', () =
       },
     ],
   };
-  assert.equal(coverageFor(candidate, BOX), 'full');
+  assert.equal(coverageFor(candidate, BOX), 'unknown');
 });
 
 test('[recent-imagery-013] a sloped footprint uses its latitude span', () => {
@@ -864,4 +868,114 @@ test('[recent-imagery-017] the thumbnail order has each index once with differen
     },
   };
   assert.deepEqual(thumbnailOrder(5, first, last, 10, 2), [5, 4, 3]);
+});
+
+test('[recent-imagery-054] the model rejects parent product keys', () => {
+  for (const product of ['__proto__', 'constructor', 'toString']) {
+    assert.deepEqual(groupGranulesByDay([granule({ product })]), []);
+    const c = { ...hls('S30', '2026-09-18', [12]), product };
+    assert.equal(rankLatest([c]).candidate, null);
+    assert.equal(formatCandidateReadout(c), '');
+    assert.equal(parseCandidateKey(`${product}:2026-09-18`), null);
+    assert.throws(() => gibsTemplate(product, '2026-09-18'), TypeError);
+    assert.throws(
+      () =>
+        wvsSnapshotUrl({
+          product,
+          day: '2026-09-18',
+          box: BOX,
+          width: 256,
+          height: 256,
+        }),
+      TypeError,
+    );
+  }
+});
+
+test('[recent-imagery-056] the invalid coordinates give unknown coverage', () => {
+  for (const point of [
+    [NaN, 31],
+    [-121, Infinity],
+    [-121, -Infinity],
+    ['-121', 31],
+    [-121, '31'],
+    null,
+    [],
+  ]) {
+    const footprint = [point, [-120, 31], [-120, 30], [-121, 30]];
+    assert.equal(coverageFor({ granules: [{ footprint }] }, BOX), 'unknown');
+  }
+  const valid = [
+    [-98, 29],
+    [-97, 29],
+    [-97, 32],
+    [-98, 32],
+  ];
+  assert.equal(
+    coverageFor({ granules: [{ footprint: { length: 3 } }] }, BOX),
+    'unknown',
+  );
+  assert.equal(
+    coverageFor(
+      { granules: [{ footprint: [undefined, [-97, 31], [-98, 31]] }] },
+      BOX,
+    ),
+    'unknown',
+  );
+  assert.equal(
+    coverageFor(
+      {
+        granules: [
+          {
+            footprint: [
+              [NaN, 31],
+              [-120, 31],
+              [-120, 30],
+            ],
+          },
+          { footprint: valid },
+        ],
+      },
+      BOX,
+    ),
+    'full',
+  );
+});
+
+test('[recent-imagery-054] the model does not read a parent product getter', () => {
+  let reads = 0;
+  Object.defineProperty(Object.prototype, 'parentImageryProduct', {
+    configurable: true,
+    get() {
+      reads += 1;
+      return { overview: false, sensor: 'parent', resolutionM: 30 };
+    },
+  });
+  try {
+    const product = 'parentImageryProduct';
+    assert.deepEqual(groupGranulesByDay([granule({ product })]), []);
+    const c = { ...hls('S30', '2026-09-18', [12]), product };
+    assert.equal(rankLatest([c]).candidate, null);
+    assert.equal(formatCandidateReadout(c), '');
+    assert.throws(() => gibsTemplate(product, '2026-09-18'), TypeError);
+    assert.throws(
+      () =>
+        wvsSnapshotUrl({
+          product,
+          day: '2026-09-18',
+          box: BOX,
+          width: 256,
+          height: 256,
+        }),
+      TypeError,
+    );
+    assert.equal(reads, 0);
+  } finally {
+    delete Object.prototype.parentImageryProduct;
+  }
+});
+
+test('[recent-imagery-056] a footprint with an absent point gives unknown coverage', () => {
+  const footprint = [, [-97, 31], [-98, 31]];
+  assert.equal(coverageFor({ granules: [{ footprint }] }, BOX), 'unknown');
 });
