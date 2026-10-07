@@ -108,7 +108,7 @@ test('[director-071] The false adapter result refuses the action', async () => {
   assert.equal(s.getState().busy, false);
 });
 
-test('[director-072] The adapter exception permits another action', async () => {
+test('[director-072] The adapter exception allows another action', async () => {
   let calls = 0;
   const s = createInteractionSession({
     execute: () => {
@@ -123,7 +123,7 @@ test('[director-072] The adapter exception permits another action', async () => 
   assert.equal(calls, 2);
 });
 
-test('[director-072] The adapter rejection permits another action', async () => {
+test('[director-072] The adapter rejection allows another action', async () => {
   let calls = 0;
   const s = createInteractionSession({
     execute: () => {

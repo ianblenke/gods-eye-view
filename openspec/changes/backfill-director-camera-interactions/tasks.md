@@ -364,7 +364,7 @@ Commit: `4660e7b6f39ee27233cd769fbb1536bdcec0876c`.
 
 ## Gates and review
 
-- [ ] 2.1 Execute `make ratchet` for this change.
-- [ ] 2.2 Execute `make gates` for this change.
+- [ ] 2.1 Run `make ratchet` for this change.
+- [ ] 2.2 Run `make gates` for this change.
 - [ ] 2.3 Get both agent reviews.
 - [ ] 2.4 Record the verdict in `review.md`.

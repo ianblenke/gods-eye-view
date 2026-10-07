@@ -127,9 +127,9 @@ Old:
 heading: camera.heading ?? 0
 New:
 heading: 9
-Selected test: [director-044] The explicit heading keeps zero
+Selected test: [director-044] The inline heading keeps zero
 Result: KILLED
-m009: KILLED [director-044] The explicit heading keeps zero
+m009: KILLED [director-044] The inline heading keeps zero
 ```
 
 ## m010
@@ -155,9 +155,9 @@ Old:
 pitch: camera.pitch ?? -35
 New:
 pitch: 9
-Selected test: [director-044] The explicit pitch keeps zero
+Selected test: [director-044] The inline pitch keeps zero
 Result: KILLED
-m011: KILLED [director-044] The explicit pitch keeps zero
+m011: KILLED [director-044] The inline pitch keeps zero
 ```
 
 ## m012
@@ -183,9 +183,9 @@ Old:
 roll: camera.roll ?? 0
 New:
 roll: 9
-Selected test: [director-044] The explicit roll keeps zero
+Selected test: [director-044] The inline roll keeps zero
 Result: KILLED
-m013: KILLED [director-044] The explicit roll keeps zero
+m013: KILLED [director-044] The inline roll keeps zero
 ```
 
 ## m014
@@ -449,9 +449,9 @@ Old:
 number(value[key], `${path}.${key}`, ...range, legacy);
 New:
 if (key !== 'lat') number(value[key], `${path}.${key}`, ...range, legacy);
-Selected test: [director-053] The explicit start needs lat
+Selected test: [director-053] The inline start needs lat
 Result: KILLED
-m032: KILLED [director-053] The explicit start needs lat
+m032: KILLED [director-053] The inline start needs lat
 ```
 
 ## m033
@@ -463,9 +463,9 @@ Old:
 number(value[key], `${path}.${key}`, ...range, legacy);
 New:
 if (key !== 'lat') number(value[key], `${path}.${key}`, ...range, legacy);
-Selected test: [director-053] The explicit destination needs lat
+Selected test: [director-053] The inline destination needs lat
 Result: KILLED
-m033: KILLED [director-053] The explicit destination needs lat
+m033: KILLED [director-053] The inline destination needs lat
 ```
 
 ## m034
@@ -491,9 +491,9 @@ Old:
 number(value[key], `${path}.${key}`, ...range, legacy);
 New:
 if (key !== 'lon') number(value[key], `${path}.${key}`, ...range, legacy);
-Selected test: [director-053] The explicit start needs lon
+Selected test: [director-053] The inline start needs lon
 Result: KILLED
-m035: KILLED [director-053] The explicit start needs lon
+m035: KILLED [director-053] The inline start needs lon
 ```
 
 ## m036
@@ -505,9 +505,9 @@ Old:
 number(value[key], `${path}.${key}`, ...range, legacy);
 New:
 if (key !== 'lon') number(value[key], `${path}.${key}`, ...range, legacy);
-Selected test: [director-053] The explicit destination needs lon
+Selected test: [director-053] The inline destination needs lon
 Result: KILLED
-m036: KILLED [director-053] The explicit destination needs lon
+m036: KILLED [director-053] The inline destination needs lon
 ```
 
 ## m037
@@ -533,9 +533,9 @@ Old:
 number(value[key], `${path}.${key}`, ...range, legacy);
 New:
 if (key !== 'alt') number(value[key], `${path}.${key}`, ...range, legacy);
-Selected test: [director-053] The explicit start needs alt
+Selected test: [director-053] The inline start needs alt
 Result: KILLED
-m038: KILLED [director-053] The explicit start needs alt
+m038: KILLED [director-053] The inline start needs alt
 ```
 
 ## m039
@@ -547,9 +547,9 @@ Old:
 number(value[key], `${path}.${key}`, ...range, legacy);
 New:
 if (key !== 'alt') number(value[key], `${path}.${key}`, ...range, legacy);
-Selected test: [director-053] The explicit destination needs alt
+Selected test: [director-053] The inline destination needs alt
 Result: KILLED
-m039: KILLED [director-053] The explicit destination needs alt
+m039: KILLED [director-053] The inline destination needs alt
 ```
 
 ## m040
@@ -631,9 +631,9 @@ Old:
 required || Object.hasOwn(value, key)
 New:
 Object.hasOwn(value, key)
-Selected test: [director-053] The explicit start needs all coordinates
+Selected test: [director-053] The inline start needs all coordinates
 Result: KILLED
-m045: KILLED [director-053] The explicit start needs all coordinates
+m045: KILLED [director-053] The inline start needs all coordinates
 ```
 
 ## m046
@@ -897,9 +897,9 @@ Old:
 explicit || Object.hasOwn(value, 'altitudeReference')
 New:
 Object.hasOwn(value, 'altitudeReference')
-Selected test: [director-055] The explicit endpoint needs a height reference
+Selected test: [director-055] The inline endpoint needs a height reference
 Result: KILLED
-m064: KILLED [director-055] The explicit endpoint needs a height reference
+m064: KILLED [director-055] The inline endpoint needs a height reference
 ```
 
 ## m065
@@ -2007,9 +2007,9 @@ Old:
 New:
 } catch {
         return true;
-Selected test: [director-072] The adapter exception permits another action
+Selected test: [director-072] The adapter exception allows another action
 Result: KILLED
-m140: KILLED [director-072] The adapter exception permits another action
+m140: KILLED [director-072] The adapter exception allows another action
 ```
 
 ## m141
@@ -2023,9 +2023,9 @@ Old:
 New:
 } catch {
         return true;
-Selected test: [director-072] The adapter rejection permits another action
+Selected test: [director-072] The adapter rejection allows another action
 Result: KILLED
-m141: KILLED [director-072] The adapter rejection permits another action
+m141: KILLED [director-072] The adapter rejection allows another action
 ```
 
 ## m142
@@ -2413,7 +2413,7 @@ Old:
 pose(shot.camera, `${at}.camera`, version, anchorIds, true);
 New:
 pose(shot.camera, `${at}.camera`, version, anchorIds, true); shot.camera.heading = 99;
-Selected test: [director-064] version 4 retains anchor identity, references and explicit move edits through normalization
+Selected test: [director-064] version 4 keeps anchor identity, references and inline move edits through normalization
 Result: KILLED
 m168: KILLED [director-064] version 4 retains anchor identity, references and explicit move edits through normali
 ```
