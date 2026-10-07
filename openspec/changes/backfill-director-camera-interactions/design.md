@@ -1,8 +1,8 @@
 ## Context
 
-This change records commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
-The scene controller resolves camera poses for load, replay and seek.
-It admits actions after load and seek.
+The change records commit `290b5d2`.
+The scene controller resolves camera poses when it loads, replays or seeks a scene.
+It admits interactions after it loads or seeks a scene.
 
 ## Decisions
 
@@ -24,24 +24,49 @@ The lead runs the ratchet, gates and review.
 
 The evidence records the scope sweep, test links and host coverage.
 The mutation report records the exact changes and failed tests.
-The scratch audit records each decision and field loop.
+The audit records each branch and field loop.
 
 ## Sweep commands
 
 The evidence gives the ledger gaps, old test totals and import paths from the scope sweep.
 The audit command gives the tested, default-value and equivalent row totals.
-The report command reads each final mutation result from command output.
+The complete mutation command gives each result in its output.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/director-2 && python3 /home/ianblenke/docker/gev-tools/director-2/sweep.py
-cd /home/ianblenke/docker/gev-work/director-2 && python3 /home/ianblenke/docker/gev-tools/director-2/audit.py
-cd /home/ianblenke/docker/gev-work/director-2 && python3 /home/ianblenke/docker/gev-tools/director-2/report.py
+cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-2/sweep.py
+cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-2/audit2.py
 ```
 
-## Known limits
+## Corrections of review round 1
 
-The evidence names the host branch before finally in the interaction session.
-The evidence also names the state callback exception and the tests outside this scope.
-The lead checks the Node version of the gates before the ledger update.
-- Known limit `session-finally-branch`: the branch at `src/director/interactions/session.js` line 51 cannot run, because the try block and the catch block both return. The file keeps one gap in branch coverage.
-- Known limit `session-callback-busy`: when the state callback of `dispatch` throws at line 34, the session stays busy. No scenario states this behavior.
+Pass 2 reads base commit `290b5d2` and the current files.
+The code accepts duration 0.2 seconds and rejects 0.19 seconds.
+The pass uses these limits because the brief gives two different results for 0.19 seconds.
+
+The pass deletes the test that changes the Map size getter.
+A supplied list or proxy cannot change the native Map size getter.
+The native Map stores each ID before the session reads its size.
+An inactive session therefore contains no interaction that dispatch can find.
+
+The scratch probe uses getters, a proxy list and a map callback spy.
+Row m149 records an equivalent change, not failed tests.
+The proposal gives the known limits.
+
+## Text check choices
+
+The predispatch tool also checks code blocks.
+Those blocks hold source strings, error messages, test titles and the lcov record.
+The pass keeps those strings because they are evidence.
+The word `abort` names the API event and signal.
+
+The tool marks the verb in the phrase "content that runs" as a noun.
+That phrase states a verb, so the pass keeps it.
+The audit class `DEFAULT-VALUE` names a row type, not a unit.
+
+## Source check
+
+The source comparison with main gives no difference.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-2 && git diff --stat 290b5d2 origin/main -- 'src/director/*.js' 'src/director/interactions/*.js'
+```

@@ -70,7 +70,7 @@ const fixture = () => ({
   ],
 });
 
-test('[director-063] all four inert actions survive validation, migration and export without executing content', () => {
+test('[director-063] all four inert interactions survive validation, migration and export without running content', () => {
   const input = fixture();
   const output = JSON.parse(
     stringifySceneDocument(
@@ -83,7 +83,7 @@ test('[director-063] all four inert actions survive validation, migration and ex
   );
 });
 
-test('[director-056 director-060 director-061] reject unknown fields, executable syntax, invalid references and missing reset baselines', () => {
+test('[director-056 director-060 director-061] reject unknown fields, script syntax, invalid references and missing reset baselines', () => {
   const mutations = [
     (p) => (p.version = 5),
     (p) => {
@@ -119,14 +119,38 @@ test('[director-056 director-060 director-061] reject unknown fields, executable
         (_, i) => ({ ...p.scenes[0].shots[0].interactions[0], id: String(i) }),
       )),
   ];
+  const messages = [
+    '$.scenes[0].shots[0].interactions: unsupported field',
+    '$.scenes[0].shots[0].interactions[2].action.layerId: expected nonempty text, at most 256 characters',
+    '$.scenes[0].shots[0].interactions[0].action.type: expected nonempty text, at most 256 characters',
+    '$.scenes[0].shots[0].interactions[2].action.layerId: expected nonempty text, at most 256 characters',
+    '$.scenes[0].shots[0].interactions: expected an array of at most 64 entries',
+    '$.scenes[0].shots[0].interactions[4].id: duplicate ID',
+    '$.scenes[0].shots[0].interactions[0].action.code: unsupported field',
+    '$.scenes[0].shots[0].interactions[0].url: expected HTTPS source URL without credentials, query or fragment',
+    '$.scenes[0].shots[0].interactions[0].url: expected HTTPS source URL without credentials, query or fragment',
+    '$.scenes[0].shots[0].interactions[0].url: expected HTTPS source URL without credentials, query or fragment',
+    '$.scenes[0].shots[0].interactions[0]: target must belong to a selected GeoJSON pack',
+    '$.scenes[0].shots[0].interactions[0]: target must belong to a selected GeoJSON pack',
+    '$.scenes[0].shots[0].interactions[1]: unknown anchor',
+    '$.scenes[0].shots[0].interactions[2]: layer must have an explicit shot baseline',
+    '$.scenes[0].shots[0].interactions[2]: expected enabled boolean',
+    '$.scenes[0].shots[0].interactions[3]: unknown shot',
+    '$.scenes[0].shots[0].interactions[3]: target shot must declare interactive layer baseline',
+    '$.scenes[0].shots[0].interactions: expected an array of at most 64 entries',
+  ];
+  let caseIndex = 0;
   for (const mutate of mutations) {
     const p = fixture();
     mutate(p);
-    assert.throws(() => parseSceneDocument(JSON.stringify(p)));
+    assert.throws(() => parseSceneDocument(JSON.stringify(p)), {
+      name: 'SceneDocumentError',
+      message: messages[caseIndex++],
+    });
   }
 });
 
-test('[director-068 director-073 director-074] pending actions cancel promptly, refuse overlap and cannot update a replacement session', async () => {
+test('[director-068 director-073 director-074] pending interactions cancel promptly, refuse overlap and cannot update a replacement session', async () => {
   let resolve,
     signal,
     calls = 0;
@@ -158,7 +182,7 @@ test('[director-068 director-073 director-074] pending actions cancel promptly, 
   assert.equal(await session.dispatch('new'), false);
 });
 
-test('[director-072 director-073] synchronous stop before execution prevents any side effect; rejection unlocks retry', async () => {
+test('[director-072 director-073] synchronous stop before adapter call prevents any side effect; rejection unlocks retry', async () => {
   let calls = 0;
   const session = createInteractionSession({
     execute: () => {

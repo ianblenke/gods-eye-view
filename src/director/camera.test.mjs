@@ -45,7 +45,7 @@ const fixture = () => ({
     },
   ],
 });
-test('[director-064] version 4 keeps anchor identity, references and inline move edits through normalization', () => {
+test('[director-064] version 4 keeps anchor identity, references and move edits through normalization', () => {
   const raw = fixture();
   const project = normalizeProject(parseSceneDocument(JSON.stringify(raw)));
   assert.deepEqual(project.scenes[0].anchors, raw.scenes[0].anchors);
@@ -109,6 +109,18 @@ test('[director-046 director-047 director-048] move endpoints, easing, shortest 
   assert.deepEqual(sampleCameraMove(move, 1), move.to);
 });
 test('[director-052 director-054 director-055] unknown anchors, duplicate IDs, mixed references, bad easing and unspecified altitude are rejected', () => {
+  const messages = [
+    '$.scenes[0].shots[0].camera.anchorId: unknown scene anchor',
+    '$.scenes[0].anchors[1].id: duplicate ID',
+    '$.scenes[0].anchors[0].altitudeReference: expected ellipsoid height in meters; terrain-relative heights are not supported',
+    '$.scenes[0].anchors[0].altitudeReference: expected ellipsoid height in meters; terrain-relative heights are not supported',
+    '$.scenes[0].shots[0].camera.lon: unsupported field',
+    '$.scenes[0].shots[0].move.easing: expected linear or cubic-in-out',
+    '$.scenes[0].shots[0].move.from.altitudeReference: expected ellipsoid height in meters; terrain-relative heights are not supported',
+    '$.scenes[0].shots[0].durationSec: expected a number from 0.2 to 86400',
+    '$.scenes[0].shots[0].holdSec: expected a number from 0 to 86400',
+  ];
+  let caseIndex = 0;
   for (const mutate of [
     (s) => {
       s.shots[0].camera.anchorId = 'missing';
@@ -142,6 +154,7 @@ test('[director-052 director-054 director-055] unknown anchors, duplicate IDs, m
     mutate(project.scenes[0]);
     assert.throws(() => parseSceneDocument(JSON.stringify(project)), {
       name: 'SceneDocumentError',
+      message: messages[caseIndex++],
     });
   }
   const old = fixture();

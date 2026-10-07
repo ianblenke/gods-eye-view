@@ -248,6 +248,50 @@ test('[director-048] The cubic sample uses the second half', () => {
   });
 });
 
-test('[director-047] The linear curve uses its own fraction', () => {
+test('[director-047] The linear curve uses its supplied fraction', () => {
   assert.equal(sampleCameraMove(move(), 0.25).lat, 10.5);
+});
+
+test('[director-048] The cubic sample uses progress 0.45', () => {
+  assert.equal(sampleCameraMove(move('cubic-in-out'), 0.45).lat, 10.729);
+});
+
+test('[director-047] The westward sample crosses the date line', () => {
+  const m = {
+    from: { lat: 0, lon: -179, alt: 0, heading: 350, pitch: 0, roll: 350 },
+    to: { lat: 0, lon: 179, alt: 0, heading: -350, pitch: 0, roll: -350 },
+    easing: 'linear',
+  };
+  assert.deepEqual(sampleCameraMove(m, 0.75), {
+    lat: 0,
+    lon: 179.5,
+    alt: 0,
+    heading: 365,
+    pitch: 0,
+    roll: 365,
+  });
+});
+
+test('[director-044] The heading keeps negative zero from a getter', () => {
+  let reads = 0;
+  const camera = {
+    get heading() {
+      reads++;
+      return -0;
+    },
+  };
+  assert.equal(Object.is(resolveCameraPose({}, camera).heading, -0), true);
+  assert.equal(reads, 1);
+});
+
+test('[director-044] The roll keeps negative zero from a getter', () => {
+  let reads = 0;
+  const camera = {
+    get roll() {
+      reads++;
+      return -0;
+    },
+  };
+  assert.equal(Object.is(resolveCameraPose({}, camera).roll, -0), true);
+  assert.equal(reads, 1);
 });

@@ -13,7 +13,7 @@ test('[director-065] The new session reports empty state', () => {
   });
 });
 
-test('[director-066] The session activates every unique action', () => {
+test('[director-066] The session activates every unique interaction', () => {
   const states = [];
   const s = createInteractionSession({
     execute: () => true,
@@ -32,9 +32,13 @@ test('[director-066] The session activates every unique action', () => {
   ]);
   s.activate([]);
   assert.equal(s.getState().active, false);
+  assert.deepEqual(states.slice(-2), [
+    { active: false, busy: false, selected: null, count: 0 },
+    { active: false, busy: false, selected: null, count: 0 },
+  ]);
 });
 
-test('[director-067] The inactive session refuses execution', async () => {
+test('[director-067] The inactive session refuses adapter call', async () => {
   let calls = 0;
   const s = createInteractionSession({
     execute: () => {
@@ -46,7 +50,7 @@ test('[director-067] The inactive session refuses execution', async () => {
   assert.equal(calls, 0);
 });
 
-test('[director-068] The busy session refuses a second execution', async () => {
+test('[director-068] The busy session refuses a second adapter call', async () => {
   let calls = 0;
   let resolve;
   const s = createInteractionSession({
@@ -82,7 +86,7 @@ test('[director-069] The active session refuses an unknown ID', async () => {
   assert.equal(calls, 0);
 });
 
-test('[director-070] The successful action reports selected idle state', async () => {
+test('[director-070] The successful interaction gives selected idle state', async () => {
   const states = [];
   const s = createInteractionSession({
     execute: (item, signal) => {
@@ -100,14 +104,14 @@ test('[director-070] The successful action reports selected idle state', async (
   ]);
 });
 
-test('[director-071] The false adapter result refuses the action', async () => {
+test('[director-071] The false adapter result refuses the interaction', async () => {
   const s = createInteractionSession({ execute: () => false });
   s.activate([{ id: 'a' }]);
   assert.equal(await s.dispatch('a'), false);
   assert.equal(s.getState().busy, false);
 });
 
-test('[director-072] The adapter exception allows another action', async () => {
+test('[director-072] The adapter exception allows another interaction', async () => {
   let calls = 0;
   const s = createInteractionSession({
     execute: () => {
@@ -122,7 +126,7 @@ test('[director-072] The adapter exception allows another action', async () => {
   assert.equal(calls, 2);
 });
 
-test('[director-072] The adapter rejection allows another action', async () => {
+test('[director-072] The adapter rejection allows another interaction', async () => {
   let calls = 0;
   const s = createInteractionSession({
     execute: () => {
@@ -137,7 +141,7 @@ test('[director-072] The adapter rejection allows another action', async () => {
   assert.equal(calls, 2);
 });
 
-test('[director-073] The session cancels work before execution', async () => {
+test('[director-073] The session cancels work before adapter call', async () => {
   let calls = 0;
   const s = createInteractionSession({
     execute: () => {
@@ -152,7 +156,7 @@ test('[director-073] The session cancels work before execution', async () => {
   assert.equal(calls, 0);
 });
 
-test('[director-073] The session settles uncooperative work', async () => {
+test('[director-073] The session settles work with no adapter result', async () => {
   let signal;
   const s = createInteractionSession({
     execute: (_, v) => {
@@ -208,6 +212,15 @@ test('[director-074] The old work leaves new session state intact', async () => 
   });
   newResult(true);
   assert.equal(await newWork, true);
+  assert.deepEqual(states, [
+    { active: false, busy: false, selected: null, count: 0 },
+    { active: true, busy: false, selected: null, count: 1 },
+    { active: true, busy: true, selected: 'old', count: 1 },
+    { active: false, busy: false, selected: null, count: 0 },
+    { active: true, busy: false, selected: null, count: 1 },
+    { active: true, busy: true, selected: 'new', count: 1 },
+    { active: true, busy: false, selected: 'new', count: 1 },
+  ]);
   assert.deepEqual(s.getState(), {
     active: true,
     busy: false,
@@ -216,35 +229,7 @@ test('[director-074] The old work leaves new session state intact', async () => 
   });
 });
 
-test('[director-067] The inactive map refuses custom list work', async () => {
-  let calls = 0;
-  const s = createInteractionSession({
-    execute: () => {
-      calls++;
-      return true;
-    },
-  });
-  const descriptor = Object.getOwnPropertyDescriptor(Map.prototype, 'size');
-  const fake = {
-    map: (callback) => {
-      Object.defineProperty(Map.prototype, 'size', {
-        get: () => 0,
-        configurable: true,
-      });
-      return [{ id: 'a' }].map(callback);
-    },
-  };
-  try {
-    s.activate(fake);
-  } finally {
-    Object.defineProperty(Map.prototype, 'size', descriptor);
-  }
-  assert.equal(s.getState().count, 1);
-  assert.equal(await s.dispatch('a'), false);
-  assert.equal(calls, 0);
-});
-
-test('[director-073] The settled race checks the abort signal', async () => {
+test('[director-073] The session returns false when clear runs after the result', async () => {
   let s;
   s = createInteractionSession({
     execute: () => {
@@ -256,7 +241,7 @@ test('[director-073] The settled race checks the abort signal', async () => {
   assert.equal(await s.dispatch('a'), false);
 });
 
-test('[director-070] The action detaches its abort listener', async () => {
+test('[director-070] The interaction removes its abort listener', async () => {
   let signal;
   const s = createInteractionSession({
     execute: (_, current) => {
@@ -268,4 +253,86 @@ test('[director-070] The action detaches its abort listener', async () => {
   s.activate([{ id: 'a' }]);
   assert.equal(await s.dispatch('a'), true);
   assert.equal(getEventListeners(signal, 'abort').length, 0);
+});
+
+test('[director-070] The adapter result zero gives true', async () => {
+  const s = createInteractionSession({ execute: () => 0 });
+  s.activate([{ id: 'a' }]);
+  assert.equal(await s.dispatch('a'), true);
+});
+
+test('[director-070] The adapter result empty text gives true', async () => {
+  const s = createInteractionSession({ execute: () => '' });
+  s.activate([{ id: 'a' }]);
+  assert.equal(await s.dispatch('a'), true);
+});
+
+test('[director-065] The default state callback accepts a session change', () => {
+  const s = createInteractionSession({ execute: () => true });
+  assert.doesNotThrow(() => s.activate([]));
+  assert.deepEqual(s.getState(), {
+    active: false,
+    busy: false,
+    selected: null,
+    count: 0,
+  });
+});
+
+test('[director-073] The session does not abort the old controller when clear runs twice', async () => {
+  let signal;
+  let calls = 0;
+  const s = createInteractionSession({
+    execute: (_, v) => {
+      signal = v;
+      return new Promise(() => {});
+    },
+  });
+  s.activate([{ id: 'a' }]);
+  const work = s.dispatch('a');
+  await Promise.resolve();
+  signal.addEventListener('abort', () => {
+    calls++;
+  });
+  s.clear();
+  const native = AbortController.prototype.abort;
+  AbortController.prototype.abort = function () {
+    calls++;
+    return native.call(this);
+  };
+  try {
+    s.clear();
+  } finally {
+    AbortController.prototype.abort = native;
+  }
+  assert.equal(calls, 1);
+  await work;
+});
+
+test('[director-070] The session does not abort a completed controller when clear runs', async () => {
+  let signal;
+  const s = createInteractionSession({
+    execute: (_, v) => {
+      signal = v;
+      return true;
+    },
+  });
+  s.activate([{ id: 'a' }]);
+  assert.equal(await s.dispatch('a'), true);
+  s.clear();
+  assert.equal(signal.aborted, false);
+});
+
+test('[director-073] The state callback receives empty state after clear', () => {
+  const states = [];
+  const s = createInteractionSession({
+    execute: () => true,
+    changed: (v) => states.push(v),
+  });
+  s.activate([{ id: 'a' }]);
+  s.clear();
+  assert.deepEqual(states, [
+    { active: false, busy: false, selected: null, count: 0 },
+    { active: true, busy: false, selected: null, count: 1 },
+    { active: false, busy: false, selected: null, count: 0 },
+  ]);
 });
