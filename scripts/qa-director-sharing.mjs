@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * @purpose Prove that an author can share a scene with local assets.
- * @covers director
+ * @covers pending:director
  * @run node scripts/qa-director-sharing.mjs
  * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
