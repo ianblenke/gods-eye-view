@@ -1,0 +1,44 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+const source = readFileSync('/home/ianblenke/docker/gev-work/director-2/src/director/interactions/session.js', 'utf8');
+const changes = [
+ ['source', '', ''],
+ ['m149', '!active || busy || !item', 'busy || !item'],
+ ['m253', 'if (current.signal.aborted) return false;', 'if (current.signal.aborted) return true;'],
+];
+for (const [id, old, replacement] of changes) {
+ const text = old ? source.replace(old, replacement) : source;
+ const { createInteractionSession } = await import('data:text/javascript;base64,' + Buffer.from(text).toString('base64'));
+ let reads = 0, maps = 0, calls = 0;
+ const session = createInteractionSession({ execute: () => { calls++; return true; } });
+ const item = { get id() { reads++; return 'a'; } };
+ const list = new Proxy([item], { get(target, key, receiver) { if (key === 'map') return (callback) => { maps++; return target.map(callback); }; return Reflect.get(target, key, receiver); } });
+ session.activate(list);
+ assert.equal(await session.dispatch('a'), true);
+ session.clear();
+ assert.equal(await session.dispatch('a'), false);
+ session.activate([]);
+ assert.equal(await session.dispatch('a'), false);
+ assert.equal(reads, 1); assert.equal(maps, 1); assert.equal(calls, 1);
+ let nested, inside = false;
+ nested = createInteractionSession({ execute: () => true, changed: state => { if (state.active && !inside) { inside = true; nested.clear(); } } });
+ nested.activate([{id:'a'}]);
+ assert.deepEqual(nested.getState(), { active:false, busy:false, selected:null, count:0 });
+ assert.equal(await nested.dispatch('a'), false);
+ let workCalls = 0;
+ const early = createInteractionSession({ execute: () => { workCalls++; return true; } });
+ early.activate([{id:'a'}]); const work = early.dispatch('a'); early.clear();
+ assert.equal(await work, false); assert.equal(workCalls, 0);
+ let signal, added = 0, removed = 0;
+ const add = AbortSignal.prototype.addEventListener, remove = AbortSignal.prototype.removeEventListener;
+ AbortSignal.prototype.addEventListener = function(...args) { added++; return add.apply(this,args); };
+ AbortSignal.prototype.removeEventListener = function(...args) { removed++; return remove.apply(this,args); };
+ try {
+  const late = createInteractionSession({ execute: (_, value) => { signal=value; return new Promise(()=>{}); } });
+  late.activate([{id:'a'}]); const pending=late.dispatch('a'); await Promise.resolve(); late.clear();
+  assert.equal(await pending,false); assert.equal(signal.aborted,true);
+  signal.dispatchEvent(new Event('abort'));
+  assert.equal(added,1); assert.equal(removed,1);
+ } finally { AbortSignal.prototype.addEventListener=add; AbortSignal.prototype.removeEventListener=remove; }
+ console.log(id + ': getter, proxy, callback and listener spy checks pass');
+}
