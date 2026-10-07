@@ -166,6 +166,7 @@ test('card controls drive gain, FM mode and the Local ADS-B layer', async (t) =>
 });
 
 test('the card shows one read-only decoder-feed line after a single probe', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   const doc = stubDocument();
   const listeners = new Set();
   let probes = 0;
@@ -201,7 +202,7 @@ test('the card shows one read-only decoder-feed line after a single probe', asyn
       { band: '978', status: 'live' },
     ],
   });
-  await new Promise((resolve) => setTimeout(resolve, 30));
+  t.mock.timers.tick(30);
   assert.equal(line.hidden, false);
   assert.equal(line.textContent, 'Decoder feeds: 1090 live · 978 live');
 });

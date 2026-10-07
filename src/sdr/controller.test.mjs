@@ -394,7 +394,28 @@ function stallingDevice(events, name = 'stalled') {
   };
 }
 
+// A clock step allows the promise callbacks to finish before the next timer fires.
+async function advanceClock(t, ms) {
+  for (let i = 0; i < ms; i++) {
+    await new Promise((resolve) => setImmediate(resolve));
+    t.mock.timers.tick(1);
+  }
+  await new Promise((resolve) => setImmediate(resolve));
+}
+
+async function clockWithin(t, promise, ms = 1_000) {
+  let done = false;
+  const pending = within(promise, ms).finally(() => {
+    done = true;
+  });
+  // Keep a catch handler on the promise while the clock advances.
+  pending.catch(() => {});
+  for (let i = 0; i <= ms && !done; i++) await advanceClock(t, 1);
+  return pending;
+}
+
 test('a stalled USB read cannot wedge stop(): the raw device is closed and the queue replaced', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const devices = [stallingDevice(events), fakeDevice(events, 'fresh')];
@@ -405,21 +426,37 @@ test('a stalled USB read cannot wedge stop(): the raw device is closed and the q
     closeTimeoutMs: 50,
     providerFactory: () => ({ get: async () => devices.shift() }),
   });
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   assert.equal(await controller.connect('adsb'), true);
-  await new Promise((resolve) => setTimeout(resolve, 5));
+  await advanceClock(t, 5);
   assert.ok(events.includes('stalled:read'), 'a read is in flight');
 
-  assert.equal(await within(controller.stop()), true, 'stop() returns');
+  assert.equal(await clockWithin(t, controller.stop()), true, 'stop() returns');
   assert.ok(events.includes('stalled:usb-close'), 'raw USB device closed');
   assert.equal(controller.getState().connected, false);
 
   // The next session is not queued behind the abandoned transfer.
-  assert.equal(await within(controller.connect('adsb')), true);
+  assert.equal(await clockWithin(t, controller.connect('adsb')), true);
   assert.ok(events.includes('fresh:tune:1090000000'));
 });
 
 test('a stalled USB read times out and tears the session down on its own', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const cleared = [];
+  const deadlines = [];
+  const setTimer = globalThis.setTimeout;
+  const clearTimer = globalThis.clearTimeout;
+  t.mock.method(globalThis, 'setTimeout', (callback, ms, ...args) => {
+    const timer = setTimer(callback, ms, ...args);
+    if (ms === 30) deadlines.push(timer);
+    return timer;
+  });
+  t.mock.method(globalThis, 'clearTimeout', (timer) => {
+    cleared.push(timer);
+    return clearTimer(timer);
+  });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const controller = new SdrController({
@@ -429,19 +466,24 @@ test('a stalled USB read times out and tears the session down on its own', async
     closeTimeoutMs: 30,
     providerFactory: () => ({ get: async () => stallingDevice(events) }),
   });
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   assert.equal(await controller.connect('adsb'), true);
-  await new Promise((resolve) => setTimeout(resolve, 150));
+  await advanceClock(t, 150);
   const state = controller.getState();
+  assert.equal(deadlines.length > 0, true);
+  assert.equal(cleared.includes(deadlines[0]), true);
   assert.equal(state.connected, false);
   assert.equal(state.status, 'error');
   assert.equal(state.message, 'RTL-SDR sample stream stopped');
   assert.ok(events.includes('stalled:usb-close'));
   // Mode changes work again instead of queuing behind the dead read.
-  assert.equal(await within(controller.setMode('fm')), true);
+  assert.equal(await clockWithin(t, controller.setMode('fm')), true);
 });
 
 test('destroy() during a pending connect closes the late device instead of resuming the session', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   const workers = [];
   class CountingWorker extends FakeWorker {
@@ -463,11 +505,11 @@ test('destroy() during a pending connect closes the late device instead of resum
     }),
   });
   const connecting = controller.connect('adsb');
-  await new Promise((resolve) => setTimeout(resolve, 0));
+  await advanceClock(t, 0);
   assert.equal(typeof deliver, 'function', 'device acquisition is pending');
-  await controller.destroy();
+  assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
   deliver(fakeDevice(events, 'late'));
-  assert.equal(await within(connecting), false);
+  assert.equal(await clockWithin(t, connecting), false);
   assert.ok(events.includes('late:close'), 'late device is closed');
   assert.ok(!events.includes('late:tune:1090000000'), 'never configured');
   assert.equal(controller.getState().connected, false);
@@ -476,6 +518,7 @@ test('destroy() during a pending connect closes the late device instead of resum
 });
 
 test('a failed decoder worker is discarded and reconnect builds a fresh one', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   const workers = [];
   class RecordingWorker {
@@ -499,15 +542,17 @@ test('a failed decoder worker is discarded and reconnect builds a fresh one', as
     webUsb: {},
     providerFactory: () => ({ get: async () => fakeDevice(events) }),
   });
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   assert.equal(await controller.connect('adsb'), true);
   assert.equal(workers.length, 1);
   workers[0].onerror?.({ message: 'module failed to load' });
-  await new Promise((resolve) => setTimeout(resolve, 10));
+  await advanceClock(t, 10);
   assert.equal(controller.getState().status, 'error');
   assert.equal(workers[0].terminated, true, 'failed worker terminated');
 
-  await controller.stop();
+  assert.equal(await clockWithin(t, controller.stop()), true);
   assert.equal(await controller.connect('adsb'), true);
   assert.equal(workers.length, 2, 'reconnect creates a fresh worker');
   assert.ok(workers[1].messages.includes('configure'));
@@ -580,7 +625,8 @@ function gate() {
   return { promise, open };
 }
 
-const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const realSetTimeout = globalThis.setTimeout;
+const pause = (ms) => new Promise((resolve) => realSetTimeout(resolve, ms));
 
 function sharedUsbController(usb, devices) {
   return new SdrController({
@@ -598,6 +644,7 @@ function sharedUsbController(usb, devices) {
 }
 
 test('a graceful close queued behind a stalled read never runs once the raw device is closed', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const usb = sharedUsb(events);
@@ -606,14 +653,17 @@ test('a graceful close queued behind a stalled read never runs once the raw devi
     rtlOver(usb, events, 'old', { stallReads: true, closeGate: held.promise }),
     rtlOver(usb, events, 'new'),
   ]);
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   assert.equal(await controller.connect('adsb'), true);
-  await pause(5);
-  assert.equal(await within(controller.stop()), true);
-  assert.equal(await within(controller.connect('adsb')), true);
+  await advanceClock(t, 5);
+  assert.equal(await clockWithin(t, controller.stop()), true);
+  assert.equal(await clockWithin(t, controller.connect('adsb')), true);
   // Whatever the old session still had queued is released now.
   held.open();
-  await pause(30);
+  await advanceClock(t, 30);
+  await pause(5);
   assert.ok(
     !events.includes('old:graceful-close'),
     'queued close abandoned before the raw close',
@@ -625,6 +675,7 @@ test('a graceful close queued behind a stalled read never runs once the raw devi
 });
 
 test('a graceful close already running when abandoned cannot close the reopened device', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const usb = sharedUsb(events);
@@ -633,15 +684,18 @@ test('a graceful close already running when abandoned cannot close the reopened 
     rtlOver(usb, events, 'old', { closeGate: held.promise }),
     rtlOver(usb, events, 'new'),
   ]);
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   assert.equal(await controller.connect('adsb'), true);
-  await pause(5);
-  assert.equal(await within(controller.stop()), true);
+  await advanceClock(t, 5);
+  assert.equal(await clockWithin(t, controller.stop()), true);
   assert.ok(events.includes('old:graceful-close'), 'graceful close started');
-  assert.equal(await within(controller.connect('adsb')), true);
+  assert.equal(await clockWithin(t, controller.connect('adsb')), true);
   // The old close resumes, as a stuck control transfer finally completes.
   held.open();
-  await pause(30);
+  await advanceClock(t, 30);
+  await pause(5);
   assert.equal(usb.opened, true, 'the reopened device stays open');
   const state = controller.getState();
   assert.equal(state.status, 'streaming');
@@ -649,6 +703,7 @@ test('a graceful close already running when abandoned cannot close the reopened 
 });
 
 test('teardown is single-flight: a second stop() and a connect() wait for the device close', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const usb = sharedUsb(events);
@@ -657,7 +712,9 @@ test('teardown is single-flight: a second stop() and a connect() wait for the de
     rtlOver(usb, events, 'old', { closeGate: new Promise(() => {}) }),
     rtlOver(usb, events, 'new'),
   ]);
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   assert.equal(await controller.connect('adsb'), true);
   const first = controller.stop();
   let secondDone = false;
@@ -666,10 +723,10 @@ test('teardown is single-flight: a second stop() and a connect() wait for the de
     events.push('second-stop-done');
   });
   const reconnect = controller.connect('adsb');
-  await pause(5);
+  await advanceClock(t, 5);
   assert.equal(secondDone, false, 'the second stop joins the teardown');
-  await within(Promise.all([first, second]));
-  assert.equal(await within(reconnect), true);
+  await clockWithin(t, Promise.all([first, second]));
+  assert.equal(await clockWithin(t, reconnect), true);
   assert.ok(
     events.indexOf('usb-close') < events.indexOf('second-stop-done'),
     'second stop returns after the device is closed',
@@ -678,24 +735,28 @@ test('teardown is single-flight: a second stop() and a connect() wait for the de
     events.indexOf('usb-close') < events.lastIndexOf('usb-open'),
     'the device is reopened only after the old session closed it',
   );
-  await pause(30);
+  await advanceClock(t, 30);
+  await pause(5);
   assert.equal(usb.opened, true);
   assert.equal(controller.getState().status, 'streaming');
   assert.equal(controller.getState().connected, true);
 });
 
 test('stop() settles within its deadline even when the raw USB close never settles', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const usb = sharedUsb(events, { closeNeverSettles: true });
   const controller = sharedUsbController(usb, [
     rtlOver(usb, events, 'old', { stallReads: true }),
   ]);
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   assert.equal(await controller.connect('adsb'), true);
-  await pause(5);
+  await advanceClock(t, 5);
   const startedAt = Date.now();
-  assert.equal(await within(controller.stop(), 500), true);
+  assert.equal(await clockWithin(t, controller.stop(), 500), true);
   // Graceful close deadline plus raw close deadline, with scheduling slack.
   assert.ok(Date.now() - startedAt < 250, `${Date.now() - startedAt} ms`);
   assert.ok(events.includes('usb-close'), 'raw close attempted');
@@ -703,6 +764,7 @@ test('stop() settles within its deadline even when the raw USB close never settl
 });
 
 test('a mode change queued behind a stalled read never reports streaming after the stall teardown', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const controller = new SdrController({
@@ -712,11 +774,13 @@ test('a mode change queued behind a stalled read never reports streaming after t
     closeTimeoutMs: 30,
     providerFactory: () => ({ get: async () => stallingDevice(events) }),
   });
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   assert.equal(await controller.connect('adsb'), true);
-  const switched = await within(controller.setMode('adsb'));
+  const switched = await clockWithin(t, controller.setMode('adsb'));
   assert.equal(switched, false, 'the superseded switch fails');
-  await pause(100);
+  await advanceClock(t, 100);
   const state = controller.getState();
   assert.notEqual(state.status, 'streaming');
   assert.equal(state.connected, false);
@@ -793,15 +857,16 @@ test('a receiver whose initialization fails is closed and destroy() settles', as
 });
 
 test('a superseded receiver initialization that then fails still closes the device', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const usb = failingInitUsb(events, { hold: true });
   const controller = failingInitController(usb);
   const connecting = controller.connect('adsb');
-  await pause(5);
+  await advanceClock(t, 5);
   assert.ok(events.includes('init-transfer'), 'initialization is in flight');
-  assert.notEqual(await within(controller.destroy()), 'timed out');
-  assert.equal(await within(connecting), false);
+  assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  assert.equal(await clockWithin(t, connecting), false);
   assert.ok(events.includes('close'));
   assert.equal(usb.opened, false, 'the raw device is not left open');
   assert.notEqual(controller.getState().status, 'streaming');
@@ -836,6 +901,7 @@ function acquisitionController(providers, closeTimeoutMs = 30) {
 }
 
 test('a newer connect waits for an older acquisition to finish closing its device', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const usb = sharedUsb(events);
@@ -848,26 +914,30 @@ test('a newer connect waits for an older acquisition to finish closing its devic
     // Long enough that B does not give up on A while it is held.
     1_000,
   );
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   const connectA = controller.connect('adsb');
-  await pause(5);
+  await advanceClock(t, 5);
   const connectB = controller.connect('adsb');
-  await pause(5);
+  await advanceClock(t, 5);
   assert.ok(!events.includes('B:init'), 'B waits for A');
   heldA.open();
-  assert.equal(await within(connectA), false, 'A was superseded');
-  assert.equal(await within(connectB), true);
+  assert.equal(await clockWithin(t, connectA), false, 'A was superseded');
+  assert.equal(await clockWithin(t, connectB), true);
   assert.ok(
     events.lastIndexOf('usb-close') < events.indexOf('B:init'),
     'A closed its device before B opened it',
   );
-  await pause(30);
+  await advanceClock(t, 30);
+  await pause(5);
   assert.equal(usb.opened, true, "B's device stays open");
   assert.equal(controller.getState().status, 'streaming');
   assert.equal(controller.getState().connected, true);
 });
 
 test("a held older acquisition released after a newer session starts never closes that session's device", async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const usb = sharedUsb(events);
@@ -876,17 +946,20 @@ test("a held older acquisition released after a newer session starts never close
     heldProvider(usb, events, 'A', heldA.promise),
     heldProvider(usb, events, 'B'),
   ]);
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   const connectA = controller.connect('adsb');
-  await pause(5);
+  await advanceClock(t, 5);
   // B gives up waiting on the stuck acquisition A and completes.
-  assert.equal(await within(controller.connect('adsb')), true);
+  assert.equal(await clockWithin(t, controller.connect('adsb')), true);
   assert.equal(controller.getState().status, 'streaming');
   const closes = () => events.filter((event) => event === 'usb-close').length;
   const closesBeforeRelease = closes();
   heldA.open();
-  assert.equal(await within(connectA), false);
-  await pause(30);
+  assert.equal(await clockWithin(t, connectA), false);
+  await advanceClock(t, 30);
+  await pause(5);
   assert.equal(
     closes(),
     closesBeforeRelease,
@@ -901,6 +974,7 @@ test("a held older acquisition released after a newer session starts never close
 });
 
 test("an older acquisition's cleanup that outlives the wait never closes the newer session's device", async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const usb = sharedUsb(events);
@@ -920,19 +994,22 @@ test("an older acquisition's cleanup that outlives the wait never closes the new
     [providerA, heldProvider(usb, events, 'B')],
     40,
   );
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   const connectA = controller.connect('adsb');
-  await pause(5);
+  await advanceClock(t, 5);
   const connectB = controller.connect('adsb');
   // A's cleanup starts shortly before B stops waiting for it (3 x 40 ms), so
   // its fallback raw close comes due after B is already streaming.
-  await pause(100);
+  await advanceClock(t, 100);
   heldA.open();
-  assert.equal(await within(connectA), false, 'A was superseded');
+  assert.equal(await clockWithin(t, connectA), false, 'A was superseded');
   assert.ok(events.includes('A:graceful-close'), "A's cleanup is running");
-  assert.equal(await within(connectB), true);
+  assert.equal(await clockWithin(t, connectB), true);
   const closesAfterB = events.filter((event) => event === 'usb-close').length;
-  await pause(80);
+  await advanceClock(t, 80);
+  await pause(5);
   assert.equal(
     events.filter((event) => event === 'usb-close').length,
     closesAfterB,
@@ -945,6 +1022,7 @@ test("an older acquisition's cleanup that outlives the wait never closes the new
 });
 
 test("a device selection that resolves after its acquisition was superseded cannot touch the newer session's device", async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const usb = Object.assign(sharedUsb(events), {
@@ -1003,15 +1081,18 @@ test("a device selection that resolves after its acquisition was superseded cann
       };
     },
   });
-  t.after(() => controller.destroy());
+  t.after(async () => {
+    assert.notEqual(await clockWithin(t, controller.destroy()), 'timed out');
+  });
   const connectA = controller.connect('adsb');
-  await pause(5);
-  assert.equal(await within(controller.connect('adsb')), true);
+  await advanceClock(t, 5);
+  assert.equal(await clockWithin(t, controller.connect('adsb')), true);
   assert.equal(controller.getState().status, 'streaming');
   const eventsBeforeRelease = events.length;
   heldSelection.open();
-  assert.equal(await within(connectA), false, 'A was superseded');
-  await pause(30);
+  assert.equal(await clockWithin(t, connectA), false, 'A was superseded');
+  await advanceClock(t, 30);
+  await pause(5);
   const late = events
     .slice(eventsBeforeRelease)
     .filter((event) => event.startsWith('usb-'));
