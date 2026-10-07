@@ -5,7 +5,7 @@ The owner chose to correct all defects.
 
 - `src/layers/recentImagery/thumbnails.js:121` leaves a stale entry after an external AbortError.
 - `src/layers/recentImagery/model.js:331` accepts parent product keys.
-- `src/ui/recentImagery.js:304` restores the old position after DETAILS requests scroll to show the DETAILS card.
+- `src/ui/recentImagery.js:304` restores the old body scroll position after the panel makes the scroll request.
 - `src/layers/recentImagery/model.js:401` accepts footprint coordinates that are not finite.
 
 The line numbers come from `rg -n` on the production files.
@@ -22,7 +22,7 @@ Change the old tests that state the defective results.
 
 ### Modified
 
-- `recent-imagery`: Correct thumbnails, products, DETAILS position, and footprint coverage.
+- `recent-imagery`: Correct thumbnails, products, body scroll position, and footprint coverage.
 
 ### New
 
@@ -44,11 +44,19 @@ The current model uses unknown coverage when no valid polygon exists.
 - `other-products-readers`: Other product table readers stay without own-key guards.
   The readers are in `catalog.js:148`, `rendering.js:102`, `index.js:66`, `index.js:753`, `index.js:770`, and `ui/recentImagery.js:57`.
   Normal catalog paths use fixed product names, granule groups, overview days, or the key parser.
-  The catalog URL builder also accepts a caller product; the layer accepts caller catalog errors.
+  The catalog URL builder also accepts a product from the caller.
+  The layer reads product keys from errors that its catalog function returns.
 - `unknown-coverage-ranks-covering`: The `coversBox` function in `rankLatest` treats unknown coverage as coverage of the box.
-  A day with only invalid footprints can enter the `clear` or `cloudy` tier; the old NaN result was partial.
-  A later change can address that rank rule.
+  A day with only invalid footprints can enter the `clear` or `cloudy` tier.
+  The old NaN results were full or partial.
+  Only an old partial result changes tier when it becomes unknown.
+  A later change can change that rank rule.
 - `ledger-count-noise`: The ratchet records an unrelated change for `server/providers/vessels/ais-store.js`.
   Its line gap changes from 44 to 40, and its branch total changes from 74 to 76.
-  The history also records that change under `upstream-sync`; `gates-coverage-race` sets the opposite values.
+  The history also records that change under `upstream-sync`.
+  The `gates-coverage-race` change changes them back, from 40 to 44 and from 76 to 74.
   The source search of `history.jsonl` supplies these values.
+
+- `qa-details-scroll`: The browser QA script sets its own scroll position after it opens DETAILS.
+  No browser check shows that the body moves to show the DETAILS card.
+  The unit tests of scenario 055 check the move.

@@ -1406,7 +1406,7 @@ test('[recent-imagery-043 recent-imagery-048 recent-imagery-049] the panel owns 
   f.layer.destroy();
 });
 
-test('[recent-imagery-049 recent-imagery-055] the panel shows the DETAILS card when DETAILS opens', async () => {
+test('[recent-imagery-049 recent-imagery-050 recent-imagery-055] the panel shows the DETAILS card when DETAILS opens', async () => {
   const f = fixture();
   await f.ready();
   f.body.clientHeight = 100;
@@ -2436,7 +2436,7 @@ test('[recent-imagery-049] a zero viewport height alone does not allow a scroll 
   p.readout.destroy();
 });
 
-test('[recent-imagery-049 recent-imagery-055] an absent card rectangle alone does not allow a scroll request', async () => {
+test('[recent-imagery-049 recent-imagery-055] a card without a getBoundingClientRect method keeps the body scroll position', async () => {
   const s = await auditPanelState();
   const p = auditPanel(s),
     view = auditScroll(p, { cardRect: false });
@@ -2465,8 +2465,10 @@ test('[recent-imagery-049 recent-imagery-050 recent-imagery-055] an open DETAILS
   assert.equal(p.body.scrollTop, 10);
   view.requests.length = 0;
   p.emit(s);
-  assert.equal(p.body.scrollTop, 10);
-  assert.deepEqual(view.requests, []);
+  assert.deepEqual(
+    { scrollTop: p.body.scrollTop, requests: view.requests },
+    { scrollTop: 10, requests: [] },
+  );
   p.readout.destroy();
 });
 
@@ -2915,7 +2917,7 @@ test('[recent-imagery-043] a snapshot callback that destroys the panel does not 
   assert.equal(p.readout.root.dataset.mode, 'image');
 });
 
-test('[recent-imagery-055] DETAILS without a viewport height keeps the body scroll position', async () => {
+test('[recent-imagery-055] a viewport height of zero keeps the body scroll position', async () => {
   const s = await auditPanelState();
   const p = auditPanel(s);
   const view = auditScroll(p, { height: 0 });
@@ -2936,6 +2938,32 @@ test('[recent-imagery-055] DETAILS does not move the body when it closes', async
   view.requests.length = 0;
   view.header.click();
   assert.equal(p.body.scrollTop, 10);
+  assert.deepEqual(view.requests, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-055] a scroller without a viewport height value keeps the body scroll position', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  const view = auditScroll(p, { top: -10 });
+  delete p.body.clientHeight;
+  assert.equal(p.body.clientHeight, undefined);
+  p.body.scrollTop = 40;
+  view.requests.length = 0;
+  view.header.click();
+  assert.equal(p.body.scrollTop, 40);
+  assert.deepEqual(view.requests, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-055] a card inside the view keeps the body scroll position', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  const view = auditScroll(p, { top: 10, cardHeight: 20 });
+  p.body.scrollTop = 40;
+  view.requests.length = 0;
+  view.header.click();
+  assert.equal(p.body.scrollTop, 40);
   assert.deepEqual(view.requests, []);
   p.readout.destroy();
 });

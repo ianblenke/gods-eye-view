@@ -24,7 +24,7 @@ The old test expects zero after the scroll request writes the body scroll positi
 Move the scroll request after the function that restores the body scroll position.
 Keep normal refresh behavior through `recent-imagery-050`.
 Keep the base THEN line and add the order of the scroll request after DETAILS opens.
-The new scenario states the exact position from the dimensions in the old test.
+The new scenario states the exact body scroll position from the dimensions in the old test.
 
 ## Footprint decision
 
@@ -79,13 +79,46 @@ No mutation is necessary because no default code remains.
 
 ## Corrections of review round 1
 
-The tree read is commit `c913d8cf820a0d3947a0f5b120449f1946e3544e`.
-The safest decision keeps the body scroll position restore in every render.
-The scroll request follows that restore when DETAILS opens.
-The test card gives a height of zero while closed and 60 pixels while open.
+The base commit is `81b8bd6`.
+The worker read the working tree of the lead.
+The panel restores the body scroll position in every render.
+The panel sends the scroll request after it restores the body scroll position when DETAILS opens.
+The test card gives a height of zero while it is closed and 60 pixels while it is open.
 
-Separate tests cover an absent viewport height and an absent card rectangle.
-A sparse ring test covers an absent point.
-The thumbnail test records signal state and asserts that state after the fetch settles.
+Separate tests cover a viewport height of zero and a card without a getBoundingClientRect method.
+A test covers a footprint with an absent point.
+The thumbnail test records the state of the signal and asserts that state after the fetch settles.
 The proposal names the other product readers with their actual input sources.
 No production correction is necessary for these review findings.
+
+## Corrections of review round 2
+
+The base commit is `81b8bd6`.
+The worker read the working tree of the lead at Git current commit `ee1b35ee8c2e9074366530346f761fc2ddda5680`.
+The old latitude tests give partial and full coverage for NaN.
+The base-code probe gives partial coverage for the tested NaN longitude.
+All three cases now give unknown coverage.
+The rank rule treats both full and unknown coverage as coverage of the box.
+
+The tests use separate cases for zero and undefined viewport heights.
+The undefined-height test removes the clientHeight value after the helper sets it.
+The test card top is -10 pixels.
+The body scroll position stays at 40 pixels, with no scroll request.
+The exact AND text from correction A names each height case and the card without a getBoundingClientRect method.
+
+The card inside the view starts at 10 pixels, with a height of 20 pixels.
+The viewport height is 100 pixels.
+The body scroll position stays at 40 pixels, with no scroll request.
+The scroll spy detects a write even when the value stays at 40.
+Thus the zero-delta mutation is not equivalent.
+
+The content-update mutation moves the scroll request into render after the call that restores the body scroll position.
+The test must reject a body scroll position of 20 instead of 10.
+A separate probe records the scroll request of 20.
+No production correction is necessary.
+
+The browser QA script sets its own body scroll position after DETAILS opens.
+The proposal records that limit as `qa-details-scroll`.
+Corrections A and C give exact AND text.
+Those lines keep that text.
+The general panel-agent request in correction D does not change those lines.
