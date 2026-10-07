@@ -145,7 +145,7 @@ test('Incident Corridor gives all overview pins time to reveal without rewriting
 });
 
 
-test('scene clock seek resolves the exact shot phase and camera in both directions', async () => {
+test('[director-217] scene clock seek resolves the exact shot phase and camera in both directions', async () => {
   const { director, restore } = makeDirector();
   const loads = [];
   director._loadShot = async (sceneId, shotId, options) => {
@@ -175,7 +175,7 @@ test('scene clock seek resolves the exact shot phase and camera in both directio
   }
 });
 
-test('scene clock subscribers receive authoritative forward playback snapshots', () => {
+test('[director-212] scene clock subscribers receive authoritative forward playback snapshots', () => {
   const { director, restore } = makeDirector();
   const snapshots = [];
   const unsubscribe = director.subscribeSceneClock((snapshot) => snapshots.push(snapshot));
@@ -763,7 +763,7 @@ test('only Play Shot or a scene run grants transient media authority; LOAD, Stop
   } finally { await director.destroy(); restore(); }
 });
 
-test('cross-scene replay grants media ownership only after the previous scene releases its layers', async () => {
+test('[director-194] cross-scene replay grants media ownership only after the previous scene releases its layers', async () => {
   const { director, dataManager, restore } = makeDirector();
   let owner = null;
   const events = [];
@@ -872,7 +872,7 @@ test('destroyed directors refuse seek, replay, adjacent and continuation without
   } finally { restore(); }
 });
 
-test('replay, adjacent and seek report layer refusal rather than success', async () => {
+test('[director-197] replay, adjacent and seek report layer refusal rather than success', async () => {
   const { director, restore } = makeDirector({ data: { refuse: () => true } });
   try {
     assert.equal((await director.replayShot('scene-1', 'shot-a')).started, false);
@@ -1215,7 +1215,7 @@ test('STOP aborts the layer transition in flight, not merely the next one', asyn
   }
 });
 
-test('a newer LOAD aborts the previous LOAD transition rather than disowning it', async () => {
+test('[director-196] a newer LOAD aborts the previous LOAD transition rather than disowning it', async () => {
   const { director, styleManager, dataManager, restore } = makeDirector();
   const gates = [];
   styleManager.applyVisualState = (visual, options = {}) => {
@@ -1281,7 +1281,7 @@ test('applyVisualState gates the map-stack switch on both sides of its await', (
   );
 });
 
-test('a superseded LOAD is refused its visual commit', async () => {
+test('[director-196] a superseded LOAD is refused its visual commit', async () => {
   // applyVisualState suspends on a map-stack switch and writes its shader
   // uniforms AFTER that await. A stale LOAD resuming there would commit the
   // look of a shot the operator has already moved past, so the director hands
@@ -1336,7 +1336,7 @@ test('a run refuses the visual commit of a shot cancelled mid-transition', async
   }
 });
 
-test('the newest LOAD wins when two loads race', async () => {
+test('[director-196] the newest LOAD wins when two loads race', async () => {
   // Both loads suspend on their visual await; the OLDER one resolves second.
   // Without a generation it completes last and overwrites the newer intent.
   const { director, viewer, styleManager, dataManager, restore } = makeDirector();
@@ -1572,7 +1572,7 @@ test('zero camera pitch is preserved by both immediate placement and ordinary fl
   } finally { restore(); }
 });
 
-test('camera refusal starts no authored frame or playback clock', async () => {
+test('[director-192] camera refusal starts no authored frame or playback clock', async () => {
   const { director, styleManager, viewer, restore } = makeDirector();
   try {
     const shot = director._project.scenes[0].shots[0];
