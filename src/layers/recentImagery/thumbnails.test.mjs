@@ -407,7 +407,7 @@ test('[recent-imagery-026] a stop after blob data does not make an image', async
   assert.equal(loader.get('S30:2026-09-18').status, 'unknown');
 });
 
-test('[recent-imagery-023 recent-imagery-026 recent-imagery-053] the fetch errors and AbortError give different states', async () => {
+test('[recent-imagery-023 recent-imagery-026 recent-imagery-053] an Error and an AbortError from the fetch give different states', async () => {
   for (const name of ['Error', 'AbortError']) {
     const loader = createThumbnailLoader({
       fetchImpl: async () => {
@@ -655,7 +655,7 @@ test('[recent-imagery-053] an old fetch cannot remove a new entry', async () => 
   loader.destroy();
 });
 
-test('[recent-imagery-053] a present day keeps proof after a loader cancellation', async () => {
+test('[recent-imagery-053] a day with present proof keeps its proof after a loader cancellation', async () => {
   const f = fixture({ maxDecoded: 1 });
   f.loader.request(candidate('S30', '2026-09-18'), BOX);
   f.fetch.respond(0);
