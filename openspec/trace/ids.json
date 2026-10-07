@@ -1119,6 +1119,181 @@
     "since": "2026-10-07",
     "change": "backfill-director-camera-interactions"
   },
+  "director-076": {
+    "hash": "fcaad296579f4698337fdbd2a48aa75aa1f19fea8065644a7a1b1cd3e6ec79b5",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-077": {
+    "hash": "3312c70b9144c9a82b7f7db5c00523e5c854cbe8e955b0ddb4a5dc4522ca3420",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-078": {
+    "hash": "b5a53d45f44fbad907b5f57192eb8683365362ce14cb0f785422d3d287f7017e",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-079": {
+    "hash": "1f19b80786a0bb3dca99b52a4bbf3c5ca016ce2fdaf7b519a435f3f0a19b45b8",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-080": {
+    "hash": "5cab8f5f01925b72cdc193f9bff79a02a8460bcb4efdd6690eb733f19412760f",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-081": {
+    "hash": "8223161e620148f592911ba0ae2b7dc945241a5eecdf9c81bf265d92c7908315",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-082": {
+    "hash": "c15e6216b9300e43b60583f45fcc7a25139dcbf1539be1feaa397cef695baf0b",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-083": {
+    "hash": "765a2b61b471510bb288908c920c8d9350a563640a5df7cc9236aad3173cdcb8",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-084": {
+    "hash": "c608eaa36b1657c5349f8b1fd78af79f876de084511663bbb8901e8063025e8a",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-085": {
+    "hash": "ea63bc6ad3a4c3f0eaa9e7632e24b1277d64e5cb19132bc2563cbe7b84b1cd71",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-086": {
+    "hash": "fb3388e49ab5a9eaefc4b363fd5e75fd75f22318737fd88f1c1b930dbb88ae68",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-087": {
+    "hash": "fabb8545ecce2dff5819742787773c751e9923e8f8b19e4499f05e9dcf357ede",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-088": {
+    "hash": "c83cd0ccfa2dde946bcb5f7e4336009c317fbd7416a27ff53768dd93a790ec40",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-089": {
+    "hash": "560e21d04ead6fac5858916abed5a6c89572d21bf592957e4cbb19d1cc1e29c3",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-090": {
+    "hash": "92c3e2531fb32c9146f49fd40290b0f8cc6af86c06acaf3a190c51b9c87fe2bc",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-091": {
+    "hash": "db771dcc3fc07b1973ee2a1f294b4e49d53b8a7a3ae7711979d5f3ed29cea98c",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-092": {
+    "hash": "b7f3ff608aa0c5268f354f1641fd64d4aaea2479590afbeef0ec645c61ecc7eb",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-093": {
+    "hash": "4e95d8cc0e43da68c4b93cb1a33f86203b98ce33e9df48a0ad67abaa193e7a58",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-094": {
+    "hash": "da70d4384331e821c70b86a776fa6d13fc88affab6e6e35fa985647c9e796cfa",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-095": {
+    "hash": "4000aef5e3501c16f79a12bb3769dab22c9030961b837f3eee5fda5d16c8db67",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-096": {
+    "hash": "0d51fe3ae4ec1ffefdf1ab19724d8a253c7b55125fce0898db3bfa7009768223",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-097": {
+    "hash": "193cebd4255f0f554cc9c31f53f3f74257ea6941640072c7e64c070dbaee92e0",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-098": {
+    "hash": "69047ce5d2b76d46c3a6e9e559122064752ad1799f7f21ee3c720b000d37c843",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-099": {
+    "hash": "29d625a0dcbad6320d3d82076fa3666c088c32f2d0e84f916f78c091871a58cf",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-100": {
+    "hash": "c12917b882ad15d28a6cf4c9a6279a5e1ce2209ddf71f7b1428b5c3dea820d20",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-101": {
+    "hash": "95740c9c7c4175fc526812b436eb09a00a0072a8a3c2dffe76299fbbf7978bb1",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-102": {
+    "hash": "df10cdba4ca0402aa0d176d871a36e2c4fd023b4969f31aa0c7199328ec237d3",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-103": {
+    "hash": "dd1bd599e8f9410af626caed10a3d56ae4c713c07618e5f72c5095b970a98948",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-104": {
+    "hash": "f9a22f18f7442b10508493e1e562c4a2b7e91e7b85a01561547d144b63582bca",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-105": {
+    "hash": "7f18d6bcd963be368ba04cc7ce1053701e9289a67553e2f24114f76af11bba92",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-106": {
+    "hash": "2a03a1c462c68af43f5ff0bf82a26c88304e809ca548e0c28b865e3b94cf3d1f",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-107": {
+    "hash": "b255f0ab9a0fd1fd41538b04c133392cbb69ccb7d7d62c350a834f9fce338b9a",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-108": {
+    "hash": "b3d96794fc57564e486c7b1a62c449df7e586e8f95483cde80c9dbd1c7e234fc",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-109": {
+    "hash": "49db5485e18b609641a50215acb2f18731519a4520e30e8a7ba88d17b3f214af",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
+  "director-110": {
+    "hash": "0d514f59babab8ec77308d43ea545382123f75628fdf45538e33609c0d2feeb0",
+    "since": "2026-10-07",
+    "change": "backfill-director-packs-sharing"
+  },
   "gap-ledger-001": {
     "hash": "d926236986707c5770e366ba46ec70d9e7431ee9daf231b24b1d4d14e242705c",
     "since": "2026-09-14",
