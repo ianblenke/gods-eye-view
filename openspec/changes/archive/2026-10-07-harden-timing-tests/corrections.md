@@ -14,14 +14,14 @@ An identifier (ID) names one item.
 
 # Round 2 corrections
 
-Base commit 290b5d2. The worker started at commit 3b72650; the checks cover the edits that commit b95b44f holds.
+Base commit 290b5d2. The work started at commit 3b72650. The checks include the changes in commit b95b44f. The command `git diff` between commits b95b44f and d923d4d, limited to the folder `src`, prints nothing.
 
 | Review item: first words | Correction |
 |---|---|
-| `The cap test asserts` | Await rejection; remove the unused clock; add mutation 46. |
+| ``The `[osh-015]` cap test`` | Await rejection; remove the unused clock; add mutation 46. |
 | `Task 8 is checked` | Use a mock deadline and the TimeoutError signal reason; repeat mutation 40. |
-| `proposal.md says the design` | Add the CCTV delay, the OSH guard and the USB guards; name 50 ms. |
-| `Each Date.now check` | Compare exact elapsed literals: 20, 25, 20 and 20 ms. |
+| `proposal.md:37 says the design` | Add the CCTV delay, the OSH guard and the USB guards; name 50 ms. |
+| ``Each `Date.now() - startedAt`` | Compare exact elapsed literals: 20, 25, 20 and 20 ms. |
 | `await requestStarted has no` | Add cleared 2000 ms guards; add mutations 48 and 49. |
 | `No mutation proves` | Add mutations 50, 51 and 52; check that production clears the timer at its source; prove the absence checks with rows 53 and 54. |
 | `Tasks 13, 16 and` | Mark the tasks from lead3-tests.log; the checks come after the round 2 edits. |
