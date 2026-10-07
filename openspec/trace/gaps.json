@@ -3331,55 +3331,10 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/director/camera.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 6,
-      "functions": 0,
-      "totals": {
-        "lines": 54,
-        "branches": 25,
-        "functions": 6
-      },
-      "sha": "7b9435e50b2a07c292c0e4eebe38a3fc16d660ed897b71af1c43525e54f06a04",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/cameraDocument.js": {
+    "src/director/interactions/session.js": {
       "loaded": true,
       "lines": 0,
       "branches": 1,
-      "functions": 0,
-      "totals": {
-        "lines": 88,
-        "branches": 29,
-        "functions": 10
-      },
-      "sha": "88124895f8754a812f0939e008e9e2ed39c16da5ea4dd04145d22123d89e34fb",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/interactions/document.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 4,
-      "functions": 0,
-      "totals": {
-        "lines": 96,
-        "branches": 44,
-        "functions": 8
-      },
-      "sha": "49f64f2a7d81bc7c88bd5f3b02b5f9fab0926720e715dc394d761c0fb3ade00f",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/interactions/session.js": {
-      "loaded": true,
-      "lines": 1,
-      "branches": 2,
       "functions": 0,
       "totals": {
         "lines": 61,
@@ -14135,10 +14090,7 @@
     },
     "src/director/camera.test.mjs": {
       "names": {
-        "move endpoints, easing, shortest arcs and hold agree with scene seeking": 1,
-        "unknown anchors, duplicate IDs, mixed references, bad easing and unspecified altitude are rejected": 1,
-        "v3 unversioned bloom already uses scale 2 and is not migrated again in later formats": 1,
-        "version 4 retains anchor identity, references and explicit move edits through normalization": 1
+        "v3 unversioned bloom already uses scale 2 and is not migrated again in later formats": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -14146,11 +14098,7 @@
     "src/director/interactions/interactions.test.mjs": {
       "names": {
         "actions preserve camera refusal, layer admission signal and explicit transition cap": 1,
-        "all four inert actions survive validation, migration and export without executing content": 1,
-        "pending actions cancel promptly, refuse overlap and cannot update a replacement session": 1,
-        "reject unknown fields, executable syntax, invalid references and missing reset baselines": 1,
-        "settled pack shots cannot take the same-shot seek shortcut after Stop released geometry": 1,
-        "synchronous stop before execution prevents any side effect; rejection unlocks retry": 1
+        "settled pack shots cannot take the same-shot seek shortcut after Stop released geometry": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
