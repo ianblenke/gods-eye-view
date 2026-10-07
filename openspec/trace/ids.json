@@ -2969,6 +2969,46 @@
     "since": "2026-09-14",
     "change": "establish-spec-governance"
   },
+  "ste-lint-020": {
+    "hash": "c62e2fc2a3b06fbfe55f3b2820eb0c3f2309fbbb155add2cb2303e9159d150d9",
+    "since": "2026-10-06",
+    "change": "ste-noun-warning"
+  },
+  "ste-lint-021": {
+    "hash": "6e64e2c094d60a9cfce5e2fa95f0b8562cf1541216107fd25d453290a5698cac",
+    "since": "2026-10-06",
+    "change": "ste-noun-warning"
+  },
+  "ste-lint-022": {
+    "hash": "1ddb79291f063e6debe1ab636bdcae92227a914dae715343a61fdbf837b77176",
+    "since": "2026-10-06",
+    "change": "ste-noun-warning"
+  },
+  "ste-lint-023": {
+    "hash": "922517ab717db818d4b4dc9e91f3d1b48a6a917e53a6bcdc64f5ae4609e46d6b",
+    "since": "2026-10-06",
+    "change": "ste-noun-warning"
+  },
+  "ste-lint-024": {
+    "hash": "f524ad5f9447d4c0ec1e4ba14873009df5ca6668c923b2172f69bc826e8f07dc",
+    "since": "2026-10-06",
+    "change": "ste-noun-warning"
+  },
+  "ste-lint-025": {
+    "hash": "738b6efc8ccfd5191bd28a0d138391056b9dc9e3bf971aa2cecff0b594f355d7",
+    "since": "2026-10-06",
+    "change": "ste-noun-warning"
+  },
+  "ste-lint-026": {
+    "hash": "79607e16ca69bf293dc75461fe803264418fea067bc016f8b0188269a4b0905a",
+    "since": "2026-10-06",
+    "change": "ste-noun-warning"
+  },
+  "ste-lint-027": {
+    "hash": "df9cbc4d384d34e4a03ef70c73e633d2173c00430575c2002430fa321b2ce156",
+    "since": "2026-10-07",
+    "change": "ste-noun-warning"
+  },
   "wind-001": {
     "hash": "25376818102333bb788cde47843c2dce37362cebf4f938da44726885f94e75ac",
     "since": "2026-09-29",

@@ -11,6 +11,7 @@ const HEADING = /^\s*#{1,6}\s+/;
 const LIST_ITEM = /^\s*(?:[-*+]|\d+\.)\s+/;
 const TASK_ITEM = /^\s*-\s+\[[ xX]\]\s+(?:\d+(?:\.\d+)*\s+)?/;
 const ABBREVIATIONS = new Set(['e.g', 'i.e', 'etc', 'vs']);
+const DETERMINERS = new Set(['a', 'an', 'the', 'each', 'every', 'no', 'any', 'this', 'that', 'these', 'those', 'its', 'their', 'another', 'one', 'some']);
 const BE_FORMS = new Set(['is', 'are', 'was', 'were', 'be', 'been', 'being']);
 const NOT_PARTICIPLES = new Set(['then', 'when', 'open', 'even', 'often', 'token', 'seven', 'eleven']);
 const CONTRACTION = /^(?:[a-z]+n['’]t|[a-z]+['’](?:re|ve|ll|d|m)|(?:it|that|there|what|here|let|who|he|she)['’]s)$/i;
@@ -174,6 +175,13 @@ function checkParagraph(paragraph, words) {
       findings.push(finding('STE-PASSIVE', 'warning', tokens[index].line, `Check for passive voice: "${lowered[index]} ${next}"`));
     }
   }
+  const nounVerbs = new Set(words.nounVerbs);
+  for (let index = 0; index + 1 < tokens.length; index += 1) {
+    const word = lowered[index + 1];
+    if (DETERMINERS.has(tokens[index].text.toLowerCase()) && nounVerbs.has(word) && !/^["'“‘]/.test(tokens[index + 1].text)) {
+      findings.push(finding('STE-NOUN', 'warning', tokens[index + 1].line, `Check for a verb used as a noun: "${word}"`));
+    }
+  }
   const allowed = new Set(words.allowedIng);
   for (const token of tokens) {
     const word = bare(token);
@@ -220,7 +228,7 @@ export function lintTestNames(records, words) {
   return records
     .filter((record) => record.kind === 'test' && record.tags.length > 0)
     .flatMap((record) =>
-      checkParagraph({ kind: 'text', line: 0, tokens: tokensOf(record.title, 0) }, words).map((item) => ({
+      checkParagraph({ kind: 'text', line: 0, tokens: tokensOf(cleanLine(record.title), 0) }, words).map((item) => ({
         rule: item.rule,
         level: item.level,
         file: record.file,
