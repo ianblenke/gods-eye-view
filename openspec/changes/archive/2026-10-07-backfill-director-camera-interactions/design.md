@@ -1,6 +1,6 @@
 ## Context
 
-This change records commit `4660e7b6f39ee27233cd769fbb1536bdcec0876c`.
+This change records commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
 The scene controller resolves camera poses for load, replay and seek.
 It admits actions after load and seek.
 

@@ -1,6 +1,7 @@
 ## Why
 
-This backfill records camera moves and shot actions at commit `4660e7b6f39ee27233cd769fbb1536bdcec0876c`.
+This backfill records camera moves and shot actions at commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
+The source files of `src/director` stay the same at this commit and at main.
 The first director change records time and playback.
 This change adds requirements to the same capability.
 
