@@ -3010,62 +3010,87 @@
     "change": "ste-noun-warning"
   },
   "ste-lint-028": {
-    "hash": "4d187f000e7dd7e1c2ae397326690900992e2c27851741a5500a53c3e28660f4",
+    "hash": "bb51d6749905a8385a734fa219eb13aa4c1a1011ecb5e1d99ae9f0e93c511d0f",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-029": {
-    "hash": "2c38b6c4eb3f296ff96d5e5f5ff7bf89841587dac0bfac0c43ee24f832f896fd",
+    "hash": "59e4000365f9ddceb7e0f929bbdffd372b2d04caf9ad7b276f931781ace478f5",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-030": {
-    "hash": "b6ffc494e83669923d53473b116fae5910956f2423d18d5d93fca68d29cc7dab",
+    "hash": "ee27d519cd920e86664a2c68e832fefd748c97189c2dafbca20dad6d7544c74a",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-031": {
-    "hash": "9c4baf237dae294c1b53d7972c55f08c3835c3146ff44cb6a66e0de3396c2349",
+    "hash": "0aa5e20129e320c73865d32fc4753ed2486dc6145afb8336caacdc2fdfa47e28",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-032": {
-    "hash": "431abde2b7df3eaf1895b7f2dd8a76cc9b07aabfd91bba4878e41402917c07cc",
+    "hash": "1f058980c1b9f5084ccf55b6bc422b17c2f3635b8856933f08a112889a3d92f4",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-033": {
-    "hash": "994628677c9cc504f294176adb1d8d92ab75f2e16cc7a9e1936acbe9d510545b",
+    "hash": "d621b74e0ae601bcdc7fcd94d550ab5ea340fbe0e560baf4876882d92a59d7cb",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-034": {
-    "hash": "474cdb046a65084fb1090dd9ec7ec27a7aedf4abe08c01658336cd9f76ddc80b",
+    "hash": "b6308fd95195529467ff91efa8042939dc283f23aaee0d5f4117b9cbd4cda5ff",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-035": {
-    "hash": "9cdbcf43f8366fabd4593fc23136f1106887715d440e904237fa438507b48495",
+    "hash": "e637ee3b46eba993df76285dbb52e7e659737628c7f0f89547231bd2db0aa3e9",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-036": {
-    "hash": "33bc39d52b58fdb4d51fec726cca51d86192a5d7e3bcf9a3e8945a1207cf79e2",
+    "hash": "fe75f6ef48fbbc94b0c2d6722581502049c55928173339fd15ea5ab06e5dc61f",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-037": {
-    "hash": "3ee4277ae70cb574fd94d6d8778df5093a065df9c69fabfc467288d2efdb4797",
+    "hash": "2f6616f7eb819367404ffaf9642c0a814712fd5c0d9c94f8c17d58eb2935dfe5",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-038": {
-    "hash": "1ef1f96d7c92756800bf31ecc1e0304cc961c64247d4cd1afdea19d1d2bae08e",
+    "hash": "6f9ffc88c6ab53bd01a0e7d87c0f61dd8fb88f5579e211dd6d26c2f253c5fafc",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
   "ste-lint-039": {
-    "hash": "7b368c30c19944510a5c671fb03717ba75557df66f490addf33191ca732a1d7e",
+    "hash": "7dd42f6322f6d5decb4da0a2c889addf4d80d161038b23becaebd31293e7290d",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-040": {
+    "hash": "925c12cac560193b89e139307a327e23a39970747c1f034333bfcf71b2f8a612",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-041": {
+    "hash": "58cc4fe181e353bc5377f5995391bde93de66730894d9aac4c2b561feb18449f",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-042": {
+    "hash": "b411a432f252fd2e86e87f24f94496aa1483786f4fa70e4246c88b313450b616",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-043": {
+    "hash": "85d73799d5a362c66ca9bbd147ee13b70f4b89c2447f9679af4e7c7bb3fe1406",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-044": {
+    "hash": "e2185ebbf77c6dbc7dc6bb5438d881c2429ebfb54cb9620cae20c6699a6f9c49",
     "since": "2026-10-07",
     "change": "ste-new-prose-words"
   },
