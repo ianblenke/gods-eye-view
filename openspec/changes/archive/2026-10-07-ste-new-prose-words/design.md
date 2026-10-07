@@ -1,6 +1,6 @@
 ## Context
 
-The tree starts at commit `3017ecc6`, from the branch history.
+The branch starts at commit `3017ecc6`.
 The owner chose the words on 2026-10-06.
 The current lint checks prose and tagged titles with the same word rules.
 
@@ -28,13 +28,13 @@ Exclude inline code and code blocks as the current rules do.
 
 Read `openspec/trace/ids.json` in `lintProject`.
 An absent registry supplies an empty object.
-Invalid JSON throws an error with the registry path and the JSON reason.
+Invalid JSON throws an error whose message starts with `Cannot read openspec/trace/ids.json:` and holds the reason of the parser; the test checks the prefix.
 Use each `since` date from the registry.
 Do not use active delta specs.
 
 An unknown ID makes a new title.
 A `since` date on or after `newWordsFrom` makes a new title.
-A missing, null or non-string `since` value makes a new title.
+A `since` value that is absent, null or not a string makes a new title.
 A changed scenario keeps the `since` date from the registry.
 
 The lint command still works without test records.
@@ -46,7 +46,7 @@ Inline code in a title remains outside the rule.
 
 Keep the words that the owner chose and their regular forms.
 Remove `explicitly` and `verification` from `newWords`.
-Use the past forms in the map in the test of `ste-lint-036`.
+The map in the test of `ste-lint-036` gives the past forms.
 Use `Object.hasOwn` to exclude parent object keys.
 The test checks `constructor` against the rule for `newWords`.
 
