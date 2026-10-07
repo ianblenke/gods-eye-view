@@ -1,7 +1,7 @@
 ## Context
 
 The source base is commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
-Pass 3 read the base commit `290b5d2` and the working tree of the lead's branch.
+Pass 3 read the base commit `290b5d2` and the working tree of the lead.
 The source comparison below gives no output.
 
 ```sh
@@ -23,9 +23,9 @@ The tests do not request network data.
 The host coverage result is not a gate result.
 The lead runs the ratchet, gates, archive and review.
 
-The trace check checks test tags and assertion methods.
-The coverage check checks each code file.
-The STE check checks prose and tagged test titles.
+The trace gate checks test tags and assertion methods.
+The coverage gate checks each code file.
+The STE gate checks prose and tagged test titles.
 
 ## Related browser QA scripts
 
@@ -121,12 +121,12 @@ The QA limit names later work by its module scope because the correction brief d
 ## Pass 3 choices
 
 The correction brief gives the test, mutation and document order for this pass.
-The single scene test starts at scene `a`, before the last scene.
+The single scene test starts at scene `a`, which is not the last scene.
 The test puts scene `b` next to scene `a`, so a wider slice adds shot `b1`.
 The interactions test uses an empty list to check the document version limit only.
 The version scenario covers validation and migration, so the version table stays there.
 The worker calls each work step a pass and uses review round only for the lead's two reviews.
 
-The source tree read at the start of pass 3 was `32f10e3`.
+The worker read commit `32f10e3` at the start of pass 3.
 The worker made no commit in this pass.
 The lead owns the applied Purpose text, so this pass does not change that file.
