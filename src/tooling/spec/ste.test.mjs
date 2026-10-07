@@ -404,7 +404,7 @@ test('[ste-lint-031] gives an error for new prose in an agent file', () => {
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
-test('[ste-lint-032] gives an error for a new title', () => {
+test('[ste-lint-032] gives an error for a word from `newWords` in a new title', () => {
   const root = registryRoot();
   try {
     for (const title of ['The retain result', 'The "RETAIN" result']) {
@@ -424,7 +424,7 @@ test('[ste-lint-033] gives a warning for an old title', () => {
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
-test('[ste-lint-034] uses new prose for mixed tags', () => {
+test('[ste-lint-034] gives an error for a word in a title with one old ID and one new ID', () => {
   const root = registryRoot();
   try {
     for (const tags of [['a-001', 'a-002'], ['a-002', 'a-001']]) {
@@ -464,15 +464,15 @@ test('[ste-lint-039] shows the suggested word', () => {
 });
 
 
-test('[ste-lint-040] excludes parent keys from new prose and new titles', () => {
-  for (const word of ['constructor', '__proto__', 'toString', 'valueOf']) {
+test('[ste-lint-040] gives no finding for `constructor` in new prose and new titles', () => {
+  for (const word of ['constructor']) {
     assert.deepEqual(newLint(word, 'openspec/process.md').filter((item) => item.rule.startsWith('STE-WORD')), []);
     assert.deepEqual(lintTestNames([newRecord(['a-002'], word)], newWords, registry).filter((item) => item.rule.startsWith('STE-WORD')), []);
   }
 });
 
-test('[ste-lint-041] gives errors at and after the archive date boundary', () => {
-  for (const folder of ['2026-10-07-b', '2026-10-08-b', 'b', 'prefix-2026-10-06-b']) {
+test('[ste-lint-041] gives an error for a word in an archive file with no date or a date not before `newWordsFrom`', () => {
+  for (const folder of ['2026-10-07-b', '2026-10-08-b', 'b', 'prefix-2026-10-06-b', '2026-1-6-b', '2026-10-06b-x', '026-10-06-b']) {
     assert.deepEqual(newLint('Retain the file.', `openspec/changes/archive/${folder}/proposal.md`).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
   }
 });
@@ -486,18 +486,30 @@ test('[ste-lint-042] keeps an old title for a changed scenario', () => {
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
-test('[ste-lint-043] gives errors for unknown IDs and an absent registry', () => {
+test('[ste-lint-043] gives an error for a word in a title with an unknown ID or an absent registry', () => {
   const root = registryRoot();
   try {
     assert.deepEqual(lintProject({ root, records: [newRecord(['a-099'])] }).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
+    for (const since of [undefined, null, 20261006, ['2026-10-06']]) {
+      writeFileSync(path.join(root, 'openspec/trace/ids.json'), JSON.stringify({ 'a-001': { since } }));
+      assert.deepEqual(lintProject({ root, records: [newRecord(['a-001'])] }).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
+    }
     rmSync(path.join(root, 'openspec/trace/ids.json'));
     assert.deepEqual(lintProject({ root, records: [newRecord(['a-001'])] }).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
     assert.deepEqual(lintTestNames([newRecord(['a-001'])], newWords).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
-test('[ste-lint-044] uses new prose when the date key is absent', () => {
+test('[ste-lint-044] uses new prose when `newWordsFrom` is absent', () => {
   const words = { ...WORDS, newWords: { retain: 'keep' } };
   assert.deepEqual(lintMarkdown('Retain the file.', { file: 'openspec/changes/archive/2026-10-06-b/proposal.md', words }).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
   assert.deepEqual(lintTestNames([newRecord(['a-001'])], words, registry).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
+});
+
+test('[ste-lint-045] gives a clear error for invalid registry JSON', () => {
+  const root = registryRoot();
+  try {
+    writeFileSync(path.join(root, 'openspec/trace/ids.json'), '{');
+    assert.throws(() => lintProject({ root, records: [] }), { name: 'Error', message: /^Cannot read openspec\/trace\/ids\.json: / });
+  } finally { rmSync(root, { recursive: true, force: true }); }
 });

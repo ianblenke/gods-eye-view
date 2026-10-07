@@ -27,15 +27,18 @@
   - Run the mutation that changes the suggested word. The test must fail.
 
 - [x] 1.14 Write the test for `ste-lint-040`.
-  - Run the mutation for the scenario. The test must fail.
+  - Run the mutation that replaces `Object.hasOwn` with `in`. The test must fail.
 - [x] 1.15 Write the test for `ste-lint-041`.
-  - Run the mutation for the scenario. The test must fail.
+  - Run the mutation that changes the archive folder date comparison. The test must fail.
 - [x] 1.16 Write the test for `ste-lint-042`.
-  - Run the mutation for the scenario. The test must fail.
+  - Run the mutation that makes an old ID new. The test must fail.
 - [x] 1.17 Write the test for `ste-lint-043`.
-  - Run the mutation for the scenario. The test must fail.
+  - Run the mutation that treats an unknown ID as old. The test must fail.
 - [x] 1.18 Write the test for `ste-lint-044`.
-  - Run the mutation for the scenario. The test must fail.
+  - Run the mutation that changes the absent cutoff date. The test must fail.
+
+- [x] 1.19 Write the test for `ste-lint-045`.
+  - Run the mutation that removes the JSON error prefix. The test must fail.
 
 ## 2. Code and host checks
 
@@ -46,7 +49,7 @@
 - [ ] 2.5 Test each spec tool file.
 - [x] 2.6 Check the whole tree with the lint command.
 - [ ] 2.7 Run `node scripts/format.mjs --check`.
-- [x] 2.8 Run `predispatch.py` on the change documents.
+- [x] 2.8 Run `/home/ianblenke/docker/gev-tools/predispatch/predispatch.py` on the change documents.
 
 ## 3. Gates and review
 
