@@ -1,0 +1,17 @@
+Verdict: FAIL
+- [ ] FINDING major design.md:261 (also proposal.md:39-40, `remaining-inequalities`) "The mock Date clock fixes the value, so the inequality cannot fail" disagrees with the code. `clockWithin()` (controller.test.mjs:406-415) ticks 1 ms per step until `stop()` settles. So `Date.now() - startedAt` at :761 equals the ticks production needs: 2 x 30 ms (`closeTimeoutMs` :636; two `withDeadline` calls at controller.js:931-935 and :945-949). Mutation: multiply both `this._closeTimeoutMs` at controller.js:933 and :947 by 5. Then `stop()` settles at about 300 ms, :759 still passes (guard 500) and :761 fails. No row covers this, and row 8 fails at :759. I did not run it (no shell). Correct: "The elapsed value is 60 ms. The inequality fails if production lengthens the two close deadlines to 125 ms or more. Host load cannot change it." Or add a row and name it. (`exact-elapsed-constants` is true, because those tests call `tick(n)` once.)
+- [ ] FINDING minor corrections.md:31,33 The "first words" cells took the new vocabulary. The round-1 items say `complete gates assessment` (round-1/ste-adversary.md:8) and `short real wait` (:10). Row 33 now reads "short real delay -> short real delay". Restore both quoted phrases.
+- [ ] FINDING minor corrections.md:137,140 "435 warnings" is the round-2 count (round2-final-lint.log); lint now gives 438. Drop the count. Line 137 still names `--change harden-timing-tests` for an archived change, but line 145 got the archive path.
+- [ ] FINDING minor design.md:255, corrections.md:17 "Commit read: 3b72650" is the commit that moved the change out of the archive (.git/logs/HEAD: 3b72650, then b95b44f "correct ... after review round 1"). The tests, the 54 rows and the 995 comparisons come from edits that are not in 3b72650. Name b95b44f, or "3b72650 and uncommitted edits" (rule 11). I did not check with git show.
+- [ ] FINDING minor proposal.md:46-49 `evidence-outside-repo` lists 7 items. The documents also cite mutation-real/*.log, lead3-tests.log, round2-checks/, round2-check-results.json, network-filters.json and round2-files.json. design.md:328 says corrections.md gives "each review correction", but it has no row for the round-2 findings (they are only in report-round3.md, outside the repo). Write "each file that the documents name" and add those rows.
+- [ ] FINDING minor design.md:258 "the inequalities in the cctvProxy, gbfsProxy and requests tests" has two readings: cctvProxy.test.mjs:48 and :145 still hold inequalities (on production constants, not elapsed time). Write "the elapsed-time inequalities".
+
+Checked and true against the code:
+- The grep over the 17 files finds only two elapsed inequalities (controller:761, nominatim:388). The nominatim text (real 300 ms deadline, `< 5000`) is correct.
+- `within()` (:359-366) clears its timer in `.finally()`. The only real-timer calls are :850 and :855. The other guards go through `clockWithin()` in tests that enable mock timers.
+- The 7 `pause(5)` lines match (666, 698, 739, 933, 962, 1012, 1095). The cctvProxy 5 ms (:162), the osh 10 s guard (:52) and 30_000 x 20 match.
+- The elapsed literals are 20, 25, 20 and 20.
+- round2-check-results.json has 85 load runs with 0 failures. The 17 rows sum to 221, and 221 x 5 = 1105. lead3-mut.log has 54 KILLED. lead3-tests.log has 17 exit=0.
+- tasks.md boxes match the evidence. The 4 gate boxes are open, as they should be.
+
+Read at 55600d4. Not read: the gate output (not supplied), the lint warning list, mutation logs 1-45, git objects and the STE wording.

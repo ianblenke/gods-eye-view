@@ -360,6 +360,8 @@ test('coverage changes at the same center reload and disabling invalidates cover
 });
 
 test('a settled footprint loads new tiles even when the camera centre stays put', async (t) => {
+  // A fixed clock keeps fixture roads inside one time slice.
+  t.mock.method(performance, 'now', () => 0);
   const seen = [];
   const { layer, viewer, tick } = setup(
     t,
