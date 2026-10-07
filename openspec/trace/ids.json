@@ -2830,7 +2830,7 @@
     "change": "backfill-recent-imagery"
   },
   "recent-imagery-050": {
-    "hash": "c68ba1d260b9f4a1ec859218a0594404737e132057d4bac50dc5e9df679b7e41",
+    "hash": "61105e35fb54358f579d34cc5902d8b4db83e0d86cefd0364f9432a4ec1eb666",
     "since": "2026-09-30",
     "change": "backfill-recent-imagery"
   },
@@ -2843,6 +2843,26 @@
     "hash": "f7c9f3ea93f3232a0c4ee226258ddd24af6f07eccef52ac77d1af158bf94b87d",
     "since": "2026-09-30",
     "change": "backfill-recent-imagery"
+  },
+  "recent-imagery-053": {
+    "hash": "475bea12c436aa6f1674cd5fef739549edff86a00199a4ea8068fbb83565e286",
+    "since": "2026-10-07",
+    "change": "fix-recent-imagery-defects"
+  },
+  "recent-imagery-054": {
+    "hash": "657c76ec9563a5564ea3c00ddaa024e26e42c6eef4ca68b5c1f7bbe3677495cd",
+    "since": "2026-10-07",
+    "change": "fix-recent-imagery-defects"
+  },
+  "recent-imagery-055": {
+    "hash": "6f60da0b94ac4737723338c9d4246fe8c4ac9ecf30b831604ef0772c7abb5a6e",
+    "since": "2026-10-07",
+    "change": "fix-recent-imagery-defects"
+  },
+  "recent-imagery-056": {
+    "hash": "456ed1b486c64171f8acd9c6c84394c1d7228e5b6dca04141da0822580a0ed7f",
+    "since": "2026-10-07",
+    "change": "fix-recent-imagery-defects"
   },
   "spec-lint-001": {
     "hash": "ec7912f39317f0ce6b8cdce5090db617e1d5779148ff69a574f1218281a1738d",

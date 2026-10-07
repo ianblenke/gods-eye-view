@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {createCoverage,addProcess,coverageCounts} from '/home/ianblenke/docker/gev-work/fix-ri/scripts/spec/lib/v8-merge.mjs';
+const dir=process.argv[2];
+const targets=['src/layers/recentImagery/model.js','src/layers/recentImagery/thumbnails.js','src/ui/recentImagery.js'];
+const state=createCoverage(url=>fs.readFileSync(fileURLToPath(url),'utf8'));
+for(const file of fs.readdirSync(dir)) addProcess(state,JSON.parse(fs.readFileSync(`${dir}/${file}`,'utf8')),url=>targets.some(t=>url===`file://${process.cwd()}/${t}`));
+for(const [url,c] of coverageCounts(state)) console.log(JSON.stringify({file:fileURLToPath(url),...c,lineGap:c.LF-c.LH,branchGap:c.BRF-c.BRH,functionGap:c.FNF-c.FNH}));
+const ledger=JSON.parse(fs.readFileSync('openspec/trace/gaps.json','utf8'));
+for(const t of targets) console.log('LEDGER',t,JSON.stringify(ledger.coverage[t]));

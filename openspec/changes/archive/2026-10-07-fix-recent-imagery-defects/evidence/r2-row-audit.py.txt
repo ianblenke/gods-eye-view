@@ -1,0 +1,15 @@
+import json, re
+from pathlib import Path
+change = Path('openspec/changes/fix-recent-imagery-defects/evidence')
+rows = json.loads((change / 'muts.json').read_text())
+assert len(rows) == 29
+assert len({row['id'] for row in rows}) == 29
+for row in rows:
+    assert Path(row['file']).read_text().count(row['old']) == 1
+assert (change / 'muts.json').read_bytes() == Path('/home/ianblenke/docker/gev-tools/fix-ri/muts.json').read_bytes()
+log = Path('/home/ianblenke/docker/gev-tools/fix-ri/r2-mutations-final.log').read_text()
+matches = re.findall(r'^([^:]+): KILLED (.+)$', log, re.M)
+assert len(matches) == 29
+assert {match[0] for match in matches} == {row['id'] for row in rows}
+assert 'SURVIVORS: []' in log and 'timeout' not in log
+print('29 unique rows. Each source match occurs once. The mutation files match. All 29 rows fail repository tests.')

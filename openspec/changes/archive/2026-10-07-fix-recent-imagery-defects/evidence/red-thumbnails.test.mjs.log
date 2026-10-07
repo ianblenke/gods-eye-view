@@ -1,0 +1,69 @@
+Command: cd /home/ianblenke/docker/gev-work/fix-ri && taskset -c 12-15 nice -n 19 node --test --test-isolation=none src/layers/recentImagery/thumbnails.test.mjs
+Source commit: 81b8bd6c4eb9e2abae1cf6cc9a2447bc16accb02.
+✔ [recent-imagery-023] Data-Present decides the day: present with an object URL and sensing time, empty, or error (36.331354ms)
+✔ [recent-imagery-024] at most maxInFlight fetches run and the queue drains by priority (11.777961ms)
+✔ [recent-imagery-024] requestOrdered loads the focused card first, then outward, then the margins (6.036265ms)
+✔ [recent-imagery-025] decoded thumbnails are evicted least-recently-used and revoked; a read is not a use and an evicted day keeps what it learned (6.511549ms)
+✔ [recent-imagery-025] reading every card in strip order (a snapshot) never decides who is evicted; evicted days stay known and come back on request (12.9799ms)
+✔ [recent-imagery-026] cancelAll aborts in-flight fetches and a late settle never leaks an object URL (3.96602ms)
+✔ [recent-imagery-027] clear and destroy revoke every resident thumbnail (4.882784ms)
+✔ [recent-imagery-026] a request queued behind an aborted fetch still starts once the abort settles (7.783335ms)
+✔ [recent-imagery-023 recent-imagery-027] the default loader owns its URLs and releases them (3.945652ms)
+✔ [recent-imagery-023 recent-imagery-027] a listener error or a URL error does not stop the release of images (3.695578ms)
+✔ [recent-imagery-026] a stop after blob data does not make an image (5.429393ms)
+✖ [recent-imagery-023 recent-imagery-026 recent-imagery-053] fetch errors and stop errors give different states (10.914543ms)
+✔ [recent-imagery-026] a callback that clears the loader revokes its late URL (2.59632ms)
+✔ [recent-imagery-026] a late empty response after a stop leaves the day unknown (3.328757ms)
+✔ [recent-imagery-024] a duplicate active request uses one fetch (1.966966ms)
+✔ [recent-imagery-026] a late settlement after destroy leaves the queue empty (3.701653ms)
+✔ [recent-imagery-023] each thumbnail subscriber gets the same day result (2.202505ms)
+✔ [recent-imagery-025] an image eviction does not send a day update for an empty day (7.169529ms)
+✔ [recent-imagery-023] a new successful fetch updates the acquisition time (6.91152ms)
+✔ [recent-imagery-023] a known empty day does not start another fetch (3.229475ms)
+✔ [recent-imagery-026] a signal that stops the fetch does not send another day update (6.609525ms)
+✔ [recent-imagery-026] a URL callback while the loader clears images does not start a day that the loader removed (5.79856ms)
+✖ [recent-imagery-053] a later request starts after external AbortError (3.449496ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 21
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 307.191086
+
+✖ failing tests:
+
+test at src/layers/recentImagery/thumbnails.test.mjs:410:1
+✖ [recent-imagery-023 recent-imagery-026 recent-imagery-053] fetch errors and stop errors give different states (10.914543ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ri/src/layers/recentImagery/thumbnails.test.mjs:419:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/layers/recentImagery/thumbnails.test.mjs:612:1
+✖ [recent-imagery-053] a later request starts after external AbortError (3.449496ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ri/src/layers/recentImagery/thumbnails.test.mjs:626:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
