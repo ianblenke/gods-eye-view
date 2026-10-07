@@ -1,11 +1,11 @@
 ## Why
 
-A chance test failure stops a complete gates assessment under the rule in `AGENTS.md` about command output.
-The supplied experiment records failures under simultaneous container load.
-The lead must repeat the complete assessment when a test fails by chance.
+A chance test failure stops a gates run under the rule in `AGENTS.md` about command output.
+The phase3-analysis.md records failures under simultaneous container load.
+The lead must repeat the gates run when a test fails by chance.
 
-Evidence command: inspect the supplied experiment with `cat` and search the supplied logs with `rg` for `TRACE-FAILED-TEST`.
-Tree commit from `git rev-parse HEAD`: `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
+Evidence command: inspect the phase3-analysis.md with `cat` and search the container logs with `rg` for `TRACE-FAILED-TEST`.
+Base commit 290b5d2; the later merges of main do not change the 17 test files.
 
 ## What Changes
 
@@ -25,13 +25,13 @@ The change edits no production file and no scenario text.
 The change must not reduce covered production lines.
 The ratchet command changed the ledger by one line.
 The branch total of `server/providers/cctv/stream.js` rises from 135 to 136.
-Its uncovered counts stay at 22 lines, 18 branches and 4 functions.
+The uncovered counts of that file stay at 22 lines, 18 branches and 4 functions.
 
 ## Known limits
 
 The host runtime differs from the image runtime.
 The lead checks the complete gates in the image.
-A clean local measurement does not prove the cause of a failure in the supplied logs.
-The process limit takes precedence over load when launcher children need Node.
-Synchronous source checks and array identity checks need no timer change without a timer fault.
+A clean local measurement does not prove the cause of a failure in the container logs.
+The process limit has priority over load when launcher children need Node.
+Synchronous source checks and surface identity checks need no timer change without a timer fault.
 The design lists the real waits and the later changes.

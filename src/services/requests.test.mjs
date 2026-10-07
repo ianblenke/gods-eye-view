@@ -75,7 +75,7 @@ test('a stalled capability probe times out and queries proceed; no re-probe duri
   t.mock.timers.tick(20);
   assert.equal(observedSignal?.aborted, true);
   assert.deepEqual(await pending, []);
-  assert.ok(Date.now() - started < 1000);
+  assert.equal(Date.now() - started, 20);
   assert.deepEqual(await services.boundaries.query('fixture'), []);
   assert.deepEqual(seen, ['GET /api/overpass/status', 'POST /api/overpass', 'POST /api/overpass']);
 });
