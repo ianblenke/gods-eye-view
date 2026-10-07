@@ -1,0 +1,199 @@
+[
+  {
+    "id": "053-no-delete",
+    "file": "src/layers/recentImagery/thumbnails.js",
+    "old": "      if (entries.get(entry.key) === entry) {\n        if (entry.status === 'unknown') entries.delete(entry.key);\n      }",
+    "new": "      if (entries.get(entry.key) === entry) {\n        if (false) entries.delete(entry.key);\n      }",
+    "test": [
+      "src/layers/recentImagery/thumbnails.test.mjs"
+    ],
+    "pattern": "recent-imagery-053"
+  },
+  {
+    "id": "053-delete-new",
+    "file": "src/layers/recentImagery/thumbnails.js",
+    "old": "if (entries.get(entry.key) === entry) {",
+    "new": "if (true) {",
+    "test": [
+      "src/layers/recentImagery/thumbnails.test.mjs"
+    ],
+    "pattern": "recent-imagery-053"
+  },
+  {
+    "id": "053-delete-proof",
+    "file": "src/layers/recentImagery/thumbnails.js",
+    "old": "      if (entries.get(entry.key) === entry) {\n        if (entry.status === 'unknown') entries.delete(entry.key);\n      }",
+    "new": "      if (entries.get(entry.key) === entry) {\n        if (true) entries.delete(entry.key);\n      }",
+    "test": [
+      "src/layers/recentImagery/thumbnails.test.mjs"
+    ],
+    "pattern": "recent-imagery-053"
+  },
+  {
+    "id": "053-delete-success",
+    "file": "src/layers/recentImagery/thumbnails.js",
+    "old": "    if (cancelled) {",
+    "new": "    if (true) {",
+    "test": [
+      "src/layers/recentImagery/thumbnails.test.mjs"
+    ],
+    "pattern": "recent-imagery-053"
+  },
+  {
+    "id": "054-own",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "Object.hasOwn(PRODUCTS, key) ? PRODUCTS[key] : null",
+    "new": "true ? PRODUCTS[key] : null",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ],
+    "pattern": "recent-imagery-054"
+  },
+  {
+    "id": "054-no-products",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "Object.hasOwn(PRODUCTS, key) ? PRODUCTS[key] : null",
+    "new": "false ? PRODUCTS[key] : null",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ]
+  },
+  {
+    "id": "054-group",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "!productOf(granule?.product) || !day",
+    "new": "!PRODUCTS[granule?.product] || !day",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ],
+    "pattern": "recent-imagery-054"
+  },
+  {
+    "id": "054-rank",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "    productOf(c.product) &&",
+    "new": "    PRODUCTS[c.product] &&",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ],
+    "pattern": "recent-imagery-054"
+  },
+  {
+    "id": "054-readout",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "const product = productOf(candidate?.product);",
+    "new": "const product = PRODUCTS[candidate?.product];",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ],
+    "pattern": "recent-imagery-054"
+  },
+  {
+    "id": "054-gibs",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "const spec = productOf(product);\n  if (!spec)",
+    "new": "const spec = PRODUCTS[product];\n  if (!spec)",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ],
+    "pattern": "recent-imagery-054"
+  },
+  {
+    "id": "054-wvs",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "const spec = productOf(product);\n  const normalized",
+    "new": "const spec = PRODUCTS[product];\n  const normalized",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ],
+    "pattern": "recent-imagery-054"
+  },
+  {
+    "id": "055-no-reveal",
+    "file": "src/ui/recentImagery.js",
+    "old": "if (detailsOpen) revealCard(container, detailsHost.children[0]);",
+    "new": "if (false) revealCard(container, detailsHost.children[0]);",
+    "test": [
+      "src/ui/recentImagery.test.mjs"
+    ],
+    "pattern": "recent-imagery-055"
+  },
+  {
+    "id": "055-close-reveal",
+    "file": "src/ui/recentImagery.js",
+    "old": "if (detailsOpen) revealCard(container, detailsHost.children[0]);",
+    "new": "if (true) revealCard(container, detailsHost.children[0]);",
+    "test": [
+      "src/ui/recentImagery.test.mjs"
+    ],
+    "pattern": "recent-imagery-055"
+  },
+  {
+    "id": "055-restore",
+    "file": "src/ui/recentImagery.js",
+    "old": "      if (detailsOpen) revealCard(container, detailsHost.children[0]);",
+    "new": "      preserveScroll(() => { if (detailsOpen) revealCard(container, detailsHost.children[0]); });",
+    "test": [
+      "src/ui/recentImagery.test.mjs"
+    ],
+    "pattern": "recent-imagery-055"
+  },
+  {
+    "id": "050-no-restore",
+    "file": "src/ui/recentImagery.js",
+    "old": "if ((Number(container.scrollTop) || 0) !== top) container.scrollTop = top;",
+    "new": "if (false) container.scrollTop = top;",
+    "test": [
+      "src/ui/recentImagery.test.mjs"
+    ],
+    "pattern": "recent-imagery-050"
+  },
+  {
+    "id": "056-lon",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "finite(point?.[0]) && finite(point[1])",
+    "new": "true && finite(point[1])",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ],
+    "pattern": "recent-imagery-056"
+  },
+  {
+    "id": "056-lat",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "finite(point?.[0]) && finite(point[1])",
+    "new": "finite(point?.[0]) && true",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ],
+    "pattern": "recent-imagery-056"
+  },
+  {
+    "id": "056-every",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "Array.from(ring).every(\n          (point) => finite(point?.[0]) && finite(point[1]),\n        )",
+    "new": "true",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ],
+    "pattern": "recent-imagery-056"
+  },
+  {
+    "id": "056-array",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "Array.isArray(ring) &&\n        ring.length >= 3",
+    "new": "true &&\n        ring.length >= 3",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ]
+  },
+  {
+    "id": "056-length",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "ring.length >= 3 &&",
+    "new": "true &&",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ]
+  }
+]
