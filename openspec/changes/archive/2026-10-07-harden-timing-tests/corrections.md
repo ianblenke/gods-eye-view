@@ -1,58 +1,61 @@
-# Round 2 corrections
-
-Tree read: `3b726505157e146cf3ee07326044abb200d37f8b`.
-
-| Review item: first words | Correction |
-|---|---|
-| `The cap test asserts` | Await rejection; remove the unused clock; add mutation 46. |
-| `Task 8 is checked` | Use a mock deadline and the TimeoutError signal reason; repeat mutation 40. |
-| `proposal.md says the design` | Add the CCTV delay, OSH guard and USB guards; name 50 ms. |
-| `Each Date.now check` | Compare exact elapsed literals: 20, 25 and 20 ms. |
-| `await requestStarted has no` | Add cleared 2000 ms guards; add mutations 48 and 49. |
-| `No mutation proves` | Add mutations 50, 51 and 52; check timer closure at its source; prove the absence checks with rows 53 and 54. |
-| `Tasks 13, 16 and` | Check the tasks from the lead host log; name that evidence as before the round 2 edits. |
-| `The command rg` | Search all 17 files; add the seventh absence delay. |
-| `const rejected` | Restore the original awaited rejection in the cap test. |
-| `the factor in the` | Use factor 20 and file names. |
-| `complete gates assessment` | Use gates run. |
-| `array identity checks` | Use surface identity checks and measurement load. |
-| `short real wait` | Use short real delay. |
-| `takes precedence` | Use has priority. |
-| `Mutation: Report` | Use Make production for each mutation note. |
-| `holding the test open` | State that the deadline assertion fails, so the test cannot stay open. |
-| `Change device deadlines` | Add articles; place mutation notes outside task instructions. |
-| `Its fixed delay` | Name the fixture and the production file. |
-| `Run the predispatch check` | Name predispatch.py and scripts/format.mjs. |
-| `with room for CPU` | Use long enough for CPU load in both comments. |
-| `with a missing clock` | Use when a clock callback does not run. |
-| `lets promise callbacks finish` | Use allows the promise callbacks to finish. |
-
-The cap correction follows the lead instruction to restore await assert.rejects.
-The alternative await rejected has the same result, but is unnecessary.
-The sentence about test completion uses active verbs to avoid a new STE warning.
-The other corrections follow the review replacements.
-
 ## Terms
 
 OpenSensorHub (OSH) names the sensor service.
 Closed-circuit television (CCTV) names the camera service.
 The universal serial bus (USB) connects the receiver.
 The Domain Name System (DNS) supplies network addresses.
-HTTP Live Streaming (HLS) names the media format.
 The central processing unit (CPU) supplies processor time.
 
 The Hypertext Transfer Protocol (HTTP) carries web requests.
+HTTP Live Streaming (HLS) names the media format.
+An application programming interface (API) defines calls between software parts.
+JavaScript Object Notation (JSON) is a data format.
+An identifier (ID) names one item.
+
+# Round 2 corrections
+
+Base commit 290b5d2. Commit read: `3b726505157e146cf3ee07326044abb200d37f8b`.
+
+| Review item: first words | Correction |
+|---|---|
+| `The cap test asserts` | Await rejection; remove the unused clock; add mutation 46. |
+| `Task 8 is checked` | Use a mock deadline and the TimeoutError signal reason; repeat mutation 40. |
+| `proposal.md says the design` | Add the CCTV delay, the OSH guard and the USB guards; name 50 ms. |
+| `Each Date.now check` | Compare exact elapsed literals: 20, 25, 20 and 20 ms. |
+| `await requestStarted has no` | Add cleared 2000 ms guards; add mutations 48 and 49. |
+| `No mutation proves` | Add mutations 50, 51 and 52; check that production clears the timer at its source; prove the absence checks with rows 53 and 54. |
+| `Tasks 13, 16 and` | Mark the tasks from lead3-tests.log; the checks follow the round 2 edits. |
+| `The command rg` | Search all 17 files; add the seventh absence delay. |
+| `const rejected` | Restore the original awaited rejection in the cap test. |
+| `the factor in the` | Use the factor 20 and file names. |
+| `complete gates run` | Use "gates run". |
+| `array identity checks` | Use "surface identity checks and measurement load". |
+| `short real delay` | Use "short real delay". |
+| `takes precedence` | Use "has priority". |
+| `Mutation: Report` | Use "Make production" for each mutation note. |
+| `holding the test open` | State that the deadline assertion fails, so the test cannot stay open. |
+| `Change device deadlines` | Add articles; place mutation notes outside task instructions. |
+| `Its fixed delay` | Name the fixture and the production file. |
+| `Run the predispatch check` | Name predispatch.py and scripts/format.mjs. |
+| `with room for CPU` | Use "long enough for CPU load" in both comments. |
+| `with a missing clock` | Use "when a clock callback does not run". |
+| `lets promise callbacks finish` | Use "allows the promise callbacks to finish". |
+
+The cap correction follows the lead instruction to restore await assert.rejects.
+The alternative await rejected has the same result, but is unnecessary.
+The sentence about test completion uses active verbs to avoid a new STE warning.
+The other corrections follow the review replacements.
 
 ## File checks
 
 Command: `round2-check.py` starts one Node process per file without the force-exit flag.
-Each Node process uses cores 12-15 and nice priority 19.
-The measurement load uses three Node loops, or three shell loops for launcher files.
-Each loop stops after its file assessment.
+Each Node process uses CPU set 12-15 and nice priority 19.
+The measurement load uses three Node load loops, or three shell load loops for launcher files.
+Each loop stops after its file run.
 The full output is in `round2-checks` in the tools directory.
 The JSON summary is `round2-check-results.json`.
 
-| File | No-load tests/pass/fail | Load tests per process | Load processes | Load failures |
+| File | No-load tests/pass/fail | Load tests per process | Test processes under load | Load failures |
 |---|---|---:|---:|---:|
 | `src/sdr/controller.test.mjs` | 24/24/0 | 24 | 5 | 0 |
 | `src/cameraGroundGuard.test.mjs` | 20/20/0 | 20 | 5 | 0 |
@@ -73,15 +76,15 @@ The JSON summary is `round2-check-results.json`.
 | `src/app/layers/osh.test.mjs` | 4/4/0 | 4 | 5 | 0 |
 
 The complete checks of three socket files have six failures from `listen EPERM`.
-The filtered checks pass; the host must repeat the complete socket files after the round 2 changes.
-All 85 load processes have zero failures and no stopped process.
-The load processes report 1105 tests in total.
+The filtered checks pass; the lead log `lead3-tests.log` records complete checks after the round 2 changes.
+All 85 test processes under load have zero failures and no stopped process.
+The test processes under load report 1105 tests in total.
 
 ## New mutation rows
 
-Command: `mutate.py` checks the complete 54-row file in the separate clone.
-The final assessment has 54 failed selected tests and no stopped process.
-Row 40 fails the converted OSH timeout test.
+Command: `mutate.py` checks the complete 54-row file in the separate copy.
+The final run has 54 failed selected tests and no stopped process.
+Row 40 makes the converted OSH timeout test fail.
 Each row below links to the command output that names the failed test.
 The log files are in the tools directory at `mutation-real`.
 
@@ -102,17 +105,17 @@ The log files are in the tools directory at `mutation-real`.
 The commands `compare-coverage.py` and `compare-counts.py` report 995 comparisons.
 The comparisons show no lost covered lines and no smaller covered branch or function totals.
 The normal format commands stop at `spawnSync git EPERM`.
-The host preload completes both format commands for 1158 files.
+The preloaded file `format-host.mjs` completes both format commands for 1158 files.
 The source diff has no production file, scenario text or review report change.
 
 ## Files changed in round 2
 
-Command: `git status --short` for the current tree.
-The diff from `HEAD` changes these test files and prose files.
+The round 2 record used `git status --short` before the archive.
+The list below gives those files at their current paths.
 
-- `openspec/changes/harden-timing-tests/design.md`
-- `openspec/changes/harden-timing-tests/proposal.md`
-- `openspec/changes/harden-timing-tests/tasks.md`
+- `openspec/changes/archive/2026-10-07-harden-timing-tests/design.md`
+- `openspec/changes/archive/2026-10-07-harden-timing-tests/proposal.md`
+- `openspec/changes/archive/2026-10-07-harden-timing-tests/tasks.md`
 - `src/data/cctvHlsStream.test.mjs`
 - `src/data/cctvProxy.test.mjs`
 - `src/data/gbfsProxy.test.mjs`
@@ -124,7 +127,7 @@ The diff from `HEAD` changes these test files and prose files.
 - `src/toolProjectRoot.test.mjs`
 - `src/tooling/localServices.test.mjs`
 - `src/tooling/nominatimSearchRoute.test.mjs`
-- `openspec/changes/harden-timing-tests/corrections.md`
+- `openspec/changes/archive/2026-10-07-harden-timing-tests/corrections.md`
 
 ## Prose checks
 
@@ -139,7 +142,7 @@ The lint reports 0 errors and 435 warnings.
 Command:
 
 ```text
-taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/harden-timing-tests
+taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/archive/2026-10-07-harden-timing-tests
 ```
 
 The predispatch error summary is empty.
