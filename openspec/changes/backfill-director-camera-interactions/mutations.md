@@ -1,10 +1,9 @@
 # Director code mutations
 
-Commit: `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
+Pass 2 reads base commit `290b5d2`.
 
-The final command logs give each result below.
-The helper restores the production file after each check.
-The custom list probe gives an independent inactive state.
+The complete command gives each result below.
+Row m149 is equivalent; the getter, proxy and spy probe passes for both code versions.
 
 ## m001
 
@@ -421,9 +420,9 @@ Old:
 move.easing === 'linear'
 New:
 false
-Selected test: [director-047] The linear curve uses its own fraction
+Selected test: [director-047] The linear curve uses its supplied fraction
 Result: KILLED
-m030: KILLED [director-047] The linear curve uses its own fraction
+m030: KILLED [director-047] The linear curve uses its supplied fraction
 ```
 
 ## m031
@@ -463,9 +462,9 @@ Old:
 number(value[key], `${path}.${key}`, ...range, legacy);
 New:
 if (key !== 'lat') number(value[key], `${path}.${key}`, ...range, legacy);
-Selected test: [director-053] The inline destination needs lat
+Selected test: [director-053] The inline end pose needs lat
 Result: KILLED
-m033: KILLED [director-053] The inline destination needs lat
+m033: KILLED [director-053] The inline end pose needs lat
 ```
 
 ## m034
@@ -505,9 +504,9 @@ Old:
 number(value[key], `${path}.${key}`, ...range, legacy);
 New:
 if (key !== 'lon') number(value[key], `${path}.${key}`, ...range, legacy);
-Selected test: [director-053] The inline destination needs lon
+Selected test: [director-053] The inline end pose needs lon
 Result: KILLED
-m036: KILLED [director-053] The inline destination needs lon
+m036: KILLED [director-053] The inline end pose needs lon
 ```
 
 ## m037
@@ -547,9 +546,9 @@ Old:
 number(value[key], `${path}.${key}`, ...range, legacy);
 New:
 if (key !== 'alt') number(value[key], `${path}.${key}`, ...range, legacy);
-Selected test: [director-053] The inline destination needs alt
+Selected test: [director-053] The inline end pose needs alt
 Result: KILLED
-m039: KILLED [director-053] The inline destination needs alt
+m039: KILLED [director-053] The inline end pose needs alt
 ```
 
 ## m040
@@ -645,9 +644,9 @@ Old:
 required || Object.hasOwn(value, key)
 New:
 required
-Selected test: [director-050] The own orientation field decides the check
+Selected test: [director-050] The supplied orientation field controls the check
 Result: KILLED
-m046: KILLED [director-050] The own orientation field decides the check
+m046: KILLED [director-050] The supplied orientation field controls the check
 ```
 
 ## m047
@@ -659,9 +658,9 @@ Old:
 coordinates(value, path, ORIENTATION, false, version < 3);
 New:
 coordinates(value, path, ORIENTATION, false, false);
-Selected test: [director-051] The legacy pose accepts text heading
+Selected test: [director-051] The version 2 pose accepts text heading
 Result: KILLED
-m047: KILLED [director-051] The legacy pose accepts text heading
+m047: KILLED [director-051] The version 2 pose accepts text heading
 ```
 
 ## m048
@@ -673,9 +672,9 @@ Old:
 coordinates(value, path, ORIENTATION, false, version < 3);
 New:
 coordinates(value, path, ORIENTATION, false, true);
-Selected test: [director-051] The modern pose rejects text heading
+Selected test: [director-051] The version 3 pose rejects text heading
 Result: KILLED
-m048: KILLED [director-051] The modern pose rejects text heading
+m048: KILLED [director-051] The version 3 pose rejects text heading
 ```
 
 ## m049
@@ -687,9 +686,9 @@ Old:
 coordinates(value, path, ORIENTATION, false, version < 3);
 New:
 coordinates(value, path, ORIENTATION, false, false);
-Selected test: [director-051] The legacy pose accepts text pitch
+Selected test: [director-051] The version 2 pose accepts text pitch
 Result: KILLED
-m049: KILLED [director-051] The legacy pose accepts text pitch
+m049: KILLED [director-051] The version 2 pose accepts text pitch
 ```
 
 ## m050
@@ -701,9 +700,9 @@ Old:
 coordinates(value, path, ORIENTATION, false, version < 3);
 New:
 coordinates(value, path, ORIENTATION, false, true);
-Selected test: [director-051] The modern pose rejects text pitch
+Selected test: [director-051] The version 3 pose rejects text pitch
 Result: KILLED
-m050: KILLED [director-051] The modern pose rejects text pitch
+m050: KILLED [director-051] The version 3 pose rejects text pitch
 ```
 
 ## m051
@@ -715,9 +714,9 @@ Old:
 coordinates(value, path, ORIENTATION, false, version < 3);
 New:
 coordinates(value, path, ORIENTATION, false, false);
-Selected test: [director-051] The legacy pose accepts text roll
+Selected test: [director-051] The version 2 pose accepts text roll
 Result: KILLED
-m051: KILLED [director-051] The legacy pose accepts text roll
+m051: KILLED [director-051] The version 2 pose accepts text roll
 ```
 
 ## m052
@@ -729,9 +728,9 @@ Old:
 coordinates(value, path, ORIENTATION, false, version < 3);
 New:
 coordinates(value, path, ORIENTATION, false, true);
-Selected test: [director-051] The modern pose rejects text roll
+Selected test: [director-051] The version 3 pose rejects text roll
 Result: KILLED
-m052: KILLED [director-051] The modern pose rejects text roll
+m052: KILLED [director-051] The version 3 pose rejects text roll
 ```
 
 ## m053
@@ -743,9 +742,9 @@ Old:
 coordinates(value, path, POSITION, explicit, version < 3);
 New:
 coordinates(value, path, POSITION, explicit, false);
-Selected test: [director-051] The legacy pose accepts text lat
+Selected test: [director-051] The version 2 pose accepts text lat
 Result: KILLED
-m053: KILLED [director-051] The legacy pose accepts text lat
+m053: KILLED [director-051] The version 2 pose accepts text lat
 ```
 
 ## m054
@@ -757,9 +756,9 @@ Old:
 coordinates(value, path, POSITION, explicit, version < 3);
 New:
 coordinates(value, path, POSITION, explicit, true);
-Selected test: [director-051] The modern pose rejects text lat
+Selected test: [director-051] The version 3 pose rejects text lat
 Result: KILLED
-m054: KILLED [director-051] The modern pose rejects text lat
+m054: KILLED [director-051] The version 3 pose rejects text lat
 ```
 
 ## m055
@@ -771,9 +770,9 @@ Old:
 coordinates(value, path, POSITION, explicit, version < 3);
 New:
 coordinates(value, path, POSITION, explicit, false);
-Selected test: [director-051] The legacy pose accepts text lon
+Selected test: [director-051] The version 2 pose accepts text lon
 Result: KILLED
-m055: KILLED [director-051] The legacy pose accepts text lon
+m055: KILLED [director-051] The version 2 pose accepts text lon
 ```
 
 ## m056
@@ -785,9 +784,9 @@ Old:
 coordinates(value, path, POSITION, explicit, version < 3);
 New:
 coordinates(value, path, POSITION, explicit, true);
-Selected test: [director-051] The modern pose rejects text lon
+Selected test: [director-051] The version 3 pose rejects text lon
 Result: KILLED
-m056: KILLED [director-051] The modern pose rejects text lon
+m056: KILLED [director-051] The version 3 pose rejects text lon
 ```
 
 ## m057
@@ -799,9 +798,9 @@ Old:
 coordinates(value, path, POSITION, explicit, version < 3);
 New:
 coordinates(value, path, POSITION, explicit, false);
-Selected test: [director-051] The legacy pose accepts text alt
+Selected test: [director-051] The version 2 pose accepts text alt
 Result: KILLED
-m057: KILLED [director-051] The legacy pose accepts text alt
+m057: KILLED [director-051] The version 2 pose accepts text alt
 ```
 
 ## m058
@@ -813,9 +812,9 @@ Old:
 coordinates(value, path, POSITION, explicit, version < 3);
 New:
 coordinates(value, path, POSITION, explicit, true);
-Selected test: [director-051] The modern pose rejects text alt
+Selected test: [director-051] The version 3 pose rejects text alt
 Result: KILLED
-m058: KILLED [director-051] The modern pose rejects text alt
+m058: KILLED [director-051] The version 3 pose rejects text alt
 ```
 
 ## m059
@@ -883,9 +882,9 @@ Old:
 explicit || Object.hasOwn(value, 'altitudeReference')
 New:
 explicit
-Selected test: [director-055] The own height reference decides the check
+Selected test: [director-055] The supplied height reference controls the check
 Result: KILLED
-m063: KILLED [director-055] The own height reference decides the check
+m063: KILLED [director-055] The supplied height reference controls the check
 ```
 
 ## m064
@@ -1348,9 +1347,9 @@ Old:
 !a || !Object.hasOwn(specs, a.type)
 New:
 !Object.hasOwn(specs, a.type)
-Selected test: [director-057] The action rejects an absent object
+Selected test: [director-057] The action field rejects an absent object
 Result: KILLED
-m096: KILLED [director-057] The action rejects an absent object
+m096: KILLED [director-057] The action field rejects an absent object
 ```
 
 ## m097
@@ -1362,9 +1361,9 @@ Old:
 !a || !Object.hasOwn(specs, a.type)
 New:
 !a
-Selected test: [director-057] The action rejects an unknown type
+Selected test: [director-057] The action field rejects an unknown type
 Result: KILLED
-m097: KILLED [director-057] The action rejects an unknown type
+m097: KILLED [director-057] The action field rejects an unknown type
 ```
 
 ## m098
@@ -1376,9 +1375,9 @@ Old:
 card: ['text', 'url'],
 New:
 card: ['url'],
-Selected test: [director-057] The card action accepts its text field
+Selected test: [director-057] The card action field accepts its text field
 Result: KILLED
-m098: KILLED [director-057] The card action accepts its text field
+m098: KILLED [director-057] The card action field accepts its text field
 ```
 
 ## m099
@@ -1390,9 +1389,9 @@ Old:
 card: ['text', 'url'],
 New:
 card: ['text'],
-Selected test: [director-057] The card action accepts its url field
+Selected test: [director-057] The card action field accepts its url field
 Result: KILLED
-m099: KILLED [director-057] The card action accepts its url field
+m099: KILLED [director-057] The card action field accepts its url field
 ```
 
 ## m100
@@ -1404,9 +1403,9 @@ Old:
 focus: ['anchorId'],
 New:
 focus: [],
-Selected test: [director-057] The focus action accepts its anchorId field
+Selected test: [director-057] The focus action field accepts its anchorId field
 Result: KILLED
-m100: KILLED [director-057] The focus action accepts its anchorId field
+m100: KILLED [director-057] The focus action field accepts its anchorId field
 ```
 
 ## m101
@@ -1418,9 +1417,9 @@ Old:
 shot: ['shotId'],
 New:
 shot: [],
-Selected test: [director-057] The shot action accepts its shotId field
+Selected test: [director-057] The shot action field accepts its shotId field
 Result: KILLED
-m101: KILLED [director-057] The shot action accepts its shotId field
+m101: KILLED [director-057] The shot action field accepts its shotId field
 ```
 
 ## m102
@@ -1432,9 +1431,9 @@ Old:
 layer: ['layerId', 'enabled'],
 New:
 layer: ['enabled'],
-Selected test: [director-057] The layer action accepts its layerId field
+Selected test: [director-057] The layer action field accepts its layerId field
 Result: KILLED
-m102: KILLED [director-057] The layer action accepts its layerId field
+m102: KILLED [director-057] The layer action field accepts its layerId field
 ```
 
 ## m103
@@ -1446,9 +1445,9 @@ Old:
 layer: ['layerId', 'enabled'],
 New:
 layer: ['layerId'],
-Selected test: [director-057] The layer action accepts its enabled field
+Selected test: [director-057] The layer action field accepts its enabled field
 Result: KILLED
-m103: KILLED [director-057] The layer action accepts its enabled field
+m103: KILLED [director-057] The layer action field accepts its enabled field
 ```
 
 ## m104
@@ -1460,9 +1459,9 @@ Old:
 fields(a, `${field}.action`, ['type', ...specs[a.type]]);
 New:
 <empty>
-Selected test: [director-057] The action rejects an unsupported field
+Selected test: [director-057] The action field rejects an unsupported field
 Result: KILLED
-m104: KILLED [director-057] The action rejects an unsupported field
+m104: KILLED [director-057] The action field rejects an unsupported field
 ```
 
 ## m105
@@ -1611,9 +1610,9 @@ Old:
 if (reference) string(a[reference], `${field}.action.${reference}`);
 New:
 <empty>
-Selected test: [director-057] The action rejects nontext anchorId
+Selected test: [director-057] The action field rejects nontext anchorId
 Result: KILLED
-m112: KILLED [director-057] The action rejects nontext anchorId
+m112: KILLED [director-057] The action field rejects nontext anchorId
 ```
 
 ## m113
@@ -1625,9 +1624,9 @@ Old:
 if (reference) string(a[reference], `${field}.action.${reference}`);
 New:
 <empty>
-Selected test: [director-057] The action rejects nontext shotId
+Selected test: [director-057] The action field rejects nontext shotId
 Result: KILLED
-m113: KILLED [director-057] The action rejects nontext shotId
+m113: KILLED [director-057] The action field rejects nontext shotId
 ```
 
 ## m114
@@ -1639,9 +1638,9 @@ Old:
 if (reference) string(a[reference], `${field}.action.${reference}`);
 New:
 <empty>
-Selected test: [director-057] The action rejects nontext layerId
+Selected test: [director-057] The action field rejects nontext layerId
 Result: KILLED
-m114: KILLED [director-057] The action rejects nontext layerId
+m114: KILLED [director-057] The action field rejects nontext layerId
 ```
 
 ## m115
@@ -1653,9 +1652,9 @@ Old:
 if (!target) fail(field, 'unknown shot');
 New:
 if (!target) return;
-Selected test: [director-060] The shot action rejects an unknown shot
+Selected test: [director-060] The shot action field rejects an unknown shot
 Result: KILLED
-m115: KILLED [director-060] The shot action rejects an unknown shot
+m115: KILLED [director-060] The shot action field rejects an unknown shot
 ```
 
 ## m116
@@ -1668,9 +1667,9 @@ entry?.action?.type === 'layer' &&
               !Object.hasOwn(target.layers || {}, entry.action.layerId)
 New:
 false
-Selected test: [director-060] The destination needs each layer baseline
+Selected test: [director-060] The target shot needs each layer baseline
 Result: KILLED
-m116: KILLED [director-060] The destination needs each layer baseline
+m116: KILLED [director-060] The target shot needs each layer baseline
 ```
 
 ## m117
@@ -1683,9 +1682,9 @@ entry?.action?.type === 'layer' &&
               !Object.hasOwn(target.layers || {}, entry.action.layerId)
 New:
 !Object.hasOwn(target.layers || {}, entry.action.layerId)
-Selected test: [director-060] The destination check skips a card action
+Selected test: [director-060] The target shot check skips a card action field
 Result: KILLED
-m117: KILLED [director-060] The destination check skips a card action
+m117: KILLED [director-060] The target shot check skips a card action field
 ```
 
 ## m118
@@ -1697,9 +1696,9 @@ Old:
 Object.hasOwn(target.layers || {}, entry.action.layerId)
 New:
 entry.action.layerId in (target.layers || {})
-Selected test: [director-060] The destination needs an own layer baseline
+Selected test: [director-060] The target shot needs an own layer baseline
 Result: KILLED
-m118: KILLED [director-060] The destination needs an own layer baseline
+m118: KILLED [director-060] The target shot needs an own layer baseline
 ```
 
 ## m119
@@ -1711,9 +1710,9 @@ Old:
 target.layers || {}
 New:
 target.layers || {traffic:false}
-Selected test: [director-060] The absent destination layers use an empty baseline
+Selected test: [director-060] The absent target shot layers use an empty baseline
 Result: KILLED
-m119: KILLED [director-060] The absent destination layers use an empty baseline
+m119: KILLED [director-060] The absent target shot layers use an empty baseline
 ```
 
 ## m120
@@ -1725,9 +1724,9 @@ Old:
 target.layers || {}
 New:
 {}
-Selected test: [director-060] The destination accepts every declared layer
+Selected test: [director-060] The target shot accepts every declared layer
 Result: KILLED
-m120: KILLED [director-060] The destination accepts every declared layer
+m120: KILLED [director-060] The target shot accepts every declared layer
 ```
 
 ## m121
@@ -1739,9 +1738,9 @@ Old:
 Object.hasOwn(shot.layers || {}, a.layerId)
 New:
 a.layerId in (shot.layers || {})
-Selected test: [director-061] The layer needs an own shot baseline
+Selected test: [director-061] The layer needs a direct shot baseline
 Result: KILLED
-m121: KILLED [director-061] The layer needs an own shot baseline
+m121: KILLED [director-061] The layer needs a direct shot baseline
 ```
 
 ## m122
@@ -1767,9 +1766,9 @@ Old:
 shot.layers || {}
 New:
 {}
-Selected test: [director-061] The layer accepts an own shot baseline
+Selected test: [director-061] The layer accepts a direct shot baseline
 Result: KILLED
-m123: KILLED [director-061] The layer accepts an own shot baseline
+m123: KILLED [director-061] The layer accepts a direct shot baseline
 ```
 
 ## m124
@@ -1921,9 +1920,9 @@ Old:
 active = !!actions.size;
 New:
 active = false;
-Selected test: [director-066] The session activates every unique action
+Selected test: [director-066] The session activates every unique interaction
 Result: KILLED
-m134: KILLED [director-066] The session activates every unique action
+m134: KILLED [director-066] The session activates every unique interaction
 ```
 
 ## m135
@@ -1935,9 +1934,9 @@ Old:
 if (!active || busy || !item) return false;
 New:
 if (false) return false;
-Selected test: [director-067] The inactive session refuses execution
+Selected test: [director-067] The inactive session refuses adapter call
 Result: KILLED
-m135: KILLED [director-067] The inactive session refuses execution
+m135: KILLED [director-067] The inactive session refuses adapter call
 ```
 
 ## m136
@@ -1949,9 +1948,9 @@ Old:
 !active || busy || !item
 New:
 !active || !item
-Selected test: [director-068] The busy session refuses a second execution
+Selected test: [director-068] The busy session refuses a second adapter call
 Result: KILLED
-m136: KILLED [director-068] The busy session refuses a second execution
+m136: KILLED [director-068] The busy session refuses a second adapter call
 ```
 
 ## m137
@@ -1977,9 +1976,9 @@ Old:
 busy = true;
 New:
 busy = false;
-Selected test: [director-070] The successful action reports selected idle state
+Selected test: [director-070] The successful interaction gives selected idle state
 Result: KILLED
-m138: KILLED [director-070] The successful action reports selected idle state
+m138: KILLED [director-070] The successful interaction gives selected idle state
 ```
 
 ## m139
@@ -1991,9 +1990,9 @@ Old:
 (await Promise.race([work, cancelled])) !== false
 New:
 (await Promise.race([work, cancelled])) !== null
-Selected test: [director-071] The false adapter result refuses the action
+Selected test: [director-071] The false adapter result refuses the interaction
 Result: KILLED
-m139: KILLED [director-071] The false adapter result refuses the action
+m139: KILLED [director-071] The false adapter result refuses the interaction
 ```
 
 ## m140
@@ -2007,9 +2006,9 @@ Old:
 New:
 } catch {
         return true;
-Selected test: [director-072] The adapter exception allows another action
+Selected test: [director-072] The adapter exception allows another interaction
 Result: KILLED
-m140: KILLED [director-072] The adapter exception allows another action
+m140: KILLED [director-072] The adapter exception allows another interaction
 ```
 
 ## m141
@@ -2023,9 +2022,9 @@ Old:
 New:
 } catch {
         return true;
-Selected test: [director-072] The adapter rejection allows another action
+Selected test: [director-072] The adapter rejection allows another interaction
 Result: KILLED
-m141: KILLED [director-072] The adapter rejection allows another action
+m141: KILLED [director-072] The adapter rejection allows another interaction
 ```
 
 ## m142
@@ -2037,9 +2036,9 @@ Old:
 if (current.signal.aborted) return false;
 New:
 <empty>
-Selected test: [director-073] The session cancels work before execution
+Selected test: [director-073] The session cancels work before adapter call
 Result: KILLED
-m142: KILLED [director-073] The session cancels work before execution
+m142: KILLED [director-073] The session cancels work before adapter call
 ```
 
 ## m143
@@ -2051,9 +2050,9 @@ Old:
 controller?.abort();
 New:
 <empty>
-Selected test: [director-073] The session settles uncooperative work
+Selected test: [director-073] The session settles work with no adapter result
 Result: KILLED
-m143: KILLED [director-073] The session settles uncooperative work
+m143: KILLED [director-073] The session settles work with no adapter result
 ```
 
 ## m144
@@ -2121,9 +2120,9 @@ Old:
 entry?.action?.type === 'layer'
 New:
 entry?.action.type === 'layer'
-Selected test: [director-060] The shot loop skips an absent action
+Selected test: [director-060] The shot loop skips an absent action field
 Result: KILLED
-m148: KILLED [director-060] The shot loop skips an absent action
+m148: KILLED [director-060] The shot loop skips an absent action field
 ```
 
 ## m149
@@ -2135,9 +2134,9 @@ Old:
 !active || busy || !item
 New:
 busy || !item
-Selected test: [director-067] The inactive map refuses custom list work
-Result: KILLED
-m149: KILLED [director-067] The inactive map refuses custom list work
+Selected test: [director-067] The inactive session refuses adapter call
+Result: EQUIVALENT (SURVIVED)
+m149: SURVIVED
 ```
 
 ## m150
@@ -2151,9 +2150,9 @@ Old:
 New:
 true
         );
-Selected test: [director-073] The settled race checks the abort signal
+Selected test: [director-073] The session returns false when clear runs after the result
 Result: KILLED
-m150: KILLED [director-073] The settled race checks the abort signal
+m150: KILLED [director-073] The session returns false when clear runs after the result
 ```
 
 ## m151
@@ -2165,9 +2164,9 @@ Old:
 current.signal.removeEventListener('abort', abort);
 New:
 <empty>
-Selected test: [director-070] The action detaches its abort listener
+Selected test: [director-070] The interaction removes its abort listener
 Result: KILLED
-m151: KILLED [director-070] The action detaches its abort listener
+m151: KILLED [director-070] The interaction removes its abort listener
 ```
 
 ## m152
@@ -2285,9 +2284,9 @@ Old:
 New:
 ...(false
       ? ['anchorId']
-Selected test: [director-051] The anchor shape uses its own reference field
+Selected test: [director-051] The anchor shape uses its supplied reference field
 Result: KILLED
-m159: KILLED [director-051] The anchor shape uses its own reference field
+m159: KILLED [director-051] The anchor shape uses its supplied reference field
 ```
 
 ## m160
@@ -2315,9 +2314,9 @@ Old:
 version >= 4 && Object.hasOwn(value || {}, 'anchorId')
 New:
 version >= 4
-Selected test: [director-051] The inline pose decides its own shape
+Selected test: [director-051] The inline pose controls its supplied shape
 Result: KILLED
-m161: KILLED [director-051] The inline pose decides its own shape
+m161: KILLED [director-051] The inline pose controls its supplied shape
 ```
 
 ## m162
@@ -2343,9 +2342,9 @@ Old:
 if (a.type === 'card') {
 New:
 if (false) {
-Selected test: [director-057] The card type decides its text check
+Selected test: [director-057] The card type controls its text check
 Result: KILLED
-m163: KILLED [director-057] The card type decides its text check
+m163: KILLED [director-057] The card type controls its text check
 ```
 
 ## m164
@@ -2357,9 +2356,9 @@ Old:
 else if (a.type === 'shot') {
 New:
 else if (false) {
-Selected test: [director-060] The shot type decides its reference check
+Selected test: [director-060] The shot type controls its reference check
 Result: KILLED
-m164: KILLED [director-060] The shot type decides its reference check
+m164: KILLED [director-060] The shot type controls its reference check
 ```
 
 ## m165
@@ -2371,9 +2370,9 @@ Old:
 else if (a.type === 'layer') {
 New:
 else if (false) {
-Selected test: [director-061] The layer type decides its state check
+Selected test: [director-061] The layer type controls its state check
 Result: KILLED
-m165: KILLED [director-061] The layer type decides its state check
+m165: KILLED [director-061] The layer type controls its state check
 ```
 
 ## m166
@@ -2413,9 +2412,9 @@ Old:
 pose(shot.camera, `${at}.camera`, version, anchorIds, true);
 New:
 pose(shot.camera, `${at}.camera`, version, anchorIds, true); shot.camera.heading = 99;
-Selected test: [director-064] version 4 keeps anchor identity, references and inline move edits through normalization
+Selected test: [director-064] version 4 keeps anchor identity, references and move edits through normalization
 Result: KILLED
-m168: KILLED [director-064] version 4 retains anchor identity, references and explicit move edits through normali
+m168: KILLED [director-064] version 4 keeps anchor identity, references and move edits through normalization
 ```
 
 ## m169
@@ -2427,9 +2426,9 @@ Old:
 string(a.text, field, 4096);
 New:
 string(a.text, field, 4096); a.text = "changed";
-Selected test: [director-063] all four inert actions survive validation, migration and export without executing content
+Selected test: [director-063] all four inert interactions survive validation, migration and export without running content
 Result: KILLED
-m169: KILLED [director-063] all four inert actions survive validation, migration and export without executing con
+m169: KILLED [director-063] all four inert interactions survive validation, migration and export without running
 ```
 
 ## m170
@@ -2441,9 +2440,9 @@ Old:
 if (typeof a.enabled !== 'boolean')
 New:
 if (false)
-Selected test: [director-056 director-060 director-061] reject unknown fields, executable syntax, invalid references and missing reset baselines
+Selected test: [director-056 director-060 director-061] reject unknown fields, script syntax, invalid references and missing reset baselines
 Result: KILLED
-m170: KILLED [director-056 director-060 director-061] reject unknown fields, executable syntax, invalid reference
+m170: KILLED [director-056 director-060 director-061] reject unknown fields, script syntax, invalid references an
 ```
 
 ## m171
@@ -2455,9 +2454,9 @@ Old:
 controller?.abort();
 New:
 <empty>
-Selected test: [director-068 director-073 director-074] pending actions cancel promptly, refuse overlap and cannot update a replacement session
+Selected test: [director-068 director-073 director-074] pending interactions cancel promptly, refuse overlap and cannot update a replacement session
 Result: KILLED
-m171: KILLED [director-068 director-073 director-074] pending actions cancel promptly, refuse overlap and cannot 
+m171: KILLED [director-068 director-073 director-074] pending interactions cancel promptly, refuse overlap and ca
 ```
 
 ## m172
@@ -2469,9 +2468,9 @@ Old:
 if (current.signal.aborted) return false;
 New:
 <empty>
-Selected test: [director-072 director-073] synchronous stop before execution prevents any side effect; rejection unlocks retry
+Selected test: [director-072 director-073] synchronous stop before adapter call prevents any side effect; rejection unlocks retry
 Result: KILLED
-m172: KILLED [director-072 director-073] synchronous stop before execution prevents any side effect; rejection un
+m172: KILLED [director-072 director-073] synchronous stop before adapter call prevents any side effect; rejection
 ```
 
 ## m173
@@ -2553,9 +2552,9 @@ Old:
 for (const entry of items)
 New:
 for (const entry of items.filter(e => e.action?.layerId !== 'traffic'))
-Selected test: [director-060] The destination loop checks the traffic entry
+Selected test: [director-060] The target shot loop checks the traffic entry
 Result: KILLED
-m178: KILLED [director-060] The destination loop checks the traffic entry
+m178: KILLED [director-060] The target shot loop checks the traffic entry
 ```
 
 ## m179
@@ -2567,9 +2566,9 @@ Old:
 for (const entry of items)
 New:
 for (const entry of items.filter(e => e.action?.layerId !== 'ships'))
-Selected test: [director-060] The destination loop checks the ships entry
+Selected test: [director-060] The target shot loop checks the ships entry
 Result: KILLED
-m179: KILLED [director-060] The destination loop checks the ships entry
+m179: KILLED [director-060] The target shot loop checks the ships entry
 ```
 
 ## m180
@@ -2707,9 +2706,9 @@ Old:
 selected = id;
 New:
 selected = null;
-Selected test: [director-070] The successful action reports selected idle state
+Selected test: [director-070] The successful interaction gives selected idle state
 Result: KILLED
-m189: KILLED [director-070] The successful action reports selected idle state
+m189: KILLED [director-070] The successful interaction gives selected idle state
 ```
 
 ## m190
@@ -2721,9 +2720,9 @@ Old:
           busy = false;
 New:
           busy = true;
-Selected test: [director-070] The successful action reports selected idle state
+Selected test: [director-070] The successful interaction gives selected idle state
 Result: KILLED
-m190: KILLED [director-070] The successful action reports selected idle state
+m190: KILLED [director-070] The successful interaction gives selected idle state
 ```
 
 ## m191
@@ -2833,9 +2832,9 @@ Old:
 controller?.abort();
 New:
 controller.abort();
-Selected test: [director-066] The session activates every unique action
+Selected test: [director-066] The session activates every unique interaction
 Result: KILLED
-m198: KILLED [director-066] The session activates every unique action
+m198: KILLED [director-066] The session activates every unique interaction
 ```
 
 ## m199
@@ -2931,9 +2930,9 @@ Old:
 array(items, at, 64);
 New:
 array(items, at, 63);
-Selected test: [director-062] The shot accepts the exact action limit
+Selected test: [director-062] The shot accepts the exact interaction limit
 Result: KILLED
-m205: KILLED [director-062] The shot accepts the exact action limit
+m205: KILLED [director-062] The shot accepts the exact interaction limit
 ```
 
 ## m206
@@ -3015,9 +3014,9 @@ Old:
 string(a.type, `${field}.action.type`);
 New:
 <empty>
-Selected test: [director-057] The action rejects an array type
+Selected test: [director-057] The action field rejects an array type
 Result: KILLED
-m211: KILLED [director-057] The action rejects an array type
+m211: KILLED [director-057] The action field rejects an array type
 ```
 
 ## m212
@@ -3029,9 +3028,9 @@ Old:
 explicit || Object.hasOwn(value, 'altitudeReference')
 New:
 Object.hasOwn(value, 'altitudeReference')
-Selected test: [director-055] The destination needs its height reference
+Selected test: [director-055] The end pose needs its height reference
 Result: KILLED
-m212: KILLED [director-055] The destination needs its height reference
+m212: KILLED [director-055] The end pose needs its height reference
 ```
 
 ## m213
@@ -3043,9 +3042,9 @@ Old:
 current.signal.removeEventListener('abort', abort);
 New:
 current.signal.removeEventListener('abort', () => {});
-Selected test: [director-070] The action detaches its abort listener
+Selected test: [director-070] The interaction removes its abort listener
 Result: KILLED
-m213: KILLED [director-070] The action detaches its abort listener
+m213: KILLED [director-070] The interaction removes its abort listener
 ```
 
 ## m214
@@ -3127,8 +3126,443 @@ Old:
 actions = new Map(items.map((item) => [item.id, item]));
 New:
 actions = new Map();
-Selected test: [director-067] The inactive map refuses custom list work
+Selected test: [director-066] The session activates every unique interaction
 Result: KILLED
-m219: KILLED [director-067] The inactive map refuses custom list work
+m219: KILLED [director-066] The session activates every unique interaction
+```
+
+## m220
+
+File: `src/director/cameraDocument.js`.
+
+```text
+Old:
+0.2, 86400, false
+New:
+0.1, 86400, false
+Selected test: [director-054] The move rejects 0.19 seconds
+Result: KILLED
+m220: KILLED [director-054] The move rejects 0.19 seconds
+```
+
+## m221
+
+File: `src/director/cameraDocument.js`.
+
+```text
+Old:
+0.2, 86400, false
+New:
+0.3, 86400, false
+Selected test: [director-054] The move accepts 0.2 seconds
+Result: KILLED
+m221: KILLED [director-054] The move accepts 0.2 seconds
+```
+
+## m222
+
+File: `src/director/interactions/document.js`.
+
+```text
+Old:
+string(url, at, 2048);
+New:
+string(url, at, 2047);
+Selected test: [director-062] The card accepts 2048 URL characters
+Result: KILLED
+m222: KILLED [director-062] The card accepts 2048 URL characters
+```
+
+## m223
+
+File: `src/director/interactions/document.js`.
+
+```text
+Old:
+string(url, at, 2048);
+New:
+string(url, at, 2049);
+Selected test: [director-062] The card rejects 2049 URL characters
+Result: KILLED
+m223: KILLED [director-062] The card rejects 2049 URL characters
+```
+
+## m224
+
+File: `src/director/interactions/document.js`.
+
+```text
+Old:
+fields(a, `${field}.action`, ['type', ...specs[a.type]]);
+New:
+if (a.type !== 'card') fields(a, `${field}.action`, ['type', ...specs[a.type]]);
+Selected test: [director-057] The card rejects an extra field
+Result: KILLED
+m224: KILLED [director-057] The card rejects an extra field
+```
+
+## m225
+
+File: `src/director/interactions/document.js`.
+
+```text
+Old:
+fields(a, `${field}.action`, ['type', ...specs[a.type]]);
+New:
+if (a.type !== 'focus') fields(a, `${field}.action`, ['type', ...specs[a.type]]);
+Selected test: [director-057] The focus rejects an extra field
+Result: KILLED
+m225: KILLED [director-057] The focus rejects an extra field
+```
+
+## m226
+
+File: `src/director/interactions/document.js`.
+
+```text
+Old:
+fields(a, `${field}.action`, ['type', ...specs[a.type]]);
+New:
+if (a.type !== 'shot') fields(a, `${field}.action`, ['type', ...specs[a.type]]);
+Selected test: [director-057] The shot rejects an extra field
+Result: KILLED
+m226: KILLED [director-057] The shot rejects an extra field
+```
+
+## m227
+
+File: `src/director/interactions/document.js`.
+
+```text
+Old:
+fields(a, `${field}.action`, ['type', ...specs[a.type]]);
+New:
+if (a.type !== 'layer') fields(a, `${field}.action`, ['type', ...specs[a.type]]);
+Selected test: [director-057] The layer rejects an extra field
+Result: KILLED
+m227: KILLED [director-057] The layer rejects an extra field
+```
+
+## m228
+
+File: `src/director/interactions/document.js`.
+
+```text
+Old:
+fields(item, field, ['id', 'label', 'target', 'action']);
+New:
+<empty>
+Selected test: [director-057] The interaction rejects an extra field
+Result: KILLED
+m228: KILLED [director-057] The interaction rejects an extra field
+```
+
+## m229
+
+File: `src/director/interactions/document.js`.
+
+```text
+Old:
+fields(item.target, `${field}.target`, ['packId', 'featureId']);
+New:
+<empty>
+Selected test: [director-057] The target rejects an extra field
+Result: KILLED
+m229: KILLED [director-057] The target rejects an extra field
+```
+
+## m230
+
+File: `src/director/cameraDocument.js`.
+
+```text
+Old:
+fields(move, field, ['from', 'easing']);
+New:
+<empty>
+Selected test: [director-054] The move rejects an extra field
+Result: KILLED
+m230: KILLED [director-054] The move rejects an extra field
+```
+
+## m231
+
+File: `src/director/cameraDocument.js`.
+
+```text
+Old:
+fields(anchor, at, [
+        'id',
+        'title',
+        ...Object.keys(POSITION),
+        'altitudeReference',
+      ]);
+New:
+<empty>
+Selected test: [director-052] The anchor rejects an extra field
+Result: KILLED
+m231: KILLED [director-052] The anchor rejects an extra field
+```
+
+## m232
+
+File: `src/director/interactions/document.js`.
+
+```text
+Old:
+string(item.label, field, 256);
+New:
+string(item.label, field, 255);
+Selected test: [director-062] The label accepts 256 characters
+Result: KILLED
+m232: KILLED [director-062] The label accepts 256 characters
+```
+
+## m233
+
+File: `src/director/interactions/document.js`.
+
+```text
+Old:
+string(item.label, field, 256);
+New:
+string(item.label, field, 257);
+Selected test: [director-062] The label rejects 257 characters
+Result: KILLED
+m233: KILLED [director-062] The label rejects 257 characters
+```
+
+## m234
+
+File: `src/director/cameraDocument.js`.
+
+```text
+Old:
+string(v, p, 4096)
+New:
+string(v, p, 4095)
+Selected test: [director-052] The title accepts 4096 characters
+Result: KILLED
+m234: KILLED [director-052] The title accepts 4096 characters
+```
+
+## m235
+
+File: `src/director/cameraDocument.js`.
+
+```text
+Old:
+string(v, p, 4096)
+New:
+string(v, p, 4097)
+Selected test: [director-052] The title rejects 4097 characters
+Result: KILLED
+m235: KILLED [director-052] The title rejects 4097 characters
+```
+
+## m236
+
+File: `src/director/cameraDocument.js`.
+
+```text
+Old:
+coordinates(anchor, at, POSITION, true, false);
+New:
+coordinates(anchor, at, POSITION, true, true);
+Selected test: [director-052] The anchor rejects text coordinates in version 2
+Result: KILLED
+m236: KILLED [director-052] The anchor rejects text coordinates in version 2
+```
+
+## m237
+
+File: `src/director/camera.js`.
+
+```text
+Old:
+t < 0.5
+New:
+t < 0.4
+Selected test: [director-048] The cubic sample uses progress 0.45
+Result: KILLED
+m237: KILLED [director-048] The cubic sample uses progress 0.45
+```
+
+## m238
+
+File: `src/director/camera.js`.
+
+```text
+Old:
+((((angle(from.lon, to.lon) + 180) % 360) + 360) % 360) - 180
+New:
+((angle(from.lon, to.lon) + 180) % 360) - 180
+Selected test: [director-047] The westward sample crosses the date line
+Result: KILLED
+m238: KILLED [director-047] The westward sample crosses the date line
+```
+
+## m239
+
+File: `src/director/camera.js`.
+
+```text
+Old:
+((((b - a + 540) % 360) + 360) % 360)
+New:
+((b - a + 540) % 360)
+Selected test: [director-047] The westward sample crosses the date line
+Result: KILLED
+m239: KILLED [director-047] The westward sample crosses the date line
+```
+
+## m240
+
+File: `src/director/camera.js`.
+
+```text
+Old:
+camera.heading ?? 0
+New:
+camera.heading || 0
+Selected test: [director-044] The heading keeps negative zero from a getter
+Result: KILLED
+m240: KILLED [director-044] The heading keeps negative zero from a getter
+```
+
+## m241
+
+File: `src/director/camera.js`.
+
+```text
+Old:
+camera.roll ?? 0
+New:
+camera.roll || 0
+Selected test: [director-044] The roll keeps negative zero from a getter
+Result: KILLED
+m241: KILLED [director-044] The roll keeps negative zero from a getter
+```
+
+## m242
+
+File: `src/director/interactions/session.js`.
+
+```text
+Old:
+(await Promise.race([work, cancelled])) !== false
+New:
+(await Promise.race([work, cancelled])) != false
+Selected test: [director-070] The adapter result zero gives true
+Result: KILLED
+m242: KILLED [director-070] The adapter result zero gives true
+```
+
+## m243
+
+File: `src/director/interactions/session.js`.
+
+```text
+Old:
+(await Promise.race([work, cancelled])) !== false
+New:
+(await Promise.race([work, cancelled])) != false
+Selected test: [director-070] The adapter result empty text gives true
+Result: KILLED
+m243: KILLED [director-070] The adapter result empty text gives true
+```
+
+## m244
+
+File: `src/director/interactions/session.js`.
+
+```text
+Old:
+changed = () => {}
+New:
+changed = undefined
+Selected test: [director-065] The default state callback accepts a session change
+Result: KILLED
+m244: KILLED [director-065] The default state callback accepts a session change
+```
+
+## m245
+
+File: `src/director/cameraDocument.js`.
+
+```text
+Old:
+explicit = false
+New:
+explicit = true
+Selected test: [director-049] The ordinary pose uses optional coordinates by default
+Result: KILLED
+m245: KILLED [director-049] The ordinary pose uses optional coordinates by default
+```
+
+## m246
+
+File: `src/director/interactions/session.js`.
+
+```text
+Old:
+    controller = null;
+    changed(state());
+New:
+    changed(state());
+Selected test: [director-073] The session does not abort the old controller when clear runs twice
+Result: KILLED
+m246: KILLED [director-073] The session does not abort the old controller when clear runs twice
+```
+
+## m247
+
+File: `src/director/interactions/session.js`.
+
+```text
+Old:
+          controller = null;
+New:
+<empty>
+Selected test: [director-070] The session does not abort a completed controller when clear runs
+Result: KILLED
+m247: KILLED [director-070] The session does not abort a completed controller when clear runs
+```
+
+## m248
+
+File: `src/director/cameraDocument.js`.
+
+```text
+Old:
+  fields(value, path, [
+    ...Object.keys(ORIENTATION),
+    ...(anchored
+      ? ['anchorId']
+      : [
+          ...Object.keys(POSITION),
+          ...(version >= 4 ? ['altitudeReference'] : []),
+        ]),
+  ]);
+New:
+<empty>
+Selected test: [director-049] The pose rejects an extra field
+Result: KILLED
+m248: KILLED [director-049] The pose rejects an extra field
+```
+
+## m249
+
+File: `src/director/interactions/session.js`.
+
+```text
+Old:
+    controller = null;
+    changed(state());
+New:
+    controller = null;
+Selected test: [director-073] The state callback receives empty state after clear
+Result: KILLED
+m249: KILLED [director-073] The state callback receives empty state after clear
 ```
 

@@ -34,7 +34,7 @@ test('[director-053] The inline start needs lat', () => {
   assert.throws(() => validate(s), /move\.from\.lat/);
 });
 
-test('[director-053] The inline destination needs lat', () => {
+test('[director-053] The inline end pose needs lat', () => {
   const s = moving();
   delete s.shots[0].camera.lat;
   assert.throws(() => validate(s), /camera\.lat/);
@@ -52,7 +52,7 @@ test('[director-053] The inline start needs lon', () => {
   assert.throws(() => validate(s), /move\.from\.lon/);
 });
 
-test('[director-053] The inline destination needs lon', () => {
+test('[director-053] The inline end pose needs lon', () => {
   const s = moving();
   delete s.shots[0].camera.lon;
   assert.throws(() => validate(s), /camera\.lon/);
@@ -70,7 +70,7 @@ test('[director-053] The inline start needs alt', () => {
   assert.throws(() => validate(s), /move\.from\.alt/);
 });
 
-test('[director-053] The inline destination needs alt', () => {
+test('[director-053] The inline end pose needs alt', () => {
   const s = moving();
   delete s.shots[0].camera.alt;
   assert.throws(() => validate(s), /camera\.alt/);
@@ -108,90 +108,90 @@ test('[director-053] The inline start needs all coordinates', () => {
   assert.throws(() => validate(s), /move\.from\.lat/);
 });
 
-test('[director-050] The own orientation field decides the check', () => {
+test('[director-050] The supplied orientation field controls the check', () => {
   const s = scene();
   s.shots[0].camera.pitch = 91;
   assert.throws(() => validate(s), /camera\.pitch/);
 });
 
-test('[director-051] The legacy pose accepts text heading', () => {
+test('[director-051] The version 2 pose accepts text heading', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.heading = '1';
   assert.doesNotThrow(() => validate(s, 2));
 });
 
-test('[director-051] The modern pose rejects text heading', () => {
+test('[director-051] The version 3 pose rejects text heading', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.heading = '1';
   assert.throws(() => validate(s, 3), /camera\.heading/);
 });
 
-test('[director-051] The legacy pose accepts text pitch', () => {
+test('[director-051] The version 2 pose accepts text pitch', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.pitch = '1';
   assert.doesNotThrow(() => validate(s, 2));
 });
 
-test('[director-051] The modern pose rejects text pitch', () => {
+test('[director-051] The version 3 pose rejects text pitch', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.pitch = '1';
   assert.throws(() => validate(s, 3), /camera\.pitch/);
 });
 
-test('[director-051] The legacy pose accepts text roll', () => {
+test('[director-051] The version 2 pose accepts text roll', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.roll = '1';
   assert.doesNotThrow(() => validate(s, 2));
 });
 
-test('[director-051] The modern pose rejects text roll', () => {
+test('[director-051] The version 3 pose rejects text roll', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.roll = '1';
   assert.throws(() => validate(s, 3), /camera\.roll/);
 });
 
-test('[director-051] The legacy pose accepts text lat', () => {
+test('[director-051] The version 2 pose accepts text lat', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.lat = '1';
   assert.doesNotThrow(() => validate(s, 2));
 });
 
-test('[director-051] The modern pose rejects text lat', () => {
+test('[director-051] The version 3 pose rejects text lat', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.lat = '1';
   assert.throws(() => validate(s, 3), /camera\.lat/);
 });
 
-test('[director-051] The legacy pose accepts text lon', () => {
+test('[director-051] The version 2 pose accepts text lon', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.lon = '1';
   assert.doesNotThrow(() => validate(s, 2));
 });
 
-test('[director-051] The modern pose rejects text lon', () => {
+test('[director-051] The version 3 pose rejects text lon', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.lon = '1';
   assert.throws(() => validate(s, 3), /camera\.lon/);
 });
 
-test('[director-051] The legacy pose accepts text alt', () => {
+test('[director-051] The version 2 pose accepts text alt', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.alt = '1';
   assert.doesNotThrow(() => validate(s, 2));
 });
 
-test('[director-051] The modern pose rejects text alt', () => {
+test('[director-051] The version 3 pose rejects text alt', () => {
   const s = scene();
   delete s.shots[0].camera.altitudeReference;
   s.shots[0].camera.alt = '1';
@@ -226,7 +226,7 @@ test('[director-051] The early version rejects the height field', () => {
   assert.throws(() => validate(scene(), 3), /altitudeReference/);
 });
 
-test('[director-055] The own height reference decides the check', () => {
+test('[director-055] The supplied height reference controls the check', () => {
   const s = scene();
   s.shots[0].camera.altitudeReference = 'terrain';
   assert.throws(() => validate(s), /altitudeReference/);
@@ -452,7 +452,7 @@ test('[director-050] The inline schema accepts its roll field', () => {
   assert.doesNotThrow(() => validate(s));
 });
 
-test('[director-051] The anchor shape uses its own reference field', () => {
+test('[director-051] The anchor shape uses its supplied reference field', () => {
   assert.doesNotThrow(() =>
     validate({ anchors: [anchor()], shots: [{ camera: { anchorId: 'a' } }] }),
   );
@@ -462,7 +462,7 @@ test('[director-055] The inline shape keeps its coordinate fields', () => {
   assert.doesNotThrow(() => validate(scene()));
 });
 
-test('[director-051] The inline pose decides its own shape', () => {
+test('[director-051] The inline pose controls its supplied shape', () => {
   assert.doesNotThrow(() => validate(scene()));
 });
 
@@ -609,7 +609,7 @@ test('[director-052] The anchor needs its height reference', () => {
   );
 });
 
-test('[director-055] The destination needs its height reference', () => {
+test('[director-055] The end pose needs its height reference', () => {
   const s = moving();
   delete s.shots[0].camera.altitudeReference;
   assert.throws(() => validate(s), /camera\.altitudeReference/);
@@ -641,4 +641,64 @@ test('[director-075] The anchor pose rejects its inline altitudeReference field'
   s.anchors = [anchor()];
   s.shots[0].camera = { anchorId: 'a', altitudeReference: 'ellipsoid' };
   assert.throws(() => validate(s), /camera\.altitudeReference/);
+});
+
+test('[director-054] The move rejects 0.19 seconds', () => {
+  const s = moving();
+  s.shots[0].durationSec = 0.19;
+  assert.throws(() => validate(s), /expected a number from 0.2 to 86400/);
+});
+
+test('[director-054] The move accepts 0.2 seconds', () => {
+  const s = moving();
+  s.shots[0].durationSec = 0.2;
+  assert.doesNotThrow(() => validate(s));
+});
+
+test('[director-054] The move rejects an extra field', () => {
+  const s = moving();
+  s.shots[0].move.extra = true;
+  assert.throws(() => validate(s), /move.extra: unsupported field/);
+});
+
+test('[director-052] The anchor rejects an extra field', () => {
+  const a = anchor();
+  a.extra = true;
+  assert.throws(
+    () => validate({ anchors: [a], shots: [] }),
+    /extra: unsupported field/,
+  );
+});
+
+test('[director-052] The title accepts 4096 characters', () => {
+  const a = anchor();
+  a.title = 'x'.repeat(4096);
+  const s = { anchors: [a], shots: [] };
+  assert.doesNotThrow(() => validate(s));
+});
+
+test('[director-052] The title rejects 4097 characters', () => {
+  const a = anchor();
+  a.title = 'x'.repeat(4097);
+  const s = { anchors: [a], shots: [] };
+  assert.throws(() => validate(s), /at most 4096 characters/);
+});
+
+test('[director-052] The anchor rejects text coordinates in version 2', () => {
+  const a = anchor();
+  a.lat = '1';
+  assert.throws(
+    () => validate({ anchors: [a], shots: [] }, 2),
+    /anchors\[0\].lat: expected a number/,
+  );
+});
+
+test('[director-049] The ordinary pose uses optional coordinates by default', () => {
+  assert.doesNotThrow(() => validate({ shots: [{ camera: {} }] }));
+});
+
+test('[director-049] The pose rejects an extra field', () => {
+  const s = scene();
+  s.shots[0].camera.extra = true;
+  assert.throws(() => validate(s), /camera.extra: unsupported field/);
 });
