@@ -1,11 +1,14 @@
 import test from 'node:test';
+import fs from 'node:fs';
+import { syncBuiltinESMExports } from 'node:module';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { appendFileSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { appendFileSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, renameSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { buildTestRuns, childEnv, mergeRawCoverage, parseArgs, runGates } from '../../../scripts/spec/gates.mjs';
+import { protectedInput } from '../../../scripts/spec/lib/measurement.mjs';
 import { contentHash } from '../../../scripts/spec/lib/coverage.mjs';
 import { GUARD_PRELOAD, missingTestContext } from '../../../scripts/spec/lib/test-guard.mjs';
 
@@ -81,7 +84,13 @@ function run(root, argv, options = {}) {
 
 function passes(root, argv, options) {
   const result = run(root, argv, options);
-  assert.equal(result.status, 0, result.output);
+  if (argv[0] === 'ratchet' && result.status === 2) {
+    const errors = result.output.split('\n').filter(line => line.startsWith('ERROR '));
+    assert.ok(errors.length > 0);
+    assert.equal(errors.every(line => /^ERROR REVIEW-/.test(line)), true, result.output);
+  } else {
+    assert.equal(result.status, 0, result.output);
+  }
   return result;
 }
 
@@ -1586,3 +1595,805 @@ test('[ste-lint-037 ste-lint-012] keeps a success status for the lint command wi
     assert.match(result.output, /STE: 0 errors, 1 warnings\./);
   });
 });
+
+// Fake test results keep the new scenarios independent of host measurement counts.
+function oneMeasurement(root, { loaded = false, assertions = 1 } = {}) {
+  let calls = 0;
+  const spawn = (_command, args) => {
+    calls += 1;
+    const runs = JSON.parse(readFileSync(args[1], 'utf8'));
+    writeFileSync(args[2], JSON.stringify(runs.map(() => ({ status: 0, error: null }))));
+    const records = ['src/math.test.mjs', 'tools/other.test.mjs'].map((file, index) => {
+      const tagged = index === 0 && readFileSync(path.join(root, file), 'utf8').includes('[demo-001]');
+      const name = index === 0 ? (tagged ? '[demo-001] adds two numbers' : 'adds two numbers') : 'runs outside src';
+      return { file, name, fullName: name, title: name.replace('[demo-001] ', ''), kind: 'test', status: 'pass', tags: tagged ? ['demo-001'] : [], tagError: null, line: 4, column: 1, leaf: true };
+    });
+    writeFileSync(path.join(path.dirname(args[1]), 'tests-main.jsonl.sync'), records.map(record => JSON.stringify(record) + '\n').join(''));
+    if (loaded) {
+      writeFileSync(path.join(runs[0].env.NODE_V8_COVERAGE, 'coverage-1-1-0.json'), '{"result":[]}');
+      writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:2\nBRF:1\nBRH:1\nFNF:1\nFNH:1\nend_of_record\n`);
+    }
+    writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ checked: loaded ? ['src/math.js'] : [], violations: [], assertions: records.map(record => ({ file: record.file, fullName: record.fullName, count: assertions })), leaks: [] }) + '\n');
+    return { status: 0 };
+  };
+  const openSpec = (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : args[0] === 'show' ? JSON.stringify({ deltas: [{ spec: 'demo', operation: 'ADDED', requirement: { scenarios: [{}] } }], requirements: [{ scenarios: [{}] }] }) : '{"items":[]}' });
+  return { spawn, openSpec, calls: () => calls };
+}
+
+function trustedFixture(body, extra = {}, base = {}) {
+  withFixture(root => {
+    const fake = oneMeasurement(root);
+    passes(root, ['init'], { openSpec: fake.openSpec, spawn: fake.spawn });
+    write(root, { ...CHANGE, 'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers'), ...extra });
+    git(root, 'add', '-A');
+    // Fixture commits supply the Git content comparison required by the scenarios.
+    commitAll(root, 'inputs');
+    const ratchet = run(root, ['ratchet', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn });
+    body({ root, fake, ratchet, commit: git(root, 'rev-parse', 'HEAD'), docs: (options = {}) => run(root, ['check', '--no-measure', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: () => { assert.fail('The document mode started tests'); }, ...options }) });
+  }, { base });
+}
+
+test('[gap-ledger-123] compare one ratchet measurement', () => trustedFixture(({ fake, ratchet }) => {
+  assert.equal(fake.calls(), 2);
+  assert.match(ratchet.output, /^Command: ratchet\n/);
+  assert.match(ratchet.output, /Ledger: 0 entries do not match the current gaps\./);
+  assert.match(ratchet.output, /STE: 0 errors,/);
+}));
+test('[gap-ledger-124] fail for an absent review', () => trustedFixture(({ ratchet }) => {
+  assert.equal(ratchet.status, 2);
+  assert.match(ratchet.output, /ERROR REVIEW-MISSING/);
+  assert.match(ratchet.output, /Gates failed with 1 errors\./);
+}));
+test('[gap-ledger-125] pass after all comparisons', () => trustedFixture(({ root, fake }) => {
+  reviewFor(root, 'add-demo');
+  const result = run(root, ['ratchet', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  assert.equal(result.status, 0, result.output);
+  assert.match(result.output, /Gates passed\./);
+  assert.equal(fake.calls(), 3);
+}));
+test('[gap-ledger-126] compare repaired ledger values', () => trustedFixture(({ root, fake }) => {
+  const file = path.join(root, 'openspec/trace/gaps.json');
+  const ledger = JSON.parse(readFileSync(file, 'utf8'));
+  ledger.version = 1;
+  writeFileSync(file, JSON.stringify(ledger));
+  const result = run(root, ['ratchet', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  assert.equal(JSON.parse(readFileSync(file, 'utf8')).version, 4);
+  assert.doesNotMatch(result.output, /ERROR LEDGER-VERSION/);
+  assert.match(result.output, /ERROR REVIEW-MISSING/);
+}));
+
+test('[coverage-gate-068] trust a changed document', () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { 'openspec/changes/add-demo/design.md': 'The demo adds numbers.\n' });
+
+  write(root, { 'node_modules/dep/example.test.mjs': '// A dependency test.\n' });
+  reviewFor(root, 'add-demo');
+  const before = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8');
+  const trace = readFileSync(path.join(root, '.gev-cache/spec/trace-report.json'), 'utf8');
+  const originalWrite = fs.writeFileSync;
+  let traceWrites = 0;
+  fs.writeFileSync = (file, ...args) => {
+    if (String(file).startsWith(path.join(root, 'openspec/trace/')) || String(file).startsWith(path.join(root, '.gev-cache/spec/'))) traceWrites += 1;
+    return originalWrite(file, ...args);
+  };
+  syncBuiltinESMExports();
+  let result;
+  try {
+    result = docs();
+  } finally {
+    fs.writeFileSync = originalWrite;
+    syncBuiltinESMExports();
+  }
+  assert.equal(traceWrites, 0);
+  assert.equal(result.status, 0, result.output);
+  assert.equal(result.output.split('\n')[0], `NO MEASUREMENT: the measurement of commit ${commit} is trusted`);
+  assert.match(result.output, /Gates passed\./);
+  assert.equal(readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8'), before);
+  assert.equal(readFileSync(path.join(root, '.gev-cache/spec/trace-report.json'), 'utf8'), trace);
+}, { '.gitignore': '.gev-cache/\nnode_modules/\n' }));
+
+test("[coverage-gate-069] refuse a changed inventory file", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "src/math.js": "export {};\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["src/math.js"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {}));
+test("[coverage-gate-070] refuse a changed test file", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "src/math.test.mjs": "// changed\n// changed\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["src/math.test.mjs"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {}));
+test("[coverage-gate-071] refuse a changed QA script", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "scripts/qa-demo.mjs": "/**\n * @purpose Prove the demo.\n * @covers unmapped: Demo\n * @run node scripts/qa-demo.mjs\n * @needs Node.\n */\n// changed\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["scripts/qa-demo.mjs"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {"scripts/qa-demo.mjs": "/**\n * @purpose Prove the demo.\n * @covers unmapped: Demo\n * @run node scripts/qa-demo.mjs\n * @needs Node.\n */\n"}));
+test("[coverage-gate-072] refuse a changed package lock", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "package-lock.json": "{}\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["package-lock.json"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {"package-lock.json": "base\n"}));
+test("[coverage-gate-073] refuse a changed Node version", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { ".node-version": "0.0.0\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), [".node-version"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {}));
+test("[coverage-gate-074] refuse a changed Makefile", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "Makefile": "# changed\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["Makefile"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {"Makefile": "base\n"}));
+test("[coverage-gate-075] refuse a changed Dockerfile", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "Dockerfile": "# changed\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["Dockerfile"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {"Dockerfile": "base\n"}));
+test("[coverage-gate-075] refuse a changed Dockerfile at `containers/Dockerfile.gates`", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "containers/Dockerfile.gates": "# changed\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["containers/Dockerfile.gates"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {"containers/Dockerfile.gates": "base\n"}));
+test("[coverage-gate-075] refuse a changed Dockerfile at `Dockerfileprod`", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "Dockerfileprod": "# changed\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["Dockerfileprod"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {"Dockerfileprod": "base\n"}));
+test("[coverage-gate-076] refuse a changed compose file", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "compose.yaml": "# changed\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["compose.yaml"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {"compose.yaml": "base\n"}));
+test("[coverage-gate-076] refuse a changed compose file at `docker-compose.yml`", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "docker-compose.yml": "# changed\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["docker-compose.yml"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {"docker-compose.yml": "base\n"}));
+test("[coverage-gate-076] refuse a changed compose file at `containers/compose.gates.yaml`", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "containers/compose.gates.yaml": "# changed\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["containers/compose.gates.yaml"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {"containers/compose.gates.yaml": "base\n"}));
+test("[coverage-gate-077] refuse a changed gate file", () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { "scripts/spec/config.txt": "changed\n" });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.equal(result.output.split('\n')[0], 'NO MEASUREMENT: refused');
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["scripts/spec/config.txt"]);
+  assert.ok(result.output.split('\n').includes(`Trusted commit: ${commit}`));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, {"scripts/spec/config.txt": "base\n"}));
+test('[coverage-gate-078] refuse an untracked protected file', () => trustedFixture(({ root, docs }) => {
+  write(root, { 'scripts/spec/new.txt': 'new\n' });
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.ok(result.output.split('\n').includes('scripts/spec/new.txt'));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}));
+test('[coverage-gate-079] refuse without ratchet history', () => withFixture(root => {
+  const result = run(root, ['check', '--no-measure', '--change', 'add-demo']);
+  assert.equal(result.status, 2);
+  assert.match(result.output, /^NO MEASUREMENT: refused\n/);
+  assert.match(result.output, /The change has no ratchet history line/);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}));
+test('[coverage-gate-080] refuse a commit that Git cannot find', () => trustedFixture(({ root, docs }) => {
+  const file = path.join(root, 'openspec/trace/history.jsonl');
+  const history = readFileSync(file, 'utf8').trim().split('\n').map(JSON.parse);
+  history[history.length - 1].commit = '0'.repeat(40);
+  writeFileSync(file, history.map(line => JSON.stringify(line) + '\n').join(''));
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.match(result.output, /Git cannot find the ratchet commit/);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}));
+test('[coverage-gate-081] refuse a changed word list', () => trustedFixture(({ root, docs }) => {
+  const words = JSON.parse(readFileSync(path.join(root, 'openspec/ste/words.json'), 'utf8'));
+  words.words.demo = 'example';
+  write(root, { 'openspec/ste/words.json': JSON.stringify(words) });
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.ok(result.output.split('\n').includes('openspec/ste/words.json'));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}));
+test('[coverage-gate-082] refuse an absent measurement snapshot', () => trustedFixture(({ root, docs }) => {
+  const file = path.join(root, '.gev-cache/spec/measurement.json');
+  writeFileSync(file, '{}');
+  assert.match(docs().output, /The snapshot hash differs from history/);
+  rmSync(file);
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.match(result.output, /The ratchet snapshot is absent/);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}));
+test('[coverage-gate-083] show command times', () => trustedFixture(({ root, fake, docs }) => {
+  for (const command of ['check', 'ratchet', 'docs']) {
+    const result = command === 'docs' ? docs({ clock: () => DATE }) : run(root, [command, '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn, clock: () => DATE });
+    assert.equal(result.output.split('\n')[1], 'Started: 2026-09-13T12:00:00.000Z');
+    assert.equal(result.output.split('\n').at(-1), 'Finished: 2026-09-13T12:00:00.000Z (0 s)');
+    assert.doesNotMatch(result.output, /Phase /);
+  }
+}));
+test('[coverage-gate-084] show slow phase times', () => trustedFixture(({ root, fake }) => {
+  let tick = 0;
+  const result = run(root, ['check', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn, clock: () => new Date(DATE.getTime() + tick++ * 2000) });
+  assert.match(result.output, /Phase measure: 6 s/);
+  for (const name of ['specs', 'compare', 'lint', 'review']) assert.match(result.output, new RegExp(`Phase ${name}: 2 s`));
+  assert.equal(result.output.split('\n').at(-1), 'Finished: 2026-09-13T12:00:22.000Z (22 s)');
+  let exact = 0;
+  const fast = run(root, ['check', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn, clock: () => new Date(DATE.getTime() + exact++ * 1000) });
+  assert.doesNotMatch(fast.output, /Phase (specs|compare|lint|review):/);
+}));
+test('[coverage-gate-085] keep every file gate', () => trustedFixture(({ root, docs }) => {
+  write(root, { 'openspec/trace/links.json': '{}\n', 'openspec/trace/ids.json': '{}\n', 'openspec/changes/add-demo/notes.md': 'You should use the demo.\n' });
+  const result = docs();
+  for (const code of ['TRACE-ID-UNREGISTERED', 'TRACE-LINKS-STALE', 'STE-WORD', 'REVIEW-MISSING']) assert.match(result.output, new RegExp(`ERROR ${code}`));
+  write(root, { 'openspec/changes/add-demo/specs/demo/spec.md': SPEC.replace('MUST', 'can') });
+  assert.match(docs().output, /ERROR SPEC-LINT-NO-MUST/);
+}));
+
+test('[ci-gates-011] add fast checks before review', () => {
+  const text = readFileSync(path.join(PROJECT_ROOT, 'Makefile'), 'utf8');
+  const target = text.match(/^precheck:.*\n(?:\t.*\n)+/m)?.[0] || '';
+  for (const command of ['node scripts/format.mjs --check', 'node scripts/check-import-directions.mjs', 'node scripts/check-package-boundaries.mjs', 'node scripts/check-layer-state-tokens.mjs --base-ref origin/main']) assert.ok(target.includes(command), command);
+  assert.ok(target.includes('docker run --rm -v "$(CURDIR)":/src $(IMAGE)'));
+  assert.ok(target.includes('$(GATES_COPY) || exit 2; env -u NODE_ENV -u HOST -u PORT sh -c'));
+  assert.doesNotMatch(target, /gates\.mjs|\$\(GATES\)/);
+});
+test('[ci-gates-012] add a document gate target', () => {
+  const text = readFileSync(path.join(PROJECT_ROOT, 'Makefile'), 'utf8');
+  assert.match(text, /^gates-docs: ensure-image\n\t\$\(GATES_DOCS\) check --no-measure \$\(CHANGE_ARG\) \$\(BASE_ARG\)/m);
+  assert.ok(text.includes('mkdir -p /tmp/work/.gev-cache/spec'));
+  assert.ok(text.includes('cp /src/.gev-cache/spec/measurement.json /tmp/work/.gev-cache/spec/measurement.json'));
+  const docsCommand = text.match(/^GATES_DOCS := .*$/m)?.[0] || '';
+  assert.ok(docsCommand.includes('$(GATES_COPY) || exit 2;'));
+  assert.ok(docsCommand.includes('$(GATES_DOCS_MARKERS) || exit 2;'));
+  assert.ok(docsCommand.includes('env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs'));
+  assert.doesNotMatch(docsCommand, /\$\(GATES_BACK\)/);
+});
+test('[change-review-033] keep the final measurement', () => {
+  const text = readFileSync(path.join(PROJECT_ROOT, '.claude/commands/opsx/review.md'), 'utf8');
+  assert.match(text, /^1\..*make precheck/m);
+  assert.match(text, /^1\..*Commit the protected inputs before the ratchet command\./m);
+  assert.match(readFileSync(path.join(PROJECT_ROOT, 'AGENTS.md'), 'utf8'), /^2\..*Commit the protected inputs before the ratchet command\./m);
+  for (const step of [1, 3, 11, 15]) assert.match(text, new RegExp(`^${step}\\..*make gates-docs`, 'm'));
+  assert.match(text, /^10\..*make gates-docs/m);
+  assert.match(text, /^15\..*make gates CHANGE=<name>/m);
+  assert.match(text, /CI.*before.*merge/);
+});
+
+test('[coverage-gate-079] refuse history from another change or command', () => trustedFixture(({ root, docs }) => {
+  const file = path.join(root, 'openspec/trace/history.jsonl');
+  const original = readFileSync(file, 'utf8').trim().split('\n').map(JSON.parse);
+  writeFileSync(file, original.map(line => JSON.stringify({ ...line, change: 'other' }) + '\n').join(''));
+  assert.match(docs().output, /The change has no ratchet history line/);
+  writeFileSync(file, original.map(line => JSON.stringify({ ...line, kind: 'waiver' }) + '\n').join(''));
+  assert.match(docs().output, /The change has no ratchet history line/);
+}));
+
+test('[coverage-gate-085] check OpenSpec without tests', () => trustedFixture(({ docs }) => {
+  const result = docs({ openSpec: () => ({ status: 1, stdout: '0.0.0' }) });
+  assert.match(result.output, /ERROR GATES-OPENSPEC/);
+  assert.equal(result.status, 1);
+}));
+
+test('[coverage-gate-085] check coverage filters without tests', () => trustedFixture(({ root, docs }) => {
+  write(root, { 'openspec/changes/add-demo/config.json': '{"option":"--test-coverage-exclude=src/math.js"}\n' });
+  git(root, 'add', 'openspec/changes/add-demo/config.json');
+  const result = docs();
+  assert.match(result.output, /ERROR COVERAGE-FLAG openspec\/changes\/add-demo\/config.json/);
+  assert.equal(result.status, 1);
+  assert.match(docs({ nodeVersion: '0.0.0' }).output, /ERROR GATES-RUNTIME/);
+}));
+
+test('[coverage-gate-085] check archived specs without tests', () => trustedFixture(({ root, docs }) => {
+  const folder = 'openspec/changes/archive/2026-09-13-add-demo';
+  mkdirSync(path.join(root, 'openspec/changes/archive'), { recursive: true });
+  git(root, 'mv', 'openspec/changes/add-demo', folder);
+  write(root, { 'openspec/specs/demo/spec.md': '# Demo\n\n## Purpose\n\nAdd numbers.\n\n' + SPEC.replace('## ADDED Requirements', '## Requirements').replace('result is 3', 'result is 4') });
+  const result = docs();
+  assert.match(result.output, /ERROR SPEC-DELTA-NOT-APPLIED/);
+  assert.equal(result.status, 1);
+}));
+
+test('[coverage-gate-069] refuse a deleted protected file', () => trustedFixture(({ root, docs }) => {
+  git(root, 'rm', '-q', 'src/math.js');
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.ok(result.output.split('\n').includes('src/math.js'));
+}));
+
+test('[gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes', () => withFixture(root => {
+  const fake = oneMeasurement(root);
+  passes(root, ['init'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  write(root, { 'openspec/changes/docs/proposal.md': 'The demo adds numbers.\n' });
+  commitAll(root, 'docs');
+  const first = run(root, ['ratchet', '--change', 'docs'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  assert.match(first.output, /Ratchet: 1 history lines for docs/);
+  const history = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8');
+  const firstLine = JSON.parse(history);
+  assert.equal(firstLine.kind, 'measurement');
+  assert.equal(firstLine.change, 'docs');
+  assert.equal(firstLine.commit, git(root, 'rev-parse', 'HEAD'));
+  assert.equal(Object.hasOwn(firstLine, 'measurement'), true);
+  assert.match(firstLine.measurement, /^[0-9a-f]{64}$/);
+  reviewFor(root, 'docs');
+  const second = run(root, ['ratchet', '--change', 'docs'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  assert.equal(second.status, 0, second.output);
+  assert.equal(readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8'), history);
+  commitAll(root, 'review');
+  run(root, ['ratchet', '--change', 'docs'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  assert.equal(readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8').trim().split('\n').length, 2);
+}));
+
+test('[gap-ledger-126] repair absent totals and stale test names', () => withFixture(root => {
+  const fake = oneMeasurement(root, { loaded: true });
+  const options = { spawn: fake.spawn, openSpec: fake.openSpec };
+  passes(root, ['init'], options);
+  write(root, { 'openspec/changes/docs/proposal.md': 'The demo adds numbers.\n' });
+  const file = path.join(root, 'openspec/trace/gaps.json');
+  const ledger = JSON.parse(readFileSync(file, 'utf8'));
+  delete ledger.coverage['src/math.js'].totals;
+  ledger.untracedTests['src/math.test.mjs'].names.obsolete = 1;
+  writeFileSync(file, JSON.stringify(ledger));
+  const result = run(root, ['ratchet', '--change', 'docs'], options);
+  const repaired = JSON.parse(readFileSync(file, 'utf8'));
+  assert.deepEqual(repaired.coverage['src/math.js'].totals, { lines: 3, branches: 1, functions: 1 });
+  assert.deepEqual(repaired.untracedTests['src/math.test.mjs'].names, { 'adds two numbers': 1 });
+  assert.doesNotMatch(result.output, /ERROR LEDGER-NO-TOTALS|ERROR LEDGER-STALE/);
+  assert.equal(result.status, 2);
+  assert.match(result.output, /ERROR REVIEW-MISSING/);
+}));
+
+test('[coverage-gate-078] refuse an ignored protected file', () => trustedFixture(({ root, docs }) => {
+  appendFileSync(path.join(root, '.gitignore'), 'scripts/spec/hidden.txt\n');
+  write(root, { 'scripts/spec/hidden.txt': 'hidden\n' });
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.ok(result.output.split('\n').includes('scripts/spec/hidden.txt'));
+}));
+
+test('[coverage-gate-086] refuse changed package metadata', () => trustedFixture(({ root, docs }) => {
+  write(root, { 'package.json': '{"type":"commonjs"}\n' });
+  git(root, 'add', 'package.json');
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.ok(result.output.split('\n').includes('package.json'));
+}));
+
+test('[coverage-gate-087] refuse a failed Git comparison', () => trustedFixture(({ docs }) => {
+  for (const failed of ['diff', 'others', 'ignored']) {
+    const result = docs({ gitSpawn: (_command, args) => ({ status: (failed === 'diff' ? args[0] === 'diff' : failed === 'ignored' ? args.includes('--ignored') : args[0] === 'ls-files' && !args.includes('--ignored')) ? 1 : 0, stdout: '' }) });
+    assert.equal(result.status, 2);
+    assert.match(result.output, /Git cannot compare protected files/);
+    assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+  }
+}));
+
+test('[coverage-gate-068] set the document option on the options object', () => {
+  const options = parseArgs(['check', '--no-measure', '--change', 'docs']);
+  assert.equal(Object.hasOwn(options, 'noMeasure'), true);
+  assert.deepEqual(options, { command: 'check', change: 'docs', base: undefined, root: undefined, noMeasure: true });
+  assert.throws(() => parseArgs(['ratchet', '--no-measure']), /Usage:/);
+});
+
+test('[gap-ledger-129] record a different hash without a changed gap', () => withFixture(root => {
+  const fake = oneMeasurement(root);
+  const options = { spawn: fake.spawn, openSpec: fake.openSpec };
+  passes(root, ['init'], options);
+  write(root, { 'openspec/changes/docs/proposal.md': 'The demo adds numbers.\n' });
+  run(root, ['ratchet', '--change', 'docs'], options);
+  const next = oneMeasurement(root, { assertions: 2 });
+  run(root, ['ratchet', '--change', 'docs'], { spawn: next.spawn, openSpec: next.openSpec });
+  assert.equal(readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8').trim().split('\n').length, 2);
+  const result = run(root, ['check', '--no-measure', '--change', 'docs'], options);
+  assert.match(result.output, /^NO MEASUREMENT: the measurement of commit /);
+}));
+
+test('[gap-ledger-129] record a different change without a changed gap', () => withFixture(root => {
+  const fake = oneMeasurement(root);
+  const options = { spawn: fake.spawn, openSpec: fake.openSpec };
+  passes(root, ['init'], options);
+  write(root, { 'openspec/changes/alpha/proposal.md': 'The demo adds numbers.\n' });
+  run(root, ['ratchet', '--change', 'alpha'], options);
+  write(root, { 'openspec/changes/beta/proposal.md': 'The demo adds numbers.\n' });
+  run(root, ['ratchet', '--change', 'beta'], options);
+  const history = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+  assert.deepEqual(history.map(line => line.change), ['alpha', 'beta']);
+  assert.equal(Object.hasOwn(history[1], 'measurement'), true);
+  assert.match(history[1].measurement, /^[0-9a-f]{64}$/);
+}));
+
+test('[coverage-gate-085] report a change folder that is absent', () => trustedFixture(({ root, docs }) => {
+  git(root, 'rm', '-r', '-q', 'openspec/changes/add-demo');
+  const result = docs();
+  assert.equal(result.status, 1);
+  assert.match(result.output, /ERROR TRACE-UNKNOWN-CHANGE/);
+}));
+
+test('[coverage-gate-079] refuse without a change name', () => trustedFixture(({ root, fake }) => {
+  const result = run(root, ['check', '--no-measure'], { spawn: fake.spawn, openSpec: fake.openSpec });
+  assert.equal(result.status, 2);
+  assert.match(result.output, /The change has no ratchet history line/);
+}));
+
+test('[coverage-gate-085] compare the ledger with the base without tests', () => withFixture(root => {
+  const fake = oneMeasurement(root);
+  const options = { spawn: fake.spawn, openSpec: fake.openSpec };
+  passes(root, ['init'], options);
+  commitAll(root, 'ledger');
+  git(root, 'checkout', '-q', 'main');
+  git(root, 'merge', '-q', '--ff-only', 'work');
+  git(root, 'checkout', '-q', 'work');
+  write(root, { 'openspec/changes/docs/proposal.md': 'The demo adds numbers.\n' });
+  run(root, ['ratchet', '--change', 'docs'], options);
+  const file = path.join(root, 'openspec/trace/gaps.json');
+  const ledger = JSON.parse(readFileSync(file, 'utf8'));
+  ledger.coverage['src/math.js'].lines = 4;
+  writeFileSync(file, JSON.stringify(ledger));
+  const result = run(root, ['check', '--no-measure', '--change', 'docs'], options);
+  assert.equal(result.status, 1);
+  assert.match(result.output, /ERROR LEDGER-LARGER-THAN-BASE/);
+  assert.match(result.output, /ERROR LEDGER-STALE/);
+}));
+
+test('[coverage-gate-069] refuse a new tracked inventory file', () => trustedFixture(({ root, docs }) => {
+  write(root, { 'src/new.js': 'export {};\n' });
+  git(root, 'add', 'src/new.js');
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.ok(result.output.split('\n').includes('src/new.js'));
+}));
+
+test('[coverage-gate-078] refuse an untracked code file', () => trustedFixture(({ root, docs }) => {
+  write(root, { 'src/new.js': 'export {};\n' });
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.ok(result.output.split('\n').includes('src/new.js'));
+}));
+
+test('[coverage-gate-085] check the base registry without tests', () => trustedFixture(({ root, docs }) => {
+  commitAll(root, 'trace');
+  git(root, 'checkout', '-q', 'main');
+  git(root, 'merge', '-q', '--ff-only', 'work');
+  git(root, 'checkout', '-q', 'work');
+  const file = path.join(root, 'openspec/trace/ids.json');
+  const registry = JSON.parse(readFileSync(file, 'utf8'));
+  registry['demo-001'].hash = 'wrong';
+  writeFileSync(file, JSON.stringify(registry));
+  const result = docs();
+  assert.match(result.output, /ERROR TRACE-ID-BASE-CHANGED/);
+  assert.match(result.output, /ERROR TRACE-ID-CHANGED/);
+}));
+
+test('[coverage-gate-085] check all review files without tests', () => trustedFixture(({ root, fake, docs }) => {
+  write(root, {
+    'openspec/changes/archive/2026-09-13-add-demo/proposal.md': 'The demo adds numbers.\n',
+    '.claude/agents/spec-adversary.md': '---\nname: spec-adversary\ndescription: Review\ntools: Write\n---\nReview.\n',
+    '.claude/commands/opsx/review.md': 'Review.\n',
+  });
+  commitAll(root, 'review inputs');
+  run(root, ['ratchet', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  const result = docs();
+  assert.match(result.output, /ERROR REVIEW-MISSING openspec\/changes\/archive\/2026-09-13-add-demo\/review.md/);
+  assert.match(result.output, /ERROR REVIEW-NAME-REUSED/);
+  assert.match(result.output, /ERROR REVIEW-AGENT .claude\/agents\/spec-adversary.md/);
+  assert.match(result.output, /ERROR REVIEW-COMMAND/);
+}));
+
+test('[ci-gates-005] keep the CI verdict without command times', () => withFixture(root => {
+  const fake = oneMeasurement(root);
+  const options = { spawn: fake.spawn, openSpec: fake.openSpec };
+  passes(root, ['init'], options);
+  commitAll(root, 'ledger');
+  git(root, 'checkout', '-q', 'main');
+  git(root, 'merge', '-q', '--ff-only', 'work');
+  git(root, 'checkout', '-q', 'work');
+  write(root, { 'README.md': '# Docs\n' });
+  const result = run(root, ['ci'], options);
+  assert.equal(result.status, 0, result.output);
+  assert.match(result.output, /^CI: check without a change\./);
+  assert.doesNotMatch(result.output, /Started:|Finished:|Phase /);
+}));
+
+test('[coverage-gate-088] refuse an omitted protected file', () => withFixture(source => trustedFixture(({ root, docs }) => {
+  appendFileSync(path.join(source, '.gitignore'), 'scripts/spec/hidden name.txt\n');
+  write(source, { 'scripts/spec/hidden name.txt': 'Source contents must not enter the image.\n', 'scripts/spec/visible name.txt': 'Copied contents.\n' });
+  write(root, { 'scripts/spec/visible name.txt': 'Copied contents.\n' });
+  const text = readFileSync(path.join(PROJECT_ROOT, 'Makefile'), 'utf8');
+  const command = text.match(/^GATES_DOCS_MARKERS := (.*)$/m)[1].replaceAll('$$', '$').replaceAll('/src', source).replaceAll('/tmp/work', root).replaceAll('/tmp/doc-inputs', path.join(source, 'doc-inputs'));
+  const result = spawnSync('sh', ['-c', command], { cwd: source, encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(readFileSync(path.join(root, 'scripts/spec/hidden name.txt'), 'utf8'), '{}');
+  assert.equal(readFileSync(path.join(root, 'scripts/spec/visible name.txt'), 'utf8'), 'Copied contents.\n');
+  const verdict = docs();
+  assert.equal(verdict.status, 2);
+  assert.ok(verdict.output.split('\n').includes('scripts/spec/hidden name.txt'));
+  assert.doesNotMatch(verdict.output, /Gates passed|Gates failed/);
+})));
+
+test("[coverage-gate-090 coverage-gate-091] refuse a changed file at AGENTS.md", () => trustedFixture(({ root, docs }) => {
+  write(root, { "AGENTS.md": 'Changed.\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["AGENTS.md"]);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, { "AGENTS.md": 'Base.\n' }));
+test("[coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/commands/opsx/review.md", () => trustedFixture(({ root, docs }) => {
+  write(root, { ".claude/commands/opsx/review.md": 'Changed.\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), [".claude/commands/opsx/review.md"]);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, { ".claude/commands/opsx/review.md": 'Base.\n' }));
+test("[coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/agents/x.md", () => trustedFixture(({ root, docs }) => {
+  write(root, { ".claude/agents/x.md": 'Changed.\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), [".claude/agents/x.md"]);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, { ".claude/agents/x.md": 'Base.\n' }));
+test("[coverage-gate-090 coverage-gate-091] refuse a changed file at docs/x.md", () => trustedFixture(({ root, docs }) => {
+  write(root, { "docs/x.md": 'Changed.\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["docs/x.md"]);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, { "docs/x.md": 'Base.\n' }));
+test("[coverage-gate-090 coverage-gate-091] refuse a changed file at .github/workflows/x.yaml", () => trustedFixture(({ root, docs }) => {
+  write(root, { ".github/workflows/x.yaml": 'Changed.\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), [".github/workflows/x.yaml"]);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, { ".github/workflows/x.yaml": 'Base.\n' }));
+test("[coverage-gate-090 coverage-gate-091] refuse a changed file at fixtures/x.json", () => trustedFixture(({ root, docs }) => {
+  write(root, { "fixtures/x.json": 'Changed.\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["fixtures/x.json"]);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, { "fixtures/x.json": 'Base.\n' }));
+test("[coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/config.yaml", () => trustedFixture(({ root, docs }) => {
+  write(root, { "openspec/config.yaml": 'Changed.\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["openspec/config.yaml"]);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, { "openspec/config.yaml": 'Base.\n' }));
+test("[coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/other.yaml", () => trustedFixture(({ root, docs }) => {
+  write(root, { "openspec/other.yaml": 'Changed.\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["openspec/other.yaml"]);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, { "openspec/other.yaml": 'Base.\n' }));
+test("[coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/changes-old/x.md", () => trustedFixture(({ root, docs }) => {
+  write(root, { "openspec/changes-old/x.md": 'Changed.\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["openspec/changes-old/x.md"]);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, { "openspec/changes-old/x.md": 'Base.\n' }));
+test("[coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/specs.md", () => trustedFixture(({ root, docs }) => {
+  write(root, { "openspec/specs.md": 'Changed.\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["openspec/specs.md"]);
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+}, { "openspec/specs.md": 'Base.\n' }));
+for (const file of ['openspec/changes/archive/x/notes.md', 'openspec/specs/x.md', 'openspec/trace/gaps.json']) {
+  test(`[coverage-gate-089] trust a changed file at ${file}`, () => trustedFixture(({ root, docs, commit }) => {
+    appendFileSync(path.join(root, file), '\n');
+    assert.equal(docs().output.split('\n')[0], `NO MEASUREMENT: the measurement of commit ${commit} is trusted`);
+  }, file === 'openspec/trace/gaps.json' ? {} : { [file]: 'Base.\n' }));
+}
+for (const [from, to] of [['openspec/changes/add-demo/design.md', 'docs/moved.md'], ['docs/base.md', 'openspec/changes/add-demo/moved.md']]) {
+  test(`[coverage-gate-092] refuse a file move from ${from}`, () => trustedFixture(({ root, docs }) => {
+    mkdirSync(path.dirname(path.join(root, to)), { recursive: true });
+    renameSync(path.join(root, from), path.join(root, to));
+    git(root, 'add', '-A');
+    const result = docs();
+    assert.equal(result.status, 2, result.output);
+    assert.ok(result.output.split('\n').includes(from.startsWith('docs/') ? 'docs/base.md' : 'docs/moved.md'));
+  }, { [from]: 'Base.\n' }));
+}
+test('[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their return to HEAD', () => trustedFixture(({ root, fake, docs }) => {
+  const file = path.join(root, 'src/math.js');
+  const original = readFileSync(file, 'utf8');
+  writeFileSync(file, original.replace('a + b', 'b + a'));
+  const historyFile = path.join(root, 'openspec/trace/history.jsonl');
+  const before = readFileSync(historyFile, 'utf8').trim().split('\n').length;
+  const ratchet = run(root, ['ratchet', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  assert.match(ratchet.output, /Ratchet:/, ratchet.output);
+  const lines = readFileSync(historyFile, 'utf8').trim().split('\n').map(JSON.parse);
+  assert.equal(lines.length, before + 1);
+  assert.deepEqual(lines.at(-1).dirty, ['src/math.js']);
+  writeFileSync(file, original);
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.ok(result.output.split('\n').includes('The ratchet ran with uncommitted protected files'));
+  assert.ok(result.output.split('\n').includes('src/math.js'));
+  assert.doesNotMatch(result.output, /Gates passed|Gates failed/);
+  run(root, ['ratchet', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  const clean = JSON.parse(readFileSync(historyFile, 'utf8').trim().split('\n').at(-1));
+  assert.equal(Object.hasOwn(clean, 'dirty'), false);
+  assert.match(docs().output, /^NO MEASUREMENT: the measurement of commit /);
+}));
+test('[gap-ledger-131 gap-ledger-133] accept clean history without a dirty field', () => trustedFixture(({ root, fake }) => {
+  const lines = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+  assert.equal(Object.hasOwn(lines.at(-1), 'dirty'), false);
+  lines.at(-1).dirty = ['src/math.js'];
+  writeFileSync(path.join(root, 'openspec/trace/history.jsonl'), lines.map(line => JSON.stringify(line) + '\n').join(''));
+  const result = run(root, ['check', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  assert.doesNotMatch(result.output, /ERROR (HISTORY|LEDGER|WAIVER|REBASELINE)/);
+  assert.match(result.output, /ERROR REVIEW-MISSING/);
+}));
+
+test('[coverage-gate-069 coverage-gate-078] refuse an ignored file from the code inventory', () => trustedFixture(({ root, fake, docs }) => {
+  appendFileSync(path.join(root, '.gitignore'), 'openspec/changes/add-demo/old.js\n');
+  commitAll(root, 'ignore pattern');
+  run(root, ['ratchet', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn });
+  git(root, 'rm', '--cached', 'openspec/changes/add-demo/old.js');
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ['openspec/changes/add-demo/old.js']);
+}, {}, { 'openspec/changes/add-demo/old.js': 'export {};\n' }));
+test("[coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs", () => trustedFixture(({ root, docs }) => {
+  write(root, { "node_modules-old/ignored.test.mjs": '{}\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["node_modules-old/ignored.test.mjs"]);
+}, { '.gitignore': ".gev-cache/\nnode_modules-old/ignored.test.mjs\n" }));
+test("[coverage-gate-071 coverage-gate-078] refuse an ignored file at scripts/qa-ignored.mjs", () => trustedFixture(({ root, docs }) => {
+  write(root, { "scripts/qa-ignored.mjs": '{}\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["scripts/qa-ignored.mjs"]);
+}, { '.gitignore': ".gev-cache/\nscripts/qa-ignored.mjs\n" }));
+test("[coverage-gate-072 coverage-gate-078] refuse an ignored file at package-lock.json", () => trustedFixture(({ root, docs }) => {
+  write(root, { "package-lock.json": '{}\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["package-lock.json"]);
+}, { '.gitignore': ".gev-cache/\npackage-lock.json\n" }));
+test("[coverage-gate-074 coverage-gate-078] refuse an ignored file at Makefile", () => trustedFixture(({ root, docs }) => {
+  write(root, { "Makefile": '{}\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["Makefile"]);
+}, { '.gitignore': ".gev-cache/\nMakefile\n" }));
+test("[coverage-gate-075 coverage-gate-078] refuse an ignored file at Dockerfile", () => trustedFixture(({ root, docs }) => {
+  write(root, { "Dockerfile": '{}\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["Dockerfile"]);
+}, { '.gitignore': ".gev-cache/\nDockerfile\n" }));
+test("[coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml", () => trustedFixture(({ root, docs }) => {
+  write(root, { "compose.yaml": '{}\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["compose.yaml"]);
+}, { '.gitignore': ".gev-cache/\ncompose.yaml\n" }));
+test("[coverage-gate-077 coverage-gate-078] refuse an ignored file at scripts/spec/ignored.txt", () => trustedFixture(({ root, docs }) => {
+  write(root, { "scripts/spec/ignored.txt": '{}\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["scripts/spec/ignored.txt"]);
+}, { '.gitignore': ".gev-cache/\nscripts/spec/ignored.txt\n" }));
+test("[coverage-gate-086 coverage-gate-078] refuse an ignored file at package.json", () => trustedFixture(({ root, docs }) => {
+  write(root, { "package.json": '{}\n' });
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ["package.json"]);
+}, { '.gitignore': ".gev-cache/\npackage.json\n" }));
+test('[coverage-gate-078 coverage-gate-089] trust other ignored files', () => trustedFixture(({ root, docs, commit }) => {
+  write(root, { 'ignored.txt': 'Text.\n', '.gev-cache/ignored.test.mjs': '{}\n', 'node_modules/p/x.test.mjs': '{}\n', 'packages/p/node_modules/x.test.mjs': '{}\n', 'dist/app.js': 'export {};\n', 'ignored.js': 'export {};\n' });
+  assert.equal(docs().output.split('\n')[0], `NO MEASUREMENT: the measurement of commit ${commit} is trusted`);
+}, { '.gitignore': '.gev-cache/\nnode_modules/\n**/node_modules/\nignored.txt\ndist/\nignored.js\n' }));
+test('[coverage-gate-090] refuse a staged file edit', () => trustedFixture(({ root, docs }) => {
+  write(root, { 'src/math.js': 'export {};\n' });
+  git(root, 'add', 'src/math.js');
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.ok(result.output.split('\n').includes('src/math.js'));
+}));
+test('[coverage-gate-090] refuse an untracked document', () => trustedFixture(({ root, docs }) => {
+  write(root, { 'docs/new.md': 'New.\n' });
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.ok(result.output.split('\n').includes('docs/new.md'));
+}));
+test('[coverage-gate-069] refuse a deleted test file', () => trustedFixture(({ root, docs }) => {
+  rmSync(path.join(root, 'src/math.test.mjs'));
+  const result = docs();
+  assert.equal(result.status, 2);
+  assert.ok(result.output.split('\n').includes('src/math.test.mjs'));
+}));
+
+test('[coverage-gate-073 coverage-gate-078] classify the ignored Node version', () => {
+  assert.equal(protectedInput('.node-version', new Set()), true);
+});
+test('[gap-ledger-130] refuse a failed ratchet file comparison', () => trustedFixture(({ root, fake }) => {
+  const before = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8');
+  const result = run(root, ['ratchet', '--change', 'add-demo'], { openSpec: fake.openSpec, spawn: fake.spawn, gitSpawn: () => ({ status: 1, stdout: '' }) });
+  assert.equal(result.status, 1, result.output);
+  assert.match(result.output, /ERROR GATES-RATCHET.*Git cannot compare protected files/);
+  assert.equal(readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8'), before);
+}));
+test('[gap-ledger-130 gap-ledger-132] sort dirty names and compare repeated history', () => trustedFixture(({ root, fake }) => {
+  const code = readFileSync(path.join(root, 'src/math.js'), 'utf8');
+  write(root, { 'src/math.js': code.replace('a + b', 'b + a'), 'docs/z.md': 'Z.\n', 'docs/a.md': 'A.\n', 'scripts/spec/ignored.txt': '{}\n' });
+  const options = { openSpec: fake.openSpec, spawn: fake.spawn };
+  const historyFile = path.join(root, 'openspec/trace/history.jsonl');
+  run(root, ['ratchet', '--change', 'add-demo'], options);
+  const before = readFileSync(historyFile, 'utf8');
+  assert.deepEqual(JSON.parse(before.trim().split('\n').at(-1)).dirty, ['docs/a.md', 'docs/z.md', 'scripts/spec/ignored.txt', 'src/math.js']);
+  run(root, ['ratchet', '--change', 'add-demo'], options);
+  assert.equal(readFileSync(historyFile, 'utf8'), before);
+  rmSync(path.join(root, 'docs/z.md'));
+  run(root, ['ratchet', '--change', 'add-demo'], options);
+  const after = readFileSync(historyFile, 'utf8');
+  assert.equal(after.trim().split('\n').length, before.trim().split('\n').length + 1);
+  assert.deepEqual(JSON.parse(after.trim().split('\n').at(-1)).dirty, ['docs/a.md', 'scripts/spec/ignored.txt', 'src/math.js']);
+}, { '.gitignore': '.gev-cache/\nscripts/spec/ignored.txt\n' }));
+
+test('[gap-ledger-134] add ignored name markers before the ratchet command', () => {
+  const text = readFileSync(path.join(PROJECT_ROOT, 'Makefile'), 'utf8');
+  const command = text.match(/^GATES := .*$/m)?.[0] || '';
+  assert.ok(text.indexOf('GATES_DOCS_MARKERS :=') < text.indexOf('GATES :='));
+  assert.ok(command.includes('if [ "$$1" != ratchet ]; then :; else $(GATES_DOCS_MARKERS) || exit 2; fi;'));
+});
+
+test('[coverage-gate-069 coverage-gate-092] refuse a code file move', () => trustedFixture(({ root, docs }) => {
+  renameSync(path.join(root, 'src/math.js'), path.join(root, 'src/other.js'));
+  git(root, 'add', '-A');
+  const result = docs();
+  assert.equal(result.status, 2, result.output);
+  assert.deepEqual(result.output.split('\n').slice(3, -2), ['src/math.js', 'src/other.js']);
+}));

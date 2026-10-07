@@ -23,7 +23,7 @@ test('[ci-gates-006] runs the CI command in the workflow with the pinned Node ve
 
 test('[ci-gates-007] runs the gates with make in the Docker image', () => {
   const makefile = read('Makefile');
-  assert.match(makefile, /^GATES := docker run --rm -v "\$\(CURDIR\)":\/src \$\(IMAGE\) sh -c '\$\(GATES_COPY\) \|\| exit 2; env -u NODE_ENV -u HOST -u PORT node scripts\/spec\/gates\.mjs "\$\$@"; status=\$\$\?; \$\(GATES_BACK\) \|\| exit 2; exit \$\$status' gates$/m);
+  assert.match(makefile, /^GATES := docker run --rm -v "\$\(CURDIR\)":\/src \$\(IMAGE\) sh -c '\$\(GATES_COPY\) \|\| exit 2; if \[ "\$\$1" != ratchet \]; then :; else \$\(GATES_DOCS_MARKERS\) \|\| exit 2; fi; env -u NODE_ENV -u HOST -u PORT node scripts\/spec\/gates\.mjs "\$\$@"; status=\$\$\?; \$\(GATES_BACK\) \|\| exit 2; exit \$\$status' gates$/m);
   const copy = makefile.match(/^GATES_COPY := (.*)$/m)[1];
   assert.deepEqual(copy.split(' && '), [
       "mkdir -p /tmp/work",
@@ -37,7 +37,8 @@ test('[ci-gates-007] runs the gates with make in the Docker image', () => {
       "tar -xf /tmp/copy.tar -C /tmp/work",
       "cp -a /src/.git /tmp/work/.git",
       "ln -s /app/node_modules /tmp/work/node_modules",
-      "mkdir -p /tmp/work/.gev-cache",
+      "mkdir -p /tmp/work/.gev-cache/spec",
+      "if [ ! -f /src/.gev-cache/spec/measurement.json ]; then :; else cp /src/.gev-cache/spec/measurement.json /tmp/work/.gev-cache/spec/measurement.json; fi",
       "cd /tmp/work"
   ]);
   assert.match(makefile, /^GATES_BACK := rm -rf \/src\/\.gev-cache\/spec && cp -a \/tmp\/work\/openspec\/trace\/\. \/src\/openspec\/trace\/ && mkdir -p \/src\/\.gev-cache && cp -a \/tmp\/work\/\.gev-cache\/\. \/src\/\.gev-cache\/$/m);
