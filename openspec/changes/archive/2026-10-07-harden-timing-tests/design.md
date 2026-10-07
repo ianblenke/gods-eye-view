@@ -11,9 +11,13 @@ The Hypertext Transfer Protocol (HTTP) carries web requests.
 HTTP Live Streaming (HLS) names the media format.
 The Test Anything Protocol (TAP) names the test report format.
 
+An application programming interface (API) defines calls between software parts.
+JavaScript Object Notation (JSON) is a data format.
+An identifier (ID) names one item.
+
 ## Tree and scope
 
-Base commit 290b5d2; the later merges of main do not change the 17 test files.
+Base commit 290b5d2; later merges of main do not change the 17 test files.
 The change edits tests and the change directory only.
 No requirement, scenario text or production file changes.
 
@@ -27,14 +31,14 @@ The audit.md gives each source line, margin and decision.
 The test command uses `--test-isolation=none` to avoid a second Node process.
 Launcher tests start Node children.
 Their measurements use shell load instead of Node load to keep the Node process limit.
-All children inherit the CPU set and priority.
-The measurement load uses three Node loops for files without Node children.
-The launcher measurement load uses three shell loops.
+All children inherit the CPU set and nice priority 19.
+The measurement load uses three Node load loops for files without Node children.
+The launcher measurement load uses three shell load loops.
 
 The process limit has priority when the measurement load conflicts with launcher children.
 The test command runs one file at a time.
-The measurement script stops its load processes after each file.
-All Node commands use the CPU set 12-15 and priority.
+The measurement script stops its load loops after each file.
+All Node commands use the CPU set 12-15 and nice priority 19.
 
 ## Clock decisions
 
@@ -52,7 +56,7 @@ The test keeps its error and elapsed-time assertions.
 A fixed performance clock keeps fixture roads inside one time slice.
 The settled-footprint test keeps its tile-total and coverage-key assertions.
 The argument is that load cannot end the time slice on a fixed clock.
-No measurement reproduced that fault.
+No measurement showed a failure from this cause.
 
 ## Event decisions
 
@@ -60,13 +64,13 @@ Shared request tests hold the response with a promise until the requests start.
 No fixed response delay defines which request shares the first request.
 The local SDR card test advances its render timer after the feed callback.
 Pointer tests advance the pending timer after the next owner takes the pointer.
-The OSH selection tests await a host setter after selection.
+The OSH selection tests await a page object setter after selection.
 Each promise belongs to its test, as the assertion-context lesson needs.
 
 The HLS tests await the download promise before the clock advances.
 The lease test advances Date with its timers.
 The argument is that load cannot advance lease time on a mock clock.
-No measurement reproduced that fault.
+No measurement showed a failure from this cause.
 
 ## Real clock decisions
 
@@ -77,7 +81,7 @@ A comment states why the tests need a real deadline.
 
 The absence checks keep a short real delay after controlled callbacks finish.
 The HLS absence check first proves that the session has stopped.
-A real wait then checks for later downloads.
+A real delay then checks for later downloads.
 The source inspections and `rg` searches give the timer values in the audit.
 
 ## Audit decisions without a timer change
@@ -133,7 +137,7 @@ No local check overlaps the later measurement series.
 The command `rg` on each changed test file supplies these wait values.
 The tests use the real timer captured before the mock clock starts.
 
-| File | Real wait | Controlled signal before the wait |
+| File | Real delay | Controlled signal before the wait |
 |---|---|---|
 | `src/sdr/controller.test.mjs` | 5 ms | The old operation settles or its clock steps finish. |
 | `src/cameraGroundGuard.test.mjs` | 5 ms | The probe callback finishes on the test clock. |
@@ -174,7 +178,8 @@ The deadline must schedule its next callback with the literal delay.
 The Node mock clock lost this branch in the covered line comparison.
 
 Request deadline tests check the aborted signal before they await rejection.
-A deadline that does not run fails an assertion, so the test cannot stay open.
+When a deadline does not run, an assertion fails.
+The test cannot stay open.
 The first header mutation stopped at its time limit without a test verdict.
 The repeated mutation uses the signal assertion.
 
@@ -191,12 +196,13 @@ The test awaits the headers, advances the mock deadline and keeps a short real a
 The signal assertion must fail when production does not clear the header timer.
 
 The changed playlist tests also process unchanged data on the next scheduled callback.
-The original real waits allowed that callback to start.
+The original real delays allowed that callback to start.
 The controlled callback keeps that path in the test without a real delay.
 
-The radio volume fixture has no audio object.
+The fixture in `src/data/radio.test.mjs` has no audio object.
+The production file is `src/layers/radio/volume.js`.
 The source completes restoration without a frame callback when that object is absent.
-The fixed delay of the fixture is only a wait and needs no timer change.
+The fixed delay of the fixture is only a delay and needs no timer change.
 The command `rg` for Audio and the source inspection supply this decision.
 
 ## Measurement tables
@@ -229,13 +235,13 @@ The socket exclusions stated above apply to both tables.
 | `src/tooling/nominatimSearchRoute.test.mjs` | 10 | 200 | 0 | 200 | 0 |
 | `src/ui/localSdrControls.test.mjs` | 4 | 80 | 0 | 80 | 0 |
 
-No baseline test in the local assessment failed.
+No baseline test in the local run failed.
 The measurements do not reproduce the failures in the container logs.
 
 ## Final local evidence
 
 The command `python3 report-mutations.py` gives the completed mutation total.
-The round 1 assessment had 45 production mutations that caused named tests to fail.
+The round 1 run had 45 production mutations that caused named tests to fail.
 The first header and DNS attempts stopped before the end and have no verdict.
 The repeated attempts failed the named assertions.
 
@@ -246,10 +252,14 @@ The socket exclusions stated above apply to those checks.
 
 ## Round 2 decisions
 
-Tree read: `3b726505157e146cf3ee07326044abb200d37f8b`.
-The cap test awaits rejection before it checks body access.
+Base commit 290b5d2. Commit read: `3b726505157e146cf3ee07326044abb200d37f8b`.
+The cap test awaits rejection before it checks that production did not read the body.
 Mock clocks control the OSH and CCTV frame deadlines.
-Exact elapsed values replace the clock inequalities.
+Exact elapsed values replace the inequalities in the cctvProxy, gbfsProxy and requests tests.
+
+The controller stop test keeps its inequality below 250 ms.
+The mock Date clock fixes the value, so the inequality cannot fail; the assertion that stop() returns true carries the proof.
+The nominatim stalled-body test keeps its inequality below 5000 ms because its 300 ms deadline uses the real clock.
 Each upstream start promise has a real guard of 2000 ms.
 Each test clears its guard in a finally block.
 
@@ -267,15 +277,18 @@ The file `round2-base-diff.log` records the result.
 Command: `rg -n` with the timer pattern and all 17 paths in `round2-waits.py`.
 The file `round2-waits.log` gives each match for real and mock timers.
 The table lists real delays and guards from those matches.
+The other controller guards use the mock clock through clockWithin().
+The pause(5) calls are at lines 666, 698, 739, 933, 962, 1012 and 1095.
 The absence delay table lists all seven files with real absence delays.
 
 | File | Real value | Reason |
 |---|---|---|
 | `src/devCctv.test.mjs` | 600000 ms | The process deadline uses the factor 20. |
 | `src/toolProjectRoot.test.mjs` | 600000 ms | The process deadline uses the factor 20. |
-| `src/app/layers/osh.test.mjs` | 10000 ms | The test clears the guard after the host changes. |
-| `src/sdr/controller.test.mjs` | 1000 ms | Both final ownership checks clear their guards in finally blocks. |
-| `src/sdr/controller.test.mjs` | 2 and 5 ms | Fixture completion delays do not define absence assertions. |
+| `src/app/layers/osh.test.mjs` | 10000 ms | The test clears the guard after the page object changes. |
+| `src/sdr/controller.test.mjs` | 1000 ms | The two within() calls test init failure; within() clears each real guard in .finally(). |
+| `src/sdr/controller.test.mjs` | 2 ms | The fixture completes a device read. |
+| `src/sdr/controller.test.mjs` | 5 ms | Seven pause(5) calls are real absence delays. |
 | `src/data/directions.test.mjs` | 0 ms | The callback allows event work to finish. |
 | `src/data/cctvMediaRange.test.mjs` | 10, 150, 250 and 400 ms | Socket cases need later host measurements. |
 | `src/data/localReceiversProxy.test.mjs` | 5, 20 and 300 ms | Socket cases need later host measurements. |
@@ -285,7 +298,7 @@ The absence delay table lists all seven files with real absence delays.
 | `src/data/cctvProxy.test.mjs` | 100 and 1000 ms | Immediate fixture responses clear the body guards. |
 | `src/data/cctvProxy.test.mjs` | 20 ms | The stalled body test awaits expiry without a second time threshold. |
 | `src/data/gbfsProxy.test.mjs` | 20 ms | The stalled body test awaits expiry without a second time threshold. |
-| `src/services/requests.test.mjs` | 10, 1000 and 60000 ms | Native signal deadlines have no process reference; the fixture awaits cancellation or an immediate response. |
+| `src/services/requests.test.mjs` | 10, 1000 and 60000 ms | Native signal deadlines do not keep the process alive; the fixture awaits cancellation or an immediate response. |
 
 Round 2 does not claim a gates verdict.
 The lead owns the gates run and both review verdicts.
@@ -293,8 +306,8 @@ The lead owns the gates run and both review verdicts.
 ## Timer source checks
 
 The USB source has no poll timer.
-The test checks closure of the expired device deadline from `withDeadline`.
-The HLS test checks closure of the poll timer and checks zero later downloads.
+The test checks that production clears the expired device deadline from `withDeadline`.
+The HLS test checks that production clears the poll timer and checks zero later downloads.
 Both checks record the timer that production clears.
 
 ## Frame result decision
@@ -308,11 +321,11 @@ The OSH API rejects, so its test awaits the TimeoutError rejection.
 The first cap mutation changed a helper that OSH does not call.
 The OSH read path uses `src/sources/httpBody.js` through the common HTTP module.
 The corrected mutation removes the declared body check in that source.
-The final complete assessment has 54 failed selected tests and no stopped process.
+The final complete run has 54 failed selected tests and no stopped process.
 
 ## Round 2 results
 
 The file `corrections.md` gives each review correction and each final command result.
-All 85 load processes have zero failures, with 1105 test results.
-The host must repeat the three complete socket files after the round 2 changes.
+All 85 test processes under load have zero failures, with 1105 test results.
+The lead log `lead3-tests.log` records complete checks after the round 2 changes.
 The 995 production comparisons show no coverage decrease.

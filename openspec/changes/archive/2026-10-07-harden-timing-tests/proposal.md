@@ -5,7 +5,7 @@ The phase3-analysis.md records failures under simultaneous container load.
 The lead must repeat the gates run when a test fails by chance.
 
 Evidence command: inspect the phase3-analysis.md with `cat` and search the container logs with `rg` for `TRACE-FAILED-TEST`.
-Base commit 290b5d2; the later merges of main do not change the 17 test files.
+Base commit 290b5d2; later merges of main do not change the 17 test files.
 
 ## What Changes
 
@@ -34,4 +34,16 @@ The lead checks the complete gates in the image.
 A clean local measurement does not prove the cause of a failure in the container logs.
 The process limit has priority over load when launcher children need Node.
 Synchronous source checks and surface identity checks need no timer change without a timer fault.
-The design lists the real waits and the later changes.
+The design lists the real delays and the later changes.
+
+- `remaining-inequalities`: The controller stop test keeps the mock-Date inequality below 250 ms; its assertion that stop() returns true carries the proof.
+  The mock clock fixes the elapsed value, so the inequality cannot fail.
+  The nominatim stalled-body test keeps the real-clock inequality below 5000 ms for its 300 ms deadline.
+- `poll-timer-unasserted`: The cctvHlsStream test does not assert that pollTimer is defined.
+  If production renames entry.timer, cleared.includes(undefined) can still pass.
+- `exact-elapsed-constants`: The cctvProxy, gbfsProxy and requests elapsed assertions equal their clock steps by construction.
+  No production change can make those elapsed assertions fail; the signal assertions carry the proof.
+- `evidence-outside-repo`: The evidence files are outside the repository.
+  The directory is `/home/ianblenke/docker/gev-tools/harden-timing/`.
+  Files: `prompt-1.md`, `audit.md`, `before.md`, `after.md`, `coverage.md`, `mutation-specs.json` and `round2-*.log`.
+  The file `phase3-analysis.md` is in `/home/ianblenke/docker/gev-tools/docker-concurrency/`.

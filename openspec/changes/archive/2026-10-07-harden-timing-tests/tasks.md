@@ -38,7 +38,7 @@ Mutation: Make production remove the camera lift or ignore the next owner.
 Mutation: Make production ignore the sequence changes or delay the lease expiry.
 - [x] 13. Check the tests in `src/data/cctvMediaRange.test.mjs`.
 
-Mutation: Make production omit the client response closure or ignore the client backpressure.
+Mutation: Make production omit the client response end or ignore the client backpressure.
 - [x] 14. Check the tests in `src/data/cctvProxy.test.mjs`.
 
 Mutation: Make production delay the header deadline.
@@ -72,17 +72,17 @@ Mutation: Make production use separate active weather requests.
 ## Local evidence
 
 - [x] Compare covered production lines before and after each test change.
-- [x] Record each production mutation result in the /home/ianblenke/docker/gev-tools/harden-timing/.
+- [x] Record each production mutation result in the directory `/home/ianblenke/docker/gev-tools/harden-timing/`.
 - [x] Complete the measurements after each test change under the measurement load.
 - [x] Check each changed test file without added load.
 - [x] Run the change lint.
 - [x] Run `predispatch.py` on the change directory.
 - [x] Run `scripts/format.mjs` with `--write` and `--check`.
 
-The lead checked all 17 files on the host with `node --test`.
-The log `/tmp/claude-1000/gcr/ht-chain.log` reports zero failures.
-Local socket checks still need the host.
-The completed tasks refer to the lead log before the round 2 edits.
+The lead checked all 17 files on the host after the round 2 edits.
+Command: one process per file, `node --test <file>`, without the force-exit flag.
+The log `/home/ianblenke/docker/gev-tools/harden-timing/lead3-tests.log` lists exit status 0 for each file.
+Tasks 13, 16 and 21 and the check without added load use that evidence.
 
 ## Gates and review
 
