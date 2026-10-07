@@ -3162,7 +3162,8 @@
   ],
   "ste-lint-012": [
     "src/tooling/spec/gates.test.mjs › [ste-lint-011 ste-lint-012 ste-lint-016] checks only Markdown with the lint command",
-    "src/tooling/spec/ste.test.mjs › [ste-lint-012] gives a success status for warnings only"
+    "src/tooling/spec/ste.test.mjs › [ste-lint-012] gives a success status for warnings only",
+    "src/tooling/spec/ste.test.mjs › [ste-lint-023 ste-lint-012] keeps a success status for the noun warning"
   ],
   "ste-lint-013": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-013] checks AGENTS.md, the agent files and the review command"
@@ -3185,6 +3186,31 @@
   ],
   "ste-lint-019": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-019] checks a review file that is not directly in a change folder"
+  ],
+  "ste-lint-020": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-020] warns for a listed word after each determiner"
+  ],
+  "ste-lint-021": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-021] ignores a listed word without a determiner"
+  ],
+  "ste-lint-022": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-022] ignores code and a listed word that starts with a quote mark"
+  ],
+  "ste-lint-023": [
+    "src/tooling/spec/gates.test.mjs › [ste-lint-023] keeps a success status for the lint command with a noun warning",
+    "src/tooling/spec/ste.test.mjs › [ste-lint-023 ste-lint-012] keeps a success status for the noun warning"
+  ],
+  "ste-lint-024": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-024] ignores a word outside the list nounVerbs"
+  ],
+  "ste-lint-025": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-025] reads the list nounVerbs from the word list file for each check"
+  ],
+  "ste-lint-026": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-026] ignores plural and possessive forms"
+  ],
+  "ste-lint-027": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-027] excludes inline code from the rule STE-WORD for tagged titles"
   ],
   "wind-001": [
     "src/layers/wind/fields.test.mjs › [wind-001] scalar read rejects absent and invalid data",
