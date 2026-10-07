@@ -561,7 +561,7 @@ The worker made no commit in this pass.
 
 ## Final checks
 
-The lint command gives zero errors and 525 warnings across its scope.
+The lint command gives zero errors and 530 warnings across its scope.
 The normal format commands stop with the sandbox Git error.
 The host import formats and checks 1158 source files.
 The format command checks the repository source scope.
@@ -617,16 +617,17 @@ Pass 3 reads base commit `290b5d2`.
 The probe file is `evidence/probe-equivalent.txt` in this change folder.
 The lead adds that text file with the force option if Git ignores it.
 Rows m149 and m253 are equivalent for the public API only.
-The final abort guard returns false for m253 after cancellation.
+In the source code, the final abort guard returns false after cancellation. Row m253 changes an earlier result to true, and the final result stays false.
+
 For m254, the test reads the listener total before and after the first abort event.
 
 The probe checks early and late cancellation with listener spies.
 It also checks getters, proxy lists and a re-entrant state callback.
-A patched built-in prototype is outside this API limit.
+A patched built-in prototype is outside the public API of the module.
 
 | Finding starts with | Change |
 | --- | --- |
-| Split 0.5 | The 0.55 test checks latitude 11.271; m250 and m251 change the split. |
+| Split 0.5 | The 0.55 test checks latitude 11.271 degrees; m250 and m251 change the split. |
 | Unrecorded survivors | Rows m252 and m254 fail the abort event test; m253 names the equivalent change and its probe. |
 | Row m149 | The design bounds the API claim; the proposal adds session-builtin-patch; the probe checks a re-entrant callback. |
 | Object.hasOwn | The inherited type name test checks the document error; m255 changes the field check. |
@@ -643,7 +644,7 @@ A patched built-in prototype is outside this API limit.
 | aborts the abort signal | The spec names the abort controller of the work. |
 | the interaction and target | The spec names the pack target and each callback state change. |
 | that an action field changes | Scenario 060 names the layer action field of the same shot. |
-| without adapter call | The titles and spec add the article; the spec names `clear` as code. |
+| without adapter call | The spec adds the article and names `clear` as code; one test title keeps its form (Known limit `spec-wording-minors`). |
 | version four | The spec uses version 4 and rejects. |
 | Write tests for | Each task gives one instruction; mutation sub-lines state the code change. |
 | 248 failed tests | The command supplies the current mutation totals; the lint command supplies its warning total. |

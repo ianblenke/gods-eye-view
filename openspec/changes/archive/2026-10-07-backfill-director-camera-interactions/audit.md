@@ -66,6 +66,9 @@ Pass 3 reads base commit `290b5d2`.
 | `src/director/interactions/session.js` | 29 | `TESTED` | See expression 19. | m136,m137 | The named tests and mutations check this row. |
 | `src/director/interactions/session.js` | 29 | `TESTED` | `!active &#124;&#124; busy` | m136,m137 | The named tests and mutations check this row. |
 | `src/director/interactions/session.js` | 42 | `TESTED` | `current.signal.aborted` | m142 | The named tests and mutations check this row. |
+| `src/director/interactions/session.js` | 38 | `TESTED` | `resolve(false)` | m252 | The abort event test fails while the signal reports aborted false. |
+| `src/director/interactions/session.js` | 42 | `EQUIVALENT` | `return false` | m253 | The guard at line 47 decides each cancelled result, so the final abort guard returns false before an adapter call. The public API probe passes. |
+| `src/director/interactions/session.js` | 39 | `TESTED` | `{ once: true }` | m254 | The abort event test reads one listener before the event and zero after it. |
 | `src/director/interactions/session.js` | 46 | `TESTED` | See expression 20. | m139,m150 | The named tests and mutations check this row. |
 | `src/director/interactions/session.js` | 53 | `TESTED` | `controller === current` | m144 | The named tests and mutations check this row. |
 | `src/director/cameraDocument.js` | 41 | `TESTED` | See expression 21. | m047,m048,m049,m050,m051,m052 | The named tests and mutations check this row. |
@@ -212,9 +215,6 @@ m245: [director-049] The shot without a move uses optional coordinates by defaul
 m248: [director-049] The pose rejects an extra field
 ```
 
-| `src/director/interactions/session.js` | 38 | `TESTED` | `resolve(false)` | m252 | The abort event test fails while the signal reports aborted false. |
-| `src/director/interactions/session.js` | 42 | `EQUIVALENT` | `return false` | m253 | The final abort guard returns false before an adapter call. The public API probe passes. |
-| `src/director/interactions/session.js` | 39 | `TESTED` | `{ once: true }` | m254 | The abort event test reads one listener before the event and zero after it. |
 
 ## Expression 1
 

@@ -47,9 +47,9 @@ The pass deletes the test that changes the Map size getter.
 A supplied list or proxy cannot change the native Map size getter.
 The native Map stores each ID before the session reads its size.
 For the public API of the module, an inactive session contains no interaction that dispatch can find.
-A patched built-in prototype is outside it.
+A patched built-in prototype is outside the public API of the module.
 
-The probe in `evidence/probe-equivalent.txt` uses getters, a proxy list and a map callback spy.
+The probe in `evidence/probe-equivalent.txt` uses getters, a proxy list and an array map spy.
 Row m149 records an equivalent change, not failed tests.
 The proposal gives the known limits.
 
@@ -78,5 +78,5 @@ Pass 3 reads base commit `290b5d2`.
 The pass keeps all scenario IDs and production files unchanged.
 The public API limit excludes changes to built-in prototypes.
 The probe checks re-entrant state callbacks, getters, proxy lists and listener spies.
-The pass applies each text correction from review round 2.
+The pass applies each text correction from review round 2, except the items in the Known limit `spec-wording-minors`.
 Source strings in evidence keep their exact text.

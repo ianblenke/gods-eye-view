@@ -272,7 +272,7 @@ Pass 3 reads base commit `290b5d2`.
   Mutation: `m256`, `m257`. New: version 2 only. The test fails.
 
 - [x] 3.4 Check busy state inside each adapter call.
-  Mutation: `m134`, `m144`. `mutations.md` gives the code change. The tests fail.
+  Mutation: none; see the Known limit `missing-rows-and-lines`.
 - [x] 3.5 Add probes for the equivalent changes.
   Mutation: `m149`, `m253`. The public API probe passes for each change.
 - [x] 3.6 Correct the titles and their mutation patterns.
