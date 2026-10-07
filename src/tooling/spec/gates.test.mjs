@@ -1575,3 +1575,14 @@ test('[ste-lint-023] keeps a success status for the lint command with a noun war
     assert.match(result.output, /^WARN STE-NOUN openspec\/specs\/demo\/notes\.md:1 Check for a verb used as a noun: "read"$/m);
   });
 });
+
+
+test('[ste-lint-037 ste-lint-012] keeps a success status for the lint command with an old prose warning', () => {
+  withFixture((root) => {
+    write(root, { 'openspec/specs/demo/notes.md': 'Retain the file.\n' });
+    const result = run(root, ['lint', '--change', 'ste-new-prose-words']);
+    assert.equal(result.status, 0, result.output);
+    assert.match(result.output, /^WARN STE-WORD-OLD openspec\/specs\/demo\/notes\.md:1 Use "keep", not "retain"$/m);
+    assert.match(result.output, /STE: 0 errors, 1 warnings\./);
+  });
+});

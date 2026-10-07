@@ -3009,6 +3009,96 @@
     "since": "2026-10-07",
     "change": "ste-noun-warning"
   },
+  "ste-lint-028": {
+    "hash": "f86dd71fd72d926b79e76aa117d6f9005d710bd99c51e09b46836b64948b6459",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-029": {
+    "hash": "ce3ccd513fbbd290a6c4a7f7d52177afd2b518b87a74617949b38d96af6304ac",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-030": {
+    "hash": "8cdabe67e71f314f3db338cb36cd14f881748a643756de24c9a907a505524e06",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-031": {
+    "hash": "9fbd200b267fe0f20e83802bbda2401531d202c29bf285f10d1edced6d3e76ac",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-032": {
+    "hash": "e6873a657056fbc0b082060be151237feac076a43dfbeb7181c32fbf0f378f59",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-033": {
+    "hash": "a7cb6d76155778871b54397ccb79f02813575ff2325deec8b8d7228d58514a64",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-034": {
+    "hash": "295f57740152626f2c5d71e5cde176bc3dbd619171f57545e6d641d572bcc653",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-035": {
+    "hash": "219bce6b7c70e219c0afc21fdee6812e54af8275537702b6319de9fd07f44f9e",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-036": {
+    "hash": "7e22812783610f9bb45c50a42d777642712155e7dea8003ea62a15d40b31f6d6",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-037": {
+    "hash": "c7cd15a598fcfaa4b98348f47811647e1e32041d96824e3cdbba0998e2860c68",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-038": {
+    "hash": "020295ab92cd294dc59bee2c1693ef30190379a099bd3f305a5e409e84ce00d1",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-039": {
+    "hash": "5663883d38e378f989a894e2a20fa299d68e2b4c4206fbf4d6d2ef563c3ce6b3",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-040": {
+    "hash": "9b1e9c7d1ed9c049d1587ebe1a0f0be22567ff2d1e227319ae788988fe8a707e",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-041": {
+    "hash": "40da5cd317682593cfe18e6af396443df090fa253ca2909b3ee056aab6475cb5",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-042": {
+    "hash": "cbb9c1a1dd4d0b7698f1afc8f80c575b5fae09f70618a448cb7f0714028edcd8",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-043": {
+    "hash": "bc3f165b92815796939bf671f0a1dd895f2ea40d623eb9e56ae1a2c08d323bfb",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-044": {
+    "hash": "985af9641941a83487f8cca95dc6b163ec241a939616cadadca80b4d39eee1d3",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-045": {
+    "hash": "ce4619e27a44481863329b2e4c5172df8ce3e48a00ca1a2406b6785540e31542",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
   "wind-001": {
     "hash": "25376818102333bb788cde47843c2dce37362cebf4f938da44726885f94e75ac",
     "since": "2026-09-29",
