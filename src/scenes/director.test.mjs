@@ -798,7 +798,7 @@ test('[director-194] cross-scene replay grants media ownership only after the pr
   } finally { await director.destroy(); restore(); }
 });
 
-test('scene camera waits for provider completion and fade rather than the saved media hold', async () => {
+test('[director-265] scene camera waits for provider completion and fade rather than the saved media hold', async () => {
   const { director, viewer, dataManager, restore } = makeDirector();
   let release;
   let pending = true;
@@ -821,7 +821,7 @@ test('scene camera waits for provider completion and fade rather than the saved 
   } finally { release(); await director.destroy(); restore(); }
 });
 
-test('Stop cancels a provider-owned shot hold and late completion cannot fly the next camera', async () => {
+test('[director-242] Stop cancels a provider-owned shot hold and late completion cannot fly the next camera', async () => {
   const { director, viewer, dataManager, restore } = makeDirector();
   let release;
   const gate = new Promise((resolve) => { release = resolve; });
@@ -839,7 +839,7 @@ test('Stop cancels a provider-owned shot hold and late completion cannot fly the
   } finally { release(); await director.destroy(); restore(); }
 });
 
-test('a provider-owned hold fails boundedly if its owner never settles', async () => {
+test('[director-265] a provider-owned hold fails boundedly if its owner never settles', async () => {
   const { director, restore } = makeDirector();
   try {
     director.dataManager.layers = new Map([['flights', { module: {
@@ -932,7 +932,7 @@ test('explicit scene-layer OFF revokes continuation during enable, flight and ho
   }
 });
 
-test('scene preview owns recording chrome while panel playback leaves it available', async () => {
+test('[director-236] scene preview owns recording chrome while panel playback leaves it available', async () => {
   for (const preview of [true, false]) {
     const { director, styleManager, restore } = makeDirector();
     const recording = [];
@@ -956,7 +956,7 @@ test('scene preview owns recording chrome while panel playback leaves it availab
   }
 });
 
-test('the director reconciles only the layers a shot declares', async () => {
+test('[director-257] the director reconciles only the layers a shot declares', async () => {
   // Regression: _applyLayerStates walked the LIVE registry and forced every
   // undeclared layer off, tearing down CCTV/vessels/fires with no restore pass.
   // Pinned here rather than only on the helper, because the walk lived here.
@@ -1002,7 +1002,7 @@ test('a shot captured while tracking never re-establishes tracking on playback',
   }
 });
 
-test('a dirty Space Missions state is exited before a recipe applies its layers', async () => {
+test('[director-261] a dirty Space Missions state is exited before a recipe applies its layers', async () => {
   // Space Missions refuses every enable outside its own replay bundle. The old
   // full-registry walk dismantled it by accident; the sparse policy never does,
   // so all four Flights Radar enables were refused and reported as success.
@@ -1031,7 +1031,7 @@ test('a dirty Space Missions state is exited before a recipe applies its layers'
   }
 });
 
-test('Orbital Watch does not compose over a Space Missions replay', async () => {
+test('[director-261] Orbital Watch does not compose over a Space Missions replay', async () => {
   // Orbital Watch declares satellites, which the guard permits — so nothing is
   // refused and a refusal-only check would pass while rocket-launches stayed
   // on screen. Playback leaves an isolating mode whether or not it refuses.
@@ -1051,7 +1051,7 @@ test('Orbital Watch does not compose over a Space Missions replay', async () => 
   }
 });
 
-test('a non-isolating context mode is left alone', async () => {
+test('[director-261] a non-isolating context mode is left alone', async () => {
   for (const contextMode of [null, 'flights']) {
     const { director, styleManager, restore } = makeDirector({ style: { contextMode } });
     try {
@@ -1063,7 +1063,7 @@ test('a non-isolating context mode is left alone', async () => {
   }
 });
 
-test('a refused layer is reported, never counted as applied', async () => {
+test('[director-258] a refused layer is reported, never counted as applied', async () => {
   const { director, dataManager, restore } = makeDirector({
     data: { refuse: (id) => id === 'flights' },
   });
@@ -1085,7 +1085,7 @@ test('a refused layer is reported, never counted as applied', async () => {
   }
 });
 
-test('cancellation between two layers ends the reconcile where it stands', async () => {
+test('[director-259] cancellation between two layers ends the reconcile where it stands', async () => {
   const { director, dataManager, restore } = makeDirector();
   const token = { cancelled: false };
   const inner = dataManager.setEnabled.bind(dataManager);
@@ -1108,7 +1108,7 @@ test('cancellation between two layers ends the reconcile where it stands', async
   }
 });
 
-test('STOP during a suspended visual transition lands no layer changes', async () => {
+test('[director-242] STOP during a suspended visual transition lands no layer changes', async () => {
   // Repro shape from review: applyVisualState suspends (a map-stack switch),
   // STOP arrives, the visual resolves — and the shot's layer pass still ran.
   const { director, viewer, styleManager, dataManager, restore } = makeDirector();
@@ -1134,7 +1134,7 @@ test('STOP during a suspended visual transition lands no layer changes', async (
   }
 });
 
-test('STOP between two layers lands no further layer changes', async () => {
+test('[director-242] STOP between two layers lands no further layer changes', async () => {
   const { director, dataManager, restore } = makeDirector({
     project: {
       version: 3,
@@ -1167,7 +1167,7 @@ test('STOP between two layers lands no further layer changes', async () => {
   }
 });
 
-test('STOP aborts the layer transition in flight, not merely the next one', async () => {
+test('[director-242] STOP aborts the layer transition in flight, not merely the next one', async () => {
   // Checking the token AFTER the await is a backstop, not the fix: by then an
   // un-aborted transition has already committed, and the pass returns without
   // its params — the layer left enabled carrying stale ones. The signal is
@@ -1309,7 +1309,7 @@ test('[director-196] a superseded LOAD is refused its visual commit', async () =
   }
 });
 
-test('a run refuses the visual commit of a shot cancelled mid-transition', async () => {
+test('[director-242] a run refuses the visual commit of a shot cancelled mid-transition', async () => {
   const { director, styleManager, restore } = makeDirector();
   let releaseVisual;
   styleManager.applyVisualState = (visual, options = {}) => {
@@ -1366,7 +1366,7 @@ test('[director-196] the newest LOAD wins when two loads race', async () => {
   }
 });
 
-test('a scene run supersedes a LOAD still suspended on its visual await', async () => {
+test('[director-237] a scene run supersedes a LOAD still suspended on its visual await', async () => {
   const { director, styleManager, dataManager, restore } = makeDirector();
   let releaseLoadVisual;
   let calls = 0;
@@ -1514,7 +1514,7 @@ test('unsupported stored documents cannot be overwritten by fallback edits', asy
   } finally { restore(); }
 });
 
-test('valid import settles a cancelled load before replacing the project', async () => {
+test('[director-252] valid import settles a cancelled load before replacing the project', async () => {
   const { director, styleManager, restore } = makeDirector();
   let release;
   styleManager.applyVisualState = () => new Promise((resolve) => { release = resolve; });
@@ -1533,7 +1533,7 @@ test('valid import settles a cancelled load before replacing the project', async
   } finally { restore(); }
 });
 
-test('a delayed import cannot publish after disposal', async () => {
+test('[director-253] a delayed import cannot publish after disposal', async () => {
   const { director, restore } = makeDirector();
   let release;
   try {

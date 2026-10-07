@@ -1,0 +1,93 @@
+## 1. The spec
+
+- [x] 1.1 Write the spec before tests.
+
+## 2. Tests and mutations
+
+- [x] 2.1 Write tests for `director-231`.
+  - Mutation: M001 changes `␠␠␠␠return␠this._running;` to `␠␠␠␠return␠false;`. The test must fail.
+- [x] 2.2 Write tests for `director-232`.
+  - Mutation: M008 changes `scene.id␠===␠sceneId␠&&␠` to empty text. The test must fail.
+- [x] 2.3 Write tests for `director-233`.
+  - Mutation: M013 changes `␠␠␠␠if␠(!this._claimCameraOwnership())␠{` to `␠␠␠␠if␠(false)␠{`. The test must fail.
+- [x] 2.4 Write tests for `director-234`.
+  - Mutation: M005 changes `␠␠␠␠␠␠sceneId␠&#124;&#124;␠this._selectedSceneId␠&#124;&#124;␠this._project.scenes[0]?.id,` to `␠␠␠␠␠␠this._selectedSceneId␠&#124;&#124;␠this._project.scenes[0]?.id,`. The test must fail.
+- [x] 2.5 Write tests for `director-235`.
+  - Mutation: M017 changes `this._running␠=␠true` to `this._running␠=␠false`. The test must fail.
+- [x] 2.6 Write tests for `director-236`.
+  - Mutation: M010 changes `index␠+␠1` to `index`. The test must fail.
+- [x] 2.7 Write tests for `director-237`.
+  - Mutation: M003 changes `␠␠␠␠␠␠return␠Promise.resolve({␠started:␠false,␠reason:␠'destroyed'␠});↵␠␠␠␠this._sceneSeekGeneration++;↵␠␠␠␠return␠this._trackWork(this._startScene(sceneId,␠options));` to `␠␠␠␠␠␠return␠Promise.resolve({␠started:␠false,␠reason:␠'destroyed'␠});↵␠␠␠␠void␠0;↵␠␠␠␠return␠this._trackWork(this._startScene(sceneId,␠options));`. The test must fail.
+- [x] 2.8 Write tests for `director-238`.
+  - Mutation: M016 changes `␠␠␠␠this._usesAuthoredCamera␠=␠queue.some(({␠shot␠})␠=>␠!!shot.move);` to `␠␠␠␠this._usesAuthoredCamera␠=␠queue.some(({␠shot␠})␠=>␠false);`. The test must fail.
+- [x] 2.9 Write tests for `director-239`.
+  - Mutation: M029 changes `error.message␠&#124;&#124;␠'run␠failed'` to `'run␠failed'`. The test must fail.
+- [x] 2.10 Write tests for `director-240`.
+  - Mutation: M035 changes `␠␠␠␠␠␠this._selectedSceneId␠&#124;&#124;␠this._project.scenes[0]?.id,` to `␠␠␠␠␠␠this._project.scenes[0]?.id,`. The test must fail.
+- [x] 2.11 Write tests for `director-241`.
+  - Mutation: M033 changes `␠␠␠␠if␠(this._destroyed␠&#124;&#124;␠this._running)␠return;` to `␠␠␠␠if␠(this._running)␠return;`. The test must fail.
+- [x] 2.12 Write tests for `director-242`.
+  - Mutation: M039 changes `␠␠␠␠this._dataPacks?.clear();↵␠␠␠␠this._sceneSeekGeneration++;↵␠␠␠␠this._loadAbort?.abort();` to `␠␠␠␠this._dataPacks?.clear();↵␠␠␠␠void␠0;↵␠␠␠␠this._loadAbort?.abort();`. The test must fail.
+- [x] 2.13 Write tests for `director-243`.
+  - Mutation: M046 changes `??␠true` to `??␠false`. The test must fail.
+- [x] 2.14 Write tests for `director-244`.
+  - Mutation: M050 changes `&#124;&#124;␠{␠status:␠'idle',␠count:␠0␠}` to `&#124;&#124;␠{␠status:␠'bad',␠count:␠1␠}`. The test must fail.
+- [x] 2.15 Write tests for `director-245`.
+  - Mutation: M051 changes `shot,␠this._dataPacks.getTargets()` to `shot,␠[]`. The test must fail.
+- [x] 2.16 Write tests for `director-246`.
+  - Mutation: M053 changes `signal.aborted␠&#124;&#124;␠` to empty text. The test must fail.
+- [x] 2.17 Write tests for `director-247`.
+  - Mutation: M058 changes `␠␠␠␠␠␠if␠(!this._claimCameraOwnership())␠return␠false;` to `␠␠␠␠␠␠if␠(false)␠return␠false;`. The test must fail.
+- [x] 2.18 Write tests for `director-248`.
+  - Mutation: M062 changes `!this.dataManager` to `this.dataManager`. The test must fail.
+- [x] 2.19 Write tests for `director-249`.
+  - Mutation: M066 changes `>=␠64` to `>␠64`. The test must fail.
+- [x] 2.20 Write tests for `director-250`.
+  - Mutation: M072 changes `stringifySceneDocument(this._project)` to `'{}'`. The test must fail.
+- [x] 2.21 Write tests for `director-251`.
+  - Mutation: M073 changes `␠␠␠␠␠␠this._updateStatus(ˋExport␠failed:␠${error.message}ˋ);↵␠␠␠␠␠␠return;↵␠␠␠␠}↵␠␠␠␠//␠Trigger␠a␠browser␠download␠via␠a␠temporary␠anchor␠element` to `␠␠␠␠␠␠this._updateStatus(ˋExport␠failed:␠${error.message}ˋ);↵␠␠␠␠␠␠void␠0;↵␠␠␠␠}↵␠␠␠␠//␠Trigger␠a␠browser␠download␠via␠a␠temporary␠anchor␠element`. The test must fail.
+- [x] 2.22 Write tests for `director-252`.
+  - Mutation: M075 changes `␠␠␠␠␠␠(this._importGeneration␠&#124;&#124;␠0)␠+␠1);` to `␠␠␠␠␠␠(this._importGeneration␠&#124;&#124;␠9)␠+␠1);`. The test must fail.
+- [x] 2.23 Write tests for `director-253`.
+  - Mutation: M077 changes `␠␠␠␠␠␠if␠(signal?.aborted)␠return␠false;↵␠␠␠␠␠␠if␠(this._destroyed␠&#124;&#124;␠generation␠!==␠this._importGeneration)↵␠␠␠␠␠␠␠␠return␠false;` to `␠␠␠␠␠␠if␠(signal?.aborted)␠return␠false;↵␠␠␠␠␠␠if␠(generation␠!==␠this._importGeneration)↵␠␠␠␠␠␠␠␠return␠false;`. The test must fail.
+- [x] 2.24 Write tests for `director-254`.
+  - Mutation: M076 changes `prepared␠&#124;&#124;␠` to empty text. The test must fail.
+- [x] 2.25 Write tests for `director-255`.
+  - Mutation: M098 changes `␠␠␠␠␠␠␠␠signal?.aborted␠&#124;&#124;↵␠␠␠␠␠␠␠␠this._destroyed␠&#124;&#124;` to `␠␠␠␠␠␠␠␠false␠&#124;&#124;↵␠␠␠␠␠␠␠␠this._destroyed␠&#124;&#124;`. The test must fail.
+- [x] 2.26 Write tests for `director-256`.
+  - Mutation: M103 changes `␠␠␠␠if␠(!this._lastRunJson)␠return;` to `␠␠␠␠if␠(false)␠return;`. The test must fail.
+- [x] 2.27 Write tests for `director-257`.
+  - Mutation: M107 changes `␠␠␠␠␠␠let␠settled;` to `␠␠␠␠␠␠if␠(id␠===␠'one')␠continue;↵␠␠␠␠␠␠let␠settled;`. The test must fail.
+- [x] 2.28 Write tests for `director-258`.
+  - Mutation: M116 changes `␠␠␠␠␠␠if␠(token?.cancelled)␠return␠abort();↵␠␠␠␠␠␠if␠(settled␠===␠false)␠{↵␠␠␠␠␠␠␠␠refused.push(id);` to `␠␠␠␠␠␠if␠(token?.cancelled)␠return␠abort();↵␠␠␠␠␠␠if␠(false)␠{↵␠␠␠␠␠␠␠␠refused.push(id);`. The test must fail.
+- [x] 2.29 Write tests for `director-259`.
+  - Mutation: M105 changes `␠␠␠␠const␠abort␠=␠()␠=>␠({␠applied,␠refused,␠cancelled:␠true␠});↵␠␠␠␠if␠(token?.cancelled)␠return␠abort();↵` to `␠␠␠␠const␠abort␠=␠()␠=>␠({␠applied,␠refused,␠cancelled:␠true␠});↵␠␠␠␠if␠(false)␠return␠abort();↵`. The test must fail.
+- [x] 2.30 Write tests for `director-260`.
+  - Mutation: M122 changes `Array.isArray(scene?.releaseLayerIds)` to `true`. The test must fail.
+- [x] 2.31 Write tests for `director-261`.
+  - Mutation: M132 changes `␠␠␠␠const␠state␠=␠this.styleManager.getContextModeState()␠&#124;&#124;␠{};` to `␠␠␠␠const␠state␠=␠this.styleManager.getContextModeState()␠;`. The test must fail.
+- [x] 2.32 Write tests for `director-262`.
+  - Mutation: M141 changes `!completed␠&&␠` to empty text. The test must fail.
+- [x] 2.33 Write tests for `director-263`.
+  - Mutation: M145 changes `␠␠␠␠if␠(!cameraState␠&#124;&#124;␠token.cancelled)␠return;` to `␠␠␠␠if␠(token.cancelled)␠return;`. The test must fail.
+- [x] 2.34 Write tests for `director-264`.
+  - Mutation: M156 changes `␠␠␠␠␠␠if␠(!done)␠timer␠=␠setTimeout(finish,␠(duration␠+␠0.6)␠*␠1000);` to `␠␠␠␠␠␠if␠(!done)␠timer␠=␠setTimeout(finish,␠(duration␠+␠1)␠*␠1000);`. The test must fail.
+- [x] 2.35 Write tests for `director-265`.
+  - Mutation: M157 changes `!state.enabled␠&#124;&#124;␠` to empty text. The test must fail.
+- [x] 2.36 Write tests for `director-266`.
+  - Mutation: M169 changes `this._clock.wait(ms,␠token)` to `this._clock.wait(0,␠token)`. The test must fail.
+- [x] 2.37 Write tests for `director-267`.
+  - Mutation: M173 changes `␠␠␠␠this._runAbort?.abort();↵␠␠␠␠this._runAbort␠=␠null;` to `␠␠␠␠void␠0;↵␠␠␠␠this._runAbort␠=␠null;`. The test must fail.
+- [x] 2.38 Write tests for `director-268`.
+  - Mutation: M178 changes `scene␠&&␠` to empty text. The test must fail.
+- [x] 2.39 Write tests for `director-269`.
+  - Mutation: M182 changes `this._presentation.playbackActive␠=␠` to `this._presentation.wrong␠=␠`. The test must fail.
+- [x] 2.40 Write tests for `director-270`.
+  - Mutation: M187 changes `!this._activeRun` to `false`. The test must fail.
+
+## 3. Gates and review
+
+- [ ] 3.1 Run the ratchet command.
+- [ ] 3.2 Run the image gates.
+- [ ] 3.3 Run the two review agents.
+- [ ] 3.4 Write review.md.
