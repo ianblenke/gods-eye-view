@@ -3194,7 +3194,7 @@
     "src/tooling/spec/ste.test.mjs › [ste-lint-021] ignores a listed word without a determiner"
   ],
   "ste-lint-022": [
-    "src/tooling/spec/ste.test.mjs › [ste-lint-022] ignores code and a listed word that starts with a quote"
+    "src/tooling/spec/ste.test.mjs › [ste-lint-022] ignores code and a listed word that starts with a quote mark"
   ],
   "ste-lint-023": [
     "src/tooling/spec/gates.test.mjs › [ste-lint-023] keeps a success status for the lint command with a noun warning",
@@ -3204,13 +3204,13 @@
     "src/tooling/spec/ste.test.mjs › [ste-lint-024] ignores a word outside the list nounVerbs"
   ],
   "ste-lint-025": [
-    "src/tooling/spec/ste.test.mjs › [ste-lint-025] reads the list nounVerbs from the word file for each check"
+    "src/tooling/spec/ste.test.mjs › [ste-lint-025] reads the list nounVerbs from the word list file for each check"
   ],
   "ste-lint-026": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-026] ignores plural and possessive forms"
   ],
   "ste-lint-027": [
-    "src/tooling/spec/ste.test.mjs › [ste-lint-027] excludes inline code from the word rule for tagged titles"
+    "src/tooling/spec/ste.test.mjs › [ste-lint-027] excludes inline code from the rule STE-WORD for tagged titles"
   ],
   "wind-001": [
     "src/layers/wind/fields.test.mjs › [wind-001] scalar read rejects absent and invalid data",
