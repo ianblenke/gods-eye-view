@@ -1,6 +1,12 @@
 # Director host evidence
 
-Commit read: `43b776a14aaf7d9379a786f5dafdc1c79bd4e371`.
+Pass 3 read the base commit `290b5d2` and the working tree of the lead's branch.
+The source comparison below gives no output.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director && git diff --stat 290b5d2 origin/main -- 'src/director/*.js'
+```
+
 Source base: `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
 
 ## Scenario tests
@@ -23,7 +29,7 @@ Test file: `src/director/document.test.mjs`.
 [director-002] The parser keeps an empty scene list
 ```
 
-### director-003: Accept legacy documents
+### director-003: Import supported document versions
 
 Test file: `src/director/document.test.mjs`.
 
@@ -32,9 +38,10 @@ Test file: `src/director/document.test.mjs`.
 [director-003] missing legacy IDs become stable after the first saved migration
 [director-003] The legacy document accepts absent IDs
 [director-003] The absent version allows legacy numeric text
-[director-003] The import accepts anchors and move at versions 4 through 6
+[director-003] The import accepts the anchors field and the move field at versions 4 through 6
 [director-003] The import accepts data packs at versions 5 and 6
-[director-003] The import rejects fields below each version gate
+[director-003] The import rejects fields below each version limit
+[director-003] The import accepts an empty interactions list at version 6
 ```
 
 ### director-004: Reject invalid documents
@@ -171,7 +178,7 @@ Test file: `src/director/document.test.mjs`.
 [director-014] The visual check rejects invalid style
 [director-014] The visual check rejects invalid mapStack
 [director-014] The visual check rejects invalid style parameters
-[director-014] The visual rejects an unknown field
+[director-014] The visual check rejects an unknown field
 ```
 
 ### director-015: Check visual controls
@@ -204,7 +211,7 @@ Test file: `src/director/document.test.mjs`.
 [director-015] The visual check rejects invalid number type
 [director-015] The visual check rejects invalid text type
 [director-015] The visual check rejects invalid boolean type
-[director-015] The visual group rejects an unknown field
+[director-015] The visual control rejects an unknown field
 ```
 
 ### director-016: Check document metadata
@@ -498,8 +505,9 @@ Test file: `src/director/playback.test.mjs`.
 
 ```text
 [director-036] The single scene queue excludes other scenes
-[director-036] The queue wraps from b and keeps each shot object
-[director-036] The unknown start selects the first scene
+[director-036] The queue wraps from scene b and keeps each shot object
+[director-036] The unknown start ID selects the first scene
+[director-036] The single scene queue starts at scene a and keeps source objects
 ```
 
 ### director-037: Run shot phases
@@ -633,22 +641,22 @@ camera seeking preserves cubic easing and shortest-angle orientation
 
 ## Mutations and branch audit
 
-The mutation sweep reads 312 mutation declarations.
-The last log result gives 304 killed mutations and 8 equivalent survivors.
+The mutation sweep reads 318 mutation declarations.
+The last log result gives 310 killed mutations and 8 equivalent survivors.
 The mutation evidence records each ID, file, exact change and failed test.
 
 The audit command below gives these row totals.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/audit.py
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/pass3-audit.py
 ```
 
 | Tested | Equivalent | Default-value | Open |
 | ---: | ---: | ---: | ---: |
-| 120 | 2 | 2 | 0 |
+| 124 | 2 | 2 | 0 |
 
 The scratch audit path is `/home/ianblenke/docker/gev-tools/director/audit.md`.
-Each row lists the tests and mutations that prove its decisions.
+Each row lists the tests and mutations that prove its branches.
 The nested expressions keep separate rows.
 
 ### Equivalent mutants
@@ -669,7 +677,7 @@ The nested expressions keep separate rows.
 
 ## Commands and totals
 
-The sweep gives 40 scenario headings and 308 tests that ran.
+The sweep gives 40 scenario headings and 310 tests that ran.
 It also gives old ledger test totals, title issues and the mutation declaration total.
 The title check finds no banned word or excess length in a tagged title.
 
@@ -690,13 +698,13 @@ STE lint gives zero errors.
 The normal format commands stopped with `spawnSync git EPERM`.
 The host helper completed the format commands.
 
-The scope check compares this round with `HEAD`.
+The scope check compares this pass with `HEAD`.
 The lead changes the QA headers at the archive step.
 
 The lead runs the ratchet, gates, archive and both reviews after these corrections.
 The base commit and `origin/main` hold the same director source.
-The round 1 commits hold the tests and change files.
-This round adds no commit.
+The commits of pass 1 hold the tests and change files.
+The worker made no commit in this pass.
 
 ## Tree state
 
@@ -716,15 +724,13 @@ cd /home/ianblenke/docker/gev-work/director && git status --short
  M openspec/changes/backfill-director-timing/tasks.md
  M src/director/clock.test.mjs
  M src/director/document.test.mjs
- M src/director/documentFields.test.mjs
  M src/director/playback.test.mjs
- M src/director/timeline.test.mjs
 ```
 
-## Round 1 corrections
+## Corrections of review round 1
 
 Each row names the first words of a review item.
-This report reads commit `43b776a14aaf7d9379a786f5dafdc1c79bd4e371`.
+Pass 3 read the base commit `290b5d2` and the working tree of the lead's branch.
 
 | Report | First words | Change |
 | --- | --- | --- |
@@ -753,7 +759,7 @@ This report reads commit `43b776a14aaf7d9379a786f5dafdc1c79bd4e371`.
 
 Exact test names stay in code blocks because the brief bans changes to old names.
 A different quote gives a false test link.
-No prose correction changes a test assertion.
+Pass 3 also adds snapshot and source object assertions.
 
 ### Equivalent probes
 
@@ -767,7 +773,7 @@ The camera probes compare property access through proxy endpoints and each pair 
 The probes do not count as killed mutations.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director/equivalent-round2.mjs
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director/equivalent-pass3.mjs
 cd /home/ianblenke/docker/gev-work/director && git diff --stat 290b5d2 HEAD -- 'src/director/*.js'
 cd /home/ianblenke/docker/gev-work/director && git diff --stat 290b5d2 origin/main -- 'src/director/*.js'
 ```
@@ -778,45 +784,20 @@ The file commands use `--test-isolation=none` and do not use `--test-force-exit`
 
 | Test file | Tests | Failed |
 | --- | ---: | ---: |
-| `src/director/document.test.mjs` | 74 | 0 |
+| `src/director/document.test.mjs` | 75 | 0 |
 | `src/director/documentFields.test.mjs` | 43 | 0 |
 | `src/director/authoring.test.mjs` | 22 | 0 |
 | `src/director/clock.test.mjs` | 74 | 0 |
-| `src/director/playback.test.mjs` | 66 | 0 |
+| `src/director/playback.test.mjs` | 67 | 0 |
 | `src/director/timeline.test.mjs` | 29 | 0 |
 
-The command output gives 308 tests in total.
+The command output gives 310 tests in total.
 The scenario heading sweep gives 40 scenarios.
-The diff sweep gives 18 new test titles.
-
-## New test labels
-
-The mutation table uses these labels.
-
-```text
-T01 | src/director/clock.test.mjs | [director-023] The publication uses false from the clock state
-T02 | src/director/clock.test.mjs | [director-023] The publication clamps negative elapsed time to zero
-T03 | src/director/document.test.mjs | [director-014] The visual rejects an unknown field
-T04 | src/director/document.test.mjs | [director-015] The visual group rejects an unknown field
-T05 | src/director/document.test.mjs | [director-016] The pack entry rejects an unknown field
-T06 | src/director/document.test.mjs | [director-018] The layer entry rejects an unknown field
-T07 | src/director/document.test.mjs | [director-004] The document rejects a duplicate scene ID
-T08 | src/director/document.test.mjs | [director-016] The document rejects a duplicate pack ID
-T09 | src/director/document.test.mjs | [director-003] The import accepts anchors and move at versions 4 through 6
-T10 | src/director/document.test.mjs | [director-003] The import accepts data packs at versions 5 and 6
-T11 | src/director/document.test.mjs | [director-003] The import rejects fields below each version gate
-T12 | src/director/documentFields.test.mjs | [director-006] The default text limit accepts 256 characters
-T13 | src/director/documentFields.test.mjs | [director-006] The default text limit rejects 257 characters
-T14 | src/director/playback.test.mjs | [director-036] The queue wraps from b and keeps each shot object
-T15 | src/director/playback.test.mjs | [director-036] The unknown start selects the first scene
-T16 | src/director/playback.test.mjs | [director-037] The phase context gives each index and the queue total
-T17 | src/director/timeline.test.mjs | [director-033] The camera takes the shortest arc for both angles
-T18 | src/director/timeline.test.mjs | [director-032] The absent shot starts at zero elapsed time
-```
+The pass 3 title command gives 8 new or changed titles.
 
 ## Check limits
 
-The first complete mutation check used stale patterns and gave extra survivors.
+The first complete mutation check of pass 2 used stale patterns and gave extra survivors.
 The final complete check uses the corrected patterns and a valid empty loop body for `m068`.
 Each complete check reached its end.
 The normal isolated test command reports file totals on this host.
@@ -824,19 +805,17 @@ The file totals do not count the tests inside each file.
 The commands above use the same isolation option as the mutation command.
 
 The lead still runs the container gates and the review agents.
-This round does not run make, Docker, commit or push commands.
+This pass does not run make, Docker, commit or push commands.
 The scratch audit and mutation files stay outside the repository.
 
 ## Result commands
 
-The report helper reads the test logs and the final mutation output.
-The helper also reads the totals from the branch audit.
-The diff check supplies the new test titles.
-The title check includes the word list, the owner words, the word limit and passive voice.
+The pass 3 helpers read the complete mutation output, test logs and branch audit.
+The title helper checks the new and changed titles against the word list and owner word rule.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/refresh-round2.py
-cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/title-check-round2.py
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/pass3-refresh.py
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/title-check-pass3.py
 cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-timing
 ```
 
@@ -845,7 +824,7 @@ cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 pytho
 The error test also checks that the next subscriber gets the state.
 The extra check applies the `m207` mutation to that test.
 Only the first subscriber runs in this mutation.
-The test fails because the next subscriber gets zero calls instead of one.
+The test fails because later subscribers get no snapshot.
 The mutation total counts `m207` once.
 
 ```sh
@@ -857,27 +836,85 @@ m207: KILLED [director-023] The clock warns when a subscriber fails
 SURVIVORS: []
 ```
 
-## Final file check
+## Corrections of review round 2
 
-The file check gives 11 changed files and zero production or QA changes.
-The old timeline test body matches `origin/main` exactly.
-The scenario IDs stay `director-001` through `director-040`.
-The pre-dispatch helper gives zero real prose hits and 20 hits inside fenced code.
-The word rule excludes those code blocks.
+Each row gives the first words of a finding and the change in pass 3.
+
+| Report | First words | Change |
+| --- | --- | --- |
+| Spec | `director-036 names` | Add a single scene test before the last scene and source scene checks; add `m313` and `m314`. |
+| Spec | `The WHEN of director-003` | Name validation or migration at a supported version. |
+| Spec | `Tagged tests assert results` | State zero progress for zero total and each stopped subscriber snapshot. |
+| Spec | `The director-037 AND names` | Check each shot ID and each later subscriber snapshot; add `m316` and `m317`. |
+| Spec | `The accept side` | Import an empty interactions list at version 6; add `m315`. |
+| Spec | `Rows m289-m312 give prose` | Give Old, New, Result and the failed test for each new row. |
+| Spec | `design.md:4` | Name base commit `290b5d2` and the working tree; give the source comparison command. |
+| Spec | `The ratchet recorded` | Add known limit `ledger-count-noise` with the real file path. |
+| STE | `the queue starts` | State the separate queue results for a start scene and a single scene. |
+| STE | `Round 2 reads commit` | Use pass for worker work and review round for the lead's reviews. |
+| STE | `the field checks` | Skip the applied Purpose text because the lead owns it; the delta names each module. |
+| STE | `prove its decisions` | Use branches for code and choices for policy. |
+| STE | `stop after a snapshot` | Use the stop method, the destroy method and the start scene. |
+| STE | `The visual rejects` | Add the missing nouns to each pass 2 title and its test links. |
+| STE | `visual group` | Use visual control, version limit, heading and roll; use check for project checks. |
+| STE | `scene projects` | Use documents, name the timeline as subject and give angle units. |
+| STE | `the default false clock` | State the clock state when the clock does not run; separate the final totals. |
+| STE | `This round adds no` | State that the worker made no commit in this pass. |
+
+The stop test also checks the full snapshot of each subscriber; `m318` gives the wrong clock state.
+The old test titles stay exact inside code blocks.
+The applied Purpose finding is the only skipped replacement.
+
+## Pass 3 test and mutation checks
+
+The six file commands give 310 tests and zero failed tests.
+The title command checks 8 new or changed titles and gives zero word, length or passive voice faults.
+The complete mutation command gives 318 rows, 310 killed mutations and 8 equivalent survivors.
+The survivors are `m009`, `m028`, `m098`, `m219`, `m236`, `m237`, `m238` and `m267`.
+The eight getter, proxy and spy probes pass against the base source and each mutant.
+
+Earlier mutation checks stopped before their end and give no final result.
+The final complete check uses the corrected title patterns.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/final-check-round2.py
-cd /home/ianblenke/docker/gev-work/director && rg -n 'default limit|versions 4|subscriber error|stopped: true|heading 350|roll 10|start `b`|own index' openspec/changes/backfill-director-timing/specs/director/spec.md
+cd /home/ianblenke/docker/gev-work/director && for director_module in document documentFields authoring clock playback timeline; do
+  NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test "src/director/${director_module}.test.mjs"
+done
+cd /home/ianblenke/docker/gev-work/director && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director /home/ianblenke/docker/gev-tools/director/muts.json
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director/equivalent-pass3.mjs
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/pass3-refresh.py
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/title-check-pass3.py
 ```
 
-```text
-24: versions 4, 5 and 6 accept scene anchors and shot move fields
-45: the default limit accepts 256 characters and rejects 257 characters
-135: a subscriber error gives one warning and leaves elapsed time at 1 second
-141: stop after a snapshot gives stopped: true and running: false
-142: a subscriber error does not leave the stop method
-194: heading 350 to 10 gives 360 at progress 0.5
-196: roll 10 to 350 gives 0 at progress 0.5 while heading 350 to 10 gives 360
-213: start b gives shots b1, a1 and a2 in that order
-221: each phase receives its own index and total fields
+## Pass 3 prose and scope checks
+
+The STE lint gives zero errors.
+The pre-dispatch helper gives 18 old title flags in code blocks and two abbreviation flags in code commands.
+Four noun flags refer to method names or the ledger phrase from the brief.
+Each flag refers to text that the brief allows.
+The owner word sweep finds no fault outside code.
+
+The scope command lists nine changed files: three test files and six files in this change folder.
+The scope command lists no production file, QA script, trace file or review file.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-timing 2>&1 | grep -E "^(ERROR|STE)"
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-timing
+cd /home/ianblenke/docker/gev-work/director && git diff --name-only HEAD
+```
+
+## Pass 3 format result
+
+Both normal format commands stopped with `spawnSync git EPERM`.
+The host helper completed the write command and the check command for 1158 source files.
+The final diff check gives no whitespace error.
+The worker made no commit in this pass.
+The lead still runs the ratchet, container gates, archive and both review agents.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node scripts/format.mjs --write
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node scripts/format.mjs --check
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --write
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+cd /home/ianblenke/docker/gev-work/director && git diff --check
 ```

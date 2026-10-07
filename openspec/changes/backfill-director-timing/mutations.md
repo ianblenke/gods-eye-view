@@ -1,10 +1,14 @@
 # Director mutation evidence
 
-Commit read: `43b776a14aaf7d9379a786f5dafdc1c79bd4e371`.
+Pass 3 read the base commit `290b5d2` and the working tree of the lead's branch.
+The source comparison below gives no output.
 
-The host tool restores each source file after its check.
-The final complete check supplies each result below.
-The failed test text comes from the command output.
+```sh
+cd /home/ianblenke/docker/gev-work/director && git diff --stat 290b5d2 origin/main -- 'src/director/*.js'
+```
+
+The final complete host check supplies each result below.
+The tool restores each source file after its check.
 
 ## m001
 
@@ -4688,33 +4692,476 @@ Result: KILLED
 Failed test prefix: [director-031] The shot boundaries use cumulative durations
 ```
 
-## New mutation rows
+## m289
 
-The host evidence lists each test title and file by its test label.
+File: `src/director/playback.js`.
 
-| ID | File | Change | Failed test |
+```text
+Old:
+[...scenes.slice(start), ...scenes.slice(0, start)]
+New:
+[...scenes.slice(0, start), ...scenes.slice(start)]
+Selected test: [director-036] The queue wraps from scene b and keeps each shot object
+Result: KILLED
+Failed test prefix: [director-036] The queue wraps from scene b and keeps each shot object
+```
+
+## m290
+
+File: `src/director/playback.js`.
+
+```text
+Old:
+const start = Math.max(
+    0,
+    scenes.findIndex((scene) => scene.id === startSceneId),
+  );
+New:
+const start = scenes.findIndex((scene) => scene.id === startSceneId);
+Selected test: [director-036] The unknown start ID selects the first scene
+Result: KILLED
+Failed test prefix: [director-036] The unknown start ID selects the first scene
+```
+
+## m291
+
+File: `src/director/playback.js`.
+
+```text
+Old:
+return ordered.flatMap((scene) =>
+New:
+return ordered.map((scene) =>
+Selected test: [director-036] The queue wraps from scene b and keeps each shot object
+Result: KILLED
+Failed test prefix: [director-036] The queue wraps from scene b and keeps each shot object
+```
+
+## m292
+
+File: `src/director/playback.js`.
+
+```text
+Old:
+scene.shots.map((shot) => ({ scene, shot }))
+New:
+scene.shots.map((shot) => ({ scene, shot: { ...shot } }))
+Selected test: [director-036] The queue wraps from scene b and keeps each shot object
+Result: KILLED
+Failed test prefix: [director-036] The queue wraps from scene b and keeps each shot object
+```
+
+## m293
+
+File: `src/director/timeline.js`.
+
+```text
+Old:
++ 540
+New:
++ 360
+Selected test: [director-033] The camera takes the shortest arc for both angles
+Result: KILLED
+Failed test prefix: [director-033] The camera takes the shortest arc for both angles
+```
+
+## m294
+
+File: `src/director/timeline.js`.
+
+```text
+Old:
+% 360
+New:
+% 180
+Selected test: [director-033] The camera takes the shortest arc for both angles
+Result: KILLED
+Failed test prefix: [director-033] The camera takes the shortest arc for both angles
+```
+
+## m295
+
+File: `src/director/timeline.js`.
+
+```text
+Old:
+) - 180
+New:
+) - 0
+Selected test: [director-033] The camera takes the shortest arc for both angles
+Result: KILLED
+Failed test prefix: [director-033] The camera takes the shortest arc for both angles
+```
+
+## m296
+
+File: `src/director/document.js`.
+
+```text
+Old:
+  fields(value, path, [
+    'style',
+    'bloom',
+    'sharpen',
+    'hud',
+    'detection',
+    'scope',
+    'mapStack',
+    'styleParams',
+  ]);
+New:
+<empty>
+Selected test: [director-014] The visual check rejects an unknown field
+Result: KILLED
+Failed test prefix: [director-014] The visual check rejects an unknown field
+```
+
+## m297
+
+File: `src/director/document.js`.
+
+```text
+Old:
+fields(entry, field, Object.keys(spec));
+New:
+<empty>
+Selected test: [director-015] The visual control rejects an unknown field
+Result: KILLED
+Failed test prefix: [director-015] The visual control rejects an unknown field
+```
+
+## m298
+
+File: `src/director/document.js`.
+
+```text
+Old:
+fields(pack, at, ['id', 'version', 'shotBindings']);
+New:
+<empty>
+Selected test: [director-016] The pack entry rejects an unknown field
+Result: KILLED
+Failed test prefix: [director-016] The pack entry rejects an unknown field
+```
+
+## m299
+
+File: `src/director/document.js`.
+
+```text
+Old:
+fields(entry, p, ['enabled', 'params']);
+New:
+<empty>
+Selected test: [director-018] The layer entry rejects an unknown field
+Result: KILLED
+Failed test prefix: [director-018] The layer entry rejects an unknown field
+```
+
+## m300
+
+File: `src/director/document.js`.
+
+```text
+Old:
+uniqueId(scene, path, sceneIds);
+New:
+<empty>
+Selected test: [director-004] The document rejects a duplicate scene ID
+Result: KILLED
+Failed test prefix: [director-004] The document rejects a duplicate scene ID
+```
+
+## m301
+
+File: `src/director/document.js`.
+
+```text
+Old:
+uniqueId(pack, at, packIds);
+New:
+<empty>
+Selected test: [director-016] The document rejects a duplicate pack ID
+Result: KILLED
+Failed test prefix: [director-016] The document rejects a duplicate pack ID
+```
+
+## m302
+
+File: `src/director/document.js`.
+
+```text
+Old:
+version >= 4 ? ['anchors']
+New:
+version >= 6 ? ['anchors']
+Selected test: [director-003] The import accepts the anchors field and the move field at versions 4 through 6
+Result: KILLED
+Failed test prefix: [director-003] The import accepts the anchors field and the move field at versions 4 through 6
+```
+
+## m303
+
+File: `src/director/document.js`.
+
+```text
+Old:
+version >= 4 ? ['move']
+New:
+version >= 6 ? ['move']
+Selected test: [director-003] The import accepts the anchors field and the move field at versions 4 through 6
+Result: KILLED
+Failed test prefix: [director-003] The import accepts the anchors field and the move field at versions 4 through 6
+```
+
+## m304
+
+File: `src/director/document.js`.
+
+```text
+Old:
+version >= 5 ? ['dataPacks']
+New:
+version >= 6 ? ['dataPacks']
+Selected test: [director-003] The import accepts data packs at versions 5 and 6
+Result: KILLED
+Failed test prefix: [director-003] The import accepts data packs at versions 5 and 6
+```
+
+## m305
+
+File: `src/director/document.js`.
+
+```text
+Old:
+version >= 5 ? ['dataPackIds']
+New:
+version >= 6 ? ['dataPackIds']
+Selected test: [director-003] The import accepts data packs at versions 5 and 6
+Result: KILLED
+Failed test prefix: [director-003] The import accepts data packs at versions 5 and 6
+```
+
+## m306
+
+File: `src/director/clock.js`.
+
+```text
+Old:
+running = this.isRunning()
+New:
+running = true
+Selected test: [director-023] The publication uses false from the clock state
+Result: KILLED
+Failed test prefix: [director-023] The publication uses false from the clock state
+```
+
+## m307
+
+File: `src/director/clock.js`.
+
+```text
+Old:
+const elapsedSec = Math.max(
+      0,
+      Math.min(timing.totalSec, Number(sceneElapsedSec) || 0),
+    );
+New:
+const elapsedSec = Math.min(timing.totalSec, Number(sceneElapsedSec) || 0);
+Selected test: [director-023] The publication clamps negative elapsed time to zero
+Result: KILLED
+Failed test prefix: [director-023] The publication clamps negative elapsed time to zero
+```
+
+## m308
+
+File: `src/director/timeline.js`.
+
+```text
+Old:
+.slice(0, Math.max(0, shotIndex))
+New:
+.slice(0, shotIndex)
+Selected test: [director-032] The absent shot starts at zero elapsed time
+Result: KILLED
+Failed test prefix: [director-032] The absent shot starts at zero elapsed time
+```
+
+## m309
+
+File: `src/director/documentFields.js`.
+
+```text
+Old:
+max = 256
+New:
+max = 255
+Selected test: [director-006] The default text limit accepts 256 characters
+Result: KILLED
+Failed test prefix: [director-006] The default text limit accepts 256 characters
+```
+
+## m310
+
+File: `src/director/documentFields.js`.
+
+```text
+Old:
+max = 256
+New:
+max = 257
+Selected test: [director-006] The default text limit rejects 257 characters
+Result: KILLED
+Failed test prefix: [director-006] The default text limit rejects 257 characters
+```
+
+## m311
+
+File: `src/director/playback.js`.
+
+```text
+Old:
+const context = { scene, shot, index, total: queue.length, token };
+New:
+const context = { scene, shot, index: 0, total: queue.length, token };
+Selected test: [director-037] The phase context gives each index and the queue total
+Result: KILLED
+Failed test prefix: [director-037] The phase context gives each index and the queue total
+```
+
+## m312
+
+File: `src/director/playback.js`.
+
+```text
+Old:
+const context = { scene, shot, index, total: queue.length, token };
+New:
+const context = { scene, shot, index, total: 1, token };
+Selected test: [director-037] The phase context gives each index and the queue total
+Result: KILLED
+Failed test prefix: [director-037] The phase context gives each index and the queue total
+```
+
+## m313
+
+File: `src/director/playback.js`.
+
+```text
+Old:
+scenes.slice(start, start + 1)
+New:
+scenes.slice(start, start + 2)
+Selected test: [director-036] The single scene queue starts at scene a and keeps source objects
+Result: KILLED
+Failed test prefix: [director-036] The single scene queue starts at scene a and keeps source objects
+```
+
+## m314
+
+File: `src/director/playback.js`.
+
+```text
+Old:
+({ scene, shot })
+New:
+({ scene: { id: scene.id }, shot })
+Selected test: [director-036] The single scene queue starts at scene a and keeps source objects
+Result: KILLED
+Failed test prefix: [director-036] The single scene queue starts at scene a and keeps source objects
+```
+
+## m315
+
+File: `src/director/document.js`.
+
+```text
+Old:
+...(version >= 6 ? ['interactions'] : [])
+New:
+...(version >= 7 ? ['interactions'] : [])
+Selected test: [director-003] The import accepts an empty interactions list at version 6
+Result: KILLED
+Failed test prefix: [director-003] The import accepts an empty interactions list at version 6
+```
+
+## m316
+
+File: `src/director/playback.js`.
+
+```text
+Old:
+const context = { scene, shot, index, total: queue.length, token };
+New:
+const context = { scene, shot: queue[0].shot, index, total: queue.length, token };
+Selected test: [director-037] The phase context gives each index and the queue total
+Result: KILLED
+Failed test prefix: [director-037] The phase context gives each index and the queue total
+```
+
+## m317
+
+File: `src/director/clock.js`.
+
+```text
+Old:
+listener({ ...this._sceneClockSnapshot });
+      } catch (error)
+New:
+listener({ ...this._sceneClockSnapshot, sceneElapsedSec: 0 });
+      } catch (error)
+Selected test: [director-023] The clock warns when a subscriber fails
+Result: KILLED
+Failed test prefix: [director-023] The clock warns when a subscriber fails
+```
+
+## m318
+
+File: `src/director/clock.js`.
+
+```text
+Old:
+listener(this.snapshot);
+New:
+listener({ ...this.snapshot, running: true });
+Selected test: [director-024] The stop notifies every subscriber
+Result: KILLED
+Failed test prefix: [director-024] The stop notifies every subscriber
+```
+
+## New mutation summary
+
+The sections above give the exact Old, New, Result and failed test text for each row.
+
+| ID | File | Result | Scenario |
 | --- | --- | --- | --- |
-| `m289` | `src/director/playback.js` | Reverse the scene slices. | T14 |
-| `m290` | `src/director/playback.js` | Remove the start index clamp. | T15 |
-| `m291` | `src/director/playback.js` | Replace flatMap with map. | T14 |
-| `m292` | `src/director/playback.js` | Copy each shot object. | T14 |
-| `m293` | `src/director/timeline.js` | Change the angle sum from 540 to 360. | T17 |
-| `m294` | `src/director/timeline.js` | Change the angle divisor from 360 to 180. | T17 |
-| `m295` | `src/director/timeline.js` | Change the angle subtraction from 180 to 0. | T17 |
-| `m296` | `src/director/document.js` | Delete the visual field check. | T03 |
-| `m297` | `src/director/document.js` | Delete the visual group field check. | T04 |
-| `m298` | `src/director/document.js` | Delete the pack field check. | T05 |
-| `m299` | `src/director/document.js` | Delete the layer field check. | T06 |
-| `m300` | `src/director/document.js` | Delete the scene ID check. | T07 |
-| `m301` | `src/director/document.js` | Delete the pack ID check. | T08 |
-| `m302` | `src/director/document.js` | Change the anchors gate from 4 to 6. | T09 |
-| `m303` | `src/director/document.js` | Change the move gate from 4 to 6. | T09 |
-| `m304` | `src/director/document.js` | Change the data packs gate from 5 to 6. | T10 |
-| `m305` | `src/director/document.js` | Change the data pack IDs gate from 5 to 6. | T10 |
-| `m306` | `src/director/clock.js` | Set the default clock state to true. | T01 |
-| `m307` | `src/director/clock.js` | Remove the elapsed time lower clamp. | T02 |
-| `m308` | `src/director/timeline.js` | Remove the shot index lower clamp. | T18 |
-| `m309` | `src/director/documentFields.js` | Change the default text limit to 255. | T12 |
-| `m310` | `src/director/documentFields.js` | Change the default text limit to 257. | T13 |
-| `m311` | `src/director/playback.js` | Set each phase index to 0. | T16 |
-| `m312` | `src/director/playback.js` | Set the queue total to 1. | T16 |
+| `m289` | `src/director/playback.js` | KILLED | `director-036` |
+| `m290` | `src/director/playback.js` | KILLED | `director-036` |
+| `m291` | `src/director/playback.js` | KILLED | `director-036` |
+| `m292` | `src/director/playback.js` | KILLED | `director-036` |
+| `m293` | `src/director/timeline.js` | KILLED | `director-033` |
+| `m294` | `src/director/timeline.js` | KILLED | `director-033` |
+| `m295` | `src/director/timeline.js` | KILLED | `director-033` |
+| `m296` | `src/director/document.js` | KILLED | `director-014` |
+| `m297` | `src/director/document.js` | KILLED | `director-015` |
+| `m298` | `src/director/document.js` | KILLED | `director-016` |
+| `m299` | `src/director/document.js` | KILLED | `director-018` |
+| `m300` | `src/director/document.js` | KILLED | `director-004` |
+| `m301` | `src/director/document.js` | KILLED | `director-016` |
+| `m302` | `src/director/document.js` | KILLED | `director-003` |
+| `m303` | `src/director/document.js` | KILLED | `director-003` |
+| `m304` | `src/director/document.js` | KILLED | `director-003` |
+| `m305` | `src/director/document.js` | KILLED | `director-003` |
+| `m306` | `src/director/clock.js` | KILLED | `director-023` |
+| `m307` | `src/director/clock.js` | KILLED | `director-023` |
+| `m308` | `src/director/timeline.js` | KILLED | `director-032` |
+| `m309` | `src/director/documentFields.js` | KILLED | `director-006` |
+| `m310` | `src/director/documentFields.js` | KILLED | `director-006` |
+| `m311` | `src/director/playback.js` | KILLED | `director-037` |
+| `m312` | `src/director/playback.js` | KILLED | `director-037` |
+| `m313` | `src/director/playback.js` | KILLED | `director-036` |
+| `m314` | `src/director/playback.js` | KILLED | `director-036` |
+| `m315` | `src/director/document.js` | KILLED | `director-003` |
+| `m316` | `src/director/playback.js` | KILLED | `director-037` |
+| `m317` | `src/director/clock.js` | KILLED | `director-023` |
+| `m318` | `src/director/clock.js` | KILLED | `director-024` |

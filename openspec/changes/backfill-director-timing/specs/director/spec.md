@@ -7,7 +7,7 @@ The director capability covers the document module, the fields module, the autho
 ## ADDED Requirements
 
 ### Requirement: Document behavior
-The document module MUST accept valid scene projects and reject invalid document fields.
+The document module MUST accept valid documents and reject invalid document fields.
 Origin: backfill
 
 #### Scenario: Keep authored content `director-001`
@@ -18,13 +18,14 @@ Origin: backfill
 - **WHEN** the document contains an empty scene list
 - **THEN** the scene list stays empty
 
-#### Scenario: Accept legacy documents `director-003`
-- **WHEN** a legacy document enters validation and migration
+#### Scenario: Import supported document versions `director-003`
+- **WHEN** a document enters validation or migration at a supported version
 - **THEN** the migration keeps stable IDs after export
 - **AND** versions 4, 5 and 6 accept scene anchors and shot move fields
 - **AND** versions 1, 2 and 3 reject scene anchors and shot move fields
 - **AND** versions 5 and 6 accept scene data packs and shot data pack IDs
 - **AND** versions 1, 2, 3 and 4 reject scene data packs and shot data pack IDs
+- **AND** version 6 accepts an empty shot interactions list
 
 #### Scenario: Reject invalid documents `director-004`
 - **WHEN** a document contains an invalid shape, version, field or duplicate ID
@@ -133,15 +134,18 @@ Origin: backfill
 - **AND** elapsed time -2 gives elapsed time 0 and scene progress 0
 - **AND** a clock without a snapshot keeps null for an absent scene, absent shot or destroyed clock
 - **AND** a subscriber error gives one warning and leaves elapsed time at 1 second
-- **AND** each later subscriber still gets the state
+- **AND** each later subscriber gets elapsed time 1 second, duration 4 seconds, progress 0.25 and `running: true`
+- **AND** each later subscriber gets scene ID `scene`, shot ID `shot`, shot index 0, shot count 1 and `seeking: false`
+- **AND** total duration 0 gives scene progress 0
 
 #### Scenario: Stop clock resources `director-024`
 - **WHEN** the clock stops or ends
 - **THEN** it cancels owned timers and prevents stale callbacks from new progress
-- **AND** stop after a snapshot gives `stopped: true` and `running: false`
+- **AND** the stop method after a snapshot gives `stopped: true` and `running: false`
+- **AND** each subscriber gets the snapshot with `stopped: true` and `running: false` after the stop method
 - **AND** a subscriber error does not leave the stop method
-- **AND** a second stop gives zero new subscriber calls
-- **AND** stop before the first snapshot leaves it null and leaves zero active timers
+- **AND** a second call of the stop method gives zero new subscriber calls
+- **AND** the stop method before the first snapshot leaves it null and leaves zero active timers
 - **AND** `_destroyed: true` with an absent stopped field gives zero new subscriber calls and keeps that field absent
 
 #### Scenario: Settle hold deadlines `director-025`
@@ -158,8 +162,8 @@ Origin: backfill
 - **WHEN** the clock measures playback time
 - **THEN** it reports elapsed time against a duration of at least one second
 - **AND** a stopped, replaced or destroyed tick gives zero progress calls
-- **AND** the default timer gives a number and one active timer before destroy
-- **AND** destroy leaves zero active timers
+- **AND** the default timer gives a number and one active timer before the destroy method
+- **AND** the destroy method leaves zero active timers
 
 #### Scenario: Report shot progress `director-028`
 - **WHEN** a shot that a person selects outside playback advances or ends
@@ -186,14 +190,14 @@ Origin: backfill
 - **WHEN** the timeline receives absent shots or a zero total duration
 - **THEN** it returns empty or zero time results
 - **AND** an absent shot ID in a scene of 10 seconds gives shot index -1
-- **AND** that shot gives start time 0, end time 0 and start progress 0
+- **AND** the timeline gives start time 0, end time 0 and start progress 0
 
 #### Scenario: Interpolate ordinary camera poses `director-033`
 - **WHEN** the timeline receives camera endpoints and progress
 - **THEN** it uses bounded cubic progress and the shortest arc for heading and for roll
-- **AND** heading 350 to 10 gives 360 at progress 0.5
-- **AND** roll 350 to 10 gives 360 at progress 0.5
-- **AND** roll 10 to 350 gives 0 at progress 0.5 while heading 350 to 10 gives 360
+- **AND** heading 350 degrees to 10 degrees gives 360 degrees at progress 0.5
+- **AND** roll 350 degrees to 10 degrees gives 360 degrees at progress 0.5
+- **AND** roll 10 degrees to 350 degrees gives 0 degrees at progress 0.5 while heading 350 degrees to 10 degrees gives 360 degrees
 
 #### Scenario: Select a shot at scene time `director-034`
 - **WHEN** a person seeks within a scene
@@ -209,10 +213,12 @@ Origin: backfill
 
 #### Scenario: Build a shot queue `director-036`
 - **WHEN** the caller selects a start scene or a single scene
-- **THEN** the queue starts at the start scene and wraps to the earlier scenes
-- **AND** start `b` gives shots `b1`, `a1` and `a2` in that order
+- **THEN** the queue for a start scene starts there and wraps to the earlier scenes
+- **AND** the start scene `b` gives shots `b1`, `a1` and `a2` in that order
 - **AND** an unknown start ID gives shots `a1`, `a2` and `b1` in that order
+- **AND** a single scene `a` gives only shots `a1` and `a2` in that order
 - **AND** each queue entry holds the same shot object as the source scene
+- **AND** the scene field of each queue entry holds the source scene object
 - **AND** the queue skips empty scenes
 
 #### Scenario: Run shot phases `director-037`

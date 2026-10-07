@@ -483,7 +483,7 @@
 - [x] 3.3 Check the prose with the STE lint.
 - [x] 3.4 Run the format check on the source files.
 
-## 4. Round 2 corrections
+## 4. Corrections of review round 1
 
 - [x] 4.1 Test the queue wrap, unknown start and shot objects.
 
@@ -507,7 +507,7 @@
 
   Mutation: Delete the visual field check. Use `m296`. The test must fail.
 
-  Mutation: Delete the visual group field check. Use `m297`. The test must fail.
+  Mutation: Delete the visual control field check. Use `m297`. The test must fail.
 
   Mutation: Delete the pack field check. Use `m298`. The test must fail.
 
@@ -519,17 +519,17 @@
 
   Mutation: Delete the pack ID check. Use `m301`. The test must fail.
 
-- [x] 4.5 Test each document version gate.
+- [x] 4.5 Test each document version limit.
 
-  Mutation: Change the anchors gate from 4 to 6. Use `m302`. The test must fail.
+  Mutation: Change the anchors version limit from 4 to 6. Use `m302`. The test must fail.
 
-  Mutation: Change the move gate from 4 to 6. Use `m303`. The test must fail.
+  Mutation: Change the move version limit from 4 to 6. Use `m303`. The test must fail.
 
-  Mutation: Change the data packs gate from 5 to 6. Use `m304`. The test must fail.
+  Mutation: Change the data packs version limit from 5 to 6. Use `m304`. The test must fail.
 
-  Mutation: Change the data pack IDs gate from 5 to 6. Use `m305`. The test must fail.
+  Mutation: Change the data pack IDs version limit from 5 to 6. Use `m305`. The test must fail.
 
-- [x] 4.6 Test the default false clock state and negative elapsed time.
+- [x] 4.6 Test the clock state when the clock does not run and negative elapsed time.
 
   Mutation: Set the default clock state to true. Use `m306`. The test must fail.
 
@@ -552,7 +552,7 @@
   Mutation: Set the queue total to 1. Use `m312`. The test must fail.
 
 - [x] 4.10 Check all host test results and coverage.
-- [x] 4.11 Check the final mutation and branch audit totals.
+- [x] 4.11 Check the final totals of the mutations and of the branch audit.
 - [x] 4.12 Run the STE lint.
 - [x] 4.13 Run the source format command.
 - [x] 4.14 Run the format check on the source files.
@@ -565,9 +565,35 @@
 
   Mutation: Replace the field call with an empty statement. Use `m068`. The test must fail.
 
-## 5. Gates and review
+## 5. Corrections of review round 2
 
-- [ ] 5.1 Run `make ratchet CHANGE=backfill-director-timing`.
-- [ ] 5.2 Run `make gates CHANGE=backfill-director-timing`.
-- [ ] 5.3 Ask the lead to archive the change and to run the review.
-- [ ] 5.4 Record both review verdicts in `review.md`.
+- [x] 5.1 Test a single scene before the last scene and source scene objects.
+
+  Mutation: Change `start + 1` to `start + 2`. Use `m313`. The test must fail.
+
+  Mutation: Copy the scene ID into a new object. Use `m314`. The test must fail.
+
+- [x] 5.2 Test the shot ID in each phase context.
+
+  Mutation: Use the first shot in each context. Use `m316`. The test must fail.
+
+- [x] 5.3 Test each later subscriber snapshot after an error.
+
+  Mutation: Set published elapsed time to 0. Use `m317`. The test must fail.
+
+- [x] 5.4 Test each stopped subscriber snapshot.
+
+  Mutation: Give each subscriber `running: true` after the stop method. Use `m318`. The test must fail.
+
+- [x] 5.5 Test an empty interactions list at version 6.
+
+  Mutation: Change the interactions version limit from 6 to 7. Use `m315`. The test must fail.
+
+- [x] 5.6 Check the final tests, coverage, mutations and prose.
+
+## 6. Gates and review
+
+- [ ] 6.1 Run `make ratchet CHANGE=backfill-director-timing`.
+- [ ] 6.2 Run `make gates CHANGE=backfill-director-timing`.
+- [ ] 6.3 Ask the lead to archive the change and to run the review.
+- [ ] 6.4 Record both review verdicts in `review.md`.
