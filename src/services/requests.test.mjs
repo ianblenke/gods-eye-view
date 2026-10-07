@@ -55,12 +55,27 @@ function probeTransport(status) {
 }
 const stalled = (init) => new Promise((_, reject) => init.signal.addEventListener('abort', () => reject(init.signal.reason)));
 
-test('a stalled capability probe times out and queries proceed; no re-probe during backoff', async () => {
-  const { seen, fetchImpl } = probeTransport(stalled);
+test('a stalled capability probe times out and queries proceed; no re-probe during backoff', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  // Native abort timers need the test clock.
+  t.mock.method(AbortSignal, 'timeout', (ms) => {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(new DOMException('Timeout', 'TimeoutError')), ms);
+    return controller.signal;
+  });
+  let observedSignal;
+  const { seen, fetchImpl } = probeTransport((init) => {
+    observedSignal = init.signal;
+    return stalled(init);
+  });
   const services = createApplicationRequestServices({ fetchImpl, boundaryProbe: { timeoutMs: 20, retryMs: 60_000 } });
   const started = Date.now();
-  assert.deepEqual(await services.boundaries.query('fixture'), []);
-  assert.ok(Date.now() - started < 1000);
+  const pending = services.boundaries.query('fixture');
+  await new Promise((resolve) => setImmediate(resolve));
+  t.mock.timers.tick(20);
+  assert.equal(observedSignal?.aborted, true);
+  assert.deepEqual(await pending, []);
+  assert.equal(Date.now() - started, 20);
   assert.deepEqual(await services.boundaries.query('fixture'), []);
   assert.deepEqual(seen, ['GET /api/overpass/status', 'POST /api/overpass', 'POST /api/overpass']);
 });
@@ -75,7 +90,8 @@ test('a caller cancelled while the probe is pending stops waiting at once', asyn
   assert.deepEqual(seen, ['GET /api/overpass/status']);
 });
 
-test('a failed probe is retried after its backoff, not on every query', async () => {
+test('a failed probe is retried after its backoff, not on every query', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   let failures = 1;
   const { seen, fetchImpl } = probeTransport(async () => {
     if (failures-- > 0) throw new TypeError('network');
@@ -84,7 +100,7 @@ test('a failed probe is retried after its backoff, not on every query', async ()
   const services = createApplicationRequestServices({ fetchImpl, boundaryProbe: { timeoutMs: 1000, retryMs: 30 } });
   assert.deepEqual(await services.boundaries.query('fixture'), []);
   assert.deepEqual(await services.boundaries.query('fixture'), []);
-  await new Promise((resolve) => setTimeout(resolve, 50));
+  t.mock.timers.tick(50);
   assert.equal((await services.boundaries.query('fixture')).code, 'OVERPASS_NOT_CONFIGURED');
   assert.equal((await services.boundaries.query('fixture')).code, 'OVERPASS_NOT_CONFIGURED');
   assert.deepEqual(seen, [

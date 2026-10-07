@@ -96,6 +96,8 @@ const route = {
   mode: 'car',
 };
 
+const realSetTimeout = globalThis.setTimeout;
+
 test('layer module declares the manager contract, params, and row controls', () => {
   assert.equal(directionsLayer.id, 'directions');
   assert.equal(directionsLayer.updateInterval, 0);
@@ -606,6 +608,7 @@ test('the pointer claim outlives the click that consumed it', async (t) => {
 });
 
 test('a teardown during the pending release still frees the pointer at once', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   ownershipFixture(t);
   directionsLayer.setParams({ arm: 'a' });
   directionsLayer.placeEndpoint('a', { lat: 37.7955, lon: -122.3937 });
@@ -615,7 +618,8 @@ test('a teardown during the pending release still frees the pointer at once', as
   assert.equal(isPointerFree(), true);
   // And the pending timer cannot then release someone else's later claim.
   const releaseDraw = claimAs('draw');
-  await new Promise((resolve) => setTimeout(resolve, 5));
+  t.mock.timers.tick(5);
+  await new Promise((resolve) => realSetTimeout(resolve, 5));
   assert.equal(pointerOwner(), 'draw');
   releaseDraw();
 });
@@ -703,13 +707,15 @@ test('re-arming reuses the lease this layer already holds', (t) => {
 });
 
 test('a stale lease cannot free the claim a later arming holds', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   ownershipFixture(t);
   directionsLayer.setParams({ arm: 'a' });
   directionsLayer.placeEndpoint('a', { lat: 37.7955, lon: -122.3937 });
   // The release for that click is pending. Arming again before it fires must
   // keep the pointer, not lose it to the timer a moment later.
   directionsLayer.setParams({ arm: 'b' });
-  await new Promise((resolve) => setTimeout(resolve, 10));
+  t.mock.timers.tick(10);
+  await new Promise((resolve) => realSetTimeout(resolve, 5));
   assert.equal(
     pointerOwner(),
     DIRECTIONS_POINTER_OWNER,

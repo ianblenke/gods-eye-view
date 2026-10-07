@@ -8,6 +8,8 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { makeFixtureRoot } from './tooling/fixtureRoot.mjs';
 
+// Shell commands need a real deadline long enough for CPU load.
+const launcherTimeoutMs = 30_000 * 20;
 const run = promisify(execFile);
 const bashTest = process.platform === 'win32' ? test.skip : test;
 
@@ -44,7 +46,7 @@ fs.writeFileSync(process.env.CCTV_TEST_CAPTURE, JSON.stringify({ args: process.a
     const result = await run('bash', [path.join(root, 'scripts', 'dev-cctv.sh')], {
       cwd: os.tmpdir(),
       env: { PATH: `${path.join(root, 'bin')}${path.delimiter}${process.env.PATH}`, CCTV_TEST_CAPTURE: capture, ...overrides },
-      timeout: 30_000,
+      timeout: launcherTimeoutMs,
     });
     return { ...JSON.parse(await fs.readFile(capture, 'utf8')), output: result.stdout + result.stderr, root };
   } finally {
