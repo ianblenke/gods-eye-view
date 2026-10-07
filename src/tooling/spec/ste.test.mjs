@@ -318,7 +318,7 @@ test('[ste-lint-021] ignores a listed word without a determiner', () => {
   assert.deepEqual(nounFindings('Read the file. To read the file. To release the lock. The next read fails. The. Read now. The, read fails. (the read fails. "the read fails.'), []);
 });
 
-test('[ste-lint-022] ignores code and a listed word that starts with a quote', () => {
+test('[ste-lint-022] ignores code and a listed word that starts with a quote mark', () => {
   for (const text of ['The `read` fails.', '`the read`', '```\nthe read\n```', '~~~\nthe read\n~~~', 'The "read" fails.', "The 'read' fails.", 'The “read” fails.', 'The ‘read’ fails.', 'The "read file" fails.']) {
     assert.deepEqual(nounFindings(text), [], text);
   }
@@ -342,7 +342,7 @@ test('[ste-lint-024] ignores a word outside the list nounVerbs', () => {
   assert.deepEqual(lintMarkdown('The release names a version.', { file: 'a.md', words }), []);
 });
 
-test('[ste-lint-025] reads the list nounVerbs from the word file for each check', () => {
+test('[ste-lint-025] reads the list nounVerbs from the word list file for each check', () => {
   const root = tempRoot({
     'openspec/specs/a/spec.md': 'The read fails. The skip fails.',
     'openspec/ste/words.json': JSON.stringify({ ...WORDS, nounVerbs: ['read'] }),
@@ -365,7 +365,7 @@ test('[ste-lint-026] ignores plural and possessive forms', () => {
   assert.deepEqual(nounFindings("The reads fail. The read's result stays. The read’s result stays. The reads' results stay."), []);
 });
 
-test('[ste-lint-027] excludes inline code from the word rule for tagged titles', () => {
+test('[ste-lint-027] excludes inline code from the rule STE-WORD for tagged titles', () => {
   assert.deepEqual(lintTestNames([
     { file: 'src/a.test.mjs', name: '[a-001] uses ` should ` in code', title: 'uses ` should ` in code', kind: 'test', tags: ['a-001'] },
   ], WORDS), []);

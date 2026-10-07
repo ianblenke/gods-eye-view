@@ -22,12 +22,12 @@ Use the determiners that the delta spec lists.
 Use the same prose tokens as the other warnings.
 Exclude inline code and code blocks.
 Exclude a word that starts with `"`, `'`, `“` or `‘`.
-Thus `the "read file"` gives no warning.
+For example, `the "read file"` gives no warning.
 Replace inline code with `CODE` in tagged test titles before the token check.
 
 Do not match plurals or possessives.
 Do not match a determiner token with punctuation before or after it.
-Thus `(the read` and `"the read` give no warning.
+For example, `(the read` and `"the read` give no warning.
 The rule cannot find a verb that authors use as a noun after another word.
 
 The warning names the word and does not cause an error status.
@@ -73,9 +73,11 @@ The lead runs the ratchet command, the gates and the review after these host che
 Keep the behavior of the rule and correct the delta spec to describe it.
 Remove the empty array default because `new Set(undefined)` is empty.
 The absent-list test still applies.
-The ratchet command at commit `e9b1bf8` wrote `ids.json` and `links.json`.
-The command `git show --stat e9b1bf8` confirms these files.
-It did not edit `gaps.json`.
+
+The ratchet command ran at commits `e9b1bf8` and `03d6954`, and again after the round-2 corrections.
+It wrote `ids.json` and `links.json`.
+The command `git show --stat` for each of these commits lists these files.
+The ratchet command did not edit `gaps.json`.
 
 The title test puts spaces around `should` inside the backticks.
 Without these spaces, token punctuation hides the word even when the call to `cleanLine` is absent.

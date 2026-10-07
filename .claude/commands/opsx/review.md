@@ -17,7 +17,7 @@ The review agents can only read files. You write their output to files. Copy the
 4. Run `git status --porcelain`. Keep the output.
 5. Find the scope of the round. The first round of a change has the scope `full`. Each later round has the scope `diff <commit>`, with the Git commit of the round before. Keep the scope and the number of the round.
 6. Start the `spec-adversary` agent. Give it the change name, the gate output, the diff output, the scope and the QA lines from the gate output. For a scope with a diff, give it the diff since that commit.
-7. Start the `ste-adversary` agent at the same time. Give it the change name, the STE warnings from the gate output, the names of the new tests and the scope.
+7. Start the `ste-adversary` agent at the same time. Give it the change name, the STE warnings for the changed files from the gate output, the names of the new tests and the scope.
 8. Run `git status --porcelain` again. If the output is not the same as the output of step 4, stop. Tell the user that an agent changed a file.
 9. Write the output of each agent to `review/spec-adversary.md` and `review/ste-adversary.md` in the archived change folder. Before a new round, move the output of the earlier round to `review/round-<n>/`.
 10. If one or the two agents give the verdict FAIL, examine all the corrections that you will make. If these corrections change only the proposal, the design, `tasks.md` or files in `.claude/`, do not move the change. Correct each critical finding and each major finding. You can also correct minor findings. Then start again at step 3. If one or more corrections change other files, move the change to its location before the archive command:
