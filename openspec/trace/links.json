@@ -1317,6 +1317,372 @@
     "src/director/cameraDocument.test.mjs › [director-075] The anchor pose rejects its inline lat field",
     "src/director/cameraDocument.test.mjs › [director-075] The anchor pose rejects its inline lon field"
   ],
+  "director-076": [
+    "src/director/packs/backfill.test.mjs › [director-076] The asset path accepts safe names",
+    "src/director/packs/backfill.test.mjs › [director-076] The asset path checks its text limit",
+    "src/director/packs/backfill.test.mjs › [director-076] The asset path rejects traversal"
+  ],
+  "director-077": [
+    "src/director/packs/backfill.test.mjs › [director-077] The geojson admits its altitudeReference field",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest accepts geojson",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest accepts image",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest accepts media",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest admits its pack attribution field",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest admits its pack format field",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest admits its pack id field",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest admits its pack placement field",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest admits its pack source field",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest admits its pack version field",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest admits its source adapter field",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest admits its source path field",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest rejects invalid format",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest rejects invalid version"
+  ],
+  "director-078": [
+    "src/director/packs/backfill.test.mjs › [director-078] The attribution accepts a safe link",
+    "src/director/packs/backfill.test.mjs › [director-078] The attribution rejects blank license",
+    "src/director/packs/backfill.test.mjs › [director-078] The attribution rejects blank text",
+    "src/director/packs/backfill.test.mjs › [director-078] The attribution rejects fragment",
+    "src/director/packs/backfill.test.mjs › [director-078] The attribution rejects invalid URL text",
+    "src/director/packs/backfill.test.mjs › [director-078] The attribution rejects password",
+    "src/director/packs/backfill.test.mjs › [director-078] The attribution rejects protocol",
+    "src/director/packs/backfill.test.mjs › [director-078] The attribution rejects query",
+    "src/director/packs/backfill.test.mjs › [director-078] The attribution rejects username",
+    "src/director/packs/backfill.test.mjs › [director-078] The manifest admits its attribution license field",
+    "src/director/packs/backfill.test.mjs › [director-078] The manifest admits its attribution text field",
+    "src/director/packs/backfill.test.mjs › [director-078] The manifest admits its attribution url field"
+  ],
+  "director-079": [
+    "src/director/packs/backfill.test.mjs › [director-079] The byte length rejects a fraction",
+    "src/director/packs/backfill.test.mjs › [director-079] The digest rejects invalid alphabet",
+    "src/director/packs/backfill.test.mjs › [director-079] The digest rejects invalid type",
+    "src/director/packs/backfill.test.mjs › [director-079] The integrity fields accept their limits",
+    "src/director/packs/backfill.test.mjs › [director-079] The manifest admits its pack byteLength field",
+    "src/director/packs/backfill.test.mjs › [director-079] The manifest admits its pack sha256 field"
+  ],
+  "director-080": [
+    "src/director/packs/backfill.test.mjs › [director-080] The image admits its altitudeReference field",
+    "src/director/packs/backfill.test.mjs › [director-080] The image admits its bounds field",
+    "src/director/packs/backfill.test.mjs › [director-080] The image admits its height field",
+    "src/director/packs/backfill.test.mjs › [director-080] The image bounds 0 rejects high excess",
+    "src/director/packs/backfill.test.mjs › [director-080] The image bounds 0 rejects low excess",
+    "src/director/packs/backfill.test.mjs › [director-080] The image bounds 1 rejects high excess",
+    "src/director/packs/backfill.test.mjs › [director-080] The image bounds 1 rejects low excess",
+    "src/director/packs/backfill.test.mjs › [director-080] The image bounds 2 rejects high excess",
+    "src/director/packs/backfill.test.mjs › [director-080] The image bounds 2 rejects low excess",
+    "src/director/packs/backfill.test.mjs › [director-080] The image bounds 3 rejects high excess",
+    "src/director/packs/backfill.test.mjs › [director-080] The image bounds 3 rejects low excess",
+    "src/director/packs/backfill.test.mjs › [director-080] The image height checks both limits",
+    "src/director/packs/backfill.test.mjs › [director-080] The image rejects bounds field 0",
+    "src/director/packs/backfill.test.mjs › [director-080] The image rejects bounds field 1",
+    "src/director/packs/backfill.test.mjs › [director-080] The image rejects bounds field 2",
+    "src/director/packs/backfill.test.mjs › [director-080] The image rejects bounds field 3",
+    "src/director/packs/backfill.test.mjs › [director-080] The image rejects height and reference",
+    "src/director/packs/backfill.test.mjs › [director-080] The image rejects reversed south",
+    "src/director/packs/backfill.test.mjs › [director-080] The image rejects reversed west",
+    "src/director/packs/backfill.test.mjs › [director-080] The image rejects short bounds",
+    "src/director/packs/backfill.test.mjs › [director-080] The placement selects the image fields",
+    "src/director/packs/packs.test.mjs › [director-080] image bounds and media anchor references are stated and validated"
+  ],
+  "director-081": [
+    "src/director/packs/backfill.test.mjs › [director-081] The media admits its anchorId field",
+    "src/director/packs/backfill.test.mjs › [director-081] The media rejects an unknown anchor",
+    "src/director/packs/backfill.test.mjs › [director-081] The placement selects the media fields",
+    "src/director/packs/backfill.test.mjs › [director-081] The session gives anchors to its adapter"
+  ],
+  "director-082": [
+    "src/director/packs/backfill.test.mjs › [director-082] The scene accepts absent packs and anchors",
+    "src/director/packs/backfill.test.mjs › [director-082] The scene rejects duplicate pack IDs",
+    "src/director/packs/backfill.test.mjs › [director-082] The scene uses absent anchor defaults",
+    "src/director/packs/backfill.test.mjs › [director-082] The scene uses supplied anchors",
+    "src/director/packs/backfill.test.mjs › [director-082] The shot rejects duplicate pack IDs",
+    "src/director/packs/backfill.test.mjs › [director-082] The shot rejects unknown pack IDs",
+    "src/director/packs/packs.test.mjs › [director-082] manifest rejects duplicate/unknown IDs, unsupported placement and request or credential syntax"
+  ],
+  "director-083": [
+    "src/director/packs/backfill.test.mjs › [director-083] The collection accepts its exact feature limit",
+    "src/director/packs/backfill.test.mjs › [director-083] The collection rejects invalid array",
+    "src/director/packs/backfill.test.mjs › [director-083] The collection rejects invalid total",
+    "src/director/packs/backfill.test.mjs › [director-083] The collection rejects invalid type"
+  ],
+  "director-084": [
+    "src/director/packs/backfill.test.mjs › [director-084] The feature ID accepts its exact text limit",
+    "src/director/packs/backfill.test.mjs › [director-084] The feature rejects ID type",
+    "src/director/packs/backfill.test.mjs › [director-084] The feature rejects blank ID",
+    "src/director/packs/backfill.test.mjs › [director-084] The feature rejects duplicate ID",
+    "src/director/packs/backfill.test.mjs › [director-084] The feature rejects long ID",
+    "src/director/packs/backfill.test.mjs › [director-084] The feature rejects type"
+  ],
+  "director-085": [
+    "src/director/packs/backfill.test.mjs › [director-085] The position accepts both geographic edges",
+    "src/director/packs/backfill.test.mjs › [director-085] The position accepts its exact total limit",
+    "src/director/packs/backfill.test.mjs › [director-085] The position keeps the height in the data",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects field 0 that is not finite",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects field 1 that is not finite",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects field 2 that is not finite",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects invalid array",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects invalid finite",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects invalid high height",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects invalid latitude",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects invalid length",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects invalid longitude",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects invalid low height",
+    "src/director/packs/backfill.test.mjs › [director-085] The position total rejects excess",
+    "src/director/packs/backfill.test.mjs › [director-085] The position uses zero for absent height"
+  ],
+  "director-086": [
+    "src/director/packs/backfill.test.mjs › [director-086] The line accepts two distinct endpoints",
+    "src/director/packs/backfill.test.mjs › [director-086] The line rejects invalid array",
+    "src/director/packs/backfill.test.mjs › [director-086] The line rejects invalid minimum",
+    "src/director/packs/backfill.test.mjs › [director-086] The ring needs four points",
+    "src/director/packs/backfill.test.mjs › [director-086] The ring rejects unclosed field 0",
+    "src/director/packs/backfill.test.mjs › [director-086] The ring rejects unclosed field 1",
+    "src/director/packs/backfill.test.mjs › [director-086] The ring rejects unclosed field 2"
+  ],
+  "director-087": [
+    "src/director/packs/backfill.test.mjs › [director-087] The geometry rejects invalid array",
+    "src/director/packs/backfill.test.mjs › [director-087] The geometry rejects invalid empty",
+    "src/director/packs/backfill.test.mjs › [director-087] The geometry rejects invalid total",
+    "src/director/packs/backfill.test.mjs › [director-087] The geometry rejects invalid type",
+    "src/director/packs/backfill.test.mjs › [director-087] The geometry removes properties",
+    "src/director/packs/backfill.test.mjs › [director-087] The geometry returns a closed polygon",
+    "src/director/packs/backfill.test.mjs › [director-087] The polygon accepts its exact ring limit",
+    "src/director/packs/packs.test.mjs › [director-087] GeoJSON keeps stable geometry IDs but never properties or remote style hints"
+  ],
+  "director-088": [
+    "src/director/packs/backfill.test.mjs › [director-088] The new session reports idle state",
+    "src/director/packs/backfill.test.mjs › [director-088] The session rejects cancelled state",
+    "src/director/packs/backfill.test.mjs › [director-088] The session rejects destroyed state",
+    "src/director/packs/backfill.test.mjs › [director-088] The session rejects pack list total",
+    "src/director/packs/backfill.test.mjs › [director-088] The session rejects pack list type",
+    "src/director/packs/backfill.test.mjs › [director-088] The session state uses its idle default",
+    "src/director/packs/backfill.test.mjs › [director-088] The session state uses its zero default"
+  ],
+  "director-089": [
+    "src/director/packs/backfill.test.mjs › [director-089] The session disposes handles in reverse order",
+    "src/director/packs/backfill.test.mjs › [director-089] The session gives copied state",
+    "src/director/packs/backfill.test.mjs › [director-089] The session loads its geojson format",
+    "src/director/packs/backfill.test.mjs › [director-089] The session loads its image format",
+    "src/director/packs/backfill.test.mjs › [director-089] The session loads its media format",
+    "src/director/packs/backfill.test.mjs › [director-089] The session owns every pack handle",
+    "src/director/packs/backfill.test.mjs › [director-089] The session rejects a falsy handle with inherited disposal",
+    "src/director/packs/backfill.test.mjs › [director-089] The session rejects handle disposal",
+    "src/director/packs/backfill.test.mjs › [director-089] The session rejects handle null",
+    "src/director/packs/backfill.test.mjs › [director-089] The session state uses its active status",
+    "src/director/packs/backfill.test.mjs › [director-089] The session state uses its active total",
+    "src/director/packs/packs.test.mjs › [director-089] pack session removes presentations and cancels the transport on Stop"
+  ],
+  "director-090": [
+    "src/director/packs/backfill.test.mjs › [director-090] The cancelled session disposes late resources",
+    "src/director/packs/backfill.test.mjs › [director-090] The session catches destroyed state after signal access",
+    "src/director/packs/backfill.test.mjs › [director-090] The session catches replacement without signal state",
+    "src/director/packs/backfill.test.mjs › [director-090] The session catches signal state without an event",
+    "src/director/packs/backfill.test.mjs › [director-090] The session destroys pending work",
+    "src/director/packs/backfill.test.mjs › [director-090] The session guard disposes before handle ownership",
+    "src/director/packs/backfill.test.mjs › [director-090] The session guard rejects a detached resource",
+    "src/director/packs/backfill.test.mjs › [director-090] The session tolerates a null late handle",
+    "src/director/packs/packs.test.mjs › [director-090] an abort between renderer settlement and continuation cannot leak the returned resource",
+    "src/director/packs/packs.test.mjs › [director-090] late renderer resources are disposed after cancellation without mutating a replacement"
+  ],
+  "director-091": [
+    "src/director/packs/backfill.test.mjs › [director-091] The replacement keeps its own resources",
+    "src/director/packs/packs.test.mjs › [director-091] replacing a pending source settles promptly and ignores its late bytes"
+  ],
+  "director-092": [
+    "src/director/packs/backfill.test.mjs › [director-092] The absent adapter does not call its source",
+    "src/director/packs/backfill.test.mjs › [director-092] The deadline rejects stalled work",
+    "src/director/packs/backfill.test.mjs › [director-092] The missing source stops after the validation size read",
+    "src/director/packs/backfill.test.mjs › [director-092] The session ignores a late source error",
+    "src/director/packs/backfill.test.mjs › [director-092] The session rejects a falsy custom source",
+    "src/director/packs/backfill.test.mjs › [director-092] The session rejects absent adapter",
+    "src/director/packs/backfill.test.mjs › [director-092] The session rejects absent source",
+    "src/director/packs/backfill.test.mjs › [director-092] The session removes resources after a later error",
+    "src/director/packs/backfill.test.mjs › [director-092] The session reports a stable source error",
+    "src/director/packs/backfill.test.mjs › [director-092] The session settles a source error before its deadline",
+    "src/director/packs/backfill.test.mjs › [director-092] The session settles an early internal signal",
+    "src/director/packs/backfill.test.mjs › [director-092] The session uses its default deadline",
+    "src/director/packs/backfill.test.mjs › [director-092] The session uses its supplied deadline",
+    "src/director/packs/packs.test.mjs › [director-092] timeout settles an uncooperative adapter and failed packs roll back earlier resources"
+  ],
+  "director-093": [
+    "src/director/packs/backfill.test.mjs › [director-093] The session accepts absent declared size",
+    "src/director/packs/backfill.test.mjs › [director-093] The session checks exact bytes and digest",
+    "src/director/packs/backfill.test.mjs › [director-093] The session rejects a wrong digest",
+    "src/director/packs/backfill.test.mjs › [director-093] The session rejects byte declared size",
+    "src/director/packs/backfill.test.mjs › [director-093] The session rejects byte empty",
+    "src/director/packs/backfill.test.mjs › [director-093] The session rejects byte size",
+    "src/director/packs/backfill.test.mjs › [director-093] The session rejects byte type",
+    "src/director/packs/backfill.test.mjs › [director-093] The session rejects total byte excess",
+    "src/director/packs/backfill.test.mjs › [director-093] The session uses its default byte budget",
+    "src/director/packs/packs.test.mjs › [director-093] byte and integrity checks run before rendering; adapter names never resolve inherited properties"
+  ],
+  "director-094": [
+    "src/director/packs/backfill.test.mjs › [director-094] The directory accepts HTTP and HTTPS",
+    "src/director/packs/backfill.test.mjs › [director-094] The directory rejects directory",
+    "src/director/packs/backfill.test.mjs › [director-094] The directory rejects fragment",
+    "src/director/packs/backfill.test.mjs › [director-094] The directory rejects password",
+    "src/director/packs/backfill.test.mjs › [director-094] The directory rejects protocol",
+    "src/director/packs/backfill.test.mjs › [director-094] The directory rejects query",
+    "src/director/packs/backfill.test.mjs › [director-094] The directory rejects username"
+  ],
+  "director-095": [
+    "src/director/packs/backfill.test.mjs › [director-095] The request owns its cache option",
+    "src/director/packs/backfill.test.mjs › [director-095] The request owns its credentials option",
+    "src/director/packs/backfill.test.mjs › [director-095] The request owns its redirect option",
+    "src/director/packs/backfill.test.mjs › [director-095] The request owns its referrerPolicy option",
+    "src/director/packs/backfill.test.mjs › [director-095] The request owns its signal option",
+    "src/director/packs/backfill.test.mjs › [director-095] The request sets its own options",
+    "src/director/packs/packs.test.mjs › [director-095 director-096 director-097] directory source confines paths, strips credentials and rejects redirects, oversized streaming bodies and missing assets"
+  ],
+  "director-096": [
+    "src/director/packs/backfill.test.mjs › [director-096] The source checks its default byte budget",
+    "src/director/packs/backfill.test.mjs › [director-096] The stream accepts its exact byte limit",
+    "src/director/packs/backfill.test.mjs › [director-096] The stream joins distinct chunks",
+    "src/director/packs/backfill.test.mjs › [director-096] The stream normalizes MIME text",
+    "src/director/packs/backfill.test.mjs › [director-096] The stream rejects excess chunk bytes",
+    "src/director/packs/backfill.test.mjs › [director-096] The stream rejects excess header bytes",
+    "src/director/packs/backfill.test.mjs › [director-096] The stream uses absent MIME default",
+    "src/director/packs/packs.test.mjs › [director-095 director-096 director-097] directory source confines paths, strips credentials and rejects redirects, oversized streaming bodies and missing assets"
+  ],
+  "director-097": [
+    "src/director/packs/backfill.test.mjs › [director-097] The source checks its signal between chunks",
+    "src/director/packs/backfill.test.mjs › [director-097] The source rejects a failed response without a body",
+    "src/director/packs/backfill.test.mjs › [director-097] The source rejects an absent stream",
+    "src/director/packs/backfill.test.mjs › [director-097] The source rejects early cancellation",
+    "src/director/packs/backfill.test.mjs › [director-097] The source stops between stream chunks",
+    "src/director/packs/backfill.test.mjs › [director-097] The source tolerates failed body cancellation",
+    "src/director/packs/backfill.test.mjs › [director-097] The stream releases its lock after an error",
+    "src/director/packs/packs.test.mjs › [director-095 director-096 director-097] directory source confines paths, strips credentials and rejects redirects, oversized streaming bodies and missing assets",
+    "src/director/packs/packs.test.mjs › [director-097] failed responses release their body and an already-cancelled source sends no request"
+  ],
+  "director-098": [
+    "src/director/sharing/sharing.test.mjs › [director-098] The share character guard precedes byte conversion",
+    "src/director/sharing/sharing.test.mjs › [director-098] The share parser accepts plain project JSON",
+    "src/director/sharing/sharing.test.mjs › [director-098] The share parser rejects excess UTF8 bytes",
+    "src/director/sharing/sharing.test.mjs › [director-098] The share parser rejects excess characters",
+    "src/director/sharing/sharing.test.mjs › [director-098] The share parser rejects invalid JSON",
+    "src/director/sharing/sharing.test.mjs › [director-098] The share parser rejects nontext input"
+  ],
+  "director-099": [
+    "src/director/sharing/sharing.test.mjs › [director-099] The base64 accepts bytes without padding",
+    "src/director/sharing/sharing.test.mjs › [director-099] The base64 rejects a custom text object",
+    "src/director/sharing/sharing.test.mjs › [director-099] The base64 rejects invalid alignment",
+    "src/director/sharing/sharing.test.mjs › [director-099] The base64 rejects invalid alphabet",
+    "src/director/sharing/sharing.test.mjs › [director-099] The base64 rejects invalid empty",
+    "src/director/sharing/sharing.test.mjs › [director-099] The base64 rejects invalid length",
+    "src/director/sharing/sharing.test.mjs › [director-099] The base64 rejects invalid padding",
+    "src/director/sharing/sharing.test.mjs › [director-099] The base64 rejects invalid type",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle accepts the application/geo+json media type",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle accepts the application/json media type",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle accepts the audio/mpeg media type",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle accepts the audio/ogg media type",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle accepts the audio/wav media type",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle accepts the audio/webm media type",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle accepts the image/png media type",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle accepts the video/mp4 media type",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle accepts the video/webm media type",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle rejects duplicate paths",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle rejects unsupported MIME",
+    "src/director/sharing/sharing.test.mjs › [director-099] The bundle rejects unsupported version",
+    "src/director/sharing/sharing.test.mjs › [director-099] bundle rejects invalid bytes, unknown fields, traversal, duplicates, missing files and broken integrity"
+  ],
+  "director-100": [
+    "src/director/sharing/sharing.test.mjs › [director-100] The bundle checks its second asset hash",
+    "src/director/sharing/sharing.test.mjs › [director-100] The bundle checks its second asset reference",
+    "src/director/sharing/sharing.test.mjs › [director-100] The bundle rejects external pack sources",
+    "src/director/sharing/sharing.test.mjs › [director-100] The bundle rejects pack asset absent",
+    "src/director/sharing/sharing.test.mjs › [director-100] The bundle rejects pack asset byte length",
+    "src/director/sharing/sharing.test.mjs › [director-100] The bundle rejects pack asset digest",
+    "src/director/sharing/sharing.test.mjs › [director-100] The bundle rejects unused assets",
+    "src/director/sharing/sharing.test.mjs › [director-100] The bundle rejects wrong asset digest"
+  ],
+  "director-101": [
+    "src/director/sharing/sharing.test.mjs › [director-101] The export accepts scenes without packs",
+    "src/director/sharing/sharing.test.mjs › [director-101] The export keeps a supplied pack list",
+    "src/director/sharing/sharing.test.mjs › [director-101] The export writes exact bundle metadata",
+    "src/director/sharing/sharing.test.mjs › [director-101] long valid source filenames still produce an importable bundle",
+    "src/director/sharing/sharing.test.mjs › [director-101] selected-scene bundles round trip bytes and attribution without mutating the project or fetching"
+  ],
+  "director-102": [
+    "src/director/sharing/sharing.test.mjs › [director-102] The export accepts absent integrity fields",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export accepts an absent digest",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export accepts its exact asset total",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export checks its encoded text budget",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export keeps its total after an absent length",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export rejects absent asset bytes",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export rejects absent assets",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export rejects byte empty",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export rejects byte size",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export rejects byte type",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export rejects declared byte length",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export rejects declared digest",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export rejects excess asset total",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export rejects excess total bytes",
+    "src/director/sharing/sharing.test.mjs › [director-102] asset caps and declared integrity are enforced before creating a downloadable bundle"
+  ],
+  "director-103": [
+    "src/director/sharing/sharing.test.mjs › [director-103] The export accepts matching shared integrity",
+    "src/director/sharing/sharing.test.mjs › [director-103] The export key uses adapter",
+    "src/director/sharing/sharing.test.mjs › [director-103] The export key uses path",
+    "src/director/sharing/sharing.test.mjs › [director-103] The export rejects shared byte length",
+    "src/director/sharing/sharing.test.mjs › [director-103] The export rejects shared digest",
+    "src/director/sharing/sharing.test.mjs › [director-103] The export reuses a shared asset",
+    "src/director/sharing/sharing.test.mjs › [director-103] The shared export accepts absent byte declarations",
+    "src/director/sharing/sharing.test.mjs › [director-103] The shared export accepts an absent digest",
+    "src/director/sharing/sharing.test.mjs › [director-103] duplicate pack paths share one asset and reject conflicting integrity"
+  ],
+  "director-104": [
+    "src/director/sharing/sharing.test.mjs › [director-104] The store clears owned bytes",
+    "src/director/sharing/sharing.test.mjs › [director-104] The store copies the asset map",
+    "src/director/sharing/sharing.test.mjs › [director-104] bundle byte owner releases replacement data and has no network fallback"
+  ],
+  "director-105": [
+    "src/director/sharing/sharing.test.mjs › [director-105] The store checks its default byte budget",
+    "src/director/sharing/sharing.test.mjs › [director-105] The store rejects absent bytes",
+    "src/director/sharing/sharing.test.mjs › [director-105] The store rejects size bytes",
+    "src/director/sharing/sharing.test.mjs › [director-105] The store returns an independent byte copy"
+  ],
+  "director-106": [
+    "src/director/sharing/sharing.test.mjs › [director-106] The reader accepts an absent filename",
+    "src/director/sharing/sharing.test.mjs › [director-106] The reader checks a signal after text access",
+    "src/director/sharing/sharing.test.mjs › [director-106] The reader gives bundles the larger budget",
+    "src/director/sharing/sharing.test.mjs › [director-106] The reader rejects the ordinary file budget",
+    "src/director/sharing/sharing.test.mjs › [director-106] oversized files fail before reading and cancellation settles a stalled file without a late result"
+  ],
+  "director-107": [
+    "src/director/sharing/sharing.test.mjs › [director-107] The helper cancels pending work",
+    "src/director/sharing/sharing.test.mjs › [director-107] The helper checks signal state at settlement",
+    "src/director/sharing/sharing.test.mjs › [director-107] The helper rejects a work error",
+    "src/director/sharing/sharing.test.mjs › [director-107] The helper rejects an early signal",
+    "src/director/sharing/sharing.test.mjs › [director-107] The helper resolves with an active signal",
+    "src/director/sharing/sharing.test.mjs › [director-107] The helper resolves without a signal",
+    "src/director/sharing/sharing.test.mjs › [director-107] cancelled bundle export never resolves another asset or produces partial output"
+  ],
+  "director-108": [
+    "src/director/sharing/sharing.test.mjs › [director-108] The preview accepts absent pack lists",
+    "src/director/sharing/sharing.test.mjs › [director-108] The preview keeps a supplied scene title",
+    "src/director/sharing/sharing.test.mjs › [director-108] The preview reports exact totals and attribution",
+    "src/director/sharing/sharing.test.mjs › [director-108] The preview totals include every asset",
+    "src/director/sharing/sharing.test.mjs › [director-108] The preview uses supplied pack lists",
+    "src/director/sharing/sharing.test.mjs › [director-108] The preview uses the scene ID without a title"
+  ],
+  "director-109": [
+    "src/director/sharing/sharing.test.mjs › [director-109] The preview distinguishes bundle sources",
+    "src/director/sharing/sharing.test.mjs › [director-109] The preview reports a configured source",
+    "src/director/sharing/sharing.test.mjs › [director-109] The preview reports absent bundle bytes",
+    "src/director/sharing/sharing.test.mjs › [director-109] The preview reports an unavailable source",
+    "src/director/sharing/sharing.test.mjs › [director-109] The preview reports included bundle bytes",
+    "src/director/sharing/sharing.test.mjs › [director-109] preview reports unavailable sources/layers and missing bundle assets without applying anything"
+  ],
+  "director-110": [
+    "src/director/sharing/sharing.test.mjs › [director-110] The preview accepts absent shot layers",
+    "src/director/sharing/sharing.test.mjs › [director-110] The preview detects applied scene packs",
+    "src/director/sharing/sharing.test.mjs › [director-110] The preview detects each layer key",
+    "src/director/sharing/sharing.test.mjs › [director-110] The preview detects no external content",
+    "src/director/sharing/sharing.test.mjs › [director-110] The preview detects shot source packs",
+    "src/director/sharing/sharing.test.mjs › [director-110] The preview lists distinct absent layers",
+    "src/director/sharing/sharing.test.mjs › [director-110] The preview uses supplied shot layers"
+  ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec"

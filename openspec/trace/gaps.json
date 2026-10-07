@@ -3346,111 +3346,6 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
-    "src/director/packs/geojson.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 6,
-      "functions": 0,
-      "totals": {
-        "lines": 62,
-        "branches": 25,
-        "functions": 7
-      },
-      "sha": "a5814ccf8eff2c8661288c5b891209eed80b033c3e727dae581f4b5334e0c7db",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/packs/manifest.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 5,
-      "functions": 0,
-      "totals": {
-        "lines": 138,
-        "branches": 49,
-        "functions": 13
-      },
-      "sha": "33ea3ca51d576854eff4190214cd89422ed02535735f3c972d584332b0411f08",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/packs/session.js": {
-      "loaded": true,
-      "lines": 9,
-      "branches": 7,
-      "functions": 2,
-      "totals": {
-        "lines": 159,
-        "branches": 61,
-        "functions": 18
-      },
-      "sha": "2cfec16908135cec5a10a65725aa05c513f22eaa3b0bf1ad478016a7fe1b1d26",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/packs/source.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 5,
-      "functions": 2,
-      "totals": {
-        "lines": 67,
-        "branches": 19,
-        "functions": 4
-      },
-      "sha": "2fdd5cadf054a6f7e84fb6213f018485d4f186c67d005e640a629446f63fca18",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/sharing/bundle.js": {
-      "loaded": true,
-      "lines": 2,
-      "branches": 8,
-      "functions": 2,
-      "totals": {
-        "lines": 221,
-        "branches": 83,
-        "functions": 21
-      },
-      "sha": "04c31f1898eb31689aa75eaa8fac3e7fccd700d6e3f9d48d4c1e0b448f6625c0",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/sharing/lifetime.js": {
-      "loaded": true,
-      "lines": 6,
-      "branches": 2,
-      "functions": 2,
-      "totals": {
-        "lines": 26,
-        "branches": 9,
-        "functions": 6
-      },
-      "sha": "f9595b0288e44bbb2778cd99ce7dfdaa3a1dc5f804502dd0ba8f11b91bacdcbc",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
-    "src/director/sharing/preview.js": {
-      "loaded": true,
-      "lines": 0,
-      "branches": 5,
-      "functions": 1,
-      "totals": {
-        "lines": 43,
-        "branches": 18,
-        "functions": 10
-      },
-      "sha": "b5545c8a7a7a9907b93cd6717e9a0e1ef2d4de87bf2daaeea4f47653fa3fbee3",
-      "untrue": false,
-      "origin": "upstream-sync",
-      "since": "2026-09-25"
-    },
     "src/firstRunExperience.js": {
       "loaded": true,
       "lines": 311,
@@ -14105,17 +14000,6 @@
     },
     "src/director/packs/packs.test.mjs": {
       "names": {
-        "GeoJSON preserves stable geometry IDs but never properties or remote style hints": 1,
-        "an abort between renderer settlement and continuation cannot leak the returned resource": 1,
-        "byte and integrity checks run before rendering; adapter names never resolve inherited properties": 1,
-        "directory source confines paths, strips credentials and rejects redirects, oversized streaming bodies and missing assets": 1,
-        "failed responses release their body and an already-cancelled source sends no request": 1,
-        "image bounds and media anchor references are explicit and validated": 1,
-        "late renderer resources are disposed after cancellation without mutating a replacement": 1,
-        "manifest rejects duplicate/unknown IDs, unsupported placement and request or credential syntax": 1,
-        "pack session removes presentations and cancels the transport on Stop": 1,
-        "replacing a pending source settles promptly and ignores its late bytes": 1,
-        "timeout settles an uncooperative adapter and failed packs roll back earlier resources": 1,
         "v5 packs and shot references round trip through project migration without acquiring bytes": 1
       },
       "origin": "upstream-sync",
@@ -14146,16 +14030,7 @@
     },
     "src/director/sharing/sharing.test.mjs": {
       "names": {
-        "asset caps and declared integrity are enforced before creating a downloadable bundle": 1,
-        "bundle byte owner releases replacement data and has no network fallback": 1,
-        "bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files and broken integrity": 1,
-        "cancelled bundle export never resolves another asset or produces partial output": 1,
-        "details editing preserves content IDs, layers and provenance, rejects invalid drafts atomically": 1,
-        "duplicate pack paths share one asset and reject conflicting integrity": 1,
-        "long valid source filenames still produce an importable bundle": 1,
-        "oversized files fail before reading and cancellation settles a stalled file without a late result": 1,
-        "preview reports unavailable sources/layers and missing bundle assets without applying anything": 1,
-        "selected-scene bundles round trip bytes and attribution without mutating the project or fetching": 1
+        "details editing preserves content IDs, layers and provenance, rejects invalid drafts atomically": 1
       },
       "origin": "upstream-sync",
       "since": "2026-09-25"
