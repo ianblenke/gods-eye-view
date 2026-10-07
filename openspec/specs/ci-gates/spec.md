@@ -2,7 +2,6 @@
 
 ## Purpose
 Run all gates in CI on the pinned Node version for the archived change of each pull request.
-
 ## Requirements
 ### Requirement: CI command
 The command `node scripts/spec/gates.mjs ci` MUST find the change of the diff against the base branch and run all gates for it. A diff that changes a code file, a test file, a process file or a file in `openspec/` MUST add one archived change.
@@ -65,4 +64,22 @@ Origin: spec-first
 - **WHEN** a test reads `Dockerfile` and `.node-version`
 - **THEN** the Docker base image has the Node version from `.node-version`
 - **AND** the image has Git
+
+### Requirement: Fast local checks
+The Makefile MUST supply `precheck` and `gates-docs` with the pinned image pattern.
+The target `precheck` MUST run all four CI file checks without `gates.mjs`.
+The target `gates-docs` MUST pass `CHANGE` and `BASE` to the document mode.
+The container copy MUST include the ratchet snapshot when that file exists.
+The document target MUST NOT copy any trace file back to the source folder.
+Origin: spec-first
+
+#### Scenario: Add fast checks before review `ci-gates-011`
+- **WHEN** the Makefile defines `precheck`
+- **THEN** the target runs format, import direction, package boundary and layer token checks without the gate command
+
+#### Scenario: Add a document gate target `ci-gates-012`
+- **WHEN** the Makefile defines `gates-docs`
+- **THEN** the target calls the mode with `CHANGE` and `BASE`
+- **AND** the target copies no trace file back to the source folder
+- **AND** the copy includes the ratchet snapshot when that file exists
 
