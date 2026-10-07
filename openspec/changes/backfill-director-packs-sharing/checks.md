@@ -37,12 +37,12 @@ cd /home/ianblenke/docker/gev-work/director-3 && node scripts/format.mjs --check
 spawnSync git EPERM
 ```
 
-The lead must repeat these commands in an environment that permits the child process.
+The lead must repeat these commands in an environment that allows the child process.
 
 ## Tree result
 
 The source comparison finds no production change.
-The title comparison confirms each old title after removal of its new tag.
+The title comparison confirms each old title after removal of its new tag, except three titles that changed one word.
 The path check finds no browser QA script or earlier director change.
 The whitespace check passes.
 

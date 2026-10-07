@@ -186,7 +186,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-080] image bounds and media anchor references are explicit and validated
+[director-080] image bounds and media anchor references are stated and validated
 ```
 
 ### director-081: Media placement
@@ -257,7 +257,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-085] The position rejects invalid high height
 [director-085] The position total rejects excess
 [director-085] The position uses zero for absent height
-[director-085] The position keeps explicit height
+[director-085] The position keeps the height in the data
 [director-085] The position accepts both geographic edges
 [director-085] The position rejects field 0 that is not finite
 [director-085] The position rejects field 1 that is not finite
@@ -296,7 +296,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-087] GeoJSON preserves stable geometry IDs but never properties or remote style hints
+[director-087] GeoJSON keeps stable geometry IDs but never properties or remote style hints
 ```
 
 ### director-088: Session admission
@@ -513,7 +513,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-099] bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files and broken integrity
+[director-099] bundle rejects invalid bytes, unknown fields, traversal, duplicates, missing files and broken integrity
 [director-099] The base64 rejects invalid type
 [director-099] The base64 rejects invalid empty
 [director-099] The base64 rejects invalid length
@@ -764,3 +764,23 @@ cd /home/ianblenke/docker/gev-work/director-3 && grep -aE '^ℹ (tests|pass|fail
 The test output records 788 tests and 788 passes.
 It records zero failures, cancellations and skipped tests.
 The complete mutation command records 302 KILLED results without a time limit.
+
+## Title correction
+
+The new word rule makes a retagged old title a new title.
+Three old titles had a word of the rule, so the lead changed one word in each.
+Each pair shows the old title on main and the current title without its tag.
+
+```text
+Old: image bounds and media anchor references are explicit and validated
+New: image bounds and media anchor references are stated and validated
+Old: GeoJSON preserves stable geometry IDs but never properties or remote style hints
+New: GeoJSON keeps stable geometry IDs but never properties or remote style hints
+Old: bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files and broken integrity
+New: bundle rejects invalid bytes, unknown fields, traversal, duplicates, missing files and broken integrity
+```
+
+The lead changed the same words in this change folder and in the patterns of the mutation rows.
+The title of the new position height test no longer has the word `explicit`.
+Its new text says that the position keeps the height in the data.
+

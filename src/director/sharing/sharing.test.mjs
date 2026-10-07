@@ -84,7 +84,7 @@ test('[director-101] selected-scene bundles round trip bytes and attribution wit
   );
 });
 
-test('[director-099] bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files and broken integrity', async () => {
+test('[director-099] bundle rejects invalid bytes, unknown fields, traversal, duplicates, missing files and broken integrity', async () => {
   const valid = JSON.parse(await createSceneBundle(fixture(), () => asset()));
   const mutations = [
     (b) => (b.version = 2),

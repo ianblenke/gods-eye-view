@@ -90,7 +90,7 @@ test('[director-082] manifest rejects duplicate/unknown IDs, unsupported placeme
   assert.throws(() => parseSceneDocument(JSON.stringify(old)));
 });
 
-test('[director-080] image bounds and media anchor references are explicit and validated', () => {
+test('[director-080] image bounds and media anchor references are stated and validated', () => {
   const p = project(),
     s = p.scenes[0],
     a = s.dataPacks[0];
@@ -141,7 +141,7 @@ test('[director-095 director-096 director-097] directory source confines paths, 
   await assert.rejects(missing({ path: 'a' }), /unavailable/);
 });
 
-test('[director-087] GeoJSON preserves stable geometry IDs but never properties or remote style hints', () => {
+test('[director-087] GeoJSON keeps stable geometry IDs but never properties or remote style hints', () => {
   const data = {
     type: 'FeatureCollection',
     features: [
