@@ -47,14 +47,7 @@ test('camera seeking preserves cubic easing and shortest-angle orientation', () 
     cameraAtProgress(camera(20, 350), camera(24, 10), 0.25).lon,
     20.25,
   );
-  assert.deepEqual(cameraAtProgress(null, camera(20, 350), 0), {
-    lat: 10,
-    lon: 20,
-    alt: 1000,
-    heading: 350,
-    pitch: -40,
-    roll: 0,
-  });
+  assert.deepEqual(cameraAtProgress(null, camera(20, 350), 0), camera(20, 350));
 });
 
 test('[director-031] The shot boundaries use cumulative durations', () => {
@@ -318,4 +311,36 @@ test('[director-033] The camera guard returns null for falsy endpoints', () => {
   for (const a of [null, undefined, 0, false, '', NaN])
     for (const b of [null, undefined, 0, false, '', NaN])
       assert.equal(cameraAtProgress(a, b, 0), null);
+});
+
+test('[director-033] The camera takes the shortest arc for both angles', () => {
+  const from = { ...camera(20, 350), roll: 350 };
+  const to = { ...camera(24, 10), roll: 10 };
+  const pose = cameraAtProgress(from, to, 0.5);
+  assert.equal(pose.heading, 360);
+  assert.equal(pose.roll, 360);
+  const reverseRoll = cameraAtProgress(
+    { ...from, roll: 10 },
+    { ...to, roll: 350 },
+    0.5,
+  );
+  assert.equal(reverseRoll.heading, 360);
+  assert.equal(reverseRoll.roll, 0);
+  assert.deepEqual(cameraAtProgress(null, camera(20, 350), 0), {
+    lat: 10,
+    lon: 20,
+    alt: 1000,
+    heading: 350,
+    pitch: -40,
+    roll: 0,
+  });
+});
+
+test('[director-032] The absent shot starts at zero elapsed time', () => {
+  const result = sceneTimingForShot(scene, { id: 'absent' }, duration);
+  assert.equal(result.shotIndex, -1);
+  assert.equal(result.totalSec, 10);
+  assert.equal(result.startElapsedSec, 0);
+  assert.equal(result.endElapsedSec, 0);
+  assert.equal(result.startProgress, 0);
 });

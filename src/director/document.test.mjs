@@ -640,3 +640,128 @@ test('[director-015] The visual check rejects invalid boolean type', () => {
   p.scenes[0].shots[0].visual = { scope: { enabled: 1 } };
   assert.throws(() => validateSceneDocument(p), /scope\.enabled/);
 });
+
+test('[director-014] The visual rejects an unknown field', () => {
+  const project = fixture();
+  project.scenes[0].shots[0].visual = { extra: true };
+  assert.throws(() => validateSceneDocument(project), {
+    name: 'SceneDocumentError',
+    path: '$.scenes[0].shots[0].visual.extra',
+  });
+});
+
+test('[director-015] The visual group rejects an unknown field', () => {
+  const project = fixture();
+  project.scenes[0].shots[0].visual = { bloom: { extra: true } };
+  assert.throws(() => validateSceneDocument(project), {
+    name: 'SceneDocumentError',
+    path: '$.scenes[0].shots[0].visual.bloom.extra',
+  });
+});
+
+test('[director-016] The pack entry rejects an unknown field', () => {
+  const project = fixture();
+  project.scenes[0].appliedShotPacks = [{ id: 'pack', extra: true }];
+  assert.throws(() => validateSceneDocument(project), {
+    name: 'SceneDocumentError',
+    path: '$.scenes[0].appliedShotPacks[0].extra',
+  });
+});
+
+test('[director-018] The layer entry rejects an unknown field', () => {
+  const project = fixture();
+  project.scenes[0].shots[0].layers = {
+    traffic: { enabled: true, extra: true },
+  };
+  assert.throws(() => validateSceneDocument(project), {
+    name: 'SceneDocumentError',
+    path: '$.scenes[0].shots[0].layers.traffic.extra',
+  });
+});
+
+test('[director-004] The document rejects a duplicate scene ID', () => {
+  const project = fixture();
+  project.scenes.push(structuredClone(project.scenes[0]));
+  assert.throws(() => validateSceneDocument(project), {
+    name: 'SceneDocumentError',
+    path: '$.scenes[1].id',
+  });
+});
+
+test('[director-016] The document rejects a duplicate pack ID', () => {
+  const project = fixture();
+  project.scenes[0].appliedShotPacks = [{ id: 'pack' }, { id: 'pack' }];
+  assert.throws(() => validateSceneDocument(project), {
+    name: 'SceneDocumentError',
+    path: '$.scenes[0].appliedShotPacks[1].id',
+  });
+});
+
+test('[director-003] The import accepts anchors and move at versions 4 through 6', () => {
+  for (const version of [4, 5, 6]) {
+    const project = fixture();
+    project.version = version;
+    project.scenes[0].anchors = [
+      { id: 'anchor', lat: 1, lon: 2, alt: 42, altitudeReference: 'ellipsoid' },
+    ];
+    const shot = project.scenes[0].shots[0];
+    shot.camera.altitudeReference = 'ellipsoid';
+    shot.move = {
+      from: { lat: 1, lon: 2, alt: 42, altitudeReference: 'ellipsoid' },
+      easing: 'linear',
+    };
+    const result = parseSceneDocument(JSON.stringify(project));
+    assert.ok([4, 5, 6].includes(result.version));
+    assert.equal(result.scenes[0].anchors[0].id, 'anchor');
+    assert.equal(result.scenes[0].shots[0].move.easing, 'linear');
+  }
+});
+
+test('[director-003] The import accepts data packs at versions 5 and 6', () => {
+  for (const version of [5, 6]) {
+    const project = fixture();
+    project.version = version;
+    project.scenes[0].dataPacks = [
+      {
+        id: 'data',
+        version: 1,
+        format: 'geojson',
+        source: { adapter: 'local', path: 'data.json' },
+        attribution: { text: 'Data', license: 'Public' },
+        placement: { altitudeReference: 'ellipsoid' },
+      },
+    ];
+    project.scenes[0].shots[0].dataPackIds = ['data'];
+    const result = parseSceneDocument(JSON.stringify(project));
+    assert.ok([5, 6].includes(result.version));
+    assert.equal(result.scenes[0].dataPacks[0].id, 'data');
+    assert.deepEqual(result.scenes[0].shots[0].dataPackIds, ['data']);
+  }
+});
+
+test('[director-003] The import rejects fields below each version gate', () => {
+  for (const version of [1, 2, 3]) {
+    for (const field of ['anchors', 'move']) {
+      const project = fixture();
+      project.version = version;
+      if (field === 'anchors') project.scenes[0].anchors = [];
+      else project.scenes[0].shots[0].move = {};
+      assert.throws(
+        () => parseSceneDocument(JSON.stringify(project)),
+        /unsupported field/,
+      );
+    }
+  }
+  for (const version of [1, 2, 3, 4]) {
+    for (const field of ['dataPacks', 'dataPackIds']) {
+      const project = fixture();
+      project.version = version;
+      if (field === 'dataPacks') project.scenes[0].dataPacks = [];
+      else project.scenes[0].shots[0].dataPackIds = [];
+      assert.throws(
+        () => parseSceneDocument(JSON.stringify(project)),
+        /unsupported field/,
+      );
+    }
+  }
+});

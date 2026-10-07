@@ -224,3 +224,11 @@ test('[director-011] The JSON rejects falsy nonobject values', () => {
     else assert.throws(() => jsonTree(value, '$', { nodes: 0 }));
   }
 });
+
+test('[director-006] The default text limit accepts 256 characters', () => {
+  assert.doesNotThrow(() => string('x'.repeat(256), '$'));
+});
+
+test('[director-006] The default text limit rejects 257 characters', () => {
+  assert.throws(() => string('x'.repeat(257), '$'), { name: 'SceneDocumentError', path: '$' });
+});

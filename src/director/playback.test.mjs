@@ -921,3 +921,32 @@ test('[director-039] The refused handoff stops the first shot', async () => {
   );
   assert.deepEqual(f.events, []);
 });
+
+test('[director-036] The queue wraps from b and keeps each shot object', () => {
+  const queue = buildPlaybackQueue(scenes, 'b');
+  assert.deepEqual(queue.map(({ shot }) => shot.id), ['b1', 'a1', 'a2']);
+  assert.equal(queue[0].shot, scenes[2].shots[0]);
+  assert.equal(queue[1].shot, scenes[0].shots[0]);
+  assert.equal(queue[2].shot, scenes[0].shots[1]);
+});
+
+test('[director-036] The unknown start selects the first scene', () => {
+  assert.deepEqual(buildPlaybackQueue(scenes, 'unknown').map(({ shot }) => shot.id), ['a1', 'a2', 'b1']);
+});
+
+test('[director-037] The phase context gives each index and the queue total', async () => {
+  const records = [];
+  const adapter = Object.fromEntries(phases.map((phase) => [phase, (context) => {
+    assert.equal(Object.hasOwn(context, 'index'), true);
+    assert.equal(Object.hasOwn(context, 'total'), true);
+    records.push([phase, context.index, context.total]);
+  }]));
+  adapter.releaseScene = () => true;
+  const result = await playSceneQueue(buildPlaybackQueue(scenes, 'b'), { token: {}, adapter });
+  assert.deepEqual(records, [
+    ...phases.map((phase) => [phase, 0, 3]),
+    ...phases.map((phase) => [phase, 1, 3]),
+    ...phases.map((phase) => [phase, 2, 3]),
+  ]);
+  assert.equal(result.completedShots, 3);
+});

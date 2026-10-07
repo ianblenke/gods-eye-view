@@ -1,11 +1,10 @@
 # Director mutation evidence
 
-Commit: `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
+Commit read: `43b776a14aaf7d9379a786f5dafdc1c79bd4e371`.
 
 The host tool restores each source file after its check.
-The last result for each mutation appears below.
-A code block records the exact old text and new text.
-The failed test name follows the result.
+The final complete check supplies each result below.
+The failed test text comes from the command output.
 
 ## m001
 
@@ -18,7 +17,7 @@ New:
 if (false || typeof value !== 'object' || Array.isArray(value))
 Selected test: [director-005] The object check rejects null
 Result: KILLED
-Test: [director-005] The object check rejects null
+Failed test prefix: [director-005] The object check rejects null
 ```
 
 ## m002
@@ -32,7 +31,7 @@ New:
 false ||
 Selected test: [director-005] The object check rejects text
 Result: KILLED
-Test: [director-005] The object check rejects text
+Failed test prefix: [director-005] The object check rejects text
 ```
 
 ## m003
@@ -46,7 +45,7 @@ New:
 || false
 Selected test: [director-005] The object check rejects an array
 Result: KILLED
-Test: [director-005] The object check rejects an array
+Failed test prefix: [director-005] The object check rejects an array
 ```
 
 ## m004
@@ -60,7 +59,7 @@ New:
 false
 Selected test: [director-005] The field check rejects each unsupported key
 Result: KILLED
-Test: [director-005] The field check rejects each unsupported key
+Failed test prefix: [director-005] The field check rejects each unsupported key
 ```
 
 ## m005
@@ -74,7 +73,7 @@ New:
 false ||
 Selected test: [director-006] The text check rejects numbers
 Result: KILLED
-Test: [director-006] The text check rejects numbers
+Failed test prefix: [director-006] The text check rejects numbers
 ```
 
 ## m006
@@ -88,7 +87,7 @@ New:
 false ||
 Selected test: [director-006] The text check rejects blank text
 Result: KILLED
-Test: [director-006] The text check rejects blank text
+Failed test prefix: [director-006] The text check rejects blank text
 ```
 
 ## m007
@@ -102,7 +101,7 @@ New:
 if (typeof value !== 'string' || !value.trim() || false)
 Selected test: [director-006] The text check rejects excess length
 Result: KILLED
-Test: [director-006] The text check rejects excess length
+Failed test prefix: [director-006] The text check rejects excess length
 ```
 
 ## m008
@@ -116,7 +115,7 @@ New:
 max = 0
 Selected test: [director-006] The text check accepts the exact limit
 Result: KILLED
-Test: [director-006] The text check accepts the exact limit
+Failed test prefix: [director-006] The text check accepts the exact limit
 ```
 
 ## m009
@@ -130,7 +129,7 @@ New:
 false ||
 Selected test: [director-007] The number check rejects text
 Result: SURVIVED
-Test: \[director\-007\]\ The\ number\ check\ rejects\ text
+Failed test prefix: <none>
 ```
 
 ## m010
@@ -144,7 +143,7 @@ New:
 false ||
 Selected test: [director-007] The number check rejects NaN
 Result: KILLED
-Test: [director-007] The number check rejects NaN
+Failed test prefix: [director-007] The number check rejects NaN
 ```
 
 ## m011
@@ -158,7 +157,7 @@ New:
 false ||
 Selected test: [director-007] The number check rejects the lower excess
 Result: KILLED
-Test: [director-007] The number check rejects the lower excess
+Failed test prefix: [director-007] The number check rejects the lower excess
 ```
 
 ## m012
@@ -172,7 +171,7 @@ New:
 false
 Selected test: [director-007] The number check rejects the upper excess
 Result: KILLED
-Test: [director-007] The number check rejects the upper excess
+Failed test prefix: [director-007] The number check rejects the upper excess
 ```
 
 ## m013
@@ -186,7 +185,7 @@ New:
 false &&
 Selected test: [director-007] The legacy flag alone allows numeric text
 Result: KILLED
-Test: [director-007] The legacy flag alone allows numeric text
+Failed test prefix: [director-007] The legacy flag alone allows numeric text
 ```
 
 ## m014
@@ -200,7 +199,7 @@ New:
 true &&
 Selected test: [director-007] The legacy number input keeps its type
 Result: KILLED
-Test: [director-007] The legacy number input keeps its type
+Failed test prefix: [director-007] The legacy number input keeps its type
 ```
 
 ## m015
@@ -214,7 +213,7 @@ New:
 && true ?
 Selected test: [director-007] The legacy blank text fails numeric checks
 Result: KILLED
-Test: [director-007] The legacy blank text fails numeric checks
+Failed test prefix: [director-007] The legacy blank text fails numeric checks
 ```
 
 ## m016
@@ -228,7 +227,7 @@ New:
 numeric <= min
 Selected test: [director-007] The number check accepts both bounds
 Result: KILLED
-Test: [director-007] The number check accepts both bounds
+Failed test prefix: [director-007] The number check accepts both bounds
 ```
 
 ## m017
@@ -242,7 +241,7 @@ New:
 key in value
 Selected test: [director-008] The optional check uses own fields only
 Result: KILLED
-Test: [director-008] The optional check uses own fields only
+Failed test prefix: [director-008] The optional check uses own fields only
 ```
 
 ## m018
@@ -256,7 +255,7 @@ New:
 false ||
 Selected test: [director-009] The array check rejects objects
 Result: KILLED
-Test: [director-009] The array check rejects objects
+Failed test prefix: [director-009] The array check rejects objects
 ```
 
 ## m019
@@ -272,7 +271,7 @@ false)
     fail(path, `expected an array
 Selected test: [director-009] The array check rejects excess entries
 Result: KILLED
-Test: [director-009] The array check rejects excess entries
+Failed test prefix: [director-009] The array check rejects excess entries
 ```
 
 ## m020
@@ -286,7 +285,7 @@ New:
 value.forEach((id, index) => { if (index === 0) string(id, `${path}[${index}]`); });
 Selected test: [director-009] The ID list checks every entry
 Result: KILLED
-Test: [director-009] The ID list checks every entry
+Failed test prefix: [director-009] The ID list checks every entry
 ```
 
 ## m021
@@ -300,7 +299,7 @@ New:
 /* mutation */
 Selected test: [director-009] The unique ID check keeps its set
 Result: KILLED
-Test: [director-009] The unique ID check keeps its set
+Failed test prefix: [director-009] The unique ID check keeps its set
 ```
 
 ## m022
@@ -314,7 +313,7 @@ New:
 false
 Selected test: [director-010] The node budget rejects its next value
 Result: KILLED
-Test: [director-010] The node budget rejects its next value
+Failed test prefix: [director-010] The node budget rejects its next value
 ```
 
 ## m023
@@ -328,7 +327,7 @@ New:
 false
 Selected test: [director-010] The depth check rejects its next level
 Result: KILLED
-Test: [director-010] The depth check rejects its next level
+Failed test prefix: [director-010] The depth check rejects its next level
 ```
 
 ## m024
@@ -342,7 +341,7 @@ New:
 false ||
 Selected test: [director-011] The JSON null takes its own path
 Result: KILLED
-Test: [director-011] The JSON null takes its own path
+Failed test prefix: [director-011] The JSON null takes its own path
 ```
 
 ## m025
@@ -356,7 +355,7 @@ New:
 || false
 Selected test: [director-011] The JSON boolean takes its own path
 Result: KILLED
-Test: [director-011] The JSON boolean takes its own path
+Failed test prefix: [director-011] The JSON boolean takes its own path
 ```
 
 ## m026
@@ -370,7 +369,7 @@ New:
 false &&
 Selected test: [director-011] The JSON finite number takes its own path
 Result: KILLED
-Test: [director-011] The JSON finite number takes its own path
+Failed test prefix: [director-011] The JSON finite number takes its own path
 ```
 
 ## m027
@@ -384,7 +383,7 @@ New:
 && true
 Selected test: [director-011] The JSON rejects an infinite number
 Result: KILLED
-Test: [director-011] The JSON rejects an infinite number
+Failed test prefix: [director-011] The JSON rejects an infinite number
 ```
 
 ## m028
@@ -398,7 +397,7 @@ New:
 if (typeof value !== 'object') fail(path, 'expected a JSON value');
 Selected test: [director-011] The JSON rejects undefined
 Result: SURVIVED
-Test: \[director\-011\]\ The\ JSON\ rejects\ undefined
+Failed test prefix: <none>
 ```
 
 ## m029
@@ -412,7 +411,7 @@ New:
 if (!value)
 Selected test: [director-011] The JSON rejects functions
 Result: KILLED
-Test: [director-011] The JSON rejects functions
+Failed test prefix: [director-011] The JSON rejects functions
 ```
 
 ## m030
@@ -426,7 +425,7 @@ New:
 true &&
 Selected test: [director-011] The JSON accepts an ordinary object
 Result: KILLED
-Test: [director-011] The JSON accepts an ordinary object
+Failed test prefix: [director-011] The JSON accepts an ordinary object
 ```
 
 ## m031
@@ -440,7 +439,7 @@ New:
 true &&
 Selected test: [director-011] The JSON accepts arrays
 Result: KILLED
-Test: [director-011] The JSON accepts arrays
+Failed test prefix: [director-011] The JSON accepts arrays
 ```
 
 ## m032
@@ -454,7 +453,7 @@ New:
 true
 Selected test: [director-011] The JSON accepts a null prototype
 Result: KILLED
-Test: [director-011] The JSON accepts a null prototype
+Failed test prefix: [director-011] The JSON accepts a null prototype
 ```
 
 ## m033
@@ -468,7 +467,7 @@ New:
 return;
 Selected test: [director-011] The JSON rejects a custom prototype
 Result: KILLED
-Test: [director-011] The JSON rejects a custom prototype
+Failed test prefix: [director-011] The JSON rejects a custom prototype
 ```
 
 ## m034
@@ -482,7 +481,7 @@ New:
 false
 Selected test: [director-012] The JSON text limit checks its boundary
 Result: KILLED
-Test: [director-012] The JSON text limit checks its boundary
+Failed test prefix: [director-012] The JSON text limit checks its boundary
 ```
 
 ## m035
@@ -496,7 +495,7 @@ New:
 false
 Selected test: [director-012] The JSON entry limit checks its boundary
 Result: KILLED
-Test: [director-012] The JSON entry limit checks its boundary
+Failed test prefix: [director-012] The JSON entry limit checks its boundary
 ```
 
 ## m036
@@ -510,7 +509,7 @@ New:
 ['constructor', 'prototype']
 Selected test: [director-012] The JSON rejects the __proto__ key
 Result: KILLED
-Test: [director-012] The JSON rejects the __proto__ key
+Failed test prefix: [director-012] The JSON rejects the __proto__ key
 ```
 
 ## m037
@@ -524,7 +523,7 @@ New:
 ['__proto__', 'prototype']
 Selected test: [director-012] The JSON rejects the constructor key
 Result: KILLED
-Test: [director-012] The JSON rejects the constructor key
+Failed test prefix: [director-012] The JSON rejects the constructor key
 ```
 
 ## m038
@@ -538,7 +537,7 @@ New:
 ['__proto__', 'constructor']
 Selected test: [director-012] The JSON rejects the prototype key
 Result: KILLED
-Test: [director-012] The JSON rejects the prototype key
+Failed test prefix: [director-012] The JSON rejects the prototype key
 ```
 
 ## m039
@@ -552,7 +551,7 @@ New:
 false
 Selected test: [director-012] The JSON rejects long field names
 Result: KILLED
-Test: [director-012] The JSON rejects long field names
+Failed test prefix: [director-012] The JSON rejects long field names
 ```
 
 ## m040
@@ -566,7 +565,7 @@ New:
 false ||
 Selected test: [director-013] The parser rejects nontext input
 Result: KILLED
-Test: [director-013] The parser rejects nontext input
+Failed test prefix: [director-013] The parser rejects nontext input
 ```
 
 ## m041
@@ -580,7 +579,7 @@ New:
 false ||
 Selected test: [director-013] The parser rejects excess character length
 Result: KILLED
-Test: [director-013] The parser rejects excess character length
+Failed test prefix: [director-013] The parser rejects excess character length
 ```
 
 ## m042
@@ -594,7 +593,7 @@ New:
 false
 Selected test: [director-013] The parser rejects excess UTF8 bytes
 Result: KILLED
-Test: [director-013] The parser rejects excess UTF8 bytes
+Failed test prefix: [director-013] The parser rejects excess UTF8 bytes
 ```
 
 ## m043
@@ -608,7 +607,7 @@ New:
 throw new Error("wrong");
 Selected test: [director-013] The parser reports invalid JSON
 Result: KILLED
-Test: [director-013] The parser reports invalid JSON
+Failed test prefix: [director-013] The parser reports invalid JSON
 ```
 
 ## m044
@@ -622,7 +621,7 @@ New:
 false
 Selected test: [director-004] The validator rejects an unsupported version
 Result: KILLED
-Test: [director-004] The validator rejects an unsupported version
+Failed test prefix: [director-004] The validator rejects an unsupported version
 ```
 
 ## m045
@@ -634,9 +633,9 @@ Old:
 ['style', 'mapStack']
 New:
 ['mapStack']
-Selected test: [director-014] The visual check rejects invalid style
+Selected test: [director-014] The visual check rejects invalid style; [director-014] The visual check rejects invalid style parameters
 Result: KILLED
-Test: [director-014] The visual check rejects invalid style
+Failed test prefix: [director-014] The visual check rejects invalid style
 ```
 
 ## m046
@@ -650,7 +649,7 @@ New:
 ['style']
 Selected test: [director-014] The visual check rejects invalid mapStack
 Result: KILLED
-Test: [director-014] The visual check rejects invalid mapStack
+Failed test prefix: [director-014] The visual check rejects invalid mapStack
 ```
 
 ## m047
@@ -664,7 +663,7 @@ New:
 <empty>
 Selected test: [director-014] The visual check rejects invalid style parameters
 Result: KILLED
-Test: [director-014] The visual check rejects invalid style parameters
+Failed test prefix: [director-014] The visual check rejects invalid style parameters
 ```
 
 ## m048
@@ -678,7 +677,7 @@ New:
     bloom: { enabledREMOVED: 'boolean', intensity: [-100, 10000], version: [1, 100] }
 Selected test: [director-015] The visual bloom accepts its enabled field
 Result: KILLED
-Test: [director-015] The visual bloom accepts its enabled field
+Failed test prefix: [director-015] The visual bloom accepts its enabled field
 ```
 
 ## m049
@@ -692,7 +691,7 @@ New:
     bloom: { enabled: 'boolean', intensityREMOVED: [-100, 10000], version: [1, 100] }
 Selected test: [director-015] The visual bloom accepts its intensity field
 Result: KILLED
-Test: [director-015] The visual bloom accepts its intensity field
+Failed test prefix: [director-015] The visual bloom accepts its intensity field
 ```
 
 ## m050
@@ -706,7 +705,7 @@ New:
     bloom: { enabled: 'boolean', intensity: [-100, 10000], versionREMOVED: [1, 100] }
 Selected test: [director-015] The visual bloom accepts its version field
 Result: KILLED
-Test: [director-015] The visual bloom accepts its version field
+Failed test prefix: [director-015] The visual bloom accepts its version field
 ```
 
 ## m051
@@ -720,7 +719,7 @@ New:
     sharpen: { enabledREMOVED: 'boolean', intensity: [0, 100] }
 Selected test: [director-015] The visual sharpen accepts its enabled field
 Result: KILLED
-Test: [director-015] The visual sharpen accepts its enabled field
+Failed test prefix: [director-015] The visual sharpen accepts its enabled field
 ```
 
 ## m052
@@ -734,7 +733,7 @@ New:
     sharpen: { enabled: 'boolean', intensityREMOVED: [0, 100] }
 Selected test: [director-015] The visual sharpen accepts its intensity field
 Result: KILLED
-Test: [director-015] The visual sharpen accepts its intensity field
+Failed test prefix: [director-015] The visual sharpen accepts its intensity field
 ```
 
 ## m053
@@ -748,7 +747,7 @@ New:
     hud: { visibleREMOVED: 'boolean', variant: 'string' }
 Selected test: [director-015] The visual hud accepts its visible field
 Result: KILLED
-Test: [director-015] The visual hud accepts its visible field
+Failed test prefix: [director-015] The visual hud accepts its visible field
 ```
 
 ## m054
@@ -762,7 +761,7 @@ New:
     hud: { visible: 'boolean', variantREMOVED: 'string' }
 Selected test: [director-015] The visual hud accepts its variant field
 Result: KILLED
-Test: [director-015] The visual hud accepts its variant field
+Failed test prefix: [director-015] The visual hud accepts its variant field
 ```
 
 ## m055
@@ -788,7 +787,7 @@ New:
     }
 Selected test: [director-015] The visual detection accepts its mode field
 Result: KILLED
-Test: [director-015] The visual detection accepts its mode field
+Failed test prefix: [director-015] The visual detection accepts its mode field
 ```
 
 ## m056
@@ -814,7 +813,7 @@ New:
     }
 Selected test: [director-015] The visual detection accepts its density field
 Result: KILLED
-Test: [director-015] The visual detection accepts its density field
+Failed test prefix: [director-015] The visual detection accepts its density field
 ```
 
 ## m057
@@ -840,7 +839,7 @@ New:
     }
 Selected test: [director-015] The visual detection accepts its allocation field
 Result: KILLED
-Test: [director-015] The visual detection accepts its allocation field
+Failed test prefix: [director-015] The visual detection accepts its allocation field
 ```
 
 ## m058
@@ -866,7 +865,7 @@ New:
     }
 Selected test: [director-015] The visual detection accepts its fadePct field
 Result: KILLED
-Test: [director-015] The visual detection accepts its fadePct field
+Failed test prefix: [director-015] The visual detection accepts its fadePct field
 ```
 
 ## m059
@@ -892,7 +891,7 @@ New:
     }
 Selected test: [director-015] The visual detection accepts its outsideOpacityPct field
 Result: KILLED
-Test: [director-015] The visual detection accepts its outsideOpacityPct field
+Failed test prefix: [director-015] The visual detection accepts its outsideOpacityPct field
 ```
 
 ## m060
@@ -906,7 +905,7 @@ New:
     scope: { enabledREMOVED: 'boolean', featherPct: [0, 100] }
 Selected test: [director-015] The visual scope accepts its enabled field
 Result: KILLED
-Test: [director-015] The visual scope accepts its enabled field
+Failed test prefix: [director-015] The visual scope accepts its enabled field
 ```
 
 ## m061
@@ -920,7 +919,7 @@ New:
     scope: { enabled: 'boolean', featherPctREMOVED: [0, 100] }
 Selected test: [director-015] The visual scope accepts its featherPct field
 Result: KILLED
-Test: [director-015] The visual scope accepts its featherPct field
+Failed test prefix: [director-015] The visual scope accepts its featherPct field
 ```
 
 ## m062
@@ -934,7 +933,7 @@ New:
 ['updatedAt']
 Selected test: [director-016] The document checks its createdAt field
 Result: KILLED
-Test: [director-016] The document checks its createdAt field
+Failed test prefix: [director-016] The document checks its createdAt field
 ```
 
 ## m063
@@ -948,7 +947,7 @@ New:
 ['createdAt']
 Selected test: [director-016] The document checks its updatedAt field
 Result: KILLED
-Test: [director-016] The document checks its updatedAt field
+Failed test prefix: [director-016] The document checks its updatedAt field
 ```
 
 ## m064
@@ -962,7 +961,7 @@ New:
 <empty>
 Selected test: [director-016] The document checks installed scene IDs
 Result: KILLED
-Test: [director-016] The document checks installed scene IDs
+Failed test prefix: [director-016] The document checks installed scene IDs
 ```
 
 ## m065
@@ -978,7 +977,7 @@ New:
 <empty>
 Selected test: [director-017] The shot checks its durationSec field
 Result: KILLED
-Test: [director-017] The shot checks its durationSec field
+Failed test prefix: [director-017] The shot checks its durationSec field
 ```
 
 ## m066
@@ -992,7 +991,7 @@ New:
 <empty>
 Selected test: [director-017] The shot checks its holdSec field
 Result: KILLED
-Test: [director-017] The shot checks its holdSec field
+Failed test prefix: [director-017] The shot checks its holdSec field
 ```
 
 ## m067
@@ -1008,7 +1007,7 @@ New:
 <empty>
 Selected test: [director-016] The shot checks its sourcePackVersion field
 Result: KILLED
-Test: [director-016] The shot checks its sourcePackVersion field
+Failed test prefix: [director-016] The shot checks its sourcePackVersion field
 ```
 
 ## m068
@@ -1019,10 +1018,10 @@ File: `src/director/document.js`.
 Old:
 string(id, `${p}.${title}`);
 New:
-<empty>
+;
 Selected test: [director-016] The pack bindings check every value
 Result: KILLED
-Test: src/director/document.test.mjs
+Failed test prefix: [director-016] The pack bindings check every value
 ```
 
 ## m069
@@ -1038,7 +1037,7 @@ number(v, p, 1, 1000000, true),
         );
 Selected test: [director-016] The pack versions accept legacy text only
 Result: KILLED
-Test: [director-016] The pack versions accept legacy text only
+Failed test prefix: [director-016] The pack versions accept legacy text only
 ```
 
 ## m070
@@ -1052,7 +1051,7 @@ New:
 <empty>
 Selected test: [director-016] The scene checks its title field
 Result: KILLED
-Test: [director-016] The scene checks its title field
+Failed test prefix: [director-016] The scene checks its title field
 ```
 
 ## m071
@@ -1066,7 +1065,7 @@ New:
 <empty>
 Selected test: [director-016] The scene checks its releaseLayerIds field
 Result: KILLED
-Test: [director-016] The scene checks its releaseLayerIds field
+Failed test prefix: [director-016] The scene checks its releaseLayerIds field
 ```
 
 ## m072
@@ -1080,7 +1079,7 @@ New:
 <empty>
 Selected test: [director-016] The shot checks its title field
 Result: KILLED
-Test: [director-016] The shot checks its title field
+Failed test prefix: [director-016] The shot checks its title field
 ```
 
 ## m073
@@ -1094,7 +1093,7 @@ New:
 <empty>
 Selected test: [director-016] The shot checks its sourcePackId field
 Result: KILLED
-Test: [director-016] The shot checks its sourcePackId field
+Failed test prefix: [director-016] The shot checks its sourcePackId field
 ```
 
 ## m074
@@ -1108,7 +1107,7 @@ New:
 false
 Selected test: [director-018] The layer entry needs a boolean state
 Result: KILLED
-Test: [director-018] The layer entry needs a boolean state
+Failed test prefix: [director-018] The layer entry needs a boolean state
 ```
 
 ## m075
@@ -1122,7 +1121,7 @@ New:
 <empty>
 Selected test: [director-018] The layer parameters need an object
 Result: KILLED
-Test: [director-018] The layer parameters need an object
+Failed test prefix: [director-018] The layer parameters need an object
 ```
 
 ## m076
@@ -1136,7 +1135,7 @@ New:
 false
 Selected test: [director-018] The shot total spans scene boundaries
 Result: KILLED
-Test: [director-018] The shot total spans scene boundaries
+Failed test prefix: [director-018] The shot total spans scene boundaries
 ```
 
 ## m077
@@ -1150,7 +1149,7 @@ New:
 true ? ['anchors'] : []
 Selected test: [director-004] The version rejects an early anchors field
 Result: KILLED
-Test: [director-004] The version rejects an early anchors field
+Failed test prefix: [director-004] The version rejects an early anchors field
 ```
 
 ## m078
@@ -1164,7 +1163,7 @@ New:
 true ? ['dataPacks'] : []
 Selected test: [director-004] The version rejects an early dataPacks field
 Result: KILLED
-Test: [director-004] The version rejects an early dataPacks field
+Failed test prefix: [director-004] The version rejects an early dataPacks field
 ```
 
 ## m079
@@ -1178,7 +1177,7 @@ New:
 true ? ['move'] : []
 Selected test: [director-004] The version rejects an early move field
 Result: KILLED
-Test: [director-004] The version rejects an early move field
+Failed test prefix: [director-004] The version rejects an early move field
 ```
 
 ## m080
@@ -1192,7 +1191,7 @@ New:
 true ? ['dataPackIds'] : []
 Selected test: [director-004] The version rejects an early dataPackIds field
 Result: KILLED
-Test: [director-004] The version rejects an early dataPackIds field
+Failed test prefix: [director-004] The version rejects an early dataPackIds field
 ```
 
 ## m081
@@ -1206,7 +1205,7 @@ New:
 true ? ['interactions'] : []
 Selected test: [director-004] The version rejects an early interactions field
 Result: KILLED
-Test: [director-004] The version rejects an early interactions field
+Failed test prefix: [director-004] The version rejects an early interactions field
 ```
 
 ## m082
@@ -1220,7 +1219,7 @@ New:
 if (key !== 'anchors' && Object.hasOwn(sceneDetails, key)) scene[key] = sceneDetails[key];
 Selected test: [director-019] The edit sets the anchors field
 Result: KILLED
-Test: [director-019] The edit sets the anchors field
+Failed test prefix: [director-019] The edit sets the anchors field
 ```
 
 ## m083
@@ -1234,7 +1233,7 @@ New:
 if(key !== 'anchors') delete scene[key];
 Selected test: [director-021] The edit removes an absent anchors field
 Result: KILLED
-Test: [director-021] The edit removes an absent anchors field
+Failed test prefix: [director-021] The edit removes an absent anchors field
 ```
 
 ## m084
@@ -1248,7 +1247,7 @@ New:
 if (key !== 'dataPacks' && Object.hasOwn(sceneDetails, key)) scene[key] = sceneDetails[key];
 Selected test: [director-019] The edit sets the dataPacks field
 Result: KILLED
-Test: [director-019] The edit sets the dataPacks field
+Failed test prefix: [director-019] The edit sets the dataPacks field
 ```
 
 ## m085
@@ -1262,7 +1261,7 @@ New:
 if(key !== 'dataPacks') delete scene[key];
 Selected test: [director-021] The edit removes an absent dataPacks field
 Result: KILLED
-Test: [director-021] The edit removes an absent dataPacks field
+Failed test prefix: [director-021] The edit removes an absent dataPacks field
 ```
 
 ## m086
@@ -1276,7 +1275,7 @@ New:
 if (key !== 'camera' && Object.hasOwn(shotDetails, key)) shot[key] = shotDetails[key];
 Selected test: [director-019] The edit sets the camera field
 Result: KILLED
-Test: [director-019] The edit sets the camera field
+Failed test prefix: [director-019] The edit sets the camera field
 ```
 
 ## m087
@@ -1290,7 +1289,7 @@ New:
 if(key !== 'camera') delete shot[key];
 Selected test: [director-021] The edit removes an absent camera field
 Result: KILLED
-Test: [director-021] The edit removes an absent camera field
+Failed test prefix: [director-021] The edit removes an absent camera field
 ```
 
 ## m088
@@ -1304,7 +1303,7 @@ New:
 if (key !== 'move' && Object.hasOwn(shotDetails, key)) shot[key] = shotDetails[key];
 Selected test: [director-019] The edit sets the move field
 Result: KILLED
-Test: [director-019] The edit sets the move field
+Failed test prefix: [director-019] The edit sets the move field
 ```
 
 ## m089
@@ -1318,7 +1317,7 @@ New:
 if(key !== 'move') delete shot[key];
 Selected test: [director-021] The edit removes an absent move field
 Result: KILLED
-Test: [director-021] The edit removes an absent move field
+Failed test prefix: [director-021] The edit removes an absent move field
 ```
 
 ## m090
@@ -1332,7 +1331,7 @@ New:
 if (key !== 'durationSec' && Object.hasOwn(shotDetails, key)) shot[key] = shotDetails[key];
 Selected test: [director-019] The edit sets the durationSec field
 Result: KILLED
-Test: [director-019] The edit sets the durationSec field
+Failed test prefix: [director-019] The edit sets the durationSec field
 ```
 
 ## m091
@@ -1346,7 +1345,7 @@ New:
 if(key !== 'durationSec') delete shot[key];
 Selected test: [director-021] The edit removes an absent durationSec field
 Result: KILLED
-Test: [director-021] The edit removes an absent durationSec field
+Failed test prefix: [director-021] The edit removes an absent durationSec field
 ```
 
 ## m092
@@ -1360,7 +1359,7 @@ New:
 if (key !== 'holdSec' && Object.hasOwn(shotDetails, key)) shot[key] = shotDetails[key];
 Selected test: [director-019] The edit sets the holdSec field
 Result: KILLED
-Test: [director-019] The edit sets the holdSec field
+Failed test prefix: [director-019] The edit sets the holdSec field
 ```
 
 ## m093
@@ -1374,7 +1373,7 @@ New:
 if(key !== 'holdSec') delete shot[key];
 Selected test: [director-021] The edit removes an absent holdSec field
 Result: KILLED
-Test: [director-021] The edit removes an absent holdSec field
+Failed test prefix: [director-021] The edit removes an absent holdSec field
 ```
 
 ## m094
@@ -1388,7 +1387,7 @@ New:
 if (key !== 'dataPackIds' && Object.hasOwn(shotDetails, key)) shot[key] = shotDetails[key];
 Selected test: [director-019] The edit sets the dataPackIds field
 Result: KILLED
-Test: [director-019] The edit sets the dataPackIds field
+Failed test prefix: [director-019] The edit sets the dataPackIds field
 ```
 
 ## m095
@@ -1402,7 +1401,7 @@ New:
 if(key !== 'dataPackIds') delete shot[key];
 Selected test: [director-021] The edit removes an absent dataPackIds field
 Result: KILLED
-Test: [director-021] The edit removes an absent dataPackIds field
+Failed test prefix: [director-021] The edit removes an absent dataPackIds field
 ```
 
 ## m096
@@ -1416,7 +1415,7 @@ New:
 if (key !== 'interactions' && Object.hasOwn(shotDetails, key)) shot[key] = shotDetails[key];
 Selected test: [director-019] The edit sets the interactions field
 Result: KILLED
-Test: [director-019] The edit sets the interactions field
+Failed test prefix: [director-019] The edit sets the interactions field
 ```
 
 ## m097
@@ -1430,7 +1429,7 @@ New:
 if(key !== 'interactions') delete shot[key];
 Selected test: [director-021] The edit removes an absent interactions field
 Result: KILLED
-Test: [director-021] The edit removes an absent interactions field
+Failed test prefix: [director-021] The edit removes an absent interactions field
 ```
 
 ## m098
@@ -1444,7 +1443,7 @@ New:
 false ||
 Selected test: [director-020] The edit rejects an absent scene
 Result: SURVIVED
-Test: \[director\-020\]\ The\ edit\ rejects\ an\ absent\ scene
+Failed test prefix: <none>
 ```
 
 ## m099
@@ -1458,7 +1457,7 @@ New:
 || false
 Selected test: [director-020] The edit rejects an absent shot
 Result: KILLED
-Test: [director-020] The edit rejects an absent shot
+Failed test prefix: [director-020] The edit rejects an absent shot
 ```
 
 ## m100
@@ -1472,7 +1471,7 @@ New:
 false
 Selected test: [director-020] The edit rejects unsupported scene details
 Result: KILLED
-Test: [director-020] The edit rejects unsupported scene details
+Failed test prefix: [director-020] The edit rejects unsupported scene details
 ```
 
 ## m101
@@ -1486,7 +1485,7 @@ New:
 <empty>
 Selected test: [director-020] The edit rejects unsupported shot details
 Result: KILLED
-Test: [director-020] The edit rejects unsupported shot details
+Failed test prefix: [director-020] The edit rejects unsupported shot details
 ```
 
 ## m102
@@ -1500,7 +1499,7 @@ New:
 scenes: copy.scenes
 Selected test: [director-022] The selection keeps only its scene
 Result: KILLED
-Test: [director-022] The selection keeps only its scene
+Failed test prefix: [director-022] The selection keeps only its scene
 ```
 
 ## m103
@@ -1514,7 +1513,7 @@ New:
 <empty>
 Selected test: [director-022] The selection rejects an absent scene
 Result: KILLED
-Test: [director-022] The selection rejects an absent scene
+Failed test prefix: [director-022] The selection rejects an absent scene
 ```
 
 ## m104
@@ -1528,7 +1527,7 @@ New:
 0 : 0
 Selected test: [director-031] The shot boundaries use cumulative durations
 Result: KILLED
-Test: [director-031] The shot boundaries use cumulative durations
+Failed test prefix: [director-031] The shot boundaries use cumulative durations
 ```
 
 ## m105
@@ -1542,7 +1541,7 @@ New:
 durationForShot(scene, item))
 Selected test: [director-032] The absent scene gives empty time
 Result: KILLED
-Test: [director-032] The absent scene gives empty time
+Failed test prefix: [director-032] The absent scene gives empty time
 ```
 
 ## m106
@@ -1556,7 +1555,7 @@ New:
 shot?.id)
 Selected test: [director-032] The absent shot index gives empty time
 Result: KILLED
-Test: [director-032] The absent shot index gives empty time
+Failed test prefix: [director-032] The absent shot index gives empty time
 ```
 
 ## m107
@@ -1570,7 +1569,7 @@ New:
 startProgress: startElapsedSec / totalSec
 Selected test: [director-032] The zero duration gives finite progress
 Result: KILLED
-Test: [director-032] The zero duration gives finite progress
+Failed test prefix: [director-032] The zero duration gives finite progress
 ```
 
 ## m108
@@ -1584,7 +1583,7 @@ New:
 endProgress: endElapsedSec / totalSec
 Selected test: [director-032] The zero total bounds endProgress
 Result: KILLED
-Test: [director-032] The zero total bounds endProgress
+Failed test prefix: [director-032] The zero total bounds endProgress
 ```
 
 ## m109
@@ -1598,7 +1597,7 @@ New:
 durationProgress: durationSec / totalSec
 Selected test: [director-032] The zero total bounds durationProgress
 Result: KILLED
-Test: [director-032] The zero total bounds durationProgress
+Failed test prefix: [director-032] The zero total bounds durationProgress
 ```
 
 ## m110
@@ -1612,7 +1611,7 @@ New:
 const target = toCamera;
 Selected test: [director-033] The camera uses its sole source
 Result: KILLED
-Test: [director-033] The camera uses its sole source
+Failed test prefix: [director-033] The camera uses its sole source
 ```
 
 ## m111
@@ -1626,7 +1625,7 @@ New:
 const source = fromCamera;
 Selected test: [director-033] The camera uses its sole target
 Result: KILLED
-Test: [director-033] The camera uses its sole target
+Failed test prefix: [director-033] The camera uses its sole target
 ```
 
 ## m112
@@ -1640,7 +1639,7 @@ New:
 return target || source
 Selected test: [director-033] The camera returns null without endpoints
 Result: KILLED
-Test: [director-033] The camera returns null without endpoints
+Failed test prefix: [director-033] The camera returns null without endpoints
 ```
 
 ## m113
@@ -1654,7 +1653,7 @@ New:
 const t = clamp01(Number(progress));
 Selected test: [director-033] The camera bounds numeric progress
 Result: KILLED
-Test: [director-033] The camera bounds numeric progress
+Failed test prefix: [director-033] The camera bounds numeric progress
 ```
 
 ## m114
@@ -1668,7 +1667,7 @@ New:
 true ?
 Selected test: [director-033] The camera uses both cubic halves
 Result: KILLED
-Test: [director-033] The camera uses both cubic halves
+Failed test prefix: [director-033] The camera uses both cubic halves
 ```
 
 ## m115
@@ -1682,7 +1681,7 @@ New:
 const start = Number(from);
 Selected test: [director-033] The camera gives a zero start angle for invalid text
 Result: KILLED
-Test: [director-033] The camera gives a zero start angle for invalid text
+Failed test prefix: [director-033] The camera gives a zero start angle for invalid text
 ```
 
 ## m116
@@ -1696,7 +1695,7 @@ New:
 false ||
 Selected test: [director-034] The seek uses only the first time boundary
 Result: KILLED
-Test: [director-034] The seek uses only the first time boundary
+Failed test prefix: [director-034] The seek uses only the first time boundary
 ```
 
 ## m117
@@ -1710,7 +1709,7 @@ New:
 false
 Selected test: [director-034] The seek chooses the final shot at the end
 Result: KILLED
-Test: [director-034] The seek chooses the final shot at the end
+Failed test prefix: [director-034] The seek chooses the final shot at the end
 ```
 
 ## m118
@@ -1724,7 +1723,7 @@ New:
 shot.durationSec
 Selected test: [director-034] The seek defaults an absent flight time
 Result: KILLED
-Test: [director-034] The seek defaults an absent flight time
+Failed test prefix: [director-034] The seek defaults an absent flight time
 ```
 
 ## m119
@@ -1738,7 +1737,7 @@ New:
 DEFAULT_SHOT_DURATION_SEC
 Selected test: [director-034] The seek uses authored flight time
 Result: KILLED
-Test: [director-034] The seek uses authored flight time
+Failed test prefix: [director-034] The seek uses authored flight time
 ```
 
 ## m120
@@ -1752,7 +1751,7 @@ New:
 <empty>
 Selected test: [director-032] The seek gives null without shots
 Result: KILLED
-Test: [director-032] The seek gives null without shots
+Failed test prefix: [director-032] The seek gives null without shots
 ```
 
 ## m121
@@ -1766,7 +1765,7 @@ New:
 sceneProgress: targetSec / totalSec
 Selected test: [director-032] The seek bounds zero scene time
 Result: KILLED
-Test: [director-032] The seek bounds zero scene time
+Failed test prefix: [director-032] The seek bounds zero scene time
 ```
 
 ## m122
@@ -1780,7 +1779,7 @@ New:
 const normalized = clamp01(Number(progress));
 Selected test: [director-034] The seek converts invalid progress to zero
 Result: KILLED
-Test: [director-034] The seek converts invalid progress to zero
+Failed test prefix: [director-034] The seek converts invalid progress to zero
 ```
 
 ## m123
@@ -1794,7 +1793,7 @@ New:
 clamp01(holdElapsedSec / holdDurationSec)
 Selected test: [director-034] The seek bounds the hold fraction
 Result: KILLED
-Test: [director-034] The seek bounds the hold fraction
+Failed test prefix: [director-034] The seek bounds the hold fraction
 ```
 
 ## m124
@@ -1808,7 +1807,7 @@ New:
 shot.camera
 Selected test: [director-035] The seek uses the previous ordinary camera
 Result: KILLED
-Test: [director-035] The seek uses the previous ordinary camera
+Failed test prefix: [director-035] The seek uses the previous ordinary camera
 ```
 
 ## m125
@@ -1822,7 +1821,7 @@ New:
 scene.shots[shotIndex - 1]?.camera
 Selected test: [director-035] The seek uses the first ordinary camera
 Result: KILLED
-Test: [director-035] The seek uses the first ordinary camera
+Failed test prefix: [director-035] The seek uses the first ordinary camera
 ```
 
 ## m126
@@ -1838,7 +1837,7 @@ false
       ? sampleCameraMove(move, cameraProgress)
 Selected test: [director-035] The seek samples a move that the shot gives
 Result: KILLED
-Test: [director-035] The seek samples a move that the shot gives
+Failed test prefix: [director-035] The seek samples a move that the shot gives
 ```
 
 ## m127
@@ -1852,7 +1851,7 @@ New:
 Number(sceneElapsedSec)
 Selected test: [director-023] The clock bounds and copies its snapshot
 Result: KILLED
-Test: [director-023] The clock bounds and copies its snapshot
+Failed test prefix: [director-023] The clock bounds and copies its snapshot
 ```
 
 ## m128
@@ -1866,7 +1865,7 @@ New:
 elapsedSec / timing.totalSec
 Selected test: [director-023] The clock uses zero progress for zero total
 Result: KILLED
-Test: [director-023] The clock uses zero progress for zero total
+Failed test prefix: [director-023] The clock uses zero progress for zero total
 ```
 
 ## m129
@@ -1880,7 +1879,7 @@ New:
 this._destroyed || false || !shot
 Selected test: [director-023] The clock rejects an absent scene
 Result: KILLED
-Test: [director-023] The clock rejects an absent scene
+Failed test prefix: [director-023] The clock rejects an absent scene
 ```
 
 ## m130
@@ -1894,7 +1893,7 @@ New:
 this._destroyed || !scene || false
 Selected test: [director-023] The clock rejects an absent shot
 Result: KILLED
-Test: [director-023] The clock rejects an absent shot
+Failed test prefix: [director-023] The clock rejects an absent shot
 ```
 
 ## m131
@@ -1908,7 +1907,7 @@ New:
 <empty>
 Selected test: [director-023] The clock warns when a subscriber fails
 Result: KILLED
-Test: [director-023] The clock warns when a subscriber fails
+Failed test prefix: [director-023] The clock warns when a subscriber fails
 ```
 
 ## m132
@@ -1922,7 +1921,7 @@ New:
 return () => {};
 Selected test: [director-026] The subscription gives current copied state
 Result: KILLED
-Test: [director-026] The subscription gives current copied state
+Failed test prefix: [director-026] The subscription gives current copied state
 ```
 
 ## m133
@@ -1936,7 +1935,7 @@ New:
 false
 Selected test: [director-026] The subscription rejects a nonfunction
 Result: KILLED
-Test: [director-026] The subscription rejects a nonfunction
+Failed test prefix: [director-026] The subscription rejects a nonfunction
 ```
 
 ## m134
@@ -1950,7 +1949,7 @@ New:
 false ||
 Selected test: [director-024] The stop tolerates subscriber errors
 Result: KILLED
-Test: [director-024] The stop tolerates subscriber errors
+Failed test prefix: [director-024] The stop tolerates subscriber errors
 ```
 
 ## m135
@@ -1964,7 +1963,7 @@ New:
 false ||
 Selected test: [director-024] The stop works before the first snapshot
 Result: KILLED
-Test: [director-024] The stop works before the first snapshot
+Failed test prefix: [director-024] The stop works before the first snapshot
 ```
 
 ## m136
@@ -1978,7 +1977,7 @@ New:
 totalSec * 1000
 Selected test: [director-027] The playback progress uses a one second minimum
 Result: KILLED
-Test: [director-027] The playback progress uses a one second minimum
+Failed test prefix: [director-027] The playback progress uses a one second minimum
 ```
 
 ## m137
@@ -1992,7 +1991,7 @@ New:
 this._destroyed || this._progressTimer !== timer
 Selected test: [director-027] The playback tick rejects stopped state
 Result: KILLED
-Test: [director-027] The playback tick rejects stopped state
+Failed test prefix: [director-027] The playback tick rejects stopped state
 ```
 
 ## m138
@@ -2006,7 +2005,7 @@ New:
 this._destroyed || !this.isRunning()
 Selected test: [director-027] The playback tick rejects replaced state
 Result: KILLED
-Test: [director-027] The playback tick rejects replaced state
+Failed test prefix: [director-027] The playback tick rejects replaced state
 ```
 
 ## m139
@@ -2020,7 +2019,7 @@ New:
 this._progressTimer !== timer || !this.isRunning()
 Selected test: [director-027] The playback tick rejects destroyed state
 Result: KILLED
-Test: [director-027] The playback tick rejects destroyed state
+Failed test prefix: [director-027] The playback tick rejects destroyed state
 ```
 
 ## m140
@@ -2052,7 +2051,7 @@ to, sceneClock = null) {
     )
 Selected test: [director-029] The shot guard 1 rejects destroyed
 Result: KILLED
-Test: [director-029] The shot guard 1 rejects destroyed
+Failed test prefix: [director-029] The shot guard 1 rejects destroyed
 ```
 
 ## m141
@@ -2084,7 +2083,7 @@ to, sceneClock = null) {
     )
 Selected test: [director-029] The shot guard 1 rejects flag
 Result: KILLED
-Test: [director-029] The shot guard 1 rejects flag
+Failed test prefix: [director-029] The shot guard 1 rejects flag
 ```
 
 ## m142
@@ -2116,7 +2115,7 @@ to, sceneClock = null) {
     )
 Selected test: [director-029] The shot guard 1 rejects signal
 Result: KILLED
-Test: [director-029] The shot guard 1 rejects signal
+Failed test prefix: [director-029] The shot guard 1 rejects signal
 ```
 
 ## m143
@@ -2148,7 +2147,7 @@ to, sceneClock = null) {
     )
 Selected test: [director-029] The shot guard 1 rejects playback
 Result: KILLED
-Test: [director-029] The shot guard 1 rejects playback
+Failed test prefix: [director-029] The shot guard 1 rejects playback
 ```
 
 ## m144
@@ -2184,7 +2183,7 @@ lock.shot,
     )
 Selected test: [director-029] The shot guard 2 rejects generation
 Result: KILLED
-Test: [director-029] The shot guard 2 rejects generation
+Failed test prefix: [director-029] The shot guard 2 rejects generation
 ```
 
 ## m145
@@ -2220,7 +2219,7 @@ lock.shot,
     )
 Selected test: [director-029] The shot guard 2 rejects destroyed
 Result: KILLED
-Test: [director-029] The shot guard 2 rejects destroyed
+Failed test prefix: [director-029] The shot guard 2 rejects destroyed
 ```
 
 ## m146
@@ -2256,7 +2255,7 @@ lock.shot,
     )
 Selected test: [director-029] The shot guard 2 rejects flag
 Result: KILLED
-Test: [director-029] The shot guard 2 rejects flag
+Failed test prefix: [director-029] The shot guard 2 rejects flag
 ```
 
 ## m147
@@ -2292,7 +2291,7 @@ lock.shot,
     )
 Selected test: [director-029] The shot guard 2 rejects signal
 Result: KILLED
-Test: [director-029] The shot guard 2 rejects signal
+Failed test prefix: [director-029] The shot guard 2 rejects signal
 ```
 
 ## m148
@@ -2328,7 +2327,7 @@ lock.shot,
     )
 Selected test: [director-029] The shot guard 2 rejects playback
 Result: KILLED
-Test: [director-029] The shot guard 2 rejects playback
+Failed test prefix: [director-029] The shot guard 2 rejects playback
 ```
 
 ## m149
@@ -2354,7 +2353,7 @@ if (
       )
 Selected test: [director-029] The shot guard 3 rejects generation
 Result: KILLED
-Test: [director-029] The shot guard 3 rejects generation
+Failed test prefix: [director-029] The shot guard 3 rejects generation
 ```
 
 ## m150
@@ -2380,7 +2379,7 @@ if (
       )
 Selected test: [director-029] The shot guard 3 rejects destroyed
 Result: KILLED
-Test: [director-029] The shot guard 3 rejects destroyed
+Failed test prefix: [director-029] The shot guard 3 rejects destroyed
 ```
 
 ## m151
@@ -2406,7 +2405,7 @@ if (
       )
 Selected test: [director-029] The shot guard 3 rejects flag
 Result: KILLED
-Test: [director-029] The shot guard 3 rejects flag
+Failed test prefix: [director-029] The shot guard 3 rejects flag
 ```
 
 ## m152
@@ -2432,7 +2431,7 @@ if (
       )
 Selected test: [director-029] The shot guard 3 rejects signal
 Result: KILLED
-Test: [director-029] The shot guard 3 rejects signal
+Failed test prefix: [director-029] The shot guard 3 rejects signal
 ```
 
 ## m153
@@ -2458,7 +2457,7 @@ if (
       )
 Selected test: [director-029] The shot guard 3 rejects playback
 Result: KILLED
-Test: [director-029] The shot guard 3 rejects playback
+Failed test prefix: [director-029] The shot guard 3 rejects playback
 ```
 
 ## m154
@@ -2482,7 +2481,7 @@ nal?.aborted ||
     if (false || this._destroyed) return;
 Selected test: [director-029] The shot progress guard 1 rejects generation
 Result: KILLED
-Test: [director-029] The shot progress guard 1 rejects generation
+Failed test prefix: [director-029] The shot progress guard 1 rejects generation
 ```
 
 ## m155
@@ -2506,7 +2505,7 @@ nal?.aborted ||
     if (generation !== this._shotGeneration || false) return;
 Selected test: [director-029] The shot progress guard 1 rejects destroyed
 Result: KILLED
-Test: [director-029] The shot progress guard 1 rejects destroyed
+Failed test prefix: [director-029] The shot progress guard 1 rejects destroyed
 ```
 
 ## m156
@@ -2530,7 +2529,7 @@ New:
       if (false || this._destroyed) return;
 Selected test: [director-029] The shot progress guard 2 rejects generation
 Result: KILLED
-Test: [director-029] The shot progress guard 2 rejects generation
+Failed test prefix: [director-029] The shot progress guard 2 rejects generation
 ```
 
 ## m157
@@ -2554,7 +2553,7 @@ New:
       if (generation !== this._shotGeneration || false) return;
 Selected test: [director-029] The shot progress guard 2 rejects destroyed
 Result: KILLED
-Test: [director-029] The shot progress guard 2 rejects destroyed
+Failed test prefix: [director-029] The shot progress guard 2 rejects destroyed
 ```
 
 ## m158
@@ -2572,7 +2571,7 @@ artedAt) / (seconds * 1000));
       if (false || this._destroyed) return;
 Selected test: [director-029] The shot progress guard 3 rejects generation
 Result: KILLED
-Test: [director-029] The shot progress guard 3 rejects generation
+Failed test prefix: [director-029] The shot progress guard 3 rejects generation
 ```
 
 ## m159
@@ -2590,7 +2589,7 @@ artedAt) / (seconds * 1000));
       if (generation !== this._shotGeneration || false) return;
 Selected test: [director-029] The shot progress guard 3 rejects destroyed
 Result: KILLED
-Test: [director-029] The shot progress guard 3 rejects destroyed
+Failed test prefix: [director-029] The shot progress guard 3 rejects destroyed
 ```
 
 ## m160
@@ -2604,7 +2603,7 @@ New:
 if (false)
 Selected test: [director-028] The instant shot reports both endpoints
 Result: KILLED
-Test: [director-028] The instant shot reports both endpoints
+Failed test prefix: [director-028] The instant shot reports both endpoints
 ```
 
 ## m161
@@ -2618,7 +2617,7 @@ New:
 <empty>
 Selected test: [director-029] The old shot timer leaves its replacement intact
 Result: KILLED
-Test: [director-029] The old shot timer leaves its replacement intact
+Failed test prefix: [director-029] The old shot timer leaves its replacement intact
 ```
 
 ## m162
@@ -2646,7 +2645,7 @@ st generation = this._sceneGeneration;
     )
 Selected test: [director-030] The scene guard 1 rejects destroyed
 Result: KILLED
-Test: [director-030] The scene guard 1 rejects destroyed
+Failed test prefix: [director-030] The scene guard 1 rejects destroyed
 ```
 
 ## m163
@@ -2674,7 +2673,7 @@ st generation = this._sceneGeneration;
     )
 Selected test: [director-030] The scene guard 1 rejects flag
 Result: KILLED
-Test: [director-030] The scene guard 1 rejects flag
+Failed test prefix: [director-030] The scene guard 1 rejects flag
 ```
 
 ## m164
@@ -2702,7 +2701,7 @@ st generation = this._sceneGeneration;
     )
 Selected test: [director-030] The scene guard 1 rejects signal
 Result: KILLED
-Test: [director-030] The scene guard 1 rejects signal
+Failed test prefix: [director-030] The scene guard 1 rejects signal
 ```
 
 ## m165
@@ -2734,7 +2733,7 @@ ow();
     )
 Selected test: [director-030] The scene guard 2 rejects generation
 Result: KILLED
-Test: [director-030] The scene guard 2 rejects generation
+Failed test prefix: [director-030] The scene guard 2 rejects generation
 ```
 
 ## m166
@@ -2766,7 +2765,7 @@ ow();
     )
 Selected test: [director-030] The scene guard 2 rejects destroyed
 Result: KILLED
-Test: [director-030] The scene guard 2 rejects destroyed
+Failed test prefix: [director-030] The scene guard 2 rejects destroyed
 ```
 
 ## m167
@@ -2798,7 +2797,7 @@ ow();
     )
 Selected test: [director-030] The scene guard 2 rejects flag
 Result: KILLED
-Test: [director-030] The scene guard 2 rejects flag
+Failed test prefix: [director-030] The scene guard 2 rejects flag
 ```
 
 ## m168
@@ -2830,7 +2829,7 @@ ow();
     )
 Selected test: [director-030] The scene guard 2 rejects signal
 Result: KILLED
-Test: [director-030] The scene guard 2 rejects signal
+Failed test prefix: [director-030] The scene guard 2 rejects signal
 ```
 
 ## m169
@@ -2854,7 +2853,7 @@ if (
       )
 Selected test: [director-030] The scene guard 3 rejects destroyed
 Result: KILLED
-Test: [director-030] The scene guard 3 rejects destroyed
+Failed test prefix: [director-030] The scene guard 3 rejects destroyed
 ```
 
 ## m170
@@ -2878,7 +2877,7 @@ if (
       )
 Selected test: [director-030] The scene guard 3 rejects flag
 Result: KILLED
-Test: [director-030] The scene guard 3 rejects flag
+Failed test prefix: [director-030] The scene guard 3 rejects flag
 ```
 
 ## m171
@@ -2902,7 +2901,7 @@ if (
       )
 Selected test: [director-030] The scene guard 3 rejects signal
 Result: KILLED
-Test: [director-030] The scene guard 3 rejects signal
+Failed test prefix: [director-030] The scene guard 3 rejects signal
 ```
 
 ## m172
@@ -2926,7 +2925,7 @@ if (
       )
 Selected test: [director-030] The scene guard 3 rejects playback
 Result: KILLED
-Test: [director-030] The scene guard 3 rejects playback
+Failed test prefix: [director-030] The scene guard 3 rejects playback
 ```
 
 ## m173
@@ -2942,7 +2941,7 @@ Infinity,
         (this.now() - startedAt) / 1000
 Selected test: [director-030] The scene clock bounds shot elapsed time
 Result: KILLED
-Test: [director-030] The scene clock bounds shot elapsed time
+Failed test prefix: [director-030] The scene clock bounds shot elapsed time
 ```
 
 ## m174
@@ -2956,7 +2955,7 @@ New:
 false
 Selected test: [director-025] The hold ends at its deadline
 Result: KILLED
-Test: [director-025] The hold ends at its deadline
+Failed test prefix: [director-025] The hold ends at its deadline
 ```
 
 ## m175
@@ -2970,7 +2969,7 @@ New:
 true
 Selected test: [director-025] The hold rejects flag state
 Result: KILLED
-Test: [director-025] The hold rejects flag state
+Failed test prefix: [director-025] The hold rejects flag state
 ```
 
 ## m176
@@ -2984,7 +2983,7 @@ New:
 true
 Selected test: [director-025] The hold rejects signal state
 Result: KILLED
-Test: [director-025] The hold rejects signal state
+Failed test prefix: [director-025] The hold rejects signal state
 ```
 
 ## m177
@@ -2998,7 +2997,7 @@ New:
 true
 Selected test: [director-025] The hold rejects destroyed state
 Result: KILLED
-Test: [director-025] The hold rejects destroyed state
+Failed test prefix: [director-025] The hold rejects destroyed state
 ```
 
 ## m178
@@ -3012,7 +3011,7 @@ New:
 true
 Selected test: [director-025] The hold generation stops a pending wait
 Result: KILLED
-Test: [director-025] The hold generation stops a pending wait
+Failed test prefix: [director-025] The hold generation stops a pending wait
 ```
 
 ## m179
@@ -3026,7 +3025,7 @@ New:
 setInterval(() => {}, ms)
 Selected test: [director-027] The default timer callbacks report progress
 Result: KILLED
-Test: [director-027] The default timer callbacks report progress
+Failed test prefix: [director-027] The default timer callbacks report progress
 ```
 
 ## m180
@@ -3040,7 +3039,7 @@ New:
 <empty>
 Selected test: [director-037] The playback calls the selectShot phase
 Result: KILLED
-Test: [director-037] The playback calls the selectShot phase
+Failed test prefix: [director-037] The playback calls the selectShot phase
 ```
 
 ## m181
@@ -3054,7 +3053,7 @@ New:
 <empty>
 Selected test: [director-037] The playback calls the applyVisual phase
 Result: KILLED
-Test: [director-037] The playback calls the applyVisual phase
+Failed test prefix: [director-037] The playback calls the applyVisual phase
 ```
 
 ## m182
@@ -3068,7 +3067,7 @@ New:
 <empty>
 Selected test: [director-037] The playback calls the applyLayers phase
 Result: KILLED
-Test: [director-037] The playback calls the applyLayers phase
+Failed test prefix: [director-037] The playback calls the applyLayers phase
 ```
 
 ## m183
@@ -3082,7 +3081,7 @@ New:
 <empty>
 Selected test: [director-037] The playback calls the travel phase
 Result: KILLED
-Test: [director-037] The playback calls the travel phase
+Failed test prefix: [director-037] The playback calls the travel phase
 ```
 
 ## m184
@@ -3096,7 +3095,7 @@ New:
 <empty>
 Selected test: [director-037] The playback calls the settle phase
 Result: KILLED
-Test: [director-037] The playback calls the settle phase
+Failed test prefix: [director-037] The playback calls the settle phase
 ```
 
 ## m185
@@ -3110,7 +3109,7 @@ New:
 <empty>
 Selected test: [director-037] The playback calls the hold phase
 Result: KILLED
-Test: [director-037] The playback calls the hold phase
+Failed test prefix: [director-037] The playback calls the hold phase
 ```
 
 ## m186
@@ -3124,7 +3123,7 @@ New:
 <empty>
 Selected test: [director-037] The playback calls the completeShot phase
 Result: KILLED
-Test: [director-037] The playback calls the completeShot phase
+Failed test prefix: [director-037] The playback calls the completeShot phase
 ```
 
 ## m187
@@ -3138,7 +3137,7 @@ New:
 Boolean(false || token.signal?.aborted)
 Selected test: [director-038] The playback rejects the flag token
 Result: KILLED
-Test: [director-038] The playback rejects the flag token
+Failed test prefix: [director-038] The playback rejects the flag token
 ```
 
 ## m188
@@ -3152,7 +3151,7 @@ New:
 false
 Selected test: [director-038] The playback rejects the signal token
 Result: KILLED
-Test: [director-038] The playback rejects the signal token
+Failed test prefix: [director-038] The playback rejects the signal token
 ```
 
 ## m189
@@ -3166,7 +3165,7 @@ New:
 true
 Selected test: [director-039] The playback keeps the same initial scene
 Result: KILLED
-Test: [director-039] The playback keeps the same initial scene
+Failed test prefix: [director-039] The playback keeps the same initial scene
 ```
 
 ## m190
@@ -3180,7 +3179,7 @@ New:
 adapter.complete()
 Selected test: [director-037] The playback accepts an absent complete callback
 Result: KILLED
-Test: [director-037] The playback accepts an absent complete callback
+Failed test prefix: [director-037] The playback accepts an absent complete callback
 ```
 
 ## m191
@@ -3194,7 +3193,7 @@ New:
 const ordered = false
 Selected test: [director-036] The single scene queue excludes other scenes
 Result: KILLED
-Test: [director-036] The single scene queue excludes other scenes
+Failed test prefix: [director-036] The single scene queue excludes other scenes
 ```
 
 ## m192
@@ -3208,7 +3207,7 @@ New:
 activeScene
 Selected test: [director-039] The final scene stays when cleanup is off
 Result: KILLED
-Test: [director-039] The final scene stays when cleanup is off
+Failed test prefix: [director-039] The final scene stays when cleanup is off
 ```
 
 ## m193
@@ -3222,7 +3221,7 @@ New:
 cancelled()
 Selected test: [director-038] The empty queue leaves all resources untouched
 Result: KILLED
-Test: [director-038] The empty queue leaves all resources untouched
+Failed test prefix: [director-038] The empty queue leaves all resources untouched
 ```
 
 ## m194
@@ -3236,7 +3235,7 @@ New:
 <empty>
 Selected test: [director-018] The layer check validates a second layer ID
 Result: KILLED
-Test: [director-018] The layer check validates a second layer ID
+Failed test prefix: [director-018] The layer check validates a second layer ID
 ```
 
 ## m195
@@ -3250,7 +3249,7 @@ New:
 <empty>
 Selected test: [director-018] The layer check accepts boolean entries
 Result: KILLED
-Test: [director-018] The layer check accepts boolean entries
+Failed test prefix: [director-018] The layer check accepts boolean entries
 ```
 
 ## m196
@@ -3264,7 +3263,7 @@ New:
 JSON.stringify({scenes:[]}, null, 2)
 Selected test: [director-001] The export keeps authored text and time
 Result: KILLED
-Test: [director-001] The export keeps authored text and time
+Failed test prefix: [director-001] The export keeps authored text and time
 ```
 
 ## m197
@@ -3278,7 +3277,7 @@ New:
 return validateSceneDocument({scenes:[{shots:[]}]});
 Selected test: [director-002] The parser keeps an empty scene list
 Result: KILLED
-Test: [director-002] The parser keeps an empty scene list
+Failed test prefix: [director-002] The parser keeps an empty scene list
 ```
 
 ## m198
@@ -3292,7 +3291,7 @@ New:
 Object.hasOwn(project, 'version') ? project.version : 3
 Selected test: [director-003] The absent version allows legacy numeric text
 Result: KILLED
-Test: [director-003] The absent version allows legacy numeric text
+Failed test prefix: [director-003] The absent version allows legacy numeric text
 ```
 
 ## m199
@@ -3306,7 +3305,7 @@ New:
 if (Array.isArray(type)) {}
 Selected test: [director-015] The visual check rejects invalid number type
 Result: KILLED
-Test: [director-015] The visual check rejects invalid number type
+Failed test prefix: [director-015] The visual check rejects invalid number type
 ```
 
 ## m200
@@ -3320,7 +3319,7 @@ New:
 else if (type === 'string') {}
 Selected test: [director-015] The visual check rejects invalid text type
 Result: KILLED
-Test: [director-015] The visual check rejects invalid text type
+Failed test prefix: [director-015] The visual check rejects invalid text type
 ```
 
 ## m201
@@ -3334,7 +3333,7 @@ New:
 <empty>
 Selected test: [director-015] The visual check rejects invalid boolean type
 Result: KILLED
-Test: [director-015] The visual check rejects invalid boolean type
+Failed test prefix: [director-015] The visual check rejects invalid boolean type
 ```
 
 ## m202
@@ -3350,7 +3349,7 @@ this._sceneClockSnapshot.stopped ||
       false
 Selected test: [director-024] The stop rejects a destroyed clock state
 Result: KILLED
-Test: [director-024] The stop rejects a destroyed clock state
+Failed test prefix: [director-024] The stop rejects a destroyed clock state
 ```
 
 ## m203
@@ -3364,7 +3363,7 @@ New:
 if (false || typeof listener !== 'function')
 Selected test: [director-026] The destroyed subscription does not add a listener
 Result: KILLED
-Test: [director-026] The destroyed subscription does not add a listener
+Failed test prefix: [director-026] The destroyed subscription does not add a listener
 ```
 
 ## m204
@@ -3378,7 +3377,7 @@ New:
 if (false || !scene || !shot)
 Selected test: [director-023] The destroyed publication does not make a snapshot
 Result: KILLED
-Test: [director-023] The destroyed publication does not make a snapshot
+Failed test prefix: [director-023] The destroyed publication does not make a snapshot
 ```
 
 ## m205
@@ -3392,7 +3391,7 @@ New:
 this._sceneClockSnapshot ? this._sceneClockSnapshot : null
 Selected test: [director-023] The snapshot access returns a copy
 Result: KILLED
-Test: [director-023] The snapshot access returns a copy
+Failed test prefix: [director-023] The snapshot access returns a copy
 ```
 
 ## m206
@@ -3410,7 +3409,7 @@ for (const listener of [...this._sceneClockListeners].slice(0,1)) {
         listener(this.snapshot);
 Selected test: [director-024] The stop notifies every subscriber
 Result: KILLED
-Test: [director-024] The stop notifies every subscriber
+Failed test prefix: [director-024] The stop notifies every subscriber
 ```
 
 ## m207
@@ -3428,7 +3427,7 @@ for (const listener of [...this._sceneClockListeners].slice(0,1)) {
         listener({ ...this._sceneClockSnapshot });
 Selected test: [director-023] The publication notifies every subscriber
 Result: KILLED
-Test: [director-023] The publication notifies every subscriber
+Failed test prefix: [director-023] The publication notifies every subscriber
 ```
 
 ## m208
@@ -3442,7 +3441,7 @@ New:
 for (const finish of [...this._waiters].slice(0,1)) finish();
 Selected test: [director-025] The clock cancels every pending wait
 Result: KILLED
-Test: [director-025] The clock cancels every pending wait
+Failed test prefix: [director-025] The clock cancels every pending wait
 ```
 
 ## m209
@@ -3458,7 +3457,7 @@ New:
   'applyVisual',
 Selected test: [director-037] The adapter receives the exact phase order
 Result: KILLED
-Test: [director-037] The adapter receives the exact phase order
+Failed test prefix: [director-037] The adapter receives the exact phase order
 ```
 
 ## m210
@@ -3472,7 +3471,7 @@ New:
 false && previousScene.id !== queue[0].scene.id
 Selected test: [director-039] The handoff accepts a previous scene before work
 Result: KILLED
-Test: [director-039] The handoff accepts a previous scene before work
+Failed test prefix: [director-039] The handoff accepts a previous scene before work
 ```
 
 ## m211
@@ -3486,7 +3485,7 @@ New:
 false && activeScene.id !== scene.id
 Selected test: [director-039] The scene change releases the old scene
 Result: KILLED
-Test: [director-039] The scene change releases the old scene
+Failed test prefix: [director-039] The scene change releases the old scene
 ```
 
 ## m212
@@ -3500,7 +3499,7 @@ New:
 activeScene
 Selected test: [director-039] The same scene keeps resources between shots
 Result: KILLED
-Test: [director-039] The same scene keeps resources between shots
+Failed test prefix: [director-039] The same scene keeps resources between shots
 ```
 
 ## m213
@@ -3514,7 +3513,7 @@ New:
 index < queue.length
 Selected test: [director-038] The handoff cancellation prevents the first shot
 Result: KILLED
-Test: [director-038] The handoff cancellation prevents the first shot
+Failed test prefix: [director-038] The handoff cancellation prevents the first shot
 ```
 
 ## m214
@@ -3528,7 +3527,7 @@ New:
 <empty>
 Selected test: [director-040] The phase failure keeps its error after cleanup
 Result: KILLED
-Test: [director-040] The phase failure keeps its error after cleanup
+Failed test prefix: [director-040] The phase failure keeps its error after cleanup
 ```
 
 ## m215
@@ -3542,7 +3541,7 @@ New:
 if (!Object.hasOwn(value, 'id')) fail(path, 'ID absent');
 Selected test: [director-003] The legacy document accepts absent IDs
 Result: KILLED
-Test: [director-003] The legacy document accepts absent IDs
+Failed test prefix: [director-003] The legacy document accepts absent IDs
 ```
 
 ## m216
@@ -3568,7 +3567,7 @@ const timing = this.timingForShot(scene, shot);
     )
 Selected test: [director-030] The scene start rejects a timing callback replacement
 Result: KILLED
-Test: [director-030] The scene start rejects a timing callback replacement
+Failed test prefix: [director-030] The scene start rejects a timing callback replacement
 ```
 
 ## m217
@@ -3596,7 +3595,7 @@ const generation = this._shotGeneration;
     )
 Selected test: [director-029] The shot start rejects a changed counter read
 Result: KILLED
-Test: [director-029] The shot start rejects a changed counter read
+Failed test prefix: [director-029] The shot start rejects a changed counter read
 ```
 
 ## m218
@@ -3610,7 +3609,7 @@ New:
 while (true && this.now() < endAt)
 Selected test: [director-025] The hold condition checks its current state first
 Result: KILLED
-Test: [director-025] The hold condition checks its current state first
+Failed test prefix: [director-025] The hold condition checks its current state first
 ```
 
 ## m219
@@ -3624,7 +3623,7 @@ New:
 if (!target)
 Selected test: [director-033] The camera guard handles a falsy endpoint
 Result: SURVIVED
-Test: \[director\-033\]\ The\ camera\ guard\ handles\ a\ falsy\ endpoint
+Failed test prefix: <none>
 ```
 
 ## m220
@@ -3638,7 +3637,7 @@ New:
     bloom: { enabled: 'boolean', intensity: [-101, 10000], version: [1, 100] }
 Selected test: [director-015] The visual bloom bounds its intensity field
 Result: KILLED
-Test: [director-015] The visual bloom bounds its intensity field
+Failed test prefix: [director-015] The visual bloom bounds its intensity field
 ```
 
 ## m221
@@ -3652,7 +3651,7 @@ New:
     bloom: { enabled: 'boolean', intensity: [-100, 10001], version: [1, 100] }
 Selected test: [director-015] The visual bloom bounds its intensity field
 Result: KILLED
-Test: [director-015] The visual bloom bounds its intensity field
+Failed test prefix: [director-015] The visual bloom bounds its intensity field
 ```
 
 ## m222
@@ -3666,7 +3665,7 @@ New:
     bloom: { enabled: 'boolean', intensity: [-100, 10000], version: [0, 100] }
 Selected test: [director-015] The visual bloom bounds its version field
 Result: KILLED
-Test: [director-015] The visual bloom bounds its version field
+Failed test prefix: [director-015] The visual bloom bounds its version field
 ```
 
 ## m223
@@ -3680,7 +3679,7 @@ New:
     bloom: { enabled: 'boolean', intensity: [-100, 10000], version: [1, 101] }
 Selected test: [director-015] The visual bloom bounds its version field
 Result: KILLED
-Test: [director-015] The visual bloom bounds its version field
+Failed test prefix: [director-015] The visual bloom bounds its version field
 ```
 
 ## m224
@@ -3694,7 +3693,7 @@ New:
     sharpen: { enabled: 'boolean', intensity: [-1, 100] }
 Selected test: [director-015] The visual sharpen bounds its intensity field
 Result: KILLED
-Test: [director-015] The visual sharpen bounds its intensity field
+Failed test prefix: [director-015] The visual sharpen bounds its intensity field
 ```
 
 ## m225
@@ -3708,7 +3707,7 @@ New:
     sharpen: { enabled: 'boolean', intensity: [0, 101] }
 Selected test: [director-015] The visual sharpen bounds its intensity field
 Result: KILLED
-Test: [director-015] The visual sharpen bounds its intensity field
+Failed test prefix: [director-015] The visual sharpen bounds its intensity field
 ```
 
 ## m226
@@ -3734,7 +3733,7 @@ New:
     }
 Selected test: [director-015] The visual detection bounds its density field
 Result: KILLED
-Test: [director-015] The visual detection bounds its density field
+Failed test prefix: [director-015] The visual detection bounds its density field
 ```
 
 ## m227
@@ -3760,7 +3759,7 @@ New:
     }
 Selected test: [director-015] The visual detection bounds its density field
 Result: KILLED
-Test: [director-015] The visual detection bounds its density field
+Failed test prefix: [director-015] The visual detection bounds its density field
 ```
 
 ## m228
@@ -3786,7 +3785,7 @@ New:
     }
 Selected test: [director-015] The visual detection bounds its fadePct field
 Result: KILLED
-Test: [director-015] The visual detection bounds its fadePct field
+Failed test prefix: [director-015] The visual detection bounds its fadePct field
 ```
 
 ## m229
@@ -3812,7 +3811,7 @@ New:
     }
 Selected test: [director-015] The visual detection bounds its fadePct field
 Result: KILLED
-Test: [director-015] The visual detection bounds its fadePct field
+Failed test prefix: [director-015] The visual detection bounds its fadePct field
 ```
 
 ## m230
@@ -3838,7 +3837,7 @@ New:
     }
 Selected test: [director-015] The visual detection bounds its outsideOpacityPct field
 Result: KILLED
-Test: [director-015] The visual detection bounds its outsideOpacityPct field
+Failed test prefix: [director-015] The visual detection bounds its outsideOpacityPct field
 ```
 
 ## m231
@@ -3864,7 +3863,7 @@ New:
     }
 Selected test: [director-015] The visual detection bounds its outsideOpacityPct field
 Result: KILLED
-Test: [director-015] The visual detection bounds its outsideOpacityPct field
+Failed test prefix: [director-015] The visual detection bounds its outsideOpacityPct field
 ```
 
 ## m232
@@ -3878,7 +3877,7 @@ New:
     scope: { enabled: 'boolean', featherPct: [-1, 100] }
 Selected test: [director-015] The visual scope bounds its featherPct field
 Result: KILLED
-Test: [director-015] The visual scope bounds its featherPct field
+Failed test prefix: [director-015] The visual scope bounds its featherPct field
 ```
 
 ## m233
@@ -3892,7 +3891,7 @@ New:
     scope: { enabled: 'boolean', featherPct: [0, 101] }
 Selected test: [director-015] The visual scope bounds its featherPct field
 Result: KILLED
-Test: [director-015] The visual scope bounds its featherPct field
+Failed test prefix: [director-015] The visual scope bounds its featherPct field
 ```
 
 ## m234
@@ -3908,7 +3907,7 @@ New:
     
 Selected test: [director-028] The startShotProgress detaches its timer handle
 Result: KILLED
-Test: [director-028] The startShotProgress detaches its timer handle
+Failed test prefix: [director-028] The startShotProgress detaches its timer handle
 ```
 
 ## m235
@@ -3924,7 +3923,7 @@ New:
     
 Selected test: [director-030] The startScene detaches its timer handle
 Result: KILLED
-Test: [director-030] The startScene detaches its timer handle
+Failed test prefix: [director-030] The startScene detaches its timer handle
 ```
 
 ## m236
@@ -3938,7 +3937,7 @@ New:
 if (!source)
 Selected test: [director-033] The camera guard returns null for falsy endpoints
 Result: SURVIVED
-Test: \[director\-033\]\ The\ camera\ guard\ returns\ null\ for\ falsy\ endpoints
+Failed test prefix: <none>
 ```
 
 ## m237
@@ -3952,7 +3951,7 @@ New:
 return source || null
 Selected test: [director-033] The camera guard returns null for falsy endpoints
 Result: SURVIVED
-Test: \[director\-033\]\ The\ camera\ guard\ returns\ null\ for\ falsy\ endpoints
+Failed test prefix: <none>
 ```
 
 ## m238
@@ -3966,7 +3965,7 @@ New:
 return target || null
 Selected test: [director-033] The camera guard returns null for falsy endpoints
 Result: SURVIVED
-Test: \[director\-033\]\ The\ camera\ guard\ returns\ null\ for\ falsy\ endpoints
+Failed test prefix: <none>
 ```
 
 ## m239
@@ -3980,7 +3979,7 @@ New:
 JSON.stringify({scenes:[]}, null, 2)
 Selected test: [director-001] all built-in authored content exports and normalizes without edit loss
 Result: KILLED
-Test: [director-001] all built-in authored content exports and normalizes without edit loss
+Failed test prefix: [director-001] all built-in authored content exports and normalizes without edit loss
 ```
 
 ## m240
@@ -3994,7 +3993,7 @@ New:
 JSON.stringify({scenes:[]}, null, 2)
 Selected test: [director-003] v1/v2 bloom migrates once; IDs, edits, pack bindings and zero holds survive
 Result: KILLED
-Test: [director-003] v1/v2 bloom migrates once; IDs, edits, pack bindings and zero holds survive
+Failed test prefix: [director-003] v1/v2 bloom migrates once; IDs, edits, pack bindings and zero holds survive
 ```
 
 ## m241
@@ -4008,7 +4007,7 @@ New:
 return validateSceneDocument({scenes:[{shots:[]}]});
 Selected test: [director-002] an intentionally empty project stays empty
 Result: KILLED
-Test: [director-002] an intentionally empty project stays empty
+Failed test prefix: [director-002] an intentionally empty project stays empty
 ```
 
 ## m242
@@ -4022,7 +4021,7 @@ New:
 if (!Object.hasOwn(value, 'id')) fail(path, 'ID absent');
 Selected test: [director-003] missing legacy IDs become stable after the first saved migration
 Result: KILLED
-Test: [director-003] missing legacy IDs become stable after the first saved migration
+Failed test prefix: [director-003] missing legacy IDs become stable after the first saved migration
 ```
 
 ## m243
@@ -4036,7 +4035,7 @@ New:
 false
 Selected test: [director-004] invalid shapes, versions, unknown fields and unsafe keys fail with field paths
 Result: KILLED
-Test: [director-004] invalid shapes, versions, unknown fields and unsafe keys fail with field paths
+Failed test prefix: [director-004] invalid shapes, versions, unknown fields and unsafe keys fail with field paths
 ```
 
 ## m244
@@ -4052,7 +4051,7 @@ New:
 false
 Selected test: [director-013] document byte, nesting, collection, finite-number and string bounds are enforced
 Result: KILLED
-Test: [director-013] document byte, nesting, collection, finite-number and string bounds are enforced
+Failed test prefix: [director-013] document byte, nesting, collection, finite-number and string bounds are enforced
 ```
 
 ## m245
@@ -4066,7 +4065,7 @@ New:
 for (const scene of project.scenes) for (const shot of scene.shots) delete shot.visual; return project;
 Selected test: [director-015] captured scope and extended detection edits survive migration
 Result: KILLED
-Test: [director-015] captured scope and extended detection edits survive migration
+Failed test prefix: [director-015] captured scope and extended detection edits survive migration
 ```
 
 ## m246
@@ -4082,7 +4081,7 @@ New:
   }
 Selected test: [director-024] Stop releases every clock timer and queued callbacks cannot publish later
 Result: KILLED
-Test: [director-024] Stop releases every clock timer and queued callbacks cannot publish later
+Failed test prefix: [director-024] Stop releases every clock timer and queued callbacks cannot publish later
 ```
 
 ## m247
@@ -4096,7 +4095,7 @@ New:
 <empty>
 Selected test: [director-030] replacing a shot clock rejects the old callback without clearing the replacement
 Result: KILLED
-Test: [director-030] replacing a shot clock rejects the old callback without clearing the replacement
+Failed test prefix: [director-030] replacing a shot clock rejects the old callback without clearing the replacement
 ```
 
 ## m248
@@ -4110,7 +4109,7 @@ New:
 this.onProgress(from);
 Selected test: [director-028] direct-load progress finishes once and snapshots cannot mutate the clock
 Result: KILLED
-Test: [director-028] direct-load progress finishes once and snapshots cannot mutate the clock
+Failed test prefix: [director-028] direct-load progress finishes once and snapshots cannot mutate the clock
 ```
 
 ## m249
@@ -4134,7 +4133,7 @@ const timing = this.timingForShot(scene, shot);
       false
 Selected test: [director-030] aborted starts and destruction during initial notification leave no timers or listeners
 Result: KILLED
-Test: [director-030] aborted starts and destruction during initial notification leave no timers or listene
+Failed test prefix: [director-030] aborted starts and destruction during initial notification leave no timers or listene
 ```
 
 ## m250
@@ -4148,7 +4147,7 @@ New:
 const endAt = this.now();
 Selected test: [director-025] Stop, abort and destroy settle long holds immediately and release their deadlines
 Result: KILLED
-Test: [director-025] Stop, abort and destroy settle long holds immediately and release their deadlines
+Failed test prefix: [director-025] Stop, abort and destroy settle long holds immediately and release their deadlines
 ```
 
 ## m251
@@ -4166,7 +4165,7 @@ New:
       false ||
 Selected test: [director-030] a subscriber can Stop or replace the initial clock without the old start acquiring a timer
 Result: KILLED
-Test: [director-030] a subscriber can Stop or replace the initial clock without the old start acquiring a
+Failed test prefix: [director-030] a subscriber can Stop or replace the initial clock without the old start acquiring a
 ```
 
 ## m252
@@ -4178,9 +4177,9 @@ Old:
 const ordered = single
 New:
 const ordered = false
-Selected test: queues rotate scenes, skip empty scenes, preserve shot identity and support a single scene
+Selected test: [director-036] The single scene queue excludes other scenes
 Result: KILLED
-Test: queues rotate scenes, skip empty scenes, preserve shot identity and support a single
+Failed test prefix: [director-036] The single scene queue excludes other scenes
 ```
 
 ## m253
@@ -4194,7 +4193,7 @@ New:
 <empty>
 Selected test: [director-037] playback sequences phases, releases only at scene changes, then releases the final scene
 Result: KILLED
-Test: [director-037] playback sequences phases, releases only at scene changes, then releases the final sc
+Failed test prefix: [director-037] playback sequences phases, releases only at scene changes, then releases the final sc
 ```
 
 ## m254
@@ -4208,7 +4207,7 @@ New:
 <empty>
 Selected test: [director-040] failure in selectShot propagates after release, without later shots
 Result: KILLED
-Test: [director-040] failure in selectShot propagates after release, without later shots
+Failed test prefix: [director-040] failure in selectShot propagates after release, without later shots
 ```
 
 ## m255
@@ -4222,7 +4221,7 @@ New:
 <empty>
 Selected test: [director-040] failure in applyVisual propagates after release, without later shots
 Result: KILLED
-Test: [director-040] failure in applyVisual propagates after release, without later shots
+Failed test prefix: [director-040] failure in applyVisual propagates after release, without later shots
 ```
 
 ## m256
@@ -4236,7 +4235,7 @@ New:
 <empty>
 Selected test: [director-040] failure in applyLayers propagates after release, without later shots
 Result: KILLED
-Test: [director-040] failure in applyLayers propagates after release, without later shots
+Failed test prefix: [director-040] failure in applyLayers propagates after release, without later shots
 ```
 
 ## m257
@@ -4250,7 +4249,7 @@ New:
 <empty>
 Selected test: [director-040] failure in travel propagates after release, without later shots
 Result: KILLED
-Test: [director-040] failure in travel propagates after release, without later shots
+Failed test prefix: [director-040] failure in travel propagates after release, without later shots
 ```
 
 ## m258
@@ -4264,7 +4263,7 @@ New:
 <empty>
 Selected test: [director-040] failure in settle propagates after release, without later shots
 Result: KILLED
-Test: [director-040] failure in settle propagates after release, without later shots
+Failed test prefix: [director-040] failure in settle propagates after release, without later shots
 ```
 
 ## m259
@@ -4278,7 +4277,7 @@ New:
 <empty>
 Selected test: [director-040] failure in hold propagates after release, without later shots
 Result: KILLED
-Test: [director-040] failure in hold propagates after release, without later shots
+Failed test prefix: [director-040] failure in hold propagates after release, without later shots
 ```
 
 ## m260
@@ -4292,7 +4291,7 @@ New:
 <empty>
 Selected test: [director-040] failure in completeShot propagates after release, without later shots
 Result: KILLED
-Test: [director-040] failure in completeShot propagates after release, without later shots
+Failed test prefix: [director-040] failure in completeShot propagates after release, without later shots
 ```
 
 ## m261
@@ -4306,7 +4305,7 @@ New:
 Boolean(token.cancelled)
 Selected test: [director-038] empty and pre-aborted runs never acquire or release adapter resources
 Result: KILLED
-Test: [director-038] empty and pre-aborted runs never acquire or release adapter resources
+Failed test prefix: [director-038] empty and pre-aborted runs never acquire or release adapter resources
 ```
 
 ## m262
@@ -4322,7 +4321,7 @@ New:
       }
 Selected test: [director-038] cancellation during an inter-scene release never acquires the next scene
 Result: KILLED
-Test: [director-038] cancellation during an inter-scene release never acquires the next scene
+Failed test prefix: [director-038] cancellation during an inter-scene release never acquires the next scene
 ```
 
 ## m263
@@ -4334,9 +4333,9 @@ Old:
 releaseOnFinish && activeScene
 New:
 activeScene
-Selected test: non-preview playback retains the final scene but still releases preceding scenes
+Selected test: [director-039] The final scene stays when cleanup is off
 Result: KILLED
-Test: non-preview playback retains the final scene but still releases preceding scenes
+Failed test prefix: [director-039] The final scene stays when cleanup is off
 ```
 
 ## m264
@@ -4350,7 +4349,7 @@ New:
 <empty>
 Selected test: [director-040] a cleanup failure rejects for the caller to restore its own controls
 Result: KILLED
-Test: [director-040] a cleanup failure rejects for the caller to restore its own controls
+Failed test prefix: [director-040] a cleanup failure rejects for the caller to restore its own controls
 ```
 
 ## m265
@@ -4364,7 +4363,7 @@ New:
 targetSec <= endElapsedSec ||
 Selected test: [director-031 director-034] scene time accounts for flight and hold; exact boundaries select the next shot
 Result: KILLED
-Test: [director-031 director-034] scene time accounts for flight and hold; exact boundaries select the nex
+Failed test prefix: [director-031 director-034] scene time accounts for flight and hold; exact boundaries select the nex
 ```
 
 ## m266
@@ -4376,9 +4375,9 @@ Old:
 4 * t ** 3
 New:
 0 * t ** 3
-Selected test: camera seeking preserves cubic easing and shortest-angle orientation
+Selected test: [director-033] The camera uses both cubic halves
 Result: KILLED
-Test: camera seeking preserves cubic easing and shortest-angle orientation
+Failed test prefix: [director-033] The camera uses both cubic halves
 ```
 
 ## m267
@@ -4392,7 +4391,7 @@ New:
 Number.isFinite(value)
 Selected test: [director-011] The JSON rejects functions
 Result: SURVIVED
-Test: \[director\-011\]\ The\ JSON\ rejects\ functions
+Failed test prefix: <none>
 ```
 
 ## m268
@@ -4406,7 +4405,7 @@ New:
 Boolean(token.signal?.aborted)
 Selected test: [director-038] The flag token stops work after selectShot
 Result: KILLED
-Test: [director-038] The flag token stops work after selectShot
+Failed test prefix: [director-038] The flag token stops work after selectShot
 ```
 
 ## m269
@@ -4420,7 +4419,7 @@ New:
 Boolean(token.cancelled)
 Selected test: [director-038] The signal token stops work after selectShot
 Result: KILLED
-Test: [director-038] The signal token stops work after selectShot
+Failed test prefix: [director-038] The signal token stops work after selectShot
 ```
 
 ## m270
@@ -4434,7 +4433,7 @@ New:
 Boolean(token.signal?.aborted)
 Selected test: [director-038] The flag token stops work after applyVisual
 Result: KILLED
-Test: [director-038] The flag token stops work after applyVisual
+Failed test prefix: [director-038] The flag token stops work after applyVisual
 ```
 
 ## m271
@@ -4448,7 +4447,7 @@ New:
 Boolean(token.cancelled)
 Selected test: [director-038] The signal token stops work after applyVisual
 Result: KILLED
-Test: [director-038] The signal token stops work after applyVisual
+Failed test prefix: [director-038] The signal token stops work after applyVisual
 ```
 
 ## m272
@@ -4462,7 +4461,7 @@ New:
 Boolean(token.signal?.aborted)
 Selected test: [director-038] The flag token stops work after applyLayers
 Result: KILLED
-Test: [director-038] The flag token stops work after applyLayers
+Failed test prefix: [director-038] The flag token stops work after applyLayers
 ```
 
 ## m273
@@ -4476,7 +4475,7 @@ New:
 Boolean(token.cancelled)
 Selected test: [director-038] The signal token stops work after applyLayers
 Result: KILLED
-Test: [director-038] The signal token stops work after applyLayers
+Failed test prefix: [director-038] The signal token stops work after applyLayers
 ```
 
 ## m274
@@ -4490,7 +4489,7 @@ New:
 Boolean(token.signal?.aborted)
 Selected test: [director-038] The flag token stops work after travel
 Result: KILLED
-Test: [director-038] The flag token stops work after travel
+Failed test prefix: [director-038] The flag token stops work after travel
 ```
 
 ## m275
@@ -4504,7 +4503,7 @@ New:
 Boolean(token.cancelled)
 Selected test: [director-038] The signal token stops work after travel
 Result: KILLED
-Test: [director-038] The signal token stops work after travel
+Failed test prefix: [director-038] The signal token stops work after travel
 ```
 
 ## m276
@@ -4518,7 +4517,7 @@ New:
 Boolean(token.signal?.aborted)
 Selected test: [director-038] The flag token stops work after settle
 Result: KILLED
-Test: [director-038] The flag token stops work after settle
+Failed test prefix: [director-038] The flag token stops work after settle
 ```
 
 ## m277
@@ -4532,7 +4531,7 @@ New:
 Boolean(token.cancelled)
 Selected test: [director-038] The signal token stops work after settle
 Result: KILLED
-Test: [director-038] The signal token stops work after settle
+Failed test prefix: [director-038] The signal token stops work after settle
 ```
 
 ## m278
@@ -4546,7 +4545,7 @@ New:
 Boolean(token.signal?.aborted)
 Selected test: [director-038] The flag token stops work after hold
 Result: KILLED
-Test: [director-038] The flag token stops work after hold
+Failed test prefix: [director-038] The flag token stops work after hold
 ```
 
 ## m279
@@ -4560,7 +4559,7 @@ New:
 Boolean(token.cancelled)
 Selected test: [director-038] The signal token stops work after hold
 Result: KILLED
-Test: [director-038] The signal token stops work after hold
+Failed test prefix: [director-038] The signal token stops work after hold
 ```
 
 ## m280
@@ -4574,7 +4573,7 @@ New:
 Boolean(token.signal?.aborted)
 Selected test: [director-038] The flag token stops work after completeShot
 Result: KILLED
-Test: [director-038] The flag token stops work after completeShot
+Failed test prefix: [director-038] The flag token stops work after completeShot
 ```
 
 ## m281
@@ -4588,7 +4587,7 @@ New:
 Boolean(token.cancelled)
 Selected test: [director-038] The signal token stops work after completeShot
 Result: KILLED
-Test: [director-038] The signal token stops work after completeShot
+Failed test prefix: [director-038] The signal token stops work after completeShot
 ```
 
 ## m282
@@ -4602,7 +4601,7 @@ New:
 if (false)
 Selected test: [director-039] The refused handoff stops the first shot
 Result: KILLED
-Test: [director-039] The refused handoff stops the first shot
+Failed test prefix: [director-039] The refused handoff stops the first shot
 ```
 
 ## m283
@@ -4616,7 +4615,7 @@ New:
 0
 Selected test: [director-023] The clock bounds and copies its snapshot
 Result: KILLED
-Test: [director-023] The clock bounds and copies its snapshot
+Failed test prefix: [director-023] The clock bounds and copies its snapshot
 ```
 
 ## m284
@@ -4630,7 +4629,7 @@ New:
 const t = 0;
 Selected test: [director-033] The camera uses both cubic halves
 Result: KILLED
-Test: [director-033] The camera uses both cubic halves
+Failed test prefix: [director-033] The camera uses both cubic halves
 ```
 
 ## m285
@@ -4644,7 +4643,7 @@ New:
 const normalized = 0;
 Selected test: [director-031 director-034] scene time accounts for flight and hold; exact boundaries select the next shot
 Result: KILLED
-Test: [director-031 director-034] scene time accounts for flight and hold; exact boundaries select the nex
+Failed test prefix: [director-031 director-034] scene time accounts for flight and hold; exact boundaries select the nex
 ```
 
 ## m286
@@ -4656,9 +4655,9 @@ Old:
 const start = Number(from) || 0;
 New:
 const start = 0;
-Selected test: camera seeking preserves cubic easing and shortest-angle orientation
+Selected test: [director-033] The camera takes the shortest arc for both angles
 Result: KILLED
-Test: camera seeking preserves cubic easing and shortest-angle orientation
+Failed test prefix: [director-033] The camera takes the shortest arc for both angles
 ```
 
 ## m287
@@ -4672,7 +4671,7 @@ New:
 []
 Selected test: [director-031] The shot boundaries use cumulative durations
 Result: KILLED
-Test: [director-031] The shot boundaries use cumulative durations
+Failed test prefix: [director-031] The shot boundaries use cumulative durations
 ```
 
 ## m288
@@ -4686,6 +4685,36 @@ New:
 -1
 Selected test: [director-031] The shot boundaries use cumulative durations
 Result: KILLED
-Test: [director-031] The shot boundaries use cumulative durations
+Failed test prefix: [director-031] The shot boundaries use cumulative durations
 ```
 
+## New mutation rows
+
+The host evidence lists each test title and file by its test label.
+
+| ID | File | Change | Failed test |
+| --- | --- | --- | --- |
+| `m289` | `src/director/playback.js` | Reverse the scene slices. | T14 |
+| `m290` | `src/director/playback.js` | Remove the start index clamp. | T15 |
+| `m291` | `src/director/playback.js` | Replace flatMap with map. | T14 |
+| `m292` | `src/director/playback.js` | Copy each shot object. | T14 |
+| `m293` | `src/director/timeline.js` | Change the angle sum from 540 to 360. | T17 |
+| `m294` | `src/director/timeline.js` | Change the angle divisor from 360 to 180. | T17 |
+| `m295` | `src/director/timeline.js` | Change the angle subtraction from 180 to 0. | T17 |
+| `m296` | `src/director/document.js` | Delete the visual field check. | T03 |
+| `m297` | `src/director/document.js` | Delete the visual group field check. | T04 |
+| `m298` | `src/director/document.js` | Delete the pack field check. | T05 |
+| `m299` | `src/director/document.js` | Delete the layer field check. | T06 |
+| `m300` | `src/director/document.js` | Delete the scene ID check. | T07 |
+| `m301` | `src/director/document.js` | Delete the pack ID check. | T08 |
+| `m302` | `src/director/document.js` | Change the anchors gate from 4 to 6. | T09 |
+| `m303` | `src/director/document.js` | Change the move gate from 4 to 6. | T09 |
+| `m304` | `src/director/document.js` | Change the data packs gate from 5 to 6. | T10 |
+| `m305` | `src/director/document.js` | Change the data pack IDs gate from 5 to 6. | T10 |
+| `m306` | `src/director/clock.js` | Set the default clock state to true. | T01 |
+| `m307` | `src/director/clock.js` | Remove the elapsed time lower clamp. | T02 |
+| `m308` | `src/director/timeline.js` | Remove the shot index lower clamp. | T18 |
+| `m309` | `src/director/documentFields.js` | Change the default text limit to 255. | T12 |
+| `m310` | `src/director/documentFields.js` | Change the default text limit to 257. | T13 |
+| `m311` | `src/director/playback.js` | Set each phase index to 0. | T16 |
+| `m312` | `src/director/playback.js` | Set the queue total to 1. | T16 |

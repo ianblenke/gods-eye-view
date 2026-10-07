@@ -232,7 +232,10 @@ test('[director-023] The clock warns when a subscriber fails', () => {
     f.clock.subscribe(() => {
       throw new Error('observer');
     });
+    let later = 0;
+    f.clock.subscribe(() => later++);
     f.clock.publish(scene, shot, 1);
+    assert.equal(later, 1);
     assert.equal(calls, 1);
     assert.equal(f.clock.snapshot.sceneElapsedSec, 1);
   } finally {
@@ -1187,4 +1190,20 @@ test('[director-030] The startScene detaches its timer handle', () => {
   c.startScene(scene, shot, {});
   assert.equal(calls, 1);
   c.destroy();
+});
+
+test('[director-023] The publication uses false from the clock state', () => {
+  const f = fixture();
+  f.running(false);
+  f.clock.publish(scene, shot, 1);
+  assert.equal(f.clock.snapshot.running, false);
+  f.clock.destroy();
+});
+
+test('[director-023] The publication clamps negative elapsed time to zero', () => {
+  const f = fixture();
+  f.clock.publish(scene, shot, -2);
+  assert.equal(f.clock.snapshot.sceneElapsedSec, 0);
+  assert.equal(f.clock.snapshot.sceneProgress, 0);
+  f.clock.destroy();
 });
