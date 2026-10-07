@@ -1143,12 +1143,12 @@
     },
     "server/providers/vessels/ais-store.js": {
       "loaded": true,
-      "lines": 44,
+      "lines": 40,
       "branches": 30,
       "functions": 2,
       "totals": {
         "lines": 310,
-        "branches": 74,
+        "branches": 76,
         "functions": 21
       },
       "sha": "71ec923cc8367686c7c90629f094beeaa22cb9a77b789376930290316121410d",

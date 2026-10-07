@@ -644,11 +644,15 @@
   ],
   "director-003": [
     "src/director/document.test.mjs › [director-003] The absent version allows legacy numeric text",
+    "src/director/document.test.mjs › [director-003] The import accepts anchors and move at versions 4 through 6",
+    "src/director/document.test.mjs › [director-003] The import accepts data packs at versions 5 and 6",
+    "src/director/document.test.mjs › [director-003] The import rejects fields below each version gate",
     "src/director/document.test.mjs › [director-003] The legacy document accepts absent IDs",
     "src/director/document.test.mjs › [director-003] missing legacy IDs become stable after the first saved migration",
     "src/director/document.test.mjs › [director-003] v1/v2 bloom migrates once; IDs, edits, pack bindings and zero holds survive"
   ],
   "director-004": [
+    "src/director/document.test.mjs › [director-004] The document rejects a duplicate scene ID",
     "src/director/document.test.mjs › [director-004] The validator rejects an unsupported version",
     "src/director/document.test.mjs › [director-004] The version rejects an early anchors field",
     "src/director/document.test.mjs › [director-004] The version rejects an early dataPackIds field",
@@ -664,6 +668,8 @@
     "src/director/documentFields.test.mjs › [director-005] The object check rejects text"
   ],
   "director-006": [
+    "src/director/documentFields.test.mjs › [director-006] The default text limit accepts 256 characters",
+    "src/director/documentFields.test.mjs › [director-006] The default text limit rejects 257 characters",
     "src/director/documentFields.test.mjs › [director-006] The text check accepts the exact limit",
     "src/director/documentFields.test.mjs › [director-006] The text check rejects blank text",
     "src/director/documentFields.test.mjs › [director-006] The text check rejects excess length",
@@ -724,7 +730,8 @@
   "director-014": [
     "src/director/document.test.mjs › [director-014] The visual check rejects invalid mapStack",
     "src/director/document.test.mjs › [director-014] The visual check rejects invalid style",
-    "src/director/document.test.mjs › [director-014] The visual check rejects invalid style parameters"
+    "src/director/document.test.mjs › [director-014] The visual check rejects invalid style parameters",
+    "src/director/document.test.mjs › [director-014] The visual rejects an unknown field"
   ],
   "director-015": [
     "src/director/document.test.mjs › [director-015] The visual bloom accepts its enabled field",
@@ -743,6 +750,7 @@
     "src/director/document.test.mjs › [director-015] The visual detection bounds its density field",
     "src/director/document.test.mjs › [director-015] The visual detection bounds its fadePct field",
     "src/director/document.test.mjs › [director-015] The visual detection bounds its outsideOpacityPct field",
+    "src/director/document.test.mjs › [director-015] The visual group rejects an unknown field",
     "src/director/document.test.mjs › [director-015] The visual hud accepts its variant field",
     "src/director/document.test.mjs › [director-015] The visual hud accepts its visible field",
     "src/director/document.test.mjs › [director-015] The visual scope accepts its enabled field",
@@ -757,7 +765,9 @@
     "src/director/document.test.mjs › [director-016] The document checks installed scene IDs",
     "src/director/document.test.mjs › [director-016] The document checks its createdAt field",
     "src/director/document.test.mjs › [director-016] The document checks its updatedAt field",
+    "src/director/document.test.mjs › [director-016] The document rejects a duplicate pack ID",
     "src/director/document.test.mjs › [director-016] The pack bindings check every value",
+    "src/director/document.test.mjs › [director-016] The pack entry rejects an unknown field",
     "src/director/document.test.mjs › [director-016] The pack versions accept legacy text only",
     "src/director/document.test.mjs › [director-016] The scene checks its releaseLayerIds field",
     "src/director/document.test.mjs › [director-016] The scene checks its title field",
@@ -773,6 +783,7 @@
     "src/director/document.test.mjs › [director-018] The layer check accepts boolean entries",
     "src/director/document.test.mjs › [director-018] The layer check validates a second layer ID",
     "src/director/document.test.mjs › [director-018] The layer entry needs a boolean state",
+    "src/director/document.test.mjs › [director-018] The layer entry rejects an unknown field",
     "src/director/document.test.mjs › [director-018] The layer parameters need an object",
     "src/director/document.test.mjs › [director-018] The shot total spans scene boundaries"
   ],
@@ -813,7 +824,9 @@
     "src/director/clock.test.mjs › [director-023] The clock uses zero progress for zero total",
     "src/director/clock.test.mjs › [director-023] The clock warns when a subscriber fails",
     "src/director/clock.test.mjs › [director-023] The destroyed publication does not make a snapshot",
+    "src/director/clock.test.mjs › [director-023] The publication clamps negative elapsed time to zero",
     "src/director/clock.test.mjs › [director-023] The publication notifies every subscriber",
+    "src/director/clock.test.mjs › [director-023] The publication uses false from the clock state",
     "src/director/clock.test.mjs › [director-023] The snapshot access returns a copy"
   ],
   "director-024": [
@@ -901,6 +914,7 @@
   "director-032": [
     "src/director/timeline.test.mjs › [director-032] The absent scene gives empty time",
     "src/director/timeline.test.mjs › [director-032] The absent shot index gives empty time",
+    "src/director/timeline.test.mjs › [director-032] The absent shot starts at zero elapsed time",
     "src/director/timeline.test.mjs › [director-032] The seek bounds zero scene time",
     "src/director/timeline.test.mjs › [director-032] The seek gives null without shots",
     "src/director/timeline.test.mjs › [director-032] The zero duration gives finite progress",
@@ -913,6 +927,7 @@
     "src/director/timeline.test.mjs › [director-033] The camera guard handles a falsy endpoint",
     "src/director/timeline.test.mjs › [director-033] The camera guard returns null for falsy endpoints",
     "src/director/timeline.test.mjs › [director-033] The camera returns null without endpoints",
+    "src/director/timeline.test.mjs › [director-033] The camera takes the shortest arc for both angles",
     "src/director/timeline.test.mjs › [director-033] The camera uses both cubic halves",
     "src/director/timeline.test.mjs › [director-033] The camera uses its sole source",
     "src/director/timeline.test.mjs › [director-033] The camera uses its sole target"
@@ -932,10 +947,13 @@
     "src/director/timeline.test.mjs › [director-035] The seek uses the previous ordinary camera"
   ],
   "director-036": [
-    "src/director/playback.test.mjs › [director-036] The single scene queue excludes other scenes"
+    "src/director/playback.test.mjs › [director-036] The queue wraps from b and keeps each shot object",
+    "src/director/playback.test.mjs › [director-036] The single scene queue excludes other scenes",
+    "src/director/playback.test.mjs › [director-036] The unknown start selects the first scene"
   ],
   "director-037": [
     "src/director/playback.test.mjs › [director-037] The adapter receives the exact phase order",
+    "src/director/playback.test.mjs › [director-037] The phase context gives each index and the queue total",
     "src/director/playback.test.mjs › [director-037] The playback accepts an absent complete callback",
     "src/director/playback.test.mjs › [director-037] The playback calls the applyLayers phase",
     "src/director/playback.test.mjs › [director-037] The playback calls the applyVisual phase",
