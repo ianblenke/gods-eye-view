@@ -1,7 +1,13 @@
 ## Context
 
 The source base is commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
-Round 2 reads commit `43b776a14aaf7d9379a786f5dafdc1c79bd4e371`.
+Pass 3 read the base commit `290b5d2` and the working tree of the lead's branch.
+The source comparison below gives no output.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director && git diff --stat 290b5d2 origin/main -- 'src/director/*.js'
+```
+
 The scene controller supplies duration, hold, camera and timer adapters to these modules.
 
 ## Goals
@@ -10,16 +16,16 @@ Record current public behavior with tests that fail against code mutations.
 Keep all production files unchanged.
 The lead changes the browser QA headers at the archive step.
 
-## Decisions
+## Choices
 
 The tests use local objects, custom clocks and adapters.
 The tests do not request network data.
 The host coverage result is not a gate result.
 The lead runs the ratchet, gates, archive and review.
 
-The trace gate checks test tags and assertion methods.
-The coverage gate checks each code file.
-The STE gate checks prose and tagged test titles.
+The trace check checks test tags and assertion methods.
+The coverage check checks each code file.
+The STE check checks prose and tagged test titles.
 
 ## Related browser QA scripts
 
@@ -87,12 +93,12 @@ The lead checks Node 24 coverage and gate results.
   Source: `src/director/playback.js:71`.
   No scenario states this behavior.
 
-## Round 2 choices
+## Pass 2 choices
 
 The angle test uses progress 0.5, as the old test does.
-Heading 350 to 10 gives 360 at progress 0.5 and 370 at progress 1.
+Heading 350 degrees to 10 degrees gives 360 degrees at progress 0.5 and 370 degrees at progress 1.
 The scenarios keep IDs `director-001` through `director-040`.
-The tests come first for these corrections, as the round brief states.
+The tests come first for these corrections, as the correction brief states.
 The production files stay unchanged.
 The scratch files stay outside the repository.
 
@@ -110,4 +116,17 @@ The phrase “bound” stays in old test titles and scenario headings as a verb 
 The old `m068` row deleted a loop body and caused a syntax error.
 The corrected row uses an empty statement, so the loop stays valid and the test checks the field result.
 
-The QA limit names later work by its module scope because the round brief does not name each folder.
+The QA limit names later work by its module scope because the correction brief does not name each folder.
+
+## Pass 3 choices
+
+The correction brief gives the test, mutation and document order for this pass.
+The single scene test starts at scene `a`, before the last scene.
+The test puts scene `b` next to scene `a`, so a wider slice adds shot `b1`.
+The interactions test uses an empty list to check the document version limit only.
+The version scenario covers validation and migration, so the version table stays there.
+The worker calls each work step a pass and uses review round only for the lead's two reviews.
+
+The source tree read at the start of pass 3 was `32f10e3`.
+The worker made no commit in this pass.
+The lead owns the applied Purpose text, so this pass does not change that file.

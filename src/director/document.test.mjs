@@ -641,7 +641,7 @@ test('[director-015] The visual check rejects invalid boolean type', () => {
   assert.throws(() => validateSceneDocument(p), /scope\.enabled/);
 });
 
-test('[director-014] The visual rejects an unknown field', () => {
+test('[director-014] The visual check rejects an unknown field', () => {
   const project = fixture();
   project.scenes[0].shots[0].visual = { extra: true };
   assert.throws(() => validateSceneDocument(project), {
@@ -650,7 +650,7 @@ test('[director-014] The visual rejects an unknown field', () => {
   });
 });
 
-test('[director-015] The visual group rejects an unknown field', () => {
+test('[director-015] The visual control rejects an unknown field', () => {
   const project = fixture();
   project.scenes[0].shots[0].visual = { bloom: { extra: true } };
   assert.throws(() => validateSceneDocument(project), {
@@ -697,7 +697,7 @@ test('[director-016] The document rejects a duplicate pack ID', () => {
   });
 });
 
-test('[director-003] The import accepts anchors and move at versions 4 through 6', () => {
+test('[director-003] The import accepts the anchors field and the move field at versions 4 through 6', () => {
   for (const version of [4, 5, 6]) {
     const project = fixture();
     project.version = version;
@@ -739,7 +739,7 @@ test('[director-003] The import accepts data packs at versions 5 and 6', () => {
   }
 });
 
-test('[director-003] The import rejects fields below each version gate', () => {
+test('[director-003] The import rejects fields below each version limit', () => {
   for (const version of [1, 2, 3]) {
     for (const field of ['anchors', 'move']) {
       const project = fixture();
@@ -764,4 +764,14 @@ test('[director-003] The import rejects fields below each version gate', () => {
       );
     }
   }
+});
+
+test('[director-003] The import accepts an empty interactions list at version 6', () => {
+  const project = fixture();
+  project.version = 6;
+  project.scenes[0].shots[0].interactions = [];
+  const result = parseSceneDocument(JSON.stringify(project));
+  assert.equal(result.version, 6);
+  assert.equal(Object.hasOwn(result.scenes[0].shots[0], 'interactions'), true);
+  assert.deepEqual(result.scenes[0].shots[0].interactions, []);
 });

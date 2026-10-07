@@ -232,10 +232,34 @@ test('[director-023] The clock warns when a subscriber fails', () => {
     f.clock.subscribe(() => {
       throw new Error('observer');
     });
-    let later = 0;
-    f.clock.subscribe(() => later++);
+    const later = [];
+    f.clock.subscribe((snapshot) => later.push(snapshot));
+    f.clock.subscribe((snapshot) => later.push(snapshot));
     f.clock.publish(scene, shot, 1);
-    assert.equal(later, 1);
+    assert.deepEqual(later, [
+      {
+        sceneId: 'scene',
+        shotId: 'shot',
+        shotIndex: 0,
+        shotCount: 1,
+        sceneElapsedSec: 1,
+        sceneDurationSec: 4,
+        sceneProgress: 0.25,
+        running: true,
+        seeking: false,
+      },
+      {
+        sceneId: 'scene',
+        shotId: 'shot',
+        shotIndex: 0,
+        shotCount: 1,
+        sceneElapsedSec: 1,
+        sceneDurationSec: 4,
+        sceneProgress: 0.25,
+        running: true,
+        seeking: false,
+      },
+    ]);
     assert.equal(calls, 1);
     assert.equal(f.clock.snapshot.sceneElapsedSec, 1);
   } finally {
@@ -1073,13 +1097,44 @@ test('[director-024] The stop notifies every subscriber', () => {
   f.clock.publish(scene, shot, 1);
   const calls = [];
   f.clock.subscribe((v) => {
-    if (v.stopped) calls.push('a');
+    if (v.stopped) calls.push(['a', v]);
   });
   f.clock.subscribe((v) => {
-    if (v.stopped) calls.push('b');
+    if (v.stopped) calls.push(['b', v]);
   });
   f.clock.stop();
-  assert.deepEqual(calls, ['a', 'b']);
+  assert.deepEqual(calls, [
+    [
+      'a',
+      {
+        sceneId: 'scene',
+        shotId: 'shot',
+        shotIndex: 0,
+        shotCount: 1,
+        sceneElapsedSec: 1,
+        sceneDurationSec: 4,
+        sceneProgress: 0.25,
+        running: false,
+        seeking: false,
+        stopped: true,
+      },
+    ],
+    [
+      'b',
+      {
+        sceneId: 'scene',
+        shotId: 'shot',
+        shotIndex: 0,
+        shotCount: 1,
+        sceneElapsedSec: 1,
+        sceneDurationSec: 4,
+        sceneProgress: 0.25,
+        running: false,
+        seeking: false,
+        stopped: true,
+      },
+    ],
+  ]);
 });
 
 test('[director-023] The publication notifies every subscriber', () => {
