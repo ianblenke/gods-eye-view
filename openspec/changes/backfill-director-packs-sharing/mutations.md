@@ -4275,5 +4275,6 @@ m302: KILLED [director-105] The store returns an independent byte copy
 
 ## Totals
 
-The complete command records 302 KILLED results, 0 survivors and 0 time limits.
+The complete command with the scratch tests records 302 KILLED results, 0 survivors and 0 time limits.
+With the repository tests only, rows m172 and m284 survive: they are the Known limits `geojson-inherited-height` and `session-signal-getter`.
 The command output is `mutation-continuation.log`.

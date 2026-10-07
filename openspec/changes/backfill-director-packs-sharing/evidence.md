@@ -725,9 +725,13 @@ The size getter proves that the missing source guard prevents an extra pack size
 
 ## Mutation and audit totals
 
-The mutation report command reads 302 final results: 302 KILLED and 0 SURVIVED.
+The mutation report command reads 302 final results. Repository tests kill 300 of them.
+Rows m172 and m284 fail only the scratch test `limits.test.mjs`, which is outside the repository.
+
+The repository tests do not kill those two rows, so they stay open as the Known limits `geojson-inherited-height` and `session-signal-getter`.
 The audit command reads 99 rows: 79 tested, 0 equivalent and 20 default-value.
-The audit contains zero open rows.
+The audit keeps the scratch-test rows m172 and m284 as tested rows.
+The Known limits record that no repository test kills them.
 The AST command finds 92 decision rows and no switch statement.
 
 The helper reached its time limit for m183 and m262 in earlier attempts.
@@ -763,7 +767,8 @@ cd /home/ianblenke/docker/gev-work/director-3 && grep -aE '^ℹ (tests|pass|fail
 
 The test output records 788 tests and 788 passes.
 It records zero failures, cancellations and skipped tests.
-The complete mutation command records 302 KILLED results without a time limit.
+The complete mutation command with the repository tests records 300 KILLED and 2 SURVIVED results without a time limit.
+The two survivors are m172 and m284.
 
 ## Title correction
 
