@@ -1,6 +1,5 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-import { loadSpecs } from './specs.mjs';
 
 const SENTENCE_LIMIT = 25;
 const INSTRUCTION_LIMIT = 20;
@@ -226,17 +225,18 @@ function codeSpanFindings(text) {
  */
 export function lintMarkdown(text, { file, words }) {
   const isTasks = path.posix.basename(file) === 'tasks.md';
-  const isNew = !file.startsWith('openspec/specs/') && !file.startsWith('openspec/changes/archive/');
+  const archiveDate = /^openspec\/changes\/archive\/(\d{4}-\d{2}-\d{2})-[^/]+\//.exec(file)?.[1];
+  const isNew = !file.startsWith('openspec/specs/') && !(archiveDate && archiveDate < (words.newWordsFrom ?? ''));
   return [...paragraphsOf(text, { isTasks }).flatMap((paragraph) => checkParagraph(paragraph, words, isNew)), ...codeSpanFindings(text)]
     .map((item) => ({ rule: item.rule, level: item.level, file, line: item.line, message: item.message }));
 }
 
 /** Lint the names of traced tests, without their tags. */
-export function lintTestNames(records, words, activeIds = new Set()) {
+export function lintTestNames(records, words, registry = {}) {
   return records
     .filter((record) => record.kind === 'test' && record.tags.length > 0)
     .flatMap((record) =>
-      checkParagraph({ kind: 'text', line: 0, tokens: tokensOf(cleanLine(record.title), 0) }, words, record.tags.some((id) => activeIds.has(id))).map((item) => ({
+      checkParagraph({ kind: 'text', line: 0, tokens: tokensOf(cleanLine(record.title), 0) }, words, record.tags.some((id) => !Object.hasOwn(registry, id) || registry[id].since >= (words.newWordsFrom ?? ''))).map((item) => ({
         rule: item.rule,
         level: item.level,
         file: record.file,
@@ -287,12 +287,13 @@ export function readWordList(root) {
 /** Lint all Markdown files in `openspec/` and the names of traced tests. */
 export function lintProject({ root, records }) {
   const words = readWordList(root);
-  const activeIds = new Set([...loadSpecs(root).changeIds.values()].flat());
+  const registryFile = path.join(root, 'openspec/trace/ids.json');
+  const registry = existsSync(registryFile) ? JSON.parse(readFileSync(registryFile, 'utf8')) : {};
   return [
     ...listMarkdownFiles(root).flatMap((file) =>
       lintMarkdown(readFileSync(path.join(root, file), 'utf8'), { file, words }),
     ),
-    ...lintTestNames(records, words, activeIds),
+    ...lintTestNames(records, words, registry),
   ];
 }
 

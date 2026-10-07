@@ -1577,7 +1577,7 @@ test('[ste-lint-023] keeps a success status for the lint command with a noun war
 });
 
 
-test('[ste-lint-037 ste-lint-012] The old word warning keeps a success status', () => {
+test('[ste-lint-037 ste-lint-012] keeps a success status for the lint command with an old prose warning', () => {
   withFixture((root) => {
     write(root, { 'openspec/specs/demo/notes.md': 'Retain the file.\n' });
     const result = run(root, ['lint', '--change', 'ste-new-prose-words']);
