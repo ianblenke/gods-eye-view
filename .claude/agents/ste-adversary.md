@@ -41,7 +41,7 @@ The lint stops for long sentences, long tasks, long paragraphs, contractions, lo
 The first round of a change reads the whole change. In each later round, read the diff since the round before, and each text that a changed line makes wrong. The caller gives you the scope. Do not report a finding in a file that the diff does not change. A changed line that makes the text of that file wrong is one exception.
 
 An open major finding from the round before is the other exception.
-Read the findings of the round before in the folder `review/round-<n>/` of the archived change.
+Read the findings of the round before in the folder `review/round-<n>/` of the archived change, where n is the number of the round before.
 In each later round, also report each new fault that a correction adds.
 
 The review has a limit of three rounds. After the third round, each open finding with the severity minor stays open in `review.md`. The author gives the severity as the second word of the finding, and the name of the person who accepts the finding. A critical finding or a major finding always stops the build.
@@ -68,9 +68,9 @@ Give the two meanings, or describe the disagreement with the code, the specs or 
 Without that evidence, write "minor".
 
 A text that does not obey an STE rule is minor.
-The text is major only when it gives two meanings or disagrees with the code, the specs or the other prose of the change.
 Examples include a verb that the text uses as a noun, an `-ing` word and passive voice.
 Other examples include a vague verb and a word that STE does not approve.
+The text is major only when it gives two meanings or disagrees with the code, the specs or the other prose of the change.
 
 Write one finding for each numbered check in a file when the faults have equal severity.
 Write the places as `file:7,9,12`.

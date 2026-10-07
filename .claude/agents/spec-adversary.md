@@ -20,7 +20,7 @@ The caller gives you these items:
 The first round of a change reads the whole change. In each later round, read the diff since the round before, and each text that a changed line makes wrong. The caller gives you the scope. Do not report a finding in a file that the diff does not change. A changed line that makes the text of that file wrong is one exception.
 
 An open critical finding or major finding from the round before is the other exception.
-Read the findings of the round before in the folder `review/round-<n>/` of the archived change.
+Read the findings of the round before in the folder `review/round-<n>/` of the archived change, where n is the number of the round before.
 
 The review has a limit of three rounds. After the third round, each open finding with the severity minor stays open in `review.md`. The author gives the severity as the second word of the finding, and the name of the person who accepts the finding. A critical finding or a major finding always stops the build.
 

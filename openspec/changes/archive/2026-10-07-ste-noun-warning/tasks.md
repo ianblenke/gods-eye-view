@@ -27,7 +27,7 @@
   - Run the mutation that reports the determiner line. The test must fail.
 - [x] 1.11 Test quotes inside and after a listed word.
   - Run the mutation that excludes each token with a quote. The test must fail.
-  - Run the mutation that removes each double quote from the listed word before the list lookup. The test must fail.
+  - Run the mutation that removes each double quote mark from the listed word before the call to `nounVerbs.has`. The test must fail.
 - [x] 1.12 Test the lint command with a noun warning.
   - Run the mutation that makes the noun warning an error. The test must fail.
 
@@ -43,8 +43,9 @@
 - [x] 2.8 Check all prose with the lint command.
 - [x] 2.9 Check the format of the files.
 - [x] 2.10 Check that the gate test fixtures keep their old warning counts.
+- [x] 2.11 Replace inline code in tagged test titles with `CODE`.
 
-The ratchet command ran at commits `e9b1bf8` and `03d6954`, and again after the round-2 corrections.
+The ratchet command ran at commits `e9b1bf8`, `03d6954` and `5dfc701`.
 It wrote `ids.json` and `links.json`, but did not edit `gaps.json`.
 The command `git show --stat` for each of these commits lists these files.
 
