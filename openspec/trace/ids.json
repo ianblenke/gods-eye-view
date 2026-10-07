@@ -2455,7 +2455,7 @@
     "change": "backfill-recent-imagery"
   },
   "recent-imagery-050": {
-    "hash": "d1c828e0c0c8b7354c858618f25ce45f0a97e7d3be4fdcc50e624c7c7bbc477b",
+    "hash": "c0554f6e96846c42bc7573e3dfb6fd5280cc425bab760a4ea284e79b8d6320b9",
     "since": "2026-09-30",
     "change": "backfill-recent-imagery"
   },
@@ -2470,7 +2470,7 @@
     "change": "backfill-recent-imagery"
   },
   "recent-imagery-053": {
-    "hash": "a3d430703b4dea3860850b865f503f1e57d52fa30536680f2e9aa1e598964c70",
+    "hash": "e5121d4e91a9972076fef3e1c5aca9d408006ec01fd8b9a6ecd0a492cbd13ba6",
     "since": "2026-10-07",
     "change": "fix-recent-imagery-defects"
   },
@@ -2480,12 +2480,12 @@
     "change": "fix-recent-imagery-defects"
   },
   "recent-imagery-055": {
-    "hash": "eef06ee30b21460e0716e24ad93da14fd064955fce67830a53f69222035f67db",
+    "hash": "61002f2aaef68ada8765d41047f614ae0fb4eedf675a46caec4b88b415bd43ef",
     "since": "2026-10-07",
     "change": "fix-recent-imagery-defects"
   },
   "recent-imagery-056": {
-    "hash": "6c3412c6e6079615de189bf45beff66620be71d8f972be313d711d6e721d5041",
+    "hash": "57872e0677af25b95c29e9d608723924939271372ca34a83a024b4a84e7a482b",
     "since": "2026-10-07",
     "change": "fix-recent-imagery-defects"
   },
