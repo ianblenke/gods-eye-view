@@ -371,32 +371,31 @@ test('[ste-lint-027] excludes inline code from the rule STE-WORD for tagged titl
   ], WORDS), []);
 });
 
-const newWords = { ...WORDS, newWords: { retain: 'keep' } };
+const newWords = { ...WORDS, newWordsFrom: '2026-10-07', newWords: { retain: 'keep' } };
 const newLint = (text, file) => lintMarkdown(text, { file, words: newWords });
 const newRecord = (tags, title = 'The retain result') => ({ file: 'src/a.test.mjs', name: `[${tags.join(' ')}] ${title}`, title, kind: 'test', tags });
-const titleRoot = () => tempRoot({
+const registry = { 'a-001': { since: '2026-10-06' }, 'a-002': { since: '2026-10-07' }, 'a-003': { since: '2026-10-05' } };
+const registryRoot = () => tempRoot({
   'openspec/ste/words.json': JSON.stringify(newWords),
-  'openspec/specs/a/spec.md': '# A spec\n\n## Requirements\n\n### Requirement: A value\nThe tool MUST check the value.\nOrigin: spec-first\n\n#### Scenario: Check a value `a-001`\n- **WHEN** a value arrives\n- **THEN** the tool checks it\n',
-  'openspec/changes/b/specs/a/spec.md': '## ADDED Requirements\n\n### Requirement: A new value\nThe tool MUST check the new value.\nOrigin: spec-first\n\n#### Scenario: Check a new value `a-002`\n- **WHEN** a value arrives\n- **THEN** the tool checks it\n',
-  'openspec/changes/archive/c/specs/a/spec.md': '## ADDED Requirements\n\n### Requirement: An old value\nThe tool MUST check the old value.\nOrigin: spec-first\n\n#### Scenario: Check an old value `a-003`\n- **WHEN** a value arrives\n- **THEN** the tool checks it\n',
+  'openspec/trace/ids.json': JSON.stringify(registry),
 });
 
-test('[ste-lint-028] The active change word gives an error', () => {
+test('[ste-lint-028] gives an error for a word from `newWords` in an active change', () => {
   for (const file of ['openspec/changes/b/proposal.md', 'openspec/specs-extra/a.md', 'openspec/changes/archive-extra/a.md', 'openspec/process.md']) {
     assert.deepEqual(newLint('Retain the file.', file).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
   }
   assert.deepEqual(newLint('Keep the file.', 'openspec/changes/b/proposal.md'), []);
 });
 
-test('[ste-lint-029] The archive word gives a warning', () => {
-  assert.deepEqual(newLint('Retain the file.', 'openspec/changes/archive/b/proposal.md').map((item) => [item.rule, item.level]), [['STE-WORD-OLD', 'warning']]);
+test('[ste-lint-029] gives a warning for old prose in the archive', () => {
+  assert.deepEqual(newLint('Retain the file.', 'openspec/changes/archive/2026-10-06-b/proposal.md').map((item) => [item.rule, item.level]), [['STE-WORD-OLD', 'warning']]);
 });
 
-test('[ste-lint-030] The applied spec word gives a warning', () => {
+test('[ste-lint-030] gives a warning for old prose in an applied spec', () => {
   assert.deepEqual(newLint('Retain the file.', 'openspec/specs/a/spec.md').map((item) => [item.rule, item.level]), [['STE-WORD-OLD', 'warning']]);
 });
 
-test('[ste-lint-031] The agent word gives an error', () => {
+test('[ste-lint-031] gives an error for new prose in an agent file', () => {
   const root = tempRoot({ '.claude/agents/a.md': 'Retain the file.', 'AGENTS.md': 'Retain the file.', '.claude/commands/opsx/review.md': 'Retain the file.', 'openspec/ste/words.json': JSON.stringify(newWords) });
   try {
     assert.deepEqual(lintProject({ root, records: [] }).map((item) => [item.file, item.rule, item.level]), [
@@ -405,28 +404,28 @@ test('[ste-lint-031] The agent word gives an error', () => {
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
-test('[ste-lint-032] The active title word gives an error', () => {
-  const root = titleRoot();
+test('[ste-lint-032] gives an error for a new title', () => {
+  const root = registryRoot();
   try {
     for (const title of ['The retain result', 'The "RETAIN" result']) {
       assert.deepEqual(lintProject({ root, records: [newRecord(['a-002'], title)] }).map((item) => [item.rule, item.level, item.line]), [['STE-WORD', 'error', 0]]);
     }
-    assert.deepEqual(lintTestNames([newRecord(['a-002'], 'The keep result')], newWords, new Set(['a-002'])), []);
+    assert.deepEqual(lintTestNames([newRecord(['a-002'], 'The keep result')], newWords, registry), []);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
-test('[ste-lint-033] The old title word gives a warning', () => {
-  const root = titleRoot();
+test('[ste-lint-033] gives a warning for an old title', () => {
+  const root = registryRoot();
   try {
-    for (const tags of [['a-001'], ['a-003'], ['a-099']]) {
+    for (const tags of [['a-001'], ['a-003']]) {
       assert.deepEqual(lintProject({ root, records: [newRecord(tags)] }).map((item) => [item.rule, item.level]), [['STE-WORD-OLD', 'warning']]);
     }
-    assert.deepEqual(lintTestNames([newRecord(['a-002'])], newWords).map((item) => [item.rule, item.level]), [['STE-WORD-OLD', 'warning']]);
+    assert.deepEqual(lintTestNames([newRecord(['a-001'])], newWords, registry).map((item) => [item.rule, item.level]), [['STE-WORD-OLD', 'warning']]);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
-test('[ste-lint-034] The mixed tags select new prose', () => {
-  const root = titleRoot();
+test('[ste-lint-034] uses new prose for mixed tags', () => {
+  const root = registryRoot();
   try {
     for (const tags of [['a-001', 'a-002'], ['a-002', 'a-001']]) {
       assert.deepEqual(lintProject({ root, records: [newRecord(tags)] }).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
@@ -434,7 +433,7 @@ test('[ste-lint-034] The mixed tags select new prose', () => {
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
-test('[ste-lint-035] The next check uses the current word map', () => {
+test('[ste-lint-035] reads the current word map for each check', () => {
   const root = tempRoot({ 'openspec/process.md': 'Retain the file. Emit the result.', 'openspec/ste/words.json': JSON.stringify(newWords) });
   try {
     assert.deepEqual(lintProject({ root, records: [] }).map((item) => item.message), ['Use "keep", not "retain"']);
@@ -445,20 +444,60 @@ test('[ste-lint-035] The next check uses the current word map', () => {
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
-test('[ste-lint-036] The real word map matches the approved words', () => {
+test('[ste-lint-036] checks the words that the owner chose', () => {
   const words = readWordList(path.resolve(import.meta.dirname, '../../..'));
-  assert.deepEqual(words.newWords, {"explicit": "clear", "explicitly": "clearly", "verify": "check", "verifies": "checks", "verified": "checked", "verification": "check", "malformed": "invalid", "wiring": "connection", "dismissal": "close", "dismiss": "close", "dismisses": "closes", "dismissed": "closed", "expose": "show", "exposes": "shows", "exposed": "shown", "permit": "allow", "permits": "allows", "permitted": "allowed", "retain": "keep", "retains": "keeps", "retained": "kept", "emit": "send", "emits": "sends", "emitted": "sent", "prior": "before", "preserve": "keep", "preserves": "keeps", "preserved": "kept", "renew": "start again", "renews": "starts again", "renewed": "started again", "lone": "single", "handover": "transfer", "execute": "run", "executes": "runs", "executed": "ran", "prescribed": "named"});
-  assert.deepEqual(Object.keys(words.newWords).sort(), ["dismiss", "dismissal", "dismissed", "dismisses", "emit", "emits", "emitted", "execute", "executed", "executes", "explicit", "explicitly", "expose", "exposed", "exposes", "handover", "lone", "malformed", "permit", "permits", "permitted", "prescribed", "preserve", "preserved", "preserves", "prior", "renew", "renewed", "renews", "retain", "retained", "retains", "verification", "verified", "verifies", "verify", "wiring"]);
+  assert.deepEqual(words.newWords, {"explicit": "clear", "verify": "check", "verifies": "checks", "verified": "checked", "malformed": "invalid", "wiring": "connection", "dismissal": "close", "dismiss": "close", "dismisses": "closes", "dismissed": "closed", "expose": "show", "exposes": "shows", "exposed": "shown", "permit": "allow", "permits": "allows", "permitted": "allowed", "retain": "keep", "retains": "keeps", "retained": "kept", "emit": "send", "emits": "sends", "emitted": "sent", "preserve": "keep", "preserves": "keeps", "preserved": "kept", "renew": "start again", "renews": "starts again", "renewed": "started again", "lone": "single", "handover": "transfer", "execute": "run", "executes": "runs", "executed": "run", "prescribed": "named"});
+  assert.deepEqual(Object.keys(words.newWords).sort(), ["dismiss", "dismissal", "dismissed", "dismisses", "emit", "emits", "emitted", "execute", "executed", "executes", "explicit", "expose", "exposed", "exposes", "handover", "lone", "malformed", "permit", "permits", "permitted", "prescribed", "preserve", "preserved", "preserves", "renew", "renewed", "renews", "retain", "retained", "retains", "verified", "verifies", "verify", "wiring"]);
+  assert.equal(words.newWordsFrom, "2026-10-07");
 });
 
-test('[ste-lint-038] The new word rule excludes code', () => {
+test('[ste-lint-038] excludes code from the rule for `newWords`', () => {
   for (const text of ['Use ` retain ` now.', '```\nRetain the file.\n```', '~~~\nRetain the file.\n~~~']) {
     assert.deepEqual(newLint(text, 'openspec/changes/b/proposal.md'), []);
   }
-  assert.deepEqual(lintTestNames([newRecord(['a-002'], 'The ` retain ` result')], newWords, new Set(['a-002'])), []);
+  assert.deepEqual(lintTestNames([newRecord(['a-002'], 'The ` retain ` result')], newWords, registry), []);
 });
 
-test('[ste-lint-039] The message names the suggested word', () => {
+test('[ste-lint-039] shows the suggested word', () => {
   assert.deepEqual(newLint('Retain the file.', 'openspec/changes/b/proposal.md'), [{ rule: 'STE-WORD', level: 'error', file: 'openspec/changes/b/proposal.md', line: 1, message: 'Use "keep", not "retain"' }]);
-  assert.deepEqual(lintTestNames([newRecord(['a-001'])], newWords), [{ rule: 'STE-WORD-OLD', level: 'warning', file: 'src/a.test.mjs', line: 0, message: 'Test "[a-001] The retain result": use "keep", not "retain"' }]);
+  assert.deepEqual(lintTestNames([newRecord(['a-001'])], newWords, registry), [{ rule: 'STE-WORD-OLD', level: 'warning', file: 'src/a.test.mjs', line: 0, message: 'Test "[a-001] The retain result": use "keep", not "retain"' }]);
+});
+
+
+test('[ste-lint-040] excludes parent keys from new prose and new titles', () => {
+  for (const word of ['constructor', '__proto__', 'toString', 'valueOf']) {
+    assert.deepEqual(newLint(word, 'openspec/process.md').filter((item) => item.rule.startsWith('STE-WORD')), []);
+    assert.deepEqual(lintTestNames([newRecord(['a-002'], word)], newWords, registry).filter((item) => item.rule.startsWith('STE-WORD')), []);
+  }
+});
+
+test('[ste-lint-041] gives errors at and after the archive date boundary', () => {
+  for (const folder of ['2026-10-07-b', '2026-10-08-b', 'b', 'prefix-2026-10-06-b']) {
+    assert.deepEqual(newLint('Retain the file.', `openspec/changes/archive/${folder}/proposal.md`).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
+  }
+});
+
+test('[ste-lint-042] keeps an old title for a changed scenario', () => {
+  const root = registryRoot();
+  try {
+    mkdirSync(path.join(root, 'openspec/changes/b/specs/a'), { recursive: true });
+    writeFileSync(path.join(root, 'openspec/changes/b/specs/a/spec.md'), '## MODIFIED Requirements\n#### Scenario: Check a value `a-001`\n');
+    assert.deepEqual(lintProject({ root, records: [newRecord(['a-001'])] }).map((item) => [item.rule, item.level]), [['STE-WORD-OLD', 'warning']]);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('[ste-lint-043] gives errors for unknown IDs and an absent registry', () => {
+  const root = registryRoot();
+  try {
+    assert.deepEqual(lintProject({ root, records: [newRecord(['a-099'])] }).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
+    rmSync(path.join(root, 'openspec/trace/ids.json'));
+    assert.deepEqual(lintProject({ root, records: [newRecord(['a-001'])] }).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
+    assert.deepEqual(lintTestNames([newRecord(['a-001'])], newWords).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('[ste-lint-044] uses new prose when the date key is absent', () => {
+  const words = { ...WORDS, newWords: { retain: 'keep' } };
+  assert.deepEqual(lintMarkdown('Retain the file.', { file: 'openspec/changes/archive/2026-10-06-b/proposal.md', words }).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
+  assert.deepEqual(lintTestNames([newRecord(['a-001'])], words, registry).map((item) => [item.rule, item.level]), [['STE-WORD', 'error']]);
 });

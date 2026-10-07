@@ -64,14 +64,14 @@
     "read",
     "skip"
   ],
+  "newWordsFromNote": "The lint uses this date to separate new prose from old prose.",
+  "newWordsFrom": "2026-10-07",
   "newWordsNote": "The lint gives errors for these words in new prose and warnings in old prose.",
   "newWords": {
     "explicit": "clear",
-    "explicitly": "clearly",
     "verify": "check",
     "verifies": "checks",
     "verified": "checked",
-    "verification": "check",
     "malformed": "invalid",
     "wiring": "connection",
     "dismissal": "close",
@@ -90,7 +90,6 @@
     "emit": "send",
     "emits": "sends",
     "emitted": "sent",
-    "prior": "before",
     "preserve": "keep",
     "preserves": "keeps",
     "preserved": "kept",
@@ -101,7 +100,7 @@
     "handover": "transfer",
     "execute": "run",
     "executes": "runs",
-    "executed": "ran",
+    "executed": "run",
     "prescribed": "named"
   }
 }
