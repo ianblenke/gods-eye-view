@@ -172,8 +172,8 @@
   {
     "id": "080-commit",
     "file": "scripts/spec/lib/measurement.mjs",
-    "old": "const commit = resolveCommit(root, line.commit);",
-    "new": "const commit = resolveCommit(root, 'HEAD');",
+    "old": "resolveCommit(root, line.commit) : null",
+    "new": "resolveCommit(root, 'HEAD') : null",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -182,8 +182,8 @@
   {
     "id": "081-words",
     "file": "scripts/spec/lib/measurement.mjs",
-    "old": "file && !ALLOWED_PATHS.some(prefix => file.startsWith(prefix))",
-    "new": "file && file !== 'openspec/ste/words.json' && !ALLOWED_PATHS.some(prefix => file.startsWith(prefix))",
+    "old": "file && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "new": "file && file !== 'openspec/ste/words.json' && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -582,8 +582,8 @@
   {
     "id": "069-tracked",
     "file": "scripts/spec/lib/measurement.mjs",
-    "old": "file && !ALLOWED_PATHS.some(prefix => file.startsWith(prefix))",
-    "new": "file && file !== 'src/new.js' && !ALLOWED_PATHS.some(prefix => file.startsWith(prefix))",
+    "old": "file && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "new": "file && file !== 'src/new.js' && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -592,8 +592,8 @@
   {
     "id": "069-base",
     "file": "scripts/spec/lib/measurement.mjs",
-    "old": "file && !ALLOWED_PATHS.some(prefix => file.startsWith(prefix))",
-    "new": "file && file !== 'src/math.js' && !ALLOWED_PATHS.some(prefix => file.startsWith(prefix))",
+    "old": "file && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "new": "file && file !== 'src/math.js' && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -602,8 +602,8 @@
   {
     "id": "078-inventory",
     "file": "scripts/spec/lib/measurement.mjs",
-    "old": "file && !ALLOWED_PATHS.some(prefix => file.startsWith(prefix))",
-    "new": "file && file !== 'src/new.js' && !ALLOWED_PATHS.some(prefix => file.startsWith(prefix))",
+    "old": "file && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "new": "file && file !== 'src/new.js' && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -692,8 +692,8 @@
   {
     "id": "033-step1",
     "file": ".claude/commands/opsx/review.md",
-    "old": "or run `make gates-docs CHANGE=<name>`.",
-    "new": "or continue.",
+    "old": "Then run `make gates-docs CHANGE=<name>`.",
+    "new": "Then continue.",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -782,8 +782,8 @@
   {
     "id": "033-review-inputs",
     "file": ".claude/commands/opsx/review.md",
-    "old": "Commit the protected inputs before the ratchet command.",
-    "new": "Continue with the protected inputs.",
+    "old": "Make sure that the ratchet commit has all input files.",
+    "new": "Continue.",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -792,8 +792,8 @@
   {
     "id": "033-agent-inputs",
     "file": "AGENTS.md",
-    "old": "Commit the protected inputs before the ratchet command.",
-    "new": "Continue with the protected inputs.",
+    "old": "Commit each file outside openspec/changes/, openspec/specs/ and openspec/trace/.",
+    "new": "Continue with input files.",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -862,8 +862,8 @@
   {
     "id": "088-names",
     "file": "Makefile",
-    "old": "cd /src && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
-    "new": "cd /src && git ls-files --others --exclude-standard -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "old": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "new": "cd /src && : > /tmp/doc-markers && git ls-files --others --exclude-standard -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -872,7 +872,7 @@
   {
     "id": "088-file",
     "file": "Makefile",
-    "old": "cd /src && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "old": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
     "new": "cd /tmp/work",
     "test": [
       "src/tooling/spec/gates.test.mjs"
@@ -882,8 +882,8 @@
   {
     "id": "088-content",
     "file": "Makefile",
-    "old": "cd /src && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
-    "new": "cd /src && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"source\\\" > \\\"\\$$marker_path\\\" || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "old": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "new": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"source\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -892,8 +892,8 @@
   {
     "id": "088-exists",
     "file": "Makefile",
-    "old": "cd /src && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
-    "new": "cd /src && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "old": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "new": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -1102,8 +1102,8 @@
   {
     "id": "134-definition-order",
     "file": "Makefile",
-    "old": "GATES_DOCS_MARKERS := cd /src && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work\nGATES := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; if [ \"$$1\" != ratchet ]; then :; else $(GATES_DOCS_MARKERS) || exit 2; fi; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"; status=$$?; $(GATES_BACK) || exit 2; exit $$status' gates",
-    "new": "GATES := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; if [ \"$$1\" != ratchet ]; then :; else $(GATES_DOCS_MARKERS) || exit 2; fi; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"; status=$$?; $(GATES_BACK) || exit 2; exit $$status' gates\nGATES_DOCS_MARKERS := cd /src && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "old": "GATES_DOCS_MARKERS := cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work\nGATES := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; if [ \"$$1\" != ratchet ]; then :; else $(GATES_DOCS_MARKERS) || exit 2; fi; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"; status=$$?; $(GATES_BACK) || exit 2; exit $$status' gates",
+    "new": "GATES := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; if [ \"$$1\" != ratchet ]; then :; else $(GATES_DOCS_MARKERS) || exit 2; fi; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"; status=$$?; $(GATES_BACK) || exit 2; exit $$status' gates\nGATES_DOCS_MARKERS := cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
@@ -1138,5 +1138,375 @@
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "trust other ignored files"
+  },
+  {
+    "id": "094-cache-marker",
+    "file": "Makefile",
+    "old": " \":(exclude,glob).gev-cache/**\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-094"
+  },
+  {
+    "id": "094-cache-back",
+    "file": "Makefile",
+    "old": "cp -a /tmp/work/.gev-cache/spec/. /src/.gev-cache/spec/",
+    "new": "cp -a /tmp/work/.gev-cache/. /src/.gev-cache/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-094"
+  },
+  {
+    "id": "091-trace-slash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "'openspec/trace/'",
+    "new": "'openspec/trace'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-091"
+  },
+  {
+    "id": "078-cache-slash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "'.gev-cache/'",
+    "new": "'.gev-cache'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "refuse the input file"
+  },
+  {
+    "id": "080-commit-name",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "files: [], commit: line.commit };\n  const difference",
+    "new": "files: [], commit: 'none' };\n  const difference",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-080"
+  },
+  {
+    "id": "095-test-class",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "isTestFile(file) || isCodeFile(file) ||",
+    "new": "isCodeFile(file) ||",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-095"
+  },
+  {
+    "id": "095-code-class",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "isTestFile(file) || isCodeFile(file) ||",
+    "new": "isTestFile(file) ||",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-095"
+  },
+  {
+    "id": "096-commit-hash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/^[a-fA-F0-9]{40}$/.test(line.commit)",
+    "new": "true",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "commit ref in history"
+  },
+  {
+    "id": "083-check-command",
+    "file": "scripts/spec/gates.mjs",
+    "old": "log(`Command: ${parsed.command}`);",
+    "new": "log('Command: ratchet');",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "name the full check command"
+  },
+  {
+    "id": "011-precheck-status",
+    "file": "Makefile",
+    "old": "node scripts/format.mjs --check &&",
+    "new": "node scripts/format.mjs --check ;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-011"
+  },
+  {
+    "id": "126-history-after",
+    "file": "scripts/spec/gates.mjs",
+    "old": "historyText = readOptional(root, HISTORY_FILE);\n    baseline",
+    "new": "historyText = historyText;\n    baseline",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "read the new totals history"
+  },
+  {
+    "id": "075-root",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/^Dockerfile$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at Dockerfileprod"
+  },
+  {
+    "id": "075-nested",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/^Dockerfile[^/]*$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at containers/Dockerfile.gates"
+  },
+  {
+    "id": "075-suffix",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/(^|\\/)Dockerfile$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at Dockerfileprod"
+  },
+  {
+    "id": "076-root",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/",
+    "new": "/^[^/]*compose[^/]*\\.ya?ml$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at containers/compose.gates.yaml"
+  },
+  {
+    "id": "076-prefix",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/",
+    "new": "/(^|\\/)compose[^/]*\\.ya?ml$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at docker-compose.yml"
+  },
+  {
+    "id": "076-suffix",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/",
+    "new": "/(^|\\/)[^/]*compose\\.ya?ml$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at containers/compose.gates.yaml"
+  },
+  {
+    "id": "076-yaml",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "\\.ya?ml$",
+    "new": "\\.yml$",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored file at compose.yaml"
+  },
+  {
+    "id": "076-yml",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "\\.ya?ml$",
+    "new": "\\.yaml$",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at docker-compose.yml"
+  },
+  {
+    "id": "075-boundary",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/Dockerfile[^/]*$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored name MyDockerfile"
+  },
+  {
+    "id": "075-end",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/(^|\\/)Dockerfile[^/]*/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored name Dockerfile.dir/notes.txt"
+  },
+  {
+    "id": "075-no-slash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/(^|\\/)Dockerfile.*$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored name Dockerfile.dir/notes.txt"
+  },
+  {
+    "id": "076-prefix-characters",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/",
+    "new": "/(^|\\/)[^/-]*compose[^/]*\\.ya?ml$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at docker-compose.yml"
+  },
+  {
+    "id": "076-suffix-no-slash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/",
+    "new": "/(^|\\/)[^/]*compose.*\\.ya?ml$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored name compose/other.yaml"
+  },
+  {
+    "id": "076-dot",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "\\.ya?ml$",
+    "new": "ya?ml$",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored name composeyml"
+  },
+  {
+    "id": "076-end",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "\\.ya?ml$/",
+    "new": "\\.ya?ml/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored name compose.yaml.extra"
+  },
+  {
+    "id": "096-start",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/^[a-fA-F0-9]{40}$/",
+    "new": "/[a-fA-F0-9]{40}$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "commit hash with prefix"
+  },
+  {
+    "id": "096-end",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/^[a-fA-F0-9]{40}$/",
+    "new": "/^[a-fA-F0-9]{40}/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "commit hash with suffix"
+  },
+  {
+    "id": "096-length",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/^[a-fA-F0-9]{40}$/",
+    "new": "/^[a-fA-F0-9]+$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "commit hash with short"
+  },
+  {
+    "id": "096-hex",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/^[a-fA-F0-9]{40}$/",
+    "new": "/^[a-zA-Z0-9]{40}$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "commit hash with letters"
+  },
+  {
+    "id": "033-input-correction",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "If not, commit them and run the ratchet command again.",
+    "new": "Continue.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "094-marker-cleanup",
+    "file": "Makefile",
+    "old": "cd /tmp/work && xargs -0 -r rm -f -- < /tmp/doc-markers",
+    "new": ":",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "keep cache source contents"
+  },
+  {
+    "id": "094-marker-list",
+    "file": "Makefile",
+    "old": "&& printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "keep cache source contents"
+  },
+  {
+    "id": "094-marker-no-list",
+    "file": "Makefile",
+    "old": "if [ ! -f /tmp/doc-markers ]",
+    "new": "if [ -f /tmp/doc-markers ]",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "copy cache contents without a marker list"
+  },
+  {
+    "id": "097-copy-status",
+    "file": "Makefile",
+    "old": "; fi && rm -rf /src/.gev-cache/spec",
+    "new": "; fi; rm -rf /src/.gev-cache/spec",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-097"
+  },
+  {
+    "id": "011-precheck-import-status",
+    "file": "Makefile",
+    "old": "node scripts/check-import-directions.mjs &&",
+    "new": "node scripts/check-import-directions.mjs ;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-011"
+  },
+  {
+    "id": "011-precheck-boundary-status",
+    "file": "Makefile",
+    "old": "node scripts/check-package-boundaries.mjs &&",
+    "new": "node scripts/check-package-boundaries.mjs ;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-011"
   }
 ]

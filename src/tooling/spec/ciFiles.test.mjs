@@ -41,7 +41,7 @@ test('[ci-gates-007] runs the gates with make in the Docker image', () => {
       "if [ ! -f /src/.gev-cache/spec/measurement.json ]; then :; else cp /src/.gev-cache/spec/measurement.json /tmp/work/.gev-cache/spec/measurement.json; fi",
       "cd /tmp/work"
   ]);
-  assert.match(makefile, /^GATES_BACK := rm -rf \/src\/\.gev-cache\/spec && cp -a \/tmp\/work\/openspec\/trace\/\. \/src\/openspec\/trace\/ && mkdir -p \/src\/\.gev-cache && cp -a \/tmp\/work\/\.gev-cache\/\. \/src\/\.gev-cache\/$/m);
+  assert.equal(makefile.match(/^GATES_BACK := (.*)$/m)[1], 'if [ ! -f /tmp/doc-markers ]; then :; else cd /tmp/work && xargs -0 -r rm -f -- < /tmp/doc-markers; fi && rm -rf /src/.gev-cache/spec && cp -a /tmp/work/openspec/trace/. /src/openspec/trace/ && mkdir -p /src/.gev-cache/spec && cp -a /tmp/work/.gev-cache/spec/. /src/.gev-cache/spec/');
   assert.doesNotMatch(makefile, /:\/app\/\.env/);
   assert.match(makefile, /^RUN_IMAGE := docker run --rm .* \$\(IMAGE\)$/m);
   assert.match(makefile, /^gates: ensure-image\n\t\$\(GATES\) check \$\(CHANGE_ARG\) \$\(BASE_ARG\)$/m);
