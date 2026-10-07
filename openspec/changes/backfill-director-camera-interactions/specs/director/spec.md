@@ -44,13 +44,13 @@ Origin: backfill
 - **WHEN** the camera leaves orientation fields absent
 - **THEN** the resolver gives heading zero, pitch minus 35 and roll zero
 
-### Requirement: Explicit camera moves
+### Requirement: Inline camera moves
 
-The director MUST support the current explicit camera moves behavior.
+The director MUST support the current inline camera moves behavior.
 
 Origin: backfill
 
-#### Scenario: Explicit camera moves `director-045`
+#### Scenario: Inline camera moves `director-045`
 
 - **WHEN** the shot supplies a move
 - **THEN** the resolver gives both poses, the curve name and the shot duration
@@ -161,13 +161,13 @@ Origin: backfill
 - **WHEN** the scene supplies invalid anchor data
 - **THEN** the validator rejects invalid IDs, duplicate IDs, titles, coordinates and height references
 
-### Requirement: Explicit endpoint fields
+### Requirement: Inline endpoint fields
 
-The director MUST support the current explicit endpoint fields behavior.
+The director MUST support the current inline endpoint fields behavior.
 
 Origin: backfill
 
-#### Scenario: Explicit endpoint fields `director-053`
+#### Scenario: Inline endpoint fields `director-053`
 
 - **WHEN** a move leaves an inline endpoint coordinate absent
 - **THEN** the validator rejects each absent latitude, longitude or altitude
@@ -189,7 +189,7 @@ Origin: backfill
 ### Requirement: Height references
 
 The director MUST support the current height references behavior.
-Each inline endpoint of an explicit move supplies an ellipsoid height reference.
+Each endpoint of an inline move supplies an ellipsoid height reference.
 
 Origin: backfill
 
@@ -391,7 +391,7 @@ Origin: backfill
 #### Scenario: Action exceptions `director-072`
 
 - **WHEN** the adapter throws or rejects
-- **THEN** the session returns false and permits another action
+- **THEN** the session returns false and allows another action
 
 ### Requirement: Action cancellation
 

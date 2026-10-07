@@ -85,7 +85,7 @@ test('[director-044] The absent heading uses its default', () => {
   assert.equal(resolveCameraPose({}, { lat: 1, lon: 2, alt: 3 }).heading, 0);
 });
 
-test('[director-044] The explicit heading keeps zero', () => {
+test('[director-044] The inline heading keeps zero', () => {
   assert.equal(resolveCameraPose({}, { heading: 0 }).heading, 0);
 });
 
@@ -93,7 +93,7 @@ test('[director-044] The absent pitch uses its default', () => {
   assert.equal(resolveCameraPose({}, { lat: 1, lon: 2, alt: 3 }).pitch, -35);
 });
 
-test('[director-044] The explicit pitch keeps zero', () => {
+test('[director-044] The inline pitch keeps zero', () => {
   assert.equal(resolveCameraPose({}, { pitch: 0 }).pitch, 0);
 });
 
@@ -101,7 +101,7 @@ test('[director-044] The absent roll uses its default', () => {
   assert.equal(resolveCameraPose({}, { lat: 1, lon: 2, alt: 3 }).roll, 0);
 });
 
-test('[director-044] The explicit roll keeps zero', () => {
+test('[director-044] The inline roll keeps zero', () => {
   assert.equal(resolveCameraPose({}, { roll: 0 }).roll, 0);
 });
 

@@ -82,14 +82,14 @@ Test file: `src/director/cameraMoves.test.mjs`.
 
 ```text
 [director-044] The absent heading uses its default
-[director-044] The explicit heading keeps zero
+[director-044] The inline heading keeps zero
 [director-044] The absent pitch uses its default
-[director-044] The explicit pitch keeps zero
+[director-044] The inline pitch keeps zero
 [director-044] The absent roll uses its default
-[director-044] The explicit roll keeps zero
+[director-044] The inline roll keeps zero
 ```
 
-### director-045: Explicit camera moves
+### director-045: Inline camera moves
 
 Test file: `src/director/cameraMoves.test.mjs`.
 
@@ -242,18 +242,18 @@ Test file: `src/director/cameraDocument.test.mjs`.
 [director-052] The anchor needs its height reference
 ```
 
-### director-053: Explicit endpoint fields
+### director-053: Inline endpoint fields
 
 Test file: `src/director/cameraDocument.test.mjs`.
 
 ```text
-[director-053] The explicit start needs lat
-[director-053] The explicit destination needs lat
-[director-053] The explicit start needs lon
-[director-053] The explicit destination needs lon
-[director-053] The explicit start needs alt
-[director-053] The explicit destination needs alt
-[director-053] The explicit start needs all coordinates
+[director-053] The inline start needs lat
+[director-053] The inline destination needs lat
+[director-053] The inline start needs lon
+[director-053] The inline destination needs lon
+[director-053] The inline start needs alt
+[director-053] The inline destination needs alt
+[director-053] The inline start needs all coordinates
 ```
 
 ### director-054: Move curve and time
@@ -295,7 +295,7 @@ Test file: `src/director/cameraDocument.test.mjs`.
 ```text
 [director-055] The modern inline pose accepts its reference
 [director-055] The own height reference decides the check
-[director-055] The explicit endpoint needs a height reference
+[director-055] The inline endpoint needs a height reference
 [director-055] The ellipsoid reference accepts the pose
 [director-055] The inline shape keeps its coordinate fields
 [director-055] The destination needs its height reference
@@ -439,7 +439,7 @@ Test file: `src/director/interactions/interactions.test.mjs`.
 Test file: `src/director/camera.test.mjs`.
 
 ```text
-[director-064] version 4 retains anchor identity, references and explicit move edits through normalization
+[director-064] version 4 keeps anchor identity, references and inline move edits through normalization
 [director-064] The version 1 camera stays an ordinary pose
 [director-064] The version 2 camera stays an ordinary pose
 [director-064] The version 3 camera stays an ordinary pose
@@ -520,8 +520,8 @@ Test file: `src/director/interactions/interactions.test.mjs`.
 Test file: `src/director/interactions/session.test.mjs`.
 
 ```text
-[director-072] The adapter exception permits another action
-[director-072] The adapter rejection permits another action
+[director-072] The adapter exception allows another action
+[director-072] The adapter rejection allows another action
 ```
 
 ### director-073: Action cancellation
@@ -589,7 +589,7 @@ cd /home/ianblenke/docker/gev-work/director-2 && NODE_OPTIONS=--test-isolation=n
 
 ## Known limits
 
-- The host branch at `src/director/interactions/session.js:51` cannot execute. Both the try block and catch block return before finally.
+- The host branch at `src/director/interactions/session.js:51` cannot run. Both the try block and catch block return before finally.
 The V8 result places this branch in the space before finally.
 The tests try successful results, false results, exceptions, rejected promises, immediate cancellation and replacement.
 The tests also try cancellation after the promise race and custom signal methods.
@@ -603,7 +603,7 @@ A custom callback that throws for busy state proves this limit.
 The next dispatch returns false without adapter execution.
 This change does not specify that behavior as correct.
 - Old tagged titles keep their original text.
-The owner rule permits a tag but forbids other changes to those names.
+The owner rule allows a tag but forbids other changes to those names.
 
 ### Tests without tags
 
@@ -670,7 +670,7 @@ cd /home/ianblenke/docker/gev-work/director-2 && node scripts/format.mjs --check
 ```
 
 The lead still runs the ratchet, gates and formal review.
-This work does not archive, commit, push or execute Docker.
+This work does not archive, commit, push or run Docker.
 
 ## Final file state
 

@@ -28,13 +28,13 @@ test('[director-049] The ordinary pose rejects invalid lat', () => {
   assert.throws(() => validate(s), /camera\.lat/);
 });
 
-test('[director-053] The explicit start needs lat', () => {
+test('[director-053] The inline start needs lat', () => {
   const s = moving();
   delete s.shots[0].move.from.lat;
   assert.throws(() => validate(s), /move\.from\.lat/);
 });
 
-test('[director-053] The explicit destination needs lat', () => {
+test('[director-053] The inline destination needs lat', () => {
   const s = moving();
   delete s.shots[0].camera.lat;
   assert.throws(() => validate(s), /camera\.lat/);
@@ -46,13 +46,13 @@ test('[director-049] The ordinary pose rejects invalid lon', () => {
   assert.throws(() => validate(s), /camera\.lon/);
 });
 
-test('[director-053] The explicit start needs lon', () => {
+test('[director-053] The inline start needs lon', () => {
   const s = moving();
   delete s.shots[0].move.from.lon;
   assert.throws(() => validate(s), /move\.from\.lon/);
 });
 
-test('[director-053] The explicit destination needs lon', () => {
+test('[director-053] The inline destination needs lon', () => {
   const s = moving();
   delete s.shots[0].camera.lon;
   assert.throws(() => validate(s), /camera\.lon/);
@@ -64,13 +64,13 @@ test('[director-049] The ordinary pose rejects invalid alt', () => {
   assert.throws(() => validate(s), /camera\.alt/);
 });
 
-test('[director-053] The explicit start needs alt', () => {
+test('[director-053] The inline start needs alt', () => {
   const s = moving();
   delete s.shots[0].move.from.alt;
   assert.throws(() => validate(s), /move\.from\.alt/);
 });
 
-test('[director-053] The explicit destination needs alt', () => {
+test('[director-053] The inline destination needs alt', () => {
   const s = moving();
   delete s.shots[0].camera.alt;
   assert.throws(() => validate(s), /camera\.alt/);
@@ -102,7 +102,7 @@ test('[director-049] The ordinary pose accepts absent coordinates', () => {
   assert.doesNotThrow(() => validate({ shots: [{ camera: {} }] }));
 });
 
-test('[director-053] The explicit start needs all coordinates', () => {
+test('[director-053] The inline start needs all coordinates', () => {
   const s = moving();
   delete s.shots[0].move.from.lat;
   assert.throws(() => validate(s), /move\.from\.lat/);
@@ -232,7 +232,7 @@ test('[director-055] The own height reference decides the check', () => {
   assert.throws(() => validate(s), /altitudeReference/);
 });
 
-test('[director-055] The explicit endpoint needs a height reference', () => {
+test('[director-055] The inline endpoint needs a height reference', () => {
   const s = moving();
   delete s.shots[0].move.from.altitudeReference;
   assert.throws(() => validate(s), /move\.from\.altitudeReference/);

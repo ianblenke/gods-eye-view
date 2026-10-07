@@ -45,7 +45,7 @@ const fixture = () => ({
     },
   ],
 });
-test('[director-064] version 4 retains anchor identity, references and explicit move edits through normalization', () => {
+test('[director-064] version 4 keeps anchor identity, references and inline move edits through normalization', () => {
   const raw = fixture();
   const project = normalizeProject(parseSceneDocument(JSON.stringify(raw)));
   assert.deepEqual(project.scenes[0].anchors, raw.scenes[0].anchors);
