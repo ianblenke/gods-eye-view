@@ -3162,6 +3162,7 @@
   ],
   "ste-lint-012": [
     "src/tooling/spec/gates.test.mjs › [ste-lint-011 ste-lint-012 ste-lint-016] checks only Markdown with the lint command",
+    "src/tooling/spec/gates.test.mjs › [ste-lint-037 ste-lint-012] The old word warning keeps a success status",
     "src/tooling/spec/ste.test.mjs › [ste-lint-012] gives a success status for warnings only",
     "src/tooling/spec/ste.test.mjs › [ste-lint-023 ste-lint-012] keeps a success status for the noun warning"
   ],
@@ -3211,6 +3212,42 @@
   ],
   "ste-lint-027": [
     "src/tooling/spec/ste.test.mjs › [ste-lint-027] excludes inline code from the rule STE-WORD for tagged titles"
+  ],
+  "ste-lint-028": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-028] The active change word gives an error"
+  ],
+  "ste-lint-029": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-029] The archive word gives a warning"
+  ],
+  "ste-lint-030": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-030] The applied spec word gives a warning"
+  ],
+  "ste-lint-031": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-031] The agent word gives an error"
+  ],
+  "ste-lint-032": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-032] The active title word gives an error"
+  ],
+  "ste-lint-033": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-033] The old title word gives a warning"
+  ],
+  "ste-lint-034": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-034] The mixed tags select new prose"
+  ],
+  "ste-lint-035": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-035] The next check uses the current word map"
+  ],
+  "ste-lint-036": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-036] The real word map matches the approved words"
+  ],
+  "ste-lint-037": [
+    "src/tooling/spec/gates.test.mjs › [ste-lint-037 ste-lint-012] The old word warning keeps a success status"
+  ],
+  "ste-lint-038": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-038] The new word rule excludes code"
+  ],
+  "ste-lint-039": [
+    "src/tooling/spec/ste.test.mjs › [ste-lint-039] The message names the suggested word"
   ],
   "wind-001": [
     "src/layers/wind/fields.test.mjs › [wind-001] scalar read rejects absent and invalid data",

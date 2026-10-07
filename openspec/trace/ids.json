@@ -3009,6 +3009,66 @@
     "since": "2026-10-07",
     "change": "ste-noun-warning"
   },
+  "ste-lint-028": {
+    "hash": "4d187f000e7dd7e1c2ae397326690900992e2c27851741a5500a53c3e28660f4",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-029": {
+    "hash": "2c38b6c4eb3f296ff96d5e5f5ff7bf89841587dac0bfac0c43ee24f832f896fd",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-030": {
+    "hash": "b6ffc494e83669923d53473b116fae5910956f2423d18d5d93fca68d29cc7dab",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-031": {
+    "hash": "9c4baf237dae294c1b53d7972c55f08c3835c3146ff44cb6a66e0de3396c2349",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-032": {
+    "hash": "431abde2b7df3eaf1895b7f2dd8a76cc9b07aabfd91bba4878e41402917c07cc",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-033": {
+    "hash": "994628677c9cc504f294176adb1d8d92ab75f2e16cc7a9e1936acbe9d510545b",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-034": {
+    "hash": "474cdb046a65084fb1090dd9ec7ec27a7aedf4abe08c01658336cd9f76ddc80b",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-035": {
+    "hash": "9cdbcf43f8366fabd4593fc23136f1106887715d440e904237fa438507b48495",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-036": {
+    "hash": "33bc39d52b58fdb4d51fec726cca51d86192a5d7e3bcf9a3e8945a1207cf79e2",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-037": {
+    "hash": "3ee4277ae70cb574fd94d6d8778df5093a065df9c69fabfc467288d2efdb4797",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-038": {
+    "hash": "1ef1f96d7c92756800bf31ecc1e0304cc961c64247d4cd1afdea19d1d2bae08e",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
+  "ste-lint-039": {
+    "hash": "7b368c30c19944510a5c671fb03717ba75557df66f490addf33191ca732a1d7e",
+    "since": "2026-10-07",
+    "change": "ste-new-prose-words"
+  },
   "wind-001": {
     "hash": "25376818102333bb788cde47843c2dce37362cebf4f938da44726885f94e75ac",
     "since": "2026-09-29",
