@@ -1,0 +1,27 @@
+✔ [recent-imagery-001] umm_json granules carry id, times, scene cloud and a footprint ring (21.509178ms)
+✔ [recent-imagery-002] the CMR query names the collection, box, window and page size with literal commas (6.470817ms)
+✔ [recent-imagery-003] both HLS collections fold with the VIIRS days; one failing product is reported, not fatal (27.446213ms)
+✔ [recent-imagery-004] an invalid box or clock is refused before any request (3.471666ms)
+✔ [recent-imagery-005] CMR pages follow the CMR-Search-After cursor up to 2,000 records and truncation stays honest (87.790351ms)
+✔ [recent-imagery-001] absent catalog fields use a default for each field (2.418851ms)
+✔ [recent-imagery-004] an invalid box and an absent fetch fail before source work (4.611297ms)
+✔ [recent-imagery-001] absent cloud attributes stay unknown (1.751458ms)
+✔ [recent-imagery-001] an invalid rectangle edge does not allow a footprint (2.430085ms)
+✔ [recent-imagery-005] the cursor condition alone ends the page read (11.389235ms)
+✔ [recent-imagery-005] the short-page condition alone ends the page read (14.278229ms)
+✔ [recent-imagery-005] the record-cap condition alone ends the page read (5.30626ms)
+✔ [recent-imagery-005] the hit-count condition alone ends the page read (4.882861ms)
+✔ [recent-imagery-004] a clock error names its error type and cause (1.911963ms)
+✔ [recent-imagery-002] a Date clock keeps its millisecond value in each query (2.942377ms)
+✔ [recent-imagery-001] an empty cloud value alone stays unknown (1.159516ms)
+✔ [recent-imagery-001] a Date timestamp alone does not create a granule (0.903391ms)
+✔ [recent-imagery-001] a nonfinite polygon latitude alone removes its point (1.43192ms)
+✔ [recent-imagery-001] a rectangle with three valid corners does not give a footprint (1.656352ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 356.429523

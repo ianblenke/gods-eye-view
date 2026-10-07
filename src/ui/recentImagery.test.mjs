@@ -1167,7 +1167,7 @@ test('[recent-imagery-049] DETAILS is a collapsed rail card holding every note, 
   assert.equal(article.dataset.open, 'false');
 });
 
-test('[recent-imagery-050] the body scroll position survives renders even when DOM mutations reset it', async () => {
+test('[recent-imagery-050] the body scroll position stays after content updates', async () => {
   const f = fixture();
   await f.ready();
   f.body.scrollTop = 120;
@@ -1177,6 +1177,7 @@ test('[recent-imagery-050] the body scroll position survives renders even when D
     return insert(...args);
   };
   f.thumbnails.probe(L16, 'empty');
+  assert.equal(f.body.scrollTop, 120);
   f.layer.setShowUnavailable(true);
   assert.equal(f.body.scrollTop, 120);
 });
@@ -1301,7 +1302,7 @@ test('[recent-imagery-043 recent-imagery-044] absent panel input and an absent t
   f.layer.destroy();
 });
 
-test('[recent-imagery-045 recent-imagery-050] strip keys and dimensions keep focus local', async () => {
+test('[recent-imagery-045] strip keys and dimensions keep focus local', async () => {
   const f = fixture();
   await f.ready();
   const p = snapshotPanel(f.snap());
@@ -1405,7 +1406,7 @@ test('[recent-imagery-043 recent-imagery-048 recent-imagery-049] the panel owns 
   f.layer.destroy();
 });
 
-test('[recent-imagery-049] details with real dimensions open the card', async () => {
+test('[recent-imagery-049 recent-imagery-050 recent-imagery-055] the panel shows the DETAILS card when DETAILS opens', async () => {
   const f = fixture();
   await f.ready();
   f.body.clientHeight = 100;
@@ -1414,20 +1415,27 @@ test('[recent-imagery-049] details with real dimensions open the card', async ()
   const header = f
     .byId('ri-details')
     .find((node) => node.classList.contains('rail-card-header'));
-  header.parentNode.getBoundingClientRect = () => ({ top: 120, height: 60 });
+  header.parentNode.getBoundingClientRect = () => ({
+    top: 120,
+    height: header.parentNode.dataset.open === 'true' ? 60 : 0,
+  });
   header.click();
   assert.equal(header.parentNode.dataset.open, 'true');
-  assert.equal(f.body.scrollTop, 0);
+  assert.equal(f.body.scrollTop, 68);
   header.click();
-  header.parentNode.getBoundingClientRect = () => ({ top: -10, height: 60 });
+  header.parentNode.getBoundingClientRect = () => ({
+    top: -10,
+    height: header.parentNode.dataset.open === 'true' ? 60 : 0,
+  });
   header.click();
   assert.equal(header.parentNode.dataset.open, 'true');
-  assert.equal(f.body.scrollTop, 0);
+  assert.equal(f.body.scrollTop, 46);
   header.click();
   f.body.clientTop = 0;
   f.body.scrollTop = 40;
   header.click();
   assert.equal(header.parentNode.dataset.open, 'true');
+  assert.equal(f.body.scrollTop, 20);
   f.readout.destroy();
   f.layer.destroy();
 });
@@ -2428,11 +2436,14 @@ test('[recent-imagery-049] a zero viewport height alone does not allow a scroll 
   p.readout.destroy();
 });
 
-test('[recent-imagery-049] absent card dimensions alone do not allow a scroll request', async () => {
+test('[recent-imagery-049 recent-imagery-055] a card without a getBoundingClientRect method keeps the body scroll position', async () => {
   const s = await auditPanelState();
   const p = auditPanel(s),
     view = auditScroll(p, { cardRect: false });
+  p.body.scrollTop = 40;
+  view.requests.length = 0;
   assert.doesNotThrow(() => view.header.click());
+  assert.equal(p.body.scrollTop, 40);
   assert.deepEqual(view.requests, []);
   p.readout.destroy();
 });
@@ -2446,14 +2457,18 @@ test('[recent-imagery-049] a closed DETAILS card does not request scroll', async
   p.readout.destroy();
 });
 
-test('[recent-imagery-049] an open DETAILS card does not request scroll again', async () => {
+test('[recent-imagery-049 recent-imagery-050 recent-imagery-055] an open DETAILS card does not request scroll again', async () => {
   const s = await auditPanelState();
   const p = auditPanel(s),
     view = auditScroll(p);
   view.header.click();
+  assert.equal(p.body.scrollTop, 10);
   view.requests.length = 0;
   p.emit(s);
-  assert.deepEqual(view.requests, []);
+  assert.deepEqual(
+    { scrollTop: p.body.scrollTop, requests: view.requests },
+    { scrollTop: 10, requests: [] },
+  );
   p.readout.destroy();
 });
 
@@ -2900,4 +2915,55 @@ test('[recent-imagery-043] a snapshot callback that destroys the panel does not 
   };
   p.emit(null);
   assert.equal(p.readout.root.dataset.mode, 'image');
+});
+
+test('[recent-imagery-055] a viewport height of zero keeps the body scroll position', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  const view = auditScroll(p, { height: 0 });
+  p.body.scrollTop = 40;
+  view.requests.length = 0;
+  view.header.click();
+  assert.equal(p.body.scrollTop, 40);
+  assert.deepEqual(view.requests, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-055] DETAILS does not move the body when it closes', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  const view = auditScroll(p);
+  view.header.click();
+  assert.equal(p.body.scrollTop, 10);
+  view.requests.length = 0;
+  view.header.click();
+  assert.equal(p.body.scrollTop, 10);
+  assert.deepEqual(view.requests, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-055] a scroller without a viewport height value keeps the body scroll position', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  const view = auditScroll(p, { top: -10 });
+  delete p.body.clientHeight;
+  assert.equal(p.body.clientHeight, undefined);
+  p.body.scrollTop = 40;
+  view.requests.length = 0;
+  view.header.click();
+  assert.equal(p.body.scrollTop, 40);
+  assert.deepEqual(view.requests, []);
+  p.readout.destroy();
+});
+
+test('[recent-imagery-055] a card inside the view keeps the body scroll position', async () => {
+  const s = await auditPanelState();
+  const p = auditPanel(s);
+  const view = auditScroll(p, { top: 10, cardHeight: 20 });
+  p.body.scrollTop = 40;
+  view.requests.length = 0;
+  view.header.click();
+  assert.equal(p.body.scrollTop, 40);
+  assert.deepEqual(view.requests, []);
+  p.readout.destroy();
 });

@@ -272,7 +272,6 @@ export function createRecentImageryPanel({
   const detailsHost = el('div', 'ri-details', root);
   detailsHost.id = 'ri-details';
   let detailsOpen = false;
-  let detailsShownOpen = false;
   const details = createRailCards({
     container: detailsHost,
     document,
@@ -280,6 +279,7 @@ export function createRecentImageryPanel({
     onOpen: () => {
       detailsOpen = !detailsOpen;
       render();
+      if (detailsOpen) revealCard(container, detailsHost.children[0]);
     },
   });
 
@@ -296,9 +296,8 @@ export function createRecentImageryPanel({
   let destroyed = false;
 
   /**
-   * The body is the scroll container and no render may move it: a
-   * re-render, a thumbnail arriving or a notification never sends the
-   * operator back to the top.
+   * Content updates keep the body position.
+   * DETAILS can then move the body to show its card.
    */
   function preserveScroll(fn) {
     const top = Number(container.scrollTop) || 0;
@@ -758,9 +757,6 @@ export function createRecentImageryPanel({
         ],
       },
     ]);
-    if (detailsOpen && !detailsShownOpen)
-      revealCard(container, detailsHost.children[0]);
-    detailsShownOpen = detailsOpen;
   }
 
   // ---- divider ----------------------------------------------------------
