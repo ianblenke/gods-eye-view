@@ -58,13 +58,12 @@ test('[director-068] The busy session refuses a second execution', async () => {
   s.activate([{ id: 'a' }]);
   const work = s.dispatch('a');
   await Promise.resolve();
-  assert.equal(
-    await Promise.race([
-      s.dispatch('a'),
-      new Promise((r) => setImmediate(() => r('unsettled'))),
-    ]),
-    false,
-  );
+  let timer;
+  const unsettled = new Promise((r) => {
+    timer = setImmediate(() => r('unsettled'));
+  });
+  assert.equal(await Promise.race([s.dispatch('a'), unsettled]), false);
+  clearImmediate(timer);
   assert.equal(calls, 1);
   resolve(true);
   assert.equal(await work, true);
@@ -166,13 +165,12 @@ test('[director-073] The session settles uncooperative work', async () => {
   await Promise.resolve();
   s.clear();
   assert.equal(signal.aborted, true);
-  assert.equal(
-    await Promise.race([
-      work,
-      new Promise((r) => setImmediate(() => r('unsettled'))),
-    ]),
-    false,
-  );
+  let timer;
+  const unsettled = new Promise((r) => {
+    timer = setImmediate(() => r('unsettled'));
+  });
+  assert.equal(await Promise.race([work, unsettled]), false);
+  clearImmediate(timer);
   assert.deepEqual(s.getState(), {
     active: false,
     busy: false,
