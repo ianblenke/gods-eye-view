@@ -2818,7 +2818,7 @@
     "src/layers/recentImagery/rendering.test.mjs › [recent-imagery-022] upstream deferrals from both slots share one delayed retry frame; destroy disarms it"
   ],
   "recent-imagery-023": [
-    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026 recent-imagery-053] the fetch errors and AbortError give different states",
+    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026 recent-imagery-053] an Error and an AbortError from the fetch give different states",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-027] a listener error or a URL error does not stop the release of images",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-027] the default loader owns its URLs and releases them",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023] Data-Present decides the day: present with an object URL and sensing time, empty, or error",
@@ -2837,7 +2837,7 @@
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-025] reading every card in strip order (a snapshot) never decides who is evicted; evicted days stay known and come back on request"
   ],
   "recent-imagery-026": [
-    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026 recent-imagery-053] the fetch errors and AbortError give different states",
+    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026 recent-imagery-053] an Error and an AbortError from the fetch give different states",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-026] a URL callback while the loader clears images does not start a day that the loader removed",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-026] a callback that clears the loader revokes its late URL",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-026] a late empty response after a stop leaves the day unknown",
@@ -3188,8 +3188,8 @@
     "src/ui/recentImagery.test.mjs › [recent-imagery-043 recent-imagery-048 recent-imagery-049] the panel owns its class, details title and export filename",
     "src/ui/recentImagery.test.mjs › [recent-imagery-044 recent-imagery-049] the panel details use absent and overview facts",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-050 recent-imagery-055] an open DETAILS card does not request scroll again",
-    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-055] an absent card rectangle alone does not allow a scroll request",
-    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-055] the panel shows the DETAILS card when DETAILS opens",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-050 recent-imagery-055] the panel shows the DETAILS card when DETAILS opens",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-055] a card without a getBoundingClientRect method keeps the body scroll position",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] DETAILS is a collapsed rail card holding every note, and the empty-days toggle",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] a card above the viewport requests its upper edge",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] a card below the viewport requests the minimum offset",
@@ -3210,6 +3210,7 @@
   ],
   "recent-imagery-050": [
     "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-050 recent-imagery-055] an open DETAILS card does not request scroll again",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-050 recent-imagery-055] the panel shows the DETAILS card when DETAILS opens",
     "src/ui/recentImagery.test.mjs › [recent-imagery-050] the body scroll position stays after content updates"
   ],
   "recent-imagery-051": [
@@ -3226,8 +3227,8 @@
     "src/layers/recentImagery/testDoubles.test.mjs › [recent-imagery-052] the thumbnail double calls both probe subscribers"
   ],
   "recent-imagery-053": [
-    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026 recent-imagery-053] the fetch errors and AbortError give different states",
-    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-053] a present day keeps proof after a loader cancellation",
+    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026 recent-imagery-053] an Error and an AbortError from the fetch give different states",
+    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-053] a day with present proof keeps its proof after a loader cancellation",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-053] an old fetch cannot remove a new entry",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-053] the loader starts a new fetch after an external AbortError"
   ],
@@ -3238,10 +3239,12 @@
   ],
   "recent-imagery-055": [
     "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-050 recent-imagery-055] an open DETAILS card does not request scroll again",
-    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-055] an absent card rectangle alone does not allow a scroll request",
-    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-055] the panel shows the DETAILS card when DETAILS opens",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-050 recent-imagery-055] the panel shows the DETAILS card when DETAILS opens",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-055] a card without a getBoundingClientRect method keeps the body scroll position",
     "src/ui/recentImagery.test.mjs › [recent-imagery-055] DETAILS does not move the body when it closes",
-    "src/ui/recentImagery.test.mjs › [recent-imagery-055] DETAILS without a viewport height keeps the body scroll position"
+    "src/ui/recentImagery.test.mjs › [recent-imagery-055] a card inside the view keeps the body scroll position",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-055] a scroller without a viewport height value keeps the body scroll position",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-055] a viewport height of zero keeps the body scroll position"
   ],
   "recent-imagery-056": [
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-013 recent-imagery-056] a latitude that is not finite gives unknown coverage",
