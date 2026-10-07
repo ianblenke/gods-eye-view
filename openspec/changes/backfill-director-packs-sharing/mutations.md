@@ -628,9 +628,9 @@ Old:
 p[2] ?? 0
 New:
 0
-Selected test: [director-085] The position keeps explicit height
+Selected test: [director-085] The position keeps the height in the data
 Result: KILLED
-m044: KILLED [director-085] The position keeps explicit height
+m044: KILLED [director-085] The position keeps the height in the data
 ```
 
 ## m045
@@ -3460,9 +3460,9 @@ Old:
 p.bounds[0] >= p.bounds[2]
 New:
 false
-Selected test: [director-080] image bounds and media anchor references are explicit and validated
+Selected test: [director-080] image bounds and media anchor references are stated and validated
 Result: KILLED
-m245: KILLED [director-080] image bounds and media anchor references are explicit and validated
+m245: KILLED [director-080] image bounds and media anchor references are stated and validated
 ```
 
 ## m246
@@ -3488,9 +3488,9 @@ Old:
 return { id, type: g.type, coordinates };
 New:
 return { id, type: g.type, coordinates, properties: feature.properties };
-Selected test: [director-087] GeoJSON preserves stable geometry IDs but never properties or remote style hints
+Selected test: [director-087] GeoJSON keeps stable geometry IDs but never properties or remote style hints
 Result: KILLED
-m247: KILLED [director-087] GeoJSON preserves stable geometry IDs but never properties or remote style hints
+m247: KILLED [director-087] GeoJSON keeps stable geometry IDs but never properties or remote style hints
 ```
 
 ## m248
@@ -3616,9 +3616,9 @@ Old:
 input.version !== 1
 New:
 false
-Selected test: [director-099] bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files and broken integrity
+Selected test: [director-099] bundle rejects invalid bytes, unknown fields, traversal, duplicates, missing files and broken integrity
 Result: KILLED
-m256: KILLED [director-099] bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files 
+m256: KILLED [director-099] bundle rejects invalid bytes, unknown fields, traversal, duplicates, missing files 
 ```
 
 ## m257

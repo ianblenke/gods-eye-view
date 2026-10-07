@@ -473,7 +473,7 @@ test('[director-085] The position uses zero for absent height', async () => {
   );
 });
 
-test('[director-085] The position keeps explicit height', async () => {
+test('[director-085] The position keeps the height in the data', async () => {
   assert.deepEqual(
     geoFeatures([feature('p', 'Point', [0, 0, 7])])[0].coordinates,
     [0, 0, 7],

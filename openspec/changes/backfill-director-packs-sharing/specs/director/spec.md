@@ -125,7 +125,7 @@ Origin: backfill
 #### Scenario: Asset request options `director-095`
 
 - **WHEN** a caller requests a safe asset path
-- **THEN** the source uses the registered directory and explicit request options
+- **THEN** the source uses the registered directory and stated request options
 
 #### Scenario: Asset stream limits `director-096`
 
@@ -139,7 +139,7 @@ Origin: backfill
 
 ### Requirement: Scene bundles
 
-The bundle helpers MUST check supplied assets and preserve the source project.
+The bundle helpers MUST check supplied assets and keep the source project.
 
 Origin: backfill
 
