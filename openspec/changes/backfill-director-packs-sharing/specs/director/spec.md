@@ -1,10 +1,13 @@
 # Director data packs and shares
 
+HTTP means Hypertext Transfer Protocol.
+HTTPS means HTTP with a secure connection.
+
 ## ADDED Requirements
 
-### Requirement: Pack manifests
+### Requirement: Data pack manifests
 
-The pack validators MUST check declarations before asset access.
+The data pack validators MUST accept valid declarations and reject invalid declarations.
 
 Origin: backfill
 
@@ -12,40 +15,49 @@ Origin: backfill
 
 - **WHEN** a caller supplies a relative asset path
 - **THEN** the validator accepts safe directory names and rejects traversal or URL syntax
+- **AND** The validator accepts paths of at most 1024 characters and rejects longer paths.
 
-#### Scenario: Pack formats `director-077`
+#### Scenario: Data pack formats `director-077`
 
-- **WHEN** a caller supplies a pack manifest
+- **WHEN** a caller supplies a data pack manifest
 - **THEN** the validator accepts version 1 and the geojson, image and media formats
+- **AND** The validator rejects other versions and formats.
+- **AND** The data pack ID and source name each accept at most 256 characters.
 
-#### Scenario: Pack attribution `director-078`
+#### Scenario: Data pack attribution `director-078`
 
-- **WHEN** a pack declares attribution
+- **WHEN** a data pack declares attribution
 - **THEN** the validator checks text, license and an optional HTTPS link without credentials, query or fragment
+- **AND** Text and license each accept at most 4096 characters; the HTTPS link accepts at most 2048 characters.
 
-#### Scenario: Pack integrity fields `director-079`
+#### Scenario: Data pack integrity fields `director-079`
 
-- **WHEN** a pack declares byteLength or sha256
-- **THEN** the validator checks a positive integer through 8388608 and a lowercase hexadecimal digest of 64 characters
+- **WHEN** a data pack declares byteLength or sha256
+- **THEN** the validator checks a positive integer up to 8388608 bytes and a lowercase hexadecimal digest of 64 characters
+- **AND** The validator rejects 63-character, 65-character and uppercase digests, and accepts exactly 64 lowercase hexadecimal characters.
 
 #### Scenario: Image placement `director-080`
 
-- **WHEN** an image pack declares placement
+- **WHEN** an image data pack declares placement
 - **THEN** the validator checks geographic bounds, ordered edges, height and the ellipsoid reference
+- **AND** The validator rejects equal west and east edges, and equal south and north edges.
+- **AND** The validator accepts longitude limits of -180 and 180 degrees, and latitude limits of -90 and 90 degrees.
+- **AND** The validator rejects numeric text for bounds and height.
 
 #### Scenario: Media placement `director-081`
 
-- **WHEN** a media pack declares placement
+- **WHEN** a media data pack declares placement
 - **THEN** the validator checks its scene anchor reference
 
-#### Scenario: Scene pack references `director-082`
+#### Scenario: Scene data pack references `director-082`
 
-- **WHEN** a scene declares packs or shot pack IDs
-- **THEN** the validator rejects duplicate pack IDs, unknown shot references and duplicate shot references
+- **WHEN** a scene declares data packs or data pack IDs for a shot
+- **THEN** the validator rejects duplicate data pack IDs, unknown shot references and duplicate shot references
+- **AND** The validator ignores a data pack list from the parent object of the scene.
 
-### Requirement: Pack geometry
+### Requirement: Data pack geometry
 
-The geometry decoder MUST check bounded geometry and return inert coordinates.
+The geometry decoder MUST return IDs, geometry types and coordinates without feature properties.
 
 Origin: backfill
 
@@ -53,16 +65,19 @@ Origin: backfill
 
 - **WHEN** a caller decodes GeoJSON
 - **THEN** the decoder checks a FeatureCollection with an array of at most 2000 features
+- **AND** The decoder rejects invalid UTF8 bytes and null.
 
 #### Scenario: GeoJSON feature IDs `director-084`
 
 - **WHEN** a collection contains features
 - **THEN** the decoder checks Feature types and distinct nonblank string IDs of at most 256 characters
+- **AND** The decoder rejects a null feature with the feature ID error.
 
 #### Scenario: Geographic positions `director-085`
 
 - **WHEN** a geometry supplies positions without inherited coordinate values
 - **THEN** the decoder checks finite longitude, latitude and height within geographic limits
+- **AND** The decoder accepts at most 50000 positions and gives zero meters for an absent height.
 
 #### Scenario: Lines and rings `director-086`
 
@@ -71,49 +86,62 @@ Origin: backfill
 
 #### Scenario: Geometry output `director-087`
 
-- **WHEN** a collection contains supported geometry
+- **WHEN** a collection contains geometry
 - **THEN** the decoder returns IDs, geometry types and coordinates without properties
+- **AND** The decoder rejects unsupported or absent geometry and accepts at most 128 polygon rings.
 
-### Requirement: Pack sessions
+### Requirement: Data pack sessions
 
-The pack session MUST own asset work and disposable resources.
+The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.
 
 Origin: backfill
 
 #### Scenario: Session admission `director-088`
 
 - **WHEN** a caller creates a session
-- **THEN** the session starts with idle state and its load method checks pack lists before asset work
+- **THEN** the session starts with the idle state and its load method checks data pack lists before asset work
+- **AND** The load method accepts at most eight data packs and checks every declaration before the first source call.
+- **AND** The load method returns false for a destroyed session or a cancelled signal.
 
 #### Scenario: Session resources `director-089`
 
-- **WHEN** a session completes asset work
-- **THEN** the session reports ready state and disposes its handles when the caller clears or destroys it
+- **WHEN** a session loads assets
+- **THEN** after success, the session reports the ready state and disposes its handles when the caller clears or destroys it
+- **AND** The session rejects a null handle or a handle without a dispose function.
+- **AND** During asset work, the session reports the loading state.
+- **AND** A change to a returned state object does not change the session state.
+- **AND** The session removes the deadline timer after success or clear.
 
 #### Scenario: Session cancellation `director-090`
 
-- **WHEN** a caller cancels pending asset work
-- **THEN** the session returns false and disposes late adapter resources
+- **WHEN** a caller cancels asset work that is not complete
+- **THEN** the session returns false and disposes late renderer resources
 
 #### Scenario: Session replacement `director-091`
 
-- **WHEN** a caller replaces pending asset work
-- **THEN** the old request returns false and leaves the new resources intact
+- **WHEN** a caller replaces asset work that is not complete
+- **THEN** the old load call returns false and leaves the new resources intact
 
 #### Scenario: Session errors `director-092`
 
 - **WHEN** a source fails or the asset deadline expires
 - **THEN** the session removes partial resources and reports a stable error
-- **AND** with a missing source adapter, the load reads the pack size once, during validation, and does not call the source
+- **AND** with no registered source and a byteLength field in the declaration, the load method reads that field once, during validation
+- **AND** The default deadline is 15000 milliseconds.
+- **AND** With no renderer, the load method does not call the registered source.
+- **AND** The session disposes each partial resource when the deadline expires.
 
 #### Scenario: Session asset checks `director-093`
 
-- **WHEN** a source returns bytes for a pack
-- **THEN** the session checks byte type, size, total bytes and declared integrity before the adapter call
+- **WHEN** a source returns bytes for a data pack
+- **THEN** the session checks byte type, size, total bytes and declared integrity before the renderer call
+- **AND** The session accepts up to 8388608 bytes per asset and up to 33554432 total bytes.
+- **AND** The source receives the source path and the byteLength field or the default byte limit.
+- **AND** The renderer receives the asset and the abort signal of the source call.
 
 ### Requirement: Asset sources
 
-The directory source MUST confine requests and bound stream bytes.
+The directory source MUST use its directory URL and reject bytes above the asset limit.
 
 Origin: backfill
 
@@ -124,18 +152,21 @@ Origin: backfill
 
 #### Scenario: Asset request options `director-095`
 
-- **WHEN** a caller requests a safe asset path
-- **THEN** the source uses the registered directory and stated request options
+- **WHEN** a caller asks for a safe asset path
+- **THEN** the source uses the registered directory and fixed request options: no credentials, redirects as errors, no referrer, no cache
+- **AND** Without a caller fetch function, the directory source uses the global fetch function.
 
 #### Scenario: Asset stream limits `director-096`
 
 - **WHEN** a source reads an asset stream
 - **THEN** the source checks header and stream byte limits and joins its chunks
+- **AND** The source removes media type parameters and space, and changes the media type to lowercase text.
+- **AND** An absent media type gives empty text.
 
 #### Scenario: Asset source cleanup `director-097`
 
-- **WHEN** a request fails or its signal stops it
-- **THEN** the source rejects the request and releases stream resources
+- **WHEN** an asset request fails or its signal stops it
+- **THEN** the source rejects the asset request and releases stream resources
 
 ### Requirement: Scene bundles
 
@@ -145,37 +176,43 @@ Origin: backfill
 
 #### Scenario: Share text admission `director-098`
 
-- **WHEN** a caller supplies scene share text
-- **THEN** the parser checks text type, byte limits and JSON syntax
+- **WHEN** a caller supplies project share text
+- **THEN** the bundle helpers check text type, byte limits and JSON syntax
 
 #### Scenario: Bundle asset entries `director-099`
 
 - **WHEN** a caller supplies bundle assets
-- **THEN** the parser checks fields, paths, media types, distinct paths and base64 syntax
+- **THEN** the bundle helpers check fields, paths, media types, distinct paths and base64 syntax
+- **AND** The bundle helpers accept at most 64 assets and reject 65 different paths.
+- **AND** The bundle helpers accept up to 8388608 bytes per asset and up to 33554432 total bytes.
+- **AND** The base64 length limit is 11184812 characters.
+- **AND** The bundle helpers reject a bundle version other than 1.
 
 #### Scenario: Bundle asset references `director-100`
 
-- **WHEN** a bundle declares pack assets
-- **THEN** the parser checks asset hashes and exact pack references
+- **WHEN** a bundle declares data pack assets
+- **THEN** the bundle helpers check asset digests and exact data pack references
 
 #### Scenario: Bundle export copy `director-101`
 
 - **WHEN** a caller exports a project with supplied assets
-- **THEN** the exporter copies the project and writes bundle paths, byte lengths and hashes
+- **THEN** the bundle helpers copy the project and write bundle paths, byte lengths and digests
 
 #### Scenario: Bundle export limits `director-102`
 
-- **WHEN** a caller supplies files for bundle export
-- **THEN** the exporter checks byte limits, media types, file totals and declared integrity
+- **WHEN** a caller supplies assets for bundle export
+- **THEN** the bundle helpers check byte limits, media types, asset totals and declared integrity
+- **AND** The bundle helpers accept up to 8388608 bytes per asset and up to 33554432 total bytes.
+- **AND** The bundle helpers reject an unsupported media type during export.
 
 #### Scenario: Shared asset reuse `director-103`
 
-- **WHEN** packs use the same source and path
-- **THEN** the exporter writes one asset and rejects conflicting integrity declarations
+- **WHEN** data packs use the same source and path
+- **THEN** the bundle helpers write one asset and reject integrity declarations that differ
 
 ### Requirement: Bundle byte store
 
-The byte store MUST own project assets and return copied bytes.
+The byte store MUST copy the asset map and return byte copies.
 
 Origin: backfill
 
@@ -186,8 +223,8 @@ Origin: backfill
 
 #### Scenario: Bundle byte access `director-105`
 
-- **WHEN** a caller requests stored bundle bytes
-- **THEN** the store returns a byte copy and rejects absent, excess or cancelled assets
+- **WHEN** a caller asks for stored bundle bytes
+- **THEN** the store returns a byte copy and rejects absent or excess bytes and a cancelled asset call
 
 ### Requirement: Share work
 
@@ -197,13 +234,17 @@ Origin: backfill
 
 #### Scenario: Share file budgets `director-106`
 
-- **WHEN** a caller supplies a scene file
-- **THEN** the reader checks the file suffix and size before text access
+- **WHEN** a caller supplies a project file
+- **THEN** the share helpers check the file suffix and size before text access
+- **AND** The file limit is 5242880 bytes, or 52428800 bytes for a name with the .gevbundle.json suffix.
+- **AND** The share helpers accept the limit and reject one more byte.
 
 #### Scenario: Share work cancellation `director-107`
 
 - **WHEN** share work uses a signal
 - **THEN** the helper rejects cancelled work and settles successful work or errors
+- **AND** The bundle helpers check the signal before each asset and after each digest during import and export.
+- **AND** During export, the bundle helpers also check the signal after the asset result.
 
 ### Requirement: Share preview
 
@@ -213,16 +254,16 @@ Origin: backfill
 
 #### Scenario: Preview totals `director-108`
 
-- **WHEN** a caller describes a scene share
-- **THEN** the preview reports scene, shot and byte totals with pack attribution
+- **WHEN** a caller describes a shared project
+- **THEN** the preview reports scene, shot and byte totals with data pack attribution
 
 #### Scenario: Preview source states `director-109`
 
-- **WHEN** a preview describes a pack source
+- **WHEN** a preview describes a data pack source
 - **THEN** the preview reports included, absent, configured or unavailable source states
 
 #### Scenario: Preview dependencies `director-110`
 
 - **WHEN** a preview describes scene dependencies
-- **THEN** the preview reports absent layers and external scene content
-
+- **THEN** the preview reports absent layers and applied shot packs and shot source pack IDs
+- **AND** The preview lists each absent layer once, even when two shots name that layer.
