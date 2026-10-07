@@ -14,7 +14,7 @@ An identifier (ID) names one item.
 
 # Round 2 corrections
 
-Base commit 290b5d2. Commit read: `3b726505157e146cf3ee07326044abb200d37f8b`.
+Base commit 290b5d2. The worker started at commit 3b72650; the checks cover the edits that commit b95b44f holds.
 
 | Review item: first words | Correction |
 |---|---|
@@ -24,13 +24,13 @@ Base commit 290b5d2. Commit read: `3b726505157e146cf3ee07326044abb200d37f8b`.
 | `Each Date.now check` | Compare exact elapsed literals: 20, 25, 20 and 20 ms. |
 | `await requestStarted has no` | Add cleared 2000 ms guards; add mutations 48 and 49. |
 | `No mutation proves` | Add mutations 50, 51 and 52; check that production clears the timer at its source; prove the absence checks with rows 53 and 54. |
-| `Tasks 13, 16 and` | Mark the tasks from lead3-tests.log; the checks follow the round 2 edits. |
+| `Tasks 13, 16 and` | Mark the tasks from lead3-tests.log; the checks come after the round 2 edits. |
 | `The command rg` | Search all 17 files; add the seventh absence delay. |
 | `const rejected` | Restore the original awaited rejection in the cap test. |
 | `the factor in the` | Use the factor 20 and file names. |
-| `complete gates run` | Use "gates run". |
+| `complete gates assessment` | Use "gates run". |
 | `array identity checks` | Use "surface identity checks and measurement load". |
-| `short real delay` | Use "short real delay". |
+| `short real wait` | Use "short real delay". |
 | `takes precedence` | Use "has priority". |
 | `Mutation: Report` | Use "Make production" for each mutation note. |
 | `holding the test open` | State that the deadline assertion fails, so the test cannot stay open. |
@@ -49,7 +49,7 @@ The other corrections follow the review replacements.
 ## File checks
 
 Command: `round2-check.py` starts one Node process per file without the force-exit flag.
-Each Node process uses CPU set 12-15 and nice priority 19.
+Each Node process uses the CPU set 12-15 and nice priority 19.
 The measurement load uses three Node load loops, or three shell load loops for launcher files.
 Each loop stops after its file run.
 The full output is in `round2-checks` in the tools directory.
@@ -105,7 +105,7 @@ The log files are in the tools directory at `mutation-real`.
 The commands `compare-coverage.py` and `compare-counts.py` report 995 comparisons.
 The comparisons show no lost covered lines and no smaller covered branch or function totals.
 The normal format commands stop at `spawnSync git EPERM`.
-The preloaded file `format-host.mjs` completes both format commands for 1158 files.
+With the preload file `format-host.mjs`, both format commands finish for 1158 files.
 The source diff has no production file, scenario text or review report change.
 
 ## Files changed in round 2
@@ -134,10 +134,10 @@ The list below gives those files at their current paths.
 Command:
 
 ```text
-taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change harden-timing-tests
+taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint
 ```
 
-The lint reports 0 errors and 435 warnings.
+The lint reports 0 errors.
 
 Command:
 
