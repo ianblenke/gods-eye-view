@@ -1,0 +1,189 @@
+Command: cd /home/ianblenke/docker/gev-work/fix-ri && taskset -c 12-15 nice -n 19 node --test --test-isolation=none src/layers/recentImagery/model.test.mjs
+Source commit: 81b8bd6c4eb9e2abae1cf6cc9a2447bc16accb02.
+✔ [recent-imagery-006] validateBox refuses dateline, polar, degenerate, invalid and oversized boxes (139.683541ms)
+✔ [recent-imagery-007] ZOOM IN: the height whose top-down view is 400 km wide, clamped to 5–400 km; a box centre (3.214345ms)
+✔ [recent-imagery-007] box width is the longitude span at the mid-latitude, never the shortest arc (2.529399ms)
+✔ [recent-imagery-008] boxFromPin builds a 10 km square within 2% at any latitude and refuses what cannot validate (4.445379ms)
+✔ [recent-imagery-009] rectangles convert from radians and the share-link quantization round-trips (2.792615ms)
+✔ [recent-imagery-010] days and candidate keys are real UTC calendar days (5.287184ms)
+✔ [recent-imagery-011] granules group into one candidate per product and UTC day, newest first (5.131298ms)
+✔ [recent-imagery-012] VIIRS lists the last 30 UTC days as unprobed full-coverage days (3.001831ms)
+✔ [recent-imagery-011] merging sorts newest day first, then S30, L30, VIIRS, and the first key wins (3.890907ms)
+✔ [recent-imagery-013] coverage samples the box corners and centre against the union of footprints (4.469855ms)
+✔ [recent-imagery-014] START HERE is the newest all-clear HLS day; unknown cloud is never clear (5.99554ms)
+✔ [recent-imagery-014] START HERE prefers a day that covers the whole box over a newer sliver (3.882119ms)
+✔ [recent-imagery-015] the readout is one UTC line with age, sensor, resolution and scene cloud (4.038003ms)
+✔ [recent-imagery-016] GIBS templates put y before x; Worldview snapshots take south,west,north,east (5.473501ms)
+✔ [recent-imagery-017] thumbnails load the focused card, then the visible cards outward, then the margins (1.961073ms)
+✔ [recent-imagery-006] each independent box limit rejects its box (1.894427ms)
+✔ [recent-imagery-008 recent-imagery-010] invalid pin data and an absent day return null (0.845267ms)
+✔ [recent-imagery-011 recent-imagery-013] absent lists and footprints have known results (1.433844ms)
+✔ [recent-imagery-015] absent times and an invalid clock keep the readout bounded (1.173126ms)
+✔ [recent-imagery-016] unknown products and an absent snapshot box fail (1.355954ms)
+✔ [recent-imagery-006] the west limit alone rejects the box (0.786079ms)
+✔ [recent-imagery-006] the east limit alone rejects the box (0.832184ms)
+✔ [recent-imagery-006] the south limit alone rejects the box (0.728249ms)
+✔ [recent-imagery-006] the north limit alone rejects the box (0.679155ms)
+✔ [recent-imagery-006] the zero-width limit alone rejects the box (0.69326ms)
+✔ [recent-imagery-006] the zero-height limit alone rejects the box (0.78813ms)
+✔ [recent-imagery-006] the wide limit alone rejects the box (1.45588ms)
+✔ [recent-imagery-006] the tall limit alone rejects the box (1.377174ms)
+✔ [recent-imagery-008] an invalid pin longitude alone returns null (0.858453ms)
+✔ [recent-imagery-008] an invalid pin latitude alone returns null (0.672798ms)
+✔ [recent-imagery-008] an invalid pin size alone returns null (0.838345ms)
+✔ [recent-imagery-008] an invalid pin size that is not positive alone returns null (0.62578ms)
+✖ [recent-imagery-013 recent-imagery-056] an invalid footprint point gives unknown coverage (7.953433ms)
+✖ [recent-imagery-013 recent-imagery-056] a latitude that is not finite gives unknown coverage (2.147596ms)
+✔ [recent-imagery-013] a sloped footprint uses its latitude span (1.049018ms)
+✔ [recent-imagery-010] four digit year limits still reject invalid calendar dates (1.077251ms)
+✔ [recent-imagery-011] an empty group cannot create an empty day bucket (1.195744ms)
+✔ [recent-imagery-007] an infinite aspect alone uses the square view (1.012729ms)
+✔ [recent-imagery-007] a zero aspect alone uses the square view (1.051472ms)
+✔ [recent-imagery-007] a zero field angle alone uses the square view (0.867131ms)
+✔ [recent-imagery-007] a large field angle alone uses the square view (0.852847ms)
+✔ [recent-imagery-006] a function with box edges still fails the box type check (1.013281ms)
+✔ [recent-imagery-009] a function with rectangle edges still fails the rectangle type check (0.781168ms)
+✔ [recent-imagery-011] a nonfinite cloud number alone stays unknown (1.009017ms)
+✔ [recent-imagery-010] a text object takes the timestamp path (0.69853ms)
+✔ [recent-imagery-010] a Date timestamp keeps the zero year (0.658989ms)
+✔ [recent-imagery-011] a start time that the model cannot read alone gives no time range (0.945127ms)
+✔ [recent-imagery-013] a short polygon alone gives unknown coverage (0.737408ms)
+✔ [recent-imagery-013] an absent box alone gives unknown coverage (0.706202ms)
+✔ [recent-imagery-014] an HLS day without granules cannot win (0.859172ms)
+✔ [recent-imagery-014] an unknown product alone cannot win (0.963405ms)
+✔ [recent-imagery-014] an overview with granule facts still uses the overview tier (0.879681ms)
+✔ [recent-imagery-015] an unknown product alone has an empty readout (0.629545ms)
+✔ [recent-imagery-015] an absent day alone has an empty readout (0.577562ms)
+✔ [recent-imagery-015] an absent end time keeps the start time (1.363827ms)
+✔ [recent-imagery-015] one granule alone keeps one readout time (1.257866ms)
+✔ [recent-imagery-015] equal times alone keep one readout time (1.097769ms)
+✔ [recent-imagery-017] the first card rejects negative neighbors (0.776992ms)
+✔ [recent-imagery-017] the thumbnail order has each index once with different numeric bounds (1.135034ms)
+✖ [recent-imagery-054] the model rejects parent product keys (7.130495ms)
+✖ [recent-imagery-056] invalid coordinates give unknown coverage (1.923169ms)
+ℹ tests 61
+ℹ suites 0
+ℹ pass 57
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 434.047439
+
+✖ failing tests:
+
+test at src/layers/recentImagery/model.test.mjs:596:1
+✖ [recent-imagery-013 recent-imagery-056] an invalid footprint point gives unknown coverage (7.953433ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'partial'
+  - 'unknown'
+  
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ri/src/layers/recentImagery/model.test.mjs:609:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'partial',
+    expected: 'unknown',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/layers/recentImagery/model.test.mjs:612:1
+✖ [recent-imagery-013 recent-imagery-056] a latitude that is not finite gives unknown coverage (2.147596ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'full' !== 'unknown'
+  
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ri/src/layers/recentImagery/model.test.mjs:625:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'full',
+    expected: 'unknown',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/layers/recentImagery/model.test.mjs:869:1
+✖ [recent-imagery-054] the model rejects parent product keys (7.130495ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     availability: 'present',
+  +     cloud: {
+  +       max: 12,
+  +       min: 12
+  +     },
+  +     coverage: 'unknown',
+  +     day: '2026-09-18',
+  +     granules: [
+  +       {
+  +         cloud: 12,
+  +         footprint: null,
+  +         id: 'g',
+  +         product: '__proto__',
+  +         timeEnd: '2026-09-18T17:12:30.000Z',
+  +         timeStart: '2026-09-18T17:12:00.000Z'
+  +       }
+  +     ],
+  +     key: '__proto__:2026-09-18',
+  +     product: '__proto__',
+  +     timeRange: {
+  +       end: '2026-09-18T17:12:30.000Z',
+  +       start: '2026-09-18T17:12:00.000Z'
+  +     }
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ri/src/layers/recentImagery/model.test.mjs:871:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/layers/recentImagery/model.test.mjs:881:1
+✖ [recent-imagery-056] invalid coordinates give unknown coverage (1.923169ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'partial'
+  - 'unknown'
+  
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ri/src/layers/recentImagery/model.test.mjs:884:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'partial',
+    expected: 'unknown',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
