@@ -1057,6 +1057,7 @@
   "director-048": [
     "src/director/camera.test.mjs › [director-046 director-047 director-048] move endpoints, easing, shortest arcs and hold agree with scene seeking",
     "src/director/cameraMoves.test.mjs › [director-048] The cubic sample uses progress 0.45",
+    "src/director/cameraMoves.test.mjs › [director-048] The cubic sample uses progress 0.55",
     "src/director/cameraMoves.test.mjs › [director-048] The cubic sample uses the first half",
     "src/director/cameraMoves.test.mjs › [director-048] The cubic sample uses the second half"
   ],
@@ -1065,15 +1066,15 @@
     "src/director/cameraDocument.test.mjs › [director-049] The inline schema accepts its lat field",
     "src/director/cameraDocument.test.mjs › [director-049] The inline schema accepts its lon field",
     "src/director/cameraDocument.test.mjs › [director-049] The null pose gives a document error",
-    "src/director/cameraDocument.test.mjs › [director-049] The ordinary pose accepts absent coordinates",
-    "src/director/cameraDocument.test.mjs › [director-049] The ordinary pose rejects invalid alt",
-    "src/director/cameraDocument.test.mjs › [director-049] The ordinary pose rejects invalid lat",
-    "src/director/cameraDocument.test.mjs › [director-049] The ordinary pose rejects invalid lon",
-    "src/director/cameraDocument.test.mjs › [director-049] The ordinary pose uses optional coordinates by default",
     "src/director/cameraDocument.test.mjs › [director-049] The pose checks both alt bounds",
     "src/director/cameraDocument.test.mjs › [director-049] The pose checks both lat bounds",
     "src/director/cameraDocument.test.mjs › [director-049] The pose checks both lon bounds",
-    "src/director/cameraDocument.test.mjs › [director-049] The pose rejects an extra field"
+    "src/director/cameraDocument.test.mjs › [director-049] The pose rejects an extra field",
+    "src/director/cameraDocument.test.mjs › [director-049] The shot without a move accepts absent coordinates",
+    "src/director/cameraDocument.test.mjs › [director-049] The shot without a move rejects invalid alt",
+    "src/director/cameraDocument.test.mjs › [director-049] The shot without a move rejects invalid lat",
+    "src/director/cameraDocument.test.mjs › [director-049] The shot without a move rejects invalid lon",
+    "src/director/cameraDocument.test.mjs › [director-049] The shot without a move uses optional coordinates by default"
   ],
   "director-050": [
     "src/director/cameraDocument.test.mjs › [director-050] The inline schema accepts its heading field",
@@ -1094,6 +1095,7 @@
     "src/director/cameraDocument.test.mjs › [director-051] The early version rejects the height field",
     "src/director/cameraDocument.test.mjs › [director-051] The inline pose controls its supplied shape",
     "src/director/cameraDocument.test.mjs › [director-051] The modern version accepts an anchor reference",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 1 pose accepts numeric text",
     "src/director/cameraDocument.test.mjs › [director-051] The version 2 pose accepts text alt",
     "src/director/cameraDocument.test.mjs › [director-051] The version 2 pose accepts text heading",
     "src/director/cameraDocument.test.mjs › [director-051] The version 2 pose accepts text lat",
@@ -1179,6 +1181,7 @@
   "director-057": [
     "src/director/interactions/document.test.mjs › [director-057] The action field rejects an absent object",
     "src/director/interactions/document.test.mjs › [director-057] The action field rejects an array type",
+    "src/director/interactions/document.test.mjs › [director-057] The action field rejects an inherited type name",
     "src/director/interactions/document.test.mjs › [director-057] The action field rejects an unknown type",
     "src/director/interactions/document.test.mjs › [director-057] The action field rejects an unsupported field",
     "src/director/interactions/document.test.mjs › [director-057] The action field rejects nontext anchorId",
@@ -1186,16 +1189,16 @@
     "src/director/interactions/document.test.mjs › [director-057] The action field rejects nontext shotId",
     "src/director/interactions/document.test.mjs › [director-057] The card action field accepts its text field",
     "src/director/interactions/document.test.mjs › [director-057] The card action field accepts its url field",
-    "src/director/interactions/document.test.mjs › [director-057] The card rejects an extra field",
+    "src/director/interactions/document.test.mjs › [director-057] The card action field rejects an extra field",
     "src/director/interactions/document.test.mjs › [director-057] The card type controls its text check",
     "src/director/interactions/document.test.mjs › [director-057] The focus action field accepts its anchorId field",
-    "src/director/interactions/document.test.mjs › [director-057] The focus rejects an extra field",
+    "src/director/interactions/document.test.mjs › [director-057] The focus action field rejects an extra field",
     "src/director/interactions/document.test.mjs › [director-057] The interaction rejects an extra field",
     "src/director/interactions/document.test.mjs › [director-057] The layer action field accepts its enabled field",
     "src/director/interactions/document.test.mjs › [director-057] The layer action field accepts its layerId field",
-    "src/director/interactions/document.test.mjs › [director-057] The layer rejects an extra field",
+    "src/director/interactions/document.test.mjs › [director-057] The layer action field rejects an extra field",
     "src/director/interactions/document.test.mjs › [director-057] The shot action field accepts its shotId field",
-    "src/director/interactions/document.test.mjs › [director-057] The shot rejects an extra field",
+    "src/director/interactions/document.test.mjs › [director-057] The shot action field rejects an extra field",
     "src/director/interactions/document.test.mjs › [director-057] The target rejects an extra field"
   ],
   "director-058": [
@@ -1254,12 +1257,12 @@
     "src/director/interactions/document.test.mjs › [director-062] The shot rejects excess interactions"
   ],
   "director-063": [
-    "src/director/interactions/interactions.test.mjs › [director-063] all four inert interactions survive validation, migration and export without running content"
+    "src/director/interactions/interactions.test.mjs › [director-063] all four inert interactions survive validation, migration and export and no content runs"
   ],
   "director-064": [
-    "src/director/camera.test.mjs › [director-064] The version 1 camera stays an ordinary pose",
-    "src/director/camera.test.mjs › [director-064] The version 2 camera stays an ordinary pose",
-    "src/director/camera.test.mjs › [director-064] The version 3 camera stays an ordinary pose",
+    "src/director/camera.test.mjs › [director-064] The version 1 camera stays a shot without a move",
+    "src/director/camera.test.mjs › [director-064] The version 2 camera stays a shot without a move",
+    "src/director/camera.test.mjs › [director-064] The version 3 camera stays a shot without a move",
     "src/director/camera.test.mjs › [director-064] version 4 keeps anchor identity, references and move edits through normalization"
   ],
   "director-065": [
@@ -1283,22 +1286,23 @@
     "src/director/interactions/session.test.mjs › [director-070] The adapter result empty text gives true",
     "src/director/interactions/session.test.mjs › [director-070] The adapter result zero gives true",
     "src/director/interactions/session.test.mjs › [director-070] The interaction removes its abort listener",
-    "src/director/interactions/session.test.mjs › [director-070] The session does not abort a completed controller when clear runs",
-    "src/director/interactions/session.test.mjs › [director-070] The successful interaction gives selected idle state"
+    "src/director/interactions/session.test.mjs › [director-070] The session does not abort a completed abort controller when clear runs",
+    "src/director/interactions/session.test.mjs › [director-070] The successful interaction gives idle state with the selected ID"
   ],
   "director-071": [
     "src/director/interactions/session.test.mjs › [director-071] The false adapter result refuses the interaction"
   ],
   "director-072": [
-    "src/director/interactions/interactions.test.mjs › [director-072 director-073] synchronous stop before adapter call prevents any side effect; rejection unlocks retry",
+    "src/director/interactions/interactions.test.mjs › [director-072 director-073] synchronous stop before an adapter call prevents any side effect; rejection unlocks retry",
     "src/director/interactions/session.test.mjs › [director-072] The adapter exception allows another interaction",
     "src/director/interactions/session.test.mjs › [director-072] The adapter rejection allows another interaction"
   ],
   "director-073": [
     "src/director/interactions/interactions.test.mjs › [director-068 director-073 director-074] pending interactions cancel promptly, refuse overlap and cannot update a replacement session",
-    "src/director/interactions/interactions.test.mjs › [director-072 director-073] synchronous stop before adapter call prevents any side effect; rejection unlocks retry",
-    "src/director/interactions/session.test.mjs › [director-073] The session cancels work before adapter call",
-    "src/director/interactions/session.test.mjs › [director-073] The session does not abort the old controller when clear runs twice",
+    "src/director/interactions/interactions.test.mjs › [director-072 director-073] synchronous stop before an adapter call prevents any side effect; rejection unlocks retry",
+    "src/director/interactions/session.test.mjs › [director-073] The abort event gives false before the signal changes",
+    "src/director/interactions/session.test.mjs › [director-073] The session cancels work before an adapter call",
+    "src/director/interactions/session.test.mjs › [director-073] The session does not abort the old abort controller when clear runs twice",
     "src/director/interactions/session.test.mjs › [director-073] The session returns false when clear runs after the result",
     "src/director/interactions/session.test.mjs › [director-073] The session settles work with no adapter result",
     "src/director/interactions/session.test.mjs › [director-073] The state callback receives empty state after clear"
