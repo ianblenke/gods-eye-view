@@ -944,6 +944,181 @@
     "since": "2026-10-07",
     "change": "backfill-director-timing"
   },
+  "director-041": {
+    "hash": "f0d70bb21b596e4b15a037a6459579ad4eb3cba89fe540b86219d5104dad9e95",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-042": {
+    "hash": "33cf10b899a95dbfffc67995cd93cdeab52026bc72037c24d38b92cef9277189",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-043": {
+    "hash": "084551873934dd78e08c37605bef97e0b7a54a55c3f9d53b076781f4d22ba81d",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-044": {
+    "hash": "e2d09b8136388b3632b40ecf6bcf5dad612793b1785494412f7e395c97609f06",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-045": {
+    "hash": "64815e11d35b93608368226f9d2f107db5297b59c4a4959597a800ee0c8c3483",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-046": {
+    "hash": "d16726cc0a2ae0b305546cd57f6c3e53f063d9c460a0d86a3c902fc9a1499358",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-047": {
+    "hash": "850f3bd3ddc931def5ebfe340433272193b44bbedcbd8c347ebf95c642d899c2",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-048": {
+    "hash": "a7003e00a447223ffa144c8fa2a9b64f1b97e60a982ea90bcb1cb23c23fae701",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-049": {
+    "hash": "0e6e78c7a8fafb1610fbb5974e24dc2de10aa5231c069866a1b7e7e3d3bf9a38",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-050": {
+    "hash": "7347b76124ececeead708705dec2b08439be4e3f97eb0335d0db5d0e14b5b9a8",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-051": {
+    "hash": "c8a76b81863f46a881e17f0ec04ddda9ae174f1d5dace57867672c642b83610d",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-052": {
+    "hash": "c60390e77b7232255490c46c7964481e1d0ce4ae40b6e7a2a9f22fdd55c76d00",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-053": {
+    "hash": "ec9897cefd129aeb4298959691e9ffdeb99703105fbb68c428a3a0d3da9b9e94",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-054": {
+    "hash": "efd30836a4c0ae2a6951c98a9792d3e8a12188d75b30302adccf3da6d4466657",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-055": {
+    "hash": "004e24271e1d8cf1044b239208a410fd750339e03126ac0ce7edbf3d537a1b8c",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-056": {
+    "hash": "f5054c21aca29454b1bf1f2d50e8cd020a35f77ecbf81c438ccca5ccb0c5e5cc",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-057": {
+    "hash": "b86f1b758c2e9ab640d786d3a7f2c05dbd29759bc464608f8ff9265976fe35c0",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-058": {
+    "hash": "5c26f80c9edd4a3321110545a9b812430c0cd980628e145396013d6015505104",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-059": {
+    "hash": "143ac81778cc8dbd929af4e233db858e6466341ee3130b8ed92a0fc88701fc71",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-060": {
+    "hash": "fc2d4667b0dd0d8d4793467c53f7cf526f85b8274809106567fba61bb1319f15",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-061": {
+    "hash": "bbaaca23649a054d27f4e116f665c53d1f4dd8a8f456e26f09ca29014c09df01",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-062": {
+    "hash": "cc1d48e260a8cc46b89b0f47ec735563af61137e68b918d4c174c0dbcd243de1",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-063": {
+    "hash": "63d9d461874e3c9338477017412b8e5f9f89d6637dd5f0d682471ad36d29d9f0",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-064": {
+    "hash": "cee545edf6ee015f05ac17500c4a9124c24114e79873ae20503405adcfba3233",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-065": {
+    "hash": "8fb2db94f10fc8c194c73acaa4449cd864b549239ba42a7165e244256e8b7ce1",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-066": {
+    "hash": "9b7643d8afae8efbc5b52f9edb6fdc97eeb1fff769a6658aebee731e55d5fe46",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-067": {
+    "hash": "bf98931499997b91bc5dfafa4fb1ad26bd88dd8d4a76b70d53fdde3e0856196c",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-068": {
+    "hash": "56be44feb79fdad31089e4cddb89f109395a707f8893d53debe6f8dd3b7c2954",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-069": {
+    "hash": "cddad7913dd2fb45aeece86c0d76663f1961795e73c32909cc48fbcce5cd139b",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-070": {
+    "hash": "d7ff13bf6442c863c58365c032770926352519f22b9a1ef5f9f0e3b0cfbeed69",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-071": {
+    "hash": "d24c385f622b7e29d7af820988cb7b2ce685b9e595519c465e0f7e60c4de5786",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-072": {
+    "hash": "1d6fadf67d55f59e726f7ed59d7ad46b2f154a93c9111585c8e18be190b4c816",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-073": {
+    "hash": "46a94d41177fdf5c77c1ded976998e9b0c179d3a35e3323e4879a0ec2b735a6a",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-074": {
+    "hash": "4e43dcd43d4d02eef2601fc583aa9ad0d0db4905046019852f9c4bcc2e14cca0",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
+  "director-075": {
+    "hash": "2b7c599640604c6980b3eb69e517e942376284175d466711dbb745fecde45b5f",
+    "since": "2026-10-07",
+    "change": "backfill-director-camera-interactions"
+  },
   "gap-ledger-001": {
     "hash": "d926236986707c5770e366ba46ec70d9e7431ee9daf231b24b1d4d14e242705c",
     "since": "2026-09-14",

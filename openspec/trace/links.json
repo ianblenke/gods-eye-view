@@ -1007,6 +1007,316 @@
     "src/director/playback.test.mjs › [director-040] failure in settle propagates after release, without later shots",
     "src/director/playback.test.mjs › [director-040] failure in travel propagates after release, without later shots"
   ],
+  "director-041": [
+    "src/director/cameraMoves.test.mjs › [director-041] The absent camera returns null",
+    "src/director/cameraMoves.test.mjs › [director-041] The absent move returns null"
+  ],
+  "director-042": [
+    "src/director/cameraMoves.test.mjs › [director-042] The inline pose copies each field"
+  ],
+  "director-043": [
+    "src/director/cameraMoves.test.mjs › [director-043] The anchor supplies the position",
+    "src/director/cameraMoves.test.mjs › [director-043] The pose rejects an absent anchor list",
+    "src/director/cameraMoves.test.mjs › [director-043] The pose rejects an absent scene",
+    "src/director/cameraMoves.test.mjs › [director-043] The unknown anchor rejects the pose"
+  ],
+  "director-044": [
+    "src/director/cameraMoves.test.mjs › [director-044] The absent heading uses its default",
+    "src/director/cameraMoves.test.mjs › [director-044] The absent pitch uses its default",
+    "src/director/cameraMoves.test.mjs › [director-044] The absent roll uses its default",
+    "src/director/cameraMoves.test.mjs › [director-044] The heading keeps negative zero from a getter",
+    "src/director/cameraMoves.test.mjs › [director-044] The inline heading keeps zero",
+    "src/director/cameraMoves.test.mjs › [director-044] The inline pitch keeps zero",
+    "src/director/cameraMoves.test.mjs › [director-044] The inline roll keeps zero",
+    "src/director/cameraMoves.test.mjs › [director-044] The roll keeps negative zero from a getter"
+  ],
+  "director-045": [
+    "src/director/cameraMoves.test.mjs › [director-045] The move keeps both poses and time"
+  ],
+  "director-046": [
+    "src/director/camera.test.mjs › [director-046 director-047 director-048] move endpoints, easing, shortest arcs and hold agree with scene seeking",
+    "src/director/cameraMoves.test.mjs › [director-046] The endpoint 0 returns an exact copy",
+    "src/director/cameraMoves.test.mjs › [director-046] The endpoint 1 returns an exact copy",
+    "src/director/cameraMoves.test.mjs › [director-046] The progress accepts the invalid text",
+    "src/director/cameraMoves.test.mjs › [director-046] The progress accepts the lower bound",
+    "src/director/cameraMoves.test.mjs › [director-046] The progress accepts the numeric text",
+    "src/director/cameraMoves.test.mjs › [director-046] The progress accepts the upper bound"
+  ],
+  "director-047": [
+    "src/director/camera.test.mjs › [director-046 director-047 director-048] move endpoints, easing, shortest arcs and hold agree with scene seeking",
+    "src/director/cameraMoves.test.mjs › [director-047] The angle tie takes the negative arc",
+    "src/director/cameraMoves.test.mjs › [director-047] The linear curve uses its supplied fraction",
+    "src/director/cameraMoves.test.mjs › [director-047] The linear sample sets alt",
+    "src/director/cameraMoves.test.mjs › [director-047] The linear sample sets heading",
+    "src/director/cameraMoves.test.mjs › [director-047] The linear sample sets lat",
+    "src/director/cameraMoves.test.mjs › [director-047] The linear sample sets lon",
+    "src/director/cameraMoves.test.mjs › [director-047] The linear sample sets pitch",
+    "src/director/cameraMoves.test.mjs › [director-047] The linear sample sets roll",
+    "src/director/cameraMoves.test.mjs › [director-047] The westward sample crosses the date line"
+  ],
+  "director-048": [
+    "src/director/camera.test.mjs › [director-046 director-047 director-048] move endpoints, easing, shortest arcs and hold agree with scene seeking",
+    "src/director/cameraMoves.test.mjs › [director-048] The cubic sample uses progress 0.45",
+    "src/director/cameraMoves.test.mjs › [director-048] The cubic sample uses progress 0.55",
+    "src/director/cameraMoves.test.mjs › [director-048] The cubic sample uses the first half",
+    "src/director/cameraMoves.test.mjs › [director-048] The cubic sample uses the second half"
+  ],
+  "director-049": [
+    "src/director/cameraDocument.test.mjs › [director-049] The inline schema accepts its alt field",
+    "src/director/cameraDocument.test.mjs › [director-049] The inline schema accepts its lat field",
+    "src/director/cameraDocument.test.mjs › [director-049] The inline schema accepts its lon field",
+    "src/director/cameraDocument.test.mjs › [director-049] The null pose gives a document error",
+    "src/director/cameraDocument.test.mjs › [director-049] The pose checks both alt bounds",
+    "src/director/cameraDocument.test.mjs › [director-049] The pose checks both lat bounds",
+    "src/director/cameraDocument.test.mjs › [director-049] The pose checks both lon bounds",
+    "src/director/cameraDocument.test.mjs › [director-049] The pose rejects an extra field",
+    "src/director/cameraDocument.test.mjs › [director-049] The shot without a move accepts absent coordinates",
+    "src/director/cameraDocument.test.mjs › [director-049] The shot without a move rejects invalid alt",
+    "src/director/cameraDocument.test.mjs › [director-049] The shot without a move rejects invalid lat",
+    "src/director/cameraDocument.test.mjs › [director-049] The shot without a move rejects invalid lon",
+    "src/director/cameraDocument.test.mjs › [director-049] The shot without a move uses optional coordinates by default"
+  ],
+  "director-050": [
+    "src/director/cameraDocument.test.mjs › [director-050] The inline schema accepts its heading field",
+    "src/director/cameraDocument.test.mjs › [director-050] The inline schema accepts its pitch field",
+    "src/director/cameraDocument.test.mjs › [director-050] The inline schema accepts its roll field",
+    "src/director/cameraDocument.test.mjs › [director-050] The pose accepts absent orientation",
+    "src/director/cameraDocument.test.mjs › [director-050] The pose checks both heading bounds",
+    "src/director/cameraDocument.test.mjs › [director-050] The pose checks both pitch bounds",
+    "src/director/cameraDocument.test.mjs › [director-050] The pose checks both roll bounds",
+    "src/director/cameraDocument.test.mjs › [director-050] The pose rejects invalid heading",
+    "src/director/cameraDocument.test.mjs › [director-050] The pose rejects invalid pitch",
+    "src/director/cameraDocument.test.mjs › [director-050] The pose rejects invalid roll",
+    "src/director/cameraDocument.test.mjs › [director-050] The supplied orientation field controls the check"
+  ],
+  "director-051": [
+    "src/director/cameraDocument.test.mjs › [director-051] The anchor shape uses its supplied reference field",
+    "src/director/cameraDocument.test.mjs › [director-051] The early version rejects an anchor reference",
+    "src/director/cameraDocument.test.mjs › [director-051] The early version rejects the height field",
+    "src/director/cameraDocument.test.mjs › [director-051] The inline pose controls its supplied shape",
+    "src/director/cameraDocument.test.mjs › [director-051] The modern version accepts an anchor reference",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 1 pose accepts numeric text",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 2 pose accepts text alt",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 2 pose accepts text heading",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 2 pose accepts text lat",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 2 pose accepts text lon",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 2 pose accepts text pitch",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 2 pose accepts text roll",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 3 pose rejects text alt",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 3 pose rejects text heading",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 3 pose rejects text lat",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 3 pose rejects text lon",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 3 pose rejects text pitch",
+    "src/director/cameraDocument.test.mjs › [director-051] The version 3 pose rejects text roll"
+  ],
+  "director-052": [
+    "src/director/camera.test.mjs › [director-052 director-054 director-055] unknown anchors, duplicate IDs, mixed references, bad easing and unspecified altitude are rejected",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor ID must name a scene anchor",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor check rejects a changed ID",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor needs its alt coordinate",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor needs its height reference",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor needs its lat coordinate",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor needs its lon coordinate",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor reference checks its ID",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor rejects an absent ID",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor rejects an extra field",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor rejects invalid alt",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor rejects invalid altitudeReference",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor rejects invalid id",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor rejects invalid lat",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor rejects invalid lon",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor rejects invalid title",
+    "src/director/cameraDocument.test.mjs › [director-052] The anchor rejects text coordinates in version 2",
+    "src/director/cameraDocument.test.mjs › [director-052] The scene accepts the exact anchor limit",
+    "src/director/cameraDocument.test.mjs › [director-052] The scene rejects duplicate anchor IDs",
+    "src/director/cameraDocument.test.mjs › [director-052] The scene rejects excess anchors",
+    "src/director/cameraDocument.test.mjs › [director-052] The title accepts 4096 characters",
+    "src/director/cameraDocument.test.mjs › [director-052] The title rejects 4097 characters"
+  ],
+  "director-053": [
+    "src/director/cameraDocument.test.mjs › [director-053] The inline end pose needs alt",
+    "src/director/cameraDocument.test.mjs › [director-053] The inline end pose needs lat",
+    "src/director/cameraDocument.test.mjs › [director-053] The inline end pose needs lon",
+    "src/director/cameraDocument.test.mjs › [director-053] The inline start needs all coordinates",
+    "src/director/cameraDocument.test.mjs › [director-053] The inline start needs alt",
+    "src/director/cameraDocument.test.mjs › [director-053] The inline start needs lat",
+    "src/director/cameraDocument.test.mjs › [director-053] The inline start needs lon"
+  ],
+  "director-054": [
+    "src/director/camera.test.mjs › [director-052 director-054 director-055] unknown anchors, duplicate IDs, mixed references, bad easing and unspecified altitude are rejected",
+    "src/director/cameraDocument.test.mjs › [director-054] The move accepts 0.2 seconds",
+    "src/director/cameraDocument.test.mjs › [director-054] The move accepts both durationSec bounds",
+    "src/director/cameraDocument.test.mjs › [director-054] The move accepts both holdSec bounds",
+    "src/director/cameraDocument.test.mjs › [director-054] The move accepts the cubic-in-out curve",
+    "src/director/cameraDocument.test.mjs › [director-054] The move accepts the linear curve",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects 0.19 seconds",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects an extra field",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects an unsupported curve",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects durationSec absent value",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects durationSec lower excess",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects durationSec text",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects durationSec upper excess",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects holdSec absent value",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects holdSec lower excess",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects holdSec text",
+    "src/director/cameraDocument.test.mjs › [director-054] The move rejects holdSec upper excess"
+  ],
+  "director-055": [
+    "src/director/camera.test.mjs › [director-052 director-054 director-055] unknown anchors, duplicate IDs, mixed references, bad easing and unspecified altitude are rejected",
+    "src/director/cameraDocument.test.mjs › [director-055] The ellipsoid reference accepts the pose",
+    "src/director/cameraDocument.test.mjs › [director-055] The end pose needs its height reference",
+    "src/director/cameraDocument.test.mjs › [director-055] The inline endpoint needs a height reference",
+    "src/director/cameraDocument.test.mjs › [director-055] The inline shape keeps its coordinate fields",
+    "src/director/cameraDocument.test.mjs › [director-055] The modern inline pose accepts its reference",
+    "src/director/cameraDocument.test.mjs › [director-055] The supplied height reference controls the check"
+  ],
+  "director-056": [
+    "src/director/interactions/document.test.mjs › [director-056] The target accepts a selected GeoJSON pack",
+    "src/director/interactions/document.test.mjs › [director-056] The target rejects a different pack format",
+    "src/director/interactions/document.test.mjs › [director-056] The target rejects absent scene packs",
+    "src/director/interactions/document.test.mjs › [director-056] The target rejects absent selected packs",
+    "src/director/interactions/document.test.mjs › [director-056] The target rejects an unselected pack",
+    "src/director/interactions/interactions.test.mjs › [director-056 director-060 director-061] reject unknown fields, script syntax, invalid references and missing reset baselines"
+  ],
+  "director-057": [
+    "src/director/interactions/document.test.mjs › [director-057] The action field rejects an absent object",
+    "src/director/interactions/document.test.mjs › [director-057] The action field rejects an array type",
+    "src/director/interactions/document.test.mjs › [director-057] The action field rejects an inherited type name",
+    "src/director/interactions/document.test.mjs › [director-057] The action field rejects an unknown type",
+    "src/director/interactions/document.test.mjs › [director-057] The action field rejects an unsupported field",
+    "src/director/interactions/document.test.mjs › [director-057] The action field rejects nontext anchorId",
+    "src/director/interactions/document.test.mjs › [director-057] The action field rejects nontext layerId",
+    "src/director/interactions/document.test.mjs › [director-057] The action field rejects nontext shotId",
+    "src/director/interactions/document.test.mjs › [director-057] The card action field accepts its text field",
+    "src/director/interactions/document.test.mjs › [director-057] The card action field accepts its url field",
+    "src/director/interactions/document.test.mjs › [director-057] The card action field rejects an extra field",
+    "src/director/interactions/document.test.mjs › [director-057] The card type controls its text check",
+    "src/director/interactions/document.test.mjs › [director-057] The focus action field accepts its anchorId field",
+    "src/director/interactions/document.test.mjs › [director-057] The focus action field rejects an extra field",
+    "src/director/interactions/document.test.mjs › [director-057] The interaction rejects an extra field",
+    "src/director/interactions/document.test.mjs › [director-057] The layer action field accepts its enabled field",
+    "src/director/interactions/document.test.mjs › [director-057] The layer action field accepts its layerId field",
+    "src/director/interactions/document.test.mjs › [director-057] The layer action field rejects an extra field",
+    "src/director/interactions/document.test.mjs › [director-057] The shot action field accepts its shotId field",
+    "src/director/interactions/document.test.mjs › [director-057] The shot action field rejects an extra field",
+    "src/director/interactions/document.test.mjs › [director-057] The target rejects an extra field"
+  ],
+  "director-058": [
+    "src/director/interactions/document.test.mjs › [director-058] The card accepts a plain HTTPS source",
+    "src/director/interactions/document.test.mjs › [director-058] The card rejects a source fragment",
+    "src/director/interactions/document.test.mjs › [director-058] The card rejects a source password",
+    "src/director/interactions/document.test.mjs › [director-058] The card rejects a source protocol",
+    "src/director/interactions/document.test.mjs › [director-058] The card rejects a source query",
+    "src/director/interactions/document.test.mjs › [director-058] The card rejects a source user name",
+    "src/director/interactions/document.test.mjs › [director-058] The card rejects an invalid URL"
+  ],
+  "director-059": [
+    "src/director/interactions/document.test.mjs › [director-059] The focus accepts a scene anchor",
+    "src/director/interactions/document.test.mjs › [director-059] The focus rejects absent scene anchors",
+    "src/director/interactions/document.test.mjs › [director-059] The focus rejects an unknown anchor"
+  ],
+  "director-060": [
+    "src/director/interactions/document.test.mjs › [director-060] The absent target shot layers use an empty baseline",
+    "src/director/interactions/document.test.mjs › [director-060] The shot action field rejects an unknown shot",
+    "src/director/interactions/document.test.mjs › [director-060] The shot loop skips an absent action field",
+    "src/director/interactions/document.test.mjs › [director-060] The shot loop skips an absent entry",
+    "src/director/interactions/document.test.mjs › [director-060] The shot type controls its reference check",
+    "src/director/interactions/document.test.mjs › [director-060] The target shot accepts every declared layer",
+    "src/director/interactions/document.test.mjs › [director-060] The target shot check skips a card action field",
+    "src/director/interactions/document.test.mjs › [director-060] The target shot loop checks the ships entry",
+    "src/director/interactions/document.test.mjs › [director-060] The target shot loop checks the traffic entry",
+    "src/director/interactions/document.test.mjs › [director-060] The target shot needs an own layer baseline",
+    "src/director/interactions/document.test.mjs › [director-060] The target shot needs each layer baseline",
+    "src/director/interactions/interactions.test.mjs › [director-056 director-060 director-061] reject unknown fields, script syntax, invalid references and missing reset baselines"
+  ],
+  "director-061": [
+    "src/director/interactions/document.test.mjs › [director-061] The absent shot layers use an empty baseline",
+    "src/director/interactions/document.test.mjs › [director-061] The layer accepts a direct shot baseline",
+    "src/director/interactions/document.test.mjs › [director-061] The layer accepts a false state",
+    "src/director/interactions/document.test.mjs › [director-061] The layer ignores an unrelated anchor ID",
+    "src/director/interactions/document.test.mjs › [director-061] The layer needs a direct shot baseline",
+    "src/director/interactions/document.test.mjs › [director-061] The layer rejects a nonboolean state",
+    "src/director/interactions/document.test.mjs › [director-061] The layer type controls its state check",
+    "src/director/interactions/interactions.test.mjs › [director-056 director-060 director-061] reject unknown fields, script syntax, invalid references and missing reset baselines"
+  ],
+  "director-062": [
+    "src/director/interactions/document.test.mjs › [director-062] The card accepts 2048 URL characters",
+    "src/director/interactions/document.test.mjs › [director-062] The card accepts the exact source limit",
+    "src/director/interactions/document.test.mjs › [director-062] The card accepts the exact text limit",
+    "src/director/interactions/document.test.mjs › [director-062] The card rejects 2049 URL characters",
+    "src/director/interactions/document.test.mjs › [director-062] The card rejects excess URL text",
+    "src/director/interactions/document.test.mjs › [director-062] The card rejects excess text",
+    "src/director/interactions/document.test.mjs › [director-062] The interaction rejects duplicate IDs",
+    "src/director/interactions/document.test.mjs › [director-062] The interaction rejects invalid featureId",
+    "src/director/interactions/document.test.mjs › [director-062] The interaction rejects invalid id",
+    "src/director/interactions/document.test.mjs › [director-062] The interaction rejects invalid label",
+    "src/director/interactions/document.test.mjs › [director-062] The interaction rejects invalid packId",
+    "src/director/interactions/document.test.mjs › [director-062] The label accepts 256 characters",
+    "src/director/interactions/document.test.mjs › [director-062] The label rejects 257 characters",
+    "src/director/interactions/document.test.mjs › [director-062] The shot accepts the exact interaction limit",
+    "src/director/interactions/document.test.mjs › [director-062] The shot rejects excess interactions"
+  ],
+  "director-063": [
+    "src/director/interactions/interactions.test.mjs › [director-063] all four inert interactions survive validation, migration and export and no content runs"
+  ],
+  "director-064": [
+    "src/director/camera.test.mjs › [director-064] The version 1 camera stays a shot without a move",
+    "src/director/camera.test.mjs › [director-064] The version 2 camera stays a shot without a move",
+    "src/director/camera.test.mjs › [director-064] The version 3 camera stays a shot without a move",
+    "src/director/camera.test.mjs › [director-064] version 4 keeps anchor identity, references and move edits through normalization"
+  ],
+  "director-065": [
+    "src/director/interactions/session.test.mjs › [director-065] The default state callback accepts a session change",
+    "src/director/interactions/session.test.mjs › [director-065] The new session reports empty state"
+  ],
+  "director-066": [
+    "src/director/interactions/session.test.mjs › [director-066] The session activates every unique interaction"
+  ],
+  "director-067": [
+    "src/director/interactions/session.test.mjs › [director-067] The inactive session refuses adapter call"
+  ],
+  "director-068": [
+    "src/director/interactions/interactions.test.mjs › [director-068 director-073 director-074] pending interactions cancel promptly, refuse overlap and cannot update a replacement session",
+    "src/director/interactions/session.test.mjs › [director-068] The busy session refuses a second adapter call"
+  ],
+  "director-069": [
+    "src/director/interactions/session.test.mjs › [director-069] The active session refuses an unknown ID"
+  ],
+  "director-070": [
+    "src/director/interactions/session.test.mjs › [director-070] The adapter result empty text gives true",
+    "src/director/interactions/session.test.mjs › [director-070] The adapter result zero gives true",
+    "src/director/interactions/session.test.mjs › [director-070] The interaction removes its abort listener",
+    "src/director/interactions/session.test.mjs › [director-070] The session does not abort a completed abort controller when clear runs",
+    "src/director/interactions/session.test.mjs › [director-070] The successful interaction gives idle state with the selected ID"
+  ],
+  "director-071": [
+    "src/director/interactions/session.test.mjs › [director-071] The false adapter result refuses the interaction"
+  ],
+  "director-072": [
+    "src/director/interactions/interactions.test.mjs › [director-072 director-073] synchronous stop before an adapter call prevents any side effect; rejection unlocks retry",
+    "src/director/interactions/session.test.mjs › [director-072] The adapter exception allows another interaction",
+    "src/director/interactions/session.test.mjs › [director-072] The adapter rejection allows another interaction"
+  ],
+  "director-073": [
+    "src/director/interactions/interactions.test.mjs › [director-068 director-073 director-074] pending interactions cancel promptly, refuse overlap and cannot update a replacement session",
+    "src/director/interactions/interactions.test.mjs › [director-072 director-073] synchronous stop before an adapter call prevents any side effect; rejection unlocks retry",
+    "src/director/interactions/session.test.mjs › [director-073] The abort event gives false before the signal changes",
+    "src/director/interactions/session.test.mjs › [director-073] The session cancels work before an adapter call",
+    "src/director/interactions/session.test.mjs › [director-073] The session does not abort the old abort controller when clear runs twice",
+    "src/director/interactions/session.test.mjs › [director-073] The session returns false when clear runs after the result",
+    "src/director/interactions/session.test.mjs › [director-073] The session settles work with no adapter result",
+    "src/director/interactions/session.test.mjs › [director-073] The state callback receives empty state after clear"
+  ],
+  "director-074": [
+    "src/director/interactions/interactions.test.mjs › [director-068 director-073 director-074] pending interactions cancel promptly, refuse overlap and cannot update a replacement session",
+    "src/director/interactions/session.test.mjs › [director-074] The old work leaves new session state intact"
+  ],
+  "director-075": [
+    "src/director/cameraDocument.test.mjs › [director-075] The anchor pose rejects its inline alt field",
+    "src/director/cameraDocument.test.mjs › [director-075] The anchor pose rejects its inline altitudeReference field",
+    "src/director/cameraDocument.test.mjs › [director-075] The anchor pose rejects its inline lat field",
+    "src/director/cameraDocument.test.mjs › [director-075] The anchor pose rejects its inline lon field"
+  ],
   "gap-ledger-001": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec"
