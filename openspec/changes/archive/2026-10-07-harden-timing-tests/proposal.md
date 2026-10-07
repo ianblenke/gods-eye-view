@@ -36,14 +36,15 @@ The process limit has priority over load when launcher children need Node.
 Synchronous source checks and surface identity checks need no timer change without a timer fault.
 The design lists the real delays and the later changes.
 
-- `remaining-inequalities`: The controller stop test keeps the mock-Date inequality below 250 ms; its assertion that stop() returns true carries the proof.
-  The mock clock fixes the elapsed value, so the inequality cannot fail.
-  The nominatim stalled-body test keeps the real-clock inequality below 5000 ms for its 300 ms deadline.
+- `remaining-inequalities`: The controller stop test keeps its assertion that the elapsed time is below 250 ms.
+  The mock Date clock fixes the value at 60 ms, and host load cannot change it.
+  The assertion fails if production lengthens the two close deadlines to 125 ms or more.
+  The nominatim stalled-body test keeps the real-clock assertion below 5000 ms for its 300 ms deadline.
 - `poll-timer-unasserted`: The cctvHlsStream test does not assert that pollTimer is defined.
   If production renames entry.timer, cleared.includes(undefined) can still pass.
 - `exact-elapsed-constants`: The cctvProxy, gbfsProxy and requests elapsed assertions equal their clock steps by construction.
   No production change can make those elapsed assertions fail; the signal assertions carry the proof.
 - `evidence-outside-repo`: The evidence files are outside the repository.
   The directory is `/home/ianblenke/docker/gev-tools/harden-timing/`.
-  Files: `prompt-1.md`, `audit.md`, `before.md`, `after.md`, `coverage.md`, `mutation-specs.json` and `round2-*.log`.
+  Files: `prompt-1.md`, `audit.md`, `before.md`, `after.md`, `coverage.md`, `mutation-specs.json`, `lead3-tests.log`, `network-filters.json`, `round2-files.json`, `round2-check-results.json`, `round2-checks/`, `round2-*.log` and `mutation-real/*.log`.
   The file `phase3-analysis.md` is in `/home/ianblenke/docker/gev-tools/docker-concurrency/`.

@@ -64,7 +64,7 @@ Shared request tests hold the response with a promise until the requests start.
 No fixed response delay defines which request shares the first request.
 The local SDR card test advances its render timer after the feed callback.
 Pointer tests advance the pending timer after the next owner takes the pointer.
-The OSH selection tests await a page object setter after selection.
+The OSH selection tests await a setter of the host element of the page after selection.
 Each promise belongs to its test, as the assertion-context lesson needs.
 
 The HLS tests await the download promise before the clock advances.
@@ -134,10 +134,10 @@ No local check overlaps the later measurement series.
 
 ## Real absence margins
 
-The command `rg` on each changed test file supplies these wait values.
+The command `rg` on each changed test file supplies these delay values.
 The tests use the real timer captured before the mock clock starts.
 
-| File | Real delay | Controlled signal before the wait |
+| File | Real delay | Controlled signal before the delay |
 |---|---|---|
 | `src/sdr/controller.test.mjs` | 5 ms | The old operation settles or its clock steps finish. |
 | `src/cameraGroundGuard.test.mjs` | 5 ms | The probe callback finishes on the test clock. |
@@ -202,7 +202,7 @@ The controlled callback keeps that path in the test without a real delay.
 The fixture in `src/data/radio.test.mjs` has no audio object.
 The production file is `src/layers/radio/volume.js`.
 The source completes restoration without a frame callback when that object is absent.
-The fixed delay of the fixture is only a delay and needs no timer change.
+The fixed delay of the fixture does not define an assertion and needs no timer change.
 The command `rg` for Audio and the source inspection supply this decision.
 
 ## Measurement tables
@@ -210,7 +210,7 @@ The command `rg` for Audio and the source inspection supply this decision.
 Command: `python3 measure.py`, followed by `python3 tables.py`.
 The complete per-test tables are in the before.md and after.md reports.
 Each table row below gives the sum of those test results.
-The process load is the same before and after.
+The measurement load is the same before and after.
 The socket exclusions stated above apply to both tables.
 
 | Test file | Test names | Before attempts | Before failures | After attempts | After failures |
@@ -252,13 +252,17 @@ The socket exclusions stated above apply to those checks.
 
 ## Round 2 decisions
 
-Base commit 290b5d2. Commit read: `3b726505157e146cf3ee07326044abb200d37f8b`.
+Base commit 290b5d2. The worker started at commit 3b72650; the checks cover the edits that commit b95b44f holds.
 The cap test awaits rejection before it checks that production did not read the body.
 Mock clocks control the OSH and CCTV frame deadlines.
-Exact elapsed values replace the inequalities in the cctvProxy, gbfsProxy and requests tests.
+Exact elapsed values replace the elapsed-time inequalities in the cctvProxy, gbfsProxy and requests tests.
 
-The controller stop test keeps its inequality below 250 ms.
-The mock Date clock fixes the value, so the inequality cannot fail; the assertion that stop() returns true carries the proof.
+The controller stop test keeps its assertion that the elapsed time is below 250 ms.
+The mock Date clock fixes the elapsed value at 60 ms: two close deadlines of 30 ms from the fixture value `closeTimeoutMs`.
+Host load cannot change that value.
+The assertion fails if production lengthens the two close deadlines to 125 ms or more.
+The assertion that `stop()` returns true proves the result, and it fails only above 500 ms.
+
 The nominatim stalled-body test keeps its inequality below 5000 ms because its 300 ms deadline uses the real clock.
 Each upstream start promise has a real guard of 2000 ms.
 Each test clears its guard in a finally block.
@@ -285,7 +289,7 @@ The absence delay table lists all seven files with real absence delays.
 |---|---|---|
 | `src/devCctv.test.mjs` | 600000 ms | The process deadline uses the factor 20. |
 | `src/toolProjectRoot.test.mjs` | 600000 ms | The process deadline uses the factor 20. |
-| `src/app/layers/osh.test.mjs` | 10000 ms | The test clears the guard after the page object changes. |
+| `src/app/layers/osh.test.mjs` | 10000 ms | The test clears the guard after the host element of the page changes. |
 | `src/sdr/controller.test.mjs` | 1000 ms | The two within() calls test init failure; within() clears each real guard in .finally(). |
 | `src/sdr/controller.test.mjs` | 2 ms | The fixture completes a device read. |
 | `src/sdr/controller.test.mjs` | 5 ms | Seven pause(5) calls are real absence delays. |
@@ -325,7 +329,7 @@ The final complete run has 54 failed selected tests and no stopped process.
 
 ## Round 2 results
 
-The file `corrections.md` gives each review correction and each final command result.
+The file `corrections.md` gives the corrections of round 1 and each final command result; `review.md` records the later corrections.
 All 85 test processes under load have zero failures, with 1105 test results.
 The lead log `lead3-tests.log` records complete checks after the round 2 changes.
 The 995 production comparisons show no coverage decrease.
