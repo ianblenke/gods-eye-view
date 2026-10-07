@@ -1,6 +1,6 @@
 ## Context
 
-This change records commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
+The change records commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
 The scene controller supplies duration, hold, camera and timer adapters to these modules.
 
 ## Goals
