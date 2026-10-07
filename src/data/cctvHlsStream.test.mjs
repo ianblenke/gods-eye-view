@@ -110,6 +110,12 @@ test('shutdown cancels in-flight downloads and late responses cannot refill cach
 
 test('idle cleanup stops all polling without a background sweep', async (t) => {
   t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const cleared = [];
+  const clearTimer = globalThis.clearTimeout;
+  t.mock.method(globalThis, 'clearTimeout', (timer) => {
+    cleared.push(timer);
+    return clearTimer(timer);
+  });
   let calls = 0;
   const manager = createHlsPuller({
     limits: { ...HLS_LIMITS, idleMs: 15, pollMs: 100000 },
@@ -120,9 +126,11 @@ test('idle cleanup stops all polling without a background sweep', async (t) => {
   });
   const entry = await manager.ensure('a', base);
   await entry.polling;
+  const pollTimer = entry.timer;
   t.mock.timers.tick(50);
   await new Promise((resolve) => setImmediate(resolve));
   assert.deepEqual(manager.stats(), { sessions: 0, bytes: 0 });
+  assert.equal(cleared.includes(pollTimer), true);
   const stoppedCalls = calls;
   t.mock.timers.tick(100000);
   await new Promise((resolve) => realSetTimeout(resolve, 5));

@@ -149,7 +149,20 @@ test('weather-only requests share upstream work and retain fresh and stale respo
     request(handler, query),
     request(handler, query),
   ]);
-  await requestStarted;
+  let startGuard;
+  try {
+    await Promise.race([
+      requestStarted,
+      new Promise((_resolve, reject) => {
+        startGuard = setTimeout(
+          () => reject(new Error('Upstream did not start')),
+          2000,
+        );
+      }),
+    ]);
+  } finally {
+    clearTimeout(startGuard);
+  }
   finish();
   const pair = await pending;
   assert.deepEqual(pair.map((r) => r.headers['x-weather-effects']).sort(), [

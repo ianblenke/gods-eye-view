@@ -437,7 +437,7 @@ test('a stalled DNS lookup fails its feed at the deadline without holding other 
       return respond();
     },
   });
-  // A real guard stops a test with a missing clock callback under CPU load.
+  // A real guard stops a test when a clock callback does not run.
   const guardMs = 60 * 20;
   const within = async (promise) => {
     let timer;

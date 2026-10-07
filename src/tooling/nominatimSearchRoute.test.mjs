@@ -182,7 +182,20 @@ test('identical searches in flight share one upstream call', async () => {
         request(`/api/geocode?q=${query}`),
         request(`/api/geocode?q=${query}`),
       ]);
-      await requestStarted;
+      let startGuard;
+      try {
+        await Promise.race([
+          requestStarted,
+          new Promise((_resolve, reject) => {
+            startGuard = setTimeout(
+              () => reject(new Error('Upstream did not start')),
+              2000,
+            );
+          }),
+        ]);
+      } finally {
+        clearTimeout(startGuard);
+      }
       finish();
       const answers = await pending;
       for (const answer of answers) assert.equal(answer.status, 200);

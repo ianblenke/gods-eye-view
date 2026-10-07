@@ -181,7 +181,7 @@ test('GBFS upstream fetch aborts a stalled connection with the timeout signal', 
   t.mock.timers.tick(20);
   assert.equal(observedSignal?.aborted, true);
   await rejected;
-  assert.ok(Date.now() - startedAt < 500, 'the timeout must settle promptly');
+  assert.equal(Date.now() - startedAt, 20);
 });
 
 test('GBFS cancels an oversized declared body without pulling it', async () => {

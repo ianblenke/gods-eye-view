@@ -8,7 +8,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { makeFixtureRoot } from './tooling/fixtureRoot.mjs';
 
-// Shell commands need a real deadline with room for CPU load.
+// Shell commands need a real deadline long enough for CPU load.
 const launcherTimeoutMs = 30_000 * 20;
 const run = promisify(execFile);
 const bashTest = process.platform === 'win32' ? test.skip : test;

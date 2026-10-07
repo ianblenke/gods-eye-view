@@ -25,10 +25,11 @@ function chunkedImageResponse(chunkBytes, chunkCount, { onChunk = () => {}, onCa
   return new Response(stream, { status: 200, headers: { 'Content-Type': 'image/jpeg' } });
 }
 
-test('CCTV upstream frame fetch supplies a bounded abort signal', async () => {
+test('CCTV upstream frame fetch supplies a bounded abort signal', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   let observedSignal = null;
   const startedAt = Date.now();
-  const result = await fetchCctvImageFromUpstream('https://example.com/frame.jpg', {
+  const pending = fetchCctvImageFromUpstream('https://example.com/frame.jpg', {
     timeoutMs: 20,
     fetchImpl: (_url, options) => new Promise((_resolve, reject) => {
       observedSignal = options.signal;
@@ -36,10 +37,14 @@ test('CCTV upstream frame fetch supplies a bounded abort signal', async () => {
     }),
   });
 
+  t.mock.timers.tick(20);
+  assert.equal(observedSignal?.aborted, true);
+  assert.equal(observedSignal?.reason.name, 'TimeoutError');
+  const result = await pending;
   assert.equal(result, null);
   assert.ok(observedSignal instanceof AbortSignal);
   assert.equal(observedSignal.aborted, true);
-  assert.ok(Date.now() - startedAt < 500, 'test timeout should settle promptly');
+  assert.equal(Date.now() - startedAt, 20);
   assert.ok(CCTV_FRAME_FETCH_TIMEOUT_MS < 10_000, 'production timeout must beat the active refresh cadence');
 });
 
@@ -136,7 +141,7 @@ test('CCTV media upstream fetch aborts when response headers never arrive', asyn
   t.mock.timers.tick(25);
   assert.equal(observedSignal?.aborted, true, 'the header deadline aborts the attempt');
   await rejected;
-  assert.ok(Date.now() - startedAt < 2_000, 'the deadline is the injected one, not the production one');
+  assert.equal(Date.now() - startedAt, 25);
   assert.ok(CCTV_MEDIA_FETCH_TIMEOUT_MS >= 10_000, 'production keeps a generous header deadline for slow cameras');
 });
 

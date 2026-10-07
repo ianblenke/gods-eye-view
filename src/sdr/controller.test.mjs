@@ -394,7 +394,7 @@ function stallingDevice(events, name = 'stalled') {
   };
 }
 
-// A clock step lets promise callbacks finish before the next timer fires.
+// A clock step allows the promise callbacks to finish before the next timer fires.
 async function advanceClock(t, ms) {
   for (let i = 0; i < ms; i++) {
     await new Promise((resolve) => setImmediate(resolve));
@@ -408,7 +408,7 @@ async function clockWithin(t, promise, ms = 1_000) {
   const pending = within(promise, ms).finally(() => {
     done = true;
   });
-  // Keep errors attached while the clock advances.
+  // Keep a catch handler on the promise while the clock advances.
   pending.catch(() => {});
   for (let i = 0; i <= ms && !done; i++) await advanceClock(t, 1);
   return pending;
@@ -444,6 +444,19 @@ test('a stalled USB read cannot wedge stop(): the raw device is closed and the q
 
 test('a stalled USB read times out and tears the session down on its own', async (t) => {
   t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const cleared = [];
+  const deadlines = [];
+  const setTimer = globalThis.setTimeout;
+  const clearTimer = globalThis.clearTimeout;
+  t.mock.method(globalThis, 'setTimeout', (callback, ms, ...args) => {
+    const timer = setTimer(callback, ms, ...args);
+    if (ms === 30) deadlines.push(timer);
+    return timer;
+  });
+  t.mock.method(globalThis, 'clearTimeout', (timer) => {
+    cleared.push(timer);
+    return clearTimer(timer);
+  });
   const events = [];
   t.after(replaceGlobal('Worker', FakeWorker));
   const controller = new SdrController({
@@ -459,6 +472,8 @@ test('a stalled USB read times out and tears the session down on its own', async
   assert.equal(await controller.connect('adsb'), true);
   await advanceClock(t, 150);
   const state = controller.getState();
+  assert.equal(deadlines.length > 0, true);
+  assert.equal(cleared.includes(deadlines[0]), true);
   assert.equal(state.connected, false);
   assert.equal(state.status, 'error');
   assert.equal(state.message, 'RTL-SDR sample stream stopped');
