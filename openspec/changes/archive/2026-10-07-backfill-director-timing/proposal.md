@@ -1,6 +1,6 @@
 ## Why
 
-This backfill records director behavior at commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
+The backfill records director behavior at commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
 A director document holds timed scenes and camera moves for a tour.
 
 ## What Changes
