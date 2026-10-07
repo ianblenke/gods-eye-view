@@ -617,7 +617,7 @@ test('[director-003] The legacy document accepts absent IDs', () => {
   });
 });
 
-test('[director-003] The absent version permits legacy numeric text', () => {
+test('[director-003] The absent version allows legacy numeric text', () => {
   assert.doesNotThrow(() =>
     validateSceneDocument({ scenes: [{ shots: [{ holdSec: '2' }] }] }),
   );

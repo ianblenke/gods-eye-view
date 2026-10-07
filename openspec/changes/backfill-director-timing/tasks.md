@@ -485,7 +485,7 @@
 
 ## 4. Gates and review
 
-- [ ] 4.1 Execute `make ratchet CHANGE=backfill-director-timing`.
-- [ ] 4.2 Execute `make gates CHANGE=backfill-director-timing`.
+- [ ] 4.1 Run `make ratchet CHANGE=backfill-director-timing`.
+- [ ] 4.2 Run `make gates CHANGE=backfill-director-timing`.
 - [ ] 4.3 Get the archive and review from the lead.
 - [ ] 4.4 Record both review verdicts in `review.md`.

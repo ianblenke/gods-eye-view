@@ -30,7 +30,7 @@ Test file: `src/director/document.test.mjs`.
 [director-003] v1/v2 bloom migrates once; IDs, edits, pack bindings and zero holds survive
 [director-003] missing legacy IDs become stable after the first saved migration
 [director-003] The legacy document accepts absent IDs
-[director-003] The absent version permits legacy numeric text
+[director-003] The absent version allows legacy numeric text
 ```
 
 ### director-004: Reject invalid documents
@@ -78,7 +78,7 @@ Test file: `src/director/documentFields.test.mjs`.
 [director-007] The number check rejects NaN
 [director-007] The number check rejects the lower excess
 [director-007] The number check rejects the upper excess
-[director-007] The legacy flag alone permits numeric text
+[director-007] The legacy flag alone allows numeric text
 [director-007] The legacy number input keeps its type
 [director-007] The legacy blank text fails numeric checks
 [director-007] The number check accepts both bounds
@@ -442,7 +442,6 @@ Test file: `src/director/timeline.test.mjs`.
 Test file: `src/director/timeline.test.mjs`.
 
 ```text
-[director-033] camera seeking preserves cubic easing and shortest-angle orientation
 [director-033] The camera uses its sole source
 [director-033] The camera uses its sole target
 [director-033] The camera returns null without endpoints
@@ -474,7 +473,7 @@ Test file: `src/director/timeline.test.mjs`.
 ```text
 [director-035] The seek uses the previous ordinary camera
 [director-035] The seek uses the first ordinary camera
-[director-035] The seek samples an explicit move
+[director-035] The seek samples a move that the shot gives
 ```
 
 ### director-036: Build a shot queue
@@ -482,11 +481,10 @@ Test file: `src/director/timeline.test.mjs`.
 Test file: `src/director/playback.test.mjs`.
 
 ```text
-[director-036] queues rotate scenes, skip empty scenes, preserve shot identity and support a single scene
 [director-036] The single scene queue excludes other scenes
 ```
 
-### director-037: Execute shot phases
+### director-037: Run shot phases
 
 Test file: `src/director/playback.test.mjs`.
 
@@ -535,7 +533,6 @@ Test file: `src/director/playback.test.mjs`.
 Test file: `src/director/playback.test.mjs`.
 
 ```text
-[director-039] non-preview playback retains the final scene but still releases preceding scenes
 [director-039] The playback keeps the same initial scene
 [director-039] The final scene stays when cleanup is off
 [director-039] The handoff accepts a previous scene before work
@@ -557,7 +554,7 @@ Test file: `src/director/playback.test.mjs`.
 [director-040] failure in hold propagates after release, without later shots
 [director-040] failure in completeShot propagates after release, without later shots
 [director-040] a cleanup failure rejects for the caller to restore its own controls
-[director-040] The phase failure retains its error after cleanup
+[director-040] The phase failure keeps its error after cleanup
 ```
 
 ## Host coverage
@@ -576,7 +573,7 @@ The lead still needs the Node 24 gate measurement.
 | src/director/playback.js | 100% | 100% | 100% |
 | src/director/timeline.js | 100% | 100% | 100% |
 
-The coverage command below executes once for each name in the table.
+The coverage command below runs once for each name in the table.
 The test file next to each module supplies its input.
 
 ```sh
@@ -585,9 +582,10 @@ cd /home/ianblenke/docker/gev-work/director && node --test --test-force-exit --e
 
 ## Old tests without tags
 
-The title sweep finds 15 old tests without tags.
+The title sweep finds 18 old tests without tags.
 Each cancellation title contains the banned word `subsequent`.
 The handoff title contains the banned word `prior`.
+Three more titles contain the words `preserve`, `retains` and `preserves`, which the owner chose.
 The owner rule prevents changes to these names.
 The new tagged tests cover cancellation and the initial handoff.
 
@@ -608,6 +606,10 @@ signal cancellation while awaiting hold stops subsequent work and releases resou
 flag cancellation while awaiting completeShot stops subsequent work and releases resources
 signal cancellation while awaiting completeShot stops subsequent work and releases resources
 a prior scene must release before playback; a refused handoff starts no shot
+queues rotate scenes, skip empty scenes, preserve shot identity and support a single scene
+non-preview playback retains the final scene but still releases preceding scenes
+src/director/timeline.test.mjs
+camera seeking preserves cubic easing and shortest-angle orientation
 ```
 
 ## Mutations and decision audit
@@ -628,7 +630,7 @@ cd /home/ianblenke/docker/gev-work/director && python3 /home/ianblenke/docker/ge
 
 The scratch audit path is `/home/ianblenke/docker/gev-tools/director/audit.md`.
 Each row lists the tests and mutations that prove its decisions.
-The nested expressions retain separate rows.
+The nested expressions keep separate rows.
 
 ### Equivalent mutants
 
@@ -648,7 +650,7 @@ The nested expressions retain separate rows.
 
 ## Commands and totals
 
-The sweep gives 40 scenario headings and 290 executed tests.
+The sweep gives 40 scenario headings and 290 tests that ran.
 It also gives old ledger test totals, title issues and the mutation declaration total.
 The title check finds no banned word or excess length in a tagged title.
 

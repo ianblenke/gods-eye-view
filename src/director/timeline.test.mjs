@@ -38,7 +38,7 @@ test('[director-031 director-034] scene time accounts for flight and hold; exact
   assert.equal(sceneSeekState({ shots: [] }, 1, duration, hold), null);
 });
 
-test('[director-033] camera seeking preserves cubic easing and shortest-angle orientation', () => {
+test('camera seeking preserves cubic easing and shortest-angle orientation', () => {
   assert.equal(
     cameraAtProgress(camera(20, 350), camera(24, 10), 0.5).heading,
     360,
@@ -269,7 +269,7 @@ test('[director-035] The seek uses the first ordinary camera', () => {
   );
 });
 
-test('[director-035] The seek samples an explicit move', () => {
+test('[director-035] The seek samples a move that the shot gives', () => {
   const s = {
     shots: [
       {
