@@ -68,10 +68,10 @@
 
 ## 5. Corrections of review round 2
 
-- [x] 5.1 Tag the open-state card test with `recent-imagery-050`.
+- [x] 5.1 Tag the test of the panel that shows the DETAILS card with `recent-imagery-050`.
   - [x] 5.1a Run the mutation that moves the scroll request before `render()`.
     The test must fail.
-- [x] 5.2 Name the zero-height and card-method cases for `recent-imagery-055`.
+- [x] 5.2 Write the zero-height and card-method AND lines for `recent-imagery-055`.
   - [x] 5.2a Run the mutations that remove each guard.
     Each test must fail.
 - [x] 5.3 Write the undefined-height test for `recent-imagery-055`.
@@ -85,9 +85,9 @@
 - [x] 5.5 Test the content-update path of `recent-imagery-055`.
   - [x] 5.5a Run the mutation that moves the scroll request into `render()`.
     The test must fail.
-- [x] 5.6 Name the old full and partial NaN results.
+- [x] 5.6 Write the old full and partial NaN results in the proposal.
 - [x] 5.7 Copy the round 1 logs into the evidence folder.
-- [x] 5.8 Name the browser QA limit.
+- [x] 5.8 Write the browser QA limit in the proposal.
 - [x] 5.9 Change the terms in both thumbnail test titles.
 - [x] 5.10 Test all mutation rows.
 - [x] 5.11 Measure coverage and test totals.

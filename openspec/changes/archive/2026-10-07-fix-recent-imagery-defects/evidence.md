@@ -156,7 +156,7 @@ The logs with the prefix `r1-final-` supply these results.
 | `src/ui/recentImagery.test.mjs` | 125 | 125 | 0 |
 
 The first six test files are in `src/layers/recentImagery/`.
-The first panel command without the host isolation setting stopped before it gave test results.
+The first panel command without the host isolation option stopped before it gave test results.
 That command gave no individual test results.
 The first card-method test recorded its setup value in the scroll log.
 The corrected test resets that log before the click.
@@ -223,8 +223,8 @@ The Python row audit below supplies the row total and checks each source match.
 | 24 | `056-sparse-ring` | Change `Array.from(ring).every` to `ring.every` | a footprint with an absent point gives unknown coverage |
 | 25 | `053-aborted-signal` | Cancel the controller before the fetch | the loader starts a new fetch after an external AbortError |
 
-The mutation of the footprint with an absent point fails the repository test.
-The base returns unknown coverage.
+The mutation `056-sparse-ring` fails the test of a footprint with an absent point.
+The current code returns unknown coverage.
 
 The signal state assertion now runs outside the loader catch block.
 The signal mutation causes that repository test to fail.
@@ -251,7 +251,7 @@ Their logs are `r1-final-lint.log` and `r1-final-predispatch.log`.
 ## Corrections of review round 2
 
 The base commit is `81b8bd6`.
-The worker read the working tree of the lead at Git current commit `ee1b35ee8c2e9074366530346f761fc2ddda5680`.
+The worker read the working tree of the lead at the current Git commit `ee1b35ee8c2e9074366530346f761fc2ddda5680`.
 The command `git rev-parse HEAD` supplies the current commit.
 The production files stay unchanged from that commit.
 The command `git diff --exit-code HEAD` with the three production paths confirms that result.
@@ -287,7 +287,7 @@ The gap probe uses the same V8 union method as the coverage library.
 The log `evidence/r2-gap-probe.log` compares the round 1 and round 2 panel gaps.
 The branch gaps stay at lines 122 and 896.
 The function gaps stay at lines 183 and 269.
-Each branch of revealCard receives coverage.
+The tests cover each branch of `revealCard`.
 No gap grows.
 
 ### NaN and content-update probes
@@ -299,22 +299,22 @@ The NaN longitude case gives partial coverage in the base code.
 All three now give unknown coverage.
 
 The source search shows that coversBox rejects only partial coverage.
-Thus only an old partial result changes tier when it becomes unknown.
+Only an old partial result changes the tier when it becomes unknown.
 
 The content-update probe uses row `055-scroll-on-content` and the repository test of an open DETAILS card.
 The probe command uses `node --test --test-name-pattern` with that row pattern and test file.
 The log `evidence/r2-content-probe.log` records the exact assertion failure.
-The actual body scroll position is 20, and the requests are `[20]`.
-The test expects a body scroll position of 10 and requests `[]`.
+The body scroll position is 20 pixels, and the requests are `[20]`.
+The test expects a body scroll position of 10 pixels and no scroll request.
 The production file returns to its original text after the probe.
 
 ### New tests and mutation rows
 
 The two new tests carry `recent-imagery-055`.
-The height test removes clientHeight and uses a card top of -10 pixels.
+The undefined-height test removes clientHeight and uses a card top of -10 pixels.
 The card-inside-view test uses a card top of 10 pixels and a height of 20 pixels.
-Both tests expect a body scroll position of 40 and no scroll request.
-The scroll spy kills the zero-delta mutation through the extra write of 40.
+Both tests expect a body scroll position of 40 pixels and no scroll request.
+The scroll spy kills the zero-delta mutation when the code sets scrollTop again to 40.
 That mutation is not equivalent.
 
 | Row | ID | Code change | Failed test |
@@ -325,8 +325,8 @@ That mutation is not equivalent.
 | 29 | `055-zero-delta-write` | Change `if (delta)` to `if (true)` | a card inside the view keeps the body scroll position |
 
 The zero-height test and card-method test use the same terms as the scenario.
-Rows 22 and 23 test those guards.
-The open-state card test now also carries `recent-imagery-050`.
+The mutations of rows 22 and 23 remove those guards.
+The test of the panel that shows the DETAILS card now also carries `recent-imagery-050`.
 Row 21 tests its scroll request order.
 The thumbnail test names and their document links use the same terms.
 
@@ -368,7 +368,7 @@ cd /home/ianblenke/docker/gev-work/fix-ri && git diff --name-only HEAD
 
 The complete mutation command records 29 KILLED results and no survivor.
 Each result comes from a repository test failure.
-The log `evidence/mutations-final.log` contains only the final complete command results.
+The log `evidence/mutations-final.log` contains only the results of the final complete command.
 The log `evidence/r2-row-audit.log` records the row and source-match audit.
 The audit command uses Python with `r2-row-audit.py`.
 The command `cmp` confirms that the two mutation files match.
@@ -379,8 +379,8 @@ The logs `evidence/r2-format-write.log` and `evidence/r2-format-check.log` suppl
 The final lint and predispatch logs record their results.
 The final source search records the corrected terms and test tags.
 
-Corrections A and C give exact AND text.
-Those lines keep that text instead of the general panel-agent form in correction D.
+The AND lines of scenario 055 keep their exact text.
+The wording corrections of the panel text do not change them.
 All other requested STE edits receive corrections.
 The base spec, trace files, QA scripts, and review folder stay unchanged.
 The ratchet, full gates, browser QA, and round 3 reviews remain for the lead.
