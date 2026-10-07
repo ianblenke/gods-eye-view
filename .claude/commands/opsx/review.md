@@ -11,7 +11,7 @@ The review agents can only read files. You write their output to files. Copy the
 
 ## Steps
 
-1. Run `make precheck`. Commit the protected inputs before the ratchet command. Use the output of the ratchet command, or run `make gates-docs CHANGE=<name>`. The only errors must be review errors. If there are other errors, stop. Correct them first.
+1. Run `make precheck`. Make sure that the ratchet commit has all input files. If not, commit them and run the ratchet command again. Then run `make gates-docs CHANGE=<name>`. The only errors must be review errors. If there are other errors, stop and correct them first.
 2. Run `openspec archive <name> --yes`. Replace each purpose line that starts with "TBD" in `openspec/specs/` with a purpose in STE. The archive command does not change the scenario text, the tests or the code, so you do not run the ratchet command again.
 3. Run `make gates-docs CHANGE=<name>` again. Keep the output. Run `git diff --stat origin/main`. Keep the output.
 4. Run `git status --porcelain`. Keep the output.
@@ -52,3 +52,5 @@ Reviewed-Tree: <hash from step 13>
 Document gates trust changes only under `openspec/changes/`, `openspec/specs/` and `openspec/trace/`.
 After archive, use document gates only while all changed files stay under those paths.
 A QA header change or another file change needs another ratchet command or full gates on the final tree.
+
+When a code file or test file changes, use another ratchet command or full gates.

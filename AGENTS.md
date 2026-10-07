@@ -19,7 +19,7 @@ These rules are for each person and each AI agent that changes this project.
 Each rule below comes from a defect that reached this project. Obey each one.
 
 8. Read the verdict from the output of the command. Do not read a verdict from `.gev-cache/spec/results.json`. That file records only the exit status of each test process.
-9. Read the first line of the log to find which command ran. The ratchet command now gives the comparison verdict after its writes. A ratchet command that stops before the comparisons gives no comparison verdict.
+9. Read the first line of the log to find which command ran. The ratchet command gives the comparison verdict after it writes the files. A ratchet command that stops before the comparisons gives no comparison verdict.
 10. Say plainly when a run stopped before the end. Do not give a verdict for it.
 11. Name the commit of the tree that you read. Give that commit in each report and each finding. A copy in a scratchpad has no branch, and it becomes old without a sign.
 12. Run one container at a time on this machine. A second container makes a long run stop at its time limit.
@@ -42,8 +42,8 @@ The gates run on the Node version in `.node-version`. Use the Docker image, beca
 |---|---|
 | `make gates` | Run all gates for the current tree |
 | `make gates CHANGE=<name>` | Run all gates. The named change must be complete. |
-| `make ratchet CHANGE=<name>` | Record the closed gaps, the new scenario IDs and the test links, then compare all gates |
-| `make gates-docs CHANGE=<name>` | Check current files with a trusted measurement; refuse changed measurement inputs |
+| `make ratchet CHANGE=<name>` | Record the closed gaps, the new scenario IDs and the test links, then run all gate comparisons |
+| `make gates-docs CHANGE=<name>` | Check current files with a trusted snapshot. Refuse changed input files |
 | `make precheck` | Check format, import directions, package boundaries and layer tokens |
 | `make lint` | Run the STE lint on the prose files |
 | `make tree CHANGE=<name>` | Show the tree hash for `review.md` |
@@ -57,9 +57,9 @@ A gap is a code file below 100% coverage or a test without a scenario ID. The fi
 ## Steps for a change
 
 1. Run `/opsx:propose` to write the proposal, the specs, the design and the tasks.
-2. Do the tasks in order. Write each test before its code. Commit the protected inputs before the ratchet command.
+2. Do the tasks in order. Write each test before its code. Commit each file outside openspec/changes/, openspec/specs/ and openspec/trace/. Commit code files and test files before the ratchet command.
 3. Run `make ratchet CHANGE=<name>`.
-4. Read the ratchet verdict. Correct each error, except the review errors. Use `make gates-docs CHANGE=<name>` for later document changes.
+4. Read the ratchet verdict. Correct each error, except the review errors. Use `make gates-docs CHANGE=<name>` when each changed file lies under the three allowed paths. The mode also refuses changed code files and test files.
 5. Run `/opsx:review <name>`. This command archives the change, runs the two review agents and writes `review.md`.
 6. Commit the change, the archive folder and the files in `openspec/trace/`.
 
@@ -73,6 +73,11 @@ A backfill change adds specs and tests for old code. Its name is `backfill-<capa
 4. Run `make ratchet CHANGE=backfill-<capability>`. The history records the closed gaps with the change name.
 5. Do steps 4 to 6 of the change steps.
 
+## Document gates
+
+The three allowed paths are `openspec/changes/`, `openspec/specs/` and `openspec/trace/`.
 Document gates trust changes only under `openspec/changes/`, `openspec/specs/` and `openspec/trace/`.
 After archive, use document gates only while all changed files stay under those paths.
 A QA header change or another file change needs another ratchet command or full gates on the final tree.
+
+When a code file or test file changes, use another ratchet command or full gates.

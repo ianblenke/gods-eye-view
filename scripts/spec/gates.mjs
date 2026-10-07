@@ -695,7 +695,7 @@ export function runGates(options) {
   const started = clock();
   const trusted = parsed.noMeasure ? trustMeasurement(options.root, parsed.change, options.gitSpawn) : null;
   if (parsed.noMeasure) {
-    log(trusted.reason ? 'NO MEASUREMENT: refused' : `NO MEASUREMENT: the measurement of commit ${trusted.commit} is trusted`);
+    log(trusted.reason ? 'NO TEST RUN: refused' : `NO TEST RUN: the snapshot of commit ${trusted.commit} is trusted`);
   } else {
     log(`Command: ${parsed.command}`);
   }
@@ -715,7 +715,7 @@ export function runGates(options) {
     if (trusted?.reason) {
       log(trusted.reason);
       for (const file of trusted.files) log(file);
-      log(`Trusted commit: ${trusted.commit}`);
+      log(`Ratchet commit: ${trusted.commit}`);
       return 2;
     }
     return runGateCommand({ ...options, phase, snapshot: trusted?.measured });
