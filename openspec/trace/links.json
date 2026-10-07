@@ -2376,8 +2376,8 @@
   ],
   "recent-imagery-013": [
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-011 recent-imagery-013] absent lists and footprints have known results",
-    "src/layers/recentImagery/model.test.mjs › [recent-imagery-013] a nonfinite footprint point does not prove full box coverage",
-    "src/layers/recentImagery/model.test.mjs › [recent-imagery-013] a nonfinite latitude can produce a full result",
+    "src/layers/recentImagery/model.test.mjs › [recent-imagery-013 recent-imagery-056] a latitude that is not finite gives unknown coverage",
+    "src/layers/recentImagery/model.test.mjs › [recent-imagery-013 recent-imagery-056] an invalid footprint point gives unknown coverage",
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-013] a short polygon alone gives unknown coverage",
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-013] a sloped footprint uses its latitude span",
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-013] an absent box alone gives unknown coverage",
@@ -2400,8 +2400,8 @@
     "src/layers/recentImagery/model.test.mjs › [recent-imagery-015] the readout is one UTC line with age, sensor, resolution and scene cloud"
   ],
   "recent-imagery-016": [
-    "src/layers/recentImagery/model.test.mjs › [recent-imagery-016] GIBS templates put y before x; Worldview snapshots take south,west,north,east",
-    "src/layers/recentImagery/model.test.mjs › [recent-imagery-016] unknown products and an absent snapshot box fail"
+    "src/layers/recentImagery/model.test.mjs › [recent-imagery-016 recent-imagery-054] the unknown products and an absent snapshot box fail",
+    "src/layers/recentImagery/model.test.mjs › [recent-imagery-016] GIBS templates put y before x; Worldview snapshots take south,west,north,east"
   ],
   "recent-imagery-017": [
     "src/layers/recentImagery/index.test.mjs › [recent-imagery-017] a new first card alone updates the thumbnail range",
@@ -2445,7 +2445,7 @@
     "src/layers/recentImagery/rendering.test.mjs › [recent-imagery-022] upstream deferrals from both slots share one delayed retry frame; destroy disarms it"
   ],
   "recent-imagery-023": [
-    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026] fetch errors and stop errors have different states",
+    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026 recent-imagery-053] the fetch errors and stop errors give different states",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-027] a listener error or a URL error does not stop the release of images",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-027] the default loader owns its URLs and releases them",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023] Data-Present decides the day: present with an object URL and sensing time, empty, or error",
@@ -2464,7 +2464,7 @@
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-025] reading every card in strip order (a snapshot) never decides who is evicted; evicted days stay known and come back on request"
   ],
   "recent-imagery-026": [
-    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026] fetch errors and stop errors have different states",
+    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026 recent-imagery-053] the fetch errors and stop errors give different states",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-026] a URL callback while the loader clears images does not start a day that the loader removed",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-026] a callback that clears the loader revokes its late URL",
     "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-026] a late empty response after a stop leaves the day unknown",
@@ -2814,6 +2814,8 @@
   "recent-imagery-049": [
     "src/ui/recentImagery.test.mjs › [recent-imagery-043 recent-imagery-048 recent-imagery-049] the panel owns its class, details title and export filename",
     "src/ui/recentImagery.test.mjs › [recent-imagery-044 recent-imagery-049] the panel details use absent and overview facts",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-055] DETAILS keeps the card position",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-055] an open DETAILS card does not request scroll again",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] DETAILS is a collapsed rail card holding every note, and the empty-days toggle",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] a card above the viewport requests its upper edge",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] a card below the viewport requests the minimum offset",
@@ -2829,15 +2831,13 @@
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] an absent granule cloud has no cloud suffix",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] an inactive overview source alone does not allow its scale note",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] an invalid granule time has an empty time label",
-    "src/ui/recentImagery.test.mjs › [recent-imagery-049] an open DETAILS card does not request scroll again",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] details show both independent notes",
-    "src/ui/recentImagery.test.mjs › [recent-imagery-049] details with real dimensions open the card",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] equal acquisition times have one screen reader time",
     "src/ui/recentImagery.test.mjs › [recent-imagery-049] the empty day control stays active while it shows empty days"
   ],
   "recent-imagery-050": [
     "src/ui/recentImagery.test.mjs › [recent-imagery-045 recent-imagery-050] strip keys and dimensions keep focus local",
-    "src/ui/recentImagery.test.mjs › [recent-imagery-050] the body scroll position survives renders even when DOM mutations reset it"
+    "src/ui/recentImagery.test.mjs › [recent-imagery-050] the body scroll position survives content updates"
   ],
   "recent-imagery-051": [
     "src/ui/recentImagery.test.mjs › [recent-imagery-051] a candidate without a card does not enter the visible range",
@@ -2851,6 +2851,28 @@
     "src/layers/recentImagery/testDoubles.test.mjs › [recent-imagery-052] the renderer double moves both image slots to the next host",
     "src/layers/recentImagery/testDoubles.test.mjs › [recent-imagery-052] the response doubles use different success and failure status codes",
     "src/layers/recentImagery/testDoubles.test.mjs › [recent-imagery-052] the thumbnail double calls both probe subscribers"
+  ],
+  "recent-imagery-053": [
+    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-023 recent-imagery-026 recent-imagery-053] the fetch errors and stop errors give different states",
+    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-053] a later request starts after external AbortError",
+    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-053] a present day keeps proof after fetch cancellation",
+    "src/layers/recentImagery/thumbnails.test.mjs › [recent-imagery-053] an old fetch cannot remove a new entry"
+  ],
+  "recent-imagery-054": [
+    "src/layers/recentImagery/model.test.mjs › [recent-imagery-016 recent-imagery-054] the unknown products and an absent snapshot box fail",
+    "src/layers/recentImagery/model.test.mjs › [recent-imagery-054] the model does not read a parent product getter",
+    "src/layers/recentImagery/model.test.mjs › [recent-imagery-054] the model rejects parent product keys"
+  ],
+  "recent-imagery-055": [
+    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-055] DETAILS keeps the card position",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-049 recent-imagery-055] an open DETAILS card does not request scroll again",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-055] DETAILS does not move the body when it closes",
+    "src/ui/recentImagery.test.mjs › [recent-imagery-055] DETAILS without dimensions keeps the content position"
+  ],
+  "recent-imagery-056": [
+    "src/layers/recentImagery/model.test.mjs › [recent-imagery-013 recent-imagery-056] a latitude that is not finite gives unknown coverage",
+    "src/layers/recentImagery/model.test.mjs › [recent-imagery-013 recent-imagery-056] an invalid footprint point gives unknown coverage",
+    "src/layers/recentImagery/model.test.mjs › [recent-imagery-056] the invalid coordinates give unknown coverage"
   ],
   "spec-lint-001": [
     "src/tooling/spec/specLint.test.mjs › [spec-lint-001] stops for a scenario without a WHEN line"
