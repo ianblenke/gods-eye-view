@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * @purpose Prove that scene time and seek control work in the browser.
- * @covers pending:director,pending:scenes
+ * @covers director,pending:scenes
  * @run node scripts/qa-director-timing.mjs
  * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
