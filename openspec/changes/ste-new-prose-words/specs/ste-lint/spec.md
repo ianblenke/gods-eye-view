@@ -4,14 +4,21 @@
 The STE lint MUST give errors for words from `newWords` in new prose and warnings for those words in old prose.
 The file `openspec/ste/words.json` supplies the map `newWords` for each project check.
 
-A Markdown file is old prose when the path is under `openspec/specs/`.
-A file under `openspec/changes/archive/` is old prose when the folder date is earlier than `newWordsFrom`.
+A Markdown file is old prose when its path is under `openspec/specs/`.
+A file under `openspec/changes/archive/` is old prose when the archive folder date is earlier than `newWordsFrom`.
 All other Markdown in the lint scope is new prose.
-A tagged title is old prose when every ID is known and each `since` date is earlier than `newWordsFrom`.
-All other tagged titles are new prose.
+
+An ID is old when its `since` date is a string before the cutoff date `newWordsFrom`.
+All other IDs are new IDs.
+A title is an old title when the registry lists every ID of its tags and all its IDs are old IDs.
+All other tagged titles are new titles.
+
+An old title is old prose.
+A new title is new prose.
 
 The registry `openspec/trace/ids.json` supplies the IDs and dates.
 An absent registry contains no known IDs.
+Invalid JSON gives an error with the prefix `Cannot read openspec/trace/ids.json:`.
 An absent `newWordsFrom` gives the empty string.
 The archive folder date must start the folder name and use the form `YYYY-MM-DD-`.
 
@@ -56,7 +63,7 @@ Origin: spec-first
 
 #### Scenario: Check the map of the words that the owner chose `ste-lint-036`
 - **WHEN** the test reads the real word list file
-- **THEN** the keys and suggestions match the literal map of the words that the owner chose
+- **THEN** the keys and suggestions match the map in the test of the words that the owner chose
 
 #### Scenario: Keep success for old prose warnings `ste-lint-037`
 - **WHEN** the lint command finds only `STE-WORD-OLD` warnings
@@ -71,21 +78,25 @@ Origin: spec-first
 - **THEN** the error message is `Use "keep", not "retain"`
 
 #### Scenario: Exclude parent keys from the word map `ste-lint-040`
-- **WHEN** new prose or a new title contains `constructor`, `__proto__`, `toString` or `valueOf`
+- **WHEN** new prose or a new title contains `constructor`
 - **THEN** the rule for `newWords` gives no finding
 
-#### Scenario: Check archive date boundaries `ste-lint-041`
-- **WHEN** an archive folder date equals or follows `newWordsFrom`, or the folder name contains no date
+#### Scenario: Check archive folder dates `ste-lint-041`
+- **WHEN** an archive folder date equals or follows `newWordsFrom`, or the folder name does not start with a date in the named form
 - **THEN** a word from `newWords` gives `STE-WORD` at error level
 
 #### Scenario: Keep an old title for a changed scenario `ste-lint-042`
-- **WHEN** an active delta spec names an ID with an old date in the registry
+- **WHEN** an active delta spec names an ID with a `since` date before `newWordsFrom` in the registry
 - **THEN** a word from `newWords` in the title gives `STE-WORD-OLD` at warning level
 
 #### Scenario: Use new prose for unknown IDs `ste-lint-043`
-- **WHEN** a title names an unknown ID or the registry is absent
+- **WHEN** a title names an unknown ID, its `since` date is not a string, or the registry is absent
 - **THEN** a word from `newWords` gives `STE-WORD` at error level
 
-#### Scenario: Use the empty date default `ste-lint-044`
+#### Scenario: Use new prose without `newWordsFrom` `ste-lint-044`
 - **WHEN** the word list contains no `newWordsFrom`
 - **THEN** dated archive files and titles with known IDs use new prose
+
+#### Scenario: Stop for invalid registry JSON `ste-lint-045`
+- **WHEN** the registry contains invalid JSON
+- **THEN** the project check throws an error with the prefix `Cannot read openspec/trace/ids.json:`

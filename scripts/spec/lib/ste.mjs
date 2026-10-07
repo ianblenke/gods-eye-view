@@ -226,7 +226,7 @@ function codeSpanFindings(text) {
 export function lintMarkdown(text, { file, words }) {
   const isTasks = path.posix.basename(file) === 'tasks.md';
   const archiveDate = /^openspec\/changes\/archive\/(\d{4}-\d{2}-\d{2})-[^/]+\//.exec(file)?.[1];
-  const isNew = !file.startsWith('openspec/specs/') && !(archiveDate && archiveDate < (words.newWordsFrom ?? ''));
+  const isNew = !file.startsWith('openspec/specs/') && !(archiveDate < words.newWordsFrom);
   return [...paragraphsOf(text, { isTasks }).flatMap((paragraph) => checkParagraph(paragraph, words, isNew)), ...codeSpanFindings(text)]
     .map((item) => ({ rule: item.rule, level: item.level, file, line: item.line, message: item.message }));
 }
@@ -236,7 +236,7 @@ export function lintTestNames(records, words, registry = {}) {
   return records
     .filter((record) => record.kind === 'test' && record.tags.length > 0)
     .flatMap((record) =>
-      checkParagraph({ kind: 'text', line: 0, tokens: tokensOf(cleanLine(record.title), 0) }, words, record.tags.some((id) => !Object.hasOwn(registry, id) || registry[id].since >= (words.newWordsFrom ?? ''))).map((item) => ({
+      checkParagraph({ kind: 'text', line: 0, tokens: tokensOf(cleanLine(record.title), 0) }, words, !record.tags.every((id) => typeof registry[id]?.since === 'string' && registry[id].since < (words.newWordsFrom ?? ''))).map((item) => ({
         rule: item.rule,
         level: item.level,
         file: record.file,
@@ -288,7 +288,14 @@ export function readWordList(root) {
 export function lintProject({ root, records }) {
   const words = readWordList(root);
   const registryFile = path.join(root, 'openspec/trace/ids.json');
-  const registry = existsSync(registryFile) ? JSON.parse(readFileSync(registryFile, 'utf8')) : {};
+  let registry = {};
+  if (existsSync(registryFile)) {
+    try {
+      registry = JSON.parse(readFileSync(registryFile, 'utf8'));
+    } catch (error) {
+      throw new Error(`Cannot read openspec/trace/ids.json: ${error.message}`);
+    }
+  }
   return [
     ...listMarkdownFiles(root).flatMap((file) =>
       lintMarkdown(readFileSync(path.join(root, file), 'utf8'), { file, words }),
