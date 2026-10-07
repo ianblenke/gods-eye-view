@@ -121,8 +121,8 @@
   ],
   "ci-gates-005": [
     "src/tooling/spec/ci.test.mjs › [ci-gates-005] checks a diff that changes no code, without a change name",
-    "src/tooling/spec/gates.test.mjs › [ci-gates-005] checks a diff that changes no code, without a change name",
-    "src/tooling/spec/gates.test.mjs › [ci-gates-005] keep the CI verdict without command times"
+    "src/tooling/spec/gates.test.mjs › [ci-gates-005 coverage-gate-083] keep the CI verdict without command times",
+    "src/tooling/spec/gates.test.mjs › [ci-gates-005] checks a diff that changes no code, without a change name"
   ],
   "ci-gates-006": [
     "src/tooling/spec/ciFiles.test.mjs › [ci-gates-006] runs the CI command in the workflow with the pinned Node version and the full history"
@@ -379,10 +379,11 @@
     "src/tooling/spec/gates.test.mjs › [coverage-gate-068] trust a changed document"
   ],
   "coverage-gate-069": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-069 coverage-gate-078] classify a protected ignored code file",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-069 coverage-gate-078] refuse an ignored file from the code inventory",
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-069 coverage-gate-092] refuse a code file move",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-069 coverage-gate-092] refuse a moved code file",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-069] refuse a changed inventory file",
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-069] refuse a deleted protected file",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-069] refuse a deleted input file",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-069] refuse a deleted test file",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-069] refuse a new tracked inventory file"
   ],
@@ -408,21 +409,33 @@
   ],
   "coverage-gate-075": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-075 coverage-gate-078] refuse an ignored file at Dockerfile",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-075 coverage-gate-078] refuse the input file at Dockerfileprod",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-075 coverage-gate-078] refuse the input file at containers/Dockerfile.gates",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-075] exclude the ignored name Dockerfile.dir/notes.txt",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-075] exclude the ignored name MyDockerfile",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-075] exclude the ignored name nested/MyDockerfile",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-075] refuse a changed Dockerfile",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-075] refuse a changed Dockerfile at `Dockerfileprod`",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-075] refuse a changed Dockerfile at `containers/Dockerfile.gates`"
   ],
   "coverage-gate-076": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-076 coverage-gate-078] refuse the input file at containers/compose.gates.yaml",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-076] exclude the ignored name compose-dir/file.yaml",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-076] exclude the ignored name compose.yaml.extra",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-076] exclude the ignored name compose/other.yaml",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-076] exclude the ignored name composeyml",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-076] refuse a changed compose file",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-076] refuse a changed compose file at `containers/compose.gates.yaml`",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-076] refuse a changed compose file at `docker-compose.yml`"
   ],
   "coverage-gate-077": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-077 coverage-gate-078] refuse an ignored file at scripts/spec/ignored.txt",
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-077] refuse a changed gate file"
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-077] refuse a changed gate input file"
   ],
   "coverage-gate-078": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-069 coverage-gate-078] classify a protected ignored code file",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-069 coverage-gate-078] refuse an ignored file from the code inventory",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-071 coverage-gate-078] refuse an ignored file at scripts/qa-ignored.mjs",
@@ -430,12 +443,17 @@
     "src/tooling/spec/gates.test.mjs › [coverage-gate-073 coverage-gate-078] classify the ignored Node version",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-074 coverage-gate-078] refuse an ignored file at Makefile",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-075 coverage-gate-078] refuse an ignored file at Dockerfile",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-075 coverage-gate-078] refuse the input file at Dockerfileprod",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-075 coverage-gate-078] refuse the input file at containers/Dockerfile.gates",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-076 coverage-gate-078] refuse the input file at containers/compose.gates.yaml",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-077 coverage-gate-078] refuse an ignored file at scripts/spec/ignored.txt",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-078 coverage-gate-089] trust other ignored files",
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-078] refuse an ignored protected file",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-078] refuse a protected ignored file",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-078] refuse an untracked code file",
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-078] refuse an untracked protected file",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-078] refuse an untracked input file",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-078] refuse the input file at .gev-cachex/ignored.test.mjs",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-086 coverage-gate-078] refuse an ignored file at package.json"
   ],
   "coverage-gate-079": [
@@ -450,9 +468,11 @@
     "src/tooling/spec/gates.test.mjs › [coverage-gate-081] refuse a changed word list"
   ],
   "coverage-gate-082": [
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-082] refuse an absent measurement snapshot"
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-082] refuse an absent snapshot"
   ],
   "coverage-gate-083": [
+    "src/tooling/spec/gates.test.mjs › [ci-gates-005 coverage-gate-083] keep the CI verdict without command times",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-083] name the full check command",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-083] show command times"
   ],
   "coverage-gate-084": [
@@ -465,7 +485,7 @@
     "src/tooling/spec/gates.test.mjs › [coverage-gate-085] check coverage filters without tests",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-085] check the base registry without tests",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-085] compare the ledger with the base without tests",
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-085] keep every file gate",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-085] keep every file check",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-085] report a change folder that is absent"
   ],
   "coverage-gate-086": [
@@ -476,7 +496,7 @@
     "src/tooling/spec/gates.test.mjs › [coverage-gate-087] refuse a failed Git comparison"
   ],
   "coverage-gate-088": [
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-088] refuse an omitted protected file"
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-088] refuse an omitted input file"
   ],
   "coverage-gate-089": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-078 coverage-gate-089] trust other ignored files",
@@ -496,7 +516,7 @@
     "src/tooling/spec/gates.test.mjs › [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/other.yaml",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/specs.md",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-090] refuse a staged file edit",
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-090] refuse an untracked document"
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-090] refuse an untracked input file"
   ],
   "coverage-gate-091": [
     "src/tooling/spec/gates.test.mjs › [coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/agents/x.md",
@@ -508,15 +528,44 @@
     "src/tooling/spec/gates.test.mjs › [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/changes-old/x.md",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/config.yaml",
     "src/tooling/spec/gates.test.mjs › [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/other.yaml",
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/specs.md"
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/specs.md",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-091] refuse the input file at openspec/tracex/f.md"
   ],
   "coverage-gate-092": [
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-069 coverage-gate-092] refuse a code file move",
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-092] refuse a file move from docs/base.md",
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-092] refuse a file move from openspec/changes/add-demo/design.md"
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-069 coverage-gate-092] refuse a moved code file",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-092] refuse a moved file from docs/base.md",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-092] refuse a moved file from openspec/changes/add-demo/design.md"
   ],
   "coverage-gate-093": [
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their return to HEAD"
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD"
+  ],
+  "coverage-gate-094": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-094] copy cache contents without a marker list",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-094] keep cache source contents after the container ends"
+  ],
+  "coverage-gate-095": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a new code file at openspec/changes/code.js",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a new code file at openspec/specs/code.js",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a new code file at openspec/trace/code.js",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a new test file at openspec/changes/code.test.mjs",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a new test file at openspec/specs/code.test.mjs",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a new test file at openspec/trace/code.test.mjs",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a tracked code file at openspec/changes/code.js",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a tracked code file at openspec/specs/code.js",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a tracked code file at openspec/trace/code.js",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a tracked test file at openspec/changes/code.test.mjs",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a tracked test file at openspec/specs/code.test.mjs",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-095] refuse a tracked test file at openspec/trace/code.test.mjs"
+  ],
+  "coverage-gate-096": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-096] refuse a commit ref in history",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-096] refuse the commit hash with letters",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-096] refuse the commit hash with prefix",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-096] refuse the commit hash with short",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-096] refuse the commit hash with suffix"
+  ],
+  "coverage-gate-097": [
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-097] stop before the container copies files after a marker error"
   ],
   "credential-boundary-001": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] a fixture build exposes only the allowed sentinels",
@@ -1827,6 +1876,7 @@
   ],
   "gap-ledger-126": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-126] compare repaired ledger values",
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-126] read the new totals history line for the base ledger",
     "src/tooling/spec/gates.test.mjs › [gap-ledger-126] repair absent totals and stale test names"
   ],
   "gap-ledger-127": [
@@ -1841,7 +1891,7 @@
     "src/tooling/spec/gates.test.mjs › [gap-ledger-129] record a different hash without a changed gap"
   ],
   "gap-ledger-130": [
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their return to HEAD",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD",
     "src/tooling/spec/gates.test.mjs › [gap-ledger-130 gap-ledger-132] sort dirty names and compare repeated history",
     "src/tooling/spec/gates.test.mjs › [gap-ledger-130] refuse a failed ratchet file comparison"
   ],
@@ -1849,7 +1899,7 @@
     "src/tooling/spec/gates.test.mjs › [gap-ledger-131 gap-ledger-133] accept clean history without a dirty field"
   ],
   "gap-ledger-132": [
-    "src/tooling/spec/gates.test.mjs › [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their return to HEAD",
+    "src/tooling/spec/gates.test.mjs › [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD",
     "src/tooling/spec/gates.test.mjs › [gap-ledger-130 gap-ledger-132] sort dirty names and compare repeated history"
   ],
   "gap-ledger-133": [
