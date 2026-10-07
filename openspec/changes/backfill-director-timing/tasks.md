@@ -479,13 +479,95 @@
 ## 3. Host checks
 
 - [x] 3.1 Check each module with host coverage.
-- [x] 3.2 Check each decision in the audit.
-- [x] 3.3 Check the prose with STE lint.
-- [x] 3.4 Check source format.
+- [x] 3.2 Check each branch in the audit.
+- [x] 3.3 Check the prose with the STE lint.
+- [x] 3.4 Run the format check on the source files.
 
-## 4. Gates and review
+## 4. Round 2 corrections
 
-- [ ] 4.1 Run `make ratchet CHANGE=backfill-director-timing`.
-- [ ] 4.2 Run `make gates CHANGE=backfill-director-timing`.
-- [ ] 4.3 Get the archive and review from the lead.
-- [ ] 4.4 Record both review verdicts in `review.md`.
+- [x] 4.1 Test the queue wrap, unknown start and shot objects.
+
+  Mutation: Reverse the scene slices. Use `m289`. The test must fail.
+
+  Mutation: Remove the start index clamp. Use `m290`. The test must fail.
+
+  Mutation: Replace flatMap with map. Use `m291`. The test must fail.
+
+  Mutation: Copy each shot object. Use `m292`. The test must fail.
+
+- [x] 4.2 Test the shortest arc for heading and roll.
+
+  Mutation: Change the angle sum from 540 to 360. Use `m293`. The test must fail.
+
+  Mutation: Change the angle divisor from 360 to 180. Use `m294`. The test must fail.
+
+  Mutation: Change the angle subtraction from 180 to 0. Use `m295`. The test must fail.
+
+- [x] 4.3 Test unknown visual, group, pack and layer fields.
+
+  Mutation: Delete the visual field check. Use `m296`. The test must fail.
+
+  Mutation: Delete the visual group field check. Use `m297`. The test must fail.
+
+  Mutation: Delete the pack field check. Use `m298`. The test must fail.
+
+  Mutation: Delete the layer field check. Use `m299`. The test must fail.
+
+- [x] 4.4 Test duplicate scene and pack IDs.
+
+  Mutation: Delete the scene ID check. Use `m300`. The test must fail.
+
+  Mutation: Delete the pack ID check. Use `m301`. The test must fail.
+
+- [x] 4.5 Test each document version gate.
+
+  Mutation: Change the anchors gate from 4 to 6. Use `m302`. The test must fail.
+
+  Mutation: Change the move gate from 4 to 6. Use `m303`. The test must fail.
+
+  Mutation: Change the data packs gate from 5 to 6. Use `m304`. The test must fail.
+
+  Mutation: Change the data pack IDs gate from 5 to 6. Use `m305`. The test must fail.
+
+- [x] 4.6 Test the default false clock state and negative elapsed time.
+
+  Mutation: Set the default clock state to true. Use `m306`. The test must fail.
+
+  Mutation: Remove the elapsed time lower clamp. Use `m307`. The test must fail.
+
+- [x] 4.7 Test the elapsed time for an absent shot ID.
+
+  Mutation: Remove the shot index lower clamp. Use `m308`. The test must fail.
+
+- [x] 4.8 Test both sides of the default text limit.
+
+  Mutation: Change the default text limit to 255. Use `m309`. The test must fail.
+
+  Mutation: Change the default text limit to 257. Use `m310`. The test must fail.
+
+- [x] 4.9 Test each phase index and the queue total.
+
+  Mutation: Set each phase index to 0. Use `m311`. The test must fail.
+
+  Mutation: Set the queue total to 1. Use `m312`. The test must fail.
+
+- [x] 4.10 Check all host test results and coverage.
+- [x] 4.11 Check the final mutation and branch audit totals.
+- [x] 4.12 Run the STE lint.
+- [x] 4.13 Run the source format command.
+- [x] 4.14 Run the format check on the source files.
+
+- [x] 4.15 Check the next subscriber after an error.
+
+  Mutation: Limit publication to the first subscriber. Use `m207`. The test must fail.
+
+- [x] 4.16 Check the pack field with a valid loop mutation.
+
+  Mutation: Replace the field call with an empty statement. Use `m068`. The test must fail.
+
+## 5. Gates and review
+
+- [ ] 5.1 Run `make ratchet CHANGE=backfill-director-timing`.
+- [ ] 5.2 Run `make gates CHANGE=backfill-director-timing`.
+- [ ] 5.3 Ask the lead to archive the change and to run the review.
+- [ ] 5.4 Record both review verdicts in `review.md`.

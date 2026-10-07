@@ -1,9 +1,13 @@
 # Director specification
 
+## Purpose
+
+The director capability covers the document module, the fields module, the author module, the clock module, the timeline module and the playback module.
+
 ## ADDED Requirements
 
 ### Requirement: Document behavior
-The director document API MUST validate or calculate its current public results.
+The document module MUST accept valid scene projects and reject invalid document fields.
 Origin: backfill
 
 #### Scenario: Keep authored content `director-001`
@@ -17,13 +21,18 @@ Origin: backfill
 #### Scenario: Accept legacy documents `director-003`
 - **WHEN** a legacy document enters validation and migration
 - **THEN** the migration keeps stable IDs after export
+- **AND** versions 4, 5 and 6 accept scene anchors and shot move fields
+- **AND** versions 1, 2 and 3 reject scene anchors and shot move fields
+- **AND** versions 5 and 6 accept scene data packs and shot data pack IDs
+- **AND** versions 1, 2, 3 and 4 reject scene data packs and shot data pack IDs
 
 #### Scenario: Reject invalid documents `director-004`
 - **WHEN** a document contains an invalid shape, version, field or duplicate ID
 - **THEN** validation rejects the document with a field path
+- **AND** a duplicate scene ID gives path `$.scenes[1].id`
 
 ### Requirement: Fields behavior
-The director fields API MUST validate or calculate its current public results.
+The fields module MUST check object fields, text, numbers, collections, IDs and JSON complexity.
 Origin: backfill
 
 #### Scenario: Check object fields `director-005`
@@ -32,7 +41,9 @@ Origin: backfill
 
 #### Scenario: Check text `director-006`
 - **WHEN** the text check receives text or invalid input
-- **THEN** the check accepts bounded nonempty text and rejects other input
+- **THEN** the check accepts text that is not empty within its length limit and rejects other input
+- **AND** the default limit accepts 256 characters and rejects 257 characters
+- **AND** 257 characters at path `$` give a `SceneDocumentError` with path `$`
 
 #### Scenario: Check numbers `director-007`
 - **WHEN** the number check receives a value and numeric bounds
@@ -59,64 +70,79 @@ Origin: backfill
 - **THEN** the check rejects the tree
 
 ### Requirement: Document bounds
-The director document API MUST validate or calculate its current public results.
+The document module MUST check input size, visual controls, metadata, shot time and layer state.
 Origin: backfill
 
 #### Scenario: Bound document input `director-013`
-- **WHEN** the parser receives invalid JSON, nontext input or text over its byte limit
+- **WHEN** the parser receives invalid JSON, input that is not text or text over its byte limit
 - **THEN** the parser rejects the input
 
 #### Scenario: Check visual text and objects `director-014`
 - **WHEN** a shot contains visual text or style parameters
 - **THEN** validation checks each supplied field
+- **AND** an unknown visual field gives path `$.scenes[0].shots[0].visual.extra`
 
 #### Scenario: Check visual controls `director-015`
 - **WHEN** a shot contains a visual control
 - **THEN** validation checks each supplied control field against its type and bounds
+- **AND** an unknown bloom field gives path `$.scenes[0].shots[0].visual.bloom.extra`
 
 #### Scenario: Check document metadata `director-016`
 - **WHEN** a document contains date text, scene text or pack metadata
 - **THEN** validation checks each supplied field
+- **AND** an unknown pack field gives path `$.scenes[0].appliedShotPacks[0].extra`
+- **AND** a duplicate pack ID gives path `$.scenes[0].appliedShotPacks[1].id`
 
 #### Scenario: Check shot time `director-017`
 - **WHEN** a shot contains duration or hold values
-- **THEN** validation accepts values from zero through 86400 and rejects values outside that range
+- **THEN** validation accepts values from zero through 86400 seconds and rejects values outside that range
 
 #### Scenario: Check layers and shot limits `director-018`
 - **WHEN** a document contains layer state or excess shots
 - **THEN** validation checks layer state and rejects excess shots
+- **AND** an unknown layer field gives path `$.scenes[0].shots[0].layers.traffic.extra`
 
 ### Requirement: Author behavior
-The director author API MUST validate or calculate its current public results.
+The author module MUST edit selected scene and shot details and copy selected scenes for export.
 Origin: backfill
 
 #### Scenario: Edit selected details `director-019`
-- **WHEN** the author edits valid details of a selected scene and shot
-- **THEN** the result holds the new details and keeps other authored content without source changes
+- **WHEN** the caller edits valid details of a selected scene and shot
+- **THEN** the result holds the new details and keeps other authored content and does not change the source
 
 #### Scenario: Reject invalid details `director-020`
-- **WHEN** the author selects an absent scene or shot, or supplies unsupported details
+- **WHEN** the caller selects an absent scene or shot, or supplies unsupported details
 - **THEN** the edit rejects the input
 
 #### Scenario: Remove absent details `director-021`
-- **WHEN** the author supplies a detail object without an editable field
+- **WHEN** the caller supplies a detail object without an editable field
 - **THEN** the result removes that field
 
 #### Scenario: Select one scene `director-022`
-- **WHEN** the author selects a scene for export
+- **WHEN** the caller selects a scene for export
 - **THEN** the result contains only that scene and does not change the source
 
 ### Requirement: Clock behavior
-The director clock API MUST validate or calculate its current public results.
+The clock module MUST publish copied scene time, report progress and cancel its timers and holds.
 Origin: backfill
 
 #### Scenario: Publish copied clock state `director-023`
 - **WHEN** the clock publishes scene time
 - **THEN** subscribers get bounded time and copied state
+- **AND** a clock outside playback gives `running: false` without an option
+- **AND** elapsed time -2 gives elapsed time 0 and scene progress 0
+- **AND** a clock without a snapshot keeps null for an absent scene, absent shot or destroyed clock
+- **AND** a subscriber error gives one warning and leaves elapsed time at 1 second
+- **AND** each later subscriber still gets the state
 
 #### Scenario: Stop clock resources `director-024`
 - **WHEN** the clock stops or ends
 - **THEN** it cancels owned timers and prevents stale callbacks from new progress
+- **AND** stop after a snapshot gives `stopped: true` and `running: false`
+- **AND** a subscriber error does not leave the stop method
+- **AND** a second stop gives zero new subscriber calls
+- **AND** stop before the first snapshot leaves it null and leaves zero active timers
+- **AND** `_destroyed: true` with an absent stopped field gives zero new subscriber calls and keeps that field absent
 
 #### Scenario: Settle hold deadlines `director-025`
 - **WHEN** a hold ends or its token cancels
@@ -125,25 +151,31 @@ Origin: backfill
 #### Scenario: Own subscriptions `director-026`
 - **WHEN** a subscriber joins or leaves the clock
 - **THEN** the clock gives current state and removes the subscriber on request
+- **AND** a value that is not a function on a fresh clock gives a callable unsubscribe function and zero subscribers
+- **AND** a destroyed clock adds zero subscribers
 
 #### Scenario: Report playback progress `director-027`
 - **WHEN** the clock measures playback time
 - **THEN** it reports elapsed time against a duration of at least one second
+- **AND** a stopped, replaced or destroyed tick gives zero progress calls
+- **AND** the default timer gives a number and one active timer before destroy
+- **AND** destroy leaves zero active timers
 
 #### Scenario: Report shot progress `director-028`
-- **WHEN** a direct shot advances or ends
+- **WHEN** a shot that a person selects outside playback advances or ends
 - **THEN** the clock interpolates progress and scene time and removes its completed timer
 
-#### Scenario: Reject revoked shot work `director-029`
-- **WHEN** a token, callback or clock revokes direct shot work
+#### Scenario: Reject cancelled shot work `director-029`
+- **WHEN** a token, callback or clock cancels shot work outside playback
 - **THEN** the clock prevents later progress from that work
+- **AND** an active playback clock gives zero progress calls and zero shot timers for a shot outside playback
 
 #### Scenario: Report scene time `director-030`
 - **WHEN** an active scene clock advances
-- **THEN** the clock bounds elapsed shot time and prevents revoked work from new state
+- **THEN** the clock bounds elapsed shot time and prevents cancelled work from new state
 
 ### Requirement: Timeline behavior
-The director timeline API MUST validate or calculate its current public results.
+The timeline module MUST calculate shot boundaries, scene time and camera poses.
 Origin: backfill
 
 #### Scenario: Calculate shot boundaries `director-031`
@@ -153,10 +185,15 @@ Origin: backfill
 #### Scenario: Handle absent or zero time `director-032`
 - **WHEN** the timeline receives absent shots or a zero total duration
 - **THEN** it returns empty or zero time results
+- **AND** an absent shot ID in a scene of 10 seconds gives shot index -1
+- **AND** that shot gives start time 0, end time 0 and start progress 0
 
 #### Scenario: Interpolate ordinary camera poses `director-033`
 - **WHEN** the timeline receives camera endpoints and progress
-- **THEN** it uses bounded cubic progress and the shortest heading and roll arc
+- **THEN** it uses bounded cubic progress and the shortest arc for heading and for roll
+- **AND** heading 350 to 10 gives 360 at progress 0.5
+- **AND** roll 350 to 10 gives 360 at progress 0.5
+- **AND** roll 10 to 350 gives 0 at progress 0.5 while heading 350 to 10 gives 360
 
 #### Scenario: Select a shot at scene time `director-034`
 - **WHEN** a person seeks within a scene
@@ -167,16 +204,22 @@ Origin: backfill
 - **THEN** the timeline returns the camera pose for that time
 
 ### Requirement: Playback behavior
-The director playback API MUST validate or calculate its current public results.
+The playback module MUST build shot queues, call adapter phases and release scene resources.
 Origin: backfill
 
 #### Scenario: Build a shot queue `director-036`
 - **WHEN** the caller selects a start scene or a single scene
-- **THEN** the queue keeps shot identity and scene order and skips empty scenes
+- **THEN** the queue starts at the start scene and wraps to the earlier scenes
+- **AND** start `b` gives shots `b1`, `a1` and `a2` in that order
+- **AND** an unknown start ID gives shots `a1`, `a2` and `b1` in that order
+- **AND** each queue entry holds the same shot object as the source scene
+- **AND** the queue skips empty scenes
 
 #### Scenario: Run shot phases `director-037`
 - **WHEN** the adapter accepts a shot queue
 - **THEN** playback calls each phase in order and completes the queue
+- **AND** each phase receives its own index and total fields
+- **AND** shots `b1`, `a1` and `a2` give indices 0, 1 and 2 with total 3
 
 #### Scenario: Stop cancelled work `director-038`
 - **WHEN** a token cancels before or during playback

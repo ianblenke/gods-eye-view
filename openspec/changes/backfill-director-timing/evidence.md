@@ -1,6 +1,7 @@
 # Director host evidence
 
-Commit: `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
+Commit read: `43b776a14aaf7d9379a786f5dafdc1c79bd4e371`.
+Source base: `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
 
 ## Scenario tests
 
@@ -31,6 +32,9 @@ Test file: `src/director/document.test.mjs`.
 [director-003] missing legacy IDs become stable after the first saved migration
 [director-003] The legacy document accepts absent IDs
 [director-003] The absent version allows legacy numeric text
+[director-003] The import accepts anchors and move at versions 4 through 6
+[director-003] The import accepts data packs at versions 5 and 6
+[director-003] The import rejects fields below each version gate
 ```
 
 ### director-004: Reject invalid documents
@@ -45,6 +49,7 @@ Test file: `src/director/document.test.mjs`.
 [director-004] The version rejects an early move field
 [director-004] The version rejects an early dataPackIds field
 [director-004] The version rejects an early interactions field
+[director-004] The document rejects a duplicate scene ID
 ```
 
 ### director-005: Check object fields
@@ -67,6 +72,8 @@ Test file: `src/director/documentFields.test.mjs`.
 [director-006] The text check rejects blank text
 [director-006] The text check rejects excess length
 [director-006] The text check accepts the exact limit
+[director-006] The default text limit accepts 256 characters
+[director-006] The default text limit rejects 257 characters
 ```
 
 ### director-007: Check numbers
@@ -164,6 +171,7 @@ Test file: `src/director/document.test.mjs`.
 [director-014] The visual check rejects invalid style
 [director-014] The visual check rejects invalid mapStack
 [director-014] The visual check rejects invalid style parameters
+[director-014] The visual rejects an unknown field
 ```
 
 ### director-015: Check visual controls
@@ -196,6 +204,7 @@ Test file: `src/director/document.test.mjs`.
 [director-015] The visual check rejects invalid number type
 [director-015] The visual check rejects invalid text type
 [director-015] The visual check rejects invalid boolean type
+[director-015] The visual group rejects an unknown field
 ```
 
 ### director-016: Check document metadata
@@ -213,6 +222,8 @@ Test file: `src/director/document.test.mjs`.
 [director-016] The scene checks its releaseLayerIds field
 [director-016] The shot checks its title field
 [director-016] The shot checks its sourcePackId field
+[director-016] The pack entry rejects an unknown field
+[director-016] The document rejects a duplicate pack ID
 ```
 
 ### director-017: Check shot time
@@ -234,6 +245,7 @@ Test file: `src/director/document.test.mjs`.
 [director-018] The shot total spans scene boundaries
 [director-018] The layer check validates a second layer ID
 [director-018] The layer check accepts boolean entries
+[director-018] The layer entry rejects an unknown field
 ```
 
 ### director-019: Edit selected details
@@ -299,6 +311,8 @@ Test file: `src/director/clock.test.mjs`.
 [director-023] The destroyed publication does not make a snapshot
 [director-023] The snapshot access returns a copy
 [director-023] The publication notifies every subscriber
+[director-023] The publication uses false from the clock state
+[director-023] The publication clamps negative elapsed time to zero
 ```
 
 ### director-024: Stop clock resources
@@ -361,7 +375,7 @@ Test file: `src/director/clock.test.mjs`.
 [director-028] The startShotProgress detaches its timer handle
 ```
 
-### director-029: Reject revoked shot work
+### director-029: Reject cancelled shot work
 
 Test file: `src/director/clock.test.mjs`.
 
@@ -435,6 +449,7 @@ Test file: `src/director/timeline.test.mjs`.
 [director-032] The zero total bounds durationProgress
 [director-032] The seek gives null without shots
 [director-032] The seek bounds zero scene time
+[director-032] The absent shot starts at zero elapsed time
 ```
 
 ### director-033: Interpolate ordinary camera poses
@@ -450,6 +465,7 @@ Test file: `src/director/timeline.test.mjs`.
 [director-033] The camera gives a zero start angle for invalid text
 [director-033] The camera guard handles a falsy endpoint
 [director-033] The camera guard returns null for falsy endpoints
+[director-033] The camera takes the shortest arc for both angles
 ```
 
 ### director-034: Select a shot at scene time
@@ -482,6 +498,8 @@ Test file: `src/director/playback.test.mjs`.
 
 ```text
 [director-036] The single scene queue excludes other scenes
+[director-036] The queue wraps from b and keeps each shot object
+[director-036] The unknown start selects the first scene
 ```
 
 ### director-037: Run shot phases
@@ -499,6 +517,7 @@ Test file: `src/director/playback.test.mjs`.
 [director-037] The playback calls the completeShot phase
 [director-037] The playback accepts an absent complete callback
 [director-037] The adapter receives the exact phase order
+[director-037] The phase context gives each index and the queue total
 ```
 
 ### director-038: Stop cancelled work
@@ -577,7 +596,7 @@ The coverage command below runs once for each name in the table.
 The test file next to each module supplies its input.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/director && node --test --test-force-exit --experimental-test-coverage --test-coverage-include='src/director/<name>.js' --test-coverage-exclude='**/*.test.mjs' src/director/<name>.test.mjs
+cd /home/ianblenke/docker/gev-work/director && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --test-force-exit --experimental-test-coverage --test-coverage-include='src/director/<name>.js' --test-coverage-exclude='**/*.test.mjs' src/director/<name>.test.mjs
 ```
 
 ## Old tests without tags
@@ -585,8 +604,8 @@ cd /home/ianblenke/docker/gev-work/director && node --test --test-force-exit --e
 The title sweep finds 18 old tests without tags.
 Each cancellation title contains the banned word `subsequent`.
 The handoff title contains the banned word `prior`.
-Three more titles contain the words `preserve`, `retains` and `preserves`, which the owner chose.
-The owner rule prevents changes to these names.
+Three more titles contain the words `preserve`, `retains` and `preserves`, which the word list bans in new prose.
+Old titles keep their words.
 The new tagged tests cover cancellation and the initial handoff.
 
 ```text
@@ -612,21 +631,21 @@ src/director/timeline.test.mjs
 camera seeking preserves cubic easing and shortest-angle orientation
 ```
 
-## Mutations and decision audit
+## Mutations and branch audit
 
-The mutation sweep reads 288 mutation declarations.
-The last log result gives 280 killed mutations and 8 equivalent survivors.
+The mutation sweep reads 312 mutation declarations.
+The last log result gives 304 killed mutations and 8 equivalent survivors.
 The mutation evidence records each ID, file, exact change and failed test.
 
 The audit command below gives these row totals.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/director && python3 /home/ianblenke/docker/gev-tools/director/audit.py
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/audit.py
 ```
 
 | Tested | Equivalent | Default-value | Open |
 | ---: | ---: | ---: | ---: |
-| 106 | 2 | 2 | 0 |
+| 120 | 2 | 2 | 0 |
 
 The scratch audit path is `/home/ianblenke/docker/gev-tools/director/audit.md`.
 Each row lists the tests and mutations that prove its decisions.
@@ -634,8 +653,8 @@ The nested expressions keep separate rows.
 
 ### Equivalent mutants
 
-- `m267`: The finite check at documentFields.js:77 rejects every nonnumber without conversion. Custom functions, objects and numeric text cannot pass this check.
-- `m009`: The finite check at documentFields.js:42 rejects every nonnumber without conversion. Custom valueOf objects and boxed numbers also fail.
+- `m267`: The finite check at documentFields.js:77 rejects every value that is not a number without conversion. Custom functions, objects and numeric text cannot pass this check.
+- `m009`: The finite check at documentFields.js:42 rejects every value that is not a number without conversion. Custom valueOf objects and boxed numbers also fail.
 - `m028`: The JSON checks at documentFields.js:71 and :77 accept null, booleans and finite numbers first. The type check at :78 rejects other falsy nonobjects.
 - `m098`: The optional scene access at authoring.js:13 gives an absent shot when the scene is absent. The shot check at :14 rejects it. JSON copies discard custom methods.
 - `m219`: The endpoint assignments at timeline.js:35 and :36 give source and target the same truth state. Custom objects stay true; all falsy primitives return null.
@@ -643,34 +662,41 @@ The nested expressions keep separate rows.
 - `m237`: The guard at timeline.js:37 reaches this return only with two falsy endpoints. Custom truthy endpoints enter interpolation. The null fallback gives the result.
 - `m238`: The guard at timeline.js:37 reaches this return only with two falsy endpoints. Custom truthy endpoints enter interpolation. The null fallback gives the result.
 
-## Decisions for the lead
+## Questions for the lead
 
-- Decision for the lead: `src/director/timeline.js:74` uses the default flight duration for a zero shot duration. Document validation accepts zero. The lead decides this format policy.
-- Decision for the lead: `src/director/clock.js:127` lets an immediate subscriber exception propagate. Publication catches subscriber exceptions at line 157. The lead decides the observer error policy.
+- Question for the lead: `src/director/timeline.js:74` uses the default flight duration for a zero shot duration. Document validation accepts zero. The lead decides this policy for the document format.
+- Question for the lead: `src/director/clock.js:127` lets an immediate subscriber error propagate. Publication catches subscriber errors at line 157. The lead decides the policy for subscriber errors.
 
 ## Commands and totals
 
-The sweep gives 40 scenario headings and 290 tests that ran.
+The sweep gives 40 scenario headings and 308 tests that ran.
 It also gives old ledger test totals, title issues and the mutation declaration total.
 The title check finds no banned word or excess length in a tagged title.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/director && python3 /home/ianblenke/docker/gev-tools/director/sweep.py
-cd /home/ianblenke/docker/gev-work/director && NODE_OPTIONS=--test-isolation=none node --test --test-force-exit src/director/document.test.mjs src/director/documentFields.test.mjs src/director/authoring.test.mjs src/director/clock.test.mjs src/director/playback.test.mjs src/director/timeline.test.mjs
-cd /home/ianblenke/docker/gev-work/director && NODE_OPTIONS=--test-isolation=none python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director /home/ianblenke/docker/gev-tools/director/muts.json
-cd /home/ianblenke/docker/gev-work/director && node scripts/spec/gates.mjs lint --change backfill-director-timing 2>&1 | grep -E "^(ERROR|STE)"
-cd /home/ianblenke/docker/gev-work/director && node scripts/format.mjs --write
-cd /home/ianblenke/docker/gev-work/director && node scripts/format.mjs --check
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/sweep.py
+cd /home/ianblenke/docker/gev-work/director && for director_module in document documentFields authoring clock playback timeline; do
+  NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test "src/director/${director_module}.test.mjs"
+done
+cd /home/ianblenke/docker/gev-work/director && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director /home/ianblenke/docker/gev-tools/director/muts.json
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-timing 2>&1 | grep -E "^(ERROR|STE)"
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --write
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
 ```
 
 The mutation command also accepts ID lists for later checks.
 The log keeps each result; the sweep selects the last result for each ID.
 STE lint gives zero errors.
-The format commands passed with normal process access after the sandbox blocked a child git process.
-The scope check finds no production file or browser QA script change.
+The normal format commands stopped with `spawnSync git EPERM`.
+The host helper completed the format commands.
 
-The lead still needs the ratchet, gates, archive and both reviews.
-This change does not contain a commit.
+The scope check compares this round with `HEAD`.
+The lead changes the QA headers at the archive step.
+
+The lead runs the ratchet, gates, archive and both reviews after these corrections.
+The base commit and `origin/main` hold the same director source.
+The round 1 commits hold the tests and change files.
+This round adds no commit.
 
 ## Tree state
 
@@ -682,11 +708,176 @@ cd /home/ianblenke/docker/gev-work/director && git status --short
 ```
 
 ```text
+ M openspec/changes/backfill-director-timing/design.md
+ M openspec/changes/backfill-director-timing/evidence.md
+ M openspec/changes/backfill-director-timing/mutations.md
+ M openspec/changes/backfill-director-timing/proposal.md
+ M openspec/changes/backfill-director-timing/specs/director/spec.md
+ M openspec/changes/backfill-director-timing/tasks.md
  M src/director/clock.test.mjs
  M src/director/document.test.mjs
+ M src/director/documentFields.test.mjs
  M src/director/playback.test.mjs
  M src/director/timeline.test.mjs
-?? openspec/changes/backfill-director-timing/
-?? src/director/authoring.test.mjs
-?? src/director/documentFields.test.mjs
+```
+
+## Round 1 corrections
+
+Each row names the first words of a review item.
+This report reads commit `43b776a14aaf7d9379a786f5dafdc1c79bd4e371`.
+
+| Report | First words | Change |
+| --- | --- | --- |
+| Spec | `director-036 has one` | Add queue order, unknown start and shot object tests. |
+| Spec | `director-033 says shortest` | Add heading and roll wrap tests and three angle mutations. |
+| Spec | `No test sends` | Add each field and duplicate ID test with six call deletions. |
+| Spec | `Version gates are pinned` | Add imports at each gate and below each gate. |
+| Spec | `Tests tagged 023` | Add scenario results for publication, stop, subscriptions and tick guards. |
+| Spec | `The change edited` | Restore the old body from `origin/main`. |
+| Spec | `The audit sweep` | Add clock, text limit, shot index and queue context tests. |
+| Spec | `does not change` | State the archive header step and add the QA known limit. |
+| Spec | `Known limits omit` | Add both limits and give each requirement specific module behavior. |
+| STE | `The stop works` | Keep exact old titles in code blocks; use method names in prose. |
+| STE | `a pending wait` | Keep exact old titles in code blocks; describe each method action in prose. |
+| STE | `nonempty, nontext, nonnumber` | Use text that is not empty, not text and not a number in prose. |
+| STE | `a direct shot` | State shot selection outside playback and the active playback guard. |
+| STE | `decision audit` | Use branch audit; use Question for the lead for a policy choice. |
+| STE | `the author edits` | Use the caller for the API. |
+| STE | `token cancels` | Use cancels, subscriber and error in prose. |
+| STE | `the authoring functions` | Name the fields module in the proposal and design. |
+| STE | `keeps shot identity` | State the start scene and wrap order. |
+| STE | `without source changes` | State that the result does not change the source; add the time unit. |
+| STE | `with STE lint` | Use the STE lint and separate the final tasks. |
+| STE | `which the owner chose` | State the word list rule and the current commit state. |
+| STE | `format policy` | Use the policy for the document format and the policy for subscriber errors. |
+
+Exact test names stay in code blocks because the brief bans changes to old names.
+A different quote gives a false test link.
+No prose correction changes a test assertion.
+
+### Equivalent probes
+
+The scratch probe loads source from the commit above.
+It compares each equivalent mutation with the same source through the public API.
+The number checks reject proxy objects or functions with zero conversion calls.
+The JSON object probe checks property access through a proxy.
+The author probe uses detail proxies and checks zero calls before the selection error.
+The camera probes compare property access through proxy endpoints and each pair of false endpoints.
+
+The probes do not count as killed mutations.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director/equivalent-round2.mjs
+cd /home/ianblenke/docker/gev-work/director && git diff --stat 290b5d2 HEAD -- 'src/director/*.js'
+cd /home/ianblenke/docker/gev-work/director && git diff --stat 290b5d2 origin/main -- 'src/director/*.js'
+```
+
+## Host test totals
+
+The file commands use `--test-isolation=none` and do not use `--test-force-exit`.
+
+| Test file | Tests | Failed |
+| --- | ---: | ---: |
+| `src/director/document.test.mjs` | 74 | 0 |
+| `src/director/documentFields.test.mjs` | 43 | 0 |
+| `src/director/authoring.test.mjs` | 22 | 0 |
+| `src/director/clock.test.mjs` | 74 | 0 |
+| `src/director/playback.test.mjs` | 66 | 0 |
+| `src/director/timeline.test.mjs` | 29 | 0 |
+
+The command output gives 308 tests in total.
+The scenario heading sweep gives 40 scenarios.
+The diff sweep gives 18 new test titles.
+
+## New test labels
+
+The mutation table uses these labels.
+
+```text
+T01 | src/director/clock.test.mjs | [director-023] The publication uses false from the clock state
+T02 | src/director/clock.test.mjs | [director-023] The publication clamps negative elapsed time to zero
+T03 | src/director/document.test.mjs | [director-014] The visual rejects an unknown field
+T04 | src/director/document.test.mjs | [director-015] The visual group rejects an unknown field
+T05 | src/director/document.test.mjs | [director-016] The pack entry rejects an unknown field
+T06 | src/director/document.test.mjs | [director-018] The layer entry rejects an unknown field
+T07 | src/director/document.test.mjs | [director-004] The document rejects a duplicate scene ID
+T08 | src/director/document.test.mjs | [director-016] The document rejects a duplicate pack ID
+T09 | src/director/document.test.mjs | [director-003] The import accepts anchors and move at versions 4 through 6
+T10 | src/director/document.test.mjs | [director-003] The import accepts data packs at versions 5 and 6
+T11 | src/director/document.test.mjs | [director-003] The import rejects fields below each version gate
+T12 | src/director/documentFields.test.mjs | [director-006] The default text limit accepts 256 characters
+T13 | src/director/documentFields.test.mjs | [director-006] The default text limit rejects 257 characters
+T14 | src/director/playback.test.mjs | [director-036] The queue wraps from b and keeps each shot object
+T15 | src/director/playback.test.mjs | [director-036] The unknown start selects the first scene
+T16 | src/director/playback.test.mjs | [director-037] The phase context gives each index and the queue total
+T17 | src/director/timeline.test.mjs | [director-033] The camera takes the shortest arc for both angles
+T18 | src/director/timeline.test.mjs | [director-032] The absent shot starts at zero elapsed time
+```
+
+## Check limits
+
+The first complete mutation check used stale patterns and gave extra survivors.
+The final complete check uses the corrected patterns and a valid empty loop body for `m068`.
+Each complete check reached its end.
+The normal isolated test command reports file totals on this host.
+The file totals do not count the tests inside each file.
+The commands above use the same isolation option as the mutation command.
+
+The lead still runs the container gates and the review agents.
+This round does not run make, Docker, commit or push commands.
+The scratch audit and mutation files stay outside the repository.
+
+## Result commands
+
+The report helper reads the test logs and the final mutation output.
+The helper also reads the totals from the branch audit.
+The diff check supplies the new test titles.
+The title check includes the word list, the owner words, the word limit and passive voice.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/refresh-round2.py
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/title-check-round2.py
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-timing
+```
+
+## Subscriber error check
+
+The error test also checks that the next subscriber gets the state.
+The extra check applies the `m207` mutation to that test.
+Only the first subscriber runs in this mutation.
+The test fails because the next subscriber gets zero calls instead of one.
+The mutation total counts `m207` once.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director /home/ianblenke/docker/gev-tools/director/muts-subscriber-round2.json
+```
+
+```text
+m207: KILLED [director-023] The clock warns when a subscriber fails
+SURVIVORS: []
+```
+
+## Final file check
+
+The file check gives 11 changed files and zero production or QA changes.
+The old timeline test body matches `origin/main` exactly.
+The scenario IDs stay `director-001` through `director-040`.
+The pre-dispatch helper gives zero real prose hits and 20 hits inside fenced code.
+The word rule excludes those code blocks.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director/final-check-round2.py
+cd /home/ianblenke/docker/gev-work/director && rg -n 'default limit|versions 4|subscriber error|stopped: true|heading 350|roll 10|start `b`|own index' openspec/changes/backfill-director-timing/specs/director/spec.md
+```
+
+```text
+24: versions 4, 5 and 6 accept scene anchors and shot move fields
+45: the default limit accepts 256 characters and rejects 257 characters
+135: a subscriber error gives one warning and leaves elapsed time at 1 second
+141: stop after a snapshot gives stopped: true and running: false
+142: a subscriber error does not leave the stop method
+194: heading 350 to 10 gives 360 at progress 0.5
+196: roll 10 to 350 gives 0 at progress 0.5 while heading 350 to 10 gives 360
+213: start b gives shots b1, a1 and a2 in that order
+221: each phase receives its own index and total fields
 ```
