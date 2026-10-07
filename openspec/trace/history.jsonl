@@ -2036,3 +2036,4 @@
 {"date":"2026-10-07","change":"backfill-director-camera-interactions","commit":"8b7829917a5b1ee58b9cca566db251aa2c93655e","kind":"untraced","file":"src/director/camera.test.mjs","metric":"count","before":4,"after":1,"reason":"smaller"}
 {"date":"2026-10-07","change":"backfill-director-camera-interactions","commit":"8b7829917a5b1ee58b9cca566db251aa2c93655e","kind":"untraced","file":"src/director/interactions/interactions.test.mjs","metric":"count","before":6,"after":2,"reason":"smaller"}
 {"date":"2026-10-07","change":"gates-one-measurement","commit":"5e13b0e37025cf5baa0177621791b072718734ba","kind":"measurement","measurement":"3b0ae6334a06c637d60f85e6052c17653092f45e05fc76db7b8cd60c40e8cbe1"}
+{"date":"2026-10-07","change":"gates-one-measurement","commit":"aa3119b97c465e4aa4e6e6dc6250a688517280e4","kind":"measurement","measurement":"8eafb9205030c9d7b679463cb102ca0784367c5fcca7b8085e3f87666e6097df"}
