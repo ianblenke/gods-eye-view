@@ -37,9 +37,10 @@ Synchronous source checks and surface identity checks need no timer change witho
 The design lists the real delays and the later changes.
 
 - `remaining-inequalities`: The controller stop test keeps its assertion that the elapsed time is below 250 ms.
-  The mock Date clock fixes the value at 60 ms, and host load cannot change it.
-  The assertion fails if production lengthens the two close deadlines to 125 ms or more.
-  The nominatim stalled-body test keeps the real-clock assertion below 5000 ms for its 300 ms deadline.
+  The mock Date clock gives 60 ms, and host load cannot change it.
+  The assertion fails if production sets each of the two close deadlines to 125 ms or more.
+  The lead ran both deadlines multiplied by 5 on a copy, and the assertion failed with `300 ms`.
+  The nominatim stalled-body test keeps its assertion that the elapsed time is below 5000 ms for its 300 ms deadline.
 - `poll-timer-unasserted`: The cctvHlsStream test does not assert that pollTimer is defined.
   If production renames entry.timer, cleared.includes(undefined) can still pass.
 - `exact-elapsed-constants`: The cctvProxy, gbfsProxy and requests elapsed assertions equal their clock steps by construction.
@@ -48,3 +49,7 @@ The design lists the real delays and the later changes.
   The directory is `/home/ianblenke/docker/gev-tools/harden-timing/`.
   Files: `prompt-1.md`, `audit.md`, `before.md`, `after.md`, `coverage.md`, `mutation-specs.json`, `lead3-tests.log`, `network-filters.json`, `round2-files.json`, `round2-check-results.json`, `round2-checks/`, `round2-*.log` and `mutation-real/*.log`.
   The file `phase3-analysis.md` is in `/home/ianblenke/docker/gev-tools/docker-concurrency/`.
+- `evidence-scripts`: The scripts that made the evidence are outside the repository too.
+  The directory `/home/ianblenke/docker/gev-tools/harden-timing/` holds `measure.py`, `tables.py`, `mutate.py` and `report-mutations.py`.
+  The same directory holds `compare-coverage.py`, `compare-counts.py`, `round2-check.py` and `round2-waits.py`.
+  The file `format-host.mjs` is in `/home/ianblenke/docker/gev-tools/director-4c/`, and `predispatch.py` is in `/home/ianblenke/docker/gev-tools/predispatch/`.

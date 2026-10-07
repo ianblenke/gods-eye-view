@@ -252,18 +252,20 @@ The socket exclusions stated above apply to those checks.
 
 ## Round 2 decisions
 
-Base commit 290b5d2. The worker started at commit 3b72650; the checks cover the edits that commit b95b44f holds.
+Base commit 290b5d2. The work started at commit 3b72650. The checks include the changes in commit b95b44f. The command `git diff` between commits b95b44f and d923d4d, limited to the folder `src`, prints nothing.
+
 The cap test awaits rejection before it checks that production did not read the body.
 Mock clocks control the OSH and CCTV frame deadlines.
 Exact elapsed values replace the elapsed-time inequalities in the cctvProxy, gbfsProxy and requests tests.
 
 The controller stop test keeps its assertion that the elapsed time is below 250 ms.
-The mock Date clock fixes the elapsed value at 60 ms: two close deadlines of 30 ms from the fixture value `closeTimeoutMs`.
+The mock Date clock gives an elapsed value of 60 ms, the sum of two close deadlines of 30 ms from the fixture value `closeTimeoutMs`.
 Host load cannot change that value.
-The assertion fails if production lengthens the two close deadlines to 125 ms or more.
-The assertion that `stop()` returns true proves the result, and it fails only above 500 ms.
+The assertion fails if production sets each of the two close deadlines to 125 ms or more.
+The lead ran both deadlines multiplied by 5 on a copy, and the assertion failed with `300 ms`.
+The assertion that `stop()` returns true proves the result; as a time limit it fails when `stop()` needs 500 ms or more.
 
-The nominatim stalled-body test keeps its inequality below 5000 ms because its 300 ms deadline uses the real clock.
+The nominatim stalled-body test keeps its assertion that the elapsed time is below 5000 ms because its 300 ms deadline uses the real clock.
 Each upstream start promise has a real guard of 2000 ms.
 Each test clears its guard in a finally block.
 
@@ -329,7 +331,7 @@ The final complete run has 54 failed selected tests and no stopped process.
 
 ## Round 2 results
 
-The file `corrections.md` gives the corrections of round 1 and each final command result; `review.md` records the later corrections.
+The file `corrections.md` gives the corrections of the round-1 review findings and each final command result; `review.md` records the corrections of rounds 2 to 4.
 All 85 test processes under load have zero failures, with 1105 test results.
 The lead log `lead3-tests.log` records complete checks after the round 2 changes.
 The 995 production comparisons show no coverage decrease.
