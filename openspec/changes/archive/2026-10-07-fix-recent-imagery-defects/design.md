@@ -81,7 +81,7 @@ No mutation is necessary because no default code remains.
 
 The base commit is `81b8bd6`.
 The worker read the working tree of the lead.
-The panel restores the body scroll position in every render.
+The panel restores the body scroll position each time it renders.
 The panel sends the scroll request after it restores the body scroll position when DETAILS opens.
 The test card gives a height of zero while it is closed and 60 pixels while it is open.
 
@@ -94,7 +94,7 @@ No production correction is necessary for these review findings.
 ## Corrections of review round 2
 
 The base commit is `81b8bd6`.
-The worker read the working tree of the lead at Git current commit `ee1b35ee8c2e9074366530346f761fc2ddda5680`.
+The worker read the working tree of the lead at the current Git commit `ee1b35ee8c2e9074366530346f761fc2ddda5680`.
 The old latitude tests give partial and full coverage for NaN.
 The base-code probe gives partial coverage for the tested NaN longitude.
 All three cases now give unknown coverage.
@@ -104,7 +104,7 @@ The tests use separate cases for zero and undefined viewport heights.
 The undefined-height test removes the clientHeight value after the helper sets it.
 The test card top is -10 pixels.
 The body scroll position stays at 40 pixels, with no scroll request.
-The exact AND text from correction A names each height case and the card without a getBoundingClientRect method.
+The AND lines of scenario 055 name each height case and the card without a getBoundingClientRect method.
 
 The card inside the view starts at 10 pixels, with a height of 20 pixels.
 The viewport height is 100 pixels.
@@ -112,13 +112,13 @@ The body scroll position stays at 40 pixels, with no scroll request.
 The scroll spy detects a write even when the value stays at 40.
 Thus the zero-delta mutation is not equivalent.
 
-The content-update mutation moves the scroll request into render after the call that restores the body scroll position.
-The test must reject a body scroll position of 20 instead of 10.
+The content-update mutation moves the scroll request into `render()` after the call that restores the body scroll position.
+The test must reject a body scroll position of 20 pixels instead of 10 pixels.
 A separate probe records the scroll request of 20.
 No production correction is necessary.
 
 The browser QA script sets its own body scroll position after DETAILS opens.
 The proposal records that limit as `qa-details-scroll`.
-Corrections A and C give exact AND text.
+The AND lines of scenario 055 keep their exact text.
 Those lines keep that text.
-The general panel-agent request in correction D does not change those lines.
+The wording corrections of the panel text do not change those lines.

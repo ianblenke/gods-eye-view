@@ -1,0 +1,26 @@
+openspec/changes/fix-recent-imagery-defects/evidence.md:66:| `recent-imagery-053` | `053-delete-proof` | a day with present proof keeps its proof after a loader cancellation |
+openspec/changes/fix-recent-imagery-defects/evidence.md:221:| 22 | `055-no-height-guard` | Change the viewport height guard to `false` | a viewport height of zero keeps the body scroll position |
+openspec/changes/fix-recent-imagery-defects/evidence.md:222:| 23 | `055-no-rectangle-guard` | Change the card method guard to `false` | a card without a getBoundingClientRect method keeps the body scroll position |
+openspec/changes/fix-recent-imagery-defects/evidence.md:322:| 26 | `055-undefined-height` | Change the height guard to `height === 0` | a scroller without a viewport height value keeps the body scroll position |
+openspec/changes/fix-recent-imagery-defects/evidence.md:324:| 28 | `055-no-clamp` | Remove `Math.max(0, ...)` | a card inside the view keeps the body scroll position |
+openspec/changes/fix-recent-imagery-defects/evidence.md:325:| 29 | `055-zero-delta-write` | Change `if (delta)` to `if (true)` | a card inside the view keeps the body scroll position |
+openspec/changes/fix-recent-imagery-defects/evidence.md:333:The proposal names `qa-details-scroll` because the browser QA script sets its own scroll position.
+src/ui/recentImagery.test.mjs:1409:test('[recent-imagery-049 recent-imagery-050 recent-imagery-055] the panel shows the DETAILS card when DETAILS opens', async () => {
+src/ui/recentImagery.test.mjs:2439:test('[recent-imagery-049 recent-imagery-055] a card without a getBoundingClientRect method keeps the body scroll position', async () => {
+src/ui/recentImagery.test.mjs:2460:test('[recent-imagery-049 recent-imagery-050 recent-imagery-055] an open DETAILS card does not request scroll again', async () => {
+src/ui/recentImagery.test.mjs:2920:test('[recent-imagery-055] a viewport height of zero keeps the body scroll position', async () => {
+src/ui/recentImagery.test.mjs:2945:test('[recent-imagery-055] a scroller without a viewport height value keeps the body scroll position', async () => {
+src/ui/recentImagery.test.mjs:2959:test('[recent-imagery-055] a card inside the view keeps the body scroll position', async () => {
+openspec/changes/fix-recent-imagery-defects/tasks.md:50:- [x] 4.3 Tag the test of a card without a getBoundingClientRect method with `recent-imagery-055`.
+openspec/changes/fix-recent-imagery-defects/proposal.md:48:  The layer reads product keys from errors that its catalog function returns.
+openspec/changes/fix-recent-imagery-defects/proposal.md:51:  The old NaN results were full or partial.
+openspec/changes/fix-recent-imagery-defects/proposal.md:57:  The `gates-coverage-race` change changes them back, from 40 to 44 and from 76 to 74.
+openspec/changes/fix-recent-imagery-defects/proposal.md:60:- `qa-details-scroll`: The browser QA script sets its own scroll position after it opens DETAILS.
+openspec/changes/fix-recent-imagery-defects/specs/recent-imagery/spec.md:45:- **AND** a viewport height of zero keeps the body scroll position
+openspec/changes/fix-recent-imagery-defects/specs/recent-imagery/spec.md:46:- **AND** a card without a getBoundingClientRect method keeps the body scroll position
+openspec/changes/fix-recent-imagery-defects/specs/recent-imagery/spec.md:47:- **AND** a scroller without a viewport height value keeps the body scroll position
+openspec/changes/fix-recent-imagery-defects/specs/recent-imagery/spec.md:48:- **AND** a card inside the view keeps the body scroll position
+src/layers/recentImagery/thumbnails.test.mjs:410:test('[recent-imagery-023 recent-imagery-026 recent-imagery-053] an Error and an AbortError from the fetch give different states', async () => {
+src/layers/recentImagery/thumbnails.test.mjs:658:test('[recent-imagery-053] a day with present proof keeps its proof after a loader cancellation', async () => {
+openspec/changes/fix-recent-imagery-defects/design.md:88:Separate tests cover a viewport height of zero and a card without a getBoundingClientRect method.
+openspec/changes/fix-recent-imagery-defects/design.md:121:The proposal records that limit as `qa-details-scroll`.
