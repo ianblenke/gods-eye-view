@@ -1,6 +1,6 @@
 # Director host evidence
 
-Pass 2 reads base commit `290b5d2` and the current files.
+Pass 3 reads base commit `290b5d2` and the current files.
 
 ## Test commands
 
@@ -9,11 +9,11 @@ Each command uses one test file without the force-exit option.
 | Test file | Passed tests |
 | --- | ---: |
 | `src/director/camera.test.mjs` | 7 |
-| `src/director/cameraDocument.test.mjs` | 95 |
-| `src/director/cameraMoves.test.mjs` | 34 |
-| `src/director/interactions/document.test.mjs` | 68 |
+| `src/director/cameraDocument.test.mjs` | 96 |
+| `src/director/cameraMoves.test.mjs` | 35 |
+| `src/director/interactions/document.test.mjs` | 69 |
 | `src/director/interactions/interactions.test.mjs` | 6 |
-| `src/director/interactions/session.test.mjs` | 20 |
+| `src/director/interactions/session.test.mjs` | 21 |
 
 ```sh
 cd /home/ianblenke/docker/gev-work/director-2 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/camera.test.mjs
@@ -24,8 +24,8 @@ cd /home/ianblenke/docker/gev-work/director-2 && NODE_OPTIONS=--test-isolation=n
 cd /home/ianblenke/docker/gev-work/director-2 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/interactions/session.test.mjs
 ```
 
-The tests pass all 230 tests.
-The title sweep gives 227 tagged tests and 3 tests without tags.
+The tests pass all 234 tests.
+The title sweep gives 231 tagged tests and 3 tests without tags.
 The scenario sweep gives 35 scenarios, from director-041 through director-075.
 The title sweep finds zero dictionary faults.
 
@@ -45,34 +45,62 @@ Host coverage does not give a gate verdict.
 cd /home/ianblenke/docker/gev-work/director-2 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/camera.js --test-coverage-exclude=**/*.test.mjs src/director/camera.test.mjs src/director/cameraMoves.test.mjs
 cd /home/ianblenke/docker/gev-work/director-2 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/cameraDocument.js --test-coverage-exclude=**/*.test.mjs src/director/camera.test.mjs src/director/cameraDocument.test.mjs
 cd /home/ianblenke/docker/gev-work/director-2 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/interactions/document.js --test-coverage-exclude=**/*.test.mjs src/director/interactions/interactions.test.mjs src/director/interactions/document.test.mjs
-cd /home/ianblenke/docker/gev-work/director-2 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/interactions/session.js --test-coverage-exclude=**/*.test.mjs --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=/home/ianblenke/docker/gev-tools/director-2/pass2-session.lcov src/director/interactions/interactions.test.mjs src/director/interactions/session.test.mjs
+cd /home/ianblenke/docker/gev-work/director-2 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/interactions/session.js --test-coverage-exclude=**/*.test.mjs --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=/home/ianblenke/docker/gev-tools/director-2/pass3-session.lcov src/director/interactions/interactions.test.mjs src/director/interactions/session.test.mjs
 ```
 
 ## Mutation and audit results
 
-The complete file gives 249 mutations: 248 failed tests and one equivalent change.
-The sole survivor is m149.
+The complete file gives 257 mutations: 255 mutations that fail a test and two equivalent changes.
+Rows m149 and m253 are equivalent changes for the public API.
 No command reaches a time limit.
-The separate getter, proxy and spy probe passes for the source and for m149.
+The separate getter, proxy, re-entrant callback and listener spy probe passes for the source and for m149 and m253.
 
-The audit gives 76 rows: 57 tested, 18 default-value and 1 equivalent.
+The audit gives 79 rows: 59 tested, 18 default-value and 2 equivalent.
 The audit gives zero open rows.
 The table is `audit.md`.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/director-2 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director-2 /home/ianblenke/docker/gev-tools/director-2/muts.json
-cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-2/equivalent.mjs
+cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-2/probe3.mjs
 cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-2/sweep.py
-cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-2/audit2.py
+cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-2/audit3.py
 ```
 
 ## Title correction
 
-Pass 2 changes one old camera title as follows.
+Pass 2 changes five old titles.
+Pass 3 also corrects their text as follows.
+The comparison uses `git show` and `git diff` against main.
+Only these five old titles change beyond their tags.
 
 ```text
-Old: [director-064] version 4 retains anchor identity, references and explicit move edits through normalization
+File: src/director/camera.test.mjs
+Old: version 4 retains anchor identity, references and explicit move edits through normalization
 New: [director-064] version 4 keeps anchor identity, references and move edits through normalization
+```
+
+```text
+File: src/director/interactions/interactions.test.mjs
+Old: all four inert actions survive validation, migration and export without executing content
+New: [director-063] all four inert interactions survive validation, migration and export and no content runs
+```
+
+```text
+File: src/director/interactions/interactions.test.mjs
+Old: reject unknown fields, executable syntax, invalid references and missing reset baselines
+New: [director-056 director-060 director-061] reject unknown fields, script syntax, invalid references and missing reset baselines
+```
+
+```text
+File: src/director/interactions/interactions.test.mjs
+Old: pending actions cancel promptly, refuse overlap and cannot update a replacement session
+New: [director-068 director-073 director-074] pending interactions cancel promptly, refuse overlap and cannot update a replacement session
+```
+
+```text
+File: src/director/interactions/interactions.test.mjs
+Old: synchronous stop before execution prevents any side effect; rejection unlocks retry
+New: [director-072 director-073] synchronous stop before an adapter call prevents any side effect; rejection unlocks retry
 ```
 
 ## Scenario test links
@@ -152,15 +180,16 @@ src/director/camera.test.mjs: [director-046 director-047 director-048] move endp
 src/director/cameraMoves.test.mjs: [director-048] The cubic sample uses the first half
 src/director/cameraMoves.test.mjs: [director-048] The cubic sample uses the second half
 src/director/cameraMoves.test.mjs: [director-048] The cubic sample uses progress 0.45
+src/director/cameraMoves.test.mjs: [director-048] The cubic sample uses progress 0.55
 ```
 
 ### director-049: Camera position fields
 
 ```text
-src/director/cameraDocument.test.mjs: [director-049] The ordinary pose rejects invalid lat
-src/director/cameraDocument.test.mjs: [director-049] The ordinary pose rejects invalid lon
-src/director/cameraDocument.test.mjs: [director-049] The ordinary pose rejects invalid alt
-src/director/cameraDocument.test.mjs: [director-049] The ordinary pose accepts absent coordinates
+src/director/cameraDocument.test.mjs: [director-049] The shot without a move rejects invalid lat
+src/director/cameraDocument.test.mjs: [director-049] The shot without a move rejects invalid lon
+src/director/cameraDocument.test.mjs: [director-049] The shot without a move rejects invalid alt
+src/director/cameraDocument.test.mjs: [director-049] The shot without a move accepts absent coordinates
 src/director/cameraDocument.test.mjs: [director-049] The null pose gives a document error
 src/director/cameraDocument.test.mjs: [director-049] The inline schema accepts its lat field
 src/director/cameraDocument.test.mjs: [director-049] The inline schema accepts its lon field
@@ -168,7 +197,7 @@ src/director/cameraDocument.test.mjs: [director-049] The inline schema accepts i
 src/director/cameraDocument.test.mjs: [director-049] The pose checks both lat bounds
 src/director/cameraDocument.test.mjs: [director-049] The pose checks both lon bounds
 src/director/cameraDocument.test.mjs: [director-049] The pose checks both alt bounds
-src/director/cameraDocument.test.mjs: [director-049] The ordinary pose uses optional coordinates by default
+src/director/cameraDocument.test.mjs: [director-049] The shot without a move uses optional coordinates by default
 src/director/cameraDocument.test.mjs: [director-049] The pose rejects an extra field
 ```
 
@@ -208,6 +237,7 @@ src/director/cameraDocument.test.mjs: [director-051] The modern version accepts 
 src/director/cameraDocument.test.mjs: [director-051] The early version rejects the height field
 src/director/cameraDocument.test.mjs: [director-051] The anchor shape uses its supplied reference field
 src/director/cameraDocument.test.mjs: [director-051] The inline pose controls its supplied shape
+src/director/cameraDocument.test.mjs: [director-051] The version 1 pose accepts numeric text
 ```
 
 ### director-052: Scene anchor fields
@@ -311,12 +341,13 @@ src/director/interactions/document.test.mjs: [director-057] The action field rej
 src/director/interactions/document.test.mjs: [director-057] The action field rejects nontext layerId
 src/director/interactions/document.test.mjs: [director-057] The card type controls its text check
 src/director/interactions/document.test.mjs: [director-057] The action field rejects an array type
-src/director/interactions/document.test.mjs: [director-057] The card rejects an extra field
-src/director/interactions/document.test.mjs: [director-057] The focus rejects an extra field
-src/director/interactions/document.test.mjs: [director-057] The shot rejects an extra field
-src/director/interactions/document.test.mjs: [director-057] The layer rejects an extra field
+src/director/interactions/document.test.mjs: [director-057] The card action field rejects an extra field
+src/director/interactions/document.test.mjs: [director-057] The focus action field rejects an extra field
+src/director/interactions/document.test.mjs: [director-057] The shot action field rejects an extra field
+src/director/interactions/document.test.mjs: [director-057] The layer action field rejects an extra field
 src/director/interactions/document.test.mjs: [director-057] The interaction rejects an extra field
 src/director/interactions/document.test.mjs: [director-057] The target rejects an extra field
+src/director/interactions/document.test.mjs: [director-057] The action field rejects an inherited type name
 ```
 
 ### director-058: Card source links
@@ -392,16 +423,16 @@ src/director/interactions/document.test.mjs: [director-062] The label rejects 25
 ### director-063: Portable interaction data
 
 ```text
-src/director/interactions/interactions.test.mjs: [director-063] all four inert interactions survive validation, migration and export without running content
+src/director/interactions/interactions.test.mjs: [director-063] all four inert interactions survive validation, migration and export and no content runs
 ```
 
 ### director-064: Portable camera data
 
 ```text
 src/director/camera.test.mjs: [director-064] version 4 keeps anchor identity, references and move edits through normalization
-src/director/camera.test.mjs: [director-064] The version 1 camera stays an ordinary pose
-src/director/camera.test.mjs: [director-064] The version 2 camera stays an ordinary pose
-src/director/camera.test.mjs: [director-064] The version 3 camera stays an ordinary pose
+src/director/camera.test.mjs: [director-064] The version 1 camera stays a shot without a move
+src/director/camera.test.mjs: [director-064] The version 2 camera stays a shot without a move
+src/director/camera.test.mjs: [director-064] The version 3 camera stays a shot without a move
 ```
 
 ### director-065: Initial session state
@@ -411,7 +442,7 @@ src/director/interactions/session.test.mjs: [director-065] The new session repor
 src/director/interactions/session.test.mjs: [director-065] The default state callback accepts a session change
 ```
 
-### director-066: Action activation
+### director-066: Interaction activation
 
 ```text
 src/director/interactions/session.test.mjs: [director-066] The session activates every unique interaction
@@ -439,11 +470,11 @@ src/director/interactions/session.test.mjs: [director-069] The active session re
 ### director-070: Successful adapter call
 
 ```text
-src/director/interactions/session.test.mjs: [director-070] The successful interaction gives selected idle state
+src/director/interactions/session.test.mjs: [director-070] The successful interaction gives idle state with the selected ID
 src/director/interactions/session.test.mjs: [director-070] The interaction removes its abort listener
 src/director/interactions/session.test.mjs: [director-070] The adapter result zero gives true
 src/director/interactions/session.test.mjs: [director-070] The adapter result empty text gives true
-src/director/interactions/session.test.mjs: [director-070] The session does not abort a completed controller when clear runs
+src/director/interactions/session.test.mjs: [director-070] The session does not abort a completed abort controller when clear runs
 ```
 
 ### director-071: Refused adapter call
@@ -452,24 +483,25 @@ src/director/interactions/session.test.mjs: [director-070] The session does not 
 src/director/interactions/session.test.mjs: [director-071] The false adapter result refuses the interaction
 ```
 
-### director-072: Action exceptions
+### director-072: Adapter exceptions
 
 ```text
-src/director/interactions/interactions.test.mjs: [director-072 director-073] synchronous stop before adapter call prevents any side effect; rejection unlocks retry
+src/director/interactions/interactions.test.mjs: [director-072 director-073] synchronous stop before an adapter call prevents any side effect; rejection unlocks retry
 src/director/interactions/session.test.mjs: [director-072] The adapter exception allows another interaction
 src/director/interactions/session.test.mjs: [director-072] The adapter rejection allows another interaction
 ```
 
-### director-073: Action cancellation
+### director-073: Interaction cancellation
 
 ```text
 src/director/interactions/interactions.test.mjs: [director-068 director-073 director-074] pending interactions cancel promptly, refuse overlap and cannot update a replacement session
-src/director/interactions/interactions.test.mjs: [director-072 director-073] synchronous stop before adapter call prevents any side effect; rejection unlocks retry
-src/director/interactions/session.test.mjs: [director-073] The session cancels work before adapter call
+src/director/interactions/interactions.test.mjs: [director-072 director-073] synchronous stop before an adapter call prevents any side effect; rejection unlocks retry
+src/director/interactions/session.test.mjs: [director-073] The session cancels work before an adapter call
 src/director/interactions/session.test.mjs: [director-073] The session settles work with no adapter result
 src/director/interactions/session.test.mjs: [director-073] The session returns false when clear runs after the result
-src/director/interactions/session.test.mjs: [director-073] The session does not abort the old controller when clear runs twice
+src/director/interactions/session.test.mjs: [director-073] The session does not abort the old abort controller when clear runs twice
 src/director/interactions/session.test.mjs: [director-073] The state callback receives empty state after clear
+src/director/interactions/session.test.mjs: [director-073] The abort event gives false before the signal changes
 ```
 
 ### director-074: Session replacement
@@ -501,7 +533,7 @@ Each row states the result for base commit `290b5d2`.
 | `More survivors` | Rows m232 to m243, m246 and m247 test the other limits, curve split, wrap terms and controller state. |
 | `audit.md default rows` | Rows m244 and m245 change the defaults; the audit names base commit 290b5d2. |
 | `Test 067 patches` | The pass deletes the test that changes the Map size getter; the public API probe supports equivalent row m149. |
-| `Old tagged titles` | The title record gives the exact old and new camera title; the proposal gives the lcov line. |
+| `Old tagged titles` | The title record gives all five old and new titles; the proposal gives the lcov line. |
 | `proposal.md has no` | The proposal holds one copy of all known limits, with callback errors and recovery. |
 | `Bare assert.throws` | The two error tables compare literal error messages for each case; scenario 046 names both endpoint results. |
 | `scripts/qa-director` | The proposal records qa-headers-ahead; the pass leaves the QA scripts unchanged. |
@@ -529,11 +561,14 @@ The worker made no commit in this pass.
 
 ## Final checks
 
-The lint command gives zero errors and 503 warnings across its scope.
-The format commands pass after the host import handles the sandbox git error.
-A separate Prettier check passes for all six test files.
+The lint command gives zero errors and 525 warnings across its scope.
+The normal format commands stop with the sandbox Git error.
+The host import formats and checks 1158 source files.
+The format command checks the repository source scope.
 The predispatch tool finds no prose fault after the text check choices in `design.md`.
-The callback limit probe confirms both error paths and the recovery methods.
+
+The callback limit record comes from pass 2.
+Pass 3 adds the callback conditions to the proposal.
 The production diff is empty.
 
 The file list contains only the six test files and the change folder.
@@ -560,6 +595,7 @@ cd /home/ianblenke/docker/gev-work/director-2 && rg -n 'clearImmediate\(timer\)|
 The final status command gives this list.
 
 ```text
+ M openspec/changes/backfill-director-camera-interactions/audit.md
  M openspec/changes/backfill-director-camera-interactions/design.md
  M openspec/changes/backfill-director-camera-interactions/evidence.md
  M openspec/changes/backfill-director-camera-interactions/mutations.md
@@ -572,5 +608,78 @@ The final status command gives this list.
  M src/director/interactions/document.test.mjs
  M src/director/interactions/interactions.test.mjs
  M src/director/interactions/session.test.mjs
-?? openspec/changes/backfill-director-camera-interactions/audit.md
+?? openspec/changes/backfill-director-camera-interactions/evidence/
+```
+
+## Corrections of review round 2
+
+Pass 3 reads base commit `290b5d2`.
+The probe file is `evidence/probe-equivalent.txt` in this change folder.
+The lead adds that text file with the force option if Git ignores it.
+Rows m149 and m253 are equivalent for the public API only.
+The final abort guard returns false for m253 after cancellation.
+For m254, the test reads the listener total before and after the first abort event.
+
+The probe checks early and late cancellation with listener spies.
+It also checks getters, proxy lists and a re-entrant state callback.
+A patched built-in prototype is outside this API limit.
+
+| Finding starts with | Change |
+| --- | --- |
+| Split 0.5 | The 0.55 test checks latitude 11.271; m250 and m251 change the split. |
+| Unrecorded survivors | Rows m252 and m254 fail the abort event test; m253 names the equivalent change and its probe. |
+| Row m149 | The design bounds the API claim; the proposal adds session-builtin-patch; the probe checks a re-entrant callback. |
+| Object.hasOwn | The inherited type name test checks the document error; m255 changes the field check. |
+| Scenario 051 | The version 1 numeric text test checks all pose fields; m256 and m257 change the version checks. |
+| DEFAULT rows | The audit cites m148, m147 and m116, and removes repeated mutation IDs. |
+| Scenarios 070 and 074 | Each adapter call checks the last callback state with a literal object. |
+| The tests at 353 | Scenario 060 states the document error for a null interaction and an absent action field. |
+| can recover | The proposal states that the callback must stop throwing and names errors at lines 16 and 25. |
+| one old camera title | The Title correction lists all five old and current titles from main and the current files. |
+| accepts numeric text | Scenario 051 limits numeric text to pose fields in versions 1 and 2. |
+| The shot rejects | All four sibling titles name the action field; all documents and mutation patterns use those titles. |
+| Action activation | Titles use Interaction activation, Adapter exceptions and Interaction cancellation; the design uses key interactions. |
+| The validator accepts | The spec uses the camera document module. |
+| aborts the abort signal | The spec names the abort controller of the work. |
+| the interaction and target | The spec names the pack target and each callback state change. |
+| that an action field changes | Scenario 060 names the layer action field of the same shot. |
+| without adapter call | The titles and spec add the article; the spec names `clear` as code. |
+| version four | The spec uses version 4 and rejects. |
+| Write tests for | Each task gives one instruction; mutation sub-lines state the code change. |
+| 248 failed tests | The command supplies the current mutation totals; the lint command supplies its warning total. |
+| selected idle state | The titles use idle state with the selected ID, no content runs and shot without a move. |
+
+The pass skips no requested correction.
+The predispatch hits name source strings, old titles, API event names and command flags.
+Those strings stay exact in code blocks.
+HTTPS means Hypertext Transfer Protocol Secure.
+ERROR is a command output label.
+HEAD names the current Git commit.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-2/probe3.mjs
+cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-2/check3.py
+cd /home/ianblenke/docker/gev-work/director-2 && cd /home/ianblenke/docker/gev-work && taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-2 41 75
+```
+
+The title command checks 231 titles and finds zero banned forms.
+The tests give 234 passed tests and zero failed tests.
+The audit table gives 79 rows and zero open rows.
+The command below reads each row class from that table.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-2/audit3.py
+```
+
+Rows m252 and m254 fail the abort event test through the public API.
+The test uses the supplied signal and the host listener getter.
+It does not change a built-in prototype.
+
+The final mutation output gives 255 killed rows and two equivalent changes.
+No row reaches a time limit or skips its source text.
+
+The separate format command checks all six test files.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-2/format-tests3.mjs --check
 ```

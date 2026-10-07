@@ -86,10 +86,16 @@ test('[director-069] The active session refuses an unknown ID', async () => {
   assert.equal(calls, 0);
 });
 
-test('[director-070] The successful interaction gives selected idle state', async () => {
+test('[director-070] The successful interaction gives idle state with the selected ID', async () => {
   const states = [];
   const s = createInteractionSession({
     execute: (item, signal) => {
+      assert.deepEqual(states.at(-1), {
+        active: true,
+        busy: true,
+        selected: 'a',
+        count: 1,
+      });
       assert.equal(item.id, 'a');
       assert.equal(signal.aborted, false);
       return undefined;
@@ -141,7 +147,7 @@ test('[director-072] The adapter rejection allows another interaction', async ()
   assert.equal(calls, 2);
 });
 
-test('[director-073] The session cancels work before adapter call', async () => {
+test('[director-073] The session cancels work before an adapter call', async () => {
   let calls = 0;
   const s = createInteractionSession({
     execute: () => {
@@ -187,11 +193,27 @@ test('[director-074] The old work leaves new session state intact', async () => 
   let oldResult, newResult;
   const states = [];
   const s = createInteractionSession({
-    execute: (item) =>
-      new Promise((resolve) => {
+    execute: (item) => {
+      if (item.id === 'old') {
+        assert.deepEqual(states.at(-1), {
+          active: true,
+          busy: true,
+          selected: 'old',
+          count: 1,
+        });
+      } else {
+        assert.deepEqual(states.at(-1), {
+          active: true,
+          busy: true,
+          selected: 'new',
+          count: 1,
+        });
+      }
+      return new Promise((resolve) => {
         if (item.id === 'old') oldResult = resolve;
         else newResult = resolve;
-      }),
+      });
+    },
     changed: (state) => states.push(state),
   });
   s.activate([{ id: 'old' }]);
@@ -278,7 +300,7 @@ test('[director-065] The default state callback accepts a session change', () =>
   });
 });
 
-test('[director-073] The session does not abort the old controller when clear runs twice', async () => {
+test('[director-073] The session does not abort the old abort controller when clear runs twice', async () => {
   let signal;
   let calls = 0;
   const s = createInteractionSession({
@@ -308,7 +330,7 @@ test('[director-073] The session does not abort the old controller when clear ru
   await work;
 });
 
-test('[director-070] The session does not abort a completed controller when clear runs', async () => {
+test('[director-070] The session does not abort a completed abort controller when clear runs', async () => {
   let signal;
   const s = createInteractionSession({
     execute: (_, v) => {
@@ -335,4 +357,20 @@ test('[director-073] The state callback receives empty state after clear', () =>
     { active: true, busy: false, selected: null, count: 1 },
     { active: false, busy: false, selected: null, count: 0 },
   ]);
+});
+
+test('[director-073] The abort event gives false before the signal changes', async () => {
+  const listeners = [];
+  const session = createInteractionSession({
+    execute: (_, signal) => {
+      assert.equal(signal.aborted, false);
+      listeners.push(getEventListeners(signal, 'abort').length);
+      signal.dispatchEvent(new Event('abort'));
+      listeners.push(getEventListeners(signal, 'abort').length);
+      return new Promise(() => {});
+    },
+  });
+  session.activate([{ id: 'a' }]);
+  assert.equal(await session.dispatch('a'), false);
+  assert.deepEqual(listeners, [1, 0]);
 });

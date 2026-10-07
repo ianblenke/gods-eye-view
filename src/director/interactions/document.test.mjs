@@ -469,25 +469,25 @@ test('[director-062] The card rejects 2049 URL characters', () => {
   assert.throws(() => validate(s), /at most 2048 characters/);
 });
 
-test('[director-057] The card rejects an extra field', () => {
+test('[director-057] The card action field rejects an extra field', () => {
   const s = scene({ type: 'card', text: 'Text' });
   s.shots[0].interactions[0].action.extra = true;
   assert.throws(() => validate(s), /action.extra: unsupported field/);
 });
 
-test('[director-057] The focus rejects an extra field', () => {
+test('[director-057] The focus action field rejects an extra field', () => {
   const s = scene({ type: 'focus', anchorId: 'a' });
   s.shots[0].interactions[0].action.extra = true;
   assert.throws(() => validate(s), /action.extra: unsupported field/);
 });
 
-test('[director-057] The shot rejects an extra field', () => {
+test('[director-057] The shot action field rejects an extra field', () => {
   const s = scene({ type: 'shot', shotId: 'two' });
   s.shots[0].interactions[0].action.extra = true;
   assert.throws(() => validate(s), /action.extra: unsupported field/);
 });
 
-test('[director-057] The layer rejects an extra field', () => {
+test('[director-057] The layer action field rejects an extra field', () => {
   const s = scene({ type: 'layer', layerId: 'traffic', enabled: true });
   s.shots[0].interactions[0].action.extra = true;
   assert.throws(() => validate(s), /action.extra: unsupported field/);
@@ -515,4 +515,11 @@ test('[director-062] The label rejects 257 characters', () => {
   const s = scene();
   s.shots[0].interactions[0].label = 'x'.repeat(257);
   assert.throws(() => validate(s), /at most 256 characters/);
+});
+
+test('[director-057] The action field rejects an inherited type name', () => {
+  assert.throws(() => validate(scene({ type: 'constructor' })), {
+    name: 'SceneDocumentError',
+    message: 'scene.shots[0].interactions[0]: unsupported action',
+  });
 });

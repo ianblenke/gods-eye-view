@@ -137,8 +137,8 @@ Origin: backfill
 ### Requirement: Camera orientation fields
 
 The camera document module MUST check camera orientation fields.
-The validator accepts heading and roll from minus 360 through 360 degrees.
-The validator accepts pitch from minus 90 through 90 degrees.
+The camera document module accepts heading and roll from minus 360 through 360 degrees.
+The camera document module accepts pitch from minus 90 through 90 degrees.
 
 Origin: backfill
 
@@ -157,8 +157,8 @@ Origin: backfill
 #### Scenario: Camera version rules `director-051`
 
 - **WHEN** the caller checks camera data with different versions
-- **THEN** the camera document module accepts numeric text only in versions 1 and 2 and anchor references only from version four
-- **AND** a height reference field fails before version 4
+- **THEN** the camera document module accepts numeric text in a pose field only in versions 1 and 2 and anchor references only from version 4
+- **AND** the camera document module rejects a height reference field before version 4
 
 ### Requirement: Scene anchor fields
 
@@ -192,7 +192,7 @@ Origin: backfill
 The camera document module MUST check move curves and times.
 Move duration spans 0.2 through 86400 seconds.
 Hold duration spans zero through 86400 seconds.
-The validator accepts the linear and cubic-in-out curves.
+The camera document module accepts the linear and cubic-in-out curves.
 
 Origin: backfill
 
@@ -200,7 +200,7 @@ Origin: backfill
 
 - **WHEN** a move supplies an invalid curve or time
 - **THEN** the camera document module rejects unsupported curves and invalid duration or hold values
-- **AND** duration 0.2 seconds passes and duration 0.19 seconds fails
+- **AND** duration 0.2 seconds passes and the camera document module rejects duration 0.19 seconds
 - **AND** the move rejects an unsupported field
 
 ### Requirement: Height references
@@ -238,8 +238,9 @@ Origin: backfill
 - **WHEN** an action field supplies an unsupported field or type
 - **THEN** the interaction document module rejects the field or type
 - **AND** the card, focus, shot and layer action fields reject an extra field
-- **AND** the interaction and target reject an extra field
+- **AND** the interaction and its pack target reject an extra field
 - **AND** the supported fields pass the check
+- **AND** an inherited action type name gives a document error
 
 ### Requirement: Card source links
 
@@ -273,7 +274,9 @@ Origin: backfill
 #### Scenario: Shot references and baselines `director-060`
 
 - **WHEN** a shot action field names a target shot
-- **THEN** the interaction document module rejects an unknown shot, and a target shot that lacks a baseline for any layer that an action field changes
+- **THEN** the interaction document module rejects an unknown target shot
+- **AND** the target shot needs a baseline for each layer that a layer action field of the same shot names
+- **AND** a null interaction or an absent action field gives a document error
 
 ### Requirement: Layer state fields
 
@@ -338,15 +341,15 @@ Origin: backfill
 - **WHEN** the caller creates a session
 - **THEN** getState reports inactive state, zero interactions and absent selection
 - **AND** getState reports active false, busy false, selected null and count zero
-- **AND** the default state callback accepts an empty list
+- **AND** the default state callback accepts each state change
 
-### Requirement: Action activation
+### Requirement: Interaction activation
 
 The interaction session module MUST activate interaction lists.
 
 Origin: backfill
 
-#### Scenario: Action activation `director-066`
+#### Scenario: Interaction activation `director-066`
 
 - **WHEN** the caller activates an interaction list
 - **THEN** getState reports its interaction total and active state for a nonempty list
@@ -363,7 +366,7 @@ Origin: backfill
 #### Scenario: Inactive session admission `director-067`
 
 - **WHEN** the caller dispatches an interaction in an inactive session
-- **THEN** the session returns false without adapter call
+- **THEN** the session returns false without an adapter call
 
 ### Requirement: Busy session admission
 
@@ -385,7 +388,7 @@ Origin: backfill
 #### Scenario: Unknown interaction admission `director-069`
 
 - **WHEN** the caller dispatches an unknown ID in an active session
-- **THEN** the session returns false without adapter call
+- **THEN** the session returns false without an adapter call
 
 ### Requirement: Successful adapter call
 
@@ -403,7 +406,7 @@ Origin: backfill
 - **AND** the state callback receives active true, busy true, selected a and count 1 before the adapter call
 - **AND** the state callback receives active true, busy false, selected a and count 1 after the adapter result
 - **AND** adapter results zero and empty text give true
-- **AND** clear does not abort a completed controller
+- **AND** `clear` does not abort a completed abort controller
 
 ### Requirement: Refused adapter call
 
@@ -416,30 +419,33 @@ Origin: backfill
 - **WHEN** the adapter returns false
 - **THEN** the session returns false and gives idle state
 
-### Requirement: Action exceptions
+### Requirement: Adapter exceptions
 
 The interaction session module MUST return false for adapter exceptions.
 
 Origin: backfill
 
-#### Scenario: Action exceptions `director-072`
+#### Scenario: Adapter exceptions `director-072`
 
 - **WHEN** the adapter throws or rejects
 - **THEN** the session returns false and allows another interaction
 
-### Requirement: Action cancellation
+### Requirement: Interaction cancellation
 
 The interaction session module MUST cancel active work when the caller clears the session.
 
 Origin: backfill
 
-#### Scenario: Action cancellation `director-073`
+#### Scenario: Interaction cancellation `director-073`
 
-- **WHEN** the caller clears a session with active work
-- **THEN** the session aborts the abort signal and settles the result as false
-- **AND** the adapter does not run when clear precedes its call
-- **AND** a second clear does not abort the old controller
-- **AND** clear gives the state callback active false, busy false, selected null and count zero
+- **WHEN** the caller clears active work or the adapter sends an abort event
+- **THEN** the session settles the result as false
+- **AND** `clear` aborts the abort controller of the work
+- **AND** the adapter does not run when `clear` precedes its call
+- **AND** a second `clear` does not abort the old abort controller
+- **AND** an abort event gives false while the signal still reports aborted false
+- **AND** the first abort event removes the session abort listener
+- **AND** `clear` gives the state callback active false, busy false, selected null and count zero
 
 ### Requirement: Session replacement
 
