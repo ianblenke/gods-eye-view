@@ -510,7 +510,7 @@ test('[recent-imagery-015] absent times and an invalid clock keep the readout bo
   assert.equal(formatCandidateReadout(null), '');
 });
 
-test('[recent-imagery-016 recent-imagery-054] the unknown products and an absent snapshot box fail', () => {
+test('[recent-imagery-016 recent-imagery-054] the URL builders throw for unknown products and an absent snapshot box', () => {
   assert.throws(
     () => wvsSnapshotUrl({ product: 'bad', box: BOX }),
     /Unknown imagery product/,
@@ -973,4 +973,9 @@ test('[recent-imagery-054] the model does not read a parent product getter', () 
   } finally {
     delete Object.prototype.parentImageryProduct;
   }
+});
+
+test('[recent-imagery-056] a footprint with an absent point gives unknown coverage', () => {
+  const footprint = [, [-97, 31], [-98, 31]];
+  assert.equal(coverageFor({ granules: [{ footprint }] }, BOX), 'unknown');
 });

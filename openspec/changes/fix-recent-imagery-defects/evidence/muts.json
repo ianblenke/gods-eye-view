@@ -109,7 +109,7 @@
     "pattern": "recent-imagery-054"
   },
   {
-    "id": "055-no-reveal",
+    "id": "055-no-scroll-request",
     "file": "src/ui/recentImagery.js",
     "old": "if (detailsOpen) revealCard(container, detailsHost.children[0]);",
     "new": "if (false) revealCard(container, detailsHost.children[0]);",
@@ -119,7 +119,7 @@
     "pattern": "recent-imagery-055"
   },
   {
-    "id": "055-close-reveal",
+    "id": "055-close-scroll-request",
     "file": "src/ui/recentImagery.js",
     "old": "if (detailsOpen) revealCard(container, detailsHost.children[0]);",
     "new": "if (true) revealCard(container, detailsHost.children[0]);",
@@ -195,5 +195,55 @@
     "test": [
       "src/layers/recentImagery/model.test.mjs"
     ]
+  },
+  {
+    "id": "055-scroll-before-render",
+    "file": "src/ui/recentImagery.js",
+    "old": "      render();\n      if (detailsOpen) revealCard(container, detailsHost.children[0]);",
+    "new": "      if (detailsOpen) revealCard(container, detailsHost.children[0]);\n      render();",
+    "test": [
+      "src/ui/recentImagery.test.mjs"
+    ],
+    "pattern": "recent-imagery-055"
+  },
+  {
+    "id": "055-no-height-guard",
+    "file": "src/ui/recentImagery.js",
+    "old": "!(height > 0)",
+    "new": "false",
+    "test": [
+      "src/ui/recentImagery.test.mjs"
+    ],
+    "pattern": "recent-imagery-055"
+  },
+  {
+    "id": "055-no-rectangle-guard",
+    "file": "src/ui/recentImagery.js",
+    "old": "typeof card?.getBoundingClientRect !== 'function'",
+    "new": "false",
+    "test": [
+      "src/ui/recentImagery.test.mjs"
+    ],
+    "pattern": "recent-imagery-055"
+  },
+  {
+    "id": "056-sparse-ring",
+    "file": "src/layers/recentImagery/model.js",
+    "old": "Array.from(ring).every(",
+    "new": "ring.every(",
+    "test": [
+      "src/layers/recentImagery/model.test.mjs"
+    ],
+    "pattern": "recent-imagery-056"
+  },
+  {
+    "id": "053-aborted-signal",
+    "file": "src/layers/recentImagery/thumbnails.js",
+    "old": "      const response = await fetchImpl(url, { signal: controller.signal });",
+    "new": "      controller.abort();\n      const response = await fetchImpl(url, { signal: controller.signal });",
+    "test": [
+      "src/layers/recentImagery/thumbnails.test.mjs"
+    ],
+    "pattern": "the loader starts a new fetch after an external AbortError"
   }
 ]

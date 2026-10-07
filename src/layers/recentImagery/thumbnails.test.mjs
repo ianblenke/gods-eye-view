@@ -407,7 +407,7 @@ test('[recent-imagery-026] a stop after blob data does not make an image', async
   assert.equal(loader.get('S30:2026-09-18').status, 'unknown');
 });
 
-test('[recent-imagery-023 recent-imagery-026 recent-imagery-053] the fetch errors and stop errors give different states', async () => {
+test('[recent-imagery-023 recent-imagery-026 recent-imagery-053] the fetch errors and AbortError give different states', async () => {
   for (const name of ['Error', 'AbortError']) {
     const loader = createThumbnailLoader({
       fetchImpl: async () => {
@@ -609,12 +609,13 @@ test('[recent-imagery-026] a URL callback while the loader clears images does no
   loader.destroy();
 });
 
-test('[recent-imagery-053] a later request starts after external AbortError', async () => {
+test('[recent-imagery-053] the loader starts a new fetch after an external AbortError', async () => {
   let calls = 0;
+  const signalsAborted = [];
   const loader = createThumbnailLoader({
     fetchImpl: async (_url, { signal }) => {
       calls += 1;
-      assert.equal(signal.aborted, false);
+      signalsAborted.push(signal.aborted);
       if (calls === 1)
         throw Object.assign(new Error('fetch'), { name: 'AbortError' });
       return response();
@@ -628,6 +629,7 @@ test('[recent-imagery-053] a later request starts after external AbortError', as
   loader.request(candidate('S30', '2026-09-18'), BOX);
   await settle();
   assert.equal(calls, 2);
+  assert.deepEqual(signalsAborted, [false, false]);
   assert.equal(loader.get('S30:2026-09-18').objectUrl, 'blob:second');
   loader.destroy();
 });
@@ -653,7 +655,7 @@ test('[recent-imagery-053] an old fetch cannot remove a new entry', async () => 
   loader.destroy();
 });
 
-test('[recent-imagery-053] a present day keeps proof after fetch cancellation', async () => {
+test('[recent-imagery-053] a present day keeps proof after a loader cancellation', async () => {
   const f = fixture({ maxDecoded: 1 });
   f.loader.request(candidate('S30', '2026-09-18'), BOX);
   f.fetch.respond(0);
