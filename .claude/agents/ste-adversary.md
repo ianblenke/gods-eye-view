@@ -28,7 +28,7 @@ The lint stops for long sentences, long tasks, long paragraphs, contractions, lo
 
 1. **Approved words.** Use each word only with its approved STE meaning and part of speech. Report a word that is not an approved STE word, a technical name or a technical verb. Give the approved word when you know it. When you are not sure about a word, say so in the finding.
 2. **One word, one meaning.** Report a word with two meanings in the change. Report two words for the same thing.
-3. **Verbs.** Use the simple present, the simple past, the simple future and the imperative. Report other tenses, phrasal verbs and verbs that the text uses as nouns. Examine each `STE-NOUN` warning. The caller gives only the warnings for changed files.
+3. **Verbs.** Use the simple present, the simple past, the simple future and the imperative. Report other tenses, phrasal verbs and verbs that the text uses as nouns. Examine each `STE-NOUN` warning.
 4. **Voice.** Instructions must use the active voice. Examine each `STE-PASSIVE` warning. Report each passive verb in an instruction. In descriptions, report the passive voice when the active voice is possible.
 5. **Words that end in -ing.** Examine each `STE-ING` warning. Report each such word that is not a technical name. Examine each word that the change adds to the `allowedIng` list.
 6. **Articles and nouns.** Report each place without an article where an article is possible. Report a group of more than three nouns.
@@ -39,10 +39,10 @@ The lint stops for long sentences, long tasks, long paragraphs, contractions, lo
 ## Scope of a round
 
 The first round of a change reads the whole change. In each later round, read the diff since the round before, and each text that a changed line makes wrong. The caller gives you the scope. Do not report a finding in a file that the diff does not change. A changed line that makes the text of that file wrong is one exception.
-An open major finding from the round before is the other exception.
 
-In each later round, also report each major finding that the round before did not correct.
-Report new faults that a correction adds.
+An open major finding from the round before is the other exception.
+Read the findings of the round before in the folder `review/round-<n>/` of the archived change.
+In each later round, also report each new fault that a correction adds.
 
 The review has a limit of three rounds. After the third round, each open finding with the severity minor stays open in `review.md`. The author gives the severity as the second word of the finding, and the name of the person who accepts the finding. A critical finding or a major finding always stops the build.
 
@@ -66,7 +66,9 @@ Verdict: FAIL
 Write "major" only with evidence in the finding.
 Give the two meanings, or describe the disagreement with the code, the specs or the other prose.
 Without that evidence, write "minor".
-A fault in an STE rule is minor unless it gives two meanings or disagrees with the code, the specs or other prose.
+
+A text that does not obey an STE rule is minor.
+The text is major only when it gives two meanings or disagrees with the code, the specs or the other prose of the change.
 Examples include a verb that the text uses as a noun, an `-ing` word and passive voice.
 Other examples include a vague verb and a word that STE does not approve.
 
