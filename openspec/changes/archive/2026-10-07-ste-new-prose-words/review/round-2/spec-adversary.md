@@ -1,0 +1,16 @@
+Verdict: FAIL
+
+Tree: gev-work/ste-words commit 94c7368496db41cfd68df83d4982d7985e63530d, scope diff edd90f9. I could only read files, so I ran no code and no mutations. I did not read the other 18 test files, the gate logs beyond a grep, or the unmerged branches' documents.
+
+Both round-1 majors are closed:
+- `Object.hasOwn`: row `parent-key` plus ste-lint-040 with `constructor`.
+- Archive date: folder 2026-10-07 is not before the cutoff, so it is new. ste-lint-041 and row `archive-equal` cover it.
+
+- [ ] FINDING major scripts/spec/lib/ste.mjs:239 A new test that names only old IDs (`since` before 2026-10-07) gives only `STE-WORD-OLD`. Adding or rewriting a test for an old or MODIFIED scenario is a usual edit, and the STE adversary skips these words. The date design removed the round-1 limits `titles-old-after-archive` and `merged-spec-title`. No limit names this case, and ste-lint-042 only states the rule. Add a Known limit, or classify titles of tests that the diff adds as new.
+- [ ] FINDING minor src/tooling/spec/ste.test.mjs:468 ste-lint-040 and design.md:44 claim 4 parent keys. Only `constructor` reaches the guard. `cleanLine` turns `__proto__` into `proto`, and the code lowercases `toString` and `valueOf`. Name only `constructor`. `Object.hasOwn(registry,id)` against `in` is equivalent, because IDs must end `-\d{3}`.
+- [ ] FINDING minor scripts/spec/lib/ste.mjs:239 A missing, null or non-string `since` gives OLD, because `undefined >= '2026-10-07'` is false. No test covers it. Gates compare only the hash of ids.json with the base. So a hand edit of `since` or of the archive folder date turns errors into warnings. Use old only for `typeof since === 'string' && since < from`. Add a test and name the limit.
+- [ ] FINDING minor scripts/spec/lib/ste.mjs:291 Invalid JSON in ids.json now crashes `make lint` with a SyntaxError stack. A merge-conflict marker would cause it, and lint did not read this file before. No test or limit covers it. Name it, or catch it with a named error.
+- [ ] FINDING minor design.md:50 D4 covers only active documents. Dates are UTC. A change that ratcheted or archived before 2026-10-07 stays old after it merges. A change archived on 2026-10-07 and not yet merged (harden-timing-tests, in gev-work/harden-timing) becomes new and needs corrections after it merges main. Add a Known limit `date-cutoff`.
+- [ ] FINDING minor scripts/spec/lib/ste.mjs:228 Two operands are dead: `archiveDate &&` and the Markdown-side `?? ''`. `undefined < x` is false, so no mutation can fail a test for them. The rows `archive-date-*` name other code. Nothing pins the form `YYYY-MM-DD-`: `\d+` or `2026-1-6-b` survives. Remove the operands and add a malformed-date folder to ste-lint-041.
+- [ ] FINDING minor proposal.md:26 The section only points to the design. review.md step 11 and the spec adversary read "Known limits and later changes" in the proposal. Move the four limits there. Widen `explicit-derivatives`: `retaining`, `permission`, `execution` and `retention` also pass, and -ing forms only warn through `STE-ING`.
+- [ ] FINDING minor tasks.md:46 Boxes 2.5, 2.7, 3.1 and 3.2 are open, but the report says the work is done. No gate reads boxes. Check each with its output before the merge.

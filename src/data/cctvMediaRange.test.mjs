@@ -14,6 +14,8 @@ import { proxyMediaResponse } from '../../server/providers/cctv/media.js';
 import { sanitizeCctvRangeHeader } from '../../server/providers/cctv/range.js';
 import { CCTV_MEDIA_MAX_BODY_BYTES as CAP } from '../../server/providers/cctv/constants.js';
 
+const realSetTimeout = globalThis.setTimeout;
+
 test('single well-formed byte ranges pass through canonicalized', () => {
   assert.equal(sanitizeCctvRangeHeader('bytes=0-1023'), 'bytes=0-1023');
   // A single range that names the same byte twice is legal.
@@ -633,7 +635,7 @@ function mediaUpstream({ everyMs = 0 } = {}) {
       send();
       if (everyMs > 0) {
         ticker = setInterval(send, everyMs);
-        ticker.unref();
+        ticker.unref?.();
       }
     },
     cancel() {
@@ -654,15 +656,25 @@ function mediaUpstream({ everyMs = 0 } = {}) {
   return state;
 }
 
+// Stream callbacks finish between clock steps.
+async function advanceMediaClock(t, ms) {
+  for (let i = 0; i < ms; i++) {
+    await new Promise((resolve) => setImmediate(resolve));
+    t.mock.timers.tick(1);
+  }
+  await new Promise((resolve) => setImmediate(resolve));
+}
+
 test('an upstream that goes silent after its headers is released at the idle deadline', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'setInterval'] });
   const feed = mediaUpstream();
   const res = pipeTarget();
   t.after(() => res.destroy());
   await proxyMediaResponse(res, feed.upstream, { idleTimeoutMs: 40 });
 
-  await new Promise((resolve) => setTimeout(resolve, 20));
+  await advanceMediaClock(t, 20);
   assert.equal(feed.released, false, 'released before the deadline was due');
-  await new Promise((resolve) => setTimeout(resolve, 120));
+  await advanceMediaClock(t, 120);
   // Without the deadline this stream is held open against the camera host for
   // as long as that host will keep the socket, with no bytes ever arriving.
   assert.equal(feed.released, true, 'the silent upstream was never released');
@@ -670,12 +682,14 @@ test('an upstream that goes silent after its headers is released at the idle dea
 });
 
 test('a live feed that keeps producing is not cut off by the idle deadline', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'setInterval'] });
   const feed = mediaUpstream({ everyMs: 10 });
   const res = pipeTarget();
   t.after(() => res.destroy());
   await proxyMediaResponse(res, feed.upstream, { idleTimeoutMs: 40 });
 
-  await new Promise((resolve) => setTimeout(resolve, 250));
+  await advanceMediaClock(t, 250);
+  await new Promise((resolve) => realSetTimeout(resolve, 5));
   assert.equal(feed.released, false, 'a healthy feed was torn down');
   assert.equal(res.writableEnded, false, 'a healthy feed was ended early');
   assert.ok(
@@ -685,14 +699,30 @@ test('a live feed that keeps producing is not cut off by the idle deadline', asy
 });
 
 test('a client that cannot keep up is not mistaken for a stalled upstream', async (t) => {
+  let deadline;
+  t.mock.method(globalThis, 'setTimeout', (callback, ms) => {
+    assert.equal(ms, 30);
+    deadline = callback;
+    return { unref() {} };
+  });
+  t.mock.method(globalThis, 'clearTimeout', () => {});
   // Nothing arrives from upstream while the pipe is paused, which looks exactly
   // like silence unless the response is asked whether it is still draining.
-  const feed = mediaUpstream({ everyMs: 10 });
+  // The held byte keeps the client buffer full when the deadline callback starts.
+  const feed = mediaUpstream();
   const res = pipeTarget({ drains: false });
   t.after(() => res.destroy());
   await proxyMediaResponse(res, feed.upstream, { idleTimeoutMs: 30 });
 
-  await new Promise((resolve) => setTimeout(resolve, 200));
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(res.writableNeedDrain, true);
+  for (let i = 0; i < 6; i++) {
+    assert.equal(typeof deadline, 'function');
+    const current = deadline;
+    deadline = undefined;
+    current();
+  }
+  await new Promise((resolve) => realSetTimeout(resolve, 5));
   assert.equal(
     res.writableNeedDrain,
     true,

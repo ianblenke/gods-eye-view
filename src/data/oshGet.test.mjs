@@ -554,12 +554,14 @@ test('[osh-015] fails a request whose declared body exceeds the cap, with no par
   assert.equal(pulls, 0, 'a body declared too large must never be read');
 });
 
-test('[osh-015] fails a request past its timeout', async () => {
-  const startedAt = Date.now();
-  await assert.rejects(
+test('[osh-015] fails a request past its timeout', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  let observedSignal;
+  const rejected = assert.rejects(
     oshGet(
       async (_url, options) =>
         new Promise((_resolve, reject) => {
+          observedSignal = options.signal;
           options.signal.addEventListener('abort', () => reject(options.signal.reason), {
             once: true,
           });
@@ -569,7 +571,10 @@ test('[osh-015] fails a request past its timeout', async () => {
     ),
     { name: 'TimeoutError' },
   );
-  assert.ok(Date.now() - startedAt < 500);
+  t.mock.timers.tick(20);
+  assert.equal(observedSignal?.aborted, true);
+  assert.equal(observedSignal?.reason.name, 'TimeoutError');
+  await rejected;
 });
 
 test('[osh-037] OSH_LIST_FORMAT names the GeoJSON format, and oshListUrl builds a query from named parts', () => {
