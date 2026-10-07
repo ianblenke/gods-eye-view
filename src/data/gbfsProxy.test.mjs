@@ -159,13 +159,16 @@ test('GBFS upstream fetch measures the cap in bytes and accepts a body exactly a
   assert.equal(GBFS_MAX_BODY_BYTES, 5 * 1024 * 1024);
 });
 
-test('GBFS upstream fetch aborts a stalled connection with the timeout signal', async () => {
+test('GBFS upstream fetch aborts a stalled connection with the timeout signal', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const startedAt = Date.now();
-  await assert.rejects(
+  let observedSignal;
+  const rejected = assert.rejects(
     fetchGbfsUpstream(STATION_URL, {
       timeoutMs: 20,
       fetchImpl: (_url, options) =>
         new Promise((_resolve, reject) => {
+          observedSignal = options.signal;
           options.signal.addEventListener(
             'abort',
             () => reject(options.signal.reason),
@@ -175,7 +178,10 @@ test('GBFS upstream fetch aborts a stalled connection with the timeout signal', 
     }),
     (error) => error?.name === 'AbortError',
   );
-  assert.ok(Date.now() - startedAt < 500, 'the timeout must settle promptly');
+  t.mock.timers.tick(20);
+  assert.equal(observedSignal?.aborted, true);
+  await rejected;
+  assert.equal(Date.now() - startedAt, 20);
 });
 
 test('GBFS cancels an oversized declared body without pulling it', async () => {

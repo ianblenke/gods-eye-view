@@ -12,6 +12,8 @@ import {
   guardCameraAboveGround,
 } from './cameraGroundGuard.js';
 
+const realSetTimeout = globalThis.setTimeout;
+
 test('a buried camera is lifted clear of the surface', () => {
   // Framed near sea level, arriving over ground at ~1,609 m (Denver).
   const lift = groundClearanceDeficitM(140, 1609);
@@ -67,7 +69,8 @@ function fakeViewer({ cameraHeightM, surfaceM }) {
   };
 }
 
-test('the guard lifts a buried arrival once the surface answers', async () => {
+test('the guard lifts a buried arrival once the surface answers', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   const viewer = fakeViewer({ cameraHeightM: 172, surfaceM: 171 });
   const lifts = [];
   guardCameraAboveGround(
@@ -75,17 +78,18 @@ test('the guard lifts a buried arrival once the surface answers', async () => {
     { lat: 30.3125, lon: -97.765 },
     { intervalMs: 1, onLift: (m) => lifts.push(m) },
   );
-  await new Promise((resolve) => setTimeout(resolve, 20));
+  t.mock.timers.tick(20);
   assert.equal(viewer.flights.length, 1);
   const lifted = Cesium.Cartographic.fromCartesian(
     viewer.flights[0].destination,
   );
-  assert.ok(Math.abs(lifted.height - (171 + MIN_EYE_CLEARANCE_M)) < 0.5);
+  assert.ok(Math.abs(lifted.height - 291) < 0.5);
   assert.equal(viewer.flights[0].orientation.heading, 0.5);
   assert.equal(lifts.length, 1);
 });
 
-test('the guard waits for streaming tiles and yields to a newer arrival', async () => {
+test('the guard waits for streaming tiles and yields to a newer arrival', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   let answer = Number.NaN;
   let stale = false;
   const viewer = fakeViewer({ cameraHeightM: 172, surfaceM: () => answer });
@@ -94,18 +98,22 @@ test('the guard waits for streaming tiles and yields to a newer arrival', async 
     { lat: 30.3125, lon: -97.765 },
     { intervalMs: 2, attempts: 20, isStale: () => stale },
   );
-  await new Promise((resolve) => setTimeout(resolve, 12));
+  t.mock.timers.tick(12);
+  await new Promise((resolve) => realSetTimeout(resolve, 5));
   assert.equal(viewer.flights.length, 0, 'no guess while tiles stream in');
   stale = true;
   answer = 171;
-  await new Promise((resolve) => setTimeout(resolve, 12));
+  t.mock.timers.tick(12);
+  await new Promise((resolve) => realSetTimeout(resolve, 5));
   assert.equal(viewer.flights.length, 0, 'a newer arrival owns the camera');
 });
 
-test('the guard leaves a clear view untouched', async () => {
+test('the guard leaves a clear view untouched', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   const viewer = fakeViewer({ cameraHeightM: 400, surfaceM: 171 });
   guardCameraAboveGround(viewer, { lat: 30.3125, lon: -97.765 }, { intervalMs: 1 });
-  await new Promise((resolve) => setTimeout(resolve, 20));
+  t.mock.timers.tick(20);
+  await new Promise((resolve) => realSetTimeout(resolve, 5));
   assert.equal(viewer.flights.length, 0);
 });
 
