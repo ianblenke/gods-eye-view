@@ -644,9 +644,10 @@
   ],
   "director-003": [
     "src/director/document.test.mjs › [director-003] The absent version allows legacy numeric text",
-    "src/director/document.test.mjs › [director-003] The import accepts anchors and move at versions 4 through 6",
+    "src/director/document.test.mjs › [director-003] The import accepts an empty interactions list at version 6",
     "src/director/document.test.mjs › [director-003] The import accepts data packs at versions 5 and 6",
-    "src/director/document.test.mjs › [director-003] The import rejects fields below each version gate",
+    "src/director/document.test.mjs › [director-003] The import accepts the anchors field and the move field at versions 4 through 6",
+    "src/director/document.test.mjs › [director-003] The import rejects fields below each version limit",
     "src/director/document.test.mjs › [director-003] The legacy document accepts absent IDs",
     "src/director/document.test.mjs › [director-003] missing legacy IDs become stable after the first saved migration",
     "src/director/document.test.mjs › [director-003] v1/v2 bloom migrates once; IDs, edits, pack bindings and zero holds survive"
@@ -728,10 +729,10 @@
     "src/director/document.test.mjs › [director-013] document byte, nesting, collection, finite-number and string bounds are enforced"
   ],
   "director-014": [
+    "src/director/document.test.mjs › [director-014] The visual check rejects an unknown field",
     "src/director/document.test.mjs › [director-014] The visual check rejects invalid mapStack",
     "src/director/document.test.mjs › [director-014] The visual check rejects invalid style",
-    "src/director/document.test.mjs › [director-014] The visual check rejects invalid style parameters",
-    "src/director/document.test.mjs › [director-014] The visual rejects an unknown field"
+    "src/director/document.test.mjs › [director-014] The visual check rejects invalid style parameters"
   ],
   "director-015": [
     "src/director/document.test.mjs › [director-015] The visual bloom accepts its enabled field",
@@ -742,6 +743,7 @@
     "src/director/document.test.mjs › [director-015] The visual check rejects invalid boolean type",
     "src/director/document.test.mjs › [director-015] The visual check rejects invalid number type",
     "src/director/document.test.mjs › [director-015] The visual check rejects invalid text type",
+    "src/director/document.test.mjs › [director-015] The visual control rejects an unknown field",
     "src/director/document.test.mjs › [director-015] The visual detection accepts its allocation field",
     "src/director/document.test.mjs › [director-015] The visual detection accepts its density field",
     "src/director/document.test.mjs › [director-015] The visual detection accepts its fadePct field",
@@ -750,7 +752,6 @@
     "src/director/document.test.mjs › [director-015] The visual detection bounds its density field",
     "src/director/document.test.mjs › [director-015] The visual detection bounds its fadePct field",
     "src/director/document.test.mjs › [director-015] The visual detection bounds its outsideOpacityPct field",
-    "src/director/document.test.mjs › [director-015] The visual group rejects an unknown field",
     "src/director/document.test.mjs › [director-015] The visual hud accepts its variant field",
     "src/director/document.test.mjs › [director-015] The visual hud accepts its visible field",
     "src/director/document.test.mjs › [director-015] The visual scope accepts its enabled field",
@@ -947,9 +948,10 @@
     "src/director/timeline.test.mjs › [director-035] The seek uses the previous ordinary camera"
   ],
   "director-036": [
-    "src/director/playback.test.mjs › [director-036] The queue wraps from b and keeps each shot object",
+    "src/director/playback.test.mjs › [director-036] The queue wraps from scene b and keeps each shot object",
     "src/director/playback.test.mjs › [director-036] The single scene queue excludes other scenes",
-    "src/director/playback.test.mjs › [director-036] The unknown start selects the first scene"
+    "src/director/playback.test.mjs › [director-036] The single scene queue starts at scene a and keeps source objects",
+    "src/director/playback.test.mjs › [director-036] The unknown start ID selects the first scene"
   ],
   "director-037": [
     "src/director/playback.test.mjs › [director-037] The adapter receives the exact phase order",
