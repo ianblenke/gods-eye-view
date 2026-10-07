@@ -56,7 +56,7 @@
     "warnings",
     "wing"
   ],
-  "nounVerbsNote": "The lint warns when a word in the list nounVerbs follows a determiner.",
+  "nounVerbsNote": "The lint warns when a word in the list nounVerbs directly follows a determiner.",
   "nounVerbs": [
     "abort",
     "destroy",

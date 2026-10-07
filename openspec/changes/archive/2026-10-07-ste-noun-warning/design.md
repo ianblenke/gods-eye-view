@@ -50,6 +50,10 @@ Do not report an approved word because you prefer another.
 Check changed lines and text that those lines make wrong in later rounds.
 Also report each major finding that the round before did not correct.
 
+Change check 8 of `.claude/agents/spec-adversary.md` so that it reports each error and no warning.
+Change step 7 of `.claude/commands/opsx/review.md` so that the STE adversary gets only the warnings of the changed files.
+Both agents read `review/round-<n>/` for the findings of the round before.
+
 Keep the scope sentences that the review tests check.
 Add the guidance text about word faults to `.claude/agents/spec-adversary.md`.
 The guidance change adds no spec scenario.
@@ -74,7 +78,7 @@ Keep the behavior of the rule and correct the delta spec to describe it.
 Remove the empty array default because `new Set(undefined)` is empty.
 The absent-list test still applies.
 
-The ratchet command ran at commits `e9b1bf8` and `03d6954`, and again after the round-2 corrections.
+The ratchet command ran at commits `e9b1bf8`, `03d6954` and `5dfc701`.
 It wrote `ids.json` and `links.json`.
 The command `git show --stat` for each of these commits lists these files.
 The ratchet command did not edit `gaps.json`.
