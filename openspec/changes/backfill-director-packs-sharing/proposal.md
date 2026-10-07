@@ -1,6 +1,6 @@
 ## Why
 
-This backfill records data packs and scene shares at commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
+The backfill records data packs and project shares at commit `290b5d2`.
 The director feature checks assets before display and carries local files in a scene bundle.
 The source files of `src/director` stay the same at this commit and at main.
 
@@ -17,7 +17,7 @@ The source files of `src/director` stay the same at this commit and at main.
 
 ## Impact
 
-This change edits tests and adds change documents.
+The change edits tests and adds change documents.
 It does not change production code or browser QA scripts.
 The evidence records the ledger gaps and the host coverage sweep.
 The lead updates the ledger after the gate image checks.
@@ -29,12 +29,13 @@ The lead confirms those results in the gate image.
 
 ## Known limits and later changes
 
-- Known limit `geojson-inherited-height`: the decoder checks own coordinate values, then reads an inherited height at line 27.
-  An inherited height can exceed the height bounds.
+- Known limit `geojson-inherited-height`: the decoder checks coordinate values of the array, then reads an inherited height at line 27 of geojson.js.
+  The inherited height needs a Proxy or a getter at Array.prototype[2].
+  An inherited height can exceed the height limits.
   No scenario states this behavior.
-- Known limit `session-signal-getter`: a signal getter can destroy the session at line 74 before the source call at line 100.
+- Known limit `session-signal-getter`: a custom signal getter can destroy the session at line 74 of session.js before the source call at line 100.
   The source still receives a call.
-  The session can return true with ready resources after destruction.
+  The session can return true with resources in the ready state after destruction.
   No scenario states this behavior.
 - Known limit `old-tests-outside-scope`: the project migration test and the author details test keep their names without tags.
   They check code outside this change.

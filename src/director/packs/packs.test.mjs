@@ -56,7 +56,7 @@ test('v5 packs and shot references round trip through project migration without 
   }
 });
 
-test('[director-082] manifest rejects duplicate/unknown IDs, unsupported placement and request or credential syntax', () => {
+test('[director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials', () => {
   const mutations = [
     (s) => {
       s.dataPacks = null;
@@ -90,7 +90,7 @@ test('[director-082] manifest rejects duplicate/unknown IDs, unsupported placeme
   assert.throws(() => parseSceneDocument(JSON.stringify(old)));
 });
 
-test('[director-080] image bounds and media anchor references are stated and validated', () => {
+test('[director-080] The manifest checks given image bounds and media anchor references', () => {
   const p = project(),
     s = p.scenes[0],
     a = s.dataPacks[0];
@@ -112,7 +112,7 @@ test('[director-080] image bounds and media anchor references are stated and val
   assert.doesNotThrow(() => parseSceneDocument(JSON.stringify(p)));
 });
 
-test('[director-095 director-096 director-097] directory source confines paths, strips credentials and rejects redirects, oversized streaming bodies and missing assets', async () => {
+test('[director-095 director-096 director-097] The directory source confines paths and rejects credentials, redirects, excess bytes and absent assets', async () => {
   const requests = [];
   const source = createAssetDirectorySource({
     baseUrl: 'https://assets.example.org/packs/',
@@ -141,7 +141,7 @@ test('[director-095 director-096 director-097] directory source confines paths, 
   await assert.rejects(missing({ path: 'a' }), /unavailable/);
 });
 
-test('[director-087] GeoJSON keeps stable geometry IDs but never properties or remote style hints', () => {
+test('[director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints', () => {
   const data = {
     type: 'FeatureCollection',
     features: [
@@ -177,7 +177,7 @@ test('[director-087] GeoJSON keeps stable geometry IDs but never properties or r
   assert.throws(decode, /ring/);
 });
 
-test('[director-089] pack session removes presentations and cancels the transport on Stop', async () => {
+test('[director-089] The data pack session removes resources and cancels the transport on Stop', async () => {
   let disposed = 0,
     signal;
   const session = createDataPackSession({
@@ -204,7 +204,7 @@ test('[director-089] pack session removes presentations and cancels the transpor
   assert.equal(session.getState().count, 0);
 });
 
-test('[director-091] replacing a pending source settles promptly and ignores its late bytes', async () => {
+test('[director-091] The data pack session replaces source work and ignores its late bytes', async () => {
   const first = deferred();
   let mounted = 0,
     calls = 0;
@@ -231,7 +231,7 @@ test('[director-091] replacing a pending source settles promptly and ignores its
   assert.equal(mounted, 0);
 });
 
-test('[director-090] late renderer resources are disposed after cancellation without mutating a replacement', async () => {
+test('[director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement', async () => {
   const rendering = deferred();
   let disposed = 0;
   const entered = deferred();
@@ -257,7 +257,7 @@ test('[director-090] late renderer resources are disposed after cancellation wit
   assert.equal(disposed, 1);
 });
 
-test('[director-090] an abort between renderer settlement and continuation cannot leak the returned resource', async () => {
+test('[director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result', async () => {
   const controller = new AbortController();
   let disposed = 0;
   const session = createDataPackSession({
@@ -281,7 +281,7 @@ test('[director-090] an abort between renderer settlement and continuation canno
   assert.equal(session.getState().count, 0);
 });
 
-test('[director-092] timeout settles an uncooperative adapter and failed packs roll back earlier resources', async () => {
+test('[director-092] The deadline stops a stalled renderer and a data pack error removes earlier resources', async () => {
   const session = createDataPackSession({
     timeoutMs: 10,
     sources: { assets: () => new Promise(() => {}) },
@@ -314,7 +314,7 @@ test('[director-092] timeout settles an uncooperative adapter and failed packs r
   assert.equal(rollback.getState().count, 0);
 });
 
-test('[director-093] byte and integrity checks run before rendering; adapter names never resolve inherited properties', async () => {
+test('[director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited renderer names', async () => {
   let mounted = 0;
   const session = createDataPackSession({
     sources: { assets: asset },
@@ -339,7 +339,7 @@ test('[director-093] byte and integrity checks run before rendering; adapter nam
   session.destroy();
 });
 
-test('[director-097] failed responses release their body and an already-cancelled source sends no request', async () => {
+test('[director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal', async () => {
   let cancelled = 0,
     requests = 0;
   const source = createAssetDirectorySource({

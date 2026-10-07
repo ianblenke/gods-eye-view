@@ -290,7 +290,7 @@ test('[director-081] The media rejects an unknown anchor', async () => {
   );
 });
 
-test('[director-082] The scene rejects duplicate pack IDs', async () => {
+test('[director-082] The scene rejects duplicate data pack IDs', async () => {
   assert.throws(
     () =>
       validateSceneDataPacks(
@@ -301,7 +301,7 @@ test('[director-082] The scene rejects duplicate pack IDs', async () => {
   );
 });
 
-test('[director-082] The shot rejects duplicate pack IDs', async () => {
+test('[director-082] The shot rejects duplicate data pack IDs', async () => {
   assert.throws(
     () =>
       validateSceneDataPacks(
@@ -315,7 +315,7 @@ test('[director-082] The shot rejects duplicate pack IDs', async () => {
   );
 });
 
-test('[director-082] The shot rejects unknown pack IDs', async () => {
+test('[director-082] The shot rejects unknown data pack IDs', async () => {
   assert.throws(
     () =>
       validateSceneDataPacks(
@@ -326,7 +326,7 @@ test('[director-082] The shot rejects unknown pack IDs', async () => {
   );
 });
 
-test('[director-082] The scene accepts absent packs and anchors', async () => {
+test('[director-082] The scene accepts absent data packs and anchors', async () => {
   assert.doesNotThrow(() => validateSceneDataPacks({ shots: [{}] }, 'scene'));
   assert.doesNotThrow(() =>
     validateSceneDataPacks({ anchors: [], dataPacks: [], shots: [] }, 'scene'),
@@ -353,7 +353,7 @@ test('[director-083] The collection rejects invalid array', async () => {
   );
 });
 
-test('[director-083] The collection rejects invalid total', async () => {
+test('[director-083] The collection rejects more than 2000 features', async () => {
   assert.throws(
     () =>
       geo({
@@ -417,7 +417,7 @@ test('[director-085] The position rejects invalid length', async () => {
   assert.throws(() => geoFeatures([feature('p', 'Point', [0])]), /position/);
 });
 
-test('[director-085] The position rejects invalid finite', async () => {
+test('[director-085] The position rejects a coordinate that is not finite', async () => {
   assert.throws(
     () => geoFeatures([feature('p', 'Point', [0, 'x'])]),
     /position/,
@@ -438,14 +438,14 @@ test('[director-085] The position rejects invalid latitude', async () => {
   );
 });
 
-test('[director-085] The position rejects invalid low height', async () => {
+test('[director-085] The position rejects a height below the limit', async () => {
   assert.throws(
     () => geoFeatures([feature('p', 'Point', [0, 0, -12001])]),
     /position/,
   );
 });
 
-test('[director-085] The position rejects invalid high height', async () => {
+test('[director-085] The position rejects a height above the limit', async () => {
   assert.throws(
     () => geoFeatures([feature('p', 'Point', [0, 0, 1000000001])]),
     /position/,
@@ -610,13 +610,13 @@ test('[director-087] The geometry rejects invalid array', async () => {
   }
 });
 
-test('[director-087] The geometry rejects invalid empty', async () => {
+test('[director-087] The geometry rejects an empty polygon', async () => {
   const f = feature();
   f.geometry = { type: 'Polygon', coordinates: [] };
   assert.throws(() => geoFeatures([f]), /Unsupported geometry/);
 });
 
-test('[director-087] The geometry rejects invalid total', async () => {
+test('[director-087] The geometry rejects more than 128 rings', async () => {
   const f = feature();
   f.geometry = {
     type: 'Polygon',
@@ -669,13 +669,13 @@ test('[director-088] The new session reports idle state', async () => {
   assert.equal(await s.load([]), false);
 });
 
-test('[director-088] The session rejects pack list type', async () => {
+test('[director-088] The session rejects a value that is not a data pack list', async () => {
   const s = createDataPackSession();
   await assert.rejects(s.load({}), /Too many data packs/);
   s.destroy();
 });
 
-test('[director-088] The session rejects pack list total', async () => {
+test('[director-088] The session rejects more than eight data packs', async () => {
   const s = createDataPackSession();
   await assert.rejects(
     s.load(Array.from({ length: 9 }, pack)),
@@ -754,7 +754,7 @@ test('[director-090] The cancelled session disposes late resources', async () =>
   s.destroy();
 });
 
-test('[director-090] The session tolerates a null late handle', async () => {
+test('[director-090] The session accepts a null late handle', async () => {
   const d = deferred(),
     entered = deferred();
   const s = makeSession(asset, () => {
@@ -771,7 +771,7 @@ test('[director-090] The session tolerates a null late handle', async () => {
   assert.equal(s.getState().status, 'idle');
 });
 
-test('[director-090] The session destroys pending work', async () => {
+test('[director-090] The session destroys work that is not complete', async () => {
   const d = deferred();
   const s = makeSession(() => d.promise);
   const work = s.load([pack()]);
@@ -782,7 +782,7 @@ test('[director-090] The session destroys pending work', async () => {
   assert.deepEqual(s.getState(), { status: 'idle', count: 0 });
 });
 
-test('[director-091] The replacement keeps its own resources', async () => {
+test('[director-091] The replacement keeps its resources', async () => {
   const d = deferred();
   let calls = 0,
     disposed = 0;
@@ -833,31 +833,31 @@ test('[director-092] The session rejects absent source', async () => {
   s.destroy();
 });
 
-test('[director-092] The session rejects absent adapter', async () => {
+test('[director-092] The session rejects absent renderer', async () => {
   const s = createDataPackSession({ sources: { assets: asset }, adapters: {} });
   await assert.rejects(s.load([pack()]), /could not load/);
   s.destroy();
 });
 
-test('[director-093] The session rejects byte type', async () => {
+test('[director-093] The session rejects bytes that are not a Uint8Array', async () => {
   const s = makeSession(() => ({ bytes: [1, 2, 3] }));
   await assert.rejects(s.load([{ ...pack() }]), /could not load/);
   s.destroy();
 });
 
-test('[director-093] The session rejects byte empty', async () => {
+test('[director-093] The session rejects an empty asset', async () => {
   const s = makeSession(() => ({ bytes: new Uint8Array() }));
   await assert.rejects(s.load([{ ...pack() }]), /could not load/);
   s.destroy();
 });
 
-test('[director-093] The session rejects byte size', async () => {
+test('[director-093] The session rejects an asset above the byte limit', async () => {
   const s = makeSession(() => ({ bytes: new Uint8Array(8388609) }));
   await assert.rejects(s.load([{ ...pack() }]), /could not load/);
   s.destroy();
 });
 
-test('[director-093] The session rejects byte declared size', async () => {
+test('[director-093] The session rejects a wrong asset length', async () => {
   const s = makeSession(() => ({ bytes: new Uint8Array([1]) }));
   await assert.rejects(
     s.load([{ ...pack(), byteLength: 2 }]),
@@ -866,7 +866,7 @@ test('[director-093] The session rejects byte declared size', async () => {
   s.destroy();
 });
 
-test('[director-093] The session rejects total byte excess', async () => {
+test('[director-093] The session rejects bytes above the total limit', async () => {
   const s = makeSession(() => ({ bytes: new Uint8Array(8388608) }));
   await assert.rejects(
     s.load(Array.from({ length: 5 }, (_, i) => ({ ...pack(), id: String(i) }))),
@@ -906,13 +906,13 @@ test('[director-093] The session checks exact bytes and digest', async () => {
   s.destroy();
 });
 
-test('[director-089] The session rejects handle null', async () => {
+test('[director-089] The session rejects a null handle', async () => {
   const s = makeSession(asset, () => null);
   await assert.rejects(s.load([pack()]), /could not load/);
   s.destroy();
 });
 
-test('[director-089] The session rejects handle disposal', async () => {
+test('[director-089] The session rejects a handle without a dispose function', async () => {
   const s = makeSession(asset, () => ({}));
   await assert.rejects(s.load([pack()]), /could not load/);
   s.destroy();
@@ -973,7 +973,7 @@ test('[director-094] The directory rejects fragment', async () => {
   );
 });
 
-test('[director-094] The directory rejects directory', async () => {
+test('[director-094] The directory rejects an address with no final slash', async () => {
   assert.throws(
     () =>
       createAssetDirectorySource({
@@ -984,7 +984,7 @@ test('[director-094] The directory rejects directory', async () => {
   );
 });
 
-test('[director-095] The request sets its own options', async () => {
+test('[director-095] The asset request sets its fixed options', async () => {
   let request;
   const source = createAssetDirectorySource({
     baseUrl: 'https://example.org/a/',
@@ -1049,7 +1049,7 @@ test('[director-097] The source rejects an absent stream', async () => {
   await assert.rejects(source({ path: 'x' }), /stream unavailable/);
 });
 
-test('[director-097] The source tolerates failed body cancellation', async () => {
+test('[director-097] The source accepts failed body cancellation', async () => {
   let cancelled = 0;
   const source = directory(() => ({
     ok: false,
@@ -1118,32 +1118,32 @@ test('[director-097] The source checks its signal between chunks', async () => {
   assert.equal(unlocked, 1);
 });
 
-test('[director-080] The image admits its bounds field', async () => {
+test('[director-080] The image accepts its bounds field', async () => {
   const a = imagePack();
   a.format = 'image';
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set(['a'])));
 });
 
-test('[director-080] The image admits its height field', async () => {
+test('[director-080] The image accepts its height field', async () => {
   const a = imagePack();
   a.format = 'image';
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set(['a'])));
 });
 
-test('[director-080] The image admits its altitudeReference field', async () => {
+test('[director-080] The image accepts its altitudeReference field', async () => {
   const a = imagePack();
   a.format = 'image';
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set(['a'])));
 });
 
-test('[director-081] The media admits its anchorId field', async () => {
+test('[director-081] The media accepts its anchorId field', async () => {
   const a = pack();
   a.format = 'media';
   a.placement = { anchorId: 'a' };
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set(['a'])));
 });
 
-test('[director-077] The geojson admits its altitudeReference field', async () => {
+test('[director-077] The geojson accepts its altitudeReference field', async () => {
   const a = pack();
   a.format = 'geojson';
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set(['a'])));
@@ -1273,7 +1273,7 @@ test('[director-093] The session accepts absent declared size', async () => {
   s.destroy();
 });
 
-test('[director-090] The session catches signal state without an event', async () => {
+test('[director-090] The session checks signal state without an event', async () => {
   let aborted = false;
   const signal = {
     get aborted() {
@@ -1290,7 +1290,7 @@ test('[director-090] The session catches signal state without an event', async (
   s.destroy();
 });
 
-test('[director-090] The session catches destroyed state after signal access', async () => {
+test('[director-090] The session checks destroyed state after signal access', async () => {
   let first = true;
   let s;
   const signal = {
@@ -1309,7 +1309,7 @@ test('[director-090] The session catches destroyed state after signal access', a
   assert.equal(s.getState().status, 'idle');
 });
 
-test('[director-090] The session catches replacement without signal state', async () => {
+test('[director-090] The session checks replacement without signal state', async () => {
   const d = deferred();
   const s = makeSession(() => d.promise);
   const work = s.load([pack()]);
@@ -1349,7 +1349,7 @@ test('[director-090] The session guard rejects a detached resource', async () =>
   }
 });
 
-test('[director-090] The session guard disposes before handle ownership', async () => {
+test('[director-090] The session disposes the handle before it adds the handle to its list', async () => {
   const Native = globalThis.AbortController;
   let controller, s, total, status;
   globalThis.AbortController = class {
@@ -1426,7 +1426,7 @@ test('[director-094] The directory accepts HTTP and HTTPS', async () => {
   assert.equal(typeof directory(() => assert.fail()), 'function');
 });
 
-test('[director-092] The absent adapter does not call its source', async () => {
+test('[director-092] The absent renderer does not call its source', async () => {
   let calls = 0;
   const s = createDataPackSession({
     sources: {
@@ -1441,7 +1441,7 @@ test('[director-092] The absent adapter does not call its source', async () => {
   s.destroy();
 });
 
-test('[director-095] The request owns its credentials option', async () => {
+test('[director-095] The asset request sets its credentials option', async () => {
   let opts;
   const source = directory(async (url, o) => {
     opts = o;
@@ -1452,7 +1452,7 @@ test('[director-095] The request owns its credentials option', async () => {
   assert.equal(opts.credentials, 'omit');
 });
 
-test('[director-095] The request owns its redirect option', async () => {
+test('[director-095] The asset request sets its redirect option', async () => {
   let opts;
   const source = directory(async (url, o) => {
     opts = o;
@@ -1463,7 +1463,7 @@ test('[director-095] The request owns its redirect option', async () => {
   assert.equal(opts.redirect, 'error');
 });
 
-test('[director-095] The request owns its referrerPolicy option', async () => {
+test('[director-095] The asset request sets its referrerPolicy option', async () => {
   let opts;
   const source = directory(async (url, o) => {
     opts = o;
@@ -1474,7 +1474,7 @@ test('[director-095] The request owns its referrerPolicy option', async () => {
   assert.equal(opts.referrerPolicy, 'no-referrer');
 });
 
-test('[director-095] The request owns its cache option', async () => {
+test('[director-095] The asset request sets its cache option', async () => {
   let opts;
   const source = directory(async (url, o) => {
     opts = o;
@@ -1511,69 +1511,69 @@ test('[director-096] The source checks its default byte budget', async () => {
   await assert.rejects(source({ path: 'x' }), /byte limit/);
 });
 
-test('[director-077] The manifest admits its pack id field', async () => {
+test('[director-077] The manifest accepts the id field of a data pack', async () => {
   const a = pack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-077] The manifest admits its pack version field', async () => {
+test('[director-077] The manifest accepts the version field of a data pack', async () => {
   const a = pack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-077] The manifest admits its pack format field', async () => {
+test('[director-077] The manifest accepts the format field of a data pack', async () => {
   const a = pack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-077] The manifest admits its pack source field', async () => {
+test('[director-077] The manifest accepts the source field of a data pack', async () => {
   const a = pack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-077] The manifest admits its pack attribution field', async () => {
+test('[director-077] The manifest accepts the attribution field of a data pack', async () => {
   const a = pack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-077] The manifest admits its pack placement field', async () => {
+test('[director-077] The manifest accepts the placement field of a data pack', async () => {
   const a = pack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-079] The manifest admits its pack byteLength field', async () => {
+test('[director-079] The manifest accepts the byteLength field of a data pack', async () => {
   const a = pack();
   a.byteLength = 3;
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-079] The manifest admits its pack sha256 field', async () => {
+test('[director-079] The manifest accepts the sha256 field of a data pack', async () => {
   const a = pack();
   a.sha256 = 'a'.repeat(64);
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-077] The manifest admits its source adapter field', async () => {
+test('[director-077] The manifest accepts its source name field', async () => {
   const a = pack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-077] The manifest admits its source path field', async () => {
+test('[director-077] The manifest accepts its source path field', async () => {
   const a = pack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-078] The manifest admits its attribution text field', async () => {
+test('[director-078] The manifest accepts its attribution text field', async () => {
   const a = pack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-078] The manifest admits its attribution license field', async () => {
+test('[director-078] The manifest accepts its attribution license field', async () => {
   const a = pack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
 });
 
-test('[director-078] The manifest admits its attribution url field', async () => {
+test('[director-078] The manifest accepts its attribution url field', async () => {
   const a = pack();
   a.attribution.url = 'https://example.org/a';
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set()));
@@ -1611,7 +1611,7 @@ test('[director-092] The session settles an early internal signal', async () => 
   }
 });
 
-test('[director-081] The session gives anchors to its adapter', async () => {
+test('[director-081] The session gives anchors to its renderer', async () => {
   let received;
   const s = makeSession(asset, ({ anchors }) => {
     received = anchors;
@@ -1866,7 +1866,7 @@ test('[director-076] The asset path checks its text limit', async () => {
   assert.throws(() => validateAssetPath('x'.repeat(1025)), /1024/);
 });
 
-test('[director-089] The session owns every pack handle', async () => {
+test('[director-089] The session keeps every data pack handle', async () => {
   const disposed = [];
   const s = makeSession(asset, ({ pack }) => ({
     dispose() {
@@ -1879,7 +1879,7 @@ test('[director-089] The session owns every pack handle', async () => {
   s.destroy();
 });
 
-test('[director-095] The request owns its signal option', async () => {
+test('[director-095] The asset request sets its signal option', async () => {
   let options;
   const source = directory(async (url, o) => {
     options = o;
@@ -1923,7 +1923,7 @@ test('[director-092] The session rejects a falsy custom source', async () => {
   s.destroy();
 });
 
-test('[director-092] The missing source stops after the validation size read', async () => {
+test('[director-092] The absent registered source stops after the validation size read', async () => {
   let reads = 0;
   const value = pack();
   Object.defineProperty(value, 'byteLength', {
@@ -1938,8 +1938,344 @@ test('[director-092] The missing source stops after the validation size read', a
     adapters: { geojson: () => ({ dispose() {} }) },
   });
   await assert.rejects(session.load([value]), {
-    message: 'Data pack could not load: check its source, format, size or integrity',
+    message:
+      'Data pack could not load: check its source, format, size or integrity',
   });
   assert.equal(reads, 1);
   assert.deepEqual(session.getState(), { status: 'idle', count: 0 });
 });
+
+for (const [label, value] of [
+  ['63 characters', 'a'.repeat(63)],
+  ['65 characters', 'a'.repeat(65)],
+  ['uppercase text', 'A'.repeat(64)],
+  ['a prefix', 'x' + 'a'.repeat(64)],
+  ['a suffix', 'a'.repeat(64) + 'x'],
+]) {
+  test(`[director-079] The digest rejects ${label}`, () => {
+    assert.throws(
+      () => validateDataPack({ ...pack(), sha256: value }, 'data', new Set()),
+      {
+        message: 'data.sha256: expected a lowercase SHA-256 digest',
+      },
+    );
+  });
+}
+test('[director-079] The digest accepts 64 lowercase characters', () => {
+  assert.doesNotThrow(() =>
+    validateDataPack(
+      { ...pack(), sha256: 'abcdef0123456789'.repeat(4) },
+      'data',
+      new Set(),
+    ),
+  );
+});
+for (const [label, bounds] of [
+  ['equal longitude edges', [0, -1, 0, 1]],
+  ['equal latitude edges', [-1, 0, 1, 0]],
+]) {
+  test(`[director-080] The image rejects ${label}`, () => {
+    const value = imagePack();
+    value.placement.bounds = bounds;
+    assert.throws(() => validateDataPack(value, 'data', new Set()), {
+      message: 'data.placement.bounds: expected increasing non-dateline bounds',
+    });
+  });
+}
+test('[director-080] The image accepts all geographic limits', () => {
+  const value = imagePack();
+  value.placement.bounds = [-180, -90, 180, 90];
+  assert.doesNotThrow(() => validateDataPack(value, 'data', new Set()));
+});
+test('[director-088] The session accepts eight data packs', async () => {
+  const session = makeSession();
+  try {
+    assert.equal(
+      await session.load(
+        Array.from({ length: 8 }, (_, i) => ({ ...pack(), id: String(i) })),
+      ),
+      true,
+    );
+    assert.deepEqual(session.getState(), { status: 'ready', count: 8 });
+  } finally {
+    session.destroy();
+  }
+});
+test('[director-093] The session accepts the asset byte limit', async () => {
+  const session = makeSession(() => ({ bytes: new Uint8Array(8388608) }));
+  try {
+    assert.equal(await session.load([pack()]), true);
+  } finally {
+    session.destroy();
+  }
+});
+test('[director-093] The session accepts the total byte limit', async () => {
+  const session = makeSession(() => ({ bytes: new Uint8Array(8388608) }));
+  try {
+    assert.equal(
+      await session.load(
+        Array.from({ length: 4 }, (_, i) => ({ ...pack(), id: String(i) })),
+      ),
+      true,
+    );
+    assert.equal(session.getState().count, 4);
+  } finally {
+    session.destroy();
+  }
+});
+test('[director-093] The session rejects one byte above the total limit', async () => {
+  let calls = 0;
+  const session = makeSession(() => ({
+    bytes: new Uint8Array(++calls <= 4 ? 8388608 : 1),
+  }));
+  try {
+    await assert.rejects(
+      session.load(
+        Array.from({ length: 5 }, (_, i) => ({ ...pack(), id: String(i) })),
+      ),
+      {
+        message:
+          'Data pack could not load: check its source, format, size or integrity',
+      },
+    );
+  } finally {
+    session.destroy();
+  }
+});
+test('[director-083] The decoder rejects invalid UTF8 bytes', () => {
+  const bytes = new TextEncoder().encode(
+    '{"type":"FeatureCollection","features":[],"text":"x"}',
+  );
+  bytes[bytes.length - 3] = 255;
+  assert.throws(() => decodePackGeoJSON(bytes), {
+    message: 'The encoded data was not valid for encoding utf-8',
+  });
+});
+test('[director-083] The decoder rejects null', () => {
+  assert.throws(() => geo(null), {
+    message: 'Expected a bounded FeatureCollection',
+  });
+});
+test('[director-084] The decoder rejects a null feature', () => {
+  assert.throws(() => geoFeatures([null]), {
+    message: 'Features require distinct string IDs',
+  });
+});
+test('[director-087] The decoder rejects absent geometry', () => {
+  assert.throws(() => geoFeatures([{ type: 'Feature', id: 'a' }]), {
+    message: 'Unsupported geometry',
+  });
+});
+test('[director-093] The source receives the path and the renderer receives the asset and signal', async () => {
+  let sourceSignal;
+  const session = makeSession(
+    (options) => {
+      assert.equal(options.path, 'example/outline.geojson');
+      sourceSignal = options.signal;
+      return asset();
+    },
+    (options) => {
+      assert.deepEqual(options.asset.bytes, new Uint8Array([1, 2, 3]));
+      assert.equal(options.asset.mimeType, 'application/json');
+      assert.equal(options.signal, sourceSignal);
+      assert.equal(options.signal.aborted, false);
+      return { dispose() {} };
+    },
+  );
+  try {
+    assert.equal(await session.load([pack()]), true);
+  } finally {
+    session.destroy();
+  }
+});
+test('[director-088] The session checks every declaration before the source call', async () => {
+  let calls = 0;
+  const session = makeSession(() => {
+    calls++;
+    return asset();
+  });
+  try {
+    await assert.rejects(session.load([pack(), { ...pack(), version: 2 }]), {
+      message: 'packs[1].version: unsupported pack version',
+    });
+    assert.equal(calls, 0);
+  } finally {
+    session.destroy();
+  }
+});
+test('[director-089] The session destroys each ready resource', async () => {
+  const disposed = [];
+  const session = makeSession(asset, ({ pack }) => ({
+    dispose() {
+      disposed.push(pack.id);
+    },
+  }));
+  assert.equal(await session.load([pack(), { ...pack(), id: 'second' }]), true);
+  session.destroy();
+  assert.deepEqual(disposed, ['second', 'outline']);
+  assert.deepEqual(session.getState(), { status: 'idle', count: 0 });
+});
+for (const [label, end] of [
+  ['success', false],
+  ['clear', true],
+]) {
+  test(`[director-089] The session removes its deadline after ${label}`, async () => {
+    const nativeSet = globalThis.setTimeout,
+      nativeClear = globalThis.clearTimeout;
+    const callbacks = new Map();
+    let token = 0;
+    globalThis.setTimeout = (callback) => {
+      callbacks.set(++token, callback);
+      return token;
+    };
+    globalThis.clearTimeout = (handle) => {
+      callbacks.delete(handle);
+    };
+    let rendererSignal;
+    const session = makeSession(
+      (options) => {
+        if (end) {
+          rendererSignal = options.signal;
+          return new Promise(() => {});
+        }
+        return asset();
+      },
+      ({ signal }) => {
+        rendererSignal = signal;
+        return { dispose() {} };
+      },
+    );
+    try {
+      const work = session.load([pack()]);
+      if (end) {
+        session.clear();
+        assert.equal(await work, false);
+      } else assert.equal(await work, true);
+      for (const callback of callbacks.values()) callback();
+      assert.equal(rendererSignal.aborted, end);
+      assert.equal(callbacks.size, 0);
+    } finally {
+      session.destroy();
+      globalThis.setTimeout = nativeSet;
+      globalThis.clearTimeout = nativeClear;
+    }
+  });
+}
+test('[director-092] The deadline removes partial resources', async () => {
+  const disposed = [];
+  let calls = 0;
+  const session = makeSession(
+    () => (++calls === 1 ? asset() : new Promise(() => {})),
+    ({ pack }) => ({
+      dispose() {
+        disposed.push(pack.id);
+      },
+    }),
+    { timeoutMs: 10 },
+  );
+  try {
+    await assert.rejects(session.load([pack(), { ...pack(), id: 'second' }]), {
+      message:
+        'Data pack could not load: check its source, format, size or integrity',
+    });
+    assert.deepEqual(disposed, ['outline']);
+    assert.deepEqual(session.getState(), { status: 'idle', count: 0 });
+  } finally {
+    session.destroy();
+  }
+});
+test('[director-076] The asset path rejects URL syntax with a stable message', () => {
+  assert.throws(() => validateAssetPath('https://example.org/x'), {
+    message:
+      'source.path: expected a relative asset path without URL syntax or traversal',
+  });
+});
+test('[director-082] The scene ignores a data pack list from its parent', () => {
+  const scene = Object.assign(Object.create({ dataPacks: [null] }), {
+    shots: [],
+  });
+  assert.doesNotThrow(() => validateSceneDataPacks(scene, 'scene'));
+});
+test('[director-080] The image rejects text for each geographic field', () => {
+  for (const [key, index] of [
+    ['bounds', 0],
+    ['bounds', 1],
+    ['height', 0],
+  ]) {
+    const value = imagePack();
+    if (key === 'bounds') value.placement.bounds[index] = '0';
+    else value.placement.height = '0';
+    assert.throws(() => validateDataPack(value, 'data', new Set()), {
+      message:
+        key === 'bounds'
+          ? `data.placement.bounds[${index}]: expected a number from ${index ? -90 : -180} to ${index ? 90 : 180}`
+          : 'data.placement.height: expected a number from -12000 to 1000000000',
+    });
+  }
+});
+test('[director-078] The attribution accepts its text limits and rejects excess text', () => {
+  for (const key of ['text', 'license']) {
+    const value = pack();
+    value.attribution[key] = 'x'.repeat(4096);
+    assert.doesNotThrow(() => validateDataPack(value, 'data', new Set()));
+    value.attribution[key] += 'x';
+    assert.throws(() => validateDataPack(value, 'data', new Set()), {
+      message: `data.attribution.${key}: expected nonempty text, at most 4096 characters`,
+    });
+  }
+  const value = pack();
+  value.attribution.url = 'https://example.org/' + 'x'.repeat(2028);
+  assert.doesNotThrow(() => validateDataPack(value, 'data', new Set()));
+  value.attribution.url += 'x';
+  assert.throws(() => validateDataPack(value, 'data', new Set()), {
+    message:
+      'data.attribution.url: expected nonempty text, at most 2048 characters',
+  });
+});
+test('[director-076] The asset path accepts 1024 characters and rejects 1025', () => {
+  assert.doesNotThrow(() => validateAssetPath('x'.repeat(1024)));
+  assert.throws(() => validateAssetPath('x'.repeat(1025)), {
+    message: 'source.path: expected nonempty text, at most 1024 characters',
+  });
+});
+test('[director-095] The directory source uses the default fetch function', async () => {
+  const native = globalThis.fetch;
+  let calls = 0;
+  globalThis.fetch = async (url) => {
+    calls++;
+    assert.equal(url, 'https://example.org/a/x');
+    return response();
+  };
+  try {
+    const source = createAssetDirectorySource({
+      baseUrl: 'https://example.org/a/',
+    });
+    assert.deepEqual(
+      (await source({ path: 'x' })).bytes,
+      new Uint8Array([1, 2, 3]),
+    );
+    assert.equal(calls, 1);
+  } finally {
+    globalThis.fetch = native;
+  }
+});
+
+for (const [label, key] of [
+  ['ID', 'id'],
+  ['source name', 'source'],
+]) {
+  test(`[director-077] The manifest accepts 256 characters for its ${label} and rejects 257`, () => {
+    const value = pack();
+    if (key === 'id') value.id = 'x'.repeat(256);
+    else value.source.adapter = 'x'.repeat(256);
+    assert.doesNotThrow(() => validateDataPack(value, 'data', new Set()));
+    if (key === 'id') value.id += 'x';
+    else value.source.adapter += 'x';
+    assert.throws(() => validateDataPack(value, 'data', new Set()), {
+      message:
+        key === 'id'
+          ? 'data.id: expected nonempty text, at most 256 characters'
+          : 'data.source.adapter: expected nonempty text, at most 256 characters',
+    });
+  });
+}
