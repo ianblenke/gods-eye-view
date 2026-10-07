@@ -1143,12 +1143,12 @@
     },
     "server/providers/vessels/ais-store.js": {
       "loaded": true,
-      "lines": 44,
+      "lines": 40,
       "branches": 30,
       "functions": 2,
       "totals": {
         "lines": 310,
-        "branches": 74,
+        "branches": 76,
         "functions": 21
       },
       "sha": "71ec923cc8367686c7c90629f094beeaa22cb9a77b789376930290316121410d",
@@ -5932,11 +5932,11 @@
       "branches": 2,
       "functions": 0,
       "totals": {
-        "lines": 613,
-        "branches": 234,
-        "functions": 62
+        "lines": 622,
+        "branches": 239,
+        "functions": 64
       },
-      "sha": "8fec6c5ebbc6c53394e5688dbcbdf648435e7c447c27caf32a2975d9d6497cba",
+      "sha": "ed511639fcd58b06d2af95b45b9381276e8010f4baa2d20285951b5cb2a4f723",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -5947,11 +5947,11 @@
       "branches": 1,
       "functions": 0,
       "totals": {
-        "lines": 279,
-        "branches": 94,
+        "lines": 284,
+        "branches": 100,
         "functions": 25
       },
-      "sha": "14d1558a91a6ffb9807979096a2e92a50c2f2b9646b1b75fcd08835a8ff98708",
+      "sha": "dc2489feab9d4e716052b1856daf23f1d7d6dc95a7b2154f26ab40422d4b80d2",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -9532,11 +9532,11 @@
       "branches": 2,
       "functions": 2,
       "totals": {
-        "lines": 1083,
-        "branches": 486,
+        "lines": 1079,
+        "branches": 485,
         "functions": 78
       },
-      "sha": "15f886ef74932c6a7f35392e821bf21acc945ef0726fd9997d39fe9d9ce8e4f8",
+      "sha": "6f2e0908b95c6894512e14cb45e924008d67d6727924f49bdd03ade3c124b670",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
