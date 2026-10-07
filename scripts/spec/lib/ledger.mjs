@@ -689,3 +689,125 @@ export function adoptLedger({ ledger, current, eligible, reached = () => false, 
   }
   return { ledger: { coverage, untracedTests }, history };
 }
+
+const MERGE_MODULE = 'scripts/spec/lib/v8-merge.mjs';
+const BASELINE_CHANGE = 'gates-coverage-race';
+
+function baselineContext({ change, changeActive, diffFiles, baseFiles }) {
+  if (change !== BASELINE_CHANGE) return false;
+  if (!changeActive) return false;
+  if (!diffFiles.includes(MERGE_MODULE)) return false;
+  return !baseFiles.has(MERGE_MODULE);
+}
+
+export function baselineFault(input) {
+  if (!input.history.startsWith(input.baseHistory)) return 'The baseline needs the unchanged base history prefix.';
+  if (!baselineContext(input)) return 'The baseline needs this active change and its new merge module.';
+  const lines = historyLinesOf(input.history, input.baseHistory, input.change);
+  if (lines.some((line) => line.kind === 'rebaseline' && line.change === input.change)) return 'The change already records its baseline step.';
+  return null;
+}
+
+export function rebaselineLedger({ ledger, baseLedger, coverage, sameAsBase, change, date, commit }) {
+  const next = { ...ledger, coverage: { ...ledger.coverage } };
+  const history = [];
+  const files = [];
+  for (const record of coverage) {
+    if (!sameAsBase(record.file)) continue;
+    if (!record.loaded) continue;
+    if (record.untrue) continue;
+    const base = baseLedger.coverage[record.file];
+    const gap = { loaded: true, sha: record.sha, untrue: false, lines: record.lines.uncovered, branches: record.branches.uncovered, functions: record.functions.uncovered, totals: totalsOf(record) };
+    const own = [];
+    for (const metric of METRICS) {
+      const old = base ? base[metric] : 0;
+      const oldTotal = base ? base.totals[metric] : null;
+      if (old === gap[metric]) {
+        if (!base) continue;
+        if (oldTotal === gap.totals[metric]) continue;
+      }
+      own.push({ date, commit, change, kind: 'rebaseline', file: record.file, sha: record.sha, metric, old, new: gap[metric], oldTotal, newTotal: gap.totals[metric] });
+    }
+    if (own.length === 0) continue;
+    history.push(...own);
+    files.push(record.file);
+    if (record.complete) delete next.coverage[record.file];
+    else {
+      const origin = base ? { origin: base.origin, since: base.since } : { origin: change, since: date };
+      next.coverage[record.file] = { ...gap, ...origin };
+    }
+  }
+  return { ledger: next, history, files };
+}
+
+function baselineMetric(count, total, measured) {
+  if (!Number.isInteger(count)) return false;
+  if (!Number.isInteger(total)) return false;
+  const tolerance = toleranceOf(Math.min(total, measured.total));
+  return Math.abs(count - measured.uncovered) <= tolerance &&
+    Math.abs((total - count) - (measured.total - measured.uncovered)) <= tolerance;
+}
+
+export function checkRebaseline(input) {
+  const { history, baseHistory, change, baseLedger, ledger } = input;
+  const lines = historyLinesOf(history, baseHistory, change).filter((line) => line.kind === 'rebaseline' && line.change === change);
+  if (lines.length === 0) return { baseLedger, errors: [] };
+  const error = { code: 'LEDGER-REBASELINE', file: HISTORY_FILE, message: 'The baseline history does not match this change, its source or the count tolerance.' };
+  const invalid = () => ({ baseLedger, errors: [error] });
+  if (!baselineContext(input)) return invalid();
+  if (!baseLedger) return invalid();
+  const measured = new Map(input.coverage.map(record => [record.file, record]));
+  const pairs = new Set();
+  const next = { ...baseLedger, coverage: { ...baseLedger.coverage } };
+  const files = new Set();
+  for (const line of lines) {
+    const pair = JSON.stringify([line.file, line.metric]);
+    if (pairs.has(pair)) return invalid();
+    pairs.add(pair);
+    if (!METRICS.includes(line.metric)) return invalid();
+    const record = measured.get(line.file);
+    if (!record) return invalid();
+    if (!input.sameAsBase(line.file)) return invalid();
+    if (!record.loaded) return invalid();
+    if (record.untrue) return invalid();
+    if (line.sha !== record.sha) return invalid();
+    const base = baseLedger.coverage[line.file];
+    if (!base && record.lines.uncovered === 0 && record.branches.uncovered === 0 && record.functions.uncovered === 0) return invalid();
+    if (base && base.sha !== line.sha) return invalid();
+    const old = base ? base[line.metric] : 0;
+    const oldTotal = base ? base.totals[line.metric] : null;
+    if (line.old !== old) return invalid();
+    if (line.oldTotal !== oldTotal) return invalid();
+    if (!baselineMetric(line.new, line.newTotal, record[line.metric])) return invalid();
+    if (!files.has(line.file)) {
+      next.coverage[line.file] = base ? { ...base, loaded: true, untrue: false, totals: { ...base.totals } } : { loaded: true, sha: record.sha, untrue: false, lines: 0, branches: 0, functions: 0, totals: totalsOf(record), origin: change, since: line.date };
+      files.add(line.file);
+    }
+    next.coverage[line.file][line.metric] = line.new;
+    next.coverage[line.file].totals[line.metric] = line.newTotal;
+  }
+  for (const file of files) {
+    const entry = next.coverage[file];
+    const current = ledger.coverage[file];
+    const base = baseLedger.coverage[file];
+    const record = measured.get(file);
+    for (const metric of METRICS) {
+      const old = base ? base[metric] : 0;
+      const value = current ? current[metric] : 0;
+      const total = current ? current.totals[metric] : entry.totals[metric];
+      const changed = value !== old || (Boolean(base) && total !== base.totals[metric]);
+      if (changed && !pairs.has(JSON.stringify([file, metric]))) return invalid();
+    }
+    if (METRICS.every(metric => entry[metric] === 0)) {
+      if (current) return invalid();
+      delete next.coverage[file];
+    } else {
+      if (!current) return invalid();
+      if (current.loaded !== record.loaded) return invalid();
+      if (current.sha !== record.sha) return invalid();
+      if (Boolean(current.untrue) !== Boolean(record.untrue)) return invalid();
+      if (!METRICS.every(metric => baselineMetric(current[metric], current.totals[metric], record[metric]))) return invalid();
+    }
+  }
+  return { baseLedger: next, errors: [] };
+}

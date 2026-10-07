@@ -11,6 +11,7 @@ const HEADING = /^\s*#{1,6}\s+/;
 const LIST_ITEM = /^\s*(?:[-*+]|\d+\.)\s+/;
 const TASK_ITEM = /^\s*-\s+\[[ xX]\]\s+(?:\d+(?:\.\d+)*\s+)?/;
 const ABBREVIATIONS = new Set(['e.g', 'i.e', 'etc', 'vs']);
+const DETERMINERS = new Set(['a', 'an', 'the', 'each', 'every', 'no', 'any', 'this', 'that', 'these', 'those', 'its', 'their', 'another', 'one', 'some']);
 const BE_FORMS = new Set(['is', 'are', 'was', 'were', 'be', 'been', 'being']);
 const NOT_PARTICIPLES = new Set(['then', 'when', 'open', 'even', 'often', 'token', 'seven', 'eleven']);
 const CONTRACTION = /^(?:[a-z]+n['’]t|[a-z]+['’](?:re|ve|ll|d|m)|(?:it|that|there|what|here|let|who|he|she)['’]s)$/i;
@@ -122,7 +123,7 @@ function finding(rule, level, line, message) {
 }
 
 /** Check one list of tokens against all rules. */
-function checkParagraph(paragraph, words) {
+function checkParagraph(paragraph, words, isNew) {
   const findings = [];
   const { tokens } = paragraph;
   const sentences = sentencesOf(tokens);
@@ -159,6 +160,12 @@ function checkParagraph(paragraph, words) {
       findings.push(finding('STE-WORD', 'error', token.line, `Use "${words.words[word]}", not "${word}"`));
     }
   }
+  for (const token of tokens) {
+    const word = bare(token).toLowerCase();
+    if (Object.hasOwn(words.newWords ?? {}, word)) {
+      findings.push(finding(isNew ? 'STE-WORD' : 'STE-WORD-OLD', isNew ? 'error' : 'warning', token.line, `Use "${words.newWords[word]}", not "${word}"`));
+    }
+  }
   const lowered = tokens.map((token) => bare(token).toLowerCase());
   for (const [phrase, replacement] of Object.entries(words.phrases)) {
     const parts = phrase.split(' ');
@@ -172,6 +179,13 @@ function checkParagraph(paragraph, words) {
     const next = lowered[index + 1];
     if (BE_FORMS.has(lowered[index]) && /(ed|en)$/.test(next) && !NOT_PARTICIPLES.has(next)) {
       findings.push(finding('STE-PASSIVE', 'warning', tokens[index].line, `Check for passive voice: "${lowered[index]} ${next}"`));
+    }
+  }
+  const nounVerbs = new Set(words.nounVerbs);
+  for (let index = 0; index + 1 < tokens.length; index += 1) {
+    const word = lowered[index + 1];
+    if (DETERMINERS.has(tokens[index].text.toLowerCase()) && nounVerbs.has(word) && !/^["'“‘]/.test(tokens[index + 1].text)) {
+      findings.push(finding('STE-NOUN', 'warning', tokens[index + 1].line, `Check for a verb used as a noun: "${word}"`));
     }
   }
   const allowed = new Set(words.allowedIng);
@@ -211,16 +225,18 @@ function codeSpanFindings(text) {
  */
 export function lintMarkdown(text, { file, words }) {
   const isTasks = path.posix.basename(file) === 'tasks.md';
-  return [...paragraphsOf(text, { isTasks }).flatMap((paragraph) => checkParagraph(paragraph, words)), ...codeSpanFindings(text)]
+  const archiveDate = /^openspec\/changes\/archive\/(\d{4}-\d{2}-\d{2})-[^/]+\//.exec(file)?.[1];
+  const isNew = !file.startsWith('openspec/specs/') && !(archiveDate < words.newWordsFrom);
+  return [...paragraphsOf(text, { isTasks }).flatMap((paragraph) => checkParagraph(paragraph, words, isNew)), ...codeSpanFindings(text)]
     .map((item) => ({ rule: item.rule, level: item.level, file, line: item.line, message: item.message }));
 }
 
 /** Lint the names of traced tests, without their tags. */
-export function lintTestNames(records, words) {
+export function lintTestNames(records, words, registry = {}) {
   return records
     .filter((record) => record.kind === 'test' && record.tags.length > 0)
     .flatMap((record) =>
-      checkParagraph({ kind: 'text', line: 0, tokens: tokensOf(record.title, 0) }, words).map((item) => ({
+      checkParagraph({ kind: 'text', line: 0, tokens: tokensOf(cleanLine(record.title), 0) }, words, !record.tags.every((id) => typeof registry[id]?.since === 'string' && registry[id].since < (words.newWordsFrom ?? ''))).map((item) => ({
         rule: item.rule,
         level: item.level,
         file: record.file,
@@ -271,11 +287,20 @@ export function readWordList(root) {
 /** Lint all Markdown files in `openspec/` and the names of traced tests. */
 export function lintProject({ root, records }) {
   const words = readWordList(root);
+  const registryFile = path.join(root, 'openspec/trace/ids.json');
+  let registry = {};
+  if (existsSync(registryFile)) {
+    try {
+      registry = JSON.parse(readFileSync(registryFile, 'utf8'));
+    } catch (error) {
+      throw new Error(`Cannot read openspec/trace/ids.json: ${error.message}`);
+    }
+  }
   return [
     ...listMarkdownFiles(root).flatMap((file) =>
       lintMarkdown(readFileSync(path.join(root, file), 'utf8'), { file, words }),
     ),
-    ...lintTestNames(records, words),
+    ...lintTestNames(records, words, registry),
   ];
 }
 

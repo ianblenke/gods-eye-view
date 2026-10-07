@@ -43,6 +43,30 @@ function withGlobal(t, name, value) {
   });
 }
 
+// Observe the host change instead of a fixed wait after selection.
+function nextHostChange(t, host, key, ready = () => true) {
+  const descriptor = Object.getOwnPropertyDescriptor(host, key);
+  let value = host[key];
+  let timer;
+  const pending = new Promise((resolve, reject) => {
+    timer = setTimeout(() => reject(new Error('Host change did not arrive')), 10_000);
+    Object.defineProperty(host, key, {
+      configurable: true,
+      get: () => value,
+      set(next) {
+        value = next;
+        if (ready()) resolve();
+      },
+    });
+  });
+  t.after(() => {
+    clearTimeout(timer);
+    if (descriptor) Object.defineProperty(host, key, descriptor);
+    else delete host[key];
+  });
+  return pending.finally(() => clearTimeout(timer));
+}
+
 test('[osh-096] builds the OSH systems layer in the catalog with the production source and the hosts of the page', async (t) => {
   const elements = { 'osh-panel': { hidden: true }, 'osh-panel-detail': { innerHTML: '' }, 'osh-panel-video': {} };
   withGlobal(t, 'document', { addEventListener() {}, removeEventListener() {}, getElementById: (id) => elements[id] ?? null });
@@ -84,8 +108,9 @@ test('[osh-096] builds the OSH systems layer in the catalog with the production 
   layer.enable(viewer);
   await layer.update(viewer);
   assert.ok(asked.includes('/api/osh/systems'), 'the layer reads the same-origin route of the systems');
+  const changed = nextHostChange(t, elements['osh-panel-detail'], 'innerHTML');
   click({ position: {} });
-  await new Promise((resolve) => setImmediate(resolve));
+  await changed;
   assert.equal(elements['osh-panel'].hidden, false, 'the panel element shows');
   assert.match(elements['osh-panel-detail'].innerHTML, /System A/, 'the detail element holds the name of the system');
 });
@@ -140,8 +165,9 @@ test('[osh-control-032] builds a real command view only when the page has the co
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
+  const changed = nextHostChange(t, elements['osh-panel-control'], 'hidden', () => asked.includes('/api/control/osh/targets?system=sys-fixture-1'));
   click({ position: {} });
-  await new Promise((resolve) => setImmediate(resolve));
+  await changed;
   assert.ok(asked.includes('/api/control/osh/targets?system=sys-fixture-1'), 'a real command view reads the control targets route for the picked system');
   assert.equal(elements['osh-panel-control'].hidden, true, 'the flag is off, so the view keeps its host hidden');
 });
@@ -179,8 +205,9 @@ test('[osh-control-032] builds the layer with no command view when the page has 
   layer.init(viewer);
   layer.enable(viewer);
   await layer.update(viewer);
+  const changed = nextHostChange(t, elements['osh-panel-detail'], 'innerHTML');
   click({ position: {} });
-  await new Promise((resolve) => setImmediate(resolve));
+  await changed;
   assert.equal(elements['osh-panel-detail'].innerHTML.includes('System A'), true, 'the selection itself still works with no command view');
   assert.equal(asked.some((path) => path.startsWith('/api/control/osh/targets')), false, 'with no command view, a selection never reads the control targets route');
 });
