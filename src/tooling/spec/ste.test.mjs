@@ -16,6 +16,7 @@ const WORDS = {
   words: { should: 'must', via: 'through', 'e.g': 'for example' },
   phrases: { 'in order to': 'to' },
   allowedIng: ['string', 'during'],
+  nounVerbs: [],
 };
 
 const lint = (text, file = 'openspec/specs/a/spec.md') =>
@@ -281,4 +282,91 @@ test('[ste-lint-012] gives a success status for warnings only', () => {
   assert.equal(findings.length, 1);
   assert.equal(hasErrors(findings), false);
   assert.equal(hasErrors([]), false);
+});
+
+
+const nounWords = { ...WORDS, nounVerbs: ['read'] };
+const nounLint = (text) => lintMarkdown(text, { file: 'openspec/specs/a/spec.md', words: nounWords });
+const nounFindings = (text) => nounLint(text).filter((item) => item.rule === 'STE-NOUN');
+
+test('[ste-lint-020] warns for a listed word after each determiner', () => {
+  for (const determiner of ['a', 'an', 'the', 'each', 'every', 'no', 'any', 'this', 'that', 'these', 'those', 'its', 'their', 'another', 'one', 'some']) {
+    assert.deepEqual(nounFindings(`${determiner} read. ${determiner.toUpperCase()} READ.`), [
+      { rule: 'STE-NOUN', level: 'warning', file: 'openspec/specs/a/spec.md', line: 1, message: 'Check for a verb used as a noun: "read"' },
+      { rule: 'STE-NOUN', level: 'warning', file: 'openspec/specs/a/spec.md', line: 1, message: 'Check for a verb used as a noun: "read"' },
+    ]);
+  }
+  assert.deepEqual(nounFindings('A file.\n\nThe read fails.'), [
+    { rule: 'STE-NOUN', level: 'warning', file: 'openspec/specs/a/spec.md', line: 3, message: 'Check for a verb used as a noun: "read"' },
+  ]);
+  assert.deepEqual(nounFindings('The\nread fails.'), [
+    { rule: 'STE-NOUN', level: 'warning', file: 'openspec/specs/a/spec.md', line: 2, message: 'Check for a verb used as a noun: "read"' },
+  ]);
+  assert.deepEqual(nounFindings('The read" fails.'), [
+    { rule: 'STE-NOUN', level: 'warning', file: 'openspec/specs/a/spec.md', line: 1, message: 'Check for a verb used as a noun: "read"' },
+  ]);
+  assert.deepEqual(nounFindings('The re"ad fails.'), []);
+  assert.deepEqual(lintTestNames([
+    { file: 'src/a.test.mjs', name: '[a-001] The read fails', title: 'The read fails', kind: 'test', tags: ['a-001'] },
+    { file: 'src/a.test.mjs', name: 'The read fails', title: 'The read fails', kind: 'test', tags: [] },
+  ], nounWords), [
+    { rule: 'STE-NOUN', level: 'warning', file: 'src/a.test.mjs', line: 0, message: 'Test "[a-001] The read fails": check for a verb used as a noun: "read"' },
+  ]);
+});
+
+test('[ste-lint-021] ignores a listed word without a determiner', () => {
+  assert.deepEqual(nounFindings('Read the file. To read the file. To release the lock. The next read fails. The. Read now. The, read fails. (the read fails. "the read fails.'), []);
+});
+
+test('[ste-lint-022] ignores code and a listed word that starts with a quote mark', () => {
+  for (const text of ['The `read` fails.', '`the read`', '```\nthe read\n```', '~~~\nthe read\n~~~', 'The "read" fails.', "The 'read' fails.", 'The “read” fails.', 'The ‘read’ fails.', 'The "read file" fails.']) {
+    assert.deepEqual(nounFindings(text), [], text);
+  }
+  for (const title of ['The `read` fails', '`the read`', '`file the read result`', 'The "read" fails']) {
+    assert.deepEqual(lintTestNames([
+      { file: 'src/a.test.mjs', name: `[a-001] ${title}`, title, kind: 'test', tags: ['a-001'] },
+    ], nounWords), []);
+  }
+});
+
+test('[ste-lint-023 ste-lint-012] keeps a success status for the noun warning', () => {
+  const findings = nounLint('The read fails.');
+  assert.deepEqual(findings.map((item) => [item.rule, item.level]), [['STE-NOUN', 'warning']]);
+  assert.equal(hasErrors(findings), false);
+});
+
+test('[ste-lint-024] ignores a word outside the list nounVerbs', () => {
+  assert.deepEqual(nounFindings('The file stays. The release names a version.'), []);
+  const words = readWordList(path.resolve(import.meta.dirname, '../../..'));
+  assert.deepEqual(words.nounVerbs, ['abort', 'destroy', 'install', 'read', 'skip']);
+  assert.deepEqual(lintMarkdown('The release names a version.', { file: 'a.md', words }), []);
+});
+
+test('[ste-lint-025] reads the list nounVerbs from the word list file for each check', () => {
+  const root = tempRoot({
+    'openspec/specs/a/spec.md': 'The read fails. The skip fails.',
+    'openspec/ste/words.json': JSON.stringify({ ...WORDS, nounVerbs: ['read'] }),
+  });
+  try {
+    assert.deepEqual(lintProject({ root, records: [] }).map((item) => item.message), ['Check for a verb used as a noun: "read"']);
+    writeFileSync(path.join(root, 'openspec/ste/words.json'), JSON.stringify({ ...WORDS, nounVerbs: ['skip'] }));
+    assert.deepEqual(lintProject({ root, records: [] }).map((item) => item.message), ['Check for a verb used as a noun: "skip"']);
+    writeFileSync(path.join(root, 'openspec/ste/words.json'), JSON.stringify(WORDS));
+    assert.deepEqual(lintProject({ root, records: [] }), []);
+    const { nounVerbs, ...oldWords } = WORDS;
+    writeFileSync(path.join(root, 'openspec/ste/words.json'), JSON.stringify(oldWords));
+    assert.deepEqual(lintProject({ root, records: [] }), []);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('[ste-lint-026] ignores plural and possessive forms', () => {
+  assert.deepEqual(nounFindings("The reads fail. The read's result stays. The read’s result stays. The reads' results stay."), []);
+});
+
+test('[ste-lint-027] excludes inline code from the rule STE-WORD for tagged titles', () => {
+  assert.deepEqual(lintTestNames([
+    { file: 'src/a.test.mjs', name: '[a-001] uses ` should ` in code', title: 'uses ` should ` in code', kind: 'test', tags: ['a-001'] },
+  ], WORDS), []);
 });
