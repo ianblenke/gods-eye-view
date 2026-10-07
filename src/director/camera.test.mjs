@@ -165,7 +165,7 @@ test('[director-052 director-054 director-055] unknown anchors, duplicate IDs, m
   );
 });
 
-test('[director-064] The version 1 camera stays an ordinary pose', () => {
+test('[director-064] The version 1 camera stays a shot without a move', () => {
   const input = {
     version: 1,
     scenes: [
@@ -204,7 +204,7 @@ test('[director-064] The version 1 camera stays an ordinary pose', () => {
   });
 });
 
-test('[director-064] The version 2 camera stays an ordinary pose', () => {
+test('[director-064] The version 2 camera stays a shot without a move', () => {
   const input = {
     version: 2,
     scenes: [
@@ -243,7 +243,7 @@ test('[director-064] The version 2 camera stays an ordinary pose', () => {
   });
 });
 
-test('[director-064] The version 3 camera stays an ordinary pose', () => {
+test('[director-064] The version 3 camera stays a shot without a move', () => {
   const input = {
     version: 3,
     scenes: [

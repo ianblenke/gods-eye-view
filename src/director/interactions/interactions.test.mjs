@@ -70,7 +70,7 @@ const fixture = () => ({
   ],
 });
 
-test('[director-063] all four inert interactions survive validation, migration and export without running content', () => {
+test('[director-063] all four inert interactions survive validation, migration and export and no content runs', () => {
   const input = fixture();
   const output = JSON.parse(
     stringifySceneDocument(
@@ -182,7 +182,7 @@ test('[director-068 director-073 director-074] pending interactions cancel promp
   assert.equal(await session.dispatch('new'), false);
 });
 
-test('[director-072 director-073] synchronous stop before adapter call prevents any side effect; rejection unlocks retry', async () => {
+test('[director-072 director-073] synchronous stop before an adapter call prevents any side effect; rejection unlocks retry', async () => {
   let calls = 0;
   const session = createInteractionSession({
     execute: () => {

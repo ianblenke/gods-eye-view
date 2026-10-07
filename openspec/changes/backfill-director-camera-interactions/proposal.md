@@ -26,7 +26,8 @@ The lead measures ledger gaps with Node 24.
   The `try` and `catch` blocks both return.
 - `session-callback-busy`: a state callback error at line 34 rejects dispatch and leaves the session busy.
   The adapter does not run.
-  The caller can recover with `clear` or `activate`.
+  The caller can reset the state with `clear` or `activate` after the callback stops throwing.
+  Callback errors at lines 16 and 25 also leave the new state but stop the call.
   A state callback error at line 56 rejects dispatch and replaces the adapter result.
 - `qa-headers-ahead`: the camera and interaction QA scripts name `director` without `pending:scenes`.
   Pick, card control, ownership and camera revoke belong to later scene changes.
@@ -42,8 +43,15 @@ actions preserve camera refusal, layer admission signal and explicit transition 
 ```
 
 The host lcov command records the branch at line 51 as follows.
-The tag `BRDA` records branch data.
+BRDA means branch data.
 
 ```text
 BRDA:51,16,0,0
 ```
+
+- `session-builtin-patch`: a patched Map size getter or `clear` method can create an inactive session that holds an interaction.
+  Row m149 is equivalent for the public API of the module only.
+  A patched built-in prototype is outside it.
+
+- `session-abort-event`: an adapter can send an abort event while the supplied signal still reports aborted false.
+  The session then returns false without an adapter result.

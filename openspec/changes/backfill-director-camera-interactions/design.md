@@ -18,7 +18,7 @@ The lead runs the ratchet, gates and review.
 ## Related browser QA scripts
 
 - `scripts/qa-director-camera.mjs` proves that imported camera paths and camera control agree.
-- `scripts/qa-director-interactions.mjs` proves that pointer and key actions control an authored scene.
+- `scripts/qa-director-interactions.mjs` proves that pointer and key interactions control an authored scene.
 
 ## Evidence
 
@@ -41,14 +41,15 @@ cd /home/ianblenke/docker/gev-work/director-2 && taskset -c 12-15 nice -n 19 pyt
 
 Pass 2 reads base commit `290b5d2` and the current files.
 The code accepts duration 0.2 seconds and rejects 0.19 seconds.
-The pass uses these limits because the brief gives two different results for 0.19 seconds.
+The pass uses these limits because the round-1 correction brief in `prompt-2.md` gives two different results for 0.19 seconds.
 
 The pass deletes the test that changes the Map size getter.
 A supplied list or proxy cannot change the native Map size getter.
 The native Map stores each ID before the session reads its size.
-An inactive session therefore contains no interaction that dispatch can find.
+For the public API of the module, an inactive session contains no interaction that dispatch can find.
+A patched built-in prototype is outside it.
 
-The scratch probe uses getters, a proxy list and a map callback spy.
+The probe in `evidence/probe-equivalent.txt` uses getters, a proxy list and a map callback spy.
 Row m149 records an equivalent change, not failed tests.
 The proposal gives the known limits.
 
@@ -70,3 +71,12 @@ The source comparison with main gives no difference.
 ```sh
 cd /home/ianblenke/docker/gev-work/director-2 && git diff --stat 290b5d2 origin/main -- 'src/director/*.js' 'src/director/interactions/*.js'
 ```
+
+## Corrections of review round 2
+
+Pass 3 reads base commit `290b5d2`.
+The pass keeps all scenario IDs and production files unchanged.
+The public API limit excludes changes to built-in prototypes.
+The probe checks re-entrant state callbacks, getters, proxy lists and listener spies.
+The pass applies each text correction from review round 2.
+Source strings in evidence keep their exact text.

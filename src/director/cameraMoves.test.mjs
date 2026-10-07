@@ -295,3 +295,7 @@ test('[director-044] The roll keeps negative zero from a getter', () => {
   assert.equal(Object.is(resolveCameraPose({}, camera).roll, -0), true);
   assert.equal(reads, 1);
 });
+
+test('[director-048] The cubic sample uses progress 0.55', () => {
+  assert.equal(sampleCameraMove(move('cubic-in-out'), 0.55).lat, 11.271);
+});

@@ -22,7 +22,7 @@ const anchor = () => ({
 });
 const validate = (s, v = 4) => validateSceneCameras(s, 'scene', v);
 
-test('[director-049] The ordinary pose rejects invalid lat', () => {
+test('[director-049] The shot without a move rejects invalid lat', () => {
   const s = scene();
   s.shots[0].camera.lat = 91;
   assert.throws(() => validate(s), /camera\.lat/);
@@ -40,7 +40,7 @@ test('[director-053] The inline end pose needs lat', () => {
   assert.throws(() => validate(s), /camera\.lat/);
 });
 
-test('[director-049] The ordinary pose rejects invalid lon', () => {
+test('[director-049] The shot without a move rejects invalid lon', () => {
   const s = scene();
   s.shots[0].camera.lon = 181;
   assert.throws(() => validate(s), /camera\.lon/);
@@ -58,7 +58,7 @@ test('[director-053] The inline end pose needs lon', () => {
   assert.throws(() => validate(s), /camera\.lon/);
 });
 
-test('[director-049] The ordinary pose rejects invalid alt', () => {
+test('[director-049] The shot without a move rejects invalid alt', () => {
   const s = scene();
   s.shots[0].camera.alt = -12001;
   assert.throws(() => validate(s), /camera\.alt/);
@@ -98,7 +98,7 @@ test('[director-050] The pose accepts absent orientation', () => {
   assert.doesNotThrow(() => validate(scene()));
 });
 
-test('[director-049] The ordinary pose accepts absent coordinates', () => {
+test('[director-049] The shot without a move accepts absent coordinates', () => {
   assert.doesNotThrow(() => validate({ shots: [{ camera: {} }] }));
 });
 
@@ -693,7 +693,7 @@ test('[director-052] The anchor rejects text coordinates in version 2', () => {
   );
 });
 
-test('[director-049] The ordinary pose uses optional coordinates by default', () => {
+test('[director-049] The shot without a move uses optional coordinates by default', () => {
   assert.doesNotThrow(() => validate({ shots: [{ camera: {} }] }));
 });
 
@@ -701,4 +701,26 @@ test('[director-049] The pose rejects an extra field', () => {
   const s = scene();
   s.shots[0].camera.extra = true;
   assert.throws(() => validate(s), /camera.extra: unsupported field/);
+});
+
+test('[director-051] The version 1 pose accepts numeric text', () => {
+  assert.doesNotThrow(() =>
+    validate(
+      {
+        shots: [
+          {
+            camera: {
+              lat: '1',
+              lon: '2',
+              alt: '3',
+              heading: '4',
+              pitch: '5',
+              roll: '6',
+            },
+          },
+        ],
+      },
+      1,
+    ),
+  );
 });
