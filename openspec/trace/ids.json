@@ -2970,37 +2970,37 @@
     "change": "establish-spec-governance"
   },
   "ste-lint-020": {
-    "hash": "053263596f55237757f0f988032db8b61830c0beb79b286edce5f96ac49a6ea6",
+    "hash": "c62e2fc2a3b06fbfe55f3b2820eb0c3f2309fbbb155add2cb2303e9159d150d9",
     "since": "2026-10-06",
     "change": "ste-noun-warning"
   },
   "ste-lint-021": {
-    "hash": "50760276f16dce68d248d09e0ea2505614964cf3f60c2f5f55f03a8548740d89",
+    "hash": "6e64e2c094d60a9cfce5e2fa95f0b8562cf1541216107fd25d453290a5698cac",
     "since": "2026-10-06",
     "change": "ste-noun-warning"
   },
   "ste-lint-022": {
-    "hash": "5edb9436af0104b5ee0d3aba483b409706a61423ac51b5dcde97a4a2935bafef",
+    "hash": "1ddb79291f063e6debe1ab636bdcae92227a914dae715343a61fdbf837b77176",
     "since": "2026-10-06",
     "change": "ste-noun-warning"
   },
   "ste-lint-023": {
-    "hash": "f5159b89563cc9a9b8673b4fcdd12f0a20685cd8292a7e1ea3b7ea703c7e58f4",
+    "hash": "922517ab717db818d4b4dc9e91f3d1b48a6a917e53a6bcdc64f5ae4609e46d6b",
     "since": "2026-10-06",
     "change": "ste-noun-warning"
   },
   "ste-lint-024": {
-    "hash": "c3206ff8fb6995a817c2a64e5f490a9f02dfdb50687098214769fb4f74c67f6b",
+    "hash": "f524ad5f9447d4c0ec1e4ba14873009df5ca6668c923b2172f69bc826e8f07dc",
     "since": "2026-10-06",
     "change": "ste-noun-warning"
   },
   "ste-lint-025": {
-    "hash": "e5ac60f8c2c9d93b2ce6e7314721aa6c19418f3b391c9b27f6d324106a5f3dcd",
+    "hash": "738b6efc8ccfd5191bd28a0d138391056b9dc9e3bf971aa2cecff0b594f355d7",
     "since": "2026-10-06",
     "change": "ste-noun-warning"
   },
   "ste-lint-026": {
-    "hash": "7c50e5b9830cd9fe1304e394dfc497db6dd54fe82b6111695584307b2c2841de",
+    "hash": "79607e16ca69bf293dc75461fe803264418fea067bc016f8b0188269a4b0905a",
     "since": "2026-10-06",
     "change": "ste-noun-warning"
   },
