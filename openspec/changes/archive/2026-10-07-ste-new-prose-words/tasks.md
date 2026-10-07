@@ -35,7 +35,7 @@
 - [x] 1.17 Write the test for `ste-lint-043`.
   - Run the mutation that treats an unknown ID as old. The test must fail.
 - [x] 1.18 Write the test for `ste-lint-044`.
-  - Run the mutation that changes the absent cutoff date. The test must fail.
+  - Run the mutation that replaces `words.newWordsFrom ?? ''` with `words.newWordsFrom ?? '9999-12-31'`. The test must fail.
 
 - [x] 1.19 Write the test for `ste-lint-045`.
   - Run the mutation that removes the JSON error prefix. The test must fail.
@@ -46,9 +46,9 @@
 - [x] 2.2 Add the rule for `newWords`.
 - [x] 2.3 Test each scenario with mutations.
 - [x] 2.4 Measure host coverage.
-- [ ] 2.5 Test each spec tool file.
+- [x] 2.5 Test each spec tool file.
 - [x] 2.6 Check the whole tree with the lint command.
-- [ ] 2.7 Run `node scripts/format.mjs --check`.
+- [x] 2.7 Run `node scripts/format.mjs --check`.
 - [x] 2.8 Run `/home/ianblenke/docker/gev-tools/predispatch/predispatch.py` on the change documents.
 
 ## 3. Gates and review
