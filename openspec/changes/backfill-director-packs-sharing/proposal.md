@@ -1,7 +1,8 @@
 ## Why
 
-This backfill records data packs and scene shares at commit `3e1160f47c8d1f63f4b550318134c77fa3f46c5b`.
+This backfill records data packs and scene shares at commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
 The director feature checks assets before display and carries local files in a scene bundle.
+The source files of `src/director` stay the same at this commit and at main.
 
 ## What Changes
 
