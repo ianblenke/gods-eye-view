@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * @purpose Prove that pack import, display and resource cleanup work.
- * @covers pending:director
+ * @covers director
  * @run node scripts/qa-director-packs.mjs
  * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */

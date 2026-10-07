@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * @purpose Prove that pointer and key actions control an authored scene.
- * @covers pending:director
+ * @covers director
  * @run node scripts/qa-director-interactions.mjs
  * @needs A browser and an app server that runs. QA_BASE_URL can set the app URL.
  */
