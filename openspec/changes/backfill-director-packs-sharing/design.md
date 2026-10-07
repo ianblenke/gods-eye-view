@@ -26,21 +26,6 @@ The evidence records test links, scope sweeps and host coverage.
 The mutation report records exact changes and failed tests.
 The scratch audit records each decision expression.
 
-## Known limits
-
-- Known limit `geojson-inherited-height`: the decoder checks own coordinate values, then reads an inherited height at line 27.
-  An inherited height can exceed the height bounds.
-  No scenario states this behavior.
-- Known limit `session-signal-getter`: a signal getter can destroy the session at line 74 before the source call at line 100.
-  The source still receives a call.
-  The session can return true with ready resources after destruction.
-  No scenario states this behavior.
-- Known limit `old-tests-outside-scope`: the project migration test and the author details test keep their names without tags.
-  They check code outside this change.
-- Known limit `code-probes-without-scenarios`: the scratch tests record the inherited height and signal getter code limits.
-  The repository does not include these tests.
-  The scratch file is `limits.test.mjs`.
-
 ## Sweep commands
 
 The evidence gives each source command for the ledger, titles, imports, scenarios, coverage and mutation results.

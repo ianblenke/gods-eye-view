@@ -4,7 +4,7 @@ Commit: `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
 
 ## Test result
 
-The final command passed all 295 repository tests in scope.
+The final command passed all 296 repository tests of the three test files.
 The output reports zero failures, cancellations or skipped tests.
 The scope sweep in the evidence checks the test total.
 
