@@ -1,6 +1,6 @@
 ## Context
 
-This change records commit `3e1160f47c8d1f63f4b550318134c77fa3f46c5b`.
+This change records commit `290b5d2cf65d614e39f42a0b3b24a53fc2514985`.
 The scene controller uses the pack owner for shot assets.
 It uses the share reader before project replacement.
 
