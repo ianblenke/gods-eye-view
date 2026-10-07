@@ -21,6 +21,7 @@ import {
   toleranceOf,
   readLedger,
   writeLedger,
+  waiversOf,
 } from '../../../scripts/spec/lib/ledger.mjs';
 
 const DATE = '2026-09-13';
@@ -1467,5 +1468,30 @@ test('[gap-ledger-122] A fully covered file gets no new history allowance', () =
     assert.deepEqual(rejected.baseLedger.coverage, {});
     record[metric].uncovered = 1;
     assert.deepEqual(checkRebaseline(input).errors, []);
+  }
+});
+
+test('[gap-ledger-133] accept dirty history in each reader', () => {
+  const root = mkdtempSync(path.join(tmpdir(), 'gev-history-'));
+  try {
+    const lines = [
+      { date: '2026-10-07', change: 'docs', commit: 'abc123', kind: 'measurement', measurement: 'hash', dirty: ['AGENTS.md'] },
+      { date: '2026-10-07', change: 'docs', commit: 'abc123', kind: 'waiver', count: 1, dirty: ['AGENTS.md'] },
+      { date: '2026-10-07', change: 'docs', commit: 'abc123', kind: 'adopt', file: 'src/a.js', from: 'upstream', lines: 1, branches: 0, functions: 0, untraced: 0, dirty: ['AGENTS.md'] },
+    ];
+    writeLedger(root, { coverage: {}, untracedTests: {} });
+    appendHistory(root, lines);
+    const history = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8');
+    assert.equal(waiversOf(history, '', 'docs').length, 1);
+    assert.deepEqual(waiversOf(history, '', 'docs')[0].dirty, ['AGENTS.md']);
+    assert.equal(waiversOf(history, '', 'docs')[0].count, 1);
+    assert.equal(adoptsOf(history, '', 'docs').length, 1);
+    assert.deepEqual(adoptsOf(history, '', 'docs')[0].dirty, ['AGENTS.md']);
+    assert.equal(adoptsOf(history, '', 'docs')[0].from, 'upstream');
+    const ledger = { coverage: {}, untracedTests: {} };
+    assert.deepEqual(checkRebaseline({ history, baseHistory: '', change: 'docs', ledger, baseLedger: ledger }).errors, []);
+    assert.deepEqual(compareWithBase({ history, baseHistory: '', change: 'docs', ledger, baseLedger: ledger, retired: [], baseRetired: [] }), []);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
   }
 });

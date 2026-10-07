@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { changedInputs, trustMeasurement, writeMeasurement } from './lib/measurement.mjs';
 import { importReach, adoptableReached } from './lib/import-reach.mjs';
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
@@ -50,7 +51,7 @@ const DEFAULT_BASE = 'origin/main';
 const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
 const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive', 'adopt', 'rebaseline']);
 const OPTIONS = new Set(['--change', '--base', '--root', '--file', '--metric', '--lines', '--count', '--reason', '--from']);
-const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt|rebaseline> [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
+const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt|rebaseline> [--no-measure] [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
 
 /**
  * Read the command line. Throws the usage text for a bad command line.
@@ -64,6 +65,11 @@ export function parseArgs(argv) {
   const options = { command, change: undefined, base: undefined, root: undefined };
   for (let index = 0; index < rest.length; index += 2) {
     const key = rest[index];
+    if (key === '--no-measure' && command === 'check') {
+      options.noMeasure = true;
+      index -= 1;
+      continue;
+    }
     const value = rest[index + 1];
     if (!OPTIONS.has(key) || value === undefined) throw new Error(USAGE);
     options[key.slice(2)] = value;
@@ -209,7 +215,7 @@ export function mergeRawCoverage({ root, directory, text, inventory }) {
 }
 
 /** Run the tests and measure specs, trace and coverage. */
-function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
+function measure({ root, spawn, env, allocationFiles, change, openSpec, phase }) {
   const errors = [];
   const tracked = listTrackedFiles(root).filter((file) => existsSync(path.join(root, file)));
   const qaRegister = readQaRegister({ root, tracked });
@@ -296,16 +302,9 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
     });
     const coverage = measureCoverage({ inventory, entries, readFile: read, untrue });
 
-    const specs = loadSpecs(root);
-    errors.push(...specs.errors);
+    const { specs, errors: specErrors } = phase('specs', () => fileSpecs({ root, change, openSpec }));
+    errors.push(...specErrors);
     const folder = change ? changeFolder(root, change) : null;
-    errors.push(...checkOpenSpec({ root, specs, run: (args) => openSpec(root, args) }));
-    errors.push(...lintSpecs({ requirements: specs.requirements, orphans: specs.orphans, changeIds: specs.changeIds, readTasks: tasksReader(root) }));
-    if (folder && folder.startsWith('openspec/changes/archive/')) {
-      const archived = checkArchivedChange(root, folder, specs);
-      const changeIds = new Map([[folder.slice('openspec/changes/'.length), archived.ids]]);
-      errors.push(...archived.errors, ...lintSpecs({ requirements: archived.requirements, orphans: archived.orphans, changeIds, readTasks: tasksReader(root) }));
-    }
     const trace = evaluateTrace({
       specs,
       records,
@@ -317,10 +316,40 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec }) {
     errors.push(...trace.errors);
     writeTraceReport(root, trace.report);
 
-    return { errors, inventory, qaScripts: qaRegister.scripts, testFiles, records, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
+    return { errors, inventory, qaScripts: qaRegister.scripts, testFiles, records, assertions, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
   } finally {
     rmSync(coverageDir, { recursive: true, force: true });
   }
+}
+
+function fileSpecs({ root, change, openSpec }) {
+  const errors = [];
+  const specs = loadSpecs(root);
+  errors.push(...specs.errors);
+  const folder = change ? changeFolder(root, change) : null;
+  errors.push(...checkOpenSpec({ root, specs, run: (args) => openSpec(root, args) }));
+  errors.push(...lintSpecs({ requirements: specs.requirements, orphans: specs.orphans, changeIds: specs.changeIds, readTasks: tasksReader(root) }));
+  if (folder && folder.startsWith('openspec/changes/archive/')) {
+    const archived = checkArchivedChange(root, folder, specs);
+    const changeIds = new Map([[folder.slice('openspec/changes/'.length), archived.ids]]);
+    errors.push(...archived.errors, ...lintSpecs({ requirements: archived.requirements, orphans: archived.orphans, changeIds, readTasks: tasksReader(root) }));
+  }
+  return { specs, errors };
+}
+
+function documentMeasurement({ root, change, openSpec, snapshot, phase }) {
+  const { specs, errors } = phase('specs', () => fileSpecs({ root, change, openSpec }));
+  const folder = changeFolder(root, change);
+  const trace = evaluateTrace({ specs, records: snapshot.records, assertions: snapshot.assertions, testFiles: snapshot.testFiles, change, changeFound: folder !== null });
+  const qa = readQaRegister({ root, tracked: listTrackedFiles(root) });
+  const tracked = listTrackedFiles(root).filter(file => existsSync(path.join(root, file)));
+  const inventory = codeInventory(tracked, qa.validQaScripts);
+  const readFile = file => readFileSync(path.join(root, file), 'utf8');
+  errors.push(...checkUntracked(listUntrackedFiles(root)));
+  errors.push(...findIgnoreComments({ inventory, readFile }));
+  errors.push(...findTestImports({ inventory, readFile }));
+  errors.push(...findCoverageFlags({ tracked, readFile }));
+  return { ...snapshot, specs, trace, qaScripts: qa.scripts, errors: [...errors, ...trace.errors, ...qa.errors], links: buildLinks(trace.report), current: currentGaps({ coverage: snapshot.coverage, untraced: trace.untraced }) };
 }
 
 function location(item) {
@@ -359,7 +388,7 @@ function readOptional(root, file) {
  *
  * @returns {number} Exit status.
  */
-export function runGates({
+function runGateCommand({
   root,
   argv,
   nodeVersion = process.versions.node,
@@ -369,6 +398,9 @@ export function runGates({
   allocationFiles = ALLOCATION_TEST_FILES,
   env = process.env,
   openSpec = runOpenSpec,
+  snapshot,
+  gitSpawn,
+  phase,
 }) {
   const options = parseArgs(argv);
   const { command } = options;
@@ -495,7 +527,9 @@ export function runGates({
     if (readFileAt(root, base, LEDGER_FILE) === null) return report(log, [{ code: 'GATES-REBASELINE', file: LEDGER_FILE, message: 'The baseline needs the base ledger.' }]);
   }
 
-  const measured = measure({ root, spawn, env, allocationFiles, change, openSpec });
+  const measured = options.noMeasure
+    ? documentMeasurement({ root, change, openSpec, snapshot, phase })
+    : phase('measure', () => measure({ root, spawn, env, allocationFiles, change, openSpec, phase }));
   const { counts } = measured.trace.report;
   log(`Trace: ${counts.scenarios} scenarios, ${counts.verified} verified, ${counts.pending} open. ${counts.tests} tests, ${counts.traced} traced, ${counts.untraced} untraced.`);
   for (const line of qaAdvice({ root, change, scripts: measured.qaScripts })) log(line);
@@ -514,10 +548,10 @@ export function runGates({
     return report(log, []);
   }
 
-  const ledger = readLedger(root);
+  let ledger = readLedger(root);
   if (!ledger) return report(log, [...measured.errors, { code: 'GATES-NO-LEDGER', file: LEDGER_FILE, message: 'Run: node scripts/spec/gates.mjs init' }]);
 
-  const historyText = readOptional(root, HISTORY_FILE) ?? '';
+  let historyText = readOptional(root, HISTORY_FILE) ?? '';
   const baseHistoryText = readFileAt(root, base, HISTORY_FILE) ?? '';
   const waivers = waiversOf(historyText, baseHistoryText, change);
 
@@ -561,7 +595,8 @@ export function runGates({
     return report(log, []);
   }
 
-  const baseline = checkRebaseline({ ...baselineOptions, change, ledger, baseLedger, coverage: measured.coverage, sameAsBase });
+  const compareStart = phase('compare');
+  let baseline = checkRebaseline({ ...baselineOptions, change, ledger, baseLedger, coverage: measured.coverage, sameAsBase });
 
   if (command === 'ratchet') {
     if (baseline.errors.length > 0) return report(log, baseline.errors);
@@ -592,12 +627,21 @@ export function runGates({
     } catch (error) {
       return report(log, [{ code: 'GATES-RATCHET', file: LEDGER_FILE, message: error.message }]);
     }
+    const difference = changedInputs(root, headCommit(root), gitSpawn);
+    if (difference.reason) return report(log, [{ code: 'GATES-RATCHET', file: HISTORY_FILE, message: difference.reason }]);
+    const dirty = difference.files;
     writeLedger(root, result.ledger);
-    appendHistory(root, result.history);
+    const measurement = writeMeasurement(root, measured);
+    const previous = historyText.split('\n').filter(Boolean).map(JSON.parse).findLast(line => line.change === change);
+    const unchanged = previous?.measurement === measurement && previous.commit === headCommit(root) && JSON.stringify(previous.dirty ?? []) === JSON.stringify(dirty);
+    const history = result.history.length > 0 ? result.history : unchanged ? [] : [{ date, change, commit: headCommit(root), kind: 'measurement' }];
+    appendHistory(root, history.map(line => ({ ...line, measurement, ...(dirty.length > 0 ? { dirty } : {}) })));
     writeRegistry(root, registry.registry);
     writeLinks(root, measured.links);
-    log(`Ratchet: ${result.history.length} history lines for ${change}.`);
-    return report(log, []);
+    log(`Ratchet: ${history.length} history lines for ${change}.`);
+    ledger = readLedger(root);
+    historyText = readOptional(root, HISTORY_FILE);
+    baseline = checkRebaseline({ ...baselineOptions, history: historyText, change, ledger, baseLedger, coverage: measured.coverage, sameAsBase });
   }
 
   const comparison = compareLedger({ ledger, current: measured.current, sameAsBase, waivers });
@@ -625,18 +669,60 @@ export function runGates({
     ...compareRegistryWithBase({ registry, baseRegistry: JSON.parse(readFileAt(root, base, 'openspec/trace/ids.json') ?? 'null'), retired: measured.specs.retired, changedTestIds: changedTestIds(measured.records) }),
     ...checkLinks({ links: readLinks(root), current: measured.links }),
   ];
-  const lint = lintFindings(root, measured.records);
+  compareStart();
+  const lint = phase('lint', () => lintFindings(root, measured.records));
   const folder = change ? changeFolder(root, change) : null;
-  const reviews = [
+  const reviews = phase('review', () => [
     ...checkArchivedReviews(root, { except: folder }),
     ...(folder ? checkChangeReview(root, change, { treeHash: computeTreeHash({ root, changeDir: folder, diffFiles }) }) : []),
     ...checkChangeNames(root),
     ...checkAgents(root),
     ...checkReviewCommand(root),
-  ];
+  ]);
   log(`Ledger: ${comparison.stale.length} entries do not match the current gaps.`);
   log(`STE: ${lint.errors.length} errors, ${lint.warnings.length} warnings.`);
-  return report(log, [...measured.errors, ...comparison.errors, ...baseErrors, ...baseline.errors, ...adoption.errors, ...registryErrors, ...lint.errors, ...reviews], lint.warnings);
+  const status = report(log, [...measured.errors, ...comparison.errors, ...baseErrors, ...baseline.errors, ...adoption.errors, ...registryErrors, ...lint.errors, ...reviews], lint.warnings);
+  return command === 'ratchet' && status !== 0 ? 2 : status;
+}
+
+/** Run a gate command with its command name and UTC times. */
+export function runGates(options) {
+  const parsed = parseArgs(options.argv);
+  const log = options.log ?? console.log;
+  const timed = parsed.command === 'check' || parsed.command === 'ratchet';
+  if (!timed) return runGateCommand({ ...options, phase: (_name, fn) => fn ? fn() : () => {} });
+  const clock = options.clock ?? (() => new Date());
+  const started = clock();
+  const trusted = parsed.noMeasure ? trustMeasurement(options.root, parsed.change, options.gitSpawn) : null;
+  if (parsed.noMeasure) {
+    log(trusted.reason ? 'NO MEASUREMENT: refused' : `NO MEASUREMENT: the measurement of commit ${trusted.commit} is trusted`);
+  } else {
+    log(`Command: ${parsed.command}`);
+  }
+  log(`Started: ${started.toISOString()}`);
+  const phase = (name, fn) => {
+    const start = clock();
+    const finish = () => {
+      const seconds = (clock().getTime() - start.getTime()) / 1000;
+      if (seconds > 1) log(`Phase ${name}: ${seconds} s`);
+    };
+    if (!fn) return finish;
+    const result = fn();
+    finish();
+    return result;
+  };
+  try {
+    if (trusted?.reason) {
+      log(trusted.reason);
+      for (const file of trusted.files) log(file);
+      log(`Trusted commit: ${trusted.commit}`);
+      return 2;
+    }
+    return runGateCommand({ ...options, phase, snapshot: trusted?.measured });
+  } finally {
+    const finished = clock();
+    log(`Finished: ${finished.toISOString()} (${(finished.getTime() - started.getTime()) / 1000} s)`);
+  }
 }
 
 if (import.meta.url === pathToFileURL(path.resolve(String(process.argv[1]))).href) {
