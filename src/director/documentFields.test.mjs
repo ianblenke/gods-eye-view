@@ -63,7 +63,7 @@ test('[director-007] The number check rejects the upper excess', () => {
   assert.throws(() => number(4, '$', 0, 3, false), /expected a number/);
 });
 
-test('[director-007] The legacy flag alone permits numeric text', () => {
+test('[director-007] The legacy flag alone allows numeric text', () => {
   assert.doesNotThrow(() => number('2', '$', 0, 3, true));
   assert.throws(() => number('2', '$', 0, 3, false));
 });

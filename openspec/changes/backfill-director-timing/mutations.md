@@ -184,9 +184,9 @@ Old:
 legacy &&
 New:
 false &&
-Selected test: [director-007] The legacy flag alone permits numeric text
+Selected test: [director-007] The legacy flag alone allows numeric text
 Result: KILLED
-Test: [director-007] The legacy flag alone permits numeric text
+Test: [director-007] The legacy flag alone allows numeric text
 ```
 
 ## m014
@@ -1836,9 +1836,9 @@ move
 New:
 false
       ? sampleCameraMove(move, cameraProgress)
-Selected test: [director-035] The seek samples an explicit move
+Selected test: [director-035] The seek samples a move that the shot gives
 Result: KILLED
-Test: [director-035] The seek samples an explicit move
+Test: [director-035] The seek samples a move that the shot gives
 ```
 
 ## m127
@@ -3290,9 +3290,9 @@ Old:
 Object.hasOwn(project, 'version') ? project.version : 1
 New:
 Object.hasOwn(project, 'version') ? project.version : 3
-Selected test: [director-003] The absent version permits legacy numeric text
+Selected test: [director-003] The absent version allows legacy numeric text
 Result: KILLED
-Test: [director-003] The absent version permits legacy numeric text
+Test: [director-003] The absent version allows legacy numeric text
 ```
 
 ## m199
@@ -3526,9 +3526,9 @@ Old:
 if (releaseOnFinish && activeScene) await adapter.releaseScene(activeScene);
 New:
 <empty>
-Selected test: [director-040] The phase failure retains its error after cleanup
+Selected test: [director-040] The phase failure keeps its error after cleanup
 Result: KILLED
-Test: [director-040] The phase failure retains its error after cleanup
+Test: [director-040] The phase failure keeps its error after cleanup
 ```
 
 ## m215
@@ -4178,9 +4178,9 @@ Old:
 const ordered = single
 New:
 const ordered = false
-Selected test: [director-036] queues rotate scenes, skip empty scenes, preserve shot identity and support a single scene
+Selected test: queues rotate scenes, skip empty scenes, preserve shot identity and support a single scene
 Result: KILLED
-Test: [director-036] queues rotate scenes, skip empty scenes, preserve shot identity and support a single
+Test: queues rotate scenes, skip empty scenes, preserve shot identity and support a single
 ```
 
 ## m253
@@ -4334,9 +4334,9 @@ Old:
 releaseOnFinish && activeScene
 New:
 activeScene
-Selected test: [director-039] non-preview playback retains the final scene but still releases preceding scenes
+Selected test: non-preview playback retains the final scene but still releases preceding scenes
 Result: KILLED
-Test: [director-039] non-preview playback retains the final scene but still releases preceding scenes
+Test: non-preview playback retains the final scene but still releases preceding scenes
 ```
 
 ## m264
@@ -4376,9 +4376,9 @@ Old:
 4 * t ** 3
 New:
 0 * t ** 3
-Selected test: [director-033] camera seeking preserves cubic easing and shortest-angle orientation
+Selected test: camera seeking preserves cubic easing and shortest-angle orientation
 Result: KILLED
-Test: [director-033] camera seeking preserves cubic easing and shortest-angle orientation
+Test: camera seeking preserves cubic easing and shortest-angle orientation
 ```
 
 ## m267
@@ -4656,9 +4656,9 @@ Old:
 const start = Number(from) || 0;
 New:
 const start = 0;
-Selected test: [director-033] camera seeking preserves cubic easing and shortest-angle orientation
+Selected test: camera seeking preserves cubic easing and shortest-angle orientation
 Result: KILLED
-Test: [director-033] camera seeking preserves cubic easing and shortest-angle orientation
+Test: camera seeking preserves cubic easing and shortest-angle orientation
 ```
 
 ## m287

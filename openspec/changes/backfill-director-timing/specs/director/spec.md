@@ -163,7 +163,7 @@ Origin: backfill
 - **THEN** the timeline selects the shot and calculates flight and hold progress
 
 #### Scenario: Use camera endpoints for seek `director-035`
-- **WHEN** a person seeks an ordinary shot or an explicit move
+- **WHEN** a person seeks an ordinary shot or a shot that gives a move
 - **THEN** the timeline returns the camera pose for that time
 
 ### Requirement: Playback behavior
@@ -174,7 +174,7 @@ Origin: backfill
 - **WHEN** the caller selects a start scene or a single scene
 - **THEN** the queue keeps shot identity and scene order and skips empty scenes
 
-#### Scenario: Execute shot phases `director-037`
+#### Scenario: Run shot phases `director-037`
 - **WHEN** the adapter accepts a shot queue
 - **THEN** playback calls each phase in order and completes the queue
 

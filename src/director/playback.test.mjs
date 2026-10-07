@@ -43,7 +43,7 @@ function fixture(overrides = {}) {
   return { events, abort, token, adapter };
 }
 
-test('[director-036] queues rotate scenes, skip empty scenes, preserve shot identity and support a single scene', () => {
+test('queues rotate scenes, skip empty scenes, preserve shot identity and support a single scene', () => {
   const queue = buildPlaybackQueue(scenes, 'b');
   assert.deepEqual(
     queue.map(({ shot }) => shot.id),
@@ -172,7 +172,7 @@ test('[director-038] cancellation during an inter-scene release never acquires t
   );
 });
 
-test('[director-039] non-preview playback retains the final scene but still releases preceding scenes', async () => {
+test('non-preview playback retains the final scene but still releases preceding scenes', async () => {
   const f = fixture();
   await playSceneQueue(buildPlaybackQueue(scenes, 'a'), {
     ...f,
@@ -897,7 +897,7 @@ test('[director-038] The handoff cancellation prevents the first shot', async ()
   assert.equal(releases, 1);
 });
 
-test('[director-040] The phase failure retains its error after cleanup', async () => {
+test('[director-040] The phase failure keeps its error after cleanup', async () => {
   const f = fixture({
     travel() {
       throw new Error('flight');
