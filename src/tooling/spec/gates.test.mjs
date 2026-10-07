@@ -1566,3 +1566,12 @@ test('[gap-ledger-116 gap-ledger-117] The ratchet applies the count tolerance', 
     assert.match(run(root, ['ratchet', '--change', 'gates-coverage-race'], options).output, /ERROR LEDGER-REBASELINE/);
   }, { base: { 'openspec/trace/gaps.json': JSON.stringify(baseLedger) + '\n' } });
 });
+
+test('[ste-lint-023] keeps a success status for the lint command with a noun warning', () => {
+  withFixture((root) => {
+    write(root, { 'openspec/specs/demo/notes.md': 'The read fails.\n' });
+    const result = run(root, ['lint']);
+    assert.equal(result.status, 0, result.output);
+    assert.match(result.output, /^WARN STE-NOUN openspec\/specs\/demo\/notes\.md:1 Check for a verb used as a noun: "read"$/m);
+  });
+});
