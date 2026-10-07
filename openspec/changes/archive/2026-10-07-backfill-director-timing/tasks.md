@@ -503,7 +503,7 @@
 
   Mutation: Change the angle subtraction from 180 to 0. Use `m295`. The test must fail.
 
-- [x] 4.3 Test unknown visual, group, pack and layer fields.
+- [x] 4.3 Test unknown visual, visual control, pack and layer fields.
 
   Mutation: Delete the visual field check. Use `m296`. The test must fail.
 
@@ -557,7 +557,7 @@
 - [x] 4.13 Run the source format command.
 - [x] 4.14 Run the format check on the source files.
 
-- [x] 4.15 Check the next subscriber after an error.
+- [x] 4.15 Check each later subscriber after an error.
 
   Mutation: Limit publication to the first subscriber. Use `m207`. The test must fail.
 
@@ -567,7 +567,7 @@
 
 ## 5. Corrections of review round 2
 
-- [x] 5.1 Test a single scene before the last scene and source scene objects.
+- [x] 5.1 Test a single scene that is not the last scene and the source scene objects.
 
   Mutation: Change `start + 1` to `start + 2`. Use `m313`. The test must fail.
 
@@ -581,7 +581,7 @@
 
   Mutation: Set published elapsed time to 0. Use `m317`. The test must fail.
 
-- [x] 5.4 Test each stopped subscriber snapshot.
+- [x] 5.4 Test the snapshot that each subscriber gets after the stop method.
 
   Mutation: Give each subscriber `running: true` after the stop method. Use `m318`. The test must fail.
 
@@ -589,7 +589,13 @@
 
   Mutation: Change the interactions version limit from 6 to 7. Use `m315`. The test must fail.
 
-- [x] 5.6 Check the final tests, coverage, mutations and prose.
+- [x] 5.6 Check the final tests.
+
+- [x] 5.7 Check the final coverage.
+
+- [x] 5.8 Check the final mutations.
+
+- [x] 5.9 Check the final prose.
 
 ## 6. Gates and review
 

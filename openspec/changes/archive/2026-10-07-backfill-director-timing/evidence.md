@@ -1,6 +1,6 @@
 # Director host evidence
 
-Pass 3 read the base commit `290b5d2` and the working tree of the lead's branch.
+Pass 3 read the base commit `290b5d2` and the working tree of the lead.
 The source comparison below gives no output.
 
 ```sh
@@ -730,7 +730,7 @@ cd /home/ianblenke/docker/gev-work/director && git status --short
 ## Corrections of review round 1
 
 Each row names the first words of a review item.
-Pass 3 read the base commit `290b5d2` and the working tree of the lead's branch.
+Pass 3 read the base commit `290b5d2` and the working tree of the lead.
 
 | Report | First words | Change |
 | --- | --- | --- |
@@ -821,7 +821,7 @@ cd /home/ianblenke/docker/gev-work/director && taskset -c 12-15 nice -n 19 pytho
 
 ## Subscriber error check
 
-The error test also checks that the next subscriber gets the state.
+The error test also checks that each later subscriber gets the snapshot.
 The extra check applies the `m207` mutation to that test.
 Only the first subscriber runs in this mutation.
 The test fails because later subscribers get no snapshot.
@@ -842,9 +842,9 @@ Each row gives the first words of a finding and the change in pass 3.
 
 | Report | First words | Change |
 | --- | --- | --- |
-| Spec | `director-036 names` | Add a single scene test before the last scene and source scene checks; add `m313` and `m314`. |
+| Spec | `director-036 names` | Add a single scene test that starts at a scene that is not the last scene, and source scene checks; add `m313` and `m314`. |
 | Spec | `The WHEN of director-003` | Name validation or migration at a supported version. |
-| Spec | `Tagged tests assert results` | State zero progress for zero total and each stopped subscriber snapshot. |
+| Spec | `Tagged tests assert results` | State zero progress for zero total and the snapshot that each subscriber gets after the stop method. |
 | Spec | `The director-037 AND names` | Check each shot ID and each later subscriber snapshot; add `m316` and `m317`. |
 | Spec | `The accept side` | Import an empty interactions list at version 6; add `m315`. |
 | Spec | `Rows m289-m312 give prose` | Give Old, New, Result and the failed test for each new row. |
@@ -861,7 +861,7 @@ Each row gives the first words of a finding and the change in pass 3.
 | STE | `the default false clock` | State the clock state when the clock does not run; separate the final totals. |
 | STE | `This round adds no` | State that the worker made no commit in this pass. |
 
-The stop test also checks the full snapshot of each subscriber; `m318` gives the wrong clock state.
+The test of the stop method also checks the full snapshot of each subscriber; `m318` gives the wrong clock state.
 The old test titles stay exact inside code blocks.
 The applied Purpose finding is the only skipped replacement.
 
@@ -871,7 +871,7 @@ The six file commands give 310 tests and zero failed tests.
 The title command checks 8 new or changed titles and gives zero word, length or passive voice faults.
 The complete mutation command gives 318 rows, 310 killed mutations and 8 equivalent survivors.
 The survivors are `m009`, `m028`, `m098`, `m219`, `m236`, `m237`, `m238` and `m267`.
-The eight getter, proxy and spy probes pass against the base source and each mutant.
+The eight getter, proxy and spy probes give the same result for the base source and each mutant.
 
 Earlier mutation checks stopped before their end and give no final result.
 The final complete check uses the corrected title patterns.
