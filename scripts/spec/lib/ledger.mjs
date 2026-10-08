@@ -181,8 +181,8 @@ function sameGap(entry, gap) {
 }
 
 /**
- * True for a file with the tolerance conditions: a loaded code file with true coverage,
- * base content or adopted source content, and the content hash of its ledger entry.
+ * True for a loaded code file with true coverage and the content hash of its ledger entry.
+ * The file must have base content or adopted source content.
  */
 function hasTolerance(file, entry, gap, sameAsBase, adoptedAsIs) {
   return (sameAsBase(file) || adoptedAsIs(file)) && gap.sha === entry.sha && entry.loaded && gap.loaded && !entry.untrue && !gap.untrue;
