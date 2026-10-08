@@ -106,10 +106,15 @@ test('processes starting at the same moment agree on one key', async (t) => {
     `process.stdout.write(sharedPanelKey({ file: ${JSON.stringify(file)} }));`;
   const run = () =>
     new Promise((resolve, reject) => {
+      // The eight children race, so the paths each one takes vary between runs.
+      // Leave out their coverage records: the barrier test covers the race paths.
       const child = spawn(
         process.execPath,
         ['--input-type=module', '-e', script],
-        { stdio: ['ignore', 'pipe', 'inherit'] },
+        {
+          stdio: ['ignore', 'pipe', 'inherit'],
+          env: { ...process.env, NODE_V8_COVERAGE: undefined },
+        },
       );
       let out = '';
       child.stdout.on('data', (chunk) => (out += chunk));
@@ -162,8 +167,12 @@ test('concurrent malformed-file repairs return the same persisted key', async (t
           marker(index),
           marker(1 - index),
         ],
-        { stdio: ['ignore', 'pipe', 'inherit'] },
+        {
+          stdio: ['ignore', 'pipe', 'inherit'],
+          env: { ...process.env, NODE_V8_COVERAGE: undefined },
+        },
       );
+      // Which child gets the lock first varies, so their coverage records vary.
       t.after(() => child.kill());
       let out = '';
       child.stdout.on('data', (chunk) => (out += chunk));

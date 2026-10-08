@@ -311,9 +311,25 @@ No production file changes. No assertion is removed. No timer uses `unref()`.
 | `src/voice/pointerCrop.test.mjs` | A 400 ms render deadline after a successful frame. | Save timer handles. Clear them in finally and restore the timer function. | yes |
 | `src/voice/realtimeNarration.test.mjs` | One narration deadline and one metric deadline. | Register metric flush and narration cancel hooks in the controller fixture. | yes |
 | `src/data/analystEngine.test.mjs` | No timer leak. The wall clock ceiling fails under load. | Use a 4000 ms ceiling. Clear the page interval in `t.after` if the query fails. | yes |
+| `src/tools/mcpPanelKey.test.mjs` | No timer leak. Two tests start child processes that race for one key file. Each run takes other branches. The branch count of `server/mcp/panelKey.js` changed between image runs. | Remove `NODE_V8_COVERAGE` from the environment of those children. Ten image runs then give the same coverage records. | yes |
 
 The first fixture correction tries full UI removal. The fake UI has no remove method, so this correction fails.
 The final hooks call the two timer owners directly. The host probe confirms that both owners release their timers.
+
+### Pass 5 coverage race
+
+The first ratchet stopped with `LEDGER-LOST-COVERAGE` for `server/mcp/panelKey.js`.
+The adopt run measured 5 uncovered and 28 covered branches. The ratchet run measured 6 and 26.
+
+The cause is the child processes of `src/tools/mcpPanelKey.test.mjs`. They race for the key file.
+The winner takes different branches in each run.
+
+The row above removes their coverage records. The tests still check that all processes agree on one key.
+The race branches stay uncovered, and the ledger records that gap.
+
+The lead ran the five panel key test files ten times in the image before and after the correction.
+The records of the child processes varied before it and are stable after it.
+The lead then ran adopt again, because the first adopt recorded the old counts.
 
 ## Pass 4 normal tests and baseline
 
