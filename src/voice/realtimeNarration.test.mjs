@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import test, { getTestContext } from 'node:test';
+import test from 'node:test';
+import * as nodeTest from 'node:test';
 import { GevRealtimeController } from './realtimeController.js';
 import { PROGRESS_MAX_OUTPUT_TOKENS } from './realtimeTurns.js';
 
@@ -17,7 +18,8 @@ function controllerFixture({ runner = async () => ({ ok: true }) } = {}) {
     runner,
     debugSink: null,
   });
-  getTestContext().after(() => {
+  // Node 24.14.0 has no getTestContext. The guard of the gates runs on a Node version that has it.
+  nodeTest.getTestContext?.()?.after(() => {
     controller._metrics.flush('stop');
     controller._turns.narration.cancel();
   });
