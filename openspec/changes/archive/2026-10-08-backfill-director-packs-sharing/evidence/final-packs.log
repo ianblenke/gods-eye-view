@@ -1,0 +1,20 @@
+✔ v5 packs and shot references round trip through project migration without acquiring bytes (38.700473ms)
+✔ [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials (16.786669ms)
+✔ [director-080] The manifest checks given image bounds and media anchor references (6.549019ms)
+✔ [director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets (188.144401ms)
+✔ [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints (6.172258ms)
+✔ [director-089] The data pack session removes resources and cancels the transport on Stop (8.920671ms)
+✔ [director-091] The data pack session replaces source work and ignores its late bytes (51.948558ms)
+✔ [director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement (6.986112ms)
+✔ [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result (4.344891ms)
+✔ [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources (16.072118ms)
+✔ [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names (21.252998ms)
+✔ [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal (7.245681ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7232.997928

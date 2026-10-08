@@ -1924,7 +1924,7 @@ cd /home/ianblenke/docker/gev-work/director-3 && cd /home/ianblenke/docker/gev-t
 cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs
 ```
 
-The logs are `baseline-<name>.log` and `final-<name>.log` in the pass4 scratch directory.
+The logs are `baseline-<name>.log` and `final-<name>.log` in the folder `evidence`.
 The command below reads counts and times.
 
 ```sh
@@ -2074,7 +2074,7 @@ The helper uses the same format script.
 The first helper write attempt in the sandbox stopped without a final result.
 Its empty output gives no format result.
 The later host write and check completed with exit code zero.
-The logs are `format-write-host.log` and `format-check-host.log` in the pass4 scratch directory.
+The logs are `format-write-host.log` and `format-check-host.log` in the folder `evidence`.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node scripts/format.mjs --write
@@ -2104,7 +2104,7 @@ The hand input has 408 rows.
 cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass4/check-records.py
 ```
 
-The output is `check-records.log` in the pass4 scratch directory.
+The output is `check-records.log` in the folder `evidence`.
 
 
 ### Complete hand check
@@ -2120,7 +2120,7 @@ No row was skipped, timed out or crashed.
 cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-tools/director-3/pass4/hand-clone /home/ianblenke/docker/gev-tools/director-3/muts.json
 ```
 
-The output is `hand-final.log` in the pass4 scratch directory.
+The output is `hand-final.log` in the folder `evidence`.
 The [hand mutation report](mutations.md) includes that complete output.
 The failed test for m284 is:
 

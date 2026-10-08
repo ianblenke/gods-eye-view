@@ -1,0 +1,26 @@
+baseline worker 1 src/director/packs/backfill.test.mjs: fast 1.93s full 1.95s; skipped 0
+baseline worker 1 src/director/packs/packs.test.mjs: fast 7.26s full 7.29s; skipped 0
+baseline worker 1 src/director/sharing/sharing.test.mjs: fast 10.28s full 9.87s; skipped 0
+baseline worker 2 src/director/packs/backfill.test.mjs: fast 1.97s full 1.98s; skipped 0
+baseline worker 2 src/director/packs/packs.test.mjs: fast 7.30s full 7.35s; skipped 0
+baseline worker 2 src/director/sharing/sharing.test.mjs: fast 9.80s full 9.89s; skipped 0
+baseline worker 3 src/director/packs/backfill.test.mjs: fast 1.94s full 1.91s; skipped 0
+baseline worker 3 src/director/packs/packs.test.mjs: fast 7.22s full 7.30s; skipped 0
+baseline worker 3 src/director/sharing/sharing.test.mjs: fast 9.71s full 9.82s; skipped 0
+baseline worker 4 src/director/packs/backfill.test.mjs: fast 1.93s full 1.96s; skipped 0
+baseline worker 4 src/director/packs/packs.test.mjs: fast 7.10s full 7.06s; skipped 0
+baseline worker 4 src/director/sharing/sharing.test.mjs: fast 9.59s full 9.51s; skipped 0
+phase 1: 20/260, a2625 SURVIVED
+phase 1: 40/260, a0489 KILLED
+phase 1: 60/260, a1431 SURVIVED
+phase 1: 80/260, a0256 KILLED
+phase 1: 100/260, a1472 KILLED
+phase 1 estimate after 100: 10.7 minutes; classes prioritized, string last
+phase 1: 120/260, a2808 KILLED
+phase 1: 140/260, a0108 KILLED
+phase 1: 160/260, a0433 KILLED
+phase 1: 180/260, a0941 KILLED
+phase 1: 200/260, a1425 SURVIVED
+phase 1: 220/260, a1914 KILLED
+phase 1: 240/260, a2687 KILLED
+phase 1: 260/260, a2792 KILLED
