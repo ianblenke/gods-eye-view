@@ -1417,3 +1417,7 @@ The lead runs those checks and the full review round. This pass makes no merge o
 
 The final record lint has exit status 0 in /tmp/pass4-lint-final-record-fixed.log.
 It gives STE: 0 errors, 554 warnings. The final git diff --check command has no error output.
+
+The document and result artifact commit is f8c3c0d3.
+The code and test commit remains 799372f06a74a793d63b4939dd98b7e035a4df69.
+After the document commit, task 6.26 is complete.
