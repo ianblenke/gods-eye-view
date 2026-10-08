@@ -4,9 +4,9 @@ Verdict: PASS
 Reviewers: spec-adversary, ste-adversary
 Date: 2026-10-08
 Gates: make gates CHANGE=upstream-sync-3 passed
-Rounds: 2
-Scope: diff 58b2de7
-Reviewed-Tree: 2e9c84ad4b001e60539601548fb63d0e83e2196cff5abb61f6cbdc36bdb33220
+Rounds: 3
+Scope: diff ab3e2b6
+Reviewed-Tree: TREE_PLACEHOLDER
 
 ## Findings
 
@@ -21,10 +21,23 @@ Full agent reports: `review/round-1/spec-adversary.md`, `review/round-1/ste-adve
 
 ### Round 2 (scope: diff 58b2de7) - PASS (spec-adversary PASS, ste-adversary PASS)
 
-Full agent reports: `review/spec-adversary.md`, `review/ste-adversary.md`.
+Full agent reports: `review/round-2/spec-adversary.md`, `review/round-2/ste-adversary.md`.
 
 - [x] FINDING minor (spec-adversary, 11 findings) The limits under the wrong heading, the order of two tasks, the counts of eight and nine files, the pins of the QA tags, the undefined terms "cross-site" and "same-site", the `@needs` line of the voice bench, the false claim about `build-panel.mjs`, the change of `qa-scripts-023`, the drift of totals for `tiles.js` and `google.js`, the bounds of the panel key limit, the named timer files, and three task faults. Corrected in the proposal, the design, the tasks and the QA headers, or recorded as the limits `qa-tags-not-pinned`, `site-terms-not-defined` and `spec-wording-minors`.
 - [x] FINDING minor (ste-adversary, about 40 findings) Wording in the design, the proposal, the tasks, the new requirement, two test titles, two QA purposes and `SECURITY.md`. Corrected in the proposal, the design, the tasks and the QA headers. The findings in the spec, the test titles, the test comment and `SECURITY.md` need a new ratchet or are upstream text. They are recorded in the limit `spec-wording-minors`.
+
+### Round 3 (scope: diff ab3e2b6) - PASS (spec-adversary PASS, ste-adversary PASS)
+
+Full agent reports: `review/spec-adversary.md`, `review/ste-adversary.md`.
+This round read the corrections of the minor findings of round 2 and the repair that the first final gates run made necessary (next section).
+
+- [x] FINDING minor (spec-adversary, 10 findings) The new assertion of the sweep test could not fail, the evidence sentences mixed two batches of image runs and called a file "alone", the cause was stated as a fact, the table of the six files named only the import as the reason, the host proof had no log, the tasks had no review group and three boxes for one action, the ratchet came after the review, the tenth test correction was not marked as undecided, and `review.md` was stale. Corrected: the test file ages the vanishing tile 25 hours, and the host log `gev-tools/upstream-sync-3/pass-6-host/host.log` shows that two faults make the test fail. The design and the proposal state the 28 runs, call the cause likely, and say that only `tiles.js` has a repeated-run measure. The tasks have the review group, and this file is rewritten.
+- [x] FINDING minor (ste-adversary, about 27 findings) Words with two names ("edit" and "correction", "winner branches" and "race branches"), verbs used as nouns, vague verbs, and noun groups. Corrected in the proposal, the design, the tasks and the comment of the test. The findings that remain are recorded in the limit `spec-wording-minors`.
+- [x] The ratchet ran after the round 3 report. The lead read the new lines of the trace files: the ratchet added one `measurement` line and no change of a gap.
+
+## Corrected after round 2
+
+- [x] The first run of the final gates failed with one error: `LEDGER-LOST-COVERAGE` for `server/providers/mapillary/tiles.js` (7 uncovered functions, the ledger records 6). The handler of a failed `stat` call at line 255 runs only when a tile file vanishes during a sweep, so the count depended on timing under load. The lead ran the image tests 28 times in three batches and found the process of `src/tooling/mapillaryProvider.test.mjs`. The fix is a correction of the first disk sweep test in that adopted test file. The round 3 reviewers read it, and the second review pass made the test fail without the handler and without the replacement. The `waive` command cannot repair this error, because the waiver does not apply to a file that is unchanged since its entry.
 
 ## Rule 21
 
@@ -33,8 +46,12 @@ Full agent reports: `review/spec-adversary.md`, `review/ste-adversary.md`.
 - [x] The command `adopt` ran with `--from 95fa816232456a6831172befa2f1b34b9ee73794`, which is the merged commit and not the merge commit. It recorded 338 files.
 - [x] Resolved files: `.env.example`, `.github/workflows/ci.yml`, `SECURITY.md`, `build/vite.js`, `package-lock.json`, `package.json`, `scripts/package-boundaries.json`, `server/providers/local.js`, `server/providers/places/google.js`, `server/standalone/vite.config.js`, `src/app/constructCatalog.js`, `src/data/layerState.test.mjs`, `src/data/layerStateTokenLedger.test.mjs`, `src/locations.test.mjs`, `src/tooling/viteBuild.test.mjs`, `src/voice/gevRealtime.test.mjs`. The reviewers read the difference of these files from upstream.
 
-## Accepted by the owner
+## Known limits for the owner to confirm
 
-- [x] The child processes of the two race tests in `src/tools/mcpPanelKey.test.mjs` start without `NODE_V8_COVERAGE`. No counted test covers the branches that only the winner of the race reaches in `server/mcp/panelKey.js` (lines 37, 49 and 108). The ledger records 7 uncovered branches and 1 uncovered function for the file. Accepted under the rigor boundary that Ian Blenke accepted on 2026-10-08: upstream code is vendored and adopted with its recorded gap.
-- [x] The analystEngine ranking ceiling of 4000 ms does not measure a linear slowdown below 10 times the old ceiling (limit `ranking-ceiling-not-measured`). Accepted under the same rigor boundary.
-- [x] The totals of six adopted files (`mapillary/tiles.js`, `bhoteKoshiEmbeddedMedia.js`, `flights/motion.js`, `military/queries.js`, `flights/rendering.js`, `military/rendering.js`) and of `google.js` can differ between runs. If the final gates or CI show other counts, the repair is a ledger-refresh change, as in sync 2. The merge owner checks CI on `main` after the push.
+The owner has not yet read these entries. The pull request asks for confirmation.
+
+- [x] The child processes of the two race tests in `src/tools/mcpPanelKey.test.mjs` start without `NODE_V8_COVERAGE`. No counted test covers the race branches at lines 37, 49 and 108 of `server/mcp/panelKey.js`. The ledger records 7 uncovered branches and 1 uncovered function for the file. The lead records this under the rigor boundary that Ian Blenke accepted on 2026-10-08: upstream code is vendored and adopted with its recorded gap. It is not a quoted decision of the owner.
+- [x] The analystEngine ranking ceiling of 4000 ms does not measure a linear slowdown below 10 times the old ceiling (limit `ranking-ceiling-not-measured`). The lead records it under the same rigor boundary.
+- [x] The totals of five other adopted files (`bhoteKoshiEmbeddedMedia.js`, `flights/motion.js`, `military/queries.js`, `flights/rendering.js`, `military/rendering.js`) and of `google.js` can change between runs. Only `tiles.js` has a repeated-run measure. If the final gates or CI show other counts, the repair is a test correction as for `tiles.js`, or a ledger-refresh change as in sync 2.
+- [x] The tenth test correction (`src/tooling/mapillaryProvider.test.mjs`) is not a candidate for an upstream pull request until the owner decides.
+- [x] The open minor findings of rounds 2 and 3 are recorded in the limits `spec-wording-minors`, `qa-tags-not-pinned` and `site-terms-not-defined` of the proposal. They need a new ratchet or concern upstream text.
