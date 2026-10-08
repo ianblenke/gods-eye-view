@@ -1505,7 +1505,7 @@ test('[gap-ledger-136 gap-ledger-140] allow count noise for a new adopted file',
   const smaller = gaps([loaded(file, 9, 9, 9, 'same', BIG)]);
   assert.deepEqual(compareLedger({ ledger, current: smaller, adoptedAsIs: () => true }), { errors: [], stale: [] });
   const complete = gaps([loaded(file, 0, 0, 0, 'same', BIG)]);
-  assert.deepEqual(compareLedger({ ledger, current: complete, adoptedAsIs: () => true }), { errors: [], stale: [] });
+  assert.deepEqual(compareLedger({ ledger, current: complete, adoptedAsIs: name => name === file }), { errors: [], stale: [] });
 });
 
 test('[gap-ledger-137] use no new tolerance for another ledger hash', () => {

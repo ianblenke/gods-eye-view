@@ -2623,7 +2623,7 @@ const TOLERANCE_OPTIONS = {
     const root = options.cwd;
     const runs = JSON.parse(readFileSync(args[1], 'utf8'));
     const files = Object.keys(JSON.parse(readFileSync(path.join(root, '.gev-cache/spec/inventory.json'), 'utf8')));
-    const text = files.map(file => `SF:${root}/${file}\nLF:100\nLH:100\nBRF:100\nBRH:${file === 'src/merged.js' ? 99 : 100}\nFNF:100\nFNH:100\nend_of_record\n`).join('');
+    const text = files.map(file => `SF:${root}/${file}\nLF:100\nLH:100\nBRF:100\nBRH:${file === 'src/merged.js' || file === 'src/legacy.js' ? 99 : 100}\nFNF:100\nFNH:100\nend_of_record\n`).join('');
     writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), text);
     writeFileSync(path.join(runs[0].env.NODE_V8_COVERAGE, 'coverage-1-1-0.json'), '{"result":[]}');
     writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ checked: files, violations: [], assertions: [], leaks: [] }) + '\n');
@@ -2724,6 +2724,33 @@ test('[gap-ledger-146] need the production file in a valid adopt record', () => 
     assert.equal(lines[0].file, 'src/merged.test.mjs');
     write(root, { 'openspec/trace/history.jsonl': lines.map(line => JSON.stringify(line) + '\n').join('') });
     const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
+
+test('[gap-ledger-069] keep count tolerance for base content in the gate', () => {
+  withMergeFixture((root) => {
+    adoptedNoise(root);
+    const file = 'src/legacy.js';
+    const ledger = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8'));
+    ledger.coverage[file].branches = 0;
+    write(root, { 'openspec/trace/gaps.json': JSON.stringify(ledger) + '\n' });
+    const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-(?:STALE|LOST-COVERAGE)[^\n]*src\/legacy\.js/);
+    assert.match(result.output, /Ledger: 0 entries do not match the current gaps\./);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
+
+test('[gap-ledger-081] keep the waiver count for an edited adopted file in the gate', () => {
+  withMergeFixture((root) => {
+    adoptedNoise(root);
+    const file = 'src/merged.js';
+    const ledger = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8'));
+    ledger.coverage[file].branches = 0;
+    write(root, { 'openspec/trace/gaps.json': JSON.stringify(ledger) + '\n', [file]: NOISE_SOURCE + '// Local edit.\n' });
+    appendFileSync(path.join(root, 'openspec/trace/history.jsonl'), JSON.stringify({ kind: 'waiver', change: 'sync', file, metric: 'branches', count: 1, sha: contentHash(readFileSync(path.join(root, file), 'utf8')) }) + '\n');
+    const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-LARGER-GAP src\/merged\.js/);
     assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
