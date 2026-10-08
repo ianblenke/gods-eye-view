@@ -1,0 +1,4720 @@
+{
+  "sourceCommit": "3a72f0f21b160c6c2a9cdabede2df2dda7ec2c23",
+  "baseRead": "88894512ef934f160fbeebea551d6cd2607c9c43",
+  "generated": 7681,
+  "selected": 129,
+  "totals": {
+    "KILLED": 123,
+    "SURVIVED": 5,
+    "CRASH": 1
+  },
+  "mutants": [
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5310,
+      "end": 5326,
+      "class": "default",
+      "old": "{ coverage: {} }",
+      "new": "undefined",
+      "note": "default",
+      "line": 108,
+      "col": 95,
+      "id": "a0853",
+      "runs": [
+        {
+          "id": "a0853",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2460,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5310,
+      "end": 5326,
+      "class": "default",
+      "old": "{ coverage: {} }",
+      "new": "{ coverage: {} } + 1",
+      "note": "default",
+      "line": 108,
+      "col": 95,
+      "id": "a0854",
+      "runs": [
+        {
+          "id": "a0854",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2396,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5310,
+      "end": 5326,
+      "class": "default",
+      "old": "{ coverage: {} }",
+      "new": "{ coverage: {} } - 1",
+      "note": "default",
+      "line": 108,
+      "col": 95,
+      "id": "a0855",
+      "runs": [
+        {
+          "id": "a0855",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 3051,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5312,
+      "end": 5324,
+      "class": "object",
+      "old": "coverage: {}",
+      "new": "",
+      "note": "object",
+      "line": 108,
+      "col": 97,
+      "id": "a0856",
+      "runs": [
+        {
+          "id": "a0856",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2375,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5310,
+      "end": 5326,
+      "class": "object",
+      "old": "{ coverage: {} }",
+      "new": "{}",
+      "note": "object",
+      "line": 108,
+      "col": 95,
+      "id": "a0857",
+      "runs": [
+        {
+          "id": "a0857",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2437,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5343,
+      "end": 5363,
+      "class": "default",
+      "old": "Object.keys(changed)",
+      "new": "undefined",
+      "note": "default",
+      "line": 108,
+      "col": 128,
+      "id": "a0858",
+      "runs": [
+        {
+          "id": "a0858",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2385,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5343,
+      "end": 5363,
+      "class": "default",
+      "old": "Object.keys(changed)",
+      "new": "Object.keys(changed) + 1",
+      "note": "default",
+      "line": 108,
+      "col": 128,
+      "id": "a0859",
+      "runs": [
+        {
+          "id": "a0859",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4000
+        },
+        {
+          "id": "a0859",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 6823,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5343,
+      "end": 5363,
+      "class": "default",
+      "old": "Object.keys(changed)",
+      "new": "Object.keys(changed) - 1",
+      "note": "default",
+      "line": 108,
+      "col": 128,
+      "id": "a0860",
+      "runs": [
+        {
+          "id": "a0860",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 3039,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5355,
+      "end": 5362,
+      "class": "arguments",
+      "old": "changed",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 108,
+      "col": 140,
+      "id": "a0861",
+      "runs": [
+        {
+          "id": "a0861",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "arguments",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 3083,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5355,
+      "end": 5362,
+      "class": "argument-drop",
+      "old": "changed",
+      "new": "",
+      "note": "argument-drop",
+      "line": 108,
+      "col": 140,
+      "id": "a0862",
+      "runs": [
+        {
+          "id": "a0862",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "argument-drop",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2473,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5740,
+      "end": 5818,
+      "class": "condition",
+      "old": "!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)",
+      "new": "true",
+      "note": "condition",
+      "line": 114,
+      "col": 9,
+      "id": "a0937",
+      "runs": [
+        {
+          "id": "a0937",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "condition",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2340,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5740,
+      "end": 5818,
+      "class": "condition",
+      "old": "!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)",
+      "new": "false",
+      "note": "condition",
+      "line": 114,
+      "col": 9,
+      "id": "a0938",
+      "runs": [
+        {
+          "id": "a0938",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "condition",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2360,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5736,
+      "end": 5829,
+      "class": "branch",
+      "old": "if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;",
+      "new": "continue;",
+      "note": "branch",
+      "line": 114,
+      "col": 5,
+      "id": "a0939",
+      "runs": [
+        {
+          "id": "a0939",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "branch",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2863,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5736,
+      "end": 5829,
+      "class": "statement",
+      "old": "if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;",
+      "new": "",
+      "note": "statement",
+      "line": 114,
+      "col": 5,
+      "id": "a0940",
+      "runs": [
+        {
+          "id": "a0940",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "statement",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 3591,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5774,
+      "end": 5776,
+      "class": "logical",
+      "old": "&&",
+      "new": "||",
+      "note": "logical",
+      "line": 114,
+      "col": 43,
+      "id": "a0941",
+      "runs": [
+        {
+          "id": "a0941",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "logical",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 4994,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5740,
+      "end": 5773,
+      "class": "operand",
+      "old": "!changedFiles.includes(item.file)",
+      "new": "true",
+      "note": "operand",
+      "line": 114,
+      "col": 9,
+      "id": "a0942",
+      "runs": [
+        {
+          "id": "a0942",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "operand",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 3945,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5777,
+      "end": 5818,
+      "class": "operand",
+      "old": "Object.hasOwn(ledger.coverage, item.file)",
+      "new": "true",
+      "note": "operand",
+      "line": 114,
+      "col": 46,
+      "id": "a0943",
+      "runs": [
+        {
+          "id": "a0943",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "operand",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 3644,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5740,
+      "end": 5818,
+      "class": "operand-drop",
+      "old": "!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)",
+      "new": "!changedFiles.includes(item.file)",
+      "note": "operand-drop",
+      "line": 114,
+      "col": 9,
+      "id": "a0944",
+      "runs": [
+        {
+          "id": "a0944",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "operand-drop",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2329,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5740,
+      "end": 5818,
+      "class": "operand-drop",
+      "old": "!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)",
+      "new": "Object.hasOwn(ledger.coverage, item.file)",
+      "note": "operand-drop",
+      "line": 114,
+      "col": 9,
+      "id": "a0945",
+      "runs": [
+        {
+          "id": "a0945",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "operand-drop",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2903,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5740,
+      "end": 5818,
+      "class": "operand-order",
+      "old": "!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)",
+      "new": "Object.hasOwn(ledger.coverage, item.file) && !changedFiles.includes(item.file)",
+      "note": "operand-order",
+      "line": 114,
+      "col": 9,
+      "id": "a0946",
+      "runs": [
+        {
+          "id": "a0946",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "operand-order",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 3882
+        },
+        {
+          "id": "a0946",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "operand-order",
+          "phase": 2,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 17454
+        }
+      ],
+      "assessment": "EQUIVALENT",
+      "probeCases": 8
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5740,
+      "end": 5773,
+      "class": "condition",
+      "old": "!changedFiles.includes(item.file)",
+      "new": "false",
+      "note": "condition",
+      "line": 114,
+      "col": 9,
+      "id": "a0947",
+      "runs": [
+        {
+          "id": "a0947",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "condition",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2326,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5740,
+      "end": 5773,
+      "class": "negation",
+      "old": "!changedFiles.includes(item.file)",
+      "new": "changedFiles.includes(item.file)",
+      "note": "negation",
+      "line": 114,
+      "col": 9,
+      "id": "a0948",
+      "runs": [
+        {
+          "id": "a0948",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "negation",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2440,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5763,
+      "end": 5772,
+      "class": "arguments",
+      "old": "item.file",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 114,
+      "col": 32,
+      "id": "a0949",
+      "runs": [
+        {
+          "id": "a0949",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "arguments",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2373,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5763,
+      "end": 5772,
+      "class": "argument-drop",
+      "old": "item.file",
+      "new": "",
+      "note": "argument-drop",
+      "line": 114,
+      "col": 32,
+      "id": "a0950",
+      "runs": [
+        {
+          "id": "a0950",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "argument-drop",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2788,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5741,
+      "end": 5773,
+      "class": "call-value",
+      "old": "changedFiles.includes(item.file)",
+      "new": "undefined",
+      "note": "call-value",
+      "line": 114,
+      "col": 10,
+      "id": "a0951",
+      "runs": [
+        {
+          "id": "a0951",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "call-value",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2861,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5741,
+      "end": 5773,
+      "class": "predicate",
+      "old": "changedFiles.includes(item.file)",
+      "new": "false",
+      "note": "predicate",
+      "line": 114,
+      "col": 10,
+      "id": "a0952",
+      "runs": [
+        {
+          "id": "a0952",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "predicate",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2238,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5741,
+      "end": 5773,
+      "class": "predicate",
+      "old": "changedFiles.includes(item.file)",
+      "new": "true",
+      "note": "predicate",
+      "line": 114,
+      "col": 10,
+      "id": "a0953",
+      "runs": [
+        {
+          "id": "a0953",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "predicate",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2910,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5791,
+      "end": 5806,
+      "class": "arguments",
+      "old": "ledger.coverage",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 114,
+      "col": 60,
+      "id": "a0954",
+      "runs": [
+        {
+          "id": "a0954",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "arguments",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2327,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5808,
+      "end": 5817,
+      "class": "arguments",
+      "old": "item.file",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 114,
+      "col": 77,
+      "id": "a0955",
+      "runs": [
+        {
+          "id": "a0955",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "arguments",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2902,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5791,
+      "end": 5808,
+      "class": "argument-drop",
+      "old": "ledger.coverage, ",
+      "new": "",
+      "note": "argument-drop",
+      "line": 114,
+      "col": 60,
+      "id": "a0956",
+      "runs": [
+        {
+          "id": "a0956",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "argument-drop",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2313,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5806,
+      "end": 5817,
+      "class": "argument-drop",
+      "old": ", item.file",
+      "new": "",
+      "note": "argument-drop",
+      "line": 114,
+      "col": 75,
+      "id": "a0957",
+      "runs": [
+        {
+          "id": "a0957",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "argument-drop",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2913,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5777,
+      "end": 5818,
+      "class": "call-value",
+      "old": "Object.hasOwn(ledger.coverage, item.file)",
+      "new": "undefined",
+      "note": "call-value",
+      "line": 114,
+      "col": 46,
+      "id": "a0958",
+      "runs": [
+        {
+          "id": "a0958",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "call-value",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2351,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5777,
+      "end": 5818,
+      "class": "ownership",
+      "old": "Object.hasOwn(ledger.coverage, item.file)",
+      "new": "item.file in ledger.coverage",
+      "note": "ownership",
+      "line": 114,
+      "col": 46,
+      "id": "a0959",
+      "runs": [
+        {
+          "id": "a0959",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "ownership",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 3840
+        },
+        {
+          "id": "a0959",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "ownership",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 6923,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5777,
+      "end": 5818,
+      "class": "predicate",
+      "old": "Object.hasOwn(ledger.coverage, item.file)",
+      "new": "false",
+      "note": "predicate",
+      "line": 114,
+      "col": 46,
+      "id": "a0960",
+      "runs": [
+        {
+          "id": "a0960",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "predicate",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 2919,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5249,
+      "end": 5259,
+      "class": "destructure-remove",
+      "old": "manifest, ",
+      "new": "",
+      "note": "destructure-remove",
+      "line": 108,
+      "col": 34,
+      "id": "a9206",
+      "runs": [
+        {
+          "id": "a9206",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "destructure-remove",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2338,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5259,
+      "end": 5269,
+      "class": "destructure-remove",
+      "old": "coverage, ",
+      "new": "",
+      "note": "destructure-remove",
+      "line": 108,
+      "col": 44,
+      "id": "a9207",
+      "runs": [
+        {
+          "id": "a9207",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "destructure-remove",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2900,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5269,
+      "end": 5278,
+      "class": "destructure-remove",
+      "old": "changed, ",
+      "new": "",
+      "note": "destructure-remove",
+      "line": 108,
+      "col": 54,
+      "id": "a9208",
+      "runs": [
+        {
+          "id": "a9208",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "destructure-remove",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2392,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5278,
+      "end": 5292,
+      "class": "destructure-remove",
+      "old": "lineCoverage, ",
+      "new": "",
+      "note": "destructure-remove",
+      "line": 108,
+      "col": 63,
+      "id": "a9209",
+      "runs": [
+        {
+          "id": "a9209",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "destructure-remove",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-007] lists all uncovered changed lines in both classes"
+          },
+          "ms": 2315,
+          "failedTests": [
+            "[ownership-007] lists all uncovered changed lines in both classes"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5292,
+      "end": 5301,
+      "class": "destructure-remove",
+      "old": "waivers, ",
+      "new": "",
+      "note": "destructure-remove",
+      "line": 108,
+      "col": 77,
+      "id": "a9210",
+      "runs": [
+        {
+          "id": "a9210",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "destructure-remove",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2845,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5301,
+      "end": 5328,
+      "class": "destructure-remove",
+      "old": "ledger = { coverage: {} }, ",
+      "new": "",
+      "note": "destructure-remove",
+      "line": 108,
+      "col": 86,
+      "id": "a9211",
+      "runs": [
+        {
+          "id": "a9211",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "destructure-remove",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2376,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5326,
+      "end": 5363,
+      "class": "destructure-remove",
+      "old": ", changedFiles = Object.keys(changed)",
+      "new": "",
+      "note": "destructure-remove",
+      "line": 108,
+      "col": 111,
+      "id": "a9212",
+      "runs": [
+        {
+          "id": "a9212",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "destructure-remove",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 3017,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5310,
+      "end": 5326,
+      "class": "default-shape",
+      "old": "{ coverage: {} }",
+      "new": "null",
+      "note": "default-shape",
+      "line": 108,
+      "col": 95,
+      "id": "a9213",
+      "runs": [
+        {
+          "id": "a9213",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default-shape",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2436,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5310,
+      "end": 5326,
+      "class": "default-shape",
+      "old": "{ coverage: {} }",
+      "new": "[]",
+      "note": "default-shape",
+      "line": 108,
+      "col": 95,
+      "id": "a9214",
+      "runs": [
+        {
+          "id": "a9214",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default-shape",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2983,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5310,
+      "end": 5326,
+      "class": "default-shape",
+      "old": "{ coverage: {} }",
+      "new": "false",
+      "note": "default-shape",
+      "line": 108,
+      "col": 95,
+      "id": "a9215",
+      "runs": [
+        {
+          "id": "a9215",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default-shape",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2368,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5343,
+      "end": 5363,
+      "class": "default-shape",
+      "old": "Object.keys(changed)",
+      "new": "null",
+      "note": "default-shape",
+      "line": 108,
+      "col": 128,
+      "id": "a9216",
+      "runs": [
+        {
+          "id": "a9216",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default-shape",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 3020,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5343,
+      "end": 5363,
+      "class": "default-shape",
+      "old": "Object.keys(changed)",
+      "new": "{}",
+      "note": "default-shape",
+      "line": 108,
+      "col": 128,
+      "id": "a9217",
+      "runs": [
+        {
+          "id": "a9217",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default-shape",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2382,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5343,
+      "end": 5363,
+      "class": "default-shape",
+      "old": "Object.keys(changed)",
+      "new": "[]",
+      "note": "default-shape",
+      "line": 108,
+      "col": 128,
+      "id": "a9218",
+      "runs": [
+        {
+          "id": "a9218",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default-shape",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 3986
+        },
+        {
+          "id": "a9218",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default-shape",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          },
+          "ms": 6766,
+          "failedTests": [
+            "[ownership-026 ownership-027 ownership-028] checks ledger and base scope"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5343,
+      "end": 5363,
+      "class": "default-shape",
+      "old": "Object.keys(changed)",
+      "new": "false",
+      "note": "default-shape",
+      "line": 108,
+      "col": 128,
+      "id": "a9219",
+      "runs": [
+        {
+          "id": "a9219",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "default-shape",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2937,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5460,
+      "end": 6223,
+      "class": "statement-order",
+      "old": "const ownWaivers = item => waivers.filter(waiver => waiver.file === item.file && waiver.sha === item.sha && Number.isInteger(waiver.count) && waiver.count > 0);\n  for (const item of coverage) {\n    if (classify(manifest, item.file) !== 'owned' || item.complete) continue;\n    if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;\n    const valid = ownWaivers(item);\n    if (item.loaded && !item.untrue && METRICS.every(metric => item[metric] !== null && item[metric].uncovered <= valid.filter(waiver => waiver.metric === metric).reduce((sum, waiver) => sum + waiver.count, 0))) continue;\n    errors.push({ code: 'COVERAGE-OWNED', file: item.file, message: 'Owned code needs full line, branch and function coverage.' });\n  }",
+      "new": "for (const item of coverage) {\n    if (classify(manifest, item.file) !== 'owned' || item.complete) continue;\n    if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;\n    const valid = ownWaivers(item);\n    if (item.loaded && !item.untrue && METRICS.every(metric => item[metric] !== null && item[metric].uncovered <= valid.filter(waiver => waiver.metric === metric).reduce((sum, waiver) => sum + waiver.count, 0))) continue;\n    errors.push({ code: 'COVERAGE-OWNED', file: item.file, message: 'Owned code needs full line, branch and function coverage.' });\n  }\n  const ownWaivers = item => waivers.filter(waiver => waiver.file === item.file && waiver.sha === item.sha && Number.isInteger(waiver.count) && waiver.count > 0);",
+      "note": "statement-order",
+      "line": 111,
+      "col": 3,
+      "id": "a9222",
+      "runs": [
+        {
+          "id": "a9222",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "statement-order",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownership.test.mjs",
+            "test": "[ownership-004] rejects all owned gap metrics"
+          },
+          "ms": 2969,
+          "failedTests": [
+            "[ownership-004] rejects all owned gap metrics"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5623,
+      "end": 6871,
+      "class": "statement-order",
+      "old": "for (const item of coverage) {\n    if (classify(manifest, item.file) !== 'owned' || item.complete) continue;\n    if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;\n    const valid = ownWaivers(item);\n    if (item.loaded && !item.untrue && METRICS.every(metric => item[metric] !== null && item[metric].uncovered <= valid.filter(waiver => waiver.metric === metric).reduce((sum, waiver) => sum + waiver.count, 0))) continue;\n    errors.push({ code: 'COVERAGE-OWNED', file: item.file, message: 'Owned code needs full line, branch and function coverage.' });\n  }\n  for (const [file, lines] of Object.entries(changed)) {\n    const item = records.get(file);\n    const trueFile = item && item.loaded && !item.untrue;\n    const covered = new Set(trueFile ? lineCoverage[file] ?? [] : []);\n    const waived = new Set(trueFile ? ownWaivers(item).filter(waiver => waiver.metric === 'lines' && waiver.lines.length <= waiver.count).flatMap(waiver => waiver.lines) : []);\n    const uncovered = lines.filter(line => !covered.has(line) && !waived.has(line));\n    if (uncovered.length > 0) errors.push({ code: 'COVERAGE-DIFF', file, lines: uncovered, message: `Changed lines need coverage: ${uncovered.join(', ')}.` });\n  }",
+      "new": "for (const [file, lines] of Object.entries(changed)) {\n    const item = records.get(file);\n    const trueFile = item && item.loaded && !item.untrue;\n    const covered = new Set(trueFile ? lineCoverage[file] ?? [] : []);\n    const waived = new Set(trueFile ? ownWaivers(item).filter(waiver => waiver.metric === 'lines' && waiver.lines.length <= waiver.count).flatMap(waiver => waiver.lines) : []);\n    const uncovered = lines.filter(line => !covered.has(line) && !waived.has(line));\n    if (uncovered.length > 0) errors.push({ code: 'COVERAGE-DIFF', file, lines: uncovered, message: `Changed lines need coverage: ${uncovered.join(', ')}.` });\n  }\n  for (const item of coverage) {\n    if (classify(manifest, item.file) !== 'owned' || item.complete) continue;\n    if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;\n    const valid = ownWaivers(item);\n    if (item.loaded && !item.untrue && METRICS.every(metric => item[metric] !== null && item[metric].uncovered <= valid.filter(waiver => waiver.metric === metric).reduce((sum, waiver) => sum + waiver.count, 0))) continue;\n    errors.push({ code: 'COVERAGE-OWNED', file: item.file, message: 'Owned code needs full line, branch and function coverage.' });\n  }",
+      "note": "statement-order",
+      "line": 112,
+      "col": 3,
+      "id": "a9223",
+      "runs": [
+        {
+          "id": "a9223",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "statement-order",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4051
+        },
+        {
+          "id": "a9223",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "statement-order",
+          "phase": 2,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 17207
+        }
+      ],
+      "assessment": "EQUIVALENT",
+      "probeCases": 8
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5658,
+      "end": 5829,
+      "class": "statement-order",
+      "old": "if (classify(manifest, item.file) !== 'owned' || item.complete) continue;\n    if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;",
+      "new": "if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;\n    if (classify(manifest, item.file) !== 'owned' || item.complete) continue;",
+      "note": "statement-order",
+      "line": 113,
+      "col": 5,
+      "id": "a9227",
+      "runs": [
+        {
+          "id": "a9227",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "statement-order",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6682
+        },
+        {
+          "id": "a9227",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "statement-order",
+          "phase": 2,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 17215
+        }
+      ],
+      "assessment": "EQUIVALENT",
+      "probeCases": 8
+    },
+    {
+      "file": "scripts/spec/lib/ownership.mjs",
+      "start": 5736,
+      "end": 5865,
+      "class": "statement-order",
+      "old": "if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;\n    const valid = ownWaivers(item);",
+      "new": "const valid = ownWaivers(item);\n    if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;",
+      "note": "statement-order",
+      "line": 114,
+      "col": 5,
+      "id": "a9228",
+      "runs": [
+        {
+          "id": "a9228",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "statement-order",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 3959
+        },
+        {
+          "id": "a9228",
+          "file": "scripts/spec/lib/ownership.mjs",
+          "class": "statement-order",
+          "phase": 2,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 17673
+        }
+      ],
+      "assessment": "EQUIVALENT",
+      "probeCases": 8
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29390,
+      "end": 29434,
+      "class": "condition",
+      "old": "command === 'check' || command === 'ratchet'",
+      "new": "true",
+      "note": "condition",
+      "line": 566,
+      "col": 7,
+      "id": "a5232",
+      "runs": [
+        {
+          "id": "a5232",
+          "file": "scripts/spec/gates.mjs",
+          "class": "condition",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6654
+        },
+        {
+          "id": "a5232",
+          "file": "scripts/spec/gates.mjs",
+          "class": "condition",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          },
+          "ms": 17721,
+          "failedTests": [
+            "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29390,
+      "end": 29434,
+      "class": "condition",
+      "old": "command === 'check' || command === 'ratchet'",
+      "new": "false",
+      "note": "condition",
+      "line": 566,
+      "col": 7,
+      "id": "a5233",
+      "runs": [
+        {
+          "id": "a5233",
+          "file": "scripts/spec/gates.mjs",
+          "class": "condition",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4114
+        },
+        {
+          "id": "a5233",
+          "file": "scripts/spec/gates.mjs",
+          "class": "condition",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17482,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29386,
+      "end": 29494,
+      "class": "branch",
+      "old": "if (command === 'check' || command === 'ratchet') for (const line of gapReport(manifest, ledger)) log(line);",
+      "new": "for (const line of gapReport(manifest, ledger)) log(line);",
+      "note": "branch",
+      "line": 566,
+      "col": 3,
+      "id": "a5234",
+      "runs": [
+        {
+          "id": "a5234",
+          "file": "scripts/spec/gates.mjs",
+          "class": "branch",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4031
+        },
+        {
+          "id": "a5234",
+          "file": "scripts/spec/gates.mjs",
+          "class": "branch",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          },
+          "ms": 17606,
+          "failedTests": [
+            "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29386,
+      "end": 29494,
+      "class": "statement",
+      "old": "if (command === 'check' || command === 'ratchet') for (const line of gapReport(manifest, ledger)) log(line);",
+      "new": "",
+      "note": "statement",
+      "line": 566,
+      "col": 3,
+      "id": "a5235",
+      "runs": [
+        {
+          "id": "a5235",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 7381
+        },
+        {
+          "id": "a5235",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17378,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29410,
+      "end": 29412,
+      "class": "logical",
+      "old": "||",
+      "new": "&&",
+      "note": "logical",
+      "line": 566,
+      "col": 27,
+      "id": "a5236",
+      "runs": [
+        {
+          "id": "a5236",
+          "file": "scripts/spec/gates.mjs",
+          "class": "logical",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 5459
+        },
+        {
+          "id": "a5236",
+          "file": "scripts/spec/gates.mjs",
+          "class": "logical",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17654,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29390,
+      "end": 29409,
+      "class": "operand",
+      "old": "command === 'check'",
+      "new": "false",
+      "note": "operand",
+      "line": 566,
+      "col": 7,
+      "id": "a5237",
+      "runs": [
+        {
+          "id": "a5237",
+          "file": "scripts/spec/gates.mjs",
+          "class": "operand",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4574
+        },
+        {
+          "id": "a5237",
+          "file": "scripts/spec/gates.mjs",
+          "class": "operand",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17470,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29413,
+      "end": 29434,
+      "class": "operand",
+      "old": "command === 'ratchet'",
+      "new": "false",
+      "note": "operand",
+      "line": 566,
+      "col": 30,
+      "id": "a5238",
+      "runs": [
+        {
+          "id": "a5238",
+          "file": "scripts/spec/gates.mjs",
+          "class": "operand",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6832
+        },
+        {
+          "id": "a5238",
+          "file": "scripts/spec/gates.mjs",
+          "class": "operand",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17767,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29390,
+      "end": 29434,
+      "class": "operand-drop",
+      "old": "command === 'check' || command === 'ratchet'",
+      "new": "command === 'check'",
+      "note": "operand-drop",
+      "line": 566,
+      "col": 7,
+      "id": "a5239",
+      "runs": [
+        {
+          "id": "a5239",
+          "file": "scripts/spec/gates.mjs",
+          "class": "operand-drop",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6736
+        },
+        {
+          "id": "a5239",
+          "file": "scripts/spec/gates.mjs",
+          "class": "operand-drop",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17723,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29390,
+      "end": 29434,
+      "class": "operand-drop",
+      "old": "command === 'check' || command === 'ratchet'",
+      "new": "command === 'ratchet'",
+      "note": "operand-drop",
+      "line": 566,
+      "col": 7,
+      "id": "a5240",
+      "runs": [
+        {
+          "id": "a5240",
+          "file": "scripts/spec/gates.mjs",
+          "class": "operand-drop",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 3993
+        },
+        {
+          "id": "a5240",
+          "file": "scripts/spec/gates.mjs",
+          "class": "operand-drop",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17521,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29390,
+      "end": 29434,
+      "class": "operand-order",
+      "old": "command === 'check' || command === 'ratchet'",
+      "new": "command === 'ratchet' || command === 'check'",
+      "note": "operand-order",
+      "line": 566,
+      "col": 7,
+      "id": "a5241",
+      "runs": [
+        {
+          "id": "a5241",
+          "file": "scripts/spec/gates.mjs",
+          "class": "operand-order",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6805
+        },
+        {
+          "id": "a5241",
+          "file": "scripts/spec/gates.mjs",
+          "class": "operand-order",
+          "phase": 2,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 17663
+        }
+      ],
+      "assessment": "EQUIVALENT",
+      "probeCases": 7
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29398,
+      "end": 29401,
+      "class": "equality",
+      "old": "===",
+      "new": "!==",
+      "note": "equality",
+      "line": 566,
+      "col": 15,
+      "id": "a5242",
+      "runs": [
+        {
+          "id": "a5242",
+          "file": "scripts/spec/gates.mjs",
+          "class": "equality",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 7159
+        },
+        {
+          "id": "a5242",
+          "file": "scripts/spec/gates.mjs",
+          "class": "equality",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          },
+          "ms": 17645,
+          "failedTests": [
+            "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29390,
+      "end": 29409,
+      "class": "predicate",
+      "old": "command === 'check'",
+      "new": "true",
+      "note": "predicate",
+      "line": 566,
+      "col": 7,
+      "id": "a5243",
+      "runs": [
+        {
+          "id": "a5243",
+          "file": "scripts/spec/gates.mjs",
+          "class": "predicate",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4092
+        },
+        {
+          "id": "a5243",
+          "file": "scripts/spec/gates.mjs",
+          "class": "predicate",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          },
+          "ms": 17715,
+          "failedTests": [
+            "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29402,
+      "end": 29409,
+      "class": "string",
+      "old": "'check'",
+      "new": "''",
+      "note": "string",
+      "line": 566,
+      "col": 19,
+      "id": "a5244",
+      "runs": [
+        {
+          "id": "a5244",
+          "file": "scripts/spec/gates.mjs",
+          "class": "string",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4085
+        },
+        {
+          "id": "a5244",
+          "file": "scripts/spec/gates.mjs",
+          "class": "string",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 16958,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29421,
+      "end": 29424,
+      "class": "equality",
+      "old": "===",
+      "new": "!==",
+      "note": "equality",
+      "line": 566,
+      "col": 38,
+      "id": "a5245",
+      "runs": [
+        {
+          "id": "a5245",
+          "file": "scripts/spec/gates.mjs",
+          "class": "equality",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 12515
+        },
+        {
+          "id": "a5245",
+          "file": "scripts/spec/gates.mjs",
+          "class": "equality",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          },
+          "ms": 17875,
+          "failedTests": [
+            "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29413,
+      "end": 29434,
+      "class": "predicate",
+      "old": "command === 'ratchet'",
+      "new": "true",
+      "note": "predicate",
+      "line": 566,
+      "col": 30,
+      "id": "a5246",
+      "runs": [
+        {
+          "id": "a5246",
+          "file": "scripts/spec/gates.mjs",
+          "class": "predicate",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4191
+        },
+        {
+          "id": "a5246",
+          "file": "scripts/spec/gates.mjs",
+          "class": "predicate",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          },
+          "ms": 17665,
+          "failedTests": [
+            "[ownership-004 ownership-026] adopt records a gap before the owned file check"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29425,
+      "end": 29434,
+      "class": "string",
+      "old": "'ratchet'",
+      "new": "''",
+      "note": "string",
+      "line": 566,
+      "col": 42,
+      "id": "a5247",
+      "runs": [
+        {
+          "id": "a5247",
+          "file": "scripts/spec/gates.mjs",
+          "class": "string",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6394
+        },
+        {
+          "id": "a5247",
+          "file": "scripts/spec/gates.mjs",
+          "class": "string",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 15941,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29455,
+      "end": 29482,
+      "class": "iteration",
+      "old": "gapReport(manifest, ledger)",
+      "new": "gapReport(manifest, ledger).slice(0,1)",
+      "note": "iteration",
+      "line": 566,
+      "col": 72,
+      "id": "a5248",
+      "runs": [
+        {
+          "id": "a5248",
+          "file": "scripts/spec/gates.mjs",
+          "class": "iteration",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6594
+        },
+        {
+          "id": "a5248",
+          "file": "scripts/spec/gates.mjs",
+          "class": "iteration",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17437,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29455,
+      "end": 29482,
+      "class": "iteration",
+      "old": "gapReport(manifest, ledger)",
+      "new": "[]",
+      "note": "iteration",
+      "line": 566,
+      "col": 72,
+      "id": "a5249",
+      "runs": [
+        {
+          "id": "a5249",
+          "file": "scripts/spec/gates.mjs",
+          "class": "iteration",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4041
+        },
+        {
+          "id": "a5249",
+          "file": "scripts/spec/gates.mjs",
+          "class": "iteration",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17371,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29465,
+      "end": 29473,
+      "class": "arguments",
+      "old": "manifest",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 566,
+      "col": 82,
+      "id": "a5250",
+      "runs": [
+        {
+          "id": "a5250",
+          "file": "scripts/spec/gates.mjs",
+          "class": "arguments",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-007] stops when Git cannot read a code diff"
+          },
+          "ms": 3993,
+          "failedTests": [
+            "[ownership-007] stops when Git cannot read a code diff"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29475,
+      "end": 29481,
+      "class": "arguments",
+      "old": "ledger",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 566,
+      "col": 92,
+      "id": "a5251",
+      "runs": [
+        {
+          "id": "a5251",
+          "file": "scripts/spec/gates.mjs",
+          "class": "arguments",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6323,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29465,
+      "end": 29475,
+      "class": "argument-drop",
+      "old": "manifest, ",
+      "new": "",
+      "note": "argument-drop",
+      "line": 566,
+      "col": 82,
+      "id": "a5252",
+      "runs": [
+        {
+          "id": "a5252",
+          "file": "scripts/spec/gates.mjs",
+          "class": "argument-drop",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-007] stops when Git cannot read a code diff"
+          },
+          "ms": 4124,
+          "failedTests": [
+            "[ownership-007] stops when Git cannot read a code diff"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29473,
+      "end": 29481,
+      "class": "argument-drop",
+      "old": ", ledger",
+      "new": "",
+      "note": "argument-drop",
+      "line": 566,
+      "col": 90,
+      "id": "a5253",
+      "runs": [
+        {
+          "id": "a5253",
+          "file": "scripts/spec/gates.mjs",
+          "class": "argument-drop",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6237,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29455,
+      "end": 29482,
+      "class": "call-value",
+      "old": "gapReport(manifest, ledger)",
+      "new": "undefined",
+      "note": "call-value",
+      "line": 566,
+      "col": 72,
+      "id": "a5254",
+      "runs": [
+        {
+          "id": "a5254",
+          "file": "scripts/spec/gates.mjs",
+          "class": "call-value",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6402,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29484,
+      "end": 29494,
+      "class": "statement",
+      "old": "log(line);",
+      "new": ";",
+      "note": "statement",
+      "line": 566,
+      "col": 101,
+      "id": "a5255",
+      "runs": [
+        {
+          "id": "a5255",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4742
+        },
+        {
+          "id": "a5255",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17215,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29484,
+      "end": 29494,
+      "class": "statement",
+      "old": "log(line);",
+      "new": "",
+      "note": "statement",
+      "line": 566,
+      "col": 101,
+      "id": "a5256",
+      "runs": [
+        {
+          "id": "a5256",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4014
+        },
+        {
+          "id": "a5256",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 20972,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29488,
+      "end": 29492,
+      "class": "arguments",
+      "old": "line",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 566,
+      "col": 105,
+      "id": "a5257",
+      "runs": [
+        {
+          "id": "a5257",
+          "file": "scripts/spec/gates.mjs",
+          "class": "arguments",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4048
+        },
+        {
+          "id": "a5257",
+          "file": "scripts/spec/gates.mjs",
+          "class": "arguments",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17666,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29488,
+      "end": 29492,
+      "class": "argument-drop",
+      "old": "line",
+      "new": "",
+      "note": "argument-drop",
+      "line": 566,
+      "col": 105,
+      "id": "a5258",
+      "runs": [
+        {
+          "id": "a5258",
+          "file": "scripts/spec/gates.mjs",
+          "class": "argument-drop",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4073
+        },
+        {
+          "id": "a5258",
+          "file": "scripts/spec/gates.mjs",
+          "class": "argument-drop",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17453,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29498,
+      "end": 30168,
+      "class": "branch",
+      "old": "if (command === 'check' || command === 'ratchet' || command === 'ci') {\n    let changed;\n    try {\n      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });\n      changed = scoped.changed;\n      log(scoped.advice);\n    } catch (error) {\n      return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);\n    }\n    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));\n  }",
+      "new": "{\n    let changed;\n    try {\n      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });\n      changed = scoped.changed;\n      log(scoped.advice);\n    } catch (error) {\n      return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);\n    }\n    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));\n  }",
+      "note": "branch",
+      "line": 568,
+      "col": 3,
+      "id": "a5261",
+      "runs": [
+        {
+          "id": "a5261",
+          "file": "scripts/spec/gates.mjs",
+          "class": "branch",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-004] adopt records a gap before the owned file check"
+          },
+          "ms": 6730,
+          "failedTests": [
+            "[ownership-004] adopt records a gap before the owned file check"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29498,
+      "end": 30168,
+      "class": "statement",
+      "old": "if (command === 'check' || command === 'ratchet' || command === 'ci') {\n    let changed;\n    try {\n      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });\n      changed = scoped.changed;\n      log(scoped.advice);\n    } catch (error) {\n      return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);\n    }\n    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));\n  }",
+      "new": "",
+      "note": "statement",
+      "line": 568,
+      "col": 3,
+      "id": "a5262",
+      "runs": [
+        {
+          "id": "a5262",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6561,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29959,
+      "end": 30164,
+      "class": "statement",
+      "old": "measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));",
+      "new": ";",
+      "note": "statement",
+      "line": 577,
+      "col": 5,
+      "id": "a5350",
+      "runs": [
+        {
+          "id": "a5350",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4138
+        },
+        {
+          "id": "a5350",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 16364,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29959,
+      "end": 30164,
+      "class": "statement",
+      "old": "measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));",
+      "new": "",
+      "note": "statement",
+      "line": 577,
+      "col": 5,
+      "id": "a5351",
+      "runs": [
+        {
+          "id": "a5351",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4018
+        },
+        {
+          "id": "a5351",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 16418,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29955,
+      "end": 30164,
+      "class": "statement",
+      "old": "    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));",
+      "new": "",
+      "note": "statement",
+      "line": 577,
+      "col": 1,
+      "id": "a5352",
+      "runs": [
+        {
+          "id": "a5352",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6338,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29954,
+      "end": 30164,
+      "class": "statement",
+      "old": "\n    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));",
+      "new": "",
+      "note": "statement",
+      "line": 576,
+      "col": 6,
+      "id": "a5353",
+      "runs": [
+        {
+          "id": "a5353",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4089
+        },
+        {
+          "id": "a5353",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 16532,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29998,
+      "end": 30161,
+      "class": "arguments",
+      "old": "{ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 577,
+      "col": 44,
+      "id": "a5354",
+      "runs": [
+        {
+          "id": "a5354",
+          "file": "scripts/spec/gates.mjs",
+          "class": "arguments",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6419,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29998,
+      "end": 30161,
+      "class": "argument-drop",
+      "old": "{ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }",
+      "new": "",
+      "note": "argument-drop",
+      "line": 577,
+      "col": 44,
+      "id": "a5355",
+      "runs": [
+        {
+          "id": "a5355",
+          "file": "scripts/spec/gates.mjs",
+          "class": "argument-drop",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 3981
+        },
+        {
+          "id": "a5355",
+          "file": "scripts/spec/gates.mjs",
+          "class": "argument-drop",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 13744,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29983,
+      "end": 30162,
+      "class": "call-value",
+      "old": "coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) })",
+      "new": "undefined",
+      "note": "call-value",
+      "line": 577,
+      "col": 29,
+      "id": "a5356",
+      "runs": [
+        {
+          "id": "a5356",
+          "file": "scripts/spec/gates.mjs",
+          "class": "call-value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4085
+        },
+        {
+          "id": "a5356",
+          "file": "scripts/spec/gates.mjs",
+          "class": "call-value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 13438,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30000,
+      "end": 30010,
+      "class": "object",
+      "old": "manifest, ",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 46,
+      "id": "a5357",
+      "runs": [
+        {
+          "id": "a5357",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6289,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30010,
+      "end": 30039,
+      "class": "object",
+      "old": "coverage: measured.coverage, ",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 56,
+      "id": "a5358",
+      "runs": [
+        {
+          "id": "a5358",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4156
+        },
+        {
+          "id": "a5358",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 14459,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30039,
+      "end": 30048,
+      "class": "object",
+      "old": "changed, ",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 85,
+      "id": "a5359",
+      "runs": [
+        {
+          "id": "a5359",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4135
+        },
+        {
+          "id": "a5359",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 14462,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30048,
+      "end": 30085,
+      "class": "object",
+      "old": "lineCoverage: measured.lineCoverage, ",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 94,
+      "id": "a5360",
+      "runs": [
+        {
+          "id": "a5360",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6749,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30085,
+      "end": 30094,
+      "class": "object",
+      "old": "waivers, ",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 131,
+      "id": "a5361",
+      "runs": [
+        {
+          "id": "a5361",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4096
+        },
+        {
+          "id": "a5361",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 14844,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30094,
+      "end": 30102,
+      "class": "object",
+      "old": "ledger, ",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 140,
+      "id": "a5362",
+      "runs": [
+        {
+          "id": "a5362",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4067
+        },
+        {
+          "id": "a5362",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17221,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30100,
+      "end": 30159,
+      "class": "object",
+      "old": ", changedFiles: diffFiles.filter(file => !sameAsBase(file))",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 146,
+      "id": "a5363",
+      "runs": [
+        {
+          "id": "a5363",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6647
+        },
+        {
+          "id": "a5363",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap with a new file mode"
+          },
+          "ms": 14945,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap with a new file mode"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30000,
+      "end": 30009,
+      "class": "object",
+      "old": "manifest,",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 46,
+      "id": "a5364",
+      "runs": [
+        {
+          "id": "a5364",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4145
+        },
+        {
+          "id": "a5364",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 14472,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30010,
+      "end": 30038,
+      "class": "object",
+      "old": "coverage: measured.coverage,",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 56,
+      "id": "a5365",
+      "runs": [
+        {
+          "id": "a5365",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6564,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30039,
+      "end": 30047,
+      "class": "object",
+      "old": "changed,",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 85,
+      "id": "a5366",
+      "runs": [
+        {
+          "id": "a5366",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4009
+        },
+        {
+          "id": "a5366",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 14388,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30048,
+      "end": 30084,
+      "class": "object",
+      "old": "lineCoverage: measured.lineCoverage,",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 94,
+      "id": "a5367",
+      "runs": [
+        {
+          "id": "a5367",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4147
+        },
+        {
+          "id": "a5367",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 14969,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30085,
+      "end": 30093,
+      "class": "object",
+      "old": "waivers,",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 131,
+      "id": "a5368",
+      "runs": [
+        {
+          "id": "a5368",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6253,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30094,
+      "end": 30101,
+      "class": "object",
+      "old": "ledger,",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 140,
+      "id": "a5369",
+      "runs": [
+        {
+          "id": "a5369",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4147
+        },
+        {
+          "id": "a5369",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap"
+          },
+          "ms": 17253,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30102,
+      "end": 30159,
+      "class": "object",
+      "old": "changedFiles: diffFiles.filter(file => !sameAsBase(file))",
+      "new": "",
+      "note": "object",
+      "line": 577,
+      "col": 148,
+      "id": "a5370",
+      "runs": [
+        {
+          "id": "a5370",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6452
+        },
+        {
+          "id": "a5370",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap with a new file mode"
+          },
+          "ms": 14847,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap with a new file mode"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30020,
+      "end": 30037,
+      "class": "value",
+      "old": "measured.coverage",
+      "new": "'bad'",
+      "note": "value",
+      "line": 577,
+      "col": 66,
+      "id": "a5371",
+      "runs": [
+        {
+          "id": "a5371",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4109
+        },
+        {
+          "id": "a5371",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 14245,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30020,
+      "end": 30037,
+      "class": "value",
+      "old": "measured.coverage",
+      "new": "'wrong'",
+      "note": "value",
+      "line": 577,
+      "col": 66,
+      "id": "a5372",
+      "runs": [
+        {
+          "id": "a5372",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6493,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30020,
+      "end": 30037,
+      "class": "value",
+      "old": "measured.coverage",
+      "new": "1",
+      "note": "value",
+      "line": 577,
+      "col": 66,
+      "id": "a5373",
+      "runs": [
+        {
+          "id": "a5373",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4016
+        },
+        {
+          "id": "a5373",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 14340,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30062,
+      "end": 30083,
+      "class": "value",
+      "old": "measured.lineCoverage",
+      "new": "'bad'",
+      "note": "value",
+      "line": 577,
+      "col": 108,
+      "id": "a5374",
+      "runs": [
+        {
+          "id": "a5374",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6733
+        },
+        {
+          "id": "a5374",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 16572,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30062,
+      "end": 30083,
+      "class": "value",
+      "old": "measured.lineCoverage",
+      "new": "'wrong'",
+      "note": "value",
+      "line": 577,
+      "col": 108,
+      "id": "a5375",
+      "runs": [
+        {
+          "id": "a5375",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4113
+        },
+        {
+          "id": "a5375",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 16624,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30062,
+      "end": 30083,
+      "class": "value",
+      "old": "measured.lineCoverage",
+      "new": "1",
+      "note": "value",
+      "line": 577,
+      "col": 108,
+      "id": "a5376",
+      "runs": [
+        {
+          "id": "a5376",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4111
+        },
+        {
+          "id": "a5376",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 16534,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30116,
+      "end": 30159,
+      "class": "value",
+      "old": "diffFiles.filter(file => !sameAsBase(file))",
+      "new": "'bad'",
+      "note": "value",
+      "line": 577,
+      "col": 162,
+      "id": "a5377",
+      "runs": [
+        {
+          "id": "a5377",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6613
+        },
+        {
+          "id": "a5377",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-027] checks an old owned gap"
+          },
+          "ms": 15980,
+          "failedTests": [
+            "[ownership-027] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30116,
+      "end": 30159,
+      "class": "value",
+      "old": "diffFiles.filter(file => !sameAsBase(file))",
+      "new": "'wrong'",
+      "note": "value",
+      "line": 577,
+      "col": 162,
+      "id": "a5378",
+      "runs": [
+        {
+          "id": "a5378",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4065
+        },
+        {
+          "id": "a5378",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-027] checks an old owned gap"
+          },
+          "ms": 15925,
+          "failedTests": [
+            "[ownership-027] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30116,
+      "end": 30159,
+      "class": "value",
+      "old": "diffFiles.filter(file => !sameAsBase(file))",
+      "new": "1",
+      "note": "value",
+      "line": 577,
+      "col": 162,
+      "id": "a5379",
+      "runs": [
+        {
+          "id": "a5379",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4129
+        },
+        {
+          "id": "a5379",
+          "file": "scripts/spec/gates.mjs",
+          "class": "value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 15680,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30102,
+      "end": 30159,
+      "class": "object",
+      "old": "changedFiles: diffFiles.filter(file => !sameAsBase(file))",
+      "new": "changedFiles",
+      "note": "object",
+      "line": 577,
+      "col": 148,
+      "id": "a5380",
+      "runs": [
+        {
+          "id": "a5380",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4083
+        },
+        {
+          "id": "a5380",
+          "file": "scripts/spec/gates.mjs",
+          "class": "object",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 13806,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30133,
+      "end": 30158,
+      "class": "arguments",
+      "old": "file => !sameAsBase(file)",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 577,
+      "col": 179,
+      "id": "a5381",
+      "runs": [
+        {
+          "id": "a5381",
+          "file": "scripts/spec/gates.mjs",
+          "class": "arguments",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4168
+        },
+        {
+          "id": "a5381",
+          "file": "scripts/spec/gates.mjs",
+          "class": "arguments",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 13699,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30133,
+      "end": 30158,
+      "class": "argument-drop",
+      "old": "file => !sameAsBase(file)",
+      "new": "",
+      "note": "argument-drop",
+      "line": 577,
+      "col": 179,
+      "id": "a5382",
+      "runs": [
+        {
+          "id": "a5382",
+          "file": "scripts/spec/gates.mjs",
+          "class": "argument-drop",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6327,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30116,
+      "end": 30159,
+      "class": "call-value",
+      "old": "diffFiles.filter(file => !sameAsBase(file))",
+      "new": "undefined",
+      "note": "call-value",
+      "line": 577,
+      "col": 162,
+      "id": "a5383",
+      "runs": [
+        {
+          "id": "a5383",
+          "file": "scripts/spec/gates.mjs",
+          "class": "call-value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4085
+        },
+        {
+          "id": "a5383",
+          "file": "scripts/spec/gates.mjs",
+          "class": "call-value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap with a new file mode"
+          },
+          "ms": 14862,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap with a new file mode"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30133,
+      "end": 30158,
+      "class": "callback",
+      "old": "file => !sameAsBase(file)",
+      "new": "() => true",
+      "note": "callback",
+      "line": 577,
+      "col": 179,
+      "id": "a5384",
+      "runs": [
+        {
+          "id": "a5384",
+          "file": "scripts/spec/gates.mjs",
+          "class": "callback",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4129
+        },
+        {
+          "id": "a5384",
+          "file": "scripts/spec/gates.mjs",
+          "class": "callback",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap with a new file mode"
+          },
+          "ms": 14583,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap with a new file mode"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30141,
+      "end": 30158,
+      "class": "callback",
+      "old": "!sameAsBase(file)",
+      "new": "true",
+      "note": "callback",
+      "line": 577,
+      "col": 187,
+      "id": "a5385",
+      "runs": [
+        {
+          "id": "a5385",
+          "file": "scripts/spec/gates.mjs",
+          "class": "callback",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6558
+        },
+        {
+          "id": "a5385",
+          "file": "scripts/spec/gates.mjs",
+          "class": "callback",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap with a new file mode"
+          },
+          "ms": 14494,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap with a new file mode"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30141,
+      "end": 30158,
+      "class": "callback",
+      "old": "!sameAsBase(file)",
+      "new": "false",
+      "note": "callback",
+      "line": 577,
+      "col": 187,
+      "id": "a5386",
+      "runs": [
+        {
+          "id": "a5386",
+          "file": "scripts/spec/gates.mjs",
+          "class": "callback",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4220
+        },
+        {
+          "id": "a5386",
+          "file": "scripts/spec/gates.mjs",
+          "class": "callback",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-027] checks an old owned gap"
+          },
+          "ms": 16569,
+          "failedTests": [
+            "[ownership-027] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30141,
+      "end": 30158,
+      "class": "negation",
+      "old": "!sameAsBase(file)",
+      "new": "sameAsBase(file)",
+      "note": "negation",
+      "line": 577,
+      "col": 187,
+      "id": "a5387",
+      "runs": [
+        {
+          "id": "a5387",
+          "file": "scripts/spec/gates.mjs",
+          "class": "negation",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6683
+        },
+        {
+          "id": "a5387",
+          "file": "scripts/spec/gates.mjs",
+          "class": "negation",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-027] checks an old owned gap"
+          },
+          "ms": 17900,
+          "failedTests": [
+            "[ownership-027] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30153,
+      "end": 30157,
+      "class": "arguments",
+      "old": "file",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 577,
+      "col": 199,
+      "id": "a5388",
+      "runs": [
+        {
+          "id": "a5388",
+          "file": "scripts/spec/gates.mjs",
+          "class": "arguments",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4768
+        },
+        {
+          "id": "a5388",
+          "file": "scripts/spec/gates.mjs",
+          "class": "arguments",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 13834,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30153,
+      "end": 30157,
+      "class": "argument-drop",
+      "old": "file",
+      "new": "",
+      "note": "argument-drop",
+      "line": 577,
+      "col": 199,
+      "id": "a5389",
+      "runs": [
+        {
+          "id": "a5389",
+          "file": "scripts/spec/gates.mjs",
+          "class": "argument-drop",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4041
+        },
+        {
+          "id": "a5389",
+          "file": "scripts/spec/gates.mjs",
+          "class": "argument-drop",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 13677,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30142,
+      "end": 30158,
+      "class": "call-value",
+      "old": "sameAsBase(file)",
+      "new": "undefined",
+      "note": "call-value",
+      "line": 577,
+      "col": 188,
+      "id": "a5390",
+      "runs": [
+        {
+          "id": "a5390",
+          "file": "scripts/spec/gates.mjs",
+          "class": "call-value",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6590
+        },
+        {
+          "id": "a5390",
+          "file": "scripts/spec/gates.mjs",
+          "class": "call-value",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap with a new file mode"
+          },
+          "ms": 14777,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap with a new file mode"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30142,
+      "end": 30158,
+      "class": "predicate",
+      "old": "sameAsBase(file)",
+      "new": "false",
+      "note": "predicate",
+      "line": 577,
+      "col": 188,
+      "id": "a5391",
+      "runs": [
+        {
+          "id": "a5391",
+          "file": "scripts/spec/gates.mjs",
+          "class": "predicate",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6651
+        },
+        {
+          "id": "a5391",
+          "file": "scripts/spec/gates.mjs",
+          "class": "predicate",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] checks an old owned gap with a new file mode"
+          },
+          "ms": 14574,
+          "failedTests": [
+            "[ownership-026] checks an old owned gap with a new file mode"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 30142,
+      "end": 30158,
+      "class": "predicate",
+      "old": "sameAsBase(file)",
+      "new": "true",
+      "note": "predicate",
+      "line": 577,
+      "col": 188,
+      "id": "a5392",
+      "runs": [
+        {
+          "id": "a5392",
+          "file": "scripts/spec/gates.mjs",
+          "class": "predicate",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4007
+        },
+        {
+          "id": "a5392",
+          "file": "scripts/spec/gates.mjs",
+          "class": "predicate",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-027] checks an old owned gap"
+          },
+          "ms": 16325,
+          "failedTests": [
+            "[ownership-027] checks an old owned gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29319,
+      "end": 29494,
+      "class": "statement-order",
+      "old": "const waivers = waiversOf(historyText, baseHistoryText, change);\n  if (command === 'check' || command === 'ratchet') for (const line of gapReport(manifest, ledger)) log(line);",
+      "new": "if (command === 'check' || command === 'ratchet') for (const line of gapReport(manifest, ledger)) log(line);\n  const waivers = waiversOf(historyText, baseHistoryText, change);",
+      "note": "statement-order",
+      "line": 565,
+      "col": 3,
+      "id": "a9622",
+      "runs": [
+        {
+          "id": "a9622",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement-order",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 6703
+        },
+        {
+          "id": "a9622",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement-order",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-026] rejects bad history before gap advice"
+          },
+          "ms": 15680,
+          "failedTests": [
+            "[ownership-026] rejects bad history before gap advice"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29386,
+      "end": 30168,
+      "class": "statement-order",
+      "old": "if (command === 'check' || command === 'ratchet') for (const line of gapReport(manifest, ledger)) log(line);\n\n  if (command === 'check' || command === 'ratchet' || command === 'ci') {\n    let changed;\n    try {\n      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });\n      changed = scoped.changed;\n      log(scoped.advice);\n    } catch (error) {\n      return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);\n    }\n    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));\n  }",
+      "new": "if (command === 'check' || command === 'ratchet' || command === 'ci') {\n    let changed;\n    try {\n      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });\n      changed = scoped.changed;\n      log(scoped.advice);\n    } catch (error) {\n      return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);\n    }\n    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));\n  }\n\n  if (command === 'check' || command === 'ratchet') for (const line of gapReport(manifest, ledger)) log(line);",
+      "note": "statement-order",
+      "line": 566,
+      "col": 3,
+      "id": "a9623",
+      "runs": [
+        {
+          "id": "a9623",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement-order",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4090
+        },
+        {
+          "id": "a9623",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement-order",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-007 ownership-026] stops when Git cannot read a code diff"
+          },
+          "ms": 15597,
+          "failedTests": [
+            "[ownership-007 ownership-026] stops when Git cannot read a code diff"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29498,
+      "end": 30240,
+      "class": "statement-order",
+      "old": "if (command === 'check' || command === 'ratchet' || command === 'ci') {\n    let changed;\n    try {\n      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });\n      changed = scoped.changed;\n      log(scoped.advice);\n    } catch (error) {\n      return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);\n    }\n    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));\n  }\n\n  const baseLedger = parseLedger(readFileAt(root, base, LEDGER_FILE));",
+      "new": "const baseLedger = parseLedger(readFileAt(root, base, LEDGER_FILE));\n\n  if (command === 'check' || command === 'ratchet' || command === 'ci') {\n    let changed;\n    try {\n      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });\n      changed = scoped.changed;\n      log(scoped.advice);\n    } catch (error) {\n      return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);\n    }\n    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));\n  }",
+      "note": "statement-order",
+      "line": 568,
+      "col": 3,
+      "id": "a9624",
+      "runs": [
+        {
+          "id": "a9624",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement-order",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4173
+        },
+        {
+          "id": "a9624",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement-order",
+          "phase": 2,
+          "status": "CRASH",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-024] checks the source before a bad base ledger"
+          },
+          "ms": 15625,
+          "tests": 18,
+          "fail": 1,
+          "failedTests": [
+            "[ownership-024] checks the source before a bad base ledger"
+          ],
+          "countsAsKill": false
+        }
+      ],
+      "assessment": "CRASH",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29591,
+      "end": 30164,
+      "class": "statement-order",
+      "old": "try {\n      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });\n      changed = scoped.changed;\n      log(scoped.advice);\n    } catch (error) {\n      return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);\n    }\n    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));",
+      "new": "measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));\n    try {\n      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });\n      changed = scoped.changed;\n      log(scoped.advice);\n    } catch (error) {\n      return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);\n    }",
+      "note": "statement-order",
+      "line": 570,
+      "col": 5,
+      "id": "a9745",
+      "runs": [
+        {
+          "id": "a9745",
+          "file": "scripts/spec/gates.mjs",
+          "class": "statement-order",
+          "phase": 1,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          },
+          "ms": 6455,
+          "failedTests": [
+            "[ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    },
+    {
+      "file": "scripts/spec/gates.mjs",
+      "start": 29980,
+      "end": 30162,
+      "class": "call-spread-remove",
+      "old": "...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) })",
+      "new": "",
+      "note": "call-spread-remove",
+      "line": 577,
+      "col": 26,
+      "id": "a9748",
+      "runs": [
+        {
+          "id": "a9748",
+          "file": "scripts/spec/gates.mjs",
+          "class": "call-spread-remove",
+          "phase": 1,
+          "status": "SURVIVED",
+          "killedBy": null,
+          "ms": 4158
+        },
+        {
+          "id": "a9748",
+          "file": "scripts/spec/gates.mjs",
+          "class": "call-spread-remove",
+          "phase": 2,
+          "status": "KILLED",
+          "killedBy": {
+            "file": "src/tooling/spec/ownershipGate.test.mjs",
+            "test": "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          },
+          "ms": 16271,
+          "failedTests": [
+            "[ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+          ],
+          "countsAsKill": true
+        }
+      ],
+      "assessment": "KILLED",
+      "probeCases": 0
+    }
+  ]
+}

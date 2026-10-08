@@ -2,7 +2,7 @@
 
 Tree read: e2437f945215860c42b5d8bba6834c85f93a90ce.
 
-The owner accepts whole-file coverage for owned code and coverage for each changed line.
+The owner needs whole-file coverage for changed owned code and owned code without a ledger entry. Each changed line needs coverage.
 
 ## TERMS
 
@@ -32,7 +32,7 @@ Apply both coverage checks after the measurement and before ratchet writes.
 
 Apply them in check and ci too. Keep adopt available to record upstream gaps before a check.
 
-Use COVERAGE-OWNED for an owned file gap and COVERAGE-DIFF for uncovered changed lines.
+Use COVERAGE-OWNED for a changed owned file gap or an owned file without a ledger entry. Use COVERAGE-DIFF for uncovered changed lines.
 
 Read DA records from the merged LCOV report. Intersect covered lines across duplicate source records.
 
@@ -118,6 +118,26 @@ Binary code files use the existing text diff rule. Binary non-code files do not 
 
 A fully covered upstream file can lack an adopt record. It uses the last source of the change.
 
-Without adopt records, keep the base diff rule. Whole-file owned coverage and ledger comparisons stay in force.
+Without adopt records, keep the base diff rule. The owned coverage scope and ledger comparisons stay in force.
 
 Print COVERAGE-DIFF: N changed lines, M brought by the merged upstream commit, K need coverage.
+
+## Pass 3 owned gaps
+
+Tree read: 88894512ef934f160fbeebea551d6cd2607c9c43.
+
+Check whole-file coverage for owned code that differs from its base content, or has no ledger entry.
+
+An unchanged owned file with a recorded gap passes this check. The ledger comparison still rejects larger gaps.
+
+The report and Ownership advice list all owned gaps. The target is zero.
+
+Use base content, not the sync line set, to select changed files for whole-file coverage.
+
+Tests use temporary Git repositories with fixed identity, main branch, locale and config paths.
+
+Pass 3 source commit: 3a72f0f21b160c6c2a9cdabede2df2dda7ec2c23.
+
+Print owned gap advice after valid history and before the changed line check.
+
+Check sync sources before the base ledger JSON.

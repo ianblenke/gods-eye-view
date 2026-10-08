@@ -24,6 +24,16 @@
 
 - [x] 1.19 Write the test for `ownership-019`.
 
+- [x] 1.20 Write the test for `ownership-020`.
+- [x] 1.21 Write the test for `ownership-021`.
+- [x] 1.22 Write the test for `ownership-022`.
+- [x] 1.23 Write the test for `ownership-023`.
+- [x] 1.24 Write the test for `ownership-024`.
+- [x] 1.25 Write the test for `ownership-025`.
+- [x] 1.26 Write the test for `ownership-026`.
+- [x] 1.27 Write the test for `ownership-027`.
+- [x] 1.28 Write the test for `ownership-028`.
+
 ## 2. Code
 
 - [x] 2.1 Add the manifest and path class module.
@@ -48,3 +58,11 @@
 - [x] 4.3 Update the process text for sync lines.
 - [x] 4.4 Run host tests, coverage, mutations, lint and format.
 - [x] 4.5 Record proof and commit the pass 2 files.
+
+## 5. Pass 3
+
+- [x] 5.1 Set fixed Git config and identity for the tests.
+- [x] 5.2 Check changed owned files and files without ledger entries.
+- [x] 5.3 Add the owned gap report to Ownership advice.
+- [x] 5.4 Run host checks and record all results.
+- [x] 5.5 Commit the pass 3 code, tests and process text.
