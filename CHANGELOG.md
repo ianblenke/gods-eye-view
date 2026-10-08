@@ -740,7 +740,7 @@ of current runtime behavior, see [`docs/CURRENT-STATE.md`](docs/CURRENT-STATE.md
   client renders nullschool-style animated particles in a canvas overlay that
   follows the Cesium camera and skips globe-occluded points. Forecast, not
   observations. Requires Node ≥24 for the WASM decoder.
-- Add Ontario 511 as a keyless CCTV source pack, including Kitchener-area
+- Add Ontario 511 as a CCTV source pack with a server developer key, for Kitchener-area
   highway cameras, with server-registered still URLs and attribution.
 - CCTV Mesh adds Finland: Fintraffic road weather cameras, keyless, nationwide, 300 by default. Each camera view of a station is placed separately; ambient stills refresh on the source's 10-minute cadence (the active camera keeps the usual 10-second refresh).
 - Add DriveBC highway cameras for British Columbia to the CCTV layer: the 250
