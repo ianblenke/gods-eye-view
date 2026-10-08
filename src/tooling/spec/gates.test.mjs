@@ -2634,7 +2634,7 @@ const TOLERANCE_OPTIONS = {
   },
 };
 
-function adoptedNoise(root) {
+function adoptedNoise(root, worse = false) {
   const file = 'src/merged.js';
   rmSync(path.join(root, 'src/own.js'));
   rmSync(path.join(root, 'src/own.test.mjs'));
@@ -2645,7 +2645,7 @@ function adoptedNoise(root) {
   ledger.coverage[file] = {
     loaded: true, untrue: false, sha: contentHash(readFileSync(path.join(root, file), 'utf8')),
     lines: measured.lines.total - measured.lines.covered + 1,
-    branches: measured.branches.total - measured.branches.covered,
+    branches: measured.branches.total - measured.branches.covered - (worse ? 1 : 0),
     functions: measured.functions.total - measured.functions.covered,
     totals: { lines: measured.lines.total, branches: measured.branches.total, functions: measured.functions.total },
     origin: 'sync', since: '2026-09-13',
@@ -2662,7 +2662,7 @@ const NOISE_SOURCE = BRANCH_SRC('merged') + '\n'.repeat(60);
 
 test('[gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in check ci and the ratchet command', () => {
   withMergeFixture((root) => {
-    adoptedNoise(root);
+    adoptedNoise(root, true);
     write(root, { 'openspec/changes/sync/tasks.md': '## 1. Merge\n\n- [x] Merge the branch.\n' });
     mkdirSync(path.join(root, 'openspec/changes/archive'));
     renameSync(path.join(root, 'openspec/changes/sync'), path.join(root, 'openspec/changes/archive/2026-09-13-sync'));
@@ -2673,6 +2673,7 @@ test('[gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in c
       assert.doesNotMatch(result.output, /ERROR GATES-RATCHET/);
       assert.doesNotMatch(result.output, /ERROR LEDGER-(?:STALE|LARGER-GAP|LOST-COVERAGE)[^\n]*src\/merged\.js/);
     }
+    assert.equal(JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/merged.js'].branches, 0);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
@@ -2688,7 +2689,7 @@ test('[gap-ledger-137] use no new tolerance after an adopted source edit', () =>
 test('[gap-ledger-138] use no new tolerance for an invalid adopt source', () => {
   withMergeFixture((root) => {
     const line = adoptedNoise(root);
-    line.from = git(root, 'rev-parse', 'main');
+    line.from = git(root, 'rev-parse', 'HEAD');
     write(root, { 'openspec/trace/history.jsonl': JSON.stringify(line) + '\n' });
     const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
     assert.match(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
@@ -2701,6 +2702,15 @@ test('[gap-ledger-139] use no new tolerance from another change', () => {
     const line = adoptedNoise(root);
     line.change = 'another';
     write(root, { 'openspec/trace/history.jsonl': JSON.stringify(line) + '\n' });
+    const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
+
+test('[gap-ledger-145] give no new tolerance to an absent adopted file', () => {
+  withMergeFixture((root) => {
+    adoptedNoise(root);
+    rmSync(path.join(root, 'src/merged.js'));
     const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
     assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
