@@ -2715,3 +2715,15 @@ test('[gap-ledger-145] give no new tolerance to an absent adopted file', () => {
     assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
+
+test('[gap-ledger-146] need the production file in a valid adopt record', () => {
+  withMergeFixture((root) => {
+    adoptedNoise(root);
+    const lines = historyLines(root).filter(line => line.file !== 'src/merged.js');
+    assert.equal(lines.length, 1);
+    assert.equal(lines[0].file, 'src/merged.test.mjs');
+    write(root, { 'openspec/trace/history.jsonl': lines.map(line => JSON.stringify(line) + '\n').join('') });
+    const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
