@@ -1,7 +1,8 @@
 // Pure-logic unit tests for the voice-lifecycle size guards (Batch 11, M13).
 // These helpers are DOM/WebRTC-free so they pin the screenshot down-scaling and
 // payload-byte estimation that keep an oversized dc.send from stranding a turn.
-import { test, getTestContext } from 'node:test';
+import * as nodeTest from 'node:test';
+import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { DataLayerManager } from '../data/manager.js';
 import { controlRadio as runControlRadio, createGevActionRunner as createActionRunner } from './gevActions.js';
@@ -63,7 +64,8 @@ test('push-to-talk protects text entry but arbitrates non-editing controls', () 
 
 function controllerFixture(options) {
   const controller = new GevRealtimeController(options);
-  getTestContext().after(() => {
+  // Node 24.14.0 has no getTestContext. The guard of the gates runs on a Node version that has it.
+  nodeTest.getTestContext?.()?.after(() => {
     controller._metrics.flush('stop');
     controller._turns.narration.cancel();
   });
