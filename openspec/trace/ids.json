@@ -720,12 +720,12 @@
     "change": "gates-one-measurement"
   },
   "credential-boundary-001": {
-    "hash": "10548121a6c63aea9cc38996e4e4d8ed23d49ad6823f15d376a6f1c2c06ca4a9",
+    "hash": "85a103eb9d7ba249fb78bf1b422b413ad69259efa0985971941c2ef466b6a623",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
   "credential-boundary-002": {
-    "hash": "09308d5cf6f35744528cf8d851feeaaf25eb1a65f9bd966100ecce62d9f961f4",
+    "hash": "850c748f7350a0eba7df77c010b84cc5516fd7a6f0fd581d1d6a6a1f6daac805",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
@@ -795,9 +795,19 @@
     "change": "credential-boundary"
   },
   "credential-boundary-016": {
-    "hash": "100b129f7b2ab8e51308e43f3f7496dc8b9f689bf4bd574616ebd1d1b0c50bf0",
+    "hash": "84c9b5f1c514c3881c2f686d7d61e9ce3407aad97fd49bb6d804b03b2175b2f7",
     "since": "2026-09-23",
     "change": "credential-boundary"
+  },
+  "credential-boundary-017": {
+    "hash": "1fc376a2bfc4ed2bfe7507e4aa9e958b02b3425c3954dddffee36b4e3aa5486f",
+    "since": "2026-10-08",
+    "change": "upstream-sync-3"
+  },
+  "credential-boundary-018": {
+    "hash": "f431813f9e42a1f8a6bc7b26b4f8ad50058c2855b530225343548e0cede66fbd",
+    "since": "2026-10-08",
+    "change": "upstream-sync-3"
   },
   "cyclones-001": {
     "hash": "66b1f031cbf46738d3d303d18e8cc31b6ddee0744e2237f07fe3bf48f45ba2c7",
@@ -2065,7 +2075,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "65581634838bfee7ffd7f9d39a035d00167a113fbd2ef4eb60b78c0c827c1851",
+    "hash": "f64b34c358a789ac9c33fdd7ef3d9acd94615f5bb17f11f8c3ba382526fd5941",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -2800,7 +2810,7 @@
     "change": "qa-script-register"
   },
   "qa-scripts-023": {
-    "hash": "e8db48cf46a098cbb10afabd371e36d776c8e637f42246062e8a2031d9474d4c",
+    "hash": "10f7df10bfa09293c3200a079fb05591260bee1a0d63ca80d27dd8f7e4386805",
     "since": "2026-09-26",
     "change": "qa-script-register"
   },
