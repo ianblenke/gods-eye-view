@@ -2039,3 +2039,4 @@
 {"date":"2026-10-07","change":"gates-one-measurement","commit":"aa3119b97c465e4aa4e6e6dc6250a688517280e4","kind":"measurement","measurement":"8eafb9205030c9d7b679463cb102ca0784367c5fcca7b8085e3f87666e6097df"}
 {"date":"2026-10-08","change":"gates-one-measurement","commit":"86967c019bbbad41ffffa3f73008f16c10aadefe","kind":"measurement","measurement":"25e594d8a7f19aa893009e6277566202c9a2dacea8e490f5a21c151b787c3395"}
 {"date":"2026-10-08","change":"ownership-scoped-gates","commit":"1ee5e66ab6c60d4d065a2bbcecf7bb7f419ff57e","kind":"measurement","measurement":"ce8bac5de6f39a6a83bc02bf03656005ebcd620bee7374a8a7e214e1df331c99"}
+{"date":"2026-10-08","change":"ownership-scoped-gates","commit":"f81380b42fa1c7c49cf008d4b774dca72ac4d5c2","kind":"measurement","measurement":"6dc6b64e8478ebc92835a4791c8be5ee7f0ecd4f1967421a5ea8cc57d0127c84"}
