@@ -1,121 +1,96 @@
 Verdict: PASS
 
-Tree: clone /home/ianblenke/docker/gev-work/upstream-sync-3, branch upstream-sync-3, commit ab3e2b62 as the brief names it. I cannot run git, so I did not confirm HEAD. A/ = openspec/changes/archive/2026-10-08-upstream-sync-3/.
+Tree: clone /home/ianblenke/docker/gev-work/upstream-sync-3, branch upstream-sync-3. I read the commit from .git/refs/heads/upstream-sync-3. It is c5550c683e385932ee69e2f7045f51852f096c35, and .git/HEAD points to that branch. "A/" below means openspec/changes/archive/2026-10-08-upstream-sync-3/.
 
-Under the brief's severity list I found no major finding. The grep found no owner word in new prose except the quoted `expose` at A/design.md:230, which round 1 excluded. No task has two instructions. Every other fault is minor. Item 1 of the findings is the one to read first.
+I found no major finding. Under the brief's list, none of these is a banned word, a two-meaning word in a requirement, scenario or test title, or a task with two instructions. Every finding below is minor. The two closest to major are explained after the findings. Some minor findings are the lead's own new faults. Some come from the replacement text that round 2 gave. I mark those "(round-2 text)".
 
 ## Read and not read
 
 Read:
-- The brief, report-round2.md and the full round2.diff (1182 lines).
-- My round-1 report.
-- The current A/design.md, proposal.md, tasks.md and specs/credential-boundary/spec.md.
-- The osh and qa-scripts deltas, as they appear in the diff.
-- The five QA headers, the test titles in src/googleGeocodeProxy.test.mjs, and server/providers/places/geocode.js:80-120.
-- scripts/build-panel.mjs, and the Systems layer requirement in openspec/specs/osh/spec.md.
-- Greps over A/ for the owner words and for -ing words.
+- report-round3.md and the whole round3.diff.
+- My round-2 report in A/review/ste-adversary.md.
+- The current A/design.md, A/proposal.md and A/tasks.md, in full.
+- openspec/ste/words.json.
+- server/providers/mapillary/tiles.js lines 195-284.
+- src/tooling/mapillaryProvider.test.mjs lines 440-509, plus a grep of its test titles.
+- The -ing words and the owner words, by grep, over A/design.md, A/proposal.md and A/tasks.md.
+- The same owner-word grep over the three QA headers.
+- scripts/qa-panelDrag.mjs, by grep.
+- src/ui/panelPositionControls.js:730, to confirm the 0 ms delay of panelDock.
+- src/googleGeocodeProxy.test.mjs:577-608, by grep.
+- /tmp/claude-1000/gcr/tiles-image.log, tiles-image2.log and tiles-image3.log.
+- The word "tolerance" and the QA "advice" lines in openspec/specs/.
 
 Not read:
-- The whole of SECURITY.md in the clone; I read only the changed lines through the diff.
-- The osh and qa-scripts deltas word by word against main. The applied osh diff changes only osh-033, which shows the carried text is unchanged.
-- The QA script bodies.
-- The test bodies, except the diff hunks.
-
-## Round-1 replacements
-
-I checked each replacement of my round-1 report against the files. These are in place and keep the same meaning:
-- the mcpPanelKey comment
-- the 4000 ms ceiling text
-- the osh-033 title and the "four allowed sentinels" title
-- the voice-off wording
-- the QA purposes and the voice-bench @run
-- "Source tree:" and "Work for the lead"
-- the Purpose text
-- the 30 and 88 counts in the deltas
-
-Items 3, 4 and 6 to 10 below list the replacements that are wrong or only partly done.
+- The delta specs, review.md and SECURITY.md.
+- The QA script bodies, except the grepped lines.
+- The 18 test files.
+- Any lint output. The brief gave none, and I cannot run it. I checked these by hand:
+  - No new sentence is over 25 words.
+  - No paragraph is over 6 sentences. The paragraph at A/design.md:439-442 has exactly 6, so one more sentence breaks the limit.
+  - The only owner word in A/ is the quoted `expose` at A/design.md:232. That line is unchanged, and round 1 excluded it.
+  - The diff adds no allowedIng word.
+  - No task has two instructions.
 
 ## Findings
 
-Facts that disagree. Items 1 and 2 are for the spec adversary.
+Check 1 (words) and check 2 (one word, one meaning)
 
-- [ ] FINDING minor A/design.md:341,361,363,377,383 and A/tasks.md:68 "Source tree: `7adfc97a…`, with the nine test corrections above" and "All eight changed test processes pass" -> "eight" in the pass-4 lines, or "eight, and Pass 5 adds the ninth".
-  - Lines 341 and 363 say eight for the same pass-4 run that lines 361 and 383 call nine. Line 377 and task 5.3 also say nine.
-  - The ninth file, mcpPanelKey.test.mjs, comes from Pass 5 (lines 318-331), after the tree 7adfc97a.
-  - My round-1 request to change "eight" at 362 and 384 was wrong for the pass-4 history. The worker applied it.
-  - Under my base rule ("disagrees with the other prose of the change") this would be major. The brief's severity list does not include it, so I mark it minor. The lead should still correct it.
-- [ ] FINDING minor A/proposal.md:104 "SECURITY.md and build-panel.mjs now name the same three browser credentials" -> "The panel build uses the standalone config, so it carries the same three browser credentials as the app. SECURITY.md names the same three."
-  - scripts/build-panel.mjs names no credential. It calls `standaloneConfig`.
-- [ ] FINDING minor A/proposal.md:46,52 The `###` limit sections (lines 63-114) sit under `## Pass 3 decision`, not under `## Known limits and later changes` -> "Move the heading `## Pass 3 decision` above line 46, or make the limit sections children of line 46."
-- [ ] FINDING minor A/proposal.md:100 and A/design.md:38 "OSH token `3` meets the next free upstream digit `3`" -> "OSH token `3` uses a digit that upstream has not used yet. A later upstream change can use the same digit and cause a conflict."
-  - Design.md says "The next free digit is `4`". One phrase has two values, 3 and 4.
-  - "meets" is also vague.
+- [ ] FINDING minor A/proposal.md:62,65,66,78 and A/design.md:439,441 and A/tasks.md:103,105,106 "Ten upstream test edits", "these test corrections", "The test edit adds no test", "Edit the sweep test", "after the test edit" -> One thing has two names, "edit" and "correction". "Edit" is also a verb used as a noun. Use "correction" as lines 65-66 and the "Pass 4 test corrections" table do. Heading: "Ten upstream test corrections". design.md:441: "The correction adds no test." Task 7.4: "Run the image ratchet after the test correction." Task 7.5: "Run the final image gates on the tree after the test correction."
+- [ ] FINDING minor A/proposal.md:101,99,138 and A/design.md:329 "winner branches", "the branches that only the winner of the race reaches", "race branches" -> One thing has two names. Use "race branches" in all four places. Line 99: "The branches at lines 37, 49 and 108 of that file are the race branches that only the winner of the race reaches." A line is not a branch. Line 101: "are not race branches".
+- [ ] FINDING minor A/proposal.md:150,151 and A/design.md:405 "a forwarding header", "a proxy signal", "proxy headers" -> Three names for one thing. "Forwarding" is an -ing word that is not a technical name. The test uses the header x-forwarded-for (src/googleGeocodeProxy.test.mjs:578). Line 150: "an `X-Forwarded-For` header". Line 151: "The `X-Forwarded-For` header is a proxy header, not a cross-site header." design.md:405: "proxy headers" can stay.
+- [ ] FINDING minor A/design.md:411,412 "The QA voice bench command needs ...", "Its header example uses" -> This noun group has four nouns (QA, voice, bench, command). "Header" here means the QA header, and the same text elsewhere means a panel header. Write: "The script `scripts/qa-voice-bench.mjs` needs the options `--provider` and `--model`. The `@run` line in its header shows the example `--provider ollama --model <id>`."
+- [ ] FINDING minor A/design.md:359 "the result file list" and "the result list" -> One thing has two names, in two sentences next to each other. Use "the result file list" twice. The second sentence also has a word that can attach to two verbs: "Run each file that the result list does not name before the final report." Write: "Before the final report, run each file that the result file list does not name."
+- [ ] FINDING minor A/proposal.md:126 "files with base content", "covers" -> "Covers" means "applies to" here, and it means test coverage in the rest of the section. "Base content" has no article. Write: "The count tolerance applies only to files that have the content of the base commit. The lead expects that it does not apply to these two files." "We" is also not used elsewhere in the prose.
+- [ ] FINDING minor A/proposal.md:133 and A/design.md:430 "wording minors in files that need a new ratchet or upstream text", "Pass 6" -> "Wording" is an -ing word that is not a technical name. "Minors" is an adjective used as a noun. "Files that need ... upstream text" can be read in two ways. Write: "Review round 2 lists minor wording findings in two kinds of file: files where a change needs a new ratchet, and files with text from upstream." design.md:430 heading "Pass 6": this is a note only. Only this heading uses that label, and the work after pass 5 is called "Round 1" in other headings. A name such as "Final gates correction" is clearer. The section also sits between "Round 1 decisions" and "Round 1 host result", which belong together.
 
-New faults that a correction adds (checks 1, 3, 5)
+Check 3 (verbs)
 
-- [ ] FINDING minor A/design.md:111,279 "one test failsed" -> line 111: "one test failed and one was skipped". Line 279: "seven test files with leaked timers and one failed row test".
-  - A global replace of "one fail" broke both lines. Line 279 is now garbled.
-- [ ] FINDING minor A/design.md:151 "an short-lived secret" -> "a short-lived secret".
-- [ ] FINDING minor A/design.md:227 "Each fault restores `build/vite.js`" -> "Each fault check restores `build/vite.js`".
-  - A fault does not restore a file.
-- [ ] FINDING minor A/design.md:385,387,430 "8669 passes, zero failures and one test is skipped", "one test failure and one test is skipped", "zero fail, and one test is skipped" -> "8670 tests: 8669 pass, no test fails and one test is skipped", "6184 tests: 6182 pass, one test fails and one test is skipped", "8674 tests: 8673 pass, no test fails and one test is skipped".
-  - These lines mix nouns and a clause. "zero fail" uses a verb as a noun.
-- [ ] FINDING minor A/design.md:155,357 "finds the absent layer", "Run all absent files" -> "finds that the layer `osh-systems` has no entry", "Run each file that the result list does not name".
-  - An absent file cannot run.
-- [ ] FINDING minor A/design.md:188 "Pass 4 supersedes this limit with a 4000 ms ceiling" -> "Pass 4 replaces the 400 ms ceiling with a 4000 ms ceiling".
-  - The sentence that named the 400 ms limit is gone, so "this limit" has no antecedent.
-- [ ] FINDING minor A/design.md:184,188 and A/tasks.md:30 "supersede(s)" -> "replace(s)". I am fairly sure "supersede" is not approved STE. The text already uses "replaces" at design.md:206.
-- [ ] FINDING minor A/tasks.md:30 "2.9 Passes 3 to 5 supersede the two-key conflict." -> "2.9 Record that passes 3 to 5 replace the two-key conflict." A task must start with an imperative verb.
-- [ ] FINDING minor A/tasks.md:26 "2.6 Run each stated fault." -> "2.6 Make each stated fault." A fault is not something to run.
-- [ ] FINDING minor A/design.md:377 "as read tree `7adfc97a`" -> "as source tree `7adfc97a`". A leftover of my round-1 "Read tree" finding, on a line the diff changed.
-- [ ] FINDING minor A/proposal.md:84 "Vendored production code still leaves bounded one-shot timers." -> "Upstream production code still leaves bounded one-shot timers." Round 1 removed "vendored" at line 3.
-- [ ] FINDING minor A/proposal.md:94,96 "both sets of child processes omit `NODE_V8_COVERAGE`", "record this acceptance in `review.md`" -> "the child processes of both race tests start without `NODE_V8_COVERAGE`", "record in `review.md` that the owner accepts this gap". "omit" is not approved and has two readings, and "acceptance" is a verb used as a noun.
-- [ ] FINDING minor A/design.md:423 "A return to larger gaps needs a ledger-refresh change." -> "If the gaps become larger again, use a ledger-refresh change."
-- [ ] FINDING minor A/design.md:407 "the Mapillary define", "the define is `undefined`" -> "the Mapillary entry in `define`", "the entry is `undefined`". "define" is a verb used as a noun.
-  - The test title `…no server key in the browser define` is acceptable as a technical name.
-- [ ] FINDING minor A/design.md:413 "Tests for the six variable gaps" -> "Tests for the six files whose gaps differ between runs". I am not sure "variable" is an approved adjective.
-- [ ] FINDING minor A/design.md:422 and A/proposal.md:113 "run these files", "check these tests" -> "run the test files of this table", "check the tests of these files".
-  - In the table, "files" can mean the code files or the test files. In proposal.md the paragraph names no test.
+- [ ] FINDING minor A/proposal.md:122 and A/design.md:432,435,436,440,441 "The first final gates run found", "in 10 image runs", "ran in 7 runs", "The handler now runs in each run", "The host run passes" -> "Run" is a verb used as a noun. "The first final gates run found" can also be read as "the final gates run [verb]". Line 440 uses "run" in two roles in one clause: the handler executes, and a test execution is a run. Write proposal.md:122: "The first run of the final gates found 7 uncovered functions". design.md:435: "when the image ran them 10 times". design.md:436: "ran in 7 of these 10 times". design.md:440: "The handler now runs each time that the test file runs, so the count of uncovered functions stays at 6." design.md:441: "The test file passes all 51 tests on the host, and the handler runs once."
+- [ ] FINDING minor A/proposal.md:122 "hit that race", "and alone it never did" -> "Hit" is a vague verb. "Did" stands in for another verb, and STE does not allow that. Write: "Under load, the process of `mapillaryProvider.test.mjs` reached that case in 7 of 10 image runs." The second clause is in the finding on "Three test files" below.
+- [ ] FINDING minor A/proposal.md:125 "Totals can drift between runs." -> "Drift" is not an approved verb. Write: "Totals can change between runs."
+- [ ] FINDING minor A/proposal.md:88 "Each timer fires once." -> "Fires" is vague in this sense. Write: "Each timer calls its function once."
+- [ ] FINDING minor A/proposal.md:143,145 "its test pin `pending:application-shell`", "a later spec would not show them" -> "Pin" is vague. "Its test pin" can be read as a noun group. "Would" is not an approved tense. Write: "The scenario `qa-scripts-023` and its test check the tag `pending:application-shell` for three scripts only." and "so the advice will not show them to the author of a later spec."
+- [ ] FINDING minor A/design.md:39 and A/proposal.md:106 "the digit that upstream allocates next" -> The action is in the future, so STE needs the simple future. The text also guesses what upstream will do. Write: "OSH token `3` is the digit that comes next in the upstream allocation order, so a later upstream change can cause a conflict." Use the same words in proposal.md:106.
+- [ ] FINDING minor A/proposal.md:150,151 "The tests for `017` refuse four request shapes", "The tests also refuse a POST request" -> The route refuses a request, not the tests. Write: "The tests for `017` check that the route refuses four request shapes" and "The tests also check that the route refuses a POST request with a cross-site header before the method check."
+- [ ] FINDING minor A/design.md:437 and A/design.md:439 "while a write moves its temporary file", "A replacement of `fsp.stat` makes" -> "Write" and "replacement" are verbs used as nouns. Write for 437: "A background sweep lists the cache folder while the cache writes a tile and renames the temporary file of that tile. The stat call for the old name of the temporary file then fails, the handler returns `null`, and the sweep skips the file." Write for 439: "The test replaces `fsp.stat` for a short time, so the stat call of that file fails. The test checks that the sweep skips the file."
 
-One word, one meaning (check 2)
+Check 4 (voice)
 
-- [ ] FINDING minor A/design.md:400,444 and A/specs/credential-boundary/spec.md:44 "The shared install serves dev and preview" and "The dev and preview installs MUST use this gate".
-  - "install" is a noun from a verb. It means one function at line 400 and two hook installs at line 444 and in the requirement. The requirement has one reading alone.
-  - Replace the requirement with "The route MUST call this gate on the dev server and on the preview server."
-  - Replace line 400 with "The route code is shared, so the dev server and the preview server use the same gate."
-  - Replace line 444 with "in the dev server and in the preview server".
-  - This requirement is ADDED, so rewording it does not rehash a carried scenario. The edit changes the hash of credential-boundary-017 and credential-boundary-018; run the ratchet again after it.
-- [ ] FINDING minor A/proposal.md:95, A/design.md:327 and src/tools/mcpPanelKey.test.mjs:110 "winner arms", "race branches", "race paths" -> use "branches" everywhere ("the winning branches", "no test covers the race branches").
-- [ ] FINDING minor A/design.md:103,104,188,296 and A/proposal.md:90 "limit" names three things: a rate limit (103, 104), the 400 ms bound (188, proposal.md:90) and a Known-limits entry (296). The round-1 named line design.md:104 is still unchanged.
-  - Write "The Google default rate limit is 120 requests per minute. The OpenAI default rate limit is 30. A value of zero removes each rate limit." Write "the entry `ranking-ceiling-not-measured`" at line 296.
-  - "ceiling", "budget" (design.md:214, 287, tasks.md:66) and "limit" also name the same time bound.
-- [ ] FINDING minor A/specs/credential-boundary/spec.md:13,18,35,36 "Mapillary token" -> "Mapillary client token". Line 5 of the same requirement says "the Mapillary client token". Write "the sentinel for the Mapillary client token".
-- [ ] FINDING minor A/tasks.md:19 and A/design.md:72,108,168,187,216,252,268,291,337,387 "pristine" -> "unchanged upstream". Round 1 named "pristine probe" once; the word is still in 11 places.
-- [ ] FINDING minor A/design.md:431 "The two allocation probes" -> "The two allocation tests". Lines 83 and 390 say "allocation tests". "probe" elsewhere names the timer probe.
-- [ ] FINDING minor A/specs/credential-boundary/spec.md:47-57 and A/design.md:400-444 "gate" means the `admitSameSite` check in the requirement and scenarios, and the `make gates` gates in proposal.md:114 ("Do not weaken the gate") and tasks.md:42. Use "the same-site check" for `admitSameSite`.
+- [ ] FINDING minor A/design.md:402 "The route code is shared, so the dev server and the preview server use the same gate." -> This is passive in a description (round-2 text). Write: "The dev server and the preview server share the route code, so both use the same gate."
+- [ ] FINDING minor src/tooling/mapillaryProvider.test.mjs:479 "A tile that vanishes between the directory listing and its stat is skipped." -> Passive voice. "Listing" is an -ing word that is not in allowedIng. "Directory" and "folder" (design.md:437) name one thing. "Its stat" uses "stat" as a noun. Write: "The sweep skips a tile file that vanishes after the sweep lists the folder and before it calls `stat` on the file."
 
-Articles, nouns and verbs (checks 3 and 6)
+Check 6 (articles and nouns)
 
-- [ ] FINDING minor A/proposal.md:15,20 "render test cleanup blocks", "upstream remote main check" -> "the cleanup blocks in the two render tests", "the check of main on the upstream remote". Both lines were named in round 1 and are still open (four nouns).
-- [ ] FINDING minor A/specs/credential-boundary/spec.md:29 "Google key, OpenAI key, JWT or Mapillary client token pattern" -> "…or a pattern for a Mapillary client token". Named in round 1, still four nouns. Scenario 004 is already in the modified list, so the edit costs nothing extra.
-- [ ] FINDING minor A/design.md:424,436,443,452 noun groups and verbs used as nouns: "panel key race tests", "Google title and QA register edits", "key read count", "panel key child coverage gap" ->
-  - line 424: "the child processes of both race tests of the panel key give no coverage"
-  - line 436: "the final edits to the bundle test, the Google title and the QA register test"
-  - line 443: "because the route reads the key once"
-  - line 452: "the accepted gap in the coverage of the panel key child processes"
-- [ ] FINDING minor A/specs/credential-boundary/spec.md:43 "checks the method" -> "checks the HTTP method". "method" can mean a code method.
-- [ ] FINDING minor A/specs/credential-boundary/spec.md:49,57 "the same error body as the Google Places gate", "a successful upstream response gives status `200`" -> "the same error body as the Google Places routes", "the route answers `200` for a successful upstream response".
-- [ ] FINDING minor src/googleGeocodeProxy.test.mjs:561,595 "${mode} refuses cross-site geocode before key access", "${mode} admits same-site geocode" -> "${mode} refuses a cross-site geocode request before key access", "${mode} admits a same-site geocode request". An article is missing, and "geocode" is a verb used as a noun. Both titles start with the scenario ID.
-- [ ] FINDING minor scripts/qa-panel-resize.mjs:3, scripts/qa-panelDrag.mjs:2 and A/design.md:54,55 "after each resize", "each header press" -> "after each change of size", "each press on a header". Both are verbs used as nouns. The first is my own round-1 replacement. A header edit needs another ratchet, so the owner can accept it.
-- [ ] FINDING minor A/tasks.md:81 "6.5 Correct the QA headers and the review prose." -> split into "Correct the QA headers." and "Correct the review prose." One verb with two unlike objects, the same shape as the old 5.2. I do not count it as two instructions.
-- [ ] FINDING minor SECURITY.md:35,79 "The explicit browser `define` block", "the explicit `HOST=0.0.0.0` LAN opt-in" -> "The browser `define` block", "the `HOST=0.0.0.0` LAN opt-in". Owner word on lines the diff changed. The first is also in main at line 34, so it predates this change.
+- [ ] FINDING minor A/design.md:428,470 "both panel key race tests", "the panel key child processes" -> Each group has four nouns. Round 2 gave a replacement for the first one, and the correction did not follow it. Write: "the child processes of the two race tests of the panel key give no coverage". Line 470: "the accepted gap in the coverage of the child processes of the panel key tests".
+- [ ] FINDING minor A/proposal.md:128 "The lead must check the tests of these files in the image." -> "These files" can mean the six files (line 118), the two files (line 125), or tiles.js (line 122). Write: "The lead must check in the image the tests of the six files above and of `server/providers/places/google.js`."
+- [ ] FINDING minor A/proposal.md:137 "the two test titles lack an article" -> "Lack" is not an approved verb. Write: "the two test titles have no article".
+- [ ] FINDING minor A/design.md:435 and A/proposal.md:122 "Three test files ... never ran any of them", "alone it never did" -> "Them" has its noun in the paragraph above. "Alone" means one file, but design says three files. The log tiles-image.log shows 62 tests in each of its 10 runs. design.md:441 says mapillaryProvider.test.mjs has 51 tests, so that run was not the file alone. I infer this from the counts; I did not see the command. Write for design.md:435: "In 10 image runs of three test files that load `tiles.js`, no process ran any of these 7 handlers." Write for proposal.md:122: "In 10 image runs of three test files, no process reached it." The spec adversary should check the numbers (see below).
+- [ ] FINDING minor A/proposal.md:84,85,87 "Upstream production code still leaves one-shot timers", "The streetLevelControls test leaves", "The gevRealtime fixtures leave" -> The subject changes. Line 84 says the production code leaves the timers. Lines 85 and 87 say the tests leave them. Write line 85: "The streetLevelControls test ends with one animation frame callback still open." Write line 87: "The gevRealtime fixtures end with 56 metric deadlines and 10 narration deadlines still open".
 
-## Not reported
+Check 7 (instructions)
 
-- "admit" and "admission" are technical names from `admitSameSite`. The same word is already in director/spec.md.
-- "refuse" is used in existing specs and test titles.
-- The carried osh and qa-scripts delta text has passive voice and -ing words ("placed", "once seen"). Rewording a carried requirement rehashes its scenarios, and the diff changed only the counts and one AND line.
-- -ing words in the new prose are all technical names or prepositions: ranking, rendering, tooling, including, geocoding, `pending:` and during.
-- The SECURITY.md sentence at line 106 is long, 34 words. Its structure predates this change; I changed only the noun phrase.
+- [ ] FINDING minor A/tasks.md:30 "2.9 Record that pass 3 replaces the two-key conflict." -> A conflict is resolved, not replaced. design.md:172 says "Pass 3 resolves the spec conflict". Write: "2.9 Record that pass 3 resolves the two-key conflict."
+- [ ] FINDING minor A/tasks.md:42,98,106 "3.6 Run make gates ... on the final tree", "Run the final image gates on the tree after round 2", "7.5 Run the final image gates on the tree after the test edit" -> Three open tasks name one run. The run after round 2 already happened and failed. The text is not false, because the final tree is also "the tree after round 2", so I rate it minor. Delete line 98, or merge it into 7.5.
+- [ ] FINDING minor A/tasks.md:103 and A/proposal.md:122 "Edit the sweep test", "The edit to the sweep test in that file" -> The file has at least three tests with "sweep" in the title (lines 471, 498, 515). design.md:439 names the right one, but the task does not. Write: "7.2 Edit the test `the disk sweep removes expired tiles and keeps fresh ones` so that the stat handler runs each time." Proposal: "The change to the test `the disk sweep removes expired tiles and keeps fresh ones` makes the function run each time."
 
-Note for the spec adversary: the three items at the top of the findings (eight and nine, build-panel.mjs, next free digit 3 or 4) are disagreements with other prose or with code. The brief's STE severity list does not include them, so they stay minor here.
+## The two items closest to major
+
+- A/design.md:437 "The stat call of the moved file then fails, and the handler skips it" is minor, not major. The sentence before it says "its temporary file", so "the moved file" means the temporary file. tiles.js:198,208,255 agree: the listed name is *.tmp, and the rename removes it. A reader could still take "the moved file" for the tile at its new name. The text at design.md:439 and the test comment speak of a "tile file" that vanishes. The mechanism is loose in one more place. The handler returns null, and the loop at tiles.js:256 skips the file. The replacement is in the "Write" finding on design.md:437 above.
+- A/tasks.md:98 is minor, not major, as I explain in its finding. Round 2 used the same rule. A text that is not false, and gives no reader a wrong action, stays minor.
+
+## Notes for the spec adversary and the lead
+
+- The number-source claims in A/proposal.md:122 and A/design.md:436 say "7 of 10" and "only in the process of mapillaryProvider.test.mjs". tiles-image2.log has 10 runs and 7 hits, with no attribution. tiles-image3.log has 8 runs, 7 hits, and attribution to that file. The "only in" claim therefore rests on 8 runs, and the "10 runs" claim has no attribution. The logs record only line 255, so I cannot confirm "never ran any of them" for the other six handlers.
+- A/proposal.md:78 adds a tenth candidate to the list that "the owner approves" for an upstream pull request. The table at A/design.md:305-315 has nine rows with "Send upstream? yes" and no row for mapillaryProvider.test.mjs. No text says the owner approved the tenth.
+
+## Not reported, with reasons
+
+- "press" in scripts/qa-panelDrag.mjs:2 and A/design.md:56: I accept it. It is the technical name of the test action (code field `pressed`, selector `.panel-header`). It is the round-2 replacement, and I do not change my advice. "Header" has two meanings there, the QA header and the panel header, but the code names the panel part `panel-header`.
+- "after each change of size" (scripts/qa-panel-resize.mjs:3, A/design.md:57): "change" is an approved noun.
+- "is skipped" and "was skipped" in A/design.md:113,387,389,448 are test status words, and round 2 accepted them.
+- The noun "run" in other design text that the diff does not touch.
+- "The Google default rate limit" (A/design.md:105,106): "default" is an adjective, so the group has three nouns.
+- The words "gate", "install" and "method" in the credential-boundary spec: the lead accepts them by name in A/proposal.md:135.
+- The @needs line of scripts/qa-voice-bench.mjs ("A local Ollama server with the model, or credentials for the other selected providers."): clear, one reading, and it agrees with the @run line.
+- "digit" and "token" in A/design.md:39,40 and A/proposal.md:106-108: the same pair, used the same way in both files. They agree with each other.
