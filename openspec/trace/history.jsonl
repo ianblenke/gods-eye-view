@@ -2049,3 +2049,4 @@
 {"date":"2026-10-07","change":"backfill-director-packs-sharing","commit":"4a2a626f2af76f8282190e4890755f8a4ebcac00","kind":"untraced","file":"src/director/sharing/sharing.test.mjs","metric":"count","before":10,"after":1,"reason":"smaller"}
 {"date":"2026-10-08","change":"backfill-director-packs-sharing","commit":"9968ed8edcafbceca7abeab5820b0a2abc3072f8","kind":"measurement","measurement":"4b6053eddb7c81652392db41ca149b937caf537503bddb22faa4c9b11b1300e3"}
 {"date":"2026-10-08","change":"backfill-director-packs-sharing","commit":"50ffe4398ca8ed906e197e5e91ddb3edf6bafefb","kind":"measurement","measurement":"824a996c1a8ccd81e7e7dfafc70f7d491cda406498f5701d2d3070b495e445c2"}
+{"date":"2026-10-08","change":"backfill-director-packs-sharing","commit":"e337c62c59605f9bf68fe861928cdfba2fd4b612","kind":"measurement","measurement":"d745982d22512644394688305877d9fd60f091dbecadaf883eaf04ecf92b4b5e"}

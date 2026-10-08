@@ -1644,11 +1644,13 @@
     "src/director/packs/backfill.test.mjs › [director-076] The asset path rejects x//y",
     "src/director/packs/backfill.test.mjs › [director-076] The asset path rejects x?a=1",
     "src/director/packs/backfill.test.mjs › [director-076] The manifest names the source path",
-    "src/director/packs/backfill.test.mjs › [director-076] The path type check comes before the segment read"
+    "src/director/packs/backfill.test.mjs › [director-076] The path rejects its second segment",
+    "src/director/packs/backfill.test.mjs › [director-076] The path type check comes before the segment access"
   ],
   "director-077": [
     "src/director/packs/backfill.test.mjs › [director-076 director-077] The manifest checks source name before path",
     "src/director/packs/backfill.test.mjs › [director-077 director-082] The declaration check comes before the duplicate ID check",
+    "src/director/packs/backfill.test.mjs › [director-077 director-082] The manifest validates the second data pack",
     "src/director/packs/backfill.test.mjs › [director-077] The geojson accepts its altitudeReference field",
     "src/director/packs/backfill.test.mjs › [director-077] The manifest accepts 256 characters for its ID and rejects 257",
     "src/director/packs/backfill.test.mjs › [director-077] The manifest accepts 256 characters for its source name and rejects 257",
@@ -1670,6 +1672,7 @@
     "src/director/packs/backfill.test.mjs › [director-077] The manifest names the extra data pack field",
     "src/director/packs/backfill.test.mjs › [director-077] The manifest names the format field",
     "src/director/packs/backfill.test.mjs › [director-077] The manifest names the source object",
+    "src/director/packs/backfill.test.mjs › [director-077] The manifest rejects an unlisted geojsonx format",
     "src/director/packs/backfill.test.mjs › [director-077] The manifest rejects invalid format",
     "src/director/packs/backfill.test.mjs › [director-077] The manifest rejects invalid version"
   ],
@@ -1698,9 +1701,10 @@
   ],
   "director-079": [
     "src/director/packs/backfill.test.mjs › [director-078 director-079] The manifest checks URL before byteLength",
+    "src/director/packs/backfill.test.mjs › [director-079 director-082] The manifest rejects the second data pack digest",
     "src/director/packs/backfill.test.mjs › [director-079] The byteLength field rejects a fraction",
     "src/director/packs/backfill.test.mjs › [director-079] The digest accepts 64 lowercase characters",
-    "src/director/packs/backfill.test.mjs › [director-079] The digest check comes before the placement read",
+    "src/director/packs/backfill.test.mjs › [director-079] The digest check comes before access to the placement",
     "src/director/packs/backfill.test.mjs › [director-079] The digest rejects 63 characters",
     "src/director/packs/backfill.test.mjs › [director-079] The digest rejects 65 characters",
     "src/director/packs/backfill.test.mjs › [director-079] The digest rejects a prefix",
@@ -1721,7 +1725,7 @@
     "src/director/packs/backfill.test.mjs › [director-079] The manifest names the numeric text"
   ],
   "director-080": [
-    "src/director/packs/backfill.test.mjs › [director-080] The bounds array check comes before the length read",
+    "src/director/packs/backfill.test.mjs › [director-080] The bounds array check comes before access to the length",
     "src/director/packs/backfill.test.mjs › [director-080] The bounds length check comes before each coordinate check",
     "src/director/packs/backfill.test.mjs › [director-080] The edge order check starts with west and east",
     "src/director/packs/backfill.test.mjs › [director-080] The height reference check comes before the bounds check",
@@ -1758,19 +1762,26 @@
     "src/director/packs/backfill.test.mjs › [director-080] The manifest names the extra placement field",
     "src/director/packs/backfill.test.mjs › [director-080] The manifest names the height reference",
     "src/director/packs/backfill.test.mjs › [director-080] The manifest names the placement object",
+    "src/director/packs/backfill.test.mjs › [director-080] The manifest rejects the last bounds coordinate",
     "src/director/packs/backfill.test.mjs › [director-080] The placement selects the image fields",
     "src/director/packs/packs.test.mjs › [director-080] The manifest checks given image bounds and media anchor references"
   ],
   "director-081": [
+    "src/director/packs/backfill.test.mjs › [director-081 director-093] The session uses the second anchor",
     "src/director/packs/backfill.test.mjs › [director-081] The manifest names an unknown anchor",
+    "src/director/packs/backfill.test.mjs › [director-081] The manifest uses the second anchor",
     "src/director/packs/backfill.test.mjs › [director-081] The media accepts its anchorId field",
     "src/director/packs/backfill.test.mjs › [director-081] The media rejects an unknown anchor",
     "src/director/packs/backfill.test.mjs › [director-081] The placement selects the media fields"
   ],
   "director-082": [
     "src/director/packs/backfill.test.mjs › [director-077 director-082] The declaration check comes before the duplicate ID check",
+    "src/director/packs/backfill.test.mjs › [director-077 director-082] The manifest validates the second data pack",
+    "src/director/packs/backfill.test.mjs › [director-079 director-082] The manifest rejects the second data pack digest",
     "src/director/packs/backfill.test.mjs › [director-082] The distinct reference check comes before the search for known IDs",
-    "src/director/packs/backfill.test.mjs › [director-082] The list check comes before the anchor read",
+    "src/director/packs/backfill.test.mjs › [director-082] The list check comes before access to the anchors",
+    "src/director/packs/backfill.test.mjs › [director-082] The manifest checks the second reference ID",
+    "src/director/packs/backfill.test.mjs › [director-082] The manifest rejects the second shot reference",
     "src/director/packs/backfill.test.mjs › [director-082] The scene accepts absent data packs and anchors",
     "src/director/packs/backfill.test.mjs › [director-082] The scene accepts eight distinct data packs",
     "src/director/packs/backfill.test.mjs › [director-082] The scene ignores a data pack list from its parent",
@@ -1797,6 +1808,7 @@
   ],
   "director-084": [
     "src/director/packs/backfill.test.mjs › [director-084] The decoder rejects a null feature",
+    "src/director/packs/backfill.test.mjs › [director-084] The decoder rejects the second feature",
     "src/director/packs/backfill.test.mjs › [director-084] The feature ID accepts its exact text limit",
     "src/director/packs/backfill.test.mjs › [director-084] The feature rejects ID type",
     "src/director/packs/backfill.test.mjs › [director-084] The feature rejects blank ID",
@@ -1805,6 +1817,7 @@
     "src/director/packs/backfill.test.mjs › [director-084] The feature rejects type"
   ],
   "director-085": [
+    "src/director/packs/backfill.test.mjs › [director-085 director-086] The decoder rejects the second line position",
     "src/director/packs/backfill.test.mjs › [director-085] The decoder keeps a negative zero height",
     "src/director/packs/backfill.test.mjs › [director-085] The decoder rejects a null position",
     "src/director/packs/backfill.test.mjs › [director-085] The position accepts both geographic edges",
@@ -1827,6 +1840,7 @@
     "src/director/packs/backfill.test.mjs › [director-085] The position rejects invalid latitude",
     "src/director/packs/backfill.test.mjs › [director-085] The position rejects invalid length",
     "src/director/packs/backfill.test.mjs › [director-085] The position rejects invalid longitude",
+    "src/director/packs/backfill.test.mjs › [director-085] The position rejects its second nonfinite coordinate",
     "src/director/packs/backfill.test.mjs › [director-085] The position rejects negative latitude",
     "src/director/packs/backfill.test.mjs › [director-085] The position rejects negative longitude",
     "src/director/packs/backfill.test.mjs › [director-085] The position rejects one coordinate",
@@ -1836,6 +1850,7 @@
     "src/director/packs/backfill.test.mjs › [director-085] The position uses zero for absent height"
   ],
   "director-086": [
+    "src/director/packs/backfill.test.mjs › [director-085 director-086] The decoder rejects the second line position",
     "src/director/packs/backfill.test.mjs › [director-086] The decoder accepts an open line",
     "src/director/packs/backfill.test.mjs › [director-086] The decoder rejects a null line",
     "src/director/packs/backfill.test.mjs › [director-086] The line accepts two distinct endpoints",
@@ -1848,6 +1863,7 @@
   ],
   "director-087": [
     "src/director/packs/backfill.test.mjs › [director-087] The decoder rejects absent geometry",
+    "src/director/packs/backfill.test.mjs › [director-087] The decoder rejects the second ring",
     "src/director/packs/backfill.test.mjs › [director-087] The geometry rejects an empty polygon",
     "src/director/packs/backfill.test.mjs › [director-087] The geometry rejects invalid array",
     "src/director/packs/backfill.test.mjs › [director-087] The geometry rejects invalid type",
@@ -1858,14 +1874,14 @@
     "src/director/packs/packs.test.mjs › [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints"
   ],
   "director-088": [
-    "src/director/packs/backfill.test.mjs › [director-088 director-091] The new list check follows old resource cleanup",
+    "src/director/packs/backfill.test.mjs › [director-088 director-091] The new list check follows old resource disposal",
     "src/director/packs/backfill.test.mjs › [director-088 director-092] The absent renderer map gives no renderer for a numeric name",
     "src/director/packs/backfill.test.mjs › [director-088 director-092] The absent source map gives no source for a numeric name",
     "src/director/packs/backfill.test.mjs › [director-088] The data pack limits reject a caller change",
-    "src/director/packs/backfill.test.mjs › [director-088] The declaration check comes before the caller signal read",
+    "src/director/packs/backfill.test.mjs › [director-088] The declaration check comes before access to the caller signal",
     "src/director/packs/backfill.test.mjs › [director-088] The destroyed session does not read the caller signal state",
     "src/director/packs/backfill.test.mjs › [director-088] The destroyed session returns false for a load call during source cancellation",
-    "src/director/packs/backfill.test.mjs › [director-088] The list check comes before the anchor read",
+    "src/director/packs/backfill.test.mjs › [director-088] The list check comes before access to the anchors",
     "src/director/packs/backfill.test.mjs › [director-088] The new session reports idle state",
     "src/director/packs/backfill.test.mjs › [director-088] The session accepts an empty list without asset work",
     "src/director/packs/backfill.test.mjs › [director-088] The session accepts eight data packs",
@@ -1877,11 +1893,12 @@
     "src/director/packs/backfill.test.mjs › [director-088] The session rejects destroyed state",
     "src/director/packs/backfill.test.mjs › [director-088] The session rejects more than eight data packs",
     "src/director/packs/backfill.test.mjs › [director-088] The session state uses its idle default",
-    "src/director/packs/backfill.test.mjs › [director-088] The session state uses its zero default"
+    "src/director/packs/backfill.test.mjs › [director-088] The session state uses its zero default",
+    "src/director/packs/backfill.test.mjs › [director-088] The session validates the second data pack before source access"
   ],
   "director-089": [
-    "src/director/packs/backfill.test.mjs › [director-089] The caller listener comes before the deadline",
-    "src/director/packs/backfill.test.mjs › [director-089] The completed source does not read its reason during promise settlement",
+    "src/director/packs/backfill.test.mjs › [director-089] The caller listener comes before the deadline timer starts",
+    "src/director/packs/backfill.test.mjs › [director-089] The completed source does not read its reason when the promise settles",
     "src/director/packs/backfill.test.mjs › [director-089] The completed source listener ignores a later event after error",
     "src/director/packs/backfill.test.mjs › [director-089] The completed source listener ignores a later event after success",
     "src/director/packs/backfill.test.mjs › [director-089] The data pack session removes source listeners after error",
@@ -1900,16 +1917,16 @@
     "src/director/packs/backfill.test.mjs › [director-089] The session rejects a null handle",
     "src/director/packs/backfill.test.mjs › [director-089] The session removes its deadline after clear",
     "src/director/packs/backfill.test.mjs › [director-089] The session removes its deadline after success",
-    "src/director/packs/backfill.test.mjs › [director-089] The session removes resources after source cancellation and timer cleanup",
+    "src/director/packs/backfill.test.mjs › [director-089] The session removes resources after source cancellation and timer removal",
     "src/director/packs/backfill.test.mjs › [director-089] The session sets and removes the caller listener",
     "src/director/packs/backfill.test.mjs › [director-089] The session state uses its active status",
     "src/director/packs/backfill.test.mjs › [director-089] The session state uses its active total",
-    "src/director/packs/backfill.test.mjs › [director-089] The source listener and state check come before the work read",
+    "src/director/packs/backfill.test.mjs › [director-089] The source listener and state check come before it reads the work promise",
     "src/director/packs/packs.test.mjs › [director-089] The data pack session removes resources and cancels the transport on Stop"
   ],
   "director-090": [
-    "src/director/packs/backfill.test.mjs › [director-090 director-093] The source signal error comes before the byte read",
-    "src/director/packs/backfill.test.mjs › [director-090] The caller event during listener setup cancels the load call",
+    "src/director/packs/backfill.test.mjs › [director-090 director-093] The source signal error comes before access to the bytes",
+    "src/director/packs/backfill.test.mjs › [director-090] The caller event during listener registration cancels the load call",
     "src/director/packs/backfill.test.mjs › [director-090] The cancelled session disposes late resources",
     "src/director/packs/backfill.test.mjs › [director-090] The cleared load call does not read the caller signal state again",
     "src/director/packs/backfill.test.mjs › [director-090] The detached handle check does not read the source signal state",
@@ -1930,7 +1947,7 @@
     "src/director/packs/packs.test.mjs › [director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement"
   ],
   "director-091": [
-    "src/director/packs/backfill.test.mjs › [director-088 director-091] The new list check follows old resource cleanup",
+    "src/director/packs/backfill.test.mjs › [director-088 director-091] The new list check follows old resource disposal",
     "src/director/packs/backfill.test.mjs › [director-091] The old caller listener does not change new resources",
     "src/director/packs/backfill.test.mjs › [director-091] The replacement keeps its resources",
     "src/director/packs/packs.test.mjs › [director-091] The data pack session replaces source work and ignores its late bytes"
@@ -1949,6 +1966,7 @@
     "src/director/packs/backfill.test.mjs › [director-092] The session does not read the global error property for invalid handle",
     "src/director/packs/backfill.test.mjs › [director-092] The session does not read the global error property for wrong digest",
     "src/director/packs/backfill.test.mjs › [director-092] The session ignores a late source error",
+    "src/director/packs/backfill.test.mjs › [director-092] The session reads the source signal reason once during another source signal event",
     "src/director/packs/backfill.test.mjs › [director-092] The session rejects a falsy custom source",
     "src/director/packs/backfill.test.mjs › [director-092] The session rejects absent renderer",
     "src/director/packs/backfill.test.mjs › [director-092] The session rejects absent source",
@@ -1958,14 +1976,14 @@
     "src/director/packs/backfill.test.mjs › [director-092] The session settles an early internal signal",
     "src/director/packs/backfill.test.mjs › [director-092] The session uses its default deadline",
     "src/director/packs/backfill.test.mjs › [director-092] The session uses its supplied deadline",
-    "src/director/packs/backfill.test.mjs › [director-092] The source event during listener removal stops error",
-    "src/director/packs/backfill.test.mjs › [director-092] The source event during listener removal stops success",
-    "src/director/packs/backfill.test.mjs › [director-092] The source event reads its reason once during another source event",
+    "src/director/packs/backfill.test.mjs › [director-092] The source signal event during listener removal stops error",
+    "src/director/packs/backfill.test.mjs › [director-092] The source signal event during listener removal stops success",
     "src/director/packs/backfill.test.mjs › [director-092] The source signal event stops work before the renderer",
     "src/director/packs/packs.test.mjs › [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources"
   ],
   "director-093": [
-    "src/director/packs/backfill.test.mjs › [director-090 director-093] The source signal error comes before the byte read",
+    "src/director/packs/backfill.test.mjs › [director-081 director-093] The session uses the second anchor",
+    "src/director/packs/backfill.test.mjs › [director-090 director-093] The source signal error comes before access to the bytes",
     "src/director/packs/backfill.test.mjs › [director-093] The renderer receives the data pack and scene anchors",
     "src/director/packs/backfill.test.mjs › [director-093] The session accepts absent declared size",
     "src/director/packs/backfill.test.mjs › [director-093] The session accepts the asset byte limit",
@@ -1984,7 +2002,7 @@
     "src/director/packs/backfill.test.mjs › [director-093] The session rejects one byte above the total limit",
     "src/director/packs/backfill.test.mjs › [director-093] The session uses its default byte budget",
     "src/director/packs/backfill.test.mjs › [director-093] The source receives the path and the renderer receives the asset and signal",
-    "src/director/packs/backfill.test.mjs › [director-093] The total byte check comes before the digest read",
+    "src/director/packs/backfill.test.mjs › [director-093] The total byte check comes before access to the digest",
     "src/director/packs/packs.test.mjs › [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names"
   ],
   "director-094": [
@@ -1994,6 +2012,7 @@
     "src/director/packs/backfill.test.mjs › [director-094] The directory rejects password",
     "src/director/packs/backfill.test.mjs › [director-094] The directory rejects protocol",
     "src/director/packs/backfill.test.mjs › [director-094] The directory rejects query",
+    "src/director/packs/backfill.test.mjs › [director-094] The directory rejects the file protocol",
     "src/director/packs/backfill.test.mjs › [director-094] The directory rejects username"
   ],
   "director-095": [
@@ -2009,7 +2028,7 @@
   ],
   "director-096": [
     "src/director/packs/backfill.test.mjs › [director-096] The directory source accepts its default byte limit",
-    "src/director/packs/backfill.test.mjs › [director-096] The header limit check comes before the first stream read",
+    "src/director/packs/backfill.test.mjs › [director-096] The header limit check comes before it reads the first stream chunk",
     "src/director/packs/backfill.test.mjs › [director-096] The source checks its default byte budget",
     "src/director/packs/backfill.test.mjs › [director-096] The source checks the byte limit before it keeps a chunk",
     "src/director/packs/backfill.test.mjs › [director-096] The source joins chunks of different lengths",
@@ -2023,14 +2042,15 @@
   ],
   "director-097": [
     "src/director/packs/backfill.test.mjs › [director-097] The source accepts failed body cancellation",
+    "src/director/packs/backfill.test.mjs › [director-097] The source cancels before it reads the second chunk",
     "src/director/packs/backfill.test.mjs › [director-097] The source checks its signal between chunks",
     "src/director/packs/backfill.test.mjs › [director-097] The source rejects a failed response without a body",
     "src/director/packs/backfill.test.mjs › [director-097] The source rejects an absent stream",
     "src/director/packs/backfill.test.mjs › [director-097] The source rejects early cancellation",
-    "src/director/packs/backfill.test.mjs › [director-097] The source signal check comes before the stream read",
+    "src/director/packs/backfill.test.mjs › [director-097] The source signal check comes before it reads the stream chunk",
     "src/director/packs/backfill.test.mjs › [director-097] The source stops between stream chunks",
-    "src/director/packs/backfill.test.mjs › [director-097] The source waits for body cancellation before an HTTP error",
-    "src/director/packs/backfill.test.mjs › [director-097] The source waits for stream cancellation before release",
+    "src/director/packs/backfill.test.mjs › [director-097] The source waits for body cancellation before it rejects the asset request",
+    "src/director/packs/backfill.test.mjs › [director-097] The source waits for stream cancellation before it releases the reader lock",
     "src/director/packs/backfill.test.mjs › [director-097] The stream releases its lock after an error",
     "src/director/packs/packs.test.mjs › [director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets",
     "src/director/packs/packs.test.mjs › [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal"
@@ -2050,7 +2070,7 @@
     "src/director/sharing/sharing.test.mjs › [director-098] The bundle rejects invalid JSON of 52428800 characters",
     "src/director/sharing/sharing.test.mjs › [director-098] The bundle rejects invalid JSON of 5242881 characters",
     "src/director/sharing/sharing.test.mjs › [director-098] The bundle rejects null text",
-    "src/director/sharing/sharing.test.mjs › [director-098] The plain share returns an empty asset map",
+    "src/director/sharing/sharing.test.mjs › [director-098] The plain project JSON returns an empty asset map",
     "src/director/sharing/sharing.test.mjs › [director-098] The share character guard comes before byte conversion"
   ],
   "director-099": [
@@ -2061,6 +2081,7 @@
     "src/director/sharing/sharing.test.mjs › [director-099 director-101] The export uses the standard alphabet AZaz09+/",
     "src/director/sharing/sharing.test.mjs › [director-099 director-101] The export writes each base64 character in padded text",
     "src/director/sharing/sharing.test.mjs › [director-099 director-101] The export writes each base64 character in plain text",
+    "src/director/sharing/sharing.test.mjs › [director-099 director-102] The bundle rejects an SVG media type",
     "src/director/sharing/sharing.test.mjs › [director-099 director-107] The asset signal check comes before its field check",
     "src/director/sharing/sharing.test.mjs › [director-099] The base64 accepts bytes without padding",
     "src/director/sharing/sharing.test.mjs › [director-099] The base64 accepts its length limit and rejects the next aligned length",
@@ -2112,7 +2133,7 @@
     "src/director/sharing/sharing.test.mjs › [director-099] The import checks media type before duplicate path",
     "src/director/sharing/sharing.test.mjs › [director-099] The import checks path before media type",
     "src/director/sharing/sharing.test.mjs › [director-099] The import checks project before assets",
-    "src/director/sharing/sharing.test.mjs › [director-099] The import checks top fields before version",
+    "src/director/sharing/sharing.test.mjs › [director-099] The import checks top-level fields before version",
     "src/director/sharing/sharing.test.mjs › [director-099] The import checks version before project",
     "src/director/sharing/sharing.test.mjs › [director-099] The import rejects 65 different asset paths"
   ],
@@ -2141,8 +2162,10 @@
     "src/director/sharing/sharing.test.mjs › [director-099 director-101] The export writes each base64 character in plain text",
     "src/director/sharing/sharing.test.mjs › [director-101] The bundle accepts long valid source asset names",
     "src/director/sharing/sharing.test.mjs › [director-101] The export accepts scenes without data packs",
+    "src/director/sharing/sharing.test.mjs › [director-101] The export encodes the second byte chunk",
     "src/director/sharing/sharing.test.mjs › [director-101] The export keeps a supplied data pack list",
     "src/director/sharing/sharing.test.mjs › [director-101] The export limits each source filename to 160 characters",
+    "src/director/sharing/sharing.test.mjs › [director-101] The export reaches the second scene",
     "src/director/sharing/sharing.test.mjs › [director-101] The export reads no chunk past the asset end",
     "src/director/sharing/sharing.test.mjs › [director-101] The export rejects an invalid project",
     "src/director/sharing/sharing.test.mjs › [director-101] The export writes each asset index and filename",
@@ -2153,8 +2176,9 @@
     "src/director/sharing/sharing.test.mjs › [director-101] The selected scene bundle copies bytes and attribution and keeps the project without an asset request"
   ],
   "director-102": [
-    "src/director/sharing/sharing.test.mjs › [director-102 director-107] The export signal check comes before absent asset",
+    "src/director/sharing/sharing.test.mjs › [director-099 director-102] The bundle rejects an SVG media type",
     "src/director/sharing/sharing.test.mjs › [director-102 director-107] The export signal check comes before declared integrity",
+    "src/director/sharing/sharing.test.mjs › [director-102 director-107] The export signal check comes before the absent asset check",
     "src/director/sharing/sharing.test.mjs › [director-102] The absent digest stops its check after one field read",
     "src/director/sharing/sharing.test.mjs › [director-102] The bundle checks asset limits and declared integrity before export",
     "src/director/sharing/sharing.test.mjs › [director-102] The export accepts absent integrity fields",
@@ -2164,7 +2188,7 @@
     "src/director/sharing/sharing.test.mjs › [director-102] The export accepts the total byte limit and rejects one more byte",
     "src/director/sharing/sharing.test.mjs › [director-102] The export checks bytes before the media type",
     "src/director/sharing/sharing.test.mjs › [director-102] The export checks declared byteLength before declared digest",
-    "src/director/sharing/sharing.test.mjs › [director-102] The export checks integrity before the filename read",
+    "src/director/sharing/sharing.test.mjs › [director-102] The export checks integrity before access to the filename",
     "src/director/sharing/sharing.test.mjs › [director-102] The export checks its encoded text budget",
     "src/director/sharing/sharing.test.mjs › [director-102] The export checks the asset size before the total size",
     "src/director/sharing/sharing.test.mjs › [director-102] The export checks the media type before the digest call",
@@ -2203,12 +2227,13 @@
     "src/director/sharing/sharing.test.mjs › [director-104] The bundle byte store removes old data after replacement and uses no network source",
     "src/director/sharing/sharing.test.mjs › [director-104] The byte store accepts an absent replacement map",
     "src/director/sharing/sharing.test.mjs › [director-104] The store clears stored bytes",
-    "src/director/sharing/sharing.test.mjs › [director-104] The store copies the asset map"
+    "src/director/sharing/sharing.test.mjs › [director-104] The store copies the asset map",
+    "src/director/sharing/sharing.test.mjs › [director-104] The store counts the second asset"
   ],
   "director-105": [
     "src/director/sharing/sharing.test.mjs › [director-105] The byte store accepts its default byte limit",
     "src/director/sharing/sharing.test.mjs › [director-105] The byte store accepts the caller byte limit",
-    "src/director/sharing/sharing.test.mjs › [director-105] The byte store rejects an unsafe path before its lookup",
+    "src/director/sharing/sharing.test.mjs › [director-105] The byte store rejects an unsafe path that it holds",
     "src/director/sharing/sharing.test.mjs › [director-105] The store checks its default byte budget",
     "src/director/sharing/sharing.test.mjs › [director-105] The store rejects a cancelled source call",
     "src/director/sharing/sharing.test.mjs › [director-105] The store rejects absent bytes",
@@ -2218,21 +2243,21 @@
   ],
   "director-106": [
     "src/director/sharing/sharing.test.mjs › [director-106 director-107] The file signal check comes before text access",
-    "src/director/sharing/sharing.test.mjs › [director-106] The file budget check comes before the signal read",
+    "src/director/sharing/sharing.test.mjs › [director-106] The file limit check comes before access to the signal",
     "src/director/sharing/sharing.test.mjs › [director-106] The share helpers accept an absent filename",
     "src/director/sharing/sharing.test.mjs › [director-106] The share helpers accept the bundle file limit and reject one more byte",
     "src/director/sharing/sharing.test.mjs › [director-106] The share helpers accept the project file limit and reject one more byte",
     "src/director/sharing/sharing.test.mjs › [director-106] The share helpers check a signal after text access",
     "src/director/sharing/sharing.test.mjs › [director-106] The share helpers give bundles the larger budget",
     "src/director/sharing/sharing.test.mjs › [director-106] The share helpers reject excess file bytes before text access and cancel a stalled project file",
-    "src/director/sharing/sharing.test.mjs › [director-106] The share helpers reject the ordinary file budget"
+    "src/director/sharing/sharing.test.mjs › [director-106] The share helpers reject the ordinary file limit"
   ],
   "director-107": [
     "src/director/sharing/sharing.test.mjs › [director-098 director-107] The share signal check comes before the text type check",
     "src/director/sharing/sharing.test.mjs › [director-099 director-107] The asset signal check comes before its field check",
     "src/director/sharing/sharing.test.mjs › [director-100 director-107] The import signal check comes before the digest comparison",
-    "src/director/sharing/sharing.test.mjs › [director-102 director-107] The export signal check comes before absent asset",
     "src/director/sharing/sharing.test.mjs › [director-102 director-107] The export signal check comes before declared integrity",
+    "src/director/sharing/sharing.test.mjs › [director-102 director-107] The export signal check comes before the absent asset check",
     "src/director/sharing/sharing.test.mjs › [director-106 director-107] The file signal check comes before text access",
     "src/director/sharing/sharing.test.mjs › [director-107] The bundle stops export after a digest",
     "src/director/sharing/sharing.test.mjs › [director-107] The bundle stops export after asset bytes",
@@ -2240,27 +2265,33 @@
     "src/director/sharing/sharing.test.mjs › [director-107] The bundle stops import after a digest",
     "src/director/sharing/sharing.test.mjs › [director-107] The bundle stops import before an asset",
     "src/director/sharing/sharing.test.mjs › [director-107] The cancelled bundle export stops before the next asset and returns no partial output",
-    "src/director/sharing/sharing.test.mjs › [director-107] The file signal check follows text settlement",
-    "src/director/sharing/sharing.test.mjs › [director-107] The helper attaches its listener before the work read",
+    "src/director/sharing/sharing.test.mjs › [director-107] The export stops after the second digest",
+    "src/director/sharing/sharing.test.mjs › [director-107] The export stops before the second asset",
+    "src/director/sharing/sharing.test.mjs › [director-107] The file signal check follows the text result",
+    "src/director/sharing/sharing.test.mjs › [director-107] The helper attaches its listener before it reads the work promise",
     "src/director/sharing/sharing.test.mjs › [director-107] The helper cancels work that is not complete",
     "src/director/sharing/sharing.test.mjs › [director-107] The helper checks cancellation after listener removal",
-    "src/director/sharing/sharing.test.mjs › [director-107] The helper checks signal state at settlement",
+    "src/director/sharing/sharing.test.mjs › [director-107] The helper checks signal state when the work settles",
     "src/director/sharing/sharing.test.mjs › [director-107] The helper does not attach a listener to a cancelled signal",
-    "src/director/sharing/sharing.test.mjs › [director-107] The helper handles cancellation during listener removal before a work error",
     "src/director/sharing/sharing.test.mjs › [director-107] The helper reads cancelled work before its reason",
     "src/director/sharing/sharing.test.mjs › [director-107] The helper rejects a work error",
     "src/director/sharing/sharing.test.mjs › [director-107] The helper rejects an early signal",
-    "src/director/sharing/sharing.test.mjs › [director-107] The helper removes its listener before the reason read",
+    "src/director/sharing/sharing.test.mjs › [director-107] The helper rejects with the cancellation reason during listener removal after a work error",
+    "src/director/sharing/sharing.test.mjs › [director-107] The helper removes its listener before access to the reason",
     "src/director/sharing/sharing.test.mjs › [director-107] The helper resolves with an active signal",
     "src/director/sharing/sharing.test.mjs › [director-107] The helper resolves without a signal",
+    "src/director/sharing/sharing.test.mjs › [director-107] The import stops after the second digest",
+    "src/director/sharing/sharing.test.mjs › [director-107] The import stops before the second asset",
     "src/director/sharing/sharing.test.mjs › [director-107] The share helpers remove the listener after cancel",
     "src/director/sharing/sharing.test.mjs › [director-107] The share helpers remove the listener after error",
     "src/director/sharing/sharing.test.mjs › [director-107] The share helpers remove the listener after success"
   ],
   "director-108": [
+    "src/director/sharing/sharing.test.mjs › [director-108 director-110] The preview reaches the second scene and shot",
     "src/director/sharing/sharing.test.mjs › [director-108] The preview accepts absent data pack lists",
     "src/director/sharing/sharing.test.mjs › [director-108] The preview counts shots apart from scenes",
     "src/director/sharing/sharing.test.mjs › [director-108] The preview keeps a supplied scene title",
+    "src/director/sharing/sharing.test.mjs › [director-108] The preview reaches the second data pack",
     "src/director/sharing/sharing.test.mjs › [director-108] The preview reports exact totals and attribution",
     "src/director/sharing/sharing.test.mjs › [director-108] The preview totals include every asset",
     "src/director/sharing/sharing.test.mjs › [director-108] The preview uses supplied data pack lists",
@@ -2276,6 +2307,7 @@
     "src/director/sharing/sharing.test.mjs › [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without state changes"
   ],
   "director-110": [
+    "src/director/sharing/sharing.test.mjs › [director-108 director-110] The preview reaches the second scene and shot",
     "src/director/sharing/sharing.test.mjs › [director-109 director-110] The preview uses empty source and layer lists",
     "src/director/sharing/sharing.test.mjs › [director-110] The applied shot packs decide external content before source pack IDs",
     "src/director/sharing/sharing.test.mjs › [director-110] The preview accepts absent shot layers",
