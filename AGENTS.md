@@ -34,6 +34,8 @@ Each rule below comes from a defect that reached this project. Obey each one.
 21. Use the ledger command `adopt` only for code that a merge commit brought from the upstream project. Do not use it for code that a person wrote in this project. The person who merges a change that uses `adopt` must check the merge commit of that change. The upstream remote must have the second parent of that merge commit. That person must also record the result in `review.md`.
 22. For a spec change, read the QA lines in the gate output. Avoid a conflict with a listed purpose. Add a header to each new QA script.
 
+Input files have the definition in the coverage-gate spec.
+
 ## Gates
 
 The gates run on the Node version in `.node-version`. Use the Docker image, because other Node versions give different coverage counts.
@@ -59,9 +61,10 @@ A gap is a code file below 100% coverage or a test without a scenario ID. The fi
 1. Run `/opsx:propose` to write the proposal, the specs, the design and the tasks.
 2. Do the tasks in order. Write each test before its code. Commit each file outside openspec/changes/, openspec/specs/ and openspec/trace/. Commit code files and test files before the ratchet command.
 3. Run `make ratchet CHANGE=<name>`.
-4. Read the ratchet verdict. Correct each error, except the review errors. Use `make gates-docs CHANGE=<name>` when each changed file lies under the three allowed paths. The mode also refuses changed code files and test files.
+4. Read the ratchet verdict. Correct each error, except the review errors. Use `make gates-docs CHANGE=<name>` when each changed file lies under the three allowed paths. The command also refuses changed code files and test files under those paths.
 5. Run `/opsx:review <name>`. This command archives the change, runs the two review agents and writes `review.md`.
-6. Commit the change, the archive folder and the files in `openspec/trace/`.
+6. Run `make gates CHANGE=<name>` on the final tree.
+7. Commit the change, the archive folder and the files in `openspec/trace/`.
 
 ## Steps for a backfill change
 
@@ -71,13 +74,13 @@ A backfill change adds specs and tests for old code. Its name is `backfill-<capa
 2. Write the specs from what the code does now. Use `Origin: backfill` for each requirement.
 3. Add scenario IDs to the old tests of each scenario. Add tests for the lines, branches and functions that are not covered.
 4. Run `make ratchet CHANGE=backfill-<capability>`. The history records the closed gaps with the change name.
-5. Do steps 4 to 6 of the change steps.
+5. Do steps 4 to 7 of the change steps.
 
 ## Document gates
 
 The three allowed paths are `openspec/changes/`, `openspec/specs/` and `openspec/trace/`.
 Document gates trust changes only under `openspec/changes/`, `openspec/specs/` and `openspec/trace/`.
 After archive, use document gates only while all changed files stay under those paths.
-A QA header change or another file change needs another ratchet command or full gates on the final tree.
+A QA header change or another file change needs another ratchet command or all gates on the final tree.
 
-When a code file or test file changes, use another ratchet command or full gates.
+When a code file or test file changes, use another ratchet command or all gates.

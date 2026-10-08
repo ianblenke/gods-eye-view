@@ -1,7 +1,8 @@
 ## ADDED Requirements
 
 ### Requirement: Ratchet comparison verdict
-The ratchet command MUST use one measurement to write the files and all gate comparisons.
+The ratchet command MUST use one measurement.
+The command writes the files and runs all gate comparisons with that measurement.
 The command writes the trace files before the comparisons.
 The comparison verdict decides status 0 for success or status 2 for errors.
 The command keeps the errors that stop it before it writes the files, with status 1.
@@ -51,7 +52,7 @@ Origin: spec-first
 ### Requirement: Ratchet input state
 The ratchet MUST record changed files outside `openspec/changes/`, `openspec/specs/` and `openspec/trace/` in the history field `dirty`.
 Compare current files with HEAD, with the same path rule as the document mode.
-Include ignored input files with the same exceptions.
+Include protected ignored files with the same exceptions.
 Changed code files and test files under the three allowed paths also cause a dirty list.
 A clean ratchet MUST have no `dirty` field.
 The decision to keep history unchanged MUST compare the snapshot, commit and sorted dirty list.
@@ -63,7 +64,7 @@ Origin: spec-first
 - **WHEN** a file outside the allowed paths differs from HEAD at the ratchet
 - **THEN** the history line has the sorted `dirty` list
 
-#### Scenario: Omit dirty paths for a clean ratchet `gap-ledger-131`
+#### Scenario: Omit dirty list for a clean ratchet `gap-ledger-131`
 - **WHEN** no input file, code file or test file differs from HEAD
 - **THEN** the history line has no `dirty` field
 
@@ -77,10 +78,20 @@ Origin: spec-first
 
 ### Requirement: Dirty names in the ratchet container
 The ratchet container MUST add the same protected ignored file markers as the document container.
-The history comparison then sees ignored input files that the container copy omits.
+The history comparison then sees protected ignored files that the container copy omits.
 Origin: spec-first
 
 #### Scenario: Keep ignored names for ratchet history `gap-ledger-134`
 - **WHEN** the container copy omits a protected ignored file before the ratchet
 - **THEN** the ratchet container adds its name marker before the gate command
 - **AND** the marker definition comes before the immediate command expansion
+
+### Requirement: Current review tree
+The ratchet MUST read changed file names again after it writes the trace files.
+The review gate MUST use that list for the tree hash.
+Origin: spec-first
+
+#### Scenario: Include changed trace files in the review tree `gap-ledger-135`
+- **WHEN** a trace file equals the base before the ratchet and differs after the ratchet writes it
+- **THEN** the review tree hash includes that file
+- **AND** the ratchet and full check give the same review tree error

@@ -51,6 +51,8 @@ Reviewed-Tree: <hash from step 13>
 
 Document gates trust changes only under `openspec/changes/`, `openspec/specs/` and `openspec/trace/`.
 After archive, use document gates only while all changed files stay under those paths.
-A QA header change or another file change needs another ratchet command or full gates on the final tree.
+A QA header change or another file change needs another ratchet command or all gates on the final tree.
 
-When a code file or test file changes, use another ratchet command or full gates.
+When a code file or test file changes, use another ratchet command or all gates.
+
+Input files have the definition in the coverage-gate spec.

@@ -343,11 +343,8 @@ function documentMeasurement({ root, change, openSpec, snapshot, phase }) {
   const trace = evaluateTrace({ specs, records: snapshot.records, assertions: snapshot.assertions, testFiles: snapshot.testFiles, change, changeFound: folder !== null });
   const qa = readQaRegister({ root, tracked: listTrackedFiles(root) });
   const tracked = listTrackedFiles(root).filter(file => existsSync(path.join(root, file)));
-  const inventory = codeInventory(tracked, qa.validQaScripts);
   const readFile = file => readFileSync(path.join(root, file), 'utf8');
   errors.push(...checkUntracked(listUntrackedFiles(root)));
-  errors.push(...findIgnoreComments({ inventory, readFile }));
-  errors.push(...findTestImports({ inventory, readFile }));
   errors.push(...findCoverageFlags({ tracked, readFile }));
   return { ...snapshot, specs, trace, qaScripts: qa.scripts, errors: [...errors, ...trace.errors, ...qa.errors], links: buildLinks(trace.report), current: currentGaps({ coverage: snapshot.coverage, untraced: trace.untraced }) };
 }
@@ -672,9 +669,10 @@ function runGateCommand({
   compareStart();
   const lint = phase('lint', () => lintFindings(root, measured.records));
   const folder = change ? changeFolder(root, change) : null;
+  const reviewFiles = command === 'ratchet' ? diffNames(root, base) : diffFiles;
   const reviews = phase('review', () => [
     ...checkArchivedReviews(root, { except: folder }),
-    ...(folder ? checkChangeReview(root, change, { treeHash: computeTreeHash({ root, changeDir: folder, diffFiles }) }) : []),
+    ...(folder ? checkChangeReview(root, change, { treeHash: computeTreeHash({ root, changeDir: folder, diffFiles: reviewFiles }) }) : []),
     ...checkChangeNames(root),
     ...checkAgents(root),
     ...checkReviewCommand(root),
@@ -695,7 +693,7 @@ export function runGates(options) {
   const started = clock();
   const trusted = parsed.noMeasure ? trustMeasurement(options.root, parsed.change, options.gitSpawn) : null;
   if (parsed.noMeasure) {
-    log(trusted.reason ? 'NO TEST RUN: refused' : `NO TEST RUN: the snapshot of commit ${trusted.commit} is trusted`);
+    log(trusted.reason ? 'NO TEST RUN: refused' : `NO TEST RUN: the mode trusts the snapshot of commit ${trusted.commit}`);
   } else {
     log(`Command: ${parsed.command}`);
   }
