@@ -71,6 +71,162 @@ const response = (
   );
 const directory = (fetchImpl) =>
   createAssetDirectorySource({ baseUrl: 'https://example.org/a/', fetchImpl });
+
+for (const path of ['z/Zz', 'Z/zZ', 'zZ/Zz']) {
+  test(`[director-076] The asset path accepts ${path}`, () => {
+    assert.doesNotThrow(() => validateAssetPath(path));
+  });
+}
+for (const [tag, label, alter, message] of [
+  ['077', 'extra data pack field', p => { p.extra = 1; }, 'pack.extra: unsupported field'],
+  ['077', 'format field', p => { p.format = 'bad'; }, 'pack.format: unsupported pack format'],
+  ['077', 'source object', p => { p.source = null; }, 'pack.source: expected an object'],
+  ['076', 'source path', p => { p.source.path = '../x'; }, 'pack.source.path: expected a relative asset path without URL syntax or traversal'],
+  ['078', 'extra attribution field', p => { p.attribution.extra = 1; }, 'pack.attribution.extra: unsupported field'],
+  ['078', 'attribution object', p => { p.attribution = null; }, 'pack.attribution: expected an object'],
+  ['078', 'link syntax', p => { p.attribution.url = 'bad'; }, 'pack.attribution.url: expected an HTTPS source link'],
+  ['078', 'link protocol', p => { p.attribution.url = 'http://example.org/'; }, 'pack.attribution.url: expected an HTTPS source link without credentials, query or fragment'],
+  ['079', 'numeric text', p => { p.byteLength = '1'; }, 'pack.byteLength: expected a number from 1 to 8388608'],
+  ['079', 'byte length field', p => { p.byteLength = 0; }, 'pack.byteLength: expected a number from 1 to 8388608'],
+  ['079', 'integer field', p => { p.byteLength = 1.5; }, 'pack.byteLength: expected an integer'],
+  ['080', 'extra placement field', p => { p.placement.extra = 1; }, 'pack.placement.extra: unsupported field'],
+  ['080', 'placement object', p => { p.placement = null; }, 'pack.placement: expected an object'],
+  ['080', 'height reference', p => { p.placement.altitudeReference = 'bad'; }, 'pack.placement.altitudeReference: expected ellipsoid height in meters'],
+  ['080', 'bound list', p => { p.format = 'image'; p.placement = { bounds: [0, 0, 1], height: 0, altitudeReference: 'ellipsoid' }; }, 'pack.placement.bounds: expected west, south, east, north'],
+]) {
+  test(`[director-${tag}] The manifest names the ${label}`, () => {
+    const p = pack(); alter(p);
+    assert.throws(() => validateDataPack(p, 'pack', new Set()), { message });
+  });
+}
+test('[director-081] The manifest names an unknown anchor', () => {
+  const p = { ...pack(), format: 'media', placement: { anchorId: 'absent' } };
+  assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.placement.anchorId: unknown scene anchor' });
+});
+test('[director-082] The shot accepts eight references and rejects nine references', () => {
+  const scene = {
+    dataPacks: Array.from({ length: 8 }, (_, i) => ({ ...pack(), id: `p${i}` })),
+    shots: [{ dataPackIds: Array.from({ length: 8 }, (_, i) => `p${i}`) }],
+  };
+  assert.doesNotThrow(() => validateSceneDataPacks(scene, '$'));
+  scene.shots[0].dataPackIds.push('absent');
+  assert.throws(() => validateSceneDataPacks(scene, '$'), { message: '$.shots[0].dataPackIds: expected an array of at most 8 entries' });
+});
+for (const [label, scene, message] of [
+  ['declaration', { dataPacks: [{ ...pack(), extra: 1 }], shots: [] }, '$.dataPacks[0].extra: unsupported field'],
+  ['duplicate ID', { dataPacks: [pack(), pack()], shots: [] }, '$.dataPacks[1].id: duplicate pack ID'],
+  ['duplicate reference', { dataPacks: [pack()], shots: [{ dataPackIds: ['outline', 'outline'] }] }, '$.shots[0].dataPackIds: expected distinct scene pack IDs'],
+  ['reference type', { dataPacks: [], shots: [{ dataPackIds: null }] }, '$.shots[0].dataPackIds: expected an array of at most 8 entries'],
+]) {
+  test(`[director-082] The scene names the invalid ${label}`, () => {
+    assert.throws(() => validateSceneDataPacks(scene, '$'), { message });
+  });
+}
+test('[director-085] The decoder rejects a null position', () => {
+  assert.throws(() => geoFeatures([feature('p', 'Point', null)]), { message: 'Invalid geographic position' });
+});
+test('[director-085] The decoder keeps a negative zero height', () => {
+  const value = decodePackGeoJSON(new TextEncoder().encode('{"type":"FeatureCollection","features":[{"type":"Feature","id":"p","geometry":{"type":"Point","coordinates":[0,0,-0]}}]}'));
+  assert.equal(Object.is(value[0].coordinates[2], -0), true);
+});
+test('[director-086] The decoder rejects a null line', () => {
+  assert.throws(() => geoFeatures([feature('p', 'LineString', null)]), { message: 'Invalid line' });
+});
+test('[director-086] The decoder accepts an open line', () => {
+  assert.deepEqual(geoFeatures([feature('p', 'LineString', [[0, 0], [1, 1]])])[0].coordinates, [[0, 0, 0], [1, 1, 0]]);
+});
+test('[director-088] The session accepts an empty list without asset work', async () => {
+  let calls = 0, timers = 0;
+  const native = globalThis.setTimeout;
+  globalThis.setTimeout = (...args) => { timers++; return native(...args); };
+  const s = makeSession(() => { calls++; return asset(); });
+  try {
+    assert.equal(await s.load([]), true);
+    assert.deepEqual(s.getState(), { status: 'idle', count: 0 });
+    assert.equal(calls, 0);
+    assert.equal(timers, 0);
+  } finally { globalThis.setTimeout = native; s.destroy(); }
+});
+test('[director-088] The session rejects a null list', async () => {
+  const s = makeSession();
+  try { await assert.rejects(s.load(null), { message: 'Too many data packs' }); }
+  finally { s.destroy(); }
+});
+for (const [label, source, renderer] of [
+  ['null bytes', () => ({ bytes: null }), () => ({ dispose() {} })],
+  ['null handle', asset, () => null],
+  ['source error', () => Promise.reject(new Error('source')), () => { assert.fail('The renderer must not run'); }],
+]) {
+  test(`[director-090] The session rejects ${label}`, async () => {
+    const s = makeSession(source, renderer);
+    try { await assert.rejects(s.load([pack()]), { message: 'Data pack could not load: check its source, format, size or integrity' }); }
+    finally { s.destroy(); }
+  });
+}
+test('[director-089] The session sets and removes the caller listener', async () => {
+  const events = [], callbacks = new Set();
+  const signal = {
+    aborted: false,
+    addEventListener(type, callback, options) { events.push(['add', type, options]); callbacks.add(callback); },
+    removeEventListener(type, callback) { events.push(['remove', type]); assert.equal(callbacks.delete(callback), true); },
+  };
+  const s = makeSession();
+  try {
+    assert.equal(await s.load([pack()], { signal }), true);
+    s.clear();
+    assert.deepEqual(events, [['add', 'abort', { once: true }], ['remove', 'abort']]);
+    assert.equal(callbacks.size, 0);
+  } finally { s.destroy(); }
+});
+test('[director-096] The source joins chunks of different lengths', async () => {
+  const source = directory(() => response([new Uint8Array([1, 2]), new Uint8Array([3, 4, 5])]));
+  assert.deepEqual([...(await source({ path: 'x' })).bytes], [1, 2, 3, 4, 5]);
+});
+
+test('[director-088] The data pack limits reject a caller change', async () => {
+  const { PACK_LIMITS } = await import('./manifest.js');
+  assert.equal(Object.isFrozen(PACK_LIMITS), true);
+  assert.throws(() => { PACK_LIMITS.packs = 9; }, TypeError);
+  assert.equal(PACK_LIMITS.packs, 8);
+});
+
+test('[director-088] The destroyed session does not read the caller signal state', async () => {
+  let reads = 0;
+  const signal = { get aborted() { reads++; return false; } };
+  const s = makeSession(); s.destroy();
+  assert.equal(await s.load([pack()], { signal }), false);
+  assert.equal(reads, 0);
+});
+test('[director-090] The replaced load call does not read the caller signal state again', async () => {
+  let reads = 0;
+  const signal = { get aborted() { reads++; return false; }, addEventListener() {}, removeEventListener() {} };
+  const d = deferred(), s = makeSession(() => d.promise);
+  const load = s.load([pack()], { signal }); s.clear();
+  assert.equal(await load, false);
+  assert.equal(reads, 1);
+  d.resolve(asset()); await tick();
+});
+test('[director-090] The session rejects asset data from a source error', async () => {
+  let renders = 0;
+  const s = makeSession(() => Promise.reject(asset()), () => { renders++; return { dispose() {} }; });
+  try {
+    await assert.rejects(s.load([pack()]), { message: 'Data pack could not load: check its source, format, size or integrity' });
+    assert.equal(renders, 0);
+  } finally { s.destroy(); }
+});
+test('[director-090] The session checks its source signal before byte access and after renderer work', async () => {
+  let checks = 0;
+  const s = makeSession(({ signal }) => {
+    const check = signal.throwIfAborted.bind(signal);
+    signal.throwIfAborted = () => { checks++; check(); };
+    return asset();
+  });
+  try {
+    assert.equal(await s.load([pack()]), true);
+    assert.equal(checks, 2);
+  } finally { s.destroy(); }
+});
+
 test('[director-076] The asset path accepts safe names', async () => {
   assert.doesNotThrow(() => validateAssetPath('A_1/b-c.d'));
 });
@@ -2413,6 +2569,187 @@ for (const outcome of ['success', 'error']) {
     } finally {
       session?.destroy();
       globalThis.AbortController = Native;
+    }
+  });
+}
+
+for (const outcome of ['success', 'error']) {
+  test(`[director-089] The completed source listener ignores a later event after ${outcome}`, async () => {
+    let callback, reasonReads = 0;
+    const s = makeSession(({ signal }) => {
+      const add = signal.addEventListener.bind(signal);
+      signal.addEventListener = (type, listener, options) => { callback = listener; add(type, listener, options); };
+      Object.defineProperty(signal, 'reason', { get() { reasonReads++; return new Error('stop'); } });
+      return outcome === 'success' ? asset() : Promise.reject(new Error('source'));
+    });
+    try {
+      if (outcome === 'success') assert.equal(await s.load([pack()]), true);
+      else await assert.rejects(s.load([pack()]), { message: 'Data pack could not load: check its source, format, size or integrity' });
+      reasonReads = 0;
+      callback(); callback();
+      assert.equal(reasonReads, 0);
+    } finally { s.destroy(); }
+  });
+}
+test('[director-092] The source signal event stops work before the renderer', async () => {
+  let sourceSignal, renders = 0, reasonReads = 0;
+  const d = deferred();
+  const s = makeSession(({ signal }) => {
+    sourceSignal = signal;
+    Object.defineProperty(signal, 'reason', { get() { reasonReads++; return asset(); } });
+    return d.promise;
+  }, () => { renders++; return { dispose() {} }; });
+  try {
+    const load = s.load([pack()]);
+    sourceSignal.dispatchEvent(new Event('abort'));
+    await assert.rejects(load, { message: 'Data pack could not load: check its source, format, size or integrity' });
+    assert.equal(renders, 0);
+    assert.equal(reasonReads, 1);
+    d.resolve(asset()); await tick();
+  } finally { s.destroy(); }
+});
+
+test('[director-090] The session observes destruction during caller signal access after a source error', async () => {
+  let reads = 0, s;
+  const signal = {
+    get aborted() { if (++reads === 2) s.destroy(); return false; },
+    addEventListener() {}, removeEventListener() {},
+  };
+  s = makeSession(() => Promise.reject(new Error('source')));
+  try { assert.equal(await s.load([pack()], { signal }), false); }
+  finally { s.destroy(); }
+});
+test('[director-093] The session checks byte type before length access', async () => {
+  let reads = 0;
+  const value = new Proxy({}, { get(target, key) { if (key === 'length') reads++; return 1; } });
+  const s = makeSession(() => ({ bytes: value }));
+  try {
+    await assert.rejects(s.load([pack()]), { message: 'Data pack could not load: check its source, format, size or integrity' });
+    assert.equal(reads, 0);
+  } finally { s.destroy(); }
+});
+test('[director-093] The null bytes do not cause another declared length read', async () => {
+  let reads = 0;
+  const p = pack();
+  Object.defineProperty(p, 'byteLength', { get() { reads++; return 1; } });
+  const s = makeSession(() => ({ bytes: null }));
+  try {
+    await assert.rejects(s.load([p]), { message: 'Data pack could not load: check its source, format, size or integrity' });
+    assert.equal(reads, 2);
+  } finally { s.destroy(); }
+});
+test('[director-092] The deadline gives its cause to the source signal', async () => {
+  let reason;
+  const s = makeSession(({ signal }) => {
+    signal.addEventListener('abort', () => { reason = signal.reason.message; }, { once: true });
+    return new Promise(() => {});
+  }, undefined, { timeoutMs: 5 });
+  try {
+    await assert.rejects(s.load([pack()]), { message: 'Data pack could not load: check its source, format, size or integrity' });
+    assert.equal(reason, 'Asset load timed out');
+  } finally { s.destroy(); }
+});
+
+test('[director-079] The digest type check precedes text conversion', () => {
+  const p = { ...pack(), sha256: Symbol('digest') };
+  assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.sha256: expected a lowercase SHA-256 digest' });
+});
+test('[director-080] The edge order check starts with west and east', () => {
+  const reads = [], values = [2, -1, 1, 1];
+  const bounds = new Proxy(values, { get(target, key, receiver) {
+    if (/^[0-3]$/.test(String(key))) reads.push(Number(key));
+    return Reflect.get(target, key, receiver);
+  } });
+  const p = imagePack(); p.placement.bounds = bounds;
+  assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.placement.bounds: expected increasing non-dateline bounds' });
+  assert.deepEqual(reads, [0, 1, 2, 3, 0, 2]);
+});
+test('[director-082] The distinct reference check precedes the search for known IDs', () => {
+  let reads = 0;
+  const ids = ['outline', 'outline'];
+  Object.defineProperty(ids, 'some', { get() { reads++; return Array.prototype.some; } });
+  assert.throws(() => validateSceneDataPacks({ dataPacks: [pack()], shots: [{ dataPackIds: ids }] }, '$'), { message: '$.shots[0].dataPackIds: expected distinct scene pack IDs' });
+  assert.equal(reads, 0);
+});
+test('[director-093] The absent declared length does not cause another byte length read', async () => {
+  let reads = 0;
+  class Bytes extends Uint8Array { get length() { reads++; return super.length; } }
+  const s = makeSession(() => ({ bytes: new Bytes([1, 2, 3]) }));
+  try {
+    assert.equal(await s.load([pack()]), true);
+    assert.equal(reads, 3);
+  } finally { s.destroy(); }
+});
+test('[director-090] The detached handle check does not read the source signal state', async () => {
+  let reads = 0, first = true, s;
+  const aborted = Object.getOwnPropertyDescriptor(AbortSignal.prototype, 'aborted').get;
+  s = makeSession(({ signal }) => {
+    Object.defineProperty(signal, 'aborted', { get() { reads++; return aborted.call(signal); } });
+    return asset();
+  }, () => ({ get dispose() {
+    if (first) { first = false; s.clear(); reads = 0; }
+    return () => {};
+  } }));
+  try {
+    assert.equal(await s.load([pack()]), false);
+    assert.equal(reads, 0);
+  } finally { s.destroy(); }
+});
+test('[director-091] The old caller listener does not change new resources', async () => {
+  const callbacks = [], signal = { aborted: false, addEventListener(type, callback) { callbacks.push(callback); }, removeEventListener() {} };
+  const s = makeSession();
+  try {
+    assert.equal(await s.load([pack()], { signal }), true);
+    assert.equal(await s.load([pack()], { signal }), true);
+    callbacks[0]();
+    assert.deepEqual(s.getState(), { status: 'ready', count: 1 });
+  } finally { s.destroy(); }
+});
+
+test('[director-088 director-092] The absent source map gives no source for a numeric name', async () => {
+  let reads = 0;
+  const p = pack(); p.source.adapter = '0';
+  Object.defineProperty(p, 'byteLength', { get() { reads++; return 1; } });
+  const s = createDataPackSession({ adapters: { geojson: () => ({ dispose() {} }) } });
+  try {
+    await assert.rejects(s.load([p]), { message: 'Data pack could not load: check its source, format, size or integrity' });
+    assert.equal(reads, 1);
+    assert.deepEqual(s.getState(), { status: 'idle', count: 0 });
+  } finally { s.destroy(); }
+});
+test('[director-088 director-092] The absent renderer map gives no renderer for a numeric name', async () => {
+  let reads = 0, calls = 0;
+  const p = pack();
+  Object.defineProperty(p, 'format', { enumerable: true, get() { return ++reads <= 5 ? 'geojson' : '0'; } });
+  const s = createDataPackSession({ sources: { assets: () => { calls++; return asset(); } } });
+  try {
+    await assert.rejects(s.load([p]), { message: 'Data pack could not load: check its source, format, size or integrity' });
+    assert.equal(calls, 0);
+    assert.deepEqual(s.getState(), { status: 'idle', count: 0 });
+  } finally { s.destroy(); }
+});
+
+for (const mode of ['absent source', 'invalid bytes', 'excess total', 'wrong digest', 'invalid handle']) {
+  test(`[director-092] The session does not read the global error property for ${mode}`, async () => {
+    const saved = Object.getOwnPropertyDescriptor(globalThis, 'error');
+    let reads = 0, calls = 0, s;
+    Object.defineProperty(globalThis, 'error', { configurable: true, get() { reads++; return new Error('other'); } });
+    class FullBytes extends Uint8Array { get length() { return 8388608; } }
+    const source = () => {
+      if (mode === 'invalid bytes') return { bytes: null };
+      if (mode === 'excess total') return { bytes: ++calls === 5 ? new Uint8Array([1]) : new FullBytes([1]) };
+      return asset();
+    };
+    const p = pack(); if (mode === 'wrong digest') p.sha256 = '0'.repeat(64);
+    const packs = mode === 'excess total' ? Array.from({ length: 5 }, (_, i) => ({ ...p, id: `p${i}` })) : [p];
+    try {
+      s = mode === 'absent source' ? createDataPackSession() : makeSession(source, mode === 'invalid handle' ? () => null : undefined);
+      await assert.rejects(s.load(packs), { message: 'Data pack could not load: check its source, format, size or integrity' });
+      assert.equal(reads, 0);
+    } finally {
+      s?.destroy();
+      if (saved) Object.defineProperty(globalThis, 'error', saved);
+      else delete globalThis.error;
     }
   });
 }

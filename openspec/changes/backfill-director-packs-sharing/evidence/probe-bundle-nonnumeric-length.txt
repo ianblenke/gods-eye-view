@@ -1,0 +1,72 @@
+Base commit: 290b5d2.
+Known limit: bundle-nonnumeric-length.
+A custom byte length getter returns numeric text.
+The total becomes text and gives a false byte limit error for three real bytes.
+No scenario states this behavior.
+
+```js
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const root = '/home/ianblenke/docker/gev-work/director-3';
+const file = root + '/src/director/sharing/bundle.js';
+const source = fs.readFileSync(file, 'utf8').replace(/from '([^']+)'/g, (_, p) => `from '${new URL(p, 'file://' + file).href}'`);
+const changed = source.replace('total += bytes?.length || 0;', 'total += bytes?.length || false;');
+assert.notEqual(source, changed);
+const output = [];
+for (const [name, code] of [['original', source], ['a3144', changed]]) {
+  const { createSceneBundle } = await import('data:text/javascript;base64,' + Buffer.from(code).toString('base64'));
+  class TextBytes extends Uint8Array { get length() { return '1'; } }
+  class AbsentBytes extends Uint8Array { reads = 0; get length() { return ++this.reads === 1 ? undefined : super.length; } }
+  class FullBytes extends Uint8Array { get length() { return 8388608; } }
+  const bytes = [new TextBytes([1]), new AbsentBytes([1]), new FullBytes([1])];
+  const project = { version: 6, scenes: [{ id: 's', dataPacks: bytes.map((_, i) => ({ id: `p${i}`, version: 1, format: 'geojson', source: { adapter: 'assets', path: `data/${i}.json` }, attribution: { text: 'A', license: 'CC0' }, placement: { altitudeReference: 'ellipsoid' } })), shots: [] }] };
+  let calls = 0;
+  const record = { name, actualByteLengths: bytes.map(b => b.byteLength) };
+  assert.deepEqual(record.actualByteLengths, [1, 1, 1]);
+  try {
+    const value = JSON.parse(await createSceneBundle(project, () => ({ bytes: bytes[calls++], mimeType: 'application/json' })));
+    record.assets = value.assets.length;
+    record.declaredLengths = value.project.scenes[0].dataPacks.map(p => p.byteLength);
+  } catch (error) { record.error = error.message; }
+  record.calls = calls;
+  output.push(record);
+}
+assert.equal(output[0].error, 'assets: asset byte limit exceeded');
+assert.equal(output[1].assets, 3);
+const report = 'Base commit: 290b5d2.\nKnown limit: bundle-nonnumeric-length.\nA custom byte length getter returns numeric text.\nThe total becomes text and gives a false byte limit error for three real bytes.\nNo scenario states this behavior.\n\n```js\n' + fs.readFileSync(import.meta.filename, 'utf8') + '\n```\n\nCommand output:\n\n```text\n' + JSON.stringify(output, null, 2) + '\n```\n';
+fs.writeFileSync(root + '/openspec/changes/backfill-director-packs-sharing/evidence/probe-bundle-nonnumeric-length.txt', report);
+console.log(JSON.stringify(output, null, 2));
+
+```
+
+Command output:
+
+```text
+[
+  {
+    "name": "original",
+    "actualByteLengths": [
+      1,
+      1,
+      1
+    ],
+    "error": "assets: asset byte limit exceeded",
+    "calls": 3
+  },
+  {
+    "name": "a3144",
+    "actualByteLengths": [
+      1,
+      1,
+      1
+    ],
+    "assets": 3,
+    "declaredLengths": [
+      "1",
+      1,
+      8388608
+    ],
+    "calls": 3
+  }
+]
+```

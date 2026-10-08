@@ -4,6 +4,7 @@ HTTP means Hypertext Transfer Protocol.
 HTTPS means HTTP with a secure connection.
 MIME means Multipurpose Internet Mail Extensions.
 HEAD names the current Git commit.
+ERROR is the error prefix in command output.
 
 Base commit: `290b5d2`.
 
@@ -1895,3 +1896,278 @@ The warning count in checks.md comes from this command.
 ```sh
 cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing
 ```
+
+## Pass 4
+
+Base commit: `290b5d2`.
+
+### Test counts and times
+
+The host uses Node 26.8.2.
+The image version in `.node-version` is 24.21.0.
+The lead must confirm coverage with that image.
+No image or gate command ran in this pass.
+
+Each test command below ran alone and without forced process exit.
+The before copy carries the old test files from the source commit in audit.md.
+The copy has all source dependencies and a link to the same node_modules directory.
+The first copy lacked a source dependency and stopped before the sharing test.
+That failed setup gives no test result for packs.
+The corrected copy completed all three test files.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && cd /home/ianblenke/docker/gev-tools/director-3/pass4/baseline && taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && cd /home/ianblenke/docker/gev-tools/director-3/pass4/baseline && taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && cd /home/ianblenke/docker/gev-tools/director-3/pass4/baseline && taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs
+```
+
+The logs are `baseline-<name>.log` and `final-<name>.log` in the pass4 scratch directory.
+The command below reads counts and times.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && rg '^ℹ (tests|pass|fail|duration_ms)' /home/ianblenke/docker/gev-tools/director-3/pass4/baseline-*.log /home/ianblenke/docker/gev-tools/director-3/pass4/final-*.log
+```
+
+| file | tests before | tests after | before seconds | after seconds |
+| --- | ---: | ---: | ---: | ---: |
+| `src/director/packs/backfill.test.mjs` | 241 | 301 | 2.118618 | 2.533981 |
+| `src/director/packs/packs.test.mjs` | 12 | 12 | 6.862618 | 7.232998 |
+| `src/director/sharing/sharing.test.mjs` | 132 | 166 | 115.901768 | 10.406275 |
+
+The final count is 479 passed tests and zero failures.
+No new test file is necessary.
+The existing backfill and sharing files contain the new checks.
+
+### Slow test proof
+
+The fixtures use a real 32 MiB byte buffer.
+Node Buffer and crypto build the base64 text and SHA256 digest once.
+The import checks bundle JSON directly.
+The export caches zero-byte chunks with the native subarray bounds.
+The decoder checks the map function for all 256 byte values before the fast copy.
+The final assertions check exact byte and text lengths, digest and rejection messages.
+
+The total export test also proves the asset byte limit and total excess rejection.
+It replaces two separate tests with the same limit proof.
+The absent-length test uses numeric byte lengths and an empty array length.
+It checks that the fallback keeps the running total.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && rg 'total byte limit|excess total bytes|absent length|asset byte limit|base64 accepts its length' /home/ianblenke/docker/gev-tools/director-3/pass4/baseline-sharing.log /home/ianblenke/docker/gev-tools/director-3/pass4/final-sharing.log
+```
+
+| test | before seconds | after seconds |
+| --- | ---: | ---: |
+| The import accepts the total byte limit and rejects one more byte | 59.990760 | 4.083381 |
+| The export accepts the total byte limit and rejects one more byte | 22.209433 | 2.575859 |
+| The export rejects excess total bytes | 12.033089 | Part of the total export test. |
+| The export keeps its total after an absent length | 10.273848 | 0.013870 |
+| The base64 accepts its length limit and rejects the next aligned length | 5.803030 | 0.446927 |
+| The export accepts the asset byte limit | 2.787105 | Part of the total export test. |
+
+Each remaining limit test takes less than 10 seconds.
+The complete sharing file takes less than 40 seconds.
+The assertions still separate each exact limit from its first excess value.
+The former shot limit survivors a0831 and a0832 are killed by the complete campaign.
+The source limit mutations outside this list stay available for the lead run.
+
+### Automatic mutation proof
+
+The audit gives the original operator totals and both original phases.
+The first pass4 campaign stopped during baseline tests at the 30-second cap.
+No mutant ran in that campaign.
+Its log is `stopped-baseline.log`; its partial output is `stopped-baseline-results.json`.
+
+The first complete campaign killed 180 cases and left 80 survivors.
+Its output is `campaign-first-results.json`.
+Further tests killed 12 more cases.
+
+The final command uses all 260 former survivors and all three test files.
+The slow threshold disables the skipped-test phase.
+The tool copies the source into its work directories.
+The root production files stay unchanged.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && survivor_ids=$(cat /home/ianblenke/docker/gev-tools/director-3/pass4/ids.txt) && cd /home/ianblenke/docker/gev-tools/automut && taskset -c 12-15 nice -n 19 node automut.mjs run --root /home/ianblenke/docker/gev-work/director-3 --mutants /home/ianblenke/docker/gev-tools/automut/director-3/mutants.json --tests src/director/packs/backfill.test.mjs,src/director/packs/packs.test.mjs,src/director/sharing/sharing.test.mjs --only "$survivor_ids" --jobs 4 --slow-ms 100000 --out /home/ianblenke/docker/gev-tools/director-3/pass4/results.json
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass4/final-table.py
+```
+
+The final output reports 192 killed and 68 survived results.
+It reports zero timeouts and zero crashes.
+The phase is complete.
+The final table has 260 unique rows and zero open rows.
+The result groups are 192 killed, 64 equivalent and four Known limit cases.
+
+The command output is `campaign.log` and `final-table.log`.
+
+The remaining survivor IDs are:
+
+```text
+a3144,a1022,a3788,a1415,a1100,a1435,a1436,a1439,a1442,a1549,a1550,a2624,a2625,a3048,a3049,a3424,a3635,a3636,a3637,a3640,a0405,a0607,a0705,a1431,a1487,a2552,a2680,a2681,a2683,a2684,a2483,a3054,a0364,a0359,a0354,a0369,a0410,a0612,a0710,a0926,a1026,a1025,a1038,a1149,a1190,a1205,a1335,a1336,a1396,a1397,a1417,a1424,a1425,a1432,a1512,a1513,a1717,a1908,a2012,a2017,a2022,a2027,a2032,a2512,a2553,a3295,a3301,a3310
+```
+
+The [survivor table](survivors.md) links each equivalent case to a probe.
+The probes call public exports and compare output, error fields and observable calls.
+Their bound is the public API of the module with standard built-in functions.
+They exclude source text and diagnostic stack locations.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass4/build-probes.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass4/probe-height-guards.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass4/probe-nonnumeric-length.mjs
+```
+
+The final probe output reports 64 equivalent cases in `probes-final2.log`.
+The inherited-height probe records a1022, a1025 and a1026.
+The nonnumeric-length probe records a3144.
+Those four cases remain Known limits.
+The existing signal-getter code fault stays a Known limit outside the automatic survivor list.
+No new scenario approves a code fault.
+
+### Prose scan bounds
+
+The predispatch scan still quotes old test titles from base commit `290b5d2`.
+The flagged title words occur only in those exact history quotes.
+They are not new prose or current test titles.
+
+The value AAAA is base64 test data in the hand mutation report.
+The uppercase status labels in the audit and survivor table are tool or table values.
+Those labels are not undefined abbreviations in prose.
+
+The title scan checks 406 titles and reports zero banned forms.
+The current test titles therefore pass the required scan.
+
+
+### Host coverage
+
+The command checks one production file at a time.
+It runs the same three test files in each check.
+Each log reports 479 passed tests and zero failures.
+Each production file has 100 percent line, branch and function coverage.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && for coverage_file in packs/geojson packs/manifest packs/session packs/source sharing/bundle sharing/lifetime sharing/preview; do taskset -c 12-15 nice -n 19 node --test --test-concurrency=1 --experimental-test-coverage --test-coverage-include="src/director/$coverage_file.js" --test-coverage-exclude='**/*.test.mjs' src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs src/director/sharing/sharing.test.mjs > "/home/ianblenke/docker/gev-tools/director-3/pass4/coverage-${coverage_file##*/}.log" 2>&1 || exit; done
+cd /home/ianblenke/docker/gev-work/director-3 && rg 'ℹ    .*\.js|ℹ all files|ℹ fail ' /home/ianblenke/docker/gev-tools/director-3/pass4/coverage-*.log
+```
+
+| production file | lines | branches | functions |
+| --- | ---: | ---: | ---: |
+| packs/geojson.js | 100.00 | 100.00 | 100.00 |
+| packs/manifest.js | 100.00 | 100.00 | 100.00 |
+| packs/session.js | 100.00 | 100.00 | 100.00 |
+| packs/source.js | 100.00 | 100.00 | 100.00 |
+| sharing/bundle.js | 100.00 | 100.00 | 100.00 |
+| sharing/lifetime.js | 100.00 | 100.00 | 100.00 |
+| sharing/preview.js | 100.00 | 100.00 | 100.00 |
+
+### Format and title checks
+
+The direct format write and check commands stop with `spawnSync git EPERM`.
+The host helper completes both commands.
+The write output reports 1158 formatted files.
+The check output reports 1158 checked files.
+The helper uses the same format script.
+
+The first helper write attempt in the sandbox stopped without a final result.
+Its empty output gives no format result.
+The later host write and check completed with exit code zero.
+The logs are `format-write-host.log` and `format-check-host.log` in the pass4 scratch directory.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node scripts/format.mjs --write
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node scripts/format.mjs --check
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --write
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+cd /home/ianblenke/docker/gev-work/director-3 && cd /home/ianblenke/docker/gev-work && taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110
+```
+
+The title output is:
+
+```text
+titles checked: 406, with a banned form: 0
+```
+
+
+### Record comparison
+
+The command below reads both complete campaigns and the final table.
+It reports 180 killed and 80 survived results for the first campaign.
+It reports 192 killed and 68 survived results for the final campaign.
+The table agrees with all 260 campaign records.
+Each equivalent probe path exists.
+The hand input has 408 rows.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass4/check-records.py
+```
+
+The output is `check-records.log` in the pass4 scratch directory.
+
+
+### Complete hand check
+
+The helper changes code only in a scratch clone.
+The root production files stay unchanged.
+The clone contains the final tests and all source dependencies.
+The complete run checks all 408 rows once.
+It kills 406 rows and leaves only m172 and m389.
+No row was skipped, timed out or crashed.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-tools/director-3/pass4/hand-clone /home/ianblenke/docker/gev-tools/director-3/muts.json
+```
+
+The output is `hand-final.log` in the pass4 scratch directory.
+The [hand mutation report](mutations.md) includes that complete output.
+The failed test for m284 is:
+
+```text
+[director-088] The destroyed session does not read the caller signal state
+```
+
+The new guard-order test kills m284 with an already destroyed session.
+The separate active-session signal getter fault remains a Known limit.
+The pass brief expected three survivors, but the stronger test kills one more row.
+The tests keep this valid proof.
+No new hand row is necessary because the automatic tool reproduces every new kill.
+
+The hand patterns for m126 and m341 now name the combined total export test.
+A backslash precedes each space in those patterns.
+The complete hand run proves both rows still fail.
+
+
+### Final prose and scope checks
+
+The lint command reports zero errors.
+The title scan reports zero banned forms.
+The predispatch scan leaves only exact old title quotes.
+The scan numbers refer to different stated limits and earlier pass results.
+The brief says to keep the exact old quotes.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing 2>&1 | grep -E "^(ERROR|STE)"
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-packs-sharing
+cd /home/ianblenke/docker/gev-work/director-3 && git diff --check
+cd /home/ianblenke/docker/gev-work/director-3 && git diff --name-only HEAD
+cd /home/ianblenke/docker/gev-work/director-3 && git diff HEAD -- 'src/director/**/*.js'
+cd /home/ianblenke/docker/gev-work/director-3 && git diff 290b5d2 -- src/director/packs/geojson.js src/director/packs/manifest.js src/director/packs/session.js src/director/packs/source.js src/director/sharing/bundle.js src/director/sharing/lifetime.js src/director/sharing/preview.js
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass4/check-scope.py
+```
+
+The scope script compares all seven production files and the three test files with the hand clone.
+Each copy matches its root file after the hand run.
+The production diffs are empty against the current source commit and base commit `290b5d2`.
+The changed paths are only the two test files and this change directory.
+No trace ledger, main spec, QA script or review report changes.
+
+The first marker scan included unchanged review reports and stopped on their old markers.
+That probe gave no complete scope result.
+The final scope script checks each changed file and completes.
+The logs are `final-scope.log`, `final-paths.log`, `final-production-diff.log` and `base-production-diff.log`.
+
+The lead runs the full automatic mutation set, image gates, ratchet and both reviews.
+Those commands are outside this pass.
+No commit, merge or push ran.

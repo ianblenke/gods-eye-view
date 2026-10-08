@@ -1414,5 +1414,20 @@ Old: const copy = parseSceneDocument(stringifySceneDocument(project));
 New: const copy = structuredClone(project);
 ```
 
-- [ ] 6.42 Complete the operand table.
+- [x] 6.42 Complete the automatic survivor table.
 - [x] 6.43 Check all host results after the last test change.
+
+## 7 Pass 4
+
+- [x] 7.1 Reduce repeated work in the byte limit tests.
+- [x] 7.2 Add scenario clauses for new input checks.
+- [x] 7.3 Add tagged tests for observable code changes.
+- [x] 7.4 Check every equivalent claim with a public function probe.
+- [x] 7.5 Complete the automatic check of former survivors.
+- [x] 7.6 Replace the hand operand table with the automatic audit.
+- [x] 7.7 Record each survivor result.
+- [x] 7.8 Check all test files without forced process exit.
+- [x] 7.9 Check each production file for full host coverage.
+- [x] 7.10 Check all hand mutation rows.
+- [x] 7.11 Correct each real prose error.
+- [x] 7.12 Check the final file scope.

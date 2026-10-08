@@ -42,11 +42,12 @@ The lead confirms those results in the gate image.
 - Known limit `code-probes-without-scenarios`: the scratch tests record the inherited height and signal getter code limits.
   The repository does not include these tests.
   The scratch file is `limits.test.mjs`.
-- Known limit `rows-m172-m284`: the repository tests do not kill the mutation rows m172 and m284.
-  Only the scratch test `limits.test.mjs` kills them.
+- Known limit `row-m172`: the repository tests do not kill mutation row m172.
+  Only the scratch test `limits.test.mjs` kills this row.
   Later changes `fix-director-*` add scenarios, repository tests and code changes for these two limits.
 
-- Known limit `export-repeat-check`: the serializer validates the project text before the export parser validates that text again.
-  The repeated check does not change the result for the public API of the module with standard built-in functions.
-  The getter and resolver probe records the same calls and results.
-  No scenario states that the duplicate check is necessary.
+- Known limit `bundle-nonnumeric-length`: a custom Uint8Array length getter can return text instead of a number.
+  The export helper then adds text to the total at line 157 of bundle.js.
+  The byte check can reject three real bytes as excess total bytes.
+  A later absent length can also make the total nonnumeric.
+  No scenario states this behavior.

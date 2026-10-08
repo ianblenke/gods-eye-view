@@ -16,6 +16,8 @@ Origin: backfill
 - **WHEN** a caller supplies a relative asset path
 - **THEN** the validator accepts safe directory names and rejects traversal or URL syntax
 - **AND** The validator accepts paths of at most 1024 characters and rejects longer paths.
+- **AND** The validator accepts z and Z in each path segment.
+- **AND** Each asset path error names the path field.
 
 #### Scenario: Data pack formats `director-077`
 
@@ -23,18 +25,22 @@ Origin: backfill
 - **THEN** the validator accepts version 1 and the geojson, image and media formats
 - **AND** The validator rejects other versions and formats.
 - **AND** The data pack ID and source name each accept at most 256 characters.
+- **AND** The validator rejects extra fields and names each invalid field in its error.
 
 #### Scenario: Data pack attribution `director-078`
 
 - **WHEN** a data pack declares attribution
 - **THEN** the validator checks text, license and an optional HTTPS link without credentials, query or fragment
 - **AND** Text and license each accept at most 4096 characters; the HTTPS link accepts at most 2048 characters.
+- **AND** Each attribution error names its field, and the validator rejects extra attribution fields.
 
 #### Scenario: Data pack integrity fields `director-079`
 
 - **WHEN** a data pack declares byteLength or sha256
 - **THEN** the validator checks a positive integer up to 8388608 bytes and a lowercase hexadecimal digest of 64 characters
 - **AND** The validator rejects 63-character, 65-character and uppercase digests, and accepts exactly 64 lowercase hexadecimal characters.
+- **AND** Each integrity error names its field.
+- **AND** The digest type check precedes text conversion.
 
 #### Scenario: Image placement `director-080`
 
@@ -43,11 +49,14 @@ Origin: backfill
 - **AND** The validator rejects equal west and east edges, and equal south and north edges.
 - **AND** The validator accepts longitude limits of -180 and 180 degrees, and latitude limits of -90 and 90 degrees.
 - **AND** The validator rejects numeric text for bounds and height.
+- **AND** Each placement error names its field, and the validator rejects extra placement fields.
+- **AND** The edge order check starts with west and east.
 
 #### Scenario: Media placement `director-081`
 
 - **WHEN** a media data pack declares placement
 - **THEN** the validator checks its scene anchor reference
+- **AND** An unknown anchor error names its placement field.
 
 #### Scenario: Scene data pack references `director-082`
 
@@ -55,6 +64,9 @@ Origin: backfill
 - **THEN** the validator rejects duplicate data pack IDs, unknown shot references and duplicate shot references
 - **AND** The validator ignores a data pack list from the parent object of the scene.
 - **AND** The validator accepts eight distinct data packs per scene and rejects nine.
+- **AND** Each shot accepts eight distinct data pack references and rejects nine references before the distinct ID check.
+- **AND** Each reference error names the shot field.
+- **AND** The distinct reference check precedes the search for known IDs.
 
 ### Requirement: Data pack geometry
 
@@ -81,11 +93,15 @@ Origin: backfill
 - **AND** The decoder accepts at most 50000 positions and gives zero meters for an absent height.
 - **AND** Each position has two or three coordinates; the decoder rejects one or four coordinates.
 - **AND** The decoder accepts longitude from -180 to 180 degrees and latitude from -90 to 90 degrees.
+- **AND** The decoder rejects a null position with the geographic position error.
+- **AND** The decoder keeps negative zero for a supplied height.
 
 #### Scenario: Lines and rings `director-086`
 
 - **WHEN** a geometry supplies a line or ring
 - **THEN** the decoder checks minimum lengths and closed rings
+- **AND** The decoder rejects a null line with the line error.
+- **AND** An open line does not need equal end positions.
 
 #### Scenario: Geometry output `director-087`
 
@@ -105,6 +121,10 @@ Origin: backfill
 - **THEN** the session starts with the idle state and its load method checks data pack lists before asset work
 - **AND** The load method accepts at most eight data packs and checks every declaration before the first source call.
 - **AND** The load method returns false for a destroyed session or a cancelled signal.
+- **AND** A caller cannot change the public data pack limits.
+- **AND** After destruction, a new load call does not read the caller signal state.
+- **AND** An empty data pack list returns true without a source call or a deadline timer.
+- **AND** An absent source map or renderer map gives an empty registry.
 
 #### Scenario: Session resources `director-089`
 
@@ -117,11 +137,18 @@ Origin: backfill
 - **AND** The session also removes that timer after the caller clears the session.
 
 - **AND** The session removes source listeners after success or a source error.
+- **AND** A completed source listener does not read the signal reason after success or a source error.
+- **AND** The session removes the caller signal listener when the caller clears it.
+- **AND** The session installs that listener with the once option set to true.
 
 #### Scenario: Session cancellation `director-090`
 
 - **WHEN** a caller cancels asset work that is not complete
 - **THEN** the session returns false and disposes late renderer resources
+- **AND** The session checks its source signal before byte access and after renderer work.
+- **AND** A replaced load call does not read the caller signal state again after cancellation.
+- **AND** The session rejects source errors before the renderer call and rejects null bytes or a null renderer handle.
+- **AND** After session replacement, the handle check does not read the old source signal state.
 
 #### Scenario: Session replacement `director-091`
 
@@ -134,8 +161,12 @@ Origin: backfill
 - **THEN** the session removes partial resources and reports a stable error
 - **AND** With no registered source and a byteLength field in the declaration, the load method reads that field once, during validation
 - **AND** The default deadline is 15000 milliseconds.
+- **AND** The source signal gives the error message Asset load timed out when the deadline expires.
 - **AND** With no renderer, the load method does not call the registered source.
 - **AND** The session disposes each partial resource when the deadline expires.
+- **AND** A source signal event stops the load before the renderer call.
+- **AND** The session reads the source signal reason once when a source signal event stops work.
+- **AND** The session does not read the global `error` property for a data pack failure.
 
 #### Scenario: Session asset checks `director-093`
 
@@ -145,6 +176,9 @@ Origin: backfill
 - **AND** The source receives the source path and the byteLength field or the default byte limit.
 - **AND** The renderer receives the asset and the signal of the source call.
 - **AND** The renderer also receives the data pack and the scene anchors.
+- **AND** The byte type check precedes length access for an invalid byte object.
+- **AND** A null byte value does not cause another read of the declared byteLength field.
+- **AND** Without a declared byteLength field, the size check does not compare bytes with that field.
 
 ### Requirement: Asset sources
 
@@ -170,6 +204,7 @@ Origin: backfill
 - **THEN** the source checks header and stream byte limits and joins its chunks
 - **AND** The source removes media type parameters and space, and changes the media type to lowercase text.
 - **AND** An absent media type gives empty text.
+- **AND** The source joins chunks of different byte lengths in their original order.
 
 #### Scenario: Asset source cleanup `director-097`
 
@@ -188,6 +223,7 @@ Origin: backfill
 - **THEN** the bundle helpers check text type, byte limits and JSON syntax
 - **AND** The bundle helpers reject null and invalid projects.
 - **AND** The text limit is 52428800 characters and 52428800 UTF8 bytes.
+- **AND** An invalid JSON error starts with the project path.
 
 #### Scenario: Bundle asset entries `director-099`
 
@@ -198,11 +234,16 @@ Origin: backfill
 - **AND** The base64 length limit is 11184812 characters.
 - **AND** The bundle helpers reject a bundle version other than 1.
 - **AND** The bundle helpers reject extra top-level fields and invalid bundle projects.
+- **AND** Asset field, count, byte, media type, base64 and digest errors start with the assets path.
+- **AND** An asset path error starts with `source.path`.
+- **AND** The bundle helpers accept z, Z and 9 in base64 text and reject a leading equals sign.
+- **AND** The base64 type check precedes text conversion.
 
 #### Scenario: Bundle asset references `director-100`
 
 - **WHEN** a bundle declares data pack assets
 - **THEN** the bundle helpers check asset digests and exact data pack references
+- **AND** Each data pack reference error starts with the project path.
 
 #### Scenario: Bundle export copy `director-101`
 
@@ -210,7 +251,9 @@ Origin: backfill
 - **THEN** the bundle helpers copy the project and write bundle paths, byte lengths and digests
 - **AND** The bundle helpers reject an invalid project before the resolver call.
 - **AND** The resolver receives the data pack and the signal in its options object.
-
+- **AND** The bundle path ends with at most 160 characters from the source filename.
+- **AND** The bundle helpers do not read byte chunks past the asset end.
+- **AND** The filename slice receives a start of zero and a length limit of 160.
 
 #### Scenario: Bundle export limits `director-102`
 
@@ -218,11 +261,19 @@ Origin: backfill
 - **THEN** the bundle helpers check byte limits, media types, asset totals and declared integrity
 - **AND** The bundle helpers accept up to 8388608 bytes per asset and up to 33554432 total bytes.
 - **AND** The bundle helpers reject an unsupported media type during export.
+- **AND** A caller cannot change the public share limits.
+- **AND** Each export asset error starts with the assets path.
+- **AND** The export checks byte type and per-asset size before the total size.
+- **AND** The export checks declared byteLength before the declared digest.
+- **AND** For numeric byte lengths, an absent length adds zero to the total.
+- **AND** An absent digest value stops the declared digest check after one field read.
+- **AND** An export text budget error starts with `$`.
 
 #### Scenario: Shared asset reuse `director-103`
 
 - **WHEN** data packs use the same source and path
 - **THEN** the bundle helpers write one asset and reject integrity declarations that differ
+- **AND** An integrity error for a shared asset starts with the assets path.
 
 ### Requirement: Bundle byte store
 
@@ -234,12 +285,15 @@ Origin: backfill
 
 - **WHEN** a caller replaces or clears bundle bytes
 - **THEN** the store copies the map and reports its current byte total
+- **AND** With no replacement map, the byte store becomes empty.
 
 #### Scenario: Bundle byte access `director-105`
 
 - **WHEN** a caller asks for stored bundle bytes
 - **THEN** the store returns a byte copy and rejects absent or excess bytes and a cancelled source call
 - **AND** The store accepts bytes equal to the caller limit and rejects one more byte.
+- **AND** Without a caller limit, the store accepts an asset of 8388608 bytes.
+- **AND** The store rejects an invalid path before its asset lookup.
 
 ### Requirement: Share work
 
@@ -278,9 +332,12 @@ Origin: backfill
 
 - **WHEN** a preview describes a data pack source
 - **THEN** the preview reports included, absent, configured or unavailable source states
+- **AND** Without source IDs, the preview reports every external source as unavailable.
 
 #### Scenario: Preview dependencies `director-110`
 
 - **WHEN** a preview describes scene dependencies
 - **THEN** the preview reports absent layers and whether a scene has applied shot packs or a shot has a source pack ID
 - **AND** The preview lists each absent layer once, even when two shots name that layer.
+- **AND** Without layer IDs, the preview reports every named layer as absent.
+- **AND** With applied shot packs, the preview does not read source pack IDs to decide whether the scene has external content.

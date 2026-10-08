@@ -37,13 +37,18 @@ cd /home/ianblenke/docker/gev-work/director-3 && git diff HEAD -- 'src/director/
 
 ## Final results
 
-The lint output reports zero errors and 543 warnings.
-The title scan checks 328 titles and finds zero banned forms.
+The lint output reports zero errors.
+The title scan checks 406 titles and finds zero banned forms.
 The host format helper writes and checks 1158 files.
 The direct format commands stop with the process error above.
-The three test files also pass the direct Prettier check after the last title edits.
-The byte comparison finds no difference between each repository test and its copy.
+The hand check uses a scratch copy with the final test files.
 
 The file and title checks leave only historical quotes and technical code terms in the predispatch output.
 The brief calls for those exact quotes and code values.
 The evidence lists the text that stays the same.
+
+Pass 4 reports 479 passed host tests.
+Each of the seven production files has full line, branch and function coverage.
+The automatic survivor run kills 192 cases and leaves 68 proved or bounded cases.
+The complete hand run kills 406 rows and leaves only m172 and m389.
+The guard-order test now kills m284.
