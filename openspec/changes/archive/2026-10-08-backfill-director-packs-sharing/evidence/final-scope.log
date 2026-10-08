@@ -1,0 +1,12 @@
+Copy matches: src/director/packs/geojson.js
+Copy matches: src/director/packs/manifest.js
+Copy matches: src/director/packs/session.js
+Copy matches: src/director/packs/source.js
+Copy matches: src/director/sharing/bundle.js
+Copy matches: src/director/sharing/lifetime.js
+Copy matches: src/director/sharing/preview.js
+Copy matches: src/director/packs/backfill.test.mjs
+Copy matches: src/director/packs/packs.test.mjs
+Copy matches: src/director/sharing/sharing.test.mjs
+Changed paths: 11 tracked, 24 new. Production diff: empty against HEAD and base.
+No changed file starts a line with the forbidden review marker. Old review reports stay unchanged.
