@@ -10,12 +10,12 @@ Origin: spec-first
 
 #### Scenario: Build a fixture and find only the allowed sentinels `credential-boundary-001`
 - **WHEN** the test builds a fixture page through the real browser config, with a sentinel value for every credential name
-- **THEN** the built output holds the browser-key sentinel, the ion-token sentinel and the Mapillary client token sentinel
+- **THEN** the built output holds the browser-key sentinel, the ion-token sentinel and the sentinel for the Mapillary token
 - **AND** it holds the `VITE_AIS_LIVE_MAX_ROWS` sentinel and no other sentinel
 
 #### Scenario: Keep an unprefixed `VITE_` value out of the bundle `credential-boundary-002`
 - **WHEN** the test puts a `VITE_GEV_PROBE_SECRET` sentinel and a `VITE_AIS_LIVE_MAX_ROWS` sentinel on the environment before the build
-- **AND** the fixture also has a Mapillary client token sentinel
+- **AND** the fixture also has a sentinel for the Mapillary token
 - **THEN** the built output has no `VITE_GEV_PROBE_SECRET` sentinel
 - **AND** the built output has the `VITE_AIS_LIVE_MAX_ROWS` sentinel
 
@@ -32,8 +32,26 @@ Origin: spec-first
 
 #### Scenario: Keep the server key out of the bundle and out of `main.js` `credential-boundary-016`
 - **WHEN** the environment has a sentinel for `GOOGLE_MAPS_SERVER_API_KEY`, and the test gives the browser sentinel as the `googleApiKey` of the build
-- **AND** the environment has a Mapillary client token sentinel
-- **THEN** the built output holds the Mapillary client token sentinel
+- **AND** the environment has a sentinel for the Mapillary token
+- **THEN** the built output holds the sentinel for the Mapillary token
 - **AND** the built output holds no sentinel for `GOOGLE_MAPS_SERVER_API_KEY`, and a failed assertion names it
 - **AND** `src/main.js`, read as text, gives only `import.meta.env.GOOGLE_MAPS_API_KEY` as `googleApiKey`, and has no text `SERVER_API_KEY`
 
+## ADDED Requirements
+
+### Requirement: Same-site geocode admission
+The geocode route MUST call `admitSameSite` before it checks the method, reads a key or calls Google.
+The dev and preview installs MUST use this gate.
+Origin: spec-first
+
+#### Scenario: Refuse a cross-site request before key access `credential-boundary-017`
+- **WHEN** a cross-site request reaches `/api/google/geocode` in dev or preview
+- **THEN** the route answers `403` with the same error body as the Google Places gate
+- **AND** the route makes zero upstream calls and reads no key
+- **AND** the response has `Cache-Control: no-store`
+
+#### Scenario: Admit a same-site geocode request `credential-boundary-018`
+- **WHEN** a same-site GET request reaches `/api/google/geocode` in dev or preview
+- **THEN** the gate admits the request
+- **AND** the route reads the key once and makes one upstream call
+- **AND** a successful upstream response gives status `200`
