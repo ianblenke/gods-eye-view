@@ -2,7 +2,6 @@
 
 HTTP means Hypertext Transfer Protocol.
 HTTPS means HTTP with a secure connection.
-MIME means Multipurpose Internet Mail Extensions.
 SVG means Scalable Vector Graphics.
 HEAD names the current Git commit.
 ERROR is the error prefix in command output.
@@ -379,7 +378,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-090] The session accepts a null late handle
 [director-090] The session destroys work that is not complete
 [director-090] The session checks signal state without an event
-[director-090] The session checks destroyed state after signal access
+[director-090] The session checks destroyed state after it reads the signal
 [director-090] The session checks a cleared load call without signal state
 [director-090] The session guard rejects a detached resource
 [director-090] The session disposes the handle before it adds the handle to its list
@@ -471,7 +470,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
+[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 ```
 
 Test file: `src/director/packs/backfill.test.mjs`.
@@ -491,7 +490,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
+[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 ```
 
 Test file: `src/director/packs/backfill.test.mjs`.
@@ -500,8 +499,8 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-096] The stream joins distinct chunks
 [director-096] The stream rejects excess header bytes
 [director-096] The stream rejects excess chunk bytes
-[director-096] The stream uses absent MIME default
-[director-096] The stream normalizes MIME text
+[director-096] The source returns an empty media type when the header is absent
+[director-096] The source returns lowercase media type text without parameters
 [director-096] The source checks its default byte budget
 [director-096] The stream accepts its exact byte limit
 ```
@@ -511,7 +510,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
+[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal
 ```
 
@@ -553,7 +552,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-099] The base64 rejects invalid alphabet
 [director-099] The base64 rejects invalid padding
 [director-099] The bundle rejects duplicate paths
-[director-099] The bundle rejects unsupported MIME
+[director-099] The bundle rejects an unsupported media type
 [director-099] The bundle rejects unsupported version
 [director-099] The base64 accepts bytes without padding
 [director-099] The base64 rejects a custom text object
@@ -666,11 +665,11 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-106] The share helpers reject excess file bytes before text access and cancel a stalled project file
+[director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
 [director-106] The share helpers accept an absent filename
 [director-106] The share helpers reject the ordinary file limit
-[director-106] The share helpers give bundles the larger budget
-[director-106] The share helpers check a signal after text access
+[director-106] The share helpers give bundles the larger file limit
+[director-106] The share helpers check a signal after they read text
 [director-106] The share helpers accept the project file limit and rejects one more byte
 [director-106] The share helpers accept the bundle file limit and rejects one more byte
 ```
@@ -713,7 +712,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-109] The preview reports unavailable sources, absent layers and absent bundle assets without state changes
+[director-109] The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
 [director-109] The preview reports included bundle bytes
 [director-109] The preview reports absent bundle bytes
 [director-109] The preview reports a configured source
@@ -782,7 +781,7 @@ Pass 2: No equivalent row needs a separate probe.
 
 The position has an inherited value at index 2.
 The probe returns -12001 meters through the public API.
-The custom signal getter destroys the session during signal access.
+The custom signal getter destroys the session when the session reads the signal.
 
 The source still receives a call and the load method can return true.
 No scenario states these behaviors.
@@ -832,7 +831,7 @@ New: The manifest checks given image bounds and media anchor references
 
 ```text
 Old: directory source confines paths, strips credentials and rejects redirects, oversized streaming bodies and missing assets
-New: The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
+New: The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 ```
 
 ```text
@@ -897,7 +896,7 @@ New: The data packs with the same path share one asset and reject integrity valu
 
 ```text
 Old: preview reports unavailable sources/layers and missing bundle assets without applying anything
-New: The preview reports unavailable sources, absent layers and absent bundle assets without state changes
+New: The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
 ```
 
 ```text
@@ -907,7 +906,7 @@ New: The bundle byte store removes old data after replacement and uses no networ
 
 ```text
 Old: oversized files fail before reading and cancellation settles a stalled file without a late result
-New: The share helpers reject excess file bytes before text access and cancel a stalled project file
+New: The share helpers reject excess file bytes before they read text and cancel a stalled project file
 ```
 
 ```text
@@ -943,7 +942,7 @@ New: [director-080] The manifest checks given image bounds and media anchor refe
 
 ```text
 Old: [director-095 director-096 director-097] directory source confines paths, strips credentials and rejects redirects, oversized streaming bodies and missing assets
-New: [director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
+New: [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 ```
 
 ```text
@@ -1148,7 +1147,7 @@ New: [director-090] The session checks signal state without an event
 
 ```text
 Old: [director-090] The session catches destroyed state after signal access
-New: [director-090] The session checks destroyed state after signal access
+New: [director-090] The session checks destroyed state after it reads the signal
 ```
 
 ```text
@@ -1293,7 +1292,7 @@ New: [director-103] The data packs with the same path share one asset and reject
 
 ```text
 Old: [director-109] preview reports unavailable sources/layers and missing bundle assets without applying anything
-New: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without state changes
+New: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
 ```
 
 ```text
@@ -1303,7 +1302,7 @@ New: [director-104] The bundle byte store removes old data after replacement and
 
 ```text
 Old: [director-106] oversized files fail before reading and cancellation settles a stalled file without a late result
-New: [director-106] The share helpers reject excess file bytes before text access and cancel a stalled project file
+New: [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
 ```
 
 ```text
@@ -1506,7 +1505,7 @@ File: src/director/packs/packs.test.mjs
 
 ```text
 Old: [director-095 director-096 director-097] The directory source confines paths and rejects credentials, redirects, excess bytes and absent assets
-New: [director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
+New: [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 ```
 
 File: src/director/packs/packs.test.mjs
@@ -1618,7 +1617,7 @@ File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-106] The reader gives bundles the larger budget
-New: [director-106] The share helpers give bundles the larger budget
+New: [director-106] The share helpers give bundles the larger file limit
 ```
 
 File: src/director/sharing/sharing.test.mjs
@@ -1632,7 +1631,7 @@ File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-106] The reader checks a signal after text access
-New: [director-106] The share helpers check a signal after text access
+New: [director-106] The share helpers check a signal after they read text
 ```
 
 File: src/director/sharing/sharing.test.mjs
@@ -1913,7 +1912,7 @@ Each test command below ran alone and without forced process exit.
 The before copy carries the old test files from the source commit in audit.md.
 The copy has all source dependencies and a link to the same node_modules directory.
 The first copy lacked a source dependency and stopped before the sharing test.
-That failed setup gives no test result for packs.
+That failed initial command gives no test result for packs.
 The corrected copy completed all three test files.
 
 ```sh
@@ -2066,15 +2065,15 @@ cd /home/ianblenke/docker/gev-work/director-3 && rg 'ℹ    .*\.js|ℹ all files
 
 ### Format and title checks
 
-The direct format write and check commands stop with `spawnSync git EPERM`.
+The direct format commands with --write and --check stop with `spawnSync git EPERM`.
 The host helper completes both commands.
-The write output reports 1158 formatted files.
-The check output reports 1158 checked files.
+The output of --write reports 1158 formatted files.
+The output of --check reports 1158 checked files.
 The helper uses the same format script.
 
-The first helper write attempt in the sandbox stopped without a final result.
+The first helper command with --write in the sandbox stopped without a final result.
 Its empty output gives no format result.
-The later host write and check completed with exit code zero.
+The later host commands with --write and --check completed with exit code zero.
 The logs are `format-write-host.log` and `format-check-host.log` in the folder `evidence`.
 
 ```sh
@@ -2200,19 +2199,19 @@ The lead owns the main spec, ratchet and next review round.
 | STE | `Data data pack sessions` | The delta spec uses Data pack sessions. The main spec and ratchet stay with the lead. |
 | STE | `byte length field` | The documents and titles distinguish the byteLength field from the byte array length. |
 | STE | `code changes, candidates` | The documents use mutation and Known limit. The column name is known limit. |
-| STE | `The case uses` | The proposal uses position, names later changes and lists audit.md and survivors.md. The pass deletes the stale warning statement. |
+| STE | `The case uses` | The proposal uses position, names later change folders and lists audit.md and survivors.md. The pass deletes the stale warning statement. |
 | STE | `32 MiB` | The prose uses 33554432 bytes, first value above the limit and full verb clauses. |
 | STE | `precedes, After destruction` | The prose uses comes before, caller action, include and sees. |
 | STE | `leading equals sign` | The prose uses equals sign at the start, total, other and active verbs. |
 | STE | `rejects null handle` | The labels match the test titles. The status word has one stated meaning. |
 | STE | `The claim is equivalent` | Probe headers name the mutation. All 21 expanded probes pass. The extension probe gives 67 bounds. |
 
-### Tagged test changes
+### Tagged test edits
 
 Pass 5 adds 152 host test cases: 106 in backfill.test.mjs and 46 in sharing.test.mjs.
 The scenario IDs stay director-076 through director-110.
 New cases check JSON error messages, base64 characters, snapshot data, resolver call order and path characters.
-Other cases check validation order, callback order, stream cleanup and cancellation.
+Other cases check validation order, callback order, stream disposal and cancellation.
 The spec gives a clause for each case.
 
 The new clauses use director-076, director-077, director-078, director-079 and director-080.
@@ -2249,12 +2248,12 @@ cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=n
 
 ### Extension run
 
-The extension run keeps all 3849 old IDs and exact changes.
+The extension run keeps all 3849 old IDs and exact mutations.
 It adds 711 mutations and 16 operator classes.
 The audit names classes that the tool still does not mutate.
 The seven tool tests pass.
 
-The extension run checks have inputs of 367, 199, 104 and 321 mutations.
+Extension checks 1 to 4 have inputs of 367, 199, 104 and 321 mutations.
 The second and fourth inputs include four old JSON mutations.
 The latest result for each new ID gives 644 killed and 67 equivalent cases.
 No latest case has a timeout, crash, Known limit or open result.
@@ -2292,7 +2291,7 @@ Compact reports keep exact data comparisons and record hashes, case counts and c
 
 The final command checks all 408 rows once.
 It kills 406 rows and leaves only m172 and m389.
-The pass skips no row, and no row times out.
+The pass skips no row, and no row gives a timeout.
 Every pattern matches a current test title and has a backslash before each space.
 The scratch copy has the same seven source files and three test files after the command.
 
@@ -2334,7 +2333,7 @@ The New records name the current tests.
 
 ```text
 Old: [director-076] The path type check comes before the segment read
-New: [director-076] The path type check comes before the segment access
+New: [director-076] The validator rejects the path type before it reads a segment
 ```
 
 ```text
@@ -2349,7 +2348,7 @@ New: [director-097] The source waits for body cancellation before it rejects the
 
 ```text
 Old: [director-089] The source listener and state check come before the work read
-New: [director-089] The source listener and state check come before it reads the work promise
+New: [director-089] The source registers its listener and checks its state before it reads the work promise
 ```
 
 ```text
@@ -2369,7 +2368,7 @@ New: [director-089] The session removes resources after source cancellation and 
 
 ```text
 Old: [director-088 director-091] The new list check follows old resource cleanup
-New: [director-088 director-091] The new list check follows old resource disposal
+New: [director-088 director-091] The session checks the new list after it disposes old resources
 ```
 
 ```text
@@ -2384,7 +2383,7 @@ New: [director-090] The caller event during listener registration cancels the lo
 
 ```text
 Old: [director-107] The helper attaches its listener before the work read
-New: [director-107] The helper attaches its listener before it reads the work promise
+New: [director-107] The helper attaches its listener before the source reads the work promise
 ```
 
 ```text
@@ -2394,12 +2393,12 @@ New: [director-107] The helper checks signal state when the work settles
 
 ```text
 Old: [director-107] The file signal check follows text settlement
-New: [director-107] The file signal check follows the text result
+New: [director-107] The reader checks the signal after the text promise settles
 ```
 
 ```text
 Old: [director-098] The plain share returns an empty asset map
-New: [director-098] The plain project JSON returns an empty asset map
+New: [director-098] The parser returns an empty asset map for plain project JSON
 ```
 
 ```text
@@ -2414,12 +2413,12 @@ New: [director-099] The import checks top-level fields before version
 
 ```text
 Old: [director-105] The byte store rejects an unsafe path before its lookup
-New: [director-105] The byte store rejects an unsafe path that it holds
+New: [director-105] The byte store rejects an invalid path that it holds
 ```
 
 ```text
 Old: [director-106] The file budget check comes before the signal read
-New: [director-106] The file limit check comes before access to the signal
+New: [director-106] The reader checks the file limit before it reads the signal
 ```
 
 
@@ -2427,47 +2426,47 @@ New: [director-106] The file limit check comes before access to the signal
 
 ```text
 Old: [director-079] The digest check comes before the placement read
-New: [director-079] The digest check comes before access to the placement
+New: [director-079] The validator checks the digest before it reads the placement
 ```
 
 ```text
 Old: [director-080] The bounds array check comes before the length read
-New: [director-080] The bounds array check comes before access to the length
+New: [director-080] The validator checks the bounds array before it reads the length
 ```
 
 ```text
 Old: [director-082] The list check comes before the anchor read
-New: [director-082] The list check comes before access to the anchors
+New: [director-082] The validator checks the list before it reads the anchors
 ```
 
 ```text
 Old: [director-088] The list check comes before the anchor read
-New: [director-088] The list check comes before access to the anchors
+New: [director-088] The validator checks the list before it reads the anchors
 ```
 
 ```text
 Old: [director-088] The declaration check comes before the caller signal read
-New: [director-088] The declaration check comes before access to the caller signal
+New: [director-088] The session checks declarations before it reads the caller signal
 ```
 
 ```text
 Old: [director-090 director-093] The source signal error comes before the byte read
-New: [director-090 director-093] The source signal error comes before access to the bytes
+New: [director-090 director-093] The session rejects the signal error before it reads bytes
 ```
 
 ```text
 Old: [director-093] The total byte check comes before the digest read
-New: [director-093] The total byte check comes before access to the digest
+New: [director-093] The session checks total bytes before it reads the digest
 ```
 
 ```text
 Old: [director-096] The header limit check comes before the first stream read
-New: [director-096] The header limit check comes before it reads the first stream chunk
+New: [director-096] The source checks the header limit before it reads the first stream chunk
 ```
 
 ```text
 Old: [director-097] The source signal check comes before the stream read
-New: [director-097] The source signal check comes before it reads the stream chunk
+New: [director-097] The source checks the signal before it reads the stream chunk
 ```
 
 ```text
@@ -2477,17 +2476,17 @@ New: [director-106] The share helpers reject the ordinary file limit
 
 ```text
 Old: [director-102] The export checks integrity before the filename read
-New: [director-102] The export checks integrity before access to the filename
+New: [director-102] The export checks integrity before it reads the filename
 ```
 
 ```text
 Old: [director-107] The helper removes its listener before the reason read
-New: [director-107] The helper removes its listener before access to the reason
+New: [director-107] The helper removes its listener before it reads the reason
 ```
 
 ```text
 Old: [director-102 director-107] The export signal check comes before absent asset
-New: [director-102 director-107] The export signal check comes before the absent asset check
+New: [director-102 director-107] The export checks the signal before it checks for an absent asset
 ```
 
 ```text
@@ -2513,38 +2512,38 @@ The lead owns review round 5 and the image gates.
 | report | first words | correction |
 | --- | --- | --- |
 | Spec | before each asset and after each digest | Two-item import and export tests count digests and resolver calls. Hand rows m409, m410, m447 and m448 fail. |
-| Spec | Each shot | A valid first shot and invalid second shot give the literal indexed error. Hand rows m411 and m412 fail. |
-| Spec | rejects an invalid path before | The store holds the unsafe path. The test checks that key and the rejection. The clause states the public result. |
+| Spec | Each shot | A valid first shot and an invalid second shot give the literal indexed error. Hand rows m411 and m412 fail. |
+| Spec | rejects an invalid path before | The store holds the invalid path. The test checks that key and the rejection. The clause states the public result. |
 | Spec | Tool limits omit additive edits | The audit names additive edits. The 099 clause lists nine types. SVG, file protocol and geojsonx tests kill m413 to m415. |
-| Spec | Lines 89, 102 and 103 | The audit uses rerun after pass 4 for that command. |
+| Spec | Lines 89, 102 and 103 | The audit uses the rerun after pass 4 for that command. |
 | Spec | 367 rows and 166 rows | Both figures have Pass 2 labels. |
-| Spec | Killer titles of extension rows | The script checks all 260 old rows and 711 extension rows against the lead saved result files. |
+| Spec | Killer titles of extension rows | The script checks all 260 old rows and 711 extension rows against the result files that the lead saved. |
 | STE | the final rerun | The audit and evidence distinguish the rerun after pass 4 from the final rerun after pass 5. |
 | STE | for an absent source | The labels use actual test titles. The Old records keep the full title history. |
 | STE | probe-extension.txt objects | The probe uses Objects that the caller supplies and 52428800. It states that each mutation in the table is equivalent. |
-| STE | the segment read | Titles and clauses use access, disposal and finite verb clauses. The Share work requirement uses file limits. |
+| STE | the segment read | Titles and clauses use disposal and finite verb clauses. The Share work requirement uses file limits. |
 | STE | listener setup | Titles and clauses use listener registration, source signal event and source signal state where they concern a signal. |
 | STE | The extension, last sweep | The documents use extension run, Extension check 4, final rerun, Campaign 2 phase 1 and Extension check. |
-| STE | changes | The audit and design use mutations for changes to code in the mutation checks. |
+| STE | changes | The audit and design use mutations for edits to code in the mutation tests. |
 | STE | The source event reads its reason | The session reads the signal reason. The success and error tests keep separate titles. Other titles state the exact check or result. |
 | STE | base64 alphabet and passive voice | The clauses use with + and /. The evidence and probe table use active verbs and absent. |
 | STE | accepts z and Z | The clause states _ and - at the start. The proposal states A later asset without a byte length. |
 
 ### New tests and loop checks
 
-The tests add 16 backfill cases and 10 share cases.
+The tests add 16 backfill tests and 10 sharing tests.
 The new tags stay within director-076 to director-110.
-The loop table has 32 rows, each with a repository test and hand mutation.
+The loop table lists 52 collection traversals in six of the seven source files.
 No loop row has an open gap or Known limit.
 
-The lifetime module has no collection loop.
+The file lifetime.js has no collection loop.
 The new rows are m409 to m448.
 The automatic tool classes stay unchanged, so this pass needs no tool extension command.
 
 ### Test and coverage commands
 
 The final command below records each output and its first command line.
-It follows the two-chunk correction.
+The test run follows the two-chunk correction.
 It runs one test file per process and one coverage file at a time.
 It sets NODE_OPTIONS to --test-isolation=none for each Node process.
 
@@ -2600,17 +2599,17 @@ cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 pyt
 
 ### Stopped command
 
-The initial hand attempt stops before its end because the loop check adds more tests.
+The initial hand attempt stopped before its end because the loop audit added more tests.
 It gives no complete mutation result.
 The first backfill command stopped at a syntax error.
 The corrected command passes all 422 backfill tests.
-The first spec lint command reports a six-word inline code span error.
+The first spec lint command reported an error for an inline code span of six words.
 The later command puts that text in prose and passes.
 
 ### Checks before the complete hand result
 
 The final title scan checks 488 titles with zero banned forms.
-The predispatch output contains only eight allowed Old title records.
+The predispatch output contains only eight Old title records.
 The host format helper writes and checks 1158 files.
 
 ```sh
@@ -2621,7 +2620,7 @@ cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 nod
 cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
 ```
 
-The complete hand command result follows below.
+The result of the complete hand command follows.
 The lead owns image gates, ratchet, review round 5 and any commit.
 This pass runs no commit, merge or push command.
 
@@ -2634,7 +2633,7 @@ Complete hand check 2 checks the complete hand list after this test.
 
 ### Scenario and title checks
 
-The hash check uses the project spec parser.
+The hash command uses the project spec parser.
 It finds 35 scenario IDs and 26 changed hashes.
 Each changed hash has a changed test tag in the diff.
 The final test output contains 657 different leaf titles.
@@ -2650,7 +2649,7 @@ Complete hand check 2 checks 448 rows after the two-chunk correction.
 It gives 446 killed rows and only m172 and m389 as survivors.
 Each killed row names a failed repository test.
 The command skips no row and gives no timeout.
-All 40 new rows fail.
+All 40 new rows give a failed repository test.
 
 The mutation report keeps the final output without spaces at line ends.
 The first line of hand-final.log names the command.
@@ -2667,8 +2666,8 @@ All seven files match byte for byte.
 The scope script checks all 448 old spans and each supplied test pattern.
 Each span occurs once, and each supplied pattern matches a current leaf title.
 Each pattern has a backslash before every space.
-Only two test files and ten change documents differ.
-No review report, main spec, trace ledger or QA script changes.
+In pass 6 the worker changes two test files and ten change documents only.
+The worker changes no review report, main spec, trace ledger or QA script.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass6/finish.py
@@ -2677,6 +2676,824 @@ cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 pyt
 The lead owns the image gates, ratchet, review round 5 and any commit.
 This pass does not run those commands.
 
-The first final scope command stops before its complete report because a row has no optional pattern.
+The first scope command stops before its complete report because a row has no optional pattern.
 It gives no complete scope result.
 The corrected command checks each supplied pattern and passes.
+
+## Pass 7 title corrections
+
+Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
+
+```text
+Old: [director-076] The path type check comes before the segment access
+New: [director-076] The validator rejects the path type before it reads a segment
+```
+
+```text
+Old: [director-089] The source listener and state check come before it reads the work promise
+New: [director-089] The source registers its listener and checks its state before it reads the work promise
+```
+
+```text
+Old: [director-096] The header limit check comes before it reads the first stream chunk
+New: [director-096] The source checks the header limit before it reads the first stream chunk
+```
+
+```text
+Old: [director-097] The source signal check comes before it reads the stream chunk
+New: [director-097] The source checks the signal before it reads the stream chunk
+```
+
+```text
+Old: [director-082] The manifest rejects the second shot reference
+New: [director-082] The manifest rejects a reference in the second shot
+```
+
+```text
+Old: [director-094] The directory rejects the file protocol
+New: [director-094] The source rejects the file protocol
+```
+
+```text
+Old: [director-077 director-082] The manifest validates the second data pack
+New: [director-077 director-082] The manifest rejects an invalid second data pack
+```
+
+```text
+Old: [director-081] The manifest uses the second anchor
+New: [director-081] The manifest accepts a reference to the second anchor
+```
+
+```text
+Old: [director-082] The manifest checks the second reference ID
+New: [director-082] The manifest rejects an unknown second reference ID
+```
+
+```text
+Old: [director-088] The session validates the second data pack before source access
+New: [director-088] The session rejects an invalid second data pack before the source call
+```
+
+```text
+Old: [director-081 director-093] The session uses the second anchor
+New: [director-081 director-093] The session accepts a reference to the second anchor
+```
+
+```text
+Old: [director-076] The path rejects its second segment
+New: [director-076] The validator rejects an invalid second path segment
+```
+
+```text
+Old: [director-085] The position rejects its second nonfinite coordinate
+New: [director-085] The decoder rejects an invalid second coordinate
+```
+
+```text
+Old: [director-098] The plain project JSON returns an empty asset map
+New: [director-098] The parser returns an empty asset map for plain project JSON
+```
+
+```text
+Old: [director-105] The byte store rejects an unsafe path that it holds
+New: [director-105] The byte store rejects an invalid path that it holds
+```
+
+```text
+Old: [director-106] The share helpers give bundles the larger budget
+New: [director-106] The share helpers give bundles the larger file limit
+```
+
+```text
+Old: [director-099] The bundle helpers reject an extra top field
+New: [director-099] The bundle helpers reject an extra top-level field
+```
+
+```text
+Old: [director-102] The absent digest stops its check after one field read
+New: [director-102] The export stops when the digest is absent after it reads one field
+```
+
+```text
+Old: [director-107] The file signal check follows the text result
+New: [director-107] The reader checks the signal after the text promise settles
+```
+
+```text
+Old: [director-107] The helper attaches its listener before it reads the work promise
+New: [director-107] The helper attaches its listener before the source reads the work promise
+```
+
+```text
+Old: [director-108 director-110] The preview reaches the second scene and shot
+New: [director-108 director-110] The preview counts the second scene and shot
+```
+
+```text
+Old: [director-108] The preview reaches the second data pack
+New: [director-108] The preview lists the second data pack
+```
+
+```text
+Old: [director-107] The ${mode} stops before the second asset
+New: [director-107] The import stops before the second digest
+New: [director-107] The export stops before the second resolver call
+```
+
+### Further title corrections in pass 7
+
+```text
+Old: [director-079] The digest check comes before access to the placement
+New: [director-079] The validator checks the digest before it reads the placement
+```
+
+```text
+Old: [director-080] The height reference check comes before the bounds check
+New: [director-080] The validator checks the height reference before it checks the bounds
+```
+
+```text
+Old: [director-080] The bounds array check comes before access to the length
+New: [director-080] The validator checks the bounds array before it reads the length
+```
+
+```text
+Old: [director-080] The bounds length check comes before each coordinate check
+New: [director-080] The validator checks the bounds length before it checks each coordinate
+```
+
+```text
+Old: [director-082] The list check comes before access to the anchors
+New: [director-082] The validator checks the list before it reads the anchors
+```
+
+```text
+Old: [director-077 director-082] The declaration check comes before the duplicate ID check
+New: [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs
+```
+
+```text
+Old: [director-088 director-091] The new list check follows old resource disposal
+New: [director-088 director-091] The session checks the new list after it disposes old resources
+```
+
+```text
+Old: [director-088] The list check comes before access to the anchors
+New: [director-088] The validator checks the list before it reads the anchors
+```
+
+```text
+Old: [director-088] The declaration check comes before access to the caller signal
+New: [director-088] The session checks declarations before it reads the caller signal
+```
+
+```text
+Old: [director-089] The final signal check comes before timer removal and the ready state
+New: [director-089] The session checks the signal before it removes the timer and reports the ready state
+```
+
+```text
+Old: [director-090 director-093] The source signal error comes before access to the bytes
+New: [director-090 director-093] The session rejects the signal error before it reads bytes
+```
+
+```text
+Old: [director-093] The total byte check comes before access to the digest
+New: [director-093] The session checks total bytes before it reads the digest
+```
+
+```text
+Old: [director-095] The path check comes before the caller signal check
+New: [director-095] The source checks the path before it checks the caller signal
+```
+
+```text
+Old: [director-096] The header limit check comes before the source reads the first stream chunk
+New: [director-096] The source checks the header limit before it reads the first stream chunk
+```
+
+```text
+Old: [director-090] The session checks its source signal before byte access and after renderer work
+New: [director-090] The session checks its source signal before it reads bytes and after renderer work
+```
+
+```text
+Old: [director-090] The session checks destroyed state after signal access
+New: [director-090] The session checks destroyed state after it reads the signal
+```
+
+```text
+Old: [director-090] The session sees destruction during caller signal access after a source error
+New: [director-090] The caller destroys the session when it reads the caller signal after a source error
+```
+
+```text
+Old: [director-093] The session checks byte type before length access
+New: [director-093] The session checks byte type before it reads the length
+```
+
+```text
+Old: [director-079] The digest type check comes before text conversion
+New: [director-079] The validator checks the digest type before it converts text
+```
+
+```text
+Old: [director-080] The edge order check starts with west and east
+New: [director-080] The validator checks west and east before south and north
+```
+
+```text
+Old: [director-082] The distinct reference check comes before the search for known IDs
+New: [director-082] The validator rejects duplicate references before it searches for known IDs
+```
+
+```text
+Old: [director-090] The detached handle check does not read the source signal state
+New: [director-090] The cleared session returns false without the source signal state
+```
+
+```text
+Old: [director-099] The base64 type check comes before text conversion
+New: [director-099] The parser checks the base64 type before it converts text
+```
+
+```text
+Old: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without state changes
+New: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
+```
+
+```text
+Old: [director-106] The share helpers reject excess file bytes before text access and cancel a stalled project file
+New: [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
+```
+
+```text
+Old: [director-106] The share helpers check a signal after text access
+New: [director-106] The share helpers check a signal after they read text
+```
+
+```text
+Old: [director-102] The absent digest stops its check after it reads one field
+New: [director-102] The export stops when the digest is absent after it reads one field
+```
+
+```text
+Old: [director-098 director-107] The share signal check comes before the text type check
+New: [director-098 director-107] The parser checks the signal before it checks the text type
+```
+
+```text
+Old: [director-099 director-107] The asset signal check comes before its field check
+New: [director-099 director-107] The parser checks the signal before it checks asset fields
+```
+
+```text
+Old: [director-100 director-107] The import signal check comes before the digest comparison
+New: [director-100 director-107] The import checks the signal before it compares digests
+```
+
+```text
+Old: [director-106] The file limit check comes before access to the signal
+New: [director-106] The reader checks the file limit before it reads the signal
+```
+
+```text
+Old: [director-106 director-107] The file signal check comes before text access
+New: [director-106 director-107] The reader checks the signal before it reads text
+```
+
+```text
+Old: [director-107] The file signal check follows the text promise
+New: [director-107] The reader checks the signal after the text promise settles
+```
+
+```text
+Old: [director-102] The export checks integrity before access to the filename
+New: [director-102] The export checks integrity before it reads the filename
+```
+
+```text
+Old: [director-102] The export count check comes before the next resolver call
+New: [director-102] The export checks the asset count before the next resolver call
+```
+
+```text
+Old: [director-102 director-107] The export signal check comes before ${label}
+New: [director-102 director-107] The export checks the signal before ${label}
+```
+
+```text
+Old: [director-105] The store signal check comes before the path check
+New: [director-105] The store checks the signal before it checks the path
+```
+
+```text
+Old: [director-107] The helper removes its listener before access to the reason
+New: [director-107] The helper removes its listener before it reads the reason
+```
+
+
+## Pass 7
+
+Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
+Base commit: `290b5d2`.
+
+The first words identify findings in the unchanged round 5 reports.
+The correction has no production code edit.
+The lead runs image gates, ratchet and review round 6.
+
+| finding | first words | correction |
+| --- | --- | --- |
+| Spec | Without layer IDs | A shot names traffic and ships. The test expects both absent layers. Rows m449 to m451 narrow the filter result. |
+| Spec | The registry copies | Two sources and two renderers serve GeoJSON and image data packs. Rows m452 to m454, m463 and m464 narrow registry entries or select the first renderer. |
+| Spec | The table covers each | The table has 52 traversals in six source files. Byte mappers have positive digest and byte tests. Rows m465 to m479 cover more collection operations. |
+| Spec | The closed-sets table | The table lists eight allowed-field lists. Tests reject script and adapters separately. Rows m455 to m462 add script. |
+| S1 | Titles and clauses use | The files use constructor mutations and exact mutations. Finite clauses state when the source reads chunks and when the export reads a field. |
+| S2 | The loop table covers | All five documents state 52 traversals in six source files. The file lifetime.js has no collection loop. |
+| S3 | The preview includes | The clause separates counts from the data pack list. Tests and their echoes name the second scene, shot and data pack. |
+| S4 | The manifest rejects the second | The title states a reference in the second shot. The other title states an unknown second reference ID. |
+| S5 | The final rerun is | The pass 4 design names the rerun after pass 4. Final rerun names the command after pass 5. |
+| S6 | 3514 Campaign | The audit states kills after each phase and names Complete hand check 2. The stream paragraph states cancellation before the second chunk. |
+| S7 | The verbs validates | Titles state rejection, acceptance, counts or list results. Echoes follow those titles. |
+| S8 | check comes before it | The source registers its listener and checks its state before it reads work. The parser returns an empty map for plain project JSON. |
+| S9 | The validator checks | The clause states rejection of the invalid second declaration. The source rejects the file protocol and reads only the first chunk after cancellation. |
+| S10 | give bundles the larger | The tests use larger file limit and extra top-level field. All echoes use those titles. |
+| S11 | `MIME types` | Documents use media type and delete the unused definitions. The same term applies to old tagged titles. |
+| S12 | before source access | Titles use source call, invalid path, text promise, second digest and second resolver call. Documents use killer titles. |
+| S13 | The extension run checks | The evidence gives input counts, test counts, past events, clear subjects and the pass 6 scope. It names a failed repository test for each killed row. |
+| S14 | This additive edits limit | The audit states the limit on additive edits with articles and separate sentences. The allowed-field rows extend that limit. |
+| S15 | both 52428800 checks | The probe states character and byte units and the JSON parse. |
+| S16 | Correct the command names | Tasks 9.11 and 9.12 name run names and the final rerun after pass 5. |
+
+### Prose gate constraint
+
+The first clause command stopped at the 28-word preview sentence.
+It gave no passed prose result.
+The requested sentence exceeds the 25-word prose limit.
+The correction uses two sentences with the same result.
+The correction does not change the gate.
+
+### Traversal scope
+
+The loop table lists 52 collection traversals in six of the seven source files.
+The file lifetime.js has no collection loop.
+The automatic tool classes stay unchanged.
+This pass needs no automatic tool command for new classes.
+
+### Test additions
+
+The test edits add seven backfill tests and six sharing tests.
+They use existing scenario IDs only.
+The hand list adds 31 rows, m449 to m479.
+Each new row must give a failed repository test before this pass ends.
+
+### Final title corrections in pass 7
+
+```text
+Old: [director-096] The stream uses absent MIME default
+New: [director-096] The source returns an empty media type when the header is absent
+```
+
+```text
+Old: [director-096] The stream normalizes MIME text
+New: [director-096] The source returns lowercase media type text without parameters
+```
+
+```text
+Old: [director-090] The session validates the detached handle without the source signal state
+New: [director-090] The cleared session returns false without the source signal state
+```
+
+```text
+Old: [director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
+New: [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
+```
+
+```text
+Old: [director-099] The bundle rejects unsupported MIME
+New: [director-099] The bundle rejects an unsupported media type
+```
+
+```text
+Old: [director-101] The export reaches the second scene
+New: [director-101] The export includes the asset of the second scene
+```
+
+
+### Predispatch tool limits
+
+The predispatch helper reads each line separately.
+It treats a line inside a JavaScript fence as prose.
+The code identifiers `MIME` and `SHA-256` give abbreviation reports in the mutation spans.
+The identifiers are part of unchanged production spans.
+The pass does not change that span or the helper.
+
+The helper also reports run as a noun in task 9.11.
+The task uses the exact wording that the lead gives.
+The pass keeps that wording.
+The other reports concern Old title records.
+
+### Final host tests and coverage in pass 7
+
+Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
+
+The final command follows all test title corrections and the format command.
+It runs each test file separately without a forced exit.
+It measures each source file separately.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass7/checks.py
+```
+
+| test file | passed | time in milliseconds |
+| --- | ---: | ---: |
+| backfill | 430 | 1811.553476 |
+| packs | 12 | 6902.033912 |
+| sharing | 228 | 18520.008722 |
+
+All 670 tests pass.
+
+| source file | line % | branch % | function % |
+| --- | ---: | ---: | ---: |
+| packs-manifest | 100.00 | 100.00 | 100.00 |
+| packs-geojson | 100.00 | 100.00 | 100.00 |
+| packs-session | 100.00 | 100.00 | 100.00 |
+| packs-source | 100.00 | 100.00 | 100.00 |
+| sharing-bundle | 100.00 | 100.00 | 100.00 |
+| sharing-lifetime | 100.00 | 100.00 | 100.00 |
+| sharing-preview | 100.00 | 100.00 | 100.00 |
+
+The coverage values are host measurements.
+This pass runs no image gate or Node 24.14.0 command.
+The new tests use APIs that Node 24.14.0 supports.
+No new test uses getTestContext.
+
+The first line of each log gives its command.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/manifest.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs src/director/sharing/sharing.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/geojson.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/session.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/source.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/sharing/bundle.js --test-coverage-exclude=**/*.test.mjs src/director/sharing/sharing.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/sharing/lifetime.js --test-coverage-exclude=**/*.test.mjs src/director/sharing/sharing.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/sharing/preview.js --test-coverage-exclude=**/*.test.mjs src/director/sharing/sharing.test.mjs
+```
+
+### Scenario and table checks in pass 7
+
+```json
+{
+  "sourceCommit": "0bf26a8ec20c1f6685f25e4f7ec57bb113204822",
+  "scenarios": 35,
+  "changed": [
+    "director-076",
+    "director-077",
+    "director-079",
+    "director-080",
+    "director-082",
+    "director-088",
+    "director-089",
+    "director-090",
+    "director-091",
+    "director-093",
+    "director-094",
+    "director-096",
+    "director-097",
+    "director-099",
+    "director-102",
+    "director-105",
+    "director-106",
+    "director-107",
+    "director-108"
+  ],
+  "withoutChangedTag": []
+}
+```
+
+```json
+{
+  "command": "compare.py",
+  "sourceCommit": "0bf26a8ec20c1f6685f25e4f7ec57bb113204822",
+  "traversals": 52,
+  "files": 6,
+  "documents": 5
+}
+```
+
+```json
+{
+  "sourceCommit": "0bf26a8ec20c1f6685f25e4f7ec57bb113204822",
+  "rows": 479,
+  "leafTitles": 670,
+  "duplicateTitles": 0,
+  "patternsMatch": 477,
+  "unchangedProductionFiles": 7
+}
+```
+
+```json
+{
+  "sourceCommit": "0bf26a8ec20c1f6685f25e4f7ec57bb113204822",
+  "rows": 31,
+  "validCode": 31
+}
+```
+
+```json
+{
+  "old": 260,
+  "extension": 711,
+  "killed": 840,
+  "equivalent": 127,
+  "knownLimit": 4,
+  "corrected": []
+}
+```
+
+The scenario hash command finds 19 changed hashes and no hash without a changed test tag.
+The preflight command finds 670 unique leaf titles and 477 valid supplied patterns.
+The two other hand rows have no optional pattern.
+The row syntax command parses all 31 new mutations.
+The label command checks all 971 automatic table rows against the saved lead results.
+It finds no label difference.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass7/check-delta.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass7/compare.py
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass7/preflight.py
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass7/check-rows.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass7/traversals.mjs
+```
+
+The syntax tree search lists 66 collection operations.
+Eight constructors have no input collection, and one Set is the closed media type set.
+The table groups splice and reverse with their handle loop.
+It groups layer Set construction with spread, and values with spread in the two byte totals.
+These groups give the 52 table rows.
+
+### First complete hand command in pass 7
+
+The first complete command checks 479 rows.
+It gives 476 killed rows and three survivors: m172, m246 and m389.
+Row m246 has a pattern that does not match the title in packs.test.mjs.
+The pass corrects that title and starts another complete command.
+The first command gives no result for the final tree.
+
+### Searches for the same faults in pass 7
+
+The broad grep covers the change documents, all three test files and mutation names.
+It excludes review reports.
+The saved output also includes verbs, command options, code spans, report quotations and Old title records.
+Those forms do not state a new prose noun.
+The fault-form search finds no current instance outside those records.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass7/search-final.py
+```
+
+The script uses grep with -nE and the words below.
+The complete broad output is noun-search.log in the pass7 scratch folder.
+
+```text
+read|write|check|setup|cleanup|changes|access
+```
+
+```json
+{
+  "sourceCommit": "0bf26a8ec20c1f6685f25e4f7ec57bb113204822",
+  "filesSearched": 42,
+  "broadSearchLines": 378,
+  "currentFaultForms": 0,
+  "correctionSearches": 20
+}
+```
+
+The following grep outputs show each correction after the edits.
+
+```text
+Finding: S1
+Command: grep -nE constructor mutations openspec/changes/backfill-director-packs-sharing/design.md
+128:It also adds default shapes, destructured fields, spreads, template values, regex quantifiers and constructor mutations.
+Finding: S1
+Command: grep -nE exact mutations openspec/changes/backfill-director-packs-sharing/evidence.md
+2251:The extension run keeps all 3849 old IDs and exact mutations.
+3011:| S1 | Titles and clauses use | The files use constructor mutations and exact mutations. Finite clauses state when the source reads chunks and when the export reads a field. |
+Finding: S1 S9
+Command: grep -nE reads the first stream chunk|before each time|after it reads one field openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+251:- **AND** The source checks the header byte limit before it reads the first stream chunk.
+260:- **AND** The source checks its signal before each time the source reads a stream chunk.
+329:- **AND** The export stops when the digest is absent after it reads one field.
+Finding: S2
+Command: grep -nE 52 collection traversals|lifetime.js has no openspec/changes/backfill-director-packs-sharing/audit.md
+408:The loop table lists 52 collection traversals in six of the seven source files.
+409:The file lifetime.js has no collection loop.
+Finding: S3
+Command: grep -nE The preview counts the second scene openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+407:- **AND** The preview counts the second scene and the second shot, and lists the second data pack. The preview adds the bytes of the second asset to the byte total.
+Finding: S4 S7
+Command: grep -nE reference in the second shot|invalid second data pack|reference to the second anchor|invalid second path|invalid second coordinate src/director/packs/backfill.test.mjs
+3141:test('[director-082] The manifest rejects a reference in the second shot', () => {
+3150:test('[director-077 director-082] The manifest rejects an invalid second data pack', () => {
+3153:test('[director-081] The manifest accepts a reference to the second anchor', () => {
+3168:test('[director-088] The session rejects an invalid second data pack before the source call', async () => {
+3176:test('[director-081 director-093] The session accepts a reference to the second anchor', async () => {
+3182:test('[director-076] The validator rejects an invalid second path segment', () => {
+3185:test('[director-085] The decoder rejects an invalid second coordinate', () => {
+Finding: S5
+Command: grep -nE rerun after pass 4 openspec/changes/backfill-director-packs-sharing/design.md
+119:The rerun after pass 4 is the lead test of all 3849 mutations.
+Finding: S6
+Command: grep -nE 3514 kills|checks the signal before the second chunk openspec/changes/backfill-director-packs-sharing/audit.md
+48:That rule gives 3514 kills after Campaign 2 phase 1 and 3589 kills after phase 2.
+485:The stream test supplies two chunks and stops when it checks the signal before the second chunk.
+Finding: S8
+Command: grep -nE parser returns an empty asset map src/director/sharing/sharing.test.mjs
+56:test('[director-098] The parser returns an empty asset map for plain project JSON', async () => {
+Finding: S10
+Command: grep -nE larger file limit|extra top-level field src/director/sharing/sharing.test.mjs
+1099:test('[director-106] The share helpers give bundles the larger file limit', async () => {
+2028:test('[director-099] The bundle helpers reject an extra top-level field', async () => {
+Finding: S11
+Command: grep -nE accepted media type set openspec/changes/backfill-director-packs-sharing/design.md
+157:The accepted media type set contains exactly nine types.
+Finding: S12
+Command: grep -nE invalid path|text promise settles|second.*digest.*resolver call src/director/sharing/sharing.test.mjs
+347:test('[director-105] The byte store rejects an invalid path that it holds', () => {
+2406:test('[director-107] The reader checks the signal after the text promise settles', async () => {
+2658:  test(`[director-107] The ${mode} stops before the second ${mode === 'import' ? 'digest' : 'resolver call'}`, async () => {
+Finding: S13
+Command: grep -nE Extension checks 1 to 4|16 backfill tests|In pass 6 the worker openspec/changes/backfill-director-packs-sharing/evidence.md
+2256:Extension checks 1 to 4 have inputs of 367, 199, 104 and 321 mutations.
+2534:The tests add 16 backfill tests and 10 sharing tests.
+2669:In pass 6 the worker changes two test files and ten change documents only.
+Finding: S14
+Command: grep -nE limit on additive edits openspec/changes/backfill-director-packs-sharing/audit.md
+234:This limit on additive edits covers the nine media types at bundle.js:11 to 21.
+Finding: S15
+Command: grep -nE 52428800-character openspec/changes/backfill-director-packs-sharing/evidence/probe-extension.txt
+398:The private input declaration has no value or callback. Signal checks, type checks, the 52428800-character check, the 52428800-byte check and the JSON parse keep their order for every text length.
+Finding: S16
+Command: grep -nE 9\.11|9\.12 openspec/changes/backfill-director-packs-sharing/tasks.md
+1467:- [x] 9.11 Correct the run names in audit.md and evidence.md.
+1468:- [x] 9.12 Regenerate the killer titles from the final rerun after pass 5.
+Finding: Spec Without layer IDs
+Command: grep -nE both absent named layers|traffic.*ships src/director/sharing/sharing.test.mjs
+1245:  f.scenes[0].shots.push({ id: 'b', layers: { traffic: true, ships: false } });
+1477:  f.scenes[0].shots[0].layers = { traffic: false, ships: false };
+2846:test('[director-110] The preview reports both absent named layers without layer IDs', () => {
+2848:  project.scenes[0].shots[0].layers = { traffic: true, ships: true };
+2851:    ['traffic', 'ships'],
+2871:  project.scenes[0].shots[0].layers = { traffic: true, ships: true };
+2875:      { layerIds: ['traffic', 'ships'] },
+Finding: Spec The registry copies
+Command: grep -nE both registered sources and both renderers src/director/packs/backfill.test.mjs
+3225:test('[director-088 director-093] The session calls both registered sources and both renderers', async () => {
+Finding: Spec The table covers each
+Command: grep -nE 52 collection traversals|Preview absent layer filter|registry|digest bytes|Base64 input bytes openspec/changes/backfill-director-packs-sharing/audit.md
+408:The loop table lists 52 collection traversals in six of the seven source files.
+448:| Source registry entries | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m452 |
+449:| Source registry Map | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m463 |
+450:| Renderer registry entries | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m453 |
+451:| Renderer registry Map | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m464 |
+455:| Session digest bytes | src/director/packs/session.js:124 | [director-093] The session checks exact bytes and digest | m477 |
+456:| Bundle digest bytes | src/director/sharing/bundle.js:26 | [director-099] The import accepts a literal digest for three distinct bytes | m478 |
+457:| Base64 input bytes | src/director/sharing/bundle.js:46 | [director-099] The import accepts a literal digest for three distinct bytes | m479 |
+466:| Preview absent layer filter | src/director/sharing/preview.js:36 | [director-110] The preview reports both absent named layers without layer IDs | m449, m450, m451 |
+Finding: Spec The closed-sets table
+Command: grep -nE fields.*manifest.js|fields.*bundle.js|m455 to m462 openspec/changes/backfill-director-packs-sharing/audit.md
+224:| Data pack fields | manifest.js:34-43 | id, version, format, source, attribution, placement, byteLength, sha256 |
+225:| Source fields | manifest.js:48 | adapter, path |
+226:| Attribution fields | manifest.js:51 | text, license, url |
+227:| Image placement fields | manifest.js:84-92 | bounds, height, altitudeReference |
+228:| Media placement fields | manifest.js:84-92 | anchorId |
+229:| GeoJSON placement fields | manifest.js:84-92 | altitudeReference |
+230:| Bundle fields | bundle.js:78 | format, version, project, assets |
+231:| Asset fields | bundle.js:86 | path, mimeType, base64, sha256 |
+237:Rows m455 to m462 add script to each allowed-field list.
+```
+
+### Final complete hand result in pass 7
+
+Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
+
+Complete hand check 3 checks all 479 rows after the final title corrections.
+It gives 477 killed rows and only m172 and m389 as survivors.
+All 31 new rows give a failed repository test.
+The command skips no row and gives no timeout.
+The first log line gives the command.
+The mutation report records the complete output.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director-3 /home/ianblenke/docker/gev-tools/director-3/muts.json
+```
+
+### Final source scope in pass 7
+
+The final scope command compares all seven production files with commits 0bf26a8e and 290b5d2.
+All seven files match byte for byte after the complete hand command.
+It also checks each old span and the allowed changed paths.
+No review report, main spec, trace ledger or QA script changes.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass7/finish.py
+```
+
+```json
+{
+  "sourceCommit": "0bf26a8ec20c1f6685f25e4f7ec57bb113204822",
+  "rows": 479,
+  "killed": 477,
+  "survivors": [
+    "m172",
+    "m389"
+  ],
+  "newRows": 31,
+  "newRowsKilled": 31,
+  "skipped": 0,
+  "timeout": 0,
+  "productionFilesUnchanged": 7,
+  "changedFiles": [
+    "openspec/changes/backfill-director-packs-sharing/audit.md",
+    "openspec/changes/backfill-director-packs-sharing/checks.md",
+    "openspec/changes/backfill-director-packs-sharing/design.md",
+    "openspec/changes/backfill-director-packs-sharing/evidence.md",
+    "openspec/changes/backfill-director-packs-sharing/evidence/probe-extension.txt",
+    "openspec/changes/backfill-director-packs-sharing/evidence/probe-feature-order.txt",
+    "openspec/changes/backfill-director-packs-sharing/mutations.md",
+    "openspec/changes/backfill-director-packs-sharing/probe-ranges.md",
+    "openspec/changes/backfill-director-packs-sharing/proposal.md",
+    "openspec/changes/backfill-director-packs-sharing/specs/director/spec.md",
+    "openspec/changes/backfill-director-packs-sharing/survivors.md",
+    "openspec/changes/backfill-director-packs-sharing/tasks.md",
+    "src/director/packs/backfill.test.mjs",
+    "src/director/packs/packs.test.mjs",
+    "src/director/sharing/sharing.test.mjs"
+  ]
+}
+```
+
+### Final prose and format commands in pass 7
+
+The prose lint gives zero errors.
+The title scan checks 494 titles and gives zero banned forms.
+The format command checks 1158 files.
+The git whitespace command gives no output.
+The production file comparison gives seven unchanged files.
+
+The predispatch command gives only Old records, code identifiers and the exact task 9.11 wording.
+The code fence limit applies to MIME and SHA-256 in mutation spans.
+The pass keeps the production spans, Old records and required task text.
+The pass does not change the helper.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-packs-sharing
+cd /home/ianblenke/docker/gev-work/director-3 && cd /home/ianblenke/docker/gev-work && taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+cd /home/ianblenke/docker/gev-work/director-3 && git diff --check
+```
+
+```text
+ABBR     evidence.md:3053  "MIME" is not defined in this file
+ABBR     mutations.md:3033  "MIME" is not defined in this file
+ABBR     mutations.md:14501  "SHA" is not defined in this file
+NOUN?    evidence.md:858  verb used as a noun: "abort"  Old: an abort between renderer settlement and continuation cannot leak the returned resource
+NOUN?    evidence.md:969  verb used as a noun: "abort"  Old: [director-090] an abort between renderer settlement and continuation cannot leak the returned resource
+NOUN?    evidence.md:3341  verb used as a noun: "run"  1467:- [x] 9.11 Correct the run names in audit.md and evidence.md.
+NOUN?    tasks.md:1467  verb used as a noun: "run"  - [x] 9.11 Correct the run names in audit.md and evidence.md.
+WORD     evidence.md:809  "explicit"  Old: image bounds and media anchor references are explicit and validated
+WORD     evidence.md:811  "preserves"  Old: GeoJSON preserves stable geometry IDs but never properties or remote style hints
+WORD     evidence.md:813  "malformed"  Old: bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files and broken integrity
+WORD     evidence.md:828  "explicit"  Old: image bounds and media anchor references are explicit and validated
+WORD     evidence.md:838  "preserves"  Old: GeoJSON preserves stable geometry IDs but never properties or remote style hints
+WORD     evidence.md:883  "malformed"  Old: bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files and broken integrity
+
+== summary: {'WORD': 6, 'NOUN?': 4, 'ABBR': 3}
+```
+
+The stat filter leaves the summary for the three test files.
+That summary is not a production file difference.
+The name output below lists only the three test files.
+The byte comparison in finish.py also finds no production difference.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && git diff 0bf26a8e --name-only -- src/director
+```
+
+```text
+src/director/packs/backfill.test.mjs
+src/director/packs/packs.test.mjs
+src/director/sharing/sharing.test.mjs
+```
+
+### Commands outside this pass
+
+The pass runs no container, image gate, ratchet or new review round.
+The lead runs those commands.
+The pass runs no automatic mutation command because the tool classes stay unchanged.
+The pass runs no merge or push command.
+The pass commits the correction in the clone.

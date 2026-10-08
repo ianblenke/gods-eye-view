@@ -1,4 +1,3 @@
-MIME means Multipurpose Internet Mail Extensions.
 
 ## Context
 
@@ -19,13 +18,13 @@ The lead runs the ratchet, gates and review.
 
 ## Related browser QA scripts
 
-- `scripts/qa-director-packs.mjs` proves data pack import, display and resource cleanup.
+- `scripts/qa-director-packs.mjs` proves data pack import, display and resource disposal.
 - `scripts/qa-director-sharing.mjs` proves that an author can share a scene with local assets.
 
 ## Evidence
 
 The evidence records test links, scope sweeps and host coverage.
-The mutation report records exact changes and failed tests.
+The mutation report records exact mutations and failed tests.
 The automatic audit lists each operator class.
 The survivor table gives each result.
 
@@ -48,7 +47,7 @@ cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 pyt
 The change adds its proposal, design, tasks, spec, evidence, checks.md, mutations.md, audit.md and survivors.md.
 It edits `src/director/packs/packs.test.mjs` and `src/director/sharing/sharing.test.mjs`.
 It adds `src/director/packs/backfill.test.mjs`.
-It does not edit the earlier director changes.
+It does not edit the earlier director change folders.
 
 ## Corrections of review round 1
 
@@ -64,7 +63,7 @@ A second preview test separates the shot total from the scene total.
 The lead runs the next review round after this correction pass.
 
 The scratch copy contains the repository test files and their source dependencies.
-It carries the production files of base commit `290b5d2` with the test changes of pass 2.
+It carries the production files of base commit `290b5d2` with the test edits of pass 2.
 The copy does not carry a branch.
 The final byte comparison checks each test copy against the repository file.
 
@@ -117,7 +116,7 @@ Campaign 2 checks the original 3849 mutations.
 
 Pass 4 correction check 1 gave 180 kills.
 Pass 4 correction check 2 gave 192 kills and left equivalent cases and Known limits.
-The final rerun is the lead check of all 3849 mutations.
+The rerun after pass 4 is the lead test of all 3849 mutations.
 The new Known limit concerns a custom nonnumeric byte length.
 The valid numeric length fallback keeps its tagged test and scenario clause.
 
@@ -126,7 +125,7 @@ The valid numeric length fallback keeps its tagged test and scenario clause.
 The extension run keeps all 3849 old mutation IDs.
 New mutations have IDs from a9000.
 The tool adds constructor arguments, await removal, adjacent statement order and regex class members.
-It also adds default shapes, destructured fields, spreads, template values, regex quantifiers and constructor changes.
+It also adds default shapes, destructured fields, spreads, template values, regex quantifiers and constructor mutations.
 The tool tests cover optional call arguments and optional calls.
 The old optional class already generates the same mutations in these source files.
 
@@ -150,18 +149,33 @@ Extension check 4 repeats all 67 former extension survivors and kills all 250 ne
 
 Base commit: `290b5d2`.
 
-The loop table covers 32 collection loops across all seven source files.
+The loop table lists 52 collection traversals in six of the seven source files.
+The file lifetime.js has no collection loop.
 The tests use later invalid items or count later calls.
-The new hand rows check collection subsets, indexed paths, per-item cancellation and additive edits.
+The new hand rows check collection subsets, indexed paths, per-item cancellation and mutations that add members.
 The automatic tool classes stay the same.
-The accepted MIME set contains exactly nine types.
+The accepted media type set contains exactly nine types.
 
-The unsafe path test checks a path that the store holds.
+The invalid path test checks a path that the store holds.
 It does not claim a lookup order that public input cannot show.
-The survivor titles use one source: the first failed test of the lead final rerun after pass 5.
+The killer titles use one source: the first failed test of the lead final rerun after pass 5.
 The saved result files stay unchanged.
 The lead owns round 5, ratchet and image gates.
 
 The Share work requirement belongs to this change and uses file limits.
 Both of its scenario IDs have changed tagged tests.
 No requirement from an earlier change has a new first sentence.
+
+## Pass 7 decisions
+
+Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
+
+The loop table lists 52 collection traversals in six of the seven source files.
+The file lifetime.js has no collection loop.
+The three byte mappers use positive digest and byte tests.
+The preview lists data packs and counts scenes, shots and bytes.
+Each allowed-field list has tests for script and adapters.
+The automatic tool classes stay unchanged.
+
+The prose gate rejects the requested preview sentence because it has 28 words.
+Two sentences state the same result within the word limit.

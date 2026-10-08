@@ -83,7 +83,7 @@ const response = (
 const directory = (fetchImpl) =>
   createAssetDirectorySource({ baseUrl: 'https://example.org/a/', fetchImpl });
 
-test('[director-076] The path type check comes before the segment access', () => {
+test('[director-076] The validator rejects the path type before it reads a segment', () => {
   let reads = 0;
   const value = { split() { reads++; return ['x']; } };
   assert.throws(() => validateAssetPath(value), {
@@ -113,7 +113,7 @@ for (const [tags, label, alter, message] of [
   });
 }
 
-test('[director-079] The digest check comes before access to the placement', () => {
+test('[director-079] The validator checks the digest before it reads the placement', () => {
   const p = pack();
   p.sha256 = 'bad';
   let reads = 0;
@@ -122,31 +122,31 @@ test('[director-079] The digest check comes before access to the placement', () 
   assert.equal(reads, 0);
 });
 
-test('[director-080] The height reference check comes before the bounds check', () => {
+test('[director-080] The validator checks the height reference before it checks the bounds', () => {
   const p = imagePack(); p.placement.altitudeReference = 'bad'; p.placement.bounds = null;
   assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.placement.altitudeReference: expected ellipsoid height in meters' });
 });
 
-test('[director-080] The bounds array check comes before access to the length', () => {
+test('[director-080] The validator checks the bounds array before it reads the length', () => {
   let reads = 0;
   const p = imagePack(); p.placement.bounds = { get length() { reads++; return 4; } };
   assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.placement.bounds: expected an array of at most 4 entries' });
   assert.equal(reads, 0);
 });
 
-test('[director-080] The bounds length check comes before each coordinate check', () => {
+test('[director-080] The validator checks the bounds length before it checks each coordinate', () => {
   const p = imagePack(); p.placement.bounds = ['bad', 0, 1];
   assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.placement.bounds: expected west, south, east, north' });
 });
 
-test('[director-082] The list check comes before access to the anchors', () => {
+test('[director-082] The validator checks the list before it reads the anchors', () => {
   let reads = 0;
   const scene = { dataPacks: null, shots: [], get anchors() { reads++; return []; } };
   assert.throws(() => validateSceneDataPacks(scene, '$'), { message: '$.dataPacks: expected an array of at most 8 entries' });
   assert.equal(reads, 0);
 });
 
-test('[director-077 director-082] The declaration check comes before the duplicate ID check', () => {
+test('[director-077 director-082] The validator checks the declaration before it checks for duplicate IDs', () => {
   const second = pack();
   second.version = 2;
   assert.throws(() => validateSceneDataPacks({ dataPacks: [pack(), second], shots: [] }, '$'), {
@@ -188,7 +188,7 @@ test('[director-097] The source waits for body cancellation before it rejects th
   assert.equal(cancelled, true);
 });
 
-test('[director-089] The source listener and state check come before it reads the work promise', async () => {
+test('[director-089] The source registers its listener and checks its state before it reads the work promise', async () => {
   const order = [];
   const aborted = Object.getOwnPropertyDescriptor(AbortSignal.prototype, 'aborted').get;
   const s = makeSession(({ signal }) => {
@@ -303,7 +303,7 @@ test('[director-088] The destroyed session returns false for a load call during 
   } finally { s.destroy(); }
 });
 
-test('[director-088 director-091] The new list check follows old resource disposal', async () => {
+test('[director-088 director-091] The session checks the new list after it disposes old resources', async () => {
   let disposals = 0;
   const s = makeSession(asset, () => ({ dispose() { disposals++; } }));
   try {
@@ -314,7 +314,7 @@ test('[director-088 director-091] The new list check follows old resource dispos
   } finally { s.destroy(); }
 });
 
-test('[director-088] The list check comes before access to the anchors', async () => {
+test('[director-088] The validator checks the list before it reads the anchors', async () => {
   let reads = 0;
   const s = makeSession();
   try {
@@ -323,7 +323,7 @@ test('[director-088] The list check comes before access to the anchors', async (
   } finally { s.destroy(); }
 });
 
-test('[director-088] The declaration check comes before access to the caller signal', async () => {
+test('[director-088] The session checks declarations before it reads the caller signal', async () => {
   let reads = 0;
   const p = pack(); p.version = 2;
   const s = makeSession();
@@ -356,7 +356,7 @@ test('[director-090] The caller event during listener registration cancels the l
   finally { s.destroy(); globalThis.setTimeout = nativeSet; globalThis.clearTimeout = nativeClear; }
 });
 
-test('[director-089] The final signal check comes before timer removal and the ready state', async () => {
+test('[director-089] The session checks the signal before it removes the timer and reports the ready state', async () => {
   const nativeSet = globalThis.setTimeout, nativeClear = globalThis.clearTimeout;
   const timer = {}, order = [];
   let state, s;
@@ -374,7 +374,7 @@ test('[director-089] The final signal check comes before timer removal and the r
   } finally { s.destroy(); globalThis.setTimeout = nativeSet; globalThis.clearTimeout = nativeClear; }
 });
 
-test('[director-090 director-093] The source signal error comes before access to the bytes', async () => {
+test('[director-090 director-093] The session rejects the signal error before it reads bytes', async () => {
   let reads = 0;
   const s = makeSession(({ signal }) => {
     signal.throwIfAborted = () => { throw new Error('stop'); };
@@ -386,7 +386,7 @@ test('[director-090 director-093] The source signal error comes before access to
   } finally { s.destroy(); }
 });
 
-test('[director-093] The total byte check comes before access to the digest', async () => {
+test('[director-093] The session checks total bytes before it reads the digest', async () => {
   let calls = 0, reads = 0;
   const packs = Array.from({ length: 5 }, (_, i) => ({ ...pack(), id: 'p' + i }));
   Object.defineProperty(packs[4], 'sha256', { get() { reads++; return calls < 5 ? '0'.repeat(64) : undefined; } });
@@ -398,7 +398,7 @@ test('[director-093] The total byte check comes before access to the digest', as
   } finally { s.destroy(); }
 });
 
-test('[director-095] The path check comes before the caller signal check', async () => {
+test('[director-095] The source checks the path before it checks the caller signal', async () => {
   let calls = 0;
   const source = directory(() => { throw new Error('unused'); });
   await assert.rejects(source({ path: '../x', signal: { throwIfAborted() { calls++; throw new Error('stop'); } } }), {
@@ -407,7 +407,7 @@ test('[director-095] The path check comes before the caller signal check', async
   assert.equal(calls, 0);
 });
 
-test('[director-096] The header limit check comes before it reads the first stream chunk', async () => {
+test('[director-096] The source checks the header limit before it reads the first stream chunk', async () => {
   let reads = 0;
   const source = directory(async () => ({
     ok: true, headers: new Headers({ 'content-length': '2' }),
@@ -417,7 +417,7 @@ test('[director-096] The header limit check comes before it reads the first stre
   assert.equal(reads, 0);
 });
 
-test('[director-097] The source signal check comes before it reads the stream chunk', async () => {
+test('[director-097] The source checks the signal before it reads the stream chunk', async () => {
   let checks = 0, reads = 0;
   const source = directory(async () => ({
     ok: true, headers: new Headers(),
@@ -570,7 +570,7 @@ test('[director-090] The session rejects asset data from a source error', async 
     assert.equal(renders, 0);
   } finally { s.destroy(); }
 });
-test('[director-090] The session checks its source signal before byte access and after renderer work', async () => {
+test('[director-090] The session checks its source signal before it reads bytes and after renderer work', async () => {
   let checks = 0;
   const s = makeSession(({ signal }) => {
     const check = signal.throwIfAborted.bind(signal);
@@ -1544,12 +1544,12 @@ test('[director-096] The stream rejects excess chunk bytes', async () => {
   await assert.rejects(source({ path: 'x', maxBytes: 2 }), /byte limit/);
 });
 
-test('[director-096] The stream uses absent MIME default', async () => {
+test('[director-096] The source returns an empty media type when the header is absent', async () => {
   const source = directory(() => response([], {}));
   assert.equal((await source({ path: 'x' })).mimeType, '');
 });
 
-test('[director-096] The stream normalizes MIME text', async () => {
+test('[director-096] The source returns lowercase media type text without parameters', async () => {
   const source = directory(() =>
     response([], { 'content-type': ' IMAGE/PNG ; extra=x' }),
   );
@@ -1802,7 +1802,7 @@ test('[director-090] The session checks signal state without an event', async ()
   s.destroy();
 });
 
-test('[director-090] The session checks destroyed state after signal access', async () => {
+test('[director-090] The session checks destroyed state after it reads the signal', async () => {
   let first = true;
   let s;
   const signal = {
@@ -2965,7 +2965,7 @@ test('[director-092] The source signal event stops work before the renderer', as
   } finally { s.destroy(); }
 });
 
-test('[director-090] The session sees destruction during caller signal access after a source error', async () => {
+test('[director-090] The caller destroys the session when it reads the caller signal after a source error', async () => {
   let reads = 0, s;
   const signal = {
     get aborted() { if (++reads === 2) s.destroy(); return false; },
@@ -2975,7 +2975,7 @@ test('[director-090] The session sees destruction during caller signal access af
   try { assert.equal(await s.load([pack()], { signal }), false); }
   finally { s.destroy(); }
 });
-test('[director-093] The session checks byte type before length access', async () => {
+test('[director-093] The session checks byte type before it reads the length', async () => {
   let reads = 0;
   const value = new Proxy({}, { get(target, key) { if (key === 'length') reads++; return 1; } });
   const s = makeSession(() => ({ bytes: value }));
@@ -3006,11 +3006,11 @@ test('[director-092] The deadline gives its cause to the source signal', async (
   } finally { s.destroy(); }
 });
 
-test('[director-079] The digest type check comes before text conversion', () => {
+test('[director-079] The validator checks the digest type before it converts text', () => {
   const p = { ...pack(), sha256: Symbol('digest') };
   assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.sha256: expected a lowercase SHA-256 digest' });
 });
-test('[director-080] The edge order check starts with west and east', () => {
+test('[director-080] The validator checks west and east before south and north', () => {
   const reads = [], values = [2, -1, 1, 1];
   const bounds = new Proxy(values, { get(target, key, receiver) {
     if (/^[0-3]$/.test(String(key))) reads.push(Number(key));
@@ -3020,7 +3020,7 @@ test('[director-080] The edge order check starts with west and east', () => {
   assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.placement.bounds: expected increasing non-dateline bounds' });
   assert.deepEqual(reads, [0, 1, 2, 3, 0, 2]);
 });
-test('[director-082] The distinct reference check comes before the search for known IDs', () => {
+test('[director-082] The validator rejects duplicate references before it searches for known IDs', () => {
   let reads = 0;
   const ids = ['outline', 'outline'];
   Object.defineProperty(ids, 'some', { get() { reads++; return Array.prototype.some; } });
@@ -3036,7 +3036,7 @@ test('[director-093] The session does not read bytes.length again without declar
     assert.equal(reads, 3);
   } finally { s.destroy(); }
 });
-test('[director-090] The detached handle check does not read the source signal state', async () => {
+test('[director-090] The cleared session returns false without the source signal state', async () => {
   let reads = 0, first = true, s;
   const aborted = Object.getOwnPropertyDescriptor(AbortSignal.prototype, 'aborted').get;
   s = makeSession(({ signal }) => {
@@ -3138,22 +3138,22 @@ for (const mode of ['absent source', 'invalid bytes', 'excess total', 'wrong dig
   });
 }
 
-test('[director-082] The manifest rejects the second shot reference', () => {
+test('[director-082] The manifest rejects a reference in the second shot', () => {
   assert.throws(() => validateSceneDataPacks({ dataPacks: [pack()], shots: [{ dataPackIds: ['outline'] }, { dataPackIds: ['absent'] }] }, '$'), { message: '$.shots[1].dataPackIds: expected distinct scene pack IDs' });
 });
 test('[director-077] The manifest rejects an unlisted geojsonx format', () => {
   assert.throws(() => validateDataPack({ ...pack(), format: 'geojsonx' }, 'pack', new Set()), { message: 'pack.format: unsupported pack format' });
 });
-test('[director-094] The directory rejects the file protocol', () => {
+test('[director-094] The source rejects the file protocol', () => {
   assert.throws(() => createAssetDirectorySource({ baseUrl: 'file:///assets/' }), { message: 'Asset source requires an explicit HTTP(S) directory URL' });
 });
-test('[director-077 director-082] The manifest validates the second data pack', () => {
+test('[director-077 director-082] The manifest rejects an invalid second data pack', () => {
   assert.throws(() => validateSceneDataPacks({ dataPacks: [pack(), { ...pack(), id: 'second', version: 2 }], shots: [] }, '$'), { message: '$.dataPacks[1].version: unsupported pack version' });
 });
-test('[director-081] The manifest uses the second anchor', () => {
+test('[director-081] The manifest accepts a reference to the second anchor', () => {
   assert.doesNotThrow(() => validateSceneDataPacks({ anchors: [{ id: 'first' }, { id: 'second' }], dataPacks: [{ ...pack(), format: 'media', placement: { anchorId: 'second' } }], shots: [] }, '$'));
 });
-test('[director-082] The manifest checks the second reference ID', () => {
+test('[director-082] The manifest rejects an unknown second reference ID', () => {
   assert.throws(() => validateSceneDataPacks({ dataPacks: [pack()], shots: [{ dataPackIds: ['outline', 'absent'] }] }, '$'), { message: '$.shots[0].dataPackIds: expected distinct scene pack IDs' });
 });
 test('[director-084] The decoder rejects the second feature', () => {
@@ -3165,7 +3165,7 @@ test('[director-085 director-086] The decoder rejects the second line position',
 test('[director-087] The decoder rejects the second ring', () => {
   assert.throws(() => geoFeatures([feature('polygon', 'Polygon', [[[0, 0], [1, 0], [1, 1], [0, 0]], [[0, 0], [1, 0], [1, 1], [0, 1]]])]), { message: 'Unclosed ring' });
 });
-test('[director-088] The session validates the second data pack before source access', async () => {
+test('[director-088] The session rejects an invalid second data pack before the source call', async () => {
   let calls = 0;
   const session = makeSession(() => { calls++; return asset(); });
   try {
@@ -3173,16 +3173,16 @@ test('[director-088] The session validates the second data pack before source ac
     assert.equal(calls, 0);
   } finally { session.destroy(); }
 });
-test('[director-081 director-093] The session uses the second anchor', async () => {
+test('[director-081 director-093] The session accepts a reference to the second anchor', async () => {
   const session = createDataPackSession({ sources: { assets: asset }, adapters: { media: () => ({ dispose() {} }) } });
   try { assert.equal(await session.load([{ ...pack(), format: 'media', placement: { anchorId: 'second' } }], { anchors: [{ id: 'first' }, { id: 'second' }] }), true); }
   finally { session.destroy(); }
 });
 
-test('[director-076] The path rejects its second segment', () => {
+test('[director-076] The validator rejects an invalid second path segment', () => {
   assert.throws(() => validateAssetPath('safe/../x'), { message: 'source.path: expected a relative asset path without URL syntax or traversal' });
 });
-test('[director-085] The position rejects its second nonfinite coordinate', () => {
+test('[director-085] The decoder rejects an invalid second coordinate', () => {
   assert.throws(() => geoFeatures([feature('point', 'Point', [0, null])]), { message: 'Invalid geographic position' });
 });
 
@@ -3220,3 +3220,47 @@ test('[director-097] The source cancels before it reads the second chunk', async
   assert.equal(reads, 1);
   assert.equal(unlocked, 1);
 });
+
+
+test('[director-088 director-093] The session calls both registered sources and both renderers', async () => {
+  const first = pack();
+  const second = { ...imagePack(), id: 'image', source: { adapter: 'pictures', path: 'test/image.png' } };
+  const calls = [];
+  const session = createDataPackSession({
+    sources: {
+      assets: ({ path }) => { calls.push(['source', path]); return asset(); },
+      pictures: ({ path }) => { calls.push(['picture', path]); return { bytes: new Uint8Array([4, 5]), mimeType: 'image/png' }; },
+    },
+    adapters: {
+      geojson: ({ pack, asset }) => { calls.push(['geojson', pack.id, [...asset.bytes]]); return { dispose() {} }; },
+      image: ({ pack, asset }) => { calls.push(['image', pack.id, [...asset.bytes]]); return { dispose() {} }; },
+    },
+  });
+  try {
+    assert.equal(await session.load([first, second]), true);
+    assert.deepEqual(calls, [
+      ['source', 'example/outline.geojson'], ['geojson', 'outline', [1, 2, 3]],
+      ['picture', 'test/image.png'], ['image', 'image', [4, 5]],
+    ]);
+    assert.equal(session.getState().count, 2);
+  } finally { session.destroy(); }
+});
+
+for (const [tag, label, make, object, path] of [
+  ['077', 'data pack', pack, p => p, 'pack'],
+  ['077', 'source', pack, p => p.source, 'pack.source'],
+  ['078', 'attribution', pack, p => p.attribution, 'pack.attribution'],
+  ['080', 'geojson placement', pack, p => p.placement, 'pack.placement'],
+  ['080', 'image placement', imagePack, p => p.placement, 'pack.placement'],
+  ['081', 'media placement', () => ({ ...pack(), format: 'media', placement: { anchorId: 'anchor' } }), p => p.placement, 'pack.placement'],
+]) {
+  test(`[director-${tag}] The manifest rejects script and adapters in the ${label}`, () => {
+    for (const key of ['script', 'adapters']) {
+      const value = make();
+      object(value)[key] = true;
+      assert.throws(() => validateDataPack(value, 'pack', new Set(['anchor'])), {
+        message: `${path}.${key}: unsupported field`,
+      });
+    }
+  });
+}

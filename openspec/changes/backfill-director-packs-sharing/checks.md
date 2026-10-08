@@ -13,7 +13,7 @@ The direct format command stops with the process error below.
 The host format helper completes the format commands.
 The source comparison finds no production change.
 
-The path check lists only test files and this change directory.
+The scope command lists only test files and this change directory.
 The lead runs the ratchet, gates and both reviews.
 
 ```text

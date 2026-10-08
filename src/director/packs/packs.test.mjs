@@ -112,7 +112,7 @@ test('[director-080] The manifest checks given image bounds and media anchor ref
   assert.doesNotThrow(() => parseSceneDocument(JSON.stringify(p)));
 });
 
-test('[director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets', async () => {
+test('[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets', async () => {
   const requests = [];
   const source = createAssetDirectorySource({
     baseUrl: 'https://assets.example.org/packs/',

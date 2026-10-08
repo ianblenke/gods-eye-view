@@ -1459,13 +1459,13 @@ New: const copy = structuredClone(project);
 - [x] 9.3 Add tests with later items for `director-088`, `director-093` and `director-094`.
 - [x] 9.4 Add tests with later items for `director-099`, `director-101`, `director-102`, `director-104` and `director-107`.
 - [x] 9.5 Add tests with later items for `director-108` and `director-110`.
-- [x] 9.6 Strengthen the stored unsafe path test for `director-105`.
+- [x] 9.6 Strengthen the stored invalid path test for `director-105`.
 - [x] 9.7 Correct test titles for `director-089`, `director-090`, `director-091`, `director-092`, `director-097`, `director-098` and `director-106`.
 - [x] 9.8 Add hand rows m409 to m448.
 - [x] 9.9 Correct the scenario text.
 - [x] 9.10 Build the loop table.
-- [x] 9.11 Correct the command names.
-- [x] 9.12 Regenerate killer titles from the lead final rerun.
+- [x] 9.11 Correct the run names in audit.md and evidence.md.
+- [x] 9.12 Regenerate the killer titles from the final rerun after pass 5.
 - [x] 9.13 Record the title corrections.
 - [x] 9.14 Correct the probe prose.
 - [x] 9.15 Run the test files.
@@ -1476,3 +1476,28 @@ New: const copy = structuredClone(project);
 - [x] 9.20 Check the production diff.
 
 The lead runs the image gates, ratchet and review round 5.
+
+## 10. Corrections of review round 5
+
+Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
+
+The loop table lists 52 collection traversals in six of the seven source files.
+
+- [x] 10.1 Add the two-layer test for `director-110`.
+- [x] 10.2 Add the two-registry test for `director-088` and `director-093`.
+- [x] 10.3 Add allowed-field tests for `director-077`, `director-078`, `director-080`, `director-081` and `director-099`.
+- [x] 10.4 Add positive byte tests for `director-099`.
+- [x] 10.5 Add configured source and layer tests for `director-109` and `director-110`.
+- [x] 10.6 Correct titles for `director-076`, `director-082`, `director-085`, `director-089`, `director-096`, `director-097`, `director-098`, `director-102`, `director-105`, `director-106`, `director-107` and `director-108`.
+- [x] 10.7 Correct scenario clauses.
+- [x] 10.8 Add hand rows m449 to m479.
+- [x] 10.9 Regenerate the traversal table.
+- [x] 10.10 Regenerate killer titles from the saved results.
+- [x] 10.11 Correct the review prose.
+- [x] 10.12 Run each test file.
+- [x] 10.13 Measure each source file for coverage.
+- [x] 10.14 Run the complete hand list.
+- [x] 10.15 Run the prose checks.
+- [x] 10.16 Check format.
+- [x] 10.17 Check the production diff.
+- [x] 10.18 Commit the correction.

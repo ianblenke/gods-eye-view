@@ -53,7 +53,7 @@ const asset = () => ({
   mimeType: 'application/geo+json',
 });
 
-test('[director-098] The plain project JSON returns an empty asset map', async () => {
+test('[director-098] The parser returns an empty asset map for plain project JSON', async () => {
   const result = await parseSceneShare('{"version":6,"scenes":[]}');
   assert.equal(result.assets instanceof Map, true);
   assert.deepEqual([...result.assets], []);
@@ -344,7 +344,7 @@ test('[director-105] The byte store accepts its default byte limit', () => {
   assert.equal(store.source({ path: 'x' }).bytes.length, 8388608);
   store.clear();
 });
-test('[director-105] The byte store rejects an unsafe path that it holds', () => {
+test('[director-105] The byte store rejects an invalid path that it holds', () => {
   const store = createBundleAssets();
   store.replace(new Map([['../x', { bytes: new Uint8Array([1]) }]]));
   assert.equal(store.snapshot().has('../x'), true);
@@ -370,7 +370,7 @@ test('[director-102] The share limits reject a caller change', async () => {
   assert.equal(SHARE_LIMITS.assets, 64);
 });
 
-test('[director-099] The base64 type check comes before text conversion', async () => {
+test('[director-099] The parser checks the base64 type before it converts text', async () => {
   const b = directBundle();
   b.assets[0].base64 = { toString: null };
   await assert.rejects(parseSceneShare(JSON.stringify(b)), {
@@ -548,7 +548,7 @@ test('[director-103] The data packs with the same path share one asset and rejec
   );
 });
 
-test('[director-109] The preview reports unavailable sources, absent layers and absent bundle assets without state changes', () => {
+test('[director-109] The preview reports unavailable sources, absent layers and absent bundle assets without edits to state', () => {
   const p = fixture();
   const report = describeSceneShare(
     { project: p, assets: new Map() },
@@ -588,7 +588,7 @@ test('[director-104] The bundle byte store removes old data after replacement an
   assert.throws(() => store.source({ path }), /unavailable/);
 });
 
-test('[director-106] The share helpers reject excess file bytes before text access and cancel a stalled project file', async () => {
+test('[director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file', async () => {
   let reads = 0;
   await assert.rejects(
     readSceneShare({
@@ -815,7 +815,7 @@ test('[director-099] The bundle rejects duplicate paths', async () => {
   );
 });
 
-test('[director-099] The bundle rejects unsupported MIME', async () => {
+test('[director-099] The bundle rejects an unsupported media type', async () => {
   const b = await bundleObject();
   b.assets[0].mimeType = 'text/html';
   await assert.rejects(
@@ -1096,7 +1096,7 @@ test('[director-106] The share helpers reject the ordinary file limit', async ()
   assert.equal(calls, 0);
 });
 
-test('[director-106] The share helpers give bundles the larger budget', async () => {
+test('[director-106] The share helpers give bundles the larger file limit', async () => {
   const v = await readSceneShare({
     name: 'x.gevbundle.json',
     size: 5242881,
@@ -1545,7 +1545,7 @@ test('[director-102] The export rejects absent asset bytes', async () => {
   );
 });
 
-test('[director-106] The share helpers check a signal after text access', async () => {
+test('[director-106] The share helpers check a signal after they read text', async () => {
   let calls = 0;
   const signal = {
     throwIfAborted() {
@@ -2025,11 +2025,16 @@ test('[director-098] The bundle helpers reject an invalid plain project', async 
     /version/,
   );
 });
-test('[director-099] The bundle helpers reject an extra top field', async () => {
+test('[director-099] The bundle helpers reject an extra top-level field', async () => {
   const value = await bundleObject();
   value.extra = true;
   await assert.rejects(parseSceneShare(JSON.stringify(value)), {
     message: '$.extra: unsupported field',
+  });
+  delete value.extra;
+  value.script = true;
+  await assert.rejects(parseSceneShare(JSON.stringify(value)), {
+    message: '$.script: unsupported field',
   });
 });
 test('[director-099] The bundle helpers reject an invalid bundle project', async () => {
@@ -2149,7 +2154,7 @@ for (const outcome of ['success', 'error', 'cancel']) {
   });
 }
 
-test('[director-102] The absent digest stops its check after one field read', async () => {
+test('[director-102] The export stops when the digest is absent after it reads one field', async () => {
   let reads = 0;
   const result = JSON.parse(
     await createSceneBundle(fixture(), (p) => {
@@ -2238,7 +2243,7 @@ for (const [base64, values] of [
   });
 }
 
-test('[director-098 director-107] The share signal check comes before the text type check', async () => {
+test('[director-098 director-107] The parser checks the signal before it checks the text type', async () => {
   const c = new AbortController();
   c.abort(new Error('stop'));
   await assert.rejects(parseSceneShare(null, { signal: c.signal }), {
@@ -2309,7 +2314,7 @@ for (const [label, change, message] of [
   });
 }
 
-test('[director-099 director-107] The asset signal check comes before its field check', async () => {
+test('[director-099 director-107] The parser checks the signal before it checks asset fields', async () => {
   const b = directBundle();
   b.assets[0].extra = 1;
   let calls = 0;
@@ -2343,7 +2348,7 @@ test('[director-099] The import checks asset bytes before the digest call', asyn
   }
 });
 
-test('[director-100 director-107] The import signal check comes before the digest comparison', async () => {
+test('[director-100 director-107] The import checks the signal before it compares digests', async () => {
   const b = directBundle();
   b.assets[0].sha256 = '0'.repeat(64);
   let calls = 0;
@@ -2358,7 +2363,7 @@ test('[director-100 director-107] The import signal check comes before the diges
   assert.equal(calls, 3);
 });
 
-test('[director-106] The file limit check comes before access to the signal', async () => {
+test('[director-106] The reader checks the file limit before it reads the signal', async () => {
   let reads = 0;
   await assert.rejects(
     readSceneShare(
@@ -2377,7 +2382,7 @@ test('[director-106] The file limit check comes before access to the signal', as
   assert.equal(reads, 0);
 });
 
-test('[director-106 director-107] The file signal check comes before text access', async () => {
+test('[director-106 director-107] The reader checks the signal before it reads text', async () => {
   let reads = 0;
   const c = new AbortController();
   c.abort(new Error('stop'));
@@ -2398,7 +2403,7 @@ test('[director-106 director-107] The file signal check comes before text access
   assert.equal(reads, 0);
 });
 
-test('[director-107] The file signal check follows the text result', async () => {
+test('[director-107] The reader checks the signal after the text promise settles', async () => {
   const order = [];
   const signal = {
     aborted: false,
@@ -2443,7 +2448,7 @@ test('[director-101] The export writes source then byteLength then digest', asyn
   assert.deepEqual(order, ['source', 'byteLength', 'sha256']);
 });
 
-test('[director-102] The export checks integrity before access to the filename', async () => {
+test('[director-102] The export checks integrity before it reads the filename', async () => {
   let reads = 0;
   await assert.rejects(
     createSceneBundle(fixture(), (p) => {
@@ -2462,7 +2467,7 @@ test('[director-102] The export checks integrity before access to the filename',
   assert.equal(reads, 0);
 });
 
-test('[director-102] The export count check comes before the next resolver call', async () => {
+test('[director-102] The export checks the asset count before the next resolver call', async () => {
   let calls = 0;
   await assert.rejects(
     createSceneBundle(manyPacks(65), () => {
@@ -2506,7 +2511,7 @@ test('[director-102] The export checks the media type before the digest call', a
 });
 
 for (const [label, result, change, stopAt] of [
-  ['the absent asset check', null, () => {}, 2],
+  ['it checks for an absent asset', null, () => {}, 2],
   [
     'declared integrity',
     asset(),
@@ -2516,7 +2521,7 @@ for (const [label, result, change, stopAt] of [
     3,
   ],
 ]) {
-  test(`[director-102 director-107] The export signal check comes before ${label}`, async () => {
+  test(`[director-102 director-107] The export checks the signal before ${label}`, async () => {
     let calls = 0;
     const project = fixture();
     change(project.scenes[0].dataPacks[0]);
@@ -2536,7 +2541,7 @@ for (const [label, result, change, stopAt] of [
   });
 }
 
-test('[director-105] The store signal check comes before the path check', () => {
+test('[director-105] The store checks the signal before it checks the path', () => {
   const c = new AbortController();
   c.abort(new Error('stop'));
   assert.throws(
@@ -2545,7 +2550,7 @@ test('[director-105] The store signal check comes before the path check', () => 
   );
 });
 
-test('[director-107] The helper attaches its listener before it reads the work promise', async () => {
+test('[director-107] The helper attaches its listener before the source reads the work promise', async () => {
   const order = [];
   const signal = {
     aborted: false,
@@ -2564,7 +2569,7 @@ test('[director-107] The helper attaches its listener before it reads the work p
   assert.deepEqual(order, ['listener', 'work']);
 });
 
-test('[director-107] The helper removes its listener before access to the reason', async () => {
+test('[director-107] The helper removes its listener before it reads the reason', async () => {
   let resolve;
   const promise = new Promise((r) => {
     resolve = r;
@@ -2650,7 +2655,7 @@ test('[director-107] The helper rejects with the cancellation reason during list
 });
 
 for (const mode of ['import', 'export']) {
-  test(`[director-107] The ${mode} stops before the second asset`, async () => {
+  test(`[director-107] The ${mode} stops before the second ${mode === 'import' ? 'digest' : 'resolver call'}`, async () => {
     const project = fixture();
     const second = structuredClone(project.scenes[0].dataPacks[0]);
     second.id = 'second';
@@ -2709,7 +2714,7 @@ test('[director-099 director-102] The bundle rejects an SVG media type', async (
     { message: 'assets: unsupported media type' },
   );
 });
-test('[director-108 director-110] The preview reaches the second scene and shot', () => {
+test('[director-108 director-110] The preview counts the second scene and shot', () => {
   const project = fixture();
   project.scenes[0].dataPacks = [];
   project.scenes[0].shots[0].layers = {};
@@ -2735,7 +2740,7 @@ test('[director-108 director-110] The preview reaches the second scene and shot'
   assert.deepEqual(result.missingLayers, ['later']);
 });
 
-test('[director-101] The export reaches the second scene', async () => {
+test('[director-101] The export includes the asset of the second scene', async () => {
   const project = fixture();
   project.scenes[1] = { ...structuredClone(project.scenes[0]), id: 'second' };
   project.scenes[0].dataPacks = [];
@@ -2765,7 +2770,7 @@ test('[director-104] The store counts the second asset', () => {
   assert.deepEqual(store.getState(), { count: 2, bytes: 3 });
   assert.deepEqual([...store.snapshot().keys()], ['first', 'second']);
 });
-test('[director-108] The preview reaches the second data pack', () => {
+test('[director-108] The preview lists the second data pack', () => {
   const project = fixture();
   project.scenes[0].dataPacks.push({
     ...structuredClone(project.scenes[0].dataPacks[0]),
@@ -2837,3 +2842,75 @@ for (const mode of ['import', 'export']) {
     }
   });
 }
+
+test('[director-110] The preview reports both absent named layers without layer IDs', () => {
+  const project = fixture();
+  project.scenes[0].shots[0].layers = { traffic: true, ships: true };
+  assert.deepEqual(
+    describeSceneShare({ project, assets: new Map() }).missingLayers,
+    ['traffic', 'ships'],
+  );
+});
+for (const [label, field, path] of [
+  ['top-level object', (b) => b, '$'],
+  ['asset', (b) => b.assets[0], 'assets'],
+]) {
+  test(`[director-099] The import rejects script and adapters in the ${label}`, async () => {
+    for (const key of ['script', 'adapters']) {
+      const value = directBundle();
+      field(value)[key] = true;
+      await assert.rejects(parseSceneShare(JSON.stringify(value)), {
+        message: `${path}.${key}: unsupported field`,
+      });
+    }
+  });
+}
+
+test('[director-110] The preview accepts both configured layer IDs', () => {
+  const project = fixture();
+  project.scenes[0].shots[0].layers = { traffic: true, ships: true };
+  assert.deepEqual(
+    describeSceneShare(
+      { project, assets: new Map() },
+      { layerIds: ['traffic', 'ships'] },
+    ).missingLayers,
+    [],
+  );
+});
+test('[director-109] The preview accepts both configured source IDs', () => {
+  const project = fixture();
+  project.scenes[0].dataPacks.push({
+    ...structuredClone(project.scenes[0].dataPacks[0]),
+    id: 'second',
+    source: { adapter: 'pictures', path: 'test/image.png' },
+  });
+  const result = describeSceneShare(
+    { project, assets: new Map() },
+    { sourceIds: ['assets', 'pictures'] },
+  );
+  assert.deepEqual(
+    result.packs.map((p) => p.status),
+    [
+      'Source configured; file checked when loaded',
+      'Source configured; file checked when loaded',
+    ],
+  );
+});
+test('[director-099] The import accepts a literal digest for three distinct bytes', async () => {
+  const value = directBundle();
+  value.assets[0].base64 = 'AQID';
+  value.assets[0].sha256 =
+    '039058c6f2c0cb492c533b0a4d14ef77cc0f78abccced5287d84a1a2011cfb81';
+  value.project.scenes[0].dataPacks[0].byteLength = 3;
+  value.project.scenes[0].dataPacks[0].sha256 =
+    '039058c6f2c0cb492c533b0a4d14ef77cc0f78abccced5287d84a1a2011cfb81';
+  const result = await parseSceneShare(JSON.stringify(value));
+  assert.deepEqual(
+    [...result.assets.values()][0].bytes,
+    new Uint8Array([1, 2, 3]),
+  );
+  assert.equal(
+    [...result.assets.values()][0].sha256,
+    '039058c6f2c0cb492c533b0a4d14ef77cc0f78abccced5287d84a1a2011cfb81',
+  );
+});
