@@ -1557,9 +1557,13 @@ test('[gap-ledger-147] accept only total differences for an adopted file', () =>
       const current = gaps([loaded(file, 10, 9, 2, 'same', { ...BIG, [metric]: total })]);
       assert.deepEqual(compareLedger({ ledger, current, adoptedFile: name => name === file }), { errors: [], stale: [] });
       assert.deepEqual(compareLedger({ ledger, current }).stale, [{ kind: 'coverage', file: 'src/new.js' }]);
-      assert.equal(ratchet(ledger, current).ledger.coverage[file].totals[metric], total);
+
     }
   }
+  const lower = gaps([loaded(file, 10, 9, 2, 'same', { lines: 399, branches: 399, functions: 399 })]);
+  assert.deepEqual(ratchet(ledger, lower).ledger.coverage[file].totals, { lines: 399, branches: 399, functions: 399 });
+  const higher = gaps([loaded(file, 10, 9, 2, 'same', { lines: 401, branches: 401, functions: 401 })]);
+  assert.deepEqual(ratchet(ledger, higher).ledger.coverage[file].totals, { lines: 401, branches: 401, functions: 401 });
 });
 
 test('[gap-ledger-148] keep adopted not-covered counts exact', () => {
