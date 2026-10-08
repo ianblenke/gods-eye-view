@@ -242,3 +242,23 @@ test('[ownership-010] check keeps QA header errors', () => withFixture(root => {
   assert.equal(result.status, 1, result.output);
   assert.match(result.output, /ERROR QA-HEADER scripts\/qa-demo.mjs/);
 }));
+
+test('[ownership-020 ownership-022] check exempts upstream gaps and rejects an author line', () => withFixture(root => {
+  passes(root, ['init'], oneMeasurement(root));
+  git(root, 'checkout', '-qb', 'source', 'main');
+  write(root, { 'src/math.js': 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n' });
+  commitAll(root, 'upstream');
+  const from = git(root, 'rev-parse', 'HEAD');
+  git(root, 'checkout', '-q', 'work');
+  git(root, 'merge', '--no-ff', '-qm', 'sync', from);
+  const historyFile = path.join(root, 'openspec/trace/history.jsonl');
+  const history = existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : '';
+  write(root, { ...CHANGE, 'openspec/trace/history.jsonl': history + JSON.stringify({ kind: 'adopt', change: 'add-demo', file: 'src/math.js', from, lines: 2, branches: 1, functions: 0, untraced: 0 }) + '\n' });
+  const imported = run(root, ['check', '--change', 'add-demo'], oneMeasurement(root));
+  assert.match(imported.output, /COVERAGE-DIFF: 3 changed lines, 3 brought by the merged upstream commit, 0 need coverage\./);
+  assert.doesNotMatch(imported.output, /ERROR COVERAGE-DIFF/);
+  write(root, { 'src/math.js': 'export function add(a, b) {\n  if (a < 0) {\n    return 8 + 0;\n  }\n  return a + b;\n}\n' });
+  const edited = run(root, ['check', '--change', 'add-demo'], oneMeasurement(root));
+  assert.match(edited.output, /COVERAGE-DIFF: 3 changed lines, 2 brought by the merged upstream commit, 1 need coverage\./);
+  assert.deepEqual(edited.output.split('\n').filter(line => line.startsWith('ERROR COVERAGE-DIFF')), ['ERROR COVERAGE-DIFF src/math.js Changed lines need coverage: 3.']);
+}));

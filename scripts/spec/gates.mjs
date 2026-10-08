@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { readOwnership, ownershipAdvice, changedLines, parseLineCoverage, coverageFaults, gapReport } from './lib/ownership.mjs';
+import { readOwnership, ownershipAdvice, syncChangedLines, parseLineCoverage, coverageFaults, gapReport } from './lib/ownership.mjs';
 import { changedInputs, trustMeasurement, writeMeasurement } from './lib/measurement.mjs';
 import { importReach, adoptableReached } from './lib/import-reach.mjs';
 import { spawnSync } from 'node:child_process';
@@ -567,7 +567,9 @@ function runGateCommand({
   if (command === 'check' || command === 'ratchet' || command === 'ci') {
     let changed;
     try {
-      changed = changedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)) });
+      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });
+      changed = scoped.changed;
+      log(scoped.advice);
     } catch (error) {
       return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);
     }
