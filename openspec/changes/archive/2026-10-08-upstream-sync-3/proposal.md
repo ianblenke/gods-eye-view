@@ -59,7 +59,7 @@ The config tests check clear values and reject environment defaults. Secret cred
 The image ratchet and the document gates ran after review round 1. Review round 2 passed with minor findings only.
 The lead runs the final gates and CI, and writes `review.md`. The entries below are the limits of this change.
 
-### Nine upstream test edits
+### Ten upstream test edits
 
 Changes to upstream test files can cause conflicts at the next sync.
 Each later sync must keep or replace these test corrections.
@@ -75,6 +75,7 @@ The candidates are these files:
 - `src/voice/realtimeNarration.test.mjs`
 - `src/data/analystEngine.test.mjs`
 - `src/tools/mcpPanelKey.test.mjs`
+- `src/tooling/mapillaryProvider.test.mjs`
 
 This task sends no upstream pull request.
 
@@ -117,6 +118,8 @@ Six files have smaller gaps between two measurements of the same tree.
 The files are mapillary/tiles.js, bhoteKoshiEmbeddedMedia.js, flights/motion.js, military/queries.js, and flights and military rendering.js.
 The two rendering files each lose two uncovered lines and one uncovered function.
 The other four files each lose one uncovered function or branch.
+
+The first final gates run found 7 uncovered functions in `server/providers/mapillary/tiles.js`, where the ledger records 6. The function at line 255 runs only when a tile file vanishes during a sweep. Under load, `mapillaryProvider.test.mjs` hit that race in 7 of 10 image runs, and alone it never did. The edit to the sweep test in that file makes the function run each time.
 
 The last ratchet also records changed totals for `server/providers/mapillary/tiles.js` (178 to 179 branches) and `server/providers/places/google.js` (61 to 62 branches).
 No code changed in these two files between the ratchet runs. The branch total of tiles.js was 177, 178 and 179 in three measurements.

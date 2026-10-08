@@ -472,12 +472,26 @@ test('the disk sweep removes expired tiles and keeps fresh ones', async () => {
   await withCacheDir(async (dir) => {
     const expired = tileFile({ z: 14, x: 1, y: 1 }, dir);
     const fresh = tileFile({ z: 14, x: 2, y: 2 }, dir);
+    const vanishing = tileFile({ z: 14, x: 3, y: 3 }, dir);
     await writeAged(expired, Buffer.alloc(100, 1), 25 * HOUR);
     await writeAged(fresh, Buffer.alloc(100, 2), 23 * HOUR);
-    const result = await tiles.sweepTileDisk();
+    await writeAged(vanishing, Buffer.alloc(100, 3), 23 * HOUR);
+    // A tile that vanishes between the directory listing and its stat is skipped.
+    const stat = fsp.stat;
+    fsp.stat = (file, ...rest) =>
+      file === vanishing
+        ? Promise.reject(Object.assign(new Error('gone'), { code: 'ENOENT' }))
+        : stat.call(fsp, file, ...rest);
+    let result;
+    try {
+      result = await tiles.sweepTileDisk();
+    } finally {
+      fsp.stat = stat;
+    }
     assert.equal(result.removed, 1);
     assert.equal(await exists(expired), false);
     assert.equal(await exists(fresh), true);
+    assert.equal(await exists(vanishing), true);
   });
 });
 

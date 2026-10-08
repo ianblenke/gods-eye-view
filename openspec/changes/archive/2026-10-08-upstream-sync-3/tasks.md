@@ -96,3 +96,11 @@
 - [x] Run the image ratchet after the corrections of round 1.
 - [x] Run both review agents for round 2.
 - [ ] Run the final image gates on the tree after round 2.
+
+## 7. Stable function count
+
+- [x] 7.1 Find the test process that runs the stat handler of `tiles.js` only under load.
+- [x] 7.2 Edit the sweep test so that the stat handler runs each time.
+- [x] 7.3 Show that the edited test fails without the stat handler.
+- [ ] 7.4 Run the image ratchet after the test edit.
+- [ ] 7.5 Run the final image gates on the tree after the test edit.
