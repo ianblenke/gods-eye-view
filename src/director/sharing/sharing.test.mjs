@@ -53,6 +53,57 @@ const asset = () => ({
   mimeType: 'application/geo+json',
 });
 
+test('[director-098] The plain share returns an empty asset map', async () => {
+  const result = await parseSceneShare('{"version":6,"scenes":[]}');
+  assert.equal(result.assets instanceof Map, true);
+  assert.deepEqual([...result.assets], []);
+  assert.equal(result.assets.get('x'), undefined);
+});
+
+test('[director-107] The helper does not attach a listener to a cancelled signal', async () => {
+  let calls = 0;
+  const signal = {
+    aborted: true,
+    reason: new Error('stop'),
+    addEventListener() {
+      calls++;
+    },
+    removeEventListener() {},
+  };
+  let timer;
+  try {
+    await assert.rejects(
+      Promise.race([
+        withShareSignal(1, signal),
+        new Promise((_, reject) => {
+          timer = setTimeout(() => reject(new Error('deadline')), 100);
+        }),
+      ]),
+      { message: 'stop' },
+    );
+    assert.equal(calls, 0);
+  } finally {
+    clearTimeout(timer);
+  }
+});
+
+test('[director-101] The export writes each asset index and filename', async () => {
+  const project = fixture();
+  const second = structuredClone(project.scenes[0].dataPacks[0]);
+  second.id = 'second';
+  second.source.path = 'data/other.json';
+  project.scenes[0].dataPacks.push(second);
+  const bundle = JSON.parse(await createSceneBundle(project, asset));
+  assert.deepEqual(
+    bundle.assets.map((entry) => entry.path),
+    ['files/0-data.geojson', 'files/1-other.json'],
+  );
+  assert.deepEqual(
+    bundle.project.scenes[0].dataPacks.map((p) => p.source.path),
+    ['files/0-data.geojson', 'files/1-other.json'],
+  );
+});
+
 const directBundle = (base64 = 'AQID') => {
   const raw = Buffer.from(base64, 'base64');
   const sha256 = createHash('sha256').update(raw).digest('hex');
@@ -70,6 +121,42 @@ const directBundle = (base64 = 'AQID') => {
     ],
   };
 };
+for (const [label, base64, values] of [
+  [
+    'plain',
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
+    [
+      0, 16, 131, 16, 81, 135, 32, 146, 139, 48, 211, 143, 65, 20, 147, 81, 85,
+      151, 97, 150, 155, 113, 215, 159, 130, 24, 163, 146, 89, 167, 162, 154,
+      171, 178, 219, 175, 195, 28, 179, 211, 93, 183, 227, 158, 187, 243, 223,
+      191,
+    ],
+  ],
+  [
+    'padded',
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/AA==',
+    [
+      0, 16, 131, 16, 81, 135, 32, 146, 139, 48, 211, 143, 65, 20, 147, 81, 85,
+      151, 97, 150, 155, 113, 215, 159, 130, 24, 163, 146, 89, 167, 162, 154,
+      171, 178, 219, 175, 195, 28, 179, 211, 93, 183, 227, 158, 187, 243, 223,
+      191, 0,
+    ],
+  ],
+]) {
+  test(`[director-099] The import accepts each base64 character in ${label} text`, async () => {
+    const result = await parseSceneShare(JSON.stringify(directBundle(base64)));
+    assert.deepEqual([...result.assets.get('data/item.json').bytes], values);
+  });
+  test(`[director-099 director-101] The export writes each base64 character in ${label} text`, async () => {
+    const result = JSON.parse(
+      await createSceneBundle(fixture(), () => ({
+        bytes: new Uint8Array(values),
+        mimeType: 'application/json',
+      })),
+    );
+    assert.equal(result.assets[0].base64, base64);
+  });
+}
 for (const [label, change, message] of [
   [
     'version',
@@ -153,10 +240,10 @@ for (const base64 of ['zz==', 'ZZ==', '99==', 'zZ09']) {
   });
 }
 for (const [label, base64] of [
-  ['leading equals sign', '=AA='],
-  ['null base64', null],
+  ['an equals sign at the start', '=AA='],
+  ['a null base64 value', null],
 ]) {
-  test(`[director-099] The bundle rejects a ${label}`, async () => {
+  test(`[director-099] The bundle rejects ${label}`, async () => {
     const b = directBundle();
     b.assets[0].base64 = base64;
     await assert.rejects(parseSceneShare(JSON.stringify(b)), {
@@ -189,7 +276,7 @@ for (const [label, resolve, alter, message] of [
     'assets: unsupported media type',
   ],
   [
-    'declared length',
+    'declared byteLength',
     asset,
     (p) => {
       p.byteLength = 1;
@@ -282,14 +369,14 @@ test('[director-102] The share limits reject a caller change', async () => {
   assert.equal(SHARE_LIMITS.assets, 64);
 });
 
-test('[director-099] The base64 type check precedes text conversion', async () => {
+test('[director-099] The base64 type check comes before text conversion', async () => {
   const b = directBundle();
   b.assets[0].base64 = { toString: null };
   await assert.rejects(parseSceneShare(JSON.stringify(b)), {
     message: 'assets: invalid or oversized base64 asset',
   });
 });
-test('[director-102] The export does not compare an absent declared length', async () => {
+test('[director-102] The export does not compare an absent declared byteLength', async () => {
   let reads = 0;
   class Bytes extends Uint8Array {
     get length() {
@@ -306,7 +393,7 @@ test('[director-102] The export does not compare an absent declared length', asy
   assert.equal(value.assets[0].base64, 'AQID');
   assert.equal(reads, 6);
 });
-test('[director-102] The export checks declared length before declared digest', async () => {
+test('[director-102] The export checks declared byteLength before declared digest', async () => {
   let reads = 0;
   class Bytes extends Uint8Array {
     get length() {
@@ -550,7 +637,7 @@ test('[director-107] The cancelled bundle export stops before the next asset and
 test('details editing preserves content IDs, layers and provenance, rejects invalid drafts atomically', () => {
   const p = fixture(),
     before = JSON.stringify(p);
-  p.scenes[0].shots[0].sourcePackId = 'existing';
+  p.scenes[0].shots[0].sourcePackId = 'other';
   const scene = p.scenes[0],
     shot = scene.shots[0];
   const edited = editSceneDetails(
@@ -570,7 +657,7 @@ test('details editing preserves content IDs, layers and provenance, rejects inva
       dataPackIds: ['data'],
     },
   );
-  assert.equal(edited.scenes[0].shots[0].sourcePackId, 'existing');
+  assert.equal(edited.scenes[0].shots[0].sourcePackId, 'other');
   assert.deepEqual(edited.scenes[0].shots[0].layers, shot.layers);
   assert.equal(edited.scenes[0].shots[0].id, 'shot');
   assert.throws(() =>
@@ -857,7 +944,7 @@ test('[director-102] The export rejects absent assets', async () => {
   );
 });
 
-test('[director-102] The export rejects declared byte length', async () => {
+test('[director-102] The export rejects declared byteLength', async () => {
   const f = fixture(),
     p = f.scenes[0].dataPacks[0];
   p.byteLength = 1;
@@ -903,7 +990,7 @@ test('[director-103] The export reuses a shared asset', async () => {
   );
 });
 
-test('[director-103] The export rejects shared byte length', async () => {
+test('[director-103] The export rejects shared byteLength', async () => {
   const f = fixture();
   const p = { ...structuredClone(f.scenes[0].dataPacks[0]), id: 'second' };
   p.byteLength = 1;
@@ -933,7 +1020,11 @@ test('[director-104] The store copies the asset map', async () => {
   ]);
   s.replace(map);
   map.clear();
-  s.snapshot().clear();
+  const snapshot = s.snapshot();
+  assert.deepEqual([...snapshot.keys()], ['x', 'y']);
+  assert.deepEqual([...snapshot.get('x').bytes], [1, 2, 3]);
+  assert.deepEqual([...snapshot.get('y').bytes], [4]);
+  snapshot.clear();
   assert.deepEqual(s.getState(), { count: 2, bytes: 4 });
   s.replace();
   assert.deepEqual(s.getState(), { count: 0, bytes: 0 });
@@ -1187,7 +1278,7 @@ test('[director-110] The preview detects no external content', async () => {
   );
 });
 
-test('[director-098] The share character guard precedes byte conversion', async () => {
+test('[director-098] The share character guard comes before byte conversion', async () => {
   const Native = globalThis.TextEncoder;
   let calls = 0;
   globalThis.TextEncoder = class {
@@ -1493,7 +1584,7 @@ test('[director-102] The export checks its encoded text budget', async () => {
   }
 });
 
-test('[director-102] The export keeps its total after an absent length', async () => {
+test('[director-102] The export keeps its total after an asset without a byte length', async () => {
   let calls = 0;
   class Bytes extends Uint8Array {
     reads = 0;
@@ -1950,10 +2041,19 @@ test('[director-099] The import accepts 64 distinct assets', async () => {
   assert.equal((await parseSceneShare(text)).assets.size, 64);
 });
 test('[director-101] The export rejects an invalid project', async () => {
+  const project = fixture();
+  project.version = 99;
+  let calls = 0;
   await assert.rejects(
-    createSceneBundle({ version: 99, scenes: [] }, asset),
-    /version/,
+    createSceneBundle(project, () => {
+      calls++;
+      return asset();
+    }),
+    {
+      message: '$.version: unsupported scene project version',
+    },
   );
+  assert.equal(calls, 0);
 });
 test('[director-101] The resolver receives the data pack and signal', async () => {
   const controller = new AbortController();
@@ -2096,4 +2196,454 @@ test('[director-101] The filename slice starts at zero', async () => {
   );
   assert.equal(result.assets[0].path, 'files/0-x');
   assert.deepEqual(calls, [[0, 160]]);
+});
+
+for (const length of [5242881, 52428800]) {
+  test(`[director-098] The bundle rejects invalid JSON of ${length} characters`, async () => {
+    const text = '{' + ' '.repeat(length - 1);
+    await assert.rejects(parseSceneShare(text), { message: '$: invalid JSON' });
+    await assert.rejects(
+      readSceneShare({
+        name: 'x.gevbundle.json',
+        size: length,
+        text: async () => text,
+      }),
+      { message: '$: invalid JSON' },
+    );
+  });
+}
+for (const [base64, values] of [
+  ['+/+/', [251, 255, 191]],
+  ['/w==', [255]],
+  ['+w==', [251]],
+  ['+/8=', [251, 255]],
+  ['AZaz09+/', [1, 150, 179, 211, 223, 191]],
+]) {
+  test(`[director-099] The import accepts the standard alphabet ${base64}`, async () => {
+    const result = await parseSceneShare(JSON.stringify(directBundle(base64)));
+    assert.deepEqual([...result.assets.get('data/item.json').bytes], values);
+  });
+  test(`[director-099 director-101] The export uses the standard alphabet ${base64}`, async () => {
+    const text = await createSceneBundle(fixture(), () => ({
+      bytes: new Uint8Array(values),
+      mimeType: 'image/png',
+    }));
+    assert.equal(JSON.parse(text).assets[0].base64, base64);
+    const result = await parseSceneShare(text);
+    assert.deepEqual(
+      [...result.assets.values()][0].bytes,
+      new Uint8Array(values),
+    );
+  });
+}
+
+test('[director-098 director-107] The share signal check comes before the text type check', async () => {
+  const c = new AbortController();
+  c.abort(new Error('stop'));
+  await assert.rejects(parseSceneShare(null, { signal: c.signal }), {
+    message: 'stop',
+  });
+});
+
+for (const [label, change, message] of [
+  [
+    'top fields before version',
+    (b) => {
+      b.extra = 1;
+      b.version = 2;
+    },
+    '$.extra: unsupported field',
+  ],
+  [
+    'version before project',
+    (b) => {
+      b.version = 2;
+      b.project.version = 99;
+    },
+    'version: unsupported bundle version',
+  ],
+  [
+    'project before assets',
+    (b) => {
+      b.project.version = 99;
+      b.assets = null;
+    },
+    '$.version: unsupported scene project version',
+  ],
+  [
+    'asset fields before path',
+    (b) => {
+      b.assets[0].extra = 1;
+      b.assets[0].path = '../x';
+    },
+    'assets.extra: unsupported field',
+  ],
+  [
+    'path before media type',
+    (b) => {
+      b.assets[0].path = '../x';
+      b.assets[0].mimeType = 'bad';
+    },
+    'source.path: expected a relative asset path without URL syntax or traversal',
+  ],
+  [
+    'media type before duplicate path',
+    (b) => {
+      b.assets.push({ ...b.assets[0], mimeType: 'bad' });
+    },
+    'assets: unsupported media type',
+  ],
+  [
+    'duplicate path before base64',
+    (b) => {
+      b.assets.push({ ...b.assets[0], base64: '=' });
+    },
+    'assets: duplicate asset path',
+  ],
+]) {
+  test(`[director-099] The import checks ${label}`, async () => {
+    const b = directBundle();
+    change(b);
+    await assert.rejects(parseSceneShare(JSON.stringify(b)), { message });
+  });
+}
+
+test('[director-099 director-107] The asset signal check comes before its field check', async () => {
+  const b = directBundle();
+  b.assets[0].extra = 1;
+  let calls = 0;
+  const signal = {
+    throwIfAborted() {
+      if (++calls === 2) throw new Error('stop');
+    },
+  };
+  await assert.rejects(parseSceneShare(JSON.stringify(b), { signal }), {
+    message: 'stop',
+  });
+  assert.equal(calls, 2);
+});
+
+test('[director-099] The import checks asset bytes before the digest call', async () => {
+  const original = crypto.subtle.digest;
+  let calls = 0;
+  crypto.subtle.digest = function (...args) {
+    calls++;
+    return original.apply(this, args);
+  };
+  try {
+    const b = directBundle();
+    b.assets[0].base64 = Buffer.alloc(8388609).toString('base64');
+    await assert.rejects(parseSceneShare(JSON.stringify(b)), {
+      message: 'assets: asset byte limit exceeded',
+    });
+    assert.equal(calls, 0);
+  } finally {
+    crypto.subtle.digest = original;
+  }
+});
+
+test('[director-100 director-107] The import signal check comes before the digest comparison', async () => {
+  const b = directBundle();
+  b.assets[0].sha256 = '0'.repeat(64);
+  let calls = 0;
+  const signal = {
+    throwIfAborted() {
+      if (++calls === 3) throw new Error('stop');
+    },
+  };
+  await assert.rejects(parseSceneShare(JSON.stringify(b), { signal }), {
+    message: 'stop',
+  });
+  assert.equal(calls, 3);
+});
+
+test('[director-106] The file budget check comes before the signal read', async () => {
+  let reads = 0;
+  await assert.rejects(
+    readSceneShare(
+      { name: 'x.gevbundle.json', size: 52428801 },
+      {
+        get signal() {
+          reads++;
+          return undefined;
+        },
+      },
+    ),
+    {
+      message: '$: share exceeds 50 MiB',
+    },
+  );
+  assert.equal(reads, 0);
+});
+
+test('[director-106 director-107] The file signal check comes before text access', async () => {
+  let reads = 0;
+  const c = new AbortController();
+  c.abort(new Error('stop'));
+  await assert.rejects(
+    readSceneShare(
+      {
+        name: 'x.json',
+        size: 1,
+        text() {
+          reads++;
+          return '{}';
+        },
+      },
+      { signal: c.signal },
+    ),
+    { message: 'stop' },
+  );
+  assert.equal(reads, 0);
+});
+
+test('[director-107] The file signal check follows text settlement', async () => {
+  const order = [];
+  const signal = {
+    aborted: false,
+    addEventListener() {},
+    removeEventListener() {},
+    throwIfAborted() {
+      order.push('check');
+    },
+  };
+  await readSceneShare(
+    {
+      name: 'x.json',
+      size: 1,
+      async text() {
+        order.push('text');
+        return '{"version":6,"scenes":[]}';
+      },
+    },
+    { signal },
+  );
+  assert.deepEqual(order, ['check', 'text', 'check', 'check']);
+});
+
+test('[director-101] The export writes source then byteLength then digest', async () => {
+  const order = [];
+  await createSceneBundle(fixture(), (p) => {
+    for (const key of ['source', 'byteLength', 'sha256']) {
+      let value = p[key];
+      Object.defineProperty(p, key, {
+        enumerable: true,
+        get() {
+          return value;
+        },
+        set(next) {
+          order.push(key);
+          value = next;
+        },
+      });
+    }
+    return asset();
+  });
+  assert.deepEqual(order, ['source', 'byteLength', 'sha256']);
+});
+
+test('[director-102] The export checks integrity before the filename read', async () => {
+  let reads = 0;
+  await assert.rejects(
+    createSceneBundle(fixture(), (p) => {
+      p.byteLength = 1;
+      Object.defineProperty(p.source, 'path', {
+        enumerable: true,
+        get() {
+          reads++;
+          return 'test/data.geojson';
+        },
+      });
+      return asset();
+    }),
+    { message: 'assets: selected file does not match declared integrity' },
+  );
+  assert.equal(reads, 0);
+});
+
+test('[director-102] The export count check comes before the next resolver call', async () => {
+  let calls = 0;
+  await assert.rejects(
+    createSceneBundle(manyPacks(65), () => {
+      calls++;
+      return asset();
+    }),
+    { message: 'assets: too many bundled assets' },
+  );
+  assert.equal(calls, 64);
+});
+
+test('[director-102] The export checks bytes before the media type', async () => {
+  await assert.rejects(
+    createSceneBundle(fixture(), () => ({
+      bytes: new Uint8Array(),
+      mimeType: 'bad',
+    })),
+    { message: 'assets: asset byte limit exceeded' },
+  );
+});
+
+test('[director-102] The export checks the media type before the digest call', async () => {
+  const original = crypto.subtle.digest;
+  let calls = 0;
+  crypto.subtle.digest = function (...args) {
+    calls++;
+    return original.apply(this, args);
+  };
+  try {
+    await assert.rejects(
+      createSceneBundle(fixture(), () => ({
+        bytes: new Uint8Array([1]),
+        mimeType: 'bad',
+      })),
+      { message: 'assets: unsupported media type' },
+    );
+    assert.equal(calls, 0);
+  } finally {
+    crypto.subtle.digest = original;
+  }
+});
+
+for (const [label, result, change, stopAt] of [
+  ['absent asset', null, () => {}, 2],
+  [
+    'declared integrity',
+    asset(),
+    (p) => {
+      p.byteLength = 1;
+    },
+    3,
+  ],
+]) {
+  test(`[director-102 director-107] The export signal check comes before ${label}`, async () => {
+    let calls = 0;
+    const project = fixture();
+    change(project.scenes[0].dataPacks[0]);
+    const signal = {
+      aborted: false,
+      addEventListener() {},
+      removeEventListener() {},
+      throwIfAborted() {
+        if (++calls === stopAt) throw new Error('stop');
+      },
+    };
+    await assert.rejects(
+      createSceneBundle(project, () => result, { signal }),
+      { message: 'stop' },
+    );
+    assert.equal(calls, stopAt);
+  });
+}
+
+test('[director-105] The store signal check comes before the path check', () => {
+  const c = new AbortController();
+  c.abort(new Error('stop'));
+  assert.throws(
+    () => createBundleAssets().source({ path: '../x', signal: c.signal }),
+    { message: 'stop' },
+  );
+});
+
+test('[director-107] The helper attaches its listener before the work read', async () => {
+  const order = [];
+  const signal = {
+    aborted: false,
+    addEventListener() {
+      order.push('listener');
+    },
+    removeEventListener() {},
+  };
+  const work = {
+    get then() {
+      order.push('work');
+      return (resolve) => resolve(7);
+    },
+  };
+  assert.equal(await withShareSignal(work, signal), 7);
+  assert.deepEqual(order, ['listener', 'work']);
+});
+
+test('[director-107] The helper removes its listener before the reason read', async () => {
+  let resolve;
+  const promise = new Promise((r) => {
+    resolve = r;
+  });
+  let callback,
+    attached = false,
+    observed;
+  const signal = {
+    aborted: false,
+    addEventListener(type, fn) {
+      callback = fn;
+      attached = true;
+    },
+    removeEventListener() {
+      attached = false;
+    },
+    get reason() {
+      observed = attached;
+      return new Error('stop');
+    },
+  };
+  const work = withShareSignal(promise, signal);
+  callback();
+  await assert.rejects(work, { message: 'stop' });
+  assert.equal(observed, false);
+  resolve(7);
+});
+
+test('[director-107] The helper reads cancelled work before its reason', async () => {
+  const order = [];
+  const signal = {
+    aborted: true,
+    removeEventListener() {
+      order.push('listener');
+    },
+    get reason() {
+      order.push('reason');
+      return new Error('stop');
+    },
+  };
+  const work = {
+    get then() {
+      order.push('work');
+      return undefined;
+    },
+  };
+  await assert.rejects(withShareSignal(work, signal), { message: 'stop' });
+  assert.deepEqual(order.slice(0, 3), ['work', 'listener', 'reason']);
+});
+
+test('[director-107] The helper checks cancellation after listener removal', async () => {
+  let aborted = false;
+  const signal = {
+    get aborted() {
+      return aborted;
+    },
+    reason: new Error('stop'),
+    addEventListener() {},
+    removeEventListener() {
+      aborted = true;
+    },
+  };
+  await assert.rejects(withShareSignal(Promise.resolve(7), signal), {
+    message: 'stop',
+  });
+});
+
+test('[director-107] The helper handles cancellation during listener removal before a work error', async () => {
+  const c = new AbortController();
+  const remove = c.signal.removeEventListener.bind(c.signal);
+  let first = true;
+  c.signal.removeEventListener = (...args) => {
+    if (first) {
+      first = false;
+      c.abort(new Error('stop'));
+    }
+    remove(...args);
+  };
+  await assert.rejects(
+    withShareSignal(Promise.reject(new Error('work')), c.signal),
+    { message: 'stop' },
+  );
 });

@@ -1,9 +1,12 @@
 Base commit: 290b5d2.
-The claim is equivalent for the public API of the module with standard built-in functions.
+The mutation is equivalent for the public API of the module with standard built-in functions.
 The claim covers returned data, error fields, getters and callback calls.
 The claim excludes source text and diagnostic stack locations.
 
 A valid open line supplies normalized numeric positions. The unused end comparison is pure and its result is false.
+
+
+Pass 5 extends the input cases.
 
 ```js
 import fs from 'node:fs/promises';
@@ -166,11 +169,65 @@ async function cases(mod, file) {
    Object.defineProperty(p.scenes[0].shots[0], 'layers', { get() { trace.push('named layer field'); return { '1': true }; } });
    await observe('preview named layer', () => mod.describeSceneShare({ project: p, assets }));
  }
+
+ if (file.endsWith('manifest.js')) {
+  for (const value of [NaN, Infinity, -Infinity, -1, 0, 1, 8388608, 8388609, '', '1', null]) {
+   const p = pack(); p.byteLength = value;
+   await observe('numeric limit ' + String(value), () => mod.validateDataPack(p, 'pack', new Set()));
+  }
+  for (const path of ['', '_x/-y', 'z/Z', 'é', '__proto__', 'constructor', 'x'.repeat(1024), 'x'.repeat(1025)]) {
+   await observe('path ' + path.length, () => mod.validateAssetPath(path));
+  }
+  for (const url of ['https://example.org/?x', 'https://example.org/#x', 'https://u@example.org/', 'https://:p@example.org/', 'https://example.org/é']) {
+   const p = pack(); p.attribution.url = url;
+   await observe('URL', () => mod.validateDataPack(p, 'pack', new Set()));
+  }
+  const inherited = Object.create({ dataPacks: [pack()] }); inherited.shots = [];
+  await observe('inherited declaration', () => mod.validateSceneDataPacks(inherited, '$'));
+  const sparse = { dataPacks: new Array(8), shots: [] };
+  await observe('sparse declarations', () => mod.validateSceneDataPacks(sparse, '$'));
+ } else if (file.endsWith('geojson.js')) {
+  for (const coordinates of [[], [0], [0,0,0,0], [-180,-90,-12000], [180,90,1e9], [0,0,-12001], [0,0,1000000001], [null,0], [0,Infinity], new Array(2)]) {
+   await observe('coordinate limits', () => mod.decodePackGeoJSON(new TextEncoder().encode(JSON.stringify({ type: 'FeatureCollection', features: [{ type:'Feature', id:'p', geometry:{type:'Point', coordinates} }] }))));
+  }
+  for (const text of ['{}', '', '{', '{"type":"FeatureCollection","features":[]}', '{"type":"FeatureCollection","features":[null]}']) {
+   await observe('JSON classes', () => mod.decodePackGeoJSON(new TextEncoder().encode(text)));
+  }
+  for (const length of [49999,50000,50001]) {
+   const coordinates=Array.from({length},()=>[0,0]);
+   await observe('position count ' + length, () => mod.decodePackGeoJSON(new TextEncoder().encode(JSON.stringify({type:'FeatureCollection',features:[{type:'Feature',id:'p',geometry:{type:'LineString',coordinates}}]}))));
+  }
+ } else if (file.endsWith('source.js')) {
+  for (const baseUrl of ['https://u@example.org/', 'https://:p@example.org/', 'https://example.org/?x', 'https://example.org/#x', 'https://example.org/é/']) {
+   await observe('URL fields', () => mod.createAssetDirectorySource({baseUrl,fetchImpl:()=>{throw new Error('unused');}}));
+  }
+ } else if (file.endsWith('session.js')) {
+  for (const count of [0,1,8,9]) {
+   const s=mod.createDataPackSession({sources:{assets:()=>({bytes:new Uint8Array([1])})},adapters:{geojson:()=>({dispose(){trace.push('dispose limit');}})}});
+   await observe('declaration count ' + count,()=>s.load(Array.from({length:count},(_,i)=>({...pack(),id:'p'+i}))));s.destroy();
+  }
+  for (const handle of [null,undefined,false,0,{}, {dispose:1}, {dispose(){trace.push('handle disposal');}}]) {
+   const s=mod.createDataPackSession({sources:{assets:()=>({bytes:new Uint8Array([1])})},adapters:{geojson:()=>handle}});
+   await observe('handle classes',()=>s.load([pack()]));s.destroy();
+  }
+ } else if (file.endsWith('bundle.js')) {
+  for (const text of ['', '\u0000', 'é', 'null', '{}', '{"version":6,"scenes":[]}']) await observe('text classes',()=>mod.parseSceneShare(text));
+  for (const value of [undefined,null,false,0,'']) {
+   const store=mod.createBundleAssets();
+   await observe('map input ' + String(value),()=>{store.replace(value);return store.getState();});
+  }
+ } else if (file.endsWith('preview.js')) {
+  for (const layers of [undefined,null,false,0,'',{}, {__proto__:null}, {'__proto__':true,constructor:true}, {'é':true}]) {
+   const p=project();p.scenes[0].shots[0].layers=layers;
+   await observe('layer classes',()=>mod.describeSceneShare({project:p,assets:new Map()}));
+  }
+ }
+
  return { result, trace };
 }
 
 const root = "/home/ianblenke/docker/gev-work/director-3";
-const work = "/home/ianblenke/docker/gev-tools/director-3/pass4/group-probes/line-end";
+const work = "/home/ianblenke/docker/gev-tools/director-3/pass5/group-probes/line-end";
 const mutants = [
   {
     "file": "src/director/packs/geojson.js",
@@ -199,7 +256,7 @@ for (const m of mutants) {
  const after = await cases(await import(pathToFileURL(dest + '/' + m.file)), m.file);
  
  assert.deepEqual(after, before);
- outputs.push({ id: m.id, same: true, observed: before });
+ outputs.push({ id: m.id, same: true, cases: before.result.length, before: createHash('sha256').update(JSON.stringify(before)).digest('hex'), after: createHash('sha256').update(JSON.stringify(after)).digest('hex'), trace: createHash('sha256').update(JSON.stringify(before.trace)).digest('hex') });
  console.log(m.id + ' SAME');
 }
 await fs.writeFile(work + '/output.json', JSON.stringify(outputs, null, 2));
@@ -209,7 +266,7 @@ await fs.writeFile(work + '/output.json', JSON.stringify(outputs, null, 2));
 Command:
 
 ```sh
-cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass4/probe-line-end.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass5/probe-line-end.mjs
 ```
 
 Command output:
@@ -219,138 +276,10 @@ Command output:
   {
     "id": "a1149",
     "same": true,
-    "observed": {
-      "result": [
-        {
-          "name": "position",
-          "value": [
-            {
-              "id": "p",
-              "type": "Point",
-              "coordinates": [
-                0,
-                0,
-                0
-              ]
-            }
-          ]
-        },
-        {
-          "name": "position",
-          "value": [
-            {
-              "id": "p",
-              "type": "Point",
-              "coordinates": [
-                0,
-                0,
-                -12000
-              ]
-            }
-          ]
-        },
-        {
-          "name": "position",
-          "value": [
-            {
-              "id": "p",
-              "type": "Point",
-              "coordinates": [
-                0,
-                0,
-                1000000000
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Error",
-          "error": "Invalid geographic position"
-        },
-        {
-          "name": "Error",
-          "error": "Invalid geographic position"
-        },
-        {
-          "name": "Error",
-          "error": "Invalid geographic position"
-        },
-        {
-          "name": "Error",
-          "error": "Features require distinct string IDs"
-        },
-        {
-          "name": "Error",
-          "error": "Features require distinct string IDs"
-        },
-        {
-          "name": "Error",
-          "error": "Features require distinct string IDs"
-        },
-        {
-          "name": "Error",
-          "error": "Invalid line"
-        },
-        {
-          "name": "line",
-          "value": [
-            {
-              "id": "p",
-              "type": "LineString",
-              "coordinates": [
-                [
-                  0,
-                  0,
-                  0
-                ],
-                [
-                  1,
-                  1,
-                  0
-                ]
-              ]
-            }
-          ]
-        },
-        {
-          "name": "line",
-          "value": [
-            {
-              "id": "p",
-              "type": "LineString",
-              "coordinates": [
-                [
-                  0,
-                  0,
-                  0
-                ],
-                [
-                  1,
-                  1,
-                  0
-                ],
-                [
-                  0,
-                  0,
-                  0
-                ]
-              ]
-            }
-          ]
-        }
-      ],
-      "trace": [
-        "decode [0,0]",
-        "decode [0,0,-12000]",
-        "decode [0,0,1000000000]",
-        "decode null",
-        "decode [181,0]",
-        "decode [0,91]",
-        "feature null",
-        "feature {\"type\":\"NotFeature\",\"id\":\"p\"}",
-        "feature {\"type\":\"Feature\",\"id\":1}"
-      ]
-    }
+    "cases": 30,
+    "before": "964d3b70755dd43939365566b654934508cd9be06b5456461f88e66e07dc729e",
+    "after": "964d3b70755dd43939365566b654934508cd9be06b5456461f88e66e07dc729e",
+    "trace": "f6c377758983b16bfaea5f54d70252dcbd98296e9caa5d938bb5bf8d3c3930f2"
   }
 ]
 ```

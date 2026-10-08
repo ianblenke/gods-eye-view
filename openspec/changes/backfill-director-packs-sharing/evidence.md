@@ -22,8 +22,8 @@ cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 pyt
 
 The scenario heading search gives 35 IDs, from director-076 through director-110.
 The mutation list gives 367 rows: 365 KILLED and 2 SURVIVED.
-The audit list gives 166 rows: 143 tested, 20 default-value and 3 code limits.
-The audit contains zero equivalent rows and zero open rows.
+The audit list gives 166 rows: 143 tested, 20 default-value and 3 Known limits.
+Pass 2: The audit contains zero equivalent rows and zero open rows.
 
 ## Base scope
 
@@ -47,7 +47,7 @@ cd /home/ianblenke/docker/gev-work/director-3 && git show 290b5d2:openspec/trace
 
 The table gives ledger gaps at the base commit, not current gate measurements.
 
-## Repository tests
+## Repository tests of pass 2
 
 Each command uses one test file and no force-exit option.
 
@@ -152,7 +152,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-079] The byte length rejects a fraction
+[director-079] The byteLength field rejects a fraction
 [director-079] The digest rejects invalid type
 [director-079] The digest rejects invalid alphabet
 [director-079] The integrity fields accept their limits
@@ -379,7 +379,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-090] The session destroys work that is not complete
 [director-090] The session checks signal state without an event
 [director-090] The session checks destroyed state after signal access
-[director-090] The session checks replacement without signal state
+[director-090] The session checks a cleared load call without signal state
 [director-090] The session guard rejects a detached resource
 [director-090] The session disposes the handle before it adds the handle to its list
 ```
@@ -536,7 +536,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-098] The bundle helpers accept plain project JSON
 [director-098] The bundle helpers reject excess characters
 [director-098] The bundle helpers reject excess UTF8 bytes
-[director-098] The share character guard precedes byte conversion
+[director-098] The share character guard comes before byte conversion
 ```
 
 ### director-099
@@ -607,7 +607,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-102] The export rejects an empty asset
 [director-102] The export rejects an asset above the byte limit
 [director-102] The export rejects absent assets
-[director-102] The export rejects declared byte length
+[director-102] The export rejects declared byteLength
 [director-102] The export rejects declared digest
 [director-102] The export rejects excess total bytes
 [director-102] The export rejects excess asset total
@@ -615,7 +615,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-102] The export accepts an absent digest
 [director-102] The export rejects absent asset bytes
 [director-102] The export checks its encoded text budget
-[director-102] The export keeps its total after an absent length
+[director-102] The export keeps its total after an asset without a byte length
 [director-102] The export accepts its exact asset total
 [director-102] The export rejects an unsupported media type
 [director-102] The export accepts the asset byte limit
@@ -629,7 +629,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 ```text
 [director-103] The data packs with the same path share one asset and reject integrity values that differ
 [director-103] The export reuses a shared asset
-[director-103] The export rejects shared byte length
+[director-103] The export rejects shared byteLength
 [director-103] The export rejects shared digest
 [director-103] The shared export accepts absent byte declarations
 [director-103] The shared export accepts an absent digest
@@ -774,12 +774,12 @@ The change keeps the scenario IDs and production files.
 Historical titles stay in code blocks because the brief calls for exact old/new pairs.
 Production error messages and code text stay exact in assertions and mutation rows.
 The reports, earlier requirements and Purpose stay the same because the brief bars their edit.
-The probes show code limits, not equivalent mutations.
-No equivalent row needs a separate probe.
+The probes show Known limits, not equivalent mutations.
+Pass 2: No equivalent row needs a separate probe.
 
-## Code limits
+## Known limits
 
-The case uses an inherited value at index 2.
+The position has an inherited value at index 2.
 The probe returns -12001 meters through the public API.
 The custom signal getter destroys the session during signal access.
 
@@ -1152,7 +1152,7 @@ New: [director-090] The session checks destroyed state after signal access
 
 ```text
 Old: [director-090] The session catches replacement without signal state
-New: [director-090] The session checks replacement without signal state
+New: [director-090] The session checks a cleared load call without signal state
 ```
 
 ```text
@@ -1484,7 +1484,7 @@ The parser returns its input object without a change.
 
 The inherited-height probe is evidence/probe-inherited-height.txt.
 It shows the same result for a plain value on Array.prototype and Object.prototype.
-It records a code limit, not an equivalent mutation.
+It records a Known limit, not an equivalent mutation.
 
 The listener tests check removal after success, error and cancellation.
 The cancellation test checks removal before late work settles.
@@ -1891,7 +1891,7 @@ cd /home/ianblenke/docker/gev-work/director-3 && git diff --name-only HEAD -- op
 
 The lint command reports zero errors and 543 warnings.
 The paragraph about the format command now has two parts.
-The warning count in checks.md comes from this command.
+This command checks the prose.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing
@@ -1939,11 +1939,11 @@ cd /home/ianblenke/docker/gev-work/director-3 && rg '^ℹ (tests|pass|fail|durat
 
 The final count is 479 passed tests and zero failures.
 No new test file is necessary.
-The existing backfill and sharing files contain the new checks.
+The other backfill and sharing files contain the new checks.
 
 ### Slow test proof
 
-The fixtures use a real 32 MiB byte buffer.
+The fixtures use a real buffer of 33554432 bytes.
 Node Buffer and crypto build the base64 text and SHA256 digest once.
 The import checks bundle JSON directly.
 The export caches zero-byte chunks with the native subarray bounds.
@@ -1953,7 +1953,7 @@ The final assertions check exact byte and text lengths, digest and rejection mes
 The total export test also proves the asset byte limit and total excess rejection.
 It replaces two separate tests with the same limit proof.
 The absent-length test uses numeric byte lengths and an empty array length.
-It checks that the fallback keeps the running total.
+It checks that the fallback keeps the total.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/director-3 && rg 'total byte limit|excess total bytes|absent length|asset byte limit|base64 accepts its length' /home/ianblenke/docker/gev-tools/director-3/pass4/baseline-sharing.log /home/ianblenke/docker/gev-tools/director-3/pass4/final-sharing.log
@@ -1964,24 +1964,24 @@ cd /home/ianblenke/docker/gev-work/director-3 && rg 'total byte limit|excess tot
 | The import accepts the total byte limit and rejects one more byte | 59.990760 | 4.083381 |
 | The export accepts the total byte limit and rejects one more byte | 22.209433 | 2.575859 |
 | The export rejects excess total bytes | 12.033089 | Part of the total export test. |
-| The export keeps its total after an absent length | 10.273848 | 0.013870 |
+| The export keeps its total after an asset without a byte length | 10.273848 | 0.013870 |
 | The base64 accepts its length limit and rejects the next aligned length | 5.803030 | 0.446927 |
 | The export accepts the asset byte limit | 2.787105 | Part of the total export test. |
 
-Each remaining limit test takes less than 10 seconds.
+Each other limit test takes less than 10 seconds.
 The complete sharing file takes less than 40 seconds.
-The assertions still separate each exact limit from its first excess value.
-The former shot limit survivors a0831 and a0832 are killed by the complete campaign.
+The assertions still separate each exact limit from its first value above the limit.
+Pass 4 correction check 2 kills the former shot limit survivors a0831 and a0832.
 The source limit mutations outside this list stay available for the lead run.
 
 ### Automatic mutation proof
 
 The audit gives the original operator totals and both original phases.
-The first pass4 campaign stopped during baseline tests at the 30-second cap.
-No mutant ran in that campaign.
+Campaign 1 stopped during baseline tests at the 30-second cap.
+No mutation ran in campaign 1.
 Its log is `stopped-baseline.log`; its partial output is `stopped-baseline-results.json`.
 
-The first complete campaign killed 180 cases and left 80 survivors.
+Pass 4 correction check 1 killed 180 cases and left 80 survivors.
 Its output is `campaign-first-results.json`.
 Further tests killed 12 more cases.
 
@@ -2003,7 +2003,7 @@ The result groups are 192 killed, 64 equivalent and four Known limit cases.
 
 The command output is `campaign.log` and `final-table.log`.
 
-The remaining survivor IDs are:
+The other survivor IDs are:
 
 ```text
 a3144,a1022,a3788,a1415,a1100,a1435,a1436,a1439,a1442,a1549,a1550,a2624,a2625,a3048,a3049,a3424,a3635,a3636,a3637,a3640,a0405,a0607,a0705,a1431,a1487,a2552,a2680,a2681,a2683,a2684,a2483,a3054,a0364,a0359,a0354,a0369,a0410,a0612,a0710,a0926,a1026,a1025,a1038,a1149,a1190,a1205,a1335,a1336,a1396,a1397,a1417,a1424,a1425,a1432,a1512,a1513,a1717,a1908,a2012,a2017,a2022,a2027,a2032,a2512,a2553,a3295,a3301,a3310
@@ -2024,8 +2024,8 @@ The final probe output reports 64 equivalent cases in `probes-final2.log`.
 The inherited-height probe records a1022, a1025 and a1026.
 The nonnumeric-length probe records a3144.
 Those four cases remain Known limits.
-The existing signal-getter code fault stays a Known limit outside the automatic survivor list.
-No new scenario approves a code fault.
+The other signal-getter Known limit stays a Known limit outside the automatic survivor list.
+No new scenario approves a Known limit.
 
 ### Prose scan bounds
 
@@ -2093,10 +2093,10 @@ titles checked: 406, with a banned form: 0
 
 ### Record comparison
 
-The command below reads both complete campaigns and the final table.
-It reports 180 killed and 80 survived results for the first campaign.
-It reports 192 killed and 68 survived results for the final campaign.
-The table agrees with all 260 campaign records.
+The command below reads both pass 4 correction checks and the pass 4 table.
+It reports 180 killed and 80 survived results for pass 4 correction check 1.
+It reports 192 killed and 68 survived results for pass 4 correction check 2.
+The pass 4 table agrees with all 260 correction records.
 Each equivalent probe path exists.
 The hand input has 408 rows.
 
@@ -2135,7 +2135,7 @@ The tests keep this valid proof.
 No new hand row is necessary because the automatic tool reproduces every new kill.
 
 The hand patterns for m126 and m341 now name the combined total export test.
-A backslash precedes each space in those patterns.
+A backslash comes before each space in those patterns.
 The complete hand run proves both rows still fail.
 
 
@@ -2171,3 +2171,157 @@ The logs are `final-scope.log`, `final-paths.log`, `final-production-diff.log` a
 The lead runs the full automatic mutation set, image gates, ratchet and both reviews.
 Those commands are outside this pass.
 No commit, merge or push ran.
+
+## Pass 5
+
+Base commit: `290b5d2`.
+
+### Review round 3 corrections
+
+The first words below identify each finding in the unchanged review reports.
+No finding is skipped.
+The lead owns the main spec, ratchet and next review round.
+
+| report | first words of the finding | correction |
+| --- | --- | --- |
+| Spec | `a2680, a2681, a2683 and` | New director-098 tests check 5242881 and 52428800 characters. All four mutations fail. The false probe is retired. |
+| Spec | `No test uses +` | Import and export tests check +/+/ and /w==, padded + and the standard alphabet. The 099 clause gives this alphabet. |
+| Spec | `snapshot: () => new` | The 104 test checks keys, byte values and a separate map. Constructor argument mutations now fail. |
+| Spec | `The 101 clause` | An invalid project has a pack. A resolver spy checks zero calls. |
+| Spec | `No test accepts a` | The 076 tests accept _ and - at the start. All 24 regex member mutations fail. The range check removes each character separately. |
+| Spec | `Pass 2 statements` | The old statements and test table have pass 2 labels. Pass 4 and pass 5 keep separate totals. |
+| Spec | `Timeouts and crashes count` | The audit labels the pass policy and states that the tool has countsAsKill false for the 114 final rerun cases. |
+| Spec | `these two limits` | The proposal names a later change for each code Known limit, including bundle-nonnumeric-length. |
+| STE | `starts with the project` | The delta spec names $, project, assets and source.path as distinct error prefixes. |
+| STE | `replaced load call` | The tests and clauses use cleared load call for clear(), and replacement for a new load call. |
+| STE | `first campaign` | The documents use campaign 1, campaign 2, final rerun and extension run. Pass 4 correction checks keep separate names. |
+| STE | `gives the decision totals` | The design names operator and status totals and uses pass4/build-audit.py. |
+| STE | `Data data pack sessions` | The delta spec uses Data pack sessions. The main spec and ratchet stay with the lead. |
+| STE | `byte length field` | The documents and titles distinguish the byteLength field from the byte array length. |
+| STE | `code changes, candidates` | The documents use mutation and Known limit. The column name is known limit. |
+| STE | `The case uses` | The proposal uses position, names later changes and lists audit.md and survivors.md. The stale warning statement is removed. |
+| STE | `32 MiB` | The prose uses 33554432 bytes, first value above the limit and full verb clauses. |
+| STE | `precedes, After destruction` | The prose uses comes before, caller action, include and sees. |
+| STE | `leading equals sign` | The prose uses equals sign at the start, total, other and active verbs. |
+| STE | `rejects null handle` | The labels have articles. The status word has one stated meaning. |
+| STE | `The claim is equivalent` | Probe headers name the mutation. All 21 expanded probes pass. The extension probe gives 67 bounds. |
+
+### Tagged test changes
+
+Pass 5 adds 152 host test cases: 106 in backfill.test.mjs and 46 in sharing.test.mjs.
+The scenario IDs stay director-076 through director-110.
+New cases check JSON error messages, base64 characters, snapshot data, resolver call order and path characters.
+Other cases check validation order, callback order, stream cleanup and cancellation.
+The spec gives a clause for each case.
+
+The new clauses use director-076, director-077, director-078, director-079 and director-080.
+They also use director-088 through director-093 and director-095 through director-102.
+Other new cases use director-104 through director-107.
+
+### Test counts and coverage
+
+Each test command uses one file without forced exit.
+NODE_OPTIONS sets test isolation to none for these host processes.
+
+| file | passed tests | time in seconds |
+| --- | ---: | ---: |
+| `src/director/packs/backfill.test.mjs` | 407 | 2.082896 |
+| `src/director/packs/packs.test.mjs` | 12 | 7.420291 |
+| `src/director/sharing/sharing.test.mjs` | 212 | 19.651011 |
+
+All 631 tests pass with zero failures, cancellations or skips.
+Each of the seven production files has 100% host line, branch and function coverage.
+Each coverage command includes one production file.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/manifest.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs src/director/sharing/sharing.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/geojson.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/session.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/source.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/sharing/bundle.js --test-coverage-exclude=**/*.test.mjs src/director/sharing/sharing.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/sharing/lifetime.js --test-coverage-exclude=**/*.test.mjs src/director/sharing/sharing.test.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/sharing/preview.js --test-coverage-exclude=**/*.test.mjs src/director/sharing/sharing.test.mjs
+```
+
+### Extension run
+
+The extension keeps all 3849 old IDs and exact changes.
+It adds 711 mutations and 16 operator classes.
+The audit names classes that the tool still does not mutate.
+The seven tool tests pass.
+
+The extension checks have inputs of 367, 199, 104 and 321 mutations.
+The second and fourth inputs include four old JSON mutations.
+The latest result for each new ID gives 644 killed and 67 equivalent cases.
+No latest case has a timeout, crash, Known limit or open result.
+The four old JSON mutations now fail director-098.
+
+The last sweep found a gap in character ranges.
+The tool now removes each letter and digit of a range and complete ranges.
+New tests check all path letters and digits, all hexadecimal digits and each standard base64 character.
+The fourth input checks 250 new range mutations and repeats all 67 former extension survivors.
+
+The [automatic audit](audit.md) gives the batch and class totals.
+The [survivor table](survivors.md) names every failed test.
+The [extension probe](evidence/probe-extension.txt) gives each equivalent bound.
+The [probe range table](probe-ranges.md) checks the 22 old probe groups.
+The 21 expanded equivalent probes pass; the false JSON probe is retired.
+
+Each batch uses the same three test files and source file order below.
+These commands reproduce the saved inputs of each completed batch.
+The first command used mutants-new.json while it had 367 rows.
+The saved copy of that input is extension-1-mutants.json.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && cd /home/ianblenke/docker/gev-tools/automut && taskset -c 12-15 nice -n 19 node automut.mjs run --root /home/ianblenke/docker/gev-work/director-3 --mutants /home/ianblenke/docker/gev-tools/director-3/pass5/extension-1-mutants.json --tests src/director/packs/backfill.test.mjs,src/director/packs/packs.test.mjs,src/director/sharing/sharing.test.mjs --order "src/director/packs/*.js=backfill,packs,sharing;src/director/sharing/*.js=sharing,backfill,packs" --jobs 4 --timeout 45 --slow-ms 100000 --out /home/ianblenke/docker/gev-tools/director-3/pass5/extension-results.json
+cd /home/ianblenke/docker/gev-work/director-3 && cd /home/ianblenke/docker/gev-tools/automut && taskset -c 12-15 nice -n 19 node automut.mjs run --root /home/ianblenke/docker/gev-work/director-3 --mutants /home/ianblenke/docker/gev-tools/director-3/pass5/correction-mutants.json --tests src/director/packs/backfill.test.mjs,src/director/packs/packs.test.mjs,src/director/sharing/sharing.test.mjs --order "src/director/packs/*.js=backfill,packs,sharing;src/director/sharing/*.js=sharing,backfill,packs" --jobs 4 --timeout 45 --slow-ms 100000 --out /home/ianblenke/docker/gev-tools/director-3/pass5/correction-results.json
+cd /home/ianblenke/docker/gev-work/director-3 && cd /home/ianblenke/docker/gev-tools/automut && taskset -c 12-15 nice -n 19 node automut.mjs run --root /home/ianblenke/docker/gev-work/director-3 --mutants /home/ianblenke/docker/gev-tools/director-3/pass5/closing-mutants.json --tests src/director/packs/backfill.test.mjs,src/director/packs/packs.test.mjs,src/director/sharing/sharing.test.mjs --order "src/director/packs/*.js=backfill,packs,sharing;src/director/sharing/*.js=sharing,backfill,packs" --jobs 4 --timeout 45 --slow-ms 100000 --out /home/ianblenke/docker/gev-tools/director-3/pass5/closing-results.json
+cd /home/ianblenke/docker/gev-work/director-3 && cd /home/ianblenke/docker/gev-tools/automut && taskset -c 12-15 nice -n 19 node automut.mjs run --root /home/ianblenke/docker/gev-work/director-3 --mutants /home/ianblenke/docker/gev-tools/director-3/pass5/range-mutants.json --tests src/director/packs/backfill.test.mjs,src/director/packs/packs.test.mjs,src/director/sharing/sharing.test.mjs --order "src/director/packs/*.js=backfill,packs,sharing;src/director/sharing/*.js=sharing,backfill,packs" --jobs 4 --timeout 45 --slow-ms 100000 --out /home/ianblenke/docker/gev-tools/director-3/pass5/range-results.json
+```
+
+The first extension probe command had a missing createHash import and did not pass.
+The corrected command checks all 67 survivors and passes.
+Full old probe outputs stay in scratch.
+Compact reports keep exact data comparisons and record hashes, case counts and callback traces.
+
+### Complete hand check
+
+The final command checks all 408 rows once.
+It kills 406 rows and leaves only m172 and m389.
+No row is skipped or timed out.
+Every pattern matches a current test title and has a backslash before each space.
+The scratch copy has the same seven source files and three test files after the command.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-tools/director-3/pass5/hand-copy /home/ianblenke/docker/gev-tools/director-3/pass5/hand-muts.json
+```
+
+The first hand check gave the same results.
+The new character tests required the final repeat.
+The first log stays in scratch as hand-before-range.log.
+
+The [hand mutation report](mutations.md) records the full output of pass 5.
+
+### Prose, format and scope
+
+The lint command reports zero errors.
+The title scan checks 464 titles with zero banned forms.
+The predispatch scan leaves only eight exact Old title records.
+The different numbers name different byte limits or earlier pass results.
+
+The restricted direct format commands stop with spawnSync git EPERM.
+The given host helper writes and checks 1158 files.
+The production diffs are empty against the current source tree and base commit 290b5d2.
+No main spec, trace ledger, QA script or review report changes.
+
+Known limit session-listener-timer has a separate probe and later change.
+The caller can cancel during listener registration before timer creation.
+The timer then stays after the caller destroys the session.
+Production code stays unchanged.
+
+The lead runs the full old mutation campaign, ratchet, image gates and review.
+This pass runs none of those commands.
+No commit, merge or push runs.

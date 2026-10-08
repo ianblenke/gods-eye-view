@@ -16,8 +16,12 @@ Origin: backfill
 - **WHEN** a caller supplies a relative asset path
 - **THEN** the validator accepts safe directory names and rejects traversal or URL syntax
 - **AND** The validator accepts paths of at most 1024 characters and rejects longer paths.
-- **AND** The validator accepts z and Z in each path segment.
+- **AND** The validator accepts z and Z, and _ and - at the start of each path segment.
+- **AND** The validator accepts each letter from A to Z and a to z, and each digit from 0 to 9.
+- **AND** The validator accepts those characters at the start and in other positions.
 - **AND** Each asset path error names the path field.
+- **AND** The path type check comes before the segment read.
+- **AND** The source name check comes before the path check, and the path check comes before the attribution field check.
 
 #### Scenario: Data pack formats `director-077`
 
@@ -26,6 +30,8 @@ Origin: backfill
 - **AND** The validator rejects other versions and formats.
 - **AND** The data pack ID and source name each accept at most 256 characters.
 - **AND** The validator rejects extra fields and names each invalid field in its error.
+- **AND** The declaration field check comes before ID, version, format and source checks, in that order.
+- **AND** The declaration check comes before the duplicate ID check.
 
 #### Scenario: Data pack attribution `director-078`
 
@@ -33,14 +39,17 @@ Origin: backfill
 - **THEN** the validator checks text, license and an optional HTTPS link without credentials, query or fragment
 - **AND** Text and license each accept at most 4096 characters; the HTTPS link accepts at most 2048 characters.
 - **AND** Each attribution error names its field, and the validator rejects extra attribution fields.
+- **AND** The validator checks text, license, URL and byteLength in that order.
 
 #### Scenario: Data pack integrity fields `director-079`
 
 - **WHEN** a data pack declares byteLength or sha256
 - **THEN** the validator checks a positive integer up to 8388608 bytes and a lowercase hexadecimal digest of 64 characters
 - **AND** The validator rejects 63-character, 65-character and uppercase digests, and accepts exactly 64 lowercase hexadecimal characters.
+- **AND** The digest can contain each digit from 0 to 9 and each letter from a to f.
 - **AND** Each integrity error names its field.
-- **AND** The digest type check precedes text conversion.
+- **AND** The digest type check comes before text conversion.
+- **AND** The byteLength check comes before the digest check, and the digest check comes before the placement read.
 
 #### Scenario: Image placement `director-080`
 
@@ -51,6 +60,9 @@ Origin: backfill
 - **AND** The validator rejects numeric text for bounds and height.
 - **AND** Each placement error names its field, and the validator rejects extra placement fields.
 - **AND** The edge order check starts with west and east.
+- **AND** The bounds value check comes before edge order, and edge order comes before height.
+- **AND** The height reference check comes before the bounds check.
+- **AND** The bounds array check comes before the length read, and the length check comes before each coordinate check.
 
 #### Scenario: Media placement `director-081`
 
@@ -66,7 +78,8 @@ Origin: backfill
 - **AND** The validator accepts eight distinct data packs per scene and rejects nine.
 - **AND** Each shot accepts eight distinct data pack references and rejects nine references before the distinct ID check.
 - **AND** Each reference error names the shot field.
-- **AND** The distinct reference check precedes the search for known IDs.
+- **AND** The distinct reference check comes before the search for known IDs.
+- **AND** The data pack list check comes before the anchor read.
 
 ### Requirement: Data pack geometry
 
@@ -109,7 +122,7 @@ Origin: backfill
 - **THEN** the decoder returns IDs, geometry types and coordinates without properties
 - **AND** The decoder rejects unsupported or absent geometry and accepts at most 128 polygon rings.
 
-### Requirement: Data data pack sessions
+### Requirement: Data pack sessions
 
 The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.
 
@@ -122,9 +135,12 @@ Origin: backfill
 - **AND** The load method accepts at most eight data packs and checks every declaration before the first source call.
 - **AND** The load method returns false for a destroyed session or a cancelled signal.
 - **AND** A caller cannot change the public data pack limits.
-- **AND** After destruction, a new load call does not read the caller signal state.
+- **AND** After the caller destroys the session, a new load call does not read the caller signal state.
 - **AND** An empty data pack list returns true without a source call or a deadline timer.
 - **AND** An absent source map or renderer map gives an empty registry.
+- **AND** The session reads source entries before renderer entries.
+- **AND** The data pack list check comes before the anchor read, and declaration checks come before the caller signal read.
+- **AND** During source cancellation, a destroyed session returns false for another load call.
 
 #### Scenario: Session resources `director-089`
 
@@ -140,32 +156,41 @@ Origin: backfill
 - **AND** A completed source listener does not read the signal reason after success or a source error.
 - **AND** The session removes the caller signal listener when the caller clears it.
 - **AND** The session installs that listener with the once option set to true.
+- **AND** The session attaches the source listener, checks the source state and reads the work promise in that order.
+- **AND** A completed source does not read the signal reason during promise settlement.
+- **AND** The caller listener comes before the deadline.
+- **AND** The final signal check comes before timer removal, and timer removal comes before the ready state.
+- **AND** The session reports idle before source cancellation.
+- **AND** Source cancellation comes before caller listener removal, timer removal and resource disposal, in that order.
 
 #### Scenario: Session cancellation `director-090`
 
-- **WHEN** a caller cancels asset work that is not complete
-- **THEN** the session returns false and disposes late renderer resources
+- **WHEN** a caller cancels asset work, or source or renderer work fails
+- **THEN** for cancellation, the session returns false and disposes late renderer resources
 - **AND** The session checks its source signal before byte access and after renderer work.
-- **AND** A replaced load call does not read the caller signal state again after cancellation.
+- **AND** A cleared load call does not read the caller signal state again after cancellation.
 - **AND** The session rejects source errors before the renderer call and rejects null bytes or a null renderer handle.
-- **AND** After session replacement, the handle check does not read the old source signal state.
+- **AND** After the caller clears the session, the handle check does not read the old source signal state.
+- **AND** A caller event during listener setup cancels the load call.
 
 #### Scenario: Session replacement `director-091`
 
-- **WHEN** a caller replaces asset work that is not complete
-- **THEN** the old load call returns false and does not change the new resources
+- **WHEN** a caller starts a new load call
+- **THEN** for old work that is not complete, the old load call returns false and does not change the new resources
+- **AND** Old resource cleanup comes before the new data pack list check.
 
 #### Scenario: Session errors `director-092`
 
-- **WHEN** a source fails or the asset deadline expires
+- **WHEN** a source fails, a source signal event stops work, or the asset deadline expires
 - **THEN** the session removes partial resources and reports a stable error
 - **AND** With no registered source and a byteLength field in the declaration, the load method reads that field once, during validation
 - **AND** The default deadline is 15000 milliseconds.
 - **AND** The source signal gives the error message Asset load timed out when the deadline expires.
 - **AND** With no renderer, the load method does not call the registered source.
 - **AND** The session disposes each partial resource when the deadline expires.
-- **AND** A source signal event stops the load before the renderer call.
+- **AND** A source signal event stops the load call before the renderer call.
 - **AND** The session reads the source signal reason once when a source signal event stops work.
+- **AND** A source event during listener removal stops source success or an error before the renderer call.
 - **AND** The session does not read the global `error` property for a data pack failure.
 
 #### Scenario: Session asset checks `director-093`
@@ -176,9 +201,10 @@ Origin: backfill
 - **AND** The source receives the source path and the byteLength field or the default byte limit.
 - **AND** The renderer receives the asset and the signal of the source call.
 - **AND** The renderer also receives the data pack and the scene anchors.
-- **AND** The byte type check precedes length access for an invalid byte object.
-- **AND** A null byte value does not cause another read of the declared byteLength field.
+- **AND** The byte type check comes before length access for an invalid byte object.
+- **AND** A null byte value does not read the declared byteLength field again.
 - **AND** Without a declared byteLength field, the size check does not compare bytes with that field.
+- **AND** The total byte check comes before the declared digest read.
 
 ### Requirement: Asset sources
 
@@ -194,8 +220,10 @@ Origin: backfill
 
 #### Scenario: Asset request options `director-095`
 
-- **WHEN** a caller asks for a safe asset path
-- **THEN** the source uses the registered directory and fixed request options: no credentials, redirects as errors, no referrer, no cache
+- **WHEN** a caller asks for an asset path
+- **THEN** the source checks the path before it checks the caller signal
+- **AND** For a safe path, the source uses the registered directory and fixed request options.
+- **AND** The fixed request options use no credentials, redirects as errors, no referrer and no cache.
 - **AND** Without a caller fetch function, the directory source uses the global fetch function.
 
 #### Scenario: Asset stream limits `director-096`
@@ -205,11 +233,16 @@ Origin: backfill
 - **AND** The source removes media type parameters and space, and changes the media type to lowercase text.
 - **AND** An absent media type gives empty text.
 - **AND** The source joins chunks of different byte lengths in their original order.
+- **AND** The header byte limit check comes before the first stream read.
+- **AND** The source checks the stream byte limit before it keeps a chunk.
 
 #### Scenario: Asset source cleanup `director-097`
 
 - **WHEN** an asset request fails or its signal stops it
 - **THEN** the source rejects the asset request and releases stream resources
+- **AND** The source waits for stream cancellation before it releases the reader lock.
+- **AND** For an HTTP error, the source waits for body cancellation before it rejects the asset request.
+- **AND** The source checks its signal before each stream read.
 
 ### Requirement: Scene bundles
 
@@ -223,7 +256,8 @@ Origin: backfill
 - **THEN** the bundle helpers check text type, byte limits and JSON syntax
 - **AND** The bundle helpers reject null and invalid projects.
 - **AND** The text limit is 52428800 characters and 52428800 UTF8 bytes.
-- **AND** An invalid JSON error starts with the project path.
+- **AND** Invalid JSON within the share text limit gives the message `$: invalid JSON`.
+- **AND** For project JSON without bundle format, the result includes an empty asset Map.
 
 #### Scenario: Bundle asset entries `director-099`
 
@@ -234,16 +268,20 @@ Origin: backfill
 - **AND** The base64 length limit is 11184812 characters.
 - **AND** The bundle helpers reject a bundle version other than 1.
 - **AND** The bundle helpers reject extra top-level fields and invalid bundle projects.
-- **AND** Asset field, count, byte, media type, base64 and digest errors start with the assets path.
+- **AND** Asset field, count, byte, media type, base64 and digest errors start with `assets`.
 - **AND** An asset path error starts with `source.path`.
-- **AND** The bundle helpers accept z, Z and 9 in base64 text and reject a leading equals sign.
-- **AND** The base64 type check precedes text conversion.
+- **AND** The bundle helpers accept the standard base64 alphabet, including + and /, and reject an equals sign at the start.
+- **AND** The bundle helpers accept each standard base64 character in both plain and padded text.
+- **AND** The base64 type check comes before text conversion.
+- **AND** The import checks top-level fields, version, project and the asset list in that order.
+- **AND** Each asset field check comes before path, media type, duplicate path and base64 checks, in that order.
+- **AND** The import checks asset byte limits before the digest call.
 
 #### Scenario: Bundle asset references `director-100`
 
 - **WHEN** a bundle declares data pack assets
 - **THEN** the bundle helpers check asset digests and exact data pack references
-- **AND** Each data pack reference error starts with the project path.
+- **AND** Each data pack reference error starts with `project`.
 
 #### Scenario: Bundle export copy `director-101`
 
@@ -252,6 +290,8 @@ Origin: backfill
 - **AND** The bundle helpers reject an invalid project before the resolver call.
 - **AND** The resolver receives the data pack and the signal in its options object.
 - **AND** The bundle path ends with at most 160 characters from the source filename.
+- **AND** Each bundle path starts with files/, the asset index from zero, and a dash before the filename.
+- **AND** The export writes source, byteLength and digest fields in that order.
 - **AND** The bundle helpers do not read byte chunks past the asset end.
 - **AND** The filename slice receives a start of zero and a length limit of 160.
 
@@ -262,18 +302,21 @@ Origin: backfill
 - **AND** The bundle helpers accept up to 8388608 bytes per asset and up to 33554432 total bytes.
 - **AND** The bundle helpers reject an unsupported media type during export.
 - **AND** A caller cannot change the public share limits.
-- **AND** Each export asset error starts with the assets path.
+- **AND** Each export asset error starts with `assets`.
 - **AND** The export checks byte type and per-asset size before the total size.
 - **AND** The export checks declared byteLength before the declared digest.
-- **AND** For numeric byte lengths, an absent length adds zero to the total.
+- **AND** For numeric byte lengths, an asset without a byte length adds zero to the total.
 - **AND** An absent digest value stops the declared digest check after one field read.
 - **AND** An export text budget error starts with `$`.
+- **AND** The export checks declared integrity before the filename read.
+- **AND** The asset count check comes before the next resolver call.
+- **AND** The export checks bytes before media type, and media type before the digest call.
 
 #### Scenario: Shared asset reuse `director-103`
 
 - **WHEN** data packs use the same source and path
 - **THEN** the bundle helpers write one asset and reject integrity declarations that differ
-- **AND** An integrity error for a shared asset starts with the assets path.
+- **AND** An integrity error for a shared asset starts with `assets`.
 
 ### Requirement: Bundle byte store
 
@@ -286,6 +329,7 @@ Origin: backfill
 - **WHEN** a caller replaces or clears bundle bytes
 - **THEN** the store copies the map and reports its current byte total
 - **AND** With no replacement map, the byte store becomes empty.
+- **AND** The snapshot returns a separate map with the stored keys and byte values.
 
 #### Scenario: Bundle byte access `director-105`
 
@@ -294,6 +338,7 @@ Origin: backfill
 - **AND** The store accepts bytes equal to the caller limit and rejects one more byte.
 - **AND** Without a caller limit, the store accepts an asset of 8388608 bytes.
 - **AND** The store rejects an invalid path before its asset lookup.
+- **AND** The store checks its signal before the path check.
 
 ### Requirement: Share work
 
@@ -307,6 +352,7 @@ Origin: backfill
 - **THEN** the share helpers check the file suffix and size before text access
 - **AND** The file limit is 5242880 bytes, or 52428800 bytes for a name with the .gevbundle.json suffix.
 - **AND** The share helpers accept the limit and reject one more byte.
+- **AND** The file budget check comes before the signal read.
 
 #### Scenario: Share work cancellation `director-107`
 
@@ -316,6 +362,14 @@ Origin: backfill
 - **AND** During export, the bundle helpers also check the signal after the asset result.
 
 - **AND** The share helpers remove their listener after success, a work error or cancellation.
+- **AND** The bundle helpers check the signal before text type, asset fields and digest comparison.
+- **AND** The file signal check comes before text access and follows text settlement.
+- **AND** During export, the signal check comes before the asset presence check and declared integrity check.
+- **AND** The helper does not attach a listener to a cancelled signal.
+- **AND** The helper attaches its listener before it reads the work promise.
+- **AND** The helper reads cancelled work before the reason, and removes its listener before the reason read.
+- **AND** The helper checks cancellation after listener removal and before successful settlement.
+- **AND** Cancellation during listener removal comes before a work error.
 
 ### Requirement: Share preview
 

@@ -35,7 +35,7 @@ cd /home/ianblenke/docker/gev-work/director-3 && git diff --name-only HEAD
 cd /home/ianblenke/docker/gev-work/director-3 && git diff HEAD -- 'src/director/**/*.js'
 ```
 
-## Final results
+## Final results of pass 4
 
 The lint output reports zero errors.
 The title scan checks 406 titles and finds zero banned forms.
@@ -52,3 +52,21 @@ Each of the seven production files has full line, branch and function coverage.
 The automatic survivor run kills 192 cases and leaves 68 proved or bounded cases.
 The complete hand run kills 406 rows and leaves only m172 and m389.
 The guard-order test now kills m284.
+
+## Pass 5 results
+
+All 631 host tests pass.
+Each of the seven production files has 100% line, branch and function coverage.
+The lint command reports zero errors.
+The title scan checks 464 titles and finds zero banned forms.
+The predispatch scan leaves only eight Old title records.
+
+The host format helper writes and checks 1158 files.
+The restricted direct commands stop with the process error above.
+The hand check kills 406 of 408 rows and leaves m172 and m389.
+The extension gives 644 killed and 67 equivalent cases from 711 new mutations.
+
+All hand patterns match a current title with a backslash before each space.
+All source and test files match the scratch copy after the hand check.
+The production files have no change.
+The lead runs the ratchet, image gates and next review round.
