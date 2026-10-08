@@ -26,7 +26,7 @@ Protected ignored files still cause refusal, except dependency and cache folders
 Use the code inventory at the ratchet commit for ignored code paths.
 Other ignored build files do not cause refusal.
 The ratchet records the sorted refused paths against HEAD in `dirty`.
-Document gates refuse a history line with dirty list even after those files return to HEAD.
+Document gates refuse a history line with a dirty list even after those files return to HEAD.
 
 The decision to keep history unchanged compares the dirty list and the snapshot and commit.
 Store records, assertions and coverage in a snapshot with its hash in the ratchet history.
@@ -51,7 +51,7 @@ Errors that stop the ratchet before it writes the files have status 1.
 The command `check` without `--no-measure` keeps its verdict lines and status.
 The document mode gives no verdict on refusal.
 The document mode names each changed input file and the ratchet commit.
-A successful trust decision still runs every file check that can change under the three allowed paths.
+A successful trust decision still runs every file check whose result can change under the three allowed paths.
 
 ### D4: Command times
 
@@ -104,7 +104,7 @@ Record only created marker names in a separate list.
 Remove those markers before the command copies files back.
 The command keeps real ignored trace files and copied files that were not markers.
 
-Refuse code files and test files before the path.
+Check the file class before the path. Refuse each code file and test file.
 Use forty hexadecimal digits for the ratchet commit.
 Do not add an ancestry command: the content comparison still checks a commit from another branch.
 
@@ -114,14 +114,14 @@ Code files and test files can lie under the three allowed paths.
 
 ### D7: Current file checks and review tree
 
-Remove the source import and coverage comment calls from document mode.
+Remove the source import gate and the coverage comment gate from document mode.
 Those gates read only code files and test files.
 The mode refuses changed code files and test files.
-Their results equal the ratchet results.
+The results of those gates equal the results at the ratchet.
 
 Keep the coverage filter gate.
-The gate reads tracked `.json`, `.yaml` and `.yml` files under the three allowed paths.
-Keep QA header errors because capability folders can change under those paths.
+The gate reads all tracked code, `.json` and `.yaml` files. Only the files under the three allowed paths can change.
+Keep the QA header gates because capability folders can change under those paths.
 
 Read changed file names again after the ratchet writes trace files.
 Use the new list for the review tree hash.
@@ -136,6 +136,6 @@ A deleted pathspec can keep the same marker output through another glob.
 The table checks both the class pathspec and the marker contents.
 
 Use a fresh copy under the scratch folder for the lead probes.
-The brief limits file changes to the clone and that scratch folder.
+The task text limits file changes to the clone and that scratch folder.
 The probe copies use that path instead of `gonem-verify`.
 Keep the lead probe files unchanged.
