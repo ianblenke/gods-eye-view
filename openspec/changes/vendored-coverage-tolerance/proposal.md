@@ -1,21 +1,23 @@
 ## Why
 
-V8 can merge adjacent branch ranges with equal counts. Background work can change those counts across machines.
-A sync can then fail with LEDGER-STALE for upstream files that the fork does not edit.
-Fork edits can also have different total counts with equal not-covered counts.
+V8 can merge adjacent branch ranges with equal counts. Timers can change those counts across machines.
+An upstream sync can then fail with LEDGER-STALE for files that the fork does not edit.
+A file that the fork edits can also have different total counts and equal not-covered counts.
 
 ## What Changes
 
-- Extend count tolerance to files that equal a valid adopted upstream source.
-- Use the same rule for ci, check and the ratchet command.
-- Accept total count differences for valid adopted files with equal hashes and not-covered counts.
-- Keep the count limits and the ratchet count rule.
+- Extend count tolerance to a file that equals its adopted source.
+- Use the same adopted source rule for the ci, check and ratchet commands.
+- Accept total count differences for a file with a valid adopt line, equal hashes and equal not-covered counts.
+- Apply never-worse counts to a file that equals its adopted source without base content.
+- Keep toleranceCounts for a file with base content.
+- Keep the count tolerance limits and all coverage error rules.
 
 ## Capabilities
 
 ### Modified Capabilities
 
-- `gap-ledger`: add Count tolerance for adopted files.
+- `gap-ledger`: add "Count tolerance for adopted files" and "Total counts for adopted files".
 
 ## Impact
 
@@ -24,12 +26,25 @@ The lead runs the image checks and the two review agents.
 
 ## Known limits and later changes
 
-The count tolerance is 8 counts or 4% of the metric total, whichever is less.
+The count tolerance is 8 counts or 4% of the metric total, the smaller of the two numbers.
 Totals below 25 give no count tolerance.
 This tolerance can hide a real coverage loss within those limits.
-Count tolerance applies only to files that equal the adopted upstream commit.
-A changed upstream test gives no new tolerance to its production file unless that file itself equals a valid adopted source.
-Rule 21 still needs the owner to check the upstream remote and the merge second parent.
+Count tolerance applies to a file with base content and to a file that equals its adopted source.
+A file that the fork edits gets no count tolerance from this change.
+A changed upstream test gives no tolerance from this requirement to a code file unless that code file equals its adopted source.
 
-The second rule accepts only total count differences for valid adopted files with equal ledger hashes and not-covered counts.
-This rule hides no coverage count. Fork edits keep exact not-covered counts and coverage errors.
+Rule 21 needs the person who merges to check the merged commit against the upstream remote and record the result in review.md.
+
+The requirement "Total counts for adopted files" hides no not-covered count.
+It accepts a difference in the total counts and the covered counts that follow.
+Pass 2 sets no bound on the size of a total difference. The covered baseline can lag.
+The hand-edit check protects the ledger. The not-covered count stays exact for a file that differs from its adopted source.
+
+A file that equals its adopted source can have a closed gap.
+Its old ledger entry stays until the ratchet command runs, as for a file with base content.
+A valid reached adopt line also supplies the total count exception. This has no effect for a file with base content.
+For true coverage, the base content tolerance already accepts that total count difference.
+The total-only guards exclude untrue coverage.
+
+The script for the CI artifact uses a copy of the gate predicates.
+The full gate command in the Node image on the upstream-sync-3 tree must supply the project verdict.

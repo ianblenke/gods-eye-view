@@ -1,0 +1,1855 @@
+{
+  "commit_read": "c4ba0585500149193c8fced3984bf2d576c70787",
+  "scope": "working tree T3-FIX",
+  "phases": {
+    "1": true,
+    "2": true
+  },
+  "killed": 63,
+  "equivalent": 1,
+  "unresolved": 0,
+  "order_probe_cases": 5760,
+  "mutations": [
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9802,
+      "end": 9829,
+      "class": "object",
+      "old": ", totals: { ...gap.totals }",
+      "new": "",
+      "note": "object",
+      "line": 236,
+      "col": 24,
+      "id": "a0949",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0949",
+        "status": "KILLED",
+        "failed": [
+          "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric (46.897228ms)",
+          "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric (46.897228ms)"
+        ],
+        "log": "/home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/automatic-followup-a0949.log"
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9804,
+      "end": 9829,
+      "class": "object",
+      "old": "totals: { ...gap.totals }",
+      "new": "",
+      "note": "object",
+      "line": 236,
+      "col": 26,
+      "id": "a0950",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0950",
+        "status": "KILLED",
+        "failed": [
+          "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric (53.693517ms)",
+          "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric (53.693517ms)"
+        ],
+        "log": "/home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/automatic-followup-a0950.log"
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9812,
+      "end": 9829,
+      "class": "object",
+      "old": "{ ...gap.totals }",
+      "new": "{}",
+      "note": "object",
+      "line": 236,
+      "col": 34,
+      "id": "a0951",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0951",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "object",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        },
+        "ms": 800,
+        "failedTests": [
+          "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9856,
+      "end": 9863,
+      "class": "iteration",
+      "old": "METRICS",
+      "new": "METRICS.slice(0,1)",
+      "note": "iteration",
+      "line": 237,
+      "col": 24,
+      "id": "a0952",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0952",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "iteration",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 910,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9856,
+      "end": 9863,
+      "class": "iteration",
+      "old": "METRICS",
+      "new": "[]",
+      "note": "iteration",
+      "line": 237,
+      "col": 24,
+      "id": "a0953",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0953",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "iteration",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 792,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9875,
+      "end": 9903,
+      "class": "condition",
+      "old": "gap[metric] <= entry[metric]",
+      "new": "true",
+      "note": "condition",
+      "line": 238,
+      "col": 9,
+      "id": "a0954",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0954",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "condition",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 834,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9875,
+      "end": 9903,
+      "class": "condition",
+      "old": "gap[metric] <= entry[metric]",
+      "new": "false",
+      "note": "condition",
+      "line": 238,
+      "col": 9,
+      "id": "a0955",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0955",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "condition",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 878,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9871,
+      "end": 9914,
+      "class": "branch",
+      "old": "if (gap[metric] <= entry[metric]) continue;",
+      "new": "continue;",
+      "note": "branch",
+      "line": 238,
+      "col": 5,
+      "id": "a0956",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0956",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "branch",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 839,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9871,
+      "end": 9914,
+      "class": "statement",
+      "old": "if (gap[metric] <= entry[metric]) continue;",
+      "new": "",
+      "note": "statement",
+      "line": 238,
+      "col": 5,
+      "id": "a0957",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0957",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 790,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9887,
+      "end": 9889,
+      "class": "relational",
+      "old": "<=",
+      "new": "<",
+      "note": "relational",
+      "line": 238,
+      "col": 21,
+      "id": "a0958",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0958",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "relational",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        },
+        "ms": 835,
+        "failedTests": [
+          "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9887,
+      "end": 9889,
+      "class": "relational",
+      "old": "<=",
+      "new": ">",
+      "note": "relational",
+      "line": 238,
+      "col": 21,
+      "id": "a0959",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0959",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "relational",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 788,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9919,
+      "end": 9948,
+      "class": "statement",
+      "old": "next[metric] = entry[metric];",
+      "new": ";",
+      "note": "statement",
+      "line": 239,
+      "col": 5,
+      "id": "a0960",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0960",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 770,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9919,
+      "end": 9948,
+      "class": "statement",
+      "old": "next[metric] = entry[metric];",
+      "new": "",
+      "note": "statement",
+      "line": 239,
+      "col": 5,
+      "id": "a0961",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0961",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 889,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9915,
+      "end": 9948,
+      "class": "statement",
+      "old": "    next[metric] = entry[metric];",
+      "new": "",
+      "note": "statement",
+      "line": 239,
+      "col": 1,
+      "id": "a0962",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0962",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 692,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9914,
+      "end": 9948,
+      "class": "statement",
+      "old": "\n    next[metric] = entry[metric];",
+      "new": "",
+      "note": "statement",
+      "line": 238,
+      "col": 48,
+      "id": "a0963",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0963",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 851,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9934,
+      "end": 9947,
+      "class": "value",
+      "old": "entry[metric]",
+      "new": "[]",
+      "note": "value",
+      "line": 239,
+      "col": 20,
+      "id": "a0964",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0964",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 906,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9934,
+      "end": 9947,
+      "class": "value",
+      "old": "entry[metric]",
+      "new": "1",
+      "note": "value",
+      "line": 239,
+      "col": 20,
+      "id": "a0965",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0965",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 809,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9953,
+      "end": 9996,
+      "class": "statement",
+      "old": "next.totals[metric] = entry.totals[metric];",
+      "new": ";",
+      "note": "statement",
+      "line": 240,
+      "col": 5,
+      "id": "a0966",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0966",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        },
+        "ms": 864,
+        "failedTests": [
+          "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9953,
+      "end": 9996,
+      "class": "statement",
+      "old": "next.totals[metric] = entry.totals[metric];",
+      "new": "",
+      "note": "statement",
+      "line": 240,
+      "col": 5,
+      "id": "a0967",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0967",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        },
+        "ms": 866,
+        "failedTests": [
+          "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9949,
+      "end": 9996,
+      "class": "statement",
+      "old": "    next.totals[metric] = entry.totals[metric];",
+      "new": "",
+      "note": "statement",
+      "line": 240,
+      "col": 1,
+      "id": "a0968",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0968",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        },
+        "ms": 810,
+        "failedTests": [
+          "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9948,
+      "end": 9996,
+      "class": "statement",
+      "old": "\n    next.totals[metric] = entry.totals[metric];",
+      "new": "",
+      "note": "statement",
+      "line": 239,
+      "col": 34,
+      "id": "a0969",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0969",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        },
+        "ms": 871,
+        "failedTests": [
+          "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9975,
+      "end": 9995,
+      "class": "value",
+      "old": "entry.totals[metric]",
+      "new": "[]",
+      "note": "value",
+      "line": 240,
+      "col": 27,
+      "id": "a0970",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0970",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 1123,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9975,
+      "end": 9995,
+      "class": "value",
+      "old": "entry.totals[metric]",
+      "new": "1",
+      "note": "value",
+      "line": 240,
+      "col": 27,
+      "id": "a0971",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0971",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 1076,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10003,
+      "end": 10015,
+      "class": "statement",
+      "old": "return next;",
+      "new": "return;",
+      "note": "statement",
+      "line": 242,
+      "col": 3,
+      "id": "a0972",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a0972",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 1016,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31170,
+      "end": 31178,
+      "class": "condition",
+      "old": "tolerant",
+      "new": "true",
+      "note": "condition",
+      "line": 638,
+      "col": 20,
+      "id": "a3349",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3349",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "condition",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-028] records branches that a new test shows"
+        },
+        "ms": 859,
+        "failedTests": [
+          "[gap-ledger-028] records branches that a new test shows"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31170,
+      "end": 31178,
+      "class": "condition",
+      "old": "tolerant",
+      "new": "false",
+      "note": "condition",
+      "line": 638,
+      "col": 20,
+      "id": "a3350",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3350",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "condition",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        },
+        "ms": 809,
+        "failedTests": [
+          "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31170,
+      "end": 31266,
+      "class": "branch",
+      "old": "tolerant ? (sameAsBase(file) ? toleranceCounts(entry, gap) : neverWorseCounts(entry, gap)) : gap",
+      "new": "sameAsBase(file) ? toleranceCounts(entry, gap) : neverWorseCounts(entry, gap)",
+      "note": "branch",
+      "line": 638,
+      "col": 20,
+      "id": "a3351",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3351",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "branch",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-028] records branches that a new test shows"
+        },
+        "ms": 1105,
+        "failedTests": [
+          "[gap-ledger-028] records branches that a new test shows"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31170,
+      "end": 31266,
+      "class": "branch",
+      "old": "tolerant ? (sameAsBase(file) ? toleranceCounts(entry, gap) : neverWorseCounts(entry, gap)) : gap",
+      "new": "gap",
+      "note": "branch",
+      "line": 638,
+      "col": 20,
+      "id": "a3352",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3352",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "branch",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        },
+        "ms": 1156,
+        "failedTests": [
+          "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31182,
+      "end": 31198,
+      "class": "condition",
+      "old": "sameAsBase(file)",
+      "new": "true",
+      "note": "condition",
+      "line": 638,
+      "col": 32,
+      "id": "a3353",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3353",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "condition",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        },
+        "ms": 787,
+        "failedTests": [
+          "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31182,
+      "end": 31198,
+      "class": "condition",
+      "old": "sameAsBase(file)",
+      "new": "false",
+      "note": "condition",
+      "line": 638,
+      "col": 32,
+      "id": "a3354",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3354",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "condition",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-028] records branches that a new test shows"
+        },
+        "ms": 802,
+        "failedTests": [
+          "[gap-ledger-028] records branches that a new test shows"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31182,
+      "end": 31259,
+      "class": "branch",
+      "old": "sameAsBase(file) ? toleranceCounts(entry, gap) : neverWorseCounts(entry, gap)",
+      "new": "toleranceCounts(entry, gap)",
+      "note": "branch",
+      "line": 638,
+      "col": 32,
+      "id": "a3355",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3355",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "branch",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        },
+        "ms": 1057,
+        "failedTests": [
+          "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31182,
+      "end": 31259,
+      "class": "branch",
+      "old": "sameAsBase(file) ? toleranceCounts(entry, gap) : neverWorseCounts(entry, gap)",
+      "new": "neverWorseCounts(entry, gap)",
+      "note": "branch",
+      "line": 638,
+      "col": 32,
+      "id": "a3356",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3356",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "branch",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-028] records branches that a new test shows"
+        },
+        "ms": 986,
+        "failedTests": [
+          "[gap-ledger-028] records branches that a new test shows"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31193,
+      "end": 31197,
+      "class": "arguments",
+      "old": "file",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 638,
+      "col": 43,
+      "id": "a3357",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3357",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "arguments",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/gates.test.mjs",
+          "test": "[gap-ledger-136 gap-ledger-140 gap-ledger-144] the gate uses the adopted source in the check, ci and ratchet commands"
+        },
+        "ms": 24695,
+        "failedTests": [
+          "[gap-ledger-136 gap-ledger-140 gap-ledger-144] the gate uses the adopted source in the check, ci and ratchet commands"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31193,
+      "end": 31197,
+      "class": "argument-drop",
+      "old": "file",
+      "new": "",
+      "note": "argument-drop",
+      "line": 638,
+      "col": 43,
+      "id": "a3358",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3358",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "argument-drop",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/gates.test.mjs",
+          "test": "[gap-ledger-136 gap-ledger-140 gap-ledger-144] the gate uses the adopted source in the check, ci and ratchet commands"
+        },
+        "ms": 24881,
+        "failedTests": [
+          "[gap-ledger-136 gap-ledger-140 gap-ledger-144] the gate uses the adopted source in the check, ci and ratchet commands"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31182,
+      "end": 31198,
+      "class": "call-value",
+      "old": "sameAsBase(file)",
+      "new": "undefined",
+      "note": "call-value",
+      "line": 638,
+      "col": 32,
+      "id": "a3359",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3359",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "call-value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-028] records branches that a new test shows"
+        },
+        "ms": 983,
+        "failedTests": [
+          "[gap-ledger-028] records branches that a new test shows"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31217,
+      "end": 31222,
+      "class": "arguments",
+      "old": "entry",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 638,
+      "col": 67,
+      "id": "a3360",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3360",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "arguments",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        },
+        "ms": 767,
+        "failedTests": [
+          "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31224,
+      "end": 31227,
+      "class": "arguments",
+      "old": "gap",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 638,
+      "col": 74,
+      "id": "a3361",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3361",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "arguments",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        },
+        "ms": 852,
+        "failedTests": [
+          "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31217,
+      "end": 31224,
+      "class": "argument-drop",
+      "old": "entry, ",
+      "new": "",
+      "note": "argument-drop",
+      "line": 638,
+      "col": 67,
+      "id": "a3362",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3362",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "argument-drop",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        },
+        "ms": 822,
+        "failedTests": [
+          "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31222,
+      "end": 31227,
+      "class": "argument-drop",
+      "old": ", gap",
+      "new": "",
+      "note": "argument-drop",
+      "line": 638,
+      "col": 72,
+      "id": "a3363",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3363",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "argument-drop",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        },
+        "ms": 796,
+        "failedTests": [
+          "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31201,
+      "end": 31228,
+      "class": "call-value",
+      "old": "toleranceCounts(entry, gap)",
+      "new": "undefined",
+      "note": "call-value",
+      "line": 638,
+      "col": 51,
+      "id": "a3364",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3364",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "call-value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        },
+        "ms": 1148,
+        "failedTests": [
+          "[gap-ledger-013] stops the ratchet command when a gap is larger"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31248,
+      "end": 31253,
+      "class": "arguments",
+      "old": "entry",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 638,
+      "col": 98,
+      "id": "a3365",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3365",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "arguments",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 704,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31263,
+      "end": 31266,
+      "class": "arguments",
+      "old": "gap",
+      "new": "undefined",
+      "note": "arguments",
+      "line": 638,
+      "col": 105,
+      "id": "a3366",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3366",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "arguments",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 831,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31248,
+      "end": 31255,
+      "class": "argument-drop",
+      "old": "entry, ",
+      "new": "",
+      "note": "argument-drop",
+      "line": 638,
+      "col": 98,
+      "id": "a3367",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3367",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "argument-drop",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 722,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31253,
+      "end": 31258,
+      "class": "argument-drop",
+      "old": ", gap",
+      "new": "",
+      "note": "argument-drop",
+      "line": 638,
+      "col": 103,
+      "id": "a3368",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3368",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "argument-drop",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 782,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31231,
+      "end": 31259,
+      "class": "call-value",
+      "old": "neverWorseCounts(entry, gap)",
+      "new": "undefined",
+      "note": "call-value",
+      "line": 638,
+      "col": 81,
+      "id": "a3369",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3369",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "call-value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 1005,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31298,
+      "end": 31320,
+      "class": "object",
+      "old": "origin: entry.origin, ",
+      "new": "",
+      "note": "object",
+      "line": 639,
+      "col": 31,
+      "id": "a3370",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3370",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "object",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        },
+        "ms": 808,
+        "failedTests": [
+          "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31318,
+      "end": 31338,
+      "class": "object",
+      "old": ", since: entry.since",
+      "new": "",
+      "note": "object",
+      "line": 639,
+      "col": 51,
+      "id": "a3371",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3371",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "object",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        },
+        "ms": 795,
+        "failedTests": [
+          "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31298,
+      "end": 31319,
+      "class": "object",
+      "old": "origin: entry.origin,",
+      "new": "",
+      "note": "object",
+      "line": 639,
+      "col": 31,
+      "id": "a3372",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3372",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "object",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        },
+        "ms": 828,
+        "failedTests": [
+          "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31320,
+      "end": 31338,
+      "class": "object",
+      "old": "since: entry.since",
+      "new": "",
+      "note": "object",
+      "line": 639,
+      "col": 53,
+      "id": "a3373",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3373",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "object",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        },
+        "ms": 773,
+        "failedTests": [
+          "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31306,
+      "end": 31318,
+      "class": "value",
+      "old": "entry.origin",
+      "new": "'bad'",
+      "note": "value",
+      "line": 639,
+      "col": 39,
+      "id": "a3374",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3374",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        },
+        "ms": 774,
+        "failedTests": [
+          "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31306,
+      "end": 31318,
+      "class": "value",
+      "old": "entry.origin",
+      "new": "'wrong'",
+      "note": "value",
+      "line": 639,
+      "col": 39,
+      "id": "a3375",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3375",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        },
+        "ms": 823,
+        "failedTests": [
+          "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31306,
+      "end": 31318,
+      "class": "value",
+      "old": "entry.origin",
+      "new": "1",
+      "note": "value",
+      "line": 639,
+      "col": 39,
+      "id": "a3376",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3376",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        },
+        "ms": 805,
+        "failedTests": [
+          "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31327,
+      "end": 31338,
+      "class": "value",
+      "old": "entry.since",
+      "new": "'bad'",
+      "note": "value",
+      "line": 639,
+      "col": 60,
+      "id": "a3377",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3377",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        },
+        "ms": 856,
+        "failedTests": [
+          "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31327,
+      "end": 31338,
+      "class": "value",
+      "old": "entry.since",
+      "new": "'wrong'",
+      "note": "value",
+      "line": 639,
+      "col": 60,
+      "id": "a3378",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3378",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        },
+        "ms": 796,
+        "failedTests": [
+          "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31327,
+      "end": 31338,
+      "class": "value",
+      "old": "entry.since",
+      "new": "1",
+      "note": "value",
+      "line": 639,
+      "col": 60,
+      "id": "a3379",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a3379",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "value",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        },
+        "ms": 841,
+        "failedTests": [
+          "[gap-ledger-010] makes the ledger entries smaller and records the change and the commit"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9781,
+      "end": 10000,
+      "class": "statement-order",
+      "old": "const next = { ...gap, totals: { ...gap.totals } };\n  for (const metric of METRICS) {\n    if (gap[metric] <= entry[metric]) continue;\n    next[metric] = entry[metric];\n    next.totals[metric] = entry.totals[metric];\n  }",
+      "new": "for (const metric of METRICS) {\n    if (gap[metric] <= entry[metric]) continue;\n    next[metric] = entry[metric];\n    next.totals[metric] = entry.totals[metric];\n  }\n  const next = { ...gap, totals: { ...gap.totals } };",
+      "note": "statement-order",
+      "line": 236,
+      "col": 3,
+      "id": "a9083",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a9083",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement-order",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 883,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9835,
+      "end": 10015,
+      "class": "statement-order",
+      "old": "for (const metric of METRICS) {\n    if (gap[metric] <= entry[metric]) continue;\n    next[metric] = entry[metric];\n    next.totals[metric] = entry.totals[metric];\n  }\n  return next;",
+      "new": "return next;\n  for (const metric of METRICS) {\n    if (gap[metric] <= entry[metric]) continue;\n    next[metric] = entry[metric];\n    next.totals[metric] = entry.totals[metric];\n  }",
+      "note": "statement-order",
+      "line": 237,
+      "col": 3,
+      "id": "a9084",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a9084",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement-order",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 719,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9796,
+      "end": 9804,
+      "class": "spread-remove",
+      "old": "...gap, ",
+      "new": "",
+      "note": "spread-remove",
+      "line": 236,
+      "col": 18,
+      "id": "a9085",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a9085",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "spread-remove",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 753,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9814,
+      "end": 9827,
+      "class": "spread-remove",
+      "old": "...gap.totals",
+      "new": "",
+      "note": "spread-remove",
+      "line": 236,
+      "col": 36,
+      "id": "a9086",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a9086",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "spread-remove",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        },
+        "ms": 812,
+        "failedTests": [
+          "[gap-ledger-154 gap-ledger-143] the ratchet command selects larger equal and smaller counts per metric"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9871,
+      "end": 9948,
+      "class": "statement-order",
+      "old": "if (gap[metric] <= entry[metric]) continue;\n    next[metric] = entry[metric];",
+      "new": "next[metric] = entry[metric];\n    if (gap[metric] <= entry[metric]) continue;",
+      "note": "statement-order",
+      "line": 238,
+      "col": 5,
+      "id": "a9087",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a9087",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement-order",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        },
+        "ms": 807,
+        "failedTests": [
+          "[gap-ledger-143] the ratchet command writes better counts for a file that equals its adopted source"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 9919,
+      "end": 9996,
+      "class": "statement-order",
+      "old": "next[metric] = entry[metric];\n    next.totals[metric] = entry.totals[metric];",
+      "new": "next.totals[metric] = entry.totals[metric];\n    next[metric] = entry[metric];",
+      "note": "statement-order",
+      "line": 239,
+      "col": 5,
+      "id": "a9088",
+      "verdict": "EQUIVALENT",
+      "record": {
+        "id": "a9088",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement-order",
+        "phase": 2,
+        "status": "SURVIVED",
+        "killedBy": null,
+        "ms": 26473
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31155,
+      "end": 31341,
+      "class": "statement-order",
+      "old": "const counts = tolerant ? (sameAsBase(file) ? toleranceCounts(entry, gap) : neverWorseCounts(entry, gap)) : gap;\n    const next = { ...counts, origin: entry.origin, since: entry.since };",
+      "new": "const next = { ...counts, origin: entry.origin, since: entry.since };\n    const counts = tolerant ? (sameAsBase(file) ? toleranceCounts(entry, gap) : neverWorseCounts(entry, gap)) : gap;",
+      "note": "statement-order",
+      "line": 638,
+      "col": 5,
+      "id": "a9379",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a9379",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement-order",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-055] stops for a ledger entry without the total counts"
+        },
+        "ms": 752,
+        "failedTests": [
+          "[gap-ledger-055] stops for a ledger entry without the total counts"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31272,
+      "end": 31555,
+      "class": "statement-order",
+      "old": "const next = { ...counts, origin: entry.origin, since: entry.since };\n    if (next.lines < entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'smaller');\n    else if (next.lines > entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'waived');",
+      "new": "if (next.lines < entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'smaller');\n    else if (next.lines > entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'waived');\n    const next = { ...counts, origin: entry.origin, since: entry.since };",
+      "note": "statement-order",
+      "line": 639,
+      "col": 5,
+      "id": "a9380",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a9380",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "statement-order",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-055] stops for a ledger entry without the total counts"
+        },
+        "ms": 890,
+        "failedTests": [
+          "[gap-ledger-055] stops for a ledger entry without the total counts"
+        ],
+        "countsAsKill": true
+      }
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 31287,
+      "end": 31298,
+      "class": "spread-remove",
+      "old": "...counts, ",
+      "new": "",
+      "note": "spread-remove",
+      "line": 639,
+      "col": 20,
+      "id": "a9389",
+      "verdict": "KILLED",
+      "record": {
+        "id": "a9389",
+        "file": "scripts/spec/lib/ledger.mjs",
+        "class": "spread-remove",
+        "phase": 1,
+        "status": "KILLED",
+        "killedBy": {
+          "file": "src/tooling/spec/ledger.test.mjs",
+          "test": "[gap-ledger-055] stops for a ledger entry without the total counts"
+        },
+        "ms": 735,
+        "failedTests": [
+          "[gap-ledger-055] stops for a ledger entry without the total counts"
+        ],
+        "countsAsKill": true
+      }
+    }
+  ],
+  "tested_code_ast": {
+    "verdict": "same code AST",
+    "sha256": "c0ec01a9c37709a1267a2b5cf1b4026b5115717ab74fc3b2af6df060f3b8a05d"
+  },
+  "final_source_sha256": "deecca250fb1b4a69169c67a85ea1c2b013fbb50b8dfd9b6777db1f9b6967db1",
+  "comment_note": "The final comment correction has the same code AST."
+}

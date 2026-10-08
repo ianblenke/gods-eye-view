@@ -210,9 +210,9 @@ function gapTolerance(gap) {
 }
 
 /**
- * The counts that the ratchet command writes for a file with the tolerance conditions. It never
- * writes a worse count: it writes the smaller not-covered line count, and for branches and
- * functions it keeps the entry counts when the covered count is smaller than in the entry.
+ * The counts that the ratchet command writes for a file with base content and count tolerance.
+ * The command writes the smaller not-covered line count.
+ * For branches and functions, the command keeps the entry counts when the covered count is smaller than in the entry.
  */
 function toleranceCounts(entry, gap) {
   const next = { ...gap, lines: Math.min(entry.lines, gap.lines), totals: { ...gap.totals } };
@@ -223,6 +223,21 @@ function toleranceCounts(entry, gap) {
     if (!keep) continue;
     next[metric] = entry[metric];
     next.totals[metric] = entry.totals ? entry.totals[metric] : gap.totals[metric];
+  }
+  return next;
+}
+
+/**
+ * Select never-worse counts for a file that equals its adopted source without base content.
+ * Each metric uses the current count and total when its not-covered count is smaller or equal.
+ * A larger not-covered count uses the entry count and entry total.
+ */
+function neverWorseCounts(entry, gap) {
+  const next = { ...gap, totals: { ...gap.totals } };
+  for (const metric of METRICS) {
+    if (gap[metric] <= entry[metric]) continue;
+    next[metric] = entry[metric];
+    next.totals[metric] = entry.totals[metric];
   }
   return next;
 }
@@ -380,16 +395,16 @@ function compareCoverageEntry(file, entry, gap, tolerance = () => 0, waived) {
 }
 
 /**
- * Compare the current gaps with the ledger. A file with the tolerance conditions is a loaded code
- * file with true coverage that has base content or adopted source content, and its entry hash. Its not-covered
- * line count can be above the entry by at most the tolerance. The loss of its covered branches and
- * of its covered functions can be at most the tolerance. The gate does not record the entry of
- * such a file as not current for a smaller gap. See the requirement "Count tolerance".
+ * Compare the current gaps with the ledger.
+ * A file with the tolerance conditions has true loaded coverage and the hash of its ledger entry.
+ * The file has base content or adopted source content.
+ * The not-covered line count and the loss of covered branches and functions can differ inside count tolerance.
+ * See "Count tolerance", "Count tolerance for adopted files" and "Total counts for adopted files".
  *
  * @param {object} input
  * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
- * @param {(file: string) => boolean} [input.adoptedAsIs] - True for a file that equals a valid adopted source.
- * @param {(file: string) => boolean} [input.adoptedFile] - True for a file with a valid adopt record.
+ * @param {(file: string) => boolean} [input.adoptedAsIs] - True for a file that equals its adopted source.
+ * @param {(file: string) => boolean} [input.adoptedFile] - True for a file with a valid adopt line.
  * @param {object[]} [input.waivers] - Waiver lines for the checked change.
  * @returns {{errors: object[], stale: object[]}}
  */
@@ -426,6 +441,7 @@ export function compareLedger({ ledger, current, sameAsBase = () => false, adopt
     };
     const entryErrors = compareCoverageEntry(file, entry, gap, tolerant ? gapTolerance(gap) : undefined, waived);
     errors.push(...entryErrors);
+    // A valid adopt line allows total-only differences with equal not-covered counts.
     const totalsOnly = adoptedFile(file) && gap.sha === entry.sha && entry.loaded && gap.loaded &&
       !entry.untrue && !gap.untrue && METRICS.every(metric => entry[metric] === gap[metric]);
     if (entryErrors.length === 0 && !sameGap(entry, gap) && !tolerant && !totalsOnly) stale.push({ kind: 'coverage', file });
@@ -588,7 +604,7 @@ function sum(names) {
  * @param {string} input.date - Today's date.
  * @param {string} input.commit - Head commit hash.
  * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
- * @param {(file: string) => boolean} [input.adoptedAsIs] - True for a file that equals a valid adopted source.
+ * @param {(file: string) => boolean} [input.adoptedAsIs] - True for a file that equals its adopted source.
  * @param {object[]} [input.waivers] - Waiver lines for the checked change.
  * @returns {{ledger: object, history: object[]}}
  */
@@ -619,7 +635,8 @@ export function ratchetLedger({ ledger, current, inventory, testFiles, change, c
       continue;
     }
     const tolerant = hasTolerance(file, entry, gap, sameAsBase, adoptedAsIs);
-    const next = { ...(tolerant ? toleranceCounts(entry, gap) : gap), origin: entry.origin, since: entry.since };
+    const counts = tolerant ? (sameAsBase(file) ? toleranceCounts(entry, gap) : neverWorseCounts(entry, gap)) : gap;
+    const next = { ...counts, origin: entry.origin, since: entry.since };
     if (next.lines < entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'smaller');
     else if (next.lines > entry.lines) record('coverage', file, 'lines', entry.lines, next.lines, 'waived');
     if (!entry.loaded && gap.loaded) record('coverage', file, 'loaded', false, true, 'loaded');

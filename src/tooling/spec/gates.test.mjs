@@ -2660,7 +2660,7 @@ function adoptedNoise(root, worse = false) {
 
 const NOISE_SOURCE = BRANCH_SRC('merged') + '\n'.repeat(60);
 
-test('[gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in check ci and the ratchet command', () => {
+test('[gap-ledger-136 gap-ledger-140 gap-ledger-144] the gate uses the adopted source in the check, ci and ratchet commands', () => {
   withMergeFixture((root) => {
     adoptedNoise(root, true);
     write(root, { 'openspec/changes/sync/tasks.md': '## 1. Merge\n\n- [x] Merge the branch.\n' });
@@ -2677,7 +2677,7 @@ test('[gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in c
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-137] use no new tolerance after an adopted source edit', () => {
+test('[gap-ledger-137] the gate gives no count tolerance to a file that differs from its adopted source', () => {
   withMergeFixture((root) => {
     write(root, { 'src/merged.js': NOISE_SOURCE + '// Local edit.\n' });
     adoptedNoise(root);
@@ -2686,7 +2686,7 @@ test('[gap-ledger-137] use no new tolerance after an adopted source edit', () =>
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-138] use no new tolerance for an invalid adopt source', () => {
+test('[gap-ledger-138] the gate uses no tolerance from the adopted source requirement for an invalid adopt line', () => {
   withMergeFixture((root) => {
     const line = adoptedNoise(root);
     line.from = git(root, 'rev-parse', 'HEAD');
@@ -2697,7 +2697,7 @@ test('[gap-ledger-138] use no new tolerance for an invalid adopt source', () => 
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-139] use no new tolerance from another change', () => {
+test('[gap-ledger-139] the gate uses no tolerance from the adopted source requirement from another change', () => {
   withMergeFixture((root) => {
     const line = adoptedNoise(root);
     line.change = 'another';
@@ -2707,7 +2707,7 @@ test('[gap-ledger-139] use no new tolerance from another change', () => {
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-145] give no new tolerance to an absent adopted file', () => {
+test('[gap-ledger-145] the gate gives no tolerance from the adopted source requirement to an absent file with a valid adopt line', () => {
   withMergeFixture((root) => {
     adoptedNoise(root);
     rmSync(path.join(root, 'src/merged.js'));
@@ -2716,7 +2716,7 @@ test('[gap-ledger-145] give no new tolerance to an absent adopted file', () => {
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-146] need the production file in a valid adopt record', () => {
+test('[gap-ledger-146] the gate needs the code file in a valid adopt line', () => {
   withMergeFixture((root) => {
     adoptedNoise(root);
     const lines = historyLines(root).filter(line => line.file !== 'src/merged.js');
@@ -2728,7 +2728,7 @@ test('[gap-ledger-146] need the production file in a valid adopt record', () => 
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-069] keep count tolerance for base content in the gate', () => {
+test('[gap-ledger-069] the gate applies count tolerance to a file with base content', () => {
   withMergeFixture((root) => {
     adoptedNoise(root);
     const file = 'src/legacy.js';
@@ -2741,7 +2741,7 @@ test('[gap-ledger-069] keep count tolerance for base content in the gate', () =>
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-081] keep the waiver count for an edited adopted file in the gate', () => {
+test('[gap-ledger-081] the gate applies the waived count to a file that differs from its adopted source', () => {
   withMergeFixture((root) => {
     adoptedNoise(root);
     const file = 'src/merged.js';
@@ -2765,7 +2765,7 @@ function adoptedTotals(root) {
   return line;
 }
 
-test('[gap-ledger-147] accept adopted totals in check ci and the ratchet command', () => {
+test('[gap-ledger-147] the gate accepts total differences for a file with a valid adopt line in the check, ci and ratchet commands', () => {
   withMergeFixture(root => {
     adoptedTotals(root);
     write(root, { 'openspec/changes/sync/tasks.md': '## 1. Merge\n\n- [x] Merge the branch.\n' });
@@ -2782,7 +2782,7 @@ test('[gap-ledger-147] accept adopted totals in check ci and the ratchet command
 });
 
 
-test('[gap-ledger-149] need a valid adopt record for total differences', () => {
+test('[gap-ledger-149] the gate needs a valid adopt line for total differences', () => {
   withMergeFixture(root => {
     const line = adoptedTotals(root);
     const lines = historyLines(root).filter(item => item.file !== 'src/merged.js');
@@ -2792,7 +2792,7 @@ test('[gap-ledger-149] need a valid adopt record for total differences', () => {
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-150] ignore another change for total differences', () => {
+test('[gap-ledger-150] the gate ignores another change for total differences', () => {
   withMergeFixture(root => {
     const line = adoptedTotals(root);
     line.change = 'another';
@@ -2802,7 +2802,7 @@ test('[gap-ledger-150] ignore another change for total differences', () => {
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-151] reject an invalid from for total differences', () => {
+test('[gap-ledger-151] the gate rejects an invalid from commit for total differences', () => {
   withMergeFixture(root => {
     const line = adoptedTotals(root);
     line.from = git(root, 'rev-parse', 'HEAD');
@@ -2813,7 +2813,7 @@ test('[gap-ledger-151] reject an invalid from for total differences', () => {
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-154] the ratchet command accepts a branch split in the base comparison', () => {
+test('[gap-ledger-154] the ratchet command writes no larger count for a file that equals its adopted source', () => {
   withMergeFixture(root => {
     adoptedNoise(root);
     const ledgerPath = path.join(root, 'openspec/trace/gaps.json');
@@ -2833,7 +2833,7 @@ test('[gap-ledger-154] the ratchet command accepts a branch split in the base co
     };
     const result = run(root, ['ratchet', '--change', 'sync'], splitOptions);
     const next = JSON.parse(readFileSync(ledgerPath, 'utf8')).coverage['src/merged.js'];
-    assert.deepEqual([next.branches, next.totals.branches], [2, 101]);
+    assert.deepEqual([next.branches, next.totals.branches], [1, 100]);
     assert.doesNotMatch(result.output, /ERROR LEDGER-(?:NOT-IN-BASE|MORE-THAN-BASE)/, result.output);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
