@@ -54,3 +54,21 @@ The browser helper receives it through `mapillaryToken`. The standalone config r
 The requirement now names three credentials. All five carried scenarios need changed tests with their scenario tags.
 The fixture tests check the Mapillary sentinel. The literal scan checks the upstream shape `MLY|1|abc` and a synthetic sample.
 The config tests check clear values and reject environment defaults. Secret credentials remain on the server.
+
+### Test file limits
+
+Changes to upstream test files can cause conflicts at the next sync.
+Each later sync must keep or replace these test corrections.
+The owner approves test corrections as candidates for an upstream pull request.
+The candidates are these files:
+
+- `src/layers/streetLevel/index.test.mjs`
+- `src/locations.test.mjs`
+- `src/ui/panelDock.test.mjs`
+- `src/ui/streetLevelControls.test.mjs`
+- `src/voice/gevRealtime.test.mjs`
+- `src/voice/pointerCrop.test.mjs`
+- `src/voice/realtimeNarration.test.mjs`
+- `src/data/analystEngine.test.mjs`
+
+No upstream pull request is sent in this task.

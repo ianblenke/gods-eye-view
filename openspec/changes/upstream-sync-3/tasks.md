@@ -43,3 +43,12 @@
 - [x] 4.7 Run host lint, format, boundary and token checks.
 - [x] 4.8 Run each changed test file and the full host suite once.
 - [x] 4.9 Record the results and commit the host change.
+
+## 5. Host timer checks
+
+- [x] 5.1 Build the host probe and reproduce all seven timer leaks before edits.
+- [x] 5.2 Correct test resource cleanup and the row budget clock. Keep all assertions.
+- [x] 5.3 Check the eight files and all test files that differ from the base.
+- [x] 5.4 Run the changed tests, format checks, boundary checks and full unit suite.
+- [x] 5.5 Record each correction, compare the baseline and run prose lint.
+- [x] 5.6 Commit the host corrections.

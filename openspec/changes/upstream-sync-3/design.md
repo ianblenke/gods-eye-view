@@ -273,3 +273,108 @@ The allocation phase does not run after the failure. These host results give no 
 Lint reports zero errors and 565 warnings. Format passes for 1327 source files. Boundary checks pass.
 The token check against origin/main reports 29 published tokens and one new token.
 Host logs are in `gev-tools/upstream-sync-3/pass-3-host/`. The lead still must complete the image checks and both reviews.
+
+## Pass 4 plan
+
+Read tree: `7adfc97a7cea727249269c75070bcfdeac24dea4`.
+The adopt log reports seven test files with live timers and one failed row test.
+The host probe uses the gate preload, inventory hash and environment variables. Each file runs in a separate process.
+The probe uses `--test-force-exit` to check timers at test completion.
+
+Clear test timers through cleanup hooks or a finally block. Stop controller resources after each test.
+Use mock timers for private deadlines when the test cannot clear them through an owner.
+Keep all assertions.
+
+Add a scheduler margin to the row budget. Test the original CPU budget before the final clock choice.
+Keep the page yield and cancellation assertions.
+
+Run the probe before and after each correction. Check every test file that differs from the base.
+Run the changed tests, format checks, boundary checks and the full unit suite. Compare failures with the pristine baseline.
+The lead must run the image checks and both reviews before merge.
+
+The first CPU check fails at 771 milliseconds on the host. Process CPU time includes runtime work across threads.
+Use a wall clock ceiling of 4000 milliseconds instead. This gives the original ceiling a scheduler margin of 3600 milliseconds.
+The test still checks the row count, top row, page yield and cancellation. It does not measure a browser performance limit.
+
+## Pass 4 test corrections
+
+Read tree: `7adfc97a7cea727249269c75070bcfdeac24dea4`, with host test corrections.
+No production file changes. No assertion is removed. No timer uses `unref()`.
+
+| File | Live resource | Correction | Send upstream? |
+|---|---|---|---|
+| `src/layers/streetLevel/index.test.mjs` | A 16 ms idle callback after layer enable. | Save timer handles. Clear them in `t.after` and restore the timer function. | yes |
+| `src/locations.test.mjs` | A 600 ms ground guard callback after flight completion. | Save timer handles. Clear them in `t.after` and restore the timer function. | yes |
+| `src/ui/panelDock.test.mjs` | Two click suppression callbacks after pointer release. | Use test mock timers for the two drag tests. Node restores the clock after each test. | yes |
+| `src/ui/streetLevelControls.test.mjs` | An animation frame callback from destroy. | Let the DOM fixture own its timer handles. Clear them before globals are restored. | yes |
+| `src/voice/gevRealtime.test.mjs` | 56 metric deadlines and 10 narration deadlines. | Register metric flush and narration cancel hooks for each controller fixture. | yes |
+| `src/voice/pointerCrop.test.mjs` | A 400 ms render deadline after a successful frame. | Save timer handles. Clear them in finally and restore the timer function. | yes |
+| `src/voice/realtimeNarration.test.mjs` | One narration deadline and one metric deadline. | Register metric flush and narration cancel hooks in the controller fixture. | yes |
+| `src/data/analystEngine.test.mjs` | No timer leak. The wall clock ceiling fails under load. | Use a 4000 ms ceiling. Clear the page interval in `t.after` if the query fails. | yes |
+
+The first fixture correction tries full UI removal. The fake UI has no remove method, so this correction fails.
+The final hooks call the two timer owners directly. The host probe confirms that both owners release their timers.
+
+## Pass 4 normal tests and baseline
+
+The initial probe reproduces all seven leaks on host Node 26.8.2. It reports counts of 1, 1, 2, 1, 66, 1 and 2.
+The row test has no timer leak. Its first probe passes the original ceiling during this run.
+The pristine baseline from pass 1 fails the same row test at 864 milliseconds. Its separate row test fails at 546 milliseconds.
+
+Those baseline logs name upstream commit `95fa816232456a6831172befa2f1b34b9ee73794`.
+
+The normal host run passes all 315 tests in the eight changed files. Format checks pass for 1327 source files.
+Boundary checks pass for 967 modules and 76 portable entries. Prose lint reports zero errors.
+The final results appear below.
+
+## Pass 4 fault checks
+
+Fault copies read tree `7adfc97a7cea727249269c75070bcfdeac24dea4`. They have no branch and stay outside this clone.
+Restore each of the seven original test files in these copies. The timer guard reports a leak for each file.
+The counts are 1, 1, 2, 1, 66, 1 and 2. The unit assertions still pass, but the guard rejects the live resources.
+
+Set the corrected row ceiling to zero in a copy. The row test fails.
+Its failed assertion reports 436 milliseconds.
+
+The clone keeps the corrected files throughout these fault checks.
+
+The first timer batch stops during one shell invocation after a script edit. This partial run gives no complete scan result.
+Compare the result file list with the 132-file input list. Run all missing files before the final report.
+
+## Pass 4 final timer result
+
+Read tree: `7adfc97a7cea727249269c75070bcfdeac24dea4`, with the eight test corrections above.
+The final probe uses the raw coverage environment, coverage options and two reporters from the main gate test run.
+It uses the gate QA register to build the source inventory. All eight changed test processes pass with no leaks.
+
+The final scan checks all 132 test files that differ from base `e2437f94`. No input file is missing or repeated.
+Each file runs in its own process. Two batches use CPUs 0 through 3 with nice level 19.
+
+All 132 processes pass. All guard records have no live timers or immediate callbacks.
+The scan reports no more files outside the sandbox.
+
+The first sandbox scan flags `src/tools/localRoute.test.mjs` with three timers after its test process fails.
+A second sandbox probe with coverage flags reports three immediate callbacks and a failed process for that file.
+The same file passes outside the sandbox with no leak. This task makes no correction to that file.
+The first scan command exits 123 after the script edit. Its 132 file records do not give a passed command result.
+
+The fault check with the complete coverage environment reproduces all seven original timer counts.
+The row fault with a zero ceiling fails. The eight files keep the same assertion method counts as read tree `7adfc97a`.
+Host logs and the fault copies are in `gev-tools/upstream-sync-3/pass-4-host/`.
+The reproducible script is `gev-tools/upstream-sync-3/leakcheck.sh`.
+
+## Pass 4 full host result
+
+Read tree: `7adfc97a7cea727249269c75070bcfdeac24dea4`, with the eight test corrections above.
+The full npm test command runs once and completes with exit zero.
+It reports 8670 tests, 8669 passes, zero failures and one skip. The row test passes.
+
+The pass 1 pristine baseline reports 6184 tests, 6182 passes, one failure and one skip.
+Its only failure is the row test. The corrected host run has no remaining baseline failure.
+
+Host Node 26.8.2 skips two allocation test files because their budgets need Node 24.
+This host run gives no image coverage verdict. The lead must run the Node 24 image checks and both review agents.
+Format and boundary checks pass. The first sandbox attempts stop with a Git subprocess error, so only the complete host checks give these results.
+
+Test correction commit: `588956a7dfaae7d5c3137fdb1cacf9197c8ce9c4`.
+Prose lint reports zero errors and 572 warnings. The final document commit changes no test code.
