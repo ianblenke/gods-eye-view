@@ -23,7 +23,7 @@
 
 ## 3. Lead work before and in the image
 
-- [ ] 3.1 Resolve the Mapillary conflict with the old credential spec. Get the owner decision for a later spec delta.
+- [ ] 3.1 Review the public Mapillary spec delta and the unchanged requirement text.
 - [ ] 3.2 Check the second parent of the merge commit against the upstream remote. Record the result in review.md.
 - [ ] 3.3 Run make adopt for CHANGE=upstream-sync-3 with FROM=95fa816232456a6831172befa2f1b34b9ee73794.
 - [ ] 3.4 Run make ratchet CHANGE=upstream-sync-3 and read its comparison verdict from the command output.
@@ -31,3 +31,12 @@
 - [ ] 3.6 Run make gates CHANGE=upstream-sync-3 on the final tree.
 - [ ] 3.7 Check the lock file in the image and record the actual adopt volume.
 - [ ] 3.8 Commit the archive and trace files after the image checks and review.
+
+## 4. Public browser names
+
+- [x] 4.1 Keep the test for `credential-boundary-001`.
+- [x] 4.2 Keep the test for `credential-boundary-002`.
+- [x] 4.3 Change both list tests for `credential-boundary-003` before the build helper.
+- [x] 4.4 Keep the test for `credential-boundary-004`.
+- [x] 4.5 Keep the test for `credential-boundary-016`.
+- [ ] 4.6 Remove the Mapillary define default and check the host results.

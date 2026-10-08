@@ -27,7 +27,7 @@ None.
 
 ### Modified Capabilities
 
-None. The owner requests no spec delta for this sync.
+- credential-boundary: Change scenario `credential-boundary-003` to list the three public browser names.
 
 ## Impact
 
@@ -43,6 +43,16 @@ The fork keeps its OSH implementation files equal to the canonical base. Only th
 The image must measure coverage and trace gaps. The lead must check the lock file and get both review results.
 This host task creates no `review.md` and sends no push.
 
-The old credential spec needs exactly two public browser defines. Upstream adds a third define for Mapillary.
-The host test for that old requirement fails. The owner must decide the later spec scope.
+The owner allows the public Mapillary name in scenario `credential-boundary-003`.
+SECURITY.md documents the token as public. DATA_SOURCES.md lists its viewer and Graph API use.
+docs/CURRENT-STATE.md describes Street Level. server/providers/mapillary/constants.js states that the token lives in the browser by design.
+
+This token must not be a Google, OpenAI or other server credential.
+The three names must remain in order. With no parameters, each define value must be undefined.
+The server Google key must stay outside the defines. The key-shaped literal test `credential-boundary-004` stays unchanged.
+
+The first requirement sentence stays unchanged to keep the other scenario hashes. The lead must assess its two-credential text.
 The unchanged upstream ranking time test also fails under the full suite load.
+
+The host lint rejects `expose` in the required unchanged sentence of the new delta file.
+The lead must resolve this conflict before the image steps. Do not change the word list or scenario hashes.

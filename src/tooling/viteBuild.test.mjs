@@ -5,7 +5,7 @@ import { BROWSER_CSP, createBrowserViteConfig } from '../../build/vite.js';
 import standaloneConfig, * as compatibility from '../../vite.config.js';
 import * as providers from '../../server/providers/local.js';
 
-test('[credential-boundary-003] explicit build inputs preserve browser-only defines, plugin order and loopback protections', () => {
+test('[credential-boundary-003] build inputs keep three public defines, plugin order and loopback limits', () => {
   const plugin = { name: 'fixture-provider' };
   const config = createBrowserViteConfig({
     plugins: [plugin],
@@ -40,7 +40,7 @@ test('[credential-boundary-003] explicit build inputs preserve browser-only defi
   assert.deepEqual(config.define, {
     'import.meta.env.GOOGLE_MAPS_API_KEY': '"browser-fixture"',
     'import.meta.env.CESIUM_ION_TOKEN': '"ion-fixture"',
-    'import.meta.env.MAPILLARY_CLIENT_TOKEN': '""',
+    'import.meta.env.MAPILLARY_CLIENT_TOKEN': undefined,
   });
   assert.equal(
     createBrowserViteConfig({ mapillaryToken: 'MLY|1|abc' }).define[
@@ -48,6 +48,17 @@ test('[credential-boundary-003] explicit build inputs preserve browser-only defi
     ],
     '"MLY|1|abc"',
   );
+  const emptyDefines = createBrowserViteConfig().define;
+  assert.deepEqual(Object.keys(emptyDefines), [
+    'import.meta.env.GOOGLE_MAPS_API_KEY',
+    'import.meta.env.CESIUM_ION_TOKEN',
+    'import.meta.env.MAPILLARY_CLIENT_TOKEN',
+  ]);
+  assert.deepEqual(Object.values(emptyDefines), [
+    undefined,
+    undefined,
+    undefined,
+  ]);
   // A wildcard bind keeps the Host-header check; LAN names are explicit.
   for (const host of ['0.0.0.0', '::'])
     assert.deepEqual(

@@ -116,7 +116,7 @@ test('both Places routes select the intended key and keep it out of responses', 
   }
 });
 
-test('[credential-boundary-003] browser defines contain the browser key and exclude the server key', () => {
+test('[credential-boundary-003] browser defines contain three public names and exclude the server key', () => {
   withKeys({ server: 'server-secret', browser: 'browser-public' }, () => {
     const defines = config({ mode: 'test' }).define;
     assert.equal(defines['import.meta.env.GOOGLE_MAPS_API_KEY'], '"browser-public"');
@@ -125,6 +125,7 @@ test('[credential-boundary-003] browser defines contain the browser key and excl
     assert.deepEqual(Object.keys(defines), [
       'import.meta.env.GOOGLE_MAPS_API_KEY',
       'import.meta.env.CESIUM_ION_TOKEN',
+      'import.meta.env.MAPILLARY_CLIENT_TOKEN',
     ]);
   });
 });

@@ -106,8 +106,13 @@ A value of zero removes each limit. The server geocode route shares the Google l
 
 Upstream adds standalone MCP and voice tool routes. The fork keeps those routes and the OSH routes.
 
-The new public Mapillary credential is outside the old two-key text of the credential spec.
-This sync has no spec delta. The lead must assess this spec limit in the review.
+The delta carries the complete Browser bundle inputs requirement. Only scenario `credential-boundary-003` changes.
+Keep the requirement text and the other scenarios equal to the base spec.
+List the Google browser key, Cesium ion token and public Mapillary token in that order.
+
+Both list tests use literal names. The build helper must leave each omitted input undefined.
+Remove the empty-string default for the Mapillary define. Keep the server Google key checks and the literal scan unchanged.
+
 The fixture credential scan does not supply the new Mapillary token to the build helper.
 It does not prove the classification of that public token.
 
