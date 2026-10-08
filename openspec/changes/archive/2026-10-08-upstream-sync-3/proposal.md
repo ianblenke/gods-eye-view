@@ -143,6 +143,8 @@ The owner accepts these by name. A later change corrects them.
 - `src/googleGeocodeProxy.test.mjs` lines 561 and 595: the two test titles have no article.
 - `src/tools/mcpPanelKey.test.mjs` line 110: the words "race paths" name the race branches.
 - `SECURITY.md` lines 35 and 79: one adjective from the owner list. It comes from upstream text and from an older fork sentence.
+- Review round 3 lists wording findings that remain open. One is the verb "run" used as a noun in the older design sections.
+- Two more are the place of the section "Final gates correction" and some noun groups. `review/ste-adversary.md` has the full list.
 
 ### qa-tags-not-pinned
 
