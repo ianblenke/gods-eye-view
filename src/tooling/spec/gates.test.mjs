@@ -2754,3 +2754,61 @@ test('[gap-ledger-081] keep the waiver count for an edited adopted file in the g
     assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
+
+function adoptedTotals(root) {
+  write(root, { 'src/merged.js': NOISE_SOURCE + '// Fork edit.\n' });
+  const line = adoptedNoise(root);
+  const ledger = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8'));
+  ledger.coverage['src/merged.js'].lines = 0;
+  ledger.coverage['src/merged.js'].totals.branches = 101;
+  write(root, { 'openspec/trace/gaps.json': JSON.stringify(ledger) + '\n' });
+  return line;
+}
+
+test('[gap-ledger-147] accept adopted totals in check ci and the ratchet command', () => {
+  withMergeFixture(root => {
+    adoptedTotals(root);
+    write(root, { 'openspec/changes/sync/tasks.md': '## 1. Merge\n\n- [x] Merge the branch.\n' });
+    mkdirSync(path.join(root, 'openspec/changes/archive'));
+    renameSync(path.join(root, 'openspec/changes/sync'), path.join(root, 'openspec/changes/archive/2026-09-13-sync'));
+    commitAll(root, 'record fork totals');
+    for (const command of ['check', 'ci', 'ratchet']) {
+      const result = run(root, command === 'ci' ? [command] : [command, '--change', 'sync'], TOLERANCE_OPTIONS);
+      assert.match(result.output, /Ledger: 0 entries do not match the current gaps\./);
+      assert.doesNotMatch(result.output, /ERROR LEDGER-(?:STALE|LARGER-GAP|LOST-COVERAGE)[^\n]*src\/merged\.js/);
+    }
+    assert.equal(JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/merged.js'].totals.branches, 100);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
+
+
+test('[gap-ledger-149] need a valid adopt record for total differences', () => {
+  withMergeFixture(root => {
+    const line = adoptedTotals(root);
+    const lines = historyLines(root).filter(item => item.file !== 'src/merged.js');
+    write(root, { 'openspec/trace/history.jsonl': lines.map(item => JSON.stringify(item) + '\n').join('') });
+    const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
+
+test('[gap-ledger-150] ignore another change for total differences', () => {
+  withMergeFixture(root => {
+    const line = adoptedTotals(root);
+    line.change = 'another';
+    write(root, { 'openspec/trace/history.jsonl': JSON.stringify(line) + '\n' });
+    const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
+
+test('[gap-ledger-151] reject an invalid from for total differences', () => {
+  withMergeFixture(root => {
+    const line = adoptedTotals(root);
+    line.from = git(root, 'rev-parse', 'HEAD');
+    write(root, { 'openspec/trace/history.jsonl': JSON.stringify(line) + '\n' });
+    const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
