@@ -1,4 +1,5 @@
-import test from 'node:test';
+import test, { before, after } from 'node:test';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import {
   createSceneBundle,
@@ -50,6 +51,317 @@ const fixture = () => ({
 const asset = () => ({
   bytes: bytes.slice(),
   mimeType: 'application/geo+json',
+});
+
+const directBundle = (base64 = 'AQID') => {
+  const raw = Buffer.from(base64, 'base64');
+  const sha256 = createHash('sha256').update(raw).digest('hex');
+  const project = fixture(),
+    p = project.scenes[0].dataPacks[0];
+  p.source = { adapter: 'scene-bundle', path: 'data/item.json' };
+  p.byteLength = raw.length;
+  p.sha256 = sha256;
+  return {
+    format: 'gev-scene-bundle',
+    version: 1,
+    project,
+    assets: [
+      { path: 'data/item.json', mimeType: 'application/json', base64, sha256 },
+    ],
+  };
+};
+for (const [label, change, message] of [
+  [
+    'version',
+    (b) => {
+      b.version = 2;
+    },
+    'version: unsupported bundle version',
+  ],
+  [
+    'extra field',
+    (b) => {
+      b.assets[0].extra = 1;
+    },
+    'assets.extra: unsupported field',
+  ],
+  [
+    'path',
+    (b) => {
+      b.assets[0].path = '../x';
+    },
+    'source.path: expected a relative asset path without URL syntax or traversal',
+  ],
+  [
+    'duplicate path',
+    (b) => {
+      b.assets.push({ ...b.assets[0] });
+    },
+    'assets: duplicate asset path',
+  ],
+  [
+    'digest',
+    (b) => {
+      b.assets[0].sha256 = '0'.repeat(64);
+    },
+    'assets: asset integrity mismatch',
+  ],
+  [
+    'source',
+    (b) => {
+      b.project.scenes[0].dataPacks[0].source.adapter = 'assets';
+    },
+    'project: bundle must include every declared pack',
+  ],
+  [
+    'reference',
+    (b) => {
+      b.project.scenes[0].dataPacks[0].byteLength = 2;
+    },
+    'project: missing or mismatched bundle asset',
+  ],
+  [
+    'unused asset',
+    (b) => {
+      b.project.scenes[0].dataPacks = [];
+      b.project.scenes[0].shots[0].dataPackIds = [];
+    },
+    'assets: unreferenced bundle asset',
+  ],
+]) {
+  const tag = ['source', 'reference', 'unused asset', 'digest'].includes(label)
+    ? '100'
+    : '099';
+  test(`[director-${tag}] The bundle names the invalid ${label}`, async () => {
+    const b = directBundle();
+    change(b);
+    await assert.rejects(parseSceneShare(JSON.stringify(b)), { message });
+  });
+}
+test('[director-098] The bundle names the invalid JSON path', async () => {
+  await assert.rejects(parseSceneShare('{'), { message: '$: invalid JSON' });
+});
+for (const base64 of ['zz==', 'ZZ==', '99==', 'zZ09']) {
+  test(`[director-099] The bundle accepts base64 ${base64}`, async () => {
+    const b = directBundle(base64);
+    const result = await parseSceneShare(JSON.stringify(b));
+    assert.equal(result.assets.size, 1);
+    assert.equal(
+      result.assets.get('data/item.json').mimeType,
+      'application/json',
+    );
+  });
+}
+for (const [label, base64] of [
+  ['leading equals sign', '=AA='],
+  ['null base64', null],
+]) {
+  test(`[director-099] The bundle rejects a ${label}`, async () => {
+    const b = directBundle();
+    b.assets[0].base64 = base64;
+    await assert.rejects(parseSceneShare(JSON.stringify(b)), {
+      message: 'assets: invalid or oversized base64 asset',
+    });
+  });
+}
+test('[director-098] The bundle rejects null text', async () => {
+  await assert.rejects(parseSceneShare(null), {
+    message: '$: share exceeds 50 MiB',
+  });
+});
+for (const [label, resolve, alter, message] of [
+  [
+    'absent asset',
+    () => null,
+    () => {},
+    'assets: select a file for every declared data pack',
+  ],
+  [
+    'empty bytes',
+    () => ({ bytes: new Uint8Array(), mimeType: 'application/json' }),
+    () => {},
+    'assets: asset byte limit exceeded',
+  ],
+  [
+    'media type',
+    () => ({ bytes: new Uint8Array([1]), mimeType: 'wrong' }),
+    () => {},
+    'assets: unsupported media type',
+  ],
+  [
+    'declared length',
+    asset,
+    (p) => {
+      p.byteLength = 1;
+    },
+    'assets: selected file does not match declared integrity',
+  ],
+]) {
+  test(`[director-102] The export names the invalid ${label}`, async () => {
+    const project = fixture();
+    alter(project.scenes[0].dataPacks[0]);
+    await assert.rejects(createSceneBundle(project, resolve), { message });
+  });
+}
+test('[director-102] The export names excess asset entries', async () => {
+  await assert.rejects(createSceneBundle(manyPacks(65), asset), {
+    message: 'assets: too many bundled assets',
+  });
+});
+test('[director-103] The export names different shared integrity', async () => {
+  const project = fixture(),
+    p = structuredClone(project.scenes[0].dataPacks[0]);
+  p.id = 'second';
+  p.byteLength = 1;
+  project.scenes[0].dataPacks.push(p);
+  await assert.rejects(createSceneBundle(project, asset), {
+    message: 'assets: conflicting shared asset integrity',
+  });
+});
+test('[director-101] The export limits each source filename to 160 characters', async () => {
+  const project = fixture();
+  project.scenes[0].dataPacks[0].source.path = 'z'.repeat(162);
+  const result = JSON.parse(await createSceneBundle(project, asset));
+  assert.equal(result.assets[0].path, 'files/0-' + 'z'.repeat(160));
+});
+test('[director-101] The export reads no chunk past the asset end', async () => {
+  const ranges = [],
+    data = new Uint8Array(32768);
+  const subarray = data.subarray.bind(data);
+  data.subarray = (start, end) => {
+    ranges.push([start, end]);
+    return subarray(start, end);
+  };
+  const result = JSON.parse(
+    await createSceneBundle(fixture(), () => ({
+      bytes: data,
+      mimeType: 'application/json',
+    })),
+  );
+  assert.equal(result.assets[0].base64.length, 43692);
+  assert.deepEqual(ranges, [[0, 32768]]);
+});
+test('[director-104] The byte store accepts an absent replacement map', () => {
+  const store = createBundleAssets();
+  store.replace(new Map([['x', { bytes: new Uint8Array([1]) }]]));
+  store.replace();
+  assert.deepEqual(store.getState(), { count: 0, bytes: 0 });
+});
+test('[director-105] The byte store accepts its default byte limit', () => {
+  const store = createBundleAssets();
+  store.replace(
+    new Map([
+      ['x', { bytes: new Uint8Array(8388608), mimeType: 'application/json' }],
+    ]),
+  );
+  assert.equal(store.source({ path: 'x' }).bytes.length, 8388608);
+  store.clear();
+});
+test('[director-105] The byte store rejects an unsafe path before its lookup', () => {
+  const store = createBundleAssets();
+  store.replace(new Map([['../x', { bytes: new Uint8Array([1]) }]]));
+  assert.throws(() => store.source({ path: '../x' }), {
+    message:
+      'source.path: expected a relative asset path without URL syntax or traversal',
+  });
+});
+test('[director-109 director-110] The preview uses empty source and layer lists', () => {
+  const project = fixture();
+  project.scenes[0].dataPacks[0].source.adapter = '1';
+  project.scenes[0].shots[0].layers = { 1: true };
+  const value = describeSceneShare({ project, assets: new Map() });
+  assert.equal(value.packs[0].status, 'Source unavailable');
+  assert.deepEqual(value.missingLayers, ['1']);
+});
+test('[director-102] The share limits reject a caller change', async () => {
+  const { SHARE_LIMITS } = await import('./bundle.js');
+  assert.equal(Object.isFrozen(SHARE_LIMITS), true);
+  assert.throws(() => {
+    SHARE_LIMITS.assets = 65;
+  }, TypeError);
+  assert.equal(SHARE_LIMITS.assets, 64);
+});
+
+test('[director-099] The base64 type check precedes text conversion', async () => {
+  const b = directBundle();
+  b.assets[0].base64 = { toString: null };
+  await assert.rejects(parseSceneShare(JSON.stringify(b)), {
+    message: 'assets: invalid or oversized base64 asset',
+  });
+});
+test('[director-102] The export does not compare an absent declared length', async () => {
+  let reads = 0;
+  class Bytes extends Uint8Array {
+    get length() {
+      reads++;
+      return super.length;
+    }
+  }
+  const value = JSON.parse(
+    await createSceneBundle(fixture(), () => ({
+      bytes: new Bytes([1, 2, 3]),
+      mimeType: 'application/json',
+    })),
+  );
+  assert.equal(value.assets[0].base64, 'AQID');
+  assert.equal(reads, 6);
+});
+test('[director-102] The export checks declared length before declared digest', async () => {
+  let reads = 0;
+  class Bytes extends Uint8Array {
+    get length() {
+      reads++;
+      return super.length;
+    }
+  }
+  const p = fixture();
+  p.scenes[0].dataPacks[0].byteLength = 3;
+  p.scenes[0].dataPacks[0].sha256 = '0'.repeat(64);
+  await assert.rejects(
+    createSceneBundle(p, () => ({
+      bytes: new Bytes([1, 2, 3]),
+      mimeType: 'application/json',
+    })),
+    { message: 'assets: selected file does not match declared integrity' },
+  );
+  assert.equal(reads, 4);
+});
+test('[director-102] The export checks the asset size before the total size', async () => {
+  let calls = 0,
+    reads = 0;
+  class FullBytes extends Uint8Array {
+    get length() {
+      return 8388608;
+    }
+  }
+  class LastBytes extends Uint8Array {
+    get length() {
+      reads++;
+      return 1;
+    }
+  }
+  await assert.rejects(
+    createSceneBundle(manyPacks(5), () => ({
+      bytes: ++calls === 5 ? new LastBytes([1]) : new FullBytes([1]),
+      mimeType: 'application/json',
+    })),
+    { message: 'assets: asset byte limit exceeded' },
+  );
+  assert.equal(reads, 3);
+});
+test('[director-110] The applied shot packs decide external content before source pack IDs', () => {
+  let reads = 0;
+  const project = fixture();
+  project.scenes[0].appliedShotPacks = ['x'];
+  Object.defineProperty(project.scenes[0].shots[0], 'sourcePackId', {
+    get() {
+      reads++;
+      return 'x';
+    },
+  });
+  const result = describeSceneShare({ project, assets: new Map() });
+  assert.equal(result.externalContent, true);
+  assert.equal(reads, 0);
 });
 
 test('[director-101] The selected scene bundle copies bytes and attribution and keeps the project without an asset request', async () => {
@@ -562,17 +874,6 @@ test('[director-102] The export rejects declared digest', async () => {
   await assert.rejects(
     createSceneBundle(f, asset),
     /selected file does not match/,
-  );
-});
-
-test('[director-102] The export rejects excess total bytes', async () => {
-  const f = manyPacks(5);
-  await assert.rejects(
-    createSceneBundle(f, () => ({
-      bytes: new Uint8Array(8388608),
-      mimeType: 'application/json',
-    })),
-    /asset byte limit/,
   );
 });
 
@@ -1184,10 +1485,9 @@ test('[director-102] The export checks its encoded text budget', async () => {
     }
   };
   try {
-    await assert.rejects(
-      createSceneBundle(fixture(), asset),
-      /share exceeds 50 MiB/,
-    );
+    await assert.rejects(createSceneBundle(fixture(), asset), {
+      message: '$: share exceeds 50 MiB',
+    });
   } finally {
     globalThis.TextEncoder = Native;
   }
@@ -1201,6 +1501,11 @@ test('[director-102] The export keeps its total after an absent length', async (
       return ++this.reads === 1 ? undefined : super.length;
     }
   }
+  class CountedBytes extends Uint8Array {
+    get length() {
+      return 8388608;
+    }
+  }
   const f = manyPacks(6);
   await assert.rejects(
     createSceneBundle(f, () => ({
@@ -1209,11 +1514,12 @@ test('[director-102] The export keeps its total after an absent length', async (
           ? new Bytes([1])
           : calls === 6
             ? new Uint8Array([1])
-            : new Uint8Array(8388608),
+            : new CountedBytes([1]),
       mimeType: 'application/json',
     })),
     /asset byte limit/,
   );
+  assert.equal(calls, 6);
 });
 
 test('[director-099] The bundle accepts the application/json media type', async () => {
@@ -1417,6 +1723,17 @@ for (const [label, size, name] of [
     assert.equal(calls, 1);
   });
 }
+let limitBytes, limitBase64, limitDigest, zeroChunks;
+before(() => {
+  limitBytes = new Uint8Array(33554432);
+  zeroChunks = new Map([[32768, Array.from(limitBytes.subarray(0, 32768))]]);
+  const chunk = Buffer.from(limitBytes.buffer, 0, 8388608);
+  limitBase64 = chunk.toString('base64');
+  limitDigest = createHash('sha256').update(chunk).digest('hex');
+});
+after(() => {
+  limitBytes = limitBase64 = limitDigest = zeroChunks = undefined;
+});
 const byteProject = (sizes) => ({
   version: 6,
   scenes: [
@@ -1431,65 +1748,108 @@ const byteProject = (sizes) => ({
     },
   ],
 });
-test('[director-102] The export accepts the asset byte limit', async () => {
-  const value = JSON.parse(
-    await createSceneBundle(byteProject([8388608]), () => ({
-      bytes: new Uint8Array(8388608),
+class LimitBytes extends Uint8Array {
+  subarray(start, end) {
+    const size = super.subarray(start, end).byteLength;
+    if (!zeroChunks.has(size)) zeroChunks.set(size, new Array(size).fill(0));
+    return zeroChunks.get(size);
+  }
+}
+const withBase64 = async (work) => {
+  const native = globalThis.btoa;
+  globalThis.btoa = (value) => Buffer.from(value, 'latin1').toString('base64');
+  try {
+    return await work();
+  } finally {
+    globalThis.btoa = native;
+  }
+};
+test('[director-102] The export accepts the total byte limit and rejects one more byte', async () =>
+  withBase64(async () => {
+    const sizes = [8388608, 8388608, 8388608, 8388608];
+    let i = 0;
+    const resolve = () => ({
+      bytes: new LimitBytes(limitBytes.buffer, 0, sizes[i++]),
       mimeType: 'application/json',
-    })),
-  );
-  assert.equal(value.project.scenes[0].dataPacks[0].byteLength, 8388608);
-});
-test('[director-102] The export accepts the total byte limit and rejects one more byte', async () => {
-  const sizes = [8388608, 8388608, 8388608, 8388608];
-  let i = 0;
-  const resolve = () => ({
-    bytes: new Uint8Array(sizes[i++]),
-    mimeType: 'application/json',
-  });
-  assert.equal(
-    JSON.parse(await createSceneBundle(byteProject(sizes), resolve)).assets
-      .length,
-    4,
-  );
-  sizes.push(1);
-  i = 0;
-  await assert.rejects(createSceneBundle(byteProject(sizes), resolve), {
-    message: 'assets: asset byte limit exceeded',
-  });
-});
-test('[director-099] The base64 accepts its length limit and rejects the next aligned length', async () => {
-  const value = await bundleObject();
-  value.assets[0].base64 = 'A'.repeat(11184812);
-  await assert.rejects(parseSceneShare(JSON.stringify(value)), {
-    message: 'assets: asset byte limit exceeded',
-  });
-  value.assets[0].base64 += 'AAAA';
-  await assert.rejects(parseSceneShare(JSON.stringify(value)), {
-    message: 'assets: invalid or oversized base64 asset',
-  });
-});
-test('[director-099] The import accepts the total byte limit and rejects one more byte', async () => {
-  const sizes = [8388608, 8388608, 8388608, 8388608];
-  let i = 0;
-  const resolve = () => ({
-    bytes: new Uint8Array(sizes[i++]),
-    mimeType: 'application/json',
-  });
-  const value = JSON.parse(
-    await createSceneBundle(byteProject(sizes), resolve),
-  );
-  assert.equal((await parseSceneShare(JSON.stringify(value))).assets.size, 4);
-  value.assets.push({
-    path: 'files/extra.json',
-    mimeType: 'application/json',
-    base64: 'AA==',
-    sha256: '0'.repeat(64),
-  });
-  await assert.rejects(parseSceneShare(JSON.stringify(value)), {
-    message: 'assets: asset byte limit exceeded',
-  });
-});
+    });
+    const value = JSON.parse(
+      await createSceneBundle(byteProject(sizes), resolve),
+    );
+    assert.equal(
+      value.project.scenes[0].dataPacks.reduce((n, p) => n + p.byteLength, 0),
+      33554432,
+    );
+    for (const entry of value.assets) {
+      assert.equal(entry.base64.length, 11184812);
+      assert.equal(entry.base64.slice(-4), 'AAA=');
+      assert.equal(
+        entry.sha256,
+        '2daeb1f36095b44b318410b3f4e8b5d989dcc7bb023d1426c492dab0a3053e74',
+      );
+    }
+    sizes.push(1);
+    i = 0;
+    await assert.rejects(createSceneBundle(byteProject(sizes), resolve), {
+      message: 'assets: asset byte limit exceeded',
+    });
+  }));
+const withByteCopy = async (work) => {
+  const native = Uint8Array.from;
+  Uint8Array.from = function (value, map, context) {
+    if (typeof value !== 'string')
+      return native.call(this, value, map, context);
+    for (let i = 0; i < 256; i++) {
+      assert.equal(map.call(context, String.fromCharCode(i), i), i);
+    }
+    return new Uint8Array(Buffer.from(value, 'latin1'));
+  };
+  try {
+    return await work();
+  } finally {
+    Uint8Array.from = native;
+  }
+};
+test('[director-099] The base64 accepts its length limit and rejects the next aligned length', async () =>
+  withByteCopy(async () => {
+    const value = await bundleObject();
+    value.assets[0].base64 = 'A'.repeat(11184812);
+    await assert.rejects(parseSceneShare(JSON.stringify(value)), {
+      message: 'assets: asset byte limit exceeded',
+    });
+    value.assets[0].base64 += 'AAAA';
+    await assert.rejects(parseSceneShare(JSON.stringify(value)), {
+      message: 'assets: invalid or oversized base64 asset',
+    });
+  }));
+test('[director-099] The import accepts the total byte limit and rejects one more byte', async () =>
+  withByteCopy(async () => {
+    const value = {
+      format: 'gev-scene-bundle',
+      version: 1,
+      project: byteProject([8388608, 8388608, 8388608, 8388608]),
+      assets: Array.from({ length: 4 }, (_, i) => ({
+        path: `data/${i}.json`,
+        mimeType: 'application/json',
+        base64: limitBase64,
+        sha256: limitDigest,
+      })),
+    };
+    for (const p of value.project.scenes[0].dataPacks) {
+      p.source.adapter = 'scene-bundle';
+      p.byteLength = 8388608;
+      p.sha256 = limitDigest;
+    }
+    assert.equal((await parseSceneShare(JSON.stringify(value))).assets.size, 4);
+    value.assets.push({
+      path: 'files/extra.json',
+      mimeType: 'application/json',
+      base64: 'AA==',
+      sha256: '0'.repeat(64),
+    });
+    await assert.rejects(parseSceneShare(JSON.stringify(value)), {
+      message: 'assets: asset byte limit exceeded',
+    });
+  }));
 
 for (const [label, call, stopAt] of [
   ['import before an asset', 'import', 2],
@@ -1687,3 +2047,53 @@ for (const outcome of ['success', 'error', 'cancel']) {
     assert.equal(callbacks.size, 0);
   });
 }
+
+test('[director-102] The absent digest stops its check after one field read', async () => {
+  let reads = 0;
+  const result = JSON.parse(
+    await createSceneBundle(fixture(), (p) => {
+      let value;
+      Object.defineProperty(p, 'sha256', {
+        enumerable: true,
+        get() {
+          reads++;
+          return value;
+        },
+        set(next) {
+          assert.equal(reads, 1);
+          value = next;
+        },
+      });
+      return { bytes: new Uint8Array([1, 2, 3]), mimeType: 'application/json' };
+    }),
+  );
+  assert.equal(result.assets[0].base64, 'AQID');
+  assert.equal(reads, 2);
+});
+
+test('[director-101] The filename slice starts at zero', async () => {
+  const calls = [];
+  const result = JSON.parse(
+    await createSceneBundle(fixture(), (p) => {
+      p.source.path = {
+        split(separator) {
+          assert.equal(separator, '/');
+          return {
+            at(index) {
+              assert.equal(index, -1);
+              return {
+                slice(start, end) {
+                  calls.push([start, end]);
+                  return start === 0 ? 'x' : 'wrong';
+                },
+              };
+            },
+          };
+        },
+      };
+      return { bytes: new Uint8Array([1]), mimeType: 'application/json' };
+    }),
+  );
+  assert.equal(result.assets[0].path, 'files/0-x');
+  assert.deepEqual(calls, [[0, 160]]);
+});

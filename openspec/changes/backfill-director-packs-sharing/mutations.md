@@ -1,3 +1,5 @@
+AAAA is a base64 text value.
+
 # Mutation evidence
 
 Base commit: `290b5d2`.
@@ -8,7 +10,7 @@ MIME means Multipurpose Internet Mail Extensions.
 
 Pass 3 reads the output of the complete mutation command.
 A killed mutation has a failed repository test.
-The code limits m172 and m284 have no failed repository test.
+Pass 3 had no failed repository test for m172 and m284.
 Mutation m389 is equivalent for the public API of the module with standard built-in functions.
 The getter and resolver probe is evidence/probe-export-parser.txt.
 
@@ -3445,8 +3447,8 @@ false
 ### m126 Test
 
 ```text
-[director-102] The export rejects excess total bytes
-Output: KILLED [director-102] The export rejects excess total bytes
+[director-102] The export accepts the total byte limit and rejects one more byte
+Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
 ```
 
 ## m127
@@ -7716,7 +7718,7 @@ File: src/director/packs/session.js
 
 | Old | New | Result | Failed test |
 | --- | --- | --- | --- |
-| [Old code](#m284-old) | [New code](#m284-new) | known limit | [Test record](#m284-test) |
+| [Old code](#m284-old) | [New code](#m284-new) | KILLED | [Test record](#m284-test) |
 
 ### m284 Old
 
@@ -7733,12 +7735,13 @@ if (signal?.aborted || disposed) return false;
 ### m284 Test
 
 ```text
-No failed repository test
-Output: SURVIVED 
+[director-088] The destroyed session does not read the caller signal state
+Output: KILLED [director-088] The destroyed session does not read the caller signal state
 ```
 
 Probe: evidence/probe-signal-getter.txt.
-The code limit uses a custom signal getter.
+Pass 4 kills this order change for an already destroyed session.
+The active-session getter code fault remains a Known limit.
 
 ## m285
 
@@ -9328,8 +9331,8 @@ bytes.length >= PACK_LIMITS.bytes
 ### m341 Test
 
 ```text
-[director-102] The export accepts the asset byte limit
-Output: KILLED [director-102] The export accepts the asset byte limit
+[director-102] The export accepts the total byte limit and rejects one more byte
+Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
 ```
 
 ## m342
@@ -11164,7 +11167,22 @@ const copy = structuredClone(project);
 Output: KILLED [director-101] The export rejects an invalid project
 ```
 
-## Complete command output
+## Pass 4 complete command output
+
+The command uses a scratch clone with the final test files.
+The clone has all source dependencies and the same node_modules link.
+The helper changes and restores only that clone.
+The root production files stay unchanged.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-tools/director-3/pass4/hand-clone /home/ianblenke/docker/gev-tools/director-3/muts.json
+```
+
+The result is 406 killed rows and two survivors from 408 rows.
+No row was skipped, timed out or crashed.
+Row m284 now has a failed tagged repository test.
+No row m409 or later is necessary.
+The automatic campaign reproduces every new kill.
 
 ```text
 m001: KILLED [director-076] The asset path accepts safe names
@@ -11292,7 +11310,7 @@ m122: KILLED [director-102] The export rejects an asset above the byte limit
 m123: KILLED [director-102] The export rejects absent assets
 m124: KILLED [director-102] The export rejects declared byte length
 m125: KILLED [director-102] The export rejects declared digest
-m126: KILLED [director-102] The export rejects excess total bytes
+m126: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
 m127: KILLED [director-102] The export rejects excess asset total
 m128: KILLED [director-103] The export reuses a shared asset
 m129: KILLED [director-103] The export rejects shared byte length
@@ -11450,7 +11468,7 @@ m280: KILLED [director-099] The bundle accepts the audio/ogg media type
 m281: KILLED [director-099] The bundle accepts the audio/wav media type
 m282: KILLED [director-099] The bundle accepts the audio/webm media type
 m283: KILLED [director-089] The session rejects a falsy handle with inherited disposal
-m284: SURVIVED 
+m284: KILLED [director-088] The destroyed session does not read the caller signal state
 m285: KILLED [director-083] The collection accepts its exact feature limit
 m286: KILLED [director-084] The feature ID accepts its exact text limit
 m287: KILLED [director-085] The position accepts its exact total limit
@@ -11507,7 +11525,7 @@ m337: KILLED [director-087] The decoder rejects absent geometry
 m338: KILLED [director-087] The decoder rejects absent geometry
 m339: KILLED [director-087] The decoder rejects absent geometry
 m340: KILLED [director-095] The directory source uses the default fetch function
-m341: KILLED [director-102] The export accepts the asset byte limit
+m341: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
 m342: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
 m343: KILLED [director-099] The base64 accepts its length limit and rejects the next aligned length
 m344: KILLED [director-106] The share helpers accept the project file limit and reject one more byte
@@ -11575,6 +11593,5 @@ m405: KILLED [director-107] The share helpers remove the listener after success
 m406: KILLED [director-107] The share helpers remove the listener after error
 m407: KILLED [director-107] The share helpers remove the listener after success
 m408: KILLED [director-101] The export rejects an invalid project
-SURVIVORS: [('m172', 'SURVIVED'), ('m284', 'SURVIVED'), ('m389', 'SURVIVED')]
-
+SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
 ```
