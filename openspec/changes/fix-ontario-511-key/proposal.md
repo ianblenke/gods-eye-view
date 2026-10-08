@@ -7,6 +7,7 @@ The owner approved this fix on 2026-10-08.
 
 Add an optional server key. Stop the Ontario request when the key is absent.
 Use fixed warning text. Correct the Ontario documents.
+Add backfill scenarios `live-sources-006` to `live-sources-009` for the existing Ontario row rules.
 
 ## Capabilities
 
