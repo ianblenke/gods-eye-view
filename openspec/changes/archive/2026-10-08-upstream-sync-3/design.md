@@ -427,6 +427,20 @@ The lead must run the test files of this table in the image and check the counts
 If the gaps become larger again, use a ledger-refresh change. The production code stays equal to upstream.
 The owner accepts that the child processes of both panel key race tests give no coverage. Record this in `review.md`.
 
+## Pass 6 stable function count
+
+The first final gates run stopped with `LEDGER-LOST-COVERAGE` for `server/providers/mapillary/tiles.js`. It found 7 uncovered functions, and the ledger records 6.
+The 7 functions are error handlers at lines 175, 211, 229, 255, 298, 335 and 339.
+
+Three test files that load `tiles.js` never ran any of them in 10 image runs.
+The 18 test files that load `tiles.js` ran together 10 times in the image. The handler at line 255 ran in 7 runs, and only in the process of `mapillaryProvider.test.mjs`.
+A background sweep lists the cache folder while a write moves its temporary file. The stat call of the moved file then fails, and the handler skips it.
+
+The edit adds a tile file to the first disk sweep test, the test for expired tiles. A replacement of `fsp.stat` makes the stat call of that file fail, and the test checks that the sweep skips the file.
+The handler now runs in each run, so the count of uncovered functions stays at 6.
+The test edit adds no test. The host run passes all 51 tests, and the handler runs once.
+A copy of `tiles.js` without the handler makes this test fail, and no other test fails.
+
 ## Round 1 host result
 
 Source code tree: `77b57e88aa1084f7851dd2838f0370370a14c0e8`. Host runtime: Node `26.8.2`.
