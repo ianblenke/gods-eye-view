@@ -28,6 +28,17 @@ import {
   validateDataPack,
   validateSceneDataPacks,
 } from './manifest.js';
+for (const character of 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789') {
+  test(`[director-076] The asset path accepts ${character} in both character positions`, () => {
+    assert.doesNotThrow(() => validateAssetPath(character));
+    assert.doesNotThrow(() => validateAssetPath('x' + character));
+  });
+}
+test('[director-079] The manifest accepts each hexadecimal digest character', () => {
+  const value = pack();
+  value.sha256 = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
+  assert.doesNotThrow(() => validateDataPack(value, 'pack', new Set()));
+});
 const imagePack = () => ({
   ...pack(),
   format: 'image',
@@ -72,7 +83,352 @@ const response = (
 const directory = (fetchImpl) =>
   createAssetDirectorySource({ baseUrl: 'https://example.org/a/', fetchImpl });
 
-for (const path of ['z/Zz', 'Z/zZ', 'zZ/Zz']) {
+test('[director-076] The path type check comes before the segment read', () => {
+  let reads = 0;
+  const value = { split() { reads++; return ['x']; } };
+  assert.throws(() => validateAssetPath(value), {
+    message: 'source.path: expected nonempty text, at most 1024 characters',
+  });
+  assert.equal(reads, 0);
+});
+
+for (const [tags, label, alter, message] of [
+  ['077', 'fields before ID', p => { p.extra = 1; p.id = ''; }, 'pack.extra: unsupported field'],
+  ['077', 'ID before version', p => { p.id = ''; p.version = 2; }, 'pack.id: expected nonempty text, at most 256 characters'],
+  ['077', 'version before format', p => { p.version = 2; p.format = 'bad'; }, 'pack.version: unsupported pack version'],
+  ['077', 'format before source fields', p => { p.format = 'bad'; p.source.extra = 1; }, 'pack.format: unsupported pack format'],
+  ['076 director-077', 'source name before path', p => { p.source.adapter = ''; p.source.path = '../x'; }, 'pack.source.adapter: expected nonempty text, at most 256 characters'],
+  ['076 director-078', 'source path before attribution fields', p => { p.source.path = '../x'; p.attribution.extra = 1; }, 'pack.source.path: expected a relative asset path without URL syntax or traversal'],
+  ['078', 'text before license', p => { p.attribution.text = ''; p.attribution.license = ''; }, 'pack.attribution.text: expected nonempty text, at most 4096 characters'],
+  ['078', 'license before URL', p => { p.attribution.license = ''; p.attribution.url = 'bad'; }, 'pack.attribution.license: expected nonempty text, at most 4096 characters'],
+  ['078 director-079', 'URL before byteLength', p => { p.attribution.url = 'bad'; p.byteLength = 0; }, 'pack.attribution.url: expected an HTTPS source link'],
+  ['079', 'byteLength before digest', p => { p.byteLength = 0; p.sha256 = 'bad'; }, 'pack.byteLength: expected a number from 1 to 8388608'],
+  ['080', 'bounds values before edge order', p => { p.placement.bounds = [181, 0, 1, 1]; }, 'pack.placement.bounds[0]: expected a number from -180 to 180'],
+  ['080', 'edge order before height', p => { p.placement.bounds = [0, 0, 0, 1]; p.placement.height = 1000000001; }, 'pack.placement.bounds: expected increasing non-dateline bounds'],
+]) {
+  test(`[director-${tags}] The manifest checks ${label}`, () => {
+    const p = tags === '080' ? imagePack() : pack();
+    alter(p);
+    assert.throws(() => validateDataPack(p, 'pack', new Set()), { message });
+  });
+}
+
+test('[director-079] The digest check comes before the placement read', () => {
+  const p = pack();
+  p.sha256 = 'bad';
+  let reads = 0;
+  Object.defineProperty(p, 'placement', { enumerable: true, get() { reads++; return { altitudeReference: 'ellipsoid' }; } });
+  assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.sha256: expected a lowercase SHA-256 digest' });
+  assert.equal(reads, 0);
+});
+
+test('[director-080] The height reference check comes before the bounds check', () => {
+  const p = imagePack(); p.placement.altitudeReference = 'bad'; p.placement.bounds = null;
+  assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.placement.altitudeReference: expected ellipsoid height in meters' });
+});
+
+test('[director-080] The bounds array check comes before the length read', () => {
+  let reads = 0;
+  const p = imagePack(); p.placement.bounds = { get length() { reads++; return 4; } };
+  assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.placement.bounds: expected an array of at most 4 entries' });
+  assert.equal(reads, 0);
+});
+
+test('[director-080] The bounds length check comes before each coordinate check', () => {
+  const p = imagePack(); p.placement.bounds = ['bad', 0, 1];
+  assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.placement.bounds: expected west, south, east, north' });
+});
+
+test('[director-082] The list check comes before the anchor read', () => {
+  let reads = 0;
+  const scene = { dataPacks: null, shots: [], get anchors() { reads++; return []; } };
+  assert.throws(() => validateSceneDataPacks(scene, '$'), { message: '$.dataPacks: expected an array of at most 8 entries' });
+  assert.equal(reads, 0);
+});
+
+test('[director-077 director-082] The declaration check comes before the duplicate ID check', () => {
+  const second = pack();
+  second.version = 2;
+  assert.throws(() => validateSceneDataPacks({ dataPacks: [pack(), second], shots: [] }, '$'), {
+    message: '$.dataPacks[1].version: unsupported pack version',
+  });
+});
+
+test('[director-088] The session reads source entries before renderer entries', () => {
+  const order = [];
+  const sources = { get assets() { order.push('source'); return asset; } };
+  const adapters = { get geojson() { order.push('renderer'); return () => ({ dispose() {} }); } };
+  const s = createDataPackSession({ sources, adapters });
+  try { assert.deepEqual(order, ['source', 'renderer']); }
+  finally { s.destroy(); }
+});
+
+test('[director-097] The source waits for stream cancellation before release', async () => {
+  const order = [];
+  const source = directory(async () => ({
+    ok: true,
+    headers: new Headers(),
+    body: { getReader() { return {
+      async read() { return { done: true }; },
+      async cancel() { await tick(); order.push('cancelled'); },
+      releaseLock() { order.push('released'); },
+    }; } },
+  }));
+  await source({ path: 'x' });
+  assert.deepEqual(order, ['cancelled', 'released']);
+});
+
+test('[director-097] The source waits for body cancellation before an HTTP error', async () => {
+  let cancelled = false;
+  const source = directory(async () => ({
+    ok: false,
+    body: { async cancel() { await tick(); cancelled = true; } },
+  }));
+  await assert.rejects(source({ path: 'x' }), { message: 'Asset unavailable' });
+  assert.equal(cancelled, true);
+});
+
+test('[director-089] The source listener and state check come before the work read', async () => {
+  const order = [];
+  const aborted = Object.getOwnPropertyDescriptor(AbortSignal.prototype, 'aborted').get;
+  const s = makeSession(({ signal }) => {
+    const add = signal.addEventListener.bind(signal);
+    signal.addEventListener = (...args) => { order.push('listener'); add(...args); };
+    Object.defineProperty(signal, 'aborted', { get() { order.push('state'); return aborted.call(signal); } });
+    return { get then() { order.push('work'); return resolve => resolve(asset()); } };
+  });
+  try {
+    assert.equal(await s.load([pack()]), true);
+    assert.deepEqual(order.slice(0, 3), ['listener', 'state', 'work']);
+  } finally { s.destroy(); }
+});
+
+test('[director-092] The source event reads its reason once during another source event', async () => {
+  const d = deferred();
+  let reads = 0, callback;
+  const s = makeSession(({ signal }) => {
+    const add = signal.addEventListener.bind(signal);
+    signal.addEventListener = (type, fn, options) => { callback = fn; add(type, fn, options); };
+    Object.defineProperty(signal, 'reason', { get() {
+      if (++reads === 1) callback();
+      return new Error('stop');
+    } });
+    return d.promise;
+  });
+  try {
+    const work = s.load([pack()]);
+    s.clear();
+    assert.equal(await work, false);
+    assert.equal(reads, 1);
+    d.resolve(asset());
+    await tick();
+  } finally { s.destroy(); }
+});
+
+for (const mode of ['success', 'error']) {
+  test(`[director-092] The source event during listener removal stops ${mode}`, async () => {
+    let reads = 0, renders = 0, first = true;
+    const s = makeSession(({ signal }) => {
+      Object.defineProperty(signal, 'reason', { get() { reads++; return new Error('event'); } });
+      const remove = signal.removeEventListener.bind(signal);
+      signal.removeEventListener = (...args) => {
+        if (first) { first = false; signal.dispatchEvent(new Event('abort')); }
+        remove(...args);
+      };
+      return mode === 'success' ? asset() : Promise.reject(new Error('source'));
+    }, () => { renders++; return { dispose() {} }; });
+    try {
+      await assert.rejects(s.load([pack()]), { message: 'Data pack could not load: check its source, format, size or integrity' });
+      assert.equal(reads, 1);
+      assert.equal(renders, 0);
+    } finally { s.destroy(); }
+  });
+}
+
+test('[director-089] The completed source does not read its reason during promise settlement', async () => {
+  let reads = 0, thenReads = 0, callback;
+  const s = makeSession(({ signal }) => {
+    const add = signal.addEventListener.bind(signal);
+    signal.addEventListener = (type, fn, options) => { callback = fn; add(type, fn, options); };
+    Object.defineProperty(signal, 'reason', { get() { reads++; return new Error('late'); } });
+    const value = asset();
+    Object.defineProperty(value, 'then', { get() { if (++thenReads === 2) callback(); return undefined; } });
+    return value;
+  });
+  try {
+    assert.equal(await s.load([pack()]), true);
+    assert.equal(thenReads, 2);
+    assert.equal(reads, 0);
+  } finally { s.destroy(); }
+});
+
+test('[director-089] The session removes resources after source cancellation and timer cleanup', async () => {
+  const nativeSet = globalThis.setTimeout, nativeClear = globalThis.clearTimeout;
+  const timer = {}, order = [], d = deferred();
+  let calls = 0, state, s;
+  globalThis.setTimeout = () => timer;
+  globalThis.clearTimeout = handle => { if (handle === timer) order.push('timer'); };
+  const caller = { aborted: false, addEventListener() {}, removeEventListener() { order.push('caller'); } };
+  s = makeSession(({ signal }) => {
+    if (calls++ === 0) {
+      signal.addEventListener('abort', () => { order.push('source'); state = s.getState(); });
+      return asset();
+    }
+    return d.promise;
+  }, () => ({ dispose() { order.push('resource'); } }));
+  try {
+    const work = s.load([pack(), {...pack(), id: 'second'}], { signal: caller });
+    await tick();
+    s.clear();
+    assert.equal(await work, false);
+    assert.deepEqual(state, { status: 'idle', count: 0 });
+    assert.deepEqual(order, ['source', 'caller', 'timer', 'resource']);
+    d.resolve(asset()); await tick();
+  } finally { s.destroy(); globalThis.setTimeout = nativeSet; globalThis.clearTimeout = nativeClear; }
+});
+
+test('[director-088] The destroyed session returns false for a load call during source cancellation', async () => {
+  const d = deferred();
+  let next, s;
+  s = makeSession(({ signal }) => {
+    signal.addEventListener('abort', () => { next = s.load([]); });
+    return d.promise;
+  });
+  try {
+    const work = s.load([pack()]);
+    s.destroy();
+    assert.equal(await work, false);
+    assert.equal(await next, false);
+    d.resolve(asset()); await tick();
+  } finally { s.destroy(); }
+});
+
+test('[director-088 director-091] The new list check follows old resource cleanup', async () => {
+  let disposals = 0;
+  const s = makeSession(asset, () => ({ dispose() { disposals++; } }));
+  try {
+    assert.equal(await s.load([pack()]), true);
+    await assert.rejects(s.load(null), { message: 'Too many data packs' });
+    assert.equal(disposals, 1);
+    assert.deepEqual(s.getState(), { status: 'idle', count: 0 });
+  } finally { s.destroy(); }
+});
+
+test('[director-088] The list check comes before the anchor read', async () => {
+  let reads = 0;
+  const s = makeSession();
+  try {
+    await assert.rejects(s.load(null, { anchors: { map() { reads++; return []; } } }), { message: 'Too many data packs' });
+    assert.equal(reads, 0);
+  } finally { s.destroy(); }
+});
+
+test('[director-088] The declaration check comes before the caller signal read', async () => {
+  let reads = 0;
+  const p = pack(); p.version = 2;
+  const s = makeSession();
+  try {
+    await assert.rejects(s.load([p], { signal: { get aborted() { reads++; return true; } } }), { message: 'packs[0].version: unsupported pack version' });
+    assert.equal(reads, 0);
+  } finally { s.destroy(); }
+});
+
+test('[director-089] The caller listener comes before the deadline', async () => {
+  const order = [];
+  const signal = { aborted: false, addEventListener() { order.push('listener'); }, removeEventListener() {} };
+  const timeoutMs = { valueOf() { order.push('deadline'); return 15000; } };
+  const s = makeSession(asset, undefined, { timeoutMs });
+  try {
+    assert.equal(await s.load([pack()], { signal }), true);
+    assert.deepEqual(order, ['listener', 'deadline']);
+  } finally { s.destroy(); }
+});
+
+test('[director-090] The caller event during listener setup cancels the load call', async () => {
+  const nativeSet = globalThis.setTimeout, nativeClear = globalThis.clearTimeout;
+  globalThis.setTimeout = () => ({});
+  globalThis.clearTimeout = () => {};
+  const c = new AbortController();
+  const add = c.signal.addEventListener.bind(c.signal);
+  c.signal.addEventListener = (...args) => { add(...args); c.abort(new Error('stop')); };
+  const s = makeSession();
+  try { assert.equal(await s.load([pack()], { signal: c.signal }), false); }
+  finally { s.destroy(); globalThis.setTimeout = nativeSet; globalThis.clearTimeout = nativeClear; }
+});
+
+test('[director-089] The final signal check comes before timer removal and the ready state', async () => {
+  const nativeSet = globalThis.setTimeout, nativeClear = globalThis.clearTimeout;
+  const timer = {}, order = [];
+  let state, s;
+  globalThis.setTimeout = () => timer;
+  globalThis.clearTimeout = handle => { if (handle === timer) { order.push('timer'); state = s.getState().status; } };
+  s = makeSession(({ signal }) => {
+    const check = signal.throwIfAborted.bind(signal);
+    signal.throwIfAborted = () => { order.push('check'); check(); };
+    return asset();
+  });
+  try {
+    assert.equal(await s.load([pack()]), true);
+    assert.deepEqual(order, ['check', 'check', 'timer']);
+    assert.equal(state, 'loading');
+  } finally { s.destroy(); globalThis.setTimeout = nativeSet; globalThis.clearTimeout = nativeClear; }
+});
+
+test('[director-090 director-093] The source signal error comes before the byte read', async () => {
+  let reads = 0;
+  const s = makeSession(({ signal }) => {
+    signal.throwIfAborted = () => { throw new Error('stop'); };
+    return { get bytes() { reads++; return new Uint8Array([1]); } };
+  });
+  try {
+    await assert.rejects(s.load([pack()]), { message: 'Data pack could not load: check its source, format, size or integrity' });
+    assert.equal(reads, 0);
+  } finally { s.destroy(); }
+});
+
+test('[director-093] The total byte check comes before the digest read', async () => {
+  let calls = 0, reads = 0;
+  const packs = Array.from({ length: 5 }, (_, i) => ({ ...pack(), id: 'p' + i }));
+  Object.defineProperty(packs[4], 'sha256', { get() { reads++; return calls < 5 ? '0'.repeat(64) : undefined; } });
+  class Bytes extends Uint8Array { get length() { return 8388608; } }
+  const s = makeSession(() => { if (++calls === 5) reads = 0; return { bytes: new Bytes([1]) }; });
+  try {
+    await assert.rejects(s.load(packs), { message: 'Data pack could not load: check its source, format, size or integrity' });
+    assert.equal(reads, 0);
+  } finally { s.destroy(); }
+});
+
+test('[director-095] The path check comes before the caller signal check', async () => {
+  let calls = 0;
+  const source = directory(() => { throw new Error('unused'); });
+  await assert.rejects(source({ path: '../x', signal: { throwIfAborted() { calls++; throw new Error('stop'); } } }), {
+    message: 'source.path: expected a relative asset path without URL syntax or traversal',
+  });
+  assert.equal(calls, 0);
+});
+
+test('[director-096] The header limit check comes before the first stream read', async () => {
+  let reads = 0;
+  const source = directory(async () => ({
+    ok: true, headers: new Headers({ 'content-length': '2' }),
+    body: { getReader() { return { async read() { reads++; return {done:true}; }, async cancel() {}, releaseLock() {} }; } },
+  }));
+  await assert.rejects(source({ path: 'x', maxBytes: 1 }), { message: 'Asset exceeds byte limit' });
+  assert.equal(reads, 0);
+});
+
+test('[director-097] The source signal check comes before the stream read', async () => {
+  let checks = 0, reads = 0;
+  const source = directory(async () => ({
+    ok: true, headers: new Headers(),
+    body: { getReader() { return { async read() { reads++; return {done:true}; }, async cancel() {}, releaseLock() {} }; } },
+  }));
+  const signal = { throwIfAborted() { if (++checks === 2) throw new Error('stop'); } };
+  await assert.rejects(source({ path: 'x', signal }), { message: 'stop' });
+  assert.equal(reads, 0);
+});
+
+for (const path of ['z/Zz', 'Z/zZ', 'zZ/Zz', '_x/_y', '-x/-y']) {
   test(`[director-076] The asset path accepts ${path}`, () => {
     assert.doesNotThrow(() => validateAssetPath(path));
   });
@@ -87,7 +443,7 @@ for (const [tag, label, alter, message] of [
   ['078', 'link syntax', p => { p.attribution.url = 'bad'; }, 'pack.attribution.url: expected an HTTPS source link'],
   ['078', 'link protocol', p => { p.attribution.url = 'http://example.org/'; }, 'pack.attribution.url: expected an HTTPS source link without credentials, query or fragment'],
   ['079', 'numeric text', p => { p.byteLength = '1'; }, 'pack.byteLength: expected a number from 1 to 8388608'],
-  ['079', 'byte length field', p => { p.byteLength = 0; }, 'pack.byteLength: expected a number from 1 to 8388608'],
+  ['079', 'byteLength field', p => { p.byteLength = 0; }, 'pack.byteLength: expected a number from 1 to 8388608'],
   ['079', 'integer field', p => { p.byteLength = 1.5; }, 'pack.byteLength: expected an integer'],
   ['080', 'extra placement field', p => { p.placement.extra = 1; }, 'pack.placement.extra: unsupported field'],
   ['080', 'placement object', p => { p.placement = null; }, 'pack.placement: expected an object'],
@@ -197,7 +553,7 @@ test('[director-088] The destroyed session does not read the caller signal state
   assert.equal(await s.load([pack()], { signal }), false);
   assert.equal(reads, 0);
 });
-test('[director-090] The replaced load call does not read the caller signal state again', async () => {
+test('[director-090] The cleared load call does not read the caller signal state again', async () => {
   let reads = 0;
   const signal = { get aborted() { reads++; return false; }, addEventListener() {}, removeEventListener() {} };
   const d = deferred(), s = makeSession(() => d.promise);
@@ -356,7 +712,7 @@ test('[director-078] The attribution rejects blank license', async () => {
   );
 });
 
-test('[director-079] The byte length rejects a fraction', async () => {
+test('[director-079] The byteLength field rejects a fraction', async () => {
   const a = pack();
   a.byteLength = 1.5;
   assert.throws(() => validateDataPack(a, 'pack', new Set()), /integer/);
@@ -1465,7 +1821,7 @@ test('[director-090] The session checks destroyed state after signal access', as
   assert.equal(s.getState().status, 'idle');
 });
 
-test('[director-090] The session checks replacement without signal state', async () => {
+test('[director-090] The session checks a cleared load call without signal state', async () => {
   const d = deferred();
   const s = makeSession(() => d.promise);
   const work = s.load([pack()]);
@@ -2609,7 +2965,7 @@ test('[director-092] The source signal event stops work before the renderer', as
   } finally { s.destroy(); }
 });
 
-test('[director-090] The session observes destruction during caller signal access after a source error', async () => {
+test('[director-090] The session sees destruction during caller signal access after a source error', async () => {
   let reads = 0, s;
   const signal = {
     get aborted() { if (++reads === 2) s.destroy(); return false; },
@@ -2628,7 +2984,7 @@ test('[director-093] The session checks byte type before length access', async (
     assert.equal(reads, 0);
   } finally { s.destroy(); }
 });
-test('[director-093] The null bytes do not cause another declared length read', async () => {
+test('[director-093] The session does not read declared byteLength again for null bytes', async () => {
   let reads = 0;
   const p = pack();
   Object.defineProperty(p, 'byteLength', { get() { reads++; return 1; } });
@@ -2650,7 +3006,7 @@ test('[director-092] The deadline gives its cause to the source signal', async (
   } finally { s.destroy(); }
 });
 
-test('[director-079] The digest type check precedes text conversion', () => {
+test('[director-079] The digest type check comes before text conversion', () => {
   const p = { ...pack(), sha256: Symbol('digest') };
   assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.sha256: expected a lowercase SHA-256 digest' });
 });
@@ -2664,14 +3020,14 @@ test('[director-080] The edge order check starts with west and east', () => {
   assert.throws(() => validateDataPack(p, 'pack', new Set()), { message: 'pack.placement.bounds: expected increasing non-dateline bounds' });
   assert.deepEqual(reads, [0, 1, 2, 3, 0, 2]);
 });
-test('[director-082] The distinct reference check precedes the search for known IDs', () => {
+test('[director-082] The distinct reference check comes before the search for known IDs', () => {
   let reads = 0;
   const ids = ['outline', 'outline'];
   Object.defineProperty(ids, 'some', { get() { reads++; return Array.prototype.some; } });
   assert.throws(() => validateSceneDataPacks({ dataPacks: [pack()], shots: [{ dataPackIds: ids }] }, '$'), { message: '$.shots[0].dataPackIds: expected distinct scene pack IDs' });
   assert.equal(reads, 0);
 });
-test('[director-093] The absent declared length does not cause another byte length read', async () => {
+test('[director-093] The session does not read bytes.length again without declared byteLength', async () => {
   let reads = 0;
   class Bytes extends Uint8Array { get length() { reads++; return super.length; } }
   const s = makeSession(() => ({ bytes: new Bytes([1, 2, 3]) }));
@@ -2727,6 +3083,34 @@ test('[director-088 director-092] The absent renderer map gives no renderer for 
     assert.equal(calls, 0);
     assert.deepEqual(s.getState(), { status: 'idle', count: 0 });
   } finally { s.destroy(); }
+});
+
+test('[director-096] The source checks the byte limit before it keeps a chunk', async () => {
+  const chunk = new Uint8Array([1]);
+  const push = Array.prototype.push;
+  let retained = 0;
+  const source = createAssetDirectorySource({
+    baseUrl: 'https://example.org/a/',
+    fetchImpl: async () => ({
+      ok: true,
+      headers: { get: () => null },
+      body: { getReader: () => ({
+        read: async () => ({ done: false, value: chunk }),
+        cancel: async () => {},
+        releaseLock() {},
+      }) },
+    }),
+  });
+  Array.prototype.push = function (...values) {
+    if (values.length === 1 && values[0] === chunk) retained++;
+    return Reflect.apply(push, this, values);
+  };
+  try {
+    await assert.rejects(source({ path: 'x', maxBytes: 0 }), { message: 'Asset exceeds byte limit' });
+    assert.equal(retained, 0);
+  } finally {
+    Array.prototype.push = push;
+  }
 });
 
 for (const mode of ['absent source', 'invalid bytes', 'excess total', 'wrong digest', 'invalid handle']) {

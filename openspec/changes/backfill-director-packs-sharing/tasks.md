@@ -1421,7 +1421,7 @@ New: const copy = structuredClone(project);
 
 - [x] 7.1 Reduce repeated work in the byte limit tests.
 - [x] 7.2 Add scenario clauses for new input checks.
-- [x] 7.3 Add tagged tests for observable code changes.
+- [x] 7.3 Add tagged tests for observable mutations.
 - [x] 7.4 Check every equivalent claim with a public function probe.
 - [x] 7.5 Complete the automatic check of former survivors.
 - [x] 7.6 Replace the hand operand table with the automatic audit.
@@ -1431,3 +1431,23 @@ New: const copy = structuredClone(project);
 - [x] 7.10 Check all hand mutation rows.
 - [x] 7.11 Correct each real prose error.
 - [x] 7.12 Check the final file scope.
+
+## 8 Pass 5
+
+- [x] 8.1 Add tests for long invalid JSON text.
+- [x] 8.2 Add tests for the standard base64 alphabet.
+- [x] 8.3 Check snapshot keys and bytes.
+- [x] 8.4 Check project validation before the resolver call.
+- [x] 8.5 Check path segments with _ and - at the start.
+- [x] 8.6 Check every equivalent probe across its public input limits.
+- [x] 8.7 Correct all review prose findings.
+- [x] 8.8 Extend the mutation tool classes.
+- [x] 8.9 Complete the extension mutation check.
+- [x] 8.10 Check the former survivors after the test changes.
+- [x] 8.11 Check all hand mutation rows.
+- [x] 8.12 Check all three test files.
+- [x] 8.13 Check coverage for each production file.
+- [x] 8.14 Check prose and test titles.
+- [x] 8.15 Check the format.
+- [x] 8.16 Check the production file diff.
+- [x] 8.17 Record the final evidence.
