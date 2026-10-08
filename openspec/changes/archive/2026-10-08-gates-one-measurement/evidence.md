@@ -14,18 +14,18 @@ The plain test, format and probe commands stopped or gave EPERM errors.
 Those attempts give no check verdict.
 
 The first complete host suite had failures in child process tests.
-The passed gate, guard and reporter commands ran without the sandbox child process errors.
-The parent arguments and child environment have the test isolation setting.
+The passed gate, guard and reporter commands ran without child process errors from the sandbox.
+The parent arguments and child environment have the isolation option.
 The host helpers use the actual child status and output when the host adds an EPERM error.
 The helpers do not change repository tests or gate rules.
 
 The probes use a fresh scratch copy instead of `gonem-verify`.
-The brief limits file changes to the clone and scratch folder.
+The task text limits file changes to the clone and to the scratch folder.
 The original lead probe files stay unchanged.
 Container gates, CI, archive and the two review agents remain tasks for the lead.
 Tasks 3.1 to 3.4 stay unchecked.
 
-The report labels CG, GL and CR name coverage-gate, gap-ledger and change-review.
+In the reports, P, D, T and E mean the proposal, design, tasks and evidence. CG, GL, CI and CR with a line number mean the specs coverage-gate, gap-ledger, ci-gates and change-review. Other uses of CI mean continuous integration.
 
 ## Review correction map
 
@@ -48,7 +48,7 @@ Each round two row applies to changes on commit `e4cf164097969d4f971afa46e757a34
 | STE | CG:5,7,25 trusts the snapshot | Define ratchet commit once beside the history line. | e4cf164097969d4f971afa46e757a34aac0179bb |
 | STE | AGENTS.md:62 The mode | Use the command and name code files and test files. The word them can mean all changed files. | e4cf164097969d4f971afa46e757a34aac0179bb |
 | STE | CG:167 an agent file | Name files under docs. Define input file once and point to that definition from each guide. | e4cf164097969d4f971afa46e757a34aac0179bb |
-| STE | CG:204-205 D:107 file class test | Use checks the file class before the path. Use check for the commit ancestry operation. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | CG:204-205 D:107 file class test | The mode checks the file class before the path. The word "test" names only a test file or an automated test. | e4cf164097969d4f971afa46e757a34aac0179bb |
 | STE | CI:5 all four CI file checks | Use all four CI checks. | e4cf164097969d4f971afa46e757a34aac0179bb |
 | STE | GL:4 to write the files | State one measurement for files and comparisons. Name check and ratchet in the time scenario. | e4cf164097969d4f971afa46e757a34aac0179bb |
 | STE | gates.mjs:698 CG:30 is trusted | Use the active snapshot trust message in code, tests and specs. Name files that differ from HEAD. | e4cf164097969d4f971afa46e757a34aac0179bb |
@@ -155,7 +155,7 @@ cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/g
 
 ### Earlier host coverage
 
-The earlier evidence supplied the following baseline command and results.
+The earlier evidence gave the baseline command and results below.
 The current task did not repeat that baseline command.
 
 The final gate test command supplies the current coverage file.
@@ -2839,7 +2839,7 @@ cd /home/ianblenke/docker/gev-work/gates-onem && taskset -c 12-15 nice -n 19 pyt
 
 ## Final files
 
-The following command gives the changed file list.
+The command below gives the changed file list.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/gates-onem && git status --short
@@ -2870,3 +2870,19 @@ The command cmp confirms that both mutation files have the same content.
 ```sh
 cd /home/ianblenke/docker/gev-work/gates-onem && cmp openspec/changes/gates-one-measurement/mutations.json /home/ianblenke/docker/gev-tools/gates-onem/muts.json
 ```
+
+## Review round three
+
+The lead ran one image probe after the round three reports. The clone had one ignored test file in `src/`.
+The command was `make gates-docs CHANGE=gates-one-measurement`.
+
+The mode printed `NO TEST RUN: refused` and a line that says input files, code files or test files differ from the ratchet commit.
+It printed the file name and the line `Ratchet commit:` with the hash of the ratchet commit.
+It ended after 11.1 seconds with exit status 2.
+
+The marker loop of the Makefile ran in the image shell and the trust check found the marker.
+The lead removed the ignored file after the probe. The tree had no change.
+
+The spec reviewer found seven minor findings and the STE reviewer found fifteen.
+The lead corrected the findings in the proposal, design, tasks and evidence.
+The proposal lists the other findings as Known limits, because they need a new ratchet.
