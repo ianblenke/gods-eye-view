@@ -97,11 +97,11 @@ cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=n
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-076] The asset path accepts safe names
-[director-076] The asset path rejects traversal
-[director-076] The asset path checks its text limit
-[director-076] The asset path rejects URL syntax with a stable message
-[director-076] The asset path accepts 1024 characters and rejects 1025
+[director-076] The validator returns without an error for safe names for the asset path
+[director-076] The validator rejects traversal for the asset path
+[director-076] The validator rejects a path above its text limit for the asset path
+[director-076] The validator rejects URL syntax with a stable message for the asset path
+[director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
 ```
 
 ### director-077
@@ -109,22 +109,22 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-077] The manifest rejects invalid version
-[director-077] The manifest rejects invalid format
-[director-077] The manifest accepts geojson
-[director-077] The manifest accepts image
-[director-077] The manifest accepts media
-[director-077] The geojson accepts its altitudeReference field
-[director-077] The manifest accepts the id field of a data pack
-[director-077] The manifest accepts the version field of a data pack
-[director-077] The manifest accepts the format field of a data pack
-[director-077] The manifest accepts the source field of a data pack
-[director-077] The manifest accepts the attribution field of a data pack
-[director-077] The manifest accepts the placement field of a data pack
-[director-077] The manifest accepts its source name field
-[director-077] The manifest accepts its source path field
-[director-077] The manifest accepts 256 characters for its ID and rejects 257
-[director-077] The manifest accepts 256 characters for its source name and rejects 257
+[director-077] The validator rejects invalid version
+[director-077] The validator rejects invalid format
+[director-077] The validator returns without an error for geojson
+[director-077] The validator returns without an error for image
+[director-077] The validator returns without an error for media
+[director-077] The validator returns without an error for a GeoJSON altitudeReference field
+[director-077] The validator returns without an error for the id field of a data pack
+[director-077] The validator returns without an error for the version field of a data pack
+[director-077] The validator returns without an error for the format field of a data pack
+[director-077] The validator returns without an error for the source field of a data pack
+[director-077] The validator returns without an error for the attribution field of a data pack
+[director-077] The validator returns without an error for the placement field of a data pack
+[director-077] The validator returns without an error for its source name field
+[director-077] The validator returns without an error for its source path field
+[director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+[director-077] The validator returns without an error for 256 characters for its source name and rejects 257
 ```
 
 ### director-078
@@ -132,19 +132,19 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-078] The attribution rejects protocol
-[director-078] The attribution rejects username
-[director-078] The attribution rejects password
-[director-078] The attribution rejects query
-[director-078] The attribution rejects fragment
-[director-078] The attribution rejects invalid URL text
-[director-078] The attribution accepts a safe link
-[director-078] The attribution rejects blank text
-[director-078] The attribution rejects blank license
-[director-078] The manifest accepts its attribution text field
-[director-078] The manifest accepts its attribution license field
-[director-078] The manifest accepts its attribution url field
-[director-078] The attribution accepts its text limits and rejects excess text
+[director-078] The validator rejects protocol for the attribution
+[director-078] The validator rejects username for the attribution
+[director-078] The validator rejects password for the attribution
+[director-078] The validator rejects query for the attribution
+[director-078] The validator rejects fragment for the attribution
+[director-078] The validator rejects invalid URL text for the attribution
+[director-078] The validator returns without an error for a safe link for the attribution
+[director-078] The validator rejects blank text for the attribution
+[director-078] The validator rejects blank license for the attribution
+[director-078] The validator returns without an error for its attribution text field
+[director-078] The validator returns without an error for its attribution license field
+[director-078] The validator returns without an error for its attribution url field
+[director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
 ```
 
 ### director-079
@@ -152,18 +152,18 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-079] The byteLength field rejects a fraction
-[director-079] The digest rejects invalid type
-[director-079] The digest rejects invalid alphabet
-[director-079] The integrity fields accept their limits
-[director-079] The manifest accepts the byteLength field of a data pack
-[director-079] The manifest accepts the sha256 field of a data pack
-[director-079] The digest rejects 63 characters
-[director-079] The digest rejects 65 characters
-[director-079] The digest rejects uppercase text
-[director-079] The digest rejects a prefix
-[director-079] The digest rejects a suffix
-[director-079] The digest accepts 64 lowercase characters
+[director-079] The validator rejects a fraction for the byteLength field
+[director-079] The validator rejects invalid type for the digest
+[director-079] The validator rejects invalid alphabet for the digest
+[director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+[director-079] The validator returns without an error for the byteLength field of a data pack
+[director-079] The validator returns without an error for the sha256 field of a data pack
+[director-079] The validator rejects 63 characters for the digest
+[director-079] The validator rejects 65 characters for the digest
+[director-079] The validator rejects uppercase text for the digest
+[director-079] The validator rejects a prefix for the digest
+[director-079] The validator rejects a suffix for the digest
+[director-079] The validator returns without an error for 64 lowercase characters for the digest
 ```
 
 ### director-080
@@ -177,31 +177,31 @@ Test file: `src/director/packs/packs.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-080] The image rejects reversed west
-[director-080] The image rejects reversed south
-[director-080] The image rejects short bounds
-[director-080] The image rejects bounds field 0
-[director-080] The image rejects bounds field 1
-[director-080] The image rejects bounds field 2
-[director-080] The image rejects bounds field 3
-[director-080] The image rejects height and reference
-[director-080] The image accepts its bounds field
-[director-080] The image accepts its height field
-[director-080] The image accepts its altitudeReference field
-[director-080] The image bounds 0 rejects low excess
-[director-080] The image bounds 0 rejects high excess
-[director-080] The image bounds 1 rejects low excess
-[director-080] The image bounds 1 rejects high excess
-[director-080] The image bounds 2 rejects low excess
-[director-080] The image bounds 2 rejects high excess
-[director-080] The image bounds 3 rejects low excess
-[director-080] The image bounds 3 rejects high excess
-[director-080] The image height checks both limits
-[director-080] The placement selects the image fields
-[director-080] The image rejects equal longitude edges
-[director-080] The image rejects equal latitude edges
-[director-080] The image accepts all geographic limits
-[director-080] The image rejects text for each geographic field
+[director-080] The validator rejects reversed west for the image
+[director-080] The validator rejects reversed south for the image
+[director-080] The validator rejects short bounds for the image
+[director-080] The validator rejects bounds field 0 for the image
+[director-080] The validator rejects bounds field 1 for the image
+[director-080] The validator rejects bounds field 2 for the image
+[director-080] The validator rejects bounds field 3 for the image
+[director-080] The validator rejects height and reference for the image
+[director-080] The validator returns without an error for its bounds field for the image
+[director-080] The validator returns without an error for its height field for the image
+[director-080] The validator returns without an error for its altitudeReference field for the image
+[director-080] The validator rejects low excess for image bounds field 0
+[director-080] The validator rejects high excess for image bounds field 0
+[director-080] The validator rejects low excess for image bounds field 1
+[director-080] The validator rejects high excess for image bounds field 1
+[director-080] The validator rejects low excess for image bounds field 2
+[director-080] The validator rejects high excess for image bounds field 2
+[director-080] The validator rejects low excess for image bounds field 3
+[director-080] The validator rejects high excess for image bounds field 3
+[director-080] The validator rejects image height outside both limits
+[director-080] The validator rejects media fields in image placement for the placement
+[director-080] The validator rejects equal longitude edges for the image
+[director-080] The validator rejects equal latitude edges for the image
+[director-080] The validator returns without an error for all geographic limits for the image
+[director-080] The validator rejects text for each geographic field for the image
 ```
 
 ### director-081
@@ -209,10 +209,10 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-081] The media rejects an unknown anchor
-[director-081] The media accepts its anchorId field
-[director-081] The session gives anchors to its renderer
-[director-081] The placement selects the media fields
+[director-081] The validator rejects an unknown anchor for the media
+[director-081] The validator returns without an error for its anchorId field for the media
+[director-093] The session calls the renderer with the anchors and returns true
+[director-081] The validator rejects image fields in media placement for the placement
 ```
 
 ### director-082
@@ -226,13 +226,13 @@ Test file: `src/director/packs/packs.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-082] The scene rejects duplicate data pack IDs
-[director-082] The shot rejects duplicate data pack IDs
-[director-082] The shot rejects unknown data pack IDs
-[director-082] The scene accepts absent data packs and anchors
-[director-082] The scene uses supplied anchors
-[director-082] The scene uses absent anchor defaults
-[director-082] The scene ignores a data pack list from its parent
+[director-082] The validator rejects duplicate data pack IDs for the scene
+[director-082] The validator rejects duplicate data pack IDs for the shot
+[director-082] The validator rejects unknown data pack IDs for the shot
+[director-082] The validator returns without an error for absent data packs and anchors for the scene
+[director-082] The validator uses supplied anchors for the scene and returns without an error
+[director-082] The validator uses absent anchor defaults for the scene and returns without an error
+[director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
 ```
 
 ### director-083
@@ -240,10 +240,10 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-083] The collection rejects invalid type
-[director-083] The collection rejects invalid array
-[director-083] The collection rejects more than 2000 features
-[director-083] The collection accepts its exact feature limit
+[director-083] The decoder rejects invalid type for the collection
+[director-083] The decoder rejects invalid array for the collection
+[director-083] The decoder rejects more than 2000 features for the collection
+[director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
 [director-083] The decoder rejects invalid UTF8 bytes
 [director-083] The decoder rejects null
 ```
@@ -253,12 +253,12 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-084] The feature rejects type
-[director-084] The feature rejects ID type
-[director-084] The feature rejects blank ID
-[director-084] The feature rejects long ID
-[director-084] The feature rejects duplicate ID
-[director-084] The feature ID accepts its exact text limit
+[director-084] The decoder rejects type for the feature
+[director-084] The decoder rejects ID type for the feature
+[director-084] The decoder rejects blank ID for the feature
+[director-084] The decoder rejects long ID for the feature
+[director-084] The decoder rejects duplicate ID for the feature
+[director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
 [director-084] The decoder rejects a null feature
 ```
 
@@ -267,21 +267,21 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-085] The position rejects invalid array
-[director-085] The position rejects invalid length
-[director-085] The position rejects a coordinate that is not finite
-[director-085] The position rejects invalid longitude
-[director-085] The position rejects invalid latitude
-[director-085] The position rejects a height below the limit
-[director-085] The position rejects a height above the limit
-[director-085] The position total rejects excess
-[director-085] The position uses zero for absent height
-[director-085] The position keeps the height in the data
-[director-085] The position accepts both geographic edges
-[director-085] The position rejects field 0 that is not finite
-[director-085] The position rejects field 1 that is not finite
-[director-085] The position rejects field 2 that is not finite
-[director-085] The position accepts its exact total limit
+[director-085] The decoder rejects invalid array for the position
+[director-085] The decoder rejects invalid length for the position
+[director-085] The decoder rejects a coordinate that is not finite for the position
+[director-085] The decoder rejects invalid longitude for the position
+[director-085] The decoder rejects invalid latitude for the position
+[director-085] The decoder rejects a height below the limit for the position
+[director-085] The decoder rejects a height above the limit for the position
+[director-085] The decoder rejects excess for the position total
+[director-085] The decoder returns zero for absent height for the position
+[director-085] The decoder returns the height in the data for the position
+[director-085] The decoder accepts both geographic edges for the position and returns coordinates
+[director-085] The decoder rejects field 0 that is not finite for the position
+[director-085] The decoder rejects field 1 that is not finite for the position
+[director-085] The decoder rejects field 2 that is not finite for the position
+[director-085] The decoder accepts its exact total limit for the position and returns coordinates
 ```
 
 ### director-086
@@ -289,13 +289,13 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-086] The line rejects invalid array
-[director-086] The line rejects invalid minimum
-[director-086] The ring needs four points
-[director-086] The line accepts two distinct endpoints
-[director-086] The ring rejects unclosed field 0
-[director-086] The ring rejects unclosed field 1
-[director-086] The ring rejects unclosed field 2
+[director-086] The decoder rejects invalid array for the line
+[director-086] The decoder rejects invalid minimum for the line
+[director-086] The decoder rejects a ring with fewer than four points for the ring
+[director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+[director-086] The decoder rejects unclosed field 0 for the ring
+[director-086] The decoder rejects unclosed field 1 for the ring
+[director-086] The decoder rejects unclosed field 2 for the ring
 ```
 
 ### director-087
@@ -309,13 +309,13 @@ Test file: `src/director/packs/packs.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-087] The geometry rejects invalid type
-[director-087] The geometry rejects invalid array
-[director-087] The geometry rejects an empty polygon
-[director-087] The geometry rejects more than 128 rings
-[director-087] The geometry returns a closed polygon
-[director-087] The geometry removes properties
-[director-087] The polygon accepts its exact ring limit
+[director-087] The decoder rejects invalid type for the geometry
+[director-087] The decoder rejects invalid array for the geometry
+[director-087] The decoder rejects an empty polygon for the geometry
+[director-087] The decoder rejects more than 128 rings for the geometry
+[director-087] The decoder returns a closed polygon for the geometry
+[director-087] The decoder removes properties for the geometry
+[director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
 [director-087] The decoder rejects absent geometry
 ```
 
@@ -324,15 +324,15 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-088] The new session reports idle state
+[director-088] The session reports idle state after creation
 [director-088] The session rejects a value that is not a data pack list
 [director-088] The session rejects more than eight data packs
 [director-088] The session rejects destroyed state
 [director-088] The session rejects cancelled state
-[director-088] The session state uses its idle default
-[director-088] The session state uses its zero default
-[director-088] The session accepts eight data packs
-[director-088] The session checks every declaration before the source call
+[director-088] The session reports idle after creation
+[director-088] The session reports zero handles after creation
+[director-088] The session returns true for eight data packs
+[director-088] The session checks every declaration before the source call and rejects the call
 ```
 
 ### director-089
@@ -347,17 +347,17 @@ Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
 [director-089] The session disposes handles in reverse order
-[director-089] The session gives copied state
+[director-089] The session reports ready after the caller changes a state copy
 [director-089] The session rejects a null handle
 [director-089] The session rejects a handle without a dispose function
-[director-089] The session state uses its active total
-[director-089] The session state uses its active status
-[director-089] The session loads its geojson format
-[director-089] The session loads its image format
-[director-089] The session loads its media format
+[director-089] The session reports one active handle
+[director-089] The session reports ready after asset work
+[director-089] The session calls the GeoJSON renderer once and returns true
+[director-089] The session calls the image renderer once and returns true
+[director-089] The session calls the media renderer once and returns true
 [director-089] The session rejects a falsy handle with inherited disposal
 [director-089] The session keeps every data pack handle
-[director-089] The session destroys each ready resource
+[director-089] The session disposes both ready handles in reverse order and reports idle
 [director-089] The session removes its deadline after success
 [director-089] The session removes its deadline after clear
 ```
@@ -374,12 +374,12 @@ Test file: `src/director/packs/packs.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-090] The cancelled session disposes late resources
-[director-090] The session accepts a null late handle
-[director-090] The session destroys work that is not complete
-[director-090] The session checks signal state without an event
+[director-090] The session disposes late resources for the cancelled session
+[director-090] The session returns false for cancelled work with a null late handle
+[director-090] The session returns false for work that destruction stops
+[director-090] The session returns false for a cancelled signal without an event
 [director-090] The session checks destroyed state after it reads the signal
-[director-090] The session checks a cleared load call without signal state
+[director-090] The session returns false for a cleared load call without a signal state access
 [director-090] The session guard rejects a detached resource
 [director-090] The session disposes the handle before it adds the handle to its list
 ```
@@ -395,7 +395,7 @@ Test file: `src/director/packs/packs.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-091] The replacement keeps its resources
+[director-091] The session keeps its resources for the replacement
 ```
 
 ### director-092
@@ -410,19 +410,19 @@ Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
 [director-092] The session reports a stable source error
-[director-092] The deadline rejects stalled work
+[director-092] The session rejects stalled work for the deadline
 [director-092] The session rejects absent source
 [director-092] The session rejects absent renderer
-[director-092] The session ignores a late source error
-[director-092] The absent renderer does not call its source
-[director-092] The session settles an early internal signal
-[director-092] The session settles a source error before its deadline
-[director-092] The session uses its supplied deadline
-[director-092] The session uses its default deadline
+[director-092] The session returns false for cancelled work and reports idle after a late source error
+[director-092] The session rejects an absent renderer without a source call
+[director-092] The session settles an early internal signal and reports idle
+[director-092] The session settles a source error before its deadline and reports idle
+[director-092] The session rejects stalled work at the 19 ms deadline
+[director-092] The session rejects stalled work at the default 15000 ms deadline
 [director-092] The session removes resources after a later error
 [director-092] The session rejects a falsy custom source
-[director-092] The data pack session reads the byteLength field once without a registered source
-[director-092] The deadline removes partial resources
+[director-092] The session reads the byteLength field once without a registered source for the data pack session
+[director-092] The session removes partial resources for the deadline
 ```
 
 ### director-093
@@ -442,13 +442,13 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-093] The session rejects a wrong byteLength field
 [director-093] The session rejects bytes above the total limit
 [director-093] The session rejects a wrong digest
-[director-093] The session checks exact bytes and digest
-[director-093] The session uses its default byte budget
-[director-093] The session accepts absent declared size
-[director-093] The session accepts the asset byte limit
-[director-093] The session accepts the total byte limit
+[director-093] The session returns true for exact bytes and digest
+[director-093] The session calls the source with a default limit of 8388608 bytes
+[director-093] The session returns true without a declared size
+[director-093] The session returns true at the asset byte limit
+[director-093] The session returns true at the total byte limit
 [director-093] The session rejects one byte above the total limit
-[director-093] The source receives the path and the renderer receives the asset and signal
+[director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
 ```
 
 ### director-094
@@ -456,13 +456,13 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-094] The directory rejects protocol
-[director-094] The directory rejects username
-[director-094] The directory rejects password
-[director-094] The directory rejects query
-[director-094] The directory rejects fragment
-[director-094] The directory rejects an address with no final slash
-[director-094] The directory accepts HTTP and HTTPS
+[director-094] The factory rejects protocol
+[director-094] The factory rejects username
+[director-094] The factory rejects password
+[director-094] The factory rejects query
+[director-094] The factory rejects fragment
+[director-094] The factory rejects an address with no final slash
+[director-094] The factory returns a source for HTTP and HTTPS directories
 ```
 
 ### director-095
@@ -476,13 +476,13 @@ Test file: `src/director/packs/packs.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-095] The asset request sets its fixed options
-[director-095] The asset request sets its credentials option
-[director-095] The asset request sets its redirect option
-[director-095] The asset request sets its referrerPolicy option
-[director-095] The asset request sets its cache option
-[director-095] The asset request sets its signal option
-[director-095] The directory source uses the default fetch function
+[director-095] The source sets its fixed options for the asset request
+[director-095] The source sets its credentials option for the asset request
+[director-095] The source sets its redirect option for the asset request
+[director-095] The source sets its referrerPolicy option for the asset request
+[director-095] The source sets its cache option for the asset request
+[director-095] The source sets its signal option for the asset request
+[director-095] The source uses the default fetch function and returns bytes
 ```
 
 ### director-096
@@ -496,13 +496,13 @@ Test file: `src/director/packs/packs.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-096] The stream joins distinct chunks
-[director-096] The stream rejects excess header bytes
-[director-096] The stream rejects excess chunk bytes
+[director-096] The source joins distinct stream chunks
+[director-096] The source rejects excess header bytes for the stream
+[director-096] The source rejects excess chunk bytes for the stream
 [director-096] The source returns an empty media type when the header is absent
 [director-096] The source returns lowercase media type text without parameters
-[director-096] The source checks its default byte budget
-[director-096] The stream accepts its exact byte limit
+[director-096] The source rejects 8388609 bytes without a caller limit
+[director-096] The source accepts its exact byte limit for the stream and returns bytes
 ```
 
 ### director-097
@@ -518,10 +518,10 @@ Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
 [director-097] The source rejects an absent stream
-[director-097] The source accepts failed body cancellation
+[director-097] The source rejects the asset request after failed body cancellation
 [director-097] The source rejects a failed response without a body
-[director-097] The stream releases its lock after an error
-[director-097] The source checks its signal between chunks
+[director-097] The source releases the reader lock after a stream error
+[director-097] The source checks its signal between chunks and rejects the call
 [director-097] The source rejects early cancellation
 [director-097] The source stops between stream chunks
 ```
@@ -531,12 +531,12 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-098] The bundle helpers reject nontext input
-[director-098] The bundle helpers reject invalid JSON
-[director-098] The bundle helpers accept plain project JSON
-[director-098] The bundle helpers reject excess characters
-[director-098] The bundle helpers reject excess UTF8 bytes
-[director-098] The share character guard comes before byte conversion
+[director-098] The import rejects nontext input
+[director-098] The import rejects invalid JSON
+[director-098] The import accepts plain project JSON and returns the project
+[director-098] The import rejects excess characters
+[director-098] The import rejects excess UTF8 bytes
+[director-098] The import rejects 52428801 characters before byte conversion
 ```
 
 ### director-099
@@ -544,30 +544,30 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-099] The bundle rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
-[director-099] The base64 rejects invalid type
-[director-099] The base64 rejects invalid empty
-[director-099] The base64 rejects invalid length
-[director-099] The base64 rejects invalid alignment
-[director-099] The base64 rejects invalid alphabet
-[director-099] The base64 rejects invalid padding
-[director-099] The bundle rejects duplicate paths
-[director-099] The bundle rejects an unsupported media type
-[director-099] The bundle rejects unsupported version
-[director-099] The base64 accepts bytes without padding
-[director-099] The base64 rejects a custom text object
-[director-099] The bundle accepts the application/json media type
-[director-099] The bundle accepts the application/geo+json media type
-[director-099] The bundle accepts the image/png media type
-[director-099] The bundle accepts the video/mp4 media type
-[director-099] The bundle accepts the video/webm media type
-[director-099] The bundle accepts the audio/mpeg media type
-[director-099] The bundle accepts the audio/ogg media type
-[director-099] The bundle accepts the audio/wav media type
-[director-099] The bundle accepts the audio/webm media type
+[director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+[director-099] The import rejects invalid type for the base64
+[director-099] The import rejects invalid empty for the base64
+[director-099] The import rejects invalid length for the base64
+[director-099] The import rejects invalid alignment for the base64
+[director-099] The import rejects invalid alphabet for the base64
+[director-099] The import rejects invalid padding for the base64
+[director-099] The import rejects duplicate paths
+[director-099] The import rejects an unsupported media type
+[director-099] The import rejects unsupported version
+[director-099] The import accepts bytes without padding for the base64 and returns assets
+[director-099] The import rejects a custom text object for the base64
+[director-099] The import accepts the application/json media type and returns assets
+[director-099] The import accepts the application/geo+json media type and returns assets
+[director-099] The import accepts the image/png media type and returns assets
+[director-099] The import accepts the video/mp4 media type and returns assets
+[director-099] The import accepts the video/webm media type and returns assets
+[director-099] The import accepts the audio/mpeg media type and returns assets
+[director-099] The import accepts the audio/ogg media type and returns assets
+[director-099] The import accepts the audio/wav media type and returns assets
+[director-099] The import accepts the audio/webm media type and returns assets
 [director-099] The import rejects 65 different asset paths
-[director-099] The base64 accepts its length limit and rejects the next aligned length
-[director-099] The import accepts the total byte limit and rejects one more byte
+[director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
+[director-099] The import accepts the total byte limit and rejects one more byte and returns assets
 ```
 
 ### director-100
@@ -575,14 +575,14 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-100] The bundle rejects an absent asset
-[director-100] The bundle rejects a wrong byteLength field
-[director-100] The bundle rejects a pack digest that differs from its asset
-[director-100] The bundle rejects an asset digest that differs from its bytes
-[director-100] The bundle rejects unused assets
-[director-100] The bundle rejects external data pack sources
-[director-100] The bundle checks its second asset reference
-[director-100] The bundle checks its second asset digest
+[director-100] The import rejects an absent asset
+[director-100] The import rejects a wrong byteLength field
+[director-100] The import rejects a pack digest that differs from its asset
+[director-100] The import rejects an asset digest that differs from its bytes
+[director-100] The import rejects unused assets
+[director-100] The import rejects external data pack sources
+[director-100] The import checks its second asset reference and rejects the call
+[director-100] The import checks its second asset digest and rejects the call
 ```
 
 ### director-101
@@ -590,11 +590,11 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-101] The selected scene bundle copies bytes and attribution and keeps the project without an asset request
-[director-101] The bundle accepts long valid source asset names
+[director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
+[director-101] The export returns a bundle for a source path of 1024 characters
 [director-101] The export writes exact bundle metadata
-[director-101] The export accepts scenes without data packs
-[director-101] The export keeps a supplied data pack list
+[director-101] The export accepts scenes without data packs and returns bundle text
+[director-101] The export returns one asset for a supplied data pack list
 ```
 
 ### director-102
@@ -602,24 +602,24 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-102] The bundle checks asset limits and declared integrity before export
+[director-102] The export rejects excess bytes, wrong integrity and absent assets
 [director-102] The export rejects bytes that are not a Uint8Array
 [director-102] The export rejects an empty asset
 [director-102] The export rejects an asset above the byte limit
 [director-102] The export rejects absent assets
 [director-102] The export rejects declared byteLength
 [director-102] The export rejects declared digest
-[director-102] The export rejects excess total bytes
 [director-102] The export rejects excess asset total
-[director-102] The export accepts absent integrity fields
-[director-102] The export accepts an absent digest
+[director-102] The export rejects excess asset total
+[director-102] The export accepts absent integrity fields and returns bundle text
+[director-102] The export accepts an absent digest and returns bundle text
 [director-102] The export rejects absent asset bytes
-[director-102] The export checks its encoded text budget
+[director-102] The export rejects encoded bundle text above 52428800 bytes
 [director-102] The export keeps its total after an asset without a byte length
-[director-102] The export accepts its exact asset total
+[director-102] The export accepts its exact asset total and returns bundle text
 [director-102] The export rejects an unsupported media type
-[director-102] The export accepts the asset byte limit
-[director-102] The export accepts the total byte limit and rejects one more byte
+[director-102] The export accepts the text byte limit and returns bundle text
+[director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
 ```
 
 ### director-103
@@ -627,15 +627,15 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-103] The data packs with the same path share one asset and reject integrity values that differ
-[director-103] The export reuses a shared asset
+[director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
+[director-103] The export reuses a shared asset and returns bundle text
 [director-103] The export rejects shared byteLength
 [director-103] The export rejects shared digest
-[director-103] The shared export accepts absent byte declarations
-[director-103] The shared export accepts an absent digest
-[director-103] The export key uses the registered source name
-[director-103] The export key uses path
-[director-103] The export accepts equal shared integrity
+[director-103] The export accepts absent byte declarations for the shared export and returns bundle text
+[director-103] The export accepts an absent digest for the shared export and returns bundle text
+[director-103] The export key uses the registered source name and returns bundle text
+[director-103] The export key uses path and returns bundle text
+[director-103] The export accepts equal shared integrity and returns bundle text
 ```
 
 ### director-104
@@ -643,7 +643,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-104] The bundle byte store removes old data after replacement and uses no network source
+[director-104] The store removes old data after replacement and uses no network source for the import byte store
 [director-104] The store copies the asset map
 [director-104] The store clears stored bytes
 ```
@@ -656,7 +656,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-105] The store rejects absent bytes
 [director-105] The store rejects bytes above the caller limit
 [director-105] The store returns an independent byte copy
-[director-105] The store checks its default byte budget
+[director-105] The store rejects 8388609 bytes without a caller limit
 [director-105] The store rejects a cancelled source call
 ```
 
@@ -666,12 +666,12 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
 [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
-[director-106] The share helpers accept an absent filename
+[director-106] The share helpers return the project for an absent filename
 [director-106] The share helpers reject the ordinary file limit
-[director-106] The share helpers give bundles the larger file limit
-[director-106] The share helpers check a signal after they read text
-[director-106] The share helpers accept the project file limit and rejects one more byte
-[director-106] The share helpers accept the bundle file limit and rejects one more byte
+[director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
+[director-106] The share helpers call throwIfAborted three times and return the project
+[director-106] The share helpers accept the project file limit and reject one more byte
+[director-106] The share helpers accept the bundle file limit and reject one more byte
 ```
 
 ### director-107
@@ -679,18 +679,18 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-107] The cancelled bundle export stops before the next asset and returns no partial output
+[director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
 [director-107] The helper resolves without a signal
 [director-107] The helper rejects an early signal
 [director-107] The helper resolves with an active signal
 [director-107] The helper rejects a work error
-[director-107] The helper checks signal state when the work settles
+[director-107] The helper checks signal state when the work settles and rejects the call
 [director-107] The helper cancels work that is not complete
-[director-107] The bundle stops import before an asset
-[director-107] The bundle stops import after a digest
-[director-107] The bundle stops export before an asset
-[director-107] The bundle stops export after asset bytes
-[director-107] The bundle stops export after a digest
+[director-107] The bundle helpers stop import before an asset
+[director-107] The bundle helpers stop import after a digest
+[director-107] The bundle helpers stop export before an asset
+[director-107] The bundle helpers stop export after asset bytes
+[director-107] The bundle helpers stop export after a digest
 ```
 
 ### director-108
@@ -699,11 +699,11 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
 [director-108] The preview reports exact totals and attribution
-[director-108] The preview uses the scene ID without a title
-[director-108] The preview accepts absent data pack lists
-[director-108] The preview uses supplied data pack lists
-[director-108] The preview keeps a supplied scene title
-[director-108] The preview totals include every asset
+[director-108] The preview reports the scene ID when the title is absent
+[director-108] The preview reports no packs when data pack lists are absent
+[director-108] The preview reports one pack from the supplied data pack list
+[director-108] The preview reports Example for the supplied scene title
+[director-108] The preview reports three bytes for both assets
 [director-108] The preview counts shots apart from scenes
 ```
 
@@ -712,12 +712,12 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-109] The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
+[director-109] The preview reports unavailable sources, absent layers and absent bundle assets
 [director-109] The preview reports included bundle bytes
 [director-109] The preview reports absent bundle bytes
 [director-109] The preview reports a configured source
 [director-109] The preview reports an unavailable source
-[director-109] The preview distinguishes bundle sources
+[director-109] The preview reports a configured source for a supplied source ID
 ```
 
 ### director-110
@@ -726,12 +726,12 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
 [director-110] The preview lists distinct absent layers
-[director-110] The preview detects applied shot packs
-[director-110] The preview detects the source pack ID of a shot
-[director-110] The preview detects no external content
-[director-110] The preview accepts absent shot layers
-[director-110] The preview uses supplied shot layers
-[director-110] The preview detects each layer key
+[director-110] The preview reports external content for applied shot packs
+[director-110] The preview reports external content for a shot with a source pack ID
+[director-110] The preview reports no external content without source packs
+[director-110] The preview reports no absent layer when a shot has no layers
+[director-110] The preview reports traffic as absent without layer IDs
+[director-110] The preview reports ships as absent when only traffic is configured
 ```
 
 ## Review corrections
@@ -876,32 +876,32 @@ New: The directory source cancels response bodies and sends no asset request wit
 
 ```text
 Old: selected-scene bundles round trip bytes and attribution without mutating the project or fetching
-New: The selected scene bundle copies bytes and attribution and keeps the project without an asset request
+New: The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
 ```
 
 ```text
 Old: bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files and broken integrity
-New: The bundle rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+New: The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
 ```
 
 ```text
 Old: asset caps and declared integrity are enforced before creating a downloadable bundle
-New: The bundle checks asset limits and declared integrity before export
+New: The export rejects excess bytes, wrong integrity and absent assets
 ```
 
 ```text
 Old: duplicate pack paths share one asset and reject conflicting integrity
-New: The data packs with the same path share one asset and reject integrity values that differ
+New: The export share one asset and reject integrity values that differ for the data packs with the same path
 ```
 
 ```text
 Old: preview reports unavailable sources/layers and missing bundle assets without applying anything
-New: The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
+New: The preview reports unavailable sources, absent layers and absent bundle assets
 ```
 
 ```text
 Old: bundle byte owner releases replacement data and has no network fallback
-New: The bundle byte store removes old data after replacement and uses no network source
+New: The store removes old data after replacement and uses no network source for the import byte store
 ```
 
 ```text
@@ -911,12 +911,12 @@ New: The share helpers reject excess file bytes before they read text and cancel
 
 ```text
 Old: cancelled bundle export never resolves another asset or produces partial output
-New: The cancelled bundle export stops before the next asset and returns no partial output
+New: The export stops before the next asset and returns no partial output for the cancelled bundle export
 ```
 
 ```text
 Old: long valid source filenames still produce an importable bundle
-New: The bundle accepts long valid source asset names
+New: The export returns a bundle for a source path of 1024 characters
 ```
 
 ### Pass 2 title pairs
@@ -987,52 +987,52 @@ New: [director-097] The directory source cancels response bodies and sends no as
 
 ```text
 Old: [director-082] The scene rejects duplicate pack IDs
-New: [director-082] The scene rejects duplicate data pack IDs
+New: [director-082] The validator rejects duplicate data pack IDs for the scene
 ```
 
 ```text
 Old: [director-082] The shot rejects duplicate pack IDs
-New: [director-082] The shot rejects duplicate data pack IDs
+New: [director-082] The validator rejects duplicate data pack IDs for the shot
 ```
 
 ```text
 Old: [director-082] The shot rejects unknown pack IDs
-New: [director-082] The shot rejects unknown data pack IDs
+New: [director-082] The validator rejects unknown data pack IDs for the shot
 ```
 
 ```text
 Old: [director-082] The scene accepts absent packs and anchors
-New: [director-082] The scene accepts absent data packs and anchors
+New: [director-082] The validator returns without an error for absent data packs and anchors for the scene
 ```
 
 ```text
 Old: [director-083] The collection rejects invalid total
-New: [director-083] The collection rejects more than 2000 features
+New: [director-083] The decoder rejects more than 2000 features for the collection
 ```
 
 ```text
 Old: [director-085] The position rejects invalid finite
-New: [director-085] The position rejects a coordinate that is not finite
+New: [director-085] The decoder rejects a coordinate that is not finite for the position
 ```
 
 ```text
 Old: [director-085] The position rejects invalid low height
-New: [director-085] The position rejects a height below the limit
+New: [director-085] The decoder rejects a height below the limit for the position
 ```
 
 ```text
 Old: [director-085] The position rejects invalid high height
-New: [director-085] The position rejects a height above the limit
+New: [director-085] The decoder rejects a height above the limit for the position
 ```
 
 ```text
 Old: [director-087] The geometry rejects invalid empty
-New: [director-087] The geometry rejects an empty polygon
+New: [director-087] The decoder rejects an empty polygon for the geometry
 ```
 
 ```text
 Old: [director-087] The geometry rejects invalid total
-New: [director-087] The geometry rejects more than 128 rings
+New: [director-087] The decoder rejects more than 128 rings for the geometry
 ```
 
 ```text
@@ -1047,17 +1047,17 @@ New: [director-088] The session rejects more than eight data packs
 
 ```text
 Old: [director-090] The session tolerates a null late handle
-New: [director-090] The session accepts a null late handle
+New: [director-090] The session returns false for cancelled work with a null late handle
 ```
 
 ```text
 Old: [director-090] The session destroys pending work
-New: [director-090] The session destroys work that is not complete
+New: [director-090] The session returns false for work that destruction stops
 ```
 
 ```text
 Old: [director-091] The replacement keeps its own resources
-New: [director-091] The replacement keeps its resources
+New: [director-091] The session keeps its resources for the replacement
 ```
 
 ```text
@@ -1102,47 +1102,47 @@ New: [director-089] The session rejects a handle without a dispose function
 
 ```text
 Old: [director-094] The directory rejects directory
-New: [director-094] The directory rejects an address with no final slash
+New: [director-094] The factory rejects an address with no final slash
 ```
 
 ```text
 Old: [director-095] The request sets its own options
-New: [director-095] The asset request sets its fixed options
+New: [director-095] The source sets its fixed options for the asset request
 ```
 
 ```text
 Old: [director-097] The source tolerates failed body cancellation
-New: [director-097] The source accepts failed body cancellation
+New: [director-097] The source rejects the asset request after failed body cancellation
 ```
 
 ```text
 Old: [director-080] The image admits its bounds field
-New: [director-080] The image accepts its bounds field
+New: [director-080] The validator returns without an error for its bounds field for the image
 ```
 
 ```text
 Old: [director-080] The image admits its height field
-New: [director-080] The image accepts its height field
+New: [director-080] The validator returns without an error for its height field for the image
 ```
 
 ```text
 Old: [director-080] The image admits its altitudeReference field
-New: [director-080] The image accepts its altitudeReference field
+New: [director-080] The validator returns without an error for its altitudeReference field for the image
 ```
 
 ```text
 Old: [director-081] The media admits its anchorId field
-New: [director-081] The media accepts its anchorId field
+New: [director-081] The validator returns without an error for its anchorId field for the media
 ```
 
 ```text
 Old: [director-077] The geojson admits its altitudeReference field
-New: [director-077] The geojson accepts its altitudeReference field
+New: [director-077] The validator returns without an error for a GeoJSON altitudeReference field
 ```
 
 ```text
 Old: [director-090] The session catches signal state without an event
-New: [director-090] The session checks signal state without an event
+New: [director-090] The session returns false for a cancelled signal without an event
 ```
 
 ```text
@@ -1152,7 +1152,7 @@ New: [director-090] The session checks destroyed state after it reads the signal
 
 ```text
 Old: [director-090] The session catches replacement without signal state
-New: [director-090] The session checks a cleared load call without signal state
+New: [director-090] The session returns false for a cleared load call without a signal state access
 ```
 
 ```text
@@ -1162,97 +1162,97 @@ New: [director-090] The session disposes the handle before it adds the handle to
 
 ```text
 Old: [director-092] The absent adapter does not call its source
-New: [director-092] The absent renderer does not call its source
+New: [director-092] The session rejects an absent renderer without a source call
 ```
 
 ```text
 Old: [director-095] The request owns its credentials option
-New: [director-095] The asset request sets its credentials option
+New: [director-095] The source sets its credentials option for the asset request
 ```
 
 ```text
 Old: [director-095] The request owns its redirect option
-New: [director-095] The asset request sets its redirect option
+New: [director-095] The source sets its redirect option for the asset request
 ```
 
 ```text
 Old: [director-095] The request owns its referrerPolicy option
-New: [director-095] The asset request sets its referrerPolicy option
+New: [director-095] The source sets its referrerPolicy option for the asset request
 ```
 
 ```text
 Old: [director-095] The request owns its cache option
-New: [director-095] The asset request sets its cache option
+New: [director-095] The source sets its cache option for the asset request
 ```
 
 ```text
 Old: [director-077] The manifest admits its pack id field
-New: [director-077] The manifest accepts the id field of a data pack
+New: [director-077] The validator returns without an error for the id field of a data pack
 ```
 
 ```text
 Old: [director-077] The manifest admits its pack version field
-New: [director-077] The manifest accepts the version field of a data pack
+New: [director-077] The validator returns without an error for the version field of a data pack
 ```
 
 ```text
 Old: [director-077] The manifest admits its pack format field
-New: [director-077] The manifest accepts the format field of a data pack
+New: [director-077] The validator returns without an error for the format field of a data pack
 ```
 
 ```text
 Old: [director-077] The manifest admits its pack source field
-New: [director-077] The manifest accepts the source field of a data pack
+New: [director-077] The validator returns without an error for the source field of a data pack
 ```
 
 ```text
 Old: [director-077] The manifest admits its pack attribution field
-New: [director-077] The manifest accepts the attribution field of a data pack
+New: [director-077] The validator returns without an error for the attribution field of a data pack
 ```
 
 ```text
 Old: [director-077] The manifest admits its pack placement field
-New: [director-077] The manifest accepts the placement field of a data pack
+New: [director-077] The validator returns without an error for the placement field of a data pack
 ```
 
 ```text
 Old: [director-079] The manifest admits its pack byteLength field
-New: [director-079] The manifest accepts the byteLength field of a data pack
+New: [director-079] The validator returns without an error for the byteLength field of a data pack
 ```
 
 ```text
 Old: [director-079] The manifest admits its pack sha256 field
-New: [director-079] The manifest accepts the sha256 field of a data pack
+New: [director-079] The validator returns without an error for the sha256 field of a data pack
 ```
 
 ```text
 Old: [director-077] The manifest admits its source adapter field
-New: [director-077] The manifest accepts its source name field
+New: [director-077] The validator returns without an error for its source name field
 ```
 
 ```text
 Old: [director-077] The manifest admits its source path field
-New: [director-077] The manifest accepts its source path field
+New: [director-077] The validator returns without an error for its source path field
 ```
 
 ```text
 Old: [director-078] The manifest admits its attribution text field
-New: [director-078] The manifest accepts its attribution text field
+New: [director-078] The validator returns without an error for its attribution text field
 ```
 
 ```text
 Old: [director-078] The manifest admits its attribution license field
-New: [director-078] The manifest accepts its attribution license field
+New: [director-078] The validator returns without an error for its attribution license field
 ```
 
 ```text
 Old: [director-078] The manifest admits its attribution url field
-New: [director-078] The manifest accepts its attribution url field
+New: [director-078] The validator returns without an error for its attribution url field
 ```
 
 ```text
 Old: [director-081] The session gives anchors to its adapter
-New: [director-081] The session gives anchors to its renderer
+New: [director-093] The session calls the renderer with the anchors and returns true
 ```
 
 ```text
@@ -1262,42 +1262,42 @@ New: [director-089] The session keeps every data pack handle
 
 ```text
 Old: [director-095] The request owns its signal option
-New: [director-095] The asset request sets its signal option
+New: [director-095] The source sets its signal option for the asset request
 ```
 
 ```text
 Old: [director-092] The missing source stops after the validation size read
-New: [director-092] The data pack session reads the byteLength field once without a registered source
+New: [director-092] The session reads the byteLength field once without a registered source for the data pack session
 ```
 
 ```text
 Old: [director-101] selected-scene bundles round trip bytes and attribution without mutating the project or fetching
-New: [director-101] The selected scene bundle copies bytes and attribution and keeps the project without an asset request
+New: [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
 ```
 
 ```text
 Old: [director-099] bundle rejects invalid bytes, unknown fields, traversal, duplicates, missing files and broken integrity
-New: [director-099] The bundle rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+New: [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
 ```
 
 ```text
 Old: [director-102] asset caps and declared integrity are enforced before creating a downloadable bundle
-New: [director-102] The bundle checks asset limits and declared integrity before export
+New: [director-102] The export rejects excess bytes, wrong integrity and absent assets
 ```
 
 ```text
 Old: [director-103] duplicate pack paths share one asset and reject conflicting integrity
-New: [director-103] The data packs with the same path share one asset and reject integrity values that differ
+New: [director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
 ```
 
 ```text
 Old: [director-109] preview reports unavailable sources/layers and missing bundle assets without applying anything
-New: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
+New: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
 ```
 
 ```text
 Old: [director-104] bundle byte owner releases replacement data and has no network fallback
-New: [director-104] The bundle byte store removes old data after replacement and uses no network source
+New: [director-104] The store removes old data after replacement and uses no network source for the import byte store
 ```
 
 ```text
@@ -1307,57 +1307,57 @@ New: [director-106] The share helpers reject excess file bytes before they read 
 
 ```text
 Old: [director-107] cancelled bundle export never resolves another asset or produces partial output
-New: [director-107] The cancelled bundle export stops before the next asset and returns no partial output
+New: [director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
 ```
 
 ```text
 Old: [director-101] long valid source filenames still produce an importable bundle
-New: [director-101] The bundle accepts long valid source asset names
+New: [director-101] The export returns a bundle for a source path of 1024 characters
 ```
 
 ```text
 Old: [director-098] The share parser rejects nontext input
-New: [director-098] The bundle helpers reject nontext input
+New: [director-098] The import rejects nontext input
 ```
 
 ```text
 Old: [director-098] The share parser rejects invalid JSON
-New: [director-098] The bundle helpers reject invalid JSON
+New: [director-098] The import rejects invalid JSON
 ```
 
 ```text
 Old: [director-098] The share parser accepts plain project JSON
-New: [director-098] The bundle helpers accept plain project JSON
+New: [director-098] The import accepts plain project JSON and returns the project
 ```
 
 ```text
 Old: [director-098] The share parser rejects excess characters
-New: [director-098] The bundle helpers reject excess characters
+New: [director-098] The import rejects excess characters
 ```
 
 ```text
 Old: [director-098] The share parser rejects excess UTF8 bytes
-New: [director-098] The bundle helpers reject excess UTF8 bytes
+New: [director-098] The import rejects excess UTF8 bytes
 ```
 
 ```text
 Old: [director-100] The bundle rejects pack asset absent
-New: [director-100] The bundle rejects an absent asset
+New: [director-100] The import rejects an absent asset
 ```
 
 ```text
 Old: [director-100] The bundle rejects pack asset byte length
-New: [director-100] The bundle rejects a wrong byteLength field
+New: [director-100] The import rejects a wrong byteLength field
 ```
 
 ```text
 Old: [director-100] The bundle rejects pack asset digest
-New: [director-100] The bundle rejects a pack digest that differs from its asset
+New: [director-100] The import rejects a pack digest that differs from its asset
 ```
 
 ```text
 Old: [director-100] The bundle rejects external pack sources
-New: [director-100] The bundle rejects external data pack sources
+New: [director-100] The import rejects external data pack sources
 ```
 
 ```text
@@ -1392,47 +1392,47 @@ New: [director-107] The helper cancels work that is not complete
 
 ```text
 Old: [director-110] The preview detects applied scene packs
-New: [director-110] The preview detects applied shot packs
+New: [director-110] The preview reports external content for applied shot packs
 ```
 
 ```text
 Old: [director-110] The preview detects shot source packs
-New: [director-110] The preview detects the source pack ID of a shot
+New: [director-110] The preview reports external content for a shot with a source pack ID
 ```
 
 ```text
 Old: [director-101] The export accepts scenes without packs
-New: [director-101] The export accepts scenes without data packs
+New: [director-101] The export accepts scenes without data packs and returns bundle text
 ```
 
 ```text
 Old: [director-101] The export keeps a supplied pack list
-New: [director-101] The export keeps a supplied data pack list
+New: [director-101] The export returns one asset for a supplied data pack list
 ```
 
 ```text
 Old: [director-108] The preview accepts absent pack lists
-New: [director-108] The preview accepts absent data pack lists
+New: [director-108] The preview reports no packs when data pack lists are absent
 ```
 
 ```text
 Old: [director-108] The preview uses supplied pack lists
-New: [director-108] The preview uses supplied data pack lists
+New: [director-108] The preview reports one pack from the supplied data pack list
 ```
 
 ```text
 Old: [director-103] The export key uses adapter
-New: [director-103] The export key uses the registered source name
+New: [director-103] The export key uses the registered source name and returns bundle text
 ```
 
 ```text
 Old: [director-100] The bundle checks its second asset hash
-New: [director-100] The bundle checks its second asset digest
+New: [director-100] The import checks its second asset digest and rejects the call
 ```
 
 ```text
 Old: [director-103] The export accepts matching shared integrity
-New: [director-103] The export accepts equal shared integrity
+New: [director-103] The export accepts equal shared integrity and returns bundle text
 ```
 
 ## Corrections of review round 2
@@ -1533,77 +1533,77 @@ File: src/director/packs/backfill.test.mjs
 
 ```text
 Old: [director-081] The session gives anchors to its renderer
-New: [director-093] The session gives anchors to its renderer
+New: [director-093] The session calls the renderer with the anchors and returns true
 ```
 
 File: src/director/packs/backfill.test.mjs
 
 ```text
 Old: [director-092] The absent registered source stops after the validation size read
-New: [director-092] The data pack session reads the byteLength field once without a registered source
+New: [director-092] The session reads the byteLength field once without a registered source for the data pack session
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-098] The share helpers reject nontext input
-New: [director-098] The bundle helpers reject nontext input
+New: [director-098] The import rejects nontext input
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-098] The share helpers reject invalid JSON
-New: [director-098] The bundle helpers reject invalid JSON
+New: [director-098] The import rejects invalid JSON
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-098] The share helpers accept plain project JSON
-New: [director-098] The bundle helpers accept plain project JSON
+New: [director-098] The import accepts plain project JSON and returns the project
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-098] The share helpers reject excess characters
-New: [director-098] The bundle helpers reject excess characters
+New: [director-098] The import rejects excess characters
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-098] The share helpers reject excess UTF8 bytes
-New: [director-098] The bundle helpers reject excess UTF8 bytes
+New: [director-098] The import rejects excess UTF8 bytes
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-100] The bundle rejects a wrong asset length
-New: [director-100] The bundle rejects a wrong byteLength field
+New: [director-100] The import rejects a wrong byteLength field
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-100] The bundle rejects a wrong asset digest
-New: [director-100] The bundle rejects a pack digest that differs from its asset
+New: [director-100] The import rejects a pack digest that differs from its asset
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-100] The bundle rejects wrong asset digest
-New: [director-100] The bundle rejects an asset digest that differs from its bytes
+New: [director-100] The import rejects an asset digest that differs from its bytes
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-106] The reader accepts an absent filename
-New: [director-106] The share helpers accept an absent filename
+New: [director-106] The share helpers return the project for an absent filename
 ```
 
 File: src/director/sharing/sharing.test.mjs
@@ -1617,21 +1617,21 @@ File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-106] The reader gives bundles the larger budget
-New: [director-106] The share helpers give bundles the larger file limit
+New: [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-110] The preview detects a shot source pack ID
-New: [director-110] The preview detects the source pack ID of a shot
+New: [director-110] The preview reports external content for a shot with a source pack ID
 ```
 
 File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-106] The reader checks a signal after text access
-New: [director-106] The share helpers check a signal after they read text
+New: [director-106] The share helpers call throwIfAborted three times and return the project
 ```
 
 File: src/director/sharing/sharing.test.mjs
@@ -1645,7 +1645,7 @@ File: src/director/sharing/sharing.test.mjs
 
 ```text
 Old: [director-106] The reader accepts the ${label} file limit and rejects one more byte
-New: [director-106] The share helpers accept the ${label} file limit and reject one more byte
+New: [director-106] The share helpers accept the bundle file limit and reject one more byte
 ```
 
 
@@ -1961,11 +1961,11 @@ cd /home/ianblenke/docker/gev-work/director-3 && rg 'total byte limit|excess tot
 
 | test | before seconds | after seconds |
 | --- | ---: | ---: |
-| The import accepts the total byte limit and rejects one more byte | 59.990760 | 4.083381 |
-| The export accepts the total byte limit and rejects one more byte | 22.209433 | 2.575859 |
+| The import accepts the total byte limit and rejects one more byte and returns assets | 59.990760 | 4.083381 |
+| The export accepts the total byte limit and rejects one more byte and returns bundle text | 22.209433 | 2.575859 |
 | The export rejects excess total bytes | 12.033089 | Part of the total export test. |
 | The export keeps its total after an asset without a byte length | 10.273848 | 0.013870 |
-| The base64 accepts its length limit and rejects the next aligned length | 5.803030 | 0.446927 |
+| The import accepts its length limit and rejects the next aligned length for the base64 and returns assets | 5.803030 | 0.446927 |
 | The export accepts the asset byte limit | 2.787105 | Part of the total export test. |
 
 Each other limit test takes less than 10 seconds.
@@ -2125,7 +2125,7 @@ The [hand mutation report](mutations.md) includes that complete output.
 The failed test for m284 is:
 
 ```text
-[director-088] The destroyed session does not read the caller signal state
+[director-088] The session returns false without a caller signal access after destruction
 ```
 
 The new guard-order test kills m284 with an already destroyed session.
@@ -2206,7 +2206,7 @@ The lead owns the main spec, ratchet and next review round.
 | STE | `rejects null handle` | The labels match the test titles. The status word has one stated meaning. |
 | STE | `The claim is equivalent` | Probe headers name the mutation. All 21 expanded probes pass. The extension probe gives 67 bounds. |
 
-### Tagged test edits
+### Tagged test files
 
 Pass 5 adds 152 host test cases: 106 in backfill.test.mjs and 46 in sharing.test.mjs.
 The scenario IDs stay director-076 through director-110.
@@ -2348,7 +2348,7 @@ New: [director-097] The source waits for body cancellation before it rejects the
 
 ```text
 Old: [director-089] The source listener and state check come before the work read
-New: [director-089] The source registers its listener and checks its state before it reads the work promise
+New: [director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order
 ```
 
 ```text
@@ -2358,7 +2358,7 @@ New: [director-092] The session reads the source signal reason once during anoth
 
 ```text
 Old: [director-089] The completed source does not read its reason during promise settlement
-New: [director-089] The completed source does not read its reason when the promise settles
+New: [director-089] The session returns true and does not read the reason after the source promise settles
 ```
 
 ```text
@@ -2373,32 +2373,32 @@ New: [director-088 director-091] The session checks the new list after it dispos
 
 ```text
 Old: [director-089] The caller listener comes before the deadline
-New: [director-089] The caller listener comes before the deadline timer starts
+New: [director-089] The session attaches the caller listener before the deadline timer starts
 ```
 
 ```text
 Old: [director-090] The caller event during listener setup cancels the load call
-New: [director-090] The caller event during listener registration cancels the load call
+New: [director-090] The session returns false for a caller event during listener registration
 ```
 
 ```text
 Old: [director-107] The helper attaches its listener before the work read
-New: [director-107] The helper attaches its listener before the source reads the work promise
+New: [director-107] The helper attaches its listener before it reads the work promise
 ```
 
 ```text
 Old: [director-107] The helper checks signal state at settlement
-New: [director-107] The helper checks signal state when the work settles
+New: [director-107] The helper checks signal state when the work settles and rejects the call
 ```
 
 ```text
 Old: [director-107] The file signal check follows text settlement
-New: [director-107] The reader checks the signal after the text promise settles
+New: [director-107] The share helpers check the signal after the text promise settles and return the project
 ```
 
 ```text
 Old: [director-098] The plain share returns an empty asset map
-New: [director-098] The parser returns an empty asset map for plain project JSON
+New: [director-098] The import returns an empty asset map for plain project JSON
 ```
 
 ```text
@@ -2408,17 +2408,17 @@ New: [director-107] The helper rejects with the cancellation reason during liste
 
 ```text
 Old: [director-099] The import checks top fields before version
-New: [director-099] The import checks top-level fields before version
+New: [director-099] The import checks top-level fields before version and rejects the call
 ```
 
 ```text
 Old: [director-105] The byte store rejects an unsafe path before its lookup
-New: [director-105] The byte store rejects an invalid path that it holds
+New: [director-105] The store rejects an invalid path that it holds for the byte store
 ```
 
 ```text
 Old: [director-106] The file budget check comes before the signal read
-New: [director-106] The reader checks the file limit before it reads the signal
+New: [director-106] The share helpers check the file limit before they read the signal and reject the invalid input
 ```
 
 
@@ -2441,7 +2441,7 @@ New: [director-082] The validator checks the list before it reads the anchors
 
 ```text
 Old: [director-088] The list check comes before the anchor read
-New: [director-088] The validator checks the list before it reads the anchors
+New: [director-088] The session checks the list before it reads the anchors
 ```
 
 ```text
@@ -2486,17 +2486,17 @@ New: [director-107] The helper removes its listener before it reads the reason
 
 ```text
 Old: [director-102 director-107] The export signal check comes before absent asset
-New: [director-102 director-107] The export checks the signal before it checks for an absent asset
+New: [director-102 director-107] The export checks the signal before it checks for an absent asset and rejects the call
 ```
 
 ```text
 Old: [director-092] The source event during listener removal stops success
-New: [director-092] The source signal event during listener removal stops success
+New: [director-092] The session rejects the load call for a source signal event during listener removal after success
 ```
 
 ```text
 Old: [director-092] The source event during listener removal stops error
-New: [director-092] The source signal event during listener removal stops error
+New: [director-092] The session rejects the load call for a source signal event during listener removal after error
 ```
 
 
@@ -2514,7 +2514,7 @@ The lead owns review round 5 and the image gates.
 | Spec | before each asset and after each digest | Two-item import and export tests count digests and resolver calls. Hand rows m409, m410, m447 and m448 fail. |
 | Spec | Each shot | A valid first shot and an invalid second shot give the literal indexed error. Hand rows m411 and m412 fail. |
 | Spec | rejects an invalid path before | The store holds the invalid path. The test checks that key and the rejection. The clause states the public result. |
-| Spec | Tool limits omit additive edits | The audit names additive edits. The 099 clause lists nine types. SVG, file protocol and geojsonx tests kill m413 to m415. |
+| Spec | Tool limits omit added members | The audit names the limit on added members. The 099 clause lists nine types. SVG, file protocol and geojsonx tests kill m413 to m415. |
 | Spec | Lines 89, 102 and 103 | The audit uses the rerun after pass 4 for that command. |
 | Spec | 367 rows and 166 rows | Both figures have Pass 2 labels. |
 | Spec | Killer titles of extension rows | The script checks all 260 old rows and 711 extension rows against the result files that the lead saved. |
@@ -2524,7 +2524,7 @@ The lead owns review round 5 and the image gates.
 | STE | the segment read | Titles and clauses use disposal and finite verb clauses. The Share work requirement uses file limits. |
 | STE | listener setup | Titles and clauses use listener registration, source signal event and source signal state where they concern a signal. |
 | STE | The extension, last sweep | The documents use extension run, Extension check 4, final rerun, Campaign 2 phase 1 and Extension check. |
-| STE | changes | The audit and design use mutations for edits to code in the mutation tests. |
+| STE | changes | The audit and design use mutations for code in the mutation commands. |
 | STE | The source event reads its reason | The session reads the signal reason. The success and error tests keep separate titles. Other titles state the exact check or result. |
 | STE | base64 alphabet and passive voice | The clauses use with + and /. The evidence and probe table use active verbs and absent. |
 | STE | accepts z and Z | The clause states _ and - at the start. The proposal states A later asset without a byte length. |
@@ -2585,7 +2585,7 @@ cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=n
 
 ### Killer title source
 
-The rows use the first failed test of the lead final rerun after pass 5.
+The rows use the first failed test of the final rerun of the lead after pass 5.
 The source is director-3-final2/results-mutants.json and results-mutants-new.json.
 The regeneration corrects 51 old and 123 extension killer labels.
 The final comparison checks all 260 old rows and 711 extension rows.
@@ -2691,7 +2691,7 @@ New: [director-076] The validator rejects the path type before it reads a segmen
 
 ```text
 Old: [director-089] The source listener and state check come before it reads the work promise
-New: [director-089] The source registers its listener and checks its state before it reads the work promise
+New: [director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order
 ```
 
 ```text
@@ -2706,27 +2706,27 @@ New: [director-097] The source checks the signal before it reads the stream chun
 
 ```text
 Old: [director-082] The manifest rejects the second shot reference
-New: [director-082] The manifest rejects a reference in the second shot
+New: [director-082] The validator rejects a reference in the second shot
 ```
 
 ```text
 Old: [director-094] The directory rejects the file protocol
-New: [director-094] The source rejects the file protocol
+New: [director-094] The factory rejects the file protocol
 ```
 
 ```text
 Old: [director-077 director-082] The manifest validates the second data pack
-New: [director-077 director-082] The manifest rejects an invalid second data pack
+New: [director-077 director-082] The validator rejects an invalid second data pack
 ```
 
 ```text
 Old: [director-081] The manifest uses the second anchor
-New: [director-081] The manifest accepts a reference to the second anchor
+New: [director-081] The validator returns without an error for a reference to the second anchor
 ```
 
 ```text
 Old: [director-082] The manifest checks the second reference ID
-New: [director-082] The manifest rejects an unknown second reference ID
+New: [director-082] The validator rejects an unknown second reference ID
 ```
 
 ```text
@@ -2736,7 +2736,7 @@ New: [director-088] The session rejects an invalid second data pack before the s
 
 ```text
 Old: [director-081 director-093] The session uses the second anchor
-New: [director-081 director-093] The session accepts a reference to the second anchor
+New: [director-081 director-093] The session returns true for a reference to the second anchor
 ```
 
 ```text
@@ -2751,42 +2751,42 @@ New: [director-085] The decoder rejects an invalid second coordinate
 
 ```text
 Old: [director-098] The plain project JSON returns an empty asset map
-New: [director-098] The parser returns an empty asset map for plain project JSON
+New: [director-098] The import returns an empty asset map for plain project JSON
 ```
 
 ```text
 Old: [director-105] The byte store rejects an unsafe path that it holds
-New: [director-105] The byte store rejects an invalid path that it holds
+New: [director-105] The store rejects an invalid path that it holds for the byte store
 ```
 
 ```text
 Old: [director-106] The share helpers give bundles the larger budget
-New: [director-106] The share helpers give bundles the larger file limit
+New: [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
 ```
 
 ```text
 Old: [director-099] The bundle helpers reject an extra top field
-New: [director-099] The bundle helpers reject an extra top-level field
+New: [director-099] The import rejects an extra top-level field
 ```
 
 ```text
 Old: [director-102] The absent digest stops its check after one field read
-New: [director-102] The export stops when the digest is absent after it reads one field
+New: [director-102] The export reads an absent declared digest once before it writes the digest
 ```
 
 ```text
 Old: [director-107] The file signal check follows the text result
-New: [director-107] The reader checks the signal after the text promise settles
+New: [director-107] The share helpers check the signal after the text promise settles and return the project
 ```
 
 ```text
 Old: [director-107] The helper attaches its listener before it reads the work promise
-New: [director-107] The helper attaches its listener before the source reads the work promise
+New: [director-107] The helper attaches its listener before it reads the work promise
 ```
 
 ```text
 Old: [director-108 director-110] The preview reaches the second scene and shot
-New: [director-108 director-110] The preview counts the second scene and shot
+New: [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 ```
 
 ```text
@@ -2809,7 +2809,7 @@ New: [director-079] The validator checks the digest before it reads the placemen
 
 ```text
 Old: [director-080] The height reference check comes before the bounds check
-New: [director-080] The validator checks the height reference before it checks the bounds
+New: [director-080] The validator checks the height reference before it checks the bounds and rejects the call
 ```
 
 ```text
@@ -2819,7 +2819,7 @@ New: [director-080] The validator checks the bounds array before it reads the le
 
 ```text
 Old: [director-080] The bounds length check comes before each coordinate check
-New: [director-080] The validator checks the bounds length before it checks each coordinate
+New: [director-080] The validator checks the bounds length before it checks each coordinate and rejects the call
 ```
 
 ```text
@@ -2829,7 +2829,7 @@ New: [director-082] The validator checks the list before it reads the anchors
 
 ```text
 Old: [director-077 director-082] The declaration check comes before the duplicate ID check
-New: [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs
+New: [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs and rejects the call
 ```
 
 ```text
@@ -2839,7 +2839,7 @@ New: [director-088 director-091] The session checks the new list after it dispos
 
 ```text
 Old: [director-088] The list check comes before access to the anchors
-New: [director-088] The validator checks the list before it reads the anchors
+New: [director-088] The session checks the list before it reads the anchors
 ```
 
 ```text
@@ -2864,7 +2864,7 @@ New: [director-093] The session checks total bytes before it reads the digest
 
 ```text
 Old: [director-095] The path check comes before the caller signal check
-New: [director-095] The source checks the path before it checks the caller signal
+New: [director-095] The source checks the path before it checks the caller signal and rejects the call
 ```
 
 ```text
@@ -2884,7 +2884,7 @@ New: [director-090] The session checks destroyed state after it reads the signal
 
 ```text
 Old: [director-090] The session sees destruction during caller signal access after a source error
-New: [director-090] The caller destroys the session when it reads the caller signal after a source error
+New: [director-090] The load call returns false when the caller signal destroys the session after a source error
 ```
 
 ```text
@@ -2894,12 +2894,12 @@ New: [director-093] The session checks byte type before it reads the length
 
 ```text
 Old: [director-079] The digest type check comes before text conversion
-New: [director-079] The validator checks the digest type before it converts text
+New: [director-079] The validator checks the digest type before it converts text and rejects the call
 ```
 
 ```text
 Old: [director-080] The edge order check starts with west and east
-New: [director-080] The validator checks west and east before south and north
+New: [director-080] The validator compares west with east before it compares south with north
 ```
 
 ```text
@@ -2909,17 +2909,17 @@ New: [director-082] The validator rejects duplicate references before it searche
 
 ```text
 Old: [director-090] The detached handle check does not read the source signal state
-New: [director-090] The cleared session returns false without the source signal state
+New: [director-090] The cleared session returns false and does not read the source signal state
 ```
 
 ```text
 Old: [director-099] The base64 type check comes before text conversion
-New: [director-099] The parser checks the base64 type before it converts text
+New: [director-099] The import checks the base64 type before it converts text and rejects the call
 ```
 
 ```text
 Old: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without state changes
-New: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
+New: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
 ```
 
 ```text
@@ -2929,22 +2929,22 @@ New: [director-106] The share helpers reject excess file bytes before they read 
 
 ```text
 Old: [director-106] The share helpers check a signal after text access
-New: [director-106] The share helpers check a signal after they read text
+New: [director-106] The share helpers call throwIfAborted three times and return the project
 ```
 
 ```text
 Old: [director-102] The absent digest stops its check after it reads one field
-New: [director-102] The export stops when the digest is absent after it reads one field
+New: [director-102] The export reads an absent declared digest once before it writes the digest
 ```
 
 ```text
 Old: [director-098 director-107] The share signal check comes before the text type check
-New: [director-098 director-107] The parser checks the signal before it checks the text type
+New: [director-098 director-107] The import checks the signal before it checks the text type and rejects the call
 ```
 
 ```text
 Old: [director-099 director-107] The asset signal check comes before its field check
-New: [director-099 director-107] The parser checks the signal before it checks asset fields
+New: [director-099 director-107] The import checks the signal before it checks asset fields and rejects the call
 ```
 
 ```text
@@ -2954,17 +2954,17 @@ New: [director-100 director-107] The import checks the signal before it compares
 
 ```text
 Old: [director-106] The file limit check comes before access to the signal
-New: [director-106] The reader checks the file limit before it reads the signal
+New: [director-106] The share helpers check the file limit before they read the signal and reject the invalid input
 ```
 
 ```text
 Old: [director-106 director-107] The file signal check comes before text access
-New: [director-106 director-107] The reader checks the signal before it reads text
+New: [director-106 director-107] The share helpers check the signal before they read text and reject the invalid input
 ```
 
 ```text
 Old: [director-107] The file signal check follows the text promise
-New: [director-107] The reader checks the signal after the text promise settles
+New: [director-107] The share helpers check the signal after the text promise settles and return the project
 ```
 
 ```text
@@ -2974,17 +2974,17 @@ New: [director-102] The export checks integrity before it reads the filename
 
 ```text
 Old: [director-102] The export count check comes before the next resolver call
-New: [director-102] The export checks the asset count before the next resolver call
+New: [director-102] The export checks the asset count before the next resolver call and rejects the call
 ```
 
 ```text
 Old: [director-102 director-107] The export signal check comes before ${label}
-New: [director-102 director-107] The export checks the signal before ${label}
+New: [director-102 director-107] The export checks the signal before it checks declared integrity and rejects the call
 ```
 
 ```text
 Old: [director-105] The store signal check comes before the path check
-New: [director-105] The store checks the signal before it checks the path
+New: [director-105] The store checks the signal before it checks the path and rejects the call
 ```
 
 ```text
@@ -3016,12 +3016,12 @@ The lead runs image gates, ratchet and review round 6.
 | S6 | 3514 Campaign | The audit states kills after each phase and names Complete hand check 2. The stream paragraph states cancellation before the second chunk. |
 | S7 | The verbs validates | Titles state rejection, acceptance, counts or list results. Echoes follow those titles. |
 | S8 | check comes before it | The source registers its listener and checks its state before it reads work. The parser returns an empty map for plain project JSON. |
-| S9 | The validator checks | The clause states rejection of the invalid second declaration. The source rejects the file protocol and reads only the first chunk after cancellation. |
+| S9 | The validator checks | The clause states rejection of the invalid second declaration. The source rejects the file protocol. After cancellation before the second chunk, the source reads only the first chunk. |
 | S10 | give bundles the larger | The tests use larger file limit and extra top-level field. All echoes use those titles. |
 | S11 | `MIME types` | Documents use media type and delete the unused definitions. The same term applies to old tagged titles. |
 | S12 | before source access | Titles use source call, invalid path, text promise, second digest and second resolver call. Documents use killer titles. |
 | S13 | The extension run checks | The evidence gives input counts, test counts, past events, clear subjects and the pass 6 scope. It names a failed repository test for each killed row. |
-| S14 | This additive edits limit | The audit states the limit on additive edits with articles and separate sentences. The allowed-field rows extend that limit. |
+| S14 | This limit on added members | The audit states the limit on added members with articles and separate sentences. The allowed-field rows extend that limit. |
 | S15 | both 52428800 checks | The probe states character and byte units and the JSON parse. |
 | S16 | Correct the command names | Tasks 9.11 and 9.12 name run names and the final rerun after pass 5. |
 
@@ -3042,8 +3042,8 @@ This pass needs no automatic tool command for new classes.
 
 ### Test additions
 
-The test edits add seven backfill tests and six sharing tests.
-They use existing scenario IDs only.
+The worker adds seven backfill tests and six sharing tests.
+They use only the scenario IDs of this change.
 The hand list adds 31 rows, m449 to m479.
 Each new row must give a failed repository test before this pass ends.
 
@@ -3061,7 +3061,7 @@ New: [director-096] The source returns lowercase media type text without paramet
 
 ```text
 Old: [director-090] The session validates the detached handle without the source signal state
-New: [director-090] The cleared session returns false without the source signal state
+New: [director-090] The cleared session returns false and does not read the source signal state
 ```
 
 ```text
@@ -3071,12 +3071,12 @@ New: [director-095 director-096 director-097] The directory source sends no cred
 
 ```text
 Old: [director-099] The bundle rejects unsupported MIME
-New: [director-099] The bundle rejects an unsupported media type
+New: [director-099] The import rejects an unsupported media type
 ```
 
 ```text
 Old: [director-101] The export reaches the second scene
-New: [director-101] The export includes the asset of the second scene
+New: [director-101] The export includes the asset of the second scene and returns bundle text
 ```
 
 
@@ -3272,7 +3272,7 @@ read|write|check|setup|cleanup|changes|access
 }
 ```
 
-The following grep outputs show each correction after the edits.
+The grep outputs below show each correction.
 
 ```text
 Finding: S1
@@ -3286,7 +3286,7 @@ Finding: S1 S9
 Command: grep -nE reads the first stream chunk|before each time|after it reads one field openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
 251:- **AND** The source checks the header byte limit before it reads the first stream chunk.
 260:- **AND** The source checks its signal before each time the source reads a stream chunk.
-329:- **AND** The export stops when the digest is absent after it reads one field.
+329:- **AND** The export reads an absent declared digest once before it writes the digest.
 Finding: S2
 Command: grep -nE 52 collection traversals|lifetime.js has no openspec/changes/backfill-director-packs-sharing/audit.md
 408:The loop table lists 52 collection traversals in six of the seven source files.
@@ -3296,43 +3296,43 @@ Command: grep -nE The preview counts the second scene openspec/changes/backfill-
 407:- **AND** The preview counts the second scene and the second shot, and lists the second data pack. The preview adds the bytes of the second asset to the byte total.
 Finding: S4 S7
 Command: grep -nE reference in the second shot|invalid second data pack|reference to the second anchor|invalid second path|invalid second coordinate src/director/packs/backfill.test.mjs
-3141:test('[director-082] The manifest rejects a reference in the second shot', () => {
-3150:test('[director-077 director-082] The manifest rejects an invalid second data pack', () => {
-3153:test('[director-081] The manifest accepts a reference to the second anchor', () => {
-3168:test('[director-088] The session rejects an invalid second data pack before the source call', async () => {
-3176:test('[director-081 director-093] The session accepts a reference to the second anchor', async () => {
-3182:test('[director-076] The validator rejects an invalid second path segment', () => {
-3185:test('[director-085] The decoder rejects an invalid second coordinate', () => {
+3141:test('[director-082] The validator rejects a reference in the second shot
+3150:test('[director-077 director-082] The validator rejects an invalid second data pack
+3153:test('[director-081] The validator returns without an error for a reference to the second anchor
+3168:test('[director-088] The session rejects an invalid second data pack before the source call
+3176:test('[director-081 director-093] The session returns true for a reference to the second anchor
+3182:test('[director-076] The validator rejects an invalid second path segment
+3185:test('[director-085] The decoder rejects an invalid second coordinate
 Finding: S5
 Command: grep -nE rerun after pass 4 openspec/changes/backfill-director-packs-sharing/design.md
-119:The rerun after pass 4 is the lead test of all 3849 mutations.
+119:The lead ran all 3849 mutations again after pass 4.
 Finding: S6
 Command: grep -nE 3514 kills|checks the signal before the second chunk openspec/changes/backfill-director-packs-sharing/audit.md
 48:That rule gives 3514 kills after Campaign 2 phase 1 and 3589 kills after phase 2.
-485:The stream test supplies two chunks and stops when it checks the signal before the second chunk.
+485:The stream test supplies two chunks. The source stops when it checks the signal before the second chunk.
 Finding: S8
 Command: grep -nE parser returns an empty asset map src/director/sharing/sharing.test.mjs
-56:test('[director-098] The parser returns an empty asset map for plain project JSON', async () => {
+56:test('[director-098] The import returns an empty asset map for plain project JSON
 Finding: S10
 Command: grep -nE larger file limit|extra top-level field src/director/sharing/sharing.test.mjs
-1099:test('[director-106] The share helpers give bundles the larger file limit', async () => {
-2028:test('[director-099] The bundle helpers reject an extra top-level field', async () => {
+1099:test('[director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
+2028:test('[director-099] The import rejects an extra top-level field
 Finding: S11
 Command: grep -nE accepted media type set openspec/changes/backfill-director-packs-sharing/design.md
 157:The accepted media type set contains exactly nine types.
 Finding: S12
 Command: grep -nE invalid path|text promise settles|second.*digest.*resolver call src/director/sharing/sharing.test.mjs
-347:test('[director-105] The byte store rejects an invalid path that it holds', () => {
-2406:test('[director-107] The reader checks the signal after the text promise settles', async () => {
-2658:  test(`[director-107] The ${mode} stops before the second ${mode === 'import' ? 'digest' : 'resolver call'}`, async () => {
+347:test('[director-105] The store rejects an invalid path that it holds for the byte store
+2406:test('[director-107] The share helpers check the signal after the text promise settles and return the project
+2658:  test(`[director-107] The export stops before the second resolver call`, async () => {
 Finding: S13
 Command: grep -nE Extension checks 1 to 4|16 backfill tests|In pass 6 the worker openspec/changes/backfill-director-packs-sharing/evidence.md
 2256:Extension checks 1 to 4 have inputs of 367, 199, 104 and 321 mutations.
 2534:The tests add 16 backfill tests and 10 sharing tests.
 2669:In pass 6 the worker changes two test files and ten change documents only.
 Finding: S14
-Command: grep -nE limit on additive edits openspec/changes/backfill-director-packs-sharing/audit.md
-234:This limit on additive edits covers the nine media types at bundle.js:11 to 21.
+Command: grep -nE limit on added members openspec/changes/backfill-director-packs-sharing/audit.md
+234:This limit covers additions to the nine media types at bundle.js:11 to 21.
 Finding: S15
 Command: grep -nE 52428800-character openspec/changes/backfill-director-packs-sharing/evidence/probe-extension.txt
 398:The private input declaration has no value or callback. Signal checks, type checks, the 52428800-character check, the 52428800-byte check and the JSON parse keep their order for every text length.
@@ -3344,24 +3344,24 @@ Finding: Spec Without layer IDs
 Command: grep -nE both absent named layers|traffic.*ships src/director/sharing/sharing.test.mjs
 1245:  f.scenes[0].shots.push({ id: 'b', layers: { traffic: true, ships: false } });
 1477:  f.scenes[0].shots[0].layers = { traffic: false, ships: false };
-2846:test('[director-110] The preview reports both absent named layers without layer IDs', () => {
+2846:test('[director-110] The preview reports both absent named layers without layer IDs
 2848:  project.scenes[0].shots[0].layers = { traffic: true, ships: true };
 2851:    ['traffic', 'ships'],
 2871:  project.scenes[0].shots[0].layers = { traffic: true, ships: true };
 2875:      { layerIds: ['traffic', 'ships'] },
 Finding: Spec The registry copies
 Command: grep -nE both registered sources and both renderers src/director/packs/backfill.test.mjs
-3225:test('[director-088 director-093] The session calls both registered sources and both renderers', async () => {
+3225:test('[director-088 director-093] The session calls both registered sources and both renderers
 Finding: Spec The table covers each
 Command: grep -nE 52 collection traversals|Preview absent layer filter|registry|digest bytes|Base64 input bytes openspec/changes/backfill-director-packs-sharing/audit.md
 408:The loop table lists 52 collection traversals in six of the seven source files.
-448:| Source registry entries | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m452 |
-449:| Source registry Map | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m463 |
-450:| Renderer registry entries | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m453 |
-451:| Renderer registry Map | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m464 |
-455:| Session digest bytes | src/director/packs/session.js:124 | [director-093] The session checks exact bytes and digest | m477 |
-456:| Bundle digest bytes | src/director/sharing/bundle.js:26 | [director-099] The import accepts a literal digest for three distinct bytes | m478 |
-457:| Base64 input bytes | src/director/sharing/bundle.js:46 | [director-099] The import accepts a literal digest for three distinct bytes | m479 |
+448:| Entries of the source registry | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m452 |
+449:| Map of the source registry | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m463 |
+450:| Entries of the renderer registry | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m453 |
+451:| Map of the renderer registry | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m464 |
+455:| Session digest bytes | src/director/packs/session.js:124 | [director-093] The session returns true for exact bytes and digest | m477 |
+456:| Bundle digest bytes | src/director/sharing/bundle.js:26 | [director-099] The import returns the bytes 1, 2 and 3 and the literal digest | m478 |
+457:| Base64 input bytes | src/director/sharing/bundle.js:46 | [director-099] The import returns the bytes 1, 2 and 3 and the literal digest | m479 |
 466:| Preview absent layer filter | src/director/sharing/preview.js:36 | [director-110] The preview reports both absent named layers without layer IDs | m449, m450, m451 |
 Finding: Spec The closed-sets table
 Command: grep -nE fields.*manifest.js|fields.*bundle.js|m455 to m462 openspec/changes/backfill-director-packs-sharing/audit.md
@@ -3396,7 +3396,7 @@ cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=n
 The final scope command compares all seven production files with commits 0bf26a8e and 290b5d2.
 All seven files match byte for byte after the complete hand command.
 It also checks each old span and the allowed changed paths.
-No review report, main spec, trace ledger or QA script changes.
+The worker changes no review report, main spec, trace ledger or QA script.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass7/finish.py
@@ -3445,7 +3445,7 @@ The git whitespace command gives no output.
 The production file comparison gives seven unchanged files.
 
 The predispatch command gives only Old records, code identifiers and the exact task 9.11 wording.
-The code fence limit applies to MIME and SHA-256 in mutation spans.
+The code fence limit applies to `MIME` and `SHA-256` in mutation spans.
 The pass keeps the production spans, Old records and required task text.
 The pass does not change the helper.
 
@@ -3497,3 +3497,4546 @@ The lead runs those commands.
 The pass runs no automatic mutation command because the tool classes stay unchanged.
 The pass runs no merge or push command.
 The pass commits the correction in the clone.
+
+### Title corrections in pass 8
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+```text
+Old: [director-076] The asset path accepts A in both character positions
+New: [director-076] The validator returns without an error for A in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts B in both character positions
+New: [director-076] The validator returns without an error for B in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts C in both character positions
+New: [director-076] The validator returns without an error for C in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts D in both character positions
+New: [director-076] The validator returns without an error for D in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts E in both character positions
+New: [director-076] The validator returns without an error for E in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts F in both character positions
+New: [director-076] The validator returns without an error for F in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts G in both character positions
+New: [director-076] The validator returns without an error for G in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts H in both character positions
+New: [director-076] The validator returns without an error for H in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts I in both character positions
+New: [director-076] The validator returns without an error for I in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts J in both character positions
+New: [director-076] The validator returns without an error for J in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts K in both character positions
+New: [director-076] The validator returns without an error for K in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts L in both character positions
+New: [director-076] The validator returns without an error for L in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts M in both character positions
+New: [director-076] The validator returns without an error for M in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts N in both character positions
+New: [director-076] The validator returns without an error for N in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts O in both character positions
+New: [director-076] The validator returns without an error for O in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts P in both character positions
+New: [director-076] The validator returns without an error for P in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts Q in both character positions
+New: [director-076] The validator returns without an error for Q in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts R in both character positions
+New: [director-076] The validator returns without an error for R in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts S in both character positions
+New: [director-076] The validator returns without an error for S in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts T in both character positions
+New: [director-076] The validator returns without an error for T in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts U in both character positions
+New: [director-076] The validator returns without an error for U in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts V in both character positions
+New: [director-076] The validator returns without an error for V in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts W in both character positions
+New: [director-076] The validator returns without an error for W in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts X in both character positions
+New: [director-076] The validator returns without an error for X in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts Y in both character positions
+New: [director-076] The validator returns without an error for Y in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts Z in both character positions
+New: [director-076] The validator returns without an error for Z in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts a in both character positions
+New: [director-076] The validator returns without an error for a in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts b in both character positions
+New: [director-076] The validator returns without an error for b in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts c in both character positions
+New: [director-076] The validator returns without an error for c in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts d in both character positions
+New: [director-076] The validator returns without an error for d in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts e in both character positions
+New: [director-076] The validator returns without an error for e in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts f in both character positions
+New: [director-076] The validator returns without an error for f in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts g in both character positions
+New: [director-076] The validator returns without an error for g in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts h in both character positions
+New: [director-076] The validator returns without an error for h in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts i in both character positions
+New: [director-076] The validator returns without an error for i in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts j in both character positions
+New: [director-076] The validator returns without an error for j in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts k in both character positions
+New: [director-076] The validator returns without an error for k in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts l in both character positions
+New: [director-076] The validator returns without an error for l in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts m in both character positions
+New: [director-076] The validator returns without an error for m in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts n in both character positions
+New: [director-076] The validator returns without an error for n in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts o in both character positions
+New: [director-076] The validator returns without an error for o in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts p in both character positions
+New: [director-076] The validator returns without an error for p in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts q in both character positions
+New: [director-076] The validator returns without an error for q in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts r in both character positions
+New: [director-076] The validator returns without an error for r in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts s in both character positions
+New: [director-076] The validator returns without an error for s in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts t in both character positions
+New: [director-076] The validator returns without an error for t in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts u in both character positions
+New: [director-076] The validator returns without an error for u in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts v in both character positions
+New: [director-076] The validator returns without an error for v in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts w in both character positions
+New: [director-076] The validator returns without an error for w in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts x in both character positions
+New: [director-076] The validator returns without an error for x in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts y in both character positions
+New: [director-076] The validator returns without an error for y in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts z in both character positions
+New: [director-076] The validator returns without an error for z in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts 0 in both character positions
+New: [director-076] The validator returns without an error for 0 in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts 1 in both character positions
+New: [director-076] The validator returns without an error for 1 in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts 2 in both character positions
+New: [director-076] The validator returns without an error for 2 in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts 3 in both character positions
+New: [director-076] The validator returns without an error for 3 in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts 4 in both character positions
+New: [director-076] The validator returns without an error for 4 in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts 5 in both character positions
+New: [director-076] The validator returns without an error for 5 in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts 6 in both character positions
+New: [director-076] The validator returns without an error for 6 in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts 7 in both character positions
+New: [director-076] The validator returns without an error for 7 in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts 8 in both character positions
+New: [director-076] The validator returns without an error for 8 in both character positions for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts 9 in both character positions
+New: [director-076] The validator returns without an error for 9 in both character positions for the asset path
+```
+
+```text
+Old: [director-079] The manifest accepts each hexadecimal digest character
+New: [director-079] The validator returns without an error for each hexadecimal digest character
+```
+
+```text
+Old: [director-077] The manifest checks fields before ID
+New: [director-077] The validator checks fields before ID and rejects the call
+```
+
+```text
+Old: [director-077] The manifest checks ID before version
+New: [director-077] The validator checks ID before version and rejects the call
+```
+
+```text
+Old: [director-077] The manifest checks version before format
+New: [director-077] The validator checks version before format and rejects the call
+```
+
+```text
+Old: [director-077] The manifest checks format before source fields
+New: [director-077] The validator checks format before source fields and rejects the call
+```
+
+```text
+Old: [director-076 director-077] The manifest checks source name before path
+New: [director-076 director-077] The validator checks source name before path and rejects the call
+```
+
+```text
+Old: [director-076 director-078] The manifest checks source path before attribution fields
+New: [director-076 director-078] The validator checks source path before attribution fields and rejects the call
+```
+
+```text
+Old: [director-078] The manifest checks text before license
+New: [director-078] The validator checks text before license and rejects the call
+```
+
+```text
+Old: [director-078] The manifest checks license before URL
+New: [director-078] The validator checks license before URL and rejects the call
+```
+
+```text
+Old: [director-078 director-079] The manifest checks URL before byteLength
+New: [director-078 director-079] The validator checks URL before byteLength and rejects the call
+```
+
+```text
+Old: [director-079] The manifest checks byteLength before digest
+New: [director-079] The validator checks byteLength before digest and rejects the call
+```
+
+```text
+Old: [director-080] The manifest checks bounds values before edge order
+New: [director-080] The validator checks bounds values before edge order and rejects the call
+```
+
+```text
+Old: [director-080] The manifest checks edge order before height
+New: [director-080] The validator checks edge order before height and rejects the call
+```
+
+```text
+Old: [director-080] The validator checks the height reference before it checks the bounds
+New: [director-080] The validator checks the height reference before it checks the bounds and rejects the call
+```
+
+```text
+Old: [director-080] The validator checks the bounds length before it checks each coordinate
+New: [director-080] The validator checks the bounds length before it checks each coordinate and rejects the call
+```
+
+```text
+Old: [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs
+New: [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs and rejects the call
+```
+
+```text
+Old: [director-089] The source registers its listener and checks its state before it reads the work promise
+New: [director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order
+```
+
+```text
+Old: [director-089] The completed source does not read its reason when the promise settles
+New: [director-089] The session returns true and does not read the reason after the source promise settles
+```
+
+```text
+Old: [director-088] The destroyed session returns false for a load call during source cancellation
+New: [director-088] The session returns false for a load call during source cancellation for the destroyed session
+```
+
+```text
+Old: [director-088] The validator checks the list before it reads the anchors
+New: [director-088] The session checks the list before it reads the anchors
+```
+
+```text
+Old: [director-089] The caller listener comes before the deadline timer starts
+New: [director-089] The session attaches the caller listener before the deadline timer starts
+```
+
+```text
+Old: [director-090] The caller event during listener registration cancels the load call
+New: [director-090] The session returns false for a caller event during listener registration
+```
+
+```text
+Old: [director-095] The source checks the path before it checks the caller signal
+New: [director-095] The source checks the path before it checks the caller signal and rejects the call
+```
+
+```text
+Old: [director-076] The asset path accepts z/Zz
+New: [director-076] The validator returns without an error for z/Zz for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts Z/zZ
+New: [director-076] The validator returns without an error for Z/zZ for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts zZ/Zz
+New: [director-076] The validator returns without an error for zZ/Zz for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts _x/_y
+New: [director-076] The validator returns without an error for _x/_y for the asset path
+```
+
+```text
+Old: [director-076] The asset path accepts -x/-y
+New: [director-076] The validator returns without an error for -x/-y for the asset path
+```
+
+```text
+Old: [director-077] The manifest names the extra data pack field
+New: [director-077] The validator names the extra data pack field and rejects the call
+```
+
+```text
+Old: [director-077] The manifest names the format field
+New: [director-077] The validator names the format field and rejects the call
+```
+
+```text
+Old: [director-077] The manifest names the source object
+New: [director-077] The validator names the source object and rejects the call
+```
+
+```text
+Old: [director-076] The manifest names the source path
+New: [director-076] The validator names the source path and rejects the call
+```
+
+```text
+Old: [director-078] The manifest names the extra attribution field
+New: [director-078] The validator names the extra attribution field and rejects the call
+```
+
+```text
+Old: [director-078] The manifest names the attribution object
+New: [director-078] The validator names the attribution object and rejects the call
+```
+
+```text
+Old: [director-078] The manifest names the link syntax
+New: [director-078] The validator names the link syntax and rejects the call
+```
+
+```text
+Old: [director-078] The manifest names the link protocol
+New: [director-078] The validator names the link protocol and rejects the call
+```
+
+```text
+Old: [director-079] The manifest names the numeric text
+New: [director-079] The validator names the numeric text and rejects the call
+```
+
+```text
+Old: [director-079] The manifest names the byteLength field
+New: [director-079] The validator names the byteLength field and rejects the call
+```
+
+```text
+Old: [director-079] The manifest names the integer field
+New: [director-079] The validator names the integer field and rejects the call
+```
+
+```text
+Old: [director-080] The manifest names the extra placement field
+New: [director-080] The validator names the extra placement field and rejects the call
+```
+
+```text
+Old: [director-080] The manifest names the placement object
+New: [director-080] The validator names the placement object and rejects the call
+```
+
+```text
+Old: [director-080] The manifest names the height reference
+New: [director-080] The validator names the height reference and rejects the call
+```
+
+```text
+Old: [director-080] The manifest names the bound list
+New: [director-080] The validator names the bound list and rejects the call
+```
+
+```text
+Old: [director-081] The manifest names an unknown anchor
+New: [director-081] The validator names an unknown anchor and rejects the call
+```
+
+```text
+Old: [director-082] The shot accepts eight references and rejects nine references
+New: [director-082] The validator returns without an error for eight references and rejects nine references for the shot
+```
+
+```text
+Old: [director-082] The scene names the invalid declaration
+New: [director-082] The validator rejects the invalid declaration for the scene
+```
+
+```text
+Old: [director-082] The scene names the invalid duplicate ID
+New: [director-082] The validator rejects the invalid duplicate ID for the scene
+```
+
+```text
+Old: [director-082] The scene names the invalid duplicate reference
+New: [director-082] The validator rejects the invalid duplicate reference for the scene
+```
+
+```text
+Old: [director-082] The scene names the invalid reference type
+New: [director-082] The validator rejects the invalid reference type for the scene
+```
+
+```text
+Old: [director-086] The decoder accepts an open line
+New: [director-086] The decoder accepts an open line and returns coordinates
+```
+
+```text
+Old: [director-088] The session accepts an empty list without asset work
+New: [director-088] The session returns true for an empty list without asset work
+```
+
+```text
+Old: [director-088] The data pack limits reject a caller change
+New: [director-088] The session rejects a caller change to the data pack limits
+```
+
+```text
+Old: [director-088] The destroyed session does not read the caller signal state
+New: [director-088] The session returns false without a caller signal access after destruction
+```
+
+```text
+Old: [director-090] The cleared load call does not read the caller signal state again
+New: [director-090] The session returns false and does not read the caller signal state again after cancellation
+```
+
+```text
+Old: [director-076] The asset path accepts safe names
+New: [director-076] The validator returns without an error for safe names for the asset path
+```
+
+```text
+Old: [director-076] The asset path rejects traversal
+New: [director-076] The validator rejects traversal for the asset path
+```
+
+```text
+Old: [director-077] The manifest rejects invalid version
+New: [director-077] The validator rejects invalid version
+```
+
+```text
+Old: [director-077] The manifest rejects invalid format
+New: [director-077] The validator rejects invalid format
+```
+
+```text
+Old: [director-077] The manifest accepts geojson
+New: [director-077] The validator returns without an error for geojson
+```
+
+```text
+Old: [director-077] The manifest accepts image
+New: [director-077] The validator returns without an error for image
+```
+
+```text
+Old: [director-077] The manifest accepts media
+New: [director-077] The validator returns without an error for media
+```
+
+```text
+Old: [director-078] The attribution rejects protocol
+New: [director-078] The validator rejects protocol for the attribution
+```
+
+```text
+Old: [director-078] The attribution rejects username
+New: [director-078] The validator rejects username for the attribution
+```
+
+```text
+Old: [director-078] The attribution rejects password
+New: [director-078] The validator rejects password for the attribution
+```
+
+```text
+Old: [director-078] The attribution rejects query
+New: [director-078] The validator rejects query for the attribution
+```
+
+```text
+Old: [director-078] The attribution rejects fragment
+New: [director-078] The validator rejects fragment for the attribution
+```
+
+```text
+Old: [director-078] The attribution rejects invalid URL text
+New: [director-078] The validator rejects invalid URL text for the attribution
+```
+
+```text
+Old: [director-078] The attribution accepts a safe link
+New: [director-078] The validator returns without an error for a safe link for the attribution
+```
+
+```text
+Old: [director-078] The attribution rejects blank text
+New: [director-078] The validator rejects blank text for the attribution
+```
+
+```text
+Old: [director-078] The attribution rejects blank license
+New: [director-078] The validator rejects blank license for the attribution
+```
+
+```text
+Old: [director-079] The byteLength field rejects a fraction
+New: [director-079] The validator rejects a fraction for the byteLength field
+```
+
+```text
+Old: [director-079] The digest rejects invalid type
+New: [director-079] The validator rejects invalid type for the digest
+```
+
+```text
+Old: [director-079] The digest rejects invalid alphabet
+New: [director-079] The validator rejects invalid alphabet for the digest
+```
+
+```text
+Old: [director-079] The integrity fields accept their limits
+New: [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+```
+
+```text
+Old: [director-080] The image rejects reversed west
+New: [director-080] The validator rejects reversed west for the image
+```
+
+```text
+Old: [director-080] The image rejects reversed south
+New: [director-080] The validator rejects reversed south for the image
+```
+
+```text
+Old: [director-080] The image rejects short bounds
+New: [director-080] The validator rejects short bounds for the image
+```
+
+```text
+Old: [director-080] The image rejects bounds field 0
+New: [director-080] The validator rejects bounds field 0 for the image
+```
+
+```text
+Old: [director-080] The image rejects bounds field 1
+New: [director-080] The validator rejects bounds field 1 for the image
+```
+
+```text
+Old: [director-080] The image rejects bounds field 2
+New: [director-080] The validator rejects bounds field 2 for the image
+```
+
+```text
+Old: [director-080] The image rejects bounds field 3
+New: [director-080] The validator rejects bounds field 3 for the image
+```
+
+```text
+Old: [director-080] The image rejects height and reference
+New: [director-080] The validator rejects height and reference for the image
+```
+
+```text
+Old: [director-081] The media rejects an unknown anchor
+New: [director-081] The validator rejects an unknown anchor for the media
+```
+
+```text
+Old: [director-082] The scene rejects duplicate data pack IDs
+New: [director-082] The validator rejects duplicate data pack IDs for the scene
+```
+
+```text
+Old: [director-082] The shot rejects duplicate data pack IDs
+New: [director-082] The validator rejects duplicate data pack IDs for the shot
+```
+
+```text
+Old: [director-082] The shot rejects unknown data pack IDs
+New: [director-082] The validator rejects unknown data pack IDs for the shot
+```
+
+```text
+Old: [director-082] The scene accepts absent data packs and anchors
+New: [director-082] The validator returns without an error for absent data packs and anchors for the scene
+```
+
+```text
+Old: [director-083] The collection rejects invalid type
+New: [director-083] The decoder rejects invalid type for the collection
+```
+
+```text
+Old: [director-083] The collection rejects invalid array
+New: [director-083] The decoder rejects invalid array for the collection
+```
+
+```text
+Old: [director-083] The collection rejects more than 2000 features
+New: [director-083] The decoder rejects more than 2000 features for the collection
+```
+
+```text
+Old: [director-084] The feature rejects type
+New: [director-084] The decoder rejects type for the feature
+```
+
+```text
+Old: [director-084] The feature rejects ID type
+New: [director-084] The decoder rejects ID type for the feature
+```
+
+```text
+Old: [director-084] The feature rejects blank ID
+New: [director-084] The decoder rejects blank ID for the feature
+```
+
+```text
+Old: [director-084] The feature rejects long ID
+New: [director-084] The decoder rejects long ID for the feature
+```
+
+```text
+Old: [director-084] The feature rejects duplicate ID
+New: [director-084] The decoder rejects duplicate ID for the feature
+```
+
+```text
+Old: [director-085] The position rejects invalid array
+New: [director-085] The decoder rejects invalid array for the position
+```
+
+```text
+Old: [director-085] The position rejects invalid length
+New: [director-085] The decoder rejects invalid length for the position
+```
+
+```text
+Old: [director-085] The position rejects a coordinate that is not finite
+New: [director-085] The decoder rejects a coordinate that is not finite for the position
+```
+
+```text
+Old: [director-085] The position rejects invalid longitude
+New: [director-085] The decoder rejects invalid longitude for the position
+```
+
+```text
+Old: [director-085] The position rejects invalid latitude
+New: [director-085] The decoder rejects invalid latitude for the position
+```
+
+```text
+Old: [director-085] The position rejects a height below the limit
+New: [director-085] The decoder rejects a height below the limit for the position
+```
+
+```text
+Old: [director-085] The position rejects a height above the limit
+New: [director-085] The decoder rejects a height above the limit for the position
+```
+
+```text
+Old: [director-085] The position total rejects excess
+New: [director-085] The decoder rejects excess for the position total
+```
+
+```text
+Old: [director-085] The position uses zero for absent height
+New: [director-085] The decoder returns zero for absent height for the position
+```
+
+```text
+Old: [director-085] The position keeps the height in the data
+New: [director-085] The decoder returns the height in the data for the position
+```
+
+```text
+Old: [director-086] The line rejects invalid array
+New: [director-086] The decoder rejects invalid array for the line
+```
+
+```text
+Old: [director-086] The line rejects invalid minimum
+New: [director-086] The decoder rejects invalid minimum for the line
+```
+
+```text
+Old: [director-086] The ring needs four points
+New: [director-086] The decoder rejects a ring with fewer than four points for the ring
+```
+
+```text
+Old: [director-086] The line accepts two distinct endpoints
+New: [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+```
+
+```text
+Old: [director-086] The ring rejects unclosed field 0
+New: [director-086] The decoder rejects unclosed field 0 for the ring
+```
+
+```text
+Old: [director-086] The ring rejects unclosed field 1
+New: [director-086] The decoder rejects unclosed field 1 for the ring
+```
+
+```text
+Old: [director-086] The ring rejects unclosed field 2
+New: [director-086] The decoder rejects unclosed field 2 for the ring
+```
+
+```text
+Old: [director-087] The geometry rejects invalid type
+New: [director-087] The decoder rejects invalid type for the geometry
+```
+
+```text
+Old: [director-087] The geometry rejects invalid array
+New: [director-087] The decoder rejects invalid array for the geometry
+```
+
+```text
+Old: [director-087] The geometry rejects an empty polygon
+New: [director-087] The decoder rejects an empty polygon for the geometry
+```
+
+```text
+Old: [director-087] The geometry rejects more than 128 rings
+New: [director-087] The decoder rejects more than 128 rings for the geometry
+```
+
+```text
+Old: [director-087] The geometry returns a closed polygon
+New: [director-087] The decoder returns a closed polygon for the geometry
+```
+
+```text
+Old: [director-087] The geometry removes properties
+New: [director-087] The decoder removes properties for the geometry
+```
+
+```text
+Old: [director-088] The new session reports idle state
+New: [director-088] The session reports idle state after creation
+```
+
+```text
+Old: [director-089] The session gives copied state
+New: [director-089] The session reports ready after the caller changes a state copy
+```
+
+```text
+Old: [director-090] The cancelled session disposes late resources
+New: [director-090] The session disposes late resources for the cancelled session
+```
+
+```text
+Old: [director-090] The session accepts a null late handle
+New: [director-090] The session returns false for cancelled work with a null late handle
+```
+
+```text
+Old: [director-090] The session destroys work that is not complete
+New: [director-090] The session returns false for work that destruction stops
+```
+
+```text
+Old: [director-091] The replacement keeps its resources
+New: [director-091] The session keeps its resources for the replacement
+```
+
+```text
+Old: [director-092] The deadline rejects stalled work
+New: [director-092] The session rejects stalled work for the deadline
+```
+
+```text
+Old: [director-093] The session checks exact bytes and digest
+New: [director-093] The session returns true for exact bytes and digest
+```
+
+```text
+Old: [director-094] The directory rejects protocol
+New: [director-094] The factory rejects protocol
+```
+
+```text
+Old: [director-094] The directory rejects username
+New: [director-094] The factory rejects username
+```
+
+```text
+Old: [director-094] The directory rejects password
+New: [director-094] The factory rejects password
+```
+
+```text
+Old: [director-094] The directory rejects query
+New: [director-094] The factory rejects query
+```
+
+```text
+Old: [director-094] The directory rejects fragment
+New: [director-094] The factory rejects fragment
+```
+
+```text
+Old: [director-094] The directory rejects an address with no final slash
+New: [director-094] The factory rejects an address with no final slash
+```
+
+```text
+Old: [director-095] The asset request sets its fixed options
+New: [director-095] The source sets its fixed options for the asset request
+```
+
+```text
+Old: [director-096] The stream joins distinct chunks
+New: [director-096] The source joins distinct stream chunks
+```
+
+```text
+Old: [director-096] The stream rejects excess header bytes
+New: [director-096] The source rejects excess header bytes for the stream
+```
+
+```text
+Old: [director-096] The stream rejects excess chunk bytes
+New: [director-096] The source rejects excess chunk bytes for the stream
+```
+
+```text
+Old: [director-097] The source accepts failed body cancellation
+New: [director-097] The source rejects the asset request after failed body cancellation
+```
+
+```text
+Old: [director-097] The stream releases its lock after an error
+New: [director-097] The source releases the reader lock after a stream error
+```
+
+```text
+Old: [director-097] The source checks its signal between chunks
+New: [director-097] The source checks its signal between chunks and rejects the call
+```
+
+```text
+Old: [director-080] The image accepts its bounds field
+New: [director-080] The validator returns without an error for its bounds field for the image
+```
+
+```text
+Old: [director-080] The image accepts its height field
+New: [director-080] The validator returns without an error for its height field for the image
+```
+
+```text
+Old: [director-080] The image accepts its altitudeReference field
+New: [director-080] The validator returns without an error for its altitudeReference field for the image
+```
+
+```text
+Old: [director-081] The media accepts its anchorId field
+New: [director-081] The validator returns without an error for its anchorId field for the media
+```
+
+```text
+Old: [director-077] The geojson accepts its altitudeReference field
+New: [director-077] The validator returns without an error for a GeoJSON altitudeReference field
+```
+
+```text
+Old: [director-080] The image bounds 0 rejects low excess
+New: [director-080] The validator rejects low excess for image bounds field 0
+```
+
+```text
+Old: [director-080] The image bounds 0 rejects high excess
+New: [director-080] The validator rejects high excess for image bounds field 0
+```
+
+```text
+Old: [director-080] The image bounds 1 rejects low excess
+New: [director-080] The validator rejects low excess for image bounds field 1
+```
+
+```text
+Old: [director-080] The image bounds 1 rejects high excess
+New: [director-080] The validator rejects high excess for image bounds field 1
+```
+
+```text
+Old: [director-080] The image bounds 2 rejects low excess
+New: [director-080] The validator rejects low excess for image bounds field 2
+```
+
+```text
+Old: [director-080] The image bounds 2 rejects high excess
+New: [director-080] The validator rejects high excess for image bounds field 2
+```
+
+```text
+Old: [director-080] The image bounds 3 rejects low excess
+New: [director-080] The validator rejects low excess for image bounds field 3
+```
+
+```text
+Old: [director-080] The image bounds 3 rejects high excess
+New: [director-080] The validator rejects high excess for image bounds field 3
+```
+
+```text
+Old: [director-080] The image height checks both limits
+New: [director-080] The validator rejects image height outside both limits
+```
+
+```text
+Old: [director-082] The scene uses supplied anchors
+New: [director-082] The validator uses supplied anchors for the scene and returns without an error
+```
+
+```text
+Old: [director-082] The scene uses absent anchor defaults
+New: [director-082] The validator uses absent anchor defaults for the scene and returns without an error
+```
+
+```text
+Old: [director-085] The position accepts both geographic edges
+New: [director-085] The decoder accepts both geographic edges for the position and returns coordinates
+```
+
+```text
+Old: [director-088] The session state uses its idle default
+New: [director-088] The session reports idle after creation
+```
+
+```text
+Old: [director-088] The session state uses its zero default
+New: [director-088] The session reports zero handles after creation
+```
+
+```text
+Old: [director-089] The session state uses its active total
+New: [director-089] The session reports one active handle
+```
+
+```text
+Old: [director-093] The session uses its default byte budget
+New: [director-093] The session calls the source with a default limit of 8388608 bytes
+```
+
+```text
+Old: [director-093] The session accepts absent declared size
+New: [director-093] The session returns true without a declared size
+```
+
+```text
+Old: [director-090] The session checks signal state without an event
+New: [director-090] The session returns false for a cancelled signal without an event
+```
+
+```text
+Old: [director-090] The session checks a cleared load call without signal state
+New: [director-090] The session returns false for a cleared load call without a signal state access
+```
+
+```text
+Old: [director-092] The session ignores a late source error
+New: [director-092] The session returns false for cancelled work and reports idle after a late source error
+```
+
+```text
+Old: [director-094] The directory accepts HTTP and HTTPS
+New: [director-094] The factory returns a source for HTTP and HTTPS directories
+```
+
+```text
+Old: [director-092] The absent renderer does not call its source
+New: [director-092] The session rejects an absent renderer without a source call
+```
+
+```text
+Old: [director-095] The asset request sets its credentials option
+New: [director-095] The source sets its credentials option for the asset request
+```
+
+```text
+Old: [director-095] The asset request sets its redirect option
+New: [director-095] The source sets its redirect option for the asset request
+```
+
+```text
+Old: [director-095] The asset request sets its referrerPolicy option
+New: [director-095] The source sets its referrerPolicy option for the asset request
+```
+
+```text
+Old: [director-095] The asset request sets its cache option
+New: [director-095] The source sets its cache option for the asset request
+```
+
+```text
+Old: [director-085] The position rejects field 0 that is not finite
+New: [director-085] The decoder rejects field 0 that is not finite for the position
+```
+
+```text
+Old: [director-085] The position rejects field 1 that is not finite
+New: [director-085] The decoder rejects field 1 that is not finite for the position
+```
+
+```text
+Old: [director-085] The position rejects field 2 that is not finite
+New: [director-085] The decoder rejects field 2 that is not finite for the position
+```
+
+```text
+Old: [director-096] The source checks its default byte budget
+New: [director-096] The source rejects 8388609 bytes without a caller limit
+```
+
+```text
+Old: [director-077] The manifest accepts the id field of a data pack
+New: [director-077] The validator returns without an error for the id field of a data pack
+```
+
+```text
+Old: [director-077] The manifest accepts the version field of a data pack
+New: [director-077] The validator returns without an error for the version field of a data pack
+```
+
+```text
+Old: [director-077] The manifest accepts the format field of a data pack
+New: [director-077] The validator returns without an error for the format field of a data pack
+```
+
+```text
+Old: [director-077] The manifest accepts the source field of a data pack
+New: [director-077] The validator returns without an error for the source field of a data pack
+```
+
+```text
+Old: [director-077] The manifest accepts the attribution field of a data pack
+New: [director-077] The validator returns without an error for the attribution field of a data pack
+```
+
+```text
+Old: [director-077] The manifest accepts the placement field of a data pack
+New: [director-077] The validator returns without an error for the placement field of a data pack
+```
+
+```text
+Old: [director-079] The manifest accepts the byteLength field of a data pack
+New: [director-079] The validator returns without an error for the byteLength field of a data pack
+```
+
+```text
+Old: [director-079] The manifest accepts the sha256 field of a data pack
+New: [director-079] The validator returns without an error for the sha256 field of a data pack
+```
+
+```text
+Old: [director-077] The manifest accepts its source name field
+New: [director-077] The validator returns without an error for its source name field
+```
+
+```text
+Old: [director-077] The manifest accepts its source path field
+New: [director-077] The validator returns without an error for its source path field
+```
+
+```text
+Old: [director-078] The manifest accepts its attribution text field
+New: [director-078] The validator returns without an error for its attribution text field
+```
+
+```text
+Old: [director-078] The manifest accepts its attribution license field
+New: [director-078] The validator returns without an error for its attribution license field
+```
+
+```text
+Old: [director-078] The manifest accepts its attribution url field
+New: [director-078] The validator returns without an error for its attribution url field
+```
+
+```text
+Old: [director-092] The session settles an early internal signal
+New: [director-092] The session settles an early internal signal and reports idle
+```
+
+```text
+Old: [director-093] The session gives anchors to its renderer
+New: [director-093] The session calls the renderer with the anchors and returns true
+```
+
+```text
+Old: [director-089] The session state uses its active status
+New: [director-089] The session reports ready after asset work
+```
+
+```text
+Old: [director-080] The placement selects the image fields
+New: [director-080] The validator rejects media fields in image placement for the placement
+```
+
+```text
+Old: [director-081] The placement selects the media fields
+New: [director-081] The validator rejects image fields in media placement for the placement
+```
+
+```text
+Old: [director-089] The session loads its geojson format
+New: [director-089] The session calls the GeoJSON renderer once and returns true
+```
+
+```text
+Old: [director-089] The session loads its image format
+New: [director-089] The session calls the image renderer once and returns true
+```
+
+```text
+Old: [director-089] The session loads its media format
+New: [director-089] The session calls the media renderer once and returns true
+```
+
+```text
+Old: [director-092] The session settles a source error before its deadline
+New: [director-092] The session settles a source error before its deadline and reports idle
+```
+
+```text
+Old: [director-092] The session uses its supplied deadline
+New: [director-092] The session rejects stalled work at the 19 ms deadline
+```
+
+```text
+Old: [director-092] The session uses its default deadline
+New: [director-092] The session rejects stalled work at the default 15000 ms deadline
+```
+
+```text
+Old: [director-083] The collection accepts its exact feature limit
+New: [director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
+```
+
+```text
+Old: [director-084] The feature ID accepts its exact text limit
+New: [director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
+```
+
+```text
+Old: [director-085] The position accepts its exact total limit
+New: [director-085] The decoder accepts its exact total limit for the position and returns coordinates
+```
+
+```text
+Old: [director-087] The polygon accepts its exact ring limit
+New: [director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
+```
+
+```text
+Old: [director-076] The asset path checks its text limit
+New: [director-076] The validator rejects a path above its text limit for the asset path
+```
+
+```text
+Old: [director-095] The asset request sets its signal option
+New: [director-095] The source sets its signal option for the asset request
+```
+
+```text
+Old: [director-096] The stream accepts its exact byte limit
+New: [director-096] The source accepts its exact byte limit for the stream and returns bytes
+```
+
+```text
+Old: [director-092] The data pack session reads the byteLength field once without a registered source
+New: [director-092] The session reads the byteLength field once without a registered source for the data pack session
+```
+
+```text
+Old: [director-079] The digest rejects 63 characters
+New: [director-079] The validator rejects 63 characters for the digest
+```
+
+```text
+Old: [director-079] The digest rejects 65 characters
+New: [director-079] The validator rejects 65 characters for the digest
+```
+
+```text
+Old: [director-079] The digest rejects uppercase text
+New: [director-079] The validator rejects uppercase text for the digest
+```
+
+```text
+Old: [director-079] The digest rejects a prefix
+New: [director-079] The validator rejects a prefix for the digest
+```
+
+```text
+Old: [director-079] The digest rejects a suffix
+New: [director-079] The validator rejects a suffix for the digest
+```
+
+```text
+Old: [director-079] The digest accepts 64 lowercase characters
+New: [director-079] The validator returns without an error for 64 lowercase characters for the digest
+```
+
+```text
+Old: [director-080] The image rejects equal longitude edges
+New: [director-080] The validator rejects equal longitude edges for the image
+```
+
+```text
+Old: [director-080] The image rejects equal latitude edges
+New: [director-080] The validator rejects equal latitude edges for the image
+```
+
+```text
+Old: [director-080] The image accepts all geographic limits
+New: [director-080] The validator returns without an error for all geographic limits for the image
+```
+
+```text
+Old: [director-088] The session accepts eight data packs
+New: [director-088] The session returns true for eight data packs
+```
+
+```text
+Old: [director-093] The session accepts the asset byte limit
+New: [director-093] The session returns true at the asset byte limit
+```
+
+```text
+Old: [director-093] The session accepts the total byte limit
+New: [director-093] The session returns true at the total byte limit
+```
+
+```text
+Old: [director-093] The source receives the path and the renderer receives the asset and signal
+New: [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+```
+
+```text
+Old: [director-088] The session checks every declaration before the source call
+New: [director-088] The session checks every declaration before the source call and rejects the call
+```
+
+```text
+Old: [director-089] The session destroys each ready resource
+New: [director-089] The session disposes both ready handles in reverse order and reports idle
+```
+
+```text
+Old: [director-092] The deadline removes partial resources
+New: [director-092] The session removes partial resources for the deadline
+```
+
+```text
+Old: [director-076] The asset path rejects URL syntax with a stable message
+New: [director-076] The validator rejects URL syntax with a stable message for the asset path
+```
+
+```text
+Old: [director-082] The scene ignores a data pack list from its parent
+New: [director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
+```
+
+```text
+Old: [director-080] The image rejects text for each geographic field
+New: [director-080] The validator rejects text for each geographic field for the image
+```
+
+```text
+Old: [director-078] The attribution accepts its text limits and rejects excess text
+New: [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+```
+
+```text
+Old: [director-076] The asset path accepts 1024 characters and rejects 1025
+New: [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
+```
+
+```text
+Old: [director-095] The directory source uses the default fetch function
+New: [director-095] The source uses the default fetch function and returns bytes
+```
+
+```text
+Old: [director-077] The manifest accepts 256 characters for its ID and rejects 257
+New: [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+```
+
+```text
+Old: [director-077] The manifest accepts 256 characters for its source name and rejects 257
+New: [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+```
+
+```text
+Old: [director-076] The asset path rejects x?a=1
+New: [director-076] The validator rejects x?a=1 for the asset path
+```
+
+```text
+Old: [director-076] The asset path rejects a:b
+New: [director-076] The validator rejects a:b for the asset path
+```
+
+```text
+Old: [director-076] The asset path rejects .x
+New: [director-076] The validator rejects .x for the asset path
+```
+
+```text
+Old: [director-076] The asset path rejects x/
+New: [director-076] The validator rejects x/ for the asset path
+```
+
+```text
+Old: [director-076] The asset path rejects x//y
+New: [director-076] The validator rejects x//y for the asset path
+```
+
+```text
+Old: [director-079] The manifest accepts one byte
+New: [director-079] The validator returns without an error for one byte
+```
+
+```text
+Old: [director-080] The image rejects bounds outside an array
+New: [director-080] The validator rejects bounds outside an array for the image
+```
+
+```text
+Old: [director-082] The scene accepts eight distinct data packs
+New: [director-082] The validator returns without an error for eight distinct data packs for the scene
+```
+
+```text
+Old: [director-082] The scene rejects nine distinct data packs
+New: [director-082] The validator rejects nine distinct data packs for the scene
+```
+
+```text
+Old: [director-085] The position rejects negative longitude
+New: [director-085] The decoder rejects negative longitude for the position
+```
+
+```text
+Old: [director-085] The position rejects positive longitude
+New: [director-085] The decoder rejects positive longitude for the position
+```
+
+```text
+Old: [director-085] The position rejects negative latitude
+New: [director-085] The decoder rejects negative latitude for the position
+```
+
+```text
+Old: [director-085] The position rejects positive latitude
+New: [director-085] The decoder rejects positive latitude for the position
+```
+
+```text
+Old: [director-085] The position rejects one coordinate
+New: [director-085] The decoder rejects one coordinate for the position
+```
+
+```text
+Old: [director-085] The position rejects four coordinates
+New: [director-085] The decoder rejects four coordinates for the position
+```
+
+```text
+Old: [director-085] The position accepts the limit for negative longitude
+New: [director-085] The decoder accepts the limit for negative longitude for the position and returns coordinates
+```
+
+```text
+Old: [director-085] The position accepts the limit for positive longitude
+New: [director-085] The decoder accepts the limit for positive longitude for the position and returns coordinates
+```
+
+```text
+Old: [director-085] The position accepts the limit for negative latitude
+New: [director-085] The decoder accepts the limit for negative latitude for the position and returns coordinates
+```
+
+```text
+Old: [director-085] The position accepts the limit for positive latitude
+New: [director-085] The decoder accepts the limit for positive latitude for the position and returns coordinates
+```
+
+```text
+Old: [director-089] The data pack session reports its state during asset work
+New: [director-089] The session reports its state during asset work for the data pack session
+```
+
+```text
+Old: [director-096] The directory source accepts its default byte limit
+New: [director-096] The source accepts its default byte limit and returns bytes
+```
+
+```text
+Old: [director-093] The renderer receives the data pack and scene anchors
+New: [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+```
+
+```text
+Old: [director-080] The image accepts its minimum height
+New: [director-080] The validator returns without an error for its minimum height for the image
+```
+
+```text
+Old: [director-085] The position accepts its minimum height
+New: [director-085] The decoder accepts its minimum height for the position and returns coordinates
+```
+
+```text
+Old: [director-080] The image accepts its maximum height
+New: [director-080] The validator returns without an error for its maximum height for the image
+```
+
+```text
+Old: [director-085] The position accepts its maximum height
+New: [director-085] The decoder accepts its maximum height for the position and returns coordinates
+```
+
+```text
+Old: [director-079] The manifest accepts its byte limit
+New: [director-079] The validator returns without an error for its byte limit
+```
+
+```text
+Old: [director-089] The data pack session removes source listeners after success
+New: [director-089] The session removes source listeners after success for the data pack session
+```
+
+```text
+Old: [director-089] The data pack session removes source listeners after error
+New: [director-089] The session removes source listeners after error for the data pack session
+```
+
+```text
+Old: [director-089] The completed source listener ignores a later event after success
+New: [director-089] The session reads the reason zero times after a later event for success
+```
+
+```text
+Old: [director-089] The completed source listener ignores a later event after error
+New: [director-089] The session reads the reason zero times after a later event for error
+```
+
+```text
+Old: [director-090] The caller destroys the session when it reads the caller signal after a source error
+New: [director-090] The load call returns false when the caller signal destroys the session after a source error
+```
+
+```text
+Old: [director-093] The session does not read declared byteLength again for null bytes
+New: [director-093] The session does not read declared byteLength again for null bytes and rejects the call
+```
+
+```text
+Old: [director-092] The deadline gives its cause to the source signal
+New: [director-092] The session gives its cause to the source signal for the deadline and rejects the call
+```
+
+```text
+Old: [director-079] The validator checks the digest type before it converts text
+New: [director-079] The validator checks the digest type before it converts text and rejects the call
+```
+
+```text
+Old: [director-080] The validator checks west and east before south and north
+New: [director-080] The validator compares west with east before it compares south with north
+```
+
+```text
+Old: [director-093] The session does not read bytes.length again without declared byteLength
+New: [director-093] The session returns true and reads bytes.length three times without declared byteLength
+```
+
+```text
+Old: [director-090] The cleared session returns false without the source signal state
+New: [director-090] The cleared session returns false and does not read the source signal state
+```
+
+```text
+Old: [director-091] The old caller listener does not change new resources
+New: [director-091] The session keeps new resources after the old caller listener fires
+```
+
+```text
+Old: [director-088 director-092] The absent source map gives no source for a numeric name
+New: [director-088 director-092] The session rejects a numeric source name with no source map
+```
+
+```text
+Old: [director-088 director-092] The absent renderer map gives no renderer for a numeric name
+New: [director-088 director-092] The session rejects a numeric renderer name with no renderer map
+```
+
+```text
+Old: [director-092] The session does not read the global error property for absent source
+New: [director-092] The session does not read the global error property for absent source and rejects the call
+```
+
+```text
+Old: [director-092] The session does not read the global error property for invalid bytes
+New: [director-092] The session does not read the global error property for invalid bytes and rejects the call
+```
+
+```text
+Old: [director-092] The session does not read the global error property for excess total
+New: [director-092] The session does not read the global error property for excess total and rejects the call
+```
+
+```text
+Old: [director-092] The session does not read the global error property for wrong digest
+New: [director-092] The session does not read the global error property for wrong digest and rejects the call
+```
+
+```text
+Old: [director-092] The session does not read the global error property for invalid handle
+New: [director-092] The session does not read the global error property for invalid handle and rejects the call
+```
+
+```text
+Old: [director-082] The manifest rejects a reference in the second shot
+New: [director-082] The validator rejects a reference in the second shot
+```
+
+```text
+Old: [director-077] The manifest rejects an unlisted geojsonx format
+New: [director-077] The validator rejects an unlisted geojsonx format
+```
+
+```text
+Old: [director-077 director-082] The manifest rejects an invalid second data pack
+New: [director-077 director-082] The validator rejects an invalid second data pack
+```
+
+```text
+Old: [director-081] The manifest accepts a reference to the second anchor
+New: [director-081] The validator returns without an error for a reference to the second anchor
+```
+
+```text
+Old: [director-082] The manifest rejects an unknown second reference ID
+New: [director-082] The validator rejects an unknown second reference ID
+```
+
+```text
+Old: [director-081 director-093] The session accepts a reference to the second anchor
+New: [director-081 director-093] The session returns true for a reference to the second anchor
+```
+
+```text
+Old: [director-079 director-082] The manifest rejects the second data pack digest
+New: [director-079 director-082] The validator rejects the second data pack digest
+```
+
+```text
+Old: [director-080] The manifest rejects the last bounds coordinate
+New: [director-080] The validator rejects the last bounds coordinate
+```
+
+```text
+Old: [director-077] The manifest rejects script and adapters in the data pack
+New: [director-077] The validator rejects the extra fields script and adapters in the data pack
+```
+
+```text
+Old: [director-077] The manifest rejects script and adapters in the source
+New: [director-077] The validator rejects the extra fields script and adapters in the source
+```
+
+```text
+Old: [director-078] The manifest rejects script and adapters in the attribution
+New: [director-078] The validator rejects the extra fields script and adapters in the attribution
+```
+
+```text
+Old: [director-080] The manifest rejects script and adapters in the geojson placement
+New: [director-077] The validator rejects the extra fields script and adapters in the GeoJSON placement
+```
+
+```text
+Old: [director-080] The manifest rejects script and adapters in the image placement
+New: [director-080] The validator rejects the extra fields script and adapters in the image placement
+```
+
+```text
+Old: [director-081] The manifest rejects script and adapters in the media placement
+New: [director-077] The validator rejects the extra fields script and adapters in the media placement
+```
+
+```text
+Old: [director-098] The parser returns an empty asset map for plain project JSON
+New: [director-098] The import returns an empty asset map for plain project JSON
+```
+
+```text
+Old: [director-107] The helper does not attach a listener to a cancelled signal
+New: [director-107] The helper does not attach a listener to a cancelled signal and rejects the call
+```
+
+```text
+Old: [director-099] The import accepts each base64 character in plain text
+New: [director-099] The import accepts each base64 character in plain text and returns assets
+```
+
+```text
+Old: [director-099] The import accepts each base64 character in padded text
+New: [director-099] The import accepts each base64 character in padded text and returns assets
+```
+
+```text
+Old: [director-099] The bundle names the invalid version
+New: [director-099] The import names the invalid version and rejects the call
+```
+
+```text
+Old: [director-099] The bundle names the invalid extra field
+New: [director-099] The import names the invalid extra field and rejects the call
+```
+
+```text
+Old: [director-099] The bundle names the invalid path
+New: [director-099] The import names the invalid path and rejects the call
+```
+
+```text
+Old: [director-099] The bundle names the invalid duplicate path
+New: [director-099] The import names the invalid duplicate path and rejects the call
+```
+
+```text
+Old: [director-100] The bundle names the invalid digest
+New: [director-100] The import names the invalid digest and rejects the call
+```
+
+```text
+Old: [director-100] The bundle names the invalid source
+New: [director-100] The import names the invalid source and rejects the call
+```
+
+```text
+Old: [director-100] The bundle names the invalid reference
+New: [director-100] The import names the invalid reference and rejects the call
+```
+
+```text
+Old: [director-100] The bundle names the invalid unused asset
+New: [director-100] The import names the invalid unused asset and rejects the call
+```
+
+```text
+Old: [director-098] The bundle names the invalid JSON path
+New: [director-098] The import names the invalid JSON path and rejects the call
+```
+
+```text
+Old: [director-099] The bundle accepts base64 zz==
+New: [director-099] The import accepts base64 zz== and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts base64 ZZ==
+New: [director-099] The import accepts base64 ZZ== and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts base64 99==
+New: [director-099] The import accepts base64 99== and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts base64 zZ09
+New: [director-099] The import accepts base64 zZ09 and returns assets
+```
+
+```text
+Old: [director-099] The bundle rejects an equals sign at the start
+New: [director-099] The import rejects an equals sign at the start
+```
+
+```text
+Old: [director-099] The bundle rejects a null base64 value
+New: [director-099] The import rejects a null base64 value
+```
+
+```text
+Old: [director-098] The bundle rejects null text
+New: [director-098] The import rejects null text
+```
+
+```text
+Old: [director-102] The export names the invalid absent asset
+New: [director-102] The export names the invalid absent asset and rejects the call
+```
+
+```text
+Old: [director-102] The export names the invalid empty bytes
+New: [director-102] The export names the invalid empty bytes and rejects the call
+```
+
+```text
+Old: [director-102] The export names the invalid media type
+New: [director-102] The export names the invalid media type and rejects the call
+```
+
+```text
+Old: [director-102] The export names the invalid declared byteLength
+New: [director-102] The export names the invalid declared byteLength and rejects the call
+```
+
+```text
+Old: [director-102] The export names excess asset entries
+New: [director-102] The export names excess asset entries and rejects the call
+```
+
+```text
+Old: [director-103] The export names different shared integrity
+New: [director-103] The export names different shared integrity and rejects the call
+```
+
+```text
+Old: [director-101] The export limits each source filename to 160 characters
+New: [director-101] The export limits each source filename to 160 characters and returns bundle text
+```
+
+```text
+Old: [director-104] The byte store accepts an absent replacement map
+New: [director-104] The store reports zero bytes after an absent replacement map
+```
+
+```text
+Old: [director-105] The byte store accepts its default byte limit
+New: [director-105] The store accepts its default byte limit for the byte store and returns byte copies
+```
+
+```text
+Old: [director-105] The byte store rejects an invalid path that it holds
+New: [director-105] The store rejects an invalid path that it holds for the byte store
+```
+
+```text
+Old: [director-102] The share limits reject a caller change
+New: [director-102] The bundle helpers reject a caller change to the share limits
+```
+
+```text
+Old: [director-099] The parser checks the base64 type before it converts text
+New: [director-099] The import checks the base64 type before it converts text and rejects the call
+```
+
+```text
+Old: [director-102] The export does not compare an absent declared byteLength
+New: [director-102] The export does not compare an absent declared byteLength and returns bundle text
+```
+
+```text
+Old: [director-102] The export checks declared byteLength before declared digest
+New: [director-102] The export checks declared byteLength before declared digest and rejects the call
+```
+
+```text
+Old: [director-102] The export checks the asset size before the total size
+New: [director-102] The export checks the asset size before the total size and rejects the call
+```
+
+```text
+Old: [director-110] The applied shot packs decide external content before source pack IDs
+New: [director-110] The preview reports external content from applied shot packs before it reads source pack IDs
+```
+
+```text
+Old: [director-101] The selected scene bundle copies bytes and attribution and keeps the project without an asset request
+New: [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
+```
+
+```text
+Old: [director-099] The bundle rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+New: [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+```
+
+```text
+Old: [director-102] The bundle checks asset limits and declared integrity before export
+New: [director-102] The export rejects excess bytes, wrong integrity and absent assets
+```
+
+```text
+Old: [director-103] The data packs with the same path share one asset and reject integrity values that differ
+New: [director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
+```
+
+```text
+Old: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
+New: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+```
+
+```text
+Old: [director-104] The bundle byte store removes old data after replacement and uses no network source
+New: [director-104] The store removes old data after replacement and uses no network source for the import byte store
+```
+
+```text
+Old: [director-107] The cancelled bundle export stops before the next asset and returns no partial output
+New: [director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
+```
+
+```text
+Old: [director-101] The bundle accepts long valid source asset names
+New: [director-101] The export returns a bundle for a source path of 1024 characters
+```
+
+```text
+Old: [director-098] The bundle helpers reject nontext input
+New: [director-098] The import rejects nontext input
+```
+
+```text
+Old: [director-098] The bundle helpers reject invalid JSON
+New: [director-098] The import rejects invalid JSON
+```
+
+```text
+Old: [director-098] The bundle helpers accept plain project JSON
+New: [director-098] The import accepts plain project JSON and returns the project
+```
+
+```text
+Old: [director-098] The bundle helpers reject excess characters
+New: [director-098] The import rejects excess characters
+```
+
+```text
+Old: [director-098] The bundle helpers reject excess UTF8 bytes
+New: [director-098] The import rejects excess UTF8 bytes
+```
+
+```text
+Old: [director-099] The base64 rejects invalid type
+New: [director-099] The import rejects invalid type for the base64
+```
+
+```text
+Old: [director-099] The base64 rejects invalid empty
+New: [director-099] The import rejects invalid empty for the base64
+```
+
+```text
+Old: [director-099] The base64 rejects invalid length
+New: [director-099] The import rejects invalid length for the base64
+```
+
+```text
+Old: [director-099] The base64 rejects invalid alignment
+New: [director-099] The import rejects invalid alignment for the base64
+```
+
+```text
+Old: [director-099] The base64 rejects invalid alphabet
+New: [director-099] The import rejects invalid alphabet for the base64
+```
+
+```text
+Old: [director-099] The base64 rejects invalid padding
+New: [director-099] The import rejects invalid padding for the base64
+```
+
+```text
+Old: [director-099] The bundle rejects duplicate paths
+New: [director-099] The import rejects duplicate paths
+```
+
+```text
+Old: [director-099] The bundle rejects an unsupported media type
+New: [director-099] The import rejects an unsupported media type
+```
+
+```text
+Old: [director-099] The bundle rejects unsupported version
+New: [director-099] The import rejects unsupported version
+```
+
+```text
+Old: [director-100] The bundle rejects an absent asset
+New: [director-100] The import rejects an absent asset
+```
+
+```text
+Old: [director-100] The bundle rejects a wrong byteLength field
+New: [director-100] The import rejects a wrong byteLength field
+```
+
+```text
+Old: [director-100] The bundle rejects a pack digest that differs from its asset
+New: [director-100] The import rejects a pack digest that differs from its asset
+```
+
+```text
+Old: [director-100] The bundle rejects an asset digest that differs from its bytes
+New: [director-100] The import rejects an asset digest that differs from its bytes
+```
+
+```text
+Old: [director-100] The bundle rejects unused assets
+New: [director-100] The import rejects unused assets
+```
+
+```text
+Old: [director-100] The bundle rejects external data pack sources
+New: [director-100] The import rejects external data pack sources
+```
+
+```text
+Old: [director-103] The export reuses a shared asset
+New: [director-103] The export reuses a shared asset and returns bundle text
+```
+
+```text
+Old: [director-106] The share helpers accept an absent filename
+New: [director-106] The share helpers return the project for an absent filename
+```
+
+```text
+Old: [director-106] The share helpers give bundles the larger file limit
+New: [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
+```
+
+```text
+Old: [director-107] The helper checks signal state when the work settles
+New: [director-107] The helper checks signal state when the work settles and rejects the call
+```
+
+```text
+Old: [director-108] The preview uses the scene ID without a title
+New: [director-108] The preview reports the scene ID when the title is absent
+```
+
+```text
+Old: [director-110] The preview detects applied shot packs
+New: [director-110] The preview reports external content for applied shot packs
+```
+
+```text
+Old: [director-110] The preview detects the source pack ID of a shot
+New: [director-110] The preview reports external content for a shot with a source pack ID
+```
+
+```text
+Old: [director-110] The preview detects no external content
+New: [director-110] The preview reports no external content without source packs
+```
+
+```text
+Old: [director-098] The share character guard comes before byte conversion
+New: [director-098] The import rejects 52428801 characters before byte conversion
+```
+
+```text
+Old: [director-101] The export accepts scenes without data packs
+New: [director-101] The export accepts scenes without data packs and returns bundle text
+```
+
+```text
+Old: [director-102] The export accepts absent integrity fields
+New: [director-102] The export accepts absent integrity fields and returns bundle text
+```
+
+```text
+Old: [director-102] The export accepts an absent digest
+New: [director-102] The export accepts an absent digest and returns bundle text
+```
+
+```text
+Old: [director-103] The shared export accepts absent byte declarations
+New: [director-103] The export accepts absent byte declarations for the shared export and returns bundle text
+```
+
+```text
+Old: [director-103] The shared export accepts an absent digest
+New: [director-103] The export accepts an absent digest for the shared export and returns bundle text
+```
+
+```text
+Old: [director-099] The base64 accepts bytes without padding
+New: [director-099] The import accepts bytes without padding for the base64 and returns assets
+```
+
+```text
+Old: [director-109] The preview distinguishes bundle sources
+New: [director-109] The preview reports a configured source for a supplied source ID
+```
+
+```text
+Old: [director-110] The preview accepts absent shot layers
+New: [director-110] The preview reports no absent layer when a shot has no layers
+```
+
+```text
+Old: [director-110] The preview uses supplied shot layers
+New: [director-110] The preview reports traffic as absent without layer IDs
+```
+
+```text
+Old: [director-105] The store checks its default byte budget
+New: [director-105] The store rejects 8388609 bytes without a caller limit
+```
+
+```text
+Old: [director-099] The base64 rejects a custom text object
+New: [director-099] The import rejects a custom text object for the base64
+```
+
+```text
+Old: [director-103] The export key uses the registered source name
+New: [director-103] The export key uses the registered source name and returns bundle text
+```
+
+```text
+Old: [director-103] The export key uses path
+New: [director-103] The export key uses path and returns bundle text
+```
+
+```text
+Old: [director-110] The preview detects each layer key
+New: [director-110] The preview reports ships as absent when only traffic is configured
+```
+
+```text
+Old: [director-108] The preview totals include every asset
+New: [director-108] The preview reports three bytes for both assets
+```
+
+```text
+Old: [director-100] The bundle checks its second asset reference
+New: [director-100] The import checks its second asset reference and rejects the call
+```
+
+```text
+Old: [director-100] The bundle checks its second asset digest
+New: [director-100] The import checks its second asset digest and rejects the call
+```
+
+```text
+Old: [director-103] The export accepts equal shared integrity
+New: [director-103] The export accepts equal shared integrity and returns bundle text
+```
+
+```text
+Old: [director-106] The share helpers check a signal after they read text
+New: [director-106] The share helpers call throwIfAborted three times and return the project
+```
+
+```text
+Old: [director-102] The export checks its encoded text budget
+New: [director-102] The export rejects encoded bundle text above 52428800 bytes
+```
+
+```text
+Old: [director-099] The bundle accepts the application/json media type
+New: [director-099] The import accepts the application/json media type and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts the application/geo+json media type
+New: [director-099] The import accepts the application/geo+json media type and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts the image/png media type
+New: [director-099] The import accepts the image/png media type and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts the video/mp4 media type
+New: [director-099] The import accepts the video/mp4 media type and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts the video/webm media type
+New: [director-099] The import accepts the video/webm media type and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts the audio/mpeg media type
+New: [director-099] The import accepts the audio/mpeg media type and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts the audio/ogg media type
+New: [director-099] The import accepts the audio/ogg media type and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts the audio/wav media type
+New: [director-099] The import accepts the audio/wav media type and returns assets
+```
+
+```text
+Old: [director-099] The bundle accepts the audio/webm media type
+New: [director-099] The import accepts the audio/webm media type and returns assets
+```
+
+```text
+Old: [director-102] The export accepts its exact asset total
+New: [director-102] The export accepts its exact asset total and returns bundle text
+```
+
+```text
+Old: [director-102] The export accepts the total byte limit and rejects one more byte
+New: [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+```
+
+```text
+Old: [director-099] The base64 accepts its length limit and rejects the next aligned length
+New: [director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
+```
+
+```text
+Old: [director-099] The import accepts the total byte limit and rejects one more byte
+New: [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+```
+
+```text
+Old: [director-107] The bundle stops import before an asset
+New: [director-107] The bundle helpers stop import before an asset
+```
+
+```text
+Old: [director-107] The bundle stops import after a digest
+New: [director-107] The bundle helpers stop import after a digest
+```
+
+```text
+Old: [director-107] The bundle stops export before an asset
+New: [director-107] The bundle helpers stop export before an asset
+```
+
+```text
+Old: [director-107] The bundle stops export after asset bytes
+New: [director-107] The bundle helpers stop export after asset bytes
+```
+
+```text
+Old: [director-107] The bundle stops export after a digest
+New: [director-107] The bundle helpers stop export after a digest
+```
+
+```text
+Old: [director-098] The bundle helpers accept the character limit
+New: [director-098] The import accepts the character limit and returns the project
+```
+
+```text
+Old: [director-098] The bundle helpers accept the multibyte text limit
+New: [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+```
+
+```text
+Old: [director-098] The bundle helpers reject a null project
+New: [director-098] The import rejects a null project
+```
+
+```text
+Old: [director-098] The bundle helpers reject an invalid plain project
+New: [director-098] The import rejects an invalid plain project
+```
+
+```text
+Old: [director-099] The bundle helpers reject an extra top-level field
+New: [director-099] The import rejects an extra top-level field
+```
+
+```text
+Old: [director-099] The bundle helpers reject an invalid bundle project
+New: [director-099] The import rejects an invalid bundle project
+```
+
+```text
+Old: [director-099] The import accepts 64 distinct assets
+New: [director-099] The import accepts 64 distinct assets and returns assets
+```
+
+```text
+Old: [director-101] The resolver receives the data pack and signal
+New: [director-101] The export calls the resolver with the data pack and signal
+```
+
+```text
+Old: [director-102] The export accepts the text byte limit
+New: [director-102] The export accepts the text byte limit and returns bundle text
+```
+
+```text
+Old: [director-105] The byte store accepts the caller byte limit
+New: [director-105] The store accepts the caller byte limit for the byte store and returns byte copies
+```
+
+```text
+Old: [director-107] The share helpers remove the listener after success
+New: [director-107] The helper removes its listener after success
+```
+
+```text
+Old: [director-107] The share helpers remove the listener after error
+New: [director-107] The helper removes its listener after error
+```
+
+```text
+Old: [director-107] The share helpers remove the listener after cancel
+New: [director-107] The helper removes its listener after cancel
+```
+
+```text
+Old: [director-102] The export stops when the digest is absent after it reads one field
+New: [director-102] The export reads an absent declared digest once before it writes the digest
+```
+
+```text
+Old: [director-101] The filename slice starts at zero
+New: [director-101] The export calls the filename slice with a start of zero
+```
+
+```text
+Old: [director-098] The bundle rejects invalid JSON of 5242881 characters
+New: [director-098] The import rejects invalid JSON of 5242881 characters
+```
+
+```text
+Old: [director-098] The bundle rejects invalid JSON of 52428800 characters
+New: [director-098] The import rejects invalid JSON of 52428800 characters
+```
+
+```text
+Old: [director-099] The import accepts the standard alphabet +/+/
+New: [director-099] The import accepts the standard alphabet +/+/ and returns assets
+```
+
+```text
+Old: [director-099 director-101] The export uses the standard alphabet +/+/
+New: [director-099 director-101] The export uses the standard alphabet +/+/ and returns bundle text
+```
+
+```text
+Old: [director-099] The import accepts the standard alphabet /w==
+New: [director-099] The import accepts the standard alphabet /w== and returns assets
+```
+
+```text
+Old: [director-099 director-101] The export uses the standard alphabet /w==
+New: [director-099 director-101] The export uses the standard alphabet /w== and returns bundle text
+```
+
+```text
+Old: [director-099] The import accepts the standard alphabet +w==
+New: [director-099] The import accepts the standard alphabet +w== and returns assets
+```
+
+```text
+Old: [director-099 director-101] The export uses the standard alphabet +w==
+New: [director-099 director-101] The export uses the standard alphabet +w== and returns bundle text
+```
+
+```text
+Old: [director-099] The import accepts the standard alphabet +/8=
+New: [director-099] The import accepts the standard alphabet +/8= and returns assets
+```
+
+```text
+Old: [director-099 director-101] The export uses the standard alphabet +/8=
+New: [director-099 director-101] The export uses the standard alphabet +/8= and returns bundle text
+```
+
+```text
+Old: [director-099] The import accepts the standard alphabet AZaz09+/
+New: [director-099] The import accepts the standard alphabet AZaz09+/ and returns assets
+```
+
+```text
+Old: [director-099 director-101] The export uses the standard alphabet AZaz09+/
+New: [director-099 director-101] The export uses the standard alphabet AZaz09+/ and returns bundle text
+```
+
+```text
+Old: [director-098 director-107] The parser checks the signal before it checks the text type
+New: [director-098 director-107] The import checks the signal before it checks the text type and rejects the call
+```
+
+```text
+Old: [director-099] The import checks top-level fields before version
+New: [director-099] The import checks top-level fields before version and rejects the call
+```
+
+```text
+Old: [director-099] The import checks version before project
+New: [director-099] The import checks version before project and rejects the call
+```
+
+```text
+Old: [director-099] The import checks project before assets
+New: [director-099] The import checks project before assets and rejects the call
+```
+
+```text
+Old: [director-099] The import checks asset fields before path
+New: [director-099] The import checks asset fields before path and rejects the call
+```
+
+```text
+Old: [director-099] The import checks path before media type
+New: [director-099] The import checks path before media type and rejects the call
+```
+
+```text
+Old: [director-099] The import checks media type before duplicate path
+New: [director-099] The import checks media type before duplicate path and rejects the call
+```
+
+```text
+Old: [director-099] The import checks duplicate path before base64
+New: [director-099] The import checks duplicate path before base64 and rejects the call
+```
+
+```text
+Old: [director-099 director-107] The parser checks the signal before it checks asset fields
+New: [director-099 director-107] The import checks the signal before it checks asset fields and rejects the call
+```
+
+```text
+Old: [director-099] The import checks asset bytes before the digest call
+New: [director-099] The import checks asset bytes before the digest call and rejects the call
+```
+
+```text
+Old: [director-106] The reader checks the file limit before it reads the signal
+New: [director-106] The share helpers check the file limit before they read the signal and reject the invalid input
+```
+
+```text
+Old: [director-106 director-107] The reader checks the signal before it reads text
+New: [director-106 director-107] The share helpers check the signal before they read text and reject the invalid input
+```
+
+```text
+Old: [director-107] The reader checks the signal after the text promise settles
+New: [director-107] The share helpers check the signal after the text promise settles and return the project
+```
+
+```text
+Old: [director-102] The export checks the asset count before the next resolver call
+New: [director-102] The export checks the asset count before the next resolver call and rejects the call
+```
+
+```text
+Old: [director-102] The export checks bytes before the media type
+New: [director-102] The export checks bytes before the media type and rejects the call
+```
+
+```text
+Old: [director-102] The export checks the media type before the digest call
+New: [director-102] The export checks the media type before the digest call and rejects the call
+```
+
+```text
+Old: [director-102 director-107] The export checks the signal before it checks for an absent asset
+New: [director-102 director-107] The export checks the signal before it checks for an absent asset and rejects the call
+```
+
+```text
+Old: [director-102 director-107] The export checks the signal before declared integrity
+New: [director-102 director-107] The export checks the signal before it checks declared integrity and rejects the call
+```
+
+```text
+Old: [director-105] The store checks the signal before it checks the path
+New: [director-105] The store checks the signal before it checks the path and rejects the call
+```
+
+```text
+Old: [director-107] The helper attaches its listener before the source reads the work promise
+New: [director-107] The helper attaches its listener before it reads the work promise
+```
+
+```text
+Old: [director-107] The helper checks cancellation after listener removal
+New: [director-107] The helper checks cancellation after listener removal and rejects the call
+```
+
+```text
+Old: [director-099 director-102] The bundle rejects an SVG media type
+New: [director-099 director-102] The bundle helpers reject an SVG media type during import and export
+```
+
+```text
+Old: [director-108 director-110] The preview counts the second scene and shot
+New: [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+```
+
+```text
+Old: [director-101] The export includes the asset of the second scene
+New: [director-101] The export includes the asset of the second scene and returns bundle text
+```
+
+```text
+Old: [director-101] The export encodes the second byte chunk
+New: [director-101] The export encodes the second byte chunk and returns bundle text
+```
+
+```text
+Old: [director-099] The import rejects script and adapters in the top-level object
+New: [director-099] The import rejects the extra fields script and adapters in the top-level object
+```
+
+```text
+Old: [director-099] The import rejects script and adapters in the asset
+New: [director-099] The import rejects the extra fields script and adapters in the asset
+```
+
+```text
+Old: [director-110] The preview accepts both configured layer IDs
+New: [director-110] The preview reports no absent layer when both layer IDs are configured
+```
+
+```text
+Old: [director-109] The preview accepts both configured source IDs
+New: [director-109] The preview reports both configured sources as configured
+```
+
+```text
+Old: [director-099] The import accepts a literal digest for three distinct bytes
+New: [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+```
+
+## Pass 8
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+The glossary gives one name for each function actor.
+The factory validates the directory; the source is the function that the factory returns.
+No production function changes.
+The limit for coordinate lengths records the untested addition of 5 to the set of lengths 2 and 3.
+
+The pass adds no test body or hand row.
+The automatic row statuses come from the source commit.
+This pass changes their killer labels.
+Three traversals use separate table rows for their hand rows.
+The scope command counts 56 rows and 52 distinct traversals.
+
+### Findings and searches
+
+#### F1
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The reader checks.
+Named the share helpers for file and text work.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n share helpers check openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+376:- **THEN** the share helpers check the file suffix and size before they read text
+379:- **AND** The share helpers check the file limit before they read the signal and reject excess files.
+390:- **AND** The share helpers check the signal before they read text and after the text promise settles. They reject cancellation.
+```
+
+#### F2
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: During export, the helper.
+Named the bundle helpers for export signal checks.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n During export, the bundle helpers check openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+391:- **AND** During export, the bundle helpers check the signal before they check asset presence and declared integrity and reject cancellation.
+```
+
+#### F3
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The helper attaches.
+Restored the helper as the actor that reads the work promise.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n helper attaches its listener before it reads openspec/changes/backfill-director-packs-sharing/../../../src/director/sharing/sharing.test.mjs
+2553:test('[director-107] The helper attaches its listener before it reads the work promise', async () => {
+```
+
+#### F4
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The source registers.
+Named the session for listener, state and work promise order.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n session attaches the source listener openspec/changes/backfill-director-packs-sharing/../../../src/director/packs/backfill.test.mjs
+191:test('[director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order', async () => {
+```
+
+#### F5
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The export stops.
+Stated one digest field access before the export writes the digest.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n declared digest openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+223:- **AND** The session checks total bytes before it reads the declared digest.
+330:- **AND** The export checks declared byteLength before the declared digest and rejects an invalid asset.
+332:- **AND** When the declared digest is absent, the export reads the digest field once before it writes the digest.
+```
+
+#### F6
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The caller destroys.
+Stated the false result of the load call.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n caller signal destroys openspec/changes/backfill-director-packs-sharing/../../../src/director/packs/backfill.test.mjs
+2968:test('[director-090] The load call returns false when the caller signal destroys the session after a source error', async () => {
+```
+
+#### F7
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The validator checks west.
+Named edge comparison instead of field order.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n compares west with east openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+65:- **AND** The validator compares west with east before it compares south with north.
+```
+
+#### F8
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: the session calls the source.
+Named pack.source.adapter for sources and pack.format for renderers.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n pack.source.adapter openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+155:- **AND** The session calls each source by pack.source.adapter and each renderer by pack.format. Both registries contain two entries.
+```
+
+#### F9
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The rows keep.
+Restored each killer for m432, m434, m447 and m448.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n m432 openspec/changes/backfill-director-packs-sharing/audit.md
+456:| Project scenes and their data packs | src/director/sharing/bundle.js:23 | [director-101] The export writes each asset index and filename | m432 |
+```
+
+#### F10
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The validator checks the list.
+Named the session for the list check.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n session checks the list openspec/changes/backfill-director-packs-sharing/../../../src/director/packs/backfill.test.mjs
+317:test('[director-088] The session checks the list before it reads the anchors', async () => {
+```
+
+#### M1
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: the original test.
+Named commands separately from test functions.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n 3849 mutations openspec/changes/backfill-director-packs-sharing/audit.md
+41:The tool generated 3849 mutations.
+69:The old set has 3849 mutations. It gives 3718 killed, 64 timeout, 3 crash and 64 survived results.
+97:The command ended with exit status 0 after it tested 3849 mutations.
+162:Campaign 2 ran the 3849 mutations first.
+```
+
+#### M2
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: edit as a noun.
+Changed noun uses and removed the false preview state claim.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n The worker adds seven openspec/changes/backfill-director-packs-sharing/evidence.md
+3045:The worker adds seven backfill tests and six sharing tests.
+```
+
+#### M3
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: existing scenario IDs.
+Used the scenario IDs of this change and a finite sentence.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n They use only openspec/changes/backfill-director-packs-sharing/evidence.md
+3046:They use only the scenario IDs of this change.
+```
+
+#### M4
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The preview accepts.
+Stated preview reports and the import byte and digest result.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n returns the bytes 1 openspec/changes/backfill-director-packs-sharing/../../../src/director/sharing/sharing.test.mjs
+2899:test('[director-099] The import returns the bytes 1, 2 and 3 and the literal digest', async () => {
+```
+
+#### M5
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: before declared integrity.
+Added the verb for the declared integrity check.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n it checks declared integrity openspec/changes/backfill-director-packs-sharing/../../../src/director/sharing/sharing.test.mjs
+2516:    'it checks declared integrity',
+```
+
+#### M6
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: rejects script and adapters.
+Named script and adapters as extra fields.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n rejects the extra fields openspec/changes/backfill-director-packs-sharing/../../../src/director/packs/backfill.test.mjs
+3257:  test(`[director-${tag}] The validator rejects the extra fields script and adapters in the ${label}`, () => {
+```
+
+#### M7
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: the parser.
+Used import for parseSceneShare.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n The import checks asset fields openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+297:- **AND** The import checks asset fields, path, media type, duplicate path and base64 in that order and rejects an invalid asset.
+```
+
+#### M8
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: without the old source signal state.
+Stated no source signal access and a false result.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n does not read the old source signal state openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+188:- **AND** After the caller clears the session, the session does not read the old source signal state and returns false.
+```
+
+#### M9
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: byteLength and the digest.
+Restored byteLength before digest before placement.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n checks byteLength before the digest openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+55:- **AND** The validator checks byteLength before the digest, and the digest before it reads the placement.
+```
+
+#### M10
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The stream test supplies.
+Named the source that stops before the second chunk.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n The stream test supplies two chunks. openspec/changes/backfill-director-packs-sharing/audit.md
+511:The stream test supplies two chunks. The source stops when it checks the signal before the second chunk.
+```
+
+#### M11
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The source rejects the file protocol and.
+Used separate sentences for protocol and cancellation.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n After cancellation before the second chunk openspec/changes/backfill-director-packs-sharing/evidence.md
+3019:| S9 | The validator checks | The clause states rejection of the invalid second declaration. The source rejects the file protocol. After cancellation before the second chunk, the source reads only the first chunk. |
+```
+
+#### M12
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: No review report.
+Stated the scope of the worker.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n The worker changes no review report openspec/changes/backfill-director-packs-sharing/evidence.md
+2670:The worker changes no review report, main spec, trace ledger or QA script.
+3399:The worker changes no review report, main spec, trace ledger or QA script.
+```
+
+#### M13
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: because it has 28 words.
+Named the sentence and corrected the rerun phrase.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n because the sentence has 28 words openspec/changes/backfill-director-packs-sharing/design.md
+180:The prose gate rejects the requested preview sentence because the sentence has 28 words.
+```
+
+#### M14
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: Known limit host-gates.
+Moved process notes under the Known limits section as Pass 7 notes.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n Pass 7 note openspec/changes/backfill-director-packs-sharing/proposal.md
+75:### Pass 7 notes
+82:- Pass 7 note `host-gates`: the lead runs image gates, ratchet and review round 6.
+85:- Pass 7 note `predispatch-code-fence`: the predispatch checker treats the production identifiers `MIME` and `SHA-256` inside JavaScript fences as prose.
+87:- Pass 7 note `predispatch-run-name`: task 9.11 uses the wording that the lead gives.
+```
+
+#### M15
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: MIME and SHA-256.
+Marked the production identifiers as code.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n `MIME` and `SHA-256` openspec/changes/backfill-director-packs-sharing/evidence.md
+3087:The code identifiers `MIME` and `SHA-256` give abbreviation reports in the mutation spans.
+3448:The code fence limit applies to `MIME` and `SHA-256` in mutation spans.
+```
+
+#### M16
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: counts the second scene and shot.
+Added the second asset bytes to the title.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n adds the bytes of the second asset openspec/changes/backfill-director-packs-sharing/../../../src/director/sharing/sharing.test.mjs
+2717:test('[director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset', () => {
+```
+
+#### M17
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: Asset store replacement Map.
+Used Map of the asset store and entries of each registry.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n Map of the asset store openspec/changes/backfill-director-packs-sharing/audit.md
+485:| Replacement Map of the asset store | src/director/sharing/bundle.js:202 | [director-104] The store counts the second asset | m472 |
+486:| Snapshot Map of the asset store | src/director/sharing/bundle.js:207 | [director-104] The store counts the second asset | m473 |
+```
+
+#### Spec 1
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: The four new Known limits.
+Moved limits and named additions to every closed set, with coordinate lengths.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n closed-set-added-members openspec/changes/backfill-director-packs-sharing/proposal.md
+68:- Known limit `closed-set-added-members`: the automatic tool does not add members to any closed set.
+```
+
+#### Spec 2
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: Rows name one test.
+Named each killer with its hand row.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n m434 openspec/changes/backfill-director-packs-sharing/audit.md
+462:| Export data packs | src/director/sharing/bundle.js:143 | [director-101] The export writes each asset index and filename | m434 |
+```
+
+#### Spec 3
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: before the source reads.
+Named the helper and the session in titles.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n helper attaches its listener openspec/changes/backfill-director-packs-sharing/../../../src/director/sharing/sharing.test.mjs
+2553:test('[director-107] The helper attaches its listener before it reads the work promise', async () => {
+```
+
+#### Spec 4
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: calls the source and renderer.
+Stated the distinct registry keys.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n pack.format openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+27:#### Scenario: Data pack formats `director-077`
+155:- **AND** The session calls each source by pack.source.adapter and each renderer by pack.format. Both registries contain two entries.
+```
+
+#### Spec 5
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: dropped the order.
+Restored integrity order and no old signal access.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n byteLength before the digest openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+55:- **AND** The validator checks byteLength before the digest, and the digest before it reads the placement.
+```
+
+#### Spec 6
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+First words: Two new tests.
+Tagged GeoJSON and media extra fields with director-077.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n 077.*,.*placement openspec/changes/backfill-director-packs-sharing/../../../src/director/packs/backfill.test.mjs
+3253:  ['077', 'GeoJSON placement', pack, p => p.placement, 'pack.placement'],
+3255:  ['077', 'media placement', () => ({ ...pack(), format: 'media', placement: { anchorId: 'anchor' } }), p => p.placement, 'pack.placement'],
+```
+
+### echoes
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass8/check-echoes.py
+{
+  "sourceCommit": "f8f6a94d2d09489b98fda4d063b8612f766f5dfa",
+  "sourceTitleTemplates": 498,
+  "liveTitles": 705,
+  "checkedLabels": 5193,
+  "oldRecordsExcluded": 765,
+  "truncatedKillerLabels": 0,
+  "staleLabels": []
+}
+```
+
+### final-tests
+
+```text
+Command: The command in each test record gives the test process.
+[
+  {
+    "name": "backfill",
+    "exit": 0,
+    "command": "taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs",
+    "summary": [
+      "\u2139 tests 430",
+      "\u2139 suites 0",
+      "\u2139 pass 430",
+      "\u2139 fail 0",
+      "\u2139 cancelled 0",
+      "\u2139 skipped 0",
+      "\u2139 todo 0",
+      "\u2139 duration_ms 2201.062421"
+    ]
+  },
+  {
+    "name": "packs",
+    "exit": 0,
+    "command": "taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs",
+    "summary": [
+      "\u2139 tests 12",
+      "\u2139 suites 0",
+      "\u2139 pass 12",
+      "\u2139 fail 0",
+      "\u2139 cancelled 0",
+      "\u2139 skipped 0",
+      "\u2139 todo 0",
+      "\u2139 duration_ms 7539.853399"
+    ]
+  },
+  {
+    "name": "sharing",
+    "exit": 0,
+    "command": "taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs",
+    "summary": [
+      "\u2139 tests 228",
+      "\u2139 suites 0",
+      "\u2139 pass 228",
+      "\u2139 fail 0",
+      "\u2139 cancelled 0",
+      "\u2139 skipped 0",
+      "\u2139 todo 0",
+      "\u2139 duration_ms 19578.172424"
+    ]
+  }
+]
+```
+
+### self-check
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass8/self-check.py
+{
+  "sourceCommit": "f8f6a94d2d09489b98fda4d063b8612f766f5dfa",
+  "productionFilesRead": 7,
+  "testTemplatesRead": 487,
+  "scenarioResultsRead": 227,
+  "scenarioIds": 35,
+  "actorFailures": 0,
+  "outcomeFailures": 0,
+  "checks": {
+    "promiseActor": true,
+    "helperPromise": true,
+    "edgeComparison": true,
+    "registryKeys": true,
+    "absentDigestContinues": true,
+    "coordinateLengthSet": true
+  },
+  "catalog": "/home/ianblenke/docker/gev-tools/director-3/pass8/self-check-catalog.json"
+}
+```
+
+### coverage
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass8/coverage-summary.py
+[
+  {
+    "file": "packs/manifest.js",
+    "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass8/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass8/v8-packs-manifest /home/ianblenke/docker/gev-work/director-3/src/director/packs/manifest.js",
+    "counts": {
+      "LF": 138,
+      "LH": 138,
+      "BRF": 56,
+      "BRH": 56,
+      "FNF": 13,
+      "FNH": 13
+    },
+    "linePercent": 100,
+    "branchPercent": 100,
+    "functionPercent": 100
+  },
+  {
+    "file": "packs/geojson.js",
+    "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass8/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass8/v8-packs-geojson /home/ianblenke/docker/gev-work/director-3/src/director/packs/geojson.js",
+    "counts": {
+      "LF": 62,
+      "LH": 62,
+      "BRF": 54,
+      "BRH": 54,
+      "FNF": 7,
+      "FNH": 7
+    },
+    "linePercent": 100,
+    "branchPercent": 100,
+    "functionPercent": 100
+  },
+  {
+    "file": "packs/session.js",
+    "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass8/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass8/v8-packs-session /home/ianblenke/docker/gev-work/director-3/src/director/packs/session.js",
+    "counts": {
+      "LF": 159,
+      "LH": 159,
+      "BRF": 81,
+      "BRH": 81,
+      "FNF": 18,
+      "FNH": 18
+    },
+    "linePercent": 100,
+    "branchPercent": 100,
+    "functionPercent": 100
+  },
+  {
+    "file": "packs/source.js",
+    "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass8/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass8/v8-packs-source /home/ianblenke/docker/gev-work/director-3/src/director/packs/source.js",
+    "counts": {
+      "LF": 67,
+      "LH": 67,
+      "BRF": 37,
+      "BRH": 37,
+      "FNF": 4,
+      "FNH": 4
+    },
+    "linePercent": 100,
+    "branchPercent": 100,
+    "functionPercent": 100
+  },
+  {
+    "file": "sharing/bundle.js",
+    "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass8/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass8/v8-sharing-bundle /home/ianblenke/docker/gev-work/director-3/src/director/sharing/bundle.js",
+    "counts": {
+      "LF": 221,
+      "LH": 221,
+      "BRF": 103,
+      "BRH": 103,
+      "FNF": 21,
+      "FNH": 21
+    },
+    "linePercent": 100,
+    "branchPercent": 100,
+    "functionPercent": 100
+  },
+  {
+    "file": "sharing/lifetime.js",
+    "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass8/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass8/v8-sharing-lifetime /home/ianblenke/docker/gev-work/director-3/src/director/sharing/lifetime.js",
+    "counts": {
+      "LF": 26,
+      "LH": 26,
+      "BRF": 13,
+      "BRH": 13,
+      "FNF": 6,
+      "FNH": 6
+    },
+    "linePercent": 100,
+    "branchPercent": 100,
+    "functionPercent": 100
+  },
+  {
+    "file": "sharing/preview.js",
+    "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass8/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass8/v8-sharing-preview /home/ianblenke/docker/gev-work/director-3/src/director/sharing/preview.js",
+    "counts": {
+      "LF": 43,
+      "LH": 43,
+      "BRF": 22,
+      "BRH": 22,
+      "FNF": 10,
+      "FNH": 10
+    },
+    "linePercent": 100,
+    "branchPercent": 100,
+    "functionPercent": 100
+  }
+]
+```
+
+### survivor-labels
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass8/regenerate-survivors.py
+{
+  "sourceCommit": "f8f6a94d2d09489b98fda4d063b8612f766f5dfa",
+  "counts": {
+    "rows": 971,
+    "killed": 840,
+    "equivalent": 127,
+    "knownLimit": 4,
+    "oldRows": 260,
+    "extensionRows": 711
+  },
+  "correctedRows": []
+}
+```
+
+### scope
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass8/scope.py
+{
+  "sourceCommit": "f8f6a94d2d09489b98fda4d063b8612f766f5dfa",
+  "handRows": 479,
+  "killed": 477,
+  "survivors": [
+    "m172",
+    "m389"
+  ],
+  "skipped": 0,
+  "timeouts": 0,
+  "productionFilesUnchanged": [
+    "src/director/packs/manifest.js",
+    "src/director/packs/geojson.js",
+    "src/director/packs/session.js",
+    "src/director/packs/source.js",
+    "src/director/sharing/bundle.js",
+    "src/director/sharing/lifetime.js",
+    "src/director/sharing/preview.js"
+  ],
+  "changedFiles": [
+    "openspec/changes/backfill-director-packs-sharing/audit.md",
+    "openspec/changes/backfill-director-packs-sharing/design.md",
+    "openspec/changes/backfill-director-packs-sharing/evidence.md",
+    "openspec/changes/backfill-director-packs-sharing/evidence/probe-repeat-json-error.txt",
+    "openspec/changes/backfill-director-packs-sharing/mutations.md",
+    "openspec/changes/backfill-director-packs-sharing/probe-ranges.md",
+    "openspec/changes/backfill-director-packs-sharing/proposal.md",
+    "openspec/changes/backfill-director-packs-sharing/specs/director/spec.md",
+    "openspec/changes/backfill-director-packs-sharing/survivors.md",
+    "openspec/changes/backfill-director-packs-sharing/tasks.md",
+    "src/director/packs/backfill.test.mjs",
+    "src/director/sharing/sharing.test.mjs"
+  ],
+  "requirementSentencesUnchanged": true,
+  "loopTableRows": 56,
+  "traversals": 52,
+  "traversalFiles": 6
+}
+```
+
+### lint-final
+
+```text
+Command: taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint
+WARN STE-NOUN openspec/changes/archive/2026-09-16-establish-spec-governance/specs/coverage-gate/spec.md:244 Check for a verb used as a noun: "skip"
+WARN STE-NOUN openspec/changes/archive/2026-09-16-establish-spec-governance/specs/coverage-gate/spec.md:245 Check for a verb used as a noun: "skip"
+WARN STE-NOUN openspec/changes/archive/2026-09-16-establish-spec-governance/specs/coverage-gate/spec.md:246 Check for a verb used as a noun: "skip"
+WARN STE-NOUN openspec/changes/archive/2026-09-17-harden-gate-ledger/specs/coverage-gate/spec.md:73 Check for a verb used as a noun: "skip"
+WARN STE-NOUN openspec/changes/archive/2026-09-17-harden-gate-ledger/specs/coverage-gate/spec.md:74 Check for a verb used as a noun: "skip"
+WARN STE-NOUN openspec/changes/archive/2026-09-17-harden-gate-ledger/specs/coverage-gate/spec.md:75 Check for a verb used as a noun: "skip"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-17-osh-fusion/design.md:35 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-17-osh-fusion/proposal.md:70 Use "clear", not "explicit"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-17-osh-fusion/specs/osh/spec.md:172 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-17-osh-fusion/specs/osh/spec.md:179 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-17-osh-fusion/specs/osh/spec.md:251 Use "clear", not "explicit"
+WARN STE-ING openspec/changes/archive/2026-09-18-osh-geo-discovery/design.md:17 Check the -ing word "hiding"
+WARN STE-ING openspec/changes/archive/2026-09-18-osh-geo-discovery/design.md:33 Check the -ing word "hosting"
+WARN STE-ING openspec/changes/archive/2026-09-18-osh-geo-discovery/design.md:43 Check the -ing word "sampling"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/design.md:52 Check for passive voice: "is required"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/design.md:66 Check for passive voice: "is named"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/design.md:68 Check for passive voice: "is unmeasured"
+WARN STE-ING openspec/changes/archive/2026-09-18-osh-geo-discovery/proposal.md:13 Check the -ing word "rebuilding"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/proposal.md:19 Check for passive voice: "are cached"
+WARN STE-ING openspec/changes/archive/2026-09-18-osh-geo-discovery/proposal.md:21 Check the -ing word "hosting"
+WARN STE-ING openspec/changes/archive/2026-09-18-osh-geo-discovery/proposal.md:27 Check the -ing word "handling"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/proposal.md:38 Check for passive voice: "are modified"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/proposal.md:38 Check for passive voice: "are added"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/proposal.md:39 Check for passive voice: "is added"
+WARN STE-ING openspec/changes/archive/2026-09-18-osh-geo-discovery/proposal.md:39 Check the -ing word "reading"
+WARN STE-ING openspec/changes/archive/2026-09-18-osh-geo-discovery/proposal.md:52 Check the -ing word "growing"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-18-osh-geo-discovery/specs/osh/spec.md:27 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-18-osh-geo-discovery/specs/osh/spec.md:35 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-18-osh-geo-discovery/specs/osh/spec.md:64 Use "invalid", not "malformed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/specs/osh/spec.md:82 Check for passive voice: "is given"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/specs/osh/spec.md:136 Check for passive voice: "is removed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-18-osh-geo-discovery/specs/osh/spec.md:146 Use "clear", not "explicit"
+WARN STE-NOUN openspec/changes/archive/2026-09-18-osh-geo-discovery/tasks.md:21 Check for a verb used as a noun: "skip"
+WARN STE-ING openspec/changes/archive/2026-09-18-osh-geo-discovery/tasks.md:47 Check the -ing word "fetching"
+WARN STE-NOUN openspec/changes/archive/2026-09-18-osh-geo-discovery/tasks.md:71 Check for a verb used as a noun: "abort"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/tasks.md:104 Check for passive voice: "is dropped"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-18-osh-geo-discovery/tasks.md:105 Check for passive voice: "is removed"
+WARN STE-NOUN openspec/changes/archive/2026-09-18-osh-geo-discovery/tasks.md:108 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/design.md:5 Check the -ing word "morning"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/design.md:5 Check the -ing word "evening"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/design.md:9 Check the -ing word "evening"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-19-osh-observation-age/design.md:31 Check for passive voice: "is ruled"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/design.md:31 Check the -ing word "reading"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-19-osh-observation-age/design.md:41 Check for passive voice: "are pinned"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/design.md:61 Check the -ing word "reading"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/design.md:61 Check the -ing word "trusting"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:3 Check the -ing word "moving"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:5 Check the -ing word "morning"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:5 Check the -ing word "evening"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:7 Check for passive voice: "is named"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:9 Check the -ing word "evening"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:9 Check the -ing word "reading"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:9 Check the -ing word "Treating"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:9 Check the -ing word "refusing"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:9 Check the -ing word "reading"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:11 Check the -ing word "evening"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:15 Check the -ing word "reading"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:25 Check for passive voice: "are modified"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:30 Check the -ing word "morning"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:30 Check the -ing word "evening"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:35 Check the -ing word "morning"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:35 Check the -ing word "evening"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:37 Check the -ing word "evening"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:37 Check the -ing word "reading"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:38 Use "clear", not "explicit"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:38 Check the -ing word "evening"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-19-osh-observation-age/specs/osh/spec.md:41 Check for passive voice: "is given"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/specs/osh/spec.md:74 Check the -ing word "reading"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-19-osh-observation-age/specs/osh/spec.md:102 Check for passive voice: "is removed"
+WARN STE-ING openspec/changes/archive/2026-09-19-osh-observation-age/tasks.md:14 Check the -ing word "reading"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:3 Check for passive voice: "are measured"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:3 Check the -ing word "wrapping"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:15 Check the -ing word "reporting"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:30 Check for passive voice: "are recognised"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:31 Check for passive voice: "is accepted"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:34 Check the -ing word "binding"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:36 Check the -ing word "missing"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:44 Check the -ing word "carrying"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:49 Check for passive voice: "is checked"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:49 Check for passive voice: "is skipped"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:49 Check the -ing word "naming"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-osh-location-streams/design.md:59 Check for a verb used as a noun: "read"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:63 Check the -ing word "trusting"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:63 Check the -ing word "growing"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:67 Check for passive voice: "is dropped"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:68 Check for passive voice: "is dropped"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:68 Check the -ing word "naming"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:68 Check the -ing word "naming"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:74 Check for passive voice: "is removed"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:74 Check the -ing word "existing"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:74 Check the -ing word "handling"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:74 Check the -ing word "reporting"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:78 Check the -ing word "failing"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:86 Check for passive voice: "is confirmed"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:86 Check the -ing word "tracing"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:88 Check the -ing word "calling"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:89 Check the -ing word "parsing"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:89 Check the -ing word "accepting"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/design.md:91 Check the -ing word "calling"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:92 Check for passive voice: "are checked"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/design.md:92 Check for passive voice: "is called"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:5 Check the -ing word "wrapping"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:15 Check for passive voice: "is bounded"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:15 Check for passive voice: "is accepted"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:16 Check the -ing word "reporting"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:19 Check for passive voice: "is dropped"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:29 Check for passive voice: "are modified"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:29 Check for passive voice: "is added"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:30 Check for passive voice: "is unchanged"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:30 Check the -ing word "existing"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:36 Check the -ing word "reporting"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:42 Check for passive voice: "is placed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:43 Check for passive voice: "is named"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:43 Check for a verb used as a noun: "read"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-osh-location-streams/proposal.md:43 Check for a verb used as a noun: "read"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:4 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:12 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:42 Use "invalid", not "malformed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:49 Check for passive voice: "is dropped"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:51 Check for passive voice: "is dropped"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:51 Check the -ing word "naming"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:59 Check the -ing word "walking"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:79 Use "invalid", not "malformed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:149 Check for passive voice: "is given"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:189 Check for passive voice: "is placed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:216 Check for passive voice: "is removed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:241 Use "clear", not "explicit"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:255 Check for passive voice: "is walked"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:257 Check for passive voice: "is skipped"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:258 Check for a verb used as a noun: "skip"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:261 Check for passive voice: "is served"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:273 Check for a verb used as a noun: "read"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:22 Check the -ing word "missing"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:25 Check for passive voice: "is green"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:29 Check for passive voice: "is green"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:31 Use "invalid", not "malformed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:33 Check for passive voice: "is green"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:35 Check the -ing word "winning"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:38 Check for passive voice: "is green"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:43 Check the -ing word "trailing"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:44 Check for passive voice: "is green"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:47 Check for passive voice: "is green"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:50 Check for a verb used as a noun: "read"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:53 Check for passive voice: "is green"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:58 Check the -ing word "landing"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:58 Check the -ing word "existing"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:60 Check for passive voice: "are green"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:62 Check the -ing word "naming"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:69 Check for passive voice: "is green"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:76 Check for passive voice: "are green"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:76 Check the -ing word "bookkeeping"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:83 Check the -ing word "keeping"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:85 Check for passive voice: "is carried"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:87 Check the -ing word "standing"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:88 Check for passive voice: "are green"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:90 Check for passive voice: "is unchanged"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:92 Use "shown", not "exposed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:105 Check for passive voice: "is placed"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:105 Check the -ing word "naming"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:105 Check the -ing word "asserting"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:107 Check the -ing word "asserting"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:124 Check the -ing word "surviving"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:132 Check for passive voice: "be honoured"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:133 Check the -ing word "missing"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:140 Check the -ing word "keeping"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-marker-depth/design.md:11 Use "shows", not "exposes"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-marker-depth/design.md:34 Check for passive voice: "be buried"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-marker-depth/proposal.md:39 Check the -ing word "answering"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-marker-depth/tasks.md:36 Check for passive voice: "is green"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-osh-marker-depth/tasks.md:53 Check for passive voice: "is green"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-marker-depth/tasks.md:67 Check the -ing word "having"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-marker-depth/tasks.md:67 Check the -ing word "missing"
+WARN STE-ING openspec/changes/archive/2026-09-20-osh-marker-depth/tasks.md:67 Check the -ing word "missing"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-test-teardown-cleanup/design.md:30 Check for a verb used as a noun: "read"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-20-test-teardown-cleanup/design.md:36 Check for passive voice: "is unreached"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-test-teardown-cleanup/design.md:36 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-test-teardown-cleanup/design.md:36 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-test-teardown-cleanup/tasks.md:49 Check for a verb used as a noun: "read"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-test-teardown-cleanup/tasks.md:49 Check for a verb used as a noun: "read"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-test-teardown-cleanup/tasks.md:55 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-20-test-teardown-cleanup/tasks.md:56 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/changes/archive/2026-09-20-test-teardown-cleanup/tasks.md:113 Check the -ing word "including"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-22-teardown-guard/proposal.md:38 Use "shows", not "exposes"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:4 Check for passive voice: "is modified"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:34 Check for passive voice: "is unchanged"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:121 Use "check", not "verify"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:128 Use "checked", not "verified"
+WARN STE-ING openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:134 Check the -ing word "moving"
+WARN STE-ING openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:134 Check the -ing word "gaining"
+WARN STE-ING openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:139 Check the -ing word "matching"
+WARN STE-ING openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:140 Check the -ing word "undercounting"
+WARN STE-ING openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:141 Check the -ing word "extracting"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:143 Check for passive voice: "was corrected"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:143 Check for passive voice: "was fixed"
+WARN STE-ING openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:143 Check the -ing word "confirming"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:144 Use "allows", not "permits"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:144 Check for passive voice: "are accepted"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:144 Check for passive voice: "is cross-referenced"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/design.md:7 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/design.md:15 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/design.md:35 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/design.md:41 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/design.md:43 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/design.md:67 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/design.md:101 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/proposal.md:11 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/proposal.md:19 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/proposal.md:45 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/proposal.md:46 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/proposal.md:47 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/proposal.md:49 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/specs/coverage-gate/spec.md:4 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/specs/coverage-gate/spec.md:4 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/specs/coverage-gate/spec.md:4 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/specs/coverage-gate/spec.md:7 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/specs/coverage-gate/spec.md:9 Check the -ing word "blocking"
+WARN STE-ING openspec/changes/archive/2026-09-23-gate-measurement-race/tasks.md:13 Check the -ing word "blocking"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-23-ledger-waiver/design.md:3 Use "runs", not "executes"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-23-ledger-waiver/design.md:52 Use "runs", not "executes"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-23-ledger-waiver/design.md:56 Use "run", not "executed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-23-ledger-waiver/design.md:124 Use "run", not "executed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-23-ledger-waiver/proposal.md:3 Use "runs", not "executes"
+WARN STE-ING openspec/changes/archive/2026-09-24-ci-leak-cleanup/design.md:38 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-24-ci-leak-cleanup/design.md:44 Check the -ing word "running"
+WARN STE-ING openspec/changes/archive/2026-09-24-ci-leak-cleanup/proposal.md:5 Check the -ing word "onboarding"
+WARN STE-ING openspec/changes/archive/2026-09-24-ci-leak-cleanup/proposal.md:25 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-24-ci-leak-cleanup/tasks.md:38 Check the -ing word "pending"
+WARN STE-NOUN openspec/changes/archive/2026-09-24-ci-node-24-skip/design.md:22 Check for a verb used as a noun: "skip"
+WARN STE-NOUN openspec/changes/archive/2026-09-24-ci-node-24-skip/design.md:26 Check for a verb used as a noun: "skip"
+WARN STE-NOUN openspec/changes/archive/2026-09-24-ci-node-24-skip/proposal.md:26 Check for a verb used as a noun: "skip"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/design.md:5 Check the -ing word "geocoding"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/design.md:10 Use "shows", not "exposes"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/design.md:17 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/design.md:37 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/design.md:61 Check the -ing word "geocoding"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/design.md:81 Use "shows", not "exposes"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/design.md:158 Check the -ing word "geocoding"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/design.md:177 Use "run", not "execute"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/design.md:177 Use "runs", not "executes"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/design.md:174 Check the -ing word "closing"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-credential-boundary/design.md:181 Check for passive voice: "are covered"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/design.md:249 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/design.md:250 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/design.md:252 Check the -ing word "setting"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:4 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:5 Check the -ing word "geocoding"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:9 Use "shows", not "exposes"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:14 Use "show", not "expose"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:16 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:65 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:84 Check the -ing word "Geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:86 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:94 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:95 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:96 Check the -ing word "geocoding"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/specs/credential-boundary/spec.md:4 Use "show", not "expose"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/specs/credential-boundary/spec.md:47 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/specs/credential-boundary/spec.md:48 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/specs/credential-boundary/spec.md:68 Check the -ing word "missing"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/specs/credential-boundary/spec.md:82 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/specs/credential-boundary/spec.md:92 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/specs/credential-boundary/spec.md:93 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/specs/credential-boundary/spec.md:109 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:112 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:155 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:156 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:157 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:158 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:159 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:160 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:161 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:162 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:163 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-24-credential-boundary/tasks.md:163 Check the -ing word "geocoding"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/design.md:3 Check for passive voice: "is dropped"
+WARN STE-NOUN openspec/changes/archive/2026-09-24-osh-draw-unheld-features/design.md:44 Check for a verb used as a noun: "read"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/design.md:94 Check for passive voice: "is dropped"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/design.md:104 Check for passive voice: "was weighed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/design.md:104 Check for passive voice: "is rejected"
+WARN STE-ING openspec/changes/archive/2026-09-24-osh-draw-unheld-features/design.md:108 Check the -ing word "failing"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/design.md:112 Check for passive voice: "is bounded"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/proposal.md:28 Check for passive voice: "are modified"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/proposal.md:28 Check for passive voice: "are added"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/proposal.md:46 Check for passive voice: "is dropped"
+WARN STE-ING openspec/changes/archive/2026-09-24-osh-draw-unheld-features/proposal.md:46 Check the -ing word "existing"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:4 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:12 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:42 Use "invalid", not "malformed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:49 Check for passive voice: "is dropped"
+WARN STE-ING openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:61 Check the -ing word "walking"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:81 Use "invalid", not "malformed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:104 Check for passive voice: "is given"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:144 Check for passive voice: "is placed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:145 Check for passive voice: "is placed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:173 Check for passive voice: "is removed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/tasks.md:4 Check for passive voice: "was archived"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/tasks.md:7 Check for passive voice: "was checked"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/tasks.md:26 Check for passive voice: "is moved"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/tasks.md:30 Check for passive voice: "is green"
+WARN STE-ING openspec/changes/archive/2026-09-24-osh-draw-unheld-features/tasks.md:53 Check the -ing word "grouping"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/tasks.md:71 Check for passive voice: "are green"
+WARN STE-NOUN openspec/changes/archive/2026-09-24-osh-draw-unheld-features/tasks.md:90 Check for a verb used as a noun: "destroy"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-24-osh-draw-unheld-features/tasks.md:102 Check for passive voice: "is green"
+WARN STE-ING openspec/changes/archive/2026-09-26-backfill-cyclones/proposal.md:27 Check the -ing word "rendering"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/proposal.md:68 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/proposal.md:78 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/specs/cyclones/spec.md:77 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/specs/cyclones/spec.md:96 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/specs/cyclones/spec.md:101 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/specs/cyclones/spec.md:103 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/specs/cyclones/spec.md:200 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/specs/cyclones/spec.md:202 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/specs/cyclones/spec.md:207 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/specs/cyclones/spec.md:256 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/specs/cyclones/spec.md:258 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/specs/cyclones/spec.md:259 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/changes/archive/2026-09-26-backfill-cyclones/tasks.md:80 Check the -ing word "rendering"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/tasks.md:86 Check for a verb used as a noun: "skip"
+WARN STE-ING openspec/changes/archive/2026-09-26-backfill-cyclones/tasks.md:126 Check the -ing word "missing"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-cyclones/tasks.md:131 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/changes/archive/2026-09-26-backfill-cyclones/tasks.md:147 Check the -ing word "pending"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/design.md:25 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/design.md:29 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/proposal.md:10 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/proposal.md:10 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/specs/layer-lifecycle/spec.md:4 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/specs/layer-lifecycle/spec.md:7 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/tasks.md:10 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/tasks.md:11 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/changes/archive/2026-09-26-backfill-layer-lifecycle/tasks.md:12 Check for a verb used as a noun: "destroy"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/design.md:8 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/design.md:34 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/design.md:65 Check the -ing word "pending"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-26-qa-script-register/design.md:102 Use "keep", not "retain"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/proposal.md:113 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/proposal.md:121 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/specs/qa-scripts/spec.md:39 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/specs/qa-scripts/spec.md:40 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/specs/qa-scripts/spec.md:43 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/specs/qa-scripts/spec.md:44 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/specs/qa-scripts/spec.md:81 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/tasks.md:32 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/tasks.md:34 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/tasks.md:35 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/tasks.md:37 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-qa-script-register/tasks.md:62 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-26-upstream-sync/proposal.md:31 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-26-upstream-sync/specs/credential-boundary/spec.md:3 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-26-upstream-sync/specs/credential-boundary/spec.md:4 Check the -ing word "geocoding"
+WARN STE-ING openspec/changes/archive/2026-09-26-upstream-sync/specs/credential-boundary/spec.md:23 Check the -ing word "geocoding"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-26-upstream-sync/specs/osh/spec.md:12 Check for passive voice: "is given"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-26-upstream-sync/specs/osh/spec.md:52 Check for passive voice: "is placed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-26-upstream-sync/specs/osh/spec.md:53 Check for passive voice: "is placed"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-26-upstream-sync/specs/osh/spec.md:81 Check for passive voice: "is removed"
+WARN STE-NOUN openspec/changes/archive/2026-09-27-backfill-live-sources/design.md:33 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-27-backfill-live-sources/tasks.md:8 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-27-backfill-perimeters/specs/perimeters/spec.md:17 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-27-backfill-perimeters/specs/perimeters/spec.md:64 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-09-27-backfill-perimeters/specs/perimeters/spec.md:194 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-control-auto-targets/design.md:3 Check the -ing word "Adding"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-28-osh-control-auto-targets/design.md:33 Check for passive voice: "is unchanged"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-control-auto-targets/design.md:34 Check the -ing word "missing"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-control-auto-targets/design.md:48 Check the -ing word "matching"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-28-osh-control-auto-targets/design.md:52 Use "show", not "expose"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-28-osh-control-auto-targets/design.md:58 Check for passive voice: "is unaffected"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-control-auto-targets/proposal.md:7 Check the -ing word "BREAKING"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-control-auto-targets/proposal.md:8 Check the -ing word "BREAKING"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-28-osh-control-auto-targets/proposal.md:33 Use "show", not "expose"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-control-auto-targets/specs/osh-control/spec.md:78 Check the -ing word "matching"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-28-osh-control-auto-targets/tasks.md:8 Check for passive voice: "is carried"
+WARN STE-NOUN openspec/changes/archive/2026-09-28-osh-control-auto-targets/tasks.md:38 Check for a verb used as a noun: "read"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-control-auto-targets/tasks.md:52 Check the -ing word "reading"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-mavlink-control/design.md:272 Check the -ing word "calling"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-28-osh-mavlink-control/proposal.md:23 Check for passive voice: "was written"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-mavlink-control/specs/osh-control/spec.md:38 Check the -ing word "matching"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-mavlink-control/tasks.md:13 Check the -ing word "missing"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-mavlink-control/tasks.md:26 Check the -ing word "parsing"
+WARN STE-ING openspec/changes/archive/2026-09-28-osh-mavlink-control/tasks.md:99 Check the -ing word "handling"
+WARN STE-ING openspec/changes/archive/2026-09-29-backfill-osh-control-options/design.md:5 Check the -ing word "missing"
+WARN STE-ING openspec/changes/archive/2026-09-29-backfill-osh-control-options/design.md:27 Check the -ing word "existing"
+WARN STE-ING openspec/changes/archive/2026-09-29-backfill-osh-control-options/design.md:37 Check the -ing word "passing"
+WARN STE-ING openspec/changes/archive/2026-09-29-backfill-osh-control-options/proposal.md:5 Check the -ing word "missing"
+WARN STE-ING openspec/changes/archive/2026-09-29-backfill-osh-control-options/tasks.md:6 Check the -ing word "existing"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-29-backfill-osh-control-options/tasks.md:9 Check for passive voice: "are needed"
+WARN STE-WORD-OLD openspec/changes/archive/2026-09-29-backfill-wind/specs/wind/spec.md:71 Use "closes", not "dismisses"
+WARN STE-NOUN openspec/changes/archive/2026-09-29-backfill-wind/specs/wind/spec.md:190 Check for a verb used as a noun: "abort"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-29-osh-control-panel-layout/design.md:25 Check for passive voice: "is defined"
+WARN STE-ING openspec/changes/archive/2026-09-29-osh-control-panel-layout/design.md:33 Check the -ing word "padding"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-29-osh-control-panel-layout/design.md:37 Check for passive voice: "was considered"
+WARN STE-PASSIVE openspec/changes/archive/2026-09-29-osh-control-panel-layout/design.md:44 Check for passive voice: "is retired"
+WARN STE-ING openspec/changes/archive/2026-09-29-osh-control-panel-layout/proposal.md:9 Check the -ing word "spacing"
+WARN STE-ING openspec/changes/archive/2026-09-29-osh-control-panel-layout/tasks.md:22 Check the -ing word "padding"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:67 Check the -ing word "including"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:111 Check the -ing word "failing"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:117 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:123 Check the -ing word "moving"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:123 Check the -ing word "unpinning"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:129 Check the -ing word "shrinking"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:141 Check the -ing word "being"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:183 Check the -ing word "pinning"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:201 Check the -ing word "publishing"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:207 Check the -ing word "scrubbing"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:213 Check the -ing word "turning"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:213 Check the -ing word "pending"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:219 Check the -ing word "merging"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:225 Check the -ing word "leaving"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:231 Check the -ing word "sensing"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:243 Check the -ing word "reading"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:249 Check the -ing word "holding"
+WARN STE-ING openspec/changes/archive/2026-09-30-backfill-recent-imagery/proposal.md:255 Check the -ing word "moving"
+WARN STE-PASSIVE openspec/changes/archive/2026-10-01-ledger-adopt-reached/design.md:15 Check for passive voice: "is reached"
+WARN STE-ING openspec/changes/archive/2026-10-01-ledger-adopt-reached/design.md:29 Check the -ing word "existing"
+WARN STE-ING openspec/changes/archive/2026-10-01-ledger-adopt-reached/proposal.md:19 Check the -ing word "existing"
+WARN STE-ING openspec/changes/archive/2026-10-01-ledger-adopt-reached/specs/gap-ledger/spec.md:140 Check the -ing word "including"
+WARN STE-ING openspec/changes/archive/2026-10-02-upstream-sync-2/design.md:31 Check the -ing word "differing"
+WARN STE-ING openspec/changes/archive/2026-10-06-gates-coverage-race/design.md:54 Check the -ing word "using"
+WARN STE-ING openspec/changes/archive/2026-10-06-gates-coverage-race/design.md:58 Check the -ing word "existing"
+WARN STE-ING openspec/changes/archive/2026-10-06-gates-coverage-race/design.md:62 Check the -ing word "existing"
+WARN STE-ING openspec/changes/archive/2026-10-06-gates-coverage-race/design.md:82 Check the -ing word "existing"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/audit.md:69 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/audit.md:71 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/evidence.md:631 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/evidence.md:638 Check the -ing word "throwing"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/evidence.md:641 Check the -ing word "sibling"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/evidence.md:644 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/evidence.md:644 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/evidence.md:675 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/proposal.md:57 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/proposal.md:60 Check for a verb used as a noun: "read"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/proposal.md:62 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/proposal.md:68 Check the -ing word "reading"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/proposal.md:72 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/proposal.md:69 Check the -ing word "wording"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/specs/director/spec.md:396 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/specs/director/spec.md:405 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/specs/director/spec.md:441 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/specs/director/spec.md:443 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/specs/director/spec.md:446 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-camera-interactions/tasks.md:281 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-timing/design.md:4 Check the -ing word "working"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-timing/evidence.md:3 Check the -ing word "working"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-timing/evidence.md:733 Check the -ing word "working"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-timing/evidence.md:851 Check the -ing word "working"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-timing/evidence.md:857 Check for a verb used as a noun: "destroy"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-timing/evidence.md:858 Check the -ing word "missing"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-timing/mutations.md:3 Check the -ing word "working"
+WARN STE-ING openspec/changes/archive/2026-10-07-backfill-director-timing/proposal.md:46 Check the -ing word "wording"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-timing/specs/director/spec.md:165 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/changes/archive/2026-10-07-backfill-director-timing/specs/director/spec.md:166 Check for a verb used as a noun: "destroy"
+WARN STE-PASSIVE openspec/changes/archive/2026-10-07-fix-recent-imagery-defects/design.md:86 Check for passive voice: "is closed"
+WARN STE-ING openspec/changes/archive/2026-10-07-fix-recent-imagery-defects/design.md:83 Check the -ing word "working"
+WARN STE-ING openspec/changes/archive/2026-10-07-fix-recent-imagery-defects/design.md:97 Check the -ing word "working"
+WARN STE-ING openspec/changes/archive/2026-10-07-fix-recent-imagery-defects/design.md:124 Check the -ing word "wording"
+WARN STE-ING openspec/changes/archive/2026-10-07-fix-recent-imagery-defects/evidence.md:50 Check the -ing word "remaining"
+WARN STE-ING openspec/changes/archive/2026-10-07-fix-recent-imagery-defects/evidence.md:139 Check the -ing word "working"
+WARN STE-ING openspec/changes/archive/2026-10-07-fix-recent-imagery-defects/evidence.md:254 Check the -ing word "working"
+WARN STE-ING openspec/changes/archive/2026-10-07-fix-recent-imagery-defects/evidence.md:383 Check the -ing word "wording"
+WARN STE-ING openspec/changes/archive/2026-10-07-fix-recent-imagery-defects/proposal.md:67 Check the -ing word "wording"
+WARN STE-ING openspec/changes/archive/2026-10-07-harden-timing-tests/corrections.md:7 Check the -ing word "processing"
+WARN STE-ING openspec/changes/archive/2026-10-07-harden-timing-tests/corrections.md:10 Check the -ing word "Streaming"
+WARN STE-ING openspec/changes/archive/2026-10-07-harden-timing-tests/corrections.md:11 Check the -ing word "programming"
+WARN STE-ING openspec/changes/archive/2026-10-07-harden-timing-tests/design.md:5 Check the -ing word "processing"
+WARN STE-ING openspec/changes/archive/2026-10-07-harden-timing-tests/design.md:11 Check the -ing word "Streaming"
+WARN STE-ING openspec/changes/archive/2026-10-07-harden-timing-tests/design.md:14 Check the -ing word "programming"
+WARN STE-ING openspec/changes/archive/2026-10-07-harden-timing-tests/design.md:66 Check the -ing word "pending"
+WARN STE-PASSIVE openspec/changes/archive/2026-10-07-harden-timing-tests/proposal.md:44 Check for passive voice: "is defined"
+WARN STE-ING openspec/changes/archive/2026-10-07-ste-noun-warning/proposal.md:11 Check the -ing word "reporting"
+WARN STE-PASSIVE openspec/changes/archive/2026-10-08-gates-one-measurement/evidence.md:54 Check for passive voice: "is trusted"
+WARN STE-PASSIVE openspec/changes/archive/2026-10-08-gates-one-measurement/evidence.md:354 Check for passive voice: "be removed"
+WARN STE-PASSIVE openspec/changes/archive/2026-10-08-gates-one-measurement/evidence.md:2676 Check for passive voice: "be removed"
+WARN STE-ING openspec/changes/archive/2026-10-08-gates-one-measurement/proposal.md:69 Check the -ing word "wording"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/audit.md:230 Check the -ing word "LineString"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/audit.md:235 Check the -ing word "padding"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/audit.md:257 Check the -ing word "Adding"
+WARN STE-PASSIVE openspec/changes/backfill-director-packs-sharing/audit.md:489 Check for passive voice: "are configured"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:757 Check the -ing word "missing"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:763 Check the -ing word "pending"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:763 Check the -ing word "missing"
+WARN STE-PASSIVE openspec/changes/backfill-director-packs-sharing/evidence.md:765 Check for passive voice: "are disposed"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:765 Check the -ing word "mutating"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:1455 Check the -ing word "loading"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:1914 Check the -ing word "sharing"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:1942 Check the -ing word "sharing"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:1972 Check the -ing word "sharing"
+WARN STE-PASSIVE openspec/changes/backfill-director-packs-sharing/evidence.md:2117 Check for passive voice: "was skipped"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:2194 Check the -ing word "including"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:2534 Check the -ing word "sharing"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:2558 Check the -ing word "sharing"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:3045 Check the -ing word "sharing"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:3092 Check the -ing word "wording"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:3093 Check the -ing word "wording"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:3112 Check the -ing word "sharing"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:3447 Check the -ing word "wording"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/evidence.md:6277 Check the -ing word "existing"
+WARN STE-PASSIVE openspec/changes/backfill-director-packs-sharing/mutations.md:11182 Check for passive voice: "was skipped"
+WARN STE-PASSIVE openspec/changes/backfill-director-packs-sharing/mutations.md:11603 Check for passive voice: "is skipped"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/proposal.md:87 Check the -ing word "wording"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/specs/director/spec.md:165 Check the -ing word "loading"
+WARN STE-ING openspec/changes/backfill-director-packs-sharing/survivors.md:753 Check the -ing word "padding"
+WARN STE-NOUN openspec/specs/coverage-gate/spec.md:247 Check for a verb used as a noun: "skip"
+WARN STE-NOUN openspec/specs/coverage-gate/spec.md:248 Check for a verb used as a noun: "skip"
+WARN STE-NOUN openspec/specs/coverage-gate/spec.md:249 Check for a verb used as a noun: "skip"
+WARN STE-ING openspec/specs/coverage-gate/spec.md:289 Check the -ing word "blocking"
+WARN STE-ING openspec/specs/coverage-gate/spec.md:289 Check the -ing word "blocking"
+WARN STE-ING openspec/specs/coverage-gate/spec.md:289 Check the -ing word "blocking"
+WARN STE-ING openspec/specs/coverage-gate/spec.md:292 Check the -ing word "blocking"
+WARN STE-ING openspec/specs/coverage-gate/spec.md:294 Check the -ing word "blocking"
+WARN STE-WORD-OLD openspec/specs/credential-boundary/spec.md:4 Use "show", not "expose"
+WARN STE-ING openspec/specs/credential-boundary/spec.md:4 Check the -ing word "geocoding"
+WARN STE-WORD-OLD openspec/specs/credential-boundary/spec.md:7 Use "show", not "expose"
+WARN STE-ING openspec/specs/credential-boundary/spec.md:50 Check the -ing word "geocoding"
+WARN STE-ING openspec/specs/credential-boundary/spec.md:51 Check the -ing word "geocoding"
+WARN STE-ING openspec/specs/credential-boundary/spec.md:71 Check the -ing word "missing"
+WARN STE-ING openspec/specs/credential-boundary/spec.md:85 Check the -ing word "geocoding"
+WARN STE-ING openspec/specs/credential-boundary/spec.md:95 Check the -ing word "geocoding"
+WARN STE-ING openspec/specs/credential-boundary/spec.md:96 Check the -ing word "geocoding"
+WARN STE-ING openspec/specs/credential-boundary/spec.md:115 Check the -ing word "geocoding"
+WARN STE-NOUN openspec/specs/cyclones/spec.md:80 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/cyclones/spec.md:99 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/cyclones/spec.md:104 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/cyclones/spec.md:106 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/cyclones/spec.md:203 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/cyclones/spec.md:205 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/cyclones/spec.md:210 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/cyclones/spec.md:259 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/cyclones/spec.md:261 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/cyclones/spec.md:262 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/director/spec.md:165 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/specs/director/spec.md:166 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/specs/director/spec.md:636 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/director/spec.md:645 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/director/spec.md:681 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/director/spec.md:683 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/director/spec.md:686 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/specs/gap-ledger/spec.md:523 Check the -ing word "including"
+WARN STE-NOUN openspec/specs/layer-lifecycle/spec.md:4 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/specs/layer-lifecycle/spec.md:7 Check for a verb used as a noun: "destroy"
+WARN STE-NOUN openspec/specs/layer-lifecycle/spec.md:10 Check for a verb used as a noun: "destroy"
+WARN STE-ING openspec/specs/osh-control/spec.md:187 Check the -ing word "matching"
+WARN STE-WORD-OLD openspec/specs/osh/spec.md:198 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/specs/osh/spec.md:206 Use "invalid", not "malformed"
+WARN STE-WORD-OLD openspec/specs/osh/spec.md:236 Use "invalid", not "malformed"
+WARN STE-PASSIVE openspec/specs/osh/spec.md:243 Check for passive voice: "is dropped"
+WARN STE-ING openspec/specs/osh/spec.md:255 Check the -ing word "walking"
+WARN STE-WORD-OLD openspec/specs/osh/spec.md:275 Use "invalid", not "malformed"
+WARN STE-PASSIVE openspec/specs/osh/spec.md:298 Check for passive voice: "is given"
+WARN STE-PASSIVE openspec/specs/osh/spec.md:338 Check for passive voice: "is placed"
+WARN STE-PASSIVE openspec/specs/osh/spec.md:339 Check for passive voice: "is placed"
+WARN STE-PASSIVE openspec/specs/osh/spec.md:367 Check for passive voice: "is removed"
+WARN STE-WORD-OLD openspec/specs/osh/spec.md:393 Use "clear", not "explicit"
+WARN STE-PASSIVE openspec/specs/osh/spec.md:547 Check for passive voice: "is walked"
+WARN STE-PASSIVE openspec/specs/osh/spec.md:549 Check for passive voice: "is skipped"
+WARN STE-NOUN openspec/specs/osh/spec.md:550 Check for a verb used as a noun: "skip"
+WARN STE-PASSIVE openspec/specs/osh/spec.md:553 Check for passive voice: "is served"
+WARN STE-NOUN openspec/specs/osh/spec.md:565 Check for a verb used as a noun: "read"
+WARN STE-NOUN openspec/specs/perimeters/spec.md:18 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/perimeters/spec.md:65 Check for a verb used as a noun: "abort"
+WARN STE-NOUN openspec/specs/perimeters/spec.md:195 Check for a verb used as a noun: "abort"
+WARN STE-ING openspec/specs/qa-scripts/spec.md:42 Check the -ing word "pending"
+WARN STE-ING openspec/specs/qa-scripts/spec.md:43 Check the -ing word "pending"
+WARN STE-ING openspec/specs/qa-scripts/spec.md:46 Check the -ing word "pending"
+WARN STE-ING openspec/specs/qa-scripts/spec.md:47 Check the -ing word "pending"
+WARN STE-ING openspec/specs/qa-scripts/spec.md:84 Check the -ing word "pending"
+WARN STE-ING openspec/specs/wind/spec.md:4 Check the -ing word "archiving"
+WARN STE-WORD-OLD openspec/specs/wind/spec.md:72 Use "closes", not "dismisses"
+WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
+STE: 0 errors, 566 warnings.
+```
+
+### predispatch-final
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-packs-sharing
+ABBR     evidence.md:3053  "MIME" is not defined in this file
+ABBR     evidence.md:3461  "ABBR" is not defined in this file
+ABBR     evidence.md:3463  "SHA" is not defined in this file
+ABBR     evidence.md:3464  "NOUN" is not defined in this file
+ABBR     evidence.md:3468  "WORD" is not defined in this file
+ABBR     evidence.md:6634  "LF" is not defined in this file
+ABBR     evidence.md:6635  "LH" is not defined in this file
+ABBR     evidence.md:6636  "BRF" is not defined in this file
+ABBR     evidence.md:6637  "BRH" is not defined in this file
+ABBR     evidence.md:6638  "FNF" is not defined in this file
+ABBR     evidence.md:6639  "FNH" is not defined in this file
+ABBR     evidence.md:6804  "WARN" is not defined in this file
+ABBR     evidence.md:6810  "OLD" is not defined in this file
+ABBR     evidence.md:6815  "ING" is not defined in this file
+ABBR     mutations.md:3033  "MIME" is not defined in this file
+The full output is in /home/ianblenke/docker/gev-tools/director-3/pass8/predispatch-final.log.
+```
+
+### titles-final
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110
+titles checked: 494, with a banned form: 0
+```
+
+### format-check
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+Checked 1158 source files.
+```
+
+### openspec-show
+
+```text
+Command: taskset -c 12-15 nice -n 19 openspec show backfill-director-packs-sharing --json
+Warning: Ignoring flags not applicable to change: scenarios
+{
+  "id": "backfill-director-packs-sharing",
+  "title": "backfill-director-packs-sharing",
+The full JSON is in /home/ianblenke/docker/gev-tools/director-3/pass8/openspec-show.log.
+```
+
+### openspec-validate
+
+```text
+Command: taskset -c 12-15 nice -n 19 openspec validate backfill-director-packs-sharing
+Change 'backfill-director-packs-sharing' is valid
+```
+
+### headings
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass8/headings.py
+{
+  "sourceCommit": "f8f6a94d2d09489b98fda4d063b8612f766f5dfa",
+  "changedHeadings": [
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "previous": [
+        "## Source commands",
+        "## Base scope",
+        "## Repository tests of pass 2",
+        "## Host coverage",
+        "## Scenario tests",
+        "## Review corrections",
+        "## Text that stays the same",
+        "## Known limits",
+        "## Tests without tags",
+        "## Title correction",
+        "## Corrections of review round 2",
+        "## Pass 4",
+        "## Pass 5",
+        "## Pass 6",
+        "## Pass 7 title corrections",
+        "## Pass 7"
+      ],
+      "current": [
+        "## Source commands",
+        "## Base scope",
+        "## Repository tests of pass 2",
+        "## Host coverage",
+        "## Scenario tests",
+        "## Review corrections",
+        "## Text that stays the same",
+        "## Known limits",
+        "## Tests without tags",
+        "## Title correction",
+        "## Corrections of review round 2",
+        "## Pass 4",
+        "## Pass 5",
+        "## Pass 6",
+        "## Pass 7 title corrections",
+        "## Pass 7",
+        "## Pass 8"
+      ]
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/proposal.md",
+      "previous": [
+        "## Why",
+        "## What Changes",
+        "## Capabilities",
+        "## Impact",
+        "## Known limits and later changes",
+        "## Pass 7 scope"
+      ],
+      "current": [
+        "## Why",
+        "## What Changes",
+        "## Capabilities",
+        "## Impact",
+        "## Known limits and later changes"
+      ]
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/tasks.md",
+      "previous": [
+        "## 1. Spec documents",
+        "## 2. Scenario tests",
+        "## Corrections of review round 1",
+        "## 3. Gates and review",
+        "## Corrections of review round 2",
+        "## 7 Pass 4",
+        "## 8 Pass 5",
+        "## 9. Corrections of review round 4",
+        "## 10. Corrections of review round 5"
+      ],
+      "current": [
+        "## 1. Spec documents",
+        "## 2. Scenario tests",
+        "## Corrections of review round 1",
+        "## 3. Gates and review",
+        "## Corrections of review round 2",
+        "## 7 Pass 4",
+        "## 8 Pass 5",
+        "## 9. Corrections of review round 4",
+        "## 10. Corrections of review round 5",
+        "## 11. Correct round 6 findings"
+      ]
+    }
+  ],
+  "requiredProposalHeadings": [
+    "## Why",
+    "## What Changes",
+    "## Capabilities",
+    "## Impact",
+    "## Known limits and later changes"
+  ]
+}
+```
+
+### hand-last
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director-3 /home/ianblenke/docker/gev-tools/director-3/muts.json
+m001: KILLED [director-076] The validator returns without an error for safe names for the asset path
+m002: KILLED [director-076] The validator rejects traversal for the asset path
+m003: KILLED [director-077] The validator rejects invalid version
+m004: KILLED [director-077] The validator rejects invalid format
+m005: KILLED [director-078] The validator rejects protocol for the attribution
+m006: KILLED [director-078] The validator rejects username for the attribution
+m007: KILLED [director-078] The validator rejects password for the attribution
+m008: KILLED [director-078] The validator rejects query for the attribution
+m009: KILLED [director-078] The validator rejects fragment for the attribution
+m010: KILLED [director-078] The validator rejects invalid URL text for the attribution
+m011: KILLED [director-078] The validator returns without an error for a safe link for the attribution
+m012: KILLED [director-078] The validator rejects blank text for the attribution
+m013: KILLED [director-078] The validator rejects blank license for the attribution
+m014: KILLED [director-079] The validator rejects a fraction for the byteLength field
+m015: KILLED [director-079] The validator rejects invalid type for the digest
+m016: KILLED [director-079] The validator rejects invalid alphabet for the digest
+m017: KILLED [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+m018: KILLED [director-080] The validator rejects reversed west for the image
+m019: KILLED [director-080] The validator rejects reversed south for the image
+m020: KILLED [director-080] The validator rejects short bounds for the image
+m021: KILLED [director-080] The validator rejects height and reference for the image
+m022: KILLED [director-081] The validator rejects an unknown anchor for the media
+m023: KILLED [director-082] The validator rejects duplicate data pack IDs for the scene
+m024: KILLED [director-082] The validator rejects duplicate data pack IDs for the shot
+m025: KILLED [director-082] The validator rejects unknown data pack IDs for the shot
+m026: KILLED [director-082] The validator returns without an error for absent data packs and anchors for the scene
+m027: KILLED [director-083] The decoder rejects invalid type for the collection
+m028: KILLED [director-083] The decoder rejects invalid array for the collection
+m029: KILLED [director-083] The decoder rejects more than 2000 features for the collection
+m030: KILLED [director-084] The decoder rejects type for the feature
+m031: KILLED [director-084] The decoder rejects ID type for the feature
+m032: KILLED [director-084] The decoder rejects blank ID for the feature
+m033: KILLED [director-084] The decoder rejects long ID for the feature
+m034: KILLED [director-084] The decoder rejects duplicate ID for the feature
+m035: KILLED [director-085] The decoder rejects invalid array for the position
+m036: KILLED [director-085] The decoder rejects invalid length for the position
+m037: KILLED [director-085] The decoder rejects a coordinate that is not finite for the position
+m038: KILLED [director-085] The decoder rejects invalid longitude for the position
+m039: KILLED [director-085] The decoder rejects invalid latitude for the position
+m040: KILLED [director-085] The decoder rejects a height below the limit for the position
+m041: KILLED [director-085] The decoder rejects a height above the limit for the position
+m042: KILLED [director-085] The decoder rejects excess for the position total
+m043: KILLED [director-085] The decoder returns zero for absent height for the position
+m044: KILLED [director-085] The decoder returns the height in the data for the position
+m045: KILLED [director-086] The decoder rejects invalid array for the line
+m046: KILLED [director-086] The decoder rejects invalid minimum for the line
+m047: KILLED [director-086] The decoder rejects a ring with fewer than four points for the ring
+m048: KILLED [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+m049: KILLED [director-086] The decoder rejects unclosed field 0 for the ring
+m050: KILLED [director-086] The decoder rejects unclosed field 1 for the ring
+m051: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m052: KILLED [director-087] The decoder rejects invalid type for the geometry
+m053: KILLED [director-087] The decoder rejects invalid array for the geometry
+m054: KILLED [director-087] The decoder rejects an empty polygon for the geometry
+m055: KILLED [director-087] The decoder rejects more than 128 rings for the geometry
+m056: KILLED [director-087] The decoder returns a closed polygon for the geometry
+m057: KILLED [director-087] The decoder removes properties for the geometry
+m058: KILLED [director-088] The session reports idle state after creation
+m059: KILLED [director-088] The session rejects a value that is not a data pack list
+m060: KILLED [director-088] The session rejects more than eight data packs
+m061: KILLED [director-088] The session rejects destroyed state
+m062: KILLED [director-088] The session rejects cancelled state
+m063: KILLED [director-089] The session disposes handles in reverse order
+m064: KILLED [director-089] The session reports ready after the caller changes a state copy
+m065: KILLED [director-090] The session disposes late resources for the cancelled session
+m066: KILLED [director-090] The session returns false for cancelled work with a null late handle
+m067: KILLED [director-090] The session returns false for work that destruction stops
+m068: KILLED [director-091] The session keeps its resources for the replacement
+m069: KILLED [director-092] The session reports a stable source error
+m070: KILLED [director-092] The session rejects stalled work for the deadline
+m071: KILLED [director-092] The session reads the byteLength field once without a registered source for the data pack session
+m072: KILLED [director-092] The session rejects an absent renderer without a source call
+m073: KILLED [director-093] The session rejects bytes that are not a Uint8Array
+m074: KILLED [director-093] The session rejects an empty asset
+m075: KILLED [director-093] The session rejects an asset above the byte limit
+m076: KILLED [director-093] The session rejects a wrong byteLength field
+m077: KILLED [director-093] The session rejects bytes above the total limit
+m078: KILLED [director-093] The session rejects a wrong digest
+m079: KILLED [director-093] The session returns true for exact bytes and digest
+m080: KILLED [director-089] The session rejects a falsy handle with inherited disposal
+m081: KILLED [director-089] The session rejects a handle without a dispose function
+m082: KILLED [director-094] The factory rejects protocol
+m083: KILLED [director-094] The factory rejects username
+m084: KILLED [director-094] The factory rejects password
+m085: KILLED [director-094] The factory rejects query
+m086: KILLED [director-094] The factory rejects fragment
+m087: KILLED [director-094] The factory rejects an address with no final slash
+m088: KILLED [director-095] The source sets its fixed options for the asset request
+m089: KILLED [director-096] The source joins distinct stream chunks
+m090: KILLED [director-096] The source rejects excess header bytes for the stream
+m091: KILLED [director-096] The source rejects excess chunk bytes for the stream
+m092: KILLED [director-096] The source returns an empty media type when the header is absent
+m093: KILLED [director-096] The source returns lowercase media type text without parameters
+m094: KILLED [director-097] The source rejects an absent stream
+m095: KILLED [director-097] The source rejects the asset request after failed body cancellation
+m096: KILLED [director-097] The source rejects a failed response without a body
+m097: KILLED [director-097] The source releases the reader lock after a stream error
+m098: KILLED [director-097] The source checks its signal between chunks and rejects the call
+m099: KILLED [director-098] The import rejects nontext input
+m100: KILLED [director-098] The import rejects invalid JSON; [director-098] The import rejects invalid JSON of 52428800 characters; [director-098] The import rejects invalid JSON of 5242881 characters
+m101: KILLED [director-098] The import accepts plain project JSON and returns the project
+m102: KILLED [director-098] The import rejects excess characters
+m103: KILLED [director-098] The import rejects excess UTF8 bytes
+m104: KILLED [director-099] The import rejects a custom text object for the base64
+m105: KILLED [director-099] The import rejects invalid empty for the base64
+m106: KILLED [director-099] The import rejects invalid length for the base64
+m107: KILLED [director-099] The import rejects invalid alignment for the base64
+m108: KILLED [director-099] The import rejects invalid alphabet for the base64
+m109: KILLED [director-099] The import rejects invalid padding for the base64
+m110: KILLED [director-099] The import rejects duplicate paths
+m111: KILLED [director-099] The import rejects an unsupported media type
+m112: KILLED [director-099] The import rejects unsupported version
+m113: KILLED [director-100] The import rejects an absent asset
+m114: KILLED [director-100] The import rejects a wrong byteLength field
+m115: KILLED [director-100] The import rejects a pack digest that differs from its asset
+m116: KILLED [director-100] The import rejects an asset digest that differs from its bytes
+m117: KILLED [director-100] The import rejects unused assets
+m118: KILLED [director-100] The import rejects external data pack sources
+m119: KILLED [director-101] The export writes exact bundle metadata
+m120: KILLED [director-102] The export rejects bytes that are not a Uint8Array
+m121: KILLED [director-102] The export rejects an empty asset
+m122: KILLED [director-102] The export rejects an asset above the byte limit
+m123: KILLED [director-102] The export rejects absent assets
+m124: KILLED [director-102] The export rejects declared byteLength
+m125: KILLED [director-102] The export rejects declared digest
+m126: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m127: KILLED [director-102] The export rejects excess asset total
+m128: KILLED [director-103] The export reuses a shared asset and returns bundle text
+m129: KILLED [director-103] The export rejects shared byteLength
+m130: KILLED [director-103] The export rejects shared digest
+m131: KILLED [director-104] The store copies the asset map
+m132: KILLED [director-104] The store clears stored bytes
+m133: KILLED [director-105] The store rejects absent bytes
+m134: KILLED [director-105] The store rejects bytes above the caller limit
+m135: KILLED [director-105] The store returns an independent byte copy
+m136: KILLED [director-106] The share helpers return the project for an absent filename
+m137: KILLED [director-106] The share helpers reject the ordinary file limit
+m138: KILLED [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
+m139: KILLED [director-107] The helper resolves without a signal
+m140: KILLED [director-107] The helper rejects an early signal
+m141: KILLED [director-107] The helper resolves with an active signal
+m142: KILLED [director-107] The helper rejects a work error
+m143: KILLED [director-107] The helper checks signal state when the work settles and rejects the call
+m144: KILLED [director-107] The helper cancels work that is not complete
+m145: KILLED [director-108] The preview reports exact totals and attribution
+m146: KILLED [director-108] The preview reports the scene ID when the title is absent
+m147: KILLED [director-109] The preview reports included bundle bytes
+m148: KILLED [director-109] The preview reports absent bundle bytes
+m149: KILLED [director-109] The preview reports a configured source; [director-109] The preview reports a configured source for a supplied source ID
+m150: KILLED [director-109] The preview reports an unavailable source
+m151: KILLED [director-110] The preview lists distinct absent layers
+m152: KILLED [director-110] The preview reports external content for applied shot packs
+m153: KILLED [director-110] The preview reports external content for a shot with a source pack ID
+m154: KILLED [director-110] The preview reports no external content without source packs
+m155: KILLED [director-080] The validator returns without an error for its bounds field for the image
+m156: KILLED [director-080] The validator returns without an error for its height field for the image
+m157: KILLED [director-080] The validator returns without an error for its altitudeReference field for the image
+m158: KILLED [director-081] The validator returns without an error for its anchorId field for the media
+m159: KILLED [director-077] The validator returns without an error for a GeoJSON altitudeReference field
+m160: KILLED [director-080] The validator rejects low excess for image bounds field 0
+m161: KILLED [director-080] The validator rejects high excess for image bounds field 0
+m162: KILLED [director-080] The validator rejects low excess for image bounds field 1
+m163: KILLED [director-080] The validator rejects high excess for image bounds field 1
+m164: KILLED [director-080] The validator rejects low excess for image bounds field 2
+m165: KILLED [director-080] The validator rejects high excess for image bounds field 2
+m166: KILLED [director-080] The validator rejects low excess for image bounds field 3
+m167: KILLED [director-080] The validator rejects high excess for image bounds field 3
+m168: KILLED [director-080] The validator rejects image height outside both limits
+m169: KILLED [director-082] The validator uses supplied anchors for the scene and returns without an error
+m170: KILLED [director-082] The validator uses absent anchor defaults for the scene and returns without an error
+m171: KILLED [director-085] The decoder accepts both geographic edges for the position and returns coordinates
+m172: SURVIVED
+m173: KILLED [director-088] The session reports idle after creation
+m174: KILLED [director-088] The session reports zero handles after creation
+m175: KILLED [director-089] The session reports one active handle
+m176: KILLED [director-093] The session calls the source with a default limit of 8388608 bytes
+m177: KILLED [director-093] The session returns true without a declared size
+m178: KILLED [director-090] The session returns false for a cancelled signal without an event
+m179: KILLED [director-090] The session checks destroyed state after it reads the signal
+m180: KILLED [director-090] The session returns false for a cleared load call without a signal state access
+m181: KILLED [director-090] The session guard rejects a detached resource
+m182: KILLED [director-090] The session disposes the handle before it adds the handle to its list
+m183: KILLED [director-092] The session settles a source error before its deadline and reports idle
+m184: KILLED [director-097] The source rejects early cancellation
+m185: KILLED [director-094] The factory returns a source for HTTP and HTTPS directories
+m186: KILLED [director-098] The import rejects 52428801 characters before byte conversion
+m187: KILLED [director-101] The export accepts scenes without data packs and returns bundle text
+m188: KILLED [director-101] The export returns one asset for a supplied data pack list
+m189: KILLED [director-102] The export accepts absent integrity fields and returns bundle text
+m190: KILLED [director-102] The export accepts an absent digest and returns bundle text
+m191: KILLED [director-103] The export accepts absent byte declarations for the shared export and returns bundle text
+m192: KILLED [director-103] The export accepts an absent digest for the shared export and returns bundle text
+m193: KILLED [director-099] The import accepts bytes without padding for the base64 and returns assets
+m194: KILLED [director-108] The preview reports no packs when data pack lists are absent
+m195: KILLED [director-108] The preview reports one pack from the supplied data pack list
+m196: KILLED [director-108] The preview reports Example for the supplied scene title
+m197: KILLED [director-109] The preview reports a configured source for a supplied source ID
+m198: KILLED [director-110] The preview reports no absent layer when a shot has no layers
+m199: KILLED [director-110] The preview reports traffic as absent without layer IDs
+m200: KILLED [director-105] The store rejects 8388609 bytes without a caller limit
+m201: KILLED [director-092] The session rejects an absent renderer without a source call
+m202: KILLED [director-099] The import rejects a custom text object for the base64
+m203: KILLED [director-103] The export key uses the registered source name and returns bundle text
+m204: KILLED [director-103] The export key uses path and returns bundle text
+m205: KILLED [director-110] The preview reports ships as absent when only traffic is configured
+m206: KILLED [director-108] The preview reports three bytes for both assets
+m207: KILLED [director-095] The source sets its credentials option for the asset request
+m208: KILLED [director-095] The source sets its redirect option for the asset request
+m209: KILLED [director-095] The source sets its referrerPolicy option for the asset request
+m210: KILLED [director-095] The source sets its cache option for the asset request
+m211: KILLED [director-085] The decoder rejects field 0 that is not finite for the position
+m212: KILLED [director-085] The decoder rejects field 1 that is not finite for the position
+m213: KILLED [director-085] The decoder rejects field 2 that is not finite for the position
+m214: KILLED [director-096] The source rejects 8388609 bytes without a caller limit
+m215: KILLED [director-077] The validator returns without an error for the id field of a data pack
+m216: KILLED [director-077] The validator returns without an error for the version field of a data pack
+m217: KILLED [director-077] The validator returns without an error for the format field of a data pack
+m218: KILLED [director-077] The validator returns without an error for the source field of a data pack
+m219: KILLED [director-077] The validator returns without an error for the attribution field of a data pack
+m220: KILLED [director-077] The validator returns without an error for the placement field of a data pack
+m221: KILLED [director-079] The validator returns without an error for the byteLength field of a data pack
+m222: KILLED [director-079] The validator returns without an error for the sha256 field of a data pack
+m223: KILLED [director-077] The validator returns without an error for its source name field
+m224: KILLED [director-077] The validator returns without an error for its source path field
+m225: KILLED [director-078] The validator returns without an error for its attribution text field
+m226: KILLED [director-078] The validator returns without an error for its attribution license field
+m227: KILLED [director-078] The validator returns without an error for its attribution url field
+m228: KILLED [director-100] The import checks its second asset reference and rejects the call
+m229: KILLED [director-100] The import checks its second asset digest and rejects the call
+m230: KILLED [director-103] The export accepts equal shared integrity and returns bundle text
+m231: KILLED [director-102] The export rejects absent asset bytes
+m232: KILLED [director-092] The session settles an early internal signal and reports idle
+m233: KILLED [director-093] The session calls the renderer with the anchors and returns true
+m234: KILLED [director-106] The share helpers call throwIfAborted three times and return the project
+m235: KILLED [director-102] The export rejects encoded bundle text above 52428800 bytes
+m236: KILLED [director-102] The export keeps its total after an asset without a byte length
+m237: KILLED [director-089] The session reports ready after asset work
+m238: KILLED [director-080] The validator rejects media fields in image placement for the placement
+m239: KILLED [director-081] The validator rejects image fields in media placement for the placement
+m240: KILLED [director-089] The session calls the GeoJSON renderer once and returns true
+m241: KILLED [director-089] The session calls the image renderer once and returns true
+m242: KILLED [director-089] The session calls the media renderer once and returns true
+m243: KILLED [director-097] The source stops between stream chunks
+m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials
+m245: KILLED [director-080] The manifest checks given image bounds and media anchor references
+m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
+m247: KILLED [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints
+m248: KILLED [director-089] The data pack session removes resources and cancels the transport on Stop
+m249: KILLED [director-091] The data pack session replaces source work and ignores its late bytes
+m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement
+m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result
+m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources
+m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
+m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal
+m255: KILLED [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
+m256: KILLED [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+m257: KILLED [director-102] The export rejects excess bytes, wrong integrity and absent assets
+m258: KILLED [director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
+m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+m260: KILLED [director-104] The store removes old data after replacement and uses no network source for the import byte store
+m261: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
+m262: KILLED [director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
+m263: KILLED [director-101] The export returns a bundle for a source path of 1024 characters
+m264: KILLED [director-077] The validator returns without an error for geojson
+m265: KILLED [director-077] The validator returns without an error for image
+m266: KILLED [director-077] The validator returns without an error for media
+m267: KILLED [director-080] The validator rejects bounds field 0 for the image
+m268: KILLED [director-080] The validator rejects bounds field 1 for the image
+m269: KILLED [director-080] The validator rejects bounds field 2 for the image
+m270: KILLED [director-080] The validator rejects bounds field 3 for the image
+m271: KILLED [director-092] The session rejects stalled work at the 19 ms deadline
+m272: KILLED [director-092] The session rejects stalled work at the default 15000 ms deadline
+m273: KILLED [director-092] The session removes resources after a later error
+m274: KILLED [director-099] The import accepts the application/json media type and returns assets
+m275: KILLED [director-099] The import accepts the application/geo+json media type and returns assets
+m276: KILLED [director-099] The import accepts the image/png media type and returns assets
+m277: KILLED [director-099] The import accepts the video/mp4 media type and returns assets
+m278: KILLED [director-099] The import accepts the video/webm media type and returns assets
+m279: KILLED [director-099] The import accepts the audio/mpeg media type and returns assets
+m280: KILLED [director-099] The import accepts the audio/ogg media type and returns assets
+m281: KILLED [director-099] The import accepts the audio/wav media type and returns assets
+m282: KILLED [director-099] The import accepts the audio/webm media type and returns assets
+m283: KILLED [director-089] The session rejects a falsy handle with inherited disposal
+m284: KILLED [director-088] The session returns false without a caller signal access after destruction
+m285: KILLED [director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
+m286: KILLED [director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
+m287: KILLED [director-085] The decoder accepts its exact total limit for the position and returns coordinates
+m288: KILLED [director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
+m289: KILLED [director-076] The validator rejects a path above its text limit for the asset path
+m290: KILLED [director-102] The export accepts its exact asset total and returns bundle text
+m291: KILLED [director-089] The session keeps every data pack handle
+m292: KILLED [director-095] The source sets its signal option for the asset request
+m293: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
+m294: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
+m295: KILLED [director-092] The session rejects a falsy custom source
+m296: KILLED [director-101] The export writes exact bundle metadata
+m297: KILLED [director-101] The export writes exact bundle metadata
+m298: KILLED [director-101] The export writes exact bundle metadata
+m299: KILLED [director-101] The export writes exact bundle metadata
+m300: KILLED [director-101] The export writes exact bundle metadata
+m301: KILLED [director-101] The export writes exact bundle metadata
+m302: KILLED [director-105] The store returns an independent byte copy
+m303: KILLED [director-079] The validator rejects 63 characters for the digest
+m304: KILLED [director-079] The validator rejects 65 characters for the digest
+m305: KILLED [director-079] The validator rejects a prefix for the digest
+m306: KILLED [director-079] The validator rejects a suffix for the digest
+m307: KILLED [director-079] The validator rejects uppercase text for the digest
+m308: KILLED [director-080] The validator rejects equal longitude edges for the image
+m309: KILLED [director-080] The validator rejects equal latitude edges for the image
+m310: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m311: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m312: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m313: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m314: KILLED [director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
+m315: KILLED [director-080] The validator rejects text for each geographic field for the image
+m316: KILLED [director-080] The validator rejects text for each geographic field for the image
+m317: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m318: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m319: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m320: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
+m321: KILLED [director-076] The validator rejects URL syntax with a stable message for the asset path
+m322: KILLED [director-088] The session returns true for eight data packs
+m323: KILLED [director-093] The session returns true at the asset byte limit
+m324: KILLED [director-093] The session returns true at the total byte limit
+m325: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m326: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m327: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m328: KILLED [director-089] The session removes its deadline after success
+m329: KILLED [director-089] The session removes its deadline after clear
+m330: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m331: KILLED [director-089] The session disposes both ready handles in reverse order and reports idle
+m332: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m333: KILLED [director-083] The decoder rejects invalid UTF8 bytes
+m334: KILLED [director-083] The decoder rejects null
+m335: KILLED [director-084] The decoder rejects a null feature
+m336: KILLED [director-084] The decoder rejects a null feature
+m337: KILLED [director-087] The decoder rejects absent geometry
+m338: KILLED [director-087] The decoder rejects absent geometry
+m339: KILLED [director-087] The decoder rejects absent geometry
+m340: KILLED [director-095] The source uses the default fetch function and returns bytes
+m341: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m342: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m343: KILLED [director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
+m344: KILLED [director-106] The share helpers accept the project file limit and reject one more byte
+m345: KILLED [director-106] The share helpers accept the bundle file limit and reject one more byte
+m346: KILLED [director-102] The export rejects an unsupported media type
+m347: KILLED [director-099] The import rejects 65 different asset paths
+m348: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+m349: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+m350: KILLED [director-105] The store rejects a cancelled source call
+m351: KILLED [director-107] The bundle helpers stop import before an asset
+m352: KILLED [director-107] The bundle helpers stop import after a digest
+m353: KILLED [director-107] The bundle helpers stop export before an asset
+m354: KILLED [director-107] The bundle helpers stop export after asset bytes
+m355: KILLED [director-107] The bundle helpers stop export after a digest
+m356: KILLED [director-108] The preview counts shots apart from scenes
+m357: KILLED [director-108] The preview counts shots apart from scenes
+m358: KILLED [director-110] The preview lists distinct absent layers
+m359: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m360: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m361: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+m362: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+m363: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m364: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m365: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m366: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
+m367: KILLED [director-102] The export rejects excess asset total
+m368: KILLED [director-085] The decoder rejects negative longitude for the position
+m369: KILLED [director-085] The decoder rejects negative latitude for the position
+m370: KILLED [director-085] The decoder accepts the limit for negative longitude for the position and returns coordinates
+m371: KILLED [director-085] The decoder accepts the limit for negative latitude for the position and returns coordinates
+m372: KILLED [director-085] The decoder rejects four coordinates for the position
+m373: KILLED [director-085] The decoder rejects one coordinate for the position
+m374: KILLED [director-076] The validator rejects .x for the asset path
+m375: KILLED [director-076] The validator rejects x?a=1 for the asset path
+m376: KILLED [director-079] The validator returns without an error for one byte
+m377: KILLED [director-080] The validator rejects bounds outside an array for the image
+m378: KILLED [director-082] The validator rejects nine distinct data packs for the scene
+m379: KILLED [director-082] The validator returns without an error for eight distinct data packs for the scene
+m380: KILLED [director-089] The session reports its state during asset work for the data pack session
+m381: KILLED [director-096] The source accepts its default byte limit and returns bytes
+m382: KILLED [director-098] The import accepts the character limit and returns the project
+m383: KILLED [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+m384: KILLED [director-098] The import rejects an invalid plain project
+m385: KILLED [director-098] The import rejects a null project
+m386: KILLED [director-099] The import rejects an extra top-level field
+m387: KILLED [director-099] The import rejects an invalid bundle project
+m388: KILLED [director-099] The import accepts 64 distinct assets and returns assets
+m389: SURVIVED
+m390: KILLED [director-101] The export calls the resolver with the data pack and signal
+m391: KILLED [director-101] The export calls the resolver with the data pack and signal
+m392: KILLED [director-102] The export accepts the text byte limit and returns bundle text
+m393: KILLED [director-105] The store accepts the caller byte limit for the byte store and returns byte copies
+m394: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+m395: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+m396: KILLED [director-089] The session removes source listeners after success for the data pack session
+m397: KILLED [director-089] The session removes source listeners after success for the data pack session
+m398: KILLED [director-089] The session removes source listeners after error for the data pack session
+m399: KILLED [director-079] The validator returns without an error for its byte limit
+m400: KILLED [director-080] The validator returns without an error for its minimum height for the image
+m401: KILLED [director-080] The validator returns without an error for its maximum height for the image
+m402: KILLED [director-085] The decoder accepts its minimum height for the position and returns coordinates
+m403: KILLED [director-085] The decoder accepts its maximum height for the position and returns coordinates
+m404: KILLED [director-107] The helper removes its listener after cancel
+m405: KILLED [director-107] The helper removes its listener after success
+m406: KILLED [director-107] The helper removes its listener after error
+m407: KILLED [director-107] The helper removes its listener after success
+m408: KILLED [director-101] The export rejects an invalid project
+m409: KILLED [director-107] The import stops before the second digest
+m410: KILLED [director-107] The export stops before the second resolver call
+m411: KILLED [director-082] The validator rejects a reference in the second shot
+m412: KILLED [director-082] The validator rejects a reference in the second shot
+m413: KILLED [director-099 director-102] The bundle helpers reject an SVG media type during import and export
+m414: KILLED [director-077] The validator rejects an unlisted geojsonx format
+m415: KILLED [director-094] The factory rejects the file protocol
+m416: KILLED [director-077 director-082] The validator rejects an invalid second data pack
+m417: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m418: KILLED [director-082] The validator rejects an unknown second reference ID
+m419: KILLED [director-084] The decoder rejects the second feature
+m420: KILLED [director-085 director-086] The decoder rejects the second line position
+m421: KILLED [director-087] The decoder rejects the second ring
+m422: KILLED [director-088] The session rejects an invalid second data pack before the source call
+m423: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
+m424: KILLED [director-080] The validator rejects bounds field 3 for the image
+m425: KILLED [director-076] The validator rejects an invalid second path segment
+m426: KILLED [director-085] The decoder rejects an invalid second coordinate
+m427: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m428: KILLED [director-089] The session keeps every data pack handle
+m429: KILLED [director-092] The session removes resources after a later error
+m430: KILLED [director-096] The source joins chunks of different lengths
+m431: KILLED [director-101] The export includes the asset of the second scene and returns bundle text
+m432: KILLED [director-101] The export writes each asset index and filename
+m433: KILLED [director-100] The import checks its second asset reference and rejects the call
+m434: KILLED [director-101] The export writes each asset index and filename
+m435: KILLED [director-101] The export writes each asset index and filename
+m436: KILLED [director-104] The store counts the second asset
+m437: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m438: KILLED [director-108] The preview lists the second data pack
+m439: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m440: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m441: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m442: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m443: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m444: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m445: KILLED [director-097] The source cancels before it reads the second chunk
+m446: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
+m447: KILLED [director-107] The import stops after the second digest
+m448: KILLED [director-107] The export stops after the second digest
+m449: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m450: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m451: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m452: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m453: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m454: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m455: KILLED [director-077] The validator rejects the extra fields script and adapters in the data pack
+m456: KILLED [director-077] The validator rejects the extra fields script and adapters in the source
+m457: KILLED [director-078] The validator rejects the extra fields script and adapters in the attribution
+m458: KILLED [director-080] The validator rejects the extra fields script and adapters in the image placement
+m459: KILLED [director-077] The validator rejects the extra fields script and adapters in the media placement
+m460: KILLED [director-077] The validator rejects the extra fields script and adapters in the GeoJSON placement
+m461: KILLED [director-099] The import rejects the extra fields script and adapters in the top-level object
+m462: KILLED [director-099] The import rejects the extra fields script and adapters in the asset
+m463: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m464: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m465: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m466: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m467: KILLED [director-110] The preview reports no absent layer when both layer IDs are configured
+m468: KILLED [director-109] The preview reports both configured sources as configured
+m469: KILLED [director-082] The validator returns without an error for eight references and rejects nine references for the shot
+m470: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m471: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
+m472: KILLED [director-104] The store counts the second asset
+m473: KILLED [director-104] The store counts the second asset
+m474: KILLED [director-104] The store counts the second asset
+m475: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m476: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
+m477: KILLED [director-093] The session returns true for exact bytes and digest
+m478: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+m479: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
+```
+
+### Label expansion
+
+The hand tool clips some killer titles.
+The label script expands only a unique live title.
+The raw hand log stays in gev-tools.
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass8/expand-killers.py
+Expanded killer labels: 47
+```
+
+### Host limits
+
+The host uses Node 26.8.2.
+This pass does not run Node 24.14.0, image gates, ratchet or the next review round.
+The lead owns those commands.
+The make lint command stopped at image construction before lint could start.
+It gave no lint verdict.
+
+The host lint command gives the lint verdict below its command line.
+The first document command stopped before completion.
+The first pattern and echo repair commands also stopped before completion.
+Those commands gave no final verdict.
+
+The final commands replace those incomplete attempts.
+
+The predispatch checker also reports coverage keys in command output.
+The fenced outputs keep those keys.

@@ -1492,7 +1492,7 @@ The loop table lists 52 collection traversals in six of the seven source files.
 - [x] 10.7 Correct scenario clauses.
 - [x] 10.8 Add hand rows m449 to m479.
 - [x] 10.9 Regenerate the traversal table.
-- [x] 10.10 Regenerate killer titles from the saved results.
+- [x] 10.10 Regenerate the killer titles from the saved results.
 - [x] 10.11 Correct the review prose.
 - [x] 10.12 Run each test file.
 - [x] 10.13 Measure each source file for coverage.
@@ -1501,3 +1501,26 @@ The loop table lists 52 collection traversals in six of the seven source files.
 - [x] 10.16 Check format.
 - [x] 10.17 Check the production diff.
 - [x] 10.18 Commit the correction.
+
+
+## 11. Correct round 6 findings
+
+- [x] 11.1 Write the Pass 8 glossary.
+- [x] 11.2 Correct the test actors and outcomes.
+- [x] 11.3 Correct the scenario results.
+- [x] 11.4 Correct the document labels.
+- [x] 11.5 Record every closed-set limit.
+- [x] 11.6 Name each killer test in the loop table.
+- [x] 11.7 Check every title and scenario result.
+- [x] 11.8 Check all title echoes.
+- [x] 11.9 Run each test file alone.
+- [x] 11.10 Measure each production file.
+- [x] 11.11 Run all hand mutations.
+- [x] 11.12 Run the prose checks.
+- [x] 11.13 Run the title scan.
+- [x] 11.14 Check the source format.
+- [x] 11.15 Compare the production files.
+- [x] 11.16 Check the OpenSpec change.
+- [x] 11.17 Compare every document heading.
+- [x] 11.18 Record the Pass 8 evidence.
+- [x] 11.19 Commit the corrections.

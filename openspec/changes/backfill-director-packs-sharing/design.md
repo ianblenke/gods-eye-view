@@ -52,7 +52,7 @@ It does not edit the earlier director change folders.
 ## Corrections of review round 1
 
 Pass 2 uses the terms data pack, shot pack, load call, asset request, renderer and registered source with one meaning each.
-The old title about stated references now says given references, because the manifest gives them.
+The old title about stated references now says given references, because the validator gives them.
 The fixed request options belong to the directory source.
 The tests call public functions with local assets, custom signals and call spies.
 The production files stay the same as base commit `290b5d2`.
@@ -63,7 +63,7 @@ A second preview test separates the shot total from the scene total.
 The lead runs the next review round after this correction pass.
 
 The scratch copy contains the repository test files and their source dependencies.
-It carries the production files of base commit `290b5d2` with the test edits of pass 2.
+It carries the production files of base commit `290b5d2` and the test files that pass 2 changes.
 The copy does not carry a branch.
 The final byte comparison checks each test copy against the repository file.
 
@@ -71,13 +71,13 @@ The final byte comparison checks each test copy against the repository file.
 
 Pass 3 keeps base commit `290b5d2` and scenario IDs director-076 through director-110.
 The pass 3 operand table started with open rows and recorded proof only after a test or probe completed.
-The export serializer checks the project before the second parser call.
-A test of invalid export input alone cannot prove the second parser call.
+The export serializer checks the project before the second call to parseSceneDocument.
+A test of invalid export input alone cannot prove the second call to parseSceneDocument.
 The production files stay unchanged.
 
-The repeated export parser is equivalent for the public API of the module when built-in functions keep their standard behavior.
+The repeated export validator is equivalent for the public API of the module when built-in functions keep their standard behavior.
 The serializer validates the same text first.
-The parser returns that parsed object without a change.
+The validator returns that parsed object without a change.
 The getter and resolver probe is evidence/probe-export-parser.txt.
 The probe also checks an invalid project and a version 1 project.
 
@@ -116,7 +116,7 @@ Campaign 2 checks the original 3849 mutations.
 
 Pass 4 correction check 1 gave 180 kills.
 Pass 4 correction check 2 gave 192 kills and left equivalent cases and Known limits.
-The rerun after pass 4 is the lead test of all 3849 mutations.
+The lead ran all 3849 mutations again after pass 4.
 The new Known limit concerns a custom nonnumeric byte length.
 The valid numeric length fallback keeps its tagged test and scenario clause.
 
@@ -158,7 +158,7 @@ The accepted media type set contains exactly nine types.
 
 The invalid path test checks a path that the store holds.
 It does not claim a lookup order that public input cannot show.
-The killer titles use one source: the first failed test of the lead final rerun after pass 5.
+The killer titles use one source: the first failed test of the final rerun of the lead after pass 5.
 The saved result files stay unchanged.
 The lead owns round 5, ratchet and image gates.
 
@@ -177,5 +177,53 @@ The preview lists data packs and counts scenes, shots and bytes.
 Each allowed-field list has tests for script and adapters.
 The automatic tool classes stay unchanged.
 
-The prose gate rejects the requested preview sentence because it has 28 words.
+The prose gate rejects the requested preview sentence because the sentence has 28 words.
 Two sentences state the same result within the word limit.
+
+
+### Pass 8 words
+
+Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
+
+Use one word for each actor below.
+The helper means only withShareSignal.
+The reader means only the stream reader.
+
+| Word | File | Function or object |
+| --- | --- | --- |
+| session | src/director/packs/session.js | createDataPackSession and its load, clear, destroy and getState methods |
+| factory | src/director/packs/source.js | createAssetDirectorySource; it returns the source function. |
+| source | src/director/packs/source.js and src/director/sharing/bundle.js | The function from createAssetDirectorySource, or source method of createBundleAssets; a test can supply another source function. |
+| renderer | src/director/packs/session.js | The function from adapterMap that load calls for pack.format |
+| validator | src/director/packs/manifest.js | validateAssetPath, validateDataPack and validateSceneDataPacks |
+| decoder | src/director/packs/geojson.js | decodePackGeoJSON, position and line |
+| import | src/director/sharing/bundle.js | parseSceneShare |
+| export | src/director/sharing/bundle.js | createSceneBundle |
+| share helpers | src/director/sharing/bundle.js and lifetime.js | readSceneShare and withShareSignal |
+| bundle helpers | src/director/sharing/bundle.js | parseSceneShare, createSceneBundle, checkAbort, checkBytes, checkMime, digest, encode and decode |
+| helper | src/director/sharing/lifetime.js | withShareSignal only |
+| throwIfAborted | src/director/sharing/bundle.js | The signal method that checkAbort calls; a test signal can supply this method. |
+| preview | src/director/sharing/preview.js | describeSceneShare |
+| lifetime handle | src/director/packs/session.js | The object that the renderer returns; its dispose method releases the resource. |
+| store | src/director/sharing/bundle.js | createBundleAssets and its replace, clear, snapshot, getState and source methods |
+| reader | src/director/packs/source.js | The stream reader from response.body.getReader |
+| reads a stream chunk | src/director/packs/source.js | The source calls reader.read. |
+| reads a field | All seven files in scope | The named actor gets an object property. |
+| reads a work promise | session.js and lifetime.js | untilAbort or withShareSignal reads the then property through Promise.resolve. |
+| load call | src/director/packs/session.js | A call to the session load method |
+| caller | All public functions in scope | The code that calls the named function |
+| resolver | src/director/sharing/bundle.js | The resolveAsset function that createSceneBundle calls |
+| serializer | src/director/document.js | stringifySceneDocument |
+| predispatch checker | gev-tools/predispatch/predispatch.py | The script that checks change prose |
+
+
+The word validator also covers manifest validation through parseSceneDocument in src/director/document.js.
+A test source means the source function that the test supplies to the session.
+A resolver means the resolveAsset function that the caller supplies to the export.
+
+
+
+Pass 8 keeps all five required proposal headings.
+The pass moves the Pass 7 notes below Known limits and later changes.
+The closed-set limit includes coordinate lengths 2 and 3.
+The pass changes test titles and scenario results, but changes no production function.

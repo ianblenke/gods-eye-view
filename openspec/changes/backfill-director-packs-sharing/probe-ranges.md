@@ -9,9 +9,9 @@ The table checks the input limits of the 22 pass 4 probe groups.
 A sample alone does not prove that a mutation is equivalent.
 Each claim also needs the code guard in the last column.
 The claims use the public API of the module with standard built-in functions.
-The claims exclude edits to built-in functions and their prototypes.
+The claims exclude mutations of built-in functions and their prototypes.
 
-| probe | Original input cases | Other public input classes | Code guard or pass 5 test |
+| probe | Original input cases | Other public input classes | Code guard or pass 5 check |
 | --- | --- | --- | --- |
 | aligned-base64-limit | Lengths 11184812, 11184813 and 11184816. | Empty text, unusual characters and large text. | The alignment validation rejects every length between adjacent multiples of four. The same byte check rejects excess decoded bytes. |
 | base64-tail | `AQID`, `AA==`, null, an object, `=AA=` and `zZ09`. | +, /, empty text and large text. | The type guard accepts only primitive strings. Both checks are pure and give the same error. New tests use + and /. |
@@ -30,13 +30,13 @@ The claims exclude edits to built-in functions and their prototypes.
 | position-counter | Valid positions and invalid longitude, latitude or height. | 49999, 50000 and 50001 positions. | The counter is private. An invalid position ends the call. Every valid position increases the counter once. |
 | registry-order | Valid and absent sources and renderers. | Inherited names, getters and both registries absent. | The session copies entries into private Maps. Both guard operands are plain local values. |
 | repeat-json-error | One character: {. | Invalid JSON from 5242881 to 52428800 characters. | The claim was false. New director-098 tests check both limits and the bundle file path. |
-| repeat-parser | Valid projects, invalid versions, getters and resolver calls. | Huge text, unusual characters and prototype keys. | stringifySceneDocument validates the same text before the second parser call. Invalid or excess text fails before that call. |
+| repeat-parser | Valid projects, invalid versions, getters and resolver calls. | Huge text, unusual characters and prototype keys. | stringifySceneDocument validates the same text before the second call to parseSceneDocument. Invalid or excess text fails before that call. |
 | ring-default | Open lines of two or three positions. | Empty lines, long lines and polygon rings. | Undefined and false each select the open-line branch. Polygon calls supply true and bypass the default. |
 | splice-default | Empty sessions, completed handles and cancelled work. | Multiple handles, repeated clear calls and late handles. | Splice converts both undefined and zero to index zero. The handle array is private. |
 | truth-state | Success, errors, cancellation and disposal. | Repeated callbacks and custom signal state. | The mutated state is private. The code uses only its truth value. True, 1 and an empty array are true. |
 | url-fields | HTTPS, HTTP, credentials, query, fragment and no final slash. | Unicode paths and each forbidden field alone. | URL converts the caller input once. Its standard fields are plain values during both guard orders. |
 
-The older export-parser probe checks the same parser claim as repeat-parser.
+The older export-parser probe checks the same validator claim as repeat-parser.
 The inherited-height, signal-getter and bundle-nonnumeric-length probes record Known limits.
 They do not support an equivalent claim.
 

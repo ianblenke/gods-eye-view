@@ -5,4 +5,4 @@ The old probe used only one character of invalid JSON.
 The new director-098 tests use 5242881 and 52428800 characters.
 The tests check the message $: invalid JSON through parseSceneShare and readSceneShare.
 The correction check kills a2680, a2681, a2683 and a2684.
-The failed test is [director-098] The bundle rejects invalid JSON of 5242881 characters.
+The failed test is [director-098] The import rejects invalid JSON of 5242881 characters.
