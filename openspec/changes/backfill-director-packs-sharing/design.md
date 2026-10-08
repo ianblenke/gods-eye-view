@@ -24,12 +24,12 @@ The lead runs the ratchet, gates and review.
 
 The evidence records test links, scope sweeps and host coverage.
 The mutation report records exact changes and failed tests.
-The scratch audit records each decision expression.
+The operand table in audit.md lists each operand and each call argument.
 
 ## Sweep commands
 
-The evidence gives each source command for the ledger, titles, imports, scenarios, coverage and mutation results.
-The scratch audit gives the decision totals.
+The evidence gives the report, test, coverage and ledger commands.
+The operand table gives the decision totals.
 The host uses Node 26.8.2.
 The lead checks the gate image before the ledger update.
 
@@ -57,11 +57,29 @@ The tests call public functions with local assets, custom signals and call spies
 The production files stay the same as base commit `290b5d2`.
 The scenario IDs stay director-076 through director-110.
 
-The tests separate each byte limit from the first excess value.
+The tests separate each byte limit from the first value above the limit.
 A second preview test separates the shot total from the scene total.
-The lead conducts the next review round after this correction pass.
+The lead runs the next review round after this correction pass.
 
 The scratch copy contains the repository test files and their source dependencies.
 It carries the production files of base commit `290b5d2` with the test changes of pass 2.
 The copy does not carry a branch.
 The final byte comparison checks each test copy against the repository file.
+
+## Corrections of review round 2
+
+Pass 3 keeps base commit `290b5d2` and scenario IDs director-076 through director-110.
+The operand table starts with open rows and records proof only after a test or probe completes.
+The export serializer checks the project before the second parser call.
+A test of invalid export input alone cannot prove the second parser call.
+The production files stay unchanged.
+
+The repeated export parser is equivalent for the public API of the module when built-in functions keep their standard behavior.
+The serializer validates the same text first.
+The parser returns that parsed object without a change.
+The getter and resolver probe is evidence/probe-export-parser.txt.
+The probe also checks an invalid project and a version 1 project.
+
+The operand table records open proof gaps as open rows.
+A candidate mutation link alone does not close a proof gap.
+The lead must not send this change to review with an open proof gap.

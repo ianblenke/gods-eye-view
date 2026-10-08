@@ -402,7 +402,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-092] The deadline stops a stalled renderer and a data pack error removes earlier resources
+[director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources
 ```
 
 Test file: `src/director/packs/backfill.test.mjs`.
@@ -420,7 +420,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-092] The session uses its default deadline
 [director-092] The session removes resources after a later error
 [director-092] The session rejects a falsy custom source
-[director-092] The absent registered source stops after the validation size read
+[director-092] The data pack session reads the byteLength field once without a registered source
 [director-092] The deadline removes partial resources
 ```
 
@@ -429,7 +429,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited renderer names
+[director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
 ```
 
 Test file: `src/director/packs/backfill.test.mjs`.
@@ -438,7 +438,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-093] The session rejects bytes that are not a Uint8Array
 [director-093] The session rejects an empty asset
 [director-093] The session rejects an asset above the byte limit
-[director-093] The session rejects a wrong asset length
+[director-093] The session rejects a wrong byteLength field
 [director-093] The session rejects bytes above the total limit
 [director-093] The session rejects a wrong digest
 [director-093] The session checks exact bytes and digest
@@ -469,7 +469,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-095 director-096 director-097] The directory source confines paths and rejects credentials, redirects, excess bytes and absent assets
+[director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
 ```
 
 Test file: `src/director/packs/backfill.test.mjs`.
@@ -489,7 +489,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-095 director-096 director-097] The directory source confines paths and rejects credentials, redirects, excess bytes and absent assets
+[director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
 ```
 
 Test file: `src/director/packs/backfill.test.mjs`.
@@ -509,7 +509,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-095 director-096 director-097] The directory source confines paths and rejects credentials, redirects, excess bytes and absent assets
+[director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
 [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal
 ```
 
@@ -530,11 +530,11 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-098] The share helpers reject nontext input
-[director-098] The share helpers reject invalid JSON
-[director-098] The share helpers accept plain project JSON
-[director-098] The share helpers reject excess characters
-[director-098] The share helpers reject excess UTF8 bytes
+[director-098] The bundle helpers reject nontext input
+[director-098] The bundle helpers reject invalid JSON
+[director-098] The bundle helpers accept plain project JSON
+[director-098] The bundle helpers reject excess characters
+[director-098] The bundle helpers reject excess UTF8 bytes
 [director-098] The share character guard precedes byte conversion
 ```
 
@@ -575,9 +575,9 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
 [director-100] The bundle rejects an absent asset
-[director-100] The bundle rejects a wrong asset length
-[director-100] The bundle rejects a wrong asset digest
-[director-100] The bundle rejects wrong asset digest
+[director-100] The bundle rejects a wrong byteLength field
+[director-100] The bundle rejects a pack digest that differs from its asset
+[director-100] The bundle rejects an asset digest that differs from its bytes
 [director-100] The bundle rejects unused assets
 [director-100] The bundle rejects external data pack sources
 [director-100] The bundle checks its second asset reference
@@ -656,7 +656,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-105] The store rejects bytes above the caller limit
 [director-105] The store returns an independent byte copy
 [director-105] The store checks its default byte budget
-[director-105] The store rejects a cancelled asset call
+[director-105] The store rejects a cancelled source call
 ```
 
 ### director-106
@@ -665,12 +665,12 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
 [director-106] The share helpers reject excess file bytes before text access and cancel a stalled project file
-[director-106] The reader accepts an absent filename
-[director-106] The reader rejects the ordinary file budget
-[director-106] The reader gives bundles the larger budget
-[director-106] The reader checks a signal after text access
-[director-106] The reader accepts the project file limit and rejects one more byte
-[director-106] The reader accepts the bundle file limit and rejects one more byte
+[director-106] The share helpers accept an absent filename
+[director-106] The share helpers reject the ordinary file budget
+[director-106] The share helpers give bundles the larger budget
+[director-106] The share helpers check a signal after text access
+[director-106] The share helpers accept the project file limit and rejects one more byte
+[director-106] The share helpers accept the bundle file limit and rejects one more byte
 ```
 
 ### director-107
@@ -726,7 +726,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 ```text
 [director-110] The preview lists distinct absent layers
 [director-110] The preview detects applied shot packs
-[director-110] The preview detects a shot source pack ID
+[director-110] The preview detects the source pack ID of a shot
 [director-110] The preview detects no external content
 [director-110] The preview accepts absent shot layers
 [director-110] The preview uses supplied shot layers
@@ -741,7 +741,7 @@ The change keeps the scenario IDs and production files.
 
 | Finding label | Correction |
 | --- | --- |
-| Spec: 079 says lowercase digest | Tests reject 63 characters, 65 characters, uppercase text, a prefix and a suffix. Rows m303-m307 fail. |
+| Spec: 079 says lowercase digest | Tests reject 63 characters, 65 characters, uppercase text, a prefix and a suffix. Mutations m303 to m307 make a test fail. |
 | Spec: 080 ordered edges | Tests reject equal edges and accept all geographic limits. Rows m308-m313 fail. |
 | Spec: No accept-at-limit test | Tests accept asset, total, data pack, base64 and file limits. Rows m322-m324 and m341-m345 fail. |
 | Spec: 102 names media types | Export rejects an unsupported type. Import rejects 65 different paths and excess total bytes. Rows m346-m349 fail. |
@@ -751,10 +751,10 @@ The change keeps the scenario IDs and production files.
 | Spec: Tag mismatches | New tests carry 076, 089 and 105. Rows m321, m331 and m350 fail. |
 | Spec: nothing aborts parseSceneShare | Signal spies check asset and digest calls during import and export. Rows m351-m355 fail. |
 | Spec: Tags assert what no THEN states | The scenarios now state each listed result. The requirement sentences name results that tests can check. |
-| Spec: Count after destroy cannot fail | A new deadline test checks the disposal list before destroy. Scenario 092 separates registered source and renderer cases. |
+| Spec: Count after destroy cannot fail | A new deadline test checks the disposal list before the caller destroys it. Scenario 092 separates registered source and renderer cases. |
 | Spec: Known limits lack bounds | The limits name the custom prototype getter and signal getter. Parent declarations, text limits and default fetch tests fail their rows. |
 | STE: a missing source adapter | The prose separates registered source from renderer. The load method reads byteLength once when no source exists. |
-| STE: applied scene packs | The prose and titles use data pack, applied shot packs and a shot source pack ID with one meaning each. |
+| STE: applied scene packs | The prose and titles use data pack, applied shot packs and the source pack ID of a shot with one meaning each. |
 | STE: the old request returns false | The prose uses load call, asset request or the caller asks, as applicable. |
 | STE: stated request options | The source uses fixed request options. The manifest title uses given references. The design states the reason. |
 | STE: scene share text | The prose uses project share text, project file and shared project. Scene totals still mean scenes. |
@@ -778,7 +778,7 @@ No equivalent row needs a separate probe.
 
 ## Code limits
 
-The inherited height needs a Proxy or a getter at Array.prototype[2].
+The case uses an inherited value at index 2.
 The probe returns -12001 meters through the public API.
 The custom signal getter destroys the session during signal access.
 
@@ -830,7 +830,7 @@ New: The manifest checks given image bounds and media anchor references
 
 ```text
 Old: directory source confines paths, strips credentials and rejects redirects, oversized streaming bodies and missing assets
-New: The directory source confines paths and rejects credentials, redirects, excess bytes and absent assets
+New: The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
 ```
 
 ```text
@@ -860,12 +860,12 @@ New: The data pack session disposes a renderer resource when its signal stops af
 
 ```text
 Old: timeout settles an uncooperative adapter and failed packs roll back earlier resources
-New: The deadline stops a stalled renderer and a data pack error removes earlier resources
+New: The deadline stops a stalled registered source and a data pack error removes earlier resources
 ```
 
 ```text
 Old: byte and integrity checks run before rendering; adapter names never resolve inherited properties
-New: The data pack session checks bytes and integrity before the renderer call and rejects inherited renderer names
+New: The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
 ```
 
 ```text
@@ -941,7 +941,7 @@ New: [director-080] The manifest checks given image bounds and media anchor refe
 
 ```text
 Old: [director-095 director-096 director-097] directory source confines paths, strips credentials and rejects redirects, oversized streaming bodies and missing assets
-New: [director-095 director-096 director-097] The directory source confines paths and rejects credentials, redirects, excess bytes and absent assets
+New: [director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
 ```
 
 ```text
@@ -971,12 +971,12 @@ New: [director-090] The data pack session disposes a renderer resource when its 
 
 ```text
 Old: [director-092] timeout settles an uncooperative adapter and failed packs roll back earlier resources
-New: [director-092] The deadline stops a stalled renderer and a data pack error removes earlier resources
+New: [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources
 ```
 
 ```text
 Old: [director-093] byte and integrity checks run before rendering; adapter names never resolve inherited properties
-New: [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited renderer names
+New: [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
 ```
 
 ```text
@@ -1081,7 +1081,7 @@ New: [director-093] The session rejects an asset above the byte limit
 
 ```text
 Old: [director-093] The session rejects byte declared size
-New: [director-093] The session rejects a wrong asset length
+New: [director-093] The session rejects a wrong byteLength field
 ```
 
 ```text
@@ -1266,7 +1266,7 @@ New: [director-095] The asset request sets its signal option
 
 ```text
 Old: [director-092] The missing source stops after the validation size read
-New: [director-092] The absent registered source stops after the validation size read
+New: [director-092] The data pack session reads the byteLength field once without a registered source
 ```
 
 ```text
@@ -1316,27 +1316,27 @@ New: [director-101] The bundle accepts long valid source asset names
 
 ```text
 Old: [director-098] The share parser rejects nontext input
-New: [director-098] The share helpers reject nontext input
+New: [director-098] The bundle helpers reject nontext input
 ```
 
 ```text
 Old: [director-098] The share parser rejects invalid JSON
-New: [director-098] The share helpers reject invalid JSON
+New: [director-098] The bundle helpers reject invalid JSON
 ```
 
 ```text
 Old: [director-098] The share parser accepts plain project JSON
-New: [director-098] The share helpers accept plain project JSON
+New: [director-098] The bundle helpers accept plain project JSON
 ```
 
 ```text
 Old: [director-098] The share parser rejects excess characters
-New: [director-098] The share helpers reject excess characters
+New: [director-098] The bundle helpers reject excess characters
 ```
 
 ```text
 Old: [director-098] The share parser rejects excess UTF8 bytes
-New: [director-098] The share helpers reject excess UTF8 bytes
+New: [director-098] The bundle helpers reject excess UTF8 bytes
 ```
 
 ```text
@@ -1346,12 +1346,12 @@ New: [director-100] The bundle rejects an absent asset
 
 ```text
 Old: [director-100] The bundle rejects pack asset byte length
-New: [director-100] The bundle rejects a wrong asset length
+New: [director-100] The bundle rejects a wrong byteLength field
 ```
 
 ```text
 Old: [director-100] The bundle rejects pack asset digest
-New: [director-100] The bundle rejects a wrong asset digest
+New: [director-100] The bundle rejects a pack digest that differs from its asset
 ```
 
 ```text
@@ -1396,7 +1396,7 @@ New: [director-110] The preview detects applied shot packs
 
 ```text
 Old: [director-110] The preview detects shot source packs
-New: [director-110] The preview detects a shot source pack ID
+New: [director-110] The preview detects the source pack ID of a shot
 ```
 
 ```text
@@ -1432,4 +1432,466 @@ New: [director-100] The bundle checks its second asset digest
 ```text
 Old: [director-103] The export accepts matching shared integrity
 New: [director-103] The export accepts equal shared integrity
+```
+
+## Corrections of review round 2
+
+OPEN means that the proof is not complete.
+
+Base commit: `290b5d2`.
+Pass 3 adds the operand table in audit.md.
+That table replaces the scratch decision table.
+The table lists operands, constants, default values, array methods and helper arguments.
+An open row records work that is not complete.
+
+| Finding | Correction |
+| --- | --- |
+| Accept-at-limit holes | Tests check the character limit, the multibyte byte limit, the export text limit and the caller byte limit. |
+| Accept-at-limit holes: asset total | The import accepts distinct assets at its limit. |
+| Math.abs | Tests check negative and positive longitude and latitude limits and the first value above each limit. |
+| Four-element position | Tests reject positions with one or four coordinates. Scenario 085 states the accepted lengths. |
+| Cap of eight data packs | Tests use distinct IDs and separate acceptance at eight from rejection at nine. Scenario 082 states the cap. |
+| Reports the loading state | A test tagged 089 reads the state before the source work settles. |
+| Bundle validators | Tests reject invalid plain, bundle and export projects, null and extra top-level fields. |
+| Resolver arguments | A resolver reads the data pack, the signal and the signal property source. |
+| Inherited height | The description says an inherited value at index 2. The probe checks plain values on both parent objects. |
+| Path character class | Tests reject query syntax, a colon, a dot prefix, a final slash and an empty path part. |
+| Smaller survivors | Tests check one byte, array bounds and the default source byte limit. Scenario 094 states the final slash. |
+| Renderer arguments | Tests tagged 093 check data pack and anchors arguments. Scenario 093 names both. |
+| Stalled renderer | The titles and records say stalled registered source and inherited registered source names. |
+| The share helpers reject | Tests tagged 098 and their records name the bundle helpers. |
+| Wrong asset digest | The two titles distinguish the data pack digest from the asset digest. |
+| Preview dependencies | Scenario 110 describes whether content exists, instead of lists of that content. |
+| Rejects credentials | The directory title says it sends no credentials and rejects the other invalid input. |
+| One name each | The records use data pack validators, data pack session, source call and byteLength field. |
+| Shot source pack ID | The title says the source pack ID of a shot. |
+| Verbs as nouns | The records name caller actions and tests that mutations make fail. |
+| Intact and lower case | The replacement scenario states that the old call does not change new resources. The AND line starts with a capital. |
+| Warning total | The current lint output supplies the total. |
+| Design terms | The design names report, test, coverage and ledger commands and the first value above the limit. |
+| Task m071 | The task states that the mutation uses the code below. |
+
+The applied Purpose belongs to the lead.
+Pass 3 does not edit that file.
+Old title text stays in fenced records because it names the original text.
+
+The repeated export parser is equivalent for the public API of the module with standard built-in functions.
+The probe checks getters and a resolver spy.
+The probe is evidence/probe-export-parser.txt.
+The serializer checks the same project text before the repeated parser.
+The parser returns its input object without a change.
+
+The inherited-height probe is evidence/probe-inherited-height.txt.
+It shows the same result for a plain value on Array.prototype and Object.prototype.
+It records a code limit, not an equivalent mutation.
+
+The listener tests check removal after success, error and cancellation.
+The cancellation test checks removal before late work settles.
+The renderer test checks the source of the data pack and anchors properties.
+
+Commands for probes:
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass3-height-probe.mjs
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass3-export-probe.mjs
+```
+
+### Title correction in pass 3
+
+The pairs below compare the titles of pass 2 with the titles of pass 3.
+
+File: src/director/packs/packs.test.mjs
+
+```text
+Old: [director-095 director-096 director-097] The directory source confines paths and rejects credentials, redirects, excess bytes and absent assets
+New: [director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets
+```
+
+File: src/director/packs/packs.test.mjs
+
+```text
+Old: [director-092] The deadline stops a stalled renderer and a data pack error removes earlier resources
+New: [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources
+```
+
+File: src/director/packs/packs.test.mjs
+
+```text
+Old: [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited renderer names
+New: [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
+```
+
+File: src/director/packs/backfill.test.mjs
+
+```text
+Old: [director-093] The session rejects a wrong asset length
+New: [director-093] The session rejects a wrong byteLength field
+```
+
+File: src/director/packs/backfill.test.mjs
+
+```text
+Old: [director-081] The session gives anchors to its renderer
+New: [director-093] The session gives anchors to its renderer
+```
+
+File: src/director/packs/backfill.test.mjs
+
+```text
+Old: [director-092] The absent registered source stops after the validation size read
+New: [director-092] The data pack session reads the byteLength field once without a registered source
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-098] The share helpers reject nontext input
+New: [director-098] The bundle helpers reject nontext input
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-098] The share helpers reject invalid JSON
+New: [director-098] The bundle helpers reject invalid JSON
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-098] The share helpers accept plain project JSON
+New: [director-098] The bundle helpers accept plain project JSON
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-098] The share helpers reject excess characters
+New: [director-098] The bundle helpers reject excess characters
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-098] The share helpers reject excess UTF8 bytes
+New: [director-098] The bundle helpers reject excess UTF8 bytes
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-100] The bundle rejects a wrong asset length
+New: [director-100] The bundle rejects a wrong byteLength field
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-100] The bundle rejects a wrong asset digest
+New: [director-100] The bundle rejects a pack digest that differs from its asset
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-100] The bundle rejects wrong asset digest
+New: [director-100] The bundle rejects an asset digest that differs from its bytes
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-106] The reader accepts an absent filename
+New: [director-106] The share helpers accept an absent filename
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-106] The reader rejects the ordinary file budget
+New: [director-106] The share helpers reject the ordinary file budget
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-106] The reader gives bundles the larger budget
+New: [director-106] The share helpers give bundles the larger budget
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-110] The preview detects a shot source pack ID
+New: [director-110] The preview detects the source pack ID of a shot
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-106] The reader checks a signal after text access
+New: [director-106] The share helpers check a signal after text access
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-105] The store rejects a cancelled asset call
+New: [director-105] The store rejects a cancelled source call
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```text
+Old: [director-106] The reader accepts the ${label} file limit and rejects one more byte
+New: [director-106] The share helpers accept the ${label} file limit and reject one more byte
+```
+
+
+### Complete mutation results of pass 3
+
+The complete command reaches the end after the last test edit.
+The output records a failed repository test for each killed mutation.
+The mutation report gives the Old, New, Result and failed test for each row.
+The operand table is [audit.md](audit.md).
+
+```json
+{
+  "mutations": 408,
+  "results": {
+    "KILLED": 405,
+    "SURVIVED": 3
+  },
+  "survivors": [
+    "m172",
+    "m284",
+    "m389"
+  ],
+  "audit": {
+    "rows": 1079,
+    "classes": {
+      "OPEN": 661,
+      "TESTED": 415,
+      "known limit": 2,
+      "EQUIVALENT": 1
+    }
+  }
+}
+```
+
+The command below gives these totals.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass3-reconcile.py
+```
+
+The open operand rows are not complete.
+This pass does not claim a complete systematic proof sweep.
+The change is not ready for review.
+
+### Host checks of pass 3
+
+Base commit: `290b5d2`.
+The host uses Node 26.8.2.
+The commands use one process for each test file and one coverage command for each production file.
+They do not use the test-force-exit option.
+
+File: src/director/packs/packs.test.mjs
+
+```json
+{
+  "tests": 12,
+  "pass": 12,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0
+}
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs
+```
+
+File: src/director/packs/backfill.test.mjs
+
+```json
+{
+  "tests": 241,
+  "pass": 241,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0
+}
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs
+```
+
+File: src/director/sharing/sharing.test.mjs
+
+```json
+{
+  "tests": 132,
+  "pass": 132,
+  "fail": 0,
+  "cancelled": 0,
+  "skipped": 0
+}
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs
+```
+
+File: src/director/packs/manifest.js
+
+```json
+{
+  "lines": 100.0,
+  "branches": 100.0,
+  "functions": 100.0
+}
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/manifest.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs
+```
+
+File: src/director/packs/geojson.js
+
+```json
+{
+  "lines": 100.0,
+  "branches": 100.0,
+  "functions": 100.0
+}
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/geojson.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs
+```
+
+File: src/director/packs/session.js
+
+```json
+{
+  "lines": 100.0,
+  "branches": 100.0,
+  "functions": 100.0
+}
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/session.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs
+```
+
+File: src/director/packs/source.js
+
+```json
+{
+  "lines": 100.0,
+  "branches": 100.0,
+  "functions": 100.0
+}
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/packs/source.js --test-coverage-exclude=**/*.test.mjs src/director/packs/backfill.test.mjs src/director/packs/packs.test.mjs
+```
+
+File: src/director/sharing/bundle.js
+
+```json
+{
+  "lines": 100.0,
+  "branches": 100.0,
+  "functions": 100.0
+}
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/sharing/bundle.js --test-coverage-exclude=**/*.test.mjs src/director/sharing/sharing.test.mjs
+```
+
+File: src/director/sharing/lifetime.js
+
+```json
+{
+  "lines": 100.0,
+  "branches": 100.0,
+  "functions": 100.0
+}
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/sharing/lifetime.js --test-coverage-exclude=**/*.test.mjs src/director/sharing/sharing.test.mjs
+```
+
+File: src/director/sharing/preview.js
+
+```json
+{
+  "lines": 100.0,
+  "branches": 100.0,
+  "functions": 100.0
+}
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --experimental-test-coverage --test-coverage-include=src/director/sharing/preview.js --test-coverage-exclude=**/*.test.mjs src/director/sharing/sharing.test.mjs
+```
+
+The command below reads each test total and each coverage row from those command outputs.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass3-host-record.py
+```
+
+### Prose checks of pass 3
+
+The title scan checks 354 titles and reports zero banned forms.
+The predispatch report also scans source text and old title records in code blocks.
+The owner words in those blocks are source text, not new prose or new titles.
+The value AAAA is a base64 string in a mutation, not an abbreviation.
+The signal is a technical object.
+
+Commands:
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-packs-sharing
+cd /home/ianblenke/docker/gev-work/director-3 && (cd /home/ianblenke/docker/gev-work && taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110)
+```
+
+### Format and file scope of pass 3
+
+EPERM means that the operation is not allowed.
+The direct format command stops with spawnSync git EPERM.
+The host format commands complete and report 1158 source files each.
+The production diff is empty after the mutation command restores its files.
+The protected review files also match HEAD.
+The changed files belong to the test scope and this change folder.
+
+The lead runs the full gates and the review.
+This pass does not run those commands.
+
+Commands:
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node scripts/format.mjs --write
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --write
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+cd /home/ianblenke/docker/gev-work/director-3 && git diff --name-only HEAD
+cd /home/ianblenke/docker/gev-work/director-3 && git diff --stat HEAD -- 'src/director/**/*.js'
+cd /home/ianblenke/docker/gev-work/director-3 && git diff --name-only HEAD -- openspec/changes/backfill-director-packs-sharing/review
+```
+
+### Final prose correction of pass 3
+
+The lint command reports zero errors and 543 warnings.
+The paragraph about the format command now has two parts.
+The warning count in checks.md comes from this command.
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing
 ```
