@@ -79,8 +79,8 @@
 - [x] 6.3 Add the gate as the first geocode route check.
 - [x] 6.4 Prove the gate tests with three faults.
 - [x] 6.5 Correct the QA headers and the review prose.
-- [ ] 6.6 Run the host checks.
-- [ ] Commit the corrections.
+- [x] 6.6 Run the host checks.
+- [x] Commit the corrections.
 - [x] 6.7 Keep the Mapillary define without the empty string default in `build/vite.js`.
 - [x] Keep the test for `osh-028`.
 - [x] Keep the test for `osh-029`.

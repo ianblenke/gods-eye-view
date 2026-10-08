@@ -28,6 +28,9 @@ None.
 ### Modified Capabilities
 
 - credential-boundary: Change Browser bundle inputs and scenarios `001`, `002`, `003`, `004` and `016` for three public credentials.
+- credential-boundary: Add same-site geocode admission with scenarios `017` and `018`.
+- osh: Correct the registry count in `osh-033` to 30.
+- qa-scripts: Correct the script count in `qa-scripts-023` to 88.
 
 ## Impact
 
