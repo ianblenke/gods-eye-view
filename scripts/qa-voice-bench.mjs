@@ -3,7 +3,7 @@
  * @purpose Compare voice tool choices across providers with the same phrases.
  * @covers pending:voice
  * @run node scripts/qa-voice-bench.mjs --provider ollama --model <id>
- * @needs Provider credentials for the selected providers.
+ * @needs A local Ollama server with the model, or credentials for the other selected providers.
  */
 /**
  * qa-voice-bench.mjs — provider-neutral TEXT-mode voice-routing benchmark.

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * @purpose Check CCTV panel size and position after each resize.
+ * @purpose Check CCTV panel size and position after each change of size.
  * @covers pending:application-shell
  * @run node scripts/qa-panel-resize.mjs --url http://localhost:4173
  * @needs A browser and a server on port 4173.
