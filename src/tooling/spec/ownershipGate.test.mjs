@@ -3,11 +3,20 @@ import childProcess from 'node:child_process';
 import { syncBuiltinESMExports } from 'node:module';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { chmodSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs, runGates } from '../../../scripts/spec/gates.mjs';
+
+for (const key of Object.keys(process.env)) if (key.startsWith('GIT_')) delete process.env[key];
+Object.assign(process.env, {
+  GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_SYSTEM: '/dev/null', LC_ALL: 'C',
+  GIT_CONFIG_COUNT: '4', GIT_CONFIG_KEY_0: 'user.name', GIT_CONFIG_VALUE_0: 'Test',
+  GIT_CONFIG_KEY_1: 'user.email', GIT_CONFIG_VALUE_1: 'test@example.com',
+  GIT_CONFIG_KEY_2: 'safe.directory', GIT_CONFIG_VALUE_2: '*',
+  GIT_CONFIG_KEY_3: 'commit.gpgsign', GIT_CONFIG_VALUE_3: 'false',
+});
 
 const PROJECT_ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 const DATE = new Date('2026-09-13T12:00:00Z');
@@ -105,7 +114,7 @@ function oneMeasurement(root, { loaded = true, assertions = 1 } = {}) {
       writeFileSync(path.join(runs[0].env.NODE_V8_COVERAGE, 'coverage-1-1-0.json'), '{"result":[]}');
       const text = readFileSync(path.join(root, 'src/math.js'), 'utf8');
       const count = text.split('\n').length - 1;
-      const gap = text.includes('return 8') ? [3, 4] : [];
+      const gap = /return [89]/.test(text) ? [3, 4] : [];
       writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:${count}\nLH:${count - gap.length}\nBRF:1\nBRH:${gap.length ? 0 : 1}\nFNF:1\nFNH:1\n` + Array.from({ length: count }, (_, index) => `DA:${index + 1},${gap.includes(index + 1) ? 0 : 1}\n`).join('') + 'end_of_record\n');
     }
     writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ checked: loaded ? ['src/math.js'] : [], violations: [], assertions: records.map(record => ({ file: record.file, fullName: record.fullName, count: assertions })), leaks: [] }) + '\n');
@@ -171,7 +180,7 @@ test('[ownership-007] ci checks changed upstream lines', () => withFixture(root 
   assert.equal(result.status, 1);
 }));
 
-test('[ownership-004] adopt records a gap before the owned file check', () => withFixture(root => {
+test('[ownership-004 ownership-026] adopt records a gap before the owned file check', () => withFixture(root => {
   write(root, { 'openspec/ownership.json': '{"version":1,"owned":["src/math.js"]}' });
   passes(root, ['init'], oneMeasurement(root));
   git(root, 'checkout', '-qb', 'upstream', 'main');
@@ -188,9 +197,10 @@ test('[ownership-004] adopt records a gap before the owned file check', () => wi
   });
   assert.equal(result.status, 0, result.output);
   assert.equal(JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8')).coverage['src/math.js'].lines, 2);
+  assert.doesNotMatch(result.output, /Owned gaps:/);
 }));
 
-test('[ownership-007] stops when Git cannot read a code diff', () => withFixture(root => {
+test('[ownership-007 ownership-026] stops when Git cannot read a code diff', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   write(root, { 'src/math.js': 'export function add(a, b) {\n  return a + b + 0;\n}\n' });
   const original = childProcess.spawnSync;
@@ -200,6 +210,7 @@ test('[ownership-007] stops when Git cannot read a code diff', () => withFixture
     const result = run(root, ['check'], oneMeasurement(root));
     assert.equal(result.status, 1);
     assert.match(result.output, /ERROR COVERAGE-DIFF Git cannot read the diff of src\/math.js: Diff fault\./);
+    assert.match(result.output, /Owned gaps: 0 code files/);
   } finally {
     childProcess.spawnSync = original;
     syncBuiltinESMExports();
@@ -261,4 +272,64 @@ test('[ownership-020 ownership-022] check exempts upstream gaps and rejects an a
   const edited = run(root, ['check', '--change', 'add-demo'], oneMeasurement(root));
   assert.match(edited.output, /COVERAGE-DIFF: 3 changed lines, 2 brought by the merged upstream commit, 1 need coverage\./);
   assert.deepEqual(edited.output.split('\n').filter(line => line.startsWith('ERROR COVERAGE-DIFF')), ['ERROR COVERAGE-DIFF src/math.js Changed lines need coverage: 3.']);
+}));
+
+for (const [id, edit, mode] of [['026', false], ['027', true], ['026', false, true]]) {
+  test(`[ownership-${id}] checks an old owned gap${mode ? ' with a new file mode' : ''}`, () => withFixture(root => {
+    const source = 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n';
+    write(root, { 'src/math.js': source, 'openspec/ownership.json': '{"version":1,"owned":["src/math.js"]}' });
+    passes(root, ['init'], oneMeasurement(root));
+    commitAll(root, 'old gap');
+    git(root, 'branch', '-f', 'main', 'HEAD');
+    write(root, CHANGE);
+    if (edit) write(root, { 'src/math.js': source.replace('return 8', 'return 9') });
+    if (mode) {
+      chmodSync(path.join(root, 'src/math.js'), 0o755);
+      assert.equal(git(root, 'diff', '--numstat', 'main', '--', 'src/math.js'), '0\t0\tsrc/math.js');
+      assert.match(git(root, 'diff', '--summary', 'main', '--', 'src/math.js'), /mode change 100644 => 100755/);
+    }
+    const result = run(root, ['check', '--change', 'add-demo'], oneMeasurement(root));
+    if (edit) assert.match(result.output, /ERROR COVERAGE-OWNED src\/math.js/);
+    else {
+      assert.doesNotMatch(result.output, /ERROR COVERAGE-OWNED/);
+      assert.match(result.output, /Owned gaps: 1 code files/);
+      assert.match(result.output, /owned code: src\/math.js/);
+      const ratchet = run(root, ['ratchet', '--change', 'add-demo'], oneMeasurement(root));
+      assert.doesNotMatch(ratchet.output, /ERROR COVERAGE-OWNED/);
+      assert.match(ratchet.output, /Owned gaps: 1 code files/);
+      assert.match(ratchet.output, /owned code: src\/math.js/);
+    }
+  }));
+}
+test('[ownership-028] rejects a new owned gap without a ledger entry', () => withFixture(root => {
+  passes(root, ['init'], oneMeasurement(root));
+  git(root, 'rm', 'src/math.js');
+  commitAll(root, 'base without code');
+  git(root, 'branch', '-f', 'main', 'HEAD');
+  write(root, CHANGE);
+  write(root, { 'openspec/ownership.json': '{"version":1,"owned":["src/math.js"]}', 'src/math.js': 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n' });
+  git(root, 'add', 'src/math.js');
+  const result = run(root, ['check', '--change', 'add-demo'], oneMeasurement(root));
+  assert.match(result.output, /ERROR COVERAGE-OWNED src\/math.js/);
+}));
+
+test('[ownership-024] checks the source before a bad base ledger', () => withFixture(root => {
+  passes(root, ['init'], oneMeasurement(root));
+  const ledger = readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8');
+  write(root, { 'openspec/trace/gaps.json': '{' });
+  commitAll(root, 'bad base ledger');
+  git(root, 'branch', '-f', 'main', 'HEAD');
+  write(root, CHANGE);
+  write(root, { 'openspec/trace/gaps.json': ledger, 'openspec/trace/history.jsonl': JSON.stringify({ kind: 'adopt', change: 'add-demo', from: '0' }) + '\n' });
+  const result = run(root, ['check', '--change', 'add-demo'], oneMeasurement(root));
+  assert.equal(result.status, 1);
+  assert.match(result.output, /ERROR COVERAGE-DIFF/);
+}));
+test('[ownership-026] rejects bad history before gap advice', () => withFixture(root => {
+  passes(root, ['init'], oneMeasurement(root));
+  write(root, CHANGE);
+  write(root, { 'openspec/trace/history.jsonl': '{\n' });
+  const lines = [];
+  assert.throws(() => runGates({ root, argv: ['check', '--base', 'main', '--change', 'add-demo'], now: DATE, log: line => lines.push(line), allocationFiles: [], ...oneMeasurement(root) }), SyntaxError);
+  assert.doesNotMatch(lines.join('\n'), /Owned gaps:/);
 }));

@@ -563,6 +563,7 @@ function runGateCommand({
   let historyText = readOptional(root, HISTORY_FILE) ?? '';
   const baseHistoryText = readFileAt(root, base, HISTORY_FILE) ?? '';
   const waivers = waiversOf(historyText, baseHistoryText, change);
+  if (command === 'check' || command === 'ratchet') for (const line of gapReport(manifest, ledger)) log(line);
 
   if (command === 'check' || command === 'ratchet' || command === 'ci') {
     let changed;
@@ -573,7 +574,7 @@ function runGateCommand({
     } catch (error) {
       return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);
     }
-    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers }));
+    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers, ledger, changedFiles: diffFiles.filter(file => !sameAsBase(file)) }));
   }
 
   const baseLedger = parseLedger(readFileAt(root, base, LEDGER_FILE));

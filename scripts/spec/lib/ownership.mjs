@@ -105,12 +105,13 @@ export function parseLineCoverage(text, root) {
 }
 
 /** Coverage boundary errors, in addition to all ledger comparisons. */
-export function coverageFaults({ manifest, coverage, changed, lineCoverage, waivers }) {
+export function coverageFaults({ manifest, coverage, changed, lineCoverage, waivers, ledger = { coverage: {} }, changedFiles = Object.keys(changed) }) {
   const errors = [];
   const records = new Map(coverage.map(item => [item.file, item]));
   const ownWaivers = item => waivers.filter(waiver => waiver.file === item.file && waiver.sha === item.sha && Number.isInteger(waiver.count) && waiver.count > 0);
   for (const item of coverage) {
     if (classify(manifest, item.file) !== 'owned' || item.complete) continue;
+    if (!changedFiles.includes(item.file) && Object.hasOwn(ledger.coverage, item.file)) continue;
     const valid = ownWaivers(item);
     if (item.loaded && !item.untrue && METRICS.every(metric => item[metric] !== null && item[metric].uncovered <= valid.filter(waiver => waiver.metric === metric).reduce((sum, waiver) => sum + waiver.count, 0))) continue;
     errors.push({ code: 'COVERAGE-OWNED', file: item.file, message: 'Owned code needs full line, branch and function coverage.' });

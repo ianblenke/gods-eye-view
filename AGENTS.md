@@ -8,7 +8,7 @@ These rules are for each person and each AI agent that changes this project.
 2. Give each scenario a stable ID. Put the ID at the end of the scenario heading, in backticks.
 3. Write the tests from the scenarios. Put the scenario IDs at the start of each test name. Use a method of `node:assert`, such as `assert.equal`. The gate does not count a direct `assert()` call.
 4. Write the code until the tests pass.
-5. Keep each owned code file at 100% line, branch and function coverage. Keep each line that a change adds or edits at 100%, in every file. For a sync, upstream source lines need no changed line coverage. Rule 23 defines owned paths.
+5. Keep each owned code file that a change adds or edits at 100% line, branch and function coverage. The report lists the other owned gaps. The target is zero. Keep each line that a change adds or edits at 100%, in every file. For a sync, upstream source lines need no changed line coverage. Rule 23 defines owned paths.
 6. Write all new prose in ASD-STE100 Simplified Technical English.
 7. Get a passed review from the two review agents before you merge the change.
 

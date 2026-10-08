@@ -15,8 +15,9 @@ context: |
   1. Write or change the spec before you write or change code.
   2. Write the tests from the scenarios. Then write the code until the tests pass.
   3. Each scenario has a stable ID. Each test names one or more scenario IDs.
-  4. All owned JS code and every changed line has 100% coverage.
-     Owned code files need full line, branch and function coverage.
+  4. All owned JS code that a change adds or edits has 100% coverage.
+     Those files need full line, branch and function coverage.
+     The report lists the other owned gaps. The target is zero.
      A changed line needs line coverage in every code file.
      For a sync, upstream source lines need no changed line coverage.
      openspec/ownership.json defines owned paths.
