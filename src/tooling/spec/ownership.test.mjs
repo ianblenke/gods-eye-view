@@ -39,7 +39,7 @@ test('[ownership-001] rejects each bad manifest field', () => {
   for (const bad of [null, [], {}, { ...manifest, version: 2 }, { ...manifest, version: '1' }, { ...manifest, owned: 'src/' }, { ...manifest, extra: 1 }, { ...manifest, owned: ['a', 'a'] }]) {
     assert.throws(() => parseOwnership(JSON.stringify(bad)), /version 1/);
   }
-  for (const item of ['', 1, null, '/src/', '../a', './a', 'src/../a', 'src/./a', 'src//a', 'src\\a', 'a\n', 'a*', 'a?']) {
+  for (const item of ['', 1, null, '/src/', '../a', './a', 'src/../a', 'src/./a', 'src//a', 'src\\a', 'a\n', 'a*', 'a?', 'a directory/']) {
     assert.throws(() => parseOwnership(JSON.stringify({ version: 1, owned: [item] })), /version 1/);
   }
   assert.throws(() => parseOwnership('{'), SyntaxError);
@@ -50,13 +50,17 @@ test('[ownership-001] reports an absent or bad manifest file', () => fixture(({ 
   put('openspec/ownership.json', '{}');
   assert.deepEqual(readOwnership(root).errors, [{ code: 'OWNERSHIP-MANIFEST', file: 'openspec/ownership.json', message: 'Use version 1 and unique safe relative paths in the owned array.' }]);
 }));
-test('[ownership-002] uses exact paths and prefix boundaries', () => {
+test('[ownership-002] classifies exact paths and directory prefixes', () => {
   for (const file of ['single.js', 'src/own/a.js', 'src/own/sub/a.js']) assert.equal(classify(manifest, file), 'owned');
   for (const file of ['single.js/a', 'single.jsx', 'src/own', 'src/owner/a.js', 'other.js']) assert.equal(classify(manifest, file), 'upstream');
+  assert.equal(classify({ version: 1, owned: [] }, 'src/own/a.js'), 'upstream');
+  assert.equal(classify({ version: 1, owned: ['single.js/'] }, 'single.js/a'), 'owned');
+  assert.equal(classify({ version: 1, owned: ['single.js/'] }, 'single.js'), 'upstream');
 });
 test('[ownership-003] shows each path class and totals', () => {
   assert.deepEqual(ownershipAdvice(manifest, ['single.js', 'other.js', 'src/own/a.js']), ['Class: owned single.js', 'Class: upstream other.js', 'Class: owned src/own/a.js', 'Ownership: 2 owned, 1 upstream']);
   assert.deepEqual(ownershipAdvice(manifest, []), ['Ownership: 0 owned, 0 upstream']);
+  assert.deepEqual(ownershipAdvice(manifest, ['deleted.js', 'single.js']), ['Class: upstream deleted.js', 'Class: owned single.js', 'Ownership: 1 owned, 1 upstream']);
 });
 test('[ownership-004] rejects all owned gap metrics', () => {
   assert.deepEqual(faults(), [{ code: 'COVERAGE-OWNED', file: 'src/own/a.js', message: 'Owned code needs full line, branch and function coverage.' }]);
@@ -84,7 +88,7 @@ test('[ownership-005] reads real edited new and deleted files', () => fixture(({
   assert.deepEqual(changedLines({ root, base, files: ['a.js', 'new.js', 'empty.js', 'gone.js', 'binary.js', 'trail.js'] }), { 'a.js': [2, 4], 'new.js': [1, 2], 'empty.js': [], 'binary.js': [1], 'trail.js': [1, 2] });
   assert.throws(() => changedLines({ root, base: 'bad-ref', files: ['a.js'] }), /Git cannot read/);
 }));
-test('[ownership-006] intersects duplicate line records', () => {
+test('[ownership-006] keeps only lines that every duplicate record covers', () => {
   const text = 'DA:9,1\nSF:/repo/a.js\nDA:1,2\nDA:2,0\nDA:3,1\nend_of_record\nSF:/repo/a.js\nDA:1,1\nDA:2,1\nDA:4,1\nend_of_record\nSF:b.js\nDA:7,1\n';
   assert.deepEqual(parseLineCoverage(text, '/repo'), { 'a.js': [1], 'b.js': [7] });
   assert.deepEqual(parseLineCoverage('SF:a.js\nDA:1,0\nSF:a.js\nDA:1,1\n', '/repo'), { 'a.js': [] });
@@ -97,11 +101,11 @@ test('[ownership-007] lists all uncovered changed lines in both classes', () => 
     { code: 'COVERAGE-DIFF', file: 'other.js', lines: [2, 3], message: 'Changed lines need coverage: 2, 3.' },
     { code: 'COVERAGE-DIFF', file: 'src/own/a.js', lines: [2], message: 'Changed lines need coverage: 2.' },
   ]);
-  for (const patch of [{ loaded: false }, { untrue: true }]) assert.equal(faults({ coverage: [record('other.js', patch)], changed: { 'other.js': [2] }, lineCoverage: { 'other.js': [2] } })[0].code, 'COVERAGE-DIFF');
+  for (const patch of [{ loaded: false }, { untrue: true }]) assert.deepEqual(faults({ coverage: [record('other.js', patch)], changed: { 'other.js': [2] }, lineCoverage: { 'other.js': [2] } }), [{ code: 'COVERAGE-DIFF', file: 'other.js', lines: [2], message: 'Changed lines need coverage: 2.' }]);
   assert.equal(faults({ coverage: [], changed: { 'other.js': [2] }, lineCoverage: { 'other.js': [2] } })[0].code, 'COVERAGE-DIFF');
   assert.deepEqual(faults({ coverage: [], changed: { 'gone.js': [] } }), []);
 });
-test('[ownership-008] bounds a line waiver by hash metric and count', () => {
+test('[ownership-008] limits a line waiver to its file hash, its metric and its count', () => {
   const input = { coverage: [record('other.js')], changed: { 'other.js': [1, 2, 3] }, lineCoverage: { 'other.js': [1] }, waivers: [waiver('lines', { file: 'other.js', count: 2, lines: [2, 3] })] };
   assert.deepEqual(faults(input), []);
   for (const patch of [{ sha: 'old' }, { file: 'wrong.js' }, { metric: 'branches' }, { count: 1 }, { lines: [4, 5] }, { count: 0 }, { count: 1.5 }]) assert.equal(faults({ ...input, waivers: [{ ...input.waivers[0], ...patch }] })[0].code, 'COVERAGE-DIFF');
@@ -115,26 +119,29 @@ test('[ownership-011] separates code and test gaps by class', () => {
   ]);
   assert.deepEqual(gapReport(manifest, { coverage: {}, untracedTests: {} }), ['Owned gaps: 0 code files, 0 lines, 0 test files, 0 tests.', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.']);
 });
-test('[ownership-012] fixes the process boundary text', () => {
+test('[ownership-012] has the process rules in AGENTS.md and config.yaml', () => {
   const root = new URL('../../../', import.meta.url);
   const text = readFileSync(new URL('AGENTS.md', root), 'utf8');
-  assert.match(text, /5\. Keep each owned code file that a change adds or edits at 100% line, branch and function coverage\. The report lists the other owned gaps\. The target is zero\. Keep each line that a change adds or edits at 100%, in every file\./);
-  assert.match(text, /For a sync, upstream source lines need no changed line coverage\./);
-  assert.match(text, /A sync needs changed line coverage only for base diff lines that also differ from their adopted upstream source\./);
-  assert.match(text, /Each sync change uses `adopt` for every file the merge brings\./);
+  assert.match(text, /Keep each owned code file that a change adds or edits at 100% line, branch and function coverage\./);
+  assert.match(text, /Each owned code file without a ledger entry also needs full coverage\./);
+  assert.match(text, /Keep 100% line coverage for each line that a change adds or edits in a code file\./);
+  assert.match(text, /For a sync, a changed line needs no coverage when it equals the adopted upstream source\./);
+  assert.match(text, /Use `adopt` for each file that the merge brings and that has a coverage gap\./);
   assert.match(text, /23\. `openspec\/ownership.json` lists the owned paths/);
-  assert.match(text, /24\..*review.md.*files resolved by hand/);
+  assert.match(text, /24\..*review.md.*files.*resolved by hand/);
   assert.match(text, /24\..*Resolved files:.*Scope: full/);
-  assert.match(text, /25\..*retires the scenario or rewrites it/);
-  assert.match(text, /The campaign order of 2026-09-26 is closed\./);
+  assert.match(text, /25\..*retire the scenario or write it again/);
+  assert.match(text, /A backfill is a change that adds specs and tests for old code that another change needs\./);
+  assert.match(text, /node scripts\/spec\/gates.mjs report/);
   const config = readFileSync(new URL('openspec/config.yaml', root), 'utf8');
-  assert.match(config, /All owned JS code that a change adds or edits has 100%/);
-  assert.match(config, /For a sync, upstream source lines need no changed line coverage\./);
-  assert.match(config, /Upstream code enters the ledger by `adopt` and keeps its recorded gap\./);
+  assert.match(config, /Each owned code file that a change adds or edits needs 100% line, branch and function coverage\./);
+  assert.match(config, /Each owned code file without a ledger entry also needs full coverage\./);
+  assert.match(config, /For a sync, a changed line needs no coverage when it equals the adopted upstream source\./);
+  assert.match(config, /Use `adopt` to record the gap of upstream code in the ledger\./);
 });
-test('[ownership-013] writes merged DA counts for each source line', () => {
+test('[ownership-013] writes merged DA counts for each code line', () => {
   const state = createCoverage(() => 'a\nb\nc\n');
-  addProcess(state, { result: [{ url: 'file:///repo/a.js', functions: [{ functionName: '', isBlockCoverage: true, ranges: [{ startOffset: 0, endOffset: 6, count: 1 }, { startOffset: 2, endOffset: 4, count: 0 }] }] }] });
+  addProcess(state, { result: [{ url: 'file:///repo/a.js', functions: [{ functionName: '', isBlockCoverage: true, ranges: [{ startOffset: 0, endOffset: 6, count: 5 }, { startOffset: 2, endOffset: 4, count: 0 }] }] }] });
   assert.match(coverageLcov(state), /DA:1,1\nDA:2,0\nDA:3,1\n/);
 });
 test('[ownership-013] stores line data in the snapshot', () => fixture(({ root, put }) => {
@@ -145,7 +152,7 @@ test('[ownership-013] stores line data in the snapshot', () => fixture(({ root, 
   assert.deepEqual(JSON.parse(text), { coverage: [{ file: 'a.js' }], lineCoverage: { 'a.js': [1, 3] }, records: [{ file: 'a.test.mjs' }], assertions: [['a.test.mjs', 2]], inventory: ['a.js'], testFiles: ['a.test.mjs'], untrue: ['b.js'] });
 }));
 
-test('[ownership-004 ownership-008] rejects fractional waiver counts and ignores negative counts', () => {
+test('[ownership-004 ownership-008] ignores fractional and negative waiver counts', () => {
   assert.deepEqual(faults({ waivers: [waiver('lines', { count: 1.5 }), waiver('branches'), waiver('functions')] }).map(item => item.code), ['COVERAGE-OWNED']);
   assert.deepEqual(faults({ waivers: [waiver(), waiver('branches'), waiver('functions'), waiver('lines', { count: -1 })] }), []);
   const input = { coverage: [record('other.js')], changed: { 'other.js': [2, 3] }, lineCoverage: {}, waivers: [waiver('lines', { file: 'other.js', count: 2.5, lines: [2, 3] })] };
@@ -157,7 +164,7 @@ test('[ownership-007 ownership-008] rejects all line waivers for an untrue file'
   assert.deepEqual(result, [{ code: 'COVERAGE-DIFF', file: 'other.js', lines: [1, 2, 3], message: 'Changed lines need coverage: 1, 2, 3.' }]);
 });
 
-test('[ownership-004] checks each owned file after an upstream file', () => {
+test('[ownership-004] reports each owned gap after an upstream file', () => {
   assert.deepEqual(faults({ coverage: [record('other.js'), record(), record('single.js')] }).map(item => item.file), ['src/own/a.js', 'single.js']);
 });
 
@@ -168,24 +175,24 @@ test('[ownership-014] counts every test instance', () => {
   ]);
 });
 
-test('[ownership-001] accepts each ASCII range end', () => {
+test('[ownership-001] accepts the first and last characters of each allowed character range', () => {
   assert.deepEqual(parseOwnership('{"version":1,"owned":["AZaz09_.-/Zz9/"]}'), { version: 1, owned: ['AZaz09_.-/Zz9/'] });
 });
 test('[ownership-016] sorts all line numbers as numbers', () => {
   assert.deepEqual(parseDiffLines('@@ -1 +20 @@\n@@ -1 +2 @@\n@@ -1 +10 @@\n'), [2, 10, 20]);
   assert.deepEqual(parseLineCoverage('SF:a.js\nDA:20,1\nDA:2,1\nDA:10,1\n', '/repo'), { 'a.js': [2, 10, 20] });
 });
-test('[ownership-017] rejects extra line record text', () => {
+test('[ownership-017] ignores extra line record text', () => {
   assert.deepEqual(parseDiffLines('prefix@@ -1 +2 @@\n'), []);
   assert.deepEqual(parseLineCoverage('SF:a.js\nprefixDA:2,1\nDA:3,1suffix\n', '/repo'), { 'a.js': [] });
 });
-test('[ownership-018] sums owned file gaps and waiver counts', () => {
+test('[ownership-018] adds owned file gaps and waiver counts', () => {
   assert.deepEqual(gapReport(manifest, { coverage: { 'src/own/a.js': { lines: 2 }, 'src/own/b.js': { lines: 3 } }, untracedTests: {} }), ['Owned gaps: 2 code files, 5 lines, 0 test files, 0 tests.', 'owned code: src/own/a.js', 'owned code: src/own/b.js', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.']);
   assert.deepEqual(faults({ coverage: [record(undefined, { lines: { total: 4, uncovered: 2 } })], waivers: [waiver(), waiver('lines', { lines: [3] }), waiver('branches'), waiver('functions')] }), []);
   assert.deepEqual(faults({ coverage: [record(undefined, { lines: { total: 4, uncovered: 2 } })], waivers: [waiver('lines', { count: 2, lines: [2, 3] }), waiver('branches'), waiver('functions')] }), []);
 });
 
-test('[ownership-005] sets each Git diff option', () => fixture(({ root, put }) => {
+test('[ownership-005] uses each Git diff option', () => fixture(({ root, put }) => {
   put('a.js', 'one\n');
   const native = childProcess.spawnSync;
   const calls = [];
@@ -197,7 +204,7 @@ test('[ownership-005] sets each Git diff option', () => fixture(({ root, put }) 
   } finally { childProcess.spawnSync = native; syncBuiltinESMExports(); }
 }));
 
-test('[ownership-018] sums test counts across owned files', () => {
+test('[ownership-018] adds test counts across owned files', () => {
   assert.deepEqual(gapReport(manifest, { coverage: {}, untracedTests: { 'single.js': { names: { one: 2, two: 1 } }, 'src/own/a.test.js': { names: { three: 4 } } } }), ['Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests.', 'owned tests: single.js', 'owned tests: src/own/a.test.js', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.']);
 });
 test('[ownership-019] counts zero instances for an empty name map', () => {
@@ -222,20 +229,20 @@ function syncFixture(body) {
     const from = commit();
     git('checkout', '-qb', 'work', base);
     git('merge', '--no-ff', '-qm', 'sync', from);
-    const adopt = (file = 'a.js', source = from, change = 'sync') => JSON.stringify({ kind: 'adopt', change, file, from: source }) + '\n';
+    const adopt = (file = 'a.js', source = from, change = 'sync') => JSON.stringify({ kind: 'adopt', change, file, from: source, lines: 1, branches: 0, functions: 0, untraced: 0 }) + '\n';
     const input = { root, base, files: ['a.js', 'no-gap.js', 'gone.js', 'renamed.js', 'binary.js'], history: adopt(), baseHistory: '', change: 'sync' };
     body({ root, put, git, commit, base, from, adopt, input });
   });
 }
 
-test('[ownership-020 ownership-025] exempts merge lines and counts current code', () => syncFixture(({ input }) => {
+test('[ownership-020 ownership-025] needs no coverage for lines that equal the merged source', () => syncFixture(({ input }) => {
   assert.deepEqual(syncChangedLines(input), {
     changed: { 'a.js': [], 'no-gap.js': [], 'renamed.js': [], 'binary.js': [] },
     advice: 'COVERAGE-DIFF: 5 changed lines, 5 brought by the merged upstream commit, 0 need coverage.',
   });
 }));
 
-test('[ownership-021] needs the manual conflict repair line', () => syncFixture(({ root, put, git, commit, base, from, input }) => {
+test('[ownership-021] needs coverage for a line that a person resolved by hand', () => syncFixture(({ root, put, git, commit, base, from, input }) => {
   git('checkout', '-qb', 'conflict', base); put('a.js', 'author\n'); commit();
   const merge = spawnSync('git', ['-c', 'user.name=Test', '-c', 'user.email=test@example.com', 'merge', '--no-ff', '--no-commit', from], { cwd: root, encoding: 'utf8' });
   assert.equal(merge.status, 1);
@@ -246,7 +253,7 @@ test('[ownership-021] needs the manual conflict repair line', () => syncFixture(
   assert.equal(result.advice, 'COVERAGE-DIFF: 5 changed lines, 4 brought by the merged upstream commit, 1 need coverage.');
 }));
 
-test('[ownership-022] needs an author edit to a vendored line', () => syncFixture(({ put, commit, input }) => {
+test('[ownership-022] needs coverage for an author edit to an upstream line', () => syncFixture(({ put, commit, input }) => {
   put('a.js', 'upstream\nauthor\n'); commit();
   const result = syncChangedLines(input);
   assert.deepEqual(result.changed['a.js'], [2]);
@@ -254,25 +261,27 @@ test('[ownership-022] needs an author edit to a vendored line', () => syncFixtur
   assert.deepEqual(faults({ changed: result.changed, coverage: [record('a.js')], lineCoverage: { 'a.js': [2] } }), []);
 }));
 
-test('[ownership-023] uses each last file source and the last source for other files', () => syncFixture(({ put, commit, from, adopt, input }) => {
+test('[ownership-023] uses the last adopt source for each file and the last source for other files', () => syncFixture(({ put, git, commit, from, adopt, input }) => {
+  git('checkout', '-qb', 'upstream2');
   put('a.js', 'second\nextra\n'); put('no-gap.js', 'second\n');
   const second = commit();
+  git('checkout', '-q', 'work'); git('merge', '--no-ff', '-qm', 'sync2', second);
   put('ours.js', 'one\ntwo'); put('empty.js', ''); commit();
   const result = syncChangedLines({ ...input, files: [...input.files, 'ours.js', 'empty.js'], history: adopt('anchor.js', from) + adopt('a.js', second) + adopt('a.js', from) + adopt('other.js', second) });
   assert.deepEqual(result.changed, { 'a.js': [1], 'no-gap.js': [], 'renamed.js': [], 'binary.js': [], 'ours.js': [1, 2], 'empty.js': [] });
   assert.equal(result.advice, 'COVERAGE-DIFF: 7 changed lines, 4 brought by the merged upstream commit, 3 need coverage.');
 }));
 
-test('[ownership-024] rejects absent and separate source commits', () => syncFixture(({ git, put, commit, input, adopt, base }) => {
-  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', 'absent') }), /Adopt source absent is not an ancestor of HEAD/);
-  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', 'x') }), /Adopt source x is not an ancestor of HEAD/);
+test('[ownership-024] stops a source commit that the repository lacks or that no merge brought', () => syncFixture(({ git, put, commit, input, adopt, base }) => {
+  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', 'absent') }), /LEDGER-ADOPT-FROM/);
+  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', 'x') }), /LEDGER-ADOPT-FROM/);
   git('checkout', '-qb', 'separate', base); put('separate.js', 'one\n'); const separate = commit();
   git('checkout', '-q', 'work');
-  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', separate) }), /is not an ancestor of HEAD/);
+  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', separate) }), /LEDGER-ADOPT-FROM/);
 }));
 
-test('[ownership-024] keeps the base rule without current adopt sources', () => syncFixture(({ input, adopt }) => {
-  for (const patch of [{}, { change: '', history: adopt('a.js', undefined, '') }, { history: adopt('a.js', undefined, 'other') }, { history: '{"kind":"waiver","change":"sync","from":"absent"}\n' }, { history: '{"kind":"adopt","change":"sync","from":""}\n' }, { baseHistory: input.history }, { baseHistory: 'not a prefix' }]) {
+test('[ownership-024] keeps the base diff rule without current adopt sources', () => syncFixture(({ input, adopt }) => {
+  for (const patch of [{}, { change: '', history: adopt('a.js', undefined, '') }, { history: adopt('a.js', undefined, 'other') }, { history: '{"kind":"waiver","change":"sync","from":"absent"}\n' }, { baseHistory: input.history }, { baseHistory: 'not a prefix' }]) {
     const result = syncChangedLines({ ...input, history: '', ...patch });
     assert.deepEqual(result.changed, { 'a.js': [1, 2], 'no-gap.js': [1], 'renamed.js': [1], 'binary.js': [1] });
     assert.equal(result.advice, 'COVERAGE-DIFF: 5 changed lines, 0 brought by the merged upstream commit, 5 need coverage.');
@@ -280,7 +289,7 @@ test('[ownership-024] keeps the base rule without current adopt sources', () => 
 }));
 
 
-test('[ownership-024] ignores base adopt records and rejects non-string source values', () => syncFixture(({ input, adopt }) => {
+test('[ownership-024] ignores base adopt records and stops non-string source values', () => syncFixture(({ input, adopt }) => {
   const baseHistory = adopt('a.js', 'absent');
   const result = syncChangedLines({ ...input, baseHistory, history: baseHistory + input.history });
   assert.deepEqual(result.changed, { 'a.js': [], 'no-gap.js': [], 'renamed.js': [], 'binary.js': [] });
@@ -288,8 +297,7 @@ test('[ownership-024] ignores base adopt records and rejects non-string source v
   const foreignPrefix = input.history.replace('"sync"', '"else"');
   assert.deepEqual(syncChangedLines({ ...input, history: input.history + input.history, baseHistory: foreignPrefix }).changed['a.js'], [1, 2]);
   for (const from of [null, 1, {}, [], false]) {
-    const result = syncChangedLines({ ...input, history: JSON.stringify({ kind: 'adopt', change: 'sync', file: 'a.js', from }) + '\n' });
-    assert.deepEqual(result.changed['a.js'], [1, 2]);
+    assert.throws(() => syncChangedLines({ ...input, history: JSON.stringify({ kind: 'adopt', change: 'sync', file: 'a.js', from }) + '\n' }), /LEDGER-ADOPT-FROM/);
   }
 }));
 
@@ -300,7 +308,7 @@ test('[ownership-025] checks each line of an author rename absent from the sourc
   assert.equal(result.advice, 'COVERAGE-DIFF: 5 changed lines, 3 brought by the merged upstream commit, 2 need coverage.');
 }));
 
-test('[ownership-026 ownership-027 ownership-028] checks ledger and base scope', () => {
+test('[ownership-026 ownership-027 ownership-028] accepts only unchanged owned gaps with a ledger entry', () => {
   assert.deepEqual(faults({ ledger: { coverage: { 'src/own/a.js': {} } }, changedFiles: [] }), []);
   assert.equal(faults({ ledger: { coverage: { 'src/own/a.js': {} } }, changed: { 'src/own/a.js': [] } })[0].code, 'COVERAGE-OWNED');
   assert.deepEqual(faults({ ledger: { coverage: { 'src/own/a.js': {} } }, changed: { 'src/own/a.js.extra.js': [] } }), []);
@@ -308,3 +316,117 @@ test('[ownership-026 ownership-027 ownership-028] checks ledger and base scope',
   assert.equal(faults({ ledger: { coverage: {} }, changedFiles: [] })[0].code, 'COVERAGE-OWNED');
   assert.equal(faults({ ledger: { coverage: Object.create({ 'src/own/a.js': {} }) }, changedFiles: [] })[0].code, 'COVERAGE-OWNED');
 });
+
+test('[ownership-029 ownership-001] keeps base paths after manifest removal', () => syncFixture(({ root, put, git, base: absentBase }) => {
+  put('openspec/ownership.json', '{"version":1,"owned":["src/","single.js"]}'); git('add', '.'); git('commit', '-qm', 'manifest');
+  const base = git('rev-parse', 'HEAD');
+  git('branch', 'undefined', base);
+  put('openspec/ownership.json', '{"version":1,"owned":[]}');
+  assert.deepEqual(readOwnership(root).manifest.owned, []);
+  put('openspec/ownership.json', '{"version":1,"owned":["src/narrow/"]}');
+  const result = readOwnership(root, base);
+  assert.deepEqual(result.errors, []);
+  assert.deepEqual(result.manifest.owned, ['src/', 'single.js', 'src/narrow/']);
+  assert.equal(classify(result.manifest, 'src/wide/a.js'), 'owned');
+  assert.equal(classify(result.manifest, 'single.js'), 'owned');
+  assert.equal(classify(result.manifest, 'other.js'), 'upstream');
+  put('openspec/ownership.json', '{"version":1,"owned":["src/narrow/","src/"]}');
+  assert.deepEqual(readOwnership(root, base).manifest.owned, ['src/', 'single.js', 'src/narrow/']);
+  put('openspec/ownership.json', '{}'); git('add', '.'); git('commit', '-qm', 'bad manifest');
+  const bad = git('rev-parse', 'HEAD');
+  put('openspec/ownership.json', '{"version":1,"owned":[]}');
+  assert.equal(readOwnership(root, bad).errors[0].code, 'OWNERSHIP-MANIFEST');
+  assert.deepEqual(readOwnership(root, absentBase).manifest, { version: 1, owned: [] });
+}));
+test('[ownership-030] owns the project sentinel files', () => {
+  const value = parseOwnership(readFileSync(new URL('../../../openspec/ownership.json', import.meta.url), 'utf8'));
+  for (const file of ['scripts/spec/gates.mjs', 'src/layers/osh/index.js', 'server/providers/osh.js']) assert.equal(classify(value, file), 'owned');
+});
+test('[ownership-031] stops an adopt record without a file at HEAD', () => syncFixture(({ input, git }) => {
+  assert.throws(() => syncChangedLines({ ...input, history: JSON.stringify({ kind: 'adopt', change: 'sync', from: git('rev-parse', 'HEAD') }) + '\n' }), error => {
+    assert.equal(error.code, 'LEDGER-ADOPT-FROM');
+    assert.match(error.message, /LEDGER-ADOPT-FROM/);
+    return true;
+  });
+}));
+test('[ownership-032] stops a work branch adopt source', () => syncFixture(({ input, put, commit, adopt }) => {
+  put('a.js', 'author\n'); const from = commit();
+  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', from) }), /LEDGER-ADOPT-FROM/);
+}));
+test('[ownership-033] stops an ancestor that no merge brought', () => syncFixture(({ input, base, adopt }) => {
+  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', base) }), /LEDGER-ADOPT-FROM/);
+}));
+test('[ownership-036] gives the diff a 256 MiB buffer', () => fixture(({ root, put }) => {
+  put('a.js', 'one\n');
+  const native = childProcess.spawnSync;
+  let buffer;
+  childProcess.spawnSync = (command, args, options) => { if (args[0] === 'diff') buffer = options.maxBuffer; return { status: 0, stdout: '', stderr: '' }; };
+  syncBuiltinESMExports();
+  try { changedLines({ root, base: 'base', files: ['a.js'] }); assert.equal(buffer, 268435456); }
+  finally { childProcess.spawnSync = native; syncBuiltinESMExports(); }
+}));
+
+test('[ownership-031 ownership-024] stops an incomplete record with a merged source', () => syncFixture(({ input, from, adopt }) => {
+  const line = JSON.parse(adopt());
+  for (const patch of [{ file: undefined }, { from: '' }]) {
+    assert.throws(() => syncChangedLines({ ...input, history: JSON.stringify({ ...line, ...patch }) + '\n' }), /LEDGER-ADOPT-FROM/);
+  }
+  for (const patch of [{ untraced: undefined }, { lines: undefined }, { lines: -1 }]) {
+    assert.deepEqual(syncChangedLines({ ...input, history: JSON.stringify({ ...line, ...patch }) + '\n' }).changed['a.js'], [1, 2]);
+  }
+  assert.equal(syncChangedLines({ ...input, history: adopt('a.js', from.slice(0, 12)) }).changed['a.js'].length, 0);
+}));
+
+test('[ownership-041] stops a number in the from field with a merged branch', () => syncFixture(({ input, git, from, adopt }) => {
+  git('branch', '1', from);
+  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', 1) }), /LEDGER-ADOPT-FROM/);
+  assert.deepEqual(syncChangedLines({ ...input, history: adopt('a.js', '1') }).changed['a.js'], []);
+}));
+
+
+test('[ownership-043] skips invalid adopt records outside the change', () => syncFixture(({ input }) => {
+  const invalid = JSON.stringify({ kind: 'adopt', change: 'other', from: 'HEAD' }) + '\n';
+  for (const patch of [
+    { history: invalid },
+    { history: invalid.replace('other', 'sync'), change: undefined },
+    { history: JSON.stringify({ kind: 'adopt', from: 'HEAD' }) + '\n', change: undefined },
+    { history: invalid.replace('other', ''), change: '' },
+    { history: invalid.replace('other', 'sync'), baseHistory: '{"kind":"measurement"}\n' },
+  ]) {
+    assert.deepEqual(syncChangedLines({ ...input, ...patch }).changed['a.js'], [1, 2]);
+  }
+}));
+
+test('[ownership-050] stops an invalid record after a valid record', () => syncFixture(({ input, from }) => {
+  const invalid = JSON.stringify({ kind: 'adopt', change: 'sync', from }) + '\n';
+  assert.throws(() => syncChangedLines({ ...input, history: input.history + invalid }), /LEDGER-ADOPT-FROM/);
+}));
+
+test('[ownership-051 ownership-024] stops an invalid source before a diff fault', () => syncFixture(({ input }) => {
+  const native = childProcess.spawnSync;
+  let calls = 0;
+  childProcess.spawnSync = (command, args, options) => {
+    if (command === 'git' && args.includes('-U0')) {
+      calls += 1;
+      return { status: 128, stderr: 'Diff fault.' };
+    }
+    return native(command, args, options);
+  };
+  syncBuiltinESMExports();
+  try {
+    const history = JSON.stringify({ kind: 'adopt', change: 'sync', from: 'HEAD' }) + '\n';
+    assert.throws(() => syncChangedLines({ ...input, history }), /LEDGER-ADOPT-FROM/);
+    assert.equal(calls, 0);
+  } finally {
+    childProcess.spawnSync = native;
+    syncBuiltinESMExports();
+  }
+}));
+
+test('[ownership-052] stops a source name with a null byte', () => syncFixture(({ input, adopt }) => {
+  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', '\0') }), error => {
+    assert.equal(error.code, 'LEDGER-ADOPT-FROM');
+    assert.equal(error.message, 'LEDGER-ADOPT-FROM: Use a complete adopt record with a source that a merge after the base brought.');
+    return true;
+  });
+}));
