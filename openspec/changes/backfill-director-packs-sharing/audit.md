@@ -50,6 +50,34 @@ The automatic and hand runs cover all review round 2 survivors found by code rea
 The hand table also checks changes that the automatic tool cannot reproduce.
 The [hand mutation report](mutations.md) keeps those results.
 
+## Final rerun
+
+The final check ran the tool on the committed clone after the last test change.
+The command used the complete suite for each mutation and a deadline of 45 seconds.
+
+```sh
+cd /home/ianblenke/docker/gev-tools/automut && taskset -c 12-15 nice -n 19 node automut.mjs run --root /home/ianblenke/docker/gev-work/director-3 --mutants director-3-final/mutants.json --tests src/director/packs/backfill.test.mjs,src/director/packs/packs.test.mjs,src/director/sharing/sharing.test.mjs --order "src/director/packs/*.js=backfill,packs,sharing;src/director/sharing/*.js=sharing,backfill,packs" --jobs 4 --timeout 45 --slow-ms 100000 --out director-3-final/results.json
+```
+
+The command ended with exit status 0 after it tested 3849 mutations.
+It gives 3667 killed, 105 timeout, 9 crash and 68 survived results.
+The 68 survived results are the 64 equivalent cases and the four Known limit cases of the [survivor table](survivors.md).
+No other mutation survived, and all 192 killed cases of the table stay killed.
+The final run has fewer timeout and crash results than the first run, because the tests are faster and the deadline is lower.
+Timeouts and crashes count as kills, as in Stryker.
+
+The ids of the 105 final timeout results are:
+
+```text
+a1325 a1327 a1329 a1330 a1338 a1339 a1340 a1341 a1345 a1346 a1347 a1348 a1349 a1350 a1352 a1353 a1355 a1364 a1366 a1367 a1368 a1369 a1370 a1386 a1399 a1400 a1401 a1402 a1416 a1418 a1419 a1427 a1428 a1429 a1430 a1468 a1469 a1470 a1471 a1515 a1516 a1517 a1518 a1554 a1555 a1556 a1557 a1678 a1679 a1680 a1681 a1682 a1683 a1688 a1689 a1690 a1693 a2145 a2146 a2147 a2148 a2149 a2379 a2387 a2388 a2389 a2390 a3029 a3031 a3106 a3108 a3524 a3526 a3543 a3544 a3545 a3546 a3564 a3565 a3566 a3567 a3568 a3569 a3570 a3571 a3572 a3573 a3575 a3576 a3578 a3582 a3583 a3584 a3585 a3586 a3602 a3603 a3604 a3605 a3612 a3616 a3627 a3628 a3629 a3630
+```
+
+The ids of the 9 final crash results are:
+
+```text
+a3554 a3555 a3556 a3557 a3558 a3559 a3560 a3561 a3562
+```
+
 ## Operator totals
 
 | class | mutations |
@@ -89,7 +117,7 @@ The [hand mutation report](mutations.md) keeps those results.
 
 ## TIMEOUT results
 
-The source command gives 111 results with this status.
+The first run gives 111 results with this status. The final rerun section gives the final list.
 
 | id | status |
 | --- | --- |
@@ -207,7 +235,7 @@ The source command gives 111 results with this status.
 
 ## Process crash results
 
-The source command gives 11 results with this status.
+The first run gives 11 results with this status. The final rerun section gives the final list.
 
 | id | status |
 | --- | --- |
