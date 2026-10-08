@@ -123,6 +123,8 @@ The other four files each lose one uncovered function or branch.
 
 The first run of the final gates found 7 uncovered functions in `server/providers/mapillary/tiles.js`, where the ledger records 6. The function at line 255 runs only when a tile file vanishes during a sweep.
 In 8 image runs of 18 test files, only the process of `mapillaryProvider.test.mjs` ran it, in 7 runs. The correction of the sweep test in that file makes the function run each time.
+
+The second run of the final gates found a branch total of 178 where the ledger records 179. The loop of `sweepTileDisk` changed its V8 ranges when a background sweep added one removal. The second correction keeps the removals above the breaks, so the ranges stay the same in each run.
 Only `tiles.js` has a repeated-run measure. The other five files rest on the ratchet and on the first run of the final gates, which agree.
 
 The last ratchet also records changed totals for `server/providers/mapillary/tiles.js` (178 to 179 branches) and `server/providers/places/google.js` (61 to 62 branches).

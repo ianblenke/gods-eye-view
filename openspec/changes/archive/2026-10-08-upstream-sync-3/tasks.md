@@ -102,8 +102,11 @@
 - [x] 7.2 Correct the first disk sweep test so that the stat handler runs each time.
 - [x] 7.3 Show that the corrected test fails without the stat handler.
 - [x] 7.4 Make the vanishing tile old enough for the sweep to remove it.
-- [ ] 7.5 Run the image ratchet after the test correction.
-- [ ] 7.6 Read the new lines of the trace files after the ratchet.
+- [x] 7.5 Run the image ratchet after the test correction.
+- [x] 7.6 Read the new lines of the trace files after the ratchet.
+- [x] 7.7 Find the loop that changes the total of branch ranges of `tiles.js`.
+- [x] 7.8 Add two expired tiles to the first disk sweep test.
+- [x] 7.9 Run 8 image runs again and compare the ranges.
 
 ## 8. Review of the correction
 

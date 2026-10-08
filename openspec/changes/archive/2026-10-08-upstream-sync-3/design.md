@@ -449,6 +449,19 @@ The test replaces `fsp.stat` for a short time, so the stat call of that file fai
 The handler now runs each time that the test file runs, so the count of uncovered functions stays at 6.
 The correction adds no test.
 
+The second run of the final gates stopped with `LEDGER-STALE` for the same file. The function count was now stable, and the total of branch ranges was 178, where the ledger records 179.
+The totals of `tiles.js` were 177, 179 and 178 in the first three measurements of the final gates and of the ratchet.
+
+The lead compared the V8 ranges of `tiles.js` in 8 image runs of the 18 test files. Only the loop of `sweepTileDisk` changed between runs, and only in the process of `mapillaryProvider.test.mjs`.
+V8 gives one range to the `break` and to the code after it when both have the same count. It gives two ranges when the counts differ.
+
+The loop breaks 6 times in each run. It removes a file 6 or 7 times, because a background sweep adds one removal in most runs.
+The ledger records the split case, with 179 ranges.
+
+The second correction adds two more expired tiles to the first disk sweep test, so the removals always stay above the breaks. The test checks that the sweep removes three tiles.
+On the host, the loop has 15 iterations, 6 breaks and 9 removals.
+In 8 image runs of the 18 test files, the set of ranges of `tiles.js` is the same in each run.
+
 The test file passes all 51 tests on the host, and the handler runs once.
 A copy of `tiles.js` without the handler makes this test fail, and no other test fails.
 A copy of the test where the replacement never matches the file also makes this test fail.
