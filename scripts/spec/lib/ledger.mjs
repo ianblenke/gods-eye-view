@@ -389,10 +389,11 @@ function compareCoverageEntry(file, entry, gap, tolerance = () => 0, waived) {
  * @param {object} input
  * @param {(file: string) => boolean} [input.sameAsBase] - True for a file with the content of the base.
  * @param {(file: string) => boolean} [input.adoptedAsIs] - True for a file that equals a valid adopted source.
+ * @param {(file: string) => boolean} [input.adoptedFile] - True for a file with a valid adopt record.
  * @param {object[]} [input.waivers] - Waiver lines for the checked change.
  * @returns {{errors: object[], stale: object[]}}
  */
-export function compareLedger({ ledger, current, sameAsBase = () => false, adoptedAsIs = () => false, waivers = [] }) {
+export function compareLedger({ ledger, current, sameAsBase = () => false, adoptedAsIs = () => false, adoptedFile = () => false, waivers = [] }) {
   const errors = [];
   const stale = [];
   if (ledger.version !== VERSION) {
@@ -425,7 +426,9 @@ export function compareLedger({ ledger, current, sameAsBase = () => false, adopt
     };
     const entryErrors = compareCoverageEntry(file, entry, gap, tolerant ? gapTolerance(gap) : undefined, waived);
     errors.push(...entryErrors);
-    if (entryErrors.length === 0 && !sameGap(entry, gap) && !tolerant) stale.push({ kind: 'coverage', file });
+    const totalsOnly = adoptedFile(file) && gap.sha === entry.sha && entry.loaded && gap.loaded &&
+      !entry.untrue && !gap.untrue && METRICS.every(metric => entry[metric] === gap[metric]);
+    if (entryErrors.length === 0 && !sameGap(entry, gap) && !tolerant && !totalsOnly) stale.push({ kind: 'coverage', file });
   }
   for (const [file, entry] of Object.entries(ledger.coverage)) {
     if (current.coverage.has(file)) continue;

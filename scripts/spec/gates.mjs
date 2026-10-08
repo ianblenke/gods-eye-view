@@ -599,6 +599,7 @@ function runGateCommand({
     changedFiles: (from) => changedByCommit(root, base, from),
     reachedValid,
   });
+  const adoptedFile = (file) => adoption.valid.some((line) => line.file === file);
   const adoptedAsIs = (file) => adoption.valid.some((line) =>
     line.file === file && existsSync(path.join(root, file)) &&
     readFileAt(root, line.from, file) === readFileSync(path.join(root, file), 'utf8'));
@@ -653,7 +654,7 @@ function runGateCommand({
     baseline = checkRebaseline({ ...baselineOptions, history: historyText, change, ledger, baseLedger, coverage: measured.coverage, sameAsBase });
   }
 
-  const comparison = compareLedger({ ledger, current: measured.current, sameAsBase, adoptedAsIs, waivers });
+  const comparison = compareLedger({ ledger, current: measured.current, sameAsBase, adoptedAsIs, adoptedFile, waivers });
   const baseErrors = compareWithBase({
     ledger,
     baseLedger: baseline.baseLedger,
