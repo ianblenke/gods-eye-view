@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import test from 'node:test';
+import test, { getTestContext } from 'node:test';
 import { GevRealtimeController } from './realtimeController.js';
 import { PROGRESS_MAX_OUTPUT_TOKENS } from './realtimeTurns.js';
 
@@ -16,6 +16,10 @@ function controllerFixture({ runner = async () => ({ ok: true }) } = {}) {
     },
     runner,
     debugSink: null,
+  });
+  getTestContext().after(() => {
+    controller._metrics.flush('stop');
+    controller._turns.narration.cancel();
   });
   const setStatus = controller.setStatus.bind(controller);
   controller.setStatus = (status, detail) => {

@@ -549,7 +549,18 @@ test('globe and city-overview flights name the world frame explicitly', () => {
   assert.equal(cityViewer.flights[0].endTransform, Cesium.Matrix4.IDENTITY);
 });
 
-test('city and landmark flights expose completion and cancellation hooks', () => {
+test('city and landmark flights expose completion and cancellation hooks', (t) => {
+  const originalSetTimeout = globalThis.setTimeout;
+  const timers = new Set();
+  globalThis.setTimeout = (callback, delay, ...args) => {
+    const timer = originalSetTimeout(callback, delay, ...args);
+    timers.add(timer);
+    return timer;
+  };
+  t.after(() => {
+    for (const timer of timers) clearTimeout(timer);
+    globalThis.setTimeout = originalSetTimeout;
+  });
   const overviewViewer = stubViewer();
   const overviewEvents = [];
   flyToPresetLocation(overviewViewer, 'austin', {

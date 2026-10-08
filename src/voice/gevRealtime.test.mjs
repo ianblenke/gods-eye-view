@@ -1,7 +1,7 @@
 // Pure-logic unit tests for the voice-lifecycle size guards (Batch 11, M13).
 // These helpers are DOM/WebRTC-free so they pin the screenshot down-scaling and
 // payload-byte estimation that keep an oversized dc.send from stranding a turn.
-import { test } from 'node:test';
+import { test, getTestContext } from 'node:test';
 import assert from 'node:assert/strict';
 import { DataLayerManager } from '../data/manager.js';
 import { controlRadio as runControlRadio, createGevActionRunner as createActionRunner } from './gevActions.js';
@@ -61,6 +61,15 @@ test('push-to-talk protects text entry but arbitrates non-editing controls', () 
   assert.equal(isEditingSpaceTarget(pushToTalkTarget({ tagName: 'INPUT', type: 'range' })), false);
 });
 
+function controllerFixture(options) {
+  const controller = new GevRealtimeController(options);
+  getTestContext().after(() => {
+    controller._metrics.flush('stop');
+    controller._turns.narration.cancel();
+  });
+  return controller;
+}
+
 // Dispatch through the installed document/window listeners, keeping WebRTC at
 // the start boundary. Native button activation itself belongs to browser QA.
 function createPushToTalkFixture(t) {
@@ -113,7 +122,7 @@ function createPushToTalkFixture(t) {
   const controllers = [];
   const makeController = () => {
     const microphone = { enabled: false, stopped: false, stop() { this.stopped = true; } };
-    const controller = new GevRealtimeController({
+    const controller = controllerFixture({
       ui: {
         root: { dataset: {}, querySelectorAll: () => [], remove() {} },
         status: {}, detail: {},
@@ -578,7 +587,7 @@ test('failed or superseded Radio preflight keeps voice open and cancels audio', 
 
 test('replacement input invalidates an in-flight Radio preflight immediately', () => {
   const order = [];
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui: {},
     runner: async () => ({}),
     radioLayer: { stopPlayback: () => order.push('radio-stop') },
@@ -602,7 +611,7 @@ test('direct Radio pause or stop cancels a pending voice handoff', async () => {
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async () => ({ ok: true }),
     radioLayer: {
@@ -643,7 +652,7 @@ test('confirmed manual Radio playback closes active voice without stopping Radio
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async () => ({ ok: true }),
     radioLayer: {
@@ -698,7 +707,7 @@ test('manual playback takeover survives stale voice preflight cleanup', async ()
       return owned;
     },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async () => ({ ok: true }),
     radioLayer,
@@ -731,7 +740,7 @@ test('manual playback takeover survives stale voice preflight cleanup', async ()
 
 test('internal Radio cleanup controls do not masquerade as newer user input', () => {
   let playbackControl = null;
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui: {},
     runner: async () => ({}),
     radioLayer: {
@@ -756,7 +765,7 @@ test('internal Radio cleanup controls do not masquerade as newer user input', ()
 test('manual Radio playback does not close voice when voice is already idle', () => {
   let playbackControl = null;
   let voiceStops = 0;
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui: {},
     runner: async () => ({}),
     radioLayer: {
@@ -783,7 +792,7 @@ test('active-response Realtime errors invalidate pending and in-flight Radio han
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async () => ({ ok: true }),
     radioLayer: {
@@ -861,7 +870,7 @@ test('Radio handoff waits for response.done so later multi-intent tools execute 
     },
     stopPlayback() { order.push('radio-stop'); },
   };
-  const controller = new GevRealtimeController({ runner, ui, radioLayer });
+  const controller = controllerFixture({ runner, ui, radioLayer });
   controller.debugLog = () => {};
   controller.sendVisualContextIfUseful = async () => false;
   controller.dc = {
@@ -930,7 +939,7 @@ test('Radio playback failure leaves voice connected and speaks a correction', as
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async () => ({
       ok: true,
@@ -992,7 +1001,7 @@ test('detected speech cancels a prepared Radio handoff before a cancelled respon
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async () => ({
       ok: true,
@@ -1056,7 +1065,7 @@ test('a Radio tool result that resolves after speech interruption cannot re-arm 
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async (_name, _args, options) => {
       receivedSignal = options.signal;
@@ -1116,7 +1125,7 @@ test('sibling tool calls in one response do not abort an in-flight Radio action'
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async (name, _args, options) => {
       if (name === 'control_radio') {
@@ -1162,7 +1171,7 @@ test('Radio stop does not abort an unrelated sibling tool from the same response
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async (name, _args, options) => {
       if (name === 'set_visual_style') {
@@ -1255,7 +1264,7 @@ test('real Radio Select cannot enable or play after a same-response Disable comp
       }),
     };
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     dataManager,
     radioLayer,
@@ -1386,7 +1395,7 @@ test('generic same-response Radio visibility disable supersedes delayed Select',
       }),
     };
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     radioLayer,
     runner: (name, args, options) => (
@@ -1507,7 +1516,7 @@ test('same-response Pause aborts a real manager enable already in flight', async
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     dataManager,
     radioLayer,
@@ -1638,7 +1647,7 @@ test('Pause and Stop preserve independent dedicated and generic Radio ON across 
                 detail: { textContent: '', title: '' },
                 errorDetail: { textContent: '' },
               };
-              const controller = new GevRealtimeController({
+              const controller = controllerFixture({
                 ui,
                 dataManager,
                 radioLayer,
@@ -1772,7 +1781,7 @@ test('successful same- or newer-response Stop aborts Select across real manager 
         detail: { textContent: '', title: '' },
         errorDetail: { textContent: '' },
       };
-      const controller = new GevRealtimeController({
+      const controller = controllerFixture({
         ui,
         radioLayer,
         runner: (_name, args, options) => controlRadio({}, dataManager, args, options),
@@ -1843,7 +1852,7 @@ test('same-response pause and disable suppress play/select handoffs without canc
         detail: { textContent: '', title: '' },
         errorDetail: { textContent: '' },
       };
-      const controller = new GevRealtimeController({
+      const controller = controllerFixture({
         ui,
         radioLayer: { getUIState: () => ({ ...radioState }) },
         runner: async (_name, args) => {
@@ -1924,7 +1933,7 @@ test('Realtime Radio route exceptions preserve the authoritative lifecycle summa
       detail: { textContent: '', title: '' },
       errorDetail: { textContent: '' },
     };
-    const controller = new GevRealtimeController({
+    const controller = controllerFixture({
       ui,
       dataManager: {
         getLayerLifecycleState: () => ({ ...lifecycle }),
@@ -1976,7 +1985,7 @@ test('different-response Radio stop remains a cancellation authority for an olde
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async (_name, args) => {
       if (args.action === 'select') {
@@ -2054,7 +2063,7 @@ test('failed same-response stop does not suppress a successful playback request'
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async (_name, args) => {
       const result = await controlRadio({}, dataManager, args);
@@ -2162,7 +2171,7 @@ test('failed same-response Stop preserves Select auto-enable held inside real ma
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     dataManager,
     radioLayer,
@@ -2250,7 +2259,7 @@ test('failed same-response Pause and Disable do not suppress valid older playbac
         detail: { textContent: '', title: '' },
         errorDetail: { textContent: '' },
       };
-      const controller = new GevRealtimeController({
+      const controller = controllerFixture({
         ui,
         dataManager,
         radioLayer: dataManager.layers.get('radio').module,
@@ -2313,7 +2322,7 @@ test('failed generic same-response Radio OFF does not suppress valid older playb
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async (name, args) => {
       if (name === 'set_layer_visibility') {
@@ -2407,7 +2416,7 @@ test('direct user Radio OFF aborts an in-flight voice enable before settled publ
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     dataManager,
     radioLayer,
@@ -2498,7 +2507,7 @@ test('direct user Radio OFF freezes a prepared handoff until disable success or 
         detail: { textContent: '', title: '' },
         errorDetail: { textContent: '' },
       };
-      const controller = new GevRealtimeController({
+      const controller = controllerFixture({
         ui,
         dataManager,
         radioLayer,
@@ -2577,7 +2586,7 @@ test('dedicated and generic Radio OFF reservations freeze an in-flight playback 
           detail: { textContent: '', title: '' },
           errorDetail: { textContent: '' },
         };
-        const controller = new GevRealtimeController({
+        const controller = controllerFixture({
           ui,
           radioLayer,
           dataManager: { isEnabled: () => true },
@@ -2679,7 +2688,7 @@ test('delayed Stop reports its result before committing or resuming a prepared h
         detail: { textContent: '', title: '' },
         errorDetail: { textContent: '' },
       };
-      const controller = new GevRealtimeController({
+      const controller = controllerFixture({
         ui,
         radioLayer,
         dataManager: { isEnabled: () => true },
@@ -2762,7 +2771,7 @@ test('stale handoff cleanup cannot erase a resumed successor across repeated fai
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     radioLayer,
     runner: async () => ({ ok: false }),
@@ -2814,7 +2823,7 @@ test('a later same-response stop clears an already prepared playback result', as
     detail: { textContent: '', title: '' },
     errorDetail: { textContent: '' },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: async (_name, args) => args.action === 'select'
       ? {
@@ -3139,7 +3148,7 @@ function costControllerHarness({ runner } = {}) {
     },
     costValue: { textContent: '', title: '', dataset: {} },
   };
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui,
     runner: runner || (async (name) => { toolCalls.push(name); return { ok: true }; }),
   });
@@ -3448,7 +3457,7 @@ test('F3: an unrecognised session model bills at the most expensive known rates'
  */
 function textCommandController() {
   const sent = [];
-  const controller = new GevRealtimeController({
+  const controller = controllerFixture({
     ui: {},
     runner: async () => ({}),
   });
