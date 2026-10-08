@@ -1,8 +1,8 @@
 ## ADDED Requirements
 
 ### Requirement: Fast local checks
-The Makefile MUST supply `precheck` and `gates-docs` with the pinned image pattern.
-The target `precheck` MUST run all four CI file checks without `gates.mjs`.
+The Makefile MUST supply `precheck` and `gates-docs` with the pinned container pattern.
+The target `precheck` MUST run all four CI checks without `gates.mjs`.
 The target `gates-docs` MUST pass `CHANGE` and `BASE` to the document mode.
 The container copy MUST include the ratchet snapshot when that file exists.
 The document target MUST NOT copy any trace file back to the source folder.

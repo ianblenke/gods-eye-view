@@ -3,8 +3,8 @@ RUN_IMAGE := docker run --rm -v "$(CURDIR)":/app -v /app/node_modules -w /app $(
 # The gates run on a copy without the files that Git ignores, which is almost the same as CI. Ignored local files,
 # such as .env, can change the coverage of the tests. The copy also gets .git.
 # Each copy step stops the target when it fails. The container command
-# removes the values NODE_ENV, HOST and PORT of the image, which the CI job does not set. The
-# full gates write openspec/trace/ and .gev-cache/spec/. Their targets copy those folders back.
+# removes the values NODE_ENV, HOST and PORT of the image, which the CI job does not set.
+# The gates and ratchet targets copy openspec/trace/ and .gev-cache/spec/ back to the source folder.
 # The document gates and precheck targets copy no files back.
 GATES_COPY := mkdir -p /tmp/work && cd /src && git ls-files -z --cached --others --exclude-standard > /tmp/listed && git ls-files -z --deleted > /tmp/removed && sort -zu /tmp/listed > /tmp/all && sort -zu /tmp/removed > /tmp/deleted && comm -z -23 /tmp/all /tmp/deleted > /tmp/files && tar --null --verbatim-files-from -T /tmp/files -cf /tmp/copy.tar && tar -xf /tmp/copy.tar -C /tmp/work && cp -a /src/.git /tmp/work/.git && ln -s /app/node_modules /tmp/work/node_modules && mkdir -p /tmp/work/.gev-cache/spec && if [ ! -f /src/.gev-cache/spec/measurement.json ]; then :; else cp /src/.gev-cache/spec/measurement.json /tmp/work/.gev-cache/spec/measurement.json; fi && cd /tmp/work
 GATES_BACK := if [ ! -f /tmp/doc-markers ]; then :; else cd /tmp/work && xargs -0 -r rm -f -- < /tmp/doc-markers; fi && rm -rf /src/.gev-cache/spec && cp -a /tmp/work/openspec/trace/. /src/openspec/trace/ && mkdir -p /src/.gev-cache/spec && cp -a /tmp/work/.gev-cache/spec/. /src/.gev-cache/spec/

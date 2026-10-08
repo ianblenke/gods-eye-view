@@ -28,20 +28,21 @@ The change also edits `AGENTS.md`, the review command and the gate flow text und
 The ratchet writes `ids.json` and `links.json` and, when the ledger changes, `gaps.json` and `history.jsonl`.
 The ratchet also records the snapshot hash in history and writes a snapshot under `.gev-cache/spec/`.
 Host checks cannot establish the final container coverage gaps.
-The lead must use the pinned image for that result.
+The lead must use the pinned container for that result.
 
 ## Known limits and later changes
 
-- Host coverage cannot replace the pinned image measurement.
+- Host coverage cannot replace the pinned container measurement.
 - Document gates allow changes only under `openspec/changes/`, `openspec/specs/` and `openspec/trace/`.
-- A QA header change in `scripts/qa-*.mjs` at archive time needs another ratchet command or full gates on the final tree.
-- Any change outside the three paths needs another ratchet command or full gates on the final tree.
+- A QA header change in `scripts/qa-*.mjs` at archive time needs another ratchet command or all gates on the final tree.
+- Any change outside the three allowed paths needs another ratchet command or all gates on the final tree.
 - Dirty ratchet history prevents trust even after the files return to HEAD.
 - An absent snapshot needs another ratchet command.
-- Only the document mode reads the snapshot hash.
-- The document mode is a local convenience. The final full gates and CI measure again.
+- Only the document mode compares the snapshot file with the snapshot hash.
+The ratchet reads the hash from history to skip a history line.
+- The document mode is a local convenience. All gates on the final tree and CI measure again.
 - An exception can cause a finish line without a verdict. A process that stops early can have neither line.
-- The final full gates and CI remain necessary.
+- All gates on the final tree and CI remain necessary.
 - The first line names the command or trust state; the UTC start line follows it.
 
 The command `check` without `--no-measure` replaces the cache and removes the ratchet snapshot.
@@ -49,5 +50,8 @@ Later document gates need another ratchet command.
 
 Git content comparisons can miss files with `assume-unchanged` or `skip-worktree`.
 The commit hash must have forty hexadecimal digits.
-The mode does not test commit ancestry. A hash of another branch still has to pass the content comparison.
+The mode does not check commit ancestry. A hash of another branch still has to pass the content comparison.
 Changed code files and test files cause refusal even under the three allowed paths.
+
+The image shell was proven by the image runs of the ratchet and of the document mode.
+CI on Ubuntu supplies the first comparison of host and image marker results.

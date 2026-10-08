@@ -36,7 +36,7 @@ export function trustMeasurement(root, change, spawn = spawnSync) {
   const history = existsSync(historyFile) ? readFileSync(historyFile, 'utf8') : '';
   const line = history.split('\n').filter(Boolean).map(JSON.parse).findLast(item => item.change === change && ['coverage', 'untraced', 'measurement'].includes(item.kind));
   if (!line) return { reason: 'The change has no ratchet history line', files: [], commit: 'none' };
-  if (line.dirty?.length > 0) return { reason: 'The ratchet ran with uncommitted input files, code files or test files', files: line.dirty, commit: line.commit };
+  if (line.dirty?.length > 0) return { reason: 'The ratchet ran with input files, code files or test files that differ from HEAD', files: line.dirty, commit: line.commit };
   const commit = /^[a-fA-F0-9]{40}$/.test(line.commit) ? resolveCommit(root, line.commit) : null;
   if (!commit) return { reason: 'Git cannot find the ratchet commit', files: [], commit: line.commit };
   const difference = changedInputs(root, commit, spawn);

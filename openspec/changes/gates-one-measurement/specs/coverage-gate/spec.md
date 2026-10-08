@@ -1,12 +1,16 @@
 ## ADDED Requirements
 
 ### Requirement: Trusted snapshot for document changes
-The command `check --no-measure` MUST run every file check without tests or changes to trace files.
+The command `check --no-measure` MUST run each file check whose result can change under the three allowed paths.
+The mode runs no tests and changes no trace files.
 The mode trusts the snapshot from the last ratchet history line for the named change.
+That line gives the ratchet commit.
+An input file is any changed file outside the three allowed paths.
+
 Allowed paths start with `openspec/changes/`, `openspec/specs/` or `openspec/trace/`.
 The mode compares all tracked and untracked paths with the ratchet commit.
 
-Both names of a renamed file must have an allowed path.
+Both names of a moved file must have an allowed path.
 Protected ignored files cause refusal, except files under `node_modules/` and `.gev-cache/`.
 
 A protected ignored file belongs to these classes: tests, QA scripts, package metadata, lockfiles, Node version, Makefile, Dockerfiles, compose files and `scripts/spec/`.
@@ -23,11 +27,12 @@ The mode MUST also refuse when the snapshot is absent or its hash differs from t
 
 The first refusal line is `NO TEST RUN: refused`.
 Each changed file has its own line, followed by `Ratchet commit: <hash>`.
+Without a history line, the mode prints `Ratchet commit: none`.
 A refusal gives no gate verdict.
 The first success line has this form:
 
 ```
-NO TEST RUN: the snapshot of commit <hash> is trusted
+NO TEST RUN: the mode trusts the snapshot of commit <hash>
 ```
 
 The mode exits with status 0 for success or status 1 for comparison errors.
@@ -108,11 +113,11 @@ Phases use the names `measure`, `specs`, `compare`, `lint` and `review`.
 A phase MUST show its seconds only when its time is more than one second.
 
 The clock MUST accept a clock function from a test.
-The other commands print no time lines.
+The commands `check` and `ratchet` print time lines; the other commands print none.
 Origin: spec-first
 
 #### Scenario: Show command times `coverage-gate-083`
-- **WHEN** a gate command completes with an injected clock
+- **WHEN** `check` or `ratchet` completes with an injected clock
 - **THEN** the command shows literal UTC start and finish times and elapsed seconds
 - **AND** a full check starts with `Command: check`
 - **AND** the other commands print no time lines
@@ -124,12 +129,18 @@ Origin: spec-first
 ### Requirement: File checks without tests
 The document mode MUST check specs, OpenSpec, archived changes, registry, links, ledger against base, STE and reviews.
 The mode MUST use current specs and prose with test names and assertions from the trusted snapshot.
-The mode MUST keep the runtime, local environment, QA header, coverage filter, source import and coverage comment gates.
+The mode MUST keep the runtime, local environment, QA header and coverage filter gates.
+
+The mode does not run the source import and coverage comment gates because they read only code files and test files.
+The mode refuses changed code files and test files, so those gate results equal the ratchet results.
+The coverage filter gate reads tracked `.json`, `.yaml` and `.yml` files under the three allowed paths.
+The mode runs that gate.
 Origin: spec-first
 
 #### Scenario: Keep every file check `coverage-gate-085`
 - **WHEN** a document has a fault in specs, links, registry, STE or reviews
 - **THEN** the mode reports the fault without tests
+- **AND** a coverage filter option in a tracked `.json` file under the three allowed paths gives `COVERAGE-FLAG`
 
 ### Requirement: Safe Git comparison
 The document mode MUST protect package metadata because that file can change how Node loads code.
@@ -144,13 +155,13 @@ Origin: spec-first
 - **WHEN** Git cannot compare content or list untracked input files
 - **THEN** the mode refuses with status 2 and no verdict
 
-### Requirement: Input names in the container copy
+### Requirement: Protected ignored file names in the container copy
 The container copy for document gates MUST keep protected ignored file names outside dependency and cache folders, even when Git excludes those names.
 The copy MUST add marker files when the usual container copy omits those names.
 The marker files MUST have empty JSON objects instead of source contents.
 Origin: spec-first
 
-#### Scenario: Refuse an omitted input file `coverage-gate-088`
+#### Scenario: Refuse an omitted protected ignored file `coverage-gate-088`
 - **WHEN** the container copy omits a protected ignored file
 - **THEN** the marker command adds a marker without source contents and the mode refuses
 
@@ -164,11 +175,15 @@ Origin: spec-first
 - **THEN** the mode trusts the snapshot
 
 #### Scenario: Refuse other file inputs `coverage-gate-090`
-- **WHEN** an agent file, command file, input file, workflow, JSON fixture or config file changes outside the allowed paths
+- **WHEN** a file under `docs/`, an agent file, command file, workflow, JSON fixture or config file changes outside the allowed paths
 - **THEN** the mode refuses and names the file
 
 #### Scenario: Refuse a false prefix `coverage-gate-091`
 - **WHEN** a file changes at `openspec/changes-old/x.md`, `openspec/specs.md` or `openspec/tracex/f.md`
+- **THEN** the mode refuses and names the file
+
+#### Scenario: Refuse a prefix inside another path `coverage-gate-098`
+- **WHEN** a file changes at `docs/openspec/trace/x.md`, `docs/openspec/changes/x.md` or `src/openspec/specs/x.md`
 - **THEN** the mode refuses and names the file
 
 #### Scenario: Refuse files that move in either direction `coverage-gate-092`
@@ -177,7 +192,7 @@ Origin: spec-first
 
 #### Scenario: Refuse a dirty ratchet `coverage-gate-093`
 - **WHEN** the ratchet history line has a `dirty` list that is not empty
-- **THEN** the mode refuses with the reason "The ratchet ran with uncommitted input files, code files or test files"
+- **THEN** the mode refuses with the reason "The ratchet ran with input files, code files or test files that differ from HEAD"
 - **AND** the mode lists those files even after their content returns to HEAD
 
 ### Requirement: Safe cache contents
@@ -202,7 +217,7 @@ Origin: spec-first
 
 ### Requirement: Code and tests under allowed paths
 The document mode MUST refuse changed code files and test files under the three allowed paths.
-The file class test comes before the allowed path test.
+The mode checks the file class before the path.
 Origin: spec-first
 
 #### Scenario: Refuse code and tests under allowed paths `coverage-gate-095`
@@ -216,3 +231,22 @@ Origin: spec-first
 #### Scenario: Refuse a commit name `coverage-gate-096`
 - **WHEN** the history line names a ref instead of a forty-digit commit hash
 - **THEN** the mode refuses and names that value
+
+### Requirement: Marker classes
+The marker command MUST add a marker for each protected ignored file class and each code extension outside dependency and cache folders.
+Origin: spec-first
+
+#### Scenario: Add each marker class `coverage-gate-099`
+- **WHEN** one ignored file of each class enters the marker command
+- **THEN** the command adds an empty JSON marker for each file
+- **AND** the command adds no marker under `.gev-cache/` or `node_modules/`
+- **AND** the command names each class with its own pathspec
+
+### Requirement: Current QA capability names
+The document mode MUST compare QA capability names with current specs.
+Origin: spec-first
+
+#### Scenario: Check QA capability names without tests `coverage-gate-100`
+- **WHEN** a QA script names `pending:x` and a document adds `openspec/specs/x/`
+- **THEN** the mode reports `QA-COVERS-LANDED`
+- **AND** a QA capability name without current specs gives `QA-COVERS-UNKNOWN`

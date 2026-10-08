@@ -216,8 +216,9 @@ An edit makes the open gaps grow. Add a group for `mcp-broker` to
 before review. Commit all input files before the ratchet command.
 Commit code files and test files before that command.
 Use the ratchet verdict, then document gates for changes under `openspec/changes/`, `openspec/specs/` and `openspec/trace/`.
-Other file changes need another ratchet command or full gates.
-Run full gates on the final tree. Check each change name first.
+Input files have the definition in the coverage-gate spec.
+Other file changes need another ratchet command or all gates.
+Run all gates on the final tree. Check each change name first.
 
 ## Test plan
 

@@ -1,64 +1,101 @@
-# Evidence for review corrections
+# Evidence for review round two corrections
 
-The tree starts at commit `c87e7eb88b263791c21277a604ec23c745aafd0e`.
+The correction tree starts at commit `e4cf164097969d4f971afa46e757a34aac0179bb`.
 The command `git rev-parse HEAD` gives that commit.
-The change is active at `openspec/changes/gates-one-measurement/`.
-The results below apply to changes on that commit.
-Earlier review reports name commit `2f94a73b04514344d98ba95e8eb5ca21d28f20ff`.
+The change was active under `openspec/changes/gates-one-measurement/` during these checks.
+The earlier change was active at that path at the commit of the earlier evidence.
+No commit command ran in this correction task.
 
-## Host command limits
+## Host limits
 
-All Node and Python commands use cores 12 to 15 and priority 19.
-Test counts use one process per file without a forced exit option.
+All Node and Python processes use cores 12 to 15 and priority 19.
 The host version command gave `v26.8.2`.
-Host results do not replace the pinned container gates or CI.
-The lead completes the final container gates and review tasks.
+The plain test, format and probe commands stopped or gave EPERM errors.
+Those attempts give no check verdict.
 
-## Checks before code changes
+The first complete host suite had failures in child process tests.
+The passed gate, guard and reporter commands ran without the sandbox child process errors.
+The parent arguments and child environment have the test isolation setting.
+The host helpers use the actual child status and output when the host adds an EPERM error.
+The helpers do not change repository tests or gate rules.
 
-The cache test failed because the marker list included `.gev-cache/private/app.js`.
-The same test passes after the cache exclusion and after the command copies only the cache spec folder.
-The command used the pattern `coverage-gate-094` with node:test.
-The code and test path cases failed before the file class tests.
-The commit ref case failed before the hash test.
-The log `BD-before.log` has those results in the scratch folder.
+The probes use a fresh scratch copy instead of `gonem-verify`.
+The brief limits file changes to the clone and scratch folder.
+The original lead probe files stay unchanged.
+Container gates, CI, archive and the two review agents remain tasks for the lead.
+Tasks 3.1 to 3.4 stay unchecked.
 
-## Runs that stopped early
+The report labels CG, GL and CR name coverage-gate, gap-ledger and change-review.
 
-The plain host test process stopped without test details.
-A full host suite with the fixture helper stopped before it gave a result.
-Those processes give no suite verdict.
-The first old test with the fixture helper failed because the OpenSpec child process gave EPERM.
-The host helper captures child output through files for later host checks.
+## Review correction map
 
-## Decisions
+Each round two row applies to changes on commit `e4cf164097969d4f971afa46e757a34aac0179bb`.
 
-Keep markers for ignored input files so the ratchet can record its dirty list.
-Exclude `.gev-cache/` from the marker list.
-Copy only `.gev-cache/spec/` back to keep other cache files safe.
-Refuse changed code and test files under each of the three allowed paths.
+| Report | First words | Correction | Commit |
+|---|---|---|---|
+| Spec | Makefile:11 GATES_DOCS_MARKERS | Add a table with every class and extension. Check the real shell command, marker contents, exclusions and class pathspecs. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| Spec | gates.mjs:344 The requirement | Add current QA capability tests. Remove the source import and coverage comment calls. Keep the coverage filter gate for allowed JSON files. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| Spec | measurement.mjs:62 file.startsWith | Add each nested false prefix and the includes mutation. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| Spec | gates.mjs:692 Scenario 083 | Check no time lines for lint, init, adopt, waive, rebaseline, tree and ci. Add a row for each command. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| Spec | gates.mjs:677 The ratchet reviews | Read changed file names again after trace files change. Test equal review errors from ratchet and check. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| Spec | measurement.mjs:38 Ratchet commit | Assert the commit line for each refusal class. State none for absent history. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| Spec | proposal.md:41 Only the document mode | Name the snapshot file comparison and the ratchet history hash separately. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| Spec note | AGENTS.md rule 9 | Pin the verdict rule and final gate step with sentence tests and mutations. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| Spec note | CI on Ubuntu | Record the shell comparison limit and the image proof from the lead brief. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | P:41 Only the document mode | Correct the hash sentence in the proposal and evidence. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | GL:54,80 ignored input files | Use protected ignored files in the ledger, design, evidence and container titles. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | D:76 Use the ratchet verdict | Start review with make gates-docs after precheck. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | CG:5,7,25 trusts the snapshot | Define ratchet commit once beside the history line. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | AGENTS.md:62 The mode | Use the command and name code files and test files. The word them can mean all changed files. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | CG:167 an agent file | Name files under docs. Define input file once and point to that definition from each guide. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | CG:204-205 D:107 file class test | Use checks the file class before the path. Use check for the commit ancestry operation. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | CI:5 all four CI file checks | Use all four CI checks. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | GL:4 to write the files | State one measurement for files and comparisons. Name check and ratchet in the time scenario. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | gates.mjs:698 CG:30 is trusted | Use the active snapshot trust message in code, tests and specs. Name files that differ from HEAD. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | P:38 CR:5,7,12 one name | Use the three allowed paths, document steps, all gates, moved, dirty list and pinned container. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | gates.test.mjs:2492 titles | Correct commit hash, ignored file, changed ratchet and marker removal titles. | e4cf164097969d4f971afa46e757a34aac0179bb |
+| STE | evidence.md:5,52 The change is active | Use past tense for the earlier commit. Name the current correction commit separately. | e4cf164097969d4f971afa46e757a34aac0179bb |
 
-Use forty hexadecimal digits for the ratchet commit.
-The mode does not test commit ancestry. Its content comparison still checks a commit from another branch.
-Only document mode reads the snapshot hash. Full gates and CI measure again.
-Git can hide files with `assume-unchanged` or `skip-worktree`.
+The AGENTS sentence uses the full file class names instead of the suggested pronoun.
+The changes include all other corrections.
 
+### Earlier correction map
 
+All rows apply to the commit in the last column.
+The changes include every STE correction.
 
+| Report | First words | Correction | Commit |
+|---|---|---|---|
+| Spec | Makefile:10 GATES_DOCS_MARKERS | Exclude cache files. Remove created markers before the container copies files back. Test cache and trace contents. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| Spec | gates.test.mjs:2216 Operand mutations | Test every prefix boundary and ignored Docker and compose operand. Add negative name cases. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| Spec | gates.test.mjs:1825 Scenario 080 | Assert the ratchet commit line with forty literal zero digits. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| Spec | measurement.mjs:62 The prefix test | Refuse code and tests under each allowed path before the prefix test. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| Spec | measurement.mjs:40 resolveCommit | Use forty hexadecimal digits. State the ancestry decision and who reads the snapshot hash. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| Spec | gates.mjs:700 Command: check | Assert the full check header. State other command times and the exception limit. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| Spec | Makefile:44 In precheck | Assert the exact command text with all conjunctions. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| Spec | coverage-gate/spec.md:12 class list | Define protected ignored files once. Use input files for files outside the allowed paths. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| Spec | measurement.mjs:57 git diff | State the Git index flag limit in the proposal. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| Spec | gates.mjs:643 history | Test the new totals history line against a base ledger. Add the snapshot copy result to the scenario. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | gap-ledger/spec.md:34,43 same snapshot | Add the dirty list to both descriptions of unchanged history. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | gates.mjs:698 output | Use NO TEST RUN and snapshot in the log and tests. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | gates.mjs:718 commit line | Use Ratchet commit in refusals and their tests. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | AGENTS.md:62 document steps | Name the three allowed paths. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | AGENTS.md:60 input files | Use the requested commit instruction and input file term. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | review.md:14,16 ratchet sequence | Start after the ratchet. Test the new sentences and the second ratchet instruction. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | gap-ledger/spec.md:7 status | State status 1 for errors before the ratchet writes files. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | design.md:17 conditional tense | Use simple present tense and verb clauses for file actions. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | coverage-gate/spec.md:137-144 container names | Use container for the Docker process. Use file checks and steps. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | AGENTS.md:45,46,22,76-78 | Remove now and the semicolon. Add a heading after the backfill steps. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | gap-ledger/spec.md:55 design.md:31 decision | Use the requested decision, clock, error line, empty list and trace copy terms. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | evidence.md:4,574,580-582 tree | Name the current commit and active path. Correct the Makefile comment. | c87e7eb88b263791c21277a604ec23c745aafd0e |
+| STE | evidence.md:115,117,124 test corrections | Use direct test-failure terms. Correct the source comments. | c87e7eb88b263791c21277a604ec23c745aafd0e |
 
-## Results
+## Tests and coverage
 
-The final tree has changes on commit `c87e7eb88b263791c21277a604ec23c745aafd0e`.
-The command `git rev-parse HEAD` gives that commit.
-The change stays active. The review reports stay unchanged.
-
-### C1: Unit files
-
-The host command below starts one Node process for each test file.
-Each Node command has no forced exit option.
+The command below starts one process per file without a forced exit option.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/gates-onem/round1-tests.py
+cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/gates-onem/round3-tests.py
 ```
 
 | File | Tests | Pass | Fail | Skip |
@@ -66,7 +103,7 @@ cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/g
 | ci.test.mjs | 6 | 6 | 0 | 0 |
 | ciFiles.test.mjs | 4 | 4 | 0 | 0 |
 | coverage.test.mjs | 15 | 15 | 0 | 0 |
-| gates.test.mjs | 189 | 189 | 0 | 0 |
+| gates.test.mjs | 227 | 227 | 0 | 0 |
 | git.test.mjs | 4 | 4 | 0 | 0 |
 | importReach.test.mjs | 12 | 12 | 0 | 0 |
 | inventory.test.mjs | 8 | 8 | 0 | 0 |
@@ -83,16 +120,16 @@ cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/g
 | trace.test.mjs | 25 | 25 | 0 | 0 |
 | traceReporter.test.mjs | 10 | 10 | 0 | 0 |
 | v8Merge.test.mjs | 11 | 11 | 0 | 0 |
+| Total | 611 | 611 | 0 | 0 |
 
-C1 gives 573 tests across 20 files.
-
-C1 uses these exact Node commands:
+The process output gives each total.
+The gate test process also supplies the coverage output.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/ci.test.mjs
-cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/ciFiles.test.mjs
+cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --test-isolation=none src/tooling/spec/ciFiles.test.mjs
 cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/coverage.test.mjs
-cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none --experimental-test-coverage --test-coverage-include=scripts/spec/gates.mjs --test-coverage-include=scripts/spec/lib/measurement.mjs --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=/home/ianblenke/docker/gev-tools/gates-onem/round1-coverage.lcov src/tooling/spec/gates.test.mjs
+cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none --experimental-test-coverage --test-coverage-include=scripts/spec/gates.mjs --test-coverage-include=scripts/spec/lib/measurement.mjs --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=/home/ianblenke/docker/gev-tools/gates-onem/round3-coverage.lcov src/tooling/spec/gates.test.mjs
 cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/git.test.mjs
 cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/importReach.test.mjs
 cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/inventory.test.mjs
@@ -105,35 +142,21 @@ cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/g
 cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/specLint.test.mjs
 cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/specs.test.mjs
 cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/ste.test.mjs
-cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/testGuard.test.mjs
+cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --test-isolation=none src/tooling/spec/testGuard.test.mjs
 cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/trace.test.mjs
-cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/traceReporter.test.mjs
+cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test --test-isolation=none src/tooling/spec/traceReporter.test.mjs
 cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none src/tooling/spec/v8Merge.test.mjs
 ```
 
-The gate test command ran again after the final code log changes.
-The review test command ran again after the guidance changes.
-The marker test command ran again after the final title changes:
+| File | Lines | Branches | Functions |
+|---|---:|---:|---:|
+| scripts/spec/gates.mjs | 735/735 (100%) | 321/321 (100%) | 87/87 (100%) |
+| scripts/spec/lib/measurement.mjs | 65/65 (100%) | 57/57 (100%) | 8/8 (100%) |
 
-```sh
-cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/harden-host.mjs --test --test-isolation=none --test-name-pattern='coverage-gate-094|coverage-gate-097' src/tooling/spec/gates.test.mjs
-```
+### Earlier host coverage
 
-```text
-✔ [coverage-gate-094] keep cache source contents after the container ends (413.279482ms)
-✔ [coverage-gate-094] copy cache contents without a marker list (306.830594ms)
-✔ [coverage-gate-097] stop before the container copies files after a marker error (291.399523ms)
-ℹ tests 3
-ℹ suites 0
-ℹ pass 3
-ℹ fail 0
-ℹ cancelled 0
-ℹ skipped 0
-ℹ todo 0
-ℹ duration_ms 1479.539008
-```
-
-### C2: Host coverage
+The earlier evidence supplied the following baseline command and results.
+The current task did not repeat that baseline command.
 
 The final gate test command supplies the current coverage file.
 The baseline command below uses the scratch tree from the named base commit.
@@ -149,173 +172,231 @@ cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/g
 | After | gates.mjs | 737/737 (100%) | 317/317 (100%) | 87/87 (100%) |
 | After | measurement.mjs | 65/65 (100%) | 57/57 (100%) | 8/8 (100%) |
 
-### C3: Mutations
+## Mutations
+
+The complete mutation command ran after the code changes.
+A repository test failed for each row.
+No row timed out, and no row has absent or repeated old text.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/gates-onem /home/ianblenke/docker/gev-tools/gates-onem/muts.json
+cd /home/ianblenke/docker/gev-work/gates-onem && NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/gates-onem /home/ianblenke/docker/gev-tools/gates-onem/muts.json
 ```
 
-C3 made a repository test fail for all 151 rows.
-No row had a timeout. No row had absent or repeated old code.
-No mutation remains without a test that fails.
+The command made repository tests fail for all 192 rows.
+Rows 152 to 192 are new.
 
-The mutation table and exact code are below.
+Row 124-review now names reviewFiles in the tree hash call.
+Row 130-sort uses the new test title pattern.
+Rows 075-boundary, 075-end and 075-no-slash use the new ignored file title.
+Rows 076-suffix-no-slash, 076-dot and 076-end use that title too.
+Row 096-length uses the short commit hash title.
 
-| ID | Repository test that failed |
-|---|---|
-| 068-tests | [coverage-gate-068] trust a changed document |
-| 123-twice | [gap-ledger-123] compare one ratchet measurement |
-| 124-review | [gap-ledger-124] fail for an absent review |
-| 125-status | [gap-ledger-125] pass after all comparisons |
-| 126-ledger | [gap-ledger-126] compare repaired ledger values |
-| 069-path | [coverage-gate-069 coverage-gate-078] classify a protected ignored code file |
-| 070-path | [coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs |
-| 071-path | [coverage-gate-071 coverage-gate-078] refuse an ignored file at scripts/qa-ignored.mjs |
-| 072-path | [coverage-gate-072 coverage-gate-078] refuse an ignored file at package-lock.json |
-| 073-path | [coverage-gate-073 coverage-gate-078] classify the ignored Node version |
-| 074-path | [coverage-gate-074 coverage-gate-078] refuse an ignored file at Makefile |
-| 075-path | [coverage-gate-075 coverage-gate-078] refuse an ignored file at Dockerfile |
-| 076-path | [coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml |
-| 077-path | [coverage-gate-077 coverage-gate-078] refuse an ignored file at scripts/spec/ignored.txt |
-| 078-untracked | [coverage-gate-078] refuse an untracked code file |
-| 079-history | [coverage-gate-079] refuse history from another change or command |
-| 079-change | [coverage-gate-079] refuse history from another change or command |
-| 080-commit | [coverage-gate-080] refuse a commit that Git cannot find |
-| 081-words | [coverage-gate-081] refuse a changed word list |
-| 082-hash | [coverage-gate-082] refuse an absent snapshot |
-| 082-absent | [coverage-gate-082] refuse an absent snapshot |
-| 083-start | [coverage-gate-083] show command times |
-| 083-finish | [coverage-gate-083] show command times |
-| 084-cutoff | [coverage-gate-084] show slow phase times |
-| 084-phase | [coverage-gate-084] show slow phase times |
-| 085-links | [coverage-gate-085] keep every file check |
-| 085-registry | [coverage-gate-085] check the base registry without tests |
-| 085-specs | [coverage-gate-085] keep every file check |
-| 085-lint | [coverage-gate-085] keep every file check |
-| 011-precheck | [ci-gates-011] add fast checks before review |
-| 012-docs | [ci-gates-012] add a document gate target |
-| 033-final | [change-review-033] keep the final measurement |
-| 068-own-option | [coverage-gate-068] set the document option on the options object |
-| 068-dependencies | [coverage-gate-078 coverage-gate-089] trust other ignored files |
-| 086-package | [coverage-gate-086 coverage-gate-078] refuse an ignored file at package.json |
-| 087-diff | [coverage-gate-087] refuse a failed Git comparison |
-| 087-others | [coverage-gate-087] refuse a failed Git comparison |
-| 085-openspec | [coverage-gate-085] check OpenSpec without tests |
-| 085-archive | [coverage-gate-085] check archived specs without tests |
-| 085-filters | [coverage-gate-085] check coverage filters without tests |
-| 126-totals | [gap-ledger-126] repair absent totals and stale test names |
-| 126-stale | [gap-ledger-126] compare repaired ledger values |
-| 126-version | [gap-ledger-126] compare repaired ledger values |
-| 012-copy | [ci-gates-012] add a document gate target |
-| 068-command-option | [coverage-gate-068] set the document option on the options object |
-| 124-status | [gap-ledger-124] fail for an absent review |
-| 083-check-time | [coverage-gate-083] name the full check command |
-| 083-ratchet-time | [coverage-gate-083] show command times |
-| 084-elapsed | [coverage-gate-084] show slow phase times |
-| 127-history | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
-| 127-stamp | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
-| 128-same | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
-| 129-hash | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
-| 129-commit | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
-| 129-change | [gap-ledger-129] record a different change without a changed gap |
-| 011-format | [ci-gates-011] add fast checks before review |
-| 011-boundaries | [ci-gates-011] add fast checks before review |
-| 011-tokens | [ci-gates-011] add fast checks before review |
-| 069-tracked | [coverage-gate-069] refuse a new tracked inventory file |
-| 069-base | [coverage-gate-069 coverage-gate-092] refuse a moved code file |
-| 078-inventory | [coverage-gate-078] refuse an untracked code file |
-| 085-base | [coverage-gate-085] compare the ledger with the base without tests |
-| 085-ledger | [coverage-gate-085] compare the ledger with the base without tests |
-| 085-base-registry | [coverage-gate-085] check the base registry without tests |
-| 085-archive-reviews | [coverage-gate-085] check all review files without tests |
-| 085-names | [coverage-gate-085] check all review files without tests |
-| 085-agents | [coverage-gate-085] check all review files without tests |
-| 085-command | [coverage-gate-085] check all review files without tests |
-| 033-precheck | [change-review-033] keep the final measurement |
-| 033-step1 | [change-review-033] keep the final measurement |
-| 033-step3 | [change-review-033] keep the final measurement |
-| 033-step10 | [change-review-033] keep the final measurement |
-| 033-step11 | [change-review-033] keep the final measurement |
-| 033-step15 | [change-review-033] keep the final measurement |
-| 033-ci | [change-review-033] keep the final measurement |
-| 005-ci-phase | [ci-gates-005 coverage-gate-083] keep the CI verdict without command times |
-| 127-summary | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
-| 068-trace-write | [coverage-gate-068] trust a changed document |
-| 033-review-inputs | [change-review-033] keep the final measurement |
-| 033-agent-inputs | [change-review-033] keep the final measurement |
-| 012-docs-back | [ci-gates-012] add a document gate target |
-| 012-docs-copy | [ci-gates-012] add a document gate target |
-| 012-docs-env | [ci-gates-012] add a document gate target |
-| 012-change | [ci-gates-012] add a document gate target |
-| 012-base | [ci-gates-012] add a document gate target |
-| 012-markers | [ci-gates-012] add a document gate target |
-| 088-names | [coverage-gate-088] refuse an omitted input file |
-| 088-file | [coverage-gate-088] refuse an omitted input file |
-| 088-content | [coverage-gate-088] refuse an omitted input file |
-| 088-exists | [coverage-gate-088] refuse an omitted input file |
-| 089-changes | [coverage-gate-089] trust a changed file at openspec/changes/archive/x/notes.md |
-| 089-specs | [coverage-gate-089] trust a changed file at openspec/specs/x.md |
-| 089-trace | [coverage-gate-078 coverage-gate-089] trust other ignored files |
-| 091-slash | [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/changes-old/x.md |
-| 092-second-name | [coverage-gate-069 coverage-gate-092] refuse a moved code file |
-| 090-all-paths | [coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/agents/x.md |
-| 078-ignored | [coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs |
-| 078-cache | [coverage-gate-078 coverage-gate-089] trust other ignored files |
-| 087-ignored-status | [coverage-gate-087] refuse a failed Git comparison |
-| 093-dirty | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD |
-| 130-dirty-field | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD |
-| 131-empty-field | [gap-ledger-131 gap-ledger-133] accept clean history without a dirty field |
-| 132-dirty-equality | [gap-ledger-130 gap-ledger-132] sort dirty names and compare repeated history |
-| 130-dirty-paths | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD |
-| 130-git-failure | [gap-ledger-130] refuse a failed ratchet file comparison |
-| 133-reader | [gap-ledger-133] accept dirty history in each reader |
-| 134-image-markers | [gap-ledger-134] add ignored name markers before the ratchet command |
-| 078-root-deps | [coverage-gate-078 coverage-gate-089] trust other ignored files |
-| 078-nested-deps | [coverage-gate-078 coverage-gate-089] trust other ignored files |
-| 078-deps-slash | [coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs |
-| 134-definition-order | [gap-ledger-134] add ignored name markers before the ratchet command |
-| 134-command | [gap-ledger-134] add ignored name markers before the ratchet command |
-| 130-sort | [gap-ledger-130 gap-ledger-132] sort dirty names and compare repeated history |
-| 078-inventory-source | [coverage-gate-078 coverage-gate-089] trust other ignored files |
-| 094-cache-marker | [coverage-gate-094] keep cache source contents after the container ends |
-| 094-cache-back | [coverage-gate-094] keep cache source contents after the container ends |
-| 091-trace-slash | [coverage-gate-091] refuse the input file at openspec/tracex/f.md |
-| 078-cache-slash | [coverage-gate-078] refuse the input file at .gev-cachex/ignored.test.mjs |
-| 080-commit-name | [coverage-gate-080] refuse a commit that Git cannot find |
-| 095-test-class | [coverage-gate-095] refuse a new test file at openspec/changes/code.test.mjs |
-| 095-code-class | [coverage-gate-095] refuse a new code file at openspec/changes/code.js |
-| 096-commit-hash | [coverage-gate-096] refuse a commit ref in history |
-| 083-check-command | [coverage-gate-083] name the full check command |
-| 011-precheck-status | [ci-gates-011] add fast checks before review |
-| 126-history-after | [gap-ledger-126] read the new totals history line for the base ledger |
-| 075-root | [coverage-gate-075 coverage-gate-078] refuse the input file at Dockerfileprod |
-| 075-nested | [coverage-gate-075 coverage-gate-078] refuse the input file at containers/Dockerfile.gates |
-| 075-suffix | [coverage-gate-075 coverage-gate-078] refuse the input file at Dockerfileprod |
-| 076-root | [coverage-gate-076 coverage-gate-078] refuse the input file at containers/compose.gates.yaml |
-| 076-prefix | [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml |
-| 076-suffix | [coverage-gate-076 coverage-gate-078] refuse the input file at containers/compose.gates.yaml |
-| 076-yaml | [coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml |
-| 076-yml | [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml |
-| 075-boundary | [coverage-gate-075] exclude the ignored name MyDockerfile |
-| 075-end | [coverage-gate-075] exclude the ignored name Dockerfile.dir/notes.txt |
-| 075-no-slash | [coverage-gate-075] exclude the ignored name Dockerfile.dir/notes.txt |
-| 076-prefix-characters | [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml |
-| 076-suffix-no-slash | [coverage-gate-076] exclude the ignored name compose/other.yaml |
-| 076-dot | [coverage-gate-076] exclude the ignored name composeyml |
-| 076-end | [coverage-gate-076] exclude the ignored name compose.yaml.extra |
-| 096-start | [coverage-gate-096] refuse the commit hash with prefix |
-| 096-end | [coverage-gate-096] refuse the commit hash with suffix |
-| 096-length | [coverage-gate-096] refuse the commit hash with short |
-| 096-hex | [coverage-gate-096] refuse the commit hash with letters |
-| 033-input-correction | [change-review-033] keep the final measurement |
-| 094-marker-cleanup | [coverage-gate-094] keep cache source contents after the container ends |
-| 094-marker-list | [coverage-gate-094] keep cache source contents after the container ends |
-| 094-marker-no-list | [coverage-gate-094] copy cache contents without a marker list |
-| 097-copy-status | [coverage-gate-097] stop before the container copies files after a marker error |
-| 011-precheck-import-status | [ci-gates-011] add fast checks before review |
-| 011-precheck-boundary-status | [ci-gates-011] add fast checks before review |
+The first full file had seven selectors that matched no test.
+The corrected selectors made repository tests fail, then the complete file ran again.
 
-The next block gives the exact old code, new code and failed test for each row.
+The mutation command cuts long test names. The unit output gives their full names.
+No old row names either removed document mode call.
+The two message changes had no old message row. Rows 191 and 192 test the new messages.
+
+The class pathspec assertions also catch deletion of redundant globs.
+The marker table still runs the real command and checks its file contents.
+
+| ID | File | Failed repository test |
+|---|---|---|
+| 068-tests | scripts/spec/gates.mjs | [coverage-gate-068] trust a changed document |
+| 123-twice | scripts/spec/gates.mjs | [gap-ledger-123] compare one ratchet measurement |
+| 124-review | scripts/spec/gates.mjs | [gap-ledger-124] fail for an absent review |
+| 125-status | scripts/spec/gates.mjs | [gap-ledger-125] pass after all comparisons |
+| 126-ledger | scripts/spec/gates.mjs | [gap-ledger-126] compare repaired ledger values |
+| 069-path | scripts/spec/lib/measurement.mjs | [coverage-gate-069 coverage-gate-078] classify a protected ignored code file |
+| 070-path | scripts/spec/lib/measurement.mjs | [coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs |
+| 071-path | scripts/spec/lib/measurement.mjs | [coverage-gate-071 coverage-gate-078] refuse an ignored file at scripts/qa-ignored.mjs |
+| 072-path | scripts/spec/lib/measurement.mjs | [coverage-gate-072 coverage-gate-078] refuse an ignored file at package-lock.json |
+| 073-path | scripts/spec/lib/measurement.mjs | [coverage-gate-073 coverage-gate-078] classify the ignored Node version |
+| 074-path | scripts/spec/lib/measurement.mjs | [coverage-gate-074 coverage-gate-078] refuse an ignored file at Makefile |
+| 075-path | scripts/spec/lib/measurement.mjs | [coverage-gate-075 coverage-gate-078] refuse an ignored file at Dockerfile |
+| 076-path | scripts/spec/lib/measurement.mjs | [coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml |
+| 077-path | scripts/spec/lib/measurement.mjs | [coverage-gate-077 coverage-gate-078] refuse an ignored file at scripts/spec/ignored.txt |
+| 078-untracked | scripts/spec/lib/measurement.mjs | [coverage-gate-078] refuse an untracked code file |
+| 079-history | scripts/spec/lib/measurement.mjs | [coverage-gate-079] refuse history from another change or command |
+| 079-change | scripts/spec/lib/measurement.mjs | [coverage-gate-079] refuse history from another change or command |
+| 080-commit | scripts/spec/lib/measurement.mjs | [coverage-gate-080] refuse a commit that Git cannot find |
+| 081-words | scripts/spec/lib/measurement.mjs | [coverage-gate-081] refuse a changed word list |
+| 082-hash | scripts/spec/lib/measurement.mjs | [coverage-gate-082] refuse an absent snapshot |
+| 082-absent | scripts/spec/lib/measurement.mjs | [coverage-gate-082] refuse an absent snapshot |
+| 083-start | scripts/spec/gates.mjs | [coverage-gate-083] show command times |
+| 083-finish | scripts/spec/gates.mjs | [coverage-gate-083] show command times |
+| 084-cutoff | scripts/spec/gates.mjs | [coverage-gate-084] show slow phase times |
+| 084-phase | scripts/spec/gates.mjs | [coverage-gate-084] show slow phase times |
+| 085-links | scripts/spec/gates.mjs | [coverage-gate-085] keep every file check |
+| 085-registry | scripts/spec/gates.mjs | [coverage-gate-085] check the base registry without tests |
+| 085-specs | scripts/spec/gates.mjs | [coverage-gate-085] keep every file check |
+| 085-lint | scripts/spec/gates.mjs | [coverage-gate-085] keep every file check |
+| 011-precheck | Makefile | [ci-gates-011] add fast checks before review |
+| 012-docs | Makefile | [ci-gates-012] add a document gate target |
+| 033-final | .claude/commands/opsx/review.md | [change-review-033] keep the final measurement |
+| 068-own-option | scripts/spec/gates.mjs | [coverage-gate-068] set the document option on the options object |
+| 068-dependencies | scripts/spec/lib/measurement.mjs | [coverage-gate-078 coverage-gate-089] trust other ignored files |
+| 086-package | scripts/spec/lib/measurement.mjs | [coverage-gate-086 coverage-gate-078] refuse an ignored file at package.json |
+| 087-diff | scripts/spec/lib/measurement.mjs | [coverage-gate-087] refuse a failed Git comparison |
+| 087-others | scripts/spec/lib/measurement.mjs | [coverage-gate-087] refuse a failed Git comparison |
+| 085-openspec | scripts/spec/gates.mjs | [coverage-gate-085] check OpenSpec without tests |
+| 085-archive | scripts/spec/gates.mjs | [coverage-gate-085] check archived specs without tests |
+| 085-filters | scripts/spec/gates.mjs | [coverage-gate-085] check coverage filters without tests |
+| 126-totals | scripts/spec/lib/ledger.mjs | [gap-ledger-126] repair absent totals and stale test names |
+| 126-stale | scripts/spec/lib/ledger.mjs | [gap-ledger-126] compare repaired ledger values |
+| 126-version | scripts/spec/lib/ledger.mjs | [gap-ledger-126] compare repaired ledger values |
+| 012-copy | Makefile | [ci-gates-012] add a document gate target |
+| 068-command-option | scripts/spec/gates.mjs | [coverage-gate-068] set the document option on the options object |
+| 124-status | scripts/spec/gates.mjs | [gap-ledger-124] fail for an absent review |
+| 083-check-time | scripts/spec/gates.mjs | [coverage-gate-083] name the full check command |
+| 083-ratchet-time | scripts/spec/gates.mjs | [coverage-gate-083] show command times |
+| 084-elapsed | scripts/spec/gates.mjs | [coverage-gate-084] show slow phase times |
+| 127-history | scripts/spec/gates.mjs | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
+| 127-stamp | scripts/spec/gates.mjs | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
+| 128-same | scripts/spec/gates.mjs | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
+| 129-hash | scripts/spec/gates.mjs | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
+| 129-commit | scripts/spec/gates.mjs | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
+| 129-change | scripts/spec/gates.mjs | [gap-ledger-129] record a different change without a changed gap |
+| 011-format | Makefile | [ci-gates-011] add fast checks before review |
+| 011-boundaries | Makefile | [ci-gates-011] add fast checks before review |
+| 011-tokens | Makefile | [ci-gates-011] add fast checks before review |
+| 069-tracked | scripts/spec/lib/measurement.mjs | [coverage-gate-069] refuse a new tracked inventory file |
+| 069-base | scripts/spec/lib/measurement.mjs | [coverage-gate-069 coverage-gate-092] refuse a moved code file |
+| 078-inventory | scripts/spec/lib/measurement.mjs | [coverage-gate-078] refuse an untracked code file |
+| 085-base | scripts/spec/gates.mjs | [coverage-gate-085] compare the ledger with the base without tests |
+| 085-ledger | scripts/spec/gates.mjs | [coverage-gate-085] compare the ledger with the base without tests |
+| 085-base-registry | scripts/spec/gates.mjs | [coverage-gate-085] check the base registry without tests |
+| 085-archive-reviews | scripts/spec/gates.mjs | [coverage-gate-085] check all review files without tests |
+| 085-names | scripts/spec/gates.mjs | [coverage-gate-085] check all review files without tests |
+| 085-agents | scripts/spec/gates.mjs | [coverage-gate-085] check all review files without tests |
+| 085-command | scripts/spec/gates.mjs | [coverage-gate-085] check all review files without tests |
+| 033-precheck | .claude/commands/opsx/review.md | [change-review-033] keep the final measurement |
+| 033-step1 | .claude/commands/opsx/review.md | [change-review-033] keep the final measurement |
+| 033-step3 | .claude/commands/opsx/review.md | [change-review-033] keep the final measurement |
+| 033-step10 | .claude/commands/opsx/review.md | [change-review-033] keep the final measurement |
+| 033-step11 | .claude/commands/opsx/review.md | [change-review-033] keep the final measurement |
+| 033-step15 | .claude/commands/opsx/review.md | [change-review-033] keep the final measurement |
+| 033-ci | .claude/commands/opsx/review.md | [change-review-033] keep the final measurement |
+| 005-ci-phase | scripts/spec/gates.mjs | [ci-gates-005 coverage-gate-083] keep the CI verdict without command times |
+| 127-summary | scripts/spec/gates.mjs | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
+| 068-trace-write | scripts/spec/gates.mjs | [coverage-gate-068] trust a changed document |
+| 033-review-inputs | .claude/commands/opsx/review.md | [change-review-033] keep the final measurement |
+| 033-agent-inputs | AGENTS.md | [change-review-033] keep the final measurement |
+| 012-docs-back | Makefile | [ci-gates-012] add a document gate target |
+| 012-docs-copy | Makefile | [ci-gates-012] add a document gate target |
+| 012-docs-env | Makefile | [ci-gates-012] add a document gate target |
+| 012-change | Makefile | [ci-gates-012] add a document gate target |
+| 012-base | Makefile | [ci-gates-012] add a document gate target |
+| 012-markers | Makefile | [ci-gates-012] add a document gate target |
+| 088-names | Makefile | [coverage-gate-088] refuse an omitted protected ignored file |
+| 088-file | Makefile | [coverage-gate-088] refuse an omitted protected ignored file |
+| 088-content | Makefile | [coverage-gate-088] refuse an omitted protected ignored file |
+| 088-exists | Makefile | [coverage-gate-088] refuse an omitted protected ignored file |
+| 089-changes | scripts/spec/lib/measurement.mjs | [coverage-gate-089] trust a changed file at openspec/changes/archive/x/notes.md |
+| 089-specs | scripts/spec/lib/measurement.mjs | [coverage-gate-089] trust a changed file at openspec/specs/x.md |
+| 089-trace | scripts/spec/lib/measurement.mjs | [coverage-gate-078 coverage-gate-089] trust other ignored files |
+| 091-slash | scripts/spec/lib/measurement.mjs | [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/changes-old/x.md |
+| 092-second-name | scripts/spec/lib/measurement.mjs | [coverage-gate-069 coverage-gate-092] refuse a moved code file |
+| 090-all-paths | scripts/spec/lib/measurement.mjs | [coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/agents/x.md |
+| 078-ignored | scripts/spec/lib/measurement.mjs | [coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs |
+| 078-cache | scripts/spec/lib/measurement.mjs | [coverage-gate-078 coverage-gate-089] trust other ignored files |
+| 087-ignored-status | scripts/spec/lib/measurement.mjs | [coverage-gate-087] refuse a failed Git comparison |
+| 093-dirty | scripts/spec/lib/measurement.mjs | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD |
+| 130-dirty-field | scripts/spec/gates.mjs | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD |
+| 131-empty-field | scripts/spec/gates.mjs | [gap-ledger-131 gap-ledger-133] accept clean history without a dirty field |
+| 132-dirty-equality | scripts/spec/gates.mjs | [gap-ledger-130 gap-ledger-132] sort the dirty list and compare repeated history |
+| 130-dirty-paths | scripts/spec/gates.mjs | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD |
+| 130-git-failure | scripts/spec/gates.mjs | [gap-ledger-130] refuse a failed ratchet file comparison |
+| 133-reader | scripts/spec/lib/ledger.mjs | [gap-ledger-133] accept dirty history in each reader |
+| 134-image-markers | Makefile | [gap-ledger-134] add ignored name markers before the ratchet command |
+| 078-root-deps | scripts/spec/lib/measurement.mjs | [coverage-gate-078 coverage-gate-089] trust other ignored files |
+| 078-nested-deps | scripts/spec/lib/measurement.mjs | [coverage-gate-078 coverage-gate-089] trust other ignored files |
+| 078-deps-slash | scripts/spec/lib/measurement.mjs | [coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs |
+| 134-definition-order | Makefile | [gap-ledger-134] add ignored name markers before the ratchet command |
+| 134-command | Makefile | [gap-ledger-134] add ignored name markers before the ratchet command |
+| 130-sort | scripts/spec/lib/measurement.mjs | [gap-ledger-130 gap-ledger-132] sort the dirty list and compare repeated history |
+| 078-inventory-source | scripts/spec/lib/measurement.mjs | [coverage-gate-078 coverage-gate-089] trust other ignored files |
+| 094-cache-marker | Makefile | [coverage-gate-094] keep cache source contents after the container ends |
+| 094-cache-back | Makefile | [coverage-gate-094] keep cache source contents after the container ends |
+| 091-trace-slash | scripts/spec/lib/measurement.mjs | [coverage-gate-091] refuse the input file at openspec/tracex/f.md |
+| 078-cache-slash | scripts/spec/lib/measurement.mjs | [coverage-gate-078] refuse the input file at .gev-cachex/ignored.test.mjs |
+| 080-commit-name | scripts/spec/lib/measurement.mjs | [coverage-gate-080] refuse a commit that Git cannot find |
+| 095-test-class | scripts/spec/lib/measurement.mjs | [coverage-gate-095] refuse a new test file at openspec/changes/code.test.mjs |
+| 095-code-class | scripts/spec/lib/measurement.mjs | [coverage-gate-095] refuse a new code file at openspec/changes/code.js |
+| 096-commit-hash | scripts/spec/lib/measurement.mjs | [coverage-gate-096] refuse a commit ref in history |
+| 083-check-command | scripts/spec/gates.mjs | [coverage-gate-083] name the full check command |
+| 011-precheck-status | Makefile | [ci-gates-011] add fast checks before review |
+| 126-history-after | scripts/spec/gates.mjs | [gap-ledger-126] read the new totals history line for the base ledger |
+| 075-root | scripts/spec/lib/measurement.mjs | [coverage-gate-075 coverage-gate-078] refuse the input file at Dockerfileprod |
+| 075-nested | scripts/spec/lib/measurement.mjs | [coverage-gate-075 coverage-gate-078] refuse the input file at containers/Dockerfile.gates |
+| 075-suffix | scripts/spec/lib/measurement.mjs | [coverage-gate-075 coverage-gate-078] refuse the input file at Dockerfileprod |
+| 076-root | scripts/spec/lib/measurement.mjs | [coverage-gate-076 coverage-gate-078] refuse the input file at containers/compose.gates.yaml |
+| 076-prefix | scripts/spec/lib/measurement.mjs | [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml |
+| 076-suffix | scripts/spec/lib/measurement.mjs | [coverage-gate-076 coverage-gate-078] refuse the input file at containers/compose.gates.yaml |
+| 076-yaml | scripts/spec/lib/measurement.mjs | [coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml |
+| 076-yml | scripts/spec/lib/measurement.mjs | [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml |
+| 075-boundary | scripts/spec/lib/measurement.mjs | [coverage-gate-075] do not protect the ignored file MyDockerfile |
+| 075-end | scripts/spec/lib/measurement.mjs | [coverage-gate-075] do not protect the ignored file Dockerfile.dir/notes.txt |
+| 075-no-slash | scripts/spec/lib/measurement.mjs | [coverage-gate-075] do not protect the ignored file Dockerfile.dir/notes.txt |
+| 076-prefix-characters | scripts/spec/lib/measurement.mjs | [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml |
+| 076-suffix-no-slash | scripts/spec/lib/measurement.mjs | [coverage-gate-076] do not protect the ignored file compose/other.yaml |
+| 076-dot | scripts/spec/lib/measurement.mjs | [coverage-gate-076] do not protect the ignored file composeyml |
+| 076-end | scripts/spec/lib/measurement.mjs | [coverage-gate-076] do not protect the ignored file compose.yaml.extra |
+| 096-start | scripts/spec/lib/measurement.mjs | [coverage-gate-096] refuse a commit hash with prefix |
+| 096-end | scripts/spec/lib/measurement.mjs | [coverage-gate-096] refuse a commit hash with suffix |
+| 096-length | scripts/spec/lib/measurement.mjs | [coverage-gate-096] refuse a short commit hash |
+| 096-hex | scripts/spec/lib/measurement.mjs | [coverage-gate-096] refuse a commit hash with letters |
+| 033-input-correction | .claude/commands/opsx/review.md | [change-review-033] keep the final measurement |
+| 094-marker-cleanup | Makefile | [coverage-gate-094] keep cache source contents after the container ends |
+| 094-marker-list | Makefile | [coverage-gate-094] keep cache source contents after the container ends |
+| 094-marker-no-list | Makefile | [coverage-gate-094] copy cache contents without a marker list |
+| 097-copy-status | Makefile | [coverage-gate-097] stop before the container copies files when a marker cannot be removed |
+| 011-precheck-import-status | Makefile | [ci-gates-011] add fast checks before review |
+| 011-precheck-boundary-status | Makefile | [ci-gates-011] add fast checks before review |
+| 152 | Makefile | [coverage-gate-099] check the marker class at scripts/spec/x.mjs |
+| 153 | Makefile | [coverage-gate-099] check the marker class at package.json |
+| 154 | Makefile | [coverage-gate-099] check the marker class at package-lock.json |
+| 155 | Makefile | [coverage-gate-099] check the marker class at .node-version |
+| 156 | Makefile | [coverage-gate-099] check the marker class at Makefile |
+| 157 | Makefile | [coverage-gate-099] check the marker class at scripts/qa-x.mjs |
+| 158 | Makefile | [coverage-gate-099] check the marker class at src/a.test.mjs |
+| 159 | Makefile | [coverage-gate-099] check the marker class at Dockerfile |
+| 160 | Makefile | [coverage-gate-099] check the marker class at compose.yaml |
+| 161 | Makefile | [coverage-gate-099] check the marker class at containers/compose.gates.yml |
+| 162 | Makefile | [coverage-gate-099] check the marker class at src/deep/x.js |
+| 163 | Makefile | [coverage-gate-099] check the marker class at src/deep/x.mjs |
+| 164 | Makefile | [coverage-gate-099] check the marker class at src/deep/x.cjs |
+| 165 | Makefile | [coverage-gate-099] check the marker class at src/deep/x.ts |
+| 166 | Makefile | [coverage-gate-099] check the marker class at src/deep/x.mts |
+| 167 | Makefile | [coverage-gate-099] check the marker class at src/deep/x.cts |
+| 168 | Makefile | [coverage-gate-099] check the marker class at src/deep/x.jsx |
+| 169 | Makefile | [coverage-gate-099] check the marker class at src/deep/x.tsx |
+| 170 | Makefile | [coverage-gate-099] check the marker class at src/deep/x.html |
+| 171 | Makefile | [coverage-gate-099] check the marker class at src/deep/x.sh |
+| 172 | Makefile | [coverage-gate-099] check the marker class at node_modules/x.js |
+| 173 | Makefile | [coverage-gate-099] check the marker class at .gev-cache/x.js |
+| 174 | scripts/spec/gates.mjs | [coverage-gate-100] check QA capability names without tests |
+| 175 | scripts/spec/lib/measurement.mjs | [coverage-gate-098] refuse a prefix inside docs/openspec/changes/x.md |
+| 176 | scripts/spec/gates.mjs | [coverage-gate-083] omit time lines for lint |
+| 177 | scripts/spec/gates.mjs | [coverage-gate-083] omit time lines for init |
+| 178 | scripts/spec/gates.mjs | [coverage-gate-083] omit time lines for adopt |
+| 179 | scripts/spec/gates.mjs | [coverage-gate-083] omit time lines for waive |
+| 180 | scripts/spec/gates.mjs | [coverage-gate-083] omit time lines for rebaseline |
+| 181 | scripts/spec/gates.mjs | [coverage-gate-083] omit time lines for tree |
+| 182 | scripts/spec/gates.mjs | [coverage-gate-083] omit time lines for ci |
+| 183 | scripts/spec/gates.mjs | [gap-ledger-135] include new trace content in the review tree |
+| 184 | scripts/spec/lib/measurement.mjs | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD |
+| 185 | scripts/spec/lib/measurement.mjs | [coverage-gate-087] refuse a failed Git comparison |
+| 186 | scripts/spec/lib/measurement.mjs | [coverage-gate-082] refuse an absent snapshot |
+| 187 | scripts/spec/lib/measurement.mjs | [coverage-gate-082] refuse an absent snapshot |
+| 188 | scripts/spec/lib/measurement.mjs | [coverage-gate-079] refuse without a change name |
+| 189 | AGENTS.md | [change-review-033] pin the agent verdict and final tree instructions |
+| 190 | AGENTS.md | [change-review-033] pin the agent verdict and final tree instructions |
+| 191 | scripts/spec/gates.mjs | [coverage-gate-068] trust a changed document |
+| 192 | scripts/spec/lib/measurement.mjs | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD |
+
+### Exact mutation changes
 
 ```json
 [
@@ -344,7 +425,7 @@ The next block gives the exact old code, new code and failed test for each row.
   {
     "id": "124-review",
     "file": "scripts/spec/gates.mjs",
-    "old": "...(folder ? checkChangeReview(root, change, { treeHash: computeTreeHash({ root, changeDir: folder, diffFiles }) }) : []),",
+    "old": "...(folder ? checkChangeReview(root, change, { treeHash: computeTreeHash({ root, changeDir: folder, diffFiles: reviewFiles }) }) : []),",
     "new": "...[],",
     "test": [
       "src/tooling/spec/gates.test.mjs"
@@ -372,7 +453,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "gap-ledger-126",
-    "failed_test": "[gap-ledger-126] compare repaired ledger values"
+    "failed_test": "[gap-ledger-126] compare repaired ledger values; [gap-ledger-126] repair absent totals and stale test names"
   },
   {
     "id": "069-path",
@@ -449,7 +530,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-075",
-    "failed_test": "[coverage-gate-075 coverage-gate-078] refuse an ignored file at Dockerfile"
+    "failed_test": "[coverage-gate-075 coverage-gate-078] refuse an ignored file at Dockerfile; [coverage-gate-075 coverage-gate-078] refuse the input file at Dockerfileprod; [coverage-gate-075 coverage-gate-078] refuse the input file at containers/Dockerfile.gates"
   },
   {
     "id": "076-path",
@@ -460,7 +541,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-076",
-    "failed_test": "[coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml"
+    "failed_test": "[coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml; [coverage-gate-076 coverage-gate-078] refuse the input file at containers/compose.gates.yaml; [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml"
   },
   {
     "id": "077-path",
@@ -482,7 +563,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-078",
-    "failed_test": "[coverage-gate-078] refuse an untracked code file"
+    "failed_test": "[coverage-gate-078] refuse an untracked code file; [coverage-gate-078] refuse an untracked input file"
   },
   {
     "id": "079-history",
@@ -504,7 +585,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-079",
-    "failed_test": "[coverage-gate-079] refuse history from another change or command"
+    "failed_test": "[coverage-gate-079] refuse history from another change or command; [coverage-gate-079] refuse without a change name"
   },
   {
     "id": "080-commit",
@@ -614,7 +695,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-085",
-    "failed_test": "[coverage-gate-085] check the base registry without tests"
+    "failed_test": "[coverage-gate-085] check the base registry without tests; [coverage-gate-085] keep every file check"
   },
   {
     "id": "085-specs",
@@ -680,7 +761,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-068",
-    "failed_test": "[coverage-gate-068] set the document option on the options object"
+    "failed_test": "[coverage-gate-068] set the document option on the options object; [coverage-gate-068] trust a changed document"
   },
   {
     "id": "068-dependencies",
@@ -779,7 +860,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "gap-ledger-126",
-    "failed_test": "[gap-ledger-126] compare repaired ledger values"
+    "failed_test": "[gap-ledger-126] compare repaired ledger values; [gap-ledger-126] repair absent totals and stale test names"
   },
   {
     "id": "126-version",
@@ -834,7 +915,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-083",
-    "failed_test": "[coverage-gate-083] name the full check command"
+    "failed_test": "[coverage-gate-083] name the full check command; [coverage-gate-083] show command times"
   },
   {
     "id": "083-ratchet-time",
@@ -900,7 +981,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "gap-ledger-129",
-    "failed_test": "[gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes"
+    "failed_test": "[gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes; [gap-ledger-129] record a different change without a changed gap; [gap-ledger-129] record a different hash without a changed gap"
   },
   {
     "id": "129-commit",
@@ -977,7 +1058,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-069",
-    "failed_test": "[coverage-gate-069 coverage-gate-092] refuse a moved code file"
+    "failed_test": "[coverage-gate-069 coverage-gate-092] refuse a moved code file; [coverage-gate-069] refuse a changed inventory file; [coverage-gate-069] refuse a deleted input file"
   },
   {
     "id": "078-inventory",
@@ -1274,7 +1355,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-088",
-    "failed_test": "[coverage-gate-088] refuse an omitted input file"
+    "failed_test": "[coverage-gate-088] refuse an omitted protected ignored file"
   },
   {
     "id": "088-file",
@@ -1285,7 +1366,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-088",
-    "failed_test": "[coverage-gate-088] refuse an omitted input file"
+    "failed_test": "[coverage-gate-088] refuse an omitted protected ignored file"
   },
   {
     "id": "088-content",
@@ -1296,7 +1377,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-088",
-    "failed_test": "[coverage-gate-088] refuse an omitted input file"
+    "failed_test": "[coverage-gate-088] refuse an omitted protected ignored file"
   },
   {
     "id": "088-exists",
@@ -1307,7 +1388,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-088",
-    "failed_test": "[coverage-gate-088] refuse an omitted input file"
+    "failed_test": "[coverage-gate-088] refuse an omitted protected ignored file"
   },
   {
     "id": "089-changes",
@@ -1340,7 +1421,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-089",
-    "failed_test": "[coverage-gate-078 coverage-gate-089] trust other ignored files"
+    "failed_test": "[coverage-gate-078 coverage-gate-089] trust other ignored files; [coverage-gate-089] trust a changed file at openspec/changes/archive/x/notes.md; [coverage-gate-089] trust a changed file at openspec/specs/x.md; [coverage-gate-089] trust a changed file at openspec/trace/gaps.json"
   },
   {
     "id": "091-slash",
@@ -1351,7 +1432,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-091",
-    "failed_test": "[coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/changes-old/x.md"
+    "failed_test": "[coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/changes-old/x.md; [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/specs.md; [coverage-gate-091] refuse the input file at openspec/tracex/f.md"
   },
   {
     "id": "092-second-name",
@@ -1362,7 +1443,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-092",
-    "failed_test": "[coverage-gate-069 coverage-gate-092] refuse a moved code file"
+    "failed_test": "[coverage-gate-069 coverage-gate-092] refuse a moved code file; [coverage-gate-092] refuse a moved file from docs/base.md"
   },
   {
     "id": "090-all-paths",
@@ -1373,7 +1454,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-090",
-    "failed_test": "[coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/agents/x.md"
+    "failed_test": "[coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/agents/x.md; [coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/commands/opsx/review.md; [coverage-gate-090 coverage-gate-091] refuse a changed file at .github/workflows/x.yaml; [coverage-gate-090 coverage-gat"
   },
   {
     "id": "078-ignored",
@@ -1384,7 +1465,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "ignored file",
-    "failed_test": "[coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs"
+    "failed_test": "[coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs; [coverage-gate-071 coverage-gate-078] refuse an ignored file at scripts/qa-ignored.mjs; [coverage-gate-072 coverage-gate-078] refuse an ignored file at package-lock.json; [coverage-gate-074 coverage-gate-078] refuse an ignored file at Makefile"
   },
   {
     "id": "078-cache",
@@ -1417,7 +1498,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-093",
-    "failed_test": "[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD"
+    "failed_test": "[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD"
   },
   {
     "id": "130-dirty-field",
@@ -1428,7 +1509,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "gap-ledger-130",
-    "failed_test": "[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD"
+    "failed_test": "[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD; [gap-ledger-130 gap-ledger-132] sort the dirty list and compare repeated history"
   },
   {
     "id": "131-empty-field",
@@ -1450,7 +1531,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "gap-ledger-132",
-    "failed_test": "[gap-ledger-130 gap-ledger-132] sort dirty names and compare repeated history"
+    "failed_test": "[gap-ledger-130 gap-ledger-132] sort the dirty list and compare repeated history"
   },
   {
     "id": "130-dirty-paths",
@@ -1461,7 +1542,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "gap-ledger-130",
-    "failed_test": "[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD"
+    "failed_test": "[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD; [gap-ledger-130 gap-ledger-132] sort the dirty list and compare repeated history"
   },
   {
     "id": "130-git-failure",
@@ -1559,8 +1640,8 @@ The next block gives the exact old code, new code and failed test for each row.
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
-    "pattern": "sort dirty names",
-    "failed_test": "[gap-ledger-130 gap-ledger-132] sort dirty names and compare repeated history"
+    "pattern": "sort the dirty list",
+    "failed_test": "[gap-ledger-130 gap-ledger-132] sort the dirty list and compare repeated history"
   },
   {
     "id": "078-inventory-source",
@@ -1637,7 +1718,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-095",
-    "failed_test": "[coverage-gate-095] refuse a new test file at openspec/changes/code.test.mjs"
+    "failed_test": "[coverage-gate-095] refuse a new test file at openspec/changes/code.test.mjs; [coverage-gate-095] refuse a new test file at openspec/specs/code.test.mjs; [coverage-gate-095] refuse a new test file at openspec/trace/code.test.mjs; [coverage-gate-095] refuse a tracked test file at openspec/changes/code.test.mjs"
   },
   {
     "id": "095-code-class",
@@ -1648,7 +1729,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-095",
-    "failed_test": "[coverage-gate-095] refuse a new code file at openspec/changes/code.js"
+    "failed_test": "[coverage-gate-095] refuse a new code file at openspec/changes/code.js; [coverage-gate-095] refuse a new code file at openspec/specs/code.js; [coverage-gate-095] refuse a new code file at openspec/trace/code.js; [coverage-gate-095] refuse a tracked code file at openspec/changes/code.js; [coverage-ga"
   },
   {
     "id": "096-commit-hash",
@@ -1790,8 +1871,8 @@ The next block gives the exact old code, new code and failed test for each row.
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
-    "pattern": "ignored name MyDockerfile",
-    "failed_test": "[coverage-gate-075] exclude the ignored name MyDockerfile"
+    "pattern": "ignored file MyDockerfile",
+    "failed_test": "[coverage-gate-075] do not protect the ignored file MyDockerfile"
   },
   {
     "id": "075-end",
@@ -1801,8 +1882,8 @@ The next block gives the exact old code, new code and failed test for each row.
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
-    "pattern": "ignored name Dockerfile.dir/notes.txt",
-    "failed_test": "[coverage-gate-075] exclude the ignored name Dockerfile.dir/notes.txt"
+    "pattern": "ignored file Dockerfile.dir/notes.txt",
+    "failed_test": "[coverage-gate-075] do not protect the ignored file Dockerfile.dir/notes.txt"
   },
   {
     "id": "075-no-slash",
@@ -1812,8 +1893,8 @@ The next block gives the exact old code, new code and failed test for each row.
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
-    "pattern": "ignored name Dockerfile.dir/notes.txt",
-    "failed_test": "[coverage-gate-075] exclude the ignored name Dockerfile.dir/notes.txt"
+    "pattern": "ignored file Dockerfile.dir/notes.txt",
+    "failed_test": "[coverage-gate-075] do not protect the ignored file Dockerfile.dir/notes.txt"
   },
   {
     "id": "076-prefix-characters",
@@ -1834,8 +1915,8 @@ The next block gives the exact old code, new code and failed test for each row.
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
-    "pattern": "ignored name compose/other.yaml",
-    "failed_test": "[coverage-gate-076] exclude the ignored name compose/other.yaml"
+    "pattern": "ignored file compose/other.yaml",
+    "failed_test": "[coverage-gate-076] do not protect the ignored file compose/other.yaml"
   },
   {
     "id": "076-dot",
@@ -1845,8 +1926,8 @@ The next block gives the exact old code, new code and failed test for each row.
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
-    "pattern": "ignored name composeyml",
-    "failed_test": "[coverage-gate-076] exclude the ignored name composeyml"
+    "pattern": "ignored file composeyml",
+    "failed_test": "[coverage-gate-076] do not protect the ignored file composeyml"
   },
   {
     "id": "076-end",
@@ -1856,8 +1937,8 @@ The next block gives the exact old code, new code and failed test for each row.
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
-    "pattern": "ignored name compose.yaml.extra",
-    "failed_test": "[coverage-gate-076] exclude the ignored name compose.yaml.extra"
+    "pattern": "ignored file compose.yaml.extra",
+    "failed_test": "[coverage-gate-076] do not protect the ignored file compose.yaml.extra"
   },
   {
     "id": "096-start",
@@ -1868,7 +1949,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "commit hash with prefix",
-    "failed_test": "[coverage-gate-096] refuse the commit hash with prefix"
+    "failed_test": "[coverage-gate-096] refuse a commit hash with prefix"
   },
   {
     "id": "096-end",
@@ -1879,7 +1960,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "commit hash with suffix",
-    "failed_test": "[coverage-gate-096] refuse the commit hash with suffix"
+    "failed_test": "[coverage-gate-096] refuse a commit hash with suffix"
   },
   {
     "id": "096-length",
@@ -1889,8 +1970,8 @@ The next block gives the exact old code, new code and failed test for each row.
     "test": [
       "src/tooling/spec/gates.test.mjs"
     ],
-    "pattern": "commit hash with short",
-    "failed_test": "[coverage-gate-096] refuse the commit hash with short"
+    "pattern": "refuse a short commit hash",
+    "failed_test": "[coverage-gate-096] refuse a short commit hash"
   },
   {
     "id": "096-hex",
@@ -1901,7 +1982,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "commit hash with letters",
-    "failed_test": "[coverage-gate-096] refuse the commit hash with letters"
+    "failed_test": "[coverage-gate-096] refuse a commit hash with letters"
   },
   {
     "id": "033-input-correction",
@@ -1956,7 +2037,7 @@ The next block gives the exact old code, new code and failed test for each row.
       "src/tooling/spec/gates.test.mjs"
     ],
     "pattern": "coverage-gate-097",
-    "failed_test": "[coverage-gate-097] stop before the container copies files after a marker error"
+    "failed_test": "[coverage-gate-097] stop before the container copies files when a marker cannot be removed"
   },
   {
     "id": "011-precheck-import-status",
@@ -1979,94 +2060,675 @@ The next block gives the exact old code, new code and failed test for each row.
     ],
     "pattern": "ci-gates-011",
     "failed_test": "[ci-gates-011] add fast checks before review"
+  },
+  {
+    "id": "152",
+    "file": "Makefile",
+    "old": " \"scripts/spec\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at scripts/spec/x.mjs"
+  },
+  {
+    "id": "153",
+    "file": "Makefile",
+    "old": " \"package.json\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at package.json"
+  },
+  {
+    "id": "154",
+    "file": "Makefile",
+    "old": " \"package-lock.json\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at package-lock.json"
+  },
+  {
+    "id": "155",
+    "file": "Makefile",
+    "old": " \".node-version\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at .node-version"
+  },
+  {
+    "id": "156",
+    "file": "Makefile",
+    "old": " \"Makefile\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at Makefile"
+  },
+  {
+    "id": "157",
+    "file": "Makefile",
+    "old": " \":(glob)scripts/qa-*.mjs\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at scripts/qa-x.mjs"
+  },
+  {
+    "id": "158",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.test.mjs\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/a.test.mjs"
+  },
+  {
+    "id": "159",
+    "file": "Makefile",
+    "old": " \":(glob)**/Dockerfile*\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at Dockerfile; [coverage-gate-099] check the marker class at containers/Dockerfile.gates"
+  },
+  {
+    "id": "160",
+    "file": "Makefile",
+    "old": " \":(glob)**/*compose*.yaml\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at compose.yaml; [coverage-gate-099] check the marker class at containers/compose.gates.yaml"
+  },
+  {
+    "id": "161",
+    "file": "Makefile",
+    "old": " \":(glob)**/*compose*.yml\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at containers/compose.gates.yml; [coverage-gate-099] check the marker class at docker-compose.yml"
+  },
+  {
+    "id": "162",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.js\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/deep/x.js"
+  },
+  {
+    "id": "163",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.mjs\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/deep/x.mjs"
+  },
+  {
+    "id": "164",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.cjs\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/deep/x.cjs"
+  },
+  {
+    "id": "165",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.ts\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/deep/x.ts"
+  },
+  {
+    "id": "166",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.mts\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/deep/x.mts"
+  },
+  {
+    "id": "167",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.cts\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/deep/x.cts"
+  },
+  {
+    "id": "168",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.jsx\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/deep/x.jsx"
+  },
+  {
+    "id": "169",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.tsx\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/deep/x.tsx"
+  },
+  {
+    "id": "170",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.html\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/deep/x.html"
+  },
+  {
+    "id": "171",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.sh\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at src/deep/x.sh"
+  },
+  {
+    "id": "172",
+    "file": "Makefile",
+    "old": " \":(exclude,glob)**/node_modules/**\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at node_modules/x.js"
+  },
+  {
+    "id": "173",
+    "file": "Makefile",
+    "old": " \":(exclude,glob).gev-cache/**\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099",
+    "failed_test": "[coverage-gate-099] check the marker class at .gev-cache/x.js"
+  },
+  {
+    "id": "174",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...trace.errors, ...qa.errors], links:",
+    "new": "...trace.errors], links:",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-100",
+    "failed_test": "[coverage-gate-100] check QA capability names without tests"
+  },
+  {
+    "id": "175",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "file.startsWith(prefix)",
+    "new": "file.includes(prefix)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-098",
+    "failed_test": "[coverage-gate-098] refuse a prefix inside docs/openspec/changes/x.md; [coverage-gate-098] refuse a prefix inside docs/openspec/trace/x.md; [coverage-gate-098] refuse a prefix inside src/openspec/specs/x.md"
+  },
+  {
+    "id": "176",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'lint' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for lint",
+    "failed_test": "[coverage-gate-083] omit time lines for lint"
+  },
+  {
+    "id": "177",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'init' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for init",
+    "failed_test": "[coverage-gate-083] omit time lines for init"
+  },
+  {
+    "id": "178",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'adopt' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for adopt",
+    "failed_test": "[coverage-gate-083] omit time lines for adopt"
+  },
+  {
+    "id": "179",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'waive' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for waive",
+    "failed_test": "[coverage-gate-083] omit time lines for waive"
+  },
+  {
+    "id": "180",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'rebaseline' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for rebaseline",
+    "failed_test": "[coverage-gate-083] omit time lines for rebaseline"
+  },
+  {
+    "id": "181",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'tree' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for tree",
+    "failed_test": "[coverage-gate-083] omit time lines for tree"
+  },
+  {
+    "id": "182",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'ci' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for ci",
+    "failed_test": "[coverage-gate-083] omit time lines for ci"
+  },
+  {
+    "id": "183",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const reviewFiles = command === 'ratchet' ? diffNames(root, base) : diffFiles;",
+    "new": "const reviewFiles = diffFiles;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-135",
+    "failed_test": "[gap-ledger-135] include new trace content in the review tree"
+  },
+  {
+    "id": "184",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "files: line.dirty, commit: line.commit",
+    "new": "files: line.dirty, commit: 'none'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-093",
+    "failed_test": "[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD"
+  },
+  {
+    "id": "185",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "return { ...difference, commit };",
+    "new": "return { ...difference, commit: 'none' };",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-087",
+    "failed_test": "[coverage-gate-087] refuse a failed Git comparison"
+  },
+  {
+    "id": "186",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "reason: 'The ratchet snapshot is absent', files: [], commit",
+    "new": "reason: 'The ratchet snapshot is absent', files: [], commit: 'none'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-082",
+    "failed_test": "[coverage-gate-082] refuse an absent snapshot"
+  },
+  {
+    "id": "187",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "reason: 'The snapshot hash differs from history', files: [], commit",
+    "new": "reason: 'The snapshot hash differs from history', files: [], commit: 'none'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-082",
+    "failed_test": "[coverage-gate-082] refuse an absent snapshot"
+  },
+  {
+    "id": "188",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "reason: 'The change has no ratchet history line', files: [], commit: 'none'",
+    "new": "reason: 'The change has no ratchet history line', files: [], commit: 'HEAD'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-079",
+    "failed_test": "[coverage-gate-079] refuse without a change name; [coverage-gate-079] refuse without ratchet history"
+  },
+  {
+    "id": "189",
+    "file": "AGENTS.md",
+    "old": "9. Read the first line of the log to find which command ran.",
+    "new": "9. Read the last line of the log to find which command ran.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "pin the agent",
+    "failed_test": "[change-review-033] pin the agent verdict and final tree instructions"
+  },
+  {
+    "id": "190",
+    "file": "AGENTS.md",
+    "old": "6. Run `make gates CHANGE=<name>` on the final tree.",
+    "new": "6. Read the final tree.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "pin the agent",
+    "failed_test": "[change-review-033] pin the agent verdict and final tree instructions"
+  },
+  {
+    "id": "191",
+    "file": "scripts/spec/gates.mjs",
+    "old": "NO TEST RUN: the mode trusts the snapshot of commit ${trusted.commit}",
+    "new": "NO TEST RUN: the snapshot of commit ${trusted.commit} is trusted",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-068",
+    "failed_test": "[coverage-gate-068] trust a changed document"
+  },
+  {
+    "id": "192",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "The ratchet ran with input files, code files or test files that differ from HEAD",
+    "new": "The ratchet ran with changed files",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-093",
+    "failed_test": "[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD"
   }
 ]
 ```
 
-New rows:
+## Scenario map
 
-```text
-094-cache-marker
-094-cache-back
-091-trace-slash
-078-cache-slash
-080-commit-name
-095-test-class
-095-code-class
-096-commit-hash
-083-check-command
-011-precheck-status
-126-history-after
-075-root
-075-nested
-075-suffix
-076-root
-076-prefix
-076-suffix
-076-yaml
-076-yml
-075-boundary
-075-end
-075-no-slash
-076-prefix-characters
-076-suffix-no-slash
-076-dot
-076-end
-096-start
-096-end
-096-length
-096-hex
-033-input-correction
-094-marker-cleanup
-094-marker-list
-094-marker-no-list
-097-copy-status
-011-precheck-import-status
-011-precheck-boundary-status
-```
+| Scenario | Test |
+|---|---|
+| gap-ledger-123 | compare one ratchet measurement |
+| gap-ledger-124 | fail for an absent review |
+| gap-ledger-125 | pass after all comparisons |
+| gap-ledger-126 | compare repaired ledger values |
+| coverage-gate-068 | trust a changed document |
+| coverage-gate-069 | refuse a changed inventory file |
+| coverage-gate-070 | refuse a changed test file |
+| coverage-gate-071 | refuse a changed QA script |
+| coverage-gate-072 | refuse a changed package lock |
+| coverage-gate-073 | refuse a changed Node version |
+| coverage-gate-074 | refuse a changed Makefile |
+| coverage-gate-075 | refuse a changed Dockerfile |
+| coverage-gate-075 | refuse a changed Dockerfile at `containers/Dockerfile.gates` |
+| coverage-gate-075 | refuse a changed Dockerfile at `Dockerfileprod` |
+| coverage-gate-076 | refuse a changed compose file |
+| coverage-gate-076 | refuse a changed compose file at `docker-compose.yml` |
+| coverage-gate-076 | refuse a changed compose file at `containers/compose.gates.yaml` |
+| coverage-gate-077 | refuse a changed gate input file |
+| coverage-gate-078 | refuse an untracked input file |
+| coverage-gate-079 | refuse without ratchet history |
+| coverage-gate-080 | refuse a commit that Git cannot find |
+| coverage-gate-081 | refuse a changed word list |
+| coverage-gate-082 | refuse an absent snapshot |
+| coverage-gate-083 | show command times |
+| coverage-gate-084 | show slow phase times |
+| coverage-gate-085 | keep every file check |
+| ci-gates-011 | add fast checks before review |
+| ci-gates-012 | add a document gate target |
+| change-review-033 | keep the final measurement |
+| coverage-gate-079 | refuse history from another change or command |
+| coverage-gate-085 | check OpenSpec without tests |
+| coverage-gate-085 | check coverage filters without tests |
+| coverage-gate-085 | check archived specs without tests |
+| coverage-gate-069 | refuse a deleted input file |
+| gap-ledger-127 | record a snapshot when no gap changes |
+| gap-ledger-128 | record a snapshot when no gap changes |
+| gap-ledger-129 | record a snapshot when no gap changes |
+| gap-ledger-126 | repair absent totals and stale test names |
+| coverage-gate-078 | refuse a protected ignored file |
+| coverage-gate-086 | refuse changed package metadata |
+| coverage-gate-087 | refuse a failed Git comparison |
+| coverage-gate-068 | set the document option on the options object |
+| gap-ledger-129 | record a different hash without a changed gap |
+| gap-ledger-129 | record a different change without a changed gap |
+| coverage-gate-085 | report a change folder that is absent |
+| coverage-gate-079 | refuse without a change name |
+| coverage-gate-085 | compare the ledger with the base without tests |
+| coverage-gate-069 | refuse a new tracked inventory file |
+| coverage-gate-078 | refuse an untracked code file |
+| coverage-gate-085 | check the base registry without tests |
+| coverage-gate-085 | check all review files without tests |
+| coverage-gate-083 | keep the CI verdict without command times |
+| coverage-gate-088 | refuse an omitted protected ignored file |
+| coverage-gate-090 | refuse a changed file at AGENTS.md |
+| coverage-gate-091 | refuse a changed file at AGENTS.md |
+| coverage-gate-090 | refuse a changed file at .claude/commands/opsx/review.md |
+| coverage-gate-091 | refuse a changed file at .claude/commands/opsx/review.md |
+| coverage-gate-090 | refuse a changed file at .claude/agents/x.md |
+| coverage-gate-091 | refuse a changed file at .claude/agents/x.md |
+| coverage-gate-090 | refuse a changed file at docs/x.md |
+| coverage-gate-091 | refuse a changed file at docs/x.md |
+| coverage-gate-090 | refuse a changed file at .github/workflows/x.yaml |
+| coverage-gate-091 | refuse a changed file at .github/workflows/x.yaml |
+| coverage-gate-090 | refuse a changed file at fixtures/x.json |
+| coverage-gate-091 | refuse a changed file at fixtures/x.json |
+| coverage-gate-090 | refuse a changed file at openspec/config.yaml |
+| coverage-gate-091 | refuse a changed file at openspec/config.yaml |
+| coverage-gate-090 | refuse a changed file at openspec/other.yaml |
+| coverage-gate-091 | refuse a changed file at openspec/other.yaml |
+| coverage-gate-090 | refuse a changed file at openspec/changes-old/x.md |
+| coverage-gate-091 | refuse a changed file at openspec/changes-old/x.md |
+| coverage-gate-090 | refuse a changed file at openspec/specs.md |
+| coverage-gate-091 | refuse a changed file at openspec/specs.md |
+| coverage-gate-089 | trust a changed file at openspec/changes/archive/x/notes.md |
+| coverage-gate-089 | trust a changed file at openspec/specs/x.md |
+| coverage-gate-089 | trust a changed file at openspec/trace/gaps.json |
+| coverage-gate-092 | refuse a moved file from openspec/changes/add-demo/design.md |
+| coverage-gate-092 | refuse a moved file from docs/base.md |
+| coverage-gate-093 | refuse a ratchet with changed files after their content returns to HEAD |
+| gap-ledger-130 | refuse a ratchet with changed files after their content returns to HEAD |
+| gap-ledger-132 | refuse a ratchet with changed files after their content returns to HEAD |
+| gap-ledger-131 | accept clean history without a dirty field |
+| gap-ledger-133 | accept clean history without a dirty field |
+| coverage-gate-069 | refuse an ignored file from the code inventory |
+| coverage-gate-078 | refuse an ignored file from the code inventory |
+| coverage-gate-070 | refuse an ignored file at node_modules-old/ignored.test.mjs |
+| coverage-gate-078 | refuse an ignored file at node_modules-old/ignored.test.mjs |
+| coverage-gate-071 | refuse an ignored file at scripts/qa-ignored.mjs |
+| coverage-gate-078 | refuse an ignored file at scripts/qa-ignored.mjs |
+| coverage-gate-072 | refuse an ignored file at package-lock.json |
+| coverage-gate-078 | refuse an ignored file at package-lock.json |
+| coverage-gate-074 | refuse an ignored file at Makefile |
+| coverage-gate-078 | refuse an ignored file at Makefile |
+| coverage-gate-075 | refuse an ignored file at Dockerfile |
+| coverage-gate-078 | refuse an ignored file at Dockerfile |
+| coverage-gate-076 | refuse an ignored file at compose.yaml |
+| coverage-gate-078 | refuse an ignored file at compose.yaml |
+| coverage-gate-077 | refuse an ignored file at scripts/spec/ignored.txt |
+| coverage-gate-078 | refuse an ignored file at scripts/spec/ignored.txt |
+| coverage-gate-086 | refuse an ignored file at package.json |
+| coverage-gate-078 | refuse an ignored file at package.json |
+| coverage-gate-078 | trust other ignored files |
+| coverage-gate-089 | trust other ignored files |
+| coverage-gate-090 | refuse a staged file edit |
+| coverage-gate-090 | refuse an untracked input file |
+| coverage-gate-069 | refuse a deleted test file |
+| coverage-gate-073 | classify the ignored Node version |
+| coverage-gate-078 | classify the ignored Node version |
+| gap-ledger-130 | refuse a failed ratchet file comparison |
+| gap-ledger-130 | sort the dirty list and compare repeated history |
+| gap-ledger-132 | sort the dirty list and compare repeated history |
+| gap-ledger-134 | add ignored name markers before the ratchet command |
+| coverage-gate-069 | refuse a moved code file |
+| coverage-gate-092 | refuse a moved code file |
+| coverage-gate-094 | keep cache source contents after the container ends |
+| coverage-gate-091 | refuse the input file at openspec/tracex/f.md |
+| coverage-gate-078 | refuse the input file at .gev-cachex/ignored.test.mjs |
+| coverage-gate-075 | refuse the input file at containers/Dockerfile.gates |
+| coverage-gate-078 | refuse the input file at containers/Dockerfile.gates |
+| coverage-gate-075 | refuse the input file at Dockerfileprod |
+| coverage-gate-078 | refuse the input file at Dockerfileprod |
+| coverage-gate-076 | refuse the input file at docker-compose.yml |
+| coverage-gate-078 | refuse the input file at docker-compose.yml |
+| coverage-gate-076 | refuse the input file at containers/compose.gates.yaml |
+| coverage-gate-078 | refuse the input file at containers/compose.gates.yaml |
+| coverage-gate-095 | refuse a new code file at openspec/changes/code.js |
+| coverage-gate-095 | refuse a tracked code file at openspec/changes/code.js |
+| coverage-gate-095 | refuse a new test file at openspec/changes/code.test.mjs |
+| coverage-gate-095 | refuse a tracked test file at openspec/changes/code.test.mjs |
+| coverage-gate-095 | refuse a new code file at openspec/specs/code.js |
+| coverage-gate-095 | refuse a tracked code file at openspec/specs/code.js |
+| coverage-gate-095 | refuse a new test file at openspec/specs/code.test.mjs |
+| coverage-gate-095 | refuse a tracked test file at openspec/specs/code.test.mjs |
+| coverage-gate-095 | refuse a new code file at openspec/trace/code.js |
+| coverage-gate-095 | refuse a tracked code file at openspec/trace/code.js |
+| coverage-gate-095 | refuse a new test file at openspec/trace/code.test.mjs |
+| coverage-gate-095 | refuse a tracked test file at openspec/trace/code.test.mjs |
+| coverage-gate-096 | refuse a commit ref in history |
+| coverage-gate-083 | name the full check command |
+| gap-ledger-126 | read the new totals history line for the base ledger |
+| coverage-gate-069 | classify a protected ignored code file |
+| coverage-gate-078 | classify a protected ignored code file |
+| coverage-gate-075 | do not protect the ignored file MyDockerfile |
+| coverage-gate-075 | do not protect the ignored file nested/MyDockerfile |
+| coverage-gate-075 | do not protect the ignored file Dockerfile.dir/notes.txt |
+| coverage-gate-076 | do not protect the ignored file compose-dir/file.yaml |
+| coverage-gate-076 | do not protect the ignored file compose/other.yaml |
+| coverage-gate-076 | do not protect the ignored file composeyml |
+| coverage-gate-076 | do not protect the ignored file compose.yaml.extra |
+| coverage-gate-096 | refuse a short commit hash |
+| coverage-gate-096 | refuse a commit hash with suffix |
+| coverage-gate-096 | refuse a commit hash with prefix |
+| coverage-gate-096 | refuse a commit hash with letters |
+| coverage-gate-094 | copy cache contents without a marker list |
+| coverage-gate-097 | stop before the container copies files when a marker cannot be removed |
+| coverage-gate-098 | refuse a prefix inside docs/openspec/trace/x.md |
+| coverage-gate-098 | refuse a prefix inside docs/openspec/changes/x.md |
+| coverage-gate-098 | refuse a prefix inside src/openspec/specs/x.md |
+| coverage-gate-083 | omit time lines for lint |
+| coverage-gate-083 | omit time lines for init |
+| coverage-gate-083 | omit time lines for adopt |
+| coverage-gate-083 | omit time lines for waive |
+| coverage-gate-083 | omit time lines for rebaseline |
+| coverage-gate-083 | omit time lines for tree |
+| coverage-gate-083 | omit time lines for ci |
+| coverage-gate-099 | check the marker class at Makefile |
+| coverage-gate-099 | check the marker class at .node-version |
+| coverage-gate-099 | check the marker class at package.json |
+| coverage-gate-099 | check the marker class at package-lock.json |
+| coverage-gate-099 | check the marker class at containers/Dockerfile.gates |
+| coverage-gate-099 | check the marker class at Dockerfile |
+| coverage-gate-099 | check the marker class at docker-compose.yml |
+| coverage-gate-099 | check the marker class at compose.yaml |
+| coverage-gate-099 | check the marker class at containers/compose.gates.yaml |
+| coverage-gate-099 | check the marker class at containers/compose.gates.yml |
+| coverage-gate-099 | check the marker class at scripts/qa-x.mjs |
+| coverage-gate-099 | check the marker class at src/a.test.mjs |
+| coverage-gate-099 | check the marker class at scripts/spec/x.mjs |
+| coverage-gate-099 | check the marker class at src/deep/x.js |
+| coverage-gate-099 | check the marker class at src/deep/x.cjs |
+| coverage-gate-099 | check the marker class at src/deep/x.ts |
+| coverage-gate-099 | check the marker class at src/deep/x.mts |
+| coverage-gate-099 | check the marker class at src/deep/x.cts |
+| coverage-gate-099 | check the marker class at src/deep/x.jsx |
+| coverage-gate-099 | check the marker class at src/deep/x.tsx |
+| coverage-gate-099 | check the marker class at src/deep/x.html |
+| coverage-gate-099 | check the marker class at src/deep/x.sh |
+| coverage-gate-099 | check the marker class at src/deep/x.mjs |
+| coverage-gate-099 | check the marker class at .gev-cache/x.js |
+| coverage-gate-099 | check the marker class at node_modules/x.js |
+| coverage-gate-100 | check QA capability names without tests |
+| gap-ledger-135 | include new trace content in the review tree |
+| change-review-033 | pin the agent verdict and final tree instructions |
 
-Rows with new code or test patterns:
+The table test expands MARKER_FILES into one test for each path.
+The nested prefix, command time and commit hash loops also have one test per value.
+The test process output names every expanded test.
 
-```text
-080-commit
-081-words
-069-tracked
-069-base
-078-inventory
-033-step1
-033-review-inputs
-033-agent-inputs
-088-names
-088-file
-088-content
-088-exists
-134-definition-order
-```
+## Lead probes
 
-The code terms, marker command, input file predicate and review sentences changed those rows.
-The first complete pass had one compose-prefix row that made no test fail.
-The replacement row changes the prefix character class and makes the Docker compose test fail.
-The final complete file contains that replacement.
-
-### C4: Trust probe
+The copy command uses the clone content in the scratch folder.
+The copied probe scripts change only their import path.
+The host helper reads Git output when the host reports EPERM with status zero.
+A Git error with a different status still stops the probe.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/gates-onem && TMPDIR=/home/ianblenke/docker/gev-tools/gates-onem taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/gates-onem/round1-probe-trust2.mjs
+cd /home/ianblenke/docker/gev-work/gates-onem && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/round3-probe-host.mjs /home/ianblenke/docker/gev-tools/gates-onem/round3-probe-trust2.mjs
 ```
 
-All 31 cases match their EXPECT label.
-The extra case for another change also causes refusal.
-The scratch probe uses this clone instead of the old copy.
-The new cases cover code and test files under each allowed path.
-A probe does not prove that a repository test fails.
-
 ```text
-REFUSED  EXPECT REFUSED: new code openspec/changes/new.js — Input files, code files or test files differ from the ratchet commit ["openspec/changes/new.js"]
-REFUSED  EXPECT REFUSED: new test openspec/changes/new.test.mjs — Input files, code files or test files differ from the ratchet commit ["openspec/changes/new.test.mjs"]
-REFUSED  EXPECT REFUSED: new code openspec/specs/new.js — Input files, code files or test files differ from the ratchet commit ["openspec/specs/new.js"]
-REFUSED  EXPECT REFUSED: new test openspec/specs/new.test.mjs — Input files, code files or test files differ from the ratchet commit ["openspec/specs/new.test.mjs"]
-REFUSED  EXPECT REFUSED: new code openspec/trace/new.js — Input files, code files or test files differ from the ratchet commit ["openspec/trace/new.js"]
-REFUSED  EXPECT REFUSED: new test openspec/trace/new.test.mjs — Input files, code files or test files differ from the ratchet commit ["openspec/trace/new.test.mjs"]
 TRUSTED  EXPECT TRUSTED: clean tree
 TRUSTED  EXPECT TRUSTED: edit archived change doc
 TRUSTED  EXPECT TRUSTED: new untracked change doc
@@ -2095,225 +2757,89 @@ REFUSED  EXPECT REFUSED: remove snapshot — The ratchet snapshot is absent
 REFUSED  other change — The change has no ratchet history line
 ```
 
-### C5: Format and prose
+```sh
+cd /home/ianblenke/docker/gev-work/gates-onem && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/round3-probe-host.mjs /home/ianblenke/docker/gev-tools/gates-onem/round3-probe-trust3.mjs
+```
+
+```text
+TRUSTED  EXPECT TRUSTED: clean tree
+TRUSTED  EXPECT TRUSTED: edit archived change doc
+TRUSTED  EXPECT TRUSTED: new untracked change doc
+TRUSTED  EXPECT TRUSTED: edit spec
+TRUSTED  EXPECT TRUSTED: edit trace json
+TRUSTED  EXPECT TRUSTED: node_modules file
+REFUSED  EXPECT REFUSED: docs/readme.md edit — Input files, code files or test files differ from the ratchet commit ["docs/readme.md"]
+REFUSED  EXPECT REFUSED: AGENTS.md edit — Input files, code files or test files differ from the ratchet commit ["AGENTS.md"]
+REFUSED  EXPECT REFUSED: .claude agent edit — Input files, code files or test files differ from the ratchet commit [".claude/agents/a.md"]
+REFUSED  EXPECT REFUSED: openspec/config.yaml edit — Input files, code files or test files differ from the ratchet commit ["openspec/config.yaml"]
+REFUSED  EXPECT REFUSED: openspec/changes-old/x.md (prefix needs slash) — Input files, code files or test files differ from the ratchet commit ["openspec/changes-old/x.md"]
+REFUSED  EXPECT REFUSED: openspec/specs.md — Input files, code files or test files differ from the ratchet commit ["openspec/specs.md"]
+REFUSED  EXPECT REFUSED: openspec/tracex/f.md — Input files, code files or test files differ from the ratchet commit ["openspec/tracex/f.md"]
+REFUSED  EXPECT REFUSED: edit test file — Input files, code files or test files differ from the ratchet commit ["src/a.test.mjs"]
+REFUSED  EXPECT REFUSED: edit code file — Input files, code files or test files differ from the ratchet commit ["src/a.js"]
+REFUSED  EXPECT REFUSED: edit Makefile — Input files, code files or test files differ from the ratchet commit ["Makefile"]
+REFUSED  EXPECT REFUSED: untracked json fixture — Input files, code files or test files differ from the ratchet commit ["src/fixtures/data.json"]
+REFUSED  EXPECT REFUSED: untracked yaml workflow — Input files, code files or test files differ from the ratchet commit [".github/workflows/ci.yml"]
+REFUSED  EXPECT REFUSED: new IGNORED test — Input files, code files or test files differ from the ratchet commit ["ignored.test.mjs"]
+REFUSED  EXPECT REFUSED: rename allowed -> refused — Input files, code files or test files differ from the ratchet commit ["docs/s.md"]
+REFUSED  EXPECT REFUSED: rename refused -> allowed — Input files, code files or test files differ from the ratchet commit ["docs/readme.md"]
+REFUSED  EXPECT REFUSED: delete test — Input files, code files or test files differ from the ratchet commit ["src/a.test.mjs"]
+REFUSED  EXPECT REFUSED: staged code edit — Input files, code files or test files differ from the ratchet commit ["src/a.js"]
+REFUSED  EXPECT REFUSED: edit snapshot — The snapshot hash differs from history
+REFUSED  EXPECT REFUSED: remove snapshot — The ratchet snapshot is absent
+REFUSED  EXPECT REFUSED: untracked test under openspec/changes — Input files, code files or test files differ from the ratchet commit ["openspec/changes/new/q.test.mjs"]
+REFUSED  EXPECT REFUSED: untracked code under openspec/specs — Input files, code files or test files differ from the ratchet commit ["openspec/specs/z.js"]
+REFUSED  EXPECT REFUSED: untracked code under openspec/trace — Input files, code files or test files differ from the ratchet commit ["openspec/trace/z.mjs"]
+TRUSTED  EXPECT TRUSTED: json under openspec/trace
+REFUSED  other change — The change has no ratchet history line
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/gates-onem && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/gates-onem/round3-probe-host.mjs /home/ianblenke/docker/gev-tools/gates-onem/round3-probe-history.mjs
+```
+
+```text
+REFUSED  commit HEAD (ref) — Git cannot find the ratchet commit
+REFUSED  commit abbreviated — Git cannot find the ratchet commit
+REFUSED  dirty field — The ratchet ran with input files, code files or test files that differ from HEAD ["src/a.test.mjs"]
+TRUSTED  clean full hash
+```
+
+Each EXPECT label agrees with its result.
+The history probe refuses refs, short hashes and dirty history, and trusts the full clean hash.
+
+## Format and prose
+
+The plain format command gave EPERM. The host format commands passed.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/gates-onem && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --write
-cd /home/ianblenke/docker/gev-work/gates-onem && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
 ```
-
-The plain format command gave EPERM. The host commands passed.
 
 ```text
 Formatted 1158 source files.
+```
+
+```sh
+cd /home/ianblenke/docker/gev-work/gates-onem && taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+```
+
+```text
 Checked 1158 source files.
 ```
 
-The final lint and predispatch commands are below.
+The final lint and predispatch commands follow.
+The lint output has zero errors and 541 warnings.
+Predispatch gives no real hit. Its hints name Git refs, software messages, report labels and code values.
 
 ```sh
-cd /home/ianblenke/docker/gev-work/gates-onem && taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change gates-one-measurement 2>&1 | grep -E "^(ERROR|STE)"
+cd /home/ianblenke/docker/gev-work/gates-onem && taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change gates-one-measurement
 cd /home/ianblenke/docker/gev-work/gates-onem && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/gates-one-measurement
 ```
 
-The lint command gives zero errors.
-Predispatch gives only abbreviation flags for technical names and literal code or log text.
-The final lint output and predispatch output stay in the scratch folder.
-Predispatch can flag Git names, shell variables, requirement words and literal log text as abbreviations.
+## Final files
 
-## Scenario map
-
-| Scenario | Repository tests |
-|---|---|
-| change-review-033 | [change-review-033] keep the final measurement |
-| ci-gates-011 | [ci-gates-011] add fast checks before review |
-| ci-gates-012 | [ci-gates-012] add a document gate target |
-| coverage-gate-068 | [coverage-gate-068] trust a changed document |
-| coverage-gate-068 | [coverage-gate-068] set the document option on the options object |
-| coverage-gate-069 | [coverage-gate-069] refuse a changed inventory file |
-| coverage-gate-069 | [coverage-gate-069] refuse a deleted input file |
-| coverage-gate-069 | [coverage-gate-069] refuse a new tracked inventory file |
-| coverage-gate-069 | [coverage-gate-069 coverage-gate-078] refuse an ignored file from the code inventory |
-| coverage-gate-069 | [coverage-gate-069] refuse a deleted test file |
-| coverage-gate-069 | [coverage-gate-069 coverage-gate-092] refuse a moved code file |
-| coverage-gate-069 | [coverage-gate-069 coverage-gate-078] classify a protected ignored code file |
-| coverage-gate-070 | [coverage-gate-070] refuse a changed test file |
-| coverage-gate-070 | [coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs |
-| coverage-gate-071 | [coverage-gate-071] refuse a changed QA script |
-| coverage-gate-071 | [coverage-gate-071 coverage-gate-078] refuse an ignored file at scripts/qa-ignored.mjs |
-| coverage-gate-072 | [coverage-gate-072] refuse a changed package lock |
-| coverage-gate-072 | [coverage-gate-072 coverage-gate-078] refuse an ignored file at package-lock.json |
-| coverage-gate-073 | [coverage-gate-073] refuse a changed Node version |
-| coverage-gate-073 | [coverage-gate-073 coverage-gate-078] classify the ignored Node version |
-| coverage-gate-074 | [coverage-gate-074] refuse a changed Makefile |
-| coverage-gate-074 | [coverage-gate-074 coverage-gate-078] refuse an ignored file at Makefile |
-| coverage-gate-075 | [coverage-gate-075] refuse a changed Dockerfile |
-| coverage-gate-075 | [coverage-gate-075] refuse a changed Dockerfile at `containers/Dockerfile.gates` |
-| coverage-gate-075 | [coverage-gate-075] refuse a changed Dockerfile at `Dockerfileprod` |
-| coverage-gate-075 | [coverage-gate-075 coverage-gate-078] refuse an ignored file at Dockerfile |
-| coverage-gate-075 | [coverage-gate-075 coverage-gate-078] refuse the input file at containers/Dockerfile.gates |
-| coverage-gate-075 | [coverage-gate-075 coverage-gate-078] refuse the input file at Dockerfileprod |
-| coverage-gate-075 | [coverage-gate-075] exclude the ignored name MyDockerfile |
-| coverage-gate-075 | [coverage-gate-075] exclude the ignored name nested/MyDockerfile |
-| coverage-gate-075 | [coverage-gate-075] exclude the ignored name Dockerfile.dir/notes.txt |
-| coverage-gate-076 | [coverage-gate-076] refuse a changed compose file |
-| coverage-gate-076 | [coverage-gate-076] refuse a changed compose file at `docker-compose.yml` |
-| coverage-gate-076 | [coverage-gate-076] refuse a changed compose file at `containers/compose.gates.yaml` |
-| coverage-gate-076 | [coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml |
-| coverage-gate-076 | [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml |
-| coverage-gate-076 | [coverage-gate-076 coverage-gate-078] refuse the input file at containers/compose.gates.yaml |
-| coverage-gate-076 | [coverage-gate-076] exclude the ignored name compose-dir/file.yaml |
-| coverage-gate-076 | [coverage-gate-076] exclude the ignored name compose/other.yaml |
-| coverage-gate-076 | [coverage-gate-076] exclude the ignored name composeyml |
-| coverage-gate-076 | [coverage-gate-076] exclude the ignored name compose.yaml.extra |
-| coverage-gate-077 | [coverage-gate-077] refuse a changed gate input file |
-| coverage-gate-077 | [coverage-gate-077 coverage-gate-078] refuse an ignored file at scripts/spec/ignored.txt |
-| coverage-gate-078 | [coverage-gate-078] refuse an untracked input file |
-| coverage-gate-078 | [coverage-gate-078] refuse a protected ignored file |
-| coverage-gate-078 | [coverage-gate-078] refuse an untracked code file |
-| coverage-gate-078 | [coverage-gate-069 coverage-gate-078] refuse an ignored file from the code inventory |
-| coverage-gate-078 | [coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs |
-| coverage-gate-078 | [coverage-gate-071 coverage-gate-078] refuse an ignored file at scripts/qa-ignored.mjs |
-| coverage-gate-078 | [coverage-gate-072 coverage-gate-078] refuse an ignored file at package-lock.json |
-| coverage-gate-078 | [coverage-gate-074 coverage-gate-078] refuse an ignored file at Makefile |
-| coverage-gate-078 | [coverage-gate-075 coverage-gate-078] refuse an ignored file at Dockerfile |
-| coverage-gate-078 | [coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml |
-| coverage-gate-078 | [coverage-gate-077 coverage-gate-078] refuse an ignored file at scripts/spec/ignored.txt |
-| coverage-gate-078 | [coverage-gate-086 coverage-gate-078] refuse an ignored file at package.json |
-| coverage-gate-078 | [coverage-gate-078 coverage-gate-089] trust other ignored files |
-| coverage-gate-078 | [coverage-gate-073 coverage-gate-078] classify the ignored Node version |
-| coverage-gate-078 | [coverage-gate-078] refuse the input file at .gev-cachex/ignored.test.mjs |
-| coverage-gate-078 | [coverage-gate-075 coverage-gate-078] refuse the input file at containers/Dockerfile.gates |
-| coverage-gate-078 | [coverage-gate-075 coverage-gate-078] refuse the input file at Dockerfileprod |
-| coverage-gate-078 | [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml |
-| coverage-gate-078 | [coverage-gate-076 coverage-gate-078] refuse the input file at containers/compose.gates.yaml |
-| coverage-gate-078 | [coverage-gate-069 coverage-gate-078] classify a protected ignored code file |
-| coverage-gate-079 | [coverage-gate-079] refuse without ratchet history |
-| coverage-gate-079 | [coverage-gate-079] refuse history from another change or command |
-| coverage-gate-079 | [coverage-gate-079] refuse without a change name |
-| coverage-gate-080 | [coverage-gate-080] refuse a commit that Git cannot find |
-| coverage-gate-081 | [coverage-gate-081] refuse a changed word list |
-| coverage-gate-082 | [coverage-gate-082] refuse an absent snapshot |
-| coverage-gate-083 | [coverage-gate-083] show command times |
-| coverage-gate-083 | [ci-gates-005 coverage-gate-083] keep the CI verdict without command times |
-| coverage-gate-083 | [coverage-gate-083] name the full check command |
-| coverage-gate-084 | [coverage-gate-084] show slow phase times |
-| coverage-gate-085 | [coverage-gate-085] keep every file check |
-| coverage-gate-085 | [coverage-gate-085] check OpenSpec without tests |
-| coverage-gate-085 | [coverage-gate-085] check coverage filters without tests |
-| coverage-gate-085 | [coverage-gate-085] check archived specs without tests |
-| coverage-gate-085 | [coverage-gate-085] report a change folder that is absent |
-| coverage-gate-085 | [coverage-gate-085] compare the ledger with the base without tests |
-| coverage-gate-085 | [coverage-gate-085] check the base registry without tests |
-| coverage-gate-085 | [coverage-gate-085] check all review files without tests |
-| coverage-gate-086 | [coverage-gate-086] refuse changed package metadata |
-| coverage-gate-086 | [coverage-gate-086 coverage-gate-078] refuse an ignored file at package.json |
-| coverage-gate-087 | [coverage-gate-087] refuse a failed Git comparison |
-| coverage-gate-088 | [coverage-gate-088] refuse an omitted input file |
-| coverage-gate-089 | [coverage-gate-089] trust a changed file at openspec/changes/archive/x/notes.md |
-| coverage-gate-089 | [coverage-gate-089] trust a changed file at openspec/specs/x.md |
-| coverage-gate-089 | [coverage-gate-089] trust a changed file at openspec/trace/gaps.json |
-| coverage-gate-089 | [coverage-gate-078 coverage-gate-089] trust other ignored files |
-| coverage-gate-090 | [coverage-gate-090 coverage-gate-091] refuse a changed file at AGENTS.md |
-| coverage-gate-090 | [coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/commands/opsx/review.md |
-| coverage-gate-090 | [coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/agents/x.md |
-| coverage-gate-090 | [coverage-gate-090 coverage-gate-091] refuse a changed file at docs/x.md |
-| coverage-gate-090 | [coverage-gate-090 coverage-gate-091] refuse a changed file at .github/workflows/x.yaml |
-| coverage-gate-090 | [coverage-gate-090 coverage-gate-091] refuse a changed file at fixtures/x.json |
-| coverage-gate-090 | [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/config.yaml |
-| coverage-gate-090 | [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/other.yaml |
-| coverage-gate-090 | [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/changes-old/x.md |
-| coverage-gate-090 | [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/specs.md |
-| coverage-gate-090 | [coverage-gate-090] refuse a staged file edit |
-| coverage-gate-090 | [coverage-gate-090] refuse an untracked input file |
-| coverage-gate-091 | [coverage-gate-090 coverage-gate-091] refuse a changed file at AGENTS.md |
-| coverage-gate-091 | [coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/commands/opsx/review.md |
-| coverage-gate-091 | [coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/agents/x.md |
-| coverage-gate-091 | [coverage-gate-090 coverage-gate-091] refuse a changed file at docs/x.md |
-| coverage-gate-091 | [coverage-gate-090 coverage-gate-091] refuse a changed file at .github/workflows/x.yaml |
-| coverage-gate-091 | [coverage-gate-090 coverage-gate-091] refuse a changed file at fixtures/x.json |
-| coverage-gate-091 | [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/config.yaml |
-| coverage-gate-091 | [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/other.yaml |
-| coverage-gate-091 | [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/changes-old/x.md |
-| coverage-gate-091 | [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/specs.md |
-| coverage-gate-091 | [coverage-gate-091] refuse the input file at openspec/tracex/f.md |
-| coverage-gate-092 | [coverage-gate-092] refuse a moved file from openspec/changes/add-demo/design.md |
-| coverage-gate-092 | [coverage-gate-092] refuse a moved file from docs/base.md |
-| coverage-gate-092 | [coverage-gate-069 coverage-gate-092] refuse a moved code file |
-| coverage-gate-093 | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD |
-| coverage-gate-094 | [coverage-gate-094] keep cache source contents after the container ends |
-| coverage-gate-094 | [coverage-gate-094] copy cache contents without a marker list |
-| coverage-gate-097 | [coverage-gate-097] stop before the container copies files after a marker error |
-| coverage-gate-095 | [coverage-gate-095] refuse a new code file at openspec/changes/code.js |
-| coverage-gate-095 | [coverage-gate-095] refuse a tracked code file at openspec/changes/code.js |
-| coverage-gate-095 | [coverage-gate-095] refuse a new test file at openspec/changes/code.test.mjs |
-| coverage-gate-095 | [coverage-gate-095] refuse a tracked test file at openspec/changes/code.test.mjs |
-| coverage-gate-095 | [coverage-gate-095] refuse a new code file at openspec/specs/code.js |
-| coverage-gate-095 | [coverage-gate-095] refuse a tracked code file at openspec/specs/code.js |
-| coverage-gate-095 | [coverage-gate-095] refuse a new test file at openspec/specs/code.test.mjs |
-| coverage-gate-095 | [coverage-gate-095] refuse a tracked test file at openspec/specs/code.test.mjs |
-| coverage-gate-095 | [coverage-gate-095] refuse a new code file at openspec/trace/code.js |
-| coverage-gate-095 | [coverage-gate-095] refuse a tracked code file at openspec/trace/code.js |
-| coverage-gate-095 | [coverage-gate-095] refuse a new test file at openspec/trace/code.test.mjs |
-| coverage-gate-095 | [coverage-gate-095] refuse a tracked test file at openspec/trace/code.test.mjs |
-| coverage-gate-096 | [coverage-gate-096] refuse a commit ref in history |
-| coverage-gate-096 | [coverage-gate-096] refuse the commit hash with short |
-| coverage-gate-096 | [coverage-gate-096] refuse the commit hash with suffix |
-| coverage-gate-096 | [coverage-gate-096] refuse the commit hash with prefix |
-| coverage-gate-096 | [coverage-gate-096] refuse the commit hash with letters |
-| gap-ledger-123 | [gap-ledger-123] compare one ratchet measurement |
-| gap-ledger-124 | [gap-ledger-124] fail for an absent review |
-| gap-ledger-125 | [gap-ledger-125] pass after all comparisons |
-| gap-ledger-126 | [gap-ledger-126] compare repaired ledger values |
-| gap-ledger-126 | [gap-ledger-126] repair absent totals and stale test names |
-| gap-ledger-126 | [gap-ledger-126] read the new totals history line for the base ledger |
-| gap-ledger-127 | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
-| gap-ledger-128 | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
-| gap-ledger-129 | [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes |
-| gap-ledger-129 | [gap-ledger-129] record a different hash without a changed gap |
-| gap-ledger-129 | [gap-ledger-129] record a different change without a changed gap |
-| gap-ledger-130 | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD |
-| gap-ledger-130 | [gap-ledger-130] refuse a failed ratchet file comparison |
-| gap-ledger-130 | [gap-ledger-130 gap-ledger-132] sort dirty names and compare repeated history |
-| gap-ledger-131 | [gap-ledger-131 gap-ledger-133] accept clean history without a dirty field |
-| gap-ledger-132 | [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse dirty ratchet inputs after their content returns to HEAD |
-| gap-ledger-132 | [gap-ledger-130 gap-ledger-132] sort dirty names and compare repeated history |
-| gap-ledger-133 | [gap-ledger-131 gap-ledger-133] accept clean history without a dirty field |
-| gap-ledger-133 | [gap-ledger-133] accept dirty history in each reader |
-| gap-ledger-134 | [gap-ledger-134] add ignored name markers before the ratchet command |
-
-## Review correction map
-
-All rows apply to the commit in the last column.
-The changes include every STE correction.
-
-| Report | First words | Correction | Commit |
-|---|---|---|---|
-| Spec | Makefile:10 GATES_DOCS_MARKERS | Exclude cache files. Remove created markers before the container copies files back. Test cache and trace contents. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| Spec | gates.test.mjs:2216 Operand mutations | Test every prefix boundary and ignored Docker and compose operand. Add negative name cases. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| Spec | gates.test.mjs:1825 Scenario 080 | Assert the ratchet commit line with forty literal zero digits. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| Spec | measurement.mjs:62 The prefix test | Refuse code and tests under each allowed path before the prefix test. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| Spec | measurement.mjs:40 resolveCommit | Use forty hexadecimal digits. State the ancestry decision and who reads the snapshot hash. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| Spec | gates.mjs:700 Command: check | Assert the full check header. State other command times and the exception limit. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| Spec | Makefile:44 In precheck | Assert the exact command text with all conjunctions. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| Spec | coverage-gate/spec.md:12 class list | Define protected ignored files once. Use input files for files outside the allowed paths. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| Spec | measurement.mjs:57 git diff | State the Git index flag limit in the proposal. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| Spec | gates.mjs:643 history | Test the new totals history line against a base ledger. Add the snapshot copy result to the scenario. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | gap-ledger/spec.md:34,43 same snapshot | Add the dirty list to both descriptions of unchanged history. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | gates.mjs:698 output | Use NO TEST RUN and snapshot in the log and tests. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | gates.mjs:718 commit line | Use Ratchet commit in refusals and their tests. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | AGENTS.md:62 document steps | Name the three allowed paths. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | AGENTS.md:60 input files | Use the requested commit instruction and input file term. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | review.md:14,16 ratchet sequence | Start after the ratchet. Test the new sentences and the second ratchet instruction. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | gap-ledger/spec.md:7 status | State status 1 for errors before the ratchet writes files. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | design.md:17 conditional tense | Use simple present tense and verb clauses for file actions. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | coverage-gate/spec.md:137-144 container names | Use container for the Docker process. Use file checks and steps. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | AGENTS.md:45,46,22,76-78 | Remove now and the semicolon. Add a heading after the backfill steps. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | gap-ledger/spec.md:55 design.md:31 decision | Use the requested decision, clock, error line, empty list and trace copy terms. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | evidence.md:4,574,580-582 tree | Name the current commit and active path. Correct the Makefile comment. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-| STE | evidence.md:115,117,124 test corrections | Use direct test-failure terms. Correct the source comments. | c87e7eb88b263791c21277a604ec23c745aafd0e |
-
-## Final tree
+The following command gives the changed file list.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/gates-onem && git status --short
@@ -2335,9 +2861,12 @@ M .claude/commands/opsx/review.md
  M openspec/changes/gates-one-measurement/tasks.md
  M scripts/spec/gates.mjs
  M scripts/spec/lib/measurement.mjs
- M src/tooling/spec/ciFiles.test.mjs
  M src/tooling/spec/gates.test.mjs
 ```
 
-The pinned container gates, CI, archive and two-agent review are not host checks.
-The lead completes those tasks. The final task boxes stay unchecked.
+Only the allowed files changed.
+The command cmp confirms that both mutation files have the same content.
+
+```sh
+cd /home/ianblenke/docker/gev-work/gates-onem && cmp openspec/changes/gates-one-measurement/mutations.json /home/ianblenke/docker/gev-tools/gates-onem/muts.json
+```

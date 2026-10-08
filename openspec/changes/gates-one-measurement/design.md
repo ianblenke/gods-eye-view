@@ -1,6 +1,6 @@
 ## Context
 
-The correction tree starts at commit `c87e7eb88b263791c21277a604ec23c745aafd0e` from `git rev-parse HEAD`.
+The correction tree starts at commit `e4cf164097969d4f971afa46e757a34aac0179bb` from `git rev-parse HEAD`.
 The Fable report sections on structural costs describe repeated measurements after document changes.
 The gate code separates measurement from comparisons.
 
@@ -21,12 +21,12 @@ A second measurement does not add file check information.
 Compare Git content against the commit in the last ratchet history line for this change.
 Allow only `openspec/changes/`, `openspec/specs/` and `openspec/trace/` for tracked and untracked changes.
 
-Compare both names of renamed files.
+Compare both names of moved files.
 Protected ignored files still cause refusal, except dependency and cache folders.
 Use the code inventory at the ratchet commit for ignored code paths.
 Other ignored build files do not cause refusal.
 The ratchet records the sorted refused paths against HEAD in `dirty`.
-Document gates refuse a history line with dirty paths even after those files return to HEAD.
+Document gates refuse a history line with dirty list even after those files return to HEAD.
 
 The decision to keep history unchanged compares the dirty list and the snapshot and commit.
 Store records, assertions and coverage in a snapshot with its hash in the ratchet history.
@@ -34,7 +34,7 @@ Refuse an absent snapshot or a different hash.
 
 Copy the snapshot into the container work folder because Git ignores `.gev-cache/`.
 Use a separate container command for document gates, with no file copies back to the source folder.
-Add marker files for omitted input file names, because the usual container copy omits ignored files.
+Add marker files for omitted protected ignored file names, because the usual container copy omits ignored files.
 Use empty JSON objects so a package marker cannot stop Node before the refusal.
 Rebuild trace results with current specs, so changed specs cannot inherit an old verdict.
 
@@ -51,7 +51,7 @@ Errors that stop the ratchet before it writes the files have status 1.
 The command `check` without `--no-measure` keeps its verdict lines and status.
 The document mode gives no verdict on refusal.
 The document mode names each changed input file and the ratchet commit.
-A successful trust decision still runs every file check.
+A successful trust decision still runs every file check that can change under the three allowed paths.
 
 ### D4: Command times
 
@@ -66,14 +66,14 @@ The time for `measure` includes its `specs` phase.
 
 ### D5: Fast checks
 
-Add `precheck` with the same image pattern as `lint`.
+Add `precheck` with the same container pattern as `lint`.
 Run format, import direction, package boundary and layer token checks.
 Use `origin/main` for the layer token base.
 The target has no call to `gates.mjs` because these checks need no measurement.
 
 ### D6: Review and gate guidance
 
-Use the ratchet verdict at the start of review after `precheck`.
+Run `make gates-docs` at the start of review after `precheck`.
 Commit the input files before the ratchet command so the document mode can trust the measured tree.
 Use document gates for archive and prose changes under the three allowed paths.
 Keep one full measurement on the final tree and keep CI.
@@ -104,10 +104,38 @@ Record only created marker names in a separate list.
 Remove those markers before the command copies files back.
 The command keeps real ignored trace files and copied files that were not markers.
 
-Refuse code files and test files before the allowed path test.
+Refuse code files and test files before the path.
 Use forty hexadecimal digits for the ratchet commit.
 Do not add an ancestry command: the content comparison still checks a commit from another branch.
 
 Use file class names in refusal reasons.
 A refusal list can have input files, code files or test files.
 Code files and test files can lie under the three allowed paths.
+
+### D7: Current file checks and review tree
+
+Remove the source import and coverage comment calls from document mode.
+Those gates read only code files and test files.
+The mode refuses changed code files and test files.
+Their results equal the ratchet results.
+
+Keep the coverage filter gate.
+The gate reads tracked `.json`, `.yaml` and `.yml` files under the three allowed paths.
+Keep QA header errors because capability folders can change under those paths.
+
+Read changed file names again after the ratchet writes trace files.
+Use the new list for the review tree hash.
+The ratchet and all gates then compare the same tree.
+Without a history line, a refusal prints `Ratchet commit: none`.
+
+### D8: Marker proof and probe copy
+
+Test each marker class through the real shell command from the Makefile.
+Also check each class pathspec because the code extension globs overlap the test and gate script pathspecs.
+A deleted pathspec can keep the same marker output through another glob.
+The table checks both the class pathspec and the marker contents.
+
+Use a fresh copy under the scratch folder for the lead probes.
+The brief limits file changes to the clone and that scratch folder.
+The probe copies use that path instead of `gonem-verify`.
+Keep the lead probe files unchanged.

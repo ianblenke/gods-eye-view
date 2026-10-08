@@ -2024,11 +2024,39 @@
 - [x] 2.8 Check the change with predispatch.
 - [x] 2.9 Record the host results in evidence.md.
 
+## 2R. Review round two corrections
+
+- [x] 2R.1 Write the marker table for `coverage-gate-099`.
+
+  Run the mutations that delete each marker pathspec. The table tests must fail.
+- [x] 2R.2 Write the QA capability test for `coverage-gate-100`.
+
+  Run the mutation that removes QA errors from document mode. The test must fail.
+- [x] 2R.3 Write the nested prefix tests for `coverage-gate-098`.
+
+  Run the mutation that uses includes for a path prefix. The tests must fail.
+- [x] 2R.4 Write the other command time tests for `coverage-gate-083`.
+
+  Run the mutations that time each other command. The tests must fail.
+- [x] 2R.5 Write the trace tree test for `gap-ledger-135`.
+
+  Run the mutation that uses the old changed file list. The test must fail.
+- [x] 2R.6 Add the ratchet commit assertion to each refusal test.
+
+  Run the mutations that change those commit values. The tests must fail.
+- [x] 2R.7 Write the agent sentence tests for `change-review-033`.
+
+  Run the mutations that change the verdict rule and final gate step. The tests must fail.
+- [x] 2R.8 Remove the two code file gates from document mode.
+- [x] 2R.9 Read changed file names after the ratchet writes trace files.
+- [x] 2R.10 Correct the review round two prose.
+- [x] 2R.11 Run all host checks for the correction tree.
+
 ## 3. Gates and review
 
 The lead checks these tasks at the end.
 
 - [ ] 3.1 Run the ratchet command in the pinned container.
-- [ ] 3.2 Run the full gates in the pinned container.
+- [ ] 3.2 Run all gates in the pinned container.
 - [ ] 3.3 Run the two review agents.
 - [ ] 3.4 Write `review.md`.
