@@ -253,3 +253,23 @@ Change `src/tooling/bundleCredentials.test.mjs`, `src/googleServerKey.test.mjs` 
 Run each file in one host process. Run the full unit suite once and compare it with the pristine baseline.
 Run host lint, format, boundary and layer token checks. Prove each changed test with a fault and restore each file.
 The lead must run the image checks and the two review agents before merge.
+
+## Pass 3 host result
+
+Spec and test commit: `7f424c6081bf26845aa8c985e8920749296d0ab9`. Read commit: `07bf094e8df16abfe6e8b1847d2c1157b7e9ecf0`.
+The three separate test processes pass all 18 tests. Each changed test fails with a stated fault.
+
+Remove Mapillary: tests for `001`, `002`, `003` and `016` fail. Add the server define: `001`, `003` and `016` fail.
+Remove the Mapillary pattern or add a token literal to main.js: `004` fails.
+Add a Mapillary environment default: the second helper test for `003` fails. All fault files are restored.
+
+The full host suite runs once and completes with exit 1. It reports 8670 tests, 8668 pass, one fail and one skip.
+Only the unchanged upstream row test fails. Its assertion reports 1379 ms; the whole test takes about 2039 ms.
+
+The pristine baseline has 6184 tests, 6182 pass, one fail and one skip. It has the same failed test.
+The row test file has no diff from upstream commit `95fa816232456a6831172befa2f1b34b9ee73794`.
+The allocation phase does not run after the failure. These host results give no image coverage verdict.
+
+Lint reports zero errors and 565 warnings. Format passes for 1327 source files. Boundary checks pass.
+The token check against origin/main reports 29 published tokens and one new token.
+Host logs are in `gev-tools/upstream-sync-3/pass-3-host/`. The lead still must complete the image checks and both reviews.

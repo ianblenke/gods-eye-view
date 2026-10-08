@@ -40,6 +40,6 @@
 - [x] 4.4 Add the Mapillary pattern and sample tests for `credential-boundary-004`.
 - [x] 4.5 Strengthen the server key test for `credential-boundary-016` with the Mapillary sentinel.
 - [x] 4.6 Prove each changed test with a fault and restore each file.
-- [ ] 4.7 Run host lint, format, boundary and token checks.
-- [ ] 4.8 Run each changed test file and the full host suite once.
-- [ ] 4.9 Record the results and commit the host change.
+- [x] 4.7 Run host lint, format, boundary and token checks.
+- [x] 4.8 Run each changed test file and the full host suite once.
+- [x] 4.9 Record the results and commit the host change.
