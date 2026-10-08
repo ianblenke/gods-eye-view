@@ -107,7 +107,7 @@
 - [x] 6.23 Run the format check.
 - [x] 6.24 Run STE lint.
 - [x] 6.25 Record the pass 4 results.
-- [ ] 6.26 Commit the pass 4 files.
+- [x] 6.26 Commit the pass 4 files.
 
 - [x] 6.27 Write the test for `ownership-039`.
 
