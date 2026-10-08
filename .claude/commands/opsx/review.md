@@ -11,20 +11,20 @@ The review agents can only read files. You write their output to files. Copy the
 
 ## Steps
 
-1. Run `make gates CHANGE=<name>`. The only errors must be review errors. If there are other errors, stop. Correct them first.
+1. Run `make precheck`. Make sure that the ratchet commit has all input files. If not, commit them and run the ratchet command again. Then run `make gates-docs CHANGE=<name>`. The only errors must be review errors. If there are other errors, stop and correct them first.
 2. Run `openspec archive <name> --yes`. Replace each purpose line that starts with "TBD" in `openspec/specs/` with a purpose in STE. The archive command does not change the scenario text, the tests or the code, so you do not run the ratchet command again.
-3. Run `make gates CHANGE=<name>` again. Keep the output. Run `git diff --stat origin/main`. Keep the output.
+3. Run `make gates-docs CHANGE=<name>` again. Keep the output. Run `git diff --stat origin/main`. Keep the output.
 4. Run `git status --porcelain`. Keep the output.
 5. Find the scope of the round. The first round of a change has the scope `full`. Each later round has the scope `diff <commit>`, with the Git commit of the round before. Keep the scope and the number of the round.
 6. Start the `spec-adversary` agent. Give it the change name, the gate output, the diff output, the scope and the QA lines from the gate output. For a scope with a diff, give it the diff since that commit.
 7. Start the `ste-adversary` agent at the same time. Give it the change name and the scope. Give it the STE warnings for the changed files from the gate output. Give it the names of the tests that the change adds or renames.
 8. Run `git status --porcelain` again. If the output is not the same as the output of step 4, stop. Tell the user that an agent changed a file.
 9. Write the output of each agent to `review/spec-adversary.md` and `review/ste-adversary.md` in the archived change folder. Before a new round, move the output of the earlier round to `review/round-<n>/`.
-10. If one or the two agents give the verdict FAIL, examine all the corrections that you will make. If these corrections change only the proposal, the design, `tasks.md` or files in `.claude/`, do not move the change. Correct each critical finding and each major finding. You can also correct minor findings. Then start again at step 3. If one or more corrections change other files, move the change to its location before the archive command:
+10. If one or the two agents give the verdict FAIL, examine all the corrections that you will make. If these corrections change only the proposal, the design, or `tasks.md`, do not move the change. Correct each critical finding and each major finding. You can also correct minor findings. Use `make gates-docs CHANGE=<name>` and start again at step 3. If one or more corrections change other files, move the change to its location before the archive command:
    - Move the folder `openspec/changes/archive/<date>-<name>` to `openspec/changes/<name>`.
    - Make the content of `openspec/specs/` the same as in the commit before the archive command. Run the Git command `restore` with the options `--source=<commit>`, `--staged` and `--worktree` for `openspec/specs`. If that commit has no `openspec/specs/` folder, run the Git command `rm` with the options `-r` and `-f` for `openspec/specs`. Remove each file in `openspec/specs/` that Git does not track.
    - Correct each critical finding and each major finding. You can also correct minor findings. Run `make ratchet CHANGE=<name>`. Then start again at step 1.
-11. If the two agents give the verdict PASS, do not start a new review round for their minor findings. Add each minor finding of the spec adversary to the section "Known limits and later changes" in the proposal of the archived change. Keep each minor finding of the STE adversary, or correct it in the proposal or the design of the archived change. Then run `make gates CHANGE=<name>`, which must give only review errors. Record your decision for each minor finding in `review.md`.
+11. If the two agents give the verdict PASS, do not start a new review round for their minor findings. Add each minor finding of the spec adversary to the section "Known limits and later changes" in the proposal of the archived change. Keep each minor finding of the STE adversary, or correct it in the proposal or the design of the archived change. Then run `make gates-docs CHANGE=<name>`, which must give only review errors. Record your decision for each minor finding in `review.md`.
 12. The review has a limit of three rounds. After the third round, ask the user to accept each open finding with the severity minor. Write the severity as the second word of the finding, and the name of that person in the finding. A critical finding or a major finding always stops the build. Do not change a file in `.claude/agents/` or this file inside a round.
 13. Run `make tree CHANGE=<name>`. Keep the hash.
 14. Write `review.md` in the archived change folder with this content:
@@ -46,5 +46,13 @@ Reviewed-Tree: <hash from step 13>
 - [ ] <each open finding after three rounds with the severity minor, with "Accepted by <the name of the person>">
 ```
 
-15. Run `make gates CHANGE=<name>`. All gates must pass.
+15. Run `make gates-docs CHANGE=<name>`. Then run `make gates CHANGE=<name>` on the final tree. All gates must pass. CI must also pass before you merge.
 16. Tell the user the result, the number of review rounds and the findings that you corrected.
+
+Document gates trust changes only under `openspec/changes/`, `openspec/specs/` and `openspec/trace/`.
+After archive, use document gates only while all changed files stay under those paths.
+A QA header change or another file change needs another ratchet command or all gates on the final tree.
+
+When a code file or test file changes, use another ratchet command or all gates.
+
+Input files have the definition in the coverage-gate spec.

@@ -159,6 +159,11 @@
     "since": "2026-09-16",
     "change": "review-scope-diff"
   },
+  "change-review-033": {
+    "hash": "7fcc887226314db368bcb13bc8e66ef6bc9c9f8dbf61f2d9e64f765461a72385",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
   "ci-gates-001": {
     "hash": "6344005c90cfdf7d391ff0ddfd31bff01cde4a3ddb729ba5741cb6740be7d202",
     "since": "2026-09-14",
@@ -208,6 +213,16 @@
     "hash": "af3d4781e4ed6caf8f63a0be6fa946573f46a167f243029aa13bfa5001bb9849",
     "since": "2026-09-14",
     "change": "establish-spec-governance"
+  },
+  "ci-gates-011": {
+    "hash": "0d218564c9e4a9d1b6fcab8dccafb7b3c1cdc7622cd882156c3cad69f71aea1d",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "ci-gates-012": {
+    "hash": "009f16f2bd4b2151c315cd7f616fe72156b9fcb2eae3972e6ff6d4c0c8ea9949",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
   },
   "coverage-gate-001": {
     "hash": "22565bebf0824c441282127bbb46b08ae6f67a08a29b7661d1e2ae231ca0366a",
@@ -538,6 +553,171 @@
     "hash": "9da52ccf5241a27d513a4231d6f59630cb2889e3906c8500326a9b84aaec4d68",
     "since": "2026-10-06",
     "change": "gates-coverage-race"
+  },
+  "coverage-gate-068": {
+    "hash": "4d18e950d77d7878aaa53e99e78bc8e90230f095aaed65360db06c58fdfad880",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-069": {
+    "hash": "f94ab41744b8962c58c79f93ceeb5ebbfc632b941c27083fd0b5dc587e2feb3a",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-070": {
+    "hash": "94c28fd6e8e246fee31fb558369641b0347e0214973fe986b774a82ee1a53865",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-071": {
+    "hash": "1fc983d423cebe589c8cafd8f4472a4d293ac7d2ea57473b852351e78027b228",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-072": {
+    "hash": "68da857692712a9850d29381b9b411ff710bbf85214ea7508839898b9a9c26d9",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-073": {
+    "hash": "ae4804c4cbcf8ceb84629db862e0c4ebef5b230936182677a69118be53b4f716",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-074": {
+    "hash": "f52011ffd850daab83d00710061962d586da70dfcce1c906adf3860e5a90b63d",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-075": {
+    "hash": "575c4336333c145e5ea0e948adbbff458a96336bcb447c16aa183f065d8d3b58",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-076": {
+    "hash": "a2d4880580638f19440703c1d4d072f12b6e4ca779b44545bf18decfb8fda5d7",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-077": {
+    "hash": "f018d066a242ce8c1eabc9bec33038e51e0dbceb3b7853f7ce8fb26e903e024f",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-078": {
+    "hash": "a2263c74215d156e5ae6a27fc87d4bb96419d406c373bd94770f1dfc3de7b698",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-079": {
+    "hash": "2263dfcc7b70c1d40319c76a064e62547d4a359b2a1a5d7bdffd3d629d979f85",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-080": {
+    "hash": "8fdb4c7f91560a130d36616e063fd5e5eee145df496ae02ecdfd704cc9fd151b",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-081": {
+    "hash": "fbcfd6df4355c5e6f0dddb96f0bcacad9b41be00489f57b15ba2423938548b3e",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-082": {
+    "hash": "853d7deb56aaff123148625f59f0634582aa8d50511b2c4e43aca3c47fd4e875",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-083": {
+    "hash": "f332e4c160ddc3b0a10e91cac629d9a515459f7dbbcca599a2c184c0309056bd",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-084": {
+    "hash": "982cb9ba06298314d7b51dec48e2c0c251ba1cd3e140f70d7c0407744a9c057f",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-085": {
+    "hash": "8facfc50eb9b1f84d2a856f46712f9465d3b78dff618e382c1e7ed2089ed653f",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-086": {
+    "hash": "c1859dfb6b06174bbbaaed7d4299800ab375a1f2d5845a10a57780091363492d",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-087": {
+    "hash": "21f7375606a0e896921fc1625c70c1e3a4e11e6f02740b0491f1b331e0b49420",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-088": {
+    "hash": "46ad043c73d95948ee900b5526fbde3985735a2790aaac039755eee3b9a984df",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-089": {
+    "hash": "aa2df69fc0045b5fe22bc1168aa05c05a5567d5ee4874044c749215834dc109d",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-090": {
+    "hash": "6bf5cee1a3eea2663ef7481b24ac8e2d2db6bca36958670331979707a446f748",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-091": {
+    "hash": "d1bd5b4c6c76e71472e9e4e5a4e5debc005c6bbba9c425a7de7b6e1398239303",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-092": {
+    "hash": "58be2199f23120cf980dd77d41612dbcc39e352d4fbd0885610d7d6041fe3ee3",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-093": {
+    "hash": "d5917f644bad101897ee5169ecd5657de8c428b94a742fec3aa59d60cec897be",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-094": {
+    "hash": "1382817361baacd7f8c78f7f213e276c0a95e6bdff839e7edb9af840e2ecb5a2",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-095": {
+    "hash": "88a8dfd5ed7ff09f528e71d91a8d92a4ddb9a5034fff8e5755605407a848589c",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-096": {
+    "hash": "81be52370873738b34ea95bdd451480a2a4216ddf4ec0dbecee10cb75963b8b6",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-097": {
+    "hash": "4224e25822b8cfb9a12b5e16c7a25197c440c8fad769b384e51f136ce3a754b6",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-098": {
+    "hash": "fd9c595b6cc7921d391076e95565a221715e03cde7bee675048275ca97f243b6",
+    "since": "2026-10-08",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-099": {
+    "hash": "95b665b6cc44d9ec66c0cdeac3cf478f7369d373022899d8ff23175f20047f57",
+    "since": "2026-10-08",
+    "change": "gates-one-measurement"
+  },
+  "coverage-gate-100": {
+    "hash": "ad336ddd648328d932e124d770783a68a6de98e9e43ddd03b6bf79e516de7d86",
+    "since": "2026-10-08",
+    "change": "gates-one-measurement"
   },
   "credential-boundary-001": {
     "hash": "eaef1a424e119ef144eb60a230f3592743ea14ab6d772b1c441006589caf402c",
@@ -1598,6 +1778,71 @@
     "hash": "9d310f2d4e842840b6db1efd2ca563941dbda3341d43425301c193046587089b",
     "since": "2026-10-06",
     "change": "gates-coverage-race"
+  },
+  "gap-ledger-123": {
+    "hash": "5f572ed21d1edc527759f99ff9380eaece903408ddfeb097dca42b1786856199",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-124": {
+    "hash": "5e03b03134c476680c96948f84af5a11595b00e7bc32ef4cad505cee5341d54e",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-125": {
+    "hash": "31ed755b16da0b34f878945ba2d37612a7e91a1559ea790fa8430d6e8fe944a8",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-126": {
+    "hash": "b4b0fdc01fd29ecc96a7b8d4d1e3e5904c74cce729cdbb7cf08ed3d36a03871f",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-127": {
+    "hash": "936e03330d3671138eb24d04cf51c415ca780307cffc60dd056809a17cf5470e",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-128": {
+    "hash": "b09f4883fff1eb3638e14dade47025b4bee0ed841ddffe7c7b627ccb90c178a0",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-129": {
+    "hash": "57490165a977dd7f3e1ab57cd81594f2b564d7f9e161454bd217555aac617898",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-130": {
+    "hash": "e9adf18a54ebc1ce9126664abcf483abdd9ac8e4e29abf307a0cf7ea16aac33b",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-131": {
+    "hash": "10092de66a02af1aef773b6a248ae3078baf52ec46a9053318c7d1a50db0b178",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-132": {
+    "hash": "7c7c7c60012dcdb7385583eb302e455cb6196b40638fc0a04a8c127a1ffdeb48",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-133": {
+    "hash": "42853d40e5bb5afb3696b2c85618078bfb58455dac6decc0bb238e28707bbd46",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-134": {
+    "hash": "a8db293eef8329dad214b0db2855023980229905aa1f93afea78ac33259db054",
+    "since": "2026-10-07",
+    "change": "gates-one-measurement"
+  },
+  "gap-ledger-135": {
+    "hash": "63fc42c3b199e0c831d7f8017681175a17d7d155281b75c131c9cd1d3898732c",
+    "since": "2026-10-08",
+    "change": "gates-one-measurement"
   },
   "hud-markings-001": {
     "hash": "bf07f3ac338e3fd2d2154e6b57509df6157b73411cd9031a3d84856c0ef48c0a",
