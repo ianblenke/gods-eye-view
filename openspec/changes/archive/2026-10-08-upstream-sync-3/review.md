@@ -6,7 +6,7 @@ Date: 2026-10-08
 Gates: make gates CHANGE=upstream-sync-3 passed
 Rounds: 3
 Scope: diff ab3e2b6
-Reviewed-Tree: TREE_PLACEHOLDER
+Reviewed-Tree: e6eee7ff60476eefb643b7f57532bed98fde6c229f5b68aa763828bf03370c9c
 
 ## Findings
 
@@ -37,7 +37,7 @@ This round read the corrections of the minor findings of round 2 and the repair 
 
 ## Corrected after round 2
 
-- [x] The first run of the final gates failed with one error: `LEDGER-LOST-COVERAGE` for `server/providers/mapillary/tiles.js` (7 uncovered functions, the ledger records 6). The handler of a failed `stat` call at line 255 runs only when a tile file vanishes during a sweep, so the count depended on timing under load. The lead ran the image tests 28 times in three batches and found the process of `src/tooling/mapillaryProvider.test.mjs`. The fix is a correction of the first disk sweep test in that adopted test file. The round 3 reviewers read it, and the second review pass made the test fail without the handler and without the replacement. The `waive` command cannot repair this error, because the waiver does not apply to a file that is unchanged since its entry.
+- [x] The first run of the final gates failed with one error: `LEDGER-LOST-COVERAGE` for `server/providers/mapillary/tiles.js` (7 uncovered functions, the ledger records 6). The handler of a failed `stat` call at line 255 runs only when a tile file vanishes during a sweep, so the count depended on timing under load. The lead ran the image tests 28 times in three batches and found the process of `src/tooling/mapillaryProvider.test.mjs`. The fix is a correction of the first disk sweep test in that adopted test file. The round 3 reviewers read the first version. They found that its last assertion could not fail, and the lead corrected that. The host log shows that the corrected test fails without the handler and without the replacement. The `waive` command cannot repair this error, because the waiver does not apply to a file that is unchanged since its entry.
 
 ## Rule 21
 
