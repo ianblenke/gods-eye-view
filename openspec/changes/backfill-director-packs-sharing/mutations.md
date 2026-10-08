@@ -66,8 +66,8 @@ File: src/director/packs/manifest.js
 ### m001 Test
 
 ```text
-[director-076] The asset path accepts safe names
-Output: KILLED [director-076] The asset path accepts safe names
+[director-076] The validator returns without an error for safe names for the asset path
+Output: KILLED [director-076] The validator returns without an error for safe names for the asset path
 ```
 
 ## m002
@@ -93,8 +93,8 @@ File: src/director/packs/manifest.js
 ### m002 Test
 
 ```text
-[director-076] The asset path rejects traversal
-Output: KILLED [director-076] The asset path rejects traversal
+[director-076] The validator rejects traversal for the asset path
+Output: KILLED [director-076] The validator rejects traversal for the asset path
 ```
 
 ## m003
@@ -120,8 +120,8 @@ false
 ### m003 Test
 
 ```text
-[director-077] The manifest rejects invalid version
-Output: KILLED [director-077] The manifest rejects invalid version
+[director-077] The validator rejects invalid version
+Output: KILLED [director-077] The validator rejects invalid version
 ```
 
 ## m004
@@ -147,8 +147,8 @@ false
 ### m004 Test
 
 ```text
-[director-077] The manifest rejects invalid format
-Output: KILLED [director-077] The manifest rejects invalid format
+[director-077] The validator rejects invalid format
+Output: KILLED [director-077] The validator rejects invalid format
 ```
 
 ## m005
@@ -174,8 +174,8 @@ false
 ### m005 Test
 
 ```text
-[director-078] The attribution rejects protocol
-Output: KILLED [director-078] The attribution rejects protocol
+[director-078] The validator rejects protocol for the attribution
+Output: KILLED [director-078] The validator rejects protocol for the attribution
 ```
 
 ## m006
@@ -201,8 +201,8 @@ false
 ### m006 Test
 
 ```text
-[director-078] The attribution rejects username
-Output: KILLED [director-078] The attribution rejects username
+[director-078] The validator rejects username for the attribution
+Output: KILLED [director-078] The validator rejects username for the attribution
 ```
 
 ## m007
@@ -228,8 +228,8 @@ false
 ### m007 Test
 
 ```text
-[director-078] The attribution rejects password
-Output: KILLED [director-078] The attribution rejects password
+[director-078] The validator rejects password for the attribution
+Output: KILLED [director-078] The validator rejects password for the attribution
 ```
 
 ## m008
@@ -255,8 +255,8 @@ false
 ### m008 Test
 
 ```text
-[director-078] The attribution rejects query
-Output: KILLED [director-078] The attribution rejects query
+[director-078] The validator rejects query for the attribution
+Output: KILLED [director-078] The validator rejects query for the attribution
 ```
 
 ## m009
@@ -282,8 +282,8 @@ false
 ### m009 Test
 
 ```text
-[director-078] The attribution rejects fragment
-Output: KILLED [director-078] The attribution rejects fragment
+[director-078] The validator rejects fragment for the attribution
+Output: KILLED [director-078] The validator rejects fragment for the attribution
 ```
 
 ## m010
@@ -309,8 +309,8 @@ return;
 ### m010 Test
 
 ```text
-[director-078] The attribution rejects invalid URL text
-Output: KILLED [director-078] The attribution rejects invalid URL text
+[director-078] The validator rejects invalid URL text for the attribution
+Output: KILLED [director-078] The validator rejects invalid URL text for the attribution
 ```
 
 ## m011
@@ -336,8 +336,8 @@ parsed.protocol === 'https:'
 ### m011 Test
 
 ```text
-[director-078] The attribution accepts a safe link
-Output: KILLED [director-078] The attribution accepts a safe link
+[director-078] The validator returns without an error for a safe link for the attribution
+Output: KILLED [director-078] The validator returns without an error for a safe link for the attribution
 ```
 
 ## m012
@@ -363,8 +363,8 @@ string(pack.attribution.text, `${path}.attribution.text`, 4096);
 ### m012 Test
 
 ```text
-[director-078] The attribution rejects blank text
-Output: KILLED [director-078] The attribution rejects blank text
+[director-078] The validator rejects blank text for the attribution
+Output: KILLED [director-078] The validator rejects blank text for the attribution
 ```
 
 ## m013
@@ -390,8 +390,8 @@ string(pack.attribution.license, `${path}.attribution.license`, 4096);
 ### m013 Test
 
 ```text
-[director-078] The attribution rejects blank license
-Output: KILLED [director-078] The attribution rejects blank license
+[director-078] The validator rejects blank license for the attribution
+Output: KILLED [director-078] The validator rejects blank license for the attribution
 ```
 
 ## m014
@@ -417,8 +417,8 @@ false
 ### m014 Test
 
 ```text
-[director-079] The byteLength field rejects a fraction
-Output: KILLED [director-079] The byteLength field rejects a fraction
+[director-079] The validator rejects a fraction for the byteLength field
+Output: KILLED [director-079] The validator rejects a fraction for the byteLength field
 ```
 
 ## m015
@@ -444,8 +444,8 @@ typeof v !== 'string' || !/^[a-f0-9]{64}$/.test(v)
 ### m015 Test
 
 ```text
-[director-079] The digest rejects invalid type
-Output: KILLED [director-079] The digest rejects invalid type
+[director-079] The validator rejects invalid type for the digest
+Output: KILLED [director-079] The validator rejects invalid type for the digest
 ```
 
 ## m016
@@ -471,8 +471,8 @@ typeof v !== 'string'
 ### m016 Test
 
 ```text
-[director-079] The digest rejects invalid alphabet
-Output: KILLED [director-079] The digest rejects invalid alphabet
+[director-079] The validator rejects invalid alphabet for the digest
+Output: KILLED [director-079] The validator rejects invalid alphabet for the digest
 ```
 
 ## m017
@@ -498,8 +498,8 @@ number(v, at, 0, PACK_LIMITS.bytes + 1, false);
 ### m017 Test
 
 ```text
-[director-079] The integrity fields accept their limits
-Output: KILLED [director-079] The integrity fields accept their limits
+[director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+Output: KILLED [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
 ```
 
 ## m018
@@ -525,8 +525,8 @@ false
 ### m018 Test
 
 ```text
-[director-080] The image rejects reversed west
-Output: KILLED [director-080] The image rejects reversed west
+[director-080] The validator rejects reversed west for the image
+Output: KILLED [director-080] The validator rejects reversed west for the image
 ```
 
 ## m019
@@ -552,8 +552,8 @@ false
 ### m019 Test
 
 ```text
-[director-080] The image rejects reversed south
-Output: KILLED [director-080] The image rejects reversed south
+[director-080] The validator rejects reversed south for the image
+Output: KILLED [director-080] The validator rejects reversed south for the image
 ```
 
 ## m020
@@ -579,8 +579,8 @@ false
 ### m020 Test
 
 ```text
-[director-080] The image rejects short bounds
-Output: KILLED [director-080] The image rejects short bounds
+[director-080] The validator rejects short bounds for the image
+Output: KILLED [director-080] The validator rejects short bounds for the image
 ```
 
 ## m021
@@ -606,8 +606,8 @@ false
 ### m021 Test
 
 ```text
-[director-080] The image rejects height and reference
-Output: KILLED [director-080] The image rejects height and reference
+[director-080] The validator rejects height and reference for the image
+Output: KILLED [director-080] The validator rejects height and reference for the image
 ```
 
 ## m022
@@ -633,8 +633,8 @@ false
 ### m022 Test
 
 ```text
-[director-081] The media rejects an unknown anchor
-Output: KILLED [director-081] The media rejects an unknown anchor
+[director-081] The validator rejects an unknown anchor for the media
+Output: KILLED [director-081] The validator rejects an unknown anchor for the media
 ```
 
 ## m023
@@ -660,8 +660,8 @@ false
 ### m023 Test
 
 ```text
-[director-082] The scene rejects duplicate data pack IDs
-Output: KILLED [director-082] The scene rejects duplicate data pack IDs
+[director-082] The validator rejects duplicate data pack IDs for the scene
+Output: KILLED [director-082] The validator rejects duplicate data pack IDs for the scene
 ```
 
 ## m024
@@ -687,8 +687,8 @@ false
 ### m024 Test
 
 ```text
-[director-082] The shot rejects duplicate data pack IDs
-Output: KILLED [director-082] The shot rejects duplicate data pack IDs
+[director-082] The validator rejects duplicate data pack IDs for the shot
+Output: KILLED [director-082] The validator rejects duplicate data pack IDs for the shot
 ```
 
 ## m025
@@ -714,8 +714,8 @@ false
 ### m025 Test
 
 ```text
-[director-082] The shot rejects unknown data pack IDs
-Output: KILLED [director-082] The shot rejects unknown data pack IDs
+[director-082] The validator rejects unknown data pack IDs for the shot
+Output: KILLED [director-082] The validator rejects unknown data pack IDs for the shot
 ```
 
 ## m026
@@ -741,8 +741,8 @@ scene.dataPacks
 ### m026 Test
 
 ```text
-[director-082] The scene accepts absent data packs and anchors
-Output: KILLED [director-082] The scene accepts absent data packs and anchors
+[director-082] The validator returns without an error for absent data packs and anchors for the scene
+Output: KILLED [director-082] The validator returns without an error for absent data packs and anchors for the scene
 ```
 
 ## m027
@@ -768,8 +768,8 @@ false
 ### m027 Test
 
 ```text
-[director-083] The collection rejects invalid type
-Output: KILLED [director-083] The collection rejects invalid type
+[director-083] The decoder rejects invalid type for the collection
+Output: KILLED [director-083] The decoder rejects invalid type for the collection
 ```
 
 ## m028
@@ -795,8 +795,8 @@ false
 ### m028 Test
 
 ```text
-[director-083] The collection rejects invalid array
-Output: KILLED [director-083] The collection rejects invalid array
+[director-083] The decoder rejects invalid array for the collection
+Output: KILLED [director-083] The decoder rejects invalid array for the collection
 ```
 
 ## m029
@@ -822,8 +822,8 @@ false
 ### m029 Test
 
 ```text
-[director-083] The collection rejects more than 2000 features
-Output: KILLED [director-083] The collection rejects more than 2000 features
+[director-083] The decoder rejects more than 2000 features for the collection
+Output: KILLED [director-083] The decoder rejects more than 2000 features for the collection
 ```
 
 ## m030
@@ -849,8 +849,8 @@ false
 ### m030 Test
 
 ```text
-[director-084] The feature rejects type
-Output: KILLED [director-084] The feature rejects type
+[director-084] The decoder rejects type for the feature
+Output: KILLED [director-084] The decoder rejects type for the feature
 ```
 
 ## m031
@@ -876,8 +876,8 @@ false
 ### m031 Test
 
 ```text
-[director-084] The feature rejects ID type
-Output: KILLED [director-084] The feature rejects ID type
+[director-084] The decoder rejects ID type for the feature
+Output: KILLED [director-084] The decoder rejects ID type for the feature
 ```
 
 ## m032
@@ -903,8 +903,8 @@ false
 ### m032 Test
 
 ```text
-[director-084] The feature rejects blank ID
-Output: KILLED [director-084] The feature rejects blank ID
+[director-084] The decoder rejects blank ID for the feature
+Output: KILLED [director-084] The decoder rejects blank ID for the feature
 ```
 
 ## m033
@@ -930,8 +930,8 @@ false
 ### m033 Test
 
 ```text
-[director-084] The feature rejects long ID
-Output: KILLED [director-084] The feature rejects long ID
+[director-084] The decoder rejects long ID for the feature
+Output: KILLED [director-084] The decoder rejects long ID for the feature
 ```
 
 ## m034
@@ -957,8 +957,8 @@ false
 ### m034 Test
 
 ```text
-[director-084] The feature rejects duplicate ID
-Output: KILLED [director-084] The feature rejects duplicate ID
+[director-084] The decoder rejects duplicate ID for the feature
+Output: KILLED [director-084] The decoder rejects duplicate ID for the feature
 ```
 
 ## m035
@@ -984,8 +984,8 @@ false
 ### m035 Test
 
 ```text
-[director-085] The position rejects invalid array
-Output: KILLED [director-085] The position rejects invalid array
+[director-085] The decoder rejects invalid array for the position
+Output: KILLED [director-085] The decoder rejects invalid array for the position
 ```
 
 ## m036
@@ -1011,8 +1011,8 @@ false
 ### m036 Test
 
 ```text
-[director-085] The position rejects invalid length
-Output: KILLED [director-085] The position rejects invalid length
+[director-085] The decoder rejects invalid length for the position
+Output: KILLED [director-085] The decoder rejects invalid length for the position
 ```
 
 ## m037
@@ -1038,8 +1038,8 @@ false
 ### m037 Test
 
 ```text
-[director-085] The position rejects a coordinate that is not finite
-Output: KILLED [director-085] The position rejects a coordinate that is not finite
+[director-085] The decoder rejects a coordinate that is not finite for the position
+Output: KILLED [director-085] The decoder rejects a coordinate that is not finite for the position
 ```
 
 ## m038
@@ -1065,8 +1065,8 @@ false
 ### m038 Test
 
 ```text
-[director-085] The position rejects invalid longitude
-Output: KILLED [director-085] The position rejects invalid longitude
+[director-085] The decoder rejects invalid longitude for the position
+Output: KILLED [director-085] The decoder rejects invalid longitude for the position
 ```
 
 ## m039
@@ -1092,8 +1092,8 @@ false
 ### m039 Test
 
 ```text
-[director-085] The position rejects invalid latitude
-Output: KILLED [director-085] The position rejects invalid latitude
+[director-085] The decoder rejects invalid latitude for the position
+Output: KILLED [director-085] The decoder rejects invalid latitude for the position
 ```
 
 ## m040
@@ -1119,8 +1119,8 @@ false
 ### m040 Test
 
 ```text
-[director-085] The position rejects a height below the limit
-Output: KILLED [director-085] The position rejects a height below the limit
+[director-085] The decoder rejects a height below the limit for the position
+Output: KILLED [director-085] The decoder rejects a height below the limit for the position
 ```
 
 ## m041
@@ -1146,8 +1146,8 @@ false
 ### m041 Test
 
 ```text
-[director-085] The position rejects a height above the limit
-Output: KILLED [director-085] The position rejects a height above the limit
+[director-085] The decoder rejects a height above the limit for the position
+Output: KILLED [director-085] The decoder rejects a height above the limit for the position
 ```
 
 ## m042
@@ -1173,8 +1173,8 @@ false
 ### m042 Test
 
 ```text
-[director-085] The position total rejects excess
-Output: KILLED [director-085] The position total rejects excess
+[director-085] The decoder rejects excess for the position total
+Output: KILLED [director-085] The decoder rejects excess for the position total
 ```
 
 ## m043
@@ -1200,8 +1200,8 @@ p[2] ?? 1
 ### m043 Test
 
 ```text
-[director-085] The position uses zero for absent height
-Output: KILLED [director-085] The position uses zero for absent height
+[director-085] The decoder returns zero for absent height for the position
+Output: KILLED [director-085] The decoder returns zero for absent height for the position
 ```
 
 ## m044
@@ -1227,8 +1227,8 @@ p[2] ?? 0
 ### m044 Test
 
 ```text
-[director-085] The position keeps the height in the data
-Output: KILLED [director-085] The position keeps the height in the data
+[director-085] The decoder returns the height in the data for the position
+Output: KILLED [director-085] The decoder returns the height in the data for the position
 ```
 
 ## m045
@@ -1254,8 +1254,8 @@ false
 ### m045 Test
 
 ```text
-[director-086] The line rejects invalid array
-Output: KILLED [director-086] The line rejects invalid array
+[director-086] The decoder rejects invalid array for the line
+Output: KILLED [director-086] The decoder rejects invalid array for the line
 ```
 
 ## m046
@@ -1281,8 +1281,8 @@ false
 ### m046 Test
 
 ```text
-[director-086] The line rejects invalid minimum
-Output: KILLED [director-086] The line rejects invalid minimum
+[director-086] The decoder rejects invalid minimum for the line
+Output: KILLED [director-086] The decoder rejects invalid minimum for the line
 ```
 
 ## m047
@@ -1308,8 +1308,8 @@ ring ? 4 : 2
 ### m047 Test
 
 ```text
-[director-086] The ring needs four points
-Output: KILLED [director-086] The ring needs four points
+[director-086] The decoder rejects a ring with fewer than four points for the ring
+Output: KILLED [director-086] The decoder rejects a ring with fewer than four points for the ring
 ```
 
 ## m048
@@ -1335,8 +1335,8 @@ normalized[0].some
 ### m048 Test
 
 ```text
-[director-086] The line accepts two distinct endpoints
-Output: KILLED [director-086] The line accepts two distinct endpoints
+[director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+Output: KILLED [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
 ```
 
 ## m049
@@ -1362,8 +1362,8 @@ i !== 0 && v !== normalized.at(-1)[i]
 ### m049 Test
 
 ```text
-[director-086] The ring rejects unclosed field 0
-Output: KILLED [director-086] The ring rejects unclosed field 0
+[director-086] The decoder rejects unclosed field 0 for the ring
+Output: KILLED [director-086] The decoder rejects unclosed field 0 for the ring
 ```
 
 ## m050
@@ -1389,8 +1389,8 @@ i !== 1 && v !== normalized.at(-1)[i]
 ### m050 Test
 
 ```text
-[director-086] The ring rejects unclosed field 1
-Output: KILLED [director-086] The ring rejects unclosed field 1
+[director-086] The decoder rejects unclosed field 1 for the ring
+Output: KILLED [director-086] The decoder rejects unclosed field 1 for the ring
 ```
 
 ## m051
@@ -1416,8 +1416,8 @@ i !== 2 && v !== normalized.at(-1)[i]
 ### m051 Test
 
 ```text
-[director-086] The ring rejects unclosed field 2
-Output: KILLED [director-086] The ring rejects unclosed field 2
+[director-086] The decoder rejects unclosed field 2 for the ring
+Output: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
 ```
 
 ## m052
@@ -1443,8 +1443,8 @@ true
 ### m052 Test
 
 ```text
-[director-087] The geometry rejects invalid type
-Output: KILLED [director-087] The geometry rejects invalid type
+[director-087] The decoder rejects invalid type for the geometry
+Output: KILLED [director-087] The decoder rejects invalid type for the geometry
 ```
 
 ## m053
@@ -1470,8 +1470,8 @@ true
 ### m053 Test
 
 ```text
-[director-087] The geometry rejects invalid array
-Output: KILLED [director-087] The geometry rejects invalid array
+[director-087] The decoder rejects invalid array for the geometry
+Output: KILLED [director-087] The decoder rejects invalid array for the geometry
 ```
 
 ## m054
@@ -1497,8 +1497,8 @@ true &&
 ### m054 Test
 
 ```text
-[director-087] The geometry rejects an empty polygon
-Output: KILLED [director-087] The geometry rejects an empty polygon
+[director-087] The decoder rejects an empty polygon for the geometry
+Output: KILLED [director-087] The decoder rejects an empty polygon for the geometry
 ```
 
 ## m055
@@ -1524,8 +1524,8 @@ true
 ### m055 Test
 
 ```text
-[director-087] The geometry rejects more than 128 rings
-Output: KILLED [director-087] The geometry rejects more than 128 rings
+[director-087] The decoder rejects more than 128 rings for the geometry
+Output: KILLED [director-087] The decoder rejects more than 128 rings for the geometry
 ```
 
 ## m056
@@ -1551,8 +1551,8 @@ coordinates = [];
 ### m056 Test
 
 ```text
-[director-087] The geometry returns a closed polygon
-Output: KILLED [director-087] The geometry returns a closed polygon
+[director-087] The decoder returns a closed polygon for the geometry
+Output: KILLED [director-087] The decoder returns a closed polygon for the geometry
 ```
 
 ## m057
@@ -1578,8 +1578,8 @@ return { ...feature, id, type: g.type, coordinates };
 ### m057 Test
 
 ```text
-[director-087] The geometry removes properties
-Output: KILLED [director-087] The geometry removes properties
+[director-087] The decoder removes properties for the geometry
+Output: KILLED [director-087] The decoder removes properties for the geometry
 ```
 
 ## m058
@@ -1605,8 +1605,8 @@ if (!packs.length) return false;
 ### m058 Test
 
 ```text
-[director-088] The new session reports idle state
-Output: KILLED [director-088] The new session reports idle state
+[director-088] The session reports idle state after creation
+Output: KILLED [director-088] The session reports idle state after creation
 ```
 
 ## m059
@@ -1767,8 +1767,8 @@ run.status = 'bad';
 ### m064 Test
 
 ```text
-[director-089] The session gives copied state
-Output: KILLED [director-089] The session gives copied state
+[director-089] The session reports ready after the caller changes a state copy
+Output: KILLED [director-089] The session reports ready after the caller changes a state copy
 ```
 
 ## m065
@@ -1794,8 +1794,8 @@ if (ended) {}
 ### m065 Test
 
 ```text
-[director-090] The cancelled session disposes late resources
-Output: KILLED [director-090] The cancelled session disposes late resources
+[director-090] The session disposes late resources for the cancelled session
+Output: KILLED [director-090] The session disposes late resources for the cancelled session
 ```
 
 ## m066
@@ -1821,8 +1821,8 @@ File: src/director/packs/session.js
 ### m066 Test
 
 ```text
-[director-090] The session accepts a null late handle
-Output: KILLED [director-090] The session accepts a null late handle
+[director-090] The session returns false for cancelled work with a null late handle
+Output: KILLED [director-090] The session returns false for cancelled work with a null late handle
 ```
 
 ## m067
@@ -1848,8 +1848,8 @@ if (superseded) throw new Error("bad");
 ### m067 Test
 
 ```text
-[director-090] The session destroys work that is not complete
-Output: KILLED [director-090] The session destroys work that is not complete
+[director-090] The session returns false for work that destruction stops
+Output: KILLED [director-090] The session returns false for work that destruction stops
 ```
 
 ## m068
@@ -1877,8 +1877,8 @@ clear();
 ### m068 Test
 
 ```text
-[director-091] The replacement keeps its resources
-Output: KILLED [director-091] The replacement keeps its resources
+[director-091] The session keeps its resources for the replacement
+Output: KILLED [director-091] The session keeps its resources for the replacement
 ```
 
 ## m069
@@ -1933,8 +1933,8 @@ return false;
 ### m070 Test
 
 ```text
-[director-092] The deadline rejects stalled work
-Output: KILLED [director-092] The deadline rejects stalled work
+[director-092] The session rejects stalled work for the deadline
+Output: KILLED [director-092] The session rejects stalled work for the deadline
 ```
 
 ## m071
@@ -1960,8 +1960,8 @@ false
 ### m071 Test
 
 ```text
-[director-092] The data pack session reads the byteLength field once without a registered source
-Output: KILLED [director-092] The data pack session reads the byteLength field once without a registered source
+[director-092] The session reads the byteLength field once without a registered source for the data pack session
+Output: KILLED [director-092] The session reads the byteLength field once without a registered source for the data pack session
 ```
 
 ## m072
@@ -1987,8 +1987,8 @@ false
 ### m072 Test
 
 ```text
-[director-092] The absent renderer does not call its source
-Output: KILLED [director-092] The absent renderer does not call its source
+[director-092] The session rejects an absent renderer without a source call
+Output: KILLED [director-092] The session rejects an absent renderer without a source call
 ```
 
 ## m073
@@ -2176,8 +2176,8 @@ maxBytes: PACK_LIMITS.bytes
 ### m079 Test
 
 ```text
-[director-093] The session checks exact bytes and digest
-Output: KILLED [director-093] The session checks exact bytes and digest
+[director-093] The session returns true for exact bytes and digest
+Output: KILLED [director-093] The session returns true for exact bytes and digest
 ```
 
 ## m080
@@ -2257,8 +2257,8 @@ false
 ### m082 Test
 
 ```text
-[director-094] The directory rejects protocol
-Output: KILLED [director-094] The directory rejects protocol
+[director-094] The factory rejects protocol
+Output: KILLED [director-094] The factory rejects protocol
 ```
 
 ## m083
@@ -2284,8 +2284,8 @@ false
 ### m083 Test
 
 ```text
-[director-094] The directory rejects username
-Output: KILLED [director-094] The directory rejects username
+[director-094] The factory rejects username
+Output: KILLED [director-094] The factory rejects username
 ```
 
 ## m084
@@ -2311,8 +2311,8 @@ false
 ### m084 Test
 
 ```text
-[director-094] The directory rejects password
-Output: KILLED [director-094] The directory rejects password
+[director-094] The factory rejects password
+Output: KILLED [director-094] The factory rejects password
 ```
 
 ## m085
@@ -2338,8 +2338,8 @@ false
 ### m085 Test
 
 ```text
-[director-094] The directory rejects query
-Output: KILLED [director-094] The directory rejects query
+[director-094] The factory rejects query
+Output: KILLED [director-094] The factory rejects query
 ```
 
 ## m086
@@ -2365,8 +2365,8 @@ false
 ### m086 Test
 
 ```text
-[director-094] The directory rejects fragment
-Output: KILLED [director-094] The directory rejects fragment
+[director-094] The factory rejects fragment
+Output: KILLED [director-094] The factory rejects fragment
 ```
 
 ## m087
@@ -2392,8 +2392,8 @@ false
 ### m087 Test
 
 ```text
-[director-094] The directory rejects an address with no final slash
-Output: KILLED [director-094] The directory rejects an address with no final slash
+[director-094] The factory rejects an address with no final slash
+Output: KILLED [director-094] The factory rejects an address with no final slash
 ```
 
 ## m088
@@ -2419,8 +2419,8 @@ cache: 'default'
 ### m088 Test
 
 ```text
-[director-095] The asset request sets its fixed options
-Output: KILLED [director-095] The asset request sets its fixed options
+[director-095] The source sets its fixed options for the asset request
+Output: KILLED [director-095] The source sets its fixed options for the asset request
 ```
 
 ## m089
@@ -2446,8 +2446,8 @@ offset = 0;
 ### m089 Test
 
 ```text
-[director-096] The stream joins distinct chunks
-Output: KILLED [director-096] The stream joins distinct chunks
+[director-096] The source joins distinct stream chunks
+Output: KILLED [director-096] The source joins distinct stream chunks
 ```
 
 ## m090
@@ -2473,8 +2473,8 @@ false
 ### m090 Test
 
 ```text
-[director-096] The stream rejects excess header bytes
-Output: KILLED [director-096] The stream rejects excess header bytes
+[director-096] The source rejects excess header bytes for the stream
+Output: KILLED [director-096] The source rejects excess header bytes for the stream
 ```
 
 ## m091
@@ -2500,8 +2500,8 @@ false
 ### m091 Test
 
 ```text
-[director-096] The stream rejects excess chunk bytes
-Output: KILLED [director-096] The stream rejects excess chunk bytes
+[director-096] The source rejects excess chunk bytes for the stream
+Output: KILLED [director-096] The source rejects excess chunk bytes for the stream
 ```
 
 ## m092
@@ -2608,8 +2608,8 @@ response.body?.cancel()
 ### m095 Test
 
 ```text
-[director-097] The source accepts failed body cancellation
-Output: KILLED [director-097] The source accepts failed body cancellation
+[director-097] The source rejects the asset request after failed body cancellation
+Output: KILLED [director-097] The source rejects the asset request after failed body cancellation
 ```
 
 ## m096
@@ -2662,8 +2662,8 @@ await reader.cancel();
 ### m097 Test
 
 ```text
-[director-097] The stream releases its lock after an error
-Output: KILLED [director-097] The stream releases its lock after an error
+[director-097] The source releases the reader lock after a stream error
+Output: KILLED [director-097] The source releases the reader lock after a stream error
 ```
 
 ## m098
@@ -2691,8 +2691,8 @@ for (;;) {
 ### m098 Test
 
 ```text
-[director-097] The source checks its signal between chunks
-Output: KILLED [director-097] The source checks its signal between chunks
+[director-097] The source checks its signal between chunks and rejects the call
+Output: KILLED [director-097] The source checks its signal between chunks and rejects the call
 ```
 
 ## m099
@@ -2718,8 +2718,8 @@ false
 ### m099 Test
 
 ```text
-[director-098] The bundle helpers reject nontext input
-Output: KILLED [director-098] The bundle helpers reject nontext input
+[director-098] The import rejects nontext input
+Output: KILLED [director-098] The import rejects nontext input
 ```
 
 ## m100
@@ -2745,8 +2745,8 @@ throw new Error('wrong');
 ### m100 Test
 
 ```text
-[director-098] The bundle helpers reject invalid JSON
-Output: KILLED [director-098] The bundle helpers reject invalid JSON
+[director-098] The import rejects invalid JSON
+Output: KILLED [director-098] The import rejects invalid JSON
 ```
 
 ## m101
@@ -2772,8 +2772,8 @@ if (false)
 ### m101 Test
 
 ```text
-[director-098] The bundle helpers accept plain project JSON
-Output: KILLED [director-098] The bundle helpers accept plain project JSON
+[director-098] The import accepts plain project JSON and returns the project
+Output: KILLED [director-098] The import accepts plain project JSON and returns the project
 ```
 
 ## m102
@@ -2799,8 +2799,8 @@ false
 ### m102 Test
 
 ```text
-[director-098] The bundle helpers reject excess characters
-Output: KILLED [director-098] The bundle helpers reject excess characters
+[director-098] The import rejects excess characters
+Output: KILLED [director-098] The import rejects excess characters
 ```
 
 ## m103
@@ -2826,8 +2826,8 @@ File: src/director/sharing/bundle.js
 ### m103 Test
 
 ```text
-[director-098] The bundle helpers reject excess UTF8 bytes
-Output: KILLED [director-098] The bundle helpers reject excess UTF8 bytes
+[director-098] The import rejects excess UTF8 bytes
+Output: KILLED [director-098] The import rejects excess UTF8 bytes
 ```
 
 ## m104
@@ -2853,8 +2853,8 @@ false
 ### m104 Test
 
 ```text
-[director-099] The base64 rejects a custom text object
-Output: KILLED [director-099] The base64 rejects a custom text object
+[director-099] The import rejects a custom text object for the base64
+Output: KILLED [director-099] The import rejects a custom text object for the base64
 ```
 
 ## m105
@@ -2880,8 +2880,8 @@ false
 ### m105 Test
 
 ```text
-[director-099] The base64 rejects invalid empty
-Output: KILLED [director-099] The base64 rejects invalid empty
+[director-099] The import rejects invalid empty for the base64
+Output: KILLED [director-099] The import rejects invalid empty for the base64
 ```
 
 ## m106
@@ -2907,8 +2907,8 @@ false
 ### m106 Test
 
 ```text
-[director-099] The base64 rejects invalid length
-Output: KILLED [director-099] The base64 rejects invalid length
+[director-099] The import rejects invalid length for the base64
+Output: KILLED [director-099] The import rejects invalid length for the base64
 ```
 
 ## m107
@@ -2934,8 +2934,8 @@ false
 ### m107 Test
 
 ```text
-[director-099] The base64 rejects invalid alignment
-Output: KILLED [director-099] The base64 rejects invalid alignment
+[director-099] The import rejects invalid alignment for the base64
+Output: KILLED [director-099] The import rejects invalid alignment for the base64
 ```
 
 ## m108
@@ -2961,8 +2961,8 @@ false
 ### m108 Test
 
 ```text
-[director-099] The base64 rejects invalid alphabet
-Output: KILLED [director-099] The base64 rejects invalid alphabet
+[director-099] The import rejects invalid alphabet for the base64
+Output: KILLED [director-099] The import rejects invalid alphabet for the base64
 ```
 
 ## m109
@@ -2988,8 +2988,8 @@ false
 ### m109 Test
 
 ```text
-[director-099] The base64 rejects invalid padding
-Output: KILLED [director-099] The base64 rejects invalid padding
+[director-099] The import rejects invalid padding for the base64
+Output: KILLED [director-099] The import rejects invalid padding for the base64
 ```
 
 ## m110
@@ -3015,8 +3015,8 @@ false
 ### m110 Test
 
 ```text
-[director-099] The bundle rejects duplicate paths
-Output: KILLED [director-099] The bundle rejects duplicate paths
+[director-099] The import rejects duplicate paths
+Output: KILLED [director-099] The import rejects duplicate paths
 ```
 
 ## m111
@@ -3042,8 +3042,8 @@ false
 ### m111 Test
 
 ```text
-[director-099] The bundle rejects an unsupported media type
-Output: KILLED [director-099] The bundle rejects an unsupported media type
+[director-099] The import rejects an unsupported media type
+Output: KILLED [director-099] The import rejects an unsupported media type
 ```
 
 ## m112
@@ -3069,8 +3069,8 @@ false
 ### m112 Test
 
 ```text
-[director-099] The bundle rejects unsupported version
-Output: KILLED [director-099] The bundle rejects unsupported version
+[director-099] The import rejects unsupported version
+Output: KILLED [director-099] The import rejects unsupported version
 ```
 
 ## m113
@@ -3096,8 +3096,8 @@ File: src/director/sharing/bundle.js
 ### m113 Test
 
 ```text
-[director-100] The bundle rejects an absent asset
-Output: KILLED [director-100] The bundle rejects an absent asset
+[director-100] The import rejects an absent asset
+Output: KILLED [director-100] The import rejects an absent asset
 ```
 
 ## m114
@@ -3123,8 +3123,8 @@ false
 ### m114 Test
 
 ```text
-[director-100] The bundle rejects a wrong byteLength field
-Output: KILLED [director-100] The bundle rejects a wrong byteLength field
+[director-100] The import rejects a wrong byteLength field
+Output: KILLED [director-100] The import rejects a wrong byteLength field
 ```
 
 ## m115
@@ -3150,8 +3150,8 @@ false
 ### m115 Test
 
 ```text
-[director-100] The bundle rejects a pack digest that differs from its asset
-Output: KILLED [director-100] The bundle rejects a pack digest that differs from its asset
+[director-100] The import rejects a pack digest that differs from its asset
+Output: KILLED [director-100] The import rejects a pack digest that differs from its asset
 ```
 
 ## m116
@@ -3177,8 +3177,8 @@ false
 ### m116 Test
 
 ```text
-[director-100] The bundle rejects an asset digest that differs from its bytes
-Output: KILLED [director-100] The bundle rejects an asset digest that differs from its bytes
+[director-100] The import rejects an asset digest that differs from its bytes
+Output: KILLED [director-100] The import rejects an asset digest that differs from its bytes
 ```
 
 ## m117
@@ -3204,8 +3204,8 @@ false
 ### m117 Test
 
 ```text
-[director-100] The bundle rejects unused assets
-Output: KILLED [director-100] The bundle rejects unused assets
+[director-100] The import rejects unused assets
+Output: KILLED [director-100] The import rejects unused assets
 ```
 
 ## m118
@@ -3231,8 +3231,8 @@ false
 ### m118 Test
 
 ```text
-[director-100] The bundle rejects external data pack sources
-Output: KILLED [director-100] The bundle rejects external data pack sources
+[director-100] The import rejects external data pack sources
+Output: KILLED [director-100] The import rejects external data pack sources
 ```
 
 ## m119
@@ -3447,8 +3447,8 @@ false
 ### m126 Test
 
 ```text
-[director-102] The export accepts the total byte limit and rejects one more byte
-Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
+[director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
 ```
 
 ## m127
@@ -3501,8 +3501,8 @@ let entry = null;
 ### m128 Test
 
 ```text
-[director-103] The export reuses a shared asset
-Output: KILLED [director-103] The export reuses a shared asset
+[director-103] The export reuses a shared asset and returns bundle text
+Output: KILLED [director-103] The export reuses a shared asset and returns bundle text
 ```
 
 ## m129
@@ -3717,8 +3717,8 @@ file.name.endsWith('.gevbundle.json')
 ### m136 Test
 
 ```text
-[director-106] The share helpers accept an absent filename
-Output: KILLED [director-106] The share helpers accept an absent filename
+[director-106] The share helpers return the project for an absent filename
+Output: KILLED [director-106] The share helpers return the project for an absent filename
 ```
 
 ## m137
@@ -3771,8 +3771,8 @@ false
 ### m138 Test
 
 ```text
-[director-106] The share helpers give bundles the larger file limit
-Output: KILLED [director-106] The share helpers give bundles the larger file limit
+[director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
+Output: KILLED [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
 ```
 
 ## m139
@@ -3906,8 +3906,8 @@ resolve(value)
 ### m143 Test
 
 ```text
-[director-107] The helper checks signal state when the work settles
-Output: KILLED [director-107] The helper checks signal state when the work settles
+[director-107] The helper checks signal state when the work settles and rejects the call
+Output: KILLED [director-107] The helper checks signal state when the work settles and rejects the call
 ```
 
 ## m144
@@ -3987,8 +3987,8 @@ scene.title
 ### m146 Test
 
 ```text
-[director-108] The preview uses the scene ID without a title
-Output: KILLED [director-108] The preview uses the scene ID without a title
+[director-108] The preview reports the scene ID when the title is absent
+Output: KILLED [director-108] The preview reports the scene ID when the title is absent
 ```
 
 ## m147
@@ -4149,8 +4149,8 @@ false
 ### m152 Test
 
 ```text
-[director-110] The preview detects applied shot packs
-Output: KILLED [director-110] The preview detects applied shot packs
+[director-110] The preview reports external content for applied shot packs
+Output: KILLED [director-110] The preview reports external content for applied shot packs
 ```
 
 ## m153
@@ -4176,8 +4176,8 @@ false
 ### m153 Test
 
 ```text
-[director-110] The preview detects the source pack ID of a shot
-Output: KILLED [director-110] The preview detects the source pack ID of a shot
+[director-110] The preview reports external content for a shot with a source pack ID
+Output: KILLED [director-110] The preview reports external content for a shot with a source pack ID
 ```
 
 ## m154
@@ -4203,8 +4203,8 @@ true
 ### m154 Test
 
 ```text
-[director-110] The preview detects no external content
-Output: KILLED [director-110] The preview detects no external content
+[director-110] The preview reports no external content without source packs
+Output: KILLED [director-110] The preview reports no external content without source packs
 ```
 
 ## m155
@@ -4230,8 +4230,8 @@ File: src/director/packs/manifest.js
 ### m155 Test
 
 ```text
-[director-080] The image accepts its bounds field
-Output: KILLED [director-080] The image accepts its bounds field
+[director-080] The validator returns without an error for its bounds field for the image
+Output: KILLED [director-080] The validator returns without an error for its bounds field for the image
 ```
 
 ## m156
@@ -4257,8 +4257,8 @@ File: src/director/packs/manifest.js
 ### m156 Test
 
 ```text
-[director-080] The image accepts its height field
-Output: KILLED [director-080] The image accepts its height field
+[director-080] The validator returns without an error for its height field for the image
+Output: KILLED [director-080] The validator returns without an error for its height field for the image
 ```
 
 ## m157
@@ -4284,8 +4284,8 @@ File: src/director/packs/manifest.js
 ### m157 Test
 
 ```text
-[director-080] The image accepts its altitudeReference field
-Output: KILLED [director-080] The image accepts its altitudeReference field
+[director-080] The validator returns without an error for its altitudeReference field for the image
+Output: KILLED [director-080] The validator returns without an error for its altitudeReference field for the image
 ```
 
 ## m158
@@ -4311,8 +4311,8 @@ File: src/director/packs/manifest.js
 ### m158 Test
 
 ```text
-[director-081] The media accepts its anchorId field
-Output: KILLED [director-081] The media accepts its anchorId field
+[director-081] The validator returns without an error for its anchorId field for the media
+Output: KILLED [director-081] The validator returns without an error for its anchorId field for the media
 ```
 
 ## m159
@@ -4338,8 +4338,8 @@ File: src/director/packs/manifest.js
 ### m159 Test
 
 ```text
-[director-077] The geojson accepts its altitudeReference field
-Output: KILLED [director-077] The geojson accepts its altitudeReference field
+[director-077] The validator returns without an error for a GeoJSON altitudeReference field
+Output: KILLED [director-077] The validator returns without an error for a GeoJSON altitudeReference field
 ```
 
 ## m160
@@ -4365,8 +4365,8 @@ i === 0 ? -181 : (i % 2 ? -90 : -180)
 ### m160 Test
 
 ```text
-[director-080] The image bounds 0 rejects low excess
-Output: KILLED [director-080] The image bounds 0 rejects low excess
+[director-080] The validator rejects low excess for image bounds field 0
+Output: KILLED [director-080] The validator rejects low excess for image bounds field 0
 ```
 
 ## m161
@@ -4392,8 +4392,8 @@ i === 0 ? 181 : (i % 2 ? 90 : 180)
 ### m161 Test
 
 ```text
-[director-080] The image bounds 0 rejects high excess
-Output: KILLED [director-080] The image bounds 0 rejects high excess
+[director-080] The validator rejects high excess for image bounds field 0
+Output: KILLED [director-080] The validator rejects high excess for image bounds field 0
 ```
 
 ## m162
@@ -4419,8 +4419,8 @@ i === 1 ? -91 : (i % 2 ? -90 : -180)
 ### m162 Test
 
 ```text
-[director-080] The image bounds 1 rejects low excess
-Output: KILLED [director-080] The image bounds 1 rejects low excess
+[director-080] The validator rejects low excess for image bounds field 1
+Output: KILLED [director-080] The validator rejects low excess for image bounds field 1
 ```
 
 ## m163
@@ -4446,8 +4446,8 @@ i === 1 ? 91 : (i % 2 ? 90 : 180)
 ### m163 Test
 
 ```text
-[director-080] The image bounds 1 rejects high excess
-Output: KILLED [director-080] The image bounds 1 rejects high excess
+[director-080] The validator rejects high excess for image bounds field 1
+Output: KILLED [director-080] The validator rejects high excess for image bounds field 1
 ```
 
 ## m164
@@ -4473,8 +4473,8 @@ i === 2 ? -181 : (i % 2 ? -90 : -180)
 ### m164 Test
 
 ```text
-[director-080] The image bounds 2 rejects low excess
-Output: KILLED [director-080] The image bounds 2 rejects low excess
+[director-080] The validator rejects low excess for image bounds field 2
+Output: KILLED [director-080] The validator rejects low excess for image bounds field 2
 ```
 
 ## m165
@@ -4500,8 +4500,8 @@ i === 2 ? 181 : (i % 2 ? 90 : 180)
 ### m165 Test
 
 ```text
-[director-080] The image bounds 2 rejects high excess
-Output: KILLED [director-080] The image bounds 2 rejects high excess
+[director-080] The validator rejects high excess for image bounds field 2
+Output: KILLED [director-080] The validator rejects high excess for image bounds field 2
 ```
 
 ## m166
@@ -4527,8 +4527,8 @@ i === 3 ? -91 : (i % 2 ? -90 : -180)
 ### m166 Test
 
 ```text
-[director-080] The image bounds 3 rejects low excess
-Output: KILLED [director-080] The image bounds 3 rejects low excess
+[director-080] The validator rejects low excess for image bounds field 3
+Output: KILLED [director-080] The validator rejects low excess for image bounds field 3
 ```
 
 ## m167
@@ -4554,8 +4554,8 @@ i === 3 ? 91 : (i % 2 ? 90 : 180)
 ### m167 Test
 
 ```text
-[director-080] The image bounds 3 rejects high excess
-Output: KILLED [director-080] The image bounds 3 rejects high excess
+[director-080] The validator rejects high excess for image bounds field 3
+Output: KILLED [director-080] The validator rejects high excess for image bounds field 3
 ```
 
 ## m168
@@ -4581,8 +4581,8 @@ number(p.height, `${at}.height`, -12000, 1e9 + 1, false);
 ### m168 Test
 
 ```text
-[director-080] The image height checks both limits
-Output: KILLED [director-080] The image height checks both limits
+[director-080] The validator rejects image height outside both limits
+Output: KILLED [director-080] The validator rejects image height outside both limits
 ```
 
 ## m169
@@ -4608,8 +4608,8 @@ scene.anchors || []
 ### m169 Test
 
 ```text
-[director-082] The scene uses supplied anchors
-Output: KILLED [director-082] The scene uses supplied anchors
+[director-082] The validator uses supplied anchors for the scene and returns without an error
+Output: KILLED [director-082] The validator uses supplied anchors for the scene and returns without an error
 ```
 
 ## m170
@@ -4635,8 +4635,8 @@ scene.anchors
 ### m170 Test
 
 ```text
-[director-082] The scene uses absent anchor defaults
-Output: KILLED [director-082] The scene uses absent anchor defaults
+[director-082] The validator uses absent anchor defaults for the scene and returns without an error
+Output: KILLED [director-082] The validator uses absent anchor defaults for the scene and returns without an error
 ```
 
 ## m171
@@ -4662,8 +4662,8 @@ Math.abs(p[0]) >= 180
 ### m171 Test
 
 ```text
-[director-085] The position accepts both geographic edges
-Output: KILLED [director-085] The position accepts both geographic edges
+[director-085] The decoder accepts both geographic edges for the position and returns coordinates
+Output: KILLED [director-085] The decoder accepts both geographic edges for the position and returns coordinates
 ```
 
 ## m172
@@ -4719,8 +4719,8 @@ active?.status || 'bad'
 ### m173 Test
 
 ```text
-[director-088] The session state uses its idle default
-Output: KILLED [director-088] The session state uses its idle default
+[director-088] The session reports idle after creation
+Output: KILLED [director-088] The session reports idle after creation
 ```
 
 ## m174
@@ -4746,8 +4746,8 @@ active?.handles.length || 1
 ### m174 Test
 
 ```text
-[director-088] The session state uses its zero default
-Output: KILLED [director-088] The session state uses its zero default
+[director-088] The session reports zero handles after creation
+Output: KILLED [director-088] The session reports zero handles after creation
 ```
 
 ## m175
@@ -4773,8 +4773,8 @@ active?.handles.length || 0
 ### m175 Test
 
 ```text
-[director-089] The session state uses its active total
-Output: KILLED [director-089] The session state uses its active total
+[director-089] The session reports one active handle
+Output: KILLED [director-089] The session reports one active handle
 ```
 
 ## m176
@@ -4800,8 +4800,8 @@ pack.byteLength || 1
 ### m176 Test
 
 ```text
-[director-093] The session uses its default byte budget
-Output: KILLED [director-093] The session uses its default byte budget
+[director-093] The session calls the source with a default limit of 8388608 bytes
+Output: KILLED [director-093] The session calls the source with a default limit of 8388608 bytes
 ```
 
 ## m177
@@ -4827,8 +4827,8 @@ bytes.length !== pack.byteLength
 ### m177 Test
 
 ```text
-[director-093] The session accepts absent declared size
-Output: KILLED [director-093] The session accepts absent declared size
+[director-093] The session returns true without a declared size
+Output: KILLED [director-093] The session returns true without a declared size
 ```
 
 ## m178
@@ -4854,8 +4854,8 @@ const superseded = active !== run || disposed;
 ### m178 Test
 
 ```text
-[director-090] The session checks signal state without an event
-Output: KILLED [director-090] The session checks signal state without an event
+[director-090] The session returns false for a cancelled signal without an event
+Output: KILLED [director-090] The session returns false for a cancelled signal without an event
 ```
 
 ## m179
@@ -4908,8 +4908,8 @@ const superseded = signal?.aborted || disposed;
 ### m180 Test
 
 ```text
-[director-090] The session checks a cleared load call without signal state
-Output: KILLED [director-090] The session checks a cleared load call without signal state
+[director-090] The session returns false for a cleared load call without a signal state access
+Output: KILLED [director-090] The session returns false for a cleared load call without a signal state access
 ```
 
 ## m181
@@ -4993,8 +4993,8 @@ if (ended) {
 ### m183 Test
 
 ```text
-[director-092] The session settles a source error before its deadline
-Output: KILLED [director-092] The session settles a source error before its deadline
+[director-092] The session settles a source error before its deadline and reports idle
+Output: KILLED [director-092] The session settles a source error before its deadline and reports idle
 ```
 
 ## m184
@@ -5048,8 +5048,8 @@ base.protocol !== 'https:'
 ### m185 Test
 
 ```text
-[director-094] The directory accepts HTTP and HTTPS
-Output: KILLED [director-094] The directory accepts HTTP and HTTPS
+[director-094] The factory returns a source for HTTP and HTTPS directories
+Output: KILLED [director-094] The factory returns a source for HTTP and HTTPS directories
 ```
 
 ## m186
@@ -5075,8 +5075,8 @@ false
 ### m186 Test
 
 ```text
-[director-098] The share character guard comes before byte conversion
-Output: KILLED [director-098] The share character guard comes before byte conversion
+[director-098] The import rejects 52428801 characters before byte conversion
+Output: KILLED [director-098] The import rejects 52428801 characters before byte conversion
 ```
 
 ## m187
@@ -5102,8 +5102,8 @@ scene.dataPacks
 ### m187 Test
 
 ```text
-[director-101] The export accepts scenes without data packs
-Output: KILLED [director-101] The export accepts scenes without data packs
+[director-101] The export accepts scenes without data packs and returns bundle text
+Output: KILLED [director-101] The export accepts scenes without data packs and returns bundle text
 ```
 
 ## m188
@@ -5129,8 +5129,8 @@ scene.dataPacks || []
 ### m188 Test
 
 ```text
-[director-101] The export keeps a supplied data pack list
-Output: KILLED [director-101] The export keeps a supplied data pack list
+[director-101] The export returns one asset for a supplied data pack list
+Output: KILLED [director-101] The export returns one asset for a supplied data pack list
 ```
 
 ## m189
@@ -5156,8 +5156,8 @@ pack.byteLength !== bytes.length
 ### m189 Test
 
 ```text
-[director-102] The export accepts absent integrity fields
-Output: KILLED [director-102] The export accepts absent integrity fields
+[director-102] The export accepts absent integrity fields and returns bundle text
+Output: KILLED [director-102] The export accepts absent integrity fields and returns bundle text
 ```
 
 ## m190
@@ -5183,8 +5183,8 @@ pack.sha256 !== sha256
 ### m190 Test
 
 ```text
-[director-102] The export accepts an absent digest
-Output: KILLED [director-102] The export accepts an absent digest
+[director-102] The export accepts an absent digest and returns bundle text
+Output: KILLED [director-102] The export accepts an absent digest and returns bundle text
 ```
 
 ## m191
@@ -5210,8 +5210,8 @@ pack.byteLength !== entry.byteLength
 ### m191 Test
 
 ```text
-[director-103] The shared export accepts absent byte declarations
-Output: KILLED [director-103] The shared export accepts absent byte declarations
+[director-103] The export accepts absent byte declarations for the shared export and returns bundle text
+Output: KILLED [director-103] The export accepts absent byte declarations for the shared export and returns bundle text
 ```
 
 ## m192
@@ -5237,8 +5237,8 @@ pack.sha256 !== entry.sha256
 ### m192 Test
 
 ```text
-[director-103] The shared export accepts an absent digest
-Output: KILLED [director-103] The shared export accepts an absent digest
+[director-103] The export accepts an absent digest for the shared export and returns bundle text
+Output: KILLED [director-103] The export accepts an absent digest for the shared export and returns bundle text
 ```
 
 ## m193
@@ -5264,8 +5264,8 @@ value.includes('=') && !/^[A-Za-z0-9+/]+={1,2}$/.test(value)
 ### m193 Test
 
 ```text
-[director-099] The base64 accepts bytes without padding
-Output: KILLED [director-099] The base64 accepts bytes without padding
+[director-099] The import accepts bytes without padding for the base64 and returns assets
+Output: KILLED [director-099] The import accepts bytes without padding for the base64 and returns assets
 ```
 
 ## m194
@@ -5291,8 +5291,8 @@ scene.dataPacks
 ### m194 Test
 
 ```text
-[director-108] The preview accepts absent data pack lists
-Output: KILLED [director-108] The preview accepts absent data pack lists
+[director-108] The preview reports no packs when data pack lists are absent
+Output: KILLED [director-108] The preview reports no packs when data pack lists are absent
 ```
 
 ## m195
@@ -5318,8 +5318,8 @@ scene.dataPacks || []
 ### m195 Test
 
 ```text
-[director-108] The preview uses supplied data pack lists
-Output: KILLED [director-108] The preview uses supplied data pack lists
+[director-108] The preview reports one pack from the supplied data pack list
+Output: KILLED [director-108] The preview reports one pack from the supplied data pack list
 ```
 
 ## m196
@@ -5345,8 +5345,8 @@ scene.id
 ### m196 Test
 
 ```text
-[director-108] The preview keeps a supplied scene title
-Output: KILLED [director-108] The preview keeps a supplied scene title
+[director-108] The preview reports Example for the supplied scene title
+Output: KILLED [director-108] The preview reports Example for the supplied scene title
 ```
 
 ## m197
@@ -5372,8 +5372,8 @@ true
 ### m197 Test
 
 ```text
-[director-109] The preview distinguishes bundle sources
-Output: KILLED [director-109] The preview distinguishes bundle sources
+[director-109] The preview reports a configured source for a supplied source ID
+Output: KILLED [director-109] The preview reports a configured source for a supplied source ID
 ```
 
 ## m198
@@ -5399,8 +5399,8 @@ shot.layers
 ### m198 Test
 
 ```text
-[director-110] The preview accepts absent shot layers
-Output: KILLED [director-110] The preview accepts absent shot layers
+[director-110] The preview reports no absent layer when a shot has no layers
+Output: KILLED [director-110] The preview reports no absent layer when a shot has no layers
 ```
 
 ## m199
@@ -5426,8 +5426,8 @@ shot.layers || {}
 ### m199 Test
 
 ```text
-[director-110] The preview uses supplied shot layers
-Output: KILLED [director-110] The preview uses supplied shot layers
+[director-110] The preview reports traffic as absent without layer IDs
+Output: KILLED [director-110] The preview reports traffic as absent without layer IDs
 ```
 
 ## m200
@@ -5453,8 +5453,8 @@ source({ path, signal, maxBytes = PACK_LIMITS.bytes + 1 })
 ### m200 Test
 
 ```text
-[director-105] The store checks its default byte budget
-Output: KILLED [director-105] The store checks its default byte budget
+[director-105] The store rejects 8388609 bytes without a caller limit
+Output: KILLED [director-105] The store rejects 8388609 bytes without a caller limit
 ```
 
 ## m201
@@ -5480,8 +5480,8 @@ false
 ### m201 Test
 
 ```text
-[director-092] The absent renderer does not call its source
-Output: KILLED [director-092] The absent renderer does not call its source
+[director-092] The session rejects an absent renderer without a source call
+Output: KILLED [director-092] The session rejects an absent renderer without a source call
 ```
 
 ## m202
@@ -5507,8 +5507,8 @@ false
 ### m202 Test
 
 ```text
-[director-099] The base64 rejects a custom text object
-Output: KILLED [director-099] The base64 rejects a custom text object
+[director-099] The import rejects a custom text object for the base64
+Output: KILLED [director-099] The import rejects a custom text object for the base64
 ```
 
 ## m203
@@ -5534,8 +5534,8 @@ File: src/director/sharing/bundle.js
 ### m203 Test
 
 ```text
-[director-103] The export key uses the registered source name
-Output: KILLED [director-103] The export key uses the registered source name
+[director-103] The export key uses the registered source name and returns bundle text
+Output: KILLED [director-103] The export key uses the registered source name and returns bundle text
 ```
 
 ## m204
@@ -5561,8 +5561,8 @@ File: src/director/sharing/bundle.js
 ### m204 Test
 
 ```text
-[director-103] The export key uses path
-Output: KILLED [director-103] The export key uses path
+[director-103] The export key uses path and returns bundle text
+Output: KILLED [director-103] The export key uses path and returns bundle text
 ```
 
 ## m205
@@ -5588,8 +5588,8 @@ Object.keys(shot.layers || {}).filter(id=>id!=='ships')
 ### m205 Test
 
 ```text
-[director-110] The preview detects each layer key
-Output: KILLED [director-110] The preview detects each layer key
+[director-110] The preview reports ships as absent when only traffic is configured
+Output: KILLED [director-110] The preview reports ships as absent when only traffic is configured
 ```
 
 ## m206
@@ -5615,8 +5615,8 @@ File: src/director/sharing/preview.js
 ### m206 Test
 
 ```text
-[director-108] The preview totals include every asset
-Output: KILLED [director-108] The preview totals include every asset
+[director-108] The preview reports three bytes for both assets
+Output: KILLED [director-108] The preview reports three bytes for both assets
 ```
 
 ## m207
@@ -5642,8 +5642,8 @@ credentials: 'omit',
 ### m207 Test
 
 ```text
-[director-095] The asset request sets its credentials option
-Output: KILLED [director-095] The asset request sets its credentials option
+[director-095] The source sets its credentials option for the asset request
+Output: KILLED [director-095] The source sets its credentials option for the asset request
 ```
 
 ## m208
@@ -5669,8 +5669,8 @@ redirect: 'error',
 ### m208 Test
 
 ```text
-[director-095] The asset request sets its redirect option
-Output: KILLED [director-095] The asset request sets its redirect option
+[director-095] The source sets its redirect option for the asset request
+Output: KILLED [director-095] The source sets its redirect option for the asset request
 ```
 
 ## m209
@@ -5696,8 +5696,8 @@ referrerPolicy: 'no-referrer',
 ### m209 Test
 
 ```text
-[director-095] The asset request sets its referrerPolicy option
-Output: KILLED [director-095] The asset request sets its referrerPolicy option
+[director-095] The source sets its referrerPolicy option for the asset request
+Output: KILLED [director-095] The source sets its referrerPolicy option for the asset request
 ```
 
 ## m210
@@ -5723,8 +5723,8 @@ cache: 'no-store',
 ### m210 Test
 
 ```text
-[director-095] The asset request sets its cache option
-Output: KILLED [director-095] The asset request sets its cache option
+[director-095] The source sets its cache option for the asset request
+Output: KILLED [director-095] The source sets its cache option for the asset request
 ```
 
 ## m211
@@ -5750,8 +5750,8 @@ p.some((v,i) => i !== 0 && !Number.isFinite(v))
 ### m211 Test
 
 ```text
-[director-085] The position rejects field 0 that is not finite
-Output: KILLED [director-085] The position rejects field 0 that is not finite
+[director-085] The decoder rejects field 0 that is not finite for the position
+Output: KILLED [director-085] The decoder rejects field 0 that is not finite for the position
 ```
 
 ## m212
@@ -5777,8 +5777,8 @@ p.some((v,i) => i !== 1 && !Number.isFinite(v))
 ### m212 Test
 
 ```text
-[director-085] The position rejects field 1 that is not finite
-Output: KILLED [director-085] The position rejects field 1 that is not finite
+[director-085] The decoder rejects field 1 that is not finite for the position
+Output: KILLED [director-085] The decoder rejects field 1 that is not finite for the position
 ```
 
 ## m213
@@ -5804,8 +5804,8 @@ p.some((v,i) => i !== 2 && !Number.isFinite(v))
 ### m213 Test
 
 ```text
-[director-085] The position rejects field 2 that is not finite
-Output: KILLED [director-085] The position rejects field 2 that is not finite
+[director-085] The decoder rejects field 2 that is not finite for the position
+Output: KILLED [director-085] The decoder rejects field 2 that is not finite for the position
 ```
 
 ## m214
@@ -5831,8 +5831,8 @@ maxBytes = PACK_LIMITS.bytes + 1
 ### m214 Test
 
 ```text
-[director-096] The source checks its default byte budget
-Output: KILLED [director-096] The source checks its default byte budget
+[director-096] The source rejects 8388609 bytes without a caller limit
+Output: KILLED [director-096] The source rejects 8388609 bytes without a caller limit
 ```
 
 ## m215
@@ -5858,8 +5858,8 @@ File: src/director/packs/manifest.js
 ### m215 Test
 
 ```text
-[director-077] The manifest accepts the id field of a data pack
-Output: KILLED [director-077] The manifest accepts the id field of a data pack
+[director-077] The validator returns without an error for the id field of a data pack
+Output: KILLED [director-077] The validator returns without an error for the id field of a data pack
 ```
 
 ## m216
@@ -5885,8 +5885,8 @@ File: src/director/packs/manifest.js
 ### m216 Test
 
 ```text
-[director-077] The manifest accepts the version field of a data pack
-Output: KILLED [director-077] The manifest accepts the version field of a data pack
+[director-077] The validator returns without an error for the version field of a data pack
+Output: KILLED [director-077] The validator returns without an error for the version field of a data pack
 ```
 
 ## m217
@@ -5912,8 +5912,8 @@ File: src/director/packs/manifest.js
 ### m217 Test
 
 ```text
-[director-077] The manifest accepts the format field of a data pack
-Output: KILLED [director-077] The manifest accepts the format field of a data pack
+[director-077] The validator returns without an error for the format field of a data pack
+Output: KILLED [director-077] The validator returns without an error for the format field of a data pack
 ```
 
 ## m218
@@ -5939,8 +5939,8 @@ File: src/director/packs/manifest.js
 ### m218 Test
 
 ```text
-[director-077] The manifest accepts the source field of a data pack
-Output: KILLED [director-077] The manifest accepts the source field of a data pack
+[director-077] The validator returns without an error for the source field of a data pack
+Output: KILLED [director-077] The validator returns without an error for the source field of a data pack
 ```
 
 ## m219
@@ -5966,8 +5966,8 @@ File: src/director/packs/manifest.js
 ### m219 Test
 
 ```text
-[director-077] The manifest accepts the attribution field of a data pack
-Output: KILLED [director-077] The manifest accepts the attribution field of a data pack
+[director-077] The validator returns without an error for the attribution field of a data pack
+Output: KILLED [director-077] The validator returns without an error for the attribution field of a data pack
 ```
 
 ## m220
@@ -5993,8 +5993,8 @@ File: src/director/packs/manifest.js
 ### m220 Test
 
 ```text
-[director-077] The manifest accepts the placement field of a data pack
-Output: KILLED [director-077] The manifest accepts the placement field of a data pack
+[director-077] The validator returns without an error for the placement field of a data pack
+Output: KILLED [director-077] The validator returns without an error for the placement field of a data pack
 ```
 
 ## m221
@@ -6020,8 +6020,8 @@ File: src/director/packs/manifest.js
 ### m221 Test
 
 ```text
-[director-079] The manifest accepts the byteLength field of a data pack
-Output: KILLED [director-079] The manifest accepts the byteLength field of a data pack
+[director-079] The validator returns without an error for the byteLength field of a data pack
+Output: KILLED [director-079] The validator returns without an error for the byteLength field of a data pack
 ```
 
 ## m222
@@ -6047,8 +6047,8 @@ File: src/director/packs/manifest.js
 ### m222 Test
 
 ```text
-[director-079] The manifest accepts the sha256 field of a data pack
-Output: KILLED [director-079] The manifest accepts the sha256 field of a data pack
+[director-079] The validator returns without an error for the sha256 field of a data pack
+Output: KILLED [director-079] The validator returns without an error for the sha256 field of a data pack
 ```
 
 ## m223
@@ -6074,8 +6074,8 @@ File: src/director/packs/manifest.js
 ### m223 Test
 
 ```text
-[director-077] The manifest accepts its source name field
-Output: KILLED [director-077] The manifest accepts its source name field
+[director-077] The validator returns without an error for its source name field
+Output: KILLED [director-077] The validator returns without an error for its source name field
 ```
 
 ## m224
@@ -6101,8 +6101,8 @@ File: src/director/packs/manifest.js
 ### m224 Test
 
 ```text
-[director-077] The manifest accepts its source path field
-Output: KILLED [director-077] The manifest accepts its source path field
+[director-077] The validator returns without an error for its source path field
+Output: KILLED [director-077] The validator returns without an error for its source path field
 ```
 
 ## m225
@@ -6128,8 +6128,8 @@ File: src/director/packs/manifest.js
 ### m225 Test
 
 ```text
-[director-078] The manifest accepts its attribution text field
-Output: KILLED [director-078] The manifest accepts its attribution text field
+[director-078] The validator returns without an error for its attribution text field
+Output: KILLED [director-078] The validator returns without an error for its attribution text field
 ```
 
 ## m226
@@ -6155,8 +6155,8 @@ File: src/director/packs/manifest.js
 ### m226 Test
 
 ```text
-[director-078] The manifest accepts its attribution license field
-Output: KILLED [director-078] The manifest accepts its attribution license field
+[director-078] The validator returns without an error for its attribution license field
+Output: KILLED [director-078] The validator returns without an error for its attribution license field
 ```
 
 ## m227
@@ -6182,8 +6182,8 @@ File: src/director/packs/manifest.js
 ### m227 Test
 
 ```text
-[director-078] The manifest accepts its attribution url field
-Output: KILLED [director-078] The manifest accepts its attribution url field
+[director-078] The validator returns without an error for its attribution url field
+Output: KILLED [director-078] The validator returns without an error for its attribution url field
 ```
 
 ## m228
@@ -6209,8 +6209,8 @@ for (const pack of packsOf(project).slice(0,1))
 ### m228 Test
 
 ```text
-[director-100] The bundle checks its second asset reference
-Output: KILLED [director-100] The bundle checks its second asset reference
+[director-100] The import checks its second asset reference and rejects the call
+Output: KILLED [director-100] The import checks its second asset reference and rejects the call
 ```
 
 ## m229
@@ -6236,8 +6236,8 @@ for (const entry of input.assets.slice(0,1))
 ### m229 Test
 
 ```text
-[director-100] The bundle checks its second asset digest
-Output: KILLED [director-100] The bundle checks its second asset digest
+[director-100] The import checks its second asset digest and rejects the call
+Output: KILLED [director-100] The import checks its second asset digest and rejects the call
 ```
 
 ## m230
@@ -6263,8 +6263,8 @@ pack.sha256 === entry.sha256
 ### m230 Test
 
 ```text
-[director-103] The export accepts equal shared integrity
-Output: KILLED [director-103] The export accepts equal shared integrity
+[director-103] The export accepts equal shared integrity and returns bundle text
+Output: KILLED [director-103] The export accepts equal shared integrity and returns bundle text
 ```
 
 ## m231
@@ -6317,8 +6317,8 @@ if (false) abort();
 ### m232 Test
 
 ```text
-[director-092] The session settles an early internal signal
-Output: KILLED [director-092] The session settles an early internal signal
+[director-092] The session settles an early internal signal and reports idle
+Output: KILLED [director-092] The session settles an early internal signal and reports idle
 ```
 
 ## m233
@@ -6344,8 +6344,8 @@ File: src/director/packs/session.js
 ### m233 Test
 
 ```text
-[director-093] The session gives anchors to its renderer
-Output: KILLED [director-093] The session gives anchors to its renderer
+[director-093] The session calls the renderer with the anchors and returns true
+Output: KILLED [director-093] The session calls the renderer with the anchors and returns true
 ```
 
 ## m234
@@ -6373,8 +6373,8 @@ File: src/director/sharing/bundle.js
 ### m234 Test
 
 ```text
-[director-106] The share helpers check a signal after they read text
-Output: KILLED [director-106] The share helpers check a signal after they read text
+[director-106] The share helpers call throwIfAborted three times and return the project
+Output: KILLED [director-106] The share helpers call throwIfAborted three times and return the project
 ```
 
 ## m235
@@ -6400,8 +6400,8 @@ if (false)
 ### m235 Test
 
 ```text
-[director-102] The export checks its encoded text budget
-Output: KILLED [director-102] The export checks its encoded text budget
+[director-102] The export rejects encoded bundle text above 52428800 bytes
+Output: KILLED [director-102] The export rejects encoded bundle text above 52428800 bytes
 ```
 
 ## m236
@@ -6454,8 +6454,8 @@ active?.status || 'idle'
 ### m237 Test
 
 ```text
-[director-089] The session state uses its active status
-Output: KILLED [director-089] The session state uses its active status
+[director-089] The session reports ready after asset work
+Output: KILLED [director-089] The session reports ready after asset work
 ```
 
 ## m238
@@ -6483,8 +6483,8 @@ false
 ### m238 Test
 
 ```text
-[director-080] The placement selects the image fields
-Output: KILLED [director-080] The placement selects the image fields
+[director-080] The validator rejects media fields in image placement for the placement
+Output: KILLED [director-080] The validator rejects media fields in image placement for the placement
 ```
 
 ## m239
@@ -6512,8 +6512,8 @@ false
 ### m239 Test
 
 ```text
-[director-081] The placement selects the media fields
-Output: KILLED [director-081] The placement selects the media fields
+[director-081] The validator rejects image fields in media placement for the placement
+Output: KILLED [director-081] The validator rejects image fields in media placement for the placement
 ```
 
 ## m240
@@ -6539,8 +6539,8 @@ pack.format === 'geojson' ? null : adapterMap.get(pack.format)
 ### m240 Test
 
 ```text
-[director-089] The session loads its geojson format
-Output: KILLED [director-089] The session loads its geojson format
+[director-089] The session calls the GeoJSON renderer once and returns true
+Output: KILLED [director-089] The session calls the GeoJSON renderer once and returns true
 ```
 
 ## m241
@@ -6566,8 +6566,8 @@ pack.format === 'image' ? null : adapterMap.get(pack.format)
 ### m241 Test
 
 ```text
-[director-089] The session loads its image format
-Output: KILLED [director-089] The session loads its image format
+[director-089] The session calls the image renderer once and returns true
+Output: KILLED [director-089] The session calls the image renderer once and returns true
 ```
 
 ## m242
@@ -6593,8 +6593,8 @@ pack.format === 'media' ? null : adapterMap.get(pack.format)
 ### m242 Test
 
 ```text
-[director-089] The session loads its media format
-Output: KILLED [director-089] The session loads its media format
+[director-089] The session calls the media renderer once and returns true
+Output: KILLED [director-089] The session calls the media renderer once and returns true
 ```
 
 ## m243
@@ -6649,7 +6649,7 @@ false
 
 ```text
 [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials
-Output: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and cred
+Output: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials
 ```
 
 ## m245
@@ -6703,7 +6703,7 @@ redirect: 'follow'
 
 ```text
 [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
-Output: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects unsaf
+Output: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 ```
 
 ## m247
@@ -6811,7 +6811,7 @@ if (ended) {}
 
 ```text
 [director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement
-Output: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps t
+Output: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement
 ```
 
 ## m251
@@ -6838,7 +6838,7 @@ if (ended) {}
 
 ```text
 [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result
-Output: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the re
+Output: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result
 ```
 
 ## m252
@@ -6867,7 +6867,7 @@ throw new Error("wrong");
 
 ```text
 [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources
-Output: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier
+Output: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources
 ```
 
 ## m253
@@ -6894,7 +6894,7 @@ false
 
 ```text
 [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
-Output: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects
+Output: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
 ```
 
 ## m254
@@ -6921,7 +6921,7 @@ await response.body?.cancel().catch(() => {});
 
 ```text
 [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal
-Output: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancel
+Output: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal
 ```
 
 ## m255
@@ -6947,8 +6947,8 @@ pack.source = { adapter: 'bad', path: entry.path };
 ### m255 Test
 
 ```text
-[director-101] The selected scene bundle copies bytes and attribution and keeps the project without an asset request
-Output: KILLED [director-101] The selected scene bundle copies bytes and attribution and keeps the project without
+[director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
+Output: KILLED [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
 ```
 
 ## m256
@@ -6974,8 +6974,8 @@ false
 ### m256 Test
 
 ```text
-[director-099] The bundle rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
-Output: KILLED [director-099] The bundle rejects invalid bytes, unknown fields, traversal, duplicates, absent asset
+[director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+Output: KILLED [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
 ```
 
 ## m257
@@ -7001,8 +7001,8 @@ false
 ### m257 Test
 
 ```text
-[director-102] The bundle checks asset limits and declared integrity before export
-Output: KILLED [director-102] The bundle checks asset limits and declared integrity before export
+[director-102] The export rejects excess bytes, wrong integrity and absent assets
+Output: KILLED [director-102] The export rejects excess bytes, wrong integrity and absent assets
 ```
 
 ## m258
@@ -7028,8 +7028,8 @@ false
 ### m258 Test
 
 ```text
-[director-103] The data packs with the same path share one asset and reject integrity values that differ
-Output: KILLED [director-103] The data packs with the same path share one asset and reject integrity values that di
+[director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
+Output: KILLED [director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
 ```
 
 ## m259
@@ -7055,8 +7055,8 @@ true
 ### m259 Test
 
 ```text
-[director-109] The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
-Output: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets witho
+[director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+Output: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
 ```
 
 ## m260
@@ -7082,8 +7082,8 @@ bytes: asset.bytes
 ### m260 Test
 
 ```text
-[director-104] The bundle byte store removes old data after replacement and uses no network source
-Output: KILLED [director-104] The bundle byte store removes old data after replacement and uses no network source
+[director-104] The store removes old data after replacement and uses no network source for the import byte store
+Output: KILLED [director-104] The store removes old data after replacement and uses no network source for the import byte store
 ```
 
 ## m261
@@ -7110,7 +7110,7 @@ if (false)
 
 ```text
 [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
-Output: KILLED [director-106] The share helpers reject excess file bytes before text access and cancel a stalled pr
+Output: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
 ```
 
 ## m262
@@ -7136,8 +7136,8 @@ reject(new Error('wrong'));
 ### m262 Test
 
 ```text
-[director-107] The cancelled bundle export stops before the next asset and returns no partial output
-Output: KILLED [director-107] The cancelled bundle export stops before the next asset and returns no partial output
+[director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
+Output: KILLED [director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
 ```
 
 ## m263
@@ -7163,8 +7163,8 @@ File: src/director/sharing/bundle.js
 ### m263 Test
 
 ```text
-[director-101] The bundle accepts long valid source asset names
-Output: KILLED [director-101] The bundle accepts long valid source asset names
+[director-101] The export returns a bundle for a source path of 1024 characters
+Output: KILLED [director-101] The export returns a bundle for a source path of 1024 characters
 ```
 
 ## m264
@@ -7190,8 +7190,8 @@ File: src/director/packs/manifest.js
 ### m264 Test
 
 ```text
-[director-077] The manifest accepts geojson
-Output: KILLED [director-077] The manifest accepts geojson
+[director-077] The validator returns without an error for geojson
+Output: KILLED [director-077] The validator returns without an error for geojson
 ```
 
 ## m265
@@ -7219,8 +7219,8 @@ false
 ### m265 Test
 
 ```text
-[director-077] The manifest accepts image
-Output: KILLED [director-077] The manifest accepts image
+[director-077] The validator returns without an error for image
+Output: KILLED [director-077] The validator returns without an error for image
 ```
 
 ## m266
@@ -7248,8 +7248,8 @@ false
 ### m266 Test
 
 ```text
-[director-077] The manifest accepts media
-Output: KILLED [director-077] The manifest accepts media
+[director-077] The validator returns without an error for media
+Output: KILLED [director-077] The validator returns without an error for media
 ```
 
 ## m267
@@ -7275,8 +7275,8 @@ i === 0 ? 181 : (i % 2 ? 90 : 180)
 ### m267 Test
 
 ```text
-[director-080] The image rejects bounds field 0
-Output: KILLED [director-080] The image rejects bounds field 0
+[director-080] The validator rejects bounds field 0 for the image
+Output: KILLED [director-080] The validator rejects bounds field 0 for the image
 ```
 
 ## m268
@@ -7302,8 +7302,8 @@ i === 1 ? 91 : (i % 2 ? 90 : 180)
 ### m268 Test
 
 ```text
-[director-080] The image rejects bounds field 1
-Output: KILLED [director-080] The image rejects bounds field 1
+[director-080] The validator rejects bounds field 1 for the image
+Output: KILLED [director-080] The validator rejects bounds field 1 for the image
 ```
 
 ## m269
@@ -7329,8 +7329,8 @@ i === 2 ? 181 : (i % 2 ? 90 : 180)
 ### m269 Test
 
 ```text
-[director-080] The image rejects bounds field 2
-Output: KILLED [director-080] The image rejects bounds field 2
+[director-080] The validator rejects bounds field 2 for the image
+Output: KILLED [director-080] The validator rejects bounds field 2 for the image
 ```
 
 ## m270
@@ -7356,8 +7356,8 @@ i === 3 ? 91 : (i % 2 ? 90 : 180)
 ### m270 Test
 
 ```text
-[director-080] The image rejects bounds field 3
-Output: KILLED [director-080] The image rejects bounds field 3
+[director-080] The validator rejects bounds field 3 for the image
+Output: KILLED [director-080] The validator rejects bounds field 3 for the image
 ```
 
 ## m271
@@ -7383,8 +7383,8 @@ File: src/director/packs/session.js
 ### m271 Test
 
 ```text
-[director-092] The session uses its supplied deadline
-Output: KILLED [director-092] The session uses its supplied deadline
+[director-092] The session rejects stalled work at the 19 ms deadline
+Output: KILLED [director-092] The session rejects stalled work at the 19 ms deadline
 ```
 
 ## m272
@@ -7410,8 +7410,8 @@ timeoutMs = 15001
 ### m272 Test
 
 ```text
-[director-092] The session uses its default deadline
-Output: KILLED [director-092] The session uses its default deadline
+[director-092] The session rejects stalled work at the default 15000 ms deadline
+Output: KILLED [director-092] The session rejects stalled work at the default 15000 ms deadline
 ```
 
 ## m273
@@ -7465,8 +7465,8 @@ File: src/director/sharing/bundle.js
 ### m274 Test
 
 ```text
-[director-099] The bundle accepts the application/json media type
-Output: KILLED [director-099] The bundle accepts the application/json media type
+[director-099] The import accepts the application/json media type and returns assets
+Output: KILLED [director-099] The import accepts the application/json media type and returns assets
 ```
 
 ## m275
@@ -7492,8 +7492,8 @@ File: src/director/sharing/bundle.js
 ### m275 Test
 
 ```text
-[director-099] The bundle accepts the application/geo+json media type
-Output: KILLED [director-099] The bundle accepts the application/geo+json media type
+[director-099] The import accepts the application/geo+json media type and returns assets
+Output: KILLED [director-099] The import accepts the application/geo+json media type and returns assets
 ```
 
 ## m276
@@ -7519,8 +7519,8 @@ File: src/director/sharing/bundle.js
 ### m276 Test
 
 ```text
-[director-099] The bundle accepts the image/png media type
-Output: KILLED [director-099] The bundle accepts the image/png media type
+[director-099] The import accepts the image/png media type and returns assets
+Output: KILLED [director-099] The import accepts the image/png media type and returns assets
 ```
 
 ## m277
@@ -7546,8 +7546,8 @@ File: src/director/sharing/bundle.js
 ### m277 Test
 
 ```text
-[director-099] The bundle accepts the video/mp4 media type
-Output: KILLED [director-099] The bundle accepts the video/mp4 media type
+[director-099] The import accepts the video/mp4 media type and returns assets
+Output: KILLED [director-099] The import accepts the video/mp4 media type and returns assets
 ```
 
 ## m278
@@ -7573,8 +7573,8 @@ File: src/director/sharing/bundle.js
 ### m278 Test
 
 ```text
-[director-099] The bundle accepts the video/webm media type
-Output: KILLED [director-099] The bundle accepts the video/webm media type
+[director-099] The import accepts the video/webm media type and returns assets
+Output: KILLED [director-099] The import accepts the video/webm media type and returns assets
 ```
 
 ## m279
@@ -7600,8 +7600,8 @@ File: src/director/sharing/bundle.js
 ### m279 Test
 
 ```text
-[director-099] The bundle accepts the audio/mpeg media type
-Output: KILLED [director-099] The bundle accepts the audio/mpeg media type
+[director-099] The import accepts the audio/mpeg media type and returns assets
+Output: KILLED [director-099] The import accepts the audio/mpeg media type and returns assets
 ```
 
 ## m280
@@ -7627,8 +7627,8 @@ File: src/director/sharing/bundle.js
 ### m280 Test
 
 ```text
-[director-099] The bundle accepts the audio/ogg media type
-Output: KILLED [director-099] The bundle accepts the audio/ogg media type
+[director-099] The import accepts the audio/ogg media type and returns assets
+Output: KILLED [director-099] The import accepts the audio/ogg media type and returns assets
 ```
 
 ## m281
@@ -7654,8 +7654,8 @@ File: src/director/sharing/bundle.js
 ### m281 Test
 
 ```text
-[director-099] The bundle accepts the audio/wav media type
-Output: KILLED [director-099] The bundle accepts the audio/wav media type
+[director-099] The import accepts the audio/wav media type and returns assets
+Output: KILLED [director-099] The import accepts the audio/wav media type and returns assets
 ```
 
 ## m282
@@ -7681,8 +7681,8 @@ File: src/director/sharing/bundle.js
 ### m282 Test
 
 ```text
-[director-099] The bundle accepts the audio/webm media type
-Output: KILLED [director-099] The bundle accepts the audio/webm media type
+[director-099] The import accepts the audio/webm media type and returns assets
+Output: KILLED [director-099] The import accepts the audio/webm media type and returns assets
 ```
 
 ## m283
@@ -7735,8 +7735,8 @@ if (signal?.aborted || disposed) return false;
 ### m284 Test
 
 ```text
-[director-088] The destroyed session does not read the caller signal state
-Output: KILLED [director-088] The destroyed session does not read the caller signal state
+[director-088] The session returns false without a caller signal access after destruction
+Output: KILLED [director-088] The session returns false without a caller signal access after destruction
 ```
 
 Probe: evidence/probe-signal-getter.txt.
@@ -7766,8 +7766,8 @@ value.features.length >= PACK_LIMITS.features
 ### m285 Test
 
 ```text
-[director-083] The collection accepts its exact feature limit
-Output: KILLED [director-083] The collection accepts its exact feature limit
+[director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
+Output: KILLED [director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
 ```
 
 ## m286
@@ -7793,8 +7793,8 @@ id.length >= 256
 ### m286 Test
 
 ```text
-[director-084] The feature ID accepts its exact text limit
-Output: KILLED [director-084] The feature ID accepts its exact text limit
+[director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
+Output: KILLED [director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
 ```
 
 ## m287
@@ -7820,8 +7820,8 @@ File: src/director/packs/geojson.js
 ### m287 Test
 
 ```text
-[director-085] The position accepts its exact total limit
-Output: KILLED [director-085] The position accepts its exact total limit
+[director-085] The decoder accepts its exact total limit for the position and returns coordinates
+Output: KILLED [director-085] The decoder accepts its exact total limit for the position and returns coordinates
 ```
 
 ## m288
@@ -7847,8 +7847,8 @@ g.coordinates.length < 128
 ### m288 Test
 
 ```text
-[director-087] The polygon accepts its exact ring limit
-Output: KILLED [director-087] The polygon accepts its exact ring limit
+[director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
+Output: KILLED [director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
 ```
 
 ## m289
@@ -7874,8 +7874,8 @@ string(value, path, 1025);
 ### m289 Test
 
 ```text
-[director-076] The asset path checks its text limit
-Output: KILLED [director-076] The asset path checks its text limit
+[director-076] The validator rejects a path above its text limit for the asset path
+Output: KILLED [director-076] The validator rejects a path above its text limit for the asset path
 ```
 
 ## m290
@@ -7901,8 +7901,8 @@ assets.length >= SHARE_LIMITS.assets - 1
 ### m290 Test
 
 ```text
-[director-102] The export accepts its exact asset total
-Output: KILLED [director-102] The export accepts its exact asset total
+[director-102] The export accepts its exact asset total and returns bundle text
+Output: KILLED [director-102] The export accepts its exact asset total and returns bundle text
 ```
 
 ## m291
@@ -7955,8 +7955,8 @@ File: src/director/packs/source.js
 ### m292 Test
 
 ```text
-[director-095] The asset request sets its signal option
-Output: KILLED [director-095] The asset request sets its signal option
+[director-095] The source sets its signal option for the asset request
+Output: KILLED [director-095] The source sets its signal option for the asset request
 ```
 
 ## m293
@@ -7982,8 +7982,8 @@ length >= maxBytes
 ### m293 Test
 
 ```text
-[director-096] The stream accepts its exact byte limit
-Output: KILLED [director-096] The stream accepts its exact byte limit
+[director-096] The source accepts its exact byte limit for the stream and returns bytes
+Output: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
 ```
 
 ## m294
@@ -8009,8 +8009,8 @@ Number(response.headers.get('content-length')) >= maxBytes
 ### m294 Test
 
 ```text
-[director-096] The stream accepts its exact byte limit
-Output: KILLED [director-096] The stream accepts its exact byte limit
+[director-096] The source accepts its exact byte limit for the stream and returns bytes
+Output: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
 ```
 
 ## m295
@@ -8254,8 +8254,8 @@ File: src/director/packs/manifest.js
 ### m303 Test
 
 ```text
-[director-079] The digest rejects 63 characters
-Output: KILLED [director-079] The digest rejects 63 characters
+[director-079] The validator rejects 63 characters for the digest
+Output: KILLED [director-079] The validator rejects 63 characters for the digest
 ```
 
 ## m304
@@ -8281,8 +8281,8 @@ File: src/director/packs/manifest.js
 ### m304 Test
 
 ```text
-[director-079] The digest rejects 65 characters
-Output: KILLED [director-079] The digest rejects 65 characters
+[director-079] The validator rejects 65 characters for the digest
+Output: KILLED [director-079] The validator rejects 65 characters for the digest
 ```
 
 ## m305
@@ -8308,8 +8308,8 @@ File: src/director/packs/manifest.js
 ### m305 Test
 
 ```text
-[director-079] The digest rejects a prefix
-Output: KILLED [director-079] The digest rejects a prefix
+[director-079] The validator rejects a prefix for the digest
+Output: KILLED [director-079] The validator rejects a prefix for the digest
 ```
 
 ## m306
@@ -8335,8 +8335,8 @@ File: src/director/packs/manifest.js
 ### m306 Test
 
 ```text
-[director-079] The digest rejects a suffix
-Output: KILLED [director-079] The digest rejects a suffix
+[director-079] The validator rejects a suffix for the digest
+Output: KILLED [director-079] The validator rejects a suffix for the digest
 ```
 
 ## m307
@@ -8362,8 +8362,8 @@ File: src/director/packs/manifest.js
 ### m307 Test
 
 ```text
-[director-079] The digest rejects uppercase text
-Output: KILLED [director-079] The digest rejects uppercase text
+[director-079] The validator rejects uppercase text for the digest
+Output: KILLED [director-079] The validator rejects uppercase text for the digest
 ```
 
 ## m308
@@ -8389,8 +8389,8 @@ p.bounds[0] > p.bounds[2]
 ### m308 Test
 
 ```text
-[director-080] The image rejects equal longitude edges
-Output: KILLED [director-080] The image rejects equal longitude edges
+[director-080] The validator rejects equal longitude edges for the image
+Output: KILLED [director-080] The validator rejects equal longitude edges for the image
 ```
 
 ## m309
@@ -8416,8 +8416,8 @@ p.bounds[1] > p.bounds[3]
 ### m309 Test
 
 ```text
-[director-080] The image rejects equal latitude edges
-Output: KILLED [director-080] The image rejects equal latitude edges
+[director-080] The validator rejects equal latitude edges for the image
+Output: KILLED [director-080] The validator rejects equal latitude edges for the image
 ```
 
 ## m310
@@ -8443,8 +8443,8 @@ i % 2 ? -89 : -180
 ### m310 Test
 
 ```text
-[director-080] The image accepts all geographic limits
-Output: KILLED [director-080] The image accepts all geographic limits
+[director-080] The validator returns without an error for all geographic limits for the image
+Output: KILLED [director-080] The validator returns without an error for all geographic limits for the image
 ```
 
 ## m311
@@ -8470,8 +8470,8 @@ i % 2 ? -90 : -179
 ### m311 Test
 
 ```text
-[director-080] The image accepts all geographic limits
-Output: KILLED [director-080] The image accepts all geographic limits
+[director-080] The validator returns without an error for all geographic limits for the image
+Output: KILLED [director-080] The validator returns without an error for all geographic limits for the image
 ```
 
 ## m312
@@ -8497,8 +8497,8 @@ i % 2 ? 89 : 180
 ### m312 Test
 
 ```text
-[director-080] The image accepts all geographic limits
-Output: KILLED [director-080] The image accepts all geographic limits
+[director-080] The validator returns without an error for all geographic limits for the image
+Output: KILLED [director-080] The validator returns without an error for all geographic limits for the image
 ```
 
 ## m313
@@ -8524,8 +8524,8 @@ i % 2 ? 90 : 179
 ### m313 Test
 
 ```text
-[director-080] The image accepts all geographic limits
-Output: KILLED [director-080] The image accepts all geographic limits
+[director-080] The validator returns without an error for all geographic limits for the image
+Output: KILLED [director-080] The validator returns without an error for all geographic limits for the image
 ```
 
 ## m314
@@ -8551,8 +8551,8 @@ Object.hasOwn(scene, 'dataPacks')
 ### m314 Test
 
 ```text
-[director-082] The scene ignores a data pack list from its parent
-Output: KILLED [director-082] The scene ignores a data pack list from its parent
+[director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
+Output: KILLED [director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
 ```
 
 ## m315
@@ -8578,8 +8578,8 @@ File: src/director/packs/manifest.js
 ### m315 Test
 
 ```text
-[director-080] The image rejects text for each geographic field
-Output: KILLED [director-080] The image rejects text for each geographic field
+[director-080] The validator rejects text for each geographic field for the image
+Output: KILLED [director-080] The validator rejects text for each geographic field for the image
 ```
 
 ## m316
@@ -8605,8 +8605,8 @@ File: src/director/packs/manifest.js
 ### m316 Test
 
 ```text
-[director-080] The image rejects text for each geographic field
-Output: KILLED [director-080] The image rejects text for each geographic field
+[director-080] The validator rejects text for each geographic field for the image
+Output: KILLED [director-080] The validator rejects text for each geographic field for the image
 ```
 
 ## m317
@@ -8632,8 +8632,8 @@ string(pack.attribution.text, `${path}.attribution.text`, 4095)
 ### m317 Test
 
 ```text
-[director-078] The attribution accepts its text limits and rejects excess text
-Output: KILLED [director-078] The attribution accepts its text limits and rejects excess text
+[director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+Output: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
 ```
 
 ## m318
@@ -8659,8 +8659,8 @@ string(pack.attribution.license, `${path}.attribution.license`, 4095)
 ### m318 Test
 
 ```text
-[director-078] The attribution accepts its text limits and rejects excess text
-Output: KILLED [director-078] The attribution accepts its text limits and rejects excess text
+[director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+Output: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
 ```
 
 ## m319
@@ -8686,8 +8686,8 @@ string(url, at, 2047)
 ### m319 Test
 
 ```text
-[director-078] The attribution accepts its text limits and rejects excess text
-Output: KILLED [director-078] The attribution accepts its text limits and rejects excess text
+[director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+Output: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
 ```
 
 ## m320
@@ -8713,8 +8713,8 @@ string(value, path, 1023)
 ### m320 Test
 
 ```text
-[director-076] The asset path accepts 1024 characters and rejects 1025
-Output: KILLED [director-076] The asset path accepts 1024 characters and rejects 1025
+[director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
+Output: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
 ```
 
 ## m321
@@ -8740,8 +8740,8 @@ File: src/director/packs/manifest.js
 ### m321 Test
 
 ```text
-[director-076] The asset path rejects URL syntax with a stable message
-Output: KILLED [director-076] The asset path rejects URL syntax with a stable message
+[director-076] The validator rejects URL syntax with a stable message for the asset path
+Output: KILLED [director-076] The validator rejects URL syntax with a stable message for the asset path
 ```
 
 ## m322
@@ -8767,8 +8767,8 @@ packs.length >= PACK_LIMITS.packs
 ### m322 Test
 
 ```text
-[director-088] The session accepts eight data packs
-Output: KILLED [director-088] The session accepts eight data packs
+[director-088] The session returns true for eight data packs
+Output: KILLED [director-088] The session returns true for eight data packs
 ```
 
 ## m323
@@ -8794,8 +8794,8 @@ bytes.length >= PACK_LIMITS.bytes
 ### m323 Test
 
 ```text
-[director-093] The session accepts the asset byte limit
-Output: KILLED [director-093] The session accepts the asset byte limit
+[director-093] The session returns true at the asset byte limit
+Output: KILLED [director-093] The session returns true at the asset byte limit
 ```
 
 ## m324
@@ -8821,8 +8821,8 @@ total >= PACK_LIMITS.totalBytes
 ### m324 Test
 
 ```text
-[director-093] The session accepts the total byte limit
-Output: KILLED [director-093] The session accepts the total byte limit
+[director-093] The session returns true at the total byte limit
+Output: KILLED [director-093] The session returns true at the total byte limit
 ```
 
 ## m325
@@ -8848,8 +8848,8 @@ path: 'wrong',
 ### m325 Test
 
 ```text
-[director-093] The source receives the path and the renderer receives the asset and signal
-Output: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
+[director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+Output: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
 ```
 
 ## m326
@@ -8875,8 +8875,8 @@ adapter({ pack, anchors, signal: controller.signal })
 ### m326 Test
 
 ```text
-[director-093] The source receives the path and the renderer receives the asset and signal
-Output: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
+[director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+Output: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
 ```
 
 ## m327
@@ -8902,8 +8902,8 @@ adapter({ pack, asset, anchors })
 ### m327 Test
 
 ```text
-[director-093] The source receives the path and the renderer receives the asset and signal
-Output: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
+[director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+Output: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
 ```
 
 ## m328
@@ -8987,8 +8987,8 @@ File: src/director/packs/session.js
 ### m330 Test
 
 ```text
-[director-088] The session checks every declaration before the source call
-Output: KILLED [director-088] The session checks every declaration before the source call
+[director-088] The session checks every declaration before the source call and rejects the call
+Output: KILLED [director-088] The session checks every declaration before the source call and rejects the call
 ```
 
 ## m331
@@ -9014,8 +9014,8 @@ for (const handle of []) handle.dispose();
 ### m331 Test
 
 ```text
-[director-089] The session destroys each ready resource
-Output: KILLED [director-089] The session destroys each ready resource
+[director-089] The session disposes both ready handles in reverse order and reports idle
+Output: KILLED [director-089] The session disposes both ready handles in reverse order and reports idle
 ```
 
 ## m332
@@ -9088,8 +9088,8 @@ File: src/director/packs/session.js
 ### m332 Test
 
 ```text
-[director-088] The session checks every declaration before the source call
-Output: KILLED [director-088] The session checks every declaration before the source call
+[director-088] The session checks every declaration before the source call and rejects the call
+Output: KILLED [director-088] The session checks every declaration before the source call and rejects the call
 ```
 
 ## m333
@@ -9304,8 +9304,8 @@ fetchImpl = undefined
 ### m340 Test
 
 ```text
-[director-095] The directory source uses the default fetch function
-Output: KILLED [director-095] The directory source uses the default fetch function
+[director-095] The source uses the default fetch function and returns bytes
+Output: KILLED [director-095] The source uses the default fetch function and returns bytes
 ```
 
 ## m341
@@ -9331,8 +9331,8 @@ bytes.length >= PACK_LIMITS.bytes
 ### m341 Test
 
 ```text
-[director-102] The export accepts the total byte limit and rejects one more byte
-Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
+[director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
 ```
 
 ## m342
@@ -9358,8 +9358,8 @@ total >= PACK_LIMITS.totalBytes
 ### m342 Test
 
 ```text
-[director-102] The export accepts the total byte limit and rejects one more byte
-Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
+[director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
 ```
 
 ## m343
@@ -9385,8 +9385,8 @@ value.length >= Math.ceil(PACK_LIMITS.bytes / 3) * 4
 ### m343 Test
 
 ```text
-[director-099] The base64 accepts its length limit and rejects the next aligned length
-Output: KILLED [director-099] The base64 accepts its length limit and rejects the next aligned length
+[director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
+Output: KILLED [director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
 ```
 
 ## m344
@@ -9521,8 +9521,8 @@ File: src/director/sharing/bundle.js
 ### m348 Test
 
 ```text
-[director-099] The import accepts the total byte limit and rejects one more byte
-Output: KILLED [director-099] The import accepts the total byte limit and rejects one more byte
+[director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+Output: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
 ```
 
 ## m349
@@ -9548,8 +9548,8 @@ total > PACK_LIMITS.totalBytes + 1
 ### m349 Test
 
 ```text
-[director-099] The import accepts the total byte limit and rejects one more byte
-Output: KILLED [director-099] The import accepts the total byte limit and rejects one more byte
+[director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+Output: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
 ```
 
 ## m350
@@ -9604,8 +9604,8 @@ File: src/director/sharing/bundle.js
 ### m351 Test
 
 ```text
-[director-107] The bundle stops import before an asset
-Output: KILLED [director-107] The bundle stops import before an asset
+[director-107] The bundle helpers stop import before an asset
+Output: KILLED [director-107] The bundle helpers stop import before an asset
 ```
 
 ## m352
@@ -9632,8 +9632,8 @@ File: src/director/sharing/bundle.js
 ### m352 Test
 
 ```text
-[director-107] The bundle stops import after a digest
-Output: KILLED [director-107] The bundle stops import after a digest
+[director-107] The bundle helpers stop import after a digest
+Output: KILLED [director-107] The bundle helpers stop import after a digest
 ```
 
 ## m353
@@ -9660,8 +9660,8 @@ File: src/director/sharing/bundle.js
 ### m353 Test
 
 ```text
-[director-107] The bundle stops export before an asset
-Output: KILLED [director-107] The bundle stops export before an asset
+[director-107] The bundle helpers stop export before an asset
+Output: KILLED [director-107] The bundle helpers stop export before an asset
 ```
 
 ## m354
@@ -9688,8 +9688,8 @@ File: src/director/sharing/bundle.js
 ### m354 Test
 
 ```text
-[director-107] The bundle stops export after asset bytes
-Output: KILLED [director-107] The bundle stops export after asset bytes
+[director-107] The bundle helpers stop export after asset bytes
+Output: KILLED [director-107] The bundle helpers stop export after asset bytes
 ```
 
 ## m355
@@ -9718,8 +9718,8 @@ File: src/director/sharing/bundle.js
 ### m355 Test
 
 ```text
-[director-107] The bundle stops export after a digest
-Output: KILLED [director-107] The bundle stops export after a digest
+[director-107] The bundle helpers stop export after a digest
+Output: KILLED [director-107] The bundle helpers stop export after a digest
 ```
 
 ## m356
@@ -9830,8 +9830,8 @@ string(pack.id, `${path}.id`, 255)
 ### m359 Test
 
 ```text
-[director-077] The manifest accepts 256 characters for its ID and rejects 257
-Output: KILLED [director-077] The manifest accepts 256 characters for its ID and rejects 257
+[director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+Output: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
 ```
 
 ## m360
@@ -9857,8 +9857,8 @@ string(pack.id, `${path}.id`, 257)
 ### m360 Test
 
 ```text
-[director-077] The manifest accepts 256 characters for its ID and rejects 257
-Output: KILLED [director-077] The manifest accepts 256 characters for its ID and rejects 257
+[director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+Output: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
 ```
 
 ## m361
@@ -9884,8 +9884,8 @@ string(pack.source.adapter, `${path}.source.adapter`, 255)
 ### m361 Test
 
 ```text
-[director-077] The manifest accepts 256 characters for its source name and rejects 257
-Output: KILLED [director-077] The manifest accepts 256 characters for its source name and rejects 257
+[director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+Output: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
 ```
 
 ## m362
@@ -9911,8 +9911,8 @@ string(pack.source.adapter, `${path}.source.adapter`, 257)
 ### m362 Test
 
 ```text
-[director-077] The manifest accepts 256 characters for its source name and rejects 257
-Output: KILLED [director-077] The manifest accepts 256 characters for its source name and rejects 257
+[director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+Output: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
 ```
 
 ## m363
@@ -9938,8 +9938,8 @@ string(pack.attribution.text, `${path}.attribution.text`, 4097)
 ### m363 Test
 
 ```text
-[director-078] The attribution accepts its text limits and rejects excess text
-Output: KILLED [director-078] The attribution accepts its text limits and rejects excess text
+[director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+Output: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
 ```
 
 ## m364
@@ -9965,8 +9965,8 @@ string(pack.attribution.license, `${path}.attribution.license`, 4097)
 ### m364 Test
 
 ```text
-[director-078] The attribution accepts its text limits and rejects excess text
-Output: KILLED [director-078] The attribution accepts its text limits and rejects excess text
+[director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+Output: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
 ```
 
 ## m365
@@ -9992,8 +9992,8 @@ string(url, at, 2049)
 ### m365 Test
 
 ```text
-[director-078] The attribution accepts its text limits and rejects excess text
-Output: KILLED [director-078] The attribution accepts its text limits and rejects excess text
+[director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+Output: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
 ```
 
 ## m366
@@ -10019,8 +10019,8 @@ string(value, path, 1025)
 ### m366 Test
 
 ```text
-[director-076] The asset path accepts 1024 characters and rejects 1025
-Output: KILLED [director-076] The asset path accepts 1024 characters and rejects 1025
+[director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
+Output: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
 ```
 
 ## m367
@@ -10073,8 +10073,8 @@ p[0] > 180
 ### m368 Test
 
 ```text
-[director-085] The position rejects negative longitude
-Output: KILLED [director-085] The position rejects negative longitude
+[director-085] The decoder rejects negative longitude for the position
+Output: KILLED [director-085] The decoder rejects negative longitude for the position
 ```
 
 ## m369
@@ -10100,8 +10100,8 @@ p[1] > 90
 ### m369 Test
 
 ```text
-[director-085] The position rejects negative latitude
-Output: KILLED [director-085] The position rejects negative latitude
+[director-085] The decoder rejects negative latitude for the position
+Output: KILLED [director-085] The decoder rejects negative latitude for the position
 ```
 
 ## m370
@@ -10127,8 +10127,8 @@ Math.abs(p[0]) >= 180
 ### m370 Test
 
 ```text
-[director-085] The position accepts the limit for negative longitude
-Output: KILLED [director-085] The position accepts the limit for negative longitude
+[director-085] The decoder accepts the limit for negative longitude for the position and returns coordinates
+Output: KILLED [director-085] The decoder accepts the limit for negative longitude for the position and returns coordinates
 ```
 
 ## m371
@@ -10154,8 +10154,8 @@ Math.abs(p[1]) >= 90
 ### m371 Test
 
 ```text
-[director-085] The position accepts the limit for negative latitude
-Output: KILLED [director-085] The position accepts the limit for negative latitude
+[director-085] The decoder accepts the limit for negative latitude for the position and returns coordinates
+Output: KILLED [director-085] The decoder accepts the limit for negative latitude for the position and returns coordinates
 ```
 
 ## m372
@@ -10181,8 +10181,8 @@ p.length < 2
 ### m372 Test
 
 ```text
-[director-085] The position rejects four coordinates
-Output: KILLED [director-085] The position rejects four coordinates
+[director-085] The decoder rejects four coordinates for the position
+Output: KILLED [director-085] The decoder rejects four coordinates for the position
 ```
 
 ## m373
@@ -10208,8 +10208,8 @@ p.length > 3
 ### m373 Test
 
 ```text
-[director-085] The position rejects one coordinate
-Output: KILLED [director-085] The position rejects one coordinate
+[director-085] The decoder rejects one coordinate for the position
+Output: KILLED [director-085] The decoder rejects one coordinate for the position
 ```
 
 ## m374
@@ -10235,8 +10235,8 @@ File: src/director/packs/manifest.js
 ### m374 Test
 
 ```text
-[director-076] The asset path rejects .x
-Output: KILLED [director-076] The asset path rejects .x
+[director-076] The validator rejects .x for the asset path
+Output: KILLED [director-076] The validator rejects .x for the asset path
 ```
 
 ## m375
@@ -10262,8 +10262,8 @@ File: src/director/packs/manifest.js
 ### m375 Test
 
 ```text
-[director-076] The asset path rejects x?a=1
-Output: KILLED [director-076] The asset path rejects x?a=1
+[director-076] The validator rejects x?a=1 for the asset path
+Output: KILLED [director-076] The validator rejects x?a=1 for the asset path
 ```
 
 ## m376
@@ -10289,8 +10289,8 @@ number(v, at, 2, PACK_LIMITS.bytes, false)
 ### m376 Test
 
 ```text
-[director-079] The manifest accepts one byte
-Output: KILLED [director-079] The manifest accepts one byte
+[director-079] The validator returns without an error for one byte
+Output: KILLED [director-079] The validator returns without an error for one byte
 ```
 
 ## m377
@@ -10316,8 +10316,8 @@ array(p.bounds, `${at}.bounds`, 4);
 ### m377 Test
 
 ```text
-[director-080] The image rejects bounds outside an array
-Output: KILLED [director-080] The image rejects bounds outside an array
+[director-080] The validator rejects bounds outside an array for the image
+Output: KILLED [director-080] The validator rejects bounds outside an array for the image
 ```
 
 ## m378
@@ -10343,8 +10343,8 @@ array(packs, `${path}.dataPacks`, 9);
 ### m378 Test
 
 ```text
-[director-082] The scene rejects nine distinct data packs
-Output: KILLED [director-082] The scene rejects nine distinct data packs
+[director-082] The validator rejects nine distinct data packs for the scene
+Output: KILLED [director-082] The validator rejects nine distinct data packs for the scene
 ```
 
 ## m379
@@ -10370,8 +10370,8 @@ array(packs, `${path}.dataPacks`, 7);
 ### m379 Test
 
 ```text
-[director-082] The scene accepts eight distinct data packs
-Output: KILLED [director-082] The scene accepts eight distinct data packs
+[director-082] The validator returns without an error for eight distinct data packs for the scene
+Output: KILLED [director-082] The validator returns without an error for eight distinct data packs for the scene
 ```
 
 ## m380
@@ -10397,8 +10397,8 @@ status: 'ready'
 ### m380 Test
 
 ```text
-[director-089] The data pack session reports its state during asset work
-Output: KILLED [director-089] The data pack session reports its state during asset work
+[director-089] The session reports its state during asset work for the data pack session
+Output: KILLED [director-089] The session reports its state during asset work for the data pack session
 ```
 
 ## m381
@@ -10424,8 +10424,8 @@ maxBytes = PACK_LIMITS.bytes - 1
 ### m381 Test
 
 ```text
-[director-096] The directory source accepts its default byte limit
-Output: KILLED [director-096] The directory source accepts its default byte limit
+[director-096] The source accepts its default byte limit and returns bytes
+Output: KILLED [director-096] The source accepts its default byte limit and returns bytes
 ```
 
 ## m382
@@ -10451,8 +10451,8 @@ text.length >= SHARE_LIMITS.bytes
 ### m382 Test
 
 ```text
-[director-098] The bundle helpers accept the character limit
-Output: KILLED [director-098] The bundle helpers accept the character limit
+[director-098] The import accepts the character limit and returns the project
+Output: KILLED [director-098] The import accepts the character limit and returns the project
 ```
 
 ## m383
@@ -10480,8 +10480,8 @@ new TextEncoder().encode(text).length >= SHARE_LIMITS.bytes
 ### m383 Test
 
 ```text
-[director-098] The bundle helpers accept the multibyte text limit
-Output: KILLED [director-098] The bundle helpers accept the multibyte text limit
+[director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+Output: KILLED [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
 ```
 
 ## m384
@@ -10507,8 +10507,8 @@ return { project: JSON.parse(text), assets: new Map() };
 ### m384 Test
 
 ```text
-[director-098] The bundle helpers reject an invalid plain project
-Output: KILLED [director-098] The bundle helpers reject an invalid plain project
+[director-098] The import rejects an invalid plain project
+Output: KILLED [director-098] The import rejects an invalid plain project
 ```
 
 ## m385
@@ -10534,8 +10534,8 @@ input.format !== 'gev-scene-bundle'
 ### m385 Test
 
 ```text
-[director-098] The bundle helpers reject a null project
-Output: KILLED [director-098] The bundle helpers reject a null project
+[director-098] The import rejects a null project
+Output: KILLED [director-098] The import rejects a null project
 ```
 
 ## m386
@@ -10561,8 +10561,8 @@ fields(input, '$', ['format', 'version', 'project', 'assets']);
 ### m386 Test
 
 ```text
-[director-099] The bundle helpers reject an extra top-level field
-Output: KILLED [director-099] The bundle helpers reject an extra top-level field
+[director-099] The import rejects an extra top-level field
+Output: KILLED [director-099] The import rejects an extra top-level field
 ```
 
 ## m387
@@ -10588,8 +10588,8 @@ const project = structuredClone(input.project);
 ### m387 Test
 
 ```text
-[director-099] The bundle helpers reject an invalid bundle project
-Output: KILLED [director-099] The bundle helpers reject an invalid bundle project
+[director-099] The import rejects an invalid bundle project
+Output: KILLED [director-099] The import rejects an invalid bundle project
 ```
 
 ## m388
@@ -10615,8 +10615,8 @@ array(input.assets, 'assets', SHARE_LIMITS.assets - 1);
 ### m388 Test
 
 ```text
-[director-099] The import accepts 64 distinct assets
-Output: KILLED [director-099] The import accepts 64 distinct assets
+[director-099] The import accepts 64 distinct assets and returns assets
+Output: KILLED [director-099] The import accepts 64 distinct assets and returns assets
 ```
 
 ## m389
@@ -10672,8 +10672,8 @@ resolveAsset(undefined, { signal })
 ### m390 Test
 
 ```text
-[director-101] The resolver receives the data pack and signal
-Output: KILLED [director-101] The resolver receives the data pack and signal
+[director-101] The export calls the resolver with the data pack and signal
+Output: KILLED [director-101] The export calls the resolver with the data pack and signal
 ```
 
 ## m391
@@ -10699,8 +10699,8 @@ resolveAsset(pack, {})
 ### m391 Test
 
 ```text
-[director-101] The resolver receives the data pack and signal
-Output: KILLED [director-101] The resolver receives the data pack and signal
+[director-101] The export calls the resolver with the data pack and signal
+Output: KILLED [director-101] The export calls the resolver with the data pack and signal
 ```
 
 ## m392
@@ -10726,8 +10726,8 @@ if (new TextEncoder().encode(text).length >= SHARE_LIMITS.bytes)
 ### m392 Test
 
 ```text
-[director-102] The export accepts the text byte limit
-Output: KILLED [director-102] The export accepts the text byte limit
+[director-102] The export accepts the text byte limit and returns bundle text
+Output: KILLED [director-102] The export accepts the text byte limit and returns bundle text
 ```
 
 ## m393
@@ -10753,8 +10753,8 @@ asset.bytes.length >= maxBytes
 ### m393 Test
 
 ```text
-[director-105] The byte store accepts the caller byte limit
-Output: KILLED [director-105] The byte store accepts the caller byte limit
+[director-105] The store accepts the caller byte limit for the byte store and returns byte copies
+Output: KILLED [director-105] The store accepts the caller byte limit for the byte store and returns byte copies
 ```
 
 ## m394
@@ -10780,8 +10780,8 @@ adapter({ asset, anchors, signal: controller.signal })
 ### m394 Test
 
 ```text
-[director-093] The renderer receives the data pack and scene anchors
-Output: KILLED [director-093] The renderer receives the data pack and scene anchors
+[director-093] The renderer receives the data pack and scene anchors and returns coordinates
+Output: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
 ```
 
 ## m395
@@ -10807,8 +10807,8 @@ adapter({ pack, asset, signal: controller.signal })
 ### m395 Test
 
 ```text
-[director-093] The renderer receives the data pack and scene anchors
-Output: KILLED [director-093] The renderer receives the data pack and scene anchors
+[director-093] The renderer receives the data pack and scene anchors and returns coordinates
+Output: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
 ```
 
 ## m396
@@ -10834,8 +10834,8 @@ signal.addEventListener('abort', abort);
 ### m396 Test
 
 ```text
-[director-089] The data pack session removes source listeners after success
-Output: KILLED [director-089] The data pack session removes source listeners after success
+[director-089] The session removes source listeners after success for the data pack session
+Output: KILLED [director-089] The session removes source listeners after success for the data pack session
 ```
 
 ## m397
@@ -10862,8 +10862,8 @@ File: src/director/packs/session.js
 ### m397 Test
 
 ```text
-[director-089] The data pack session removes source listeners after success
-Output: KILLED [director-089] The data pack session removes source listeners after success
+[director-089] The session removes source listeners after success for the data pack session
+Output: KILLED [director-089] The session removes source listeners after success for the data pack session
 ```
 
 ## m398
@@ -10890,8 +10890,8 @@ File: src/director/packs/session.js
 ### m398 Test
 
 ```text
-[director-089] The data pack session removes source listeners after error
-Output: KILLED [director-089] The data pack session removes source listeners after error
+[director-089] The session removes source listeners after error for the data pack session
+Output: KILLED [director-089] The session removes source listeners after error for the data pack session
 ```
 
 ## m399
@@ -10917,8 +10917,8 @@ number(v, at, 1, PACK_LIMITS.bytes - 1, false)
 ### m399 Test
 
 ```text
-[director-079] The manifest accepts its byte limit
-Output: KILLED [director-079] The manifest accepts its byte limit
+[director-079] The validator returns without an error for its byte limit
+Output: KILLED [director-079] The validator returns without an error for its byte limit
 ```
 
 ## m400
@@ -10944,8 +10944,8 @@ number(p.height, `${at}.height`, -11999, 1e9, false)
 ### m400 Test
 
 ```text
-[director-080] The image accepts its minimum height
-Output: KILLED [director-080] The image accepts its minimum height
+[director-080] The validator returns without an error for its minimum height for the image
+Output: KILLED [director-080] The validator returns without an error for its minimum height for the image
 ```
 
 ## m401
@@ -10971,8 +10971,8 @@ number(p.height, `${at}.height`, -12000, 1e9 - 1, false)
 ### m401 Test
 
 ```text
-[director-080] The image accepts its maximum height
-Output: KILLED [director-080] The image accepts its maximum height
+[director-080] The validator returns without an error for its maximum height for the image
+Output: KILLED [director-080] The validator returns without an error for its maximum height for the image
 ```
 
 ## m402
@@ -10998,8 +10998,8 @@ p[2] <= -12000
 ### m402 Test
 
 ```text
-[director-085] The position accepts its minimum height
-Output: KILLED [director-085] The position accepts its minimum height
+[director-085] The decoder accepts its minimum height for the position and returns coordinates
+Output: KILLED [director-085] The decoder accepts its minimum height for the position and returns coordinates
 ```
 
 ## m403
@@ -11025,8 +11025,8 @@ p[2] >= 1e9
 ### m403 Test
 
 ```text
-[director-085] The position accepts its maximum height
-Output: KILLED [director-085] The position accepts its maximum height
+[director-085] The decoder accepts its maximum height for the position and returns coordinates
+Output: KILLED [director-085] The decoder accepts its maximum height for the position and returns coordinates
 ```
 
 ## m404
@@ -11053,8 +11053,8 @@ File: src/director/sharing/lifetime.js
 ### m404 Test
 
 ```text
-[director-107] The share helpers remove the listener after cancel
-Output: KILLED [director-107] The share helpers remove the listener after cancel
+[director-107] The helper removes its listener after cancel
+Output: KILLED [director-107] The helper removes its listener after cancel
 ```
 
 ## m405
@@ -11081,8 +11081,8 @@ File: src/director/sharing/lifetime.js
 ### m405 Test
 
 ```text
-[director-107] The share helpers remove the listener after success
-Output: KILLED [director-107] The share helpers remove the listener after success
+[director-107] The helper removes its listener after success
+Output: KILLED [director-107] The helper removes its listener after success
 ```
 
 ## m406
@@ -11109,8 +11109,8 @@ File: src/director/sharing/lifetime.js
 ### m406 Test
 
 ```text
-[director-107] The share helpers remove the listener after error
-Output: KILLED [director-107] The share helpers remove the listener after error
+[director-107] The helper removes its listener after error
+Output: KILLED [director-107] The helper removes its listener after error
 ```
 
 ## m407
@@ -11136,8 +11136,8 @@ signal.addEventListener('abort', abort);
 ### m407 Test
 
 ```text
-[director-107] The share helpers remove the listener after success
-Output: KILLED [director-107] The share helpers remove the listener after success
+[director-107] The helper removes its listener after success
+Output: KILLED [director-107] The helper removes its listener after success
 ```
 
 ## m408
@@ -11185,124 +11185,124 @@ No row m409 or later is necessary.
 The automatic campaign reproduces every new kill.
 
 ```text
-m001: KILLED [director-076] The asset path accepts safe names
-m002: KILLED [director-076] The asset path rejects traversal
-m003: KILLED [director-077] The manifest rejects invalid version
-m004: KILLED [director-077] The manifest rejects invalid format
-m005: KILLED [director-078] The attribution rejects protocol
-m006: KILLED [director-078] The attribution rejects username
-m007: KILLED [director-078] The attribution rejects password
-m008: KILLED [director-078] The attribution rejects query
-m009: KILLED [director-078] The attribution rejects fragment
-m010: KILLED [director-078] The attribution rejects invalid URL text
-m011: KILLED [director-078] The attribution accepts a safe link
-m012: KILLED [director-078] The attribution rejects blank text
-m013: KILLED [director-078] The attribution rejects blank license
-m014: KILLED [director-079] The byteLength field rejects a fraction
-m015: KILLED [director-079] The digest rejects invalid type
-m016: KILLED [director-079] The digest rejects invalid alphabet
-m017: KILLED [director-079] The integrity fields accept their limits
-m018: KILLED [director-080] The image rejects reversed west
-m019: KILLED [director-080] The image rejects reversed south
-m020: KILLED [director-080] The image rejects short bounds
-m021: KILLED [director-080] The image rejects height and reference
-m022: KILLED [director-081] The media rejects an unknown anchor
-m023: KILLED [director-082] The scene rejects duplicate data pack IDs
-m024: KILLED [director-082] The shot rejects duplicate data pack IDs
-m025: KILLED [director-082] The shot rejects unknown data pack IDs
-m026: KILLED [director-082] The scene accepts absent data packs and anchors
-m027: KILLED [director-083] The collection rejects invalid type
-m028: KILLED [director-083] The collection rejects invalid array
-m029: KILLED [director-083] The collection rejects more than 2000 features
-m030: KILLED [director-084] The feature rejects type
-m031: KILLED [director-084] The feature rejects ID type
-m032: KILLED [director-084] The feature rejects blank ID
-m033: KILLED [director-084] The feature rejects long ID
-m034: KILLED [director-084] The feature rejects duplicate ID
-m035: KILLED [director-085] The position rejects invalid array
-m036: KILLED [director-085] The position rejects invalid length
-m037: KILLED [director-085] The position rejects a coordinate that is not finite
-m038: KILLED [director-085] The position rejects invalid longitude
-m039: KILLED [director-085] The position rejects invalid latitude
-m040: KILLED [director-085] The position rejects a height below the limit
-m041: KILLED [director-085] The position rejects a height above the limit
-m042: KILLED [director-085] The position total rejects excess
-m043: KILLED [director-085] The position uses zero for absent height
-m044: KILLED [director-085] The position keeps the height in the data
-m045: KILLED [director-086] The line rejects invalid array
-m046: KILLED [director-086] The line rejects invalid minimum
-m047: KILLED [director-086] The ring needs four points
-m048: KILLED [director-086] The line accepts two distinct endpoints
-m049: KILLED [director-086] The ring rejects unclosed field 0
-m050: KILLED [director-086] The ring rejects unclosed field 1
-m051: KILLED [director-086] The ring rejects unclosed field 2
-m052: KILLED [director-087] The geometry rejects invalid type
-m053: KILLED [director-087] The geometry rejects invalid array
-m054: KILLED [director-087] The geometry rejects an empty polygon
-m055: KILLED [director-087] The geometry rejects more than 128 rings
-m056: KILLED [director-087] The geometry returns a closed polygon
-m057: KILLED [director-087] The geometry removes properties
-m058: KILLED [director-088] The new session reports idle state
+m001: KILLED [director-076] The validator returns without an error for safe names for the asset path
+m002: KILLED [director-076] The validator rejects traversal for the asset path
+m003: KILLED [director-077] The validator rejects invalid version
+m004: KILLED [director-077] The validator rejects invalid format
+m005: KILLED [director-078] The validator rejects protocol for the attribution
+m006: KILLED [director-078] The validator rejects username for the attribution
+m007: KILLED [director-078] The validator rejects password for the attribution
+m008: KILLED [director-078] The validator rejects query for the attribution
+m009: KILLED [director-078] The validator rejects fragment for the attribution
+m010: KILLED [director-078] The validator rejects invalid URL text for the attribution
+m011: KILLED [director-078] The validator returns without an error for a safe link for the attribution
+m012: KILLED [director-078] The validator rejects blank text for the attribution
+m013: KILLED [director-078] The validator rejects blank license for the attribution
+m014: KILLED [director-079] The validator rejects a fraction for the byteLength field
+m015: KILLED [director-079] The validator rejects invalid type for the digest
+m016: KILLED [director-079] The validator rejects invalid alphabet for the digest
+m017: KILLED [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+m018: KILLED [director-080] The validator rejects reversed west for the image
+m019: KILLED [director-080] The validator rejects reversed south for the image
+m020: KILLED [director-080] The validator rejects short bounds for the image
+m021: KILLED [director-080] The validator rejects height and reference for the image
+m022: KILLED [director-081] The validator rejects an unknown anchor for the media
+m023: KILLED [director-082] The validator rejects duplicate data pack IDs for the scene
+m024: KILLED [director-082] The validator rejects duplicate data pack IDs for the shot
+m025: KILLED [director-082] The validator rejects unknown data pack IDs for the shot
+m026: KILLED [director-082] The validator returns without an error for absent data packs and anchors for the scene
+m027: KILLED [director-083] The decoder rejects invalid type for the collection
+m028: KILLED [director-083] The decoder rejects invalid array for the collection
+m029: KILLED [director-083] The decoder rejects more than 2000 features for the collection
+m030: KILLED [director-084] The decoder rejects type for the feature
+m031: KILLED [director-084] The decoder rejects ID type for the feature
+m032: KILLED [director-084] The decoder rejects blank ID for the feature
+m033: KILLED [director-084] The decoder rejects long ID for the feature
+m034: KILLED [director-084] The decoder rejects duplicate ID for the feature
+m035: KILLED [director-085] The decoder rejects invalid array for the position
+m036: KILLED [director-085] The decoder rejects invalid length for the position
+m037: KILLED [director-085] The decoder rejects a coordinate that is not finite for the position
+m038: KILLED [director-085] The decoder rejects invalid longitude for the position
+m039: KILLED [director-085] The decoder rejects invalid latitude for the position
+m040: KILLED [director-085] The decoder rejects a height below the limit for the position
+m041: KILLED [director-085] The decoder rejects a height above the limit for the position
+m042: KILLED [director-085] The decoder rejects excess for the position total
+m043: KILLED [director-085] The decoder returns zero for absent height for the position
+m044: KILLED [director-085] The decoder returns the height in the data for the position
+m045: KILLED [director-086] The decoder rejects invalid array for the line
+m046: KILLED [director-086] The decoder rejects invalid minimum for the line
+m047: KILLED [director-086] The decoder rejects a ring with fewer than four points for the ring
+m048: KILLED [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+m049: KILLED [director-086] The decoder rejects unclosed field 0 for the ring
+m050: KILLED [director-086] The decoder rejects unclosed field 1 for the ring
+m051: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m052: KILLED [director-087] The decoder rejects invalid type for the geometry
+m053: KILLED [director-087] The decoder rejects invalid array for the geometry
+m054: KILLED [director-087] The decoder rejects an empty polygon for the geometry
+m055: KILLED [director-087] The decoder rejects more than 128 rings for the geometry
+m056: KILLED [director-087] The decoder returns a closed polygon for the geometry
+m057: KILLED [director-087] The decoder removes properties for the geometry
+m058: KILLED [director-088] The session reports idle state after creation
 m059: KILLED [director-088] The session rejects a value that is not a data pack list
 m060: KILLED [director-088] The session rejects more than eight data packs
 m061: KILLED [director-088] The session rejects destroyed state
 m062: KILLED [director-088] The session rejects cancelled state
 m063: KILLED [director-089] The session disposes handles in reverse order
-m064: KILLED [director-089] The session gives copied state
-m065: KILLED [director-090] The cancelled session disposes late resources
-m066: KILLED [director-090] The session accepts a null late handle
-m067: KILLED [director-090] The session destroys work that is not complete
-m068: KILLED [director-091] The replacement keeps its resources
+m064: KILLED [director-089] The session reports ready after the caller changes a state copy
+m065: KILLED [director-090] The session disposes late resources for the cancelled session
+m066: KILLED [director-090] The session returns false for cancelled work with a null late handle
+m067: KILLED [director-090] The session returns false for work that destruction stops
+m068: KILLED [director-091] The session keeps its resources for the replacement
 m069: KILLED [director-092] The session reports a stable source error
-m070: KILLED [director-092] The deadline rejects stalled work
-m071: KILLED [director-092] The data pack session reads the byteLength field once without a registered source
-m072: KILLED [director-092] The absent renderer does not call its source
+m070: KILLED [director-092] The session rejects stalled work for the deadline
+m071: KILLED [director-092] The session reads the byteLength field once without a registered source for the data pack session
+m072: KILLED [director-092] The session rejects an absent renderer without a source call
 m073: KILLED [director-093] The session rejects bytes that are not a Uint8Array
 m074: KILLED [director-093] The session rejects an empty asset
 m075: KILLED [director-093] The session rejects an asset above the byte limit
 m076: KILLED [director-093] The session rejects a wrong byteLength field
 m077: KILLED [director-093] The session rejects bytes above the total limit
 m078: KILLED [director-093] The session rejects a wrong digest
-m079: KILLED [director-093] The session checks exact bytes and digest
+m079: KILLED [director-093] The session returns true for exact bytes and digest
 m080: KILLED [director-089] The session rejects a falsy handle with inherited disposal
 m081: KILLED [director-089] The session rejects a handle without a dispose function
-m082: KILLED [director-094] The directory rejects protocol
-m083: KILLED [director-094] The directory rejects username
-m084: KILLED [director-094] The directory rejects password
-m085: KILLED [director-094] The directory rejects query
-m086: KILLED [director-094] The directory rejects fragment
-m087: KILLED [director-094] The directory rejects an address with no final slash
-m088: KILLED [director-095] The asset request sets its fixed options
-m089: KILLED [director-096] The stream joins distinct chunks
-m090: KILLED [director-096] The stream rejects excess header bytes
-m091: KILLED [director-096] The stream rejects excess chunk bytes
+m082: KILLED [director-094] The factory rejects protocol
+m083: KILLED [director-094] The factory rejects username
+m084: KILLED [director-094] The factory rejects password
+m085: KILLED [director-094] The factory rejects query
+m086: KILLED [director-094] The factory rejects fragment
+m087: KILLED [director-094] The factory rejects an address with no final slash
+m088: KILLED [director-095] The source sets its fixed options for the asset request
+m089: KILLED [director-096] The source joins distinct stream chunks
+m090: KILLED [director-096] The source rejects excess header bytes for the stream
+m091: KILLED [director-096] The source rejects excess chunk bytes for the stream
 m092: KILLED [director-096] The source returns an empty media type when the header is absent
 m093: KILLED [director-096] The source returns lowercase media type text without parameters
 m094: KILLED [director-097] The source rejects an absent stream
-m095: KILLED [director-097] The source accepts failed body cancellation
+m095: KILLED [director-097] The source rejects the asset request after failed body cancellation
 m096: KILLED [director-097] The source rejects a failed response without a body
-m097: KILLED [director-097] The stream releases its lock after an error
-m098: KILLED [director-097] The source checks its signal between chunks
-m099: KILLED [director-098] The bundle helpers reject nontext input
-m100: KILLED [director-098] The bundle helpers reject invalid JSON
-m101: KILLED [director-098] The bundle helpers accept plain project JSON
-m102: KILLED [director-098] The bundle helpers reject excess characters
-m103: KILLED [director-098] The bundle helpers reject excess UTF8 bytes
-m104: KILLED [director-099] The base64 rejects a custom text object
-m105: KILLED [director-099] The base64 rejects invalid empty
-m106: KILLED [director-099] The base64 rejects invalid length
-m107: KILLED [director-099] The base64 rejects invalid alignment
-m108: KILLED [director-099] The base64 rejects invalid alphabet
-m109: KILLED [director-099] The base64 rejects invalid padding
-m110: KILLED [director-099] The bundle rejects duplicate paths
-m111: KILLED [director-099] The bundle rejects an unsupported media type
-m112: KILLED [director-099] The bundle rejects unsupported version
-m113: KILLED [director-100] The bundle rejects an absent asset
-m114: KILLED [director-100] The bundle rejects a wrong byteLength field
-m115: KILLED [director-100] The bundle rejects a pack digest that differs from its asset
-m116: KILLED [director-100] The bundle rejects an asset digest that differs from its bytes
-m117: KILLED [director-100] The bundle rejects unused assets
-m118: KILLED [director-100] The bundle rejects external data pack sources
+m097: KILLED [director-097] The source releases the reader lock after a stream error
+m098: KILLED [director-097] The source checks its signal between chunks and rejects the call
+m099: KILLED [director-098] The import rejects nontext input
+m100: KILLED [director-098] The import rejects invalid JSON
+m101: KILLED [director-098] The import accepts plain project JSON and returns the project
+m102: KILLED [director-098] The import rejects excess characters
+m103: KILLED [director-098] The import rejects excess UTF8 bytes
+m104: KILLED [director-099] The import rejects a custom text object for the base64
+m105: KILLED [director-099] The import rejects invalid empty for the base64
+m106: KILLED [director-099] The import rejects invalid length for the base64
+m107: KILLED [director-099] The import rejects invalid alignment for the base64
+m108: KILLED [director-099] The import rejects invalid alphabet for the base64
+m109: KILLED [director-099] The import rejects invalid padding for the base64
+m110: KILLED [director-099] The import rejects duplicate paths
+m111: KILLED [director-099] The import rejects an unsupported media type
+m112: KILLED [director-099] The import rejects unsupported version
+m113: KILLED [director-100] The import rejects an absent asset
+m114: KILLED [director-100] The import rejects a wrong byteLength field
+m115: KILLED [director-100] The import rejects a pack digest that differs from its asset
+m116: KILLED [director-100] The import rejects an asset digest that differs from its bytes
+m117: KILLED [director-100] The import rejects unused assets
+m118: KILLED [director-100] The import rejects external data pack sources
 m119: KILLED [director-101] The export writes exact bundle metadata
 m120: KILLED [director-102] The export rejects bytes that are not a Uint8Array
 m121: KILLED [director-102] The export rejects an empty asset
@@ -11310,9 +11310,9 @@ m122: KILLED [director-102] The export rejects an asset above the byte limit
 m123: KILLED [director-102] The export rejects absent assets
 m124: KILLED [director-102] The export rejects declared byteLength
 m125: KILLED [director-102] The export rejects declared digest
-m126: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
+m126: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
 m127: KILLED [director-102] The export rejects excess asset total
-m128: KILLED [director-103] The export reuses a shared asset
+m128: KILLED [director-103] The export reuses a shared asset and returns bundle text
 m129: KILLED [director-103] The export rejects shared byteLength
 m130: KILLED [director-103] The export rejects shared digest
 m131: KILLED [director-104] The store copies the asset map
@@ -11320,165 +11320,165 @@ m132: KILLED [director-104] The store clears stored bytes
 m133: KILLED [director-105] The store rejects absent bytes
 m134: KILLED [director-105] The store rejects bytes above the caller limit
 m135: KILLED [director-105] The store returns an independent byte copy
-m136: KILLED [director-106] The share helpers accept an absent filename
+m136: KILLED [director-106] The share helpers return the project for an absent filename
 m137: KILLED [director-106] The share helpers reject the ordinary file limit
-m138: KILLED [director-106] The share helpers give bundles the larger file limit
+m138: KILLED [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
 m139: KILLED [director-107] The helper resolves without a signal
 m140: KILLED [director-107] The helper rejects an early signal
 m141: KILLED [director-107] The helper resolves with an active signal
 m142: KILLED [director-107] The helper rejects a work error
-m143: KILLED [director-107] The helper checks signal state when the work settles
+m143: KILLED [director-107] The helper checks signal state when the work settles and rejects the call
 m144: KILLED [director-107] The helper cancels work that is not complete
 m145: KILLED [director-108] The preview reports exact totals and attribution
-m146: KILLED [director-108] The preview uses the scene ID without a title
+m146: KILLED [director-108] The preview reports the scene ID when the title is absent
 m147: KILLED [director-109] The preview reports included bundle bytes
 m148: KILLED [director-109] The preview reports absent bundle bytes
 m149: KILLED [director-109] The preview reports a configured source
 m150: KILLED [director-109] The preview reports an unavailable source
 m151: KILLED [director-110] The preview lists distinct absent layers
-m152: KILLED [director-110] The preview detects applied shot packs
-m153: KILLED [director-110] The preview detects the source pack ID of a shot
-m154: KILLED [director-110] The preview detects no external content
-m155: KILLED [director-080] The image accepts its bounds field
-m156: KILLED [director-080] The image accepts its height field
-m157: KILLED [director-080] The image accepts its altitudeReference field
-m158: KILLED [director-081] The media accepts its anchorId field
-m159: KILLED [director-077] The geojson accepts its altitudeReference field
-m160: KILLED [director-080] The image bounds 0 rejects low excess
-m161: KILLED [director-080] The image bounds 0 rejects high excess
-m162: KILLED [director-080] The image bounds 1 rejects low excess
-m163: KILLED [director-080] The image bounds 1 rejects high excess
-m164: KILLED [director-080] The image bounds 2 rejects low excess
-m165: KILLED [director-080] The image bounds 2 rejects high excess
-m166: KILLED [director-080] The image bounds 3 rejects low excess
-m167: KILLED [director-080] The image bounds 3 rejects high excess
-m168: KILLED [director-080] The image height checks both limits
-m169: KILLED [director-082] The scene uses supplied anchors
-m170: KILLED [director-082] The scene uses absent anchor defaults
-m171: KILLED [director-085] The position accepts both geographic edges
+m152: KILLED [director-110] The preview reports external content for applied shot packs
+m153: KILLED [director-110] The preview reports external content for a shot with a source pack ID
+m154: KILLED [director-110] The preview reports no external content without source packs
+m155: KILLED [director-080] The validator returns without an error for its bounds field for the image
+m156: KILLED [director-080] The validator returns without an error for its height field for the image
+m157: KILLED [director-080] The validator returns without an error for its altitudeReference field for the image
+m158: KILLED [director-081] The validator returns without an error for its anchorId field for the media
+m159: KILLED [director-077] The validator returns without an error for a GeoJSON altitudeReference field
+m160: KILLED [director-080] The validator rejects low excess for image bounds field 0
+m161: KILLED [director-080] The validator rejects high excess for image bounds field 0
+m162: KILLED [director-080] The validator rejects low excess for image bounds field 1
+m163: KILLED [director-080] The validator rejects high excess for image bounds field 1
+m164: KILLED [director-080] The validator rejects low excess for image bounds field 2
+m165: KILLED [director-080] The validator rejects high excess for image bounds field 2
+m166: KILLED [director-080] The validator rejects low excess for image bounds field 3
+m167: KILLED [director-080] The validator rejects high excess for image bounds field 3
+m168: KILLED [director-080] The validator rejects image height outside both limits
+m169: KILLED [director-082] The validator uses supplied anchors for the scene and returns without an error
+m170: KILLED [director-082] The validator uses absent anchor defaults for the scene and returns without an error
+m171: KILLED [director-085] The decoder accepts both geographic edges for the position and returns coordinates
 m172: SURVIVED
-m173: KILLED [director-088] The session state uses its idle default
-m174: KILLED [director-088] The session state uses its zero default
-m175: KILLED [director-089] The session state uses its active total
-m176: KILLED [director-093] The session uses its default byte budget
-m177: KILLED [director-093] The session accepts absent declared size
-m178: KILLED [director-090] The session checks signal state without an event
+m173: KILLED [director-088] The session reports idle after creation
+m174: KILLED [director-088] The session reports zero handles after creation
+m175: KILLED [director-089] The session reports one active handle
+m176: KILLED [director-093] The session calls the source with a default limit of 8388608 bytes
+m177: KILLED [director-093] The session returns true without a declared size
+m178: KILLED [director-090] The session returns false for a cancelled signal without an event
 m179: KILLED [director-090] The session checks destroyed state after it reads the signal
-m180: KILLED [director-090] The session checks a cleared load call without signal state
+m180: KILLED [director-090] The session returns false for a cleared load call without a signal state access
 m181: KILLED [director-090] The session guard rejects a detached resource
 m182: KILLED [director-090] The session disposes the handle before it adds the handle to its list
-m183: KILLED [director-092] The session settles a source error before its deadline
+m183: KILLED [director-092] The session settles a source error before its deadline and reports idle
 m184: KILLED [director-097] The source rejects early cancellation
-m185: KILLED [director-094] The directory accepts HTTP and HTTPS
-m186: KILLED [director-098] The share character guard comes before byte conversion
-m187: KILLED [director-101] The export accepts scenes without data packs
-m188: KILLED [director-101] The export keeps a supplied data pack list
-m189: KILLED [director-102] The export accepts absent integrity fields
-m190: KILLED [director-102] The export accepts an absent digest
-m191: KILLED [director-103] The shared export accepts absent byte declarations
-m192: KILLED [director-103] The shared export accepts an absent digest
-m193: KILLED [director-099] The base64 accepts bytes without padding
-m194: KILLED [director-108] The preview accepts absent data pack lists
-m195: KILLED [director-108] The preview uses supplied data pack lists
-m196: KILLED [director-108] The preview keeps a supplied scene title
-m197: KILLED [director-109] The preview distinguishes bundle sources
-m198: KILLED [director-110] The preview accepts absent shot layers
-m199: KILLED [director-110] The preview uses supplied shot layers
-m200: KILLED [director-105] The store checks its default byte budget
-m201: KILLED [director-092] The absent renderer does not call its source
-m202: KILLED [director-099] The base64 rejects a custom text object
-m203: KILLED [director-103] The export key uses the registered source name
-m204: KILLED [director-103] The export key uses path
-m205: KILLED [director-110] The preview detects each layer key
-m206: KILLED [director-108] The preview totals include every asset
-m207: KILLED [director-095] The asset request sets its credentials option
-m208: KILLED [director-095] The asset request sets its redirect option
-m209: KILLED [director-095] The asset request sets its referrerPolicy option
-m210: KILLED [director-095] The asset request sets its cache option
-m211: KILLED [director-085] The position rejects field 0 that is not finite
-m212: KILLED [director-085] The position rejects field 1 that is not finite
-m213: KILLED [director-085] The position rejects field 2 that is not finite
-m214: KILLED [director-096] The source checks its default byte budget
-m215: KILLED [director-077] The manifest accepts the id field of a data pack
-m216: KILLED [director-077] The manifest accepts the version field of a data pack
-m217: KILLED [director-077] The manifest accepts the format field of a data pack
-m218: KILLED [director-077] The manifest accepts the source field of a data pack
-m219: KILLED [director-077] The manifest accepts the attribution field of a data pack
-m220: KILLED [director-077] The manifest accepts the placement field of a data pack
-m221: KILLED [director-079] The manifest accepts the byteLength field of a data pack
-m222: KILLED [director-079] The manifest accepts the sha256 field of a data pack
-m223: KILLED [director-077] The manifest accepts its source name field
-m224: KILLED [director-077] The manifest accepts its source path field
-m225: KILLED [director-078] The manifest accepts its attribution text field
-m226: KILLED [director-078] The manifest accepts its attribution license field
-m227: KILLED [director-078] The manifest accepts its attribution url field
-m228: KILLED [director-100] The bundle checks its second asset reference
-m229: KILLED [director-100] The bundle checks its second asset digest
-m230: KILLED [director-103] The export accepts equal shared integrity
+m185: KILLED [director-094] The factory returns a source for HTTP and HTTPS directories
+m186: KILLED [director-098] The import rejects 52428801 characters before byte conversion
+m187: KILLED [director-101] The export accepts scenes without data packs and returns bundle text
+m188: KILLED [director-101] The export returns one asset for a supplied data pack list
+m189: KILLED [director-102] The export accepts absent integrity fields and returns bundle text
+m190: KILLED [director-102] The export accepts an absent digest and returns bundle text
+m191: KILLED [director-103] The export accepts absent byte declarations for the shared export and returns bundle text
+m192: KILLED [director-103] The export accepts an absent digest for the shared export and returns bundle text
+m193: KILLED [director-099] The import accepts bytes without padding for the base64 and returns assets
+m194: KILLED [director-108] The preview reports no packs when data pack lists are absent
+m195: KILLED [director-108] The preview reports one pack from the supplied data pack list
+m196: KILLED [director-108] The preview reports Example for the supplied scene title
+m197: KILLED [director-109] The preview reports a configured source for a supplied source ID
+m198: KILLED [director-110] The preview reports no absent layer when a shot has no layers
+m199: KILLED [director-110] The preview reports traffic as absent without layer IDs
+m200: KILLED [director-105] The store rejects 8388609 bytes without a caller limit
+m201: KILLED [director-092] The session rejects an absent renderer without a source call
+m202: KILLED [director-099] The import rejects a custom text object for the base64
+m203: KILLED [director-103] The export key uses the registered source name and returns bundle text
+m204: KILLED [director-103] The export key uses path and returns bundle text
+m205: KILLED [director-110] The preview reports ships as absent when only traffic is configured
+m206: KILLED [director-108] The preview reports three bytes for both assets
+m207: KILLED [director-095] The source sets its credentials option for the asset request
+m208: KILLED [director-095] The source sets its redirect option for the asset request
+m209: KILLED [director-095] The source sets its referrerPolicy option for the asset request
+m210: KILLED [director-095] The source sets its cache option for the asset request
+m211: KILLED [director-085] The decoder rejects field 0 that is not finite for the position
+m212: KILLED [director-085] The decoder rejects field 1 that is not finite for the position
+m213: KILLED [director-085] The decoder rejects field 2 that is not finite for the position
+m214: KILLED [director-096] The source rejects 8388609 bytes without a caller limit
+m215: KILLED [director-077] The validator returns without an error for the id field of a data pack
+m216: KILLED [director-077] The validator returns without an error for the version field of a data pack
+m217: KILLED [director-077] The validator returns without an error for the format field of a data pack
+m218: KILLED [director-077] The validator returns without an error for the source field of a data pack
+m219: KILLED [director-077] The validator returns without an error for the attribution field of a data pack
+m220: KILLED [director-077] The validator returns without an error for the placement field of a data pack
+m221: KILLED [director-079] The validator returns without an error for the byteLength field of a data pack
+m222: KILLED [director-079] The validator returns without an error for the sha256 field of a data pack
+m223: KILLED [director-077] The validator returns without an error for its source name field
+m224: KILLED [director-077] The validator returns without an error for its source path field
+m225: KILLED [director-078] The validator returns without an error for its attribution text field
+m226: KILLED [director-078] The validator returns without an error for its attribution license field
+m227: KILLED [director-078] The validator returns without an error for its attribution url field
+m228: KILLED [director-100] The import checks its second asset reference and rejects the call
+m229: KILLED [director-100] The import checks its second asset digest and rejects the call
+m230: KILLED [director-103] The export accepts equal shared integrity and returns bundle text
 m231: KILLED [director-102] The export rejects absent asset bytes
-m232: KILLED [director-092] The session settles an early internal signal
-m233: KILLED [director-093] The session gives anchors to its renderer
-m234: KILLED [director-106] The share helpers check a signal after they read text
-m235: KILLED [director-102] The export checks its encoded text budget
+m232: KILLED [director-092] The session settles an early internal signal and reports idle
+m233: KILLED [director-093] The session calls the renderer with the anchors and returns true
+m234: KILLED [director-106] The share helpers call throwIfAborted three times and return the project
+m235: KILLED [director-102] The export rejects encoded bundle text above 52428800 bytes
 m236: KILLED [director-102] The export keeps its total after an asset without a byte length
-m237: KILLED [director-089] The session state uses its active status
-m238: KILLED [director-080] The placement selects the image fields
-m239: KILLED [director-081] The placement selects the media fields
-m240: KILLED [director-089] The session loads its geojson format
-m241: KILLED [director-089] The session loads its image format
-m242: KILLED [director-089] The session loads its media format
+m237: KILLED [director-089] The session reports ready after asset work
+m238: KILLED [director-080] The validator rejects media fields in image placement for the placement
+m239: KILLED [director-081] The validator rejects image fields in media placement for the placement
+m240: KILLED [director-089] The session calls the GeoJSON renderer once and returns true
+m241: KILLED [director-089] The session calls the image renderer once and returns true
+m242: KILLED [director-089] The session calls the media renderer once and returns true
 m243: KILLED [director-097] The source stops between stream chunks
-m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and cred
+m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials
 m245: KILLED [director-080] The manifest checks given image bounds and media anchor references
-m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects unsaf
+m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 m247: KILLED [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints
 m248: KILLED [director-089] The data pack session removes resources and cancels the transport on Stop
 m249: KILLED [director-091] The data pack session replaces source work and ignores its late bytes
-m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps t
-m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the re
-m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier
-m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects
-m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancel
-m255: KILLED [director-101] The selected scene bundle copies bytes and attribution and keeps the project without
-m256: KILLED [director-099] The bundle rejects invalid bytes, unknown fields, traversal, duplicates, absent asset
-m257: KILLED [director-102] The bundle checks asset limits and declared integrity before export
-m258: KILLED [director-103] The data packs with the same path share one asset and reject integrity values that di
-m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets witho
-m260: KILLED [director-104] The bundle byte store removes old data after replacement and uses no network source
-m261: KILLED [director-106] The share helpers reject excess file bytes before text access and cancel a stalled pr
-m262: KILLED [director-107] The cancelled bundle export stops before the next asset and returns no partial output
-m263: KILLED [director-101] The bundle accepts long valid source asset names
-m264: KILLED [director-077] The manifest accepts geojson
-m265: KILLED [director-077] The manifest accepts image
-m266: KILLED [director-077] The manifest accepts media
-m267: KILLED [director-080] The image rejects bounds field 0
-m268: KILLED [director-080] The image rejects bounds field 1
-m269: KILLED [director-080] The image rejects bounds field 2
-m270: KILLED [director-080] The image rejects bounds field 3
-m271: KILLED [director-092] The session uses its supplied deadline
-m272: KILLED [director-092] The session uses its default deadline
+m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement
+m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result
+m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources
+m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
+m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal
+m255: KILLED [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
+m256: KILLED [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+m257: KILLED [director-102] The export rejects excess bytes, wrong integrity and absent assets
+m258: KILLED [director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
+m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+m260: KILLED [director-104] The store removes old data after replacement and uses no network source for the import byte store
+m261: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
+m262: KILLED [director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
+m263: KILLED [director-101] The export returns a bundle for a source path of 1024 characters
+m264: KILLED [director-077] The validator returns without an error for geojson
+m265: KILLED [director-077] The validator returns without an error for image
+m266: KILLED [director-077] The validator returns without an error for media
+m267: KILLED [director-080] The validator rejects bounds field 0 for the image
+m268: KILLED [director-080] The validator rejects bounds field 1 for the image
+m269: KILLED [director-080] The validator rejects bounds field 2 for the image
+m270: KILLED [director-080] The validator rejects bounds field 3 for the image
+m271: KILLED [director-092] The session rejects stalled work at the 19 ms deadline
+m272: KILLED [director-092] The session rejects stalled work at the default 15000 ms deadline
 m273: KILLED [director-092] The session removes resources after a later error
-m274: KILLED [director-099] The bundle accepts the application/json media type
-m275: KILLED [director-099] The bundle accepts the application/geo+json media type
-m276: KILLED [director-099] The bundle accepts the image/png media type
-m277: KILLED [director-099] The bundle accepts the video/mp4 media type
-m278: KILLED [director-099] The bundle accepts the video/webm media type
-m279: KILLED [director-099] The bundle accepts the audio/mpeg media type
-m280: KILLED [director-099] The bundle accepts the audio/ogg media type
-m281: KILLED [director-099] The bundle accepts the audio/wav media type
-m282: KILLED [director-099] The bundle accepts the audio/webm media type
+m274: KILLED [director-099] The import accepts the application/json media type and returns assets
+m275: KILLED [director-099] The import accepts the application/geo+json media type and returns assets
+m276: KILLED [director-099] The import accepts the image/png media type and returns assets
+m277: KILLED [director-099] The import accepts the video/mp4 media type and returns assets
+m278: KILLED [director-099] The import accepts the video/webm media type and returns assets
+m279: KILLED [director-099] The import accepts the audio/mpeg media type and returns assets
+m280: KILLED [director-099] The import accepts the audio/ogg media type and returns assets
+m281: KILLED [director-099] The import accepts the audio/wav media type and returns assets
+m282: KILLED [director-099] The import accepts the audio/webm media type and returns assets
 m283: KILLED [director-089] The session rejects a falsy handle with inherited disposal
-m284: KILLED [director-088] The destroyed session does not read the caller signal state
-m285: KILLED [director-083] The collection accepts its exact feature limit
-m286: KILLED [director-084] The feature ID accepts its exact text limit
-m287: KILLED [director-085] The position accepts its exact total limit
-m288: KILLED [director-087] The polygon accepts its exact ring limit
-m289: KILLED [director-076] The asset path checks its text limit
-m290: KILLED [director-102] The export accepts its exact asset total
+m284: KILLED [director-088] The session returns false without a caller signal access after destruction
+m285: KILLED [director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
+m286: KILLED [director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
+m287: KILLED [director-085] The decoder accepts its exact total limit for the position and returns coordinates
+m288: KILLED [director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
+m289: KILLED [director-076] The validator rejects a path above its text limit for the asset path
+m290: KILLED [director-102] The export accepts its exact asset total and returns bundle text
 m291: KILLED [director-089] The session keeps every data pack handle
-m292: KILLED [director-095] The asset request sets its signal option
-m293: KILLED [director-096] The stream accepts its exact byte limit
-m294: KILLED [director-096] The stream accepts its exact byte limit
+m292: KILLED [director-095] The source sets its signal option for the asset request
+m293: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
+m294: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
 m295: KILLED [director-092] The session rejects a falsy custom source
 m296: KILLED [director-101] The export writes exact bundle metadata
 m297: KILLED [director-101] The export writes exact bundle metadata
@@ -11487,36 +11487,36 @@ m299: KILLED [director-101] The export writes exact bundle metadata
 m300: KILLED [director-101] The export writes exact bundle metadata
 m301: KILLED [director-101] The export writes exact bundle metadata
 m302: KILLED [director-105] The store returns an independent byte copy
-m303: KILLED [director-079] The digest rejects 63 characters
-m304: KILLED [director-079] The digest rejects 65 characters
-m305: KILLED [director-079] The digest rejects a prefix
-m306: KILLED [director-079] The digest rejects a suffix
-m307: KILLED [director-079] The digest rejects uppercase text
-m308: KILLED [director-080] The image rejects equal longitude edges
-m309: KILLED [director-080] The image rejects equal latitude edges
-m310: KILLED [director-080] The image accepts all geographic limits
-m311: KILLED [director-080] The image accepts all geographic limits
-m312: KILLED [director-080] The image accepts all geographic limits
-m313: KILLED [director-080] The image accepts all geographic limits
-m314: KILLED [director-082] The scene ignores a data pack list from its parent
-m315: KILLED [director-080] The image rejects text for each geographic field
-m316: KILLED [director-080] The image rejects text for each geographic field
-m317: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m318: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m319: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m320: KILLED [director-076] The asset path accepts 1024 characters and rejects 1025
-m321: KILLED [director-076] The asset path rejects URL syntax with a stable message
-m322: KILLED [director-088] The session accepts eight data packs
-m323: KILLED [director-093] The session accepts the asset byte limit
-m324: KILLED [director-093] The session accepts the total byte limit
-m325: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
-m326: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
-m327: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
+m303: KILLED [director-079] The validator rejects 63 characters for the digest
+m304: KILLED [director-079] The validator rejects 65 characters for the digest
+m305: KILLED [director-079] The validator rejects a prefix for the digest
+m306: KILLED [director-079] The validator rejects a suffix for the digest
+m307: KILLED [director-079] The validator rejects uppercase text for the digest
+m308: KILLED [director-080] The validator rejects equal longitude edges for the image
+m309: KILLED [director-080] The validator rejects equal latitude edges for the image
+m310: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m311: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m312: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m313: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m314: KILLED [director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
+m315: KILLED [director-080] The validator rejects text for each geographic field for the image
+m316: KILLED [director-080] The validator rejects text for each geographic field for the image
+m317: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m318: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m319: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m320: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
+m321: KILLED [director-076] The validator rejects URL syntax with a stable message for the asset path
+m322: KILLED [director-088] The session returns true for eight data packs
+m323: KILLED [director-093] The session returns true at the asset byte limit
+m324: KILLED [director-093] The session returns true at the total byte limit
+m325: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m326: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m327: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
 m328: KILLED [director-089] The session removes its deadline after success
 m329: KILLED [director-089] The session removes its deadline after clear
-m330: KILLED [director-088] The session checks every declaration before the source call
-m331: KILLED [director-089] The session destroys each ready resource
-m332: KILLED [director-088] The session checks every declaration before the source call
+m330: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m331: KILLED [director-089] The session disposes both ready handles in reverse order and reports idle
+m332: KILLED [director-088] The session checks every declaration before the source call and rejects the call
 m333: KILLED [director-083] The decoder rejects invalid UTF8 bytes
 m334: KILLED [director-083] The decoder rejects null
 m335: KILLED [director-084] The decoder rejects a null feature
@@ -11524,74 +11524,74 @@ m336: KILLED [director-084] The decoder rejects a null feature
 m337: KILLED [director-087] The decoder rejects absent geometry
 m338: KILLED [director-087] The decoder rejects absent geometry
 m339: KILLED [director-087] The decoder rejects absent geometry
-m340: KILLED [director-095] The directory source uses the default fetch function
-m341: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
-m342: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
-m343: KILLED [director-099] The base64 accepts its length limit and rejects the next aligned length
+m340: KILLED [director-095] The source uses the default fetch function and returns bytes
+m341: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m342: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m343: KILLED [director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
 m344: KILLED [director-106] The share helpers accept the project file limit and reject one more byte
 m345: KILLED [director-106] The share helpers accept the bundle file limit and reject one more byte
 m346: KILLED [director-102] The export rejects an unsupported media type
 m347: KILLED [director-099] The import rejects 65 different asset paths
-m348: KILLED [director-099] The import accepts the total byte limit and rejects one more byte
-m349: KILLED [director-099] The import accepts the total byte limit and rejects one more byte
+m348: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+m349: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
 m350: KILLED [director-105] The store rejects a cancelled source call
-m351: KILLED [director-107] The bundle stops import before an asset
-m352: KILLED [director-107] The bundle stops import after a digest
-m353: KILLED [director-107] The bundle stops export before an asset
-m354: KILLED [director-107] The bundle stops export after asset bytes
-m355: KILLED [director-107] The bundle stops export after a digest
+m351: KILLED [director-107] The bundle helpers stop import before an asset
+m352: KILLED [director-107] The bundle helpers stop import after a digest
+m353: KILLED [director-107] The bundle helpers stop export before an asset
+m354: KILLED [director-107] The bundle helpers stop export after asset bytes
+m355: KILLED [director-107] The bundle helpers stop export after a digest
 m356: KILLED [director-108] The preview counts shots apart from scenes
 m357: KILLED [director-108] The preview counts shots apart from scenes
 m358: KILLED [director-110] The preview lists distinct absent layers
-m359: KILLED [director-077] The manifest accepts 256 characters for its ID and rejects 257
-m360: KILLED [director-077] The manifest accepts 256 characters for its ID and rejects 257
-m361: KILLED [director-077] The manifest accepts 256 characters for its source name and rejects 257
-m362: KILLED [director-077] The manifest accepts 256 characters for its source name and rejects 257
-m363: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m364: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m365: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m366: KILLED [director-076] The asset path accepts 1024 characters and rejects 1025
+m359: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m360: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m361: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+m362: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+m363: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m364: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m365: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m366: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
 m367: KILLED [director-102] The export rejects excess asset total
-m368: KILLED [director-085] The position rejects negative longitude
-m369: KILLED [director-085] The position rejects negative latitude
-m370: KILLED [director-085] The position accepts the limit for negative longitude
-m371: KILLED [director-085] The position accepts the limit for negative latitude
-m372: KILLED [director-085] The position rejects four coordinates
-m373: KILLED [director-085] The position rejects one coordinate
-m374: KILLED [director-076] The asset path rejects .x
-m375: KILLED [director-076] The asset path rejects x?a=1
-m376: KILLED [director-079] The manifest accepts one byte
-m377: KILLED [director-080] The image rejects bounds outside an array
-m378: KILLED [director-082] The scene rejects nine distinct data packs
-m379: KILLED [director-082] The scene accepts eight distinct data packs
-m380: KILLED [director-089] The data pack session reports its state during asset work
-m381: KILLED [director-096] The directory source accepts its default byte limit
-m382: KILLED [director-098] The bundle helpers accept the character limit
-m383: KILLED [director-098] The bundle helpers accept the multibyte text limit
-m384: KILLED [director-098] The bundle helpers reject an invalid plain project
-m385: KILLED [director-098] The bundle helpers reject a null project
-m386: KILLED [director-099] The bundle helpers reject an extra top-level field
-m387: KILLED [director-099] The bundle helpers reject an invalid bundle project
-m388: KILLED [director-099] The import accepts 64 distinct assets
+m368: KILLED [director-085] The decoder rejects negative longitude for the position
+m369: KILLED [director-085] The decoder rejects negative latitude for the position
+m370: KILLED [director-085] The decoder accepts the limit for negative longitude for the position and returns coordinates
+m371: KILLED [director-085] The decoder accepts the limit for negative latitude for the position and returns coordinates
+m372: KILLED [director-085] The decoder rejects four coordinates for the position
+m373: KILLED [director-085] The decoder rejects one coordinate for the position
+m374: KILLED [director-076] The validator rejects .x for the asset path
+m375: KILLED [director-076] The validator rejects x?a=1 for the asset path
+m376: KILLED [director-079] The validator returns without an error for one byte
+m377: KILLED [director-080] The validator rejects bounds outside an array for the image
+m378: KILLED [director-082] The validator rejects nine distinct data packs for the scene
+m379: KILLED [director-082] The validator returns without an error for eight distinct data packs for the scene
+m380: KILLED [director-089] The session reports its state during asset work for the data pack session
+m381: KILLED [director-096] The source accepts its default byte limit and returns bytes
+m382: KILLED [director-098] The import accepts the character limit and returns the project
+m383: KILLED [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+m384: KILLED [director-098] The import rejects an invalid plain project
+m385: KILLED [director-098] The import rejects a null project
+m386: KILLED [director-099] The import rejects an extra top-level field
+m387: KILLED [director-099] The import rejects an invalid bundle project
+m388: KILLED [director-099] The import accepts 64 distinct assets and returns assets
 m389: SURVIVED
-m390: KILLED [director-101] The resolver receives the data pack and signal
-m391: KILLED [director-101] The resolver receives the data pack and signal
-m392: KILLED [director-102] The export accepts the text byte limit
-m393: KILLED [director-105] The byte store accepts the caller byte limit
-m394: KILLED [director-093] The renderer receives the data pack and scene anchors
-m395: KILLED [director-093] The renderer receives the data pack and scene anchors
-m396: KILLED [director-089] The data pack session removes source listeners after success
-m397: KILLED [director-089] The data pack session removes source listeners after success
-m398: KILLED [director-089] The data pack session removes source listeners after error
-m399: KILLED [director-079] The manifest accepts its byte limit
-m400: KILLED [director-080] The image accepts its minimum height
-m401: KILLED [director-080] The image accepts its maximum height
-m402: KILLED [director-085] The position accepts its minimum height
-m403: KILLED [director-085] The position accepts its maximum height
-m404: KILLED [director-107] The share helpers remove the listener after cancel
-m405: KILLED [director-107] The share helpers remove the listener after success
-m406: KILLED [director-107] The share helpers remove the listener after error
-m407: KILLED [director-107] The share helpers remove the listener after success
+m390: KILLED [director-101] The export calls the resolver with the data pack and signal
+m391: KILLED [director-101] The export calls the resolver with the data pack and signal
+m392: KILLED [director-102] The export accepts the text byte limit and returns bundle text
+m393: KILLED [director-105] The store accepts the caller byte limit for the byte store and returns byte copies
+m394: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+m395: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+m396: KILLED [director-089] The session removes source listeners after success for the data pack session
+m397: KILLED [director-089] The session removes source listeners after success for the data pack session
+m398: KILLED [director-089] The session removes source listeners after error for the data pack session
+m399: KILLED [director-079] The validator returns without an error for its byte limit
+m400: KILLED [director-080] The validator returns without an error for its minimum height for the image
+m401: KILLED [director-080] The validator returns without an error for its maximum height for the image
+m402: KILLED [director-085] The decoder accepts its minimum height for the position and returns coordinates
+m403: KILLED [director-085] The decoder accepts its maximum height for the position and returns coordinates
+m404: KILLED [director-107] The helper removes its listener after cancel
+m405: KILLED [director-107] The helper removes its listener after success
+m406: KILLED [director-107] The helper removes its listener after error
+m407: KILLED [director-107] The helper removes its listener after success
 m408: KILLED [director-101] The export rejects an invalid project
 SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
 ```
@@ -11603,124 +11603,124 @@ It kills 406 rows and leaves only m172 and m389.
 No row is skipped or timed out.
 
 ```text
-m001: KILLED [director-076] The asset path accepts safe names
-m002: KILLED [director-076] The asset path rejects traversal
-m003: KILLED [director-077] The manifest rejects invalid version
-m004: KILLED [director-077] The manifest rejects invalid format
-m005: KILLED [director-078] The attribution rejects protocol
-m006: KILLED [director-078] The attribution rejects username
-m007: KILLED [director-078] The attribution rejects password
-m008: KILLED [director-078] The attribution rejects query
-m009: KILLED [director-078] The attribution rejects fragment
-m010: KILLED [director-078] The attribution rejects invalid URL text
-m011: KILLED [director-078] The attribution accepts a safe link
-m012: KILLED [director-078] The attribution rejects blank text
-m013: KILLED [director-078] The attribution rejects blank license
-m014: KILLED [director-079] The byteLength field rejects a fraction
-m015: KILLED [director-079] The digest rejects invalid type
-m016: KILLED [director-079] The digest rejects invalid alphabet
-m017: KILLED [director-079] The integrity fields accept their limits
-m018: KILLED [director-080] The image rejects reversed west
-m019: KILLED [director-080] The image rejects reversed south
-m020: KILLED [director-080] The image rejects short bounds
-m021: KILLED [director-080] The image rejects height and reference
-m022: KILLED [director-081] The media rejects an unknown anchor
-m023: KILLED [director-082] The scene rejects duplicate data pack IDs
-m024: KILLED [director-082] The shot rejects duplicate data pack IDs
-m025: KILLED [director-082] The shot rejects unknown data pack IDs
-m026: KILLED [director-082] The scene accepts absent data packs and anchors
-m027: KILLED [director-083] The collection rejects invalid type
-m028: KILLED [director-083] The collection rejects invalid array
-m029: KILLED [director-083] The collection rejects more than 2000 features
-m030: KILLED [director-084] The feature rejects type
-m031: KILLED [director-084] The feature rejects ID type
-m032: KILLED [director-084] The feature rejects blank ID
-m033: KILLED [director-084] The feature rejects long ID
-m034: KILLED [director-084] The feature rejects duplicate ID
-m035: KILLED [director-085] The position rejects invalid array
-m036: KILLED [director-085] The position rejects invalid length
-m037: KILLED [director-085] The position rejects a coordinate that is not finite
-m038: KILLED [director-085] The position rejects invalid longitude
-m039: KILLED [director-085] The position rejects invalid latitude
-m040: KILLED [director-085] The position rejects a height below the limit
-m041: KILLED [director-085] The position rejects a height above the limit
-m042: KILLED [director-085] The position total rejects excess
-m043: KILLED [director-085] The position uses zero for absent height
-m044: KILLED [director-085] The position keeps the height in the data
-m045: KILLED [director-086] The line rejects invalid array
-m046: KILLED [director-086] The line rejects invalid minimum
-m047: KILLED [director-086] The ring needs four points
-m048: KILLED [director-086] The line accepts two distinct endpoints
-m049: KILLED [director-086] The ring rejects unclosed field 0
-m050: KILLED [director-086] The ring rejects unclosed field 1
-m051: KILLED [director-086] The ring rejects unclosed field 2
-m052: KILLED [director-087] The geometry rejects invalid type
-m053: KILLED [director-087] The geometry rejects invalid array
-m054: KILLED [director-087] The geometry rejects an empty polygon
-m055: KILLED [director-087] The geometry rejects more than 128 rings
-m056: KILLED [director-087] The geometry returns a closed polygon
-m057: KILLED [director-087] The geometry removes properties
-m058: KILLED [director-088] The new session reports idle state
+m001: KILLED [director-076] The validator returns without an error for safe names for the asset path
+m002: KILLED [director-076] The validator rejects traversal for the asset path
+m003: KILLED [director-077] The validator rejects invalid version
+m004: KILLED [director-077] The validator rejects invalid format
+m005: KILLED [director-078] The validator rejects protocol for the attribution
+m006: KILLED [director-078] The validator rejects username for the attribution
+m007: KILLED [director-078] The validator rejects password for the attribution
+m008: KILLED [director-078] The validator rejects query for the attribution
+m009: KILLED [director-078] The validator rejects fragment for the attribution
+m010: KILLED [director-078] The validator rejects invalid URL text for the attribution
+m011: KILLED [director-078] The validator returns without an error for a safe link for the attribution
+m012: KILLED [director-078] The validator rejects blank text for the attribution
+m013: KILLED [director-078] The validator rejects blank license for the attribution
+m014: KILLED [director-079] The validator rejects a fraction for the byteLength field
+m015: KILLED [director-079] The validator rejects invalid type for the digest
+m016: KILLED [director-079] The validator rejects invalid alphabet for the digest
+m017: KILLED [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+m018: KILLED [director-080] The validator rejects reversed west for the image
+m019: KILLED [director-080] The validator rejects reversed south for the image
+m020: KILLED [director-080] The validator rejects short bounds for the image
+m021: KILLED [director-080] The validator rejects height and reference for the image
+m022: KILLED [director-081] The validator rejects an unknown anchor for the media
+m023: KILLED [director-082] The validator rejects duplicate data pack IDs for the scene
+m024: KILLED [director-082] The validator rejects duplicate data pack IDs for the shot
+m025: KILLED [director-082] The validator rejects unknown data pack IDs for the shot
+m026: KILLED [director-082] The validator returns without an error for absent data packs and anchors for the scene
+m027: KILLED [director-083] The decoder rejects invalid type for the collection
+m028: KILLED [director-083] The decoder rejects invalid array for the collection
+m029: KILLED [director-083] The decoder rejects more than 2000 features for the collection
+m030: KILLED [director-084] The decoder rejects type for the feature
+m031: KILLED [director-084] The decoder rejects ID type for the feature
+m032: KILLED [director-084] The decoder rejects blank ID for the feature
+m033: KILLED [director-084] The decoder rejects long ID for the feature
+m034: KILLED [director-084] The decoder rejects duplicate ID for the feature
+m035: KILLED [director-085] The decoder rejects invalid array for the position
+m036: KILLED [director-085] The decoder rejects invalid length for the position
+m037: KILLED [director-085] The decoder rejects a coordinate that is not finite for the position
+m038: KILLED [director-085] The decoder rejects invalid longitude for the position
+m039: KILLED [director-085] The decoder rejects invalid latitude for the position
+m040: KILLED [director-085] The decoder rejects a height below the limit for the position
+m041: KILLED [director-085] The decoder rejects a height above the limit for the position
+m042: KILLED [director-085] The decoder rejects excess for the position total
+m043: KILLED [director-085] The decoder returns zero for absent height for the position
+m044: KILLED [director-085] The decoder returns the height in the data for the position
+m045: KILLED [director-086] The decoder rejects invalid array for the line
+m046: KILLED [director-086] The decoder rejects invalid minimum for the line
+m047: KILLED [director-086] The decoder rejects a ring with fewer than four points for the ring
+m048: KILLED [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+m049: KILLED [director-086] The decoder rejects unclosed field 0 for the ring
+m050: KILLED [director-086] The decoder rejects unclosed field 1 for the ring
+m051: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m052: KILLED [director-087] The decoder rejects invalid type for the geometry
+m053: KILLED [director-087] The decoder rejects invalid array for the geometry
+m054: KILLED [director-087] The decoder rejects an empty polygon for the geometry
+m055: KILLED [director-087] The decoder rejects more than 128 rings for the geometry
+m056: KILLED [director-087] The decoder returns a closed polygon for the geometry
+m057: KILLED [director-087] The decoder removes properties for the geometry
+m058: KILLED [director-088] The session reports idle state after creation
 m059: KILLED [director-088] The session rejects a value that is not a data pack list
 m060: KILLED [director-088] The session rejects more than eight data packs
 m061: KILLED [director-088] The session rejects destroyed state
 m062: KILLED [director-088] The session rejects cancelled state
 m063: KILLED [director-089] The session disposes handles in reverse order
-m064: KILLED [director-089] The session gives copied state
-m065: KILLED [director-090] The cancelled session disposes late resources
-m066: KILLED [director-090] The session accepts a null late handle
-m067: KILLED [director-090] The session destroys work that is not complete
-m068: KILLED [director-091] The replacement keeps its resources
+m064: KILLED [director-089] The session reports ready after the caller changes a state copy
+m065: KILLED [director-090] The session disposes late resources for the cancelled session
+m066: KILLED [director-090] The session returns false for cancelled work with a null late handle
+m067: KILLED [director-090] The session returns false for work that destruction stops
+m068: KILLED [director-091] The session keeps its resources for the replacement
 m069: KILLED [director-092] The session reports a stable source error
-m070: KILLED [director-092] The deadline rejects stalled work
-m071: KILLED [director-092] The data pack session reads the byteLength field once without a registered source
-m072: KILLED [director-092] The absent renderer does not call its source
+m070: KILLED [director-092] The session rejects stalled work for the deadline
+m071: KILLED [director-092] The session reads the byteLength field once without a registered source for the data pack session
+m072: KILLED [director-092] The session rejects an absent renderer without a source call
 m073: KILLED [director-093] The session rejects bytes that are not a Uint8Array
 m074: KILLED [director-093] The session rejects an empty asset
 m075: KILLED [director-093] The session rejects an asset above the byte limit
 m076: KILLED [director-093] The session rejects a wrong byteLength field
 m077: KILLED [director-093] The session rejects bytes above the total limit
 m078: KILLED [director-093] The session rejects a wrong digest
-m079: KILLED [director-093] The session checks exact bytes and digest
+m079: KILLED [director-093] The session returns true for exact bytes and digest
 m080: KILLED [director-089] The session rejects a falsy handle with inherited disposal
 m081: KILLED [director-089] The session rejects a handle without a dispose function
-m082: KILLED [director-094] The directory rejects protocol
-m083: KILLED [director-094] The directory rejects username
-m084: KILLED [director-094] The directory rejects password
-m085: KILLED [director-094] The directory rejects query
-m086: KILLED [director-094] The directory rejects fragment
-m087: KILLED [director-094] The directory rejects an address with no final slash
-m088: KILLED [director-095] The asset request sets its fixed options
-m089: KILLED [director-096] The stream joins distinct chunks
-m090: KILLED [director-096] The stream rejects excess header bytes
-m091: KILLED [director-096] The stream rejects excess chunk bytes
+m082: KILLED [director-094] The factory rejects protocol
+m083: KILLED [director-094] The factory rejects username
+m084: KILLED [director-094] The factory rejects password
+m085: KILLED [director-094] The factory rejects query
+m086: KILLED [director-094] The factory rejects fragment
+m087: KILLED [director-094] The factory rejects an address with no final slash
+m088: KILLED [director-095] The source sets its fixed options for the asset request
+m089: KILLED [director-096] The source joins distinct stream chunks
+m090: KILLED [director-096] The source rejects excess header bytes for the stream
+m091: KILLED [director-096] The source rejects excess chunk bytes for the stream
 m092: KILLED [director-096] The source returns an empty media type when the header is absent
 m093: KILLED [director-096] The source returns lowercase media type text without parameters
 m094: KILLED [director-097] The source rejects an absent stream
-m095: KILLED [director-097] The source accepts failed body cancellation
+m095: KILLED [director-097] The source rejects the asset request after failed body cancellation
 m096: KILLED [director-097] The source rejects a failed response without a body
-m097: KILLED [director-097] The stream releases its lock after an error
-m098: KILLED [director-097] The source checks its signal between chunks
-m099: KILLED [director-098] The bundle helpers reject nontext input
-m100: KILLED [director-098] The bundle helpers reject invalid JSON
-m101: KILLED [director-098] The bundle helpers accept plain project JSON
-m102: KILLED [director-098] The bundle helpers reject excess characters
-m103: KILLED [director-098] The bundle helpers reject excess UTF8 bytes
-m104: KILLED [director-099] The base64 rejects a custom text object
-m105: KILLED [director-099] The base64 rejects invalid empty
-m106: KILLED [director-099] The base64 rejects invalid length
-m107: KILLED [director-099] The base64 rejects invalid alignment
-m108: KILLED [director-099] The base64 rejects invalid alphabet
-m109: KILLED [director-099] The base64 rejects invalid padding
-m110: KILLED [director-099] The bundle rejects duplicate paths
-m111: KILLED [director-099] The bundle rejects an unsupported media type
-m112: KILLED [director-099] The bundle rejects unsupported version
-m113: KILLED [director-100] The bundle rejects an absent asset
-m114: KILLED [director-100] The bundle rejects a wrong byteLength field
-m115: KILLED [director-100] The bundle rejects a pack digest that differs from its asset
-m116: KILLED [director-100] The bundle rejects an asset digest that differs from its bytes
-m117: KILLED [director-100] The bundle rejects unused assets
-m118: KILLED [director-100] The bundle rejects external data pack sources
+m097: KILLED [director-097] The source releases the reader lock after a stream error
+m098: KILLED [director-097] The source checks its signal between chunks and rejects the call
+m099: KILLED [director-098] The import rejects nontext input
+m100: KILLED [director-098] The import rejects invalid JSON
+m101: KILLED [director-098] The import accepts plain project JSON and returns the project
+m102: KILLED [director-098] The import rejects excess characters
+m103: KILLED [director-098] The import rejects excess UTF8 bytes
+m104: KILLED [director-099] The import rejects a custom text object for the base64
+m105: KILLED [director-099] The import rejects invalid empty for the base64
+m106: KILLED [director-099] The import rejects invalid length for the base64
+m107: KILLED [director-099] The import rejects invalid alignment for the base64
+m108: KILLED [director-099] The import rejects invalid alphabet for the base64
+m109: KILLED [director-099] The import rejects invalid padding for the base64
+m110: KILLED [director-099] The import rejects duplicate paths
+m111: KILLED [director-099] The import rejects an unsupported media type
+m112: KILLED [director-099] The import rejects unsupported version
+m113: KILLED [director-100] The import rejects an absent asset
+m114: KILLED [director-100] The import rejects a wrong byteLength field
+m115: KILLED [director-100] The import rejects a pack digest that differs from its asset
+m116: KILLED [director-100] The import rejects an asset digest that differs from its bytes
+m117: KILLED [director-100] The import rejects unused assets
+m118: KILLED [director-100] The import rejects external data pack sources
 m119: KILLED [director-101] The export writes exact bundle metadata
 m120: KILLED [director-102] The export rejects bytes that are not a Uint8Array
 m121: KILLED [director-102] The export rejects an empty asset
@@ -11728,9 +11728,9 @@ m122: KILLED [director-102] The export rejects an asset above the byte limit
 m123: KILLED [director-102] The export rejects absent assets
 m124: KILLED [director-102] The export rejects declared byteLength
 m125: KILLED [director-102] The export rejects declared digest
-m126: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
+m126: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
 m127: KILLED [director-102] The export rejects excess asset total
-m128: KILLED [director-103] The export reuses a shared asset
+m128: KILLED [director-103] The export reuses a shared asset and returns bundle text
 m129: KILLED [director-103] The export rejects shared byteLength
 m130: KILLED [director-103] The export rejects shared digest
 m131: KILLED [director-104] The store copies the asset map
@@ -11738,165 +11738,165 @@ m132: KILLED [director-104] The store clears stored bytes
 m133: KILLED [director-105] The store rejects absent bytes
 m134: KILLED [director-105] The store rejects bytes above the caller limit
 m135: KILLED [director-105] The store returns an independent byte copy
-m136: KILLED [director-106] The share helpers accept an absent filename
+m136: KILLED [director-106] The share helpers return the project for an absent filename
 m137: KILLED [director-106] The share helpers reject the ordinary file limit
-m138: KILLED [director-106] The share helpers give bundles the larger file limit
+m138: KILLED [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
 m139: KILLED [director-107] The helper resolves without a signal
 m140: KILLED [director-107] The helper rejects an early signal
 m141: KILLED [director-107] The helper resolves with an active signal
 m142: KILLED [director-107] The helper rejects a work error
-m143: KILLED [director-107] The helper checks signal state when the work settles
+m143: KILLED [director-107] The helper checks signal state when the work settles and rejects the call
 m144: KILLED [director-107] The helper cancels work that is not complete
 m145: KILLED [director-108] The preview reports exact totals and attribution
-m146: KILLED [director-108] The preview uses the scene ID without a title
+m146: KILLED [director-108] The preview reports the scene ID when the title is absent
 m147: KILLED [director-109] The preview reports included bundle bytes
 m148: KILLED [director-109] The preview reports absent bundle bytes
 m149: KILLED [director-109] The preview reports a configured source
 m150: KILLED [director-109] The preview reports an unavailable source
 m151: KILLED [director-110] The preview lists distinct absent layers
-m152: KILLED [director-110] The preview detects applied shot packs
-m153: KILLED [director-110] The preview detects the source pack ID of a shot
-m154: KILLED [director-110] The preview detects no external content
-m155: KILLED [director-080] The image accepts its bounds field
-m156: KILLED [director-080] The image accepts its height field
-m157: KILLED [director-080] The image accepts its altitudeReference field
-m158: KILLED [director-081] The media accepts its anchorId field
-m159: KILLED [director-077] The geojson accepts its altitudeReference field
-m160: KILLED [director-080] The image bounds 0 rejects low excess
-m161: KILLED [director-080] The image bounds 0 rejects high excess
-m162: KILLED [director-080] The image bounds 1 rejects low excess
-m163: KILLED [director-080] The image bounds 1 rejects high excess
-m164: KILLED [director-080] The image bounds 2 rejects low excess
-m165: KILLED [director-080] The image bounds 2 rejects high excess
-m166: KILLED [director-080] The image bounds 3 rejects low excess
-m167: KILLED [director-080] The image bounds 3 rejects high excess
-m168: KILLED [director-080] The image height checks both limits
-m169: KILLED [director-082] The scene uses supplied anchors
-m170: KILLED [director-082] The scene uses absent anchor defaults
-m171: KILLED [director-085] The position accepts both geographic edges
+m152: KILLED [director-110] The preview reports external content for applied shot packs
+m153: KILLED [director-110] The preview reports external content for a shot with a source pack ID
+m154: KILLED [director-110] The preview reports no external content without source packs
+m155: KILLED [director-080] The validator returns without an error for its bounds field for the image
+m156: KILLED [director-080] The validator returns without an error for its height field for the image
+m157: KILLED [director-080] The validator returns without an error for its altitudeReference field for the image
+m158: KILLED [director-081] The validator returns without an error for its anchorId field for the media
+m159: KILLED [director-077] The validator returns without an error for a GeoJSON altitudeReference field
+m160: KILLED [director-080] The validator rejects low excess for image bounds field 0
+m161: KILLED [director-080] The validator rejects high excess for image bounds field 0
+m162: KILLED [director-080] The validator rejects low excess for image bounds field 1
+m163: KILLED [director-080] The validator rejects high excess for image bounds field 1
+m164: KILLED [director-080] The validator rejects low excess for image bounds field 2
+m165: KILLED [director-080] The validator rejects high excess for image bounds field 2
+m166: KILLED [director-080] The validator rejects low excess for image bounds field 3
+m167: KILLED [director-080] The validator rejects high excess for image bounds field 3
+m168: KILLED [director-080] The validator rejects image height outside both limits
+m169: KILLED [director-082] The validator uses supplied anchors for the scene and returns without an error
+m170: KILLED [director-082] The validator uses absent anchor defaults for the scene and returns without an error
+m171: KILLED [director-085] The decoder accepts both geographic edges for the position and returns coordinates
 m172: SURVIVED
-m173: KILLED [director-088] The session state uses its idle default
-m174: KILLED [director-088] The session state uses its zero default
-m175: KILLED [director-089] The session state uses its active total
-m176: KILLED [director-093] The session uses its default byte budget
-m177: KILLED [director-093] The session accepts absent declared size
-m178: KILLED [director-090] The session checks signal state without an event
+m173: KILLED [director-088] The session reports idle after creation
+m174: KILLED [director-088] The session reports zero handles after creation
+m175: KILLED [director-089] The session reports one active handle
+m176: KILLED [director-093] The session calls the source with a default limit of 8388608 bytes
+m177: KILLED [director-093] The session returns true without a declared size
+m178: KILLED [director-090] The session returns false for a cancelled signal without an event
 m179: KILLED [director-090] The session checks destroyed state after it reads the signal
-m180: KILLED [director-090] The session checks a cleared load call without signal state
+m180: KILLED [director-090] The session returns false for a cleared load call without a signal state access
 m181: KILLED [director-090] The session guard rejects a detached resource
 m182: KILLED [director-090] The session disposes the handle before it adds the handle to its list
-m183: KILLED [director-092] The session settles a source error before its deadline
+m183: KILLED [director-092] The session settles a source error before its deadline and reports idle
 m184: KILLED [director-097] The source rejects early cancellation
-m185: KILLED [director-094] The directory accepts HTTP and HTTPS
-m186: KILLED [director-098] The share character guard comes before byte conversion
-m187: KILLED [director-101] The export accepts scenes without data packs
-m188: KILLED [director-101] The export keeps a supplied data pack list
-m189: KILLED [director-102] The export accepts absent integrity fields
-m190: KILLED [director-102] The export accepts an absent digest
-m191: KILLED [director-103] The shared export accepts absent byte declarations
-m192: KILLED [director-103] The shared export accepts an absent digest
-m193: KILLED [director-099] The base64 accepts bytes without padding
-m194: KILLED [director-108] The preview accepts absent data pack lists
-m195: KILLED [director-108] The preview uses supplied data pack lists
-m196: KILLED [director-108] The preview keeps a supplied scene title
-m197: KILLED [director-109] The preview distinguishes bundle sources
-m198: KILLED [director-110] The preview accepts absent shot layers
-m199: KILLED [director-110] The preview uses supplied shot layers
-m200: KILLED [director-105] The store checks its default byte budget
-m201: KILLED [director-092] The absent renderer does not call its source
-m202: KILLED [director-099] The base64 rejects a custom text object
-m203: KILLED [director-103] The export key uses the registered source name
-m204: KILLED [director-103] The export key uses path
-m205: KILLED [director-110] The preview detects each layer key
-m206: KILLED [director-108] The preview totals include every asset
-m207: KILLED [director-095] The asset request sets its credentials option
-m208: KILLED [director-095] The asset request sets its redirect option
-m209: KILLED [director-095] The asset request sets its referrerPolicy option
-m210: KILLED [director-095] The asset request sets its cache option
-m211: KILLED [director-085] The position rejects field 0 that is not finite
-m212: KILLED [director-085] The position rejects field 1 that is not finite
-m213: KILLED [director-085] The position rejects field 2 that is not finite
-m214: KILLED [director-096] The source checks its default byte budget
-m215: KILLED [director-077] The manifest accepts the id field of a data pack
-m216: KILLED [director-077] The manifest accepts the version field of a data pack
-m217: KILLED [director-077] The manifest accepts the format field of a data pack
-m218: KILLED [director-077] The manifest accepts the source field of a data pack
-m219: KILLED [director-077] The manifest accepts the attribution field of a data pack
-m220: KILLED [director-077] The manifest accepts the placement field of a data pack
-m221: KILLED [director-079] The manifest accepts the byteLength field of a data pack
-m222: KILLED [director-079] The manifest accepts the sha256 field of a data pack
-m223: KILLED [director-077] The manifest accepts its source name field
-m224: KILLED [director-077] The manifest accepts its source path field
-m225: KILLED [director-078] The manifest accepts its attribution text field
-m226: KILLED [director-078] The manifest accepts its attribution license field
-m227: KILLED [director-078] The manifest accepts its attribution url field
-m228: KILLED [director-100] The bundle checks its second asset reference
-m229: KILLED [director-100] The bundle checks its second asset digest
-m230: KILLED [director-103] The export accepts equal shared integrity
+m185: KILLED [director-094] The factory returns a source for HTTP and HTTPS directories
+m186: KILLED [director-098] The import rejects 52428801 characters before byte conversion
+m187: KILLED [director-101] The export accepts scenes without data packs and returns bundle text
+m188: KILLED [director-101] The export returns one asset for a supplied data pack list
+m189: KILLED [director-102] The export accepts absent integrity fields and returns bundle text
+m190: KILLED [director-102] The export accepts an absent digest and returns bundle text
+m191: KILLED [director-103] The export accepts absent byte declarations for the shared export and returns bundle text
+m192: KILLED [director-103] The export accepts an absent digest for the shared export and returns bundle text
+m193: KILLED [director-099] The import accepts bytes without padding for the base64 and returns assets
+m194: KILLED [director-108] The preview reports no packs when data pack lists are absent
+m195: KILLED [director-108] The preview reports one pack from the supplied data pack list
+m196: KILLED [director-108] The preview reports Example for the supplied scene title
+m197: KILLED [director-109] The preview reports a configured source for a supplied source ID
+m198: KILLED [director-110] The preview reports no absent layer when a shot has no layers
+m199: KILLED [director-110] The preview reports traffic as absent without layer IDs
+m200: KILLED [director-105] The store rejects 8388609 bytes without a caller limit
+m201: KILLED [director-092] The session rejects an absent renderer without a source call
+m202: KILLED [director-099] The import rejects a custom text object for the base64
+m203: KILLED [director-103] The export key uses the registered source name and returns bundle text
+m204: KILLED [director-103] The export key uses path and returns bundle text
+m205: KILLED [director-110] The preview reports ships as absent when only traffic is configured
+m206: KILLED [director-108] The preview reports three bytes for both assets
+m207: KILLED [director-095] The source sets its credentials option for the asset request
+m208: KILLED [director-095] The source sets its redirect option for the asset request
+m209: KILLED [director-095] The source sets its referrerPolicy option for the asset request
+m210: KILLED [director-095] The source sets its cache option for the asset request
+m211: KILLED [director-085] The decoder rejects field 0 that is not finite for the position
+m212: KILLED [director-085] The decoder rejects field 1 that is not finite for the position
+m213: KILLED [director-085] The decoder rejects field 2 that is not finite for the position
+m214: KILLED [director-096] The source rejects 8388609 bytes without a caller limit
+m215: KILLED [director-077] The validator returns without an error for the id field of a data pack
+m216: KILLED [director-077] The validator returns without an error for the version field of a data pack
+m217: KILLED [director-077] The validator returns without an error for the format field of a data pack
+m218: KILLED [director-077] The validator returns without an error for the source field of a data pack
+m219: KILLED [director-077] The validator returns without an error for the attribution field of a data pack
+m220: KILLED [director-077] The validator returns without an error for the placement field of a data pack
+m221: KILLED [director-079] The validator returns without an error for the byteLength field of a data pack
+m222: KILLED [director-079] The validator returns without an error for the sha256 field of a data pack
+m223: KILLED [director-077] The validator returns without an error for its source name field
+m224: KILLED [director-077] The validator returns without an error for its source path field
+m225: KILLED [director-078] The validator returns without an error for its attribution text field
+m226: KILLED [director-078] The validator returns without an error for its attribution license field
+m227: KILLED [director-078] The validator returns without an error for its attribution url field
+m228: KILLED [director-100] The import checks its second asset reference and rejects the call
+m229: KILLED [director-100] The import checks its second asset digest and rejects the call
+m230: KILLED [director-103] The export accepts equal shared integrity and returns bundle text
 m231: KILLED [director-102] The export rejects absent asset bytes
-m232: KILLED [director-092] The session settles an early internal signal
-m233: KILLED [director-093] The session gives anchors to its renderer
-m234: KILLED [director-106] The share helpers check a signal after they read text
-m235: KILLED [director-102] The export checks its encoded text budget
+m232: KILLED [director-092] The session settles an early internal signal and reports idle
+m233: KILLED [director-093] The session calls the renderer with the anchors and returns true
+m234: KILLED [director-106] The share helpers call throwIfAborted three times and return the project
+m235: KILLED [director-102] The export rejects encoded bundle text above 52428800 bytes
 m236: KILLED [director-102] The export keeps its total after an asset without a byte length
-m237: KILLED [director-089] The session state uses its active status
-m238: KILLED [director-080] The placement selects the image fields
-m239: KILLED [director-081] The placement selects the media fields
-m240: KILLED [director-089] The session loads its geojson format
-m241: KILLED [director-089] The session loads its image format
-m242: KILLED [director-089] The session loads its media format
+m237: KILLED [director-089] The session reports ready after asset work
+m238: KILLED [director-080] The validator rejects media fields in image placement for the placement
+m239: KILLED [director-081] The validator rejects image fields in media placement for the placement
+m240: KILLED [director-089] The session calls the GeoJSON renderer once and returns true
+m241: KILLED [director-089] The session calls the image renderer once and returns true
+m242: KILLED [director-089] The session calls the media renderer once and returns true
 m243: KILLED [director-097] The source stops between stream chunks
-m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and cred
+m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials
 m245: KILLED [director-080] The manifest checks given image bounds and media anchor references
-m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects unsaf
+m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 m247: KILLED [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints
 m248: KILLED [director-089] The data pack session removes resources and cancels the transport on Stop
 m249: KILLED [director-091] The data pack session replaces source work and ignores its late bytes
-m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps t
-m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the re
-m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier
-m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects
-m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancel
-m255: KILLED [director-101] The selected scene bundle copies bytes and attribution and keeps the project without
-m256: KILLED [director-099] The bundle rejects invalid bytes, unknown fields, traversal, duplicates, absent asset
-m257: KILLED [director-102] The bundle checks asset limits and declared integrity before export
-m258: KILLED [director-103] The data packs with the same path share one asset and reject integrity values that di
-m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets witho
-m260: KILLED [director-104] The bundle byte store removes old data after replacement and uses no network source
-m261: KILLED [director-106] The share helpers reject excess file bytes before text access and cancel a stalled pr
-m262: KILLED [director-107] The cancelled bundle export stops before the next asset and returns no partial output
-m263: KILLED [director-101] The bundle accepts long valid source asset names
-m264: KILLED [director-077] The manifest accepts geojson
-m265: KILLED [director-077] The manifest accepts image
-m266: KILLED [director-077] The manifest accepts media
-m267: KILLED [director-080] The image rejects bounds field 0
-m268: KILLED [director-080] The image rejects bounds field 1
-m269: KILLED [director-080] The image rejects bounds field 2
-m270: KILLED [director-080] The image rejects bounds field 3
-m271: KILLED [director-092] The session uses its supplied deadline
-m272: KILLED [director-092] The session uses its default deadline
+m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement
+m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result
+m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources
+m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
+m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal
+m255: KILLED [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
+m256: KILLED [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+m257: KILLED [director-102] The export rejects excess bytes, wrong integrity and absent assets
+m258: KILLED [director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
+m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+m260: KILLED [director-104] The store removes old data after replacement and uses no network source for the import byte store
+m261: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
+m262: KILLED [director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
+m263: KILLED [director-101] The export returns a bundle for a source path of 1024 characters
+m264: KILLED [director-077] The validator returns without an error for geojson
+m265: KILLED [director-077] The validator returns without an error for image
+m266: KILLED [director-077] The validator returns without an error for media
+m267: KILLED [director-080] The validator rejects bounds field 0 for the image
+m268: KILLED [director-080] The validator rejects bounds field 1 for the image
+m269: KILLED [director-080] The validator rejects bounds field 2 for the image
+m270: KILLED [director-080] The validator rejects bounds field 3 for the image
+m271: KILLED [director-092] The session rejects stalled work at the 19 ms deadline
+m272: KILLED [director-092] The session rejects stalled work at the default 15000 ms deadline
 m273: KILLED [director-092] The session removes resources after a later error
-m274: KILLED [director-099] The bundle accepts the application/json media type
-m275: KILLED [director-099] The bundle accepts the application/geo+json media type
-m276: KILLED [director-099] The bundle accepts the image/png media type
-m277: KILLED [director-099] The bundle accepts the video/mp4 media type
-m278: KILLED [director-099] The bundle accepts the video/webm media type
-m279: KILLED [director-099] The bundle accepts the audio/mpeg media type
-m280: KILLED [director-099] The bundle accepts the audio/ogg media type
-m281: KILLED [director-099] The bundle accepts the audio/wav media type
-m282: KILLED [director-099] The bundle accepts the audio/webm media type
+m274: KILLED [director-099] The import accepts the application/json media type and returns assets
+m275: KILLED [director-099] The import accepts the application/geo+json media type and returns assets
+m276: KILLED [director-099] The import accepts the image/png media type and returns assets
+m277: KILLED [director-099] The import accepts the video/mp4 media type and returns assets
+m278: KILLED [director-099] The import accepts the video/webm media type and returns assets
+m279: KILLED [director-099] The import accepts the audio/mpeg media type and returns assets
+m280: KILLED [director-099] The import accepts the audio/ogg media type and returns assets
+m281: KILLED [director-099] The import accepts the audio/wav media type and returns assets
+m282: KILLED [director-099] The import accepts the audio/webm media type and returns assets
 m283: KILLED [director-089] The session rejects a falsy handle with inherited disposal
-m284: KILLED [director-088] The destroyed session does not read the caller signal state
-m285: KILLED [director-083] The collection accepts its exact feature limit
-m286: KILLED [director-084] The feature ID accepts its exact text limit
-m287: KILLED [director-085] The position accepts its exact total limit
-m288: KILLED [director-087] The polygon accepts its exact ring limit
-m289: KILLED [director-076] The asset path checks its text limit
-m290: KILLED [director-102] The export accepts its exact asset total
+m284: KILLED [director-088] The session returns false without a caller signal access after destruction
+m285: KILLED [director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
+m286: KILLED [director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
+m287: KILLED [director-085] The decoder accepts its exact total limit for the position and returns coordinates
+m288: KILLED [director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
+m289: KILLED [director-076] The validator rejects a path above its text limit for the asset path
+m290: KILLED [director-102] The export accepts its exact asset total and returns bundle text
 m291: KILLED [director-089] The session keeps every data pack handle
-m292: KILLED [director-095] The asset request sets its signal option
-m293: KILLED [director-096] The stream accepts its exact byte limit
-m294: KILLED [director-096] The stream accepts its exact byte limit
+m292: KILLED [director-095] The source sets its signal option for the asset request
+m293: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
+m294: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
 m295: KILLED [director-092] The session rejects a falsy custom source
 m296: KILLED [director-101] The export writes exact bundle metadata
 m297: KILLED [director-101] The export writes exact bundle metadata
@@ -11905,36 +11905,36 @@ m299: KILLED [director-101] The export writes exact bundle metadata
 m300: KILLED [director-101] The export writes exact bundle metadata
 m301: KILLED [director-101] The export writes exact bundle metadata
 m302: KILLED [director-105] The store returns an independent byte copy
-m303: KILLED [director-079] The digest rejects 63 characters
-m304: KILLED [director-079] The digest rejects 65 characters
-m305: KILLED [director-079] The digest rejects a prefix
-m306: KILLED [director-079] The digest rejects a suffix
-m307: KILLED [director-079] The digest rejects uppercase text
-m308: KILLED [director-080] The image rejects equal longitude edges
-m309: KILLED [director-080] The image rejects equal latitude edges
-m310: KILLED [director-080] The image accepts all geographic limits
-m311: KILLED [director-080] The image accepts all geographic limits
-m312: KILLED [director-080] The image accepts all geographic limits
-m313: KILLED [director-080] The image accepts all geographic limits
-m314: KILLED [director-082] The scene ignores a data pack list from its parent
-m315: KILLED [director-080] The image rejects text for each geographic field
-m316: KILLED [director-080] The image rejects text for each geographic field
-m317: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m318: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m319: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m320: KILLED [director-076] The asset path accepts 1024 characters and rejects 1025
-m321: KILLED [director-076] The asset path rejects URL syntax with a stable message
-m322: KILLED [director-088] The session accepts eight data packs
-m323: KILLED [director-093] The session accepts the asset byte limit
-m324: KILLED [director-093] The session accepts the total byte limit
-m325: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
-m326: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
-m327: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
+m303: KILLED [director-079] The validator rejects 63 characters for the digest
+m304: KILLED [director-079] The validator rejects 65 characters for the digest
+m305: KILLED [director-079] The validator rejects a prefix for the digest
+m306: KILLED [director-079] The validator rejects a suffix for the digest
+m307: KILLED [director-079] The validator rejects uppercase text for the digest
+m308: KILLED [director-080] The validator rejects equal longitude edges for the image
+m309: KILLED [director-080] The validator rejects equal latitude edges for the image
+m310: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m311: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m312: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m313: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m314: KILLED [director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
+m315: KILLED [director-080] The validator rejects text for each geographic field for the image
+m316: KILLED [director-080] The validator rejects text for each geographic field for the image
+m317: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m318: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m319: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m320: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
+m321: KILLED [director-076] The validator rejects URL syntax with a stable message for the asset path
+m322: KILLED [director-088] The session returns true for eight data packs
+m323: KILLED [director-093] The session returns true at the asset byte limit
+m324: KILLED [director-093] The session returns true at the total byte limit
+m325: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m326: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m327: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
 m328: KILLED [director-089] The session removes its deadline after success
 m329: KILLED [director-089] The session removes its deadline after clear
-m330: KILLED [director-088] The session checks every declaration before the source call
-m331: KILLED [director-089] The session destroys each ready resource
-m332: KILLED [director-088] The session checks every declaration before the source call
+m330: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m331: KILLED [director-089] The session disposes both ready handles in reverse order and reports idle
+m332: KILLED [director-088] The session checks every declaration before the source call and rejects the call
 m333: KILLED [director-083] The decoder rejects invalid UTF8 bytes
 m334: KILLED [director-083] The decoder rejects null
 m335: KILLED [director-084] The decoder rejects a null feature
@@ -11942,74 +11942,74 @@ m336: KILLED [director-084] The decoder rejects a null feature
 m337: KILLED [director-087] The decoder rejects absent geometry
 m338: KILLED [director-087] The decoder rejects absent geometry
 m339: KILLED [director-087] The decoder rejects absent geometry
-m340: KILLED [director-095] The directory source uses the default fetch function
-m341: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
-m342: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
-m343: KILLED [director-099] The base64 accepts its length limit and rejects the next aligned length
+m340: KILLED [director-095] The source uses the default fetch function and returns bytes
+m341: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m342: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m343: KILLED [director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
 m344: KILLED [director-106] The share helpers accept the project file limit and reject one more byte
 m345: KILLED [director-106] The share helpers accept the bundle file limit and reject one more byte
 m346: KILLED [director-102] The export rejects an unsupported media type
 m347: KILLED [director-099] The import rejects 65 different asset paths
-m348: KILLED [director-099] The import accepts the total byte limit and rejects one more byte
-m349: KILLED [director-099] The import accepts the total byte limit and rejects one more byte
+m348: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+m349: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
 m350: KILLED [director-105] The store rejects a cancelled source call
-m351: KILLED [director-107] The bundle stops import before an asset
-m352: KILLED [director-107] The bundle stops import after a digest
-m353: KILLED [director-107] The bundle stops export before an asset
-m354: KILLED [director-107] The bundle stops export after asset bytes
-m355: KILLED [director-107] The bundle stops export after a digest
+m351: KILLED [director-107] The bundle helpers stop import before an asset
+m352: KILLED [director-107] The bundle helpers stop import after a digest
+m353: KILLED [director-107] The bundle helpers stop export before an asset
+m354: KILLED [director-107] The bundle helpers stop export after asset bytes
+m355: KILLED [director-107] The bundle helpers stop export after a digest
 m356: KILLED [director-108] The preview counts shots apart from scenes
 m357: KILLED [director-108] The preview counts shots apart from scenes
 m358: KILLED [director-110] The preview lists distinct absent layers
-m359: KILLED [director-077] The manifest accepts 256 characters for its ID and rejects 257
-m360: KILLED [director-077] The manifest accepts 256 characters for its ID and rejects 257
-m361: KILLED [director-077] The manifest accepts 256 characters for its source name and rejects 257
-m362: KILLED [director-077] The manifest accepts 256 characters for its source name and rejects 257
-m363: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m364: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m365: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m366: KILLED [director-076] The asset path accepts 1024 characters and rejects 1025
+m359: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m360: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m361: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+m362: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+m363: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m364: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m365: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m366: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
 m367: KILLED [director-102] The export rejects excess asset total
-m368: KILLED [director-085] The position rejects negative longitude
-m369: KILLED [director-085] The position rejects negative latitude
-m370: KILLED [director-085] The position accepts the limit for negative longitude
-m371: KILLED [director-085] The position accepts the limit for negative latitude
-m372: KILLED [director-085] The position rejects four coordinates
-m373: KILLED [director-085] The position rejects one coordinate
-m374: KILLED [director-076] The asset path rejects .x
-m375: KILLED [director-076] The asset path rejects x?a=1
-m376: KILLED [director-079] The manifest accepts one byte
-m377: KILLED [director-080] The image rejects bounds outside an array
-m378: KILLED [director-082] The scene rejects nine distinct data packs
-m379: KILLED [director-082] The scene accepts eight distinct data packs
-m380: KILLED [director-089] The data pack session reports its state during asset work
-m381: KILLED [director-096] The directory source accepts its default byte limit
-m382: KILLED [director-098] The bundle helpers accept the character limit
-m383: KILLED [director-098] The bundle helpers accept the multibyte text limit
-m384: KILLED [director-098] The bundle helpers reject an invalid plain project
-m385: KILLED [director-098] The bundle helpers reject a null project
-m386: KILLED [director-099] The bundle helpers reject an extra top-level field
-m387: KILLED [director-099] The bundle helpers reject an invalid bundle project
-m388: KILLED [director-099] The import accepts 64 distinct assets
+m368: KILLED [director-085] The decoder rejects negative longitude for the position
+m369: KILLED [director-085] The decoder rejects negative latitude for the position
+m370: KILLED [director-085] The decoder accepts the limit for negative longitude for the position and returns coordinates
+m371: KILLED [director-085] The decoder accepts the limit for negative latitude for the position and returns coordinates
+m372: KILLED [director-085] The decoder rejects four coordinates for the position
+m373: KILLED [director-085] The decoder rejects one coordinate for the position
+m374: KILLED [director-076] The validator rejects .x for the asset path
+m375: KILLED [director-076] The validator rejects x?a=1 for the asset path
+m376: KILLED [director-079] The validator returns without an error for one byte
+m377: KILLED [director-080] The validator rejects bounds outside an array for the image
+m378: KILLED [director-082] The validator rejects nine distinct data packs for the scene
+m379: KILLED [director-082] The validator returns without an error for eight distinct data packs for the scene
+m380: KILLED [director-089] The session reports its state during asset work for the data pack session
+m381: KILLED [director-096] The source accepts its default byte limit and returns bytes
+m382: KILLED [director-098] The import accepts the character limit and returns the project
+m383: KILLED [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+m384: KILLED [director-098] The import rejects an invalid plain project
+m385: KILLED [director-098] The import rejects a null project
+m386: KILLED [director-099] The import rejects an extra top-level field
+m387: KILLED [director-099] The import rejects an invalid bundle project
+m388: KILLED [director-099] The import accepts 64 distinct assets and returns assets
 m389: SURVIVED
-m390: KILLED [director-101] The resolver receives the data pack and signal
-m391: KILLED [director-101] The resolver receives the data pack and signal
-m392: KILLED [director-102] The export accepts the text byte limit
-m393: KILLED [director-105] The byte store accepts the caller byte limit
-m394: KILLED [director-093] The renderer receives the data pack and scene anchors
-m395: KILLED [director-093] The renderer receives the data pack and scene anchors
-m396: KILLED [director-089] The data pack session removes source listeners after success
-m397: KILLED [director-089] The data pack session removes source listeners after success
-m398: KILLED [director-089] The data pack session removes source listeners after error
-m399: KILLED [director-079] The manifest accepts its byte limit
-m400: KILLED [director-080] The image accepts its minimum height
-m401: KILLED [director-080] The image accepts its maximum height
-m402: KILLED [director-085] The position accepts its minimum height
-m403: KILLED [director-085] The position accepts its maximum height
-m404: KILLED [director-107] The share helpers remove the listener after cancel
-m405: KILLED [director-107] The share helpers remove the listener after success
-m406: KILLED [director-107] The share helpers remove the listener after error
-m407: KILLED [director-107] The share helpers remove the listener after success
+m390: KILLED [director-101] The export calls the resolver with the data pack and signal
+m391: KILLED [director-101] The export calls the resolver with the data pack and signal
+m392: KILLED [director-102] The export accepts the text byte limit and returns bundle text
+m393: KILLED [director-105] The store accepts the caller byte limit for the byte store and returns byte copies
+m394: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+m395: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+m396: KILLED [director-089] The session removes source listeners after success for the data pack session
+m397: KILLED [director-089] The session removes source listeners after success for the data pack session
+m398: KILLED [director-089] The session removes source listeners after error for the data pack session
+m399: KILLED [director-079] The validator returns without an error for its byte limit
+m400: KILLED [director-080] The validator returns without an error for its minimum height for the image
+m401: KILLED [director-080] The validator returns without an error for its maximum height for the image
+m402: KILLED [director-085] The decoder accepts its minimum height for the position and returns coordinates
+m403: KILLED [director-085] The decoder accepts its maximum height for the position and returns coordinates
+m404: KILLED [director-107] The helper removes its listener after cancel
+m405: KILLED [director-107] The helper removes its listener after success
+m406: KILLED [director-107] The helper removes its listener after error
+m407: KILLED [director-107] The helper removes its listener after success
 m408: KILLED [director-101] The export rejects an invalid project
 SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
 
@@ -12102,8 +12102,8 @@ scene.shots.slice(0, 1).forEach
 ### m411 Test
 
 ```text
-[director-082] The manifest rejects a reference in the second shot
-Output: KILLED [director-082] The manifest rejects a reference in the second shot
+[director-082] The validator rejects a reference in the second shot
+Output: KILLED [director-082] The validator rejects a reference in the second shot
 ```
 
 ## m412
@@ -12129,8 +12129,8 @@ File: src/director/packs/manifest.js
 ### m412 Test
 
 ```text
-[director-082] The manifest rejects a reference in the second shot
-Output: KILLED [director-082] The manifest rejects a reference in the second shot
+[director-082] The validator rejects a reference in the second shot
+Output: KILLED [director-082] The validator rejects a reference in the second shot
 ```
 
 ## m413
@@ -12157,8 +12157,8 @@ File: src/director/sharing/bundle.js
 ### m413 Test
 
 ```text
-[director-099 director-102] The bundle rejects an SVG media type
-Output: KILLED [director-099 director-102] The bundle rejects an SVG media type
+[director-099 director-102] The bundle helpers reject an SVG media type during import and export
+Output: KILLED [director-099 director-102] The bundle helpers reject an SVG media type during import and export
 ```
 
 ## m414
@@ -12184,8 +12184,8 @@ File: src/director/packs/manifest.js
 ### m414 Test
 
 ```text
-[director-077] The manifest rejects an unlisted geojsonx format
-Output: KILLED [director-077] The manifest rejects an unlisted geojsonx format
+[director-077] The validator rejects an unlisted geojsonx format
+Output: KILLED [director-077] The validator rejects an unlisted geojsonx format
 ```
 
 ## m415
@@ -12211,8 +12211,8 @@ File: src/director/packs/source.js
 ### m415 Test
 
 ```text
-[director-094] The source rejects the file protocol
-Output: KILLED [director-094] The source rejects the file protocol
+[director-094] The factory rejects the file protocol
+Output: KILLED [director-094] The factory rejects the file protocol
 ```
 
 ## m416
@@ -12238,8 +12238,8 @@ packs.slice(0, 1).forEach
 ### m416 Test
 
 ```text
-[director-077 director-082] The manifest rejects an invalid second data pack
-Output: KILLED [director-077 director-082] The manifest rejects an invalid second data pack
+[director-077 director-082] The validator rejects an invalid second data pack
+Output: KILLED [director-077 director-082] The validator rejects an invalid second data pack
 ```
 
 ## m417
@@ -12265,8 +12265,8 @@ File: src/director/packs/manifest.js
 ### m417 Test
 
 ```text
-[director-081] The manifest accepts a reference to the second anchor
-Output: KILLED [director-081] The manifest accepts a reference to the second anchor
+[director-081] The validator returns without an error for a reference to the second anchor
+Output: KILLED [director-081] The validator returns without an error for a reference to the second anchor
 ```
 
 ## m418
@@ -12292,8 +12292,8 @@ ids.slice(0, 1).some
 ### m418 Test
 
 ```text
-[director-082] The manifest rejects an unknown second reference ID
-Output: KILLED [director-082] The manifest rejects an unknown second reference ID
+[director-082] The validator rejects an unknown second reference ID
+Output: KILLED [director-082] The validator rejects an unknown second reference ID
 ```
 
 ## m419
@@ -12427,8 +12427,8 @@ anchors.slice(0, 1).map
 ### m423 Test
 
 ```text
-[director-081 director-093] The session accepts a reference to the second anchor
-Output: KILLED [director-081 director-093] The session accepts a reference to the second anchor
+[director-081 director-093] The session returns true for a reference to the second anchor
+Output: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
 ```
 
 ## m424
@@ -12454,8 +12454,8 @@ p.bounds.slice(0, 1).forEach
 ### m424 Test
 
 ```text
-[director-080] The image rejects bounds field 3
-Output: KILLED [director-080] The image rejects bounds field 3
+[director-080] The validator rejects bounds field 3 for the image
+Output: KILLED [director-080] The validator rejects bounds field 3 for the image
 ```
 
 ## m425
@@ -12535,8 +12535,8 @@ normalized[0].slice(0, 1).some
 ### m427 Test
 
 ```text
-[director-086] The ring rejects unclosed field 2
-Output: KILLED [director-086] The ring rejects unclosed field 2
+[director-086] The decoder rejects unclosed field 2 for the ring
+Output: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
 ```
 
 ## m428
@@ -12643,8 +12643,8 @@ project.scenes.slice(0, 1).flatMap
 ### m431 Test
 
 ```text
-[director-101] The export includes the asset of the second scene
-Output: KILLED [director-101] The export includes the asset of the second scene
+[director-101] The export includes the asset of the second scene and returns bundle text
+Output: KILLED [director-101] The export includes the asset of the second scene and returns bundle text
 ```
 
 ## m432
@@ -12697,8 +12697,8 @@ for (const pack of packsOf(project).slice(0, 1))
 ### m433 Test
 
 ```text
-[director-100] The bundle checks its second asset reference
-Output: KILLED [director-100] The bundle checks its second asset reference
+[director-100] The import checks its second asset reference and rejects the call
+Output: KILLED [director-100] The import checks its second asset reference and rejects the call
 ```
 
 ## m434
@@ -12805,8 +12805,8 @@ project.scenes.slice(0, 1).flatMap((scene)
 ### m437 Test
 
 ```text
-[director-108 director-110] The preview counts the second scene and shot
-Output: KILLED [director-108 director-110] The preview counts the second scene and shot
+[director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+Output: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 ```
 
 ## m438
@@ -12859,8 +12859,8 @@ project.scenes.slice(0, 1).reduce
 ### m439 Test
 
 ```text
-[director-108 director-110] The preview counts the second scene and shot
-Output: KILLED [director-108 director-110] The preview counts the second scene and shot
+[director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+Output: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 ```
 
 ## m440
@@ -12886,8 +12886,8 @@ project.scenes.slice(0, 1).flatMap((s)
 ### m440 Test
 
 ```text
-[director-108 director-110] The preview counts the second scene and shot
-Output: KILLED [director-108 director-110] The preview counts the second scene and shot
+[director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+Output: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 ```
 
 ## m441
@@ -12913,8 +12913,8 @@ s.shots.slice(0, 1).flatMap
 ### m441 Test
 
 ```text
-[director-108 director-110] The preview counts the second scene and shot
-Output: KILLED [director-108 director-110] The preview counts the second scene and shot
+[director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+Output: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 ```
 
 ## m442
@@ -12940,8 +12940,8 @@ project.scenes.slice(0, 1).some
 ### m442 Test
 
 ```text
-[director-108 director-110] The preview counts the second scene and shot
-Output: KILLED [director-108 director-110] The preview counts the second scene and shot
+[director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+Output: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 ```
 
 ## m443
@@ -12967,8 +12967,8 @@ s.shots.slice(0, 1).some
 ### m443 Test
 
 ```text
-[director-108 director-110] The preview counts the second scene and shot
-Output: KILLED [director-108 director-110] The preview counts the second scene and shot
+[director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+Output: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 ```
 
 ## m444
@@ -12994,8 +12994,8 @@ File: src/director/sharing/preview.js
 ### m444 Test
 
 ```text
-[director-108 director-110] The preview counts the second scene and shot
-Output: KILLED [director-108 director-110] The preview counts the second scene and shot
+[director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+Output: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 ```
 
 ## m445
@@ -13050,8 +13050,8 @@ i < Math.min(bytes.length, 32768)
 ### m446 Test
 
 ```text
-[director-101] The export encodes the second byte chunk
-Output: KILLED [director-101] The export encodes the second byte chunk
+[director-101] The export encodes the second byte chunk and returns bundle text
+Output: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
 ```
 
 ## m447
@@ -13236,124 +13236,124 @@ It gives 446 killed rows and only m172 and m389 as survivors.
 
 ```text
 Command: cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director-3 /home/ianblenke/docker/gev-tools/director-3/muts.json
-m001: KILLED [director-076] The asset path accepts safe names
-m002: KILLED [director-076] The asset path rejects traversal
-m003: KILLED [director-077] The manifest rejects invalid version
-m004: KILLED [director-077] The manifest rejects invalid format
-m005: KILLED [director-078] The attribution rejects protocol
-m006: KILLED [director-078] The attribution rejects username
-m007: KILLED [director-078] The attribution rejects password
-m008: KILLED [director-078] The attribution rejects query
-m009: KILLED [director-078] The attribution rejects fragment
-m010: KILLED [director-078] The attribution rejects invalid URL text
-m011: KILLED [director-078] The attribution accepts a safe link
-m012: KILLED [director-078] The attribution rejects blank text
-m013: KILLED [director-078] The attribution rejects blank license
-m014: KILLED [director-079] The byteLength field rejects a fraction
-m015: KILLED [director-079] The digest rejects invalid type
-m016: KILLED [director-079] The digest rejects invalid alphabet
-m017: KILLED [director-079] The integrity fields accept their limits
-m018: KILLED [director-080] The image rejects reversed west
-m019: KILLED [director-080] The image rejects reversed south
-m020: KILLED [director-080] The image rejects short bounds
-m021: KILLED [director-080] The image rejects height and reference
-m022: KILLED [director-081] The media rejects an unknown anchor
-m023: KILLED [director-082] The scene rejects duplicate data pack IDs
-m024: KILLED [director-082] The shot rejects duplicate data pack IDs
-m025: KILLED [director-082] The shot rejects unknown data pack IDs
-m026: KILLED [director-082] The scene accepts absent data packs and anchors
-m027: KILLED [director-083] The collection rejects invalid type
-m028: KILLED [director-083] The collection rejects invalid array
-m029: KILLED [director-083] The collection rejects more than 2000 features
-m030: KILLED [director-084] The feature rejects type
-m031: KILLED [director-084] The feature rejects ID type
-m032: KILLED [director-084] The feature rejects blank ID
-m033: KILLED [director-084] The feature rejects long ID
-m034: KILLED [director-084] The feature rejects duplicate ID
-m035: KILLED [director-085] The position rejects invalid array
-m036: KILLED [director-085] The position rejects invalid length
-m037: KILLED [director-085] The position rejects a coordinate that is not finite
-m038: KILLED [director-085] The position rejects invalid longitude
-m039: KILLED [director-085] The position rejects invalid latitude
-m040: KILLED [director-085] The position rejects a height below the limit
-m041: KILLED [director-085] The position rejects a height above the limit
-m042: KILLED [director-085] The position total rejects excess
-m043: KILLED [director-085] The position uses zero for absent height
-m044: KILLED [director-085] The position keeps the height in the data
-m045: KILLED [director-086] The line rejects invalid array
-m046: KILLED [director-086] The line rejects invalid minimum
-m047: KILLED [director-086] The ring needs four points
-m048: KILLED [director-086] The line accepts two distinct endpoints
-m049: KILLED [director-086] The ring rejects unclosed field 0
-m050: KILLED [director-086] The ring rejects unclosed field 1
-m051: KILLED [director-086] The ring rejects unclosed field 2
-m052: KILLED [director-087] The geometry rejects invalid type
-m053: KILLED [director-087] The geometry rejects invalid array
-m054: KILLED [director-087] The geometry rejects an empty polygon
-m055: KILLED [director-087] The geometry rejects more than 128 rings
-m056: KILLED [director-087] The geometry returns a closed polygon
-m057: KILLED [director-087] The geometry removes properties
-m058: KILLED [director-088] The new session reports idle state
+m001: KILLED [director-076] The validator returns without an error for safe names for the asset path
+m002: KILLED [director-076] The validator rejects traversal for the asset path
+m003: KILLED [director-077] The validator rejects invalid version
+m004: KILLED [director-077] The validator rejects invalid format
+m005: KILLED [director-078] The validator rejects protocol for the attribution
+m006: KILLED [director-078] The validator rejects username for the attribution
+m007: KILLED [director-078] The validator rejects password for the attribution
+m008: KILLED [director-078] The validator rejects query for the attribution
+m009: KILLED [director-078] The validator rejects fragment for the attribution
+m010: KILLED [director-078] The validator rejects invalid URL text for the attribution
+m011: KILLED [director-078] The validator returns without an error for a safe link for the attribution
+m012: KILLED [director-078] The validator rejects blank text for the attribution
+m013: KILLED [director-078] The validator rejects blank license for the attribution
+m014: KILLED [director-079] The validator rejects a fraction for the byteLength field
+m015: KILLED [director-079] The validator rejects invalid type for the digest
+m016: KILLED [director-079] The validator rejects invalid alphabet for the digest
+m017: KILLED [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+m018: KILLED [director-080] The validator rejects reversed west for the image
+m019: KILLED [director-080] The validator rejects reversed south for the image
+m020: KILLED [director-080] The validator rejects short bounds for the image
+m021: KILLED [director-080] The validator rejects height and reference for the image
+m022: KILLED [director-081] The validator rejects an unknown anchor for the media
+m023: KILLED [director-082] The validator rejects duplicate data pack IDs for the scene
+m024: KILLED [director-082] The validator rejects duplicate data pack IDs for the shot
+m025: KILLED [director-082] The validator rejects unknown data pack IDs for the shot
+m026: KILLED [director-082] The validator returns without an error for absent data packs and anchors for the scene
+m027: KILLED [director-083] The decoder rejects invalid type for the collection
+m028: KILLED [director-083] The decoder rejects invalid array for the collection
+m029: KILLED [director-083] The decoder rejects more than 2000 features for the collection
+m030: KILLED [director-084] The decoder rejects type for the feature
+m031: KILLED [director-084] The decoder rejects ID type for the feature
+m032: KILLED [director-084] The decoder rejects blank ID for the feature
+m033: KILLED [director-084] The decoder rejects long ID for the feature
+m034: KILLED [director-084] The decoder rejects duplicate ID for the feature
+m035: KILLED [director-085] The decoder rejects invalid array for the position
+m036: KILLED [director-085] The decoder rejects invalid length for the position
+m037: KILLED [director-085] The decoder rejects a coordinate that is not finite for the position
+m038: KILLED [director-085] The decoder rejects invalid longitude for the position
+m039: KILLED [director-085] The decoder rejects invalid latitude for the position
+m040: KILLED [director-085] The decoder rejects a height below the limit for the position
+m041: KILLED [director-085] The decoder rejects a height above the limit for the position
+m042: KILLED [director-085] The decoder rejects excess for the position total
+m043: KILLED [director-085] The decoder returns zero for absent height for the position
+m044: KILLED [director-085] The decoder returns the height in the data for the position
+m045: KILLED [director-086] The decoder rejects invalid array for the line
+m046: KILLED [director-086] The decoder rejects invalid minimum for the line
+m047: KILLED [director-086] The decoder rejects a ring with fewer than four points for the ring
+m048: KILLED [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+m049: KILLED [director-086] The decoder rejects unclosed field 0 for the ring
+m050: KILLED [director-086] The decoder rejects unclosed field 1 for the ring
+m051: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m052: KILLED [director-087] The decoder rejects invalid type for the geometry
+m053: KILLED [director-087] The decoder rejects invalid array for the geometry
+m054: KILLED [director-087] The decoder rejects an empty polygon for the geometry
+m055: KILLED [director-087] The decoder rejects more than 128 rings for the geometry
+m056: KILLED [director-087] The decoder returns a closed polygon for the geometry
+m057: KILLED [director-087] The decoder removes properties for the geometry
+m058: KILLED [director-088] The session reports idle state after creation
 m059: KILLED [director-088] The session rejects a value that is not a data pack list
 m060: KILLED [director-088] The session rejects more than eight data packs
 m061: KILLED [director-088] The session rejects destroyed state
 m062: KILLED [director-088] The session rejects cancelled state
 m063: KILLED [director-089] The session disposes handles in reverse order
-m064: KILLED [director-089] The session gives copied state
-m065: KILLED [director-090] The cancelled session disposes late resources
-m066: KILLED [director-090] The session accepts a null late handle
-m067: KILLED [director-090] The session destroys work that is not complete
-m068: KILLED [director-091] The replacement keeps its resources
+m064: KILLED [director-089] The session reports ready after the caller changes a state copy
+m065: KILLED [director-090] The session disposes late resources for the cancelled session
+m066: KILLED [director-090] The session returns false for cancelled work with a null late handle
+m067: KILLED [director-090] The session returns false for work that destruction stops
+m068: KILLED [director-091] The session keeps its resources for the replacement
 m069: KILLED [director-092] The session reports a stable source error
-m070: KILLED [director-092] The deadline rejects stalled work
-m071: KILLED [director-092] The data pack session reads the byteLength field once without a registered source
-m072: KILLED [director-092] The absent renderer does not call its source
+m070: KILLED [director-092] The session rejects stalled work for the deadline
+m071: KILLED [director-092] The session reads the byteLength field once without a registered source for the data pack session
+m072: KILLED [director-092] The session rejects an absent renderer without a source call
 m073: KILLED [director-093] The session rejects bytes that are not a Uint8Array
 m074: KILLED [director-093] The session rejects an empty asset
 m075: KILLED [director-093] The session rejects an asset above the byte limit
 m076: KILLED [director-093] The session rejects a wrong byteLength field
 m077: KILLED [director-093] The session rejects bytes above the total limit
 m078: KILLED [director-093] The session rejects a wrong digest
-m079: KILLED [director-093] The session checks exact bytes and digest
+m079: KILLED [director-093] The session returns true for exact bytes and digest
 m080: KILLED [director-089] The session rejects a falsy handle with inherited disposal
 m081: KILLED [director-089] The session rejects a handle without a dispose function
-m082: KILLED [director-094] The directory rejects protocol
-m083: KILLED [director-094] The directory rejects username
-m084: KILLED [director-094] The directory rejects password
-m085: KILLED [director-094] The directory rejects query
-m086: KILLED [director-094] The directory rejects fragment
-m087: KILLED [director-094] The directory rejects an address with no final slash
-m088: KILLED [director-095] The asset request sets its fixed options
-m089: KILLED [director-096] The stream joins distinct chunks
-m090: KILLED [director-096] The stream rejects excess header bytes
-m091: KILLED [director-096] The stream rejects excess chunk bytes
+m082: KILLED [director-094] The factory rejects protocol
+m083: KILLED [director-094] The factory rejects username
+m084: KILLED [director-094] The factory rejects password
+m085: KILLED [director-094] The factory rejects query
+m086: KILLED [director-094] The factory rejects fragment
+m087: KILLED [director-094] The factory rejects an address with no final slash
+m088: KILLED [director-095] The source sets its fixed options for the asset request
+m089: KILLED [director-096] The source joins distinct stream chunks
+m090: KILLED [director-096] The source rejects excess header bytes for the stream
+m091: KILLED [director-096] The source rejects excess chunk bytes for the stream
 m092: KILLED [director-096] The source returns an empty media type when the header is absent
 m093: KILLED [director-096] The source returns lowercase media type text without parameters
 m094: KILLED [director-097] The source rejects an absent stream
-m095: KILLED [director-097] The source accepts failed body cancellation
+m095: KILLED [director-097] The source rejects the asset request after failed body cancellation
 m096: KILLED [director-097] The source rejects a failed response without a body
-m097: KILLED [director-097] The stream releases its lock after an error
-m098: KILLED [director-097] The source checks its signal between chunks
-m099: KILLED [director-098] The bundle helpers reject nontext input
-m100: KILLED [director-098] The bundle helpers reject invalid JSON
-m101: KILLED [director-098] The bundle helpers accept plain project JSON
-m102: KILLED [director-098] The bundle helpers reject excess characters
-m103: KILLED [director-098] The bundle helpers reject excess UTF8 bytes
-m104: KILLED [director-099] The base64 rejects a custom text object
-m105: KILLED [director-099] The base64 rejects invalid empty
-m106: KILLED [director-099] The base64 rejects invalid length
-m107: KILLED [director-099] The base64 rejects invalid alignment
-m108: KILLED [director-099] The base64 rejects invalid alphabet
-m109: KILLED [director-099] The base64 rejects invalid padding
-m110: KILLED [director-099] The bundle rejects duplicate paths
-m111: KILLED [director-099] The bundle rejects an unsupported media type
-m112: KILLED [director-099] The bundle rejects unsupported version
-m113: KILLED [director-100] The bundle rejects an absent asset
-m114: KILLED [director-100] The bundle rejects a wrong byteLength field
-m115: KILLED [director-100] The bundle rejects a pack digest that differs from its asset
-m116: KILLED [director-100] The bundle rejects an asset digest that differs from its bytes
-m117: KILLED [director-100] The bundle rejects unused assets
-m118: KILLED [director-100] The bundle rejects external data pack sources
+m097: KILLED [director-097] The source releases the reader lock after a stream error
+m098: KILLED [director-097] The source checks its signal between chunks and rejects the call
+m099: KILLED [director-098] The import rejects nontext input
+m100: KILLED [director-098] The import rejects invalid JSON
+m101: KILLED [director-098] The import accepts plain project JSON and returns the project
+m102: KILLED [director-098] The import rejects excess characters
+m103: KILLED [director-098] The import rejects excess UTF8 bytes
+m104: KILLED [director-099] The import rejects a custom text object for the base64
+m105: KILLED [director-099] The import rejects invalid empty for the base64
+m106: KILLED [director-099] The import rejects invalid length for the base64
+m107: KILLED [director-099] The import rejects invalid alignment for the base64
+m108: KILLED [director-099] The import rejects invalid alphabet for the base64
+m109: KILLED [director-099] The import rejects invalid padding for the base64
+m110: KILLED [director-099] The import rejects duplicate paths
+m111: KILLED [director-099] The import rejects an unsupported media type
+m112: KILLED [director-099] The import rejects unsupported version
+m113: KILLED [director-100] The import rejects an absent asset
+m114: KILLED [director-100] The import rejects a wrong byteLength field
+m115: KILLED [director-100] The import rejects a pack digest that differs from its asset
+m116: KILLED [director-100] The import rejects an asset digest that differs from its bytes
+m117: KILLED [director-100] The import rejects unused assets
+m118: KILLED [director-100] The import rejects external data pack sources
 m119: KILLED [director-101] The export writes exact bundle metadata
 m120: KILLED [director-102] The export rejects bytes that are not a Uint8Array
 m121: KILLED [director-102] The export rejects an empty asset
@@ -13361,9 +13361,9 @@ m122: KILLED [director-102] The export rejects an asset above the byte limit
 m123: KILLED [director-102] The export rejects absent assets
 m124: KILLED [director-102] The export rejects declared byteLength
 m125: KILLED [director-102] The export rejects declared digest
-m126: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
+m126: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
 m127: KILLED [director-102] The export rejects excess asset total
-m128: KILLED [director-103] The export reuses a shared asset
+m128: KILLED [director-103] The export reuses a shared asset and returns bundle text
 m129: KILLED [director-103] The export rejects shared byteLength
 m130: KILLED [director-103] The export rejects shared digest
 m131: KILLED [director-104] The store copies the asset map
@@ -13371,165 +13371,165 @@ m132: KILLED [director-104] The store clears stored bytes
 m133: KILLED [director-105] The store rejects absent bytes
 m134: KILLED [director-105] The store rejects bytes above the caller limit
 m135: KILLED [director-105] The store returns an independent byte copy
-m136: KILLED [director-106] The share helpers accept an absent filename
+m136: KILLED [director-106] The share helpers return the project for an absent filename
 m137: KILLED [director-106] The share helpers reject the ordinary file limit
-m138: KILLED [director-106] The share helpers give bundles the larger file limit
+m138: KILLED [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
 m139: KILLED [director-107] The helper resolves without a signal
 m140: KILLED [director-107] The helper rejects an early signal
 m141: KILLED [director-107] The helper resolves with an active signal
 m142: KILLED [director-107] The helper rejects a work error
-m143: KILLED [director-107] The helper checks signal state when the work settles
+m143: KILLED [director-107] The helper checks signal state when the work settles and rejects the call
 m144: KILLED [director-107] The helper cancels work that is not complete
 m145: KILLED [director-108] The preview reports exact totals and attribution
-m146: KILLED [director-108] The preview uses the scene ID without a title
+m146: KILLED [director-108] The preview reports the scene ID when the title is absent
 m147: KILLED [director-109] The preview reports included bundle bytes
 m148: KILLED [director-109] The preview reports absent bundle bytes
 m149: KILLED [director-109] The preview reports a configured source
 m150: KILLED [director-109] The preview reports an unavailable source
 m151: KILLED [director-110] The preview lists distinct absent layers
-m152: KILLED [director-110] The preview detects applied shot packs
-m153: KILLED [director-110] The preview detects the source pack ID of a shot
-m154: KILLED [director-110] The preview detects no external content
-m155: KILLED [director-080] The image accepts its bounds field
-m156: KILLED [director-080] The image accepts its height field
-m157: KILLED [director-080] The image accepts its altitudeReference field
-m158: KILLED [director-081] The media accepts its anchorId field
-m159: KILLED [director-077] The geojson accepts its altitudeReference field
-m160: KILLED [director-080] The image bounds 0 rejects low excess
-m161: KILLED [director-080] The image bounds 0 rejects high excess
-m162: KILLED [director-080] The image bounds 1 rejects low excess
-m163: KILLED [director-080] The image bounds 1 rejects high excess
-m164: KILLED [director-080] The image bounds 2 rejects low excess
-m165: KILLED [director-080] The image bounds 2 rejects high excess
-m166: KILLED [director-080] The image bounds 3 rejects low excess
-m167: KILLED [director-080] The image bounds 3 rejects high excess
-m168: KILLED [director-080] The image height checks both limits
-m169: KILLED [director-082] The scene uses supplied anchors
-m170: KILLED [director-082] The scene uses absent anchor defaults
-m171: KILLED [director-085] The position accepts both geographic edges
+m152: KILLED [director-110] The preview reports external content for applied shot packs
+m153: KILLED [director-110] The preview reports external content for a shot with a source pack ID
+m154: KILLED [director-110] The preview reports no external content without source packs
+m155: KILLED [director-080] The validator returns without an error for its bounds field for the image
+m156: KILLED [director-080] The validator returns without an error for its height field for the image
+m157: KILLED [director-080] The validator returns without an error for its altitudeReference field for the image
+m158: KILLED [director-081] The validator returns without an error for its anchorId field for the media
+m159: KILLED [director-077] The validator returns without an error for a GeoJSON altitudeReference field
+m160: KILLED [director-080] The validator rejects low excess for image bounds field 0
+m161: KILLED [director-080] The validator rejects high excess for image bounds field 0
+m162: KILLED [director-080] The validator rejects low excess for image bounds field 1
+m163: KILLED [director-080] The validator rejects high excess for image bounds field 1
+m164: KILLED [director-080] The validator rejects low excess for image bounds field 2
+m165: KILLED [director-080] The validator rejects high excess for image bounds field 2
+m166: KILLED [director-080] The validator rejects low excess for image bounds field 3
+m167: KILLED [director-080] The validator rejects high excess for image bounds field 3
+m168: KILLED [director-080] The validator rejects image height outside both limits
+m169: KILLED [director-082] The validator uses supplied anchors for the scene and returns without an error
+m170: KILLED [director-082] The validator uses absent anchor defaults for the scene and returns without an error
+m171: KILLED [director-085] The decoder accepts both geographic edges for the position and returns coordinates
 m172: SURVIVED
-m173: KILLED [director-088] The session state uses its idle default
-m174: KILLED [director-088] The session state uses its zero default
-m175: KILLED [director-089] The session state uses its active total
-m176: KILLED [director-093] The session uses its default byte budget
-m177: KILLED [director-093] The session accepts absent declared size
-m178: KILLED [director-090] The session checks signal state without an event
+m173: KILLED [director-088] The session reports idle after creation
+m174: KILLED [director-088] The session reports zero handles after creation
+m175: KILLED [director-089] The session reports one active handle
+m176: KILLED [director-093] The session calls the source with a default limit of 8388608 bytes
+m177: KILLED [director-093] The session returns true without a declared size
+m178: KILLED [director-090] The session returns false for a cancelled signal without an event
 m179: KILLED [director-090] The session checks destroyed state after it reads the signal
-m180: KILLED [director-090] The session checks a cleared load call without signal state
+m180: KILLED [director-090] The session returns false for a cleared load call without a signal state access
 m181: KILLED [director-090] The session guard rejects a detached resource
 m182: KILLED [director-090] The session disposes the handle before it adds the handle to its list
-m183: KILLED [director-092] The session settles a source error before its deadline
+m183: KILLED [director-092] The session settles a source error before its deadline and reports idle
 m184: KILLED [director-097] The source rejects early cancellation
-m185: KILLED [director-094] The directory accepts HTTP and HTTPS
-m186: KILLED [director-098] The share character guard comes before byte conversion
-m187: KILLED [director-101] The export accepts scenes without data packs
-m188: KILLED [director-101] The export keeps a supplied data pack list
-m189: KILLED [director-102] The export accepts absent integrity fields
-m190: KILLED [director-102] The export accepts an absent digest
-m191: KILLED [director-103] The shared export accepts absent byte declarations
-m192: KILLED [director-103] The shared export accepts an absent digest
-m193: KILLED [director-099] The base64 accepts bytes without padding
-m194: KILLED [director-108] The preview accepts absent data pack lists
-m195: KILLED [director-108] The preview uses supplied data pack lists
-m196: KILLED [director-108] The preview keeps a supplied scene title
-m197: KILLED [director-109] The preview distinguishes bundle sources
-m198: KILLED [director-110] The preview accepts absent shot layers
-m199: KILLED [director-110] The preview uses supplied shot layers
-m200: KILLED [director-105] The store checks its default byte budget
-m201: KILLED [director-092] The absent renderer does not call its source
-m202: KILLED [director-099] The base64 rejects a custom text object
-m203: KILLED [director-103] The export key uses the registered source name
-m204: KILLED [director-103] The export key uses path
-m205: KILLED [director-110] The preview detects each layer key
-m206: KILLED [director-108] The preview totals include every asset
-m207: KILLED [director-095] The asset request sets its credentials option
-m208: KILLED [director-095] The asset request sets its redirect option
-m209: KILLED [director-095] The asset request sets its referrerPolicy option
-m210: KILLED [director-095] The asset request sets its cache option
-m211: KILLED [director-085] The position rejects field 0 that is not finite
-m212: KILLED [director-085] The position rejects field 1 that is not finite
-m213: KILLED [director-085] The position rejects field 2 that is not finite
-m214: KILLED [director-096] The source checks its default byte budget
-m215: KILLED [director-077] The manifest accepts the id field of a data pack
-m216: KILLED [director-077] The manifest accepts the version field of a data pack
-m217: KILLED [director-077] The manifest accepts the format field of a data pack
-m218: KILLED [director-077] The manifest accepts the source field of a data pack
-m219: KILLED [director-077] The manifest accepts the attribution field of a data pack
-m220: KILLED [director-077] The manifest accepts the placement field of a data pack
-m221: KILLED [director-079] The manifest accepts the byteLength field of a data pack
-m222: KILLED [director-079] The manifest accepts the sha256 field of a data pack
-m223: KILLED [director-077] The manifest accepts its source name field
-m224: KILLED [director-077] The manifest accepts its source path field
-m225: KILLED [director-078] The manifest accepts its attribution text field
-m226: KILLED [director-078] The manifest accepts its attribution license field
-m227: KILLED [director-078] The manifest accepts its attribution url field
-m228: KILLED [director-100] The bundle checks its second asset reference
-m229: KILLED [director-100] The bundle checks its second asset digest
-m230: KILLED [director-103] The export accepts equal shared integrity
+m185: KILLED [director-094] The factory returns a source for HTTP and HTTPS directories
+m186: KILLED [director-098] The import rejects 52428801 characters before byte conversion
+m187: KILLED [director-101] The export accepts scenes without data packs and returns bundle text
+m188: KILLED [director-101] The export returns one asset for a supplied data pack list
+m189: KILLED [director-102] The export accepts absent integrity fields and returns bundle text
+m190: KILLED [director-102] The export accepts an absent digest and returns bundle text
+m191: KILLED [director-103] The export accepts absent byte declarations for the shared export and returns bundle text
+m192: KILLED [director-103] The export accepts an absent digest for the shared export and returns bundle text
+m193: KILLED [director-099] The import accepts bytes without padding for the base64 and returns assets
+m194: KILLED [director-108] The preview reports no packs when data pack lists are absent
+m195: KILLED [director-108] The preview reports one pack from the supplied data pack list
+m196: KILLED [director-108] The preview reports Example for the supplied scene title
+m197: KILLED [director-109] The preview reports a configured source for a supplied source ID
+m198: KILLED [director-110] The preview reports no absent layer when a shot has no layers
+m199: KILLED [director-110] The preview reports traffic as absent without layer IDs
+m200: KILLED [director-105] The store rejects 8388609 bytes without a caller limit
+m201: KILLED [director-092] The session rejects an absent renderer without a source call
+m202: KILLED [director-099] The import rejects a custom text object for the base64
+m203: KILLED [director-103] The export key uses the registered source name and returns bundle text
+m204: KILLED [director-103] The export key uses path and returns bundle text
+m205: KILLED [director-110] The preview reports ships as absent when only traffic is configured
+m206: KILLED [director-108] The preview reports three bytes for both assets
+m207: KILLED [director-095] The source sets its credentials option for the asset request
+m208: KILLED [director-095] The source sets its redirect option for the asset request
+m209: KILLED [director-095] The source sets its referrerPolicy option for the asset request
+m210: KILLED [director-095] The source sets its cache option for the asset request
+m211: KILLED [director-085] The decoder rejects field 0 that is not finite for the position
+m212: KILLED [director-085] The decoder rejects field 1 that is not finite for the position
+m213: KILLED [director-085] The decoder rejects field 2 that is not finite for the position
+m214: KILLED [director-096] The source rejects 8388609 bytes without a caller limit
+m215: KILLED [director-077] The validator returns without an error for the id field of a data pack
+m216: KILLED [director-077] The validator returns without an error for the version field of a data pack
+m217: KILLED [director-077] The validator returns without an error for the format field of a data pack
+m218: KILLED [director-077] The validator returns without an error for the source field of a data pack
+m219: KILLED [director-077] The validator returns without an error for the attribution field of a data pack
+m220: KILLED [director-077] The validator returns without an error for the placement field of a data pack
+m221: KILLED [director-079] The validator returns without an error for the byteLength field of a data pack
+m222: KILLED [director-079] The validator returns without an error for the sha256 field of a data pack
+m223: KILLED [director-077] The validator returns without an error for its source name field
+m224: KILLED [director-077] The validator returns without an error for its source path field
+m225: KILLED [director-078] The validator returns without an error for its attribution text field
+m226: KILLED [director-078] The validator returns without an error for its attribution license field
+m227: KILLED [director-078] The validator returns without an error for its attribution url field
+m228: KILLED [director-100] The import checks its second asset reference and rejects the call
+m229: KILLED [director-100] The import checks its second asset digest and rejects the call
+m230: KILLED [director-103] The export accepts equal shared integrity and returns bundle text
 m231: KILLED [director-102] The export rejects absent asset bytes
-m232: KILLED [director-092] The session settles an early internal signal
-m233: KILLED [director-093] The session gives anchors to its renderer
-m234: KILLED [director-106] The share helpers check a signal after they read text
-m235: KILLED [director-102] The export checks its encoded text budget
+m232: KILLED [director-092] The session settles an early internal signal and reports idle
+m233: KILLED [director-093] The session calls the renderer with the anchors and returns true
+m234: KILLED [director-106] The share helpers call throwIfAborted three times and return the project
+m235: KILLED [director-102] The export rejects encoded bundle text above 52428800 bytes
 m236: KILLED [director-102] The export keeps its total after an asset without a byte length
-m237: KILLED [director-089] The session state uses its active status
-m238: KILLED [director-080] The placement selects the image fields
-m239: KILLED [director-081] The placement selects the media fields
-m240: KILLED [director-089] The session loads its geojson format
-m241: KILLED [director-089] The session loads its image format
-m242: KILLED [director-089] The session loads its media format
+m237: KILLED [director-089] The session reports ready after asset work
+m238: KILLED [director-080] The validator rejects media fields in image placement for the placement
+m239: KILLED [director-081] The validator rejects image fields in media placement for the placement
+m240: KILLED [director-089] The session calls the GeoJSON renderer once and returns true
+m241: KILLED [director-089] The session calls the image renderer once and returns true
+m242: KILLED [director-089] The session calls the media renderer once and returns true
 m243: KILLED [director-097] The source stops between stream chunks
-m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and cred
+m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials
 m245: KILLED [director-080] The manifest checks given image bounds and media anchor references
-m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects unsaf
+m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 m247: KILLED [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints
 m248: KILLED [director-089] The data pack session removes resources and cancels the transport on Stop
 m249: KILLED [director-091] The data pack session replaces source work and ignores its late bytes
-m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps t
-m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the re
-m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier
-m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects
-m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancel
-m255: KILLED [director-101] The selected scene bundle copies bytes and attribution and keeps the project without
-m256: KILLED [director-099] The bundle rejects invalid bytes, unknown fields, traversal, duplicates, absent asset
-m257: KILLED [director-102] The bundle checks asset limits and declared integrity before export
-m258: KILLED [director-103] The data packs with the same path share one asset and reject integrity values that di
-m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets witho
-m260: KILLED [director-104] The bundle byte store removes old data after replacement and uses no network source
-m261: KILLED [director-106] The share helpers reject excess file bytes before text access and cancel a stalled pr
-m262: KILLED [director-107] The cancelled bundle export stops before the next asset and returns no partial output
-m263: KILLED [director-101] The bundle accepts long valid source asset names
-m264: KILLED [director-077] The manifest accepts geojson
-m265: KILLED [director-077] The manifest accepts image
-m266: KILLED [director-077] The manifest accepts media
-m267: KILLED [director-080] The image rejects bounds field 0
-m268: KILLED [director-080] The image rejects bounds field 1
-m269: KILLED [director-080] The image rejects bounds field 2
-m270: KILLED [director-080] The image rejects bounds field 3
-m271: KILLED [director-092] The session uses its supplied deadline
-m272: KILLED [director-092] The session uses its default deadline
+m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement
+m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result
+m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources
+m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
+m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal
+m255: KILLED [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
+m256: KILLED [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+m257: KILLED [director-102] The export rejects excess bytes, wrong integrity and absent assets
+m258: KILLED [director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
+m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+m260: KILLED [director-104] The store removes old data after replacement and uses no network source for the import byte store
+m261: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
+m262: KILLED [director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
+m263: KILLED [director-101] The export returns a bundle for a source path of 1024 characters
+m264: KILLED [director-077] The validator returns without an error for geojson
+m265: KILLED [director-077] The validator returns without an error for image
+m266: KILLED [director-077] The validator returns without an error for media
+m267: KILLED [director-080] The validator rejects bounds field 0 for the image
+m268: KILLED [director-080] The validator rejects bounds field 1 for the image
+m269: KILLED [director-080] The validator rejects bounds field 2 for the image
+m270: KILLED [director-080] The validator rejects bounds field 3 for the image
+m271: KILLED [director-092] The session rejects stalled work at the 19 ms deadline
+m272: KILLED [director-092] The session rejects stalled work at the default 15000 ms deadline
 m273: KILLED [director-092] The session removes resources after a later error
-m274: KILLED [director-099] The bundle accepts the application/json media type
-m275: KILLED [director-099] The bundle accepts the application/geo+json media type
-m276: KILLED [director-099] The bundle accepts the image/png media type
-m277: KILLED [director-099] The bundle accepts the video/mp4 media type
-m278: KILLED [director-099] The bundle accepts the video/webm media type
-m279: KILLED [director-099] The bundle accepts the audio/mpeg media type
-m280: KILLED [director-099] The bundle accepts the audio/ogg media type
-m281: KILLED [director-099] The bundle accepts the audio/wav media type
-m282: KILLED [director-099] The bundle accepts the audio/webm media type
+m274: KILLED [director-099] The import accepts the application/json media type and returns assets
+m275: KILLED [director-099] The import accepts the application/geo+json media type and returns assets
+m276: KILLED [director-099] The import accepts the image/png media type and returns assets
+m277: KILLED [director-099] The import accepts the video/mp4 media type and returns assets
+m278: KILLED [director-099] The import accepts the video/webm media type and returns assets
+m279: KILLED [director-099] The import accepts the audio/mpeg media type and returns assets
+m280: KILLED [director-099] The import accepts the audio/ogg media type and returns assets
+m281: KILLED [director-099] The import accepts the audio/wav media type and returns assets
+m282: KILLED [director-099] The import accepts the audio/webm media type and returns assets
 m283: KILLED [director-089] The session rejects a falsy handle with inherited disposal
-m284: KILLED [director-088] The destroyed session does not read the caller signal state
-m285: KILLED [director-083] The collection accepts its exact feature limit
-m286: KILLED [director-084] The feature ID accepts its exact text limit
-m287: KILLED [director-085] The position accepts its exact total limit
-m288: KILLED [director-087] The polygon accepts its exact ring limit
-m289: KILLED [director-076] The asset path checks its text limit
-m290: KILLED [director-102] The export accepts its exact asset total
+m284: KILLED [director-088] The session returns false without a caller signal access after destruction
+m285: KILLED [director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
+m286: KILLED [director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
+m287: KILLED [director-085] The decoder accepts its exact total limit for the position and returns coordinates
+m288: KILLED [director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
+m289: KILLED [director-076] The validator rejects a path above its text limit for the asset path
+m290: KILLED [director-102] The export accepts its exact asset total and returns bundle text
 m291: KILLED [director-089] The session keeps every data pack handle
-m292: KILLED [director-095] The asset request sets its signal option
-m293: KILLED [director-096] The stream accepts its exact byte limit
-m294: KILLED [director-096] The stream accepts its exact byte limit
+m292: KILLED [director-095] The source sets its signal option for the asset request
+m293: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
+m294: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
 m295: KILLED [director-092] The session rejects a falsy custom source
 m296: KILLED [director-101] The export writes exact bundle metadata
 m297: KILLED [director-101] The export writes exact bundle metadata
@@ -13538,36 +13538,36 @@ m299: KILLED [director-101] The export writes exact bundle metadata
 m300: KILLED [director-101] The export writes exact bundle metadata
 m301: KILLED [director-101] The export writes exact bundle metadata
 m302: KILLED [director-105] The store returns an independent byte copy
-m303: KILLED [director-079] The digest rejects 63 characters
-m304: KILLED [director-079] The digest rejects 65 characters
-m305: KILLED [director-079] The digest rejects a prefix
-m306: KILLED [director-079] The digest rejects a suffix
-m307: KILLED [director-079] The digest rejects uppercase text
-m308: KILLED [director-080] The image rejects equal longitude edges
-m309: KILLED [director-080] The image rejects equal latitude edges
-m310: KILLED [director-080] The image accepts all geographic limits
-m311: KILLED [director-080] The image accepts all geographic limits
-m312: KILLED [director-080] The image accepts all geographic limits
-m313: KILLED [director-080] The image accepts all geographic limits
-m314: KILLED [director-082] The scene ignores a data pack list from its parent
-m315: KILLED [director-080] The image rejects text for each geographic field
-m316: KILLED [director-080] The image rejects text for each geographic field
-m317: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m318: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m319: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m320: KILLED [director-076] The asset path accepts 1024 characters and rejects 1025
-m321: KILLED [director-076] The asset path rejects URL syntax with a stable message
-m322: KILLED [director-088] The session accepts eight data packs
-m323: KILLED [director-093] The session accepts the asset byte limit
-m324: KILLED [director-093] The session accepts the total byte limit
-m325: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
-m326: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
-m327: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
+m303: KILLED [director-079] The validator rejects 63 characters for the digest
+m304: KILLED [director-079] The validator rejects 65 characters for the digest
+m305: KILLED [director-079] The validator rejects a prefix for the digest
+m306: KILLED [director-079] The validator rejects a suffix for the digest
+m307: KILLED [director-079] The validator rejects uppercase text for the digest
+m308: KILLED [director-080] The validator rejects equal longitude edges for the image
+m309: KILLED [director-080] The validator rejects equal latitude edges for the image
+m310: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m311: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m312: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m313: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m314: KILLED [director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
+m315: KILLED [director-080] The validator rejects text for each geographic field for the image
+m316: KILLED [director-080] The validator rejects text for each geographic field for the image
+m317: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m318: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m319: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m320: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
+m321: KILLED [director-076] The validator rejects URL syntax with a stable message for the asset path
+m322: KILLED [director-088] The session returns true for eight data packs
+m323: KILLED [director-093] The session returns true at the asset byte limit
+m324: KILLED [director-093] The session returns true at the total byte limit
+m325: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m326: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m327: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
 m328: KILLED [director-089] The session removes its deadline after success
 m329: KILLED [director-089] The session removes its deadline after clear
-m330: KILLED [director-088] The session checks every declaration before the source call
-m331: KILLED [director-089] The session destroys each ready resource
-m332: KILLED [director-088] The session checks every declaration before the source call
+m330: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m331: KILLED [director-089] The session disposes both ready handles in reverse order and reports idle
+m332: KILLED [director-088] The session checks every declaration before the source call and rejects the call
 m333: KILLED [director-083] The decoder rejects invalid UTF8 bytes
 m334: KILLED [director-083] The decoder rejects null
 m335: KILLED [director-084] The decoder rejects a null feature
@@ -13575,113 +13575,113 @@ m336: KILLED [director-084] The decoder rejects a null feature
 m337: KILLED [director-087] The decoder rejects absent geometry
 m338: KILLED [director-087] The decoder rejects absent geometry
 m339: KILLED [director-087] The decoder rejects absent geometry
-m340: KILLED [director-095] The directory source uses the default fetch function
-m341: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
-m342: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
-m343: KILLED [director-099] The base64 accepts its length limit and rejects the next aligned length
+m340: KILLED [director-095] The source uses the default fetch function and returns bytes
+m341: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m342: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m343: KILLED [director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
 m344: KILLED [director-106] The share helpers accept the project file limit and reject one more byte
 m345: KILLED [director-106] The share helpers accept the bundle file limit and reject one more byte
 m346: KILLED [director-102] The export rejects an unsupported media type
 m347: KILLED [director-099] The import rejects 65 different asset paths
-m348: KILLED [director-099] The import accepts the total byte limit and rejects one more byte
-m349: KILLED [director-099] The import accepts the total byte limit and rejects one more byte
+m348: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+m349: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
 m350: KILLED [director-105] The store rejects a cancelled source call
-m351: KILLED [director-107] The bundle stops import before an asset
-m352: KILLED [director-107] The bundle stops import after a digest
-m353: KILLED [director-107] The bundle stops export before an asset
-m354: KILLED [director-107] The bundle stops export after asset bytes
-m355: KILLED [director-107] The bundle stops export after a digest
+m351: KILLED [director-107] The bundle helpers stop import before an asset
+m352: KILLED [director-107] The bundle helpers stop import after a digest
+m353: KILLED [director-107] The bundle helpers stop export before an asset
+m354: KILLED [director-107] The bundle helpers stop export after asset bytes
+m355: KILLED [director-107] The bundle helpers stop export after a digest
 m356: KILLED [director-108] The preview counts shots apart from scenes
 m357: KILLED [director-108] The preview counts shots apart from scenes
 m358: KILLED [director-110] The preview lists distinct absent layers
-m359: KILLED [director-077] The manifest accepts 256 characters for its ID and rejects 257
-m360: KILLED [director-077] The manifest accepts 256 characters for its ID and rejects 257
-m361: KILLED [director-077] The manifest accepts 256 characters for its source name and rejects 257
-m362: KILLED [director-077] The manifest accepts 256 characters for its source name and rejects 257
-m363: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m364: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m365: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m366: KILLED [director-076] The asset path accepts 1024 characters and rejects 1025
+m359: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m360: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m361: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+m362: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+m363: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m364: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m365: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m366: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
 m367: KILLED [director-102] The export rejects excess asset total
-m368: KILLED [director-085] The position rejects negative longitude
-m369: KILLED [director-085] The position rejects negative latitude
-m370: KILLED [director-085] The position accepts the limit for negative longitude
-m371: KILLED [director-085] The position accepts the limit for negative latitude
-m372: KILLED [director-085] The position rejects four coordinates
-m373: KILLED [director-085] The position rejects one coordinate
-m374: KILLED [director-076] The asset path rejects .x
-m375: KILLED [director-076] The asset path rejects x?a=1
-m376: KILLED [director-079] The manifest accepts one byte
-m377: KILLED [director-080] The image rejects bounds outside an array
-m378: KILLED [director-082] The scene rejects nine distinct data packs
-m379: KILLED [director-082] The scene accepts eight distinct data packs
-m380: KILLED [director-089] The data pack session reports its state during asset work
-m381: KILLED [director-096] The directory source accepts its default byte limit
-m382: KILLED [director-098] The bundle helpers accept the character limit
-m383: KILLED [director-098] The bundle helpers accept the multibyte text limit
-m384: KILLED [director-098] The bundle helpers reject an invalid plain project
-m385: KILLED [director-098] The bundle helpers reject a null project
-m386: KILLED [director-099] The bundle helpers reject an extra top-level field
-m387: KILLED [director-099] The bundle helpers reject an invalid bundle project
-m388: KILLED [director-099] The import accepts 64 distinct assets
+m368: KILLED [director-085] The decoder rejects negative longitude for the position
+m369: KILLED [director-085] The decoder rejects negative latitude for the position
+m370: KILLED [director-085] The decoder accepts the limit for negative longitude for the position and returns coordinates
+m371: KILLED [director-085] The decoder accepts the limit for negative latitude for the position and returns coordinates
+m372: KILLED [director-085] The decoder rejects four coordinates for the position
+m373: KILLED [director-085] The decoder rejects one coordinate for the position
+m374: KILLED [director-076] The validator rejects .x for the asset path
+m375: KILLED [director-076] The validator rejects x?a=1 for the asset path
+m376: KILLED [director-079] The validator returns without an error for one byte
+m377: KILLED [director-080] The validator rejects bounds outside an array for the image
+m378: KILLED [director-082] The validator rejects nine distinct data packs for the scene
+m379: KILLED [director-082] The validator returns without an error for eight distinct data packs for the scene
+m380: KILLED [director-089] The session reports its state during asset work for the data pack session
+m381: KILLED [director-096] The source accepts its default byte limit and returns bytes
+m382: KILLED [director-098] The import accepts the character limit and returns the project
+m383: KILLED [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+m384: KILLED [director-098] The import rejects an invalid plain project
+m385: KILLED [director-098] The import rejects a null project
+m386: KILLED [director-099] The import rejects an extra top-level field
+m387: KILLED [director-099] The import rejects an invalid bundle project
+m388: KILLED [director-099] The import accepts 64 distinct assets and returns assets
 m389: SURVIVED
-m390: KILLED [director-101] The resolver receives the data pack and signal
-m391: KILLED [director-101] The resolver receives the data pack and signal
-m392: KILLED [director-102] The export accepts the text byte limit
-m393: KILLED [director-105] The byte store accepts the caller byte limit
-m394: KILLED [director-093] The renderer receives the data pack and scene anchors
-m395: KILLED [director-093] The renderer receives the data pack and scene anchors
-m396: KILLED [director-089] The data pack session removes source listeners after success
-m397: KILLED [director-089] The data pack session removes source listeners after success
-m398: KILLED [director-089] The data pack session removes source listeners after error
-m399: KILLED [director-079] The manifest accepts its byte limit
-m400: KILLED [director-080] The image accepts its minimum height
-m401: KILLED [director-080] The image accepts its maximum height
-m402: KILLED [director-085] The position accepts its minimum height
-m403: KILLED [director-085] The position accepts its maximum height
-m404: KILLED [director-107] The share helpers remove the listener after cancel
-m405: KILLED [director-107] The share helpers remove the listener after success
-m406: KILLED [director-107] The share helpers remove the listener after error
-m407: KILLED [director-107] The share helpers remove the listener after success
+m390: KILLED [director-101] The export calls the resolver with the data pack and signal
+m391: KILLED [director-101] The export calls the resolver with the data pack and signal
+m392: KILLED [director-102] The export accepts the text byte limit and returns bundle text
+m393: KILLED [director-105] The store accepts the caller byte limit for the byte store and returns byte copies
+m394: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+m395: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+m396: KILLED [director-089] The session removes source listeners after success for the data pack session
+m397: KILLED [director-089] The session removes source listeners after success for the data pack session
+m398: KILLED [director-089] The session removes source listeners after error for the data pack session
+m399: KILLED [director-079] The validator returns without an error for its byte limit
+m400: KILLED [director-080] The validator returns without an error for its minimum height for the image
+m401: KILLED [director-080] The validator returns without an error for its maximum height for the image
+m402: KILLED [director-085] The decoder accepts its minimum height for the position and returns coordinates
+m403: KILLED [director-085] The decoder accepts its maximum height for the position and returns coordinates
+m404: KILLED [director-107] The helper removes its listener after cancel
+m405: KILLED [director-107] The helper removes its listener after success
+m406: KILLED [director-107] The helper removes its listener after error
+m407: KILLED [director-107] The helper removes its listener after success
 m408: KILLED [director-101] The export rejects an invalid project
 m409: KILLED [director-107] The import stops before the second digest
 m410: KILLED [director-107] The export stops before the second resolver call
-m411: KILLED [director-082] The manifest rejects a reference in the second shot
-m412: KILLED [director-082] The manifest rejects a reference in the second shot
-m413: KILLED [director-099 director-102] The bundle rejects an SVG media type
-m414: KILLED [director-077] The manifest rejects an unlisted geojsonx format
-m415: KILLED [director-094] The source rejects the file protocol
-m416: KILLED [director-077 director-082] The manifest rejects an invalid second data pack
-m417: KILLED [director-081] The manifest accepts a reference to the second anchor
-m418: KILLED [director-082] The manifest rejects an unknown second reference ID
+m411: KILLED [director-082] The validator rejects a reference in the second shot
+m412: KILLED [director-082] The validator rejects a reference in the second shot
+m413: KILLED [director-099 director-102] The bundle helpers reject an SVG media type during import and export
+m414: KILLED [director-077] The validator rejects an unlisted geojsonx format
+m415: KILLED [director-094] The factory rejects the file protocol
+m416: KILLED [director-077 director-082] The validator rejects an invalid second data pack
+m417: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m418: KILLED [director-082] The validator rejects an unknown second reference ID
 m419: KILLED [director-084] The decoder rejects the second feature
 m420: KILLED [director-085 director-086] The decoder rejects the second line position
 m421: KILLED [director-087] The decoder rejects the second ring
 m422: KILLED [director-088] The session rejects an invalid second data pack before the source call
-m423: KILLED [director-081 director-093] The session accepts a reference to the second anchor
-m424: KILLED [director-080] The image rejects bounds field 3
+m423: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
+m424: KILLED [director-080] The validator rejects bounds field 3 for the image
 m425: KILLED [director-076] The validator rejects an invalid second path segment
 m426: KILLED [director-085] The decoder rejects an invalid second coordinate
-m427: KILLED [director-086] The ring rejects unclosed field 2
+m427: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
 m428: KILLED [director-089] The session keeps every data pack handle
 m429: KILLED [director-092] The session removes resources after a later error
 m430: KILLED [director-096] The source joins chunks of different lengths
-m431: KILLED [director-101] The export includes the asset of the second scene
+m431: KILLED [director-101] The export includes the asset of the second scene and returns bundle text
 m432: KILLED [director-101] The export writes each asset index and filename
-m433: KILLED [director-100] The bundle checks its second asset reference
+m433: KILLED [director-100] The import checks its second asset reference and rejects the call
 m434: KILLED [director-101] The export writes each asset index and filename
 m435: KILLED [director-101] The export writes each asset index and filename
 m436: KILLED [director-104] The store counts the second asset
-m437: KILLED [director-108 director-110] The preview counts the second scene and shot
+m437: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 m438: KILLED [director-108] The preview lists the second data pack
-m439: KILLED [director-108 director-110] The preview counts the second scene and shot
-m440: KILLED [director-108 director-110] The preview counts the second scene and shot
-m441: KILLED [director-108 director-110] The preview counts the second scene and shot
-m442: KILLED [director-108 director-110] The preview counts the second scene and shot
-m443: KILLED [director-108 director-110] The preview counts the second scene and shot
-m444: KILLED [director-108 director-110] The preview counts the second scene and shot
+m439: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m440: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m441: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m442: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m443: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m444: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 m445: KILLED [director-097] The source cancels before it reads the second chunk
-m446: KILLED [director-101] The export encodes the second byte chunk
+m446: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
 m447: KILLED [director-107] The import stops after the second digest
 m448: KILLED [director-107] The export stops after the second digest
 SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
@@ -13881,8 +13881,8 @@ File: src/director/packs/manifest.js
 ### m455 Test
 
 ```text
-[director-077] The manifest rejects script and adapters in the data pack
-Output: KILLED [director-077] The manifest rejects script and adapters in the data pack
+[director-077] The validator rejects the extra fields script and adapters in the data pack
+Output: KILLED [director-077] The validator rejects the extra fields script and adapters in the data pack
 ```
 
 ## m456
@@ -13908,8 +13908,8 @@ File: src/director/packs/manifest.js
 ### m456 Test
 
 ```text
-[director-077] The manifest rejects script and adapters in the source
-Output: KILLED [director-077] The manifest rejects script and adapters in the source
+[director-077] The validator rejects the extra fields script and adapters in the source
+Output: KILLED [director-077] The validator rejects the extra fields script and adapters in the source
 ```
 
 ## m457
@@ -13935,8 +13935,8 @@ File: src/director/packs/manifest.js
 ### m457 Test
 
 ```text
-[director-078] The manifest rejects script and adapters in the attribution
-Output: KILLED [director-078] The manifest rejects script and adapters in the attribution
+[director-078] The validator rejects the extra fields script and adapters in the attribution
+Output: KILLED [director-078] The validator rejects the extra fields script and adapters in the attribution
 ```
 
 ## m458
@@ -13962,8 +13962,8 @@ File: src/director/packs/manifest.js
 ### m458 Test
 
 ```text
-[director-080] The manifest rejects script and adapters in the image placement
-Output: KILLED [director-080] The manifest rejects script and adapters in the image placement
+[director-080] The validator rejects the extra fields script and adapters in the image placement
+Output: KILLED [director-080] The validator rejects the extra fields script and adapters in the image placement
 ```
 
 ## m459
@@ -13989,8 +13989,8 @@ File: src/director/packs/manifest.js
 ### m459 Test
 
 ```text
-[director-081] The manifest rejects script and adapters in the media placement
-Output: KILLED [director-081] The manifest rejects script and adapters in the media placement
+[director-077] The validator rejects the extra fields script and adapters in the media placement
+Output: KILLED [director-077] The validator rejects the extra fields script and adapters in the media placement
 ```
 
 ## m460
@@ -14016,8 +14016,8 @@ File: src/director/packs/manifest.js
 ### m460 Test
 
 ```text
-[director-080] The manifest rejects script and adapters in the geojson placement
-Output: KILLED [director-080] The manifest rejects script and adapters in the geojson placement
+[director-077] The validator rejects the extra fields script and adapters in the GeoJSON placement
+Output: KILLED [director-077] The validator rejects the extra fields script and adapters in the GeoJSON placement
 ```
 
 ## m461
@@ -14043,8 +14043,8 @@ File: src/director/sharing/bundle.js
 ### m461 Test
 
 ```text
-[director-099] The import rejects script and adapters in the top-level object
-Output: KILLED [director-099] The import rejects script and adapters in the top-level object
+[director-099] The import rejects the extra fields script and adapters in the top-level object
+Output: KILLED [director-099] The import rejects the extra fields script and adapters in the top-level object
 ```
 
 ## m462
@@ -14070,8 +14070,8 @@ File: src/director/sharing/bundle.js
 ### m462 Test
 
 ```text
-[director-099] The import rejects script and adapters in the asset
-Output: KILLED [director-099] The import rejects script and adapters in the asset
+[director-099] The import rejects the extra fields script and adapters in the asset
+Output: KILLED [director-099] The import rejects the extra fields script and adapters in the asset
 ```
 
 ## m463
@@ -14213,8 +14213,8 @@ new Set(layerIds.slice(0, 1))
 ### m467 Test
 
 ```text
-[director-110] The preview accepts both configured layer IDs
-Output: KILLED [director-110] The preview accepts both configured layer IDs
+[director-110] The preview reports no absent layer when both layer IDs are configured
+Output: KILLED [director-110] The preview reports no absent layer when both layer IDs are configured
 ```
 
 ## m468
@@ -14240,8 +14240,8 @@ new Set(sourceIds.slice(0, 1))
 ### m468 Test
 
 ```text
-[director-109] The preview accepts both configured source IDs
-Output: KILLED [director-109] The preview accepts both configured source IDs
+[director-109] The preview reports both configured sources as configured
+Output: KILLED [director-109] The preview reports both configured sources as configured
 ```
 
 ## m469
@@ -14267,8 +14267,8 @@ new Set(ids.slice(0, 1)).size
 ### m469 Test
 
 ```text
-[director-082] The shot accepts eight references and rejects nine references
-Output: KILLED [director-082] The shot accepts eight references and rejects nine references
+[director-082] The validator returns without an error for eight references and rejects nine references for the shot
+Output: KILLED [director-082] The validator returns without an error for eight references and rejects nine references for the shot
 ```
 
 ## m470
@@ -14294,8 +14294,8 @@ new Set((scene.anchors || []).map((a) => a.id).slice(0, 1))
 ### m470 Test
 
 ```text
-[director-081] The manifest accepts a reference to the second anchor
-Output: KILLED [director-081] The manifest accepts a reference to the second anchor
+[director-081] The validator returns without an error for a reference to the second anchor
+Output: KILLED [director-081] The validator returns without an error for a reference to the second anchor
 ```
 
 ## m471
@@ -14321,8 +14321,8 @@ new Set(anchors.map((anchor) => anchor.id).slice(0, 1))
 ### m471 Test
 
 ```text
-[director-081 director-093] The session accepts a reference to the second anchor
-Output: KILLED [director-081 director-093] The session accepts a reference to the second anchor
+[director-081 director-093] The session returns true for a reference to the second anchor
+Output: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
 ```
 
 ## m472
@@ -14429,8 +14429,8 @@ File: src/director/sharing/preview.js
 ### m475 Test
 
 ```text
-[director-108 director-110] The preview counts the second scene and shot
-Output: KILLED [director-108 director-110] The preview counts the second scene and shot
+[director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+Output: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 ```
 
 ## m476
@@ -14456,8 +14456,8 @@ File: src/director/sharing/bundle.js
 ### m476 Test
 
 ```text
-[director-101] The export encodes the second byte chunk
-Output: KILLED [director-101] The export encodes the second byte chunk
+[director-101] The export encodes the second byte chunk and returns bundle text
+Output: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
 ```
 
 ## m477
@@ -14483,8 +14483,8 @@ Array.from(new Uint8Array(digest).slice(0, 1), (b) =>
 ### m477 Test
 
 ```text
-[director-093] The session checks exact bytes and digest
-Output: KILLED [director-093] The session checks exact bytes and digest
+[director-093] The session returns true for exact bytes and digest
+Output: KILLED [director-093] The session returns true for exact bytes and digest
 ```
 
 ## m478
@@ -14510,8 +14510,8 @@ new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)).slice(0, 1),
 ### m478 Test
 
 ```text
-[director-099] The import accepts a literal digest for three distinct bytes
-Output: KILLED [director-099] The import accepts a literal digest for three distinct bytes
+[director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+Output: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
 ```
 
 ## m479
@@ -14537,8 +14537,8 @@ Uint8Array.from(atob(value).slice(0, 1), (c) => c.charCodeAt(0))
 ### m479 Test
 
 ```text
-[director-099] The import accepts a literal digest for three distinct bytes
-Output: KILLED [director-099] The import accepts a literal digest for three distinct bytes
+[director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+Output: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
 ```
 
 
@@ -14557,124 +14557,124 @@ cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=n
 ```
 
 ```text
-m001: KILLED [director-076] The asset path accepts safe names
-m002: KILLED [director-076] The asset path rejects traversal
-m003: KILLED [director-077] The manifest rejects invalid version
-m004: KILLED [director-077] The manifest rejects invalid format
-m005: KILLED [director-078] The attribution rejects protocol
-m006: KILLED [director-078] The attribution rejects username
-m007: KILLED [director-078] The attribution rejects password
-m008: KILLED [director-078] The attribution rejects query
-m009: KILLED [director-078] The attribution rejects fragment
-m010: KILLED [director-078] The attribution rejects invalid URL text
-m011: KILLED [director-078] The attribution accepts a safe link
-m012: KILLED [director-078] The attribution rejects blank text
-m013: KILLED [director-078] The attribution rejects blank license
-m014: KILLED [director-079] The byteLength field rejects a fraction
-m015: KILLED [director-079] The digest rejects invalid type
-m016: KILLED [director-079] The digest rejects invalid alphabet
-m017: KILLED [director-079] The integrity fields accept their limits
-m018: KILLED [director-080] The image rejects reversed west
-m019: KILLED [director-080] The image rejects reversed south
-m020: KILLED [director-080] The image rejects short bounds
-m021: KILLED [director-080] The image rejects height and reference
-m022: KILLED [director-081] The media rejects an unknown anchor
-m023: KILLED [director-082] The scene rejects duplicate data pack IDs
-m024: KILLED [director-082] The shot rejects duplicate data pack IDs
-m025: KILLED [director-082] The shot rejects unknown data pack IDs
-m026: KILLED [director-082] The scene accepts absent data packs and anchors
-m027: KILLED [director-083] The collection rejects invalid type
-m028: KILLED [director-083] The collection rejects invalid array
-m029: KILLED [director-083] The collection rejects more than 2000 features
-m030: KILLED [director-084] The feature rejects type
-m031: KILLED [director-084] The feature rejects ID type
-m032: KILLED [director-084] The feature rejects blank ID
-m033: KILLED [director-084] The feature rejects long ID
-m034: KILLED [director-084] The feature rejects duplicate ID
-m035: KILLED [director-085] The position rejects invalid array
-m036: KILLED [director-085] The position rejects invalid length
-m037: KILLED [director-085] The position rejects a coordinate that is not finite
-m038: KILLED [director-085] The position rejects invalid longitude
-m039: KILLED [director-085] The position rejects invalid latitude
-m040: KILLED [director-085] The position rejects a height below the limit
-m041: KILLED [director-085] The position rejects a height above the limit
-m042: KILLED [director-085] The position total rejects excess
-m043: KILLED [director-085] The position uses zero for absent height
-m044: KILLED [director-085] The position keeps the height in the data
-m045: KILLED [director-086] The line rejects invalid array
-m046: KILLED [director-086] The line rejects invalid minimum
-m047: KILLED [director-086] The ring needs four points
-m048: KILLED [director-086] The line accepts two distinct endpoints
-m049: KILLED [director-086] The ring rejects unclosed field 0
-m050: KILLED [director-086] The ring rejects unclosed field 1
-m051: KILLED [director-086] The ring rejects unclosed field 2
-m052: KILLED [director-087] The geometry rejects invalid type
-m053: KILLED [director-087] The geometry rejects invalid array
-m054: KILLED [director-087] The geometry rejects an empty polygon
-m055: KILLED [director-087] The geometry rejects more than 128 rings
-m056: KILLED [director-087] The geometry returns a closed polygon
-m057: KILLED [director-087] The geometry removes properties
-m058: KILLED [director-088] The new session reports idle state
+m001: KILLED [director-076] The validator returns without an error for safe names for the asset path
+m002: KILLED [director-076] The validator rejects traversal for the asset path
+m003: KILLED [director-077] The validator rejects invalid version
+m004: KILLED [director-077] The validator rejects invalid format
+m005: KILLED [director-078] The validator rejects protocol for the attribution
+m006: KILLED [director-078] The validator rejects username for the attribution
+m007: KILLED [director-078] The validator rejects password for the attribution
+m008: KILLED [director-078] The validator rejects query for the attribution
+m009: KILLED [director-078] The validator rejects fragment for the attribution
+m010: KILLED [director-078] The validator rejects invalid URL text for the attribution
+m011: KILLED [director-078] The validator returns without an error for a safe link for the attribution
+m012: KILLED [director-078] The validator rejects blank text for the attribution
+m013: KILLED [director-078] The validator rejects blank license for the attribution
+m014: KILLED [director-079] The validator rejects a fraction for the byteLength field
+m015: KILLED [director-079] The validator rejects invalid type for the digest
+m016: KILLED [director-079] The validator rejects invalid alphabet for the digest
+m017: KILLED [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+m018: KILLED [director-080] The validator rejects reversed west for the image
+m019: KILLED [director-080] The validator rejects reversed south for the image
+m020: KILLED [director-080] The validator rejects short bounds for the image
+m021: KILLED [director-080] The validator rejects height and reference for the image
+m022: KILLED [director-081] The validator rejects an unknown anchor for the media
+m023: KILLED [director-082] The validator rejects duplicate data pack IDs for the scene
+m024: KILLED [director-082] The validator rejects duplicate data pack IDs for the shot
+m025: KILLED [director-082] The validator rejects unknown data pack IDs for the shot
+m026: KILLED [director-082] The validator returns without an error for absent data packs and anchors for the scene
+m027: KILLED [director-083] The decoder rejects invalid type for the collection
+m028: KILLED [director-083] The decoder rejects invalid array for the collection
+m029: KILLED [director-083] The decoder rejects more than 2000 features for the collection
+m030: KILLED [director-084] The decoder rejects type for the feature
+m031: KILLED [director-084] The decoder rejects ID type for the feature
+m032: KILLED [director-084] The decoder rejects blank ID for the feature
+m033: KILLED [director-084] The decoder rejects long ID for the feature
+m034: KILLED [director-084] The decoder rejects duplicate ID for the feature
+m035: KILLED [director-085] The decoder rejects invalid array for the position
+m036: KILLED [director-085] The decoder rejects invalid length for the position
+m037: KILLED [director-085] The decoder rejects a coordinate that is not finite for the position
+m038: KILLED [director-085] The decoder rejects invalid longitude for the position
+m039: KILLED [director-085] The decoder rejects invalid latitude for the position
+m040: KILLED [director-085] The decoder rejects a height below the limit for the position
+m041: KILLED [director-085] The decoder rejects a height above the limit for the position
+m042: KILLED [director-085] The decoder rejects excess for the position total
+m043: KILLED [director-085] The decoder returns zero for absent height for the position
+m044: KILLED [director-085] The decoder returns the height in the data for the position
+m045: KILLED [director-086] The decoder rejects invalid array for the line
+m046: KILLED [director-086] The decoder rejects invalid minimum for the line
+m047: KILLED [director-086] The decoder rejects a ring with fewer than four points for the ring
+m048: KILLED [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+m049: KILLED [director-086] The decoder rejects unclosed field 0 for the ring
+m050: KILLED [director-086] The decoder rejects unclosed field 1 for the ring
+m051: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m052: KILLED [director-087] The decoder rejects invalid type for the geometry
+m053: KILLED [director-087] The decoder rejects invalid array for the geometry
+m054: KILLED [director-087] The decoder rejects an empty polygon for the geometry
+m055: KILLED [director-087] The decoder rejects more than 128 rings for the geometry
+m056: KILLED [director-087] The decoder returns a closed polygon for the geometry
+m057: KILLED [director-087] The decoder removes properties for the geometry
+m058: KILLED [director-088] The session reports idle state after creation
 m059: KILLED [director-088] The session rejects a value that is not a data pack list
 m060: KILLED [director-088] The session rejects more than eight data packs
 m061: KILLED [director-088] The session rejects destroyed state
 m062: KILLED [director-088] The session rejects cancelled state
 m063: KILLED [director-089] The session disposes handles in reverse order
-m064: KILLED [director-089] The session gives copied state
-m065: KILLED [director-090] The cancelled session disposes late resources
-m066: KILLED [director-090] The session accepts a null late handle
-m067: KILLED [director-090] The session destroys work that is not complete
-m068: KILLED [director-091] The replacement keeps its resources
+m064: KILLED [director-089] The session reports ready after the caller changes a state copy
+m065: KILLED [director-090] The session disposes late resources for the cancelled session
+m066: KILLED [director-090] The session returns false for cancelled work with a null late handle
+m067: KILLED [director-090] The session returns false for work that destruction stops
+m068: KILLED [director-091] The session keeps its resources for the replacement
 m069: KILLED [director-092] The session reports a stable source error
-m070: KILLED [director-092] The deadline rejects stalled work
-m071: KILLED [director-092] The data pack session reads the byteLength field once without a registered source
-m072: KILLED [director-092] The absent renderer does not call its source
+m070: KILLED [director-092] The session rejects stalled work for the deadline
+m071: KILLED [director-092] The session reads the byteLength field once without a registered source for the data pack session
+m072: KILLED [director-092] The session rejects an absent renderer without a source call
 m073: KILLED [director-093] The session rejects bytes that are not a Uint8Array
 m074: KILLED [director-093] The session rejects an empty asset
 m075: KILLED [director-093] The session rejects an asset above the byte limit
 m076: KILLED [director-093] The session rejects a wrong byteLength field
 m077: KILLED [director-093] The session rejects bytes above the total limit
 m078: KILLED [director-093] The session rejects a wrong digest
-m079: KILLED [director-093] The session checks exact bytes and digest
+m079: KILLED [director-093] The session returns true for exact bytes and digest
 m080: KILLED [director-089] The session rejects a falsy handle with inherited disposal
 m081: KILLED [director-089] The session rejects a handle without a dispose function
-m082: KILLED [director-094] The directory rejects protocol
-m083: KILLED [director-094] The directory rejects username
-m084: KILLED [director-094] The directory rejects password
-m085: KILLED [director-094] The directory rejects query
-m086: KILLED [director-094] The directory rejects fragment
-m087: KILLED [director-094] The directory rejects an address with no final slash
-m088: KILLED [director-095] The asset request sets its fixed options
-m089: KILLED [director-096] The stream joins distinct chunks
-m090: KILLED [director-096] The stream rejects excess header bytes
-m091: KILLED [director-096] The stream rejects excess chunk bytes
+m082: KILLED [director-094] The factory rejects protocol
+m083: KILLED [director-094] The factory rejects username
+m084: KILLED [director-094] The factory rejects password
+m085: KILLED [director-094] The factory rejects query
+m086: KILLED [director-094] The factory rejects fragment
+m087: KILLED [director-094] The factory rejects an address with no final slash
+m088: KILLED [director-095] The source sets its fixed options for the asset request
+m089: KILLED [director-096] The source joins distinct stream chunks
+m090: KILLED [director-096] The source rejects excess header bytes for the stream
+m091: KILLED [director-096] The source rejects excess chunk bytes for the stream
 m092: KILLED [director-096] The source returns an empty media type when the header is absent
 m093: KILLED [director-096] The source returns lowercase media type text without parameters
 m094: KILLED [director-097] The source rejects an absent stream
-m095: KILLED [director-097] The source accepts failed body cancellation
+m095: KILLED [director-097] The source rejects the asset request after failed body cancellation
 m096: KILLED [director-097] The source rejects a failed response without a body
-m097: KILLED [director-097] The stream releases its lock after an error
-m098: KILLED [director-097] The source checks its signal between chunks
-m099: KILLED [director-098] The bundle helpers reject nontext input
-m100: KILLED [director-098] The bundle helpers reject invalid JSON
-m101: KILLED [director-098] The bundle helpers accept plain project JSON
-m102: KILLED [director-098] The bundle helpers reject excess characters
-m103: KILLED [director-098] The bundle helpers reject excess UTF8 bytes
-m104: KILLED [director-099] The base64 rejects a custom text object
-m105: KILLED [director-099] The base64 rejects invalid empty
-m106: KILLED [director-099] The base64 rejects invalid length
-m107: KILLED [director-099] The base64 rejects invalid alignment
-m108: KILLED [director-099] The base64 rejects invalid alphabet
-m109: KILLED [director-099] The base64 rejects invalid padding
-m110: KILLED [director-099] The bundle rejects duplicate paths
-m111: KILLED [director-099] The bundle rejects an unsupported media type
-m112: KILLED [director-099] The bundle rejects unsupported version
-m113: KILLED [director-100] The bundle rejects an absent asset
-m114: KILLED [director-100] The bundle rejects a wrong byteLength field
-m115: KILLED [director-100] The bundle rejects a pack digest that differs from its asset
-m116: KILLED [director-100] The bundle rejects an asset digest that differs from its bytes
-m117: KILLED [director-100] The bundle rejects unused assets
-m118: KILLED [director-100] The bundle rejects external data pack sources
+m097: KILLED [director-097] The source releases the reader lock after a stream error
+m098: KILLED [director-097] The source checks its signal between chunks and rejects the call
+m099: KILLED [director-098] The import rejects nontext input
+m100: KILLED [director-098] The import rejects invalid JSON
+m101: KILLED [director-098] The import accepts plain project JSON and returns the project
+m102: KILLED [director-098] The import rejects excess characters
+m103: KILLED [director-098] The import rejects excess UTF8 bytes
+m104: KILLED [director-099] The import rejects a custom text object for the base64
+m105: KILLED [director-099] The import rejects invalid empty for the base64
+m106: KILLED [director-099] The import rejects invalid length for the base64
+m107: KILLED [director-099] The import rejects invalid alignment for the base64
+m108: KILLED [director-099] The import rejects invalid alphabet for the base64
+m109: KILLED [director-099] The import rejects invalid padding for the base64
+m110: KILLED [director-099] The import rejects duplicate paths
+m111: KILLED [director-099] The import rejects an unsupported media type
+m112: KILLED [director-099] The import rejects unsupported version
+m113: KILLED [director-100] The import rejects an absent asset
+m114: KILLED [director-100] The import rejects a wrong byteLength field
+m115: KILLED [director-100] The import rejects a pack digest that differs from its asset
+m116: KILLED [director-100] The import rejects an asset digest that differs from its bytes
+m117: KILLED [director-100] The import rejects unused assets
+m118: KILLED [director-100] The import rejects external data pack sources
 m119: KILLED [director-101] The export writes exact bundle metadata
 m120: KILLED [director-102] The export rejects bytes that are not a Uint8Array
 m121: KILLED [director-102] The export rejects an empty asset
@@ -14682,9 +14682,9 @@ m122: KILLED [director-102] The export rejects an asset above the byte limit
 m123: KILLED [director-102] The export rejects absent assets
 m124: KILLED [director-102] The export rejects declared byteLength
 m125: KILLED [director-102] The export rejects declared digest
-m126: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
+m126: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
 m127: KILLED [director-102] The export rejects excess asset total
-m128: KILLED [director-103] The export reuses a shared asset
+m128: KILLED [director-103] The export reuses a shared asset and returns bundle text
 m129: KILLED [director-103] The export rejects shared byteLength
 m130: KILLED [director-103] The export rejects shared digest
 m131: KILLED [director-104] The store copies the asset map
@@ -14692,165 +14692,165 @@ m132: KILLED [director-104] The store clears stored bytes
 m133: KILLED [director-105] The store rejects absent bytes
 m134: KILLED [director-105] The store rejects bytes above the caller limit
 m135: KILLED [director-105] The store returns an independent byte copy
-m136: KILLED [director-106] The share helpers accept an absent filename
+m136: KILLED [director-106] The share helpers return the project for an absent filename
 m137: KILLED [director-106] The share helpers reject the ordinary file limit
-m138: KILLED [director-106] The share helpers give bundles the larger file limit
+m138: KILLED [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
 m139: KILLED [director-107] The helper resolves without a signal
 m140: KILLED [director-107] The helper rejects an early signal
 m141: KILLED [director-107] The helper resolves with an active signal
 m142: KILLED [director-107] The helper rejects a work error
-m143: KILLED [director-107] The helper checks signal state when the work settles
+m143: KILLED [director-107] The helper checks signal state when the work settles and rejects the call
 m144: KILLED [director-107] The helper cancels work that is not complete
 m145: KILLED [director-108] The preview reports exact totals and attribution
-m146: KILLED [director-108] The preview uses the scene ID without a title
+m146: KILLED [director-108] The preview reports the scene ID when the title is absent
 m147: KILLED [director-109] The preview reports included bundle bytes
 m148: KILLED [director-109] The preview reports absent bundle bytes
 m149: KILLED [director-109] The preview reports a configured source
 m150: KILLED [director-109] The preview reports an unavailable source
 m151: KILLED [director-110] The preview lists distinct absent layers
-m152: KILLED [director-110] The preview detects applied shot packs
-m153: KILLED [director-110] The preview detects the source pack ID of a shot
-m154: KILLED [director-110] The preview detects no external content
-m155: KILLED [director-080] The image accepts its bounds field
-m156: KILLED [director-080] The image accepts its height field
-m157: KILLED [director-080] The image accepts its altitudeReference field
-m158: KILLED [director-081] The media accepts its anchorId field
-m159: KILLED [director-077] The geojson accepts its altitudeReference field
-m160: KILLED [director-080] The image bounds 0 rejects low excess
-m161: KILLED [director-080] The image bounds 0 rejects high excess
-m162: KILLED [director-080] The image bounds 1 rejects low excess
-m163: KILLED [director-080] The image bounds 1 rejects high excess
-m164: KILLED [director-080] The image bounds 2 rejects low excess
-m165: KILLED [director-080] The image bounds 2 rejects high excess
-m166: KILLED [director-080] The image bounds 3 rejects low excess
-m167: KILLED [director-080] The image bounds 3 rejects high excess
-m168: KILLED [director-080] The image height checks both limits
-m169: KILLED [director-082] The scene uses supplied anchors
-m170: KILLED [director-082] The scene uses absent anchor defaults
-m171: KILLED [director-085] The position accepts both geographic edges
+m152: KILLED [director-110] The preview reports external content for applied shot packs
+m153: KILLED [director-110] The preview reports external content for a shot with a source pack ID
+m154: KILLED [director-110] The preview reports no external content without source packs
+m155: KILLED [director-080] The validator returns without an error for its bounds field for the image
+m156: KILLED [director-080] The validator returns without an error for its height field for the image
+m157: KILLED [director-080] The validator returns without an error for its altitudeReference field for the image
+m158: KILLED [director-081] The validator returns without an error for its anchorId field for the media
+m159: KILLED [director-077] The validator returns without an error for a GeoJSON altitudeReference field
+m160: KILLED [director-080] The validator rejects low excess for image bounds field 0
+m161: KILLED [director-080] The validator rejects high excess for image bounds field 0
+m162: KILLED [director-080] The validator rejects low excess for image bounds field 1
+m163: KILLED [director-080] The validator rejects high excess for image bounds field 1
+m164: KILLED [director-080] The validator rejects low excess for image bounds field 2
+m165: KILLED [director-080] The validator rejects high excess for image bounds field 2
+m166: KILLED [director-080] The validator rejects low excess for image bounds field 3
+m167: KILLED [director-080] The validator rejects high excess for image bounds field 3
+m168: KILLED [director-080] The validator rejects image height outside both limits
+m169: KILLED [director-082] The validator uses supplied anchors for the scene and returns without an error
+m170: KILLED [director-082] The validator uses absent anchor defaults for the scene and returns without an error
+m171: KILLED [director-085] The decoder accepts both geographic edges for the position and returns coordinates
 m172: SURVIVED
-m173: KILLED [director-088] The session state uses its idle default
-m174: KILLED [director-088] The session state uses its zero default
-m175: KILLED [director-089] The session state uses its active total
-m176: KILLED [director-093] The session uses its default byte budget
-m177: KILLED [director-093] The session accepts absent declared size
-m178: KILLED [director-090] The session checks signal state without an event
+m173: KILLED [director-088] The session reports idle after creation
+m174: KILLED [director-088] The session reports zero handles after creation
+m175: KILLED [director-089] The session reports one active handle
+m176: KILLED [director-093] The session calls the source with a default limit of 8388608 bytes
+m177: KILLED [director-093] The session returns true without a declared size
+m178: KILLED [director-090] The session returns false for a cancelled signal without an event
 m179: KILLED [director-090] The session checks destroyed state after it reads the signal
-m180: KILLED [director-090] The session checks a cleared load call without signal state
+m180: KILLED [director-090] The session returns false for a cleared load call without a signal state access
 m181: KILLED [director-090] The session guard rejects a detached resource
 m182: KILLED [director-090] The session disposes the handle before it adds the handle to its list
-m183: KILLED [director-092] The session settles a source error before its deadline
+m183: KILLED [director-092] The session settles a source error before its deadline and reports idle
 m184: KILLED [director-097] The source rejects early cancellation
-m185: KILLED [director-094] The directory accepts HTTP and HTTPS
-m186: KILLED [director-098] The share character guard comes before byte conversion
-m187: KILLED [director-101] The export accepts scenes without data packs
-m188: KILLED [director-101] The export keeps a supplied data pack list
-m189: KILLED [director-102] The export accepts absent integrity fields
-m190: KILLED [director-102] The export accepts an absent digest
-m191: KILLED [director-103] The shared export accepts absent byte declarations
-m192: KILLED [director-103] The shared export accepts an absent digest
-m193: KILLED [director-099] The base64 accepts bytes without padding
-m194: KILLED [director-108] The preview accepts absent data pack lists
-m195: KILLED [director-108] The preview uses supplied data pack lists
-m196: KILLED [director-108] The preview keeps a supplied scene title
-m197: KILLED [director-109] The preview distinguishes bundle sources
-m198: KILLED [director-110] The preview accepts absent shot layers
-m199: KILLED [director-110] The preview uses supplied shot layers
-m200: KILLED [director-105] The store checks its default byte budget
-m201: KILLED [director-092] The absent renderer does not call its source
-m202: KILLED [director-099] The base64 rejects a custom text object
-m203: KILLED [director-103] The export key uses the registered source name
-m204: KILLED [director-103] The export key uses path
-m205: KILLED [director-110] The preview detects each layer key
-m206: KILLED [director-108] The preview totals include every asset
-m207: KILLED [director-095] The asset request sets its credentials option
-m208: KILLED [director-095] The asset request sets its redirect option
-m209: KILLED [director-095] The asset request sets its referrerPolicy option
-m210: KILLED [director-095] The asset request sets its cache option
-m211: KILLED [director-085] The position rejects field 0 that is not finite
-m212: KILLED [director-085] The position rejects field 1 that is not finite
-m213: KILLED [director-085] The position rejects field 2 that is not finite
-m214: KILLED [director-096] The source checks its default byte budget
-m215: KILLED [director-077] The manifest accepts the id field of a data pack
-m216: KILLED [director-077] The manifest accepts the version field of a data pack
-m217: KILLED [director-077] The manifest accepts the format field of a data pack
-m218: KILLED [director-077] The manifest accepts the source field of a data pack
-m219: KILLED [director-077] The manifest accepts the attribution field of a data pack
-m220: KILLED [director-077] The manifest accepts the placement field of a data pack
-m221: KILLED [director-079] The manifest accepts the byteLength field of a data pack
-m222: KILLED [director-079] The manifest accepts the sha256 field of a data pack
-m223: KILLED [director-077] The manifest accepts its source name field
-m224: KILLED [director-077] The manifest accepts its source path field
-m225: KILLED [director-078] The manifest accepts its attribution text field
-m226: KILLED [director-078] The manifest accepts its attribution license field
-m227: KILLED [director-078] The manifest accepts its attribution url field
-m228: KILLED [director-100] The bundle checks its second asset reference
-m229: KILLED [director-100] The bundle checks its second asset digest
-m230: KILLED [director-103] The export accepts equal shared integrity
+m185: KILLED [director-094] The factory returns a source for HTTP and HTTPS directories
+m186: KILLED [director-098] The import rejects 52428801 characters before byte conversion
+m187: KILLED [director-101] The export accepts scenes without data packs and returns bundle text
+m188: KILLED [director-101] The export returns one asset for a supplied data pack list
+m189: KILLED [director-102] The export accepts absent integrity fields and returns bundle text
+m190: KILLED [director-102] The export accepts an absent digest and returns bundle text
+m191: KILLED [director-103] The export accepts absent byte declarations for the shared export and returns bundle text
+m192: KILLED [director-103] The export accepts an absent digest for the shared export and returns bundle text
+m193: KILLED [director-099] The import accepts bytes without padding for the base64 and returns assets
+m194: KILLED [director-108] The preview reports no packs when data pack lists are absent
+m195: KILLED [director-108] The preview reports one pack from the supplied data pack list
+m196: KILLED [director-108] The preview reports Example for the supplied scene title
+m197: KILLED [director-109] The preview reports a configured source for a supplied source ID
+m198: KILLED [director-110] The preview reports no absent layer when a shot has no layers
+m199: KILLED [director-110] The preview reports traffic as absent without layer IDs
+m200: KILLED [director-105] The store rejects 8388609 bytes without a caller limit
+m201: KILLED [director-092] The session rejects an absent renderer without a source call
+m202: KILLED [director-099] The import rejects a custom text object for the base64
+m203: KILLED [director-103] The export key uses the registered source name and returns bundle text
+m204: KILLED [director-103] The export key uses path and returns bundle text
+m205: KILLED [director-110] The preview reports ships as absent when only traffic is configured
+m206: KILLED [director-108] The preview reports three bytes for both assets
+m207: KILLED [director-095] The source sets its credentials option for the asset request
+m208: KILLED [director-095] The source sets its redirect option for the asset request
+m209: KILLED [director-095] The source sets its referrerPolicy option for the asset request
+m210: KILLED [director-095] The source sets its cache option for the asset request
+m211: KILLED [director-085] The decoder rejects field 0 that is not finite for the position
+m212: KILLED [director-085] The decoder rejects field 1 that is not finite for the position
+m213: KILLED [director-085] The decoder rejects field 2 that is not finite for the position
+m214: KILLED [director-096] The source rejects 8388609 bytes without a caller limit
+m215: KILLED [director-077] The validator returns without an error for the id field of a data pack
+m216: KILLED [director-077] The validator returns without an error for the version field of a data pack
+m217: KILLED [director-077] The validator returns without an error for the format field of a data pack
+m218: KILLED [director-077] The validator returns without an error for the source field of a data pack
+m219: KILLED [director-077] The validator returns without an error for the attribution field of a data pack
+m220: KILLED [director-077] The validator returns without an error for the placement field of a data pack
+m221: KILLED [director-079] The validator returns without an error for the byteLength field of a data pack
+m222: KILLED [director-079] The validator returns without an error for the sha256 field of a data pack
+m223: KILLED [director-077] The validator returns without an error for its source name field
+m224: KILLED [director-077] The validator returns without an error for its source path field
+m225: KILLED [director-078] The validator returns without an error for its attribution text field
+m226: KILLED [director-078] The validator returns without an error for its attribution license field
+m227: KILLED [director-078] The validator returns without an error for its attribution url field
+m228: KILLED [director-100] The import checks its second asset reference and rejects the call
+m229: KILLED [director-100] The import checks its second asset digest and rejects the call
+m230: KILLED [director-103] The export accepts equal shared integrity and returns bundle text
 m231: KILLED [director-102] The export rejects absent asset bytes
-m232: KILLED [director-092] The session settles an early internal signal
-m233: KILLED [director-093] The session gives anchors to its renderer
-m234: KILLED [director-106] The share helpers check a signal after they read text
-m235: KILLED [director-102] The export checks its encoded text budget
+m232: KILLED [director-092] The session settles an early internal signal and reports idle
+m233: KILLED [director-093] The session calls the renderer with the anchors and returns true
+m234: KILLED [director-106] The share helpers call throwIfAborted three times and return the project
+m235: KILLED [director-102] The export rejects encoded bundle text above 52428800 bytes
 m236: KILLED [director-102] The export keeps its total after an asset without a byte length
-m237: KILLED [director-089] The session state uses its active status
-m238: KILLED [director-080] The placement selects the image fields
-m239: KILLED [director-081] The placement selects the media fields
-m240: KILLED [director-089] The session loads its geojson format
-m241: KILLED [director-089] The session loads its image format
-m242: KILLED [director-089] The session loads its media format
+m237: KILLED [director-089] The session reports ready after asset work
+m238: KILLED [director-080] The validator rejects media fields in image placement for the placement
+m239: KILLED [director-081] The validator rejects image fields in media placement for the placement
+m240: KILLED [director-089] The session calls the GeoJSON renderer once and returns true
+m241: KILLED [director-089] The session calls the image renderer once and returns true
+m242: KILLED [director-089] The session calls the media renderer once and returns true
 m243: KILLED [director-097] The source stops between stream chunks
-m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and cred
+m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials
 m245: KILLED [director-080] The manifest checks given image bounds and media anchor references
-m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects inval
+m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
 m247: KILLED [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints
 m248: KILLED [director-089] The data pack session removes resources and cancels the transport on Stop
 m249: KILLED [director-091] The data pack session replaces source work and ignores its late bytes
-m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps t
-m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the re
-m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier
-m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects
-m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancel
-m255: KILLED [director-101] The selected scene bundle copies bytes and attribution and keeps the project without
-m256: KILLED [director-099] The bundle rejects invalid bytes, unknown fields, traversal, duplicates, absent asset
-m257: KILLED [director-102] The bundle checks asset limits and declared integrity before export
-m258: KILLED [director-103] The data packs with the same path share one asset and reject integrity values that di
-m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets witho
-m260: KILLED [director-104] The bundle byte store removes old data after replacement and uses no network source
-m261: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled
-m262: KILLED [director-107] The cancelled bundle export stops before the next asset and returns no partial output
-m263: KILLED [director-101] The bundle accepts long valid source asset names
-m264: KILLED [director-077] The manifest accepts geojson
-m265: KILLED [director-077] The manifest accepts image
-m266: KILLED [director-077] The manifest accepts media
-m267: KILLED [director-080] The image rejects bounds field 0
-m268: KILLED [director-080] The image rejects bounds field 1
-m269: KILLED [director-080] The image rejects bounds field 2
-m270: KILLED [director-080] The image rejects bounds field 3
-m271: KILLED [director-092] The session uses its supplied deadline
-m272: KILLED [director-092] The session uses its default deadline
+m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement
+m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result
+m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources
+m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
+m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal
+m255: KILLED [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
+m256: KILLED [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
+m257: KILLED [director-102] The export rejects excess bytes, wrong integrity and absent assets
+m258: KILLED [director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
+m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+m260: KILLED [director-104] The store removes old data after replacement and uses no network source for the import byte store
+m261: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
+m262: KILLED [director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
+m263: KILLED [director-101] The export returns a bundle for a source path of 1024 characters
+m264: KILLED [director-077] The validator returns without an error for geojson
+m265: KILLED [director-077] The validator returns without an error for image
+m266: KILLED [director-077] The validator returns without an error for media
+m267: KILLED [director-080] The validator rejects bounds field 0 for the image
+m268: KILLED [director-080] The validator rejects bounds field 1 for the image
+m269: KILLED [director-080] The validator rejects bounds field 2 for the image
+m270: KILLED [director-080] The validator rejects bounds field 3 for the image
+m271: KILLED [director-092] The session rejects stalled work at the 19 ms deadline
+m272: KILLED [director-092] The session rejects stalled work at the default 15000 ms deadline
 m273: KILLED [director-092] The session removes resources after a later error
-m274: KILLED [director-099] The bundle accepts the application/json media type
-m275: KILLED [director-099] The bundle accepts the application/geo+json media type
-m276: KILLED [director-099] The bundle accepts the image/png media type
-m277: KILLED [director-099] The bundle accepts the video/mp4 media type
-m278: KILLED [director-099] The bundle accepts the video/webm media type
-m279: KILLED [director-099] The bundle accepts the audio/mpeg media type
-m280: KILLED [director-099] The bundle accepts the audio/ogg media type
-m281: KILLED [director-099] The bundle accepts the audio/wav media type
-m282: KILLED [director-099] The bundle accepts the audio/webm media type
+m274: KILLED [director-099] The import accepts the application/json media type and returns assets
+m275: KILLED [director-099] The import accepts the application/geo+json media type and returns assets
+m276: KILLED [director-099] The import accepts the image/png media type and returns assets
+m277: KILLED [director-099] The import accepts the video/mp4 media type and returns assets
+m278: KILLED [director-099] The import accepts the video/webm media type and returns assets
+m279: KILLED [director-099] The import accepts the audio/mpeg media type and returns assets
+m280: KILLED [director-099] The import accepts the audio/ogg media type and returns assets
+m281: KILLED [director-099] The import accepts the audio/wav media type and returns assets
+m282: KILLED [director-099] The import accepts the audio/webm media type and returns assets
 m283: KILLED [director-089] The session rejects a falsy handle with inherited disposal
-m284: KILLED [director-088] The destroyed session does not read the caller signal state
-m285: KILLED [director-083] The collection accepts its exact feature limit
-m286: KILLED [director-084] The feature ID accepts its exact text limit
-m287: KILLED [director-085] The position accepts its exact total limit
-m288: KILLED [director-087] The polygon accepts its exact ring limit
-m289: KILLED [director-076] The asset path checks its text limit
-m290: KILLED [director-102] The export accepts its exact asset total
+m284: KILLED [director-088] The session returns false without a caller signal access after destruction
+m285: KILLED [director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
+m286: KILLED [director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
+m287: KILLED [director-085] The decoder accepts its exact total limit for the position and returns coordinates
+m288: KILLED [director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
+m289: KILLED [director-076] The validator rejects a path above its text limit for the asset path
+m290: KILLED [director-102] The export accepts its exact asset total and returns bundle text
 m291: KILLED [director-089] The session keeps every data pack handle
-m292: KILLED [director-095] The asset request sets its signal option
-m293: KILLED [director-096] The stream accepts its exact byte limit
-m294: KILLED [director-096] The stream accepts its exact byte limit
+m292: KILLED [director-095] The source sets its signal option for the asset request
+m293: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
+m294: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
 m295: KILLED [director-092] The session rejects a falsy custom source
 m296: KILLED [director-101] The export writes exact bundle metadata
 m297: KILLED [director-101] The export writes exact bundle metadata
@@ -14859,36 +14859,36 @@ m299: KILLED [director-101] The export writes exact bundle metadata
 m300: KILLED [director-101] The export writes exact bundle metadata
 m301: KILLED [director-101] The export writes exact bundle metadata
 m302: KILLED [director-105] The store returns an independent byte copy
-m303: KILLED [director-079] The digest rejects 63 characters
-m304: KILLED [director-079] The digest rejects 65 characters
-m305: KILLED [director-079] The digest rejects a prefix
-m306: KILLED [director-079] The digest rejects a suffix
-m307: KILLED [director-079] The digest rejects uppercase text
-m308: KILLED [director-080] The image rejects equal longitude edges
-m309: KILLED [director-080] The image rejects equal latitude edges
-m310: KILLED [director-080] The image accepts all geographic limits
-m311: KILLED [director-080] The image accepts all geographic limits
-m312: KILLED [director-080] The image accepts all geographic limits
-m313: KILLED [director-080] The image accepts all geographic limits
-m314: KILLED [director-082] The scene ignores a data pack list from its parent
-m315: KILLED [director-080] The image rejects text for each geographic field
-m316: KILLED [director-080] The image rejects text for each geographic field
-m317: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m318: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m319: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m320: KILLED [director-076] The asset path accepts 1024 characters and rejects 1025
-m321: KILLED [director-076] The asset path rejects URL syntax with a stable message
-m322: KILLED [director-088] The session accepts eight data packs
-m323: KILLED [director-093] The session accepts the asset byte limit
-m324: KILLED [director-093] The session accepts the total byte limit
-m325: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
-m326: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
-m327: KILLED [director-093] The source receives the path and the renderer receives the asset and signal
+m303: KILLED [director-079] The validator rejects 63 characters for the digest
+m304: KILLED [director-079] The validator rejects 65 characters for the digest
+m305: KILLED [director-079] The validator rejects a prefix for the digest
+m306: KILLED [director-079] The validator rejects a suffix for the digest
+m307: KILLED [director-079] The validator rejects uppercase text for the digest
+m308: KILLED [director-080] The validator rejects equal longitude edges for the image
+m309: KILLED [director-080] The validator rejects equal latitude edges for the image
+m310: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m311: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m312: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m313: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m314: KILLED [director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
+m315: KILLED [director-080] The validator rejects text for each geographic field for the image
+m316: KILLED [director-080] The validator rejects text for each geographic field for the image
+m317: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m318: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m319: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m320: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
+m321: KILLED [director-076] The validator rejects URL syntax with a stable message for the asset path
+m322: KILLED [director-088] The session returns true for eight data packs
+m323: KILLED [director-093] The session returns true at the asset byte limit
+m324: KILLED [director-093] The session returns true at the total byte limit
+m325: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m326: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+m327: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
 m328: KILLED [director-089] The session removes its deadline after success
 m329: KILLED [director-089] The session removes its deadline after clear
-m330: KILLED [director-088] The session checks every declaration before the source call
-m331: KILLED [director-089] The session destroys each ready resource
-m332: KILLED [director-088] The session checks every declaration before the source call
+m330: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m331: KILLED [director-089] The session disposes both ready handles in reverse order and reports idle
+m332: KILLED [director-088] The session checks every declaration before the source call and rejects the call
 m333: KILLED [director-083] The decoder rejects invalid UTF8 bytes
 m334: KILLED [director-083] The decoder rejects null
 m335: KILLED [director-084] The decoder rejects a null feature
@@ -14896,113 +14896,113 @@ m336: KILLED [director-084] The decoder rejects a null feature
 m337: KILLED [director-087] The decoder rejects absent geometry
 m338: KILLED [director-087] The decoder rejects absent geometry
 m339: KILLED [director-087] The decoder rejects absent geometry
-m340: KILLED [director-095] The directory source uses the default fetch function
-m341: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
-m342: KILLED [director-102] The export accepts the total byte limit and rejects one more byte
-m343: KILLED [director-099] The base64 accepts its length limit and rejects the next aligned length
+m340: KILLED [director-095] The source uses the default fetch function and returns bytes
+m341: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m342: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+m343: KILLED [director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
 m344: KILLED [director-106] The share helpers accept the project file limit and reject one more byte
 m345: KILLED [director-106] The share helpers accept the bundle file limit and reject one more byte
 m346: KILLED [director-102] The export rejects an unsupported media type
 m347: KILLED [director-099] The import rejects 65 different asset paths
-m348: KILLED [director-099] The import accepts the total byte limit and rejects one more byte
-m349: KILLED [director-099] The import accepts the total byte limit and rejects one more byte
+m348: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+m349: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
 m350: KILLED [director-105] The store rejects a cancelled source call
-m351: KILLED [director-107] The bundle stops import before an asset
-m352: KILLED [director-107] The bundle stops import after a digest
-m353: KILLED [director-107] The bundle stops export before an asset
-m354: KILLED [director-107] The bundle stops export after asset bytes
-m355: KILLED [director-107] The bundle stops export after a digest
+m351: KILLED [director-107] The bundle helpers stop import before an asset
+m352: KILLED [director-107] The bundle helpers stop import after a digest
+m353: KILLED [director-107] The bundle helpers stop export before an asset
+m354: KILLED [director-107] The bundle helpers stop export after asset bytes
+m355: KILLED [director-107] The bundle helpers stop export after a digest
 m356: KILLED [director-108] The preview counts shots apart from scenes
 m357: KILLED [director-108] The preview counts shots apart from scenes
 m358: KILLED [director-110] The preview lists distinct absent layers
-m359: KILLED [director-077] The manifest accepts 256 characters for its ID and rejects 257
-m360: KILLED [director-077] The manifest accepts 256 characters for its ID and rejects 257
-m361: KILLED [director-077] The manifest accepts 256 characters for its source name and rejects 257
-m362: KILLED [director-077] The manifest accepts 256 characters for its source name and rejects 257
-m363: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m364: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m365: KILLED [director-078] The attribution accepts its text limits and rejects excess text
-m366: KILLED [director-076] The asset path accepts 1024 characters and rejects 1025
+m359: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m360: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m361: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+m362: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rejects 257
+m363: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m364: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m365: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution
+m366: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path
 m367: KILLED [director-102] The export rejects excess asset total
-m368: KILLED [director-085] The position rejects negative longitude
-m369: KILLED [director-085] The position rejects negative latitude
-m370: KILLED [director-085] The position accepts the limit for negative longitude
-m371: KILLED [director-085] The position accepts the limit for negative latitude
-m372: KILLED [director-085] The position rejects four coordinates
-m373: KILLED [director-085] The position rejects one coordinate
-m374: KILLED [director-076] The asset path rejects .x
-m375: KILLED [director-076] The asset path rejects x?a=1
-m376: KILLED [director-079] The manifest accepts one byte
-m377: KILLED [director-080] The image rejects bounds outside an array
-m378: KILLED [director-082] The scene rejects nine distinct data packs
-m379: KILLED [director-082] The scene accepts eight distinct data packs
-m380: KILLED [director-089] The data pack session reports its state during asset work
-m381: KILLED [director-096] The directory source accepts its default byte limit
-m382: KILLED [director-098] The bundle helpers accept the character limit
-m383: KILLED [director-098] The bundle helpers accept the multibyte text limit
-m384: KILLED [director-098] The bundle helpers reject an invalid plain project
-m385: KILLED [director-098] The bundle helpers reject a null project
-m386: KILLED [director-099] The bundle helpers reject an extra top-level field
-m387: KILLED [director-099] The bundle helpers reject an invalid bundle project
-m388: KILLED [director-099] The import accepts 64 distinct assets
+m368: KILLED [director-085] The decoder rejects negative longitude for the position
+m369: KILLED [director-085] The decoder rejects negative latitude for the position
+m370: KILLED [director-085] The decoder accepts the limit for negative longitude for the position and returns coordinates
+m371: KILLED [director-085] The decoder accepts the limit for negative latitude for the position and returns coordinates
+m372: KILLED [director-085] The decoder rejects four coordinates for the position
+m373: KILLED [director-085] The decoder rejects one coordinate for the position
+m374: KILLED [director-076] The validator rejects .x for the asset path
+m375: KILLED [director-076] The validator rejects x?a=1 for the asset path
+m376: KILLED [director-079] The validator returns without an error for one byte
+m377: KILLED [director-080] The validator rejects bounds outside an array for the image
+m378: KILLED [director-082] The validator rejects nine distinct data packs for the scene
+m379: KILLED [director-082] The validator returns without an error for eight distinct data packs for the scene
+m380: KILLED [director-089] The session reports its state during asset work for the data pack session
+m381: KILLED [director-096] The source accepts its default byte limit and returns bytes
+m382: KILLED [director-098] The import accepts the character limit and returns the project
+m383: KILLED [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+m384: KILLED [director-098] The import rejects an invalid plain project
+m385: KILLED [director-098] The import rejects a null project
+m386: KILLED [director-099] The import rejects an extra top-level field
+m387: KILLED [director-099] The import rejects an invalid bundle project
+m388: KILLED [director-099] The import accepts 64 distinct assets and returns assets
 m389: SURVIVED
-m390: KILLED [director-101] The resolver receives the data pack and signal
-m391: KILLED [director-101] The resolver receives the data pack and signal
-m392: KILLED [director-102] The export accepts the text byte limit
-m393: KILLED [director-105] The byte store accepts the caller byte limit
-m394: KILLED [director-093] The renderer receives the data pack and scene anchors
-m395: KILLED [director-093] The renderer receives the data pack and scene anchors
-m396: KILLED [director-089] The data pack session removes source listeners after success
-m397: KILLED [director-089] The data pack session removes source listeners after success
-m398: KILLED [director-089] The data pack session removes source listeners after error
-m399: KILLED [director-079] The manifest accepts its byte limit
-m400: KILLED [director-080] The image accepts its minimum height
-m401: KILLED [director-080] The image accepts its maximum height
-m402: KILLED [director-085] The position accepts its minimum height
-m403: KILLED [director-085] The position accepts its maximum height
-m404: KILLED [director-107] The share helpers remove the listener after cancel
-m405: KILLED [director-107] The share helpers remove the listener after success
-m406: KILLED [director-107] The share helpers remove the listener after error
-m407: KILLED [director-107] The share helpers remove the listener after success
+m390: KILLED [director-101] The export calls the resolver with the data pack and signal
+m391: KILLED [director-101] The export calls the resolver with the data pack and signal
+m392: KILLED [director-102] The export accepts the text byte limit and returns bundle text
+m393: KILLED [director-105] The store accepts the caller byte limit for the byte store and returns byte copies
+m394: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+m395: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+m396: KILLED [director-089] The session removes source listeners after success for the data pack session
+m397: KILLED [director-089] The session removes source listeners after success for the data pack session
+m398: KILLED [director-089] The session removes source listeners after error for the data pack session
+m399: KILLED [director-079] The validator returns without an error for its byte limit
+m400: KILLED [director-080] The validator returns without an error for its minimum height for the image
+m401: KILLED [director-080] The validator returns without an error for its maximum height for the image
+m402: KILLED [director-085] The decoder accepts its minimum height for the position and returns coordinates
+m403: KILLED [director-085] The decoder accepts its maximum height for the position and returns coordinates
+m404: KILLED [director-107] The helper removes its listener after cancel
+m405: KILLED [director-107] The helper removes its listener after success
+m406: KILLED [director-107] The helper removes its listener after error
+m407: KILLED [director-107] The helper removes its listener after success
 m408: KILLED [director-101] The export rejects an invalid project
 m409: KILLED [director-107] The import stops before the second digest
 m410: KILLED [director-107] The export stops before the second resolver call
-m411: KILLED [director-082] The manifest rejects a reference in the second shot
-m412: KILLED [director-082] The manifest rejects a reference in the second shot
-m413: KILLED [director-099 director-102] The bundle rejects an SVG media type
-m414: KILLED [director-077] The manifest rejects an unlisted geojsonx format
-m415: KILLED [director-094] The source rejects the file protocol
-m416: KILLED [director-077 director-082] The manifest rejects an invalid second data pack
-m417: KILLED [director-081] The manifest accepts a reference to the second anchor
-m418: KILLED [director-082] The manifest rejects an unknown second reference ID
+m411: KILLED [director-082] The validator rejects a reference in the second shot
+m412: KILLED [director-082] The validator rejects a reference in the second shot
+m413: KILLED [director-099 director-102] The bundle helpers reject an SVG media type during import and export
+m414: KILLED [director-077] The validator rejects an unlisted geojsonx format
+m415: KILLED [director-094] The factory rejects the file protocol
+m416: KILLED [director-077 director-082] The validator rejects an invalid second data pack
+m417: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m418: KILLED [director-082] The validator rejects an unknown second reference ID
 m419: KILLED [director-084] The decoder rejects the second feature
 m420: KILLED [director-085 director-086] The decoder rejects the second line position
 m421: KILLED [director-087] The decoder rejects the second ring
 m422: KILLED [director-088] The session rejects an invalid second data pack before the source call
-m423: KILLED [director-081 director-093] The session accepts a reference to the second anchor
-m424: KILLED [director-080] The image rejects bounds field 3
+m423: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
+m424: KILLED [director-080] The validator rejects bounds field 3 for the image
 m425: KILLED [director-076] The validator rejects an invalid second path segment
 m426: KILLED [director-085] The decoder rejects an invalid second coordinate
-m427: KILLED [director-086] The ring rejects unclosed field 2
+m427: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
 m428: KILLED [director-089] The session keeps every data pack handle
 m429: KILLED [director-092] The session removes resources after a later error
 m430: KILLED [director-096] The source joins chunks of different lengths
-m431: KILLED [director-101] The export includes the asset of the second scene
+m431: KILLED [director-101] The export includes the asset of the second scene and returns bundle text
 m432: KILLED [director-101] The export writes each asset index and filename
-m433: KILLED [director-100] The bundle checks its second asset reference
+m433: KILLED [director-100] The import checks its second asset reference and rejects the call
 m434: KILLED [director-101] The export writes each asset index and filename
 m435: KILLED [director-101] The export writes each asset index and filename
 m436: KILLED [director-104] The store counts the second asset
-m437: KILLED [director-108 director-110] The preview counts the second scene and shot
+m437: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 m438: KILLED [director-108] The preview lists the second data pack
-m439: KILLED [director-108 director-110] The preview counts the second scene and shot
-m440: KILLED [director-108 director-110] The preview counts the second scene and shot
-m441: KILLED [director-108 director-110] The preview counts the second scene and shot
-m442: KILLED [director-108 director-110] The preview counts the second scene and shot
-m443: KILLED [director-108 director-110] The preview counts the second scene and shot
-m444: KILLED [director-108 director-110] The preview counts the second scene and shot
+m439: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m440: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m441: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m442: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m443: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m444: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
 m445: KILLED [director-097] The source cancels before it reads the second chunk
-m446: KILLED [director-101] The export encodes the second byte chunk
+m446: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
 m447: KILLED [director-107] The import stops after the second digest
 m448: KILLED [director-107] The export stops after the second digest
 m449: KILLED [director-110] The preview reports both absent named layers without layer IDs
@@ -15011,30 +15011,30 @@ m451: KILLED [director-110] The preview reports both absent named layers without
 m452: KILLED [director-088 director-093] The session calls both registered sources and both renderers
 m453: KILLED [director-088 director-093] The session calls both registered sources and both renderers
 m454: KILLED [director-088 director-093] The session calls both registered sources and both renderers
-m455: KILLED [director-077] The manifest rejects script and adapters in the data pack
-m456: KILLED [director-077] The manifest rejects script and adapters in the source
-m457: KILLED [director-078] The manifest rejects script and adapters in the attribution
-m458: KILLED [director-080] The manifest rejects script and adapters in the image placement
-m459: KILLED [director-081] The manifest rejects script and adapters in the media placement
-m460: KILLED [director-080] The manifest rejects script and adapters in the geojson placement
-m461: KILLED [director-099] The import rejects script and adapters in the top-level object
-m462: KILLED [director-099] The import rejects script and adapters in the asset
+m455: KILLED [director-077] The validator rejects the extra fields script and adapters in the data pack
+m456: KILLED [director-077] The validator rejects the extra fields script and adapters in the source
+m457: KILLED [director-078] The validator rejects the extra fields script and adapters in the attribution
+m458: KILLED [director-080] The validator rejects the extra fields script and adapters in the image placement
+m459: KILLED [director-077] The validator rejects the extra fields script and adapters in the media placement
+m460: KILLED [director-077] The validator rejects the extra fields script and adapters in the GeoJSON placement
+m461: KILLED [director-099] The import rejects the extra fields script and adapters in the top-level object
+m462: KILLED [director-099] The import rejects the extra fields script and adapters in the asset
 m463: KILLED [director-088 director-093] The session calls both registered sources and both renderers
 m464: KILLED [director-088 director-093] The session calls both registered sources and both renderers
 m465: KILLED [director-110] The preview reports both absent named layers without layer IDs
 m466: KILLED [director-110] The preview reports both absent named layers without layer IDs
-m467: KILLED [director-110] The preview accepts both configured layer IDs
-m468: KILLED [director-109] The preview accepts both configured source IDs
-m469: KILLED [director-082] The shot accepts eight references and rejects nine references
-m470: KILLED [director-081] The manifest accepts a reference to the second anchor
-m471: KILLED [director-081 director-093] The session accepts a reference to the second anchor
+m467: KILLED [director-110] The preview reports no absent layer when both layer IDs are configured
+m468: KILLED [director-109] The preview reports both configured sources as configured
+m469: KILLED [director-082] The validator returns without an error for eight references and rejects nine references for the shot
+m470: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m471: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
 m472: KILLED [director-104] The store counts the second asset
 m473: KILLED [director-104] The store counts the second asset
 m474: KILLED [director-104] The store counts the second asset
-m475: KILLED [director-108 director-110] The preview counts the second scene and shot
-m476: KILLED [director-101] The export encodes the second byte chunk
-m477: KILLED [director-093] The session checks exact bytes and digest
-m478: KILLED [director-099] The import accepts a literal digest for three distinct bytes
-m479: KILLED [director-099] The import accepts a literal digest for three distinct bytes
+m475: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+m476: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
+m477: KILLED [director-093] The session returns true for exact bytes and digest
+m478: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+m479: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
 SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
 ```
