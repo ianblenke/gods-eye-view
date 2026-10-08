@@ -473,7 +473,9 @@ test('the disk sweep removes expired tiles and keeps fresh ones', async () => {
     const expired = tileFile({ z: 14, x: 1, y: 1 }, dir);
     const fresh = tileFile({ z: 14, x: 2, y: 2 }, dir);
     const vanishing = tileFile({ z: 14, x: 3, y: 3 }, dir);
-    // Two more expired tiles keep the removals above the breaks of the sweep loop.
+    // The count of branch ranges of tiles.js depends on whether the sweep loop
+    // removes as many files as it breaks. Two more expired tiles keep the
+    // removals above the breaks, so the count stays the same in each run.
     const older = [4, 5].map((n) => tileFile({ z: 14, x: n, y: n }, dir));
     await writeAged(expired, Buffer.alloc(100, 1), 25 * HOUR);
     await writeAged(fresh, Buffer.alloc(100, 2), 23 * HOUR);

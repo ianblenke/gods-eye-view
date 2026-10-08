@@ -124,16 +124,29 @@ The other four files each lose one uncovered function or branch.
 The first run of the final gates found 7 uncovered functions in `server/providers/mapillary/tiles.js`, where the ledger records 6. The function at line 255 runs only when a tile file vanishes during a sweep.
 In 8 image runs of 18 test files, only the process of `mapillaryProvider.test.mjs` ran it, in 7 runs. The correction of the sweep test in that file makes the function run each time.
 
-The second run of the final gates found a branch total of 178 where the ledger records 179. The loop of `sweepTileDisk` changed its V8 ranges when a background sweep added one removal. The second correction keeps the removals above the breaks, so the ranges stay the same in each run.
+The second run of the final gates found a branch total of 178 where the ledger records 179. The loop of `sweepTileDisk` changed its V8 ranges when a background sweep added one removal. The second correction keeps the removals above the breaks in the runs that we measured.
+
+The 8 image runs use one test command for 18 files. The final gates run the whole project under more load, so the third run of the final gates is the proof. If it fails again, use a ledger-refresh change.
+
 Only `tiles.js` has a repeated-run measure. The other five files rest on the ratchet and on the first run of the final gates, which agree.
 
-The last ratchet also records changed totals for `server/providers/mapillary/tiles.js` (178 to 179 branches) and `server/providers/places/google.js` (61 to 62 branches).
-No code changed in these two files between the ratchet runs. The branch total of tiles.js was 177, 178 and 179 in three measurements.
+A ratchet run also recorded changed totals for `server/providers/mapillary/tiles.js` (178 to 179 branches) and `server/providers/places/google.js` (61 to 62 branches).
+No production code changed in these two files between the ratchet runs. The first test correction changed the sweep test, and that is part of why the total of `tiles.js` moved.
+The branch total of tiles.js was 177, 178 and 179 in three measurements.
+
 Totals can change between runs. The count tolerance applies only to files that have the content of the base commit.
 The lead expects that it does not apply to these two files.
 
 Final gates and CI can return to the larger counts or to other totals. The lead must check in the image the tests of the six files above and of `server/providers/places/google.js`.
 If the counts return, use a ledger-refresh change, as in sync 2. Do not weaken the gate.
+
+### count-shaped-test
+
+The two extra tiles in the first disk sweep test exist to keep the V8 range counts of `tiles.js` stable.
+V8 merges neighbouring ranges that have equal counts, so the ledger total depends on counts at run time.
+The same effect can change the totals of the five other adopted files.
+The planned change `vendored-coverage-tolerance` would remove the need for such a test shape.
+Until then, a failure of this kind needs a test correction or a ledger-refresh change.
 
 ### spec-wording-minors
 

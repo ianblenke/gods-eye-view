@@ -111,5 +111,6 @@
 ## 8. Review of the correction
 
 - [x] 8.1 Run both review agents for round 3.
-- [ ] 8.2 Write the round 3 section of review.md.
-- [ ] 8.3 Compute the tree hash for review.md.
+- [x] 8.2 Write the round 3 section of review.md.
+- [x] 8.3 Compute the tree hash for review.md.
+- [x] 8.4 Run the narrow spec check of the two sweep test corrections.

@@ -418,7 +418,7 @@ The requirement sentences stay unchanged. Each delta keeps all scenarios of its 
 
 | Code file | Test imports |
 |---|---|
-| `server/providers/mapillary/tiles.js` | `src/tooling/mapillaryProvider.test.mjs` imports this file. The correction of the sweep test makes the handler at line 255 run each time. |
+| `server/providers/mapillary/tiles.js` | `src/tooling/mapillaryProvider.test.mjs` imports this file. The correction of the sweep test makes the handler at line 255 run each time. A second correction keeps the ranges of the sweep loop the same. |
 | `src/data/bhoteKoshiEmbeddedMedia.js` | `src/data/bhoteKoshiEmbeddedMedia.test.mjs`, `src/data/bhoteKoshiEvent.test.mjs` and `src/tooling/viteBuild.test.mjs` import this file. |
 | `src/layers/flights/motion.js` and `src/layers/flights/rendering.js` | `src/layers/flights/ownership.test.mjs` imports index.js, which imports these files. `src/data/flights.test.mjs` reaches them through the app layer. |
 | `src/layers/military/queries.js` and `src/layers/military/rendering.js` | `src/layers/military/ownership.test.mjs` imports index.js, which imports these files. `src/data/militaryFlights.test.mjs` reaches them through the app layer. |
@@ -450,22 +450,32 @@ The handler now runs each time that the test file runs, so the count of uncovere
 The correction adds no test.
 
 The second run of the final gates stopped with `LEDGER-STALE` for the same file. The function count was now stable, and the total of branch ranges was 178, where the ledger records 179.
-The totals of `tiles.js` were 177, 179 and 178 in the first three measurements of the final gates and of the ratchet.
+The ledger total of `tiles.js` moved from 177 to 178 and then to 179 across ratchet runs. The first run of the final gates measured 177.
 
-The lead compared the V8 ranges of `tiles.js` in 8 image runs of the 18 test files. Only the loop of `sweepTileDisk` changed between runs, and only in the process of `mapillaryProvider.test.mjs`.
+The lead compared the V8 ranges of `tiles.js` in 8 image runs of the 18 test files, with the key sets of all processes. Only the loop of `sweepTileDisk` changed between runs.
+In 6 more runs with the counts of each process, only the process of `mapillaryProvider.test.mjs` ran that loop.
 V8 gives one range to the `break` and to the code after it when both have the same count. It gives two ranges when the counts differ.
 
-The loop breaks 6 times in each run. It removes a file 6 or 7 times, because a background sweep adds one removal in most runs.
+In the 6 runs with counts, the loop broke 6 times in each run. It removed a file 6 or 7 times, because a background sweep added one removal in some runs.
 The ledger records the split case, with 179 ranges.
 
-The second correction adds two more expired tiles to the first disk sweep test, so the removals always stay above the breaks. The test checks that the sweep removes three tiles.
+The second correction adds two more expired tiles to the first disk sweep test, so the removals stay above the breaks in our runs. The test checks that the sweep removes three tiles.
+The sweeps with a fixed folder give 6 removals and 4 breaks, so the margin is at least 2.
 On the host, the loop has 15 iterations, 6 breaks and 9 removals.
-In 8 image runs of the 18 test files, the set of ranges of `tiles.js` is the same in each run.
+In 8 image runs of the 18 test files, the set of ranges of `tiles.js` is the same in each run. The split case follows from the runs before the correction, where the split runs had 213 keys.
+
+One corner can lower the margin. An earlier test in the file does not settle its background writes. A sweep from that test can still run when a later test needs its own sweep. Then the later sweep does not run, and the removals can come close to the breaks.
+This is unlikely, and no run showed it. The ledger-refresh change is the fallback.
 
 The test file passes all 51 tests on the host, and the handler runs once.
+The log `gev-tools/upstream-sync-3/pass-6-host/host.log` has three fault copies of the final test.
 A copy of `tiles.js` without the handler makes this test fail, and no other test fails.
 A copy of the test where the replacement never matches the file also makes this test fail.
-The log is `gev-tools/upstream-sync-3/pass-6-host/host.log`. The Prettier check passes for the test file.
+A copy where the two older tiles are fresh also makes this test fail.
+The Prettier check passes for the test file.
+
+The 8 image runs use one test command for 18 files. The final gates run the whole project under more load.
+The third run of the final gates is the proof of this correction. One pass does not prove that the ranges never change.
 
 ## Round 1 host result
 
