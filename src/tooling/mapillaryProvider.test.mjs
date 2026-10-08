@@ -473,9 +473,13 @@ test('the disk sweep removes expired tiles and keeps fresh ones', async () => {
     const expired = tileFile({ z: 14, x: 1, y: 1 }, dir);
     const fresh = tileFile({ z: 14, x: 2, y: 2 }, dir);
     const vanishing = tileFile({ z: 14, x: 3, y: 3 }, dir);
+    // Two more expired tiles keep the removals above the breaks of the sweep loop.
+    const older = [4, 5].map((n) => tileFile({ z: 14, x: n, y: n }, dir));
     await writeAged(expired, Buffer.alloc(100, 1), 25 * HOUR);
     await writeAged(fresh, Buffer.alloc(100, 2), 23 * HOUR);
     await writeAged(vanishing, Buffer.alloc(100, 3), 25 * HOUR);
+    for (const file of older)
+      await writeAged(file, Buffer.alloc(100, 4), 26 * HOUR);
     // The sweep skips a tile file that vanishes after the sweep lists the
     // folder and before it calls `stat` on the file. The file is old enough
     // to be removed, so a sweep that does list it removes it.
@@ -490,8 +494,9 @@ test('the disk sweep removes expired tiles and keeps fresh ones', async () => {
     } finally {
       fsp.stat = stat;
     }
-    assert.equal(result.removed, 1);
+    assert.equal(result.removed, 3);
     assert.equal(await exists(expired), false);
+    for (const file of older) assert.equal(await exists(file), false);
     assert.equal(await exists(fresh), true);
     assert.equal(await exists(vanishing), true);
   });
