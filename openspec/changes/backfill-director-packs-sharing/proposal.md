@@ -30,7 +30,7 @@ The lead confirms those results in the gate image.
 ## Known limits and later changes
 
 - Known limit `geojson-inherited-height`: the decoder checks coordinate values of the array, then reads an inherited height at line 27 of geojson.js.
-  The inherited height needs a Proxy or a getter at Array.prototype[2].
+  The case uses an inherited value at index 2.
   An inherited height can exceed the height limits.
   No scenario states this behavior.
 - Known limit `session-signal-getter`: a custom signal getter can destroy the session at line 74 of session.js before the source call at line 100.
@@ -45,3 +45,8 @@ The lead confirms those results in the gate image.
 - Known limit `rows-m172-m284`: the repository tests do not kill the mutation rows m172 and m284.
   Only the scratch test `limits.test.mjs` kills them.
   Later changes `fix-director-*` add scenarios, repository tests and code changes for these two limits.
+
+- Known limit `export-repeat-check`: the serializer validates the project text before the export parser validates that text again.
+  The repeated check does not change the result for the public API of the module with standard built-in functions.
+  The getter and resolver probe records the same calls and results.
+  No scenario states that the duplicate check is necessary.

@@ -112,7 +112,7 @@ test('[director-080] The manifest checks given image bounds and media anchor ref
   assert.doesNotThrow(() => parseSceneDocument(JSON.stringify(p)));
 });
 
-test('[director-095 director-096 director-097] The directory source confines paths and rejects credentials, redirects, excess bytes and absent assets', async () => {
+test('[director-095 director-096 director-097] The directory source sends no credentials and rejects unsafe paths, redirects, excess bytes and absent assets', async () => {
   const requests = [];
   const source = createAssetDirectorySource({
     baseUrl: 'https://assets.example.org/packs/',
@@ -281,7 +281,7 @@ test('[director-090] The data pack session disposes a renderer resource when its
   assert.equal(session.getState().count, 0);
 });
 
-test('[director-092] The deadline stops a stalled renderer and a data pack error removes earlier resources', async () => {
+test('[director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources', async () => {
   const session = createDataPackSession({
     timeoutMs: 10,
     sources: { assets: () => new Promise(() => {}) },
@@ -314,7 +314,7 @@ test('[director-092] The deadline stops a stalled renderer and a data pack error
   assert.equal(rollback.getState().count, 0);
 });
 
-test('[director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited renderer names', async () => {
+test('[director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names', async () => {
   let mounted = 0;
   const session = createDataPackSession({
     sources: { assets: asset },

@@ -1,115 +1,34 @@
 Base commit: 290b5d2.
-This probe uses the public API of the module.
+The probe uses an inherited value at index 2.
+The result applies to the public API of the module.
 No scenario states this behavior.
 
-// Commit: 3e1160f47c8d1f63f4b550318134c77fa3f46c5b.
-import test from 'node:test';
-import assert from 'node:assert/strict';
-import { createDataPackSession } from '/home/ianblenke/docker/gev-work/director-3/src/director/packs/session.js';
-import { createAssetDirectorySource } from '/home/ianblenke/docker/gev-work/director-3/src/director/packs/source.js';
-import { decodePackGeoJSON } from '/home/ianblenke/docker/gev-work/director-3/src/director/packs/geojson.js';
-const pack = () => ({
-  id: 'outline',
-  version: 1,
-  format: 'geojson',
-  source: { adapter: 'assets', path: 'example/outline.geojson' },
-  attribution: { text: 'Example author', license: 'CC0-1.0' },
-  placement: { altitudeReference: 'ellipsoid' },
-});
-const asset = () => ({
-  bytes: new Uint8Array([1, 2, 3]),
-  mimeType: 'application/json',
-});
-const deferred = () => {
-  let resolve;
-  const promise = new Promise((r) => {
-    resolve = r;
-  });
-  return { promise, resolve };
-};
+```js
+import { readFileSync, writeFileSync } from 'node:fs';
+const file='/home/ianblenke/docker/gev-work/director-3/src/director/packs/geojson.js';
+const source=readFileSync(file,'utf8').replace("'./manifest.js'", "'file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/manifest.js'");
+const modules=[];
+for(const text of [source,source.replace('p.length === 3 &&','true &&')])modules.push(await import('data:text/javascript;base64,'+Buffer.from(text).toString('base64')));
+const bytes=new TextEncoder().encode('{"type":"FeatureCollection","features":[{"type":"Feature","id":"p","geometry":{"type":"Point","coordinates":[0,0]}}]}');
+const output=[];
+for(const [label,prototype] of [['Array.prototype',Array.prototype],['Object.prototype',Object.prototype]]) {
+ const saved=Object.getOwnPropertyDescriptor(prototype,'2');
+ let values=[];
+ Object.defineProperty(prototype,'2',{value:-12001,writable:true,configurable:true});
+ try {
+  for(const module of modules){try{values.push(JSON.stringify(module.decodePackGeoJSON(bytes)[0].coordinates));}catch(error){values.push(error.message);}}
+ } finally {if(saved)Object.defineProperty(prototype,'2',saved);else delete prototype[2];}
+ output.push(label+': original '+values[0]+'; m172 '+values[1]);
+}
+const content='Base commit: 290b5d2.\nThe probe uses an inherited value at index 2.\nThe result applies to the public API of the module.\nNo scenario states this behavior.\n\n```js\n'+readFileSync(import.meta.filename,'utf8')+'\n```\n\nCommand output:\n\n```text\n'+output.join('\n')+'\n```\n';
+writeFileSync('openspec/changes/backfill-director-packs-sharing/evidence/probe-inherited-height.txt',content);
+console.log(output.join('\n'));
 
-import {
-  validateAssetPath,
-  validateDataPack,
-  validateSceneDataPacks,
-} from '/home/ianblenke/docker/gev-work/director-3/src/director/packs/manifest.js';
-const imagePack = () => ({
-  ...pack(),
-  format: 'image',
-  placement: {
-    bounds: [-2, -1, 2, 1],
-    height: 0,
-    altitudeReference: 'ellipsoid',
-  },
-});
-const feature = (id = 'p', type = 'Point', coordinates = [0, 0]) => ({
-  type: 'Feature',
-  id,
-  geometry: { type, coordinates },
-});
-const geo = (value) =>
-  decodePackGeoJSON(new TextEncoder().encode(JSON.stringify(value)));
-const geoFeatures = (features) => geo({ type: 'FeatureCollection', features });
-const tick = () => new Promise((r) => setImmediate(r));
-const makeSession = (
-  source = asset,
-  adapter = () => ({ dispose() {} }),
-  options = {},
-) =>
-  createDataPackSession({
-    sources: { assets: source },
-    adapters: { geojson: adapter },
-    ...options,
-  });
-const response = (
-  chunks = [new Uint8Array([1, 2, 3])],
-  headers = { 'content-type': 'application/json' },
-) =>
-  new Response(
-    new ReadableStream({
-      start(c) {
-        for (const chunk of chunks) c.enqueue(chunk);
-        c.close();
-      },
-    }),
-    { headers },
-  );
-const directory = (fetchImpl) =>
-  createAssetDirectorySource({ baseUrl: 'https://example.org/a/', fetchImpl });
-test('The position height guard checks its length', async () => {
-  const f = feature('p', 'Point', [0, 0]);
-  Object.defineProperty(Array.prototype, '2', {
-    configurable: true,
-    get() {
-      return -12001;
-    },
-    set(v) {
-      Object.defineProperty(this, '2', {
-        value: v,
-        writable: true,
-        configurable: true,
-        enumerable: true,
-      });
-    },
-  });
-  let result;
-  try {
-    result = geoFeatures([f]);
-  } finally {
-    delete Array.prototype[2];
-  }
-  assert.deepEqual(result[0].coordinates, [0, 0, -12001]);
-});
-
+```
 
 Command output:
-✔ The position height guard checks its length (14.112404ms)
-✔ The signal getter allows work after destruction (12.478268ms)
-ℹ tests 2
-ℹ suites 0
-ℹ pass 2
-ℹ fail 0
-ℹ cancelled 0
-ℹ skipped 0
-ℹ todo 0
-ℹ duration_ms 185.450701
+
+```text
+Array.prototype: original [0,0,-12001]; m172 Invalid geographic position
+Object.prototype: original [0,0,-12001]; m172 Invalid geographic position
+```

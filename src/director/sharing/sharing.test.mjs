@@ -311,21 +311,21 @@ const manyPacks = (n) => {
   }
   return { version: 6, scenes };
 };
-test('[director-098] The share helpers reject nontext input', async () => {
+test('[director-098] The bundle helpers reject nontext input', async () => {
   await assert.rejects(parseSceneShare({}), /share exceeds/);
 });
 
-test('[director-098] The share helpers reject invalid JSON', async () => {
+test('[director-098] The bundle helpers reject invalid JSON', async () => {
   await assert.rejects(parseSceneShare('{'), /invalid JSON/);
 });
 
-test('[director-098] The share helpers accept plain project JSON', async () => {
+test('[director-098] The bundle helpers accept plain project JSON', async () => {
   const v = await parseSceneShare(JSON.stringify({ version: 6, scenes: [] }));
   assert.deepEqual(v.assets, new Map());
   assert.deepEqual(v.project, { version: 6, scenes: [] });
 });
 
-test('[director-098] The share helpers reject excess characters', async () => {
+test('[director-098] The bundle helpers reject excess characters', async () => {
   const Native = globalThis.TextEncoder;
   let calls = 0;
   globalThis.TextEncoder = class {
@@ -345,7 +345,7 @@ test('[director-098] The share helpers reject excess characters', async () => {
   }
 });
 
-test('[director-098] The share helpers reject excess UTF8 bytes', async () => {
+test('[director-098] The bundle helpers reject excess UTF8 bytes', async () => {
   await assert.rejects(
     parseSceneShare('é'.repeat(26214401)),
     /share exceeds 50 MiB/,
@@ -442,7 +442,7 @@ test('[director-100] The bundle rejects an absent asset', async () => {
   );
 });
 
-test('[director-100] The bundle rejects a wrong asset length', async () => {
+test('[director-100] The bundle rejects a wrong byteLength field', async () => {
   const b = await bundleObject();
   b.project.scenes[0].dataPacks[0].byteLength = 1;
   await assert.rejects(
@@ -451,7 +451,7 @@ test('[director-100] The bundle rejects a wrong asset length', async () => {
   );
 });
 
-test('[director-100] The bundle rejects a wrong asset digest', async () => {
+test('[director-100] The bundle rejects a pack digest that differs from its asset', async () => {
   const b = await bundleObject();
   b.project.scenes[0].dataPacks[0].sha256 = '0'.repeat(64);
   await assert.rejects(
@@ -460,7 +460,7 @@ test('[director-100] The bundle rejects a wrong asset digest', async () => {
   );
 });
 
-test('[director-100] The bundle rejects wrong asset digest', async () => {
+test('[director-100] The bundle rejects an asset digest that differs from its bytes', async () => {
   const b = await bundleObject();
   b.assets[0].sha256 = '0'.repeat(64);
   await assert.rejects(
@@ -680,7 +680,7 @@ test('[director-105] The store returns an independent byte copy', async () => {
   });
 });
 
-test('[director-106] The reader accepts an absent filename', async () => {
+test('[director-106] The share helpers accept an absent filename', async () => {
   const v = await readSceneShare({
     size: 2,
     text: async () => JSON.stringify({ version: 6, scenes: [] }),
@@ -688,7 +688,7 @@ test('[director-106] The reader accepts an absent filename', async () => {
   assert.deepEqual(v.assets, new Map());
 });
 
-test('[director-106] The reader rejects the ordinary file budget', async () => {
+test('[director-106] The share helpers reject the ordinary file budget', async () => {
   let calls = 0;
   await assert.rejects(
     readSceneShare({
@@ -703,7 +703,7 @@ test('[director-106] The reader rejects the ordinary file budget', async () => {
   assert.equal(calls, 0);
 });
 
-test('[director-106] The reader gives bundles the larger budget', async () => {
+test('[director-106] The share helpers give bundles the larger budget', async () => {
   const v = await readSceneShare({
     name: 'x.gevbundle.json',
     size: 5242881,
@@ -869,7 +869,7 @@ test('[director-110] The preview detects applied shot packs', async () => {
   );
 });
 
-test('[director-110] The preview detects a shot source pack ID', async () => {
+test('[director-110] The preview detects the source pack ID of a shot', async () => {
   const f = fixture();
   f.scenes[0].shots[0].sourcePackId = 'x';
   assert.equal(
@@ -1152,7 +1152,7 @@ test('[director-102] The export rejects absent asset bytes', async () => {
   );
 });
 
-test('[director-106] The reader checks a signal after text access', async () => {
+test('[director-106] The share helpers check a signal after text access', async () => {
   let calls = 0;
   const signal = {
     throwIfAborted() {
@@ -1382,7 +1382,7 @@ test('[director-099] The import rejects 65 different asset paths', async () => {
     message: 'assets: expected an array of at most 64 entries',
   });
 });
-test('[director-105] The store rejects a cancelled asset call', () => {
+test('[director-105] The store rejects a cancelled source call', () => {
   const store = createBundleAssets();
   store.replace(new Map([['x', asset()]]));
   const controller = new AbortController();
@@ -1395,7 +1395,7 @@ for (const [label, size, name] of [
   ['project', 5242880, 'x.json'],
   ['bundle', 52428800, 'x.gevbundle.json'],
 ]) {
-  test(`[director-106] The reader accepts the ${label} file limit and rejects one more byte`, async () => {
+  test(`[director-106] The share helpers accept the ${label} file limit and reject one more byte`, async () => {
     let calls = 0;
     const file = {
       name,
@@ -1537,5 +1537,153 @@ for (const [label, call, stopAt] of [
     } finally {
       crypto.subtle.digest = nativeDigest;
     }
+  });
+}
+
+test('[director-098] The bundle helpers accept the character limit', async () => {
+  const text =
+    '{"format":"gev-scene-bundle","version":1,"project":{"version":6,"scenes":[]},"assets":[]}';
+  const value = await parseSceneShare(
+    text + ' '.repeat(52428800 - text.length),
+  );
+  assert.deepEqual(value.project, { version: 6, scenes: [] });
+});
+test('[director-098] The bundle helpers accept the multibyte text limit', async () => {
+  const bundle = await bundleObject();
+  bundle.project.scenes[0].dataPacks[0].attribution.text = 'é';
+  const value = JSON.stringify(bundle);
+  const bytes = new TextEncoder().encode(value).length;
+  const text = value + ' '.repeat(52428800 - bytes);
+  const result = await parseSceneShare(text);
+  assert.equal(result.project.scenes[0].dataPacks[0].attribution.text, 'é');
+  assert.equal(result.assets.size, 1);
+  await assert.rejects(parseSceneShare(text + ' '), {
+    message: '$: share exceeds 50 MiB',
+  });
+});
+
+test('[director-098] The bundle helpers reject a null project', async () => {
+  await assert.rejects(parseSceneShare('null'), {
+    message: '$: expected an object',
+  });
+});
+test('[director-098] The bundle helpers reject an invalid plain project', async () => {
+  await assert.rejects(
+    parseSceneShare('{"version":99,"scenes":[]}'),
+    /version/,
+  );
+});
+test('[director-099] The bundle helpers reject an extra top field', async () => {
+  const value = await bundleObject();
+  value.extra = true;
+  await assert.rejects(parseSceneShare(JSON.stringify(value)), {
+    message: '$.extra: unsupported field',
+  });
+});
+test('[director-099] The bundle helpers reject an invalid bundle project', async () => {
+  const value = await bundleObject();
+  value.project.version = 99;
+  await assert.rejects(parseSceneShare(JSON.stringify(value)), /version/);
+});
+test('[director-099] The import accepts 64 distinct assets', async () => {
+  const text = await createSceneBundle(manyPacks(64), asset);
+  assert.equal((await parseSceneShare(text)).assets.size, 64);
+});
+test('[director-101] The export rejects an invalid project', async () => {
+  await assert.rejects(
+    createSceneBundle({ version: 99, scenes: [] }, asset),
+    /version/,
+  );
+});
+test('[director-101] The resolver receives the data pack and signal', async () => {
+  const controller = new AbortController();
+  let calls = 0;
+  await createSceneBundle(
+    fixture(),
+    (pack, options) => {
+      calls++;
+      assert.equal(pack.id, 'data');
+      assert.deepEqual(pack.source, {
+        adapter: 'assets',
+        path: 'test/data.geojson',
+      });
+      assert.equal(options.signal, controller.signal);
+      assert.equal(Object.hasOwn(options, 'signal'), true);
+      return asset();
+    },
+    { signal: controller.signal },
+  );
+  assert.equal(calls, 1);
+});
+test('[director-102] The export accepts the text byte limit', async () => {
+  const Native = globalThis.TextEncoder;
+  globalThis.TextEncoder = class {
+    encode() {
+      return { length: 52428800 };
+    }
+  };
+  try {
+    assert.equal(
+      JSON.parse(await createSceneBundle(fixture(), asset)).assets.length,
+      1,
+    );
+  } finally {
+    globalThis.TextEncoder = Native;
+  }
+});
+test('[director-105] The byte store accepts the caller byte limit', () => {
+  const store = createBundleAssets();
+  store.replace(
+    new Map([
+      ['x', { bytes: new Uint8Array([1, 2, 3]), mimeType: 'image/png' }],
+    ]),
+  );
+  assert.deepEqual(
+    store.source({ path: 'x', maxBytes: 3 }).bytes,
+    new Uint8Array([1, 2, 3]),
+  );
+  assert.throws(() => store.source({ path: 'x', maxBytes: 2 }), {
+    message: 'Bundle asset unavailable — reimport the bundle',
+  });
+});
+
+for (const outcome of ['success', 'error', 'cancel']) {
+  test(`[director-107] The share helpers remove the listener after ${outcome}`, async () => {
+    const callbacks = new Set();
+    const signal = {
+      aborted: false,
+      reason: new Error('stop'),
+      addEventListener(type, callback, options) {
+        assert.equal(type, 'abort');
+        assert.deepEqual(options, { once: true });
+        callbacks.add(callback);
+      },
+      removeEventListener(type, callback) {
+        assert.equal(type, 'abort');
+        callbacks.delete(callback);
+      },
+    };
+    let settle;
+    const work = new Promise((resolve, reject) => {
+      settle = { resolve, reject };
+    });
+    const result = withShareSignal(work, signal);
+    assert.equal(callbacks.size, 1);
+    if (outcome === 'success') {
+      settle.resolve(7);
+      assert.equal(await result, 7);
+    } else if (outcome === 'error') {
+      settle.reject(new Error('work error'));
+      await assert.rejects(result, { message: 'work error' });
+    } else {
+      signal.aborted = true;
+      const callback = [...callbacks][0];
+      callback();
+      assert.equal(callbacks.size, 0);
+      await assert.rejects(result, { message: 'stop' });
+      settle.resolve(7);
+      await work;
+    }
+    assert.equal(callbacks.size, 0);
   });
 }

@@ -169,7 +169,7 @@ clear();
 ```
 
 - [x] 2.17 Write the tests for `director-092`.
-  Mutation: Apply `m071`: replace `!source` with `false`. The size read test must fail.
+  Mutation: `m071` uses the change below. The test must fail.
 
 - [x] 2.18 Write the tests for `director-093`.
   Mutation: `m073` uses the code change below. The test must fail.
@@ -1076,3 +1076,343 @@ assets.length > SHARE_LIMITS.assets
 - [ ] 3.2 Run `make gates` for this change.
 - [ ] 3.3 Get both review agent verdicts.
 - [ ] 3.4 Write `review.md` from those verdicts.
+
+## Corrections of review round 2
+
+- [x] 6.1 Check the test of `m368`.
+  Mutation: `m368` uses the change below. The test must fail.
+
+```js
+Old: Math.abs(p[0]) > 180
+New: p[0] > 180
+```
+
+- [x] 6.2 Check the test of `m369`.
+  Mutation: `m369` uses the change below. The test must fail.
+
+```js
+Old: Math.abs(p[1]) > 90
+New: p[1] > 90
+```
+
+- [x] 6.3 Check the test of `m370`.
+  Mutation: `m370` uses the change below. The test must fail.
+
+```js
+Old: Math.abs(p[0]) > 180
+New: Math.abs(p[0]) >= 180
+```
+
+- [x] 6.4 Check the test of `m371`.
+  Mutation: `m371` uses the change below. The test must fail.
+
+```js
+Old: Math.abs(p[1]) > 90
+New: Math.abs(p[1]) >= 90
+```
+
+- [x] 6.5 Check the test of `m372`.
+  Mutation: `m372` uses the change below. The test must fail.
+
+```js
+Old: ![2, 3].includes(p.length)
+New: p.length < 2
+```
+
+- [x] 6.6 Check the test of `m373`.
+  Mutation: `m373` uses the change below. The test must fail.
+
+```js
+Old: ![2, 3].includes(p.length)
+New: p.length > 3
+```
+
+- [x] 6.7 Check the test of `m374`.
+  Mutation: `m374` uses the change below. The test must fail.
+
+```js
+Old: /^[a-zA-Z0-9_-][a-zA-Z0-9_.-]*$/
+New: /[a-zA-Z0-9_-][a-zA-Z0-9_.-]*$/
+```
+
+- [x] 6.8 Check the test of `m375`.
+  Mutation: `m375` uses the change below. The test must fail.
+
+```js
+Old: /^[a-zA-Z0-9_-][a-zA-Z0-9_.-]*$/
+New: /^[a-zA-Z0-9_-][a-zA-Z0-9_.-]*/
+```
+
+- [x] 6.9 Check the test of `m376`.
+  Mutation: `m376` uses the change below. The test must fail.
+
+```js
+Old: number(v, at, 1, PACK_LIMITS.bytes, false)
+New: number(v, at, 2, PACK_LIMITS.bytes, false)
+```
+
+- [x] 6.10 Check the test of `m377`.
+  Mutation: `m377` uses the change below. The test must fail.
+
+```js
+Old: array(p.bounds, `${at}.bounds`, 4);
+New: ;
+```
+
+- [x] 6.11 Check the test of `m378`.
+  Mutation: `m378` uses the change below. The test must fail.
+
+```js
+Old: array(packs, `${path}.dataPacks`, PACK_LIMITS.packs);
+New: array(packs, `${path}.dataPacks`, 9);
+```
+
+- [x] 6.12 Check the test of `m379`.
+  Mutation: `m379` uses the change below. The test must fail.
+
+```js
+Old: array(packs, `${path}.dataPacks`, PACK_LIMITS.packs);
+New: array(packs, `${path}.dataPacks`, 7);
+```
+
+- [x] 6.13 Check the test of `m380`.
+  Mutation: `m380` uses the change below. The test must fail.
+
+```js
+Old: status: 'loading'
+New: status: 'ready'
+```
+
+- [x] 6.14 Check the test of `m381`.
+  Mutation: `m381` uses the change below. The test must fail.
+
+```js
+Old: maxBytes = PACK_LIMITS.bytes
+New: maxBytes = PACK_LIMITS.bytes - 1
+```
+
+- [x] 6.15 Check the test of `m382`.
+  Mutation: `m382` uses the change below. The test must fail.
+
+```js
+Old: text.length > SHARE_LIMITS.bytes
+New: text.length >= SHARE_LIMITS.bytes
+```
+
+- [x] 6.16 Check the test of `m383`.
+  Mutation: `m383` uses the change below. The test must fail.
+
+```js
+Old: new TextEncoder().encode(text).length > SHARE_LIMITS.bytes
+  )
+New: new TextEncoder().encode(text).length >= SHARE_LIMITS.bytes
+  )
+```
+
+- [x] 6.17 Check the test of `m384`.
+  Mutation: `m384` uses the change below. The test must fail.
+
+```js
+Old: return { project: parseSceneDocument(text), assets: new Map() };
+New: return { project: JSON.parse(text), assets: new Map() };
+```
+
+- [x] 6.18 Check the test of `m385`.
+  Mutation: `m385` uses the change below. The test must fail.
+
+```js
+Old: input?.format !== 'gev-scene-bundle'
+New: input.format !== 'gev-scene-bundle'
+```
+
+- [x] 6.19 Check the test of `m386`.
+  Mutation: `m386` uses the change below. The test must fail.
+
+```js
+Old: fields(input, '$', ['format', 'version', 'project', 'assets']);
+New: ;
+```
+
+- [x] 6.20 Check the test of `m387`.
+  Mutation: `m387` uses the change below. The test must fail.
+
+```js
+Old: const project = parseSceneDocument(JSON.stringify(input.project));
+New: const project = structuredClone(input.project);
+```
+
+- [x] 6.21 Check the test of `m388`.
+  Mutation: `m388` uses the change below. The test must fail.
+
+```js
+Old: array(input.assets, 'assets', SHARE_LIMITS.assets);
+New: array(input.assets, 'assets', SHARE_LIMITS.assets - 1);
+```
+
+- [x] 6.22 Check the getter and resolver probe of `m389`.
+  The probe compares both forms through the public API of the module.
+
+```js
+Old: const copy = parseSceneDocument(stringifySceneDocument(project));
+New: const copy = JSON.parse(stringifySceneDocument(project));
+```
+
+- [x] 6.23 Check the test of `m390`.
+  Mutation: `m390` uses the change below. The test must fail.
+
+```js
+Old: resolveAsset(pack, { signal })
+New: resolveAsset(undefined, { signal })
+```
+
+- [x] 6.24 Check the test of `m391`.
+  Mutation: `m391` uses the change below. The test must fail.
+
+```js
+Old: resolveAsset(pack, { signal })
+New: resolveAsset(pack, {})
+```
+
+- [x] 6.25 Check the test of `m392`.
+  Mutation: `m392` uses the change below. The test must fail.
+
+```js
+Old: if (new TextEncoder().encode(text).length > SHARE_LIMITS.bytes)
+New: if (new TextEncoder().encode(text).length >= SHARE_LIMITS.bytes)
+```
+
+- [x] 6.26 Check the test of `m393`.
+  Mutation: `m393` uses the change below. The test must fail.
+
+```js
+Old: asset.bytes.length > maxBytes
+New: asset.bytes.length >= maxBytes
+```
+
+- [x] 6.27 Check the test of `m394`.
+  Mutation: `m394` uses the change below. The test must fail.
+
+```js
+Old: adapter({ pack, asset, anchors, signal: controller.signal })
+New: adapter({ asset, anchors, signal: controller.signal })
+```
+
+- [x] 6.28 Check the test of `m395`.
+  Mutation: `m395` uses the change below. The test must fail.
+
+```js
+Old: adapter({ pack, asset, anchors, signal: controller.signal })
+New: adapter({ pack, asset, signal: controller.signal })
+```
+
+- [x] 6.29 Check the test of `m396`.
+  Mutation: `m396` uses the change below. The test must fail.
+
+```js
+Old: signal.addEventListener('abort', abort, { once: true });
+New: signal.addEventListener('abort', abort);
+```
+
+- [x] 6.30 Check the test of `m397`.
+  Mutation: `m397` uses the change below. The test must fail.
+
+```js
+Old:       (value) => {
+        signal.removeEventListener('abort', abort);
+New:       (value) => {
+```
+
+- [x] 6.31 Check the test of `m398`.
+  Mutation: `m398` uses the change below. The test must fail.
+
+```js
+Old:       (error) => {
+        signal.removeEventListener('abort', abort);
+New:       (error) => {
+```
+
+- [x] 6.32 Check the test of `m399`.
+  Mutation: `m399` uses the change below. The test must fail.
+
+```js
+Old: number(v, at, 1, PACK_LIMITS.bytes, false)
+New: number(v, at, 1, PACK_LIMITS.bytes - 1, false)
+```
+
+- [x] 6.33 Check the test of `m400`.
+  Mutation: `m400` uses the change below. The test must fail.
+
+```js
+Old: number(p.height, `${at}.height`, -12000, 1e9, false)
+New: number(p.height, `${at}.height`, -11999, 1e9, false)
+```
+
+- [x] 6.34 Check the test of `m401`.
+  Mutation: `m401` uses the change below. The test must fail.
+
+```js
+Old: number(p.height, `${at}.height`, -12000, 1e9, false)
+New: number(p.height, `${at}.height`, -12000, 1e9 - 1, false)
+```
+
+- [x] 6.35 Check the test of `m402`.
+  Mutation: `m402` uses the change below. The test must fail.
+
+```js
+Old: p[2] < -12000
+New: p[2] <= -12000
+```
+
+- [x] 6.36 Check the test of `m403`.
+  Mutation: `m403` uses the change below. The test must fail.
+
+```js
+Old: p[2] > 1e9
+New: p[2] >= 1e9
+```
+
+- [x] 6.37 Check the test of `m404`.
+  Mutation: `m404` uses the change below. The test must fail.
+
+```js
+Old:       signal.removeEventListener('abort', abort);
+      reject(signal.reason);
+New:       reject(signal.reason);
+```
+
+- [x] 6.38 Check the test of `m405`.
+  Mutation: `m405` uses the change below. The test must fail.
+
+```js
+Old:         signal.removeEventListener('abort', abort);
+        signal.aborted
+New:         signal.aborted
+```
+
+- [x] 6.39 Check the test of `m406`.
+  Mutation: `m406` uses the change below. The test must fail.
+
+```js
+Old:         signal.removeEventListener('abort', abort);
+        reject(error);
+New:         reject(error);
+```
+
+- [x] 6.40 Check the test of `m407`.
+  Mutation: `m407` uses the change below. The test must fail.
+
+```js
+Old: signal.addEventListener('abort', abort, { once: true });
+New: signal.addEventListener('abort', abort);
+```
+
+- [x] 6.41 Check the test of `m408`.
+  Mutation: `m408` uses the change below. The test must fail.
+
+```js
+Old: const copy = parseSceneDocument(stringifySceneDocument(project));
+New: const copy = structuredClone(project);
+```
+
+- [ ] 6.42 Complete the operand table.
+- [x] 6.43 Check all host results after the last test change.

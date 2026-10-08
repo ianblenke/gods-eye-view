@@ -333,7 +333,7 @@ test('[director-082] The scene accepts absent data packs and anchors', async () 
   );
   assert.throws(() =>
     validateSceneDataPacks(
-      { dataPacks: Array.from({ length: 9 }, pack), shots: [] },
+      { dataPacks: Array.from({ length: 9 }, (_, i) => ({ ...pack(), id: `p${i}` })), shots: [] },
       'scene',
     ),
   );
@@ -678,7 +678,7 @@ test('[director-088] The session rejects a value that is not a data pack list', 
 test('[director-088] The session rejects more than eight data packs', async () => {
   const s = createDataPackSession();
   await assert.rejects(
-    s.load(Array.from({ length: 9 }, pack)),
+    s.load(Array.from({ length: 9 }, (_, i) => ({ ...pack(), id: `p${i}` }))),
     /Too many data packs/,
   );
   s.destroy();
@@ -857,7 +857,7 @@ test('[director-093] The session rejects an asset above the byte limit', async (
   s.destroy();
 });
 
-test('[director-093] The session rejects a wrong asset length', async () => {
+test('[director-093] The session rejects a wrong byteLength field', async () => {
   const s = makeSession(() => ({ bytes: new Uint8Array([1]) }));
   await assert.rejects(
     s.load([{ ...pack(), byteLength: 2 }]),
@@ -1611,7 +1611,7 @@ test('[director-092] The session settles an early internal signal', async () => 
   }
 });
 
-test('[director-081] The session gives anchors to its renderer', async () => {
+test('[director-093] The session gives anchors to its renderer', async () => {
   let received;
   const s = makeSession(asset, ({ anchors }) => {
     received = anchors;
@@ -1923,7 +1923,7 @@ test('[director-092] The session rejects a falsy custom source', async () => {
   s.destroy();
 });
 
-test('[director-092] The absent registered source stops after the validation size read', async () => {
+test('[director-092] The data pack session reads the byteLength field once without a registered source', async () => {
   let reads = 0;
   const value = pack();
   Object.defineProperty(value, 'byteLength', {
@@ -2277,5 +2277,142 @@ for (const [label, key] of [
           ? 'data.id: expected nonempty text, at most 256 characters'
           : 'data.source.adapter: expected nonempty text, at most 256 characters',
     });
+  });
+}
+
+for (const value of ['x?a=1', 'a:b', '.x', 'x/', 'x//y']) {
+  test(`[director-076] The asset path rejects ${value}`, () => {
+    assert.throws(() => validateAssetPath(value), {
+      message: 'source.path: expected a relative asset path without URL syntax or traversal',
+    });
+  });
+}
+test('[director-079] The manifest accepts one byte', () => {
+  assert.doesNotThrow(() => validateDataPack({ ...pack(), byteLength: 1 }, 'pack', new Set()));
+});
+test('[director-080] The image rejects bounds outside an array', () => {
+  const value = imagePack();
+  value.placement.bounds = { 0: -2, 1: -1, 2: 2, 3: 1, length: 4, forEach: Array.prototype.forEach };
+  assert.throws(() => validateDataPack(value, 'pack', new Set()), {
+    message: 'pack.placement.bounds: expected an array of at most 4 entries',
+  });
+});
+test('[director-082] The scene accepts eight distinct data packs', () => {
+  assert.doesNotThrow(() => validateSceneDataPacks({ dataPacks: Array.from({ length: 8 }, (_, i) => ({ ...pack(), id: `p${i}` })), shots: [] }, 'scene'));
+});
+test('[director-082] The scene rejects nine distinct data packs', () => {
+  assert.throws(() => validateSceneDataPacks({ dataPacks: Array.from({ length: 9 }, (_, i) => ({ ...pack(), id: `p${i}` })), shots: [] }, 'scene'), {
+    message: 'scene.dataPacks: expected an array of at most 8 entries',
+  });
+});
+for (const [label, coordinates] of [
+  ['negative longitude', [-181, 0]], ['positive longitude', [181, 0]],
+  ['negative latitude', [0, -91]], ['positive latitude', [0, 91]],
+  ['one coordinate', [0]], ['four coordinates', [0, 0, 0, 0]],
+]) {
+  test(`[director-085] The position rejects ${label}`, () => {
+    assert.throws(() => geoFeatures([feature('p', 'Point', coordinates)]), { message: 'Invalid geographic position' });
+  });
+}
+for (const [label, coordinates, expected] of [
+  ['negative longitude', [-180, 0], [-180, 0, 0]],
+  ['positive longitude', [180, 0], [180, 0, 0]],
+  ['negative latitude', [0, -90], [0, -90, 0]],
+  ['positive latitude', [0, 90], [0, 90, 0]],
+]) {
+  test(`[director-085] The position accepts the limit for ${label}`, () => {
+    assert.deepEqual(geoFeatures([feature('p', 'Point', coordinates)])[0].coordinates, expected);
+  });
+}
+test('[director-089] The data pack session reports its state during asset work', async () => {
+  const work = deferred();
+  const session = makeSession(() => work.promise);
+  const result = session.load([pack()]);
+  try {
+    assert.deepEqual(session.getState(), { status: 'loading', count: 0 });
+    work.resolve(asset());
+    assert.equal(await result, true);
+  } finally {
+    work.resolve(asset());
+    session.destroy();
+    await result;
+  }
+});
+test('[director-096] The directory source accepts its default byte limit', async () => {
+  const source = directory(() => response([new Uint8Array(8388608)], { 'content-length': '8388608' }));
+  assert.equal((await source({ path: 'x' })).bytes.length, 8388608);
+});
+
+test('[director-093] The renderer receives the data pack and scene anchors', async () => {
+  const declaration = pack();
+  const sceneAnchors = [{ id: 'a' }];
+  let calls = 0;
+  const session = makeSession(asset, (input) => {
+    calls++;
+    assert.equal(input.pack, declaration);
+    assert.equal(input.anchors, sceneAnchors);
+    assert.equal(Object.hasOwn(input, 'pack'), true);
+    assert.equal(Object.hasOwn(input, 'anchors'), true);
+    return { dispose() {} };
+  });
+  try {
+    assert.equal(await session.load([declaration], { anchors: sceneAnchors }), true);
+    assert.equal(calls, 1);
+  } finally {
+    session.destroy();
+  }
+});
+for (const [label, height] of [['minimum', -12000], ['maximum', 1000000000]]) {
+  test(`[director-080] The image accepts its ${label} height`, () => {
+    const value = imagePack();
+    value.placement.height = height;
+    assert.doesNotThrow(() => validateDataPack(value, 'pack', new Set()));
+  });
+  test(`[director-085] The position accepts its ${label} height`, () => {
+    assert.deepEqual(geoFeatures([feature('p', 'Point', [0, 0, height])])[0].coordinates, label === 'minimum' ? [0, 0, -12000] : [0, 0, 1000000000]);
+  });
+}
+test('[director-079] The manifest accepts its byte limit', () => {
+  assert.doesNotThrow(() => validateDataPack({ ...pack(), byteLength: 8388608 }, 'pack', new Set()));
+});
+for (const outcome of ['success', 'error']) {
+  test(`[director-089] The data pack session removes source listeners after ${outcome}`, async () => {
+    const Native = globalThis.AbortController;
+    const listeners = new Set();
+    const options = [];
+    globalThis.AbortController = class extends Native {
+      constructor() {
+        super();
+        const add = this.signal.addEventListener.bind(this.signal);
+        const remove = this.signal.removeEventListener.bind(this.signal);
+        this.signal.addEventListener = (type, callback, config) => {
+          assert.equal(type, 'abort');
+          options.push(config);
+          listeners.add(callback);
+          add(type, callback, config);
+        };
+        this.signal.removeEventListener = (type, callback) => {
+          assert.equal(type, 'abort');
+          listeners.delete(callback);
+          remove(type, callback);
+        };
+      }
+    };
+    let session;
+    try {
+      session = makeSession(() => outcome === 'error' ? Promise.reject(new Error('stop')) : asset());
+      if (outcome === 'error') {
+        await assert.rejects(session.load([pack()]), { message: 'Data pack could not load: check its source, format, size or integrity' });
+        assert.equal(options.length, 1);
+      } else {
+        assert.equal(await session.load([pack()]), true);
+        assert.equal(options.length, 2);
+      }
+      assert.deepEqual(options[0], { once: true });
+      assert.equal(listeners.size, 0);
+    } finally {
+      session?.destroy();
+      globalThis.AbortController = Native;
+    }
   });
 }
