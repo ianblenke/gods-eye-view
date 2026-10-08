@@ -15,13 +15,14 @@ context: |
   1. Write or change the spec before you write or change code.
   2. Write the tests from the scenarios. Then write the code until the tests pass.
   3. Each scenario has a stable ID. Each test names one or more scenario IDs.
-  4. All owned JS code that a change adds or edits has 100% coverage.
-     Those files need full line, branch and function coverage.
-     The report lists the other owned gaps. The target is zero.
+  4. Each owned code file that a change adds or edits needs 100% line, branch and function coverage.
+     Each owned code file without a ledger entry also needs full coverage.
+     The command node scripts/spec/gates.mjs report lists owned gaps in files that the change does not edit.
+     The target is zero owned gaps.
      A changed line needs line coverage in every code file.
-     For a sync, upstream source lines need no changed line coverage.
+     For a sync, a changed line needs no coverage when it equals the adopted upstream source.
      openspec/ownership.json defines owned paths.
-     Upstream code enters the ledger by `adopt` and keeps its recorded gap.
+     Use `adopt` to record the gap of upstream code in the ledger.
   5. The gates record each open gap in openspec/trace. A gap can close. A gap
      cannot open. A new gap stops the build.
   6. Two adversarial review agents review each change after the archive

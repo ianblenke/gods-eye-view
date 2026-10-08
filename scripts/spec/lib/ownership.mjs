@@ -1,6 +1,8 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
+import { readFileAt, mergeParents, resolveCommit } from './git.mjs';
+import { adoptsOf } from './ledger.mjs';
 
 const MANIFEST = 'openspec/ownership.json';
 const METRICS = ['lines', 'branches', 'functions'];
@@ -17,9 +19,12 @@ export function parseOwnership(text) {
 }
 
 /** Read the manifest or return a gate error. */
-export function readOwnership(root) {
+export function readOwnership(root, base) {
   try {
-    return { manifest: parseOwnership(readFileSync(path.join(root, MANIFEST), 'utf8')), errors: [] };
+    const current = parseOwnership(readFileSync(path.join(root, MANIFEST), 'utf8'));
+    const text = base ? readFileAt(root, base, MANIFEST) : null;
+    const previous = text === null ? { owned: [] } : parseOwnership(text);
+    return { manifest: { version: 1, owned: [...new Set([...previous.owned, ...current.owned])] }, errors: [] };
   } catch (error) {
     return { errors: [{ code: 'OWNERSHIP-MANIFEST', file: MANIFEST, message: error.message }] };
   }
@@ -52,7 +57,7 @@ export function changedLines({ root, base, files }) {
   const result = {};
   for (const file of files) {
     if (!existsSync(path.join(root, file))) continue;
-    const diff = spawnSync('git', ['diff', '--text', '--no-ext-diff', '--no-textconv', '--no-renames', '-U0', base, '--', file], { cwd: root, encoding: 'utf8' });
+    const diff = spawnSync('git', ['diff', '--text', '--no-ext-diff', '--no-textconv', '--no-renames', '-U0', base, '--', file], { cwd: root, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
     if (diff.status !== 0) throw new Error(`Git cannot read the diff of ${file}: ${diff.stderr}`);
     const present = spawnSync('git', ['cat-file', '-e', `${base}:${file}`], { cwd: root });
     if (present.status === 0) result[file] = parseDiffLines(diff.stdout);
@@ -65,14 +70,35 @@ export function changedLines({ root, base, files }) {
   return result;
 }
 
+/** True when a merge after the base brought the adopt source. */
+export function isAdoptSource(root, base, from) {
+  try {
+    return mergeParents(root, base).has(resolveCommit(root, from));
+  } catch {
+    return false;
+  }
+}
+
+/** Read only ledger adopt records with a merged source. */
+export function validAdoptSources({ root, base, history, baseHistory, change }) {
+  history.split('\n').filter(Boolean).forEach(JSON.parse);
+  if (!change || !history.startsWith(baseHistory)) return [];
+  const records = history.slice(baseHistory.length).split('\n').filter(Boolean).map(JSON.parse)
+    .filter(item => item.kind === 'adopt' && item.change === change);
+  const adopts = adoptsOf(history, baseHistory, change);
+  for (const record of records) {
+    if (typeof record.file !== 'string' || typeof record.from !== 'string' || !isAdoptSource(root, base, record.from)) {
+      const error = new Error('LEDGER-ADOPT-FROM: Use a complete adopt record with a source that a merge after the base brought.');
+      error.code = 'LEDGER-ADOPT-FROM';
+      throw error;
+    }
+  }
+  return adopts;
+}
+
 /** Check only author lines in a sync. */
 export function syncChangedLines({ root, base, files, history, baseHistory, change }) {
-  const adopts = change && history.startsWith(baseHistory) ? history.slice(baseHistory.length).split('\n').filter(Boolean).map(JSON.parse)
-    .filter(item => item.kind === 'adopt' && item.change === change && typeof item.from === 'string' && item.from.length > 0) : [];
-  for (const from of new Set(adopts.map(item => item.from))) {
-    const ancestor = spawnSync('git', ['merge-base', '--is-ancestor', from, 'HEAD'], { cwd: root });
-    if (ancestor.status !== 0) throw new Error(`Adopt source ${from} is not an ancestor of HEAD.`);
-  }
+  const adopts = validAdoptSources({ root, base, history, baseHistory, change });
   const changed = changedLines({ root, base, files });
   const total = Object.values(changed).reduce((sum, lines) => sum + lines.length, 0);
   if (adopts.length > 0) {

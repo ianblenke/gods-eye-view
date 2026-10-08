@@ -5,6 +5,7 @@ import { changeFolder } from './review.mjs';
 
 const QA_FILE = /^scripts\/qa-.*\.mjs$/;
 const HEADER_MESSAGE = (file) => `${file}: add one first block with one nonempty line for each QA tag and valid covers items.`;
+const hasQaTag = text => /@(purpose|covers|run|needs)\b/.test(text.replace(/^#![^\r\n]*\r?\n/, '').match(/^\s*\/\*[\s\S]*?(?:\*\/|$)/)?.[0] ?? '');
 const TAGS = ['purpose', 'covers', 'run', 'needs'];
 
 /** Read the first QA block and return its four values, or null. */
@@ -29,14 +30,16 @@ export function parseQaHeader(text) {
 }
 
 /** Check tracked QA scripts and return their errors and valid header paths. */
-export function readQaRegister({ root, tracked, manifest }) {
+export function readQaRegister({ root, tracked, manifest, readBaseFile = () => null, adopts = [] }) {
   const errors = [];
   const scripts = [];
   const validQaScripts = new Set();
   for (const file of tracked.filter((item) => QA_FILE.test(item)).sort()) {
     const text = readFileSync(path.join(root, file), 'utf8');
     let header = parseQaHeader(text);
-    if (!header && manifest && classify(manifest, file) === 'upstream' && !/@(purpose|covers|run|needs)\b/.test(text.replace(/^#![^\r\n]*\r?\n/, '').match(/^\s*\/\*[\s\S]*?(?:\*\/|$)/)?.[0] ?? '')) {
+    const baseText = readBaseFile(file);
+    const eligible = (baseText !== null && !hasQaTag(baseText)) || adopts.some(item => item.file === file);
+    if (!header && manifest && classify(manifest, file) === 'upstream' && eligible && !hasQaTag(text)) {
       header = { purpose: 'Check upstream code.', covers: ['unmapped: upstream'], run: `node ${file}`, needs: 'The upstream script needs its own setup.', synthetic: true };
     }
     if (!header) {
@@ -61,7 +64,7 @@ export function readQaRegister({ root, tracked, manifest }) {
 
 /** Return the QA advice lines for an active or archived change. */
 export function qaAdvice({ root, change, scripts }) {
-  const advisory = scripts.filter(script => script.synthetic).map(script => `QA: ${script.file} uses the synthetic header unmapped: upstream.`);
+  const advisory = scripts.filter(script => script.synthetic).map(script => `QA: ${script.file} uses the synthetic header with the covers item unmapped: upstream.`);
   if (!change) return advisory;
   const folder = changeFolder(root, change);
   const delta = folder ? path.join(root, folder, 'specs') : null;
