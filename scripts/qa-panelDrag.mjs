@@ -1,4 +1,10 @@
 /**
+ * @purpose Move QA panels and check each header press.
+ * @covers unmapped: Panel test helpers have no capability spec.
+ * @run Not run alone. QA scripts import this file.
+ * @needs A browser page from another QA script.
+ */
+/**
  * Header press-and-verify for the QA gates that lift a rail panel into a
  * floating window and dock it again. The rail animates panel heights, so a
  * point read once can be under another panel by the time the pointer goes

@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Check Street Level tiles and images with browser fixtures.
+ * @covers unmapped: Street Level has no capability spec.
+ * @run npm run qa:street-level:fixtures -- --strict --url http://localhost:4173
+ * @needs A browser and a server with a Mapillary test token.
+ */
+/**
  * Browser QA for the Street Level layer against a running server. Run with
  * `npm run qa:street-level -- --url http://localhost:4173`.
  *

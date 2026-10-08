@@ -257,11 +257,7 @@ test('production registry is exact, canonical, and rejects incomplete contracts'
   }
   assert.equal(nextLayerStateToken(), '4');
   assert.equal(
-    nextLayerStateToken({
-      ...LAYER_STATE_TOKEN_RESERVATIONS,
-      alpha: '4',
-      bravo: '5',
-    }),
+    nextLayerStateToken({ ...LAYER_STATE_TOKEN_RESERVATIONS, alpha: '4', bravo: '5' }),
     '6',
   );
   const digitsExhausted = {
@@ -294,9 +290,7 @@ test('production registry is exact, canonical, and rejects incomplete contracts'
           [
             ...'0123456789',
             ...[...LAYER_STATE_TOKEN_ALPHABET].flatMap((first) =>
-              [...LAYER_STATE_TOKEN_ALPHABET].map(
-                (second) => `${first}${second}`,
-              ),
+              [...LAYER_STATE_TOKEN_ALPHABET].map((second) => `${first}${second}`),
             ),
           ].map((token, index) => [`occupied-${index}`, token]),
         ),
@@ -318,37 +312,33 @@ test('production registry is exact, canonical, and rejects incomplete contracts'
     true,
   );
   assert.equal(
-    validateLayerStateAllocations(LAYER_STATE_TOKEN_RESERVATIONS, {
-      ...LAYER_STATE_TOKEN_RESERVATIONS,
-      future: '4',
-      next: '5',
-    }),
+    validateLayerStateAllocations(
+      LAYER_STATE_TOKEN_RESERVATIONS,
+      { ...LAYER_STATE_TOKEN_RESERVATIONS, future: '4', next: '5' },
+    ),
     true,
   );
   assert.throws(
-    () =>
-      validateLayerStateAllocations(LAYER_STATE_TOKEN_RESERVATIONS, {
-        ...LAYER_STATE_TOKEN_RESERVATIONS,
-        future: '00',
-      }),
+    () => validateLayerStateAllocations(LAYER_STATE_TOKEN_RESERVATIONS, {
+      ...LAYER_STATE_TOKEN_RESERVATIONS,
+      future: '00',
+    }),
     /next free token 4/,
   );
   const beforeLastDigit = { ...digitsExhausted };
   delete beforeLastDigit['prior-9'];
   assert.equal(
-    validateLayerStateAllocations(beforeLastDigit, {
-      ...beforeLastDigit,
-      futurePair: '00',
-      futureDigit: '9',
-    }),
+    validateLayerStateAllocations(
+      beforeLastDigit,
+      { ...beforeLastDigit, futurePair: '00', futureDigit: '9' },
+    ),
     true,
   );
   assert.equal(
-    validateLayerStateAllocations(digitsExhausted, {
-      ...digitsExhausted,
-      pairB: '01',
-      pairA: '00',
-    }),
+    validateLayerStateAllocations(
+      digitsExhausted,
+      { ...digitsExhausted, pairB: '01', pairA: '00' },
+    ),
     true,
   );
   assert.throws(
