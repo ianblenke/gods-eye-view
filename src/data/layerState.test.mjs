@@ -199,7 +199,7 @@ function encode(state) {
   return params.toString();
 }
 
-test('[osh-033] registers the OSH systems layer with token 3 in localLayers.js', async () => {
+test('[osh-033] registers the OSH systems layer with token 3, and localLayers.js includes it', async () => {
   assert.deepEqual(
     LAYER_STATE_REGISTRY.find((entry) => entry.id === 'osh-systems'),
     { id: 'osh-systems', token: '3', disposition: 'enabled-only' },

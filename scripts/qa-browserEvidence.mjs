@@ -1,6 +1,6 @@
 /**
- * @purpose Save browser errors with secret values removed.
- * @covers unmapped: Browser evidence has no capability spec.
+ * @purpose Save browser evidence of a failed run, with secret values removed.
+ * @covers pending:application-shell
  * @run Not run alone. QA scripts import this file.
  * @needs Nothing. Other scripts import this file.
  */

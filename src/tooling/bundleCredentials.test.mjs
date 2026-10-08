@@ -133,7 +133,7 @@ before(async () => {
   fixture = await buildFixture();
 });
 
-test('[credential-boundary-001] a fixture build has only four public sentinels', () => {
+test('[credential-boundary-001] a fixture build has only the four allowed sentinels', () => {
   const { found } = fixture;
   assert.deepEqual([...found].sort(), [
     'GEV_SENTINEL_CESIUM_ION_TOKEN',
@@ -162,6 +162,7 @@ test('[credential-boundary-001] every secret sentinel stays out of the built out
 
 test('[credential-boundary-002] a VITE_ value outside the AIS prefix never reaches the bundle', () => {
   const { found } = fixture;
+  assert.equal(found.has('GEV_SENTINEL_GOOGLE_MAPS_API_KEY'), true);
   assert.equal(found.has('GEV_SENTINEL_VITE_GEV_PROBE_SECRET'), false);
   assert.equal(found.has('GEV_SENTINEL_VITE_AIS_LIVE_MAX_ROWS'), true);
   assert.equal(found.has('GEV_SENTINEL_MAPILLARY_CLIENT_TOKEN'), true);
@@ -169,6 +170,7 @@ test('[credential-boundary-002] a VITE_ value outside the AIS prefix never reach
 
 test('[credential-boundary-016] the server key stays out of the bundle and out of main.js, and a failure names it', () => {
   const { found, byFile } = fixture;
+  assert.equal(found.has('GEV_SENTINEL_GOOGLE_MAPS_API_KEY'), true);
   assert.equal(found.has('GEV_SENTINEL_MAPILLARY_CLIENT_TOKEN'), true);
   const sentinel = 'GEV_SENTINEL_GOOGLE_MAPS_SERVER_API_KEY';
   assert.equal(

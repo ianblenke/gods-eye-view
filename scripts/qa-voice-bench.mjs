@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
  * @purpose Compare voice tool choices across providers with the same phrases.
- * @covers unmapped: Voice provider comparison has no capability spec.
- * @run node scripts/qa-voice-bench.mjs
+ * @covers pending:voice
+ * @run node scripts/qa-voice-bench.mjs --provider ollama --model <id>
  * @needs Provider credentials for the selected providers.
  */
 /**

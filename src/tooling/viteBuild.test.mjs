@@ -5,7 +5,7 @@ import { BROWSER_CSP, createBrowserViteConfig } from '../../build/vite.js';
 import standaloneConfig, * as compatibility from '../../vite.config.js';
 import * as providers from '../../server/providers/local.js';
 
-test('[credential-boundary-003] build inputs keep three public defines, plugin order and loopback limits', () => {
+test('[credential-boundary-003] keeps three public names, plugin order and loopback protections', () => {
   const plugin = { name: 'fixture-provider' };
   const config = createBrowserViteConfig({
     plugins: [plugin],

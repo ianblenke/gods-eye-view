@@ -107,7 +107,7 @@ test('processes starting at the same moment agree on one key', async (t) => {
   const run = () =>
     new Promise((resolve, reject) => {
       // The eight children race, so the paths each one takes vary between runs.
-      // Leave out their coverage records: the barrier test covers the race paths.
+      // Leave out their coverage records: no test covers the race paths.
       const child = spawn(
         process.execPath,
         ['--input-type=module', '-e', script],

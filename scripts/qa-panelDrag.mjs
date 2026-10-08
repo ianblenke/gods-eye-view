@@ -1,6 +1,6 @@
 /**
- * @purpose Move QA panels and check each header press.
- * @covers unmapped: Panel test helpers have no capability spec.
+ * @purpose Move app panels and check each header press.
+ * @covers pending:application-shell
  * @run Not run alone. QA scripts import this file.
  * @needs A browser page from another QA script.
  */
