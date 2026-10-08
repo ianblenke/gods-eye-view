@@ -65,6 +65,27 @@ export function changedLines({ root, base, files }) {
   return result;
 }
 
+/** Check only author lines in a sync. */
+export function syncChangedLines({ root, base, files, history, baseHistory, change }) {
+  const adopts = change && history.startsWith(baseHistory) ? history.slice(baseHistory.length).split('\n').filter(Boolean).map(JSON.parse)
+    .filter(item => item.kind === 'adopt' && item.change === change && typeof item.from === 'string' && item.from.length > 0) : [];
+  for (const from of new Set(adopts.map(item => item.from))) {
+    const ancestor = spawnSync('git', ['merge-base', '--is-ancestor', from, 'HEAD'], { cwd: root });
+    if (ancestor.status !== 0) throw new Error(`Adopt source ${from} is not an ancestor of HEAD.`);
+  }
+  const changed = changedLines({ root, base, files });
+  const total = Object.values(changed).reduce((sum, lines) => sum + lines.length, 0);
+  if (adopts.length > 0) {
+    for (const file of Object.keys(changed)) {
+      const from = (adopts.findLast(item => item.file === file) ?? adopts.at(-1)).from;
+      const author = new Set(changedLines({ root, base: from, files: [file] })[file]);
+      changed[file] = changed[file].filter(line => author.has(line));
+    }
+  }
+  const required = Object.values(changed).reduce((sum, lines) => sum + lines.length, 0);
+  return { changed, advice: `COVERAGE-DIFF: ${total} changed lines, ${total - required} brought by the merged upstream commit, ${required} need coverage.` };
+}
+
 /** Covered lines common to all source records. */
 export function parseLineCoverage(text, root) {
   const records = {};

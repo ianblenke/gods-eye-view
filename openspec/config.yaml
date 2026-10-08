@@ -18,6 +18,7 @@ context: |
   4. All owned JS code and every changed line has 100% coverage.
      Owned code files need full line, branch and function coverage.
      A changed line needs line coverage in every code file.
+     For a sync, upstream source lines need no changed line coverage.
      openspec/ownership.json defines owned paths.
      Upstream code enters the ledger by `adopt` and keeps its recorded gap.
   5. The gates record each open gap in openspec/trace. A gap can close. A gap

@@ -8,7 +8,7 @@ These rules are for each person and each AI agent that changes this project.
 2. Give each scenario a stable ID. Put the ID at the end of the scenario heading, in backticks.
 3. Write the tests from the scenarios. Put the scenario IDs at the start of each test name. Use a method of `node:assert`, such as `assert.equal`. The gate does not count a direct `assert()` call.
 4. Write the code until the tests pass.
-5. Keep each owned code file at 100% line, branch and function coverage. Keep each line that a change adds or edits at 100%, in every file. Rule 23 defines owned paths.
+5. Keep each owned code file at 100% line, branch and function coverage. Keep each line that a change adds or edits at 100%, in every file. For a sync, upstream source lines need no changed line coverage. Rule 23 defines owned paths.
 6. Write all new prose in ASD-STE100 Simplified Technical English.
 7. Get a passed review from the two review agents before you merge the change.
 
@@ -38,6 +38,7 @@ Each sync change uses `adopt` for every file the merge brings.
 
 23. `openspec/ownership.json` lists the owned paths. For each new code file, add its path to the manifest or state why it is upstream.
 24. The review of a sync reads the files resolved by hand and the change documents. `review.md` lists the files resolved by hand under `Resolved files:`, or states `none`. For a sync, `Scope: full` covers those files and documents. After round one, `Scope: diff <hash>` stays valid.
+A sync needs changed line coverage only for base diff lines that also differ from their adopted upstream source.
 25. When a sync breaks a test with a scenario ID for upstream code, the sync retires the scenario or rewrites it. State the choice in the proposal.
 
 Input files have the definition in the coverage-gate spec.
