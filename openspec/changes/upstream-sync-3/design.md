@@ -106,16 +106,6 @@ A value of zero removes each limit. The server geocode route shares the Google l
 
 Upstream adds standalone MCP and voice tool routes. The fork keeps those routes and the OSH routes.
 
-The delta carries the complete Browser bundle inputs requirement. Only scenario `credential-boundary-003` changes.
-Keep the requirement text and the other scenarios equal to the base spec.
-List the Google browser key, Cesium ion token and public Mapillary token in that order.
-
-Both list tests use literal names. The build helper must leave each omitted input undefined.
-Remove the empty-string default for the Mapillary define. Keep the server Google key checks and the literal scan unchanged.
-
-The fixture credential scan does not supply the new Mapillary token to the build helper.
-It does not prove the classification of that public token.
-
 ## Pristine baseline result
 
 Tree: `95fa816232456a6831172befa2f1b34b9ee73794`. Host runtime: Node `v26.8.2`.
@@ -214,8 +204,7 @@ The command `git diff --exit-code` confirms that no code correction remains outs
 The final code commit is `f00556ebeb386396aa784cf10dd17d411bf5ee7a`. The change documents have their own commit.
 The host task runs no project adopt, ratchet, full gate or image lock check. The lead must run them in the image.
 
-The lead must resolve the old two-key spec conflict before those checks can accept the Mapillary code.
-The owner request for no spec delta remains in force. This task keeps the failed check and reports its cause.
+Pass 3 replaces the earlier two-key requirement. The owner authorizes the complete delta and all five test changes.
 
 ## Pass 2 host result
 
@@ -240,4 +229,27 @@ Each mutation restores `build/vite.js`. The source diff after the mutations is e
 
 The prose lint reports one error and 563 warnings.
 It rejects `expose` in the required unchanged sentence of the new delta file.
-The lead must resolve this conflict before the image work. Keep the word list and the unchanged scenario hashes.
+Pass 3 corrects this sentence and changes the tests for all five scenario hashes. The word list stays unchanged.
+
+## Pass 3 decision
+
+Read commit: `07bf094e8df16abfe6e8b1847d2c1157b7e9ecf0`.
+The third credential supports the Mapillary viewer and direct Graph API requests.
+SECURITY.md states that the client token is public. The server provider uses the same token for tiles.
+The browser helper receives it through `mapillaryToken`. The standalone config reads `MAPILLARY_CLIENT_TOKEN` from the environment.
+
+The requirement now names three credentials. All five carried scenarios need changed tests with their scenario tags.
+The fixture tests check the Mapillary sentinel. The literal scan checks the upstream shape `MLY|1|abc` and a synthetic sample.
+The config tests check clear values and reject environment defaults. Secret credentials remain on the server.
+
+## Purpose text for archive
+
+Keep each secret credential on the server. Show the browser bundle only the three public credentials and the AIS live settings.
+Send geocoding requests from the browser only to our server, with no API key.
+
+## Pass 3 checks
+
+Change `src/tooling/bundleCredentials.test.mjs`, `src/googleServerKey.test.mjs` and `src/tooling/viteBuild.test.mjs`.
+Run each file in one host process. Run the full unit suite once and compare it with the pristine baseline.
+Run host lint, format, boundary and layer token checks. Prove each changed test with a fault and restore each file.
+The lead must run the image checks and the two review agents before merge.

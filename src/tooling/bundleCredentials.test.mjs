@@ -28,10 +28,11 @@ function combinedCredentialNames() {
   return names;
 }
 
-/** The three sentinels the build may expose, as the 001 THEN line names them. */
+/** The four sentinels the build can show, as the 001 THEN line names them. */
 const ALLOWED_SENTINELS = [
   'GEV_SENTINEL_GOOGLE_MAPS_API_KEY',
   'GEV_SENTINEL_CESIUM_ION_TOKEN',
+  'GEV_SENTINEL_MAPILLARY_CLIENT_TOKEN',
   'GEV_SENTINEL_VITE_AIS_LIVE_MAX_ROWS',
 ];
 
@@ -90,6 +91,7 @@ async function buildFixture() {
       plugins: standalonePlugins(),
       googleApiKey: process.env.GOOGLE_MAPS_API_KEY,
       cesiumToken: process.env.CESIUM_ION_TOKEN,
+      mapillaryToken: process.env.MAPILLARY_CLIENT_TOKEN,
     });
     await build({
       ...config,
@@ -131,13 +133,19 @@ before(async () => {
   fixture = await buildFixture();
 });
 
-test('[credential-boundary-001] a fixture build exposes only the allowed sentinels', () => {
+test('[credential-boundary-001] a fixture build has only four public sentinels', () => {
   const { found } = fixture;
-  assert.deepEqual(found, new Set(ALLOWED_SENTINELS));
+  assert.deepEqual([...found].sort(), [
+    'GEV_SENTINEL_CESIUM_ION_TOKEN',
+    'GEV_SENTINEL_GOOGLE_MAPS_API_KEY',
+    'GEV_SENTINEL_MAPILLARY_CLIENT_TOKEN',
+    'GEV_SENTINEL_VITE_AIS_LIVE_MAX_ROWS',
+  ]);
 });
 
 test('[credential-boundary-001] every secret sentinel stays out of the built output, by name', () => {
   const { names, found, byFile } = fixture;
+  assert.equal(found.has('GEV_SENTINEL_MAPILLARY_CLIENT_TOKEN'), true);
   const secretNames = names.filter((name) => !ALLOWED_SENTINELS.includes(`GEV_SENTINEL_${name}`));
   for (const name of secretNames) {
     const sentinel = `GEV_SENTINEL_${name}`;
@@ -156,10 +164,12 @@ test('[credential-boundary-002] a VITE_ value outside the AIS prefix never reach
   const { found } = fixture;
   assert.equal(found.has('GEV_SENTINEL_VITE_GEV_PROBE_SECRET'), false);
   assert.equal(found.has('GEV_SENTINEL_VITE_AIS_LIVE_MAX_ROWS'), true);
+  assert.equal(found.has('GEV_SENTINEL_MAPILLARY_CLIENT_TOKEN'), true);
 });
 
 test('[credential-boundary-016] the server key stays out of the bundle and out of main.js, and a failure names it', () => {
   const { found, byFile } = fixture;
+  assert.equal(found.has('GEV_SENTINEL_MAPILLARY_CLIENT_TOKEN'), true);
   const sentinel = 'GEV_SENTINEL_GOOGLE_MAPS_SERVER_API_KEY';
   assert.equal(
     found.has(sentinel),
@@ -173,6 +183,7 @@ test('[credential-boundary-016] the server key stays out of the bundle and out o
 
 /** Key-shaped literal patterns a browser source file must never contain. */
 const KEY_SHAPED_PATTERNS = [
+  { name: 'a Mapillary client token', pattern: /MLY\|[0-9]+\|[A-Za-z0-9_-]+/, sample: `MLY|${'1'.repeat(3)}|${'a'.repeat(32)}` },
   { name: 'a Google API key', pattern: /AIza[0-9A-Za-z_-]{35}/, sample: `AIza${'A'.repeat(35)}` },
   { name: 'an OpenAI secret key', pattern: /sk-[A-Za-z0-9_-]{32,}/, sample: `sk-${'a'.repeat(32)}` },
   { name: 'a JWT', pattern: /eyJ[A-Za-z0-9_-]{16,}\.eyJ/, sample: `eyJ${'a'.repeat(16)}.eyJ` },
@@ -189,6 +200,10 @@ async function nonTestFilesUnder(directory) {
 }
 
 test('[credential-boundary-004] no key-shaped literal appears in browser source', async () => {
+  assert.deepEqual(KEY_SHAPED_PATTERNS.map(({ name }) => name), [
+    'a Mapillary client token', 'a Google API key', 'an OpenAI secret key', 'a JWT',
+  ]);
+  assert.match('MLY|1|abc', KEY_SHAPED_PATTERNS[0].pattern);
   const root = fileURLToPath(new URL('../../', import.meta.url));
   const files = [
     path.join(root, 'index.html'),
