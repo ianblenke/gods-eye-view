@@ -22,6 +22,8 @@ The golden rule: **secret-bearing API keys stay on the server side.** The dev/pr
 | OpenSky OAuth (`OPENSKY_CLIENT_ID/SECRET`) | Server only | Server mints + refreshes the token behind `/api/flights` |
 | `GOOGLE_MAPS_SERVER_API_KEY` (optional, #33) | Server only | Server calls Places (`/api/google/nearby-places`, `/api/google/text-search`, `/api/google/geocode`) and the Street View fallback with this key; falls back to `GOOGLE_MAPS_API_KEY` when unset |
 
+The browser receives one OpenAI client secret for each voice session. The server creates this secret, and the secret expires. The browser uses the secret for WebRTC. The API key stays on the server.
+
 ### Three deliberately client-side keys — restrict them
 
 These are designed to be used directly in the browser (like a Mapbox public token). They are injected into the client bundle via Vite's `define`, so they **will** be visible in browser devtools. Scope and restrict them rather than trying to hide them:
