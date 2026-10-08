@@ -592,6 +592,17 @@ function runGateCommand({
     return report(log, []);
   }
 
+  const mergedCommits = mergeParents(root, base);
+  const adoption = checkAdopts({
+    adopts: adoptsOf(historyText, baseHistoryText, change),
+    isMergedCommit: (from) => mergedCommits.has(from),
+    changedFiles: (from) => changedByCommit(root, base, from),
+    reachedValid,
+  });
+  const adoptedAsIs = (file) => adoption.valid.some((line) =>
+    line.file === file && existsSync(path.join(root, file)) &&
+    readFileAt(root, line.from, file) === readFileSync(path.join(root, file), 'utf8'));
+
   const compareStart = phase('compare');
   let baseline = checkRebaseline({ ...baselineOptions, change, ledger, baseLedger, coverage: measured.coverage, sameAsBase });
 
@@ -611,6 +622,7 @@ function runGateCommand({
     try {
       result = ratchetLedger({
         sameAsBase,
+        adoptedAsIs,
         ledger,
         current: measured.current,
         inventory: measured.inventory,
@@ -641,14 +653,7 @@ function runGateCommand({
     baseline = checkRebaseline({ ...baselineOptions, history: historyText, change, ledger, baseLedger, coverage: measured.coverage, sameAsBase });
   }
 
-  const comparison = compareLedger({ ledger, current: measured.current, sameAsBase, waivers });
-  const mergedCommits = mergeParents(root, base);
-  const adoption = checkAdopts({
-    adopts: adoptsOf(historyText, baseHistoryText, change),
-    isMergedCommit: (from) => mergedCommits.has(from),
-    changedFiles: (from) => changedByCommit(root, base, from),
-    reachedValid,
-  });
+  const comparison = compareLedger({ ledger, current: measured.current, sameAsBase, adoptedAsIs, waivers });
   const baseErrors = compareWithBase({
     ledger,
     baseLedger: baseline.baseLedger,
