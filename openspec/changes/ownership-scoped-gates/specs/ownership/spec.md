@@ -162,3 +162,40 @@ Origin: spec-first
 #### Scenario: Count an empty name map `ownership-019`
 - **WHEN** a test file has an empty name map
 - **THEN** the report counts zero test instances
+
+### Requirement: Sync line scope
+The gate MUST check coverage only for base diff lines that also differ from the adopted upstream source.
+This rule takes priority over Diff coverage for lines equal to the upstream source.
+A file uses its last adopt source in the change, or the last source in the change if it has none.
+Each source must be an ancestor of HEAD.
+Origin: spec-first
+
+#### Scenario: Exempt upstream lines `ownership-020`
+- **WHEN** a merge brings 5 code lines equal to the adopt source
+- **THEN** those lines need no changed line coverage
+- **AND** the gate prints 5 changed lines, 5 upstream source lines and 0 lines that need coverage
+
+#### Scenario: Check a manual conflict repair `ownership-021`
+- **WHEN** a person resolves a conflict with line 1 that differs from the base and the adopt source
+- **THEN** that line needs coverage
+- **AND** an uncovered line gives COVERAGE-DIFF
+
+#### Scenario: Check an edit to vendored code `ownership-022`
+- **WHEN** a person edits vendored line 2 in the sync change
+- **THEN** the line needs coverage if it differs from both sources
+- **AND** other lines from the upstream source need no changed line coverage
+
+#### Scenario: Select each file source `ownership-023`
+- **WHEN** a change has more than one adopt source
+- **THEN** each file uses its last own source and other files use the last source
+- **AND** a file absent from its source needs coverage for all its base diff lines
+
+#### Scenario: Reject an invalid source `ownership-024`
+- **WHEN** an adopt source is absent or is not an ancestor of HEAD
+- **THEN** the gate stops with COVERAGE-DIFF
+- **AND** a change with no adopt source keeps the base diff rule
+
+#### Scenario: Check current code paths `ownership-025`
+- **WHEN** upstream deletes or renames a code file
+- **THEN** deleted paths have no new lines and new paths use their source path without rename detection
+- **AND** only current code inventory paths enter the line check

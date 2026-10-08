@@ -40,3 +40,11 @@
 - [ ] 3.5 Ask the lead to run make ratchet CHANGE=ownership-scoped-gates in the image.
 - [ ] 3.6 Ask the lead to run the two review agents and write review.md.
 - [ ] 3.7 Ask the lead to run make gates CHANGE=ownership-scoped-gates on the final tree.
+
+## 4. Sync line scope
+
+- [x] 4.1 Write tests for `ownership-020` through `ownership-025` before code.
+- [x] 4.2 Add the source diff intersection and count report.
+- [x] 4.3 Update the process text for sync lines.
+- [x] 4.4 Run host tests, coverage, mutations, lint and format.
+- [x] 4.5 Record proof and commit the pass 2 files.
