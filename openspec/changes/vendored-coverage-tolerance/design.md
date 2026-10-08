@@ -46,3 +46,31 @@ Use host tests with one file per Node process. Use cores 8 through 11 and priori
 Measure line, branch and function coverage. Run named code faults and automatic code mutations.
 Replay the real CI artifact against a scratch copy of upstream-sync-3.
 Run only the lint command from the gate CLI. The lead runs the ratchet command, image gates and reviews.
+
+### Pass 3 words
+
+| Word | Meaning |
+| --- | --- |
+| file that equals its adopted source | File with current content equal to its adopted source. |
+| file with a valid adopt line | File that the valid adopt line names, with any current content. |
+| adopt line | History line that meets Adoption of merged code. |
+| adopted source | Content of the file at the `from` commit. |
+| ledger entry | Coverage record in gaps.json. |
+| current gap | Coverage record from the current measurement. |
+| content hash | Hash of file content. |
+| not-covered count | Count of items that tests do not cover. |
+| total count | Count of all measured items. |
+| stale | Entry state that stops the build until the ratchet command runs. |
+| tolerance | Allowed count difference. |
+| count tolerance | Limits from the requirement Count tolerance. |
+| check command | Command that checks the current tree. |
+| ci command | Command that selects the change and checks the current tree. |
+| ratchet command | Command that writes ledger counts and compares the ledger with the base ledger. |
+| merged commit | Commit from a parent other than the first parent of a merge commit. |
+| base commit | Commit that supplies the gate base ledger. |
+| main commit e2437f94 | Main tree before this change. |
+| pass 1 commit 125dc3ae | Tree after pass 1. |
+| gate | Code that checks the spec and ledger rules. |
+| toleranceCounts | Function that selects counts for a file with count tolerance. |
+| compareWithBase | Function that compares the ledger with the base ledger. |
+| lead | Person who decides the correction for a design defect. |

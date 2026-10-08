@@ -52,3 +52,9 @@
 - [ ] Run make gates CHANGE=vendored-coverage-tolerance in the image.
 - [ ] Run both review agents.
 - [ ] Write review.md.
+
+### Pass 3
+
+- [x] Write the word table in design.md.
+- [x] Write the test for `gap-ledger-154`.
+- [x] Run the test for `gap-ledger-154` against commit 04554050.

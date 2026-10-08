@@ -2812,3 +2812,28 @@ test('[gap-ledger-151] reject an invalid from for total differences', () => {
     assert.match(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
+
+test('[gap-ledger-154] the ratchet command accepts a branch split in the base comparison', () => {
+  withMergeFixture(root => {
+    adoptedNoise(root);
+    const ledgerPath = path.join(root, 'openspec/trace/gaps.json');
+    const ledger = JSON.parse(readFileSync(ledgerPath, 'utf8'));
+    ledger.coverage['src/merged.js'].lines = 0;
+    writeFileSync(ledgerPath, JSON.stringify(ledger) + '\n');
+    commitAll(root, 'record adopted counts');
+    const splitOptions = {
+      ...TOLERANCE_OPTIONS,
+      spawn: (...args) => {
+        const result = TOLERANCE_OPTIONS.spawn(...args);
+        const lcov = path.join(path.dirname(args[1][1]), 'lcov.info');
+        const text = readFileSync(lcov, 'utf8');
+        writeFileSync(lcov, text.replace(`SF:${root}/src/merged.js\nLF:100\nLH:100\nBRF:100\nBRH:99`, `SF:${root}/src/merged.js\nLF:100\nLH:100\nBRF:101\nBRH:99`));
+        return result;
+      },
+    };
+    const result = run(root, ['ratchet', '--change', 'sync'], splitOptions);
+    const next = JSON.parse(readFileSync(ledgerPath, 'utf8')).coverage['src/merged.js'];
+    assert.deepEqual([next.branches, next.totals.branches], [2, 101]);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-(?:NOT-IN-BASE|MORE-THAN-BASE)/, result.output);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
