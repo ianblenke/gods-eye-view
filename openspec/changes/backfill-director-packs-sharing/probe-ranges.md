@@ -9,22 +9,22 @@ The table checks the input limits of the 22 pass 4 probe groups.
 A sample alone does not prove that a mutation is equivalent.
 Each claim also needs the code guard in the last column.
 The claims use the public API of the module with standard built-in functions.
-The claims exclude changes to built-in functions and their prototypes.
+The claims exclude edits to built-in functions and their prototypes.
 
-| probe | Original input cases | Other public input classes | Code guard or pass 5 check |
+| probe | Original input cases | Other public input classes | Code guard or pass 5 test |
 | --- | --- | --- | --- |
-| aligned-base64-limit | Lengths 11184812, 11184813 and 11184816. | Empty text, unusual characters and large text. | The alignment check rejects every length between adjacent multiples of four. The same byte check rejects excess decoded bytes. |
+| aligned-base64-limit | Lengths 11184812, 11184813 and 11184816. | Empty text, unusual characters and large text. | The alignment validation rejects every length between adjacent multiples of four. The same byte check rejects excess decoded bytes. |
 | base64-tail | `AQID`, `AA==`, null, an object, `=AA=` and `zZ09`. | +, /, empty text and large text. | The type guard accepts only primitive strings. Both checks are pure and give the same error. New tests use + and /. |
 | character-index | Three decoded bytes. | Every byte from 0 to 255 and large arrays. | atob returns a primitive string. Each callback receives one character. An absent index and zero select that character. |
-| digest-order | Absent and valid integrity, wrong length, wrong digest and resolver getters. | Empty declarations, prototype keys and custom callbacks. | The serializer makes plain copies. The cache stores plain values. A later resolver cannot access a cached entry. |
+| digest-order | Absent and valid integrity, wrong length, wrong digest and resolver getters. | Empty declarations, prototype keys and custom callbacks. | The serializer makes plain copies. The cache stores plain values. A later resolver cannot use a cached entry. |
 | empty-keys | Null layers and a named layer with a getter. | Empty values, unusual names and prototype keys. | Object.keys ignores inherited keys. False and an empty object each give no keys. |
 | empty-map | An absent replacement map and one stored asset. | Null, false, zero, empty text and custom iterables. | The default applies only to undefined. new Map(undefined) and new Map() each create an empty map. |
 | empty-options | Absent options, absent registries and empty work. | Null options, custom prototypes and getters. | A default applies only to undefined. Its primitive replacement supplies the same absent fields under standard prototypes. |
 | empty-set | Absent source and layer IDs. | Empty values and custom iterables. | The default applies only to undefined. Set accepts undefined as an empty input. Other inputs bypass the default. |
 | feature-order | Null features, wrong feature types and numeric IDs. | Blank IDs, unusual characters and prototype keys. | JSON.parse makes plain feature values. Both predicates reject with the same error before geometry work. |
-| height-order | Two coordinates, height -12000, height 1000000000 and invalid positions. | NaN, Infinity, inherited height and height beyond each limit. | Three-coordinate JSON arrays contain plain values at index 2. The finite-value check comes before both height comparisons. |
+| height-order | Two coordinates, height -12000, height 1000000000 and invalid positions. | NaN, Infinity, inherited height and height beyond each limit. | Three-coordinate JSON arrays contain plain values at index 2. The finite-value validation comes before both height comparisons. |
 | late-rejection | Source success, source error, cancellation and late error. | Repeated callbacks, custom reasons and getters. | A promise settles once. A late rejection cannot change its result. The outer catch gives the same stable error. |
-| line-end | Null lines and lines of two or three positions. | Long lines, empty lines and inherited coordinates. | The decoder makes numeric output arrays before the end check. The comparison has no caller getter. |
+| line-end | Null lines and lines of two or three positions. | Long lines, empty lines and inherited coordinates. | The decoder makes numeric output arrays before the end validation. The comparison has no caller getter. |
 | null-handle | Null and valid renderer handles. | Other false values, absent dispose and dispose getters. | Both orders reject a false handle with the same stable error. A true handle reads dispose in both orders. |
 | number-flag | Absent byteLength, numeric text, 1, 0 and 1.5. | NaN, Infinity and numeric limits. | False and undefined each disable conversion in number(). Both calls check the same value and limits. |
 | position-counter | Valid positions and invalid longitude, latitude or height. | 49999, 50000 and 50001 positions. | The counter is private. An invalid position ends the call. Every valid position increases the counter once. |

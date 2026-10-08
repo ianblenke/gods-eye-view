@@ -3,7 +3,7 @@ The mutation is equivalent for the public API of the module with standard built-
 The claim covers returned data, error fields, getters and callback calls.
 The claim excludes source text and diagnostic stack locations.
 
-JSON gives plain feature fields. The private Set and the type check have no input callbacks.
+JSON gives plain feature fields. The private Set and the type validation have no input callbacks.
 
 
 Pass 5 extends the input cases.

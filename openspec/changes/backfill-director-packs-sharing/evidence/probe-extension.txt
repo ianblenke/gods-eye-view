@@ -325,7 +325,7 @@ The default applies only to an absent ring argument. Null and false each select 
 a9074 src/director/packs/geojson.js:47
 The decoder parses JSON before it reads feature geometry. The property has no getter. The ID Set is private and holds at most 2000 IDs. An error ends the call and discards that Set.
 a9075 src/director/packs/geojson.js:48
-The private coordinates declaration has no value or callback. The geometry read and all validation calls keep their order.
+The private coordinates declaration has no value or callback. The operation that reads geometry and all validation calls keep their order.
 a9084 src/director/packs/session.js:6
 The arrow function body runs only after the ended variable has its initial value. Creating the function does not read that variable or call the signal.
 a9092 src/director/packs/session.js:27
@@ -343,7 +343,7 @@ The default applies only to undefined. Empty objects, empty arrays and false hav
 a9104 src/director/packs/session.js:38
 The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9110 src/director/packs/session.js:42
-The private initial state has no callback. Object.entries reads renderer getters in the same order. The caller cannot access the session before the constructor returns.
+The private initial state has no callback. Object.entries reads renderer getters in the same order. The caller cannot use the session before the constructor returns.
 a9111 src/director/packs/session.js:43
 The clear function declaration is available throughout its block. Moving its text does not call it. The private state still has its initial value before the returned methods can run.
 a9112 src/director/packs/session.js:45
@@ -383,21 +383,21 @@ The inner error never escapes the session. The catch block gives the same stable
 a9412 src/director/packs/session.js:136
 The inner error never escapes the session. The catch block gives the same stable public error, or false for cancellation. Its message has no caller getter. The probe checks each failure path and callback trace.
 a9195 src/director/packs/source.js:35
-The empty chunk array is private. Its creation has no caller callback. An absent reader still gives the same error before any stream read.
+The empty chunk array is private. Its creation has no caller callback. An absent reader still gives the same error before the source reads a stream chunk.
 a9196 src/director/packs/source.js:36
 The empty chunk array and zero byte counter are private. Neither initial value calls caller code. Both are ready before header or stream calls.
 a9199 src/director/packs/source.js:53
 The private offset starts at zero without a callback. The same byte allocation runs before all copy calls. Chunk getters keep their order.
 a9424 src/director/sharing/bundle.js:43
-The only new matches have no alphabet character and one or two equals signs. Their lengths are not multiples of four, so the common alignment check rejects them. Empty text already matches the other regex. Every other string has the same result.
+The only new matches have no alphabet character and one or two equals signs. Their lengths are not multiples of four, so the common alignment validation rejects them. Empty text already matches the other regex. Every other string has the same result.
 a9243 src/director/sharing/bundle.js:62
 The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9244 src/director/sharing/bundle.js:62
 The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9247 src/director/sharing/bundle.js:64
-The private input declaration has no value or callback. Signal checks, type checks, both 52428800 checks and JSON parsing keep their order for every text length.
+The private input declaration has no value or callback. Signal checks, type checks, the 52428800-character check, the 52428800-byte check and the JSON parse keep their order for every text length.
 a9254 src/director/sharing/bundle.js:81
-The empty asset Map is private. Its creation has no caller callback. The asset array check still gives the same error before entry work. No map escapes an error.
+The empty asset Map is private. Its creation has no caller callback. The asset array validation still gives the same error before entry work. No map escapes an error.
 a9255 src/director/sharing/bundle.js:82
 The private asset Map and zero total each have no caller callback. Both are ready before entry work. The asset count stays at most 64.
 a9257 src/director/sharing/bundle.js:84
@@ -419,7 +419,7 @@ The empty array and Map are private and have no caller callbacks. Project getter
 a9287 src/director/sharing/bundle.js:140
 The private empty collections and zero total have no caller callbacks. Both are ready before the first resolver call. The asset count stays at most 64.
 a9292 src/director/sharing/bundle.js:144
-The key uses primitive fields of the validated plain project copy. Standard JSON.stringify calls no caller getter on this two-value array. The signal check still comes before the resolver call.
+The key uses primitive fields of the validated plain project copy. Standard JSON.stringify calls no caller getter on this two-value array. The signal validation still comes before the resolver call.
 a9311 src/director/sharing/bundle.js:175
 The cache Map and asset array are private. They hold at most 64 entries. Their two writes have no caller callback. A later resolver runs after both writes.
 a9317 src/director/sharing/bundle.js:201

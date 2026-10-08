@@ -4,7 +4,7 @@ The backfill records data packs and project shares at commit `290b5d2`.
 The director feature checks assets before display and carries local files in a scene bundle.
 The source files of `src/director` stay the same at this commit and at main.
 
-## What Changes
+## What this change does
 
 - Add requirements to the director capability.
 - Tag tests in scope.
@@ -27,7 +27,7 @@ The evidence gives the exact source commands for these totals.
 The host coverage sweep closes the measured path gaps in scope.
 The lead confirms those results in the gate image.
 
-## Known limits and later changes
+## Known limits and later change folders
 
 - Known limit `geojson-inherited-height`: the decoder checks coordinate values of the array, then reads an inherited height at line 27 of geojson.js.
   The position has an inherited value at index 2.
@@ -49,7 +49,7 @@ The lead confirms those results in the gate image.
 
 - Known limit `bundle-nonnumeric-length`: a custom Uint8Array length getter can return text instead of a number.
   The export helper then adds text to the total at line 157 of bundle.js.
-  The byte check can reject three real bytes as excess total bytes.
+  The byte validation can reject three real bytes as excess total bytes.
   A later asset without a byte length can also make the total nonnumeric.
   No scenario states this behavior.
 
@@ -61,3 +61,21 @@ Later change `fix-director-bundle-nonnumeric-length` addresses `bundle-nonnumeri
   The probe uses a custom listener method and fixed timer tokens.
   No scenario states that the timer stays.
   Later change `fix-director-listener-timer` addresses `session-listener-timer`.
+
+## Pass 7 scope
+
+Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
+
+The loop table lists 52 collection traversals in six of the seven source files.
+The file lifetime.js has no collection loop.
+
+- Known limit `allowed-field-added-members`: the automatic tool does not add members to the eight allowed-field lists.
+  Hand rows add script, and tests reject script and adapters for each list.
+  Other added names need separate hand rows.
+- Known limit `host-gates`: the lead runs image gates, ratchet and review round 6.
+  This pass uses host tests and coverage.
+
+- Known limit `predispatch-code-fence`: the helper treats the production identifiers `MIME` and `SHA-256` inside JavaScript fences as prose.
+  The pass keeps the production span and the helper.
+- Known limit `predispatch-run-name`: task 9.11 uses the wording that the lead gives.
+  The helper reports run as a noun in that instruction.

@@ -2,7 +2,6 @@
 
 Base commit: `290b5d2`.
 
-MIME means Multipurpose Internet Mail Extensions.
 
 ASCII means American Standard Code for Information Interchange.
 
@@ -46,7 +45,7 @@ The other 118 selected mutations survived.
 The unselected mutations and these results give 260 former survivors.
 
 The pass policy counts timeouts and crashes as kills, as Stryker does.
-That rule gives 3514 Campaign 2 phase 1 kills and 3589 kills after the second phase.
+That rule gives 3514 kills after Campaign 2 phase 1 and 3589 kills after phase 2.
 The tool README keeps timeouts unresolved and crashes separate.
 This audit records each status instead of a test failure for those cases.
 
@@ -160,8 +159,8 @@ a3554 a3555 a3556 a3557 a3558 a3559 a3560 a3561 a3562
 ## Extension run
 
 Campaign 1 stopped during baseline work and gave no mutation result.
-Campaign 2 is the original check of 3849 mutations.
-The final rerun is the lead check of those 3849 mutations.
+Campaign 2 is the original test of 3849 mutations.
+The final rerun is the lead test of those 3849 mutations.
 The extension run checks 711 new mutations in four extension checks.
 It keeps every old mutation ID and adds IDs from a9000.
 
@@ -219,13 +218,27 @@ The closed sets are:
 
 | set | file:line | accepted members |
 | --- | --- | --- |
-| MIME types | bundle.js:11 | application/json, application/geo+json, image/png, video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav, audio/webm |
+| media types | bundle.js:11 | application/json, application/geo+json, image/png, video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav, audio/webm |
 | Data pack formats | manifest.js:46 | geojson, image, media |
 | Directory protocols | source.js:10 | http:, https: |
+| Data pack fields | manifest.js:34-43 | id, version, format, source, attribution, placement, byteLength, sha256 |
+| Source fields | manifest.js:48 | adapter, path |
+| Attribution fields | manifest.js:51 | text, license, url |
+| Image placement fields | manifest.js:84-92 | bounds, height, altitudeReference |
+| Media placement fields | manifest.js:84-92 | anchorId |
+| GeoJSON placement fields | manifest.js:84-92 | altitudeReference |
+| Bundle fields | bundle.js:78 | format, version, project, assets |
+| Asset fields | bundle.js:86 | path, mimeType, base64, sha256 |
 
 The tool does not add members to arrays or Sets.
-This additive edits limit covers the nine MIME types at bundle.js:11 to 21, formats at manifest.js:46 and protocols at source.js:10.
-Hand rows m413 to m415 add one unlisted member to each closed set.
+This limit on additive edits covers the nine media types at bundle.js:11 to 21.
+It also covers the formats at manifest.js:46 and the protocols at source.js:10.
+Hand rows m413 to m415 add an unlisted type, format or protocol.
+Rows m455 to m462 add script to each allowed-field list.
+The tests reject script and adapters independently for each list.
+
+The automatic tool does not add members to these lists.
+Other added names remain a tool limit.
 The tool does not narrow a collection with slice or move a call outside its loop.
 The loop table names the separate hand rows for these mutations.
 
@@ -392,52 +405,84 @@ Campaign 2 gives 11 results with this status. The Final rerun section gives the 
 
 ## Loop table
 
-The table covers each collection loop in the seven source files.
-Each test reaches at least two items or rejects a later item.
-The lifetime.js file has no collection loop.
-Each mutation narrows a collection or moves a per-item check outside its loop.
-The final hand command gives each result.
+The loop table lists 52 collection traversals in six of the seven source files.
+The file lifetime.js has no collection loop.
+The table lists loops, collection methods, key and value enumeration, byte mappers, and Set and Map copies.
+Each test needs a second item, a last item, or all bytes of a digest.
+Complete hand check 3 gives each result.
 
-| loop | file:line | test with 2 items | mutation row or Known limit |
+| traversal | file:line | test | hand rows |
 | --- | --- | --- | --- |
-| Path segments | src/director/packs/manifest.js:24 | [director-076] The path rejects its second segment | m425 |
+| Path segments | src/director/packs/manifest.js:24 | [director-076] The validator rejects an invalid second path segment | m425 |
 | Bounds coordinates | src/director/packs/manifest.js:103 | [director-080] The image rejects bounds field 3 | m424 |
-| Scene anchors | src/director/packs/manifest.js:123 | [director-081] The manifest uses the second anchor | m417 |
-| Scene data packs | src/director/packs/manifest.js:125 | [director-077 director-082] The manifest validates the second data pack | m416 |
-| Scene shots | src/director/packs/manifest.js:131 | [director-082] The manifest rejects the second shot reference | m411, m412 |
-| Shot reference IDs | src/director/packs/manifest.js:134 | [director-082] The manifest checks the second reference ID | m418 |
-| Position coordinates | src/director/packs/geojson.js:20 | [director-085] The position rejects its second nonfinite coordinate | m426 |
+| Scene anchors | src/director/packs/manifest.js:123 | [director-081] The manifest accepts a reference to the second anchor | m417 |
+| Scene data packs | src/director/packs/manifest.js:125 | [director-077 director-082] The manifest rejects an invalid second data pack | m416 |
+| Scene shots | src/director/packs/manifest.js:131 | [director-082] The manifest rejects a reference in the second shot | m411, m412 |
+| Shot reference IDs | src/director/packs/manifest.js:134 | [director-082] The manifest rejects an unknown second reference ID | m418 |
+| Position coordinates | src/director/packs/geojson.js:20 | [director-085] The decoder rejects an invalid second coordinate | m426 |
 | Line positions | src/director/packs/geojson.js:32 | [director-085 director-086] The decoder rejects the second line position | m420 |
 | Ring end coordinates | src/director/packs/geojson.js:33 | [director-086] The ring rejects unclosed field 2 | m427 |
 | Features | src/director/packs/geojson.js:37 | [director-084] The decoder rejects the second feature | m419 |
 | Polygon rings | src/director/packs/geojson.js:58 | [director-087] The decoder rejects the second ring | m421 |
 | Resource handles | src/director/packs/session.js:52 | [director-089] The session keeps every data pack handle | m428 |
-| Session anchors | src/director/packs/session.js:70 | [director-081 director-093] The session uses the second anchor | m423 |
-| Session declarations | src/director/packs/session.js:71 | [director-088] The session validates the second data pack before source access | m422 |
+| Session anchors | src/director/packs/session.js:70 | [director-081 director-093] The session accepts a reference to the second anchor | m423 |
+| Session declarations | src/director/packs/session.js:71 | [director-088] The session rejects an invalid second data pack before the source call | m422 |
 | Session data packs | src/director/packs/session.js:94 | [director-092] The session removes resources after a later error | m429 |
 | Stream chunks | src/director/packs/source.js:41 | [director-097] The source cancels before it reads the second chunk | m445 |
 | Output chunks | src/director/packs/source.js:55 | [director-096] The source joins chunks of different lengths | m430 |
-| Project scenes and their data packs | src/director/sharing/bundle.js:23 | [director-101] The export reaches the second scene; [director-101] The export writes each asset index and filename | m431, m432 |
+| Project scenes and their data packs | src/director/sharing/bundle.js:23 | [director-101] The export includes the asset of the second scene | m431, m432 |
 | Base64 byte chunks | src/director/sharing/bundle.js:32 | [director-101] The export encodes the second byte chunk | m446 |
-| Import assets | src/director/sharing/bundle.js:84 | [director-107] The import stops before the second asset; [director-107] The import stops after the second digest | m409, m447 |
+| Import assets | src/director/sharing/bundle.js:84 | [director-107] The import stops before the second digest | m409, m447 |
 | Import references | src/director/sharing/bundle.js:99 | [director-100] The bundle checks its second asset reference | m433 |
-| Export data packs | src/director/sharing/bundle.js:143 | [director-107] The export stops before the second asset; [director-101] The export writes each asset index and filename; [director-107] The export stops after the second digest | m410, m434, m448 |
+| Export data packs | src/director/sharing/bundle.js:143 | [director-107] The export stops before the second resolver call | m410, m434, m448 |
 | Export entries | src/director/sharing/bundle.js:190 | [director-101] The export writes each asset index and filename | m435 |
 | Stored asset bytes | src/director/sharing/bundle.js:210 | [director-104] The store counts the second asset | m436 |
-| Preview scenes for data packs | src/director/sharing/preview.js:10 | [director-108 director-110] The preview reaches the second scene and shot | m437 |
-| Preview data packs | src/director/sharing/preview.js:11 | [director-108] The preview reaches the second data pack | m438 |
-| Preview scenes for shot totals | src/director/sharing/preview.js:28 | [director-108 director-110] The preview reaches the second scene and shot | m439 |
-| Preview scenes for layers | src/director/sharing/preview.js:32 | [director-108 director-110] The preview reaches the second scene and shot | m440 |
-| Preview shots for layers | src/director/sharing/preview.js:33 | [director-108 director-110] The preview reaches the second scene and shot | m441 |
-| Preview scenes for external content | src/director/sharing/preview.js:37 | [director-108 director-110] The preview reaches the second scene and shot | m442 |
-| Preview shots for external content | src/director/sharing/preview.js:39 | [director-108 director-110] The preview reaches the second scene and shot | m443 |
-| Preview asset bytes | src/director/sharing/preview.js:41 | [director-108 director-110] The preview reaches the second scene and shot | m444 |
+| Preview scenes for data packs | src/director/sharing/preview.js:10 | [director-108 director-110] The preview counts the second scene and shot | m437 |
+| Preview data packs | src/director/sharing/preview.js:11 | [director-108] The preview lists the second data pack | m438 |
+| Preview scenes for shot totals | src/director/sharing/preview.js:28 | [director-108 director-110] The preview counts the second scene and shot | m439 |
+| Preview scenes for layers | src/director/sharing/preview.js:32 | [director-108 director-110] The preview counts the second scene and shot | m440 |
+| Preview shots for layers | src/director/sharing/preview.js:33 | [director-108 director-110] The preview counts the second scene and shot | m441 |
+| Preview scenes for external content | src/director/sharing/preview.js:37 | [director-108 director-110] The preview counts the second scene and shot | m442 |
+| Preview shots for external content | src/director/sharing/preview.js:39 | [director-108 director-110] The preview counts the second scene and shot | m443 |
+| Preview asset bytes | src/director/sharing/preview.js:41 | [director-108 director-110] The preview counts the second scene and shot | m444 |
+| Source registry entries | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m452 |
+| Source registry Map | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m463 |
+| Renderer registry entries | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m453 |
+| Renderer registry Map | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m464 |
+| Scene anchor Set | src/director/packs/manifest.js:123 | [director-081] The manifest accepts a reference to the second anchor | m470 |
+| Shot reference Set | src/director/packs/manifest.js:134 | [director-082] The shot accepts eight references and rejects nine references | m469 |
+| Session anchor Set | src/director/packs/session.js:70 | [director-081 director-093] The session accepts a reference to the second anchor | m471 |
+| Session digest bytes | src/director/packs/session.js:124 | [director-093] The session checks exact bytes and digest | m477 |
+| Bundle digest bytes | src/director/sharing/bundle.js:26 | [director-099] The import accepts a literal digest for three distinct bytes | m478 |
+| Base64 input bytes | src/director/sharing/bundle.js:46 | [director-099] The import accepts a literal digest for three distinct bytes | m479 |
+| Base64 byte spread | src/director/sharing/bundle.js:33 | [director-101] The export encodes the second byte chunk | m476 |
+| Asset store replacement Map | src/director/sharing/bundle.js:202 | [director-104] The store counts the second asset | m472 |
+| Asset store snapshot Map | src/director/sharing/bundle.js:207 | [director-104] The store counts the second asset | m473 |
+| Asset store values and spread | src/director/sharing/bundle.js:210 | [director-104] The store counts the second asset | m474 |
+| Preview source Set | src/director/sharing/preview.js:8 | [director-109] The preview accepts both configured source IDs | m468 |
+| Preview layer Set | src/director/sharing/preview.js:9 | [director-110] The preview accepts both configured layer IDs | m467 |
+| Preview layer keys | src/director/sharing/preview.js:33 | [director-110] The preview reports both absent named layers without layer IDs | m465 |
+| Preview layer Set and spread | src/director/sharing/preview.js:31 | [director-110] The preview reports both absent named layers without layer IDs | m466 |
+| Preview absent layer filter | src/director/sharing/preview.js:36 | [director-110] The preview reports both absent named layers without layer IDs | m449, m450, m451 |
+| Preview asset values and spread | src/director/sharing/preview.js:41 | [director-108 director-110] The preview counts the second scene and shot | m475 |
 
-The loop table has 32 rows.
-All 32 rows have repository tests and hand mutations.
-No loop row has an open gap or a Known limit.
+The three byte mappers have positive byte and digest tests only.
+They do not validate a later invalid byte.
+Rows m477 to m479 narrow those mappers and must give a failed repository test.
+The session digest test is director-093, The session checks exact bytes and digest.
+The bundle digest and base64 byte test is director-099, The import accepts a literal digest for three distinct bytes.
 
-The stream test supplies two chunks and stops at the next loop check after its first chunk.
-It expects the source to read once because cancellation must stop the second stream call.
+The search covers all seven source files.
+No file has recursion, matchAll or a global regex replacement.
+Empty Sets and Maps have no input collection.
+The media type Set is a closed set, which the closed-set table lists.
+
+The handle loop includes splice and reverse before traversal.
+The preview layer row includes both Set construction and spread.
+The byte total rows include Map values and array spread.
+The byte spread row includes the per-chunk subarray.
+
+The stream test supplies two chunks and stops when it checks the signal before the second chunk.
+The source reads the first chunk only.
 The byte chunk test reaches index 32768 and checks the last encoded bytes.
 The import and export tests also stop after the second digest and expect two digests.
