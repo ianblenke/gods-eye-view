@@ -35,7 +35,9 @@ The actual merge reports the same list. Git uses rerere.
 ## Fork additions without conflicts
 
 The merge keeps OSH token `3` in `src/data/layerState.js` and `src/data/layerStateTokenReservations.json`.
-Upstream uses token `0` for Street Level. The next free digit is `4`.
+Upstream uses the digits 0, 1 and 2. Token `0` belongs to Street Level.
+OSH token `3` is the digit that upstream allocates next, so a later upstream change can cause a conflict.
+The next free digit in the merged tree is `4`.
 The token tests keep the upstream allocation order and account for the OSH reservation.
 
 The merge keeps the Taiwan preset in `src/locations.js` and the OSH style entry in `scripts/format-scope.json`.
@@ -51,8 +53,8 @@ Each covers line names a future capability with the `pending:` prefix. The regis
 | File | Purpose | Covers |
 |---|---|---|
 | `scripts/qa-browserEvidence.mjs` | Save browser evidence of a failed run, with secret values removed. | `pending:application-shell` |
-| `scripts/qa-panelDrag.mjs` | Move app panels and check each header press. | `pending:application-shell` |
-| `scripts/qa-panel-resize.mjs` | Check CCTV panel size and position after each resize. | `pending:application-shell` |
+| `scripts/qa-panelDrag.mjs` | Move app panels and check each press on a header. | `pending:application-shell` |
+| `scripts/qa-panel-resize.mjs` | Check CCTV panel size and position after each change of size. | `pending:application-shell` |
 | `scripts/qa-street-level.mjs` | Check Street Level tiles and images with browser fixtures. | `pending:street-level` |
 | `scripts/qa-voice-bench.mjs` | Compare voice tool choices across providers with the same phrases. | `pending:voice` |
 
@@ -69,7 +71,7 @@ Use the upstream commit as FROM. Do not use the merge commit as FROM.
 
 Both dependency installs use `npm ci`. The lock file uses the upstream content and `npm install --package-lock-only`.
 All Node and npm processes use `taskset -c 0-3` and `nice -n 19`.
-The pristine worktree reads the upstream commit. Both trees use `npm test` with default process isolation.
+The worktree of unchanged upstream reads the upstream commit. Both trees use `npm test` with default process isolation.
 The tests under `src/tooling/spec/` each have their own process.
 
 The host format check and boundary check use the package scripts.
@@ -100,15 +102,15 @@ The upstream tree adds `OPENAI_REALTIME_TRANSCRIBE_MODEL`, `GEV_VOICE_LOG_CONTEN
 It also adds `GEV_EMBED_FRAME_ANCESTORS` and four `CCTV_VEGVESEN_` settings.
 
 The upstream example changes the AIS browser route to `/api/vessels`.
-The Google default limit is 120 requests per minute. The OpenAI default limit is 30.
-A value of zero removes each limit. The server geocode route shares the Google limit.
+The Google default rate limit is 120 requests per minute. The OpenAI default rate limit is 30.
+A value of zero removes each rate limit. The server geocode route shares the Google rate limit.
 
 Upstream adds standalone MCP and voice tool routes. The fork keeps those routes and the OSH routes.
 
-## Pristine baseline result
+## Baseline result of unchanged upstream
 
 Tree: `95fa816232456a6831172befa2f1b34b9ee73794`. Host runtime: Node `v26.8.2`.
-The command `npm test` completed with exit 1. It ran 6184 tests: 6182 passed, one test failsed and one was skipped.
+The command `npm test` completed with exit 1. It ran 6184 tests: 6182 passed, one test failed and one was skipped.
 
 The failed test is `src/data/analystEngine.test.mjs`, line 632, the ranking test for 250000 rows.
 Its assertion reports 864 ms. The suite duration is about 869 seconds under host load.
@@ -148,11 +150,11 @@ The upstream helper `scripts/voice-bench/keys.mjs` reads this name for the optio
 Add the name to `.env.example` as an optional script credential. Keep the inventory assertion unchanged.
 
 The conflict resolution must also keep the fork note about the OpenAI client secret in `SECURITY.md`.
-The API key stays on the server. The browser receives an short-lived secret for WebRTC.
+The API key stays on the server. The browser receives a short-lived secret for WebRTC.
 
 ## Voice manifest correction
 
-At code commit `81da1e1f6ac0a0a65ca2983240cb182f1a19841b`, the upstream voice manifest test finds the absent layer `osh-systems`.
+At code commit `81da1e1f6ac0a0a65ca2983240cb182f1a19841b`, the upstream voice manifest test finds that the layer `osh-systems` has no entry.
 OSH has no voice tools. Add its ID to `VOICE_OFF_LAYERS` in `src/voice/layerManifest.js`.
 The entry keeps the current OSH behavior. It adds no voice alias or tool.
 The current upstream test must fail if a fault removes the entry.
@@ -166,7 +168,7 @@ The suite duration is about 1500 seconds. The allocation phase did not run after
 | Failed test | Cause | Next action |
 |---|---|---|
 | Catalog construction | The old assertion expects 30 layers. | Expect 31. |
-| Ranking 250000 rows | The assertion reports 561 ms. The pristine run also fails. | Pass 4 sets a 4000 ms ceiling. |
+| Ranking 250000 rows | The assertion reports 561 ms. The run on unchanged upstream also fails. | Pass 4 sets a 4000 ms ceiling. |
 | `[credential-boundary-003]` in googleServerKey | The old spec needs two public defines. Upstream has three. | Pass 3 resolves the spec conflict. |
 | `[credential-boundary-006]` | The Gemini script credential has no documentation. | Add its name to the environment example. |
 | Voice manifest | OSH has no manifest entry. | Add OSH to the voice-off list. |
@@ -181,11 +183,11 @@ The final format check reports `Checked 1327 source files.` The earlier boundary
 The last correction adds no import or export. The token helper reports `sync-check: 4`.
 
 The separate Google-key file has six tests: five pass and `[credential-boundary-003]` fails.
-The test keeps the old two-key requirement. Pass 3 supersedes this result and resolves the conflict with the complete spec delta.
+The test keeps the old two-key requirement. Pass 3 replaces this result and resolves the conflict with the complete spec delta.
 The full merged suite does not run again after these last corrections. Its counts above belong to the earlier code tree.
 
-The pristine ranking test also fails in an isolated host process. Its assertion reports 546 ms.
-This evidence does not prove that only load causes the failure. Pass 4 supersedes this limit with a 4000 ms ceiling.
+The ranking test of unchanged upstream also fails in an isolated host process. Its assertion reports 546 ms.
+This evidence does not prove that only load causes the failure. Pass 4 replaces the 400 ms ceiling with a 4000 ms ceiling.
 The host checks do not give an image gate verdict.
 
 ## Last fault checks
@@ -213,7 +215,7 @@ The two test files pass all 12 tests. The full host suite completes with exit 1.
 It reports 8670 tests: 8668 pass, one test fails and one is skipped.
 The only failure is the unchanged upstream test for 250000 rows. It reports 1018 ms against the time budget.
 
-The pristine baseline has the same failed test. The allocation phase does not run after this failure.
+The baseline of unchanged upstream has the same failed test. The allocation phase does not run after this failure.
 
 Format passes for 1327 source files. The boundary checks pass.
 The token check against `origin/main` reports 29 published tokens and one new token.
@@ -224,7 +226,7 @@ Remove the Mapillary define: both list tests fail for `credential-boundary-003`.
 Change the name order: both list tests fail for `credential-boundary-003`.
 Add the server Google define: both list tests fail for `credential-boundary-003`.
 Restore the empty-string default: the build-input test fails for `credential-boundary-003`.
-Each fault restores `build/vite.js`. The source diff after the faults is empty.
+Each fault check restores `build/vite.js`. The source diff after the faults is empty.
 
 The prose lint reports one error and 563 warnings.
 It rejects `expose` in the required unchanged sentence of the new delta file.
@@ -249,7 +251,7 @@ Send geocoding requests from the browser only to our server, with no API key.
 ## Pass 3 checks
 
 Change `src/tooling/bundleCredentials.test.mjs`, `src/googleServerKey.test.mjs` and `src/tooling/viteBuild.test.mjs`.
-Run each file in one host process. Run the full unit suite once and compare it with the pristine baseline.
+Run each file in one host process. Run the full unit suite once and compare it with the baseline of unchanged upstream.
 Run host lint, format, boundary and layer token checks. Prove each changed test with a fault and restore each file.
 The lead must run the image checks and the two review agents before merge.
 
@@ -265,7 +267,7 @@ Add a Mapillary environment default: the second helper test for `003` fails. Eac
 The full host suite runs once and completes with exit 1. It reports 8670 tests, 8668 pass, one test fails and one test is skipped.
 Only the unchanged upstream row test fails. Its assertion reports 1379 ms; the whole test takes about 2039 ms.
 
-The pristine baseline has 6184 tests, 6182 pass, one test fails and one test is skipped. It has the same failed test.
+The baseline of unchanged upstream has 6184 tests, 6182 pass, one test fails and one test is skipped. It has the same failed test.
 The row test file has no diff from upstream commit `95fa816232456a6831172befa2f1b34b9ee73794`.
 The allocation phase does not run after the failure. These host results give no image coverage verdict.
 
@@ -276,7 +278,7 @@ Host logs are in `gev-tools/upstream-sync-3/pass-3-host/`. The lead still must c
 ## Pass 4 plan
 
 Source tree: `7adfc97a7cea727249269c75070bcfdeac24dea4`.
-The adopt log reports seven test files with leaked timers and one test failsed row test.
+The adopt log reports seven test files with leaked timers and one failed row test.
 The host probe uses the gate preload, inventory hash and environment variables. Each file runs in a separate process.
 The probe uses `--test-force-exit` to check timers at test completion.
 
@@ -288,12 +290,12 @@ Add a scheduler margin to the row budget. Test the original CPU budget before th
 Keep the page yield and cancellation assertions.
 
 Run the probe before and after each correction. Check every test file that differs from the base.
-Run the changed tests, format checks, boundary checks and the full unit suite. Compare failures with the pristine baseline.
+Run the changed tests, format checks, boundary checks and the full unit suite. Compare failures with the baseline of unchanged upstream.
 The lead must run the image checks and both reviews before merge.
 
 The first CPU check fails at 771 milliseconds on the host. Process CPU time includes runtime work across threads.
 Use a wall clock ceiling of 4000 milliseconds instead. The ceiling allows 3600 milliseconds more than the original ceiling.
-The test still checks the row count, top row, page yield and cancellation. The limit `ranking-ceiling-not-measured` records the unmeasured slowdown below 10 times the old ceiling.
+The test still checks the row count, top row, page yield and cancellation. The entry `ranking-ceiling-not-measured` records the unmeasured slowdown below 10 times the old ceiling.
 
 ## Pass 4 test corrections
 
@@ -334,7 +336,7 @@ The lead then ran adopt again, because the first adopt recorded the old counts.
 
 The initial probe reproduces all seven leaks on host Node 26.8.2. It reports counts of 1, 1, 2, 1, 66, 1 and 2.
 The row test has no timer leak. Its first probe passes the original ceiling during this run.
-The pristine baseline from pass 1 fails the same row test at 864 milliseconds. Its separate row test fails at 546 milliseconds.
+The baseline of unchanged upstream from pass 1 fails the same row test at 864 milliseconds. Its separate row test fails at 546 milliseconds.
 
 Those baseline logs name upstream commit `95fa816232456a6831172befa2f1b34b9ee73794`.
 
@@ -344,7 +346,7 @@ The final results appear below.
 
 ## Pass 4 fault checks
 
-Fault copies read tree `7adfc97a7cea727249269c75070bcfdeac24dea4`. They have no branch and stay outside this clone.
+Fault copies use source tree `7adfc97a7cea727249269c75070bcfdeac24dea4`. They have no branch and stay outside this clone.
 Restore each of the seven original test files in these copies. The timer guard reports a leak for each file.
 The counts are 1, 1, 2, 1, 66, 1 and 2. The unit assertions still pass, but the guard rejects the live resources.
 
@@ -354,11 +356,11 @@ Its failed assertion reports 436 milliseconds.
 The clone keeps the corrected files throughout these fault checks.
 
 The first timer batch stops during one shell invocation after a script edit. This partial run gives no complete scan result.
-Compare the result file list with the 132-file input list. Run all absent files before the final report.
+Compare the result file list with the 132-file input list. Run each file that the result list does not name before the final report.
 
 ## Pass 4 final timer result
 
-Source tree: `7adfc97a7cea727249269c75070bcfdeac24dea4`, with the nine test corrections above.
+Source tree: `7adfc97a7cea727249269c75070bcfdeac24dea4`, with the eight test corrections of that tree.
 The final probe uses the raw coverage environment, coverage options and two reporters from the main gate test run.
 It uses the gate QA register to build the source inventory. All eight changed test processes pass with no leaks.
 
@@ -374,17 +376,17 @@ The same file passes outside the sandbox with no leak. This task makes no correc
 The first scan command exits 123 after the script edit. Its 132 file records do not give a passed command result.
 
 The fault check with the complete coverage environment reproduces all seven original timer counts.
-The row fault with a zero ceiling fails. The nine files keep the same assertion method counts as read tree `7adfc97a`.
+The row fault with a zero ceiling fails. The eight files keep the same assertion method counts as source tree `7adfc97a`.
 Host logs and the fault copies are in `gev-tools/upstream-sync-3/pass-4-host/`.
 The reproducible script is `gev-tools/upstream-sync-3/leakcheck.sh`.
 
 ## Pass 4 full host result
 
-Source tree: `7adfc97a7cea727249269c75070bcfdeac24dea4`, with the nine test corrections above.
+Source tree: `7adfc97a7cea727249269c75070bcfdeac24dea4`, with the eight test corrections of that tree.
 The full npm test command runs once and completes with exit zero.
-It reports 8670 tests, 8669 passes, zero failures and one test is skipped. The row test passes.
+It reports 8670 tests: 8669 pass, no test fails and one test is skipped. The row test passes.
 
-The pass 1 pristine baseline reports 6184 tests, 6182 passes, one test failure and one test is skipped.
+The pass 1 baseline of unchanged upstream reports 6184 tests: 6182 pass, one test fails and one test is skipped.
 Its only failure is the row test. The corrected host run has no baseline failure left.
 
 Host Node 26.8.2 skips two allocation test files because their budgets need Node 24.
@@ -397,20 +399,22 @@ Prose lint reports zero errors and 572 warnings. The final document commit chang
 ## Round 1 decisions
 
 Source tree: `1b9eaa0c8ce1eb4505e79e48006fa1d26789b52d`.
-The geocode handler calls `admitSameSite` first. The shared install serves dev and preview.
+The geocode handler calls `admitSameSite` first. The route code is shared, so the dev server and the preview server use the same gate.
 The gate sends the same 403 body and no-store header as Google Places. It writes no log.
 
 It checks Origin, Sec-Fetch-Site and proxy headers. The key resolver runs only after admission.
 
 | File | Fork decision |
 |---|---|
-| `build/vite.js` | Omit upstream `?? ''` for the Mapillary define. Without a token the define is `undefined`. `layerSources.js` uses `|| ''`, so runtime behavior is equal. |
+| `build/vite.js` | Omit upstream `?? ''` for the Mapillary entry in `define`. Without a token the entry is `undefined`. `layerSources.js` uses `|| ''`, so runtime behavior is equal. |
 
-The QA voice bench command needs `--provider ollama --model <id>` to run a provider comparison.
+The QA voice bench command needs the options `--provider` and `--model`. Its header example uses `--provider ollama --model <id>`.
+
 The OSH registry scenario now expects 30 entries. The QA register scenario now expects 88 scripts.
+The QA register scenario also checks that three scripts name `pending:application-shell` in their covers tag.
 The requirement sentences stay unchanged. Each delta keeps all scenarios of its requirement.
 
-### Tests for the six variable gaps
+### Tests for the six files whose gaps differ between runs
 
 | Code file | Test imports |
 |---|---|
@@ -419,29 +423,29 @@ The requirement sentences stay unchanged. Each delta keeps all scenarios of its 
 | `src/layers/flights/motion.js` and `src/layers/flights/rendering.js` | `src/layers/flights/ownership.test.mjs` imports index.js, which imports these files. `src/data/flights.test.mjs` reaches them through the app layer. |
 | `src/layers/military/queries.js` and `src/layers/military/rendering.js` | `src/layers/military/ownership.test.mjs` imports index.js, which imports these files. `src/data/militaryFlights.test.mjs` reaches them through the app layer. |
 
-The lead must run these files in the image and check the final gate and CI counts.
-A return to larger gaps needs a ledger-refresh change. The production code stays equal to upstream.
-The owner accepts the absent child coverage of both panel key race tests. Record this fact in `review.md`.
+The lead must run the test files of this table in the image and check the counts of the final gates and CI.
+If the gaps become larger again, use a ledger-refresh change. The production code stays equal to upstream.
+The owner accepts that the child processes of both panel key race tests give no coverage. Record this in `review.md`.
 
 ## Round 1 host result
 
 Source code tree: `77b57e88aa1084f7851dd2838f0370370a14c0e8`. Host runtime: Node `26.8.2`.
 The full host command `npm test` completes with exit zero.
-It reports 8674 tests: 8673 pass, zero fail, and one test is skipped.
-The two allocation probes need Node 24, so the host runner skips them.
+It reports 8674 tests: 8673 pass, no test fails and one test is skipped.
+The two allocation tests need Node 24, so the host runner skips them.
 
 The first restricted suite stops before the end after local server access errors. It has no final result.
 
 The seven changed test files pass 148 tests in separate processes. All seven pass the timer guard with no leaks.
-The final bundle, Google title and QA register edits also pass separate tests and guard checks.
+The final edits to the bundle test, the Google title and the QA register test also pass separate tests and guard checks.
 The geocode report covers all 200 lines, 55 branches and seven functions.
 Format checks pass for 1327 files. Boundary checks pass for 967 modules and 76 portable entries.
 
 The final prose lint reports zero errors.
 
 Remove the geocode gate: both `credential-boundary-017` tests fail.
-Move the gate after fetch: both `credential-boundary-017` tests fail because the key read count is one.
-Invert the gate check: both new scenarios fail in both installs.
+Move the gate after fetch: both `credential-boundary-017` tests fail because the route reads the key once.
+Invert the gate check: both new scenarios fail in the dev server and in the preview server.
 
 The first inversion run stops before the end. The filtered scratch run completes with four failed tests.
 Restore `unmapped:` in the panelDrag header in a scratch copy: `qa-scripts-023` fails.
@@ -449,4 +453,4 @@ Each scratch copy has no branch. The clone keeps the correct gate and QA headers
 
 The lead must run ratchet and final gates in the Node 24 image, and get both review results.
 These corrections change no adopted upstream code file. Adopt needs no new run.
-The lead must set the Purpose after archive and record the accepted panel key child coverage gap in `review.md`.
+The lead must set the Purpose after archive and record in `review.md` the accepted gap in the coverage of the panel key child processes.

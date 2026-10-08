@@ -1,5 +1,5 @@
 /**
- * @purpose Move app panels and check each header press.
+ * @purpose Move app panels and check each press on a header.
  * @covers pending:application-shell
  * @run Not run alone. QA scripts import this file.
  * @needs A browser page from another QA script.
