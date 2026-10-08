@@ -20,6 +20,7 @@ import { aisLiveProxy } from './vessels/ais-live.js';
 import { trackBackfillProxies } from './aircraft/tracks.js';
 import { openAiRealtimeProxy } from './openai.js';
 import { googlePlacesContextProxy } from './places.js';
+import { mapillaryProxy } from './mapillary.js';
 import { oshProxy } from './osh.js';
 import { oshControlProxy } from './osh-control.js';
 import { createCommandLog } from './osh-control/log.js';
@@ -29,8 +30,11 @@ import { firePerimetersProxy } from './firePerimeters.js';
 import { cycloneProxy } from './cyclones.js';
 import { windProxy } from './wind.js';
 
-/** Construct the local provider plugins in their established order. */
-function localProviderPlugins() {
+/**
+ * Construct the local provider plugins in their established order.
+ * `realtime` configures the voice session token endpoint.
+ */
+function localProviderPlugins({ realtime } = {}) {
   return [
     openSkyProxy(),
     celestrakProxy(),
@@ -52,7 +56,7 @@ function localProviderPlugins() {
     adsbLolProxy(),
     aisLiveProxy(),
     trackBackfillProxies(),
-    openAiRealtimeProxy(),
+    openAiRealtimeProxy({ realtime }),
     googlePlacesContextProxy(),
     oshProxy(),
     oshControlProxy({
@@ -64,6 +68,7 @@ function localProviderPlugins() {
     windProxy(),
     weatherProxy(),
     cycloneProxy(),
+    mapillaryProxy(),
     firePerimetersProxy(),
     keySetupEndpoint(),
   ];
