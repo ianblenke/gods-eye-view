@@ -51,3 +51,41 @@ Origin: spec-first
 #### Scenario: Need the file in the adopt record `gap-ledger-146`
 - **WHEN** valid adopt records name other files but do not name the production file
 - **THEN** the gate gives that production file no new tolerance
+
+### Requirement: Total counts for adopted files
+The gates MUST not mark a valid adopted file of the checked change as stale when only its total counts differ.
+Both records MUST have equal not-covered counts and equal content hashes with true loaded coverage.
+This rule MUST give no count tolerance to a file that differs from its adopted source.
+The ratchet command MUST write the current total counts for that file.
+Origin: spec-first
+
+#### Scenario: Accept total count differences `gap-ledger-147`
+- **WHEN** a valid adopted file differs from its source but has equal ledger and current hashes and not-covered counts
+- **AND** both records have true loaded coverage and different total counts
+- **THEN** the gate does not mark the file as stale
+- **AND** the ratchet command writes current totals, such as 399 or 401 from 400, or 100 from 101
+
+#### Scenario: Keep exact not-covered counts `gap-ledger-148`
+- **WHEN** that adopted file has different not-covered counts
+- **THEN** the gate keeps each coverage error and the stale rule exact
+
+#### Scenario: Need a valid adopt record `gap-ledger-149`
+- **WHEN** no valid adopt record names the file
+- **THEN** the gate marks total count differences as stale
+
+#### Scenario: Ignore another change record `gap-ledger-150`
+- **WHEN** the adopt record names another change
+- **THEN** the gate marks total count differences as stale
+
+#### Scenario: Reject an invalid from commit `gap-ledger-151`
+- **WHEN** the adopt record has a from commit that is not a merge second parent
+- **THEN** the gate marks total count differences as stale
+- **AND** the gate keeps LEDGER-ADOPT-FROM
+
+#### Scenario: Keep a different hash exact `gap-ledger-152`
+- **WHEN** an adopted file has a current hash that differs from its ledger hash
+- **THEN** the gate marks total count differences as stale
+
+#### Scenario: Keep untrue or unloaded records exact `gap-ledger-153`
+- **WHEN** either record has untrue coverage or no test loads the file
+- **THEN** the gate gives no total count exception

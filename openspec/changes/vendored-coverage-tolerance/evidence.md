@@ -236,3 +236,233 @@ Result: STE has zero errors. The report names no issue in this change's prose.
 The full project report has 538 WARN items for earlier prose.
 The lead must run the Node 24 image checks, the ratchet command and both review agents.
 The lead must read the QA lines and check the upstream remote for each merge second parent under rule 21.
+
+## Pass 2
+
+Read commit: `125dc3ae92f9687a830e230914ec0e2b393dda18`.
+Code commit: `0945baeeb34416d0e607abd184d096486b673eef`.
+Test correction commit: `0407e631`.
+The correction replaces a fixture-variable comparison with specification literals.
+It changes no script bytes.
+Command: git rev-parse HEAD.
+
+Each host Node process uses taskset -c 8-11 nice -n 19. Each test process names one test file.
+The host checks use the strict transport at /home/ianblenke/docker/gev-tools/vct/strict-host-2.mjs.
+It also applies the CPU and priority settings to each fixture Node process.
+It keeps Node test isolation. It changes no project file.
+
+The new adoptedFile predicate reads the same valid adopt records as adoptedAsIs.
+Only the stale decision uses the new predicate. Fork edits keep exact not-covered counts and all coverage errors.
+The ratchet command writes current totals for those edits.
+
+### Named mutations
+
+Command: python /home/ianblenke/docker/gev-tools/vct/pass2-named.py.
+Source commit: `0945baee`. Logs: /tmp/vct2-logs/named-*.log.
+The command reads failed test names from Node output. It does not read the gate result cache.
+
+| Fault | Failed test scenario |
+|---|---|
+| Drop equal not-covered counts | gap-ledger-148 |
+| Drop valid adopt evidence | gap-ledger-149 |
+| Accept another change | gap-ledger-150 |
+| Accept an invalid from | gap-ledger-151 |
+| Drop the ledger hash check | gap-ledger-152 |
+| Allow an untrue entry | gap-ledger-153 |
+| Allow an unloaded entry | gap-ledger-153 |
+| Drop the total count exception | gap-ledger-147 |
+| Drop the gate predicate | gap-ledger-147 |
+| Write old ratchet totals | gap-ledger-147 |
+
+The command also removes the current untrue guard and the current loaded guard in separate scratch files.
+Those faults do not change a verdict. The current errors stop the stale decision for those inputs.
+The other guards also stop that decision when both records have untrue coverage or no test loads them.
+
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/vct/pass2-probe.mjs.
+Source commit: `0945baee`. Log: /tmp/vct2-logs/probe-named.log.
+
+Each guard probe compares 11520 result objects. Both probes give EQUIVALENT within that input set.
+The inputs vary source predicates, hashes, loaded states, untrue states, metrics, total counts and not-covered counts.
+The probes use plain records and pure predicates. They do not cover property getters or callback side effects.
+
+### Real CI data
+
+Replay tree commit: `d09e034b9c751ebe286e2f5f32773db1af48c0a3`.
+Replay base commit: `e2437f945215860c42b5d8bba6834c85f93a90ce`.
+Command: git -C /tmp/vct2-replay rev-parse HEAD origin/main.
+
+The scratch tree is a copy of /home/ianblenke/docker/gev-work/upstream-sync-3.
+
+Command: git -C /tmp/vct2-replay diff --name-only d17b233e d09e034b.
+Only the review.md file of the sync change differs from the earlier replay tree.
+The production files and the ledger have the same content.
+
+The replay tool now supplies adoptedAsIs and adoptedFile from the same valid adopt records as the gate.
+The earlier tool copy is /home/ianblenke/docker/gev-tools/vct/stale-check-s3-original.mjs.
+
+Command: git show e2437f94:scripts/spec/lib/ledger.mjs.
+The original replay uses that library and the gate script from the same commit in the scratch tree.
+The next replay uses the scripts from commit `0945baee`.
+
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/stale-check-s3.mjs /tmp/vct2-replay /tmp/claude-1000/gcr/pr18-art.
+Logs: /tmp/vct2-logs/replay-original.log and /tmp/vct2-logs/replay-final.log.
+
+| Run | Stale coverage files |
+|---|---|
+| Original library | server/providers/mapillary/tiles.js; src/data/localGeojsonCore.js; src/keySetupCore.mjs; src/voice/turnMetrics.js |
+| Pass 2 | None |
+
+The original run has 4 stale coverage files. The new run has 0.
+The replay has untraced-test and QA script noise in both runs. Its approximations cause that noise.
+Those results give no project gate verdict.
+
+### Runs that stopped
+
+The sandbox hides individual Node test reports. Its file-level reports give no individual test verdict.
+The host runs replace those attempts.
+Some batch and single-title commands reach their time limits. Those commands give no test verdict.
+The final test report must use only commands that finish with individual test verdicts.
+
+The first automatic mutation attempt stops at its baseline time limit before it starts a mutation.
+The next attempt uses the new gate scenarios and all ledger tests.
+
+### File check
+
+Source commit: `0945baee`.
+Command: rg -n 'adoptedFile|totalsOnly' scripts/spec/gates.mjs scripts/spec/lib/ledger.mjs.
+The search shows the predicate in the gate, its input to compareLedger and the total count condition in the library.
+Command: git diff --check.
+The command reports no format error.
+
+### Host coverage
+
+Script source commit: `0945baee`. Final test source commit: `0407e631`.
+Command: taskset -c 8-11 nice -n 19 node --experimental-test-coverage --test-coverage-include=scripts/spec/lib/ledger.mjs --test src/tooling/spec/ledger.test.mjs.
+Log: /tmp/vct2-logs/ledger-coverage-final.log.
+
+The command reports 100 tests and 100 passes. It reports no failure.
+The library has 100% line, branch and function coverage.
+
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/vct/coverage-detail.mjs scripts/spec/gates.mjs /tmp/vct2-raw-gates.
+Log: /tmp/vct2-logs/gate-coverage-final.log.
+The merger selects only the actual project URL. It uses the project V8 merge library.
+The gate script has 100% line, branch and function coverage.
+The command reports equal hit and total counts for lines, branches and functions.
+
+Each coverage command selects one script. Neither command reports image coverage.
+
+### Automatic mutations
+
+Script source commit: `0945baee`. The next test correction changes no script bytes.
+The first phase uses the tests of that commit. The second phase uses the tests of `0407e631`.
+Tool guide: /home/ianblenke/docker/gev-tools/automut/README.md.
+Tool copy: /home/ianblenke/docker/gev-tools/vct/pass2-automut/automut.mjs.
+
+The copy keeps test isolation and applies the host CPU and priority settings.
+It selects all ledger tests and the new gate tests. Each process names one test file.
+The follow-up command also selects the old base, adopt and waiver scenarios.
+
+Command: python /home/ianblenke/docker/gev-tools/vct/pass2-select.py.
+Log: /tmp/vct2-logs/mutation-selection.json.
+The tool generates 11293 candidates and selects 181 candidates on the changed script lines.
+
+Command:
+
+```text
+taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/vct/pass2-automut/automut.mjs run --root /home/ianblenke/docker/gev-work/vendored-tolerance --mutants /home/ianblenke/docker/gev-tools/vct/pass2-automut/mutants.json --tests src/tooling/spec/ledger.test.mjs,src/tooling/spec/gates.test.mjs --phase 1 --jobs 1 --slow-ms 30000 --commit 0945baee --out /home/ianblenke/docker/gev-tools/vct/pass2-automut/results.json
+```
+
+Log: /tmp/vct2-logs/automut-phase1-final.log.
+
+The second command uses the same options with --phase 2 and --resume.
+Log: /tmp/vct2-logs/automut-phase2.log.
+Both phases finish. A failed-test stop identifies a killed mutation; it does not give a full test-file pass.
+
+Command: python /home/ianblenke/docker/gev-tools/vct/pass2-followup.py.
+Logs: /tmp/vct2-logs/followup-*.log.
+
+| Mutation IDs | Fault | Failed scenario |
+|---|---|---|
+| a9585, a9591 | Remove sameAsBase | gap-ledger-069 |
+| a9586, a9592 | Remove adoptedAsIs | gap-ledger-136 |
+| a9588, a9594 | Remove waivers | gap-ledger-081 |
+
+The other gate survivors are a9898 and a9903.
+The first changes closure order. The second changes the order of independent comparisons.
+The base and each mutant pass the same 12 test titles with actual Git fixtures and fixed coverage data.
+These probes compare verdicts. They do not compare elapsed time or file changes from another process.
+
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/vct/pass2-probe.mjs --automatic.
+Log: /tmp/vct2-logs/probe-automatic.log.
+The command checks 14 library survivors with 11520 cases each. All result fields match.
+The scope is plain records and pure predicates. The named guard proof also applies to the redundant current guards.
+
+Command: python /home/ianblenke/docker/gev-tools/vct/pass2-proof.py.
+Log: /tmp/vct2-logs/automut-proof.json.
+The complete proof is /home/ianblenke/docker/gev-tools/vct/pass2-automut/proof.json.
+
+| Stage | Killed | Survivors |
+|---|---:|---:|
+| First phase | 159 | 22 |
+| Second phase | 0 | 22 |
+| Follow-up tests | 6 | 16 |
+
+The final total is 165 killed mutations and 16 EQUIVALENT mutations.
+The proof has 0 unresolved mutations. No final mutation has a crash or time-limit status.
+The library probes total 161280 cases. The gate probes use 12 titles for each source version.
+
+### Complete test reports
+
+Base code and test commit: `125dc3ae`. Current script commit: `0945baee`.
+Current test commit: `0407e631`. The fixture processes use their own spec files.
+
+Command: taskset -c 8-11 nice -n 19 node --test src/tooling/spec/ledger.test.mjs.
+Base folder: /tmp/vct2-base. Log: /tmp/vct2-logs/ledger-before-host.log.
+The base command reports 95 tests and 95 passes. The current coverage command reports 100 tests and 100 passes.
+
+Command: python /home/ianblenke/docker/gev-tools/vct/pass2-exact.py.
+Command: python /home/ianblenke/docker/gev-tools/vct/pass2-extra.py.
+Command: python /home/ianblenke/docker/gev-tools/vct/pass2-retry.py.
+Each command log starts with its Node command. The retry command replaces only the reports that stop at a time limit.
+
+Command: python /home/ianblenke/docker/gev-tools/vct/pass2-report.py.
+Log: /tmp/vct2-logs/test-report-final.json.
+
+| File | Base tests | Current tests | Base passes | Current passes |
+|---|---:|---:|---:|---:|
+| ledger.test.mjs | 95 | 100 | 95 | 100 |
+| gates.test.mjs | 235 | 239 | 235 | 239 |
+
+Every gate title has a complete individual verdict. No title fails, lacks a report or has reports that conflict.
+The before and after failed-name lists are empty with the same strict transport.
+The old host adapter faults give no new failure with that transport.
+
+Command: python /home/ianblenke/docker/gev-tools/vct/pass2-suite.py.
+Logs: /tmp/vct2-logs/suite-*.log.
+All other spec test files pass. The command runs one file per process.
+
+The final gate coverage command reads 674 process files.
+It reports 741 hit lines of 741 lines, 387 hit branches of 387 branches and 91 hit functions of 91 functions.
+These counts come from /tmp/vct2-logs/gate-coverage-final.log.
+
+### Final document checks
+
+Source commit before the document commit: `0407e631798afc887de7416c1102cc4ce356d1fb`.
+Command: taskset -c 8-11 nice -n 19 node scripts/spec/gates.mjs lint --change vendored-coverage-tolerance.
+Log: /tmp/vct2-logs/lint-final.log.
+The final lint reports 0 errors. The lead still runs the image gates and reads their QA lines.
+
+Command: taskset -c 8-11 nice -n 19 node /usr/lib/openspec/bin/openspec.js show vendored-coverage-tolerance --json.
+Command: taskset -c 8-11 nice -n 19 node /usr/lib/openspec/bin/openspec.js validate vendored-coverage-tolerance.
+Logs: /tmp/vct2-logs/openspec-final.json and /tmp/vct2-logs/openspec-final-validate.log.
+The first command prints JSON. The second command accepts the active change.
+
+Command: python /home/ianblenke/docker/gev-tools/vct/pass2-headings.py.
+Log: /tmp/vct2-logs/headings-final.json.
+The design and task headings match the previous commit. The proposal uses each exact heading that the owner names.
+Only the required Known limits and later changes heading differs from that commit.
+
+The lead must run make ratchet CHANGE=vendored-coverage-tolerance in the Node image.
+The lead must check the upstream remote and merge second parents under rule 21.
+The lead must get both review passes before the merge.
+The lead must run make gates CHANGE=vendored-coverage-tolerance on the final image tree.

@@ -13,6 +13,15 @@
 - [x] Add the test for an absent file with `gap-ledger-145`.
 - [x] Add the test for the source file record with `gap-ledger-146`.
 
+- [x] Add the pass 2 total count requirement.
+- [x] Write the test for `gap-ledger-147` before its code.
+- [x] Write the test for `gap-ledger-148` before its code.
+- [x] Write the test for `gap-ledger-149` before its code.
+- [x] Write the test for `gap-ledger-150` before its code.
+- [x] Write the test for `gap-ledger-151` before its code.
+- [x] Write the test for `gap-ledger-152` before its code.
+- [x] Write the test for `gap-ledger-153` before its code.
+
 ## 2. Code and host checks
 
 - [x] Add the source predicate to the ledger functions.
@@ -24,6 +33,18 @@
 - [x] Replay the real CI data.
 - [x] Run STE lint.
 - [x] Commit the change.
+
+- [x] Add the total count predicate.
+- [x] Run host tests.
+- [x] Measure script coverage.
+- [x] Run named mutations.
+- [x] Run automatic mutations.
+- [x] Replay the real CI data.
+- [x] Run STE lint.
+- [x] Check OpenSpec JSON.
+- [x] Run OpenSpec validation.
+- [x] Compare document headings with the source commit.
+- [x] Commit the pass 2 code and tests.
 
 ## 3. Lead image checks and review
 
