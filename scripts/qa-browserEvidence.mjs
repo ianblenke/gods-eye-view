@@ -1,4 +1,10 @@
 /**
+ * @purpose Save browser errors with secret values removed.
+ * @covers unmapped: Browser evidence has no capability spec.
+ * @run Not run alone. QA scripts import this file.
+ * @needs Nothing. Other scripts import this file.
+ */
+/**
  * Evidence the browser QA gates collect while they run and save under
  * `qa-artifacts/<gate>/` when they fail (CI uploads that directory). Tokens
  * and keys are masked before anything is printed or saved.

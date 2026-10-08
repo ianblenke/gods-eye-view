@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Check CCTV panel size and position after each move.
+ * @covers unmapped: Panel resize has no capability spec.
+ * @run node scripts/qa-panel-resize.mjs --url http://localhost:4173
+ * @needs A browser and a server on port 4173.
+ */
+/**
  * Browser QA for the floating CCTV panel: lift, resize from every handle,
  * minimum size, reload, and dock again. `--fail-on-retry` (or
  * QA_FAIL_ON_RETRY=1) fails on any header-press retry.

@@ -1,5 +1,11 @@
 #!/usr/bin/env node
 /**
+ * @purpose Compare voice tool choices across providers with the same phrases.
+ * @covers unmapped: Voice provider comparison has no capability spec.
+ * @run node scripts/qa-voice-bench.mjs
+ * @needs Provider credentials for the selected providers.
+ */
+/**
  * qa-voice-bench.mjs — provider-neutral TEXT-mode voice-routing benchmark.
  *
  * Every provider gets the same prompt: production's realtimeInstructions()
