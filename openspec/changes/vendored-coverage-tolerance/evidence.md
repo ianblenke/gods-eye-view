@@ -466,3 +466,64 @@ The lead must run make ratchet CHANGE=vendored-coverage-tolerance in the Node im
 The lead must check the upstream remote and merge second parents under rule 21.
 The lead must get both review passes before the merge.
 The lead must run make gates CHANGE=vendored-coverage-tolerance on the final image tree.
+
+## Pass 3
+
+Commit read: `045540504b2f69b7e2cf91275992683dded249c8`.
+The code files still equal this commit. The pre-review reports have no changes.
+
+T3 stops this pass. The lead must decide the correction for the design defect.
+The other findings have no correction in this pass.
+
+The test for `gap-ledger-154` runs the ratchet command in a fixture.
+The file equals its adopted source. The branch split adds one not-covered branch and one total branch.
+The test checks the literal counts `[2, 101]` after the ratchet command writes the ledger.
+The test then checks the output from the base comparison.
+
+Command:
+
+```sh
+taskset -c 0-3 nice -n 19 node --test-name-pattern='gap-ledger-154' src/tooling/spec/gates.test.mjs
+```
+
+Host Node: `26.8.2`. Result: 1 test, 0 pass, 1 fail. Exit status: 1.
+Log: `/home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/t3-direct.log`.
+
+The gate output starts with `Command: ratchet`.
+The command reaches the base comparison. The output contains these lines:
+
+```text
+Ratchet: 2 history lines for sync.
+Ledger: 0 entries do not match the current gaps.
+STE: 0 errors, 0 warnings.
+ERROR LEDGER-NOT-IN-BASE src/merged.js The ledger entry for src/merged.js is not in the base ledger
+ERROR REVIEW-MISSING openspec/changes/sync/review.md Change sync has no review.md
+Gates failed with 2 errors.
+```
+
+The missing review belongs to the test fixture. The test fails for LEDGER-NOT-IN-BASE.
+The literal count assertion passes before the base comparison assertion fails.
+No code mutation runs: the code already fails this test.
+The named fault is a toleranceCounts change that writes the larger branch count after an equal covered count.
+The code at commit 04554050 already has that fault.
+
+The `node --test` command reports only a file-level failure on this host.
+The direct command above gives the assertion and the gate output.
+The first test draft used the wrong fixture cache path and failed with ENOENT.
+The corrected test uses the cache path from the spawn arguments.
+
+The word table is in design.md. The test and scenario use the same file condition and outcome.
+Full test suites, coverage, automatic mutations and the echo script do not run after the T3 failure.
+The pass stops before the other corrections and their checks.
+
+Final checks for this partial pass:
+
+- The host lint command reports 0 errors and 539 warnings. The log is pass3/lint.log in the tools folder.
+- The command `openspec show` with the change name and `--json` returns JSON. Python json.loads accepts that output.
+- The command `openspec validate` with the change name reports that the change is valid.
+- The Python comparison of each document with commit 04554050 finds no removed or renamed level-two title.
+- Only evidence.md adds a level-two title: Pass 3. The proposal titles have no changes.
+
+The search `rg` shows the word table at design.md:50 and the scenario at specs/gap-ledger/spec.md:55.
+The search shows the test at gates.test.mjs:2816 and the completed test tasks at tasks.md:59 and tasks.md:60.
+The search shows the failure output at evidence.md:499. These results apply to code commit 04554050.

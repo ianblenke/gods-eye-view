@@ -52,6 +52,11 @@ Origin: spec-first
 - **WHEN** valid adopt records name other files but do not name the production file
 - **THEN** the gate gives that production file no new tolerance
 
+#### Scenario: Accept a split after the ratchet command `gap-ledger-154`
+- **WHEN** a file that equals its adopted source has one more not-covered branch and one more total branch inside count tolerance
+- **AND** the ratchet command writes the ledger entry
+- **THEN** the base comparison reports no LEDGER-NOT-IN-BASE and no LEDGER-MORE-THAN-BASE
+
 ### Requirement: Total counts for adopted files
 The gates MUST not mark a valid adopted file of the checked change as stale when only its total counts differ.
 Both records MUST have equal not-covered counts and equal content hashes with true loaded coverage.
