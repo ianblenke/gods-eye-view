@@ -1085,10 +1085,10 @@
       "loaded": true,
       "lines": 11,
       "branches": 15,
-      "functions": 7,
+      "functions": 6,
       "totals": {
         "lines": 518,
-        "branches": 177,
+        "branches": 178,
         "functions": 64
       },
       "sha": "bfad7403f7a6d53c80206c2fe200c79d5273e5d7b94f4950397c673701ca3e92",
@@ -1943,7 +1943,7 @@
       "functions": 3,
       "totals": {
         "lines": 94,
-        "branches": 34,
+        "branches": 35,
         "functions": 17
       },
       "sha": "47b3cc27e58c0b070ebe31ff5e6195ca75c5a1aca0d5b1c127b5ca0fbbf7fb11",
@@ -2599,11 +2599,11 @@
     "src/data/bhoteKoshiEmbeddedMedia.js": {
       "loaded": true,
       "lines": 431,
-      "branches": 76,
+      "branches": 75,
       "functions": 23,
       "totals": {
         "lines": 1097,
-        "branches": 254,
+        "branches": 257,
         "functions": 74
       },
       "sha": "8e2488c1839e884252b92cb9af1eab718438cbd7de91297aab14ebc69d097372",
@@ -3113,7 +3113,7 @@
       "functions": 1,
       "totals": {
         "lines": 253,
-        "branches": 78,
+        "branches": 82,
         "functions": 17
       },
       "sha": "da5ea617fd8a733e15e9e0c4e9f4c51bb87ed554f1fbff9c5d041f9c0bd28095",
@@ -3158,7 +3158,7 @@
       "functions": 15,
       "totals": {
         "lines": 2328,
-        "branches": 603,
+        "branches": 604,
         "functions": 116
       },
       "sha": "a5d06cef52480b4aea4d0b051e7f2ac8b54e451fce7ba8063fc4a798d1a3d987",
@@ -3488,7 +3488,7 @@
       "functions": 0,
       "totals": {
         "lines": 458,
-        "branches": 104,
+        "branches": 105,
         "functions": 12
       },
       "sha": "d23c5820941c07884e448742675200ec383febd9eba4eb01fe0ea0819cab1720",
@@ -5179,11 +5179,11 @@
     "src/layers/flights/motion.js": {
       "loaded": true,
       "lines": 249,
-      "branches": 37,
+      "branches": 36,
       "functions": 4,
       "totals": {
         "lines": 1108,
-        "branches": 122,
+        "branches": 123,
         "functions": 21
       },
       "sha": "93290069e82fc1c3a4c51f149b8fdbcdb20ea88b20912fc7a2aa025412184af0",
@@ -5213,7 +5213,7 @@
       "functions": 9,
       "totals": {
         "lines": 952,
-        "branches": 207,
+        "branches": 208,
         "functions": 32
       },
       "sha": "f522fb1ecc22ec0234b7b3b110dcefe5e97b1367eac39a3c688b44dafd028523",
@@ -5228,7 +5228,7 @@
       "functions": 0,
       "totals": {
         "lines": 283,
-        "branches": 56,
+        "branches": 60,
         "functions": 4
       },
       "sha": "162f6474ee8080e8746035c529384996587a24e797a878b62755fc05f4e55244",
@@ -5238,12 +5238,12 @@
     },
     "src/layers/flights/rendering.js": {
       "loaded": true,
-      "lines": 426,
+      "lines": 424,
       "branches": 41,
-      "functions": 6,
+      "functions": 5,
       "totals": {
         "lines": 1162,
-        "branches": 125,
+        "branches": 126,
         "functions": 33
       },
       "sha": "0f1c2abc8b9f2e4e6976566219eb4b030c8180bb261294183e7bbf881ff42ac7",
@@ -5858,7 +5858,7 @@
       "functions": 4,
       "totals": {
         "lines": 528,
-        "branches": 57,
+        "branches": 60,
         "functions": 13
       },
       "sha": "1bf4c38172429571758236d04c28c08e0a173bf5e8b579b6cb0c1be3936dd840",
@@ -5869,11 +5869,11 @@
     "src/layers/military/queries.js": {
       "loaded": true,
       "lines": 53,
-      "branches": 65,
+      "branches": 64,
       "functions": 7,
       "totals": {
         "lines": 823,
-        "branches": 205,
+        "branches": 206,
         "functions": 30
       },
       "sha": "82a63063ca149f1976b6cf7ae6d89c02508fc79c37ff4a4bb958e75a1d18308a",
@@ -5898,12 +5898,12 @@
     },
     "src/layers/military/rendering.js": {
       "loaded": true,
-      "lines": 399,
+      "lines": 397,
       "branches": 39,
-      "functions": 6,
+      "functions": 5,
       "totals": {
         "lines": 1107,
-        "branches": 129,
+        "branches": 130,
         "functions": 32
       },
       "sha": "34cc6115b96589c16cc9196a43b89761a801940dba659720ff1c48354274d2d6",
@@ -7268,7 +7268,7 @@
       "functions": 0,
       "totals": {
         "lines": 565,
-        "branches": 137,
+        "branches": 138,
         "functions": 19
       },
       "sha": "791fe2e270eef27d0765b37a292945ad9077c2b45633692f3f196f7eadf6d9b1",
@@ -11193,13 +11193,13 @@
     },
     "src/voice/realtimeDiagnostics.js": {
       "loaded": true,
-      "lines": 87,
-      "branches": 14,
-      "functions": 9,
+      "lines": 30,
+      "branches": 20,
+      "functions": 3,
       "totals": {
         "lines": 226,
-        "branches": 40,
-        "functions": 22
+        "branches": 64,
+        "functions": 23
       },
       "sha": "bdc95fb09047a3d2d8eb5440f5438284d0861b33d15b7aa75049c12d78293462",
       "untrue": false,
@@ -11213,7 +11213,7 @@
       "functions": 0,
       "totals": {
         "lines": 45,
-        "branches": 19,
+        "branches": 22,
         "functions": 1
       },
       "sha": "11926da3cd2fe1de13cedfaaff64e6ee8cdabc2dbf3a3d3341022a8ce79a9a0b",
@@ -11258,7 +11258,7 @@
       "functions": 0,
       "totals": {
         "lines": 185,
-        "branches": 59,
+        "branches": 60,
         "functions": 11
       },
       "sha": "d10120c831295ab730ebf5cde254625e6e768a35b587687a7ea14b6b7cdbf3ae",
