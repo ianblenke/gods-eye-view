@@ -1,0 +1,154 @@
+✖ [live-sources-002] send the key parameter (14.459043ms)
+✖ [live-sources-003] stop without a key undefined (3.993664ms)
+✖ [live-sources-003] stop without a key "" (3.971009ms)
+✖ [live-sources-003] stop without a key "   " (3.303243ms)
+✖ [live-sources-004] reject the invalid key once (154.403912ms)
+✖ [live-sources-005] keep the fetch error secret (8.884193ms)
+✖ [live-sources-005] keep the json error secret (3.551511ms)
+✖ [live-sources-002] map the Ontario rows (3.368281ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 285.377678
+
+✖ failing tests:
+
+test at src/data/cctvOntarioKey.test.mjs:27:1
+✖ [live-sources-002] send the key parameter (14.459043ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js' imported from /home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs
+      at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+      at moduleResolve (node:internal/modules/esm/resolve:879:10)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+      at #resolve (node:internal/modules/esm/loader:690:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+      at node:internal/modules/esm/loader:639:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:547:22) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?test=0'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:41:3
+✖ [live-sources-003] stop without a key undefined (3.993664ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js' imported from /home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs
+      at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+      at moduleResolve (node:internal/modules/esm/resolve:879:10)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+      at #resolve (node:internal/modules/esm/loader:690:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+      at node:internal/modules/esm/loader:639:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:547:22) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?test=1'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:41:3
+✖ [live-sources-003] stop without a key "" (3.971009ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js' imported from /home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs
+      at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+      at moduleResolve (node:internal/modules/esm/resolve:879:10)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+      at #resolve (node:internal/modules/esm/loader:690:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+      at node:internal/modules/esm/loader:639:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:547:22) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?test=2'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:41:3
+✖ [live-sources-003] stop without a key "   " (3.303243ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js' imported from /home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs
+      at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+      at moduleResolve (node:internal/modules/esm/resolve:879:10)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+      at #resolve (node:internal/modules/esm/loader:690:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+      at node:internal/modules/esm/loader:639:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:547:22) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?test=3'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:50:1
+✖ [live-sources-004] reject the invalid key once (154.403912ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js' imported from /home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs
+      at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+      at moduleResolve (node:internal/modules/esm/resolve:879:10)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+      at #resolve (node:internal/modules/esm/loader:690:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+      at node:internal/modules/esm/loader:639:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:547:22) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?test=4'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:60:3
+✖ [live-sources-005] keep the fetch error secret (8.884193ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js' imported from /home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs
+      at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+      at moduleResolve (node:internal/modules/esm/resolve:879:10)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+      at #resolve (node:internal/modules/esm/loader:690:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+      at node:internal/modules/esm/loader:639:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:547:22) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?test=5'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:60:3
+✖ [live-sources-005] keep the json error secret (3.551511ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js' imported from /home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs
+      at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+      at moduleResolve (node:internal/modules/esm/resolve:879:10)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+      at #resolve (node:internal/modules/esm/loader:690:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+      at node:internal/modules/esm/loader:639:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:547:22) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?test=6'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:70:1
+✖ [live-sources-002] map the Ontario rows (3.368281ms)
+  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js' imported from /home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs
+      at finalizeResolution (node:internal/modules/esm/resolve:272:11)
+      at moduleResolve (node:internal/modules/esm/resolve:879:10)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:708:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:728:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:766:56)
+      at #resolve (node:internal/modules/esm/loader:690:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:610:35)
+      at node:internal/modules/esm/loader:639:32
+      at TracingChannel.tracePromise (node:diagnostics_channel:547:22) {
+    code: 'ERR_MODULE_NOT_FOUND',
+    url: 'file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?test=7'
+  }
