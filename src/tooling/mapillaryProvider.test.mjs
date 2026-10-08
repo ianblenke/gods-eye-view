@@ -475,8 +475,10 @@ test('the disk sweep removes expired tiles and keeps fresh ones', async () => {
     const vanishing = tileFile({ z: 14, x: 3, y: 3 }, dir);
     await writeAged(expired, Buffer.alloc(100, 1), 25 * HOUR);
     await writeAged(fresh, Buffer.alloc(100, 2), 23 * HOUR);
-    await writeAged(vanishing, Buffer.alloc(100, 3), 23 * HOUR);
-    // A tile that vanishes between the directory listing and its stat is skipped.
+    await writeAged(vanishing, Buffer.alloc(100, 3), 25 * HOUR);
+    // The sweep skips a tile file that vanishes after the sweep lists the
+    // folder and before it calls `stat` on the file. The file is old enough
+    // to be removed, so a sweep that does list it removes it.
     const stat = fsp.stat;
     fsp.stat = (file, ...rest) =>
       file === vanishing
