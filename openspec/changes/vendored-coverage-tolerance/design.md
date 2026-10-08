@@ -23,6 +23,15 @@ The ci command selects the change first. All three commands use the same predica
 The ratchet command uses toleranceCounts for each eligible entry. It never writes a worse count.
 The rule changes no toleranceOf limit, stale rule or coverage loss error.
 
+### Pass 2
+
+Read commit: `125dc3ae92f9687a830e230914ec0e2b393dda18`.
+Add the optional adoptedFile predicate to compareLedger. Its default returns false.
+The gate computes it from the same valid adopt records as adoptedAsIs, without a source content check.
+The stale decision accepts total differences only with equal hashes, true loaded records and equal not-covered counts for all metrics.
+
+The comparison keeps all coverage errors exact. The ratchet command keeps its current total count rule for fork edits.
+
 ## Files
 
 Change scripts/spec/lib/ledger.mjs and scripts/spec/gates.mjs.
@@ -32,7 +41,7 @@ The new requirement adds an exception to the base content condition.
 
 ## Checks
 
-Use host tests with one file per Node process. Use cores 4 through 7 and priority 19.
+Use host tests with one file per Node process. Use cores 8 through 11 and priority 19.
 
 Measure line, branch and function coverage. Run named code faults and automatic code mutations.
 Replay the real CI artifact against a scratch copy of upstream-sync-3.
