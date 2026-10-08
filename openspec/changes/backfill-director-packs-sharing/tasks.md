@@ -1451,3 +1451,28 @@ New: const copy = structuredClone(project);
 - [x] 8.15 Check the format.
 - [x] 8.16 Check the production file diff.
 - [x] 8.17 Record the final evidence.
+
+## 9. Corrections of review round 4
+
+- [x] 9.1 Add tests with later items for `director-076`, `director-077`, `director-079`, `director-080`, `director-081` and `director-082`.
+- [x] 9.2 Add tests with later items for `director-084`, `director-085`, `director-086` and `director-087`.
+- [x] 9.3 Add tests with later items for `director-088`, `director-093` and `director-094`.
+- [x] 9.4 Add tests with later items for `director-099`, `director-101`, `director-102`, `director-104` and `director-107`.
+- [x] 9.5 Add tests with later items for `director-108` and `director-110`.
+- [x] 9.6 Strengthen the stored unsafe path test for `director-105`.
+- [x] 9.7 Correct test titles for `director-089`, `director-090`, `director-091`, `director-092`, `director-097`, `director-098` and `director-106`.
+- [x] 9.8 Add hand rows m409 to m448.
+- [x] 9.9 Correct the scenario text.
+- [x] 9.10 Build the loop table.
+- [x] 9.11 Correct the command names.
+- [x] 9.12 Regenerate killer titles from the lead final rerun.
+- [x] 9.13 Record the title corrections.
+- [x] 9.14 Correct the probe prose.
+- [x] 9.15 Run the test files.
+- [x] 9.16 Check host coverage.
+- [x] 9.17 Run the complete hand mutation list.
+- [x] 9.18 Run the prose checks.
+- [x] 9.19 Check format.
+- [x] 9.20 Check the production diff.
+
+The lead runs the image gates, ratchet and review round 5.

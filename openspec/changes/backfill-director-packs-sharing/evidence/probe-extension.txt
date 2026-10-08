@@ -1,5 +1,5 @@
 Base commit: 290b5d2.
-The mutation is equivalent for the public API of the module.
+Each mutation in the table is equivalent for the public API of the module.
 The claim uses standard built-in functions and their prototypes.
 The claim excludes source text, stack locations and resource failure in the host.
 The table gives the input bound for each mutation.
@@ -331,17 +331,17 @@ The arrow function body runs only after the ended variable has its initial value
 a9092 src/director/packs/session.js:27
 The rejected error is a local value. The native promise reject function does not read its properties or call a caller callback. Promise reactions run after ended becomes true.
 a9094 src/director/packs/session.js:40
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9095 src/director/packs/session.js:40
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9100 src/director/packs/session.js:37
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9101 src/director/packs/session.js:37
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9103 src/director/packs/session.js:38
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9104 src/director/packs/session.js:38
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9110 src/director/packs/session.js:42
 The private initial state has no callback. Object.entries reads renderer getters in the same order. The caller cannot access the session before the constructor returns.
 a9111 src/director/packs/session.js:43
@@ -351,9 +351,9 @@ The clear function declaration is available to the return expression even when i
 a9116 src/director/packs/session.js:47
 When run is absent, active is already null. The added assignment sets that same private value. With a run, both orders set active to null before cancellation callbacks.
 a9123 src/director/packs/session.js:66
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9124 src/director/packs/session.js:66
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9135 src/director/packs/session.js:75
 A standard AbortController constructor has no caller callback. The empty load call returns true without a source call or listener in both forms. No controller escapes that branch.
 a9137 src/director/packs/session.js:77
@@ -391,29 +391,29 @@ The private offset starts at zero without a callback. The same byte allocation r
 a9424 src/director/sharing/bundle.js:43
 The only new matches have no alphabet character and one or two equals signs. Their lengths are not multiples of four, so the common alignment check rejects them. Empty text already matches the other regex. Every other string has the same result.
 a9243 src/director/sharing/bundle.js:62
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9244 src/director/sharing/bundle.js:62
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9247 src/director/sharing/bundle.js:64
-The private input declaration has no value or callback. Signal checks, type checks, both 50 MiB checks and JSON parsing keep their order for every text length.
+The private input declaration has no value or callback. Signal checks, type checks, both 52428800 checks and JSON parsing keep their order for every text length.
 a9254 src/director/sharing/bundle.js:81
 The empty asset Map is private. Its creation has no caller callback. The asset array check still gives the same error before entry work. No map escapes an error.
 a9255 src/director/sharing/bundle.js:82
 The private asset Map and zero total each have no caller callback. Both are ready before entry work. The asset count stays at most 64.
 a9257 src/director/sharing/bundle.js:84
-The empty used Set is private and has no caller callback. Entry work still has the same signal and digest calls. A valid bundle has at most 64 asset paths. One missing path can enter the set before the call fails.
+The empty used Set is private and has no caller callback. Entry work still has the same signal and digest calls. A valid bundle has at most 64 asset paths. One absent path can enter the set before the call fails.
 a9271 src/director/sharing/bundle.js:95
 The asset Map is private and holds at most 64 entries. A wrong digest ends the call before the map can escape. Entry values come from JSON and have no getters. Valid entries have the same map insertion.
 a9273 src/director/sharing/bundle.js:100
 Pack source fields come from the validated plain project copy. The private Map lookup has no caller callback. An invalid source still gives the same error before any later signal or digest call.
 a9274 src/director/sharing/bundle.js:102
-The plain project source path has no getter. The Map and Set are private, standard collections. Lookup and insertion have no caller callback. The used Set holds at most 65 paths before a missing asset ends the call.
+The plain project source path has no getter. The Map and Set are private, standard collections. Lookup and insertion have no caller callback. The used Set holds at most 65 paths before an absent asset ends the call.
 a9275 src/director/sharing/bundle.js:103
-The used Set is private and holds at most 65 paths before a missing asset ends the call. A mismatch ends the call before any set can escape. A valid pack inserts the same plain path in both forms.
+The used Set is private and holds at most 65 paths before an absent asset ends the call. A mismatch ends the call before any set can escape. A valid pack inserts the same plain path in both forms.
 a9283 src/director/sharing/bundle.js:137
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9284 src/director/sharing/bundle.js:137
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9286 src/director/sharing/bundle.js:139
 The empty array and Map are private and have no caller callbacks. Project getters and validation keep their order. No collection escapes an invalid project.
 a9287 src/director/sharing/bundle.js:140
@@ -423,21 +423,21 @@ The key uses primitive fields of the validated plain project copy. Standard JSON
 a9311 src/director/sharing/bundle.js:175
 The cache Map and asset array are private. They hold at most 64 entries. Their two writes have no caller callback. A later resolver runs after both writes.
 a9317 src/director/sharing/bundle.js:201
-The default applies only to undefined. Standard Map creates an empty Map when its argument is null. Explicit replacement arguments bypass the default.
+The default applies only to undefined. Standard Map creates an empty Map when its argument is null. Replacement arguments that the caller supplies bypass the default.
 a9319 src/director/sharing/bundle.js:201
-The default applies only to undefined. An empty standard array and an empty standard Map each produce an empty Map. Explicit replacement arguments bypass the default.
+The default applies only to undefined. An empty standard array and an empty standard Map each produce an empty Map. Replacement arguments that the caller supplies bypass the default.
 a9454 src/director/sharing/bundle.js:201
-The default applies only to undefined. A standard empty Set and an empty Map each give an empty Map to the replacement constructor. Explicit replacement inputs bypass the default.
+The default applies only to undefined. A standard empty Set and an empty Map each give an empty Map to the replacement constructor. Replacement inputs that the caller supplies bypass the default.
 a9333 src/director/sharing/bundle.js:214
-The store Map is private. Standard Map.get does not convert a path or read its properties. Invalid paths still fail before the signal call. Valid primitive paths get the same asset. The lookup cannot change the store.
+The store Map is private. Standard Map.get does not convert a path or read its properties. Both forms reject invalid paths even when the store holds those paths. Valid primitive paths get the same asset. The lookup cannot change the store.
 a9350 src/director/sharing/preview.js:6
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9351 src/director/sharing/preview.js:6
-The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Explicit objects, including objects with getters, bypass the default.
+The default applies only to undefined. Empty objects, empty arrays and false have the same absent named option fields with standard prototypes. Objects that the caller supplies, with or without getters, bypass the default.
 a9354 src/director/sharing/preview.js:6
-The default applies only to undefined. Standard Set accepts null and an empty array as empty inputs. Explicit source ID inputs bypass the default.
+The default applies only to undefined. Standard Set accepts null and an empty array as empty inputs. Source ID inputs that the caller supplies bypass the default.
 a9357 src/director/sharing/preview.js:6
-The default applies only to undefined. Standard Set accepts null and an empty array as empty inputs. Explicit layer ID inputs bypass the default.
+The default applies only to undefined. Standard Set accepts null and an empty array as empty inputs. Layer ID inputs that the caller supplies bypass the default.
 
 Output:
 [

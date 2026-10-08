@@ -16,12 +16,13 @@ Origin: backfill
 - **WHEN** a caller supplies a relative asset path
 - **THEN** the validator accepts safe directory names and rejects traversal or URL syntax
 - **AND** The validator accepts paths of at most 1024 characters and rejects longer paths.
-- **AND** The validator accepts z and Z, and _ and - at the start of each path segment.
+- **AND** The validator accepts _ and - at the start of each path segment.
 - **AND** The validator accepts each letter from A to Z and a to z, and each digit from 0 to 9.
 - **AND** The validator accepts those characters at the start and in other positions.
 - **AND** Each asset path error names the path field.
-- **AND** The path type check comes before the segment read.
+- **AND** The path type check comes before the segment access.
 - **AND** The source name check comes before the path check, and the path check comes before the attribution field check.
+- **AND** The validator rejects an invalid second path segment.
 
 #### Scenario: Data pack formats `director-077`
 
@@ -32,6 +33,8 @@ Origin: backfill
 - **AND** The validator rejects extra fields and names each invalid field in its error.
 - **AND** The declaration field check comes before ID, version, format and source checks, in that order.
 - **AND** The declaration check comes before the duplicate ID check.
+- **AND** The validator rejects the unlisted format geojsonx.
+- **AND** The validator checks the second data pack declaration.
 
 #### Scenario: Data pack attribution `director-078`
 
@@ -49,7 +52,7 @@ Origin: backfill
 - **AND** The digest can contain each digit from 0 to 9 and each letter from a to f.
 - **AND** Each integrity error names its field.
 - **AND** The digest type check comes before text conversion.
-- **AND** The byteLength check comes before the digest check, and the digest check comes before the placement read.
+- **AND** The byteLength check comes before the digest check, and the digest check comes before access to the placement.
 
 #### Scenario: Image placement `director-080`
 
@@ -62,13 +65,15 @@ Origin: backfill
 - **AND** The edge order check starts with west and east.
 - **AND** The bounds value check comes before edge order, and edge order comes before height.
 - **AND** The height reference check comes before the bounds check.
-- **AND** The bounds array check comes before the length read, and the length check comes before each coordinate check.
+- **AND** The bounds array check comes before access to the length, and the length check comes before each coordinate check.
+- **AND** The validator checks each bounds coordinate, with its index in the error path.
 
 #### Scenario: Media placement `director-081`
 
 - **WHEN** a media data pack declares placement
 - **THEN** the validator checks its scene anchor reference
 - **AND** An unknown anchor error names its placement field.
+- **AND** The validator accepts a reference to the second scene anchor.
 
 #### Scenario: Scene data pack references `director-082`
 
@@ -79,7 +84,10 @@ Origin: backfill
 - **AND** Each shot accepts eight distinct data pack references and rejects nine references before the distinct ID check.
 - **AND** Each reference error names the shot field.
 - **AND** The distinct reference check comes before the search for known IDs.
-- **AND** The data pack list check comes before the anchor read.
+- **AND** The data pack list check comes before access to the anchors.
+- **AND** The validator rejects an unknown reference in the second shot.
+- **AND** That error starts with `$.shots[1].dataPackIds` and says expected distinct scene pack IDs.
+- **AND** The validator rejects an unknown second reference ID.
 
 ### Requirement: Data pack geometry
 
@@ -98,6 +106,7 @@ Origin: backfill
 - **WHEN** a collection contains features
 - **THEN** the decoder checks Feature types and distinct nonblank string IDs of at most 256 characters
 - **AND** The decoder rejects a null feature with the feature ID error.
+- **AND** The decoder rejects a duplicate ID in the second feature.
 
 #### Scenario: Geographic positions `director-085`
 
@@ -108,6 +117,7 @@ Origin: backfill
 - **AND** The decoder accepts longitude from -180 to 180 degrees and latitude from -90 to 90 degrees.
 - **AND** The decoder rejects a null position with the geographic position error.
 - **AND** The decoder keeps negative zero for a supplied height.
+- **AND** The decoder rejects an invalid second coordinate and an invalid second line position.
 
 #### Scenario: Lines and rings `director-086`
 
@@ -121,6 +131,7 @@ Origin: backfill
 - **WHEN** a collection contains geometry
 - **THEN** the decoder returns IDs, geometry types and coordinates without properties
 - **AND** The decoder rejects unsupported or absent geometry and accepts at most 128 polygon rings.
+- **AND** The decoder rejects an unclosed second polygon ring.
 
 ### Requirement: Data pack sessions
 
@@ -139,8 +150,9 @@ Origin: backfill
 - **AND** An empty data pack list returns true without a source call or a deadline timer.
 - **AND** An absent source map or renderer map gives an empty registry.
 - **AND** The session reads source entries before renderer entries.
-- **AND** The data pack list check comes before the anchor read, and declaration checks come before the caller signal read.
+- **AND** The data pack list check comes before access to the anchors, and declaration checks come before access to the caller signal.
 - **AND** During source cancellation, a destroyed session returns false for another load call.
+- **AND** An invalid second declaration gives its indexed error before the source call.
 
 #### Scenario: Session resources `director-089`
 
@@ -156,9 +168,9 @@ Origin: backfill
 - **AND** A completed source listener does not read the signal reason after success or a source error.
 - **AND** The session removes the caller signal listener when the caller clears it.
 - **AND** The session installs that listener with the once option set to true.
-- **AND** The session attaches the source listener, checks the source state and reads the work promise in that order.
-- **AND** A completed source does not read the signal reason during promise settlement.
-- **AND** The caller listener comes before the deadline.
+- **AND** The session attaches the source listener, checks the source signal state and reads the work promise in that order.
+- **AND** A completed source does not read the signal reason when the promise settles.
+- **AND** The session attaches the caller listener before the deadline timer starts.
 - **AND** The final signal check comes before timer removal, and timer removal comes before the ready state.
 - **AND** The session reports idle before source cancellation.
 - **AND** Source cancellation comes before caller listener removal, timer removal and resource disposal, in that order.
@@ -171,13 +183,13 @@ Origin: backfill
 - **AND** A cleared load call does not read the caller signal state again after cancellation.
 - **AND** The session rejects source errors before the renderer call and rejects null bytes or a null renderer handle.
 - **AND** After the caller clears the session, the handle check does not read the old source signal state.
-- **AND** A caller event during listener setup cancels the load call.
+- **AND** A caller event during listener registration cancels the load call.
 
 #### Scenario: Session replacement `director-091`
 
 - **WHEN** a caller starts a new load call
 - **THEN** for old work that is not complete, the old load call returns false and does not change the new resources
-- **AND** Old resource cleanup comes before the new data pack list check.
+- **AND** Old resource disposal comes before the new data pack list check.
 
 #### Scenario: Session errors `director-092`
 
@@ -190,7 +202,7 @@ Origin: backfill
 - **AND** The session disposes each partial resource when the deadline expires.
 - **AND** A source signal event stops the load call before the renderer call.
 - **AND** The session reads the source signal reason once when a source signal event stops work.
-- **AND** A source event during listener removal stops source success or an error before the renderer call.
+- **AND** A source signal event during listener removal stops source success or an error before the renderer call.
 - **AND** The session does not read the global `error` property for a data pack failure.
 
 #### Scenario: Session asset checks `director-093`
@@ -204,7 +216,8 @@ Origin: backfill
 - **AND** The byte type check comes before length access for an invalid byte object.
 - **AND** A null byte value does not read the declared byteLength field again.
 - **AND** Without a declared byteLength field, the size check does not compare bytes with that field.
-- **AND** The total byte check comes before the declared digest read.
+- **AND** The total byte check comes before access to the declared digest.
+- **AND** The session accepts a data pack that refers to the second supplied anchor.
 
 ### Requirement: Asset sources
 
@@ -217,6 +230,7 @@ Origin: backfill
 - **WHEN** a caller registers an asset directory
 - **THEN** the source checks an HTTP or HTTPS directory without credentials, query or fragment
 - **AND** The directory URL ends with a slash.
+- **AND** The source rejects a file protocol directory URL.
 
 #### Scenario: Asset request options `director-095`
 
@@ -236,13 +250,15 @@ Origin: backfill
 - **AND** The header byte limit check comes before the first stream read.
 - **AND** The source checks the stream byte limit before it keeps a chunk.
 
-#### Scenario: Asset source cleanup `director-097`
+#### Scenario: Asset source disposal `director-097`
 
 - **WHEN** an asset request fails or its signal stops it
 - **THEN** the source rejects the asset request and releases stream resources
 - **AND** The source waits for stream cancellation before it releases the reader lock.
 - **AND** For an HTTP error, the source waits for body cancellation before it rejects the asset request.
 - **AND** The source checks its signal before each stream read.
+- **AND** With two stream chunks, cancellation before the second chunk lets the source read only the first chunk.
+
 
 ### Requirement: Scene bundles
 
@@ -270,12 +286,14 @@ Origin: backfill
 - **AND** The bundle helpers reject extra top-level fields and invalid bundle projects.
 - **AND** Asset field, count, byte, media type, base64 and digest errors start with `assets`.
 - **AND** An asset path error starts with `source.path`.
-- **AND** The bundle helpers accept the standard base64 alphabet, including + and /, and reject an equals sign at the start.
+- **AND** The bundle helpers accept the standard base64 alphabet, with + and /, and reject an equals sign at the start.
 - **AND** The bundle helpers accept each standard base64 character in both plain and padded text.
 - **AND** The base64 type check comes before text conversion.
 - **AND** The import checks top-level fields, version, project and the asset list in that order.
 - **AND** Each asset field check comes before path, media type, duplicate path and base64 checks, in that order.
 - **AND** The import checks asset byte limits before the digest call.
+- **AND** The accepted media types are application/json, application/geo+json, image/png, video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav and audio/webm.
+- **AND** The bundle helpers reject image/svg+xml.
 
 #### Scenario: Bundle asset references `director-100`
 
@@ -294,6 +312,7 @@ Origin: backfill
 - **AND** The export writes source, byteLength and digest fields in that order.
 - **AND** The bundle helpers do not read byte chunks past the asset end.
 - **AND** The filename slice receives a start of zero and a length limit of 160.
+- **AND** The export includes data packs from the second scene.
 
 #### Scenario: Bundle export limits `director-102`
 
@@ -308,7 +327,7 @@ Origin: backfill
 - **AND** For numeric byte lengths, an asset without a byte length adds zero to the total.
 - **AND** An absent digest value stops the declared digest check after one field read.
 - **AND** An export text budget error starts with `$`.
-- **AND** The export checks declared integrity before the filename read.
+- **AND** The export checks declared integrity before access to the filename.
 - **AND** The asset count check comes before the next resolver call.
 - **AND** The export checks bytes before media type, and media type before the digest call.
 
@@ -330,6 +349,7 @@ Origin: backfill
 - **THEN** the store copies the map and reports its current byte total
 - **AND** With no replacement map, the byte store becomes empty.
 - **AND** The snapshot returns a separate map with the stored keys and byte values.
+- **AND** The byte total includes the second stored asset.
 
 #### Scenario: Bundle byte access `director-105`
 
@@ -337,22 +357,22 @@ Origin: backfill
 - **THEN** the store returns a byte copy and rejects absent or excess bytes and a cancelled source call
 - **AND** The store accepts bytes equal to the caller limit and rejects one more byte.
 - **AND** Without a caller limit, the store accepts an asset of 8388608 bytes.
-- **AND** The store rejects an invalid path before its asset lookup.
+- **AND** The store rejects an invalid path even when the store holds that path.
 - **AND** The store checks its signal before the path check.
 
 ### Requirement: Share work
 
-The share helpers MUST check file budgets and settle signal cancellation.
+The share helpers MUST check file limits and settle signal cancellation.
 
 Origin: backfill
 
-#### Scenario: Share file budgets `director-106`
+#### Scenario: Share file limits `director-106`
 
 - **WHEN** a caller supplies a project file
 - **THEN** the share helpers check the file suffix and size before text access
 - **AND** The file limit is 5242880 bytes, or 52428800 bytes for a name with the .gevbundle.json suffix.
 - **AND** The share helpers accept the limit and reject one more byte.
-- **AND** The file budget check comes before the signal read.
+- **AND** The file limit check comes before access to the signal.
 
 #### Scenario: Share work cancellation `director-107`
 
@@ -363,13 +383,15 @@ Origin: backfill
 
 - **AND** The share helpers remove their listener after success, a work error or cancellation.
 - **AND** The bundle helpers check the signal before text type, asset fields and digest comparison.
-- **AND** The file signal check comes before text access and follows text settlement.
+- **AND** The file signal check comes before text access and after the text promise settles.
 - **AND** During export, the signal check comes before the asset presence check and declared integrity check.
 - **AND** The helper does not attach a listener to a cancelled signal.
 - **AND** The helper attaches its listener before it reads the work promise.
-- **AND** The helper reads cancelled work before the reason, and removes its listener before the reason read.
-- **AND** The helper checks cancellation after listener removal and before successful settlement.
-- **AND** Cancellation during listener removal comes before a work error.
+- **AND** The helper reads cancelled work before the reason, and removes its listener before access to the reason.
+- **AND** The helper checks cancellation after listener removal and before the work settles with success.
+- **AND** For cancellation during listener removal after a work error, the helper rejects with the cancellation reason.
+- **AND** With two assets, cancellation before the second import digest allows exactly one digest.
+- **AND** With two data packs, cancellation before the second resolver call allows exactly one resolver call.
 
 ### Requirement: Share preview
 
@@ -381,6 +403,7 @@ Origin: backfill
 
 - **WHEN** a caller describes a shared project
 - **THEN** the preview reports scene, shot and byte totals with data pack attribution
+- **AND** The preview includes the second scene, data pack, shot and asset in its totals.
 
 #### Scenario: Preview source states `director-109`
 
@@ -395,3 +418,4 @@ Origin: backfill
 - **AND** The preview lists each absent layer once, even when two shots name that layer.
 - **AND** Without layer IDs, the preview reports every named layer as absent.
 - **AND** With applied shot packs, the preview does not read source pack IDs to decide whether the scene has external content.
+- **AND** The preview checks layers and source pack IDs of the second shot in the second scene.

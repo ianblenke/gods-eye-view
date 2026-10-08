@@ -50,7 +50,7 @@ The lead confirms those results in the gate image.
 - Known limit `bundle-nonnumeric-length`: a custom Uint8Array length getter can return text instead of a number.
   The export helper then adds text to the total at line 157 of bundle.js.
   The byte check can reject three real bytes as excess total bytes.
-  A later absent length can also make the total nonnumeric.
+  A later asset without a byte length can also make the total nonnumeric.
   No scenario states this behavior.
 
 Later change `fix-director-bundle-nonnumeric-length` addresses `bundle-nonnumeric-length`.

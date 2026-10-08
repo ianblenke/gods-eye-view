@@ -1,3 +1,5 @@
+MIME means Multipurpose Internet Mail Extensions.
+
 ## Context
 
 The change records commit `290b5d2`.
@@ -121,12 +123,12 @@ The valid numeric length fallback keeps its tagged test and scenario clause.
 
 ## Pass 5 decisions
 
-The extension keeps all 3849 old mutation IDs.
+The extension run keeps all 3849 old mutation IDs.
 New mutations have IDs from a9000.
 The tool adds constructor arguments, await removal, adjacent statement order and regex class members.
 It also adds default shapes, destructured fields, spreads, template values, regex quantifiers and constructor changes.
 The tool tests cover optional call arguments and optional calls.
-The old optional class already generates the same changes in these source files.
+The old optional class already generates the same mutations in these source files.
 
 The tests check large invalid JSON text, each standard base64 character and snapshot entries.
 The probes check input limits, empty values, unusual text, sparse arrays, numeric limits and getters.
@@ -140,6 +142,26 @@ The final rerun is the lead command for those 3849 mutations.
 The extension run checks the new classes.
 Pass 4 correction checks 1 and 2 keep their separate names.
 
-The last sweep adds range character removal as a separate tool class.
+Extension check 4 adds range character removal as a separate tool class.
 The tests check every path letter and digit, each hexadecimal digit and each standard base64 character.
-The range check repeats all 67 former extension survivors and kills all 250 new range mutations.
+Extension check 4 repeats all 67 former extension survivors and kills all 250 new range mutations.
+
+## Pass 6 decisions
+
+Base commit: `290b5d2`.
+
+The loop table covers 32 collection loops across all seven source files.
+The tests use later invalid items or count later calls.
+The new hand rows check collection subsets, indexed paths, per-item cancellation and additive edits.
+The automatic tool classes stay the same.
+The accepted MIME set contains exactly nine types.
+
+The unsafe path test checks a path that the store holds.
+It does not claim a lookup order that public input cannot show.
+The survivor titles use one source: the first failed test of the lead final rerun after pass 5.
+The saved result files stay unchanged.
+The lead owns round 5, ratchet and image gates.
+
+The Share work requirement belongs to this change and uses file limits.
+Both of its scenario IDs have changed tagged tests.
+No requirement from an earlier change has a new first sentence.
