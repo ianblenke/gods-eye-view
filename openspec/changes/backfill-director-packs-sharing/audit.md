@@ -54,6 +54,38 @@ The [hand mutation report](mutations.md) keeps those results.
 
 ## Final rerun
 
+The lead ran the final rerun on the committed clone after pass 5.
+The command used the complete suite for each mutation and a deadline of 45 seconds.
+It ran the extension set first and the old set second.
+
+```sh
+cd /home/ianblenke/docker/gev-tools/automut && taskset -c 12-15 nice -n 19 node automut.mjs run --root /home/ianblenke/docker/gev-work/director-3 --mutants director-3-final2/<set>.json --tests src/director/packs/backfill.test.mjs,src/director/packs/packs.test.mjs,src/director/sharing/sharing.test.mjs --order "src/director/packs/*.js=backfill,packs,sharing;src/director/sharing/*.js=sharing,backfill,packs" --jobs 4 --timeout 45 --slow-ms 100000 --out director-3-final2/results-<set>.json
+```
+
+The extension set has 711 mutations. It gives 644 killed and 67 survived results, with no timeout and no crash.
+The 67 survived results are the 67 equivalent cases of the extension run in the [survivor table](survivors.md).
+
+The old set has 3849 mutations. It gives 3718 killed, 64 timeout, 3 crash and 64 survived results.
+The 64 survived results are the 60 equivalent cases and the four Known limit cases of the survivor table.
+No other mutation survived, and no killed case of the table survives.
+
+Pass policy counts timeouts and crashes as kills.
+The tool does not record them as failed tests.
+
+The ids of the 64 timeout results of the old set are:
+
+```text
+a1325 a1327 a1329 a1330 a1338 a1339 a1340 a1341 a1349 a1350 a1352 a1353 a1355 a1386 a1399 a1400 a1401 a1402 a1416 a1418 a1419 a1427 a1428 a1429 a1430 a1468 a1469 a1470 a1471 a1689 a1690 a1693 a2379 a2387 a2388 a2390 a3029 a3031 a3106 a3108 a3568 a3569 a3570 a3571 a3572 a3573 a3575 a3576 a3578 a3582 a3583 a3584 a3585 a3586 a3602 a3603 a3604 a3605 a3612 a3616 a3627 a3628 a3629 a3630
+```
+
+The ids of the 3 crash results of the old set are:
+
+```text
+a3558 a3559 a3560
+```
+
+## Rerun after pass 4
+
 The lead ran the final rerun on the committed clone with the pass 4 tests.
 The command used the complete suite for each mutation and a deadline of 45 seconds.
 
