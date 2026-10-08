@@ -2,7 +2,7 @@
 
 The owner accepts a rigor boundary for the fork.
 
-Owned files need full coverage. Each changed line needs coverage in every code file.
+Changed owned files and owned files without a ledger entry need full coverage. Each changed line needs coverage in every code file.
 
 Upstream code keeps its ledger gap after the merge and the adopt command.
 
@@ -10,7 +10,7 @@ Upstream code keeps its ledger gap after the merge and the adopt command.
 
 - Add an ownership manifest and path classes.
 
-- Add whole-file coverage checks for owned code and line coverage checks for each code diff.
+- Add whole-file checks for changed owned code and owned code without a ledger entry. Check each code diff line.
 
 - Use a synthetic QA header for upstream scripts with no header.
 
@@ -64,7 +64,7 @@ The automatic mutation campaign covers mutants that overlap the code diff. It do
 
 The base ledger lists one branch gap in scripts/spec/lib/test-guard.mjs and one in src/layers/osh/index.js.
 
-Both paths are owned. The lead must measure them in the image and resolve any true gap before merge.
+Two owned files keep one recorded branch gap each. A later change closes them. The report lists them.
 
 HTML and shell files have no true line data in the current Node measurement.
 Their changed lines fail the diff check.
@@ -85,6 +85,6 @@ The default mutation generator omits error message text.
 
 The pass 2 focused suite does not test an invalid source and a failed base diff at the same time.
 
-It does not test an invalid source and invalid base ledger JSON at the same time.
+The pass 3 test checks an invalid source with invalid base ledger JSON.
 
-Two statement order mutants can change which error appears first in those cases. Evidence names both mutants.
+The base diff fault limit remains. Evidence names that mutant.

@@ -19,6 +19,8 @@ Origin: spec-first
 
 ### Requirement: Class output
 The gate MUST print each changed path class and the owned and upstream totals in check and ratchet.
+The owned gap advice applies only to check and ratchet.
+Invalid history stops before this advice. The advice comes before the changed line check.
 Origin: spec-first
 
 #### Scenario: Show path classes `ownership-003`
@@ -26,11 +28,12 @@ Origin: spec-first
 - **THEN** the log names each class and shows Ownership: N owned, M upstream
 
 ### Requirement: Owned coverage
-The gate MUST reject a coverage gap in an owned code file except a gap covered by valid waivers.
+The gate MUST reject gaps in changed owned code files and owned code files without a ledger entry, except valid waivers.
+A file mode change does not change code content.
 Origin: spec-first
 
 #### Scenario: Check owned gaps `ownership-004`
-- **WHEN** an owned code file has a line, branch or function gap
+- **WHEN** a changed owned code file or an owned code file without a ledger entry has a gap
 - **THEN** the gate reports COVERAGE-OWNED unless valid waivers cover all gap counts
 
 ### Requirement: Diff ranges
@@ -102,7 +105,8 @@ Origin: spec-first
 
 #### Scenario: Read the process rules `ownership-012`
 - **WHEN** an agent reads AGENTS.md and the OpenSpec context
-- **THEN** the text needs owned coverage, changed line coverage, sync adoption and a manual resolution list
+- **THEN** the text needs full coverage for changed owned code and code without a ledger entry
+- **AND** it needs changed line coverage, sync adoption and a manual resolution list
 
 ### Requirement: Line data source
 The measurement MUST store merged V8 line data in the trusted snapshot.
@@ -194,8 +198,23 @@ Origin: spec-first
 - **WHEN** an adopt source is absent or is not an ancestor of HEAD
 - **THEN** the gate stops with COVERAGE-DIFF
 - **AND** a change with no adopt source keeps the base diff rule
+- **AND** an invalid source stops before the base ledger JSON check
 
 #### Scenario: Check current code paths `ownership-025`
 - **WHEN** upstream deletes or renames a code file
 - **THEN** deleted paths have no new lines and new paths use their source path without rename detection
 - **AND** only current code inventory paths enter the line check
+
+#### Scenario: Keep an old owned gap `ownership-026`
+- **WHEN** an unchanged owned code file has a recorded gap
+- **THEN** the owned coverage check passes
+- **AND** the report and Ownership advice list the gap
+- **AND** adopt gives no owned gap advice
+
+#### Scenario: Reject a changed owned gap `ownership-027`
+- **WHEN** a changed owned code file has a recorded gap
+- **THEN** the gate reports COVERAGE-OWNED
+
+#### Scenario: Reject a new owned gap `ownership-028`
+- **WHEN** a new owned code file has a gap and no ledger entry
+- **THEN** the gate reports COVERAGE-OWNED

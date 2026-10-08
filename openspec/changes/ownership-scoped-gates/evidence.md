@@ -483,3 +483,131 @@ Implementation commit: f53f46a236840b5f553aa317b27a08624f3ee3c0.
 The four tested source hashes match this commit.
 
 This commit has the code, tests, AGENTS.md and config.yaml. The change documents follow in a separate commit.
+
+## Pass 3
+
+Tree read: 88894512ef934f160fbeebea551d6cd2607c9c43.
+
+The lead changes the owned coverage rule. This decision replaces the pass 2 image waiver advice above.
+
+The two unchanged owned files keep their recorded branch gaps. They need no waiver for this change.
+
+The ledger comparison still rejects larger gaps. The report lists each owned gap.
+
+Scenarios ownership-003, ownership-004, ownership-012 and ownership-024 have new scope or error order text.
+Scenario ownership-004 now checks changed owned code and code without a ledger entry.
+Scenarios ownership-026 through ownership-028 check the old, changed and new file cases.
+Tasks now name each scenario from ownership-001 through ownership-028.
+
+All host Node commands use taskset -c 4-7 nice -n 19. Node is 26.8.2.
+
+The ownership test command is node --experimental-test-coverage --test-coverage-include='**/scripts/spec/lib/ownership.mjs' src/tooling/spec/ownership.test.mjs.
+It passes 35 tests. The report has 100% line, branch and function coverage for ownership.mjs.
+
+The gate test command is node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs src/tooling/spec/ownershipGate.test.mjs.
+It passes 18 tests. Each test file has its own process.
+
+The QA test command is node src/tooling/spec/qaRegister.test.mjs. It passes 39 tests.
+
+The three test files clear inherited Git variables and set fixed config paths, identity, trust and locale.
+Every Git init selects main. Each direct Git call that writes commits has identity options.
+Temporary repositories set cwd for each call. Gate Git calls use the same fixed process environment.
+
+The native npm run format:check stops at Git EPERM. It has no format verdict.
+The same command with NODE_OPTIONS=--import=/home/ianblenke/docker/gev-tools/ownership-gates/pass2-format-shim.mjs checks 1158 source files.
+
+The command node scripts/spec/gates.mjs lint --change ownership-scoped-gates reports 0 errors and 542 warnings.
+
+| Mutation | Failed test |
+|---|---|
+| Treat unchanged as changed | ownership-026 checks an old owned gap |
+| Drop the changed check | ownership-027 checks an old owned gap |
+| Drop the report line | ownership-026 checks an old owned gap |
+
+Each mutation runs node --import host.mjs --test-name-pattern=ownership-NNN src/tooling/spec/ownershipGate.test.mjs in the scratch copy.
+The scratch copy has no branch. Its source is commit 88894512 with the pass 3 edits.
+The file pass3-proof.json records three exit values of 1 and the failed test names.
+
+The first test for a new file failed because the file was not tracked. The final test stages the new file.
+
+The lead must run make ratchet CHANGE=ownership-scoped-gates in the image.
+Expect only REVIEW-MISSING. The two unchanged owned files must give no COVERAGE-OWNED error.
+The lead runs review and final gates. This change stays active.
+
+The final file mode test checks Git output: zero changed lines and mode change 100644 to 100755.
+The test proves that a mode change does not change the code content.
+
+The final source search is rg -n for spawnSync Git calls and Git init calls in the three changed test files.
+The output in pass3-source-search.log shows identity options on the conflict merge at ownership.test.mjs:240.
+It also shows main on both local Git init calls. The gate fixture init selects main too.
+
+The full legacy command is node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs src/tooling/spec/gates.test.mjs.
+It finishes with 227 tests, 223 passes and four failures. It has exit status 1.
+The four IDs are coverage-gate-024, spec-trace-039/spec-trace-040, coverage-gate-031 and coverage-gate-048.
+These are the four host adapter failures that the pass 1 base probe and pass 2 run record.
+
+The coverage command is node host-coverage.mjs scripts/spec/gates.mjs raw-pass3-gate raw-pass3-gate-final in the tool folder.
+It reads 305 actual process records. It reports 760/760 lines, 366/366 branches and 89/89 functions.
+Both changed scripts have 100% line, branch and function coverage on the host.
+
+The command node pass3-equivalent-probes.mjs passes 39 cases for five pure order mutants.
+The probe inputs have plain JSON records, string paths, arrays and no getters.
+The coverage fault set stays equal. The specification does not set the order of coverage faults.
+The command condition gives the same result for seven command names.
+
+The new ownership-024 test checks source faults before invalid base ledger JSON.
+It closes that pass 2 test limit. The source fault with a base diff fault remains outside the focused suite.
+
+## Pass 3 automatic mutations
+
+Source commit: 3a72f0f21b160c6c2a9cdabede2df2dda7ec2c23.
+
+The current tool command is node automut.mjs gen with this clone root and ownership.mjs and gates.mjs as files.
+It produces 7681 candidates. The diff filter against 88894512 selects 129 candidates that touch pass 3 script lines.
+The 129 code edits match the local transport copy set. The ID map links both sets by file, span and code edit.
+
+The local tool copy runs each test file in its own process. It uses the pass 1 host transport.
+The command uses run with the clone root, both ownership test files, phase 1, jobs 2 and slow-ms 1000.
+
+Phase 2 uses the same files, jobs 2 and all tests. It has no fast-test skips.
+The follow-up uses ten recorded phase-one passes and fresh baselines for the final tests.
+Its run command uses phase 2, jobs 2 and resume.
+
+It runs all 35 ownership tests and 18 gate tests.
+
+| Named run | Candidates | Killed | Passed | Crash | Timeout |
+|---|---:|---:|---:|---:|---:|
+| pass3-p1.log | 129 | 61 | 68 | 0 | 0 |
+| pass3-p2.log | 68 | 53 | 15 | 0 | 0 |
+| pass3-followup.log | 10 | 9 | 0 | 1 | 0 |
+
+Final result: 123 killed, one crash, five bounded equivalents and zero timeouts. No candidate lacks an assessment.
+
+The crash is a9624. The test ownership-024 checks the source before a bad base ledger and fails with SyntaxError.
+The tool records that test failure as CRASH. It is separate from the kill total.
+Seven follow-up mutants fail ownership-026 with the new file mode test.
+The other two kills concern bad history before gap advice and advice before a diff fault.
+
+| Current ID | Local ID | Assessment | Bound |
+|---|---|---|---|
+| a0946 | a0946 | EQUIVALENT | Both checks read plain records and arrays with no getters. |
+| a9223 | a1404 | EQUIVALENT | The fault set stays equal. The spec does not set its order. |
+| a9227 | a1408 | EQUIVALENT | Both skip checks read plain records and arrays with no getters. |
+| a9228 | a1409 | EQUIVALENT | A waiver filter reads plain JSON records and has no side effects. |
+| a5241 | a5385 | EQUIVALENT | The command is a string. Either check order selects check and ratchet. |
+
+The probe command passes 39 cases. mutation-results-pass3.json records each edit, status, failed test name and assessment.
+The tool folder has the full commands, logs, ID map, final result file and probe source.
+
+The image log own1-ratchet.log starts with the Docker ratchet command and reports QA: no script covers this change.
+No listed QA purpose conflicts with this spec. This pass starts no container and runs no project gate CLI except lint.
+
+## Pass 3 source hashes
+
+| File | SHA-256 |
+|---|---|
+| scripts/spec/gates.mjs | a6406d53af498f3834add87e4ff8c742dca9fdcc5f4f10deaa3ae05e95555b74 |
+| scripts/spec/lib/ownership.mjs | 3b4ed68932e269b91e522bf1c9a295eea0e5127fa3323dce0ac14356101c6c51 |
+| src/tooling/spec/ownership.test.mjs | fe749be37d90a196e10512484336d926d37480298db0b48e7f2de9bd1cee49d1 |
+| src/tooling/spec/ownershipGate.test.mjs | 79b17016f38e33c5c21d2466eeeadbd3a1bc810bb56ea18a5428836798308c31 |
+| src/tooling/spec/qaRegister.test.mjs | 4bf29fc98c16f84eff64866986e0872b0bd89deeb1ae44f68cde94abe3d930ad |
