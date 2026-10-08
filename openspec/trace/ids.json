@@ -1300,12 +1300,12 @@
     "change": "backfill-director-camera-interactions"
   },
   "director-076": {
-    "hash": "3e8f9596a41d76826fcd7d21a53de57c481756c93988c3a9e7e9ef654b0dd89b",
+    "hash": "69b7fd4684b20686e2741d1a4b9172690ffdc82eff0972596f679b3ff27ce9da",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
   "director-077": {
-    "hash": "3f1f48332345be9d921f4942d03ee29313371ee49ba7b42a733342527af4390e",
+    "hash": "3dddd0c827f4ecf0a04f248b5de92430a8a69f0dd26b52d31931050fc6c3065d",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
@@ -1315,12 +1315,12 @@
     "change": "backfill-director-packs-sharing"
   },
   "director-079": {
-    "hash": "83e0b1048c394235fb5da564aad67fa9c52fdb54d8aba0d4b35b75c68e24ab6c",
+    "hash": "93c61c31d4a204bb1a7c32cb1642bcc5b6c1d9feec7cc532198d2faa9380d2ad",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
   "director-080": {
-    "hash": "6db48826f4b52fd5c0df08c116784c6c939c5c908995dd64700219e9469624af",
+    "hash": "63e0967524c6c499dfdbc1432a4943ca27d327e6590a89c768b7a32773de15da",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
@@ -1330,7 +1330,7 @@
     "change": "backfill-director-packs-sharing"
   },
   "director-082": {
-    "hash": "6b5553ca310e44b1cfec28435bc7643eebba3abbddec9e1f41ff8d5467ef7253",
+    "hash": "aec9f15b9a1e7e8930b23491929874e6818a2f710bcb48b3c7156e74bd1f3532",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
@@ -1360,22 +1360,22 @@
     "change": "backfill-director-packs-sharing"
   },
   "director-088": {
-    "hash": "d83f4658a17a11728466c3c9a74a55cc6744aff3ef2a16086a2882c8559331b9",
+    "hash": "041ffa8404218f6f258a50000f348af76dbcf592d310c1ce9c279937bd23be50",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
   "director-089": {
-    "hash": "0b7eba8fae3c743234e59db1064d44699c04ad3126abcbd29b95fb33b4817792",
+    "hash": "9419cff2a50085e1beb543526254e6e019b4f34970ad52ef5b9df64a0dfe751b",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
   "director-090": {
-    "hash": "be7be48118c208ac35bd3196f6af862d7a3d51cb965fad12f4e81ea519a66f28",
+    "hash": "5eeafefc836caa5c9c52d24f898493ff623811c5accf52d6ac4f1409eaa86df2",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
   "director-091": {
-    "hash": "07d5377e6ece93810bb9c100bfecaeab99008e03e450953f46b45fafd14cd058",
+    "hash": "439d13c13fb2fa957d2b839a5bce719081d5e712736c49aabcc440a73eeb34ca",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
@@ -1385,12 +1385,12 @@
     "change": "backfill-director-packs-sharing"
   },
   "director-093": {
-    "hash": "f42f330ab2101c4370b4f320567d22898b972bb14ff778250197ea2039c31af7",
+    "hash": "e2e676a27c53d99f17b4fa523ddbfdace8226bf3507baa4c76cf1f70e4543ca8",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
   "director-094": {
-    "hash": "d336dfafc1ed89c96532516d71148a43e767ede1948e6b8590f81fb1e7a94fc7",
+    "hash": "318405f00e017300d32e7d175a61aaaca73abdbf0cbab5a04daeb20cd12a3b02",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
@@ -1400,12 +1400,12 @@
     "change": "backfill-director-packs-sharing"
   },
   "director-096": {
-    "hash": "c2aef6a3c507f9bc846ea24454e097b029baf95543d7a807f730c949a8c79a85",
+    "hash": "c4afca04b4cf693984c61997b77e16f02a337c9db5d601df0c9b39ef01f1c9ee",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
   "director-097": {
-    "hash": "b375166e297c98f68c58eed06d9b723f4d8f7abe9f93936f3cf598efdda2728a",
+    "hash": "11229f17f73e3c6b10b915c2a422148dbe2925f2b5d66072af8080428b1d06df",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
@@ -1415,7 +1415,7 @@
     "change": "backfill-director-packs-sharing"
   },
   "director-099": {
-    "hash": "6a9b406f7bd9958dde0c1fb0852c715beb6eaa583ef126ae610699e80ea9da9f",
+    "hash": "9b558381ac6562ac1a53697ed3a096d8d435f7089bf933e73d12b75712c8a3ec",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
@@ -1430,7 +1430,7 @@
     "change": "backfill-director-packs-sharing"
   },
   "director-102": {
-    "hash": "e2d55c894641b8bbeb132dae571f1afbf1e85025f1780fba4a1cc99b47f85a21",
+    "hash": "7e68cb519c66afa7d24d8ffb01126b09e8a77e99f78bff59ba8e1fc49d2c1928",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
@@ -1445,22 +1445,22 @@
     "change": "backfill-director-packs-sharing"
   },
   "director-105": {
-    "hash": "c2df2447aa95af90f4af813808eeefad2adc8a56f10b29215b59eab7c4620b81",
+    "hash": "b4b419d8c58417b5d346ff3ea2d8da99e2a3e3257e4915357bdc3f06b34e6d19",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
   "director-106": {
-    "hash": "a646b8e089b4fae0a61f3c9de255afe4be924ceb1c083539106a671cfdac9ebc",
+    "hash": "f4a004630232cbac2fd59693224882304576fc9e15f0355c769b60e52d3276fc",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
   "director-107": {
-    "hash": "d362f9095d65cabeb48d57614bd9fe3efb49ce1802b678d2c49acdb6ad365b60",
+    "hash": "8f9a45a5a10ec5811b66a9157a8fe15b2f5bd01f71458dbdc0d94dbb3c2d672d",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
   "director-108": {
-    "hash": "e41abc22bf32088d7a9c77403789402f71c6e554798548e43dbf4cc9bf551b9b",
+    "hash": "b9695721386ad028e307685308f0f2de2a950a05741edaa69567f29eace6fe02",
     "since": "2026-10-07",
     "change": "backfill-director-packs-sharing"
   },
