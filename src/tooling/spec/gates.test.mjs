@@ -9,7 +9,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { buildTestRuns, childEnv, mergeRawCoverage, parseArgs, runGates } from '../../../scripts/spec/gates.mjs';
 import { protectedInput } from '../../../scripts/spec/lib/measurement.mjs';
-import { contentHash } from '../../../scripts/spec/lib/coverage.mjs';
+import { parseLcov, contentHash } from '../../../scripts/spec/lib/coverage.mjs';
 import { GUARD_PRELOAD, missingTestContext } from '../../../scripts/spec/lib/test-guard.mjs';
 
 // A test that needs the guard to count assertions needs getTestContext in node:test.
@@ -1054,10 +1054,10 @@ const SYNC_CHANGE = {
  * The merge commit is the head. The work branch also adds its own files with gaps. The working tree keeps the base
  * content of `src/legacy.js`, which `up` changed.
  */
-function withMergeFixture(body, base = {}, upstream = {}) {
+function withMergeFixture(body, base = {}, upstream = {}, options = {}) {
   return withFixture(
     (root) => {
-      passes(root, ['init']);
+      passes(root, ['init'], options);
       commitAll(root, 'ledger');
       git(root, 'checkout', '-q', 'main');
       git(root, 'merge', '-q', '--ff-only', 'work');
@@ -2615,4 +2615,93 @@ test('[change-review-033] pin the agent verdict and final tree instructions', ()
   const text = readFileSync(path.join(PROJECT_ROOT, 'AGENTS.md'), 'utf8');
   assert.ok(text.includes('9. Read the first line of the log to find which command ran. The ratchet command gives the comparison verdict after it writes the files. A ratchet command that stops before the comparisons gives no comparison verdict.'));
   assert.ok(text.includes('Run `make gates CHANGE=<name>` on the final tree.'));
+});
+
+const TOLERANCE_OPTIONS = {
+  openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : '{"items":[]}' }),
+  spawn: (_command, args, options) => {
+    const root = options.cwd;
+    const runs = JSON.parse(readFileSync(args[1], 'utf8'));
+    const files = Object.keys(JSON.parse(readFileSync(path.join(root, '.gev-cache/spec/inventory.json'), 'utf8')));
+    const text = files.map(file => `SF:${root}/${file}\nLF:100\nLH:100\nBRF:100\nBRH:${file === 'src/merged.js' ? 99 : 100}\nFNF:100\nFNH:100\nend_of_record\n`).join('');
+    writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), text);
+    writeFileSync(path.join(runs[0].env.NODE_V8_COVERAGE, 'coverage-1-1-0.json'), '{"result":[]}');
+    writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ checked: files, violations: [], assertions: [], leaks: [] }) + '\n');
+    const records = runs.flatMap(run => run.args.filter(arg => !arg.startsWith('--') && arg.endsWith('.test.mjs')).map(file => ({ file, name: 'fixture', title: 'fixture', kind: 'test', status: 'pass', tags: [], tagError: null, line: 1, column: 1, fullName: 'fixture', leaf: true })));
+    writeFileSync(path.join(path.dirname(args[1]), 'tests-main.jsonl.sync'), records.map(record => JSON.stringify(record) + '\n').join(''));
+    writeFileSync(args[2], JSON.stringify(runs.map(() => ({ status: 0, error: null }))));
+    return { status: 0 };
+  },
+};
+
+function adoptedNoise(root) {
+  const file = 'src/merged.js';
+  rmSync(path.join(root, 'src/own.js'));
+  rmSync(path.join(root, 'src/own.test.mjs'));
+  write(root, { 'src/math.test.mjs': MATH_TEST() });
+  run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+  const measured = parseLcov(readFileSync(path.join(root, '.gev-cache/spec/lcov.info'), 'utf8'), { root }).get(file);
+  const ledger = JSON.parse(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8'));
+  ledger.coverage[file] = {
+    loaded: true, untrue: false, sha: contentHash(readFileSync(path.join(root, file), 'utf8')),
+    lines: measured.lines.total - measured.lines.covered + 1,
+    branches: measured.branches.total - measured.branches.covered,
+    functions: measured.functions.total - measured.functions.covered,
+    totals: { lines: measured.lines.total, branches: measured.branches.total, functions: measured.functions.total },
+    origin: 'sync', since: '2026-09-13',
+  };
+  ledger.untracedTests['src/merged.test.mjs'] = { names: { fixture: 1 }, origin: 'sync', since: '2026-09-13' };
+  write(root, { 'openspec/trace/gaps.json': JSON.stringify(ledger) + '\n' });
+  appendFileSync(path.join(root, 'openspec/trace/history.jsonl'), JSON.stringify(ADOPT_LINE(root, 'src/merged.test.mjs', { lines: null, branches: null, functions: null, untraced: 1, untrue: false })) + '\n');
+  const line = ADOPT_LINE(root, file, { lines: ledger.coverage[file].lines, branches: ledger.coverage[file].branches, functions: ledger.coverage[file].functions, untraced: 0, untrue: false });
+  appendFileSync(path.join(root, 'openspec/trace/history.jsonl'), JSON.stringify(line) + '\n');
+  return line;
+}
+
+const NOISE_SOURCE = BRANCH_SRC('merged') + '\n'.repeat(60);
+
+test('[gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in check ci and the ratchet command', () => {
+  withMergeFixture((root) => {
+    adoptedNoise(root);
+    write(root, { 'openspec/changes/sync/tasks.md': '## 1. Merge\n\n- [x] Merge the branch.\n' });
+    mkdirSync(path.join(root, 'openspec/changes/archive'));
+    renameSync(path.join(root, 'openspec/changes/sync'), path.join(root, 'openspec/changes/archive/2026-09-13-sync'));
+    commitAll(root, 'record source counts');
+    for (const command of ['check', 'ci', 'ratchet']) {
+      const result = run(root, command === 'ci' ? [command] : [command, '--change', 'sync'], TOLERANCE_OPTIONS);
+      assert.match(result.output, /Ledger: 0 entries do not match the current gaps\./);
+      assert.doesNotMatch(result.output, /ERROR GATES-RATCHET/);
+      assert.doesNotMatch(result.output, /ERROR LEDGER-(?:STALE|LARGER-GAP|LOST-COVERAGE)[^\n]*src\/merged\.js/);
+    }
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
+
+test('[gap-ledger-137] use no new tolerance after an adopted source edit', () => {
+  withMergeFixture((root) => {
+    write(root, { 'src/merged.js': NOISE_SOURCE + '// Local edit.\n' });
+    adoptedNoise(root);
+    const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
+
+test('[gap-ledger-138] use no new tolerance for an invalid adopt source', () => {
+  withMergeFixture((root) => {
+    const line = adoptedNoise(root);
+    line.from = git(root, 'rev-parse', 'main');
+    write(root, { 'openspec/trace/history.jsonl': JSON.stringify(line) + '\n' });
+    const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
+    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
+});
+
+test('[gap-ledger-139] use no new tolerance from another change', () => {
+  withMergeFixture((root) => {
+    const line = adoptedNoise(root);
+    line.change = 'another';
+    write(root, { 'openspec/trace/history.jsonl': JSON.stringify(line) + '\n' });
+    const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
+    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+  }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
