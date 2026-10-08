@@ -27,7 +27,7 @@
 - [x] Record the failed test.
 - [x] 2.7 Confirm that each fault check restores its source files.
 - [x] 2.8 Run the host format, boundary, token and prose checks.
-- [x] 2.9 Record that pass 3 replaces the two-key conflict.
+- [x] 2.9 Record that pass 3 resolves the two-key conflict.
 
 ## 3. Lead work before and in the image
 
@@ -95,12 +95,18 @@
 - [x] Keep the test for `osh-057`.
 - [x] Run the image ratchet after the corrections of round 1.
 - [x] Run both review agents for round 2.
-- [ ] Run the final image gates on the tree after round 2.
 
 ## 7. Stable function count
 
 - [x] 7.1 Find the test process that runs the stat handler of `tiles.js` only under load.
-- [x] 7.2 Edit the sweep test so that the stat handler runs each time.
-- [x] 7.3 Show that the edited test fails without the stat handler.
-- [ ] 7.4 Run the image ratchet after the test edit.
-- [ ] 7.5 Run the final image gates on the tree after the test edit.
+- [x] 7.2 Correct the first disk sweep test so that the stat handler runs each time.
+- [x] 7.3 Show that the corrected test fails without the stat handler.
+- [x] 7.4 Make the vanishing tile old enough for the sweep to remove it.
+- [ ] 7.5 Run the image ratchet after the test correction.
+- [ ] 7.6 Read the new lines of the trace files after the ratchet.
+
+## 8. Review of the correction
+
+- [x] 8.1 Run both review agents for round 3.
+- [ ] 8.2 Write the round 3 section of review.md.
+- [ ] 8.3 Compute the tree hash for review.md.

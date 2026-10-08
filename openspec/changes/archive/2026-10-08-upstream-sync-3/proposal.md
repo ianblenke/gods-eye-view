@@ -59,12 +59,11 @@ The config tests check clear values and reject environment defaults. Secret cred
 The image ratchet and the document gates ran after review round 1. Review round 2 passed with minor findings only.
 The lead runs the final gates and CI, and writes `review.md`. The entries below are the limits of this change.
 
-### Ten upstream test edits
+### Ten upstream test corrections
 
 Changes to upstream test files can cause conflicts at the next sync.
 Each later sync must keep or replace these test corrections.
-The owner approves test corrections as candidates for an upstream pull request.
-The candidates are these files:
+The test corrections are in these files:
 
 - `src/layers/streetLevel/index.test.mjs`
 - `src/locations.test.mjs`
@@ -77,15 +76,18 @@ The candidates are these files:
 - `src/tools/mcpPanelKey.test.mjs`
 - `src/tooling/mapillaryProvider.test.mjs`
 
+The owner approved the first nine files as candidates for an upstream pull request. The owner has not decided on the tenth.
+The tenth correction keeps the coverage count of this fork stable.
+The corrected test keeps its old name and stays untraced, so the trace gate cannot see a later weakening of its new assertion.
 This task sends no upstream pull request.
 
 ### Production timer limits
 
 Upstream production code still leaves one-shot timers. Only the tests clear these leaked timers.
-The recorded delays are 16 ms (streetLevel), 600 ms (locations), 400 ms (pointerCrop) and 0 ms (panelDock). The streetLevelControls test leaves one animation frame callback.
+The recorded delays are 16 ms (streetLevel), 600 ms (locations), 400 ms (pointerCrop) and 0 ms (panelDock). The streetLevelControls test ends with one animation frame callback still open.
 
-The gevRealtime fixtures leave 56 metric deadlines and 10 narration deadlines before test cleanup. The realtimeNarration fixture leaves one narration deadline and one metric deadline.
-This change does not record the delays of these deadlines. Each timer fires once.
+The gevRealtime fixtures end with 56 metric deadlines and 10 narration deadlines still open before test cleanup. The realtimeNarration fixture ends with one narration deadline and one metric deadline still open.
+This change does not record the delays of these deadlines. Each timer calls its function once.
 
 ### ranking-ceiling-not-measured
 
@@ -96,14 +98,14 @@ The zero-ceiling fault proves the assertion, but does not measure that performan
 
 The owner accepts that the child processes of both race tests start without `NODE_V8_COVERAGE`.
 The ledger records 7 uncovered branches and 1 uncovered function for `server/mcp/panelKey.js`.
-Lines 37, 49 and 108 of that file are the branches that only the winner of the race reaches. No counted test covers them.
+Lines 37, 49 and 108 of that file hold the race branches that only the winner of the race reaches. No counted test covers them.
 
-The other uncovered branches, such as the `throw error` branches at lines 34 and 106, are not winner branches. The ledger keeps all of them.
+The other uncovered branches, such as the `throw error` branches at lines 34 and 106, are not race branches. The ledger keeps all of them.
 The lead must record in `review.md` that the owner accepts this gap.
 
 ### OSH token limit
 
-Upstream uses the digits 0, 1 and 2. OSH token `3` is the digit that upstream allocates next.
+Upstream uses the digits 0, 1 and 2. OSH token `3` is the digit that comes next in the upstream allocation order.
 A later upstream change can use `3` and cause a conflict. A later sync can need a new conflict resolution.
 The next free digit in the merged tree is `4`.
 
@@ -119,34 +121,38 @@ The files are mapillary/tiles.js, bhoteKoshiEmbeddedMedia.js, flights/motion.js,
 The two rendering files each lose two uncovered lines and one uncovered function.
 The other four files each lose one uncovered function or branch.
 
-The first final gates run found 7 uncovered functions in `server/providers/mapillary/tiles.js`, where the ledger records 6. The function at line 255 runs only when a tile file vanishes during a sweep. Under load, `mapillaryProvider.test.mjs` hit that race in 7 of 10 image runs, and alone it never did. The edit to the sweep test in that file makes the function run each time.
+The first run of the final gates found 7 uncovered functions in `server/providers/mapillary/tiles.js`, where the ledger records 6. The function at line 255 runs only when a tile file vanishes during a sweep.
+In 8 image runs of 18 test files, only the process of `mapillaryProvider.test.mjs` ran it, in 7 runs. The correction of the sweep test in that file makes the function run each time.
+Only `tiles.js` has a repeated-run measure. The other five files rest on the ratchet and on the first run of the final gates, which agree.
 
 The last ratchet also records changed totals for `server/providers/mapillary/tiles.js` (178 to 179 branches) and `server/providers/places/google.js` (61 to 62 branches).
 No code changed in these two files between the ratchet runs. The branch total of tiles.js was 177, 178 and 179 in three measurements.
-Totals can drift between runs. The count tolerance covers only files with base content, so we expect that it does not apply to these two files.
+Totals can change between runs. The count tolerance applies only to files that have the content of the base commit.
+The lead expects that it does not apply to these two files.
 
-Final gates and CI can return to the larger counts or to other totals. The lead must check the tests of these files in the image.
+Final gates and CI can return to the larger counts or to other totals. The lead must check in the image the tests of the six files above and of `server/providers/places/google.js`.
 If the counts return, use a ledger-refresh change, as in sync 2. Do not weaken the gate.
 
 ### spec-wording-minors
 
-Review round 2 lists wording minors in files that need a new ratchet or upstream text. The owner accepts these by name. A later change corrects them.
+Review round 2 lists minor wording findings in two kinds of file. One kind needs a new ratchet after a change. The other kind has text from upstream.
+The owner accepts these by name. A later change corrects them.
 
 - `specs/credential-boundary/spec.md`: the words "install", "gate", "method" and "Mapillary token".
 - The same file: one noun group in scenario `004` and the sentence about status `200`.
-- `src/googleGeocodeProxy.test.mjs` lines 561 and 595: the two test titles lack an article.
+- `src/googleGeocodeProxy.test.mjs` lines 561 and 595: the two test titles have no article.
 - `src/tools/mcpPanelKey.test.mjs` line 110: the words "race paths" name the race branches.
 - `SECURITY.md` lines 35 and 79: one adjective from the owner list. It comes from upstream text and from an older fork sentence.
 
 ### qa-tags-not-pinned
 
-The scenario `qa-scripts-023` and its test pin `pending:application-shell` for three scripts only.
+The scenario `qa-scripts-023` and its test check the tag `pending:application-shell` for three scripts only.
 The scripts `qa-street-level.mjs` (`pending:street-level`) and `qa-voice-bench.mjs` (`pending:voice`) can return to `unmapped:`, and the register test still passes.
-The register advice ignores `unmapped:` scripts, so a later spec would not show them.
+The register advice ignores `unmapped:` scripts, so the advice will not show them to the author of a later spec.
 
 ### site-terms-not-defined
 
 The scenarios `017` and `018` use the words "cross-site" and "same-site" with no definition.
-The tests for `017` refuse four request shapes: a foreign `Origin`, `Origin: null`, `Sec-Fetch-Site: cross-site` and a forwarding header.
-The forwarding header is a proxy signal, not a cross-site signal. The tests also refuse a POST request with a cross-site header before the method check.
+The tests for `017` check that the route refuses four request shapes: a foreign `Origin`, `Origin: null`, `Sec-Fetch-Site: cross-site` and an `X-Forwarded-For` header.
+The `X-Forwarded-For` header is a proxy header, not a cross-site header. The tests also check that the route refuses a POST request with a cross-site header before the method check.
 No scenario says that the route admits a request with no `Origin` and no `Sec-Fetch-Site`.

@@ -36,7 +36,7 @@ The actual merge reports the same list. Git uses rerere.
 
 The merge keeps OSH token `3` in `src/data/layerState.js` and `src/data/layerStateTokenReservations.json`.
 Upstream uses the digits 0, 1 and 2. Token `0` belongs to Street Level.
-OSH token `3` is the digit that upstream allocates next, so a later upstream change can cause a conflict.
+OSH token `3` is the digit that comes next in the upstream allocation order, so a later upstream change can cause a conflict.
 The next free digit in the merged tree is `4`.
 The token tests keep the upstream allocation order and account for the OSH reservation.
 
@@ -356,7 +356,7 @@ Its failed assertion reports 436 milliseconds.
 The clone keeps the corrected files throughout these fault checks.
 
 The first timer batch stops during one shell invocation after a script edit. This partial run gives no complete scan result.
-Compare the result file list with the 132-file input list. Run each file that the result list does not name before the final report.
+Compare the result file list with the 132-file input list. Before the final report, run each file that the result file list does not name.
 
 ## Pass 4 final timer result
 
@@ -399,7 +399,7 @@ Prose lint reports zero errors and 572 warnings. The final document commit chang
 ## Round 1 decisions
 
 Source tree: `1b9eaa0c8ce1eb4505e79e48006fa1d26789b52d`.
-The geocode handler calls `admitSameSite` first. The route code is shared, so the dev server and the preview server use the same gate.
+The geocode handler calls `admitSameSite` first. The dev server and the preview server share the route code, so both use the same gate.
 The gate sends the same 403 body and no-store header as Google Places. It writes no log.
 
 It checks Origin, Sec-Fetch-Site and proxy headers. The key resolver runs only after admission.
@@ -408,7 +408,7 @@ It checks Origin, Sec-Fetch-Site and proxy headers. The key resolver runs only a
 |---|---|
 | `build/vite.js` | Omit upstream `?? ''` for the Mapillary entry in `define`. Without a token the entry is `undefined`. `layerSources.js` uses `|| ''`, so runtime behavior is equal. |
 
-The QA voice bench command needs the options `--provider` and `--model`. Its header example uses `--provider ollama --model <id>`.
+The script `scripts/qa-voice-bench.mjs` needs the options `--provider` and `--model`. The `@run` line in its header shows the example `--provider ollama --model <id>`.
 
 The OSH registry scenario now expects 30 entries. The QA register scenario now expects 88 scripts.
 The QA register scenario also checks that three scripts name `pending:application-shell` in their covers tag.
@@ -418,28 +418,41 @@ The requirement sentences stay unchanged. Each delta keeps all scenarios of its 
 
 | Code file | Test imports |
 |---|---|
-| `server/providers/mapillary/tiles.js` | `src/tooling/mapillaryProvider.test.mjs` imports this file. |
+| `server/providers/mapillary/tiles.js` | `src/tooling/mapillaryProvider.test.mjs` imports this file. The correction of the sweep test makes the handler at line 255 run each time. |
 | `src/data/bhoteKoshiEmbeddedMedia.js` | `src/data/bhoteKoshiEmbeddedMedia.test.mjs`, `src/data/bhoteKoshiEvent.test.mjs` and `src/tooling/viteBuild.test.mjs` import this file. |
 | `src/layers/flights/motion.js` and `src/layers/flights/rendering.js` | `src/layers/flights/ownership.test.mjs` imports index.js, which imports these files. `src/data/flights.test.mjs` reaches them through the app layer. |
 | `src/layers/military/queries.js` and `src/layers/military/rendering.js` | `src/layers/military/ownership.test.mjs` imports index.js, which imports these files. `src/data/militaryFlights.test.mjs` reaches them through the app layer. |
 
+Only `tiles.js` has a repeated-run measure. The other rows rest on the ratchet and on the first run of the final gates, which agree.
+
 The lead must run the test files of this table in the image and check the counts of the final gates and CI.
 If the gaps become larger again, use a ledger-refresh change. The production code stays equal to upstream.
-The owner accepts that the child processes of both panel key race tests give no coverage. Record this in `review.md`.
+The owner accepts that the child processes of the two race tests of the panel key give no coverage. Record this in `review.md`.
 
-## Pass 6 stable function count
+## Final gates correction
 
-The first final gates run stopped with `LEDGER-LOST-COVERAGE` for `server/providers/mapillary/tiles.js`. It found 7 uncovered functions, and the ledger records 6.
+The first run of the final gates stopped with `LEDGER-LOST-COVERAGE` for `server/providers/mapillary/tiles.js`. It found 7 uncovered functions, and the ledger records 6.
 The 7 functions are error handlers at lines 175, 211, 229, 255, 298, 335 and 339.
 
-Three test files that load `tiles.js` never ran any of them in 10 image runs.
-The 18 test files that load `tiles.js` ran together 10 times in the image. The handler at line 255 ran in 7 runs, and only in the process of `mapillaryProvider.test.mjs`.
-A background sweep lists the cache folder while a write moves its temporary file. The stat call of the moved file then fails, and the handler skips it.
+The lead ran the image tests 28 times in three batches and counted these handlers.
+In 10 runs of `mapillaryProvider.test.mjs` with two other test files, no process ran any handler.
+In 10 runs of 18 test files that load `tiles.js`, the handler at line 255 ran in 7 runs. The log does not name the process.
+In 8 more runs of the same 18 files, it ran in 7 runs, and only in the process of `mapillaryProvider.test.mjs`.
+Nothing shows that the 18 files are the complete set of files that load `tiles.js`.
 
-The edit adds a tile file to the first disk sweep test, the test for expired tiles. A replacement of `fsp.stat` makes the stat call of that file fail, and the test checks that the sweep skips the file.
-The handler now runs in each run, so the count of uncovered functions stays at 6.
-The test edit adds no test. The host run passes all 51 tests, and the handler runs once.
+The likely cause is a race. A background sweep lists the cache folder while the cache writes a tile and renames the temporary file of that tile.
+The stat call for the old name of the temporary file then fails, the handler returns `null`, and the sweep skips the file.
+No log shows the path of the failed call.
+
+The correction changes the first disk sweep test, the test for expired tiles. It adds a tile file that is old enough to be removed.
+The test replaces `fsp.stat` for a short time, so the stat call of that file fails. The test checks that the sweep does not remove the file.
+The handler now runs each time that the test file runs, so the count of uncovered functions stays at 6.
+The correction adds no test.
+
+The test file passes all 51 tests on the host, and the handler runs once.
 A copy of `tiles.js` without the handler makes this test fail, and no other test fails.
+A copy of the test where the replacement never matches the file also makes this test fail.
+The log is `gev-tools/upstream-sync-3/pass-6-host/host.log`. The Prettier check passes for the test file.
 
 ## Round 1 host result
 
@@ -467,4 +480,4 @@ Each scratch copy has no branch. The clone keeps the correct gate and QA headers
 
 The lead must run ratchet and final gates in the Node 24 image, and get both review results.
 These corrections change no adopted upstream code file. Adopt needs no new run.
-The lead must set the Purpose after archive and record in `review.md` the accepted gap in the coverage of the panel key child processes.
+The lead must set the Purpose after archive. The lead must also record in `review.md` the accepted gap in the coverage of the child processes of the panel key tests.
