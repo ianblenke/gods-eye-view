@@ -116,7 +116,7 @@ test('both Places routes select the intended key and keep it out of responses', 
   }
 });
 
-test('[credential-boundary-003] browser defines contain three public names and exclude the server key', () => {
+test('[credential-boundary-003] lists three public names and no server key in the browser define', () => {
   withKeys({ server: 'server-secret', browser: 'browser-public' }, () => {
     const previousToken = process.env.MAPILLARY_CLIENT_TOKEN;
     process.env.MAPILLARY_CLIENT_TOKEN = 'mapillary-public-fixture';

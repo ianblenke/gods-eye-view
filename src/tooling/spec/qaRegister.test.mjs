@@ -72,6 +72,7 @@ test('[qa-scripts-023] checks all tracked QA scripts in this repository', () => 
   assert.equal(result.scripts.length, 88);
   assert.equal(result.validQaScripts.size, 88);
   assert.deepEqual(result.errors, []);
+  assert.equal(result.scripts.filter((script) => script.covers.includes('pending:application-shell')).length >= 3, true);
 });
 test('[qa-scripts-026] gives advice from an archived change', () => fixture(({ root, put, scan }) => { put(FILE, header('example')); put('openspec/specs/example/spec.md'); put('openspec/changes/archive/2026-09-26-add-example/specs/example/spec.md'); assert.deepEqual(qaAdvice({ root, change: 'add-example', scripts: scan().scripts }), ['QA: scripts/qa-example.mjs covers example: Prove that the layer works.']); }));
 test('[qa-scripts-027] sorts advice by script then capability', () => fixture(({ root, put, scan }) => {
