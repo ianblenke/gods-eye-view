@@ -4,7 +4,7 @@ The backfill records data packs and project shares at commit `290b5d2`.
 The director feature checks assets before display and carries local files in a scene bundle.
 The source files of `src/director` stay the same at this commit and at main.
 
-## What this change does
+## What Changes
 
 - Add requirements to the director capability.
 - Tag tests in scope.
@@ -27,7 +27,7 @@ The evidence gives the exact source commands for these totals.
 The host coverage sweep closes the measured path gaps in scope.
 The lead confirms those results in the gate image.
 
-## Known limits and later change folders
+## Known limits and later changes
 
 - Known limit `geojson-inherited-height`: the decoder checks coordinate values of the array, then reads an inherited height at line 27 of geojson.js.
   The position has an inherited value at index 2.
