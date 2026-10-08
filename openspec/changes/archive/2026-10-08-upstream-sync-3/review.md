@@ -50,9 +50,9 @@ This round read the corrections of the minor findings of round 2 and the repair 
 
 ## Known limits for the owner to confirm
 
-The owner has not yet read these entries. The pull request asks for confirmation.
+The first entry is accepted by the owner. The owner has not yet answered for the other entries. The pull request asks for confirmation.
 
-- [x] The child processes of the two race tests in `src/tools/mcpPanelKey.test.mjs` start without `NODE_V8_COVERAGE`. No counted test covers the race branches at lines 37, 49 and 108 of `server/mcp/panelKey.js`. The ledger records 7 uncovered branches and 1 uncovered function for the file. The lead records this under the rigor boundary that Ian Blenke accepted on 2026-10-08: upstream code is vendored and adopted with its recorded gap. It is not a quoted decision of the owner.
+- [x] The child processes of the two race tests in `src/tools/mcpPanelKey.test.mjs` start without `NODE_V8_COVERAGE`. No counted test covers the race branches at lines 37, 49 and 108 of `server/mcp/panelKey.js`. The ledger records 7 uncovered branches and 1 uncovered function for the file. Accepted by Ian Blenke on 2026-10-08 with the words "I accept 1". The rigor boundary of the same day also applies: upstream code is vendored and adopted with its recorded gap.
 - [x] The analystEngine ranking ceiling of 4000 ms does not measure a linear slowdown below 10 times the old ceiling (limit `ranking-ceiling-not-measured`). The lead records it under the same rigor boundary.
 - [x] The totals of five other adopted files (`bhoteKoshiEmbeddedMedia.js`, `flights/motion.js`, `military/queries.js`, `flights/rendering.js`, `military/rendering.js`) and of `google.js` can change between runs. Only `tiles.js` has a repeated-run measure. If the final gates or CI show other counts, the repair is a test correction as for `tiles.js`, or a ledger-refresh change as in sync 2.
 - [x] The two extra tiles in the first disk sweep test keep the removals of the sweep loop above its breaks, so V8 gives the same ranges to `tiles.js` in each run. The tiles exist for the count, not for the behaviour (limit `count-shaped-test`). The margin is at least 2 in the runs that we measured. One corner can lower it, and the fallback is a ledger-refresh change. The planned change `vendored-coverage-tolerance` would remove the need for this test shape.
