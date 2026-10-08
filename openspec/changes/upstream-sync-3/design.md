@@ -216,3 +216,28 @@ The host task runs no project adopt, ratchet, full gate or image lock check. The
 
 The lead must resolve the old two-key spec conflict before those checks can accept the Mapillary code.
 The owner request for no spec delta remains in force. This task keeps the failed check and reports its cause.
+
+## Pass 2 host result
+
+Code and spec commit: `bba5fc6adc0bae823022b404e06a839511d35fa2`. Host runtime: Node `v26.8.2`.
+
+The two test files pass all 12 tests. The full host suite completes with exit 1.
+It reports 8670 tests: 8668 pass, one fails and one is skipped.
+The only failure is the unchanged upstream test for 250000 rows. It reports 1018 ms against the time budget.
+
+The pristine baseline has the same failed test. The allocation phase does not run after this failure.
+
+Format passes for 1327 source files. The boundary checks pass.
+The token check against `origin/main` reports 29 published tokens and one new token.
+The first restricted checks stop at child process access. The restricted suite stops before the end and has no final verdict.
+The complete host suite runs once after that stop.
+
+Remove the Mapillary define: both list tests fail for `credential-boundary-003`.
+Change the name order: both list tests fail for `credential-boundary-003`.
+Add the server Google define: both list tests fail for `credential-boundary-003`.
+Restore the empty-string default: the build-input test fails for `credential-boundary-003`.
+Each mutation restores `build/vite.js`. The source diff after the mutations is empty.
+
+The prose lint reports one error and 563 warnings.
+It rejects `expose` in the required unchanged sentence of the new delta file.
+The lead must resolve this conflict before the image work. Keep the word list and the unchanged scenario hashes.
