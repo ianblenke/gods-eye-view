@@ -3013,6 +3013,135 @@
   "osh-control-038": [
     "src/layers/oshControl/view.test.mjs › [osh-control-038] Put one field on its own line"
   ],
+  "ownership-001": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-001] accepts each ASCII range end",
+    "src/tooling/spec/ownership.test.mjs › [ownership-001] accepts the manifest contract",
+    "src/tooling/spec/ownership.test.mjs › [ownership-001] rejects each bad manifest field",
+    "src/tooling/spec/ownership.test.mjs › [ownership-001] reports an absent or bad manifest file",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-001] stops the gate for an absent manifest"
+  ],
+  "ownership-002": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-002] uses exact paths and prefix boundaries"
+  ],
+  "ownership-003": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-003] shows each path class and totals",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-003 ownership-007] check prints classes and rejects an upstream line gap"
+  ],
+  "ownership-004": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-004 ownership-008] rejects fractional waiver counts and ignores negative counts",
+    "src/tooling/spec/ownership.test.mjs › [ownership-004] checks each owned file after an upstream file",
+    "src/tooling/spec/ownership.test.mjs › [ownership-004] rejects all owned gap metrics",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-003 ownership-004] ratchet rejects an owned gap before a ledger write",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-004 ownership-026] adopt records a gap before the owned file check"
+  ],
+  "ownership-005": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-005] reads only added diff ranges",
+    "src/tooling/spec/ownership.test.mjs › [ownership-005] reads real edited new and deleted files",
+    "src/tooling/spec/ownership.test.mjs › [ownership-005] sets each Git diff option"
+  ],
+  "ownership-006": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-006] intersects duplicate line records"
+  ],
+  "ownership-007": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-007 ownership-008] rejects all line waivers for an untrue file",
+    "src/tooling/spec/ownership.test.mjs › [ownership-007] lists all uncovered changed lines in both classes",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-003 ownership-007] check prints classes and rejects an upstream line gap",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-007 ownership-026] stops when Git cannot read a code diff",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-007] ci checks changed upstream lines"
+  ],
+  "ownership-008": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-004 ownership-008] rejects fractional waiver counts and ignores negative counts",
+    "src/tooling/spec/ownership.test.mjs › [ownership-007 ownership-008] rejects all line waivers for an untrue file",
+    "src/tooling/spec/ownership.test.mjs › [ownership-008] bounds a line waiver by hash metric and count"
+  ],
+  "ownership-009": [
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-009 ownership-013] document mode uses the manifest and snapshot line data",
+    "src/tooling/spec/qaRegister.test.mjs › [ownership-009 ownership-010] keeps a valid upstream QA header and its covers rule",
+    "src/tooling/spec/qaRegister.test.mjs › [ownership-009] uses a synthetic upstream QA header",
+    "src/tooling/spec/qaRegister.test.mjs › [ownership-009] uses the synthetic header for a later comment"
+  ],
+  "ownership-010": [
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-010] check keeps QA header errors",
+    "src/tooling/spec/qaRegister.test.mjs › [ownership-009 ownership-010] keeps a valid upstream QA header and its covers rule",
+    "src/tooling/spec/qaRegister.test.mjs › [ownership-010] rejects a bad upstream QA block after a shebang",
+    "src/tooling/spec/qaRegister.test.mjs › [ownership-010] rejects a hashbang inside a QA comment",
+    "src/tooling/spec/qaRegister.test.mjs › [ownership-010] rejects an upstream QA block with no end",
+    "src/tooling/spec/qaRegister.test.mjs › [ownership-010] rejects owned and invalid upstream QA headers"
+  ],
+  "ownership-011": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-011] separates code and test gaps by class",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-011] report reads the ledger without tests or a base",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-011] report uses the manifest for ledger paths"
+  ],
+  "ownership-012": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-012] fixes the process boundary text"
+  ],
+  "ownership-013": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-013] stores line data in the snapshot",
+    "src/tooling/spec/ownership.test.mjs › [ownership-013] writes merged DA counts for each source line",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-009 ownership-013] document mode uses the manifest and snapshot line data",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-013] init accepts an absent line report"
+  ],
+  "ownership-014": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-014] counts every test instance"
+  ],
+  "ownership-015": [
+    "src/tooling/spec/qaRegister.test.mjs › [ownership-015] accepts an upstream first comment with no QA tags"
+  ],
+  "ownership-016": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-016] sorts all line numbers as numbers"
+  ],
+  "ownership-017": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-017] rejects extra line record text"
+  ],
+  "ownership-018": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-018] sums owned file gaps and waiver counts",
+    "src/tooling/spec/ownership.test.mjs › [ownership-018] sums test counts across owned files"
+  ],
+  "ownership-019": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-019] counts zero instances for an empty name map"
+  ],
+  "ownership-020": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-020 ownership-025] exempts merge lines and counts current code",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-020 ownership-022] check exempts upstream gaps and rejects an author line"
+  ],
+  "ownership-021": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-021] needs the manual conflict repair line"
+  ],
+  "ownership-022": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-022] needs an author edit to a vendored line",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-020 ownership-022] check exempts upstream gaps and rejects an author line"
+  ],
+  "ownership-023": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-023] uses each last file source and the last source for other files"
+  ],
+  "ownership-024": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-024] ignores base adopt records and rejects non-string source values",
+    "src/tooling/spec/ownership.test.mjs › [ownership-024] keeps the base rule without current adopt sources",
+    "src/tooling/spec/ownership.test.mjs › [ownership-024] rejects absent and separate source commits",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-024] checks the source before a bad base ledger"
+  ],
+  "ownership-025": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-020 ownership-025] exempts merge lines and counts current code",
+    "src/tooling/spec/ownership.test.mjs › [ownership-025] checks each line of an author rename absent from the source"
+  ],
+  "ownership-026": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-026 ownership-027 ownership-028] checks ledger and base scope",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-004 ownership-026] adopt records a gap before the owned file check",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-007 ownership-026] stops when Git cannot read a code diff",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-026] checks an old owned gap",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-026] checks an old owned gap with a new file mode",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-026] rejects bad history before gap advice"
+  ],
+  "ownership-027": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-026 ownership-027 ownership-028] checks ledger and base scope",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-027] checks an old owned gap"
+  ],
+  "ownership-028": [
+    "src/tooling/spec/ownership.test.mjs › [ownership-026 ownership-027 ownership-028] checks ledger and base scope",
+    "src/tooling/spec/ownershipGate.test.mjs › [ownership-028] rejects a new owned gap without a ledger entry"
+  ],
   "perimeters-001": [
     "src/layers/perimeters/source.test.mjs › [perimeters-001] a live signal accepts a complete source response",
     "src/layers/perimeters/source.test.mjs › [perimeters-001] a successful response yields normalized perimeter rows",
