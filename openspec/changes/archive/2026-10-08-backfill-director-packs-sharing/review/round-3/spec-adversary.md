@@ -1,0 +1,19 @@
+Verdict: FAIL
+Tree read: /home/ianblenke/docker/gev-work/director-3 at 0b7488e22bc1625a1ed0df1418d7a5990a316a1d. I only read files and ran no code.
+- [ ] FINDING major openspec/changes/archive/2026-10-08-backfill-director-packs-sharing/survivors.md:217 a2680, a2681, a2683 and a2684 are not EQUIVALENT. Without the `fail()` at bundle.js:74, invalid JSON falls to `parseSceneDocument(text)`, which rejects text over 5 MiB (document.js:167) with "$: file exceeds 5 MiB". The original gives "$: invalid JSON" for any invalid JSON from 5242881 to 52428800 characters, for example a truncated .gevbundle.json. probe-repeat-json-error.txt and every test use only "{". Add a [director-098] test that `parseSceneShare('{' + ' '.repeat(5242880))` rejects with '$: invalid JSON'. State the message in the 098 clause, then move the 4 rows to KILLED.
+- [ ] FINDING major src/director/sharing/sharing.test.mjs:144 No test uses "+" or "/" in base64, and no mutant removes them. The tool's regex mutants change only ^ $ z Z 9 {64} f and the whole pattern. Hand rows m108 and m109 replace the whole `.test()` call with false. Dropping "+/" from bundle.js:42 or :43 rejects every real PNG or MP4 bundle, and no test fails. Extend the 099 clause (spec.md:239) and add import and export tests for "+/+/" (bytes 251,255,191) and "/w==".
+- [ ] FINDING major src/director/sharing/sharing.test.mjs:936 `snapshot: () => new Map(assets)` changed to `new Map()` (bundle.js:207) passes all three test files. The only snapshot test clears the copy and never reads its entries. The tool does not mutate arguments of `new` expressions, and the line-207 mutants in mutants.json confirm this, so audit.md cannot show this gap. Add a 104 clause and assert the keys and bytes of `snapshot()`. In audit.md and the Known limits, name the classes the tool does not mutate: `new` arguments, `await` removal, statement order, and regex class members.
+- [ ] FINDING minor src/director/sharing/sharing.test.mjs:1952 The 101 clause "reject an invalid project before the resolver call" (spec.md:252) is not asserted. The project has `scenes: []`, so no resolver can run. Use an invalid project with a pack and a resolver spy that expects zero calls.
+- [ ] FINDING minor src/director/packs/backfill.test.mjs:75 No test accepts a path segment that starts with "_" or "-" (first class, manifest.js:24). Dropping either character passes every test. Add 076 cases.
+- [ ] FINDING minor openspec/changes/archive/2026-10-08-backfill-director-packs-sharing/evidence.md:26 Pass 2 statements read as current and contradict pass 4. Lines 24-26 say "zero equivalent rows", lines 54-58 give 212 and 118 tests, and lines 777-778 say "No equivalent row needs a separate probe". Label them Pass 2.
+- [ ] FINDING minor openspec/changes/archive/2026-10-08-backfill-director-packs-sharing/audit.md:67 "Timeouts and crashes count as kills" is the pass policy, not tool data. results.json has `countsAsKill` false on all 114 rows, and the 9 CRASH rows show fail 0. Label it as policy. I did not check whether the gate's force-exit option hides the 9 lifetime.js:10 crashes.
+- [ ] FINDING minor openspec/changes/archive/2026-10-08-backfill-director-packs-sharing/proposal.md:47 "these two limits" names no follow-up change for bundle-nonnumeric-length, although three code limits are listed. Name one, or accept this by name.
+
+Checked and clean:
+- About 55 other EQUIVALENT ids hold: URL operand order, number flag, truthiness, defaults, splice, charCodeAt, a2483 alignment, and a3054 (the validators do not mutate).
+- Ten KILLED samples match tagged tests in director-3-final/results.json.
+- The bounds of the Known limits are accurate.
+- Accept and reject both hold at 8 MiB, 32 MiB, 11184812 characters, 50 MiB and the 5 MiB file limit.
+- The audit totals (3849, 3392, 3667) add up.
+
+Not read: the full probe outputs and the QA scripts beyond their purpose and check names.
