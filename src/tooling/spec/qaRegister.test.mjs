@@ -7,6 +7,15 @@ import { fileURLToPath } from 'node:url';
 import { listTrackedFiles } from '../../../scripts/spec/lib/inventory.mjs';
 import { readQaRegister, qaAdvice } from '../../../scripts/spec/lib/qa-register.mjs';
 
+for (const key of Object.keys(process.env)) if (key.startsWith('GIT_')) delete process.env[key];
+Object.assign(process.env, {
+  GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_SYSTEM: '/dev/null', LC_ALL: 'C',
+  GIT_CONFIG_COUNT: '4', GIT_CONFIG_KEY_0: 'user.name', GIT_CONFIG_VALUE_0: 'Test',
+  GIT_CONFIG_KEY_1: 'user.email', GIT_CONFIG_VALUE_1: 'test@example.com',
+  GIT_CONFIG_KEY_2: 'safe.directory', GIT_CONFIG_VALUE_2: '*',
+  GIT_CONFIG_KEY_3: 'commit.gpgsign', GIT_CONFIG_VALUE_3: 'false',
+});
+
 const PROJECT = fileURLToPath(new URL('../../../', import.meta.url));
 const FILE = 'scripts/qa-example.mjs';
 const PURPOSE = 'Prove that the layer works.';

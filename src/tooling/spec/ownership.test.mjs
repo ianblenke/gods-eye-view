@@ -10,6 +10,15 @@ import { readQaRegister, qaAdvice } from '../../../scripts/spec/lib/qa-register.
 import { createCoverage, addProcess, coverageLcov } from '../../../scripts/spec/lib/v8-merge.mjs';
 import { writeMeasurement, trustMeasurement } from '../../../scripts/spec/lib/measurement.mjs';
 
+for (const key of Object.keys(process.env)) if (key.startsWith('GIT_')) delete process.env[key];
+Object.assign(process.env, {
+  GIT_CONFIG_GLOBAL: '/dev/null', GIT_CONFIG_SYSTEM: '/dev/null', LC_ALL: 'C',
+  GIT_CONFIG_COUNT: '4', GIT_CONFIG_KEY_0: 'user.name', GIT_CONFIG_VALUE_0: 'Test',
+  GIT_CONFIG_KEY_1: 'user.email', GIT_CONFIG_VALUE_1: 'test@example.com',
+  GIT_CONFIG_KEY_2: 'safe.directory', GIT_CONFIG_VALUE_2: '*',
+  GIT_CONFIG_KEY_3: 'commit.gpgsign', GIT_CONFIG_VALUE_3: 'false',
+});
+
 const manifest = { version: 1, owned: ['src/own/', 'single.js'] };
 function fixture(fn) {
   const root = mkdtempSync(path.join(tmpdir(), 'gev-ownership-'));
@@ -67,8 +76,8 @@ test('[ownership-005] reads only added diff ranges', () => {
   assert.deepEqual(parseDiffLines('@@ -1 +1,1 @@\n@@ -1 +1,1 @@\n'), [1]);
 });
 test('[ownership-005] reads real edited new and deleted files', () => fixture(({ root, put }) => {
-  const git = (...args) => { const result = spawnSync('git', args, { cwd: root, encoding: 'utf8' }); assert.equal(result.status, 0, result.stderr); return result.stdout.trim(); };
-  git('init', '-q'); put('a.js', 'a\nb\nc\n'); put('gone.js', 'old\n'); put('binary.js', 'old\0text\n');
+  const git = (...args) => { const result = spawnSync('git', ['-c', 'user.name=Test', '-c', 'user.email=test@example.com', ...args], { cwd: root, encoding: 'utf8' }); assert.equal(result.status, 0, result.stderr); return result.stdout.trim(); };
+  git('init', '-q', '-b', 'main'); put('a.js', 'a\nb\nc\n'); put('gone.js', 'old\n'); put('binary.js', 'old\0text\n');
   git('add', '.'); git('-c', 'user.name=Test', '-c', 'user.email=test@example.com', 'commit', '-qm', 'base');
   const base = git('rev-parse', 'HEAD');
   put('a.js', 'a\nnew\nc\nextra\n'); put('new.js', 'one\ntwo'); put('trail.js', 'one\ntwo\n'); put('empty.js', ''); put('binary.js', 'a\0b\n'); rmSync(path.join(root, 'gone.js'));
@@ -109,7 +118,7 @@ test('[ownership-011] separates code and test gaps by class', () => {
 test('[ownership-012] fixes the process boundary text', () => {
   const root = new URL('../../../', import.meta.url);
   const text = readFileSync(new URL('AGENTS.md', root), 'utf8');
-  assert.match(text, /5\. Keep each owned code file at 100% line, branch and function coverage\. Keep each line that a change adds or edits at 100%, in every file\./);
+  assert.match(text, /5\. Keep each owned code file that a change adds or edits at 100% line, branch and function coverage\. The report lists the other owned gaps\. The target is zero\. Keep each line that a change adds or edits at 100%, in every file\./);
   assert.match(text, /For a sync, upstream source lines need no changed line coverage\./);
   assert.match(text, /A sync needs changed line coverage only for base diff lines that also differ from their adopted upstream source\./);
   assert.match(text, /Each sync change uses `adopt` for every file the merge brings\./);
@@ -119,7 +128,7 @@ test('[ownership-012] fixes the process boundary text', () => {
   assert.match(text, /25\..*retires the scenario or rewrites it/);
   assert.match(text, /The campaign order of 2026-09-26 is closed\./);
   const config = readFileSync(new URL('openspec/config.yaml', root), 'utf8');
-  assert.match(config, /All owned JS code and every changed line has 100%/);
+  assert.match(config, /All owned JS code that a change adds or edits has 100%/);
   assert.match(config, /For a sync, upstream source lines need no changed line coverage\./);
   assert.match(config, /Upstream code enters the ledger by `adopt` and keeps its recorded gap\./);
 });
@@ -228,7 +237,7 @@ test('[ownership-020 ownership-025] exempts merge lines and counts current code'
 
 test('[ownership-021] needs the manual conflict repair line', () => syncFixture(({ root, put, git, commit, base, from, input }) => {
   git('checkout', '-qb', 'conflict', base); put('a.js', 'author\n'); commit();
-  const merge = spawnSync('git', ['merge', '--no-ff', '--no-commit', from], { cwd: root, encoding: 'utf8' });
+  const merge = spawnSync('git', ['-c', 'user.name=Test', '-c', 'user.email=test@example.com', 'merge', '--no-ff', '--no-commit', from], { cwd: root, encoding: 'utf8' });
   assert.equal(merge.status, 1);
   put('a.js', 'resolved\nextra\n'); commit();
   const result = syncChangedLines(input);
@@ -290,3 +299,12 @@ test('[ownership-025] checks each line of an author rename absent from the sourc
   assert.deepEqual(result.changed, { 'no-gap.js': [], 'renamed.js': [], 'binary.js': [], 'author-name.js': [1, 2] });
   assert.equal(result.advice, 'COVERAGE-DIFF: 5 changed lines, 3 brought by the merged upstream commit, 2 need coverage.');
 }));
+
+test('[ownership-026 ownership-027 ownership-028] checks ledger and base scope', () => {
+  assert.deepEqual(faults({ ledger: { coverage: { 'src/own/a.js': {} } }, changedFiles: [] }), []);
+  assert.equal(faults({ ledger: { coverage: { 'src/own/a.js': {} } }, changed: { 'src/own/a.js': [] } })[0].code, 'COVERAGE-OWNED');
+  assert.deepEqual(faults({ ledger: { coverage: { 'src/own/a.js': {} } }, changed: { 'src/own/a.js.extra.js': [] } }), []);
+  assert.equal(faults({ ledger: { coverage: { 'src/own/a.js': {} } }, changedFiles: ['src/own/a.js'] })[0].code, 'COVERAGE-OWNED');
+  assert.equal(faults({ ledger: { coverage: {} }, changedFiles: [] })[0].code, 'COVERAGE-OWNED');
+  assert.equal(faults({ ledger: { coverage: Object.create({ 'src/own/a.js': {} }) }, changedFiles: [] })[0].code, 'COVERAGE-OWNED');
+});
