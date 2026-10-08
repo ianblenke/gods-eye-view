@@ -39,4 +39,4 @@
 - [x] 4.3 Change both list tests for `credential-boundary-003` before the build helper.
 - [x] 4.4 Keep the test for `credential-boundary-004`.
 - [x] 4.5 Keep the test for `credential-boundary-016`.
-- [ ] 4.6 Remove the Mapillary define default and check the host results.
+- [x] 4.6 Remove the Mapillary define default and check the host results.
