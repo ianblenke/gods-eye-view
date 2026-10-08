@@ -1,49 +1,61 @@
 ## Source
 
-Read commit: `e2437f945215860c42b5d8bba6834c85f93a90ce`.
+Commit read: `e2437f945215860c42b5d8bba6834c85f93a90ce`.
 
 ## Decision
 
-Add the optional predicate `adoptedAsIs` to compareLedger and ratchetLedger. Its default returns false.
-A file has tolerance when its current hash equals its ledger hash.
-Both records must show a file that a test loads with true coverage.
-The file must also have base content or satisfy adoptedAsIs.
+Add the optional predicate adoptedAsIs to compareLedger and ratchetLedger. Its default returns false.
+The content hash must equal the hash in the ledger entry.
+Both the ledger entry and the current gap must show true coverage from a test that loads the file.
+The file must also have base content or equal its adopted source.
 
-The gate reads adopt records through adoptsOf for the checked change after the base history prefix.
-The gate uses checkAdopts to check the merge parent, the changed file set and the reached rule.
+The gate reads adopt lines through adoptsOf for the checked change after the base history prefix.
+The gate uses checkAdopts to check the merged commit, the changed file set and the reached rule.
 
-Only valid records supply source evidence. The gate compares current file text with git show at the from commit.
-An absent current file gives no evidence. Other source content gives no evidence, also after a conflict that a person resolves by hand.
+Only valid adopt lines supply evidence of adopted source content.
+The gate compares current file text with its content at the from commit.
+An absent current file gives no evidence.
+If the current file differs from its content at the from commit, the file gives no evidence.
+This includes a conflict that a person resolves by hand.
 
-A new file can satisfy this rule without base content. Another change or an invalid source gives no tolerance.
-The gate keeps LEDGER-ADOPT-FROM and the other adopt errors.
+A new file can have count tolerance without base content. Another change or an invalid adopt line gives no count tolerance.
+The gate still reports LEDGER-ADOPT-FROM and the other adopt errors.
+The gate computes adoptedAsIs before the ratchet command and the ledger comparison.
+The ci command selects the change first. The ci, check and ratchet commands use the same predicate.
 
-The gate computes this predicate before the ratchet command and the ledger comparison.
-The ci command selects the change first. All three commands use the same predicate.
-The ratchet command uses toleranceCounts for each eligible entry. It never writes a worse count.
-The rule changes no toleranceOf limit, stale rule or coverage loss error.
+The ratchet command uses toleranceCounts for a file with base content, also when adoptedAsIs returns true.
+
+For a file that equals its adopted source without base content, the ratchet command uses neverWorseCounts.
+An adopt line has no total counts. The base comparison bounds a new ledger entry by the adopt line not-covered counts.
+The covered-count rule of toleranceCounts cannot apply to that file.
+neverWorseCounts selects each metric separately.
+
+A smaller or equal current not-covered count selects the current count and current total count.
+A larger current not-covered count selects the entry count and entry total count.
+The change does not change compareWithBase, compareLedger, toleranceOf or the coverage error rules.
 
 ### Pass 2
 
-Read commit: `125dc3ae92f9687a830e230914ec0e2b393dda18`.
+Commit read: `125dc3ae92f9687a830e230914ec0e2b393dda18`.
 Add the optional adoptedFile predicate to compareLedger. Its default returns false.
-The gate computes it from the same valid adopt records as adoptedAsIs, without a source content check.
-The stale decision accepts total differences only with equal hashes, true loaded records and equal not-covered counts for all metrics.
+The gate computes adoptedFile from the same valid adopt lines as adoptedAsIs, without an adopted source content check.
 
-The comparison keeps all coverage errors exact. The ratchet command keeps its current total count rule for fork edits.
+The gate accepts total differences only with equal hashes, true loaded coverage and equal not-covered counts of lines, branches and functions.
+The requirement "Total counts for adopted files" gives this exception to the stale rule.
+The comparison applies all coverage error rules. The ratchet command applies its existing rule for total counts to files without base content that differ from their adopted source.
 
 ## Files
 
 Change scripts/spec/lib/ledger.mjs and scripts/spec/gates.mjs.
 Add tests to src/tooling/spec/ledger.test.mjs and src/tooling/spec/gates.test.mjs.
-Keep the first sentence of Count tolerance unchanged. Add a separate requirement for the new source condition.
+Keep the first sentence of Count tolerance unchanged. Add a separate requirement for the adopted source content condition.
 The new requirement adds an exception to the base content condition.
 
 ## Checks
 
-Use host tests with one file per Node process. Use cores 8 through 11 and priority 19.
+Use host tests with one file per Node process. Use cores 0 through 3 and priority 19.
 
-Measure line, branch and function coverage. Run named code faults and automatic code mutations.
+Measure line, branch and function coverage. Run named mutations and automatic code mutations.
 Replay the real CI artifact against a scratch copy of upstream-sync-3.
 Run only the lint command from the gate CLI. The lead runs the ratchet command, image gates and reviews.
 
@@ -71,6 +83,41 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | main commit e2437f94 | Main tree before this change. |
 | pass 1 commit 125dc3ae | Tree after pass 1. |
 | gate | Code that checks the spec and ledger rules. |
-| toleranceCounts | Function that selects counts for a file with count tolerance. |
+| toleranceCounts | Function that selects counts for a file with base content and count tolerance. |
+| never-worse counts | Use the current count and total for a smaller or equal not-covered count. Otherwise use the entry count and total. |
+| neverWorseCounts | Function that selects never-worse counts. |
+| adoptedAsIs | Predicate for a file that equals its adopted source. |
+| adoptedFile | Predicate for a file with a valid adopt line. |
+| current measurement | Coverage data from the test command. |
+| covered count | Total count minus not-covered count. |
+| base content | File content at the base commit. |
+| reached adopt line | Adopt line with reached true, under Adoption of merged code. |
+| person who merges | Person who checks rule 21 and records the result in review.md. |
+| upstream remote | Git remote that has the merged commit. |
+| compareLedger | Function that compares current gaps with ledger entries. |
+| ratchetLedger | Function that selects ledger entries and history lines. |
+| adoptsOf | Function that selects adopt lines of the checked change. |
+| checkAdopts | Function that checks adopt lines. |
+| toleranceOf | Function that computes the count tolerance. |
 | compareWithBase | Function that compares the ledger with the base ledger. |
 | lead | Person who decides the correction for a design defect. |
+
+| metric | Lines, branches or functions. |
+| history line | JSON object in history.jsonl. |
+| base ledger | Ledger at the base commit. |
+| test | Node test that calls a method of node:assert. |
+| fork | This project with changes to upstream code. |
+| sync | Change that merges upstream code into this project. |
+| CI artifact | Coverage and guard files from the CI command. |
+| covered baseline | Entry total count minus entry not-covered count. |
+| hand-edit check | Base comparison that rejects ledger changes without history evidence. |
+| V8 split | One measured range becomes two ranges. |
+
+| host | Machine that runs Node commands outside the image. |
+| Node process | Process that runs one Node command. |
+| fixture | Temporary Git project for a gate test. |
+| script copy | Tool that reads the CI artifact with copies of the gate predicates. |
+| scratch root | Copy of a project tree for a host command. |
+| mutation | Code change that tests must reject. |
+| probe | Command that compares two code versions. |
+| code AST | JavaScript syntax tree without comments or source offsets. |

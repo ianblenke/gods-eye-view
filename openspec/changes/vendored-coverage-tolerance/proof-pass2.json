@@ -1,0 +1,2735 @@
+{
+  "sourceCommit": "0945baee",
+  "candidates": 181,
+  "phase1": {
+    "KILLED": 159,
+    "SURVIVED": 22
+  },
+  "phase2": {
+    "SURVIVED": 22
+  },
+  "followupKilled": 6,
+  "final": {
+    "KILLED": 165,
+    "EQUIVALENT": 16
+  },
+  "libraryProbeCases": 161280,
+  "gateProbeTitles": 12,
+  "unresolved": 0,
+  "mutations": {
+    "a2079": {
+      "id": "a2079",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "equality",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2692,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2099": {
+      "id": "a2099",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "equality",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2695,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2122": {
+      "id": "a2122",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "equality",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2123,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9101": {
+      "id": "a9101",
+      "file": "scripts/spec/gates.mjs",
+      "class": "equality",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-149] need a valid adopt record for total differences"
+      },
+      "ms": 22908,
+      "failedTests": [
+        "[gap-ledger-149] need a valid adopt record for total differences"
+      ],
+      "countsAsKill": true
+    },
+    "a2038": {
+      "id": "a2038",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "logical",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 2832,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2050": {
+      "id": "a2050",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "logical",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 2433,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2055": {
+      "id": "a2055",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "logical",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 2279,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2060": {
+      "id": "a2060",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "logical",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 2132,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2065": {
+      "id": "a2065",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "logical",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1789,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2070": {
+      "id": "a2070",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "logical",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 2219,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2104": {
+      "id": "a2104",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "logical",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1902,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2112": {
+      "id": "a2112",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "logical",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1875,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2117": {
+      "id": "a2117",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "logical",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1816,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2039": {
+      "id": "a2039",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1968,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2040": {
+      "id": "a2040",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-152] keep another ledger hash exact for total differences"
+      },
+      "ms": 2297,
+      "failedTests": [
+        "[gap-ledger-152] keep another ledger hash exact for total differences"
+      ],
+      "countsAsKill": true
+    },
+    "a2041": {
+      "id": "a2041",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-153] keep untrue and unloaded total differences exact"
+      },
+      "ms": 2644,
+      "failedTests": [
+        "[gap-ledger-153] keep untrue and unloaded total differences exact"
+      ],
+      "countsAsKill": true
+    },
+    "a2042": {
+      "status": "EQUIVALENT",
+      "id": "a2042",
+      "cases": 11520
+    },
+    "a2043": {
+      "id": "a2043",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-153] keep untrue and unloaded total differences exact"
+      },
+      "ms": 2174,
+      "failedTests": [
+        "[gap-ledger-153] keep untrue and unloaded total differences exact"
+      ],
+      "countsAsKill": true
+    },
+    "a2044": {
+      "status": "EQUIVALENT",
+      "id": "a2044",
+      "cases": 11520
+    },
+    "a2045": {
+      "id": "a2045",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-148] keep adopted not-covered counts exact"
+      },
+      "ms": 2224,
+      "failedTests": [
+        "[gap-ledger-148] keep adopted not-covered counts exact"
+      ],
+      "countsAsKill": true
+    },
+    "a2046": {
+      "id": "a2046",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2110,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2051": {
+      "id": "a2051",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2266,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2056": {
+      "id": "a2056",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2189,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2061": {
+      "id": "a2061",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2132,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2066": {
+      "id": "a2066",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2283,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2071": {
+      "id": "a2071",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2439,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2105": {
+      "id": "a2105",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2570,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2106": {
+      "id": "a2106",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage"
+      },
+      "ms": 2862,
+      "failedTests": [
+        "[gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage"
+      ],
+      "countsAsKill": true
+    },
+    "a2107": {
+      "id": "a2107",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2687,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2108": {
+      "id": "a2108",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2429,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2113": {
+      "id": "a2113",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 2731,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2118": {
+      "id": "a2118",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 2368,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2083": {
+      "id": "a2083",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "condition",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2338,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2087": {
+      "id": "a2087",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "condition",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2442,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2100": {
+      "id": "a2100",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "condition",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2929,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2101": {
+      "id": "a2101",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "condition",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 2460,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2128": {
+      "id": "a2128",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "condition",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 1979,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2137": {
+      "id": "a2137",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "condition",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 2841,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2139": {
+      "id": "a2139",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "condition",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 2086,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2084": {
+      "id": "a2084",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "negation",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2808,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2088": {
+      "id": "a2088",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "negation",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2542,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2129": {
+      "id": "a2129",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "negation",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 2211,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2138": {
+      "id": "a2138",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "negation",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2110,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2140": {
+      "id": "a2140",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "negation",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 2047,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a1795": {
+      "id": "a1795",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1851,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a1796": {
+      "id": "a1796",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2116,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a1797": {
+      "id": "a1797",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2151,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a1799": {
+      "id": "a1799",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2004,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a1800": {
+      "id": "a1800",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1862,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a1801": {
+      "id": "a1801",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2046,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a1803": {
+      "id": "a1803",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1577,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a1804": {
+      "id": "a1804",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1943,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a1805": {
+      "id": "a1805",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1898,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a1807": {
+      "id": "a1807",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1947,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a1808": {
+      "id": "a1808",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1775,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a1809": {
+      "id": "a1809",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1976,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a2075": {
+      "id": "a2075",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "arguments",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1995,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2091": {
+      "id": "a2091",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "arguments",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2083,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2130": {
+      "id": "a2130",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "arguments",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1750,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2131": {
+      "id": "a2131",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "arguments",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1874,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2143": {
+      "id": "a2143",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "arguments",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 1826,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a9094": {
+      "id": "a9094",
+      "file": "scripts/spec/gates.mjs",
+      "class": "arguments",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 9832,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9580": {
+      "id": "a9580",
+      "file": "scripts/spec/gates.mjs",
+      "class": "arguments",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 9416,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a2103": {
+      "id": "a2103",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 1812,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2141": {
+      "id": "a2141",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 2385,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2142": {
+      "id": "a2142",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 2027,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2077": {
+      "id": "a2077",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "call-value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 3460,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2093": {
+      "id": "a2093",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "call-value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2515,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2134": {
+      "id": "a2134",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "call-value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage"
+      },
+      "ms": 1746,
+      "failedTests": [
+        "[gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage"
+      ],
+      "countsAsKill": true
+    },
+    "a9096": {
+      "id": "a9096",
+      "file": "scripts/spec/gates.mjs",
+      "class": "call-value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 14493,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9582": {
+      "id": "a9582",
+      "file": "scripts/spec/gates.mjs",
+      "class": "call-value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 9808,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a2124": {
+      "id": "a2124",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "number",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2201,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2125": {
+      "id": "a2125",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "number",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 1658,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2126": {
+      "id": "a2126",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "number",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1721,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2127": {
+      "id": "a2127",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "number",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 1521,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2094": {
+      "id": "a2094",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "method",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-148] keep adopted not-covered counts exact"
+      },
+      "ms": 1446,
+      "failedTests": [
+        "[gap-ledger-148] keep adopted not-covered counts exact"
+      ],
+      "countsAsKill": true
+    },
+    "a9097": {
+      "id": "a9097",
+      "file": "scripts/spec/gates.mjs",
+      "class": "method",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 10717,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a2145": {
+      "id": "a2145",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "object",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+      },
+      "ms": 1285,
+      "failedTests": [
+        "[gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+      ],
+      "countsAsKill": true
+    },
+    "a2146": {
+      "id": "a2146",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "object",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+      },
+      "ms": 1286,
+      "failedTests": [
+        "[gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+      ],
+      "countsAsKill": true
+    },
+    "a2147": {
+      "id": "a2147",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "object",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+      },
+      "ms": 1340,
+      "failedTests": [
+        "[gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+      ],
+      "countsAsKill": true
+    },
+    "a2148": {
+      "id": "a2148",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "object",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+      },
+      "ms": 1318,
+      "failedTests": [
+        "[gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+      ],
+      "countsAsKill": true
+    },
+    "a9583": {
+      "id": "a9583",
+      "file": "scripts/spec/gates.mjs",
+      "class": "object",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 6885,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9584": {
+      "id": "a9584",
+      "file": "scripts/spec/gates.mjs",
+      "class": "object",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 6962,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9585": {
+      "status": 1,
+      "id": "a9585",
+      "names": [
+        "\u2716 [gap-ledger-069] keep count tolerance for base content in the gate",
+        "\u2716 [gap-ledger-069] keep count tolerance for base content in the gate"
+      ],
+      "log": "/tmp/vct2-logs/followup-a9585.log",
+      "verdict": "KILLED"
+    },
+    "a9586": {
+      "status": 1,
+      "id": "a9586",
+      "names": [
+        "\u2716 [gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in check ci and the ratchet command",
+        "\u2716 [gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in check ci and the ratchet command"
+      ],
+      "log": "/tmp/vct2-logs/followup-a9586.log",
+      "verdict": "KILLED"
+    },
+    "a9587": {
+      "id": "a9587",
+      "file": "scripts/spec/gates.mjs",
+      "class": "object",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 9693,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9588": {
+      "status": 1,
+      "id": "a9588",
+      "names": [
+        "\u2716 [gap-ledger-081] keep the waiver count for an edited adopted file in the gate",
+        "\u2716 [gap-ledger-081] keep the waiver count for an edited adopted file in the gate"
+      ],
+      "log": "/tmp/vct2-logs/followup-a9588.log",
+      "verdict": "KILLED"
+    },
+    "a9589": {
+      "id": "a9589",
+      "file": "scripts/spec/gates.mjs",
+      "class": "object",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 6408,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9590": {
+      "id": "a9590",
+      "file": "scripts/spec/gates.mjs",
+      "class": "object",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 6470,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9591": {
+      "status": 1,
+      "id": "a9591",
+      "names": [
+        "\u2716 [gap-ledger-069] keep count tolerance for base content in the gate",
+        "\u2716 [gap-ledger-069] keep count tolerance for base content in the gate"
+      ],
+      "log": "/tmp/vct2-logs/followup-a9591.log",
+      "verdict": "KILLED"
+    },
+    "a9592": {
+      "status": 1,
+      "id": "a9592",
+      "names": [
+        "\u2716 [gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in check ci and the ratchet command",
+        "\u2716 [gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in check ci and the ratchet command"
+      ],
+      "log": "/tmp/vct2-logs/followup-a9592.log",
+      "verdict": "KILLED"
+    },
+    "a9593": {
+      "id": "a9593",
+      "file": "scripts/spec/gates.mjs",
+      "class": "object",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 11335,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9594": {
+      "status": 1,
+      "id": "a9594",
+      "names": [
+        "\u2716 [gap-ledger-081] keep the waiver count for an edited adopted file in the gate",
+        "\u2716 [gap-ledger-081] keep the waiver count for an edited adopted file in the gate"
+      ],
+      "log": "/tmp/vct2-logs/followup-a9594.log",
+      "verdict": "KILLED"
+    },
+    "a1798": {
+      "id": "a1798",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1554,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a1802": {
+      "id": "a1802",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1454,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a1806": {
+      "id": "a1806",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1501,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2047": {
+      "id": "a2047",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-148] keep adopted not-covered counts exact"
+      },
+      "ms": 1737,
+      "failedTests": [
+        "[gap-ledger-148] keep adopted not-covered counts exact"
+      ],
+      "countsAsKill": true
+    },
+    "a2048": {
+      "id": "a2048",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1562,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2049": {
+      "status": "EQUIVALENT",
+      "id": "a2049",
+      "cases": 11520
+    },
+    "a2052": {
+      "status": "EQUIVALENT",
+      "id": "a2052",
+      "cases": 11520
+    },
+    "a2053": {
+      "id": "a2053",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1485,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2054": {
+      "status": "EQUIVALENT",
+      "id": "a2054",
+      "cases": 11520
+    },
+    "a2057": {
+      "id": "a2057",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-153] keep untrue and unloaded total differences exact"
+      },
+      "ms": 1886,
+      "failedTests": [
+        "[gap-ledger-153] keep untrue and unloaded total differences exact"
+      ],
+      "countsAsKill": true
+    },
+    "a2058": {
+      "id": "a2058",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1569,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2059": {
+      "status": "EQUIVALENT",
+      "id": "a2059",
+      "cases": 11520
+    },
+    "a2062": {
+      "status": "EQUIVALENT",
+      "id": "a2062",
+      "cases": 11520
+    },
+    "a2063": {
+      "id": "a2063",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1521,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2064": {
+      "status": "EQUIVALENT",
+      "id": "a2064",
+      "cases": 11520
+    },
+    "a2067": {
+      "id": "a2067",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-153] keep untrue and unloaded total differences exact"
+      },
+      "ms": 1675,
+      "failedTests": [
+        "[gap-ledger-153] keep untrue and unloaded total differences exact"
+      ],
+      "countsAsKill": true
+    },
+    "a2068": {
+      "id": "a2068",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1518,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2069": {
+      "status": "EQUIVALENT",
+      "id": "a2069",
+      "cases": 11520
+    },
+    "a2072": {
+      "id": "a2072",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-152] keep another ledger hash exact for total differences"
+      },
+      "ms": 1618,
+      "failedTests": [
+        "[gap-ledger-152] keep another ledger hash exact for total differences"
+      ],
+      "countsAsKill": true
+    },
+    "a2073": {
+      "id": "a2073",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      },
+      "ms": 1488,
+      "failedTests": [
+        "[gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2074": {
+      "status": "EQUIVALENT",
+      "id": "a2074",
+      "cases": 11520
+    },
+    "a2076": {
+      "id": "a2076",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "argument-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1935,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2078": {
+      "id": "a2078",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1772,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2080": {
+      "id": "a2080",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1688,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2081": {
+      "id": "a2081",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1808,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2082": {
+      "id": "a2082",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1665,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2085": {
+      "id": "a2085",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-153] keep untrue and unloaded total differences exact"
+      },
+      "ms": 1839,
+      "failedTests": [
+        "[gap-ledger-153] keep untrue and unloaded total differences exact"
+      ],
+      "countsAsKill": true
+    },
+    "a2086": {
+      "id": "a2086",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 2063,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2089": {
+      "status": "EQUIVALENT",
+      "id": "a2089",
+      "cases": 11520
+    },
+    "a2090": {
+      "id": "a2090",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1717,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2092": {
+      "id": "a2092",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "argument-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1795,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2095": {
+      "id": "a2095",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1634,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2096": {
+      "id": "a2096",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-148] keep adopted not-covered counts exact"
+      },
+      "ms": 1911,
+      "failedTests": [
+        "[gap-ledger-148] keep adopted not-covered counts exact"
+      ],
+      "countsAsKill": true
+    },
+    "a2097": {
+      "id": "a2097",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-148] keep adopted not-covered counts exact"
+      },
+      "ms": 1836,
+      "failedTests": [
+        "[gap-ledger-148] keep adopted not-covered counts exact"
+      ],
+      "countsAsKill": true
+    },
+    "a2098": {
+      "id": "a2098",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1642,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2102": {
+      "id": "a2102",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "branch",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1547,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2109": {
+      "id": "a2109",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-147] accept only total differences for an adopted file"
+      },
+      "ms": 1779,
+      "failedTests": [
+        "[gap-ledger-147] accept only total differences for an adopted file"
+      ],
+      "countsAsKill": true
+    },
+    "a2110": {
+      "id": "a2110",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1452,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2111": {
+      "status": "EQUIVALENT",
+      "id": "a2111",
+      "cases": 11520
+    },
+    "a2114": {
+      "id": "a2114",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1612,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2115": {
+      "id": "a2115",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1595,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2116": {
+      "status": "EQUIVALENT",
+      "id": "a2116",
+      "cases": 11520
+    },
+    "a2119": {
+      "id": "a2119",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage"
+      },
+      "ms": 1456,
+      "failedTests": [
+        "[gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage"
+      ],
+      "countsAsKill": true
+    },
+    "a2120": {
+      "id": "a2120",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "operand-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1587,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2121": {
+      "status": "EQUIVALENT",
+      "id": "a2121",
+      "cases": 11520
+    },
+    "a2123": {
+      "id": "a2123",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 1621,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2132": {
+      "id": "a2132",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "argument-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1519,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2133": {
+      "id": "a2133",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "argument-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1462,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a2135": {
+      "id": "a2135",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage"
+      },
+      "ms": 1602,
+      "failedTests": [
+        "[gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage"
+      ],
+      "countsAsKill": true
+    },
+    "a2136": {
+      "id": "a2136",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "predicate",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 1508,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a2144": {
+      "id": "a2144",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "argument-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 1513,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a9147": {
+      "id": "a9147",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "destructure-remove",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1484,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9148": {
+      "id": "a9148",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "destructure-remove",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1567,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9149": {
+      "id": "a9149",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "destructure-remove",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1428,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9150": {
+      "id": "a9150",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "destructure-remove",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1447,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9151": {
+      "id": "a9151",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "destructure-remove",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1537,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9152": {
+      "id": "a9152",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "destructure-remove",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1530,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9153": {
+      "id": "a9153",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1508,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9154": {
+      "id": "a9154",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1518,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9155": {
+      "id": "a9155",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1405,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9156": {
+      "id": "a9156",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1495,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9157": {
+      "id": "a9157",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1459,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9158": {
+      "id": "a9158",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1566,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9159": {
+      "id": "a9159",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1414,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9160": {
+      "id": "a9160",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1771,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9161": {
+      "id": "a9161",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1751,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9162": {
+      "id": "a9162",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 1841,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9163": {
+      "id": "a9163",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2062,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9164": {
+      "id": "a9164",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      },
+      "ms": 2090,
+      "failedTests": [
+        "[gap-ledger-004] stops for more lines that are not covered and shows both counts"
+      ],
+      "countsAsKill": true
+    },
+    "a9165": {
+      "id": "a9165",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1585,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9166": {
+      "id": "a9166",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 1676,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9167": {
+      "id": "a9167",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "default-shape",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-003] stops for a new code file below 100%"
+      },
+      "ms": 2006,
+      "failedTests": [
+        "[gap-ledger-003] stops for a new code file below 100%"
+      ],
+      "countsAsKill": true
+    },
+    "a9192": {
+      "id": "a9192",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "statement-order",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      },
+      "ms": 1948,
+      "failedTests": [
+        "[gap-ledger-018] does not stop for branches that a new test shows in an unchanged file"
+      ],
+      "countsAsKill": true
+    },
+    "a9091": {
+      "id": "a9091",
+      "file": "scripts/spec/gates.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-149] need a valid adopt record for total differences"
+      },
+      "ms": 16202,
+      "failedTests": [
+        "[gap-ledger-149] need a valid adopt record for total differences"
+      ],
+      "countsAsKill": true
+    },
+    "a9092": {
+      "id": "a9092",
+      "file": "scripts/spec/gates.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-149] need a valid adopt record for total differences"
+      },
+      "ms": 12578,
+      "failedTests": [
+        "[gap-ledger-149] need a valid adopt record for total differences"
+      ],
+      "countsAsKill": true
+    },
+    "a9093": {
+      "id": "a9093",
+      "file": "scripts/spec/gates.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 11056,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9095": {
+      "id": "a9095",
+      "file": "scripts/spec/gates.mjs",
+      "class": "argument-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 7295,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9098": {
+      "id": "a9098",
+      "file": "scripts/spec/gates.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-149] need a valid adopt record for total differences"
+      },
+      "ms": 12825,
+      "failedTests": [
+        "[gap-ledger-149] need a valid adopt record for total differences"
+      ],
+      "countsAsKill": true
+    },
+    "a9099": {
+      "id": "a9099",
+      "file": "scripts/spec/gates.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-149] need a valid adopt record for total differences"
+      },
+      "ms": 12565,
+      "failedTests": [
+        "[gap-ledger-149] need a valid adopt record for total differences"
+      ],
+      "countsAsKill": true
+    },
+    "a9100": {
+      "id": "a9100",
+      "file": "scripts/spec/gates.mjs",
+      "class": "callback",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 11303,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9579": {
+      "id": "a9579",
+      "file": "scripts/spec/gates.mjs",
+      "class": "value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 8327,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9581": {
+      "id": "a9581",
+      "file": "scripts/spec/gates.mjs",
+      "class": "argument-drop",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 7299,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9595": {
+      "id": "a9595",
+      "file": "scripts/spec/gates.mjs",
+      "class": "value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 7126,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9596": {
+      "id": "a9596",
+      "file": "scripts/spec/gates.mjs",
+      "class": "value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 7396,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9597": {
+      "id": "a9597",
+      "file": "scripts/spec/gates.mjs",
+      "class": "value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/gates.test.mjs",
+        "test": "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      },
+      "ms": 7522,
+      "failedTests": [
+        "[gap-ledger-147] accept adopted totals in check ci and the ratchet command"
+      ],
+      "countsAsKill": true
+    },
+    "a9898": {
+      "status": 0,
+      "id": "a9898",
+      "names": [
+        "\u2714 [gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in check ci and the ratchet command",
+        "\u2714 [gap-ledger-137] use no new tolerance after an adopted source edit",
+        "\u2714 [gap-ledger-138] use no new tolerance for an invalid adopt source",
+        "\u2714 [gap-ledger-139] use no new tolerance from another change",
+        "\u2714 [gap-ledger-145] give no new tolerance to an absent adopted file",
+        "\u2714 [gap-ledger-146] need the production file in a valid adopt record",
+        "\u2714 [gap-ledger-069] keep count tolerance for base content in the gate",
+        "\u2714 [gap-ledger-081] keep the waiver count for an edited adopted file in the gate",
+        "\u2714 [gap-ledger-147] accept adopted totals in check ci and the ratchet command",
+        "\u2714 [gap-ledger-149] need a valid adopt record for total differences",
+        "\u2714 [gap-ledger-150] ignore another change for total differences",
+        "\u2714 [gap-ledger-151] reject an invalid from for total differences"
+      ],
+      "log": "/tmp/vct2-logs/followup-a9898.log",
+      "verdict": "EQUIVALENT"
+    },
+    "a9903": {
+      "status": 0,
+      "id": "a9903",
+      "names": [
+        "\u2714 [gap-ledger-136 gap-ledger-140 gap-ledger-144] use the adopted source in check ci and the ratchet command",
+        "\u2714 [gap-ledger-137] use no new tolerance after an adopted source edit",
+        "\u2714 [gap-ledger-138] use no new tolerance for an invalid adopt source",
+        "\u2714 [gap-ledger-139] use no new tolerance from another change",
+        "\u2714 [gap-ledger-145] give no new tolerance to an absent adopted file",
+        "\u2714 [gap-ledger-146] need the production file in a valid adopt record",
+        "\u2714 [gap-ledger-069] keep count tolerance for base content in the gate",
+        "\u2714 [gap-ledger-081] keep the waiver count for an edited adopted file in the gate",
+        "\u2714 [gap-ledger-147] accept adopted totals in check ci and the ratchet command",
+        "\u2714 [gap-ledger-149] need a valid adopt record for total differences",
+        "\u2714 [gap-ledger-150] ignore another change for total differences",
+        "\u2714 [gap-ledger-151] reject an invalid from for total differences"
+      ],
+      "log": "/tmp/vct2-logs/followup-a9903.log",
+      "verdict": "EQUIVALENT"
+    },
+    "a2149": {
+      "id": "a2149",
+      "file": "scripts/spec/lib/ledger.mjs",
+      "class": "string",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/tooling/spec/ledger.test.mjs",
+        "test": "[gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+      },
+      "ms": 1499,
+      "failedTests": [
+        "[gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash"
+      ],
+      "countsAsKill": true
+    }
+  }
+}
