@@ -41,5 +41,5 @@ The inherited-height, signal-getter and bundle-nonnumeric-length probes record K
 They do not support an equivalent claim.
 
 The 21 expanded equivalent probes pass.
-The JSON probe is retired because its claim was false.
+The pass retires the JSON probe because its claim was false.
 The four mutations from that probe now fail a tagged test.

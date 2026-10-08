@@ -24,35 +24,35 @@ The source audit is [audit.md](audit.md).
 | id | file:line | class | verdict | test title or probe file or limit name |
 | --- | --- | --- | --- | --- |
 | a0004 | src/director/packs/manifest.js:10 | `object` | KILLED | [director-088] The data pack limits reject a caller change |
-| a0107 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The asset path accepts z/Zz |
-| a0108 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The asset path accepts z/Zz |
-| a0110 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The asset path accepts z/Zz |
-| a0111 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The asset path accepts Z/zZ |
-| a0121 | src/director/packs/manifest.js:34 | `statement` | KILLED | [director-077] The manifest names the extra data pack field |
-| a0122 | src/director/packs/manifest.js:34 | `statement` | KILLED | [director-077] The manifest names the extra data pack field |
-| a0123 | src/director/packs/manifest.js:34 | `statement` | KILLED | [director-077] The manifest names the extra data pack field |
-| a0124 | src/director/packs/manifest.js:33 | `statement` | KILLED | [director-077] The manifest names the extra data pack field |
-| a0126 | src/director/packs/manifest.js:34 | `arguments` | KILLED | [director-077] The manifest names the extra data pack field |
-| a0215 | src/director/packs/manifest.js:47 | `arguments` | KILLED | [director-077] The manifest names the format field |
-| a0217 | src/director/packs/manifest.js:47 | `argument-drop` | KILLED | [director-077] The manifest names the format field |
+| a0107 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The asset path accepts z in both character positions |
+| a0108 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The asset path accepts Z in both character positions |
+| a0110 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The asset path accepts z in both character positions |
+| a0111 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The asset path accepts Z in both character positions |
+| a0121 | src/director/packs/manifest.js:34 | `statement` | KILLED | [director-077] The manifest checks fields before ID |
+| a0122 | src/director/packs/manifest.js:34 | `statement` | KILLED | [director-077] The manifest checks fields before ID |
+| a0123 | src/director/packs/manifest.js:34 | `statement` | KILLED | [director-077] The manifest checks fields before ID |
+| a0124 | src/director/packs/manifest.js:33 | `statement` | KILLED | [director-077] The manifest checks fields before ID |
+| a0126 | src/director/packs/manifest.js:34 | `arguments` | KILLED | [director-077] The manifest checks fields before ID |
+| a0215 | src/director/packs/manifest.js:47 | `arguments` | KILLED | [director-077] The manifest checks format before source fields |
+| a0217 | src/director/packs/manifest.js:47 | `argument-drop` | KILLED | [director-077] The manifest checks format before source fields |
 | a0224 | src/director/packs/manifest.js:48 | `arguments` | KILLED | [director-077] The manifest names the source object |
-| a0250 | src/director/packs/manifest.js:50 | `arguments` | KILLED | [director-076] The manifest names the source path |
-| a0252 | src/director/packs/manifest.js:50 | `argument-drop` | KILLED | [director-076] The manifest names the source path |
+| a0250 | src/director/packs/manifest.js:50 | `arguments` | KILLED | [director-076 director-078] The manifest checks source path before attribution fields |
+| a0252 | src/director/packs/manifest.js:50 | `argument-drop` | KILLED | [director-076 director-078] The manifest checks source path before attribution fields |
 | a0253 | src/director/packs/manifest.js:51 | `statement` | KILLED | [director-078] The manifest names the extra attribution field |
 | a0254 | src/director/packs/manifest.js:51 | `statement` | KILLED | [director-078] The manifest names the extra attribution field |
 | a0255 | src/director/packs/manifest.js:51 | `statement` | KILLED | [director-078] The manifest names the extra attribution field |
 | a0256 | src/director/packs/manifest.js:50 | `statement` | KILLED | [director-078] The manifest names the extra attribution field |
 | a0258 | src/director/packs/manifest.js:51 | `arguments` | KILLED | [director-078] The manifest names the extra attribution field |
-| a0338 | src/director/packs/manifest.js:60 | `arguments` | KILLED | [director-078] The manifest names the link syntax |
-| a0340 | src/director/packs/manifest.js:60 | `argument-drop` | KILLED | [director-078] The manifest names the link syntax |
+| a0338 | src/director/packs/manifest.js:60 | `arguments` | KILLED | [director-078 director-079] The manifest checks URL before byteLength |
+| a0340 | src/director/packs/manifest.js:60 | `argument-drop` | KILLED | [director-078 director-079] The manifest checks URL before byteLength |
 | a0354 | src/director/packs/manifest.js:63 | `operand-order` | EQUIVALENT | [evidence/probe-url-fields.txt](evidence/probe-url-fields.txt) |
 | a0359 | src/director/packs/manifest.js:63 | `operand-order` | EQUIVALENT | [evidence/probe-url-fields.txt](evidence/probe-url-fields.txt) |
 | a0364 | src/director/packs/manifest.js:63 | `operand-order` | EQUIVALENT | [evidence/probe-url-fields.txt](evidence/probe-url-fields.txt) |
 | a0369 | src/director/packs/manifest.js:63 | `operand-order` | EQUIVALENT | [evidence/probe-url-fields.txt](evidence/probe-url-fields.txt) |
 | a0380 | src/director/packs/manifest.js:70 | `arguments` | KILLED | [director-078] The manifest names the link protocol |
 | a0382 | src/director/packs/manifest.js:70 | `argument-drop` | KILLED | [director-078] The manifest names the link protocol |
-| a0390 | src/director/packs/manifest.js:74 | `arguments` | KILLED | [director-079] The manifest names the numeric text |
-| a0402 | src/director/packs/manifest.js:75 | `arguments` | KILLED | [director-079] The manifest names the numeric text |
+| a0390 | src/director/packs/manifest.js:74 | `arguments` | KILLED | [director-079] The manifest checks byteLength before digest |
+| a0402 | src/director/packs/manifest.js:75 | `arguments` | KILLED | [director-079] The manifest checks byteLength before digest |
 | a0405 | src/director/packs/manifest.js:75 | `arguments` | EQUIVALENT | [evidence/probe-number-flag.txt](evidence/probe-number-flag.txt) |
 | a0410 | src/director/packs/manifest.js:75 | `argument-drop` | EQUIVALENT | [evidence/probe-number-flag.txt](evidence/probe-number-flag.txt) |
 | a0417 | src/director/packs/manifest.js:75 | `boolean` | KILLED | [director-079] The manifest names the numeric text |
@@ -66,16 +66,16 @@ The source audit is [audit.md](audit.md).
 | a0489 | src/director/packs/manifest.js:86 | `arguments` | KILLED | [director-080] The manifest names the extra placement field |
 | a0536 | src/director/packs/manifest.js:95 | `arguments` | KILLED | [director-081] The manifest names an unknown anchor |
 | a0538 | src/director/packs/manifest.js:95 | `argument-drop` | KILLED | [director-081] The manifest names an unknown anchor |
-| a0552 | src/director/packs/manifest.js:98 | `arguments` | KILLED | [director-080] The manifest names the height reference |
-| a0554 | src/director/packs/manifest.js:98 | `argument-drop` | KILLED | [director-080] The manifest names the height reference |
-| a0591 | src/director/packs/manifest.js:102 | `arguments` | KILLED | [director-080] The manifest names the bound list |
-| a0593 | src/director/packs/manifest.js:102 | `argument-drop` | KILLED | [director-080] The manifest names the bound list |
+| a0552 | src/director/packs/manifest.js:98 | `arguments` | KILLED | [director-080] The height reference check comes before the bounds check |
+| a0554 | src/director/packs/manifest.js:98 | `argument-drop` | KILLED | [director-080] The height reference check comes before the bounds check |
+| a0591 | src/director/packs/manifest.js:102 | `arguments` | KILLED | [director-080] The bounds length check comes before each coordinate check |
+| a0593 | src/director/packs/manifest.js:102 | `argument-drop` | KILLED | [director-080] The bounds length check comes before each coordinate check |
 | a0607 | src/director/packs/manifest.js:109 | `arguments` | EQUIVALENT | [evidence/probe-number-flag.txt](evidence/probe-number-flag.txt) |
 | a0612 | src/director/packs/manifest.js:108 | `argument-drop` | EQUIVALENT | [evidence/probe-number-flag.txt](evidence/probe-number-flag.txt) |
 | a0664 | src/director/packs/manifest.js:112 | `operand-order` | KILLED | [director-080] The edge order check starts with west and east |
 | a0705 | src/director/packs/manifest.js:114 | `arguments` | EQUIVALENT | [evidence/probe-number-flag.txt](evidence/probe-number-flag.txt) |
 | a0710 | src/director/packs/manifest.js:114 | `argument-drop` | EQUIVALENT | [evidence/probe-number-flag.txt](evidence/probe-number-flag.txt) |
-| a0772 | src/director/packs/manifest.js:126 | `arguments` | KILLED | [director-082] The scene names the invalid declaration |
+| a0772 | src/director/packs/manifest.js:126 | `arguments` | KILLED | [director-077 director-082] The declaration check comes before the duplicate ID check |
 | a0790 | src/director/packs/manifest.js:128 | `arguments` | KILLED | [director-082] The scene names the invalid duplicate ID |
 | a0792 | src/director/packs/manifest.js:128 | `argument-drop` | KILLED | [director-082] The scene names the invalid duplicate ID |
 | a0812 | src/director/packs/manifest.js:132 | `arguments` | KILLED | [director-082] The shot accepts eight references and rejects nine references |
@@ -110,20 +110,20 @@ The source audit is [audit.md](audit.md).
 | a1149 | src/director/packs/geojson.js:33 | `operand-order` | EQUIVALENT | [evidence/probe-line-end.txt](evidence/probe-line-end.txt) |
 | a1190 | src/director/packs/geojson.js:40 | `operand-order` | EQUIVALENT | [evidence/probe-feature-order.txt](evidence/probe-feature-order.txt) |
 | a1205 | src/director/packs/geojson.js:40 | `operand-order` | EQUIVALENT | [evidence/probe-feature-order.txt](evidence/probe-feature-order.txt) |
-| a1326 | src/director/packs/session.js:8 | `condition` | KILLED | [director-089] The completed source listener ignores a later event after success |
-| a1328 | src/director/packs/session.js:8 | `branch` | KILLED | [director-089] The completed source listener ignores a later event after success |
+| a1326 | src/director/packs/session.js:8 | `condition` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
+| a1328 | src/director/packs/session.js:8 | `branch` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
 | a1335 | src/director/packs/session.js:9 | `value` | EQUIVALENT | [evidence/probe-truth-state.txt](evidence/probe-truth-state.txt) |
 | a1336 | src/director/packs/session.js:9 | `value` | EQUIVALENT | [evidence/probe-truth-state.txt](evidence/probe-truth-state.txt) |
-| a1342 | src/director/packs/session.js:10 | `arguments` | KILLED | [director-092] The source signal event stops work before the renderer |
-| a1343 | src/director/packs/session.js:10 | `argument-drop` | KILLED | [director-092] The source signal event stops work before the renderer |
+| a1342 | src/director/packs/session.js:10 | `arguments` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
+| a1343 | src/director/packs/session.js:10 | `argument-drop` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
 | a1344 | src/director/packs/session.js:10 | `method` | KILLED | [director-092] The source signal event stops work before the renderer |
-| a1392 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The completed source listener ignores a later event after success |
-| a1393 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The completed source listener ignores a later event after success |
-| a1394 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The completed source listener ignores a later event after success |
-| a1395 | src/director/packs/session.js:19 | `statement` | KILLED | [director-089] The completed source listener ignores a later event after success |
+| a1392 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The completed source does not read its reason when the promise settles |
+| a1393 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The completed source does not read its reason when the promise settles |
+| a1394 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The completed source does not read its reason when the promise settles |
+| a1395 | src/director/packs/session.js:19 | `statement` | KILLED | [director-089] The completed source does not read its reason when the promise settles |
 | a1396 | src/director/packs/session.js:20 | `value` | EQUIVALENT | [evidence/probe-truth-state.txt](evidence/probe-truth-state.txt) |
 | a1397 | src/director/packs/session.js:20 | `value` | EQUIVALENT | [evidence/probe-truth-state.txt](evidence/probe-truth-state.txt) |
-| a1398 | src/director/packs/session.js:20 | `boolean` | KILLED | [director-089] The completed source listener ignores a later event after success |
+| a1398 | src/director/packs/session.js:20 | `boolean` | KILLED | [director-089] The completed source does not read its reason when the promise settles |
 | a1415 | src/director/packs/session.js:26 | `condition` | EQUIVALENT | [evidence/probe-late-rejection.txt](evidence/probe-late-rejection.txt) |
 | a1417 | src/director/packs/session.js:26 | `branch` | EQUIVALENT | [evidence/probe-late-rejection.txt](evidence/probe-late-rejection.txt) |
 | a1420 | src/director/packs/session.js:27 | `statement` | KILLED | [director-089] The completed source listener ignores a later event after error |
@@ -142,25 +142,25 @@ The source audit is [audit.md](audit.md).
 | a1439 | src/director/packs/session.js:37 | `default` | EQUIVALENT | [evidence/probe-empty-options.txt](evidence/probe-empty-options.txt) |
 | a1441 | src/director/packs/session.js:38 | `default` | KILLED | [director-088 director-092] The absent renderer map gives no renderer for a numeric name |
 | a1442 | src/director/packs/session.js:38 | `default` | EQUIVALENT | [evidence/probe-empty-options.txt](evidence/probe-empty-options.txt) |
-| a1472 | src/director/packs/session.js:50 | `statement` | KILLED | [director-089] The session sets and removes the caller listener |
-| a1473 | src/director/packs/session.js:50 | `statement` | KILLED | [director-089] The session sets and removes the caller listener |
-| a1474 | src/director/packs/session.js:50 | `statement` | KILLED | [director-089] The session sets and removes the caller listener |
-| a1475 | src/director/packs/session.js:49 | `statement` | KILLED | [director-089] The session sets and removes the caller listener |
+| a1472 | src/director/packs/session.js:50 | `statement` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
+| a1473 | src/director/packs/session.js:50 | `statement` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
+| a1474 | src/director/packs/session.js:50 | `statement` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
+| a1475 | src/director/packs/session.js:49 | `statement` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
 | a1487 | src/director/packs/session.js:52 | `arguments` | EQUIVALENT | [evidence/probe-splice-default.txt](evidence/probe-splice-default.txt) |
 | a1512 | src/director/packs/session.js:57 | `value` | EQUIVALENT | [evidence/probe-truth-state.txt](evidence/probe-truth-state.txt) |
 | a1513 | src/director/packs/session.js:57 | `value` | EQUIVALENT | [evidence/probe-truth-state.txt](evidence/probe-truth-state.txt) |
 | a1549 | src/director/packs/session.js:66 | `default` | EQUIVALENT | [evidence/probe-empty-options.txt](evidence/probe-empty-options.txt) |
 | a1550 | src/director/packs/session.js:66 | `default` | EQUIVALENT | [evidence/probe-empty-options.txt](evidence/probe-empty-options.txt) |
-| a1567 | src/director/packs/session.js:68 | `operand-order` | KILLED | [director-088] The session rejects a null list |
+| a1567 | src/director/packs/session.js:68 | `operand-order` | KILLED | [director-088 director-091] The new list check follows old resource disposal |
 | a1613 | src/director/packs/session.js:74 | `operand-order` | KILLED | [director-088] The destroyed session does not read the caller signal state |
 | a1618 | src/director/packs/session.js:75 | `condition` | KILLED | [director-088] The session accepts an empty list without asset work |
 | a1620 | src/director/packs/session.js:75 | `statement` | KILLED | [director-088] The session accepts an empty list without asset work |
 | a1623 | src/director/packs/session.js:75 | `predicate` | KILLED | [director-088] The session accepts an empty list without asset work |
-| a1640 | src/director/packs/session.js:81 | `callback` | KILLED | [director-089] The session sets and removes the caller listener |
-| a1641 | src/director/packs/session.js:81 | `callback` | KILLED | [director-089] The session sets and removes the caller listener |
+| a1640 | src/director/packs/session.js:81 | `callback` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
+| a1641 | src/director/packs/session.js:81 | `callback` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
 | a1642 | src/director/packs/session.js:81 | `arguments` | KILLED | [director-089] The session sets and removes the caller listener |
 | a1643 | src/director/packs/session.js:81 | `arguments` | KILLED | [director-089] The session sets and removes the caller listener |
-| a1646 | src/director/packs/session.js:81 | `call-value` | KILLED | [director-089] The session sets and removes the caller listener |
+| a1646 | src/director/packs/session.js:81 | `call-value` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
 | a1648 | src/director/packs/session.js:81 | `string` | KILLED | [director-089] The session sets and removes the caller listener |
 | a1649 | src/director/packs/session.js:84 | `condition` | KILLED | [director-091] The old caller listener does not change new resources |
 | a1651 | src/director/packs/session.js:84 | `branch` | KILLED | [director-091] The old caller listener does not change new resources |
@@ -172,11 +172,11 @@ The source audit is [audit.md](audit.md).
 | a1691 | src/director/packs/session.js:89 | `arguments` | KILLED | [director-092] The deadline gives its cause to the source signal |
 | a1692 | src/director/packs/session.js:89 | `argument-drop` | KILLED | [director-092] The deadline gives its cause to the source signal |
 | a1717 | src/director/packs/session.js:97 | `operand-order` | EQUIVALENT | [evidence/probe-registry-order.txt](evidence/probe-registry-order.txt) |
-| a1722 | src/director/packs/session.js:98 | `exception` | KILLED | [director-092] The session does not read the global error property for an absent source |
-| a1757 | src/director/packs/session.js:107 | `statement` | KILLED | [director-090] The session checks its source signal before byte access and after renderer work |
-| a1758 | src/director/packs/session.js:107 | `statement` | KILLED | [director-090] The session checks its source signal before byte access and after renderer work |
-| a1759 | src/director/packs/session.js:107 | `statement` | KILLED | [director-090] The session checks its source signal before byte access and after renderer work |
-| a1760 | src/director/packs/session.js:106 | `statement` | KILLED | [director-090] The session checks its source signal before byte access and after renderer work |
+| a1722 | src/director/packs/session.js:98 | `exception` | KILLED | [director-092] The session does not read the global error property for absent source |
+| a1757 | src/director/packs/session.js:107 | `statement` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
+| a1758 | src/director/packs/session.js:107 | `statement` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
+| a1759 | src/director/packs/session.js:107 | `statement` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
+| a1760 | src/director/packs/session.js:106 | `statement` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
 | a1772 | src/director/packs/session.js:110 | `operand-order` | KILLED | [director-093] The session does not read declared byteLength again for null bytes |
 | a1777 | src/director/packs/session.js:110 | `operand-order` | KILLED | [director-093] The session checks byte type before length access |
 | a1782 | src/director/packs/session.js:110 | `operand-order` | KILLED | [director-093] The session checks byte type before length access |
@@ -187,10 +187,10 @@ The source audit is [audit.md](audit.md).
 | a1908 | src/director/packs/session.js:135 | `operand-order` | EQUIVALENT | [evidence/probe-null-handle.txt](evidence/probe-null-handle.txt) |
 | a1914 | src/director/packs/session.js:136 | `exception` | KILLED | [director-092] The session does not read the global error property for invalid handle |
 | a1924 | src/director/packs/session.js:137 | `operand-order` | KILLED | [director-090] The detached handle check does not read the source signal state |
-| a1944 | src/director/packs/session.js:144 | `statement` | KILLED | [director-090] The session checks its source signal before byte access and after renderer work |
-| a1945 | src/director/packs/session.js:144 | `statement` | KILLED | [director-090] The session checks its source signal before byte access and after renderer work |
-| a1946 | src/director/packs/session.js:144 | `statement` | KILLED | [director-090] The session checks its source signal before byte access and after renderer work |
-| a1947 | src/director/packs/session.js:143 | `statement` | KILLED | [director-090] The session checks its source signal before byte access and after renderer work |
+| a1944 | src/director/packs/session.js:144 | `statement` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
+| a1945 | src/director/packs/session.js:144 | `statement` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
+| a1946 | src/director/packs/session.js:144 | `statement` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
+| a1947 | src/director/packs/session.js:143 | `statement` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
 | a1972 | src/director/packs/session.js:149 | `operand-order` | KILLED | [director-090] The session sees destruction during caller signal access after a source error |
 | a1977 | src/director/packs/session.js:149 | `operand-order` | KILLED | [director-090] The cleared load call does not read the caller signal state again |
 | a2012 | src/director/packs/source.js:10 | `operand-order` | EQUIVALENT | [evidence/probe-url-fields.txt](evidence/probe-url-fields.txt) |
@@ -202,16 +202,16 @@ The source audit is [audit.md](audit.md).
 | a2254 | src/director/sharing/bundle.js:7 | `object` | KILLED | [director-102] The share limits reject a caller change |
 | a2385 | src/director/sharing/bundle.js:32 | `relational` | KILLED | [director-101] The export reads no chunk past the asset end |
 | a2439 | src/director/sharing/bundle.js:38 | `operand-order` | KILLED | [director-099] The base64 type check comes before text conversion |
-| a2444 | src/director/sharing/bundle.js:38 | `operand-order` | KILLED | [director-099] The bundle rejects a null base64 |
-| a2449 | src/director/sharing/bundle.js:38 | `operand-order` | KILLED | [director-099] The bundle rejects a null base64 |
-| a2454 | src/director/sharing/bundle.js:38 | `operand-order` | KILLED | [director-099] The bundle rejects a null base64 |
+| a2444 | src/director/sharing/bundle.js:38 | `operand-order` | KILLED | [director-099] The bundle rejects a null base64 value |
+| a2449 | src/director/sharing/bundle.js:38 | `operand-order` | KILLED | [director-099] The bundle rejects a null base64 value |
+| a2454 | src/director/sharing/bundle.js:38 | `operand-order` | KILLED | [director-099] The bundle rejects a null base64 value |
 | a2483 | src/director/sharing/bundle.js:40 | `number` | EQUIVALENT | [evidence/probe-aligned-base64-limit.txt](evidence/probe-aligned-base64-limit.txt) |
-| a2504 | src/director/sharing/bundle.js:42 | `regex` | KILLED | [director-099] The bundle accepts base64 zz== |
+| a2504 | src/director/sharing/bundle.js:42 | `regex` | KILLED | [director-099] The import accepts each base64 character in plain text |
 | a2512 | src/director/sharing/bundle.js:43 | `operand-order` | EQUIVALENT | [evidence/probe-base64-tail.txt](evidence/probe-base64-tail.txt) |
 | a2525 | src/director/sharing/bundle.js:43 | `regex` | KILLED | [director-099] The bundle rejects an equals sign at the start |
-| a2527 | src/director/sharing/bundle.js:43 | `regex` | KILLED | [director-099] The bundle accepts base64 ZZ== |
-| a2528 | src/director/sharing/bundle.js:43 | `regex` | KILLED | [director-099] The bundle accepts base64 zz== |
-| a2529 | src/director/sharing/bundle.js:43 | `regex` | KILLED | [director-099] The bundle accepts base64 99== |
+| a2527 | src/director/sharing/bundle.js:43 | `regex` | KILLED | [director-099] The import accepts each base64 character in padded text |
+| a2528 | src/director/sharing/bundle.js:43 | `regex` | KILLED | [director-099] The import accepts each base64 character in padded text |
+| a2529 | src/director/sharing/bundle.js:43 | `regex` | KILLED | [director-099] The import accepts each base64 character in padded text |
 | a2552 | src/director/sharing/bundle.js:46 | `arguments` | EQUIVALENT | [evidence/probe-character-index.txt](evidence/probe-character-index.txt) |
 | a2553 | src/director/sharing/bundle.js:46 | `argument-drop` | EQUIVALENT | [evidence/probe-character-index.txt](evidence/probe-character-index.txt) |
 | a2570 | src/director/sharing/bundle.js:50 | `operand-order` | KILLED | [director-102] The export checks the asset size before the total size |
@@ -271,10 +271,10 @@ The source audit is [audit.md](audit.md).
 | a3405 | src/director/sharing/bundle.js:193 | `argument-drop` | KILLED | [director-102] The export checks its encoded text budget |
 | a3424 | src/director/sharing/bundle.js:201 | `default` | EQUIVALENT | [evidence/probe-empty-map.txt](evidence/probe-empty-map.txt) |
 | a3477 | src/director/sharing/bundle.js:212 | `default` | KILLED | [director-105] The byte store accepts its default byte limit |
-| a3484 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The byte store rejects an unsafe path before its lookup |
-| a3485 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The byte store rejects an unsafe path before its lookup |
-| a3486 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The byte store rejects an unsafe path before its lookup |
-| a3487 | src/director/sharing/bundle.js:213 | `statement` | KILLED | [director-105] The byte store rejects an unsafe path before its lookup |
+| a3484 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The byte store rejects an unsafe path that it holds |
+| a3485 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The byte store rejects an unsafe path that it holds |
+| a3486 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The byte store rejects an unsafe path that it holds |
+| a3487 | src/director/sharing/bundle.js:213 | `statement` | KILLED | [director-105] The byte store rejects an unsafe path that it holds |
 | a3635 | src/director/sharing/preview.js:6 | `default` | EQUIVALENT | [evidence/probe-empty-options.txt](evidence/probe-empty-options.txt) |
 | a3636 | src/director/sharing/preview.js:6 | `default` | EQUIVALENT | [evidence/probe-empty-options.txt](evidence/probe-empty-options.txt) |
 | a3637 | src/director/sharing/preview.js:6 | `default` | EQUIVALENT | [evidence/probe-empty-set.txt](evidence/probe-empty-set.txt) |
@@ -324,21 +324,21 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 
 | id | file:line | class | verdict | test title or probe file or limit name |
 | --- | --- | --- | --- | --- |
-| a9000 | src/director/packs/manifest.js:19 | `default-shape` | KILLED | [director-076] The asset path rejects URL syntax with a stable message |
-| a9001 | src/director/packs/manifest.js:19 | `default-shape` | KILLED | [director-076] The asset path rejects URL syntax with a stable message |
-| a9002 | src/director/packs/manifest.js:19 | `default-shape` | KILLED | [director-076] The asset path rejects URL syntax with a stable message |
-| a9003 | src/director/packs/manifest.js:19 | `default-shape` | KILLED | [director-076] The asset path rejects URL syntax with a stable message |
-| a9004 | src/director/packs/manifest.js:20 | `statement-order` | KILLED | [director-076] The path type check comes before the segment read |
-| a9005 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts z/Zz |
-| a9006 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts z/Zz |
-| a9007 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-102] The export names excess asset entries |
+| a9000 | src/director/packs/manifest.js:19 | `default-shape` | KILLED | [director-076] The path type check comes before the segment access |
+| a9001 | src/director/packs/manifest.js:19 | `default-shape` | KILLED | [director-076] The path type check comes before the segment access |
+| a9002 | src/director/packs/manifest.js:19 | `default-shape` | KILLED | [director-076] The path type check comes before the segment access |
+| a9003 | src/director/packs/manifest.js:19 | `default-shape` | KILLED | [director-076] The path type check comes before the segment access |
+| a9004 | src/director/packs/manifest.js:20 | `statement-order` | KILLED | [director-076] The path type check comes before the segment access |
+| a9005 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts A in both character positions |
+| a9006 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts A in both character positions |
+| a9007 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts 0 in both character positions |
 | a9008 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts _x/_y |
 | a9009 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts -x/-y |
-| a9010 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts z/Zz |
-| a9011 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts Z/zZ |
-| a9012 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts safe names |
+| a9010 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts a in both character positions |
+| a9011 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts A in both character positions |
+| a9012 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts 0 in both character positions |
 | a9013 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts safe names |
-| a9014 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-078] The manifest names the extra attribution field |
+| a9014 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-079] The manifest accepts each hexadecimal digest character |
 | a9015 | src/director/packs/manifest.js:24 | `regex-member` | KILLED | [director-076] The asset path accepts safe names |
 | a9016 | src/director/packs/manifest.js:34 | `statement-order` | KILLED | [director-077] The manifest checks fields before ID |
 | a9017 | src/director/packs/manifest.js:44 | `statement-order` | KILLED | [director-077] The manifest checks ID before version |
@@ -352,30 +352,30 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9025 | src/director/packs/manifest.js:53 | `statement-order` | KILLED | [director-078] The manifest checks license before URL |
 | a9026 | src/director/packs/manifest.js:54 | `statement-order` | KILLED | [director-078 director-079] The manifest checks URL before byteLength |
 | a9027 | src/director/packs/manifest.js:74 | `statement-order` | KILLED | [director-079] The manifest checks byteLength before digest |
-| a9028 | src/director/packs/manifest.js:78 | `statement-order` | KILLED | [director-079] The digest check comes before the placement read |
-| a9029 | src/director/packs/manifest.js:82 | `statement-order` | KILLED | [director-080] The manifest names the extra placement field |
+| a9028 | src/director/packs/manifest.js:78 | `statement-order` | KILLED | [director-079] The digest check comes before access to the placement |
+| a9029 | src/director/packs/manifest.js:82 | `statement-order` | KILLED | [director-079] The manifest accepts each hexadecimal digest character |
 | a9030 | src/director/packs/manifest.js:84 | `statement-order` | KILLED | [director-080] The manifest names the placement object |
 | a9031 | src/director/packs/manifest.js:55 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9031 |
 | a9032 | src/director/packs/manifest.js:56 | `statement-order` | KILLED | [director-078] The manifest names the link protocol |
-| a9033 | src/director/packs/manifest.js:57 | `statement-order` | KILLED | [director-078] The manifest names the link syntax |
+| a9033 | src/director/packs/manifest.js:57 | `statement-order` | KILLED | [director-078 director-079] The manifest checks URL before byteLength |
 | a9034 | src/director/packs/manifest.js:58 | `new-argument` | KILLED | [director-078] The manifest names the link protocol |
 | a9035 | src/director/packs/manifest.js:58 | `new-argument` | KILLED | [director-078] The manifest names the link protocol |
 | a9036 | src/director/packs/manifest.js:75 | `statement-order` | KILLED | [director-079] The manifest names the numeric text |
-| a9037 | src/director/packs/manifest.js:79 | `regex-member` | KILLED | [director-079] The integrity fields accept their limits |
-| a9038 | src/director/packs/manifest.js:79 | `regex-member` | KILLED | [director-093] The session rejects a wrong digest |
+| a9037 | src/director/packs/manifest.js:79 | `regex-member` | KILLED | [director-079] The manifest accepts each hexadecimal digest character |
+| a9038 | src/director/packs/manifest.js:79 | `regex-member` | KILLED | [director-079] The manifest accepts each hexadecimal digest character |
 | a9039 | src/director/packs/manifest.js:97 | `statement-order` | KILLED | [director-080] The height reference check comes before the bounds check |
-| a9040 | src/director/packs/manifest.js:100 | `statement-order` | KILLED | [director-080] The bounds array check comes before the length read |
+| a9040 | src/director/packs/manifest.js:100 | `statement-order` | KILLED | [director-080] The bounds array check comes before access to the length |
 | a9041 | src/director/packs/manifest.js:101 | `statement-order` | KILLED | [director-080] The bounds length check comes before each coordinate check |
-| a9042 | src/director/packs/manifest.js:103 | `statement-order` | KILLED | [director-080] The image rejects bounds field 0 |
+| a9042 | src/director/packs/manifest.js:103 | `statement-order` | KILLED | [director-080] The manifest checks bounds values before edge order |
 | a9043 | src/director/packs/manifest.js:112 | `statement-order` | KILLED | [director-080] The manifest checks edge order before height |
-| a9044 | src/director/packs/manifest.js:121 | `statement-order` | KILLED | [director-082] The shot accepts eight references and rejects nine references |
-| a9045 | src/director/packs/manifest.js:122 | `statement-order` | KILLED | [director-082] The list check comes before the anchor read |
+| a9044 | src/director/packs/manifest.js:121 | `statement-order` | KILLED | [director-082] The list check comes before access to the anchors |
+| a9045 | src/director/packs/manifest.js:122 | `statement-order` | KILLED | [director-082] The list check comes before access to the anchors |
 | a9046 | src/director/packs/manifest.js:123 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9046 |
-| a9047 | src/director/packs/manifest.js:124 | `statement-order` | KILLED | [director-082] The shot accepts eight references and rejects nine references |
+| a9047 | src/director/packs/manifest.js:124 | `statement-order` | KILLED | [director-077 director-082] The declaration check comes before the duplicate ID check |
 | a9048 | src/director/packs/manifest.js:125 | `statement-order` | KILLED | [director-082] The shot accepts eight references and rejects nine references |
 | a9049 | src/director/packs/manifest.js:123 | `new-argument` | KILLED | [director-082] The scene uses supplied anchors |
 | a9050 | src/director/packs/manifest.js:126 | `statement-order` | KILLED | [director-077 director-082] The declaration check comes before the duplicate ID check |
-| a9051 | src/director/packs/manifest.js:127 | `statement-order` | KILLED | [director-082] The shot accepts eight references and rejects nine references |
+| a9051 | src/director/packs/manifest.js:127 | `statement-order` | KILLED | [director-077 director-082] The declaration check comes before the duplicate ID check |
 | a9052 | src/director/packs/manifest.js:133 | `statement-order` | KILLED | [director-082] The shot accepts eight references and rejects nine references |
 | a9053 | src/director/packs/manifest.js:134 | `new-argument` | KILLED | [director-082] The shot accepts eight references and rejects nine references |
 | a9054 | src/director/packs/manifest.js:134 | `new-argument` | KILLED | [director-082] The shot accepts eight references and rejects nine references |
@@ -402,27 +402,27 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9075 | src/director/packs/geojson.js:48 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9075 |
 | a9076 | src/director/packs/geojson.js:49 | `statement-order` | KILLED | [director-085] The decoder keeps a negative zero height |
 | a9077 | src/director/packs/geojson.js:50 | `statement-order` | KILLED | [director-085] The decoder rejects a null position |
-| a9078 | src/director/packs/session.js:4 | `default-shape` | KILLED | [director-090] The cleared load call does not read the caller signal state again |
-| a9079 | src/director/packs/session.js:4 | `default-shape` | KILLED | [director-090] The cleared load call does not read the caller signal state again |
-| a9080 | src/director/packs/session.js:4 | `default-shape` | KILLED | [director-090] The cleared load call does not read the caller signal state again |
-| a9081 | src/director/packs/session.js:4 | `default-shape` | KILLED | [director-090] The cleared load call does not read the caller signal state again |
-| a9082 | src/director/packs/session.js:5 | `new-argument` | KILLED | [director-089] The session sets and removes the caller listener |
-| a9083 | src/director/packs/session.js:5 | `new-argument` | KILLED | [director-089] The session sets and removes the caller listener |
+| a9078 | src/director/packs/session.js:4 | `default-shape` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
+| a9079 | src/director/packs/session.js:4 | `default-shape` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
+| a9080 | src/director/packs/session.js:4 | `default-shape` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
+| a9081 | src/director/packs/session.js:4 | `default-shape` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
+| a9082 | src/director/packs/session.js:5 | `new-argument` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9083 | src/director/packs/session.js:5 | `new-argument` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9084 | src/director/packs/session.js:6 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9084 |
-| a9085 | src/director/packs/session.js:7 | `statement-order` | KILLED | [director-089] The session sets and removes the caller listener |
-| a9086 | src/director/packs/session.js:13 | `statement-order` | KILLED | [director-089] The source listener and state check come before the work read |
-| a9087 | src/director/packs/session.js:14 | `statement-order` | KILLED | [director-089] The source listener and state check come before the work read |
-| a9088 | src/director/packs/session.js:9 | `statement-order` | KILLED | [director-092] The source event reads its reason once during another source event |
-| a9089 | src/director/packs/session.js:17 | `statement-order` | KILLED | [director-092] The source event during listener removal stops success |
-| a9090 | src/director/packs/session.js:20 | `statement-order` | KILLED | [director-089] The completed source does not read its reason during promise settlement |
-| a9091 | src/director/packs/session.js:25 | `statement-order` | KILLED | [director-092] The source event during listener removal stops error |
+| a9085 | src/director/packs/session.js:7 | `statement-order` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9086 | src/director/packs/session.js:13 | `statement-order` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9087 | src/director/packs/session.js:14 | `statement-order` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9088 | src/director/packs/session.js:9 | `statement-order` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
+| a9089 | src/director/packs/session.js:17 | `statement-order` | KILLED | [director-092] The source signal event during listener removal stops success |
+| a9090 | src/director/packs/session.js:20 | `statement-order` | KILLED | [director-089] The completed source does not read its reason when the promise settles |
+| a9091 | src/director/packs/session.js:25 | `statement-order` | KILLED | [director-092] The source signal event during listener removal stops error |
 | a9092 | src/director/packs/session.js:27 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9092 |
 | a9093 | src/director/packs/session.js:40 | `default-shape` | KILLED | [director-088] The new session reports idle state |
 | a9094 | src/director/packs/session.js:40 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9094 |
 | a9095 | src/director/packs/session.js:40 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9095 |
-| a9096 | src/director/packs/session.js:37 | `destructure-remove` | KILLED | [director-088] The session accepts an empty list without asset work |
-| a9097 | src/director/packs/session.js:38 | `destructure-remove` | KILLED | [director-088] The session accepts an empty list without asset work |
-| a9098 | src/director/packs/session.js:38 | `destructure-remove` | KILLED | [director-090] The session rejects null bytes |
+| a9096 | src/director/packs/session.js:37 | `destructure-remove` | KILLED | [director-088] The session reads source entries before renderer entries |
+| a9097 | src/director/packs/session.js:38 | `destructure-remove` | KILLED | [director-088] The session reads source entries before renderer entries |
+| a9098 | src/director/packs/session.js:38 | `destructure-remove` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9099 | src/director/packs/session.js:37 | `default-shape` | KILLED | [director-088] The new session reports idle state |
 | a9100 | src/director/packs/session.js:37 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9100 |
 | a9101 | src/director/packs/session.js:37 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9101 |
@@ -437,88 +437,88 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9110 | src/director/packs/session.js:42 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9110 |
 | a9111 | src/director/packs/session.js:43 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9111 |
 | a9112 | src/director/packs/session.js:45 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9112 |
-| a9113 | src/director/packs/session.js:41 | `new-argument` | KILLED | [director-089] The session sets and removes the caller listener |
-| a9114 | src/director/packs/session.js:42 | `new-argument` | KILLED | [director-089] The session sets and removes the caller listener |
-| a9115 | src/director/packs/session.js:46 | `statement-order` | KILLED | [director-088] The session accepts an empty list without asset work |
+| a9113 | src/director/packs/session.js:41 | `new-argument` | KILLED | [director-088] The session reads source entries before renderer entries |
+| a9114 | src/director/packs/session.js:42 | `new-argument` | KILLED | [director-088] The session reads source entries before renderer entries |
+| a9115 | src/director/packs/session.js:46 | `statement-order` | KILLED | [director-088] The session reads source entries before renderer entries |
 | a9116 | src/director/packs/session.js:47 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9116 |
-| a9117 | src/director/packs/session.js:48 | `statement-order` | KILLED | [director-089] The session removes resources after source cancellation and timer cleanup |
-| a9118 | src/director/packs/session.js:49 | `statement-order` | KILLED | [director-089] The session removes resources after source cancellation and timer cleanup |
-| a9119 | src/director/packs/session.js:50 | `statement-order` | KILLED | [director-089] The session removes resources after source cancellation and timer cleanup |
-| a9120 | src/director/packs/session.js:51 | `statement-order` | KILLED | [director-089] The session removes resources after source cancellation and timer cleanup |
+| a9117 | src/director/packs/session.js:48 | `statement-order` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
+| a9118 | src/director/packs/session.js:49 | `statement-order` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
+| a9119 | src/director/packs/session.js:50 | `statement-order` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
+| a9120 | src/director/packs/session.js:51 | `statement-order` | KILLED | [director-089] The session removes resources after source cancellation and timer removal |
 | a9121 | src/director/packs/session.js:57 | `statement-order` | KILLED | [director-088] The destroyed session returns false for a load call during source cancellation |
-| a9122 | src/director/packs/session.js:66 | `default-shape` | KILLED | [director-088] The session accepts an empty list without asset work |
+| a9122 | src/director/packs/session.js:66 | `default-shape` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9123 | src/director/packs/session.js:66 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9123 |
 | a9124 | src/director/packs/session.js:66 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9124 |
-| a9125 | src/director/packs/session.js:66 | `destructure-remove` | KILLED | [director-088] The session accepts an empty list without asset work |
-| a9126 | src/director/packs/session.js:66 | `destructure-remove` | KILLED | [director-088] The session accepts an empty list without asset work |
-| a9127 | src/director/packs/session.js:66 | `default-shape` | KILLED | [director-088] The session accepts an empty list without asset work |
-| a9128 | src/director/packs/session.js:66 | `default-shape` | KILLED | [director-088] The session accepts an empty list without asset work |
-| a9129 | src/director/packs/session.js:66 | `default-shape` | KILLED | [director-088] The session accepts an empty list without asset work |
-| a9130 | src/director/packs/session.js:67 | `statement-order` | KILLED | [director-088 director-091] The new list check follows old resource cleanup |
-| a9131 | src/director/packs/session.js:68 | `statement-order` | KILLED | [director-088] The list check comes before the anchor read |
-| a9132 | src/director/packs/session.js:70 | `statement-order` | KILLED | [director-090] The session rejects null bytes |
-| a9133 | src/director/packs/session.js:71 | `statement-order` | KILLED | [director-088] The declaration check comes before the caller signal read |
-| a9134 | src/director/packs/session.js:74 | `statement-order` | KILLED | [director-088] The new session reports idle state |
+| a9125 | src/director/packs/session.js:66 | `destructure-remove` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9126 | src/director/packs/session.js:66 | `destructure-remove` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9127 | src/director/packs/session.js:66 | `default-shape` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9128 | src/director/packs/session.js:66 | `default-shape` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9129 | src/director/packs/session.js:66 | `default-shape` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9130 | src/director/packs/session.js:67 | `statement-order` | KILLED | [director-088 director-091] The new list check follows old resource disposal |
+| a9131 | src/director/packs/session.js:68 | `statement-order` | KILLED | [director-088] The list check comes before access to the anchors |
+| a9132 | src/director/packs/session.js:70 | `statement-order` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9133 | src/director/packs/session.js:71 | `statement-order` | KILLED | [director-088] The declaration check comes before access to the caller signal |
+| a9134 | src/director/packs/session.js:74 | `statement-order` | KILLED | [director-088] The destroyed session returns false for a load call during source cancellation |
 | a9135 | src/director/packs/session.js:75 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9135 |
-| a9136 | src/director/packs/session.js:76 | `statement-order` | KILLED | [director-090] The session rejects null bytes |
+| a9136 | src/director/packs/session.js:76 | `statement-order` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9137 | src/director/packs/session.js:77 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9137 |
 | a9138 | src/director/packs/session.js:83 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9138 |
-| a9139 | src/director/packs/session.js:86 | `statement-order` | KILLED | [director-090] The caller event during listener setup cancels the load call |
-| a9140 | src/director/packs/session.js:87 | `statement-order` | KILLED | [director-089] The caller listener comes before the deadline |
+| a9139 | src/director/packs/session.js:86 | `statement-order` | KILLED | [director-090] The caller event during listener registration cancels the load call |
+| a9140 | src/director/packs/session.js:87 | `statement-order` | KILLED | [director-089] The caller listener comes before the deadline timer starts |
 | a9141 | src/director/packs/session.js:88 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9141 |
-| a9142 | src/director/packs/session.js:92 | `statement-order` | KILLED | [director-089] The session sets and removes the caller listener |
+| a9142 | src/director/packs/session.js:92 | `statement-order` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9143 | src/director/packs/session.js:70 | `new-argument` | KILLED | [director-089] The session loads its media format |
-| a9144 | src/director/packs/session.js:94 | `statement-order` | KILLED | [director-090] The session checks its source signal before byte access and after renderer work |
+| a9144 | src/director/packs/session.js:94 | `statement-order` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
 | a9145 | src/director/packs/session.js:144 | `statement-order` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
 | a9146 | src/director/packs/session.js:145 | `statement-order` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
 | a9147 | src/director/packs/session.js:146 | `statement-order` | KILLED | [director-089] The session disposes handles in reverse order |
-| a9148 | src/director/packs/session.js:95 | `statement-order` | KILLED | [director-089] The session sets and removes the caller listener |
+| a9148 | src/director/packs/session.js:95 | `statement-order` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9149 | src/director/packs/session.js:97 | `statement-order` | KILLED | [director-092] The absent renderer does not call its source |
-| a9150 | src/director/packs/session.js:99 | `statement-order` | KILLED | [director-090] The session checks its source signal before byte access and after renderer work |
-| a9151 | src/director/packs/session.js:107 | `statement-order` | KILLED | [director-090 director-093] The source signal error comes before the byte read |
-| a9152 | src/director/packs/session.js:108 | `statement-order` | KILLED | [director-089] The session sets and removes the caller listener |
+| a9150 | src/director/packs/session.js:99 | `statement-order` | KILLED | [director-089] The final signal check comes before timer removal and the ready state |
+| a9151 | src/director/packs/session.js:107 | `statement-order` | KILLED | [director-090 director-093] The source signal error comes before access to the bytes |
+| a9152 | src/director/packs/session.js:108 | `statement-order` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9153 | src/director/packs/session.js:109 | `statement-order` | KILLED | [director-093] The session checks byte type before length access |
-| a9154 | src/director/packs/session.js:116 | `statement-order` | KILLED | [director-093] The session rejects bytes above the total limit |
-| a9155 | src/director/packs/session.js:117 | `statement-order` | KILLED | [director-093] The total byte check comes before the digest read |
+| a9154 | src/director/packs/session.js:116 | `statement-order` | KILLED | [director-093] The total byte check comes before access to the digest |
+| a9155 | src/director/packs/session.js:117 | `statement-order` | KILLED | [director-093] The total byte check comes before access to the digest |
 | a9156 | src/director/packs/session.js:119 | `statement-order` | KILLED | [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names |
-| a9157 | src/director/packs/session.js:130 | `statement-order` | KILLED | [director-089] The session sets and removes the caller listener |
+| a9157 | src/director/packs/session.js:130 | `statement-order` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9158 | src/director/packs/session.js:135 | `statement-order` | KILLED | [director-090] The session guard rejects a detached resource |
 | a9159 | src/director/packs/session.js:137 | `statement-order` | KILLED | [director-090] The session disposes the handle before it adds the handle to its list |
-| a9160 | src/director/packs/session.js:99 | `await-remove` | KILLED | [director-089] The session sets and removes the caller listener |
-| a9161 | src/director/packs/session.js:108 | `destructure-remove` | KILLED | [director-089] The session sets and removes the caller listener |
+| a9160 | src/director/packs/session.js:99 | `await-remove` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9161 | src/director/packs/session.js:108 | `destructure-remove` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9162 | src/director/packs/session.js:120 | `statement-order` | KILLED | [director-093] The session checks exact bytes and digest |
 | a9163 | src/director/packs/session.js:124 | `statement-order` | KILLED | [director-093] The session checks exact bytes and digest |
 | a9164 | src/director/packs/session.js:120 | `await-remove` | KILLED | [director-093] The session checks exact bytes and digest |
 | a9165 | src/director/packs/session.js:124 | `new-argument` | KILLED | [director-093] The session checks exact bytes and digest |
 | a9166 | src/director/packs/session.js:124 | `new-argument` | KILLED | [director-093] The session checks exact bytes and digest |
-| a9167 | src/director/packs/session.js:130 | `await-remove` | KILLED | [director-089] The session sets and removes the caller listener |
+| a9167 | src/director/packs/session.js:130 | `await-remove` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9168 | src/director/packs/session.js:138 | `statement-order` | KILLED | [director-090] The session disposes the handle before it adds the handle to its list |
 | a9169 | src/director/packs/session.js:139 | `statement-order` | KILLED | [director-090] The session disposes the handle before it adds the handle to its list |
-| a9170 | src/director/packs/session.js:149 | `statement-order` | KILLED | [director-090] The session rejects null bytes |
+| a9170 | src/director/packs/session.js:149 | `statement-order` | KILLED | [director-092] The source signal event during listener removal stops success |
 | a9171 | src/director/packs/session.js:150 | `statement-order` | KILLED | [director-090] The session checks destroyed state after signal access |
-| a9172 | src/director/packs/session.js:151 | `statement-order` | KILLED | [director-090] The cleared load call does not read the caller signal state again |
-| a9173 | src/director/packs/source.js:5 | `destructure-remove` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9174 | src/director/packs/source.js:5 | `destructure-remove` | KILLED | [director-096] The source joins chunks of different lengths |
+| a9172 | src/director/packs/session.js:151 | `statement-order` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
+| a9173 | src/director/packs/source.js:5 | `destructure-remove` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9174 | src/director/packs/source.js:5 | `destructure-remove` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9175 | src/director/packs/source.js:6 | `default-shape` | KILLED | [director-095] The directory source uses the default fetch function |
 | a9176 | src/director/packs/source.js:6 | `default-shape` | KILLED | [director-095] The directory source uses the default fetch function |
 | a9177 | src/director/packs/source.js:6 | `default-shape` | KILLED | [director-095] The directory source uses the default fetch function |
 | a9178 | src/director/packs/source.js:6 | `default-shape` | KILLED | [director-095] The directory source uses the default fetch function |
-| a9179 | src/director/packs/source.js:8 | `statement-order` | KILLED | [director-096] The source joins chunks of different lengths |
+| a9179 | src/director/packs/source.js:8 | `statement-order` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9180 | src/director/packs/source.js:9 | `statement-order` | KILLED | [director-094] The directory rejects protocol |
-| a9181 | src/director/packs/source.js:8 | `new-argument` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9182 | src/director/packs/source.js:8 | `new-argument` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9183 | src/director/packs/source.js:20 | `destructure-remove` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9184 | src/director/packs/source.js:20 | `destructure-remove` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9185 | src/director/packs/source.js:20 | `destructure-remove` | KILLED | [director-096] The source joins chunks of different lengths |
+| a9181 | src/director/packs/source.js:8 | `new-argument` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9182 | src/director/packs/source.js:8 | `new-argument` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9183 | src/director/packs/source.js:20 | `destructure-remove` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9184 | src/director/packs/source.js:20 | `destructure-remove` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9185 | src/director/packs/source.js:20 | `destructure-remove` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9186 | src/director/packs/source.js:20 | `default-shape` | KILLED | [director-096] The source joins chunks of different lengths |
 | a9187 | src/director/packs/source.js:20 | `default-shape` | KILLED | [director-096] The source checks its default byte budget |
 | a9188 | src/director/packs/source.js:20 | `default-shape` | KILLED | [director-096] The source joins chunks of different lengths |
 | a9189 | src/director/packs/source.js:20 | `default-shape` | KILLED | [director-096] The source joins chunks of different lengths |
 | a9190 | src/director/packs/source.js:21 | `statement-order` | KILLED | [director-095] The path check comes before the caller signal check |
 | a9191 | src/director/packs/source.js:22 | `statement-order` | KILLED | [director-097] The source rejects early cancellation |
-| a9192 | src/director/packs/source.js:23 | `statement-order` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9193 | src/director/packs/source.js:30 | `statement-order` | KILLED | [director-097] The source accepts failed body cancellation |
-| a9194 | src/director/packs/source.js:34 | `statement-order` | KILLED | [director-096] The source joins chunks of different lengths |
+| a9192 | src/director/packs/source.js:23 | `statement-order` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9193 | src/director/packs/source.js:30 | `statement-order` | KILLED | [director-097] The source waits for body cancellation before it rejects the asset request |
+| a9194 | src/director/packs/source.js:34 | `statement-order` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9195 | src/director/packs/source.js:35 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9195 |
 | a9196 | src/director/packs/source.js:36 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9196 |
 | a9197 | src/director/packs/source.js:37 | `statement-order` | KILLED | [director-096] The source joins chunks of different lengths |
@@ -526,120 +526,120 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9199 | src/director/packs/source.js:53 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9199 |
 | a9200 | src/director/packs/source.js:54 | `statement-order` | KILLED | [director-096] The source joins chunks of different lengths |
 | a9201 | src/director/packs/source.js:55 | `statement-order` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9202 | src/director/packs/source.js:23 | `await-remove` | KILLED | [director-095] The asset request sets its fixed options |
+| a9202 | src/director/packs/source.js:23 | `await-remove` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9203 | src/director/packs/source.js:23 | `new-argument` | KILLED | [director-095] The asset request sets its fixed options |
 | a9204 | src/director/packs/source.js:23 | `new-argument` | KILLED | [director-095] The asset request sets its fixed options |
-| a9205 | src/director/packs/source.js:23 | `new-argument` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9206 | src/director/packs/source.js:23 | `new-argument` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9207 | src/director/packs/source.js:31 | `statement-order` | KILLED | [director-097] The source accepts failed body cancellation |
-| a9208 | src/director/packs/source.js:31 | `await-remove` | KILLED | [director-097] The source waits for body cancellation before an HTTP error |
-| a9209 | src/director/packs/source.js:39 | `statement-order` | KILLED | [director-096] The header limit check comes before the first stream read |
-| a9210 | src/director/packs/source.js:42 | `statement-order` | KILLED | [director-097] The source signal check comes before the stream read |
-| a9211 | src/director/packs/source.js:43 | `statement-order` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9212 | src/director/packs/source.js:44 | `statement-order` | KILLED | [director-096] The source joins chunks of different lengths |
+| a9205 | src/director/packs/source.js:23 | `new-argument` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9206 | src/director/packs/source.js:23 | `new-argument` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9207 | src/director/packs/source.js:31 | `statement-order` | KILLED | [director-097] The source waits for body cancellation before it rejects the asset request |
+| a9208 | src/director/packs/source.js:31 | `await-remove` | KILLED | [director-097] The source waits for body cancellation before it rejects the asset request |
+| a9209 | src/director/packs/source.js:39 | `statement-order` | KILLED | [director-096] The header limit check comes before it reads the first stream chunk |
+| a9210 | src/director/packs/source.js:42 | `statement-order` | KILLED | [director-097] The source signal check comes before it reads the stream chunk |
+| a9211 | src/director/packs/source.js:43 | `statement-order` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9212 | src/director/packs/source.js:44 | `statement-order` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9213 | src/director/packs/source.js:45 | `statement-order` | KILLED | [director-096] The stream rejects excess chunk bytes |
 | a9214 | src/director/packs/source.js:46 | `statement-order` | KILLED | [director-096] The source checks the byte limit before it keeps a chunk |
-| a9215 | src/director/packs/source.js:43 | `destructure-remove` | KILLED | [director-096] The source joins chunks of different lengths |
+| a9215 | src/director/packs/source.js:43 | `destructure-remove` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9216 | src/director/packs/source.js:43 | `destructure-remove` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9217 | src/director/packs/source.js:43 | `await-remove` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9218 | src/director/packs/source.js:50 | `statement-order` | KILLED | [director-097] The source waits for stream cancellation before release |
-| a9219 | src/director/packs/source.js:50 | `await-remove` | KILLED | [director-097] The source waits for stream cancellation before release |
+| a9217 | src/director/packs/source.js:43 | `await-remove` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9218 | src/director/packs/source.js:50 | `statement-order` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
+| a9219 | src/director/packs/source.js:50 | `await-remove` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9220 | src/director/packs/source.js:53 | `new-argument` | KILLED | [director-096] The source joins chunks of different lengths |
 | a9221 | src/director/packs/source.js:53 | `new-argument` | KILLED | [director-096] The source joins chunks of different lengths |
 | a9222 | src/director/packs/source.js:56 | `statement-order` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9223 | src/director/sharing/bundle.js:11 | `new-argument` | KILLED | [director-099] The bundle names the invalid duplicate path |
-| a9224 | src/director/sharing/bundle.js:11 | `new-argument` | KILLED | [director-099] The bundle names the invalid duplicate path |
-| a9225 | src/director/sharing/bundle.js:27 | `new-argument` | KILLED | [director-099] The bundle names the invalid duplicate path |
-| a9226 | src/director/sharing/bundle.js:27 | `new-argument` | KILLED | [director-099] The bundle names the invalid duplicate path |
-| a9227 | src/director/sharing/bundle.js:27 | `await-remove` | KILLED | [director-099] The bundle names the invalid duplicate path |
-| a9228 | src/director/sharing/bundle.js:31 | `statement-order` | KILLED | [director-102] The export names excess asset entries |
-| a9229 | src/director/sharing/bundle.js:32 | `statement-order` | KILLED | [director-101] The export reads no chunk past the asset end |
-| a9230 | src/director/sharing/bundle.js:37 | `statement-order` | KILLED | [director-099] The bundle rejects a equals sign at the start |
-| a9231 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The bundle names the invalid duplicate path |
-| a9232 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The bundle accepts base64 zz== |
-| a9233 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The bundle accepts base64 99== |
-| a9234 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The import accepts the standard alphabet +/+/ |
-| a9235 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The import accepts the standard alphabet +/+/ |
-| a9236 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The bundle accepts base64 zz== |
-| a9237 | src/director/sharing/bundle.js:43 | `regex-member` | KILLED | [director-099] The bundle accepts base64 ZZ== |
-| a9238 | src/director/sharing/bundle.js:43 | `regex-member` | KILLED | [director-099] The bundle accepts base64 zz== |
-| a9239 | src/director/sharing/bundle.js:43 | `regex-member` | KILLED | [director-099] The bundle accepts base64 99== |
-| a9240 | src/director/sharing/bundle.js:43 | `regex-member` | KILLED | [director-099] The import accepts the standard alphabet +w== |
-| a9241 | src/director/sharing/bundle.js:43 | `regex-member` | KILLED | [director-099] The import accepts the standard alphabet /w== |
-| a9242 | src/director/sharing/bundle.js:62 | `default-shape` | KILLED | [director-099] The bundle names the invalid version |
+| a9223 | src/director/sharing/bundle.js:11 | `new-argument` | KILLED | [director-101] The export writes each asset index and filename |
+| a9224 | src/director/sharing/bundle.js:11 | `new-argument` | KILLED | [director-101] The export writes each asset index and filename |
+| a9225 | src/director/sharing/bundle.js:27 | `new-argument` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9226 | src/director/sharing/bundle.js:27 | `new-argument` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9227 | src/director/sharing/bundle.js:27 | `await-remove` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9228 | src/director/sharing/bundle.js:31 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
+| a9229 | src/director/sharing/bundle.js:32 | `statement-order` | KILLED | [director-099 director-101] The export writes each base64 character in plain text |
+| a9230 | src/director/sharing/bundle.js:37 | `statement-order` | KILLED | [director-099] The bundle rejects an equals sign at the start |
+| a9231 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9232 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9233 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9234 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9235 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9236 | src/director/sharing/bundle.js:42 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in padded text |
+| a9237 | src/director/sharing/bundle.js:43 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in padded text |
+| a9238 | src/director/sharing/bundle.js:43 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in padded text |
+| a9239 | src/director/sharing/bundle.js:43 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in padded text |
+| a9240 | src/director/sharing/bundle.js:43 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in padded text |
+| a9241 | src/director/sharing/bundle.js:43 | `regex-member` | KILLED | [director-099] The import accepts each base64 character in padded text |
+| a9242 | src/director/sharing/bundle.js:62 | `default-shape` | KILLED | [director-098] The plain project JSON returns an empty asset map |
 | a9243 | src/director/sharing/bundle.js:62 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9243 |
 | a9244 | src/director/sharing/bundle.js:62 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9244 |
-| a9245 | src/director/sharing/bundle.js:62 | `destructure-remove` | KILLED | [director-099] The bundle names the invalid version |
+| a9245 | src/director/sharing/bundle.js:62 | `destructure-remove` | KILLED | [director-098] The plain project JSON returns an empty asset map |
 | a9246 | src/director/sharing/bundle.js:63 | `statement-order` | KILLED | [director-098 director-107] The share signal check comes before the text type check |
 | a9247 | src/director/sharing/bundle.js:64 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9247 |
-| a9248 | src/director/sharing/bundle.js:70 | `statement-order` | KILLED | [director-099] The bundle names the invalid version |
-| a9249 | src/director/sharing/bundle.js:71 | `statement-order` | KILLED | [director-099] The bundle names the invalid version |
-| a9250 | src/director/sharing/bundle.js:76 | `statement-order` | KILLED | [director-098] The bundle helpers accept plain project JSON |
-| a9251 | src/director/sharing/bundle.js:78 | `statement-order` | KILLED | [director-099] The import checks top fields before version |
+| a9248 | src/director/sharing/bundle.js:70 | `statement-order` | KILLED | [director-098] The plain project JSON returns an empty asset map |
+| a9249 | src/director/sharing/bundle.js:71 | `statement-order` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9250 | src/director/sharing/bundle.js:76 | `statement-order` | KILLED | [director-098] The plain project JSON returns an empty asset map |
+| a9251 | src/director/sharing/bundle.js:78 | `statement-order` | KILLED | [director-099] The import checks top-level fields before version |
 | a9252 | src/director/sharing/bundle.js:79 | `statement-order` | KILLED | [director-099] The import checks version before project |
 | a9253 | src/director/sharing/bundle.js:80 | `statement-order` | KILLED | [director-099] The import checks project before assets |
 | a9254 | src/director/sharing/bundle.js:81 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9254 |
 | a9255 | src/director/sharing/bundle.js:82 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9255 |
-| a9256 | src/director/sharing/bundle.js:83 | `statement-order` | KILLED | [director-099] The bundle names the invalid duplicate path |
+| a9256 | src/director/sharing/bundle.js:83 | `statement-order` | KILLED | [director-099] The import accepts each base64 character in plain text |
 | a9257 | src/director/sharing/bundle.js:84 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9257 |
-| a9258 | src/director/sharing/bundle.js:98 | `statement-order` | KILLED | [director-100] The bundle names the invalid reference |
-| a9259 | src/director/sharing/bundle.js:99 | `statement-order` | KILLED | [director-100] The bundle names the invalid source |
+| a9258 | src/director/sharing/bundle.js:98 | `statement-order` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9259 | src/director/sharing/bundle.js:99 | `statement-order` | KILLED | [director-099] The import accepts each base64 character in plain text |
 | a9260 | src/director/sharing/bundle.js:111 | `statement-order` | KILLED | [director-100] The bundle names the invalid unused asset |
 | a9261 | src/director/sharing/bundle.js:85 | `statement-order` | KILLED | [director-099 director-107] The asset signal check comes before its field check |
 | a9262 | src/director/sharing/bundle.js:86 | `statement-order` | KILLED | [director-099] The import checks asset fields before path |
 | a9263 | src/director/sharing/bundle.js:87 | `statement-order` | KILLED | [director-099] The import checks path before media type |
 | a9264 | src/director/sharing/bundle.js:88 | `statement-order` | KILLED | [director-099] The import checks media type before duplicate path |
 | a9265 | src/director/sharing/bundle.js:89 | `statement-order` | KILLED | [director-099] The import checks duplicate path before base64 |
-| a9266 | src/director/sharing/bundle.js:90 | `statement-order` | KILLED | [director-099] The bundle names the invalid duplicate path |
+| a9266 | src/director/sharing/bundle.js:90 | `statement-order` | KILLED | [director-099] The import accepts each base64 character in plain text |
 | a9267 | src/director/sharing/bundle.js:91 | `statement-order` | KILLED | [director-099] The import accepts the total byte limit and rejects one more byte |
 | a9268 | src/director/sharing/bundle.js:92 | `statement-order` | KILLED | [director-099] The import checks asset bytes before the digest call |
 | a9269 | src/director/sharing/bundle.js:93 | `statement-order` | KILLED | [director-107] The bundle stops import after a digest |
 | a9270 | src/director/sharing/bundle.js:94 | `statement-order` | KILLED | [director-100 director-107] The import signal check comes before the digest comparison |
 | a9271 | src/director/sharing/bundle.js:95 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9271 |
-| a9272 | src/director/sharing/bundle.js:93 | `await-remove` | KILLED | [director-099] The bundle names the invalid duplicate path |
+| a9272 | src/director/sharing/bundle.js:93 | `await-remove` | KILLED | [director-099] The import accepts each base64 character in plain text |
 | a9273 | src/director/sharing/bundle.js:100 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9273 |
 | a9274 | src/director/sharing/bundle.js:102 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9274 |
 | a9275 | src/director/sharing/bundle.js:103 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9275 |
 | a9276 | src/director/sharing/bundle.js:117 | `statement-order` | KILLED | [director-106] The share helpers reject excess file bytes before text access and cancel a stalled project file |
-| a9277 | src/director/sharing/bundle.js:120 | `statement-order` | KILLED | [director-106] The file budget check comes before the signal read |
+| a9277 | src/director/sharing/bundle.js:120 | `statement-order` | KILLED | [director-106] The file limit check comes before access to the signal |
 | a9278 | src/director/sharing/bundle.js:127 | `statement-order` | KILLED | [director-106 director-107] The file signal check comes before text access |
-| a9279 | src/director/sharing/bundle.js:128 | `statement-order` | KILLED | [director-107] The file signal check follows text settlement |
+| a9279 | src/director/sharing/bundle.js:128 | `statement-order` | KILLED | [director-107] The file signal check follows the text result |
 | a9280 | src/director/sharing/bundle.js:129 | `statement-order` | KILLED | [director-106] The share helpers check a signal after text access |
 | a9281 | src/director/sharing/bundle.js:128 | `await-remove` | KILLED | [director-106] The share helpers reject excess file bytes before text access and cancel a stalled project file |
-| a9282 | src/director/sharing/bundle.js:137 | `default-shape` | KILLED | [director-102] The export names the invalid absent asset |
+| a9282 | src/director/sharing/bundle.js:137 | `default-shape` | KILLED | [director-101] The export writes each asset index and filename |
 | a9283 | src/director/sharing/bundle.js:137 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9283 |
 | a9284 | src/director/sharing/bundle.js:137 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9284 |
-| a9285 | src/director/sharing/bundle.js:137 | `destructure-remove` | KILLED | [director-102] The export names the invalid absent asset |
+| a9285 | src/director/sharing/bundle.js:137 | `destructure-remove` | KILLED | [director-101] The export writes each asset index and filename |
 | a9286 | src/director/sharing/bundle.js:139 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9286 |
 | a9287 | src/director/sharing/bundle.js:140 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9287 |
-| a9288 | src/director/sharing/bundle.js:142 | `statement-order` | KILLED | [director-102] The export names the invalid empty bytes |
-| a9289 | src/director/sharing/bundle.js:143 | `statement-order` | KILLED | [director-101] The export limits each source filename to 160 characters |
-| a9290 | src/director/sharing/bundle.js:186 | `statement-order` | KILLED | [director-101] The export limits each source filename to 160 characters |
+| a9288 | src/director/sharing/bundle.js:142 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
+| a9289 | src/director/sharing/bundle.js:143 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
+| a9290 | src/director/sharing/bundle.js:186 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
 | a9291 | src/director/sharing/bundle.js:192 | `statement-order` | KILLED | [director-102] The export checks its encoded text budget |
 | a9292 | src/director/sharing/bundle.js:144 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9292 |
-| a9293 | src/director/sharing/bundle.js:145 | `statement-order` | KILLED | [director-102] The export names the invalid absent asset |
-| a9294 | src/director/sharing/bundle.js:146 | `statement-order` | KILLED | [director-102] The export names the invalid absent asset |
-| a9295 | src/director/sharing/bundle.js:147 | `statement-order` | KILLED | [director-102] The export names the invalid absent asset |
+| a9293 | src/director/sharing/bundle.js:145 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
+| a9294 | src/director/sharing/bundle.js:146 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
+| a9295 | src/director/sharing/bundle.js:147 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
 | a9296 | src/director/sharing/bundle.js:182 | `statement-order` | KILLED | [director-101] The export writes source then byteLength then digest |
 | a9297 | src/director/sharing/bundle.js:183 | `statement-order` | KILLED | [director-101] The export writes source then byteLength then digest |
 | a9298 | src/director/sharing/bundle.js:148 | `statement-order` | KILLED | [director-102] The export count check comes before the next resolver call |
 | a9299 | src/director/sharing/bundle.js:150 | `statement-order` | KILLED | [director-107] The bundle stops export after asset bytes |
-| a9300 | src/director/sharing/bundle.js:154 | `statement-order` | KILLED | [director-102 director-107] The export signal check comes before absent asset |
+| a9300 | src/director/sharing/bundle.js:154 | `statement-order` | KILLED | [director-102 director-107] The export signal check comes before the absent asset check |
 | a9301 | src/director/sharing/bundle.js:155 | `statement-order` | KILLED | [director-102] The export names the invalid absent asset |
-| a9302 | src/director/sharing/bundle.js:156 | `statement-order` | KILLED | [director-102] The export names the invalid empty bytes |
+| a9302 | src/director/sharing/bundle.js:156 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
 | a9303 | src/director/sharing/bundle.js:157 | `statement-order` | KILLED | [director-102] The export checks the asset size before the total size |
 | a9304 | src/director/sharing/bundle.js:158 | `statement-order` | KILLED | [director-102] The export checks bytes before the media type |
 | a9305 | src/director/sharing/bundle.js:159 | `statement-order` | KILLED | [director-102] The export checks the media type before the digest call |
 | a9306 | src/director/sharing/bundle.js:160 | `statement-order` | KILLED | [director-107] The bundle stops export after a digest |
 | a9307 | src/director/sharing/bundle.js:161 | `statement-order` | KILLED | [director-102 director-107] The export signal check comes before declared integrity |
-| a9308 | src/director/sharing/bundle.js:162 | `statement-order` | KILLED | [director-102] The export checks integrity before the filename read |
-| a9309 | src/director/sharing/bundle.js:167 | `statement-order` | KILLED | [director-102] The export names excess asset entries |
+| a9308 | src/director/sharing/bundle.js:162 | `statement-order` | KILLED | [director-102] The export checks integrity before access to the filename |
+| a9309 | src/director/sharing/bundle.js:167 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
 | a9310 | src/director/sharing/bundle.js:168 | `statement-order` | KILLED | [director-103] The export names different shared integrity |
 | a9311 | src/director/sharing/bundle.js:175 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9311 |
-| a9312 | src/director/sharing/bundle.js:150 | `await-remove` | KILLED | [director-102] The export names the invalid absent asset |
+| a9312 | src/director/sharing/bundle.js:150 | `await-remove` | KILLED | [director-101] The export writes each asset index and filename |
 | a9313 | src/director/sharing/bundle.js:160 | `await-remove` | KILLED | [director-101] The selected scene bundle copies bytes and attribution and keeps the project without an asset request |
 | a9314 | src/director/sharing/bundle.js:190 | `destructure-remove` | KILLED | [director-101] The selected scene bundle copies bytes and attribution and keeps the project without an asset request |
-| a9315 | src/director/sharing/bundle.js:190 | `destructure-remove` | KILLED | [director-101] The export limits each source filename to 160 characters |
+| a9315 | src/director/sharing/bundle.js:190 | `destructure-remove` | KILLED | [director-101] The export writes each asset index and filename |
 | a9316 | src/director/sharing/bundle.js:199 | `statement-order` | KILLED | [director-104] The byte store accepts an absent replacement map |
 | a9317 | src/director/sharing/bundle.js:201 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9317 |
 | a9318 | src/director/sharing/bundle.js:201 | `default-shape` | KILLED | [director-104] The byte store accepts an absent replacement map |
@@ -660,17 +660,17 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9333 | src/director/sharing/bundle.js:214 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9333 |
 | a9334 | src/director/sharing/bundle.js:215 | `statement-order` | KILLED | [director-105] The byte store accepts its default byte limit |
 | a9335 | src/director/sharing/bundle.js:216 | `statement-order` | KILLED | [director-104] The bundle byte store removes old data after replacement and uses no network source |
-| a9336 | src/director/sharing/lifetime.js:3 | `statement-order` | KILLED | [director-102] The export names the invalid absent asset |
-| a9337 | src/director/sharing/lifetime.js:4 | `new-argument` | KILLED | [director-106] The share helpers reject excess file bytes before text access and cancel a stalled project file |
-| a9338 | src/director/sharing/lifetime.js:4 | `new-argument` | KILLED | [director-106] The share helpers reject excess file bytes before text access and cancel a stalled project file |
-| a9339 | src/director/sharing/lifetime.js:5 | `statement-order` | KILLED | [director-107] The helper rejects an early signal |
+| a9336 | src/director/sharing/lifetime.js:3 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
+| a9337 | src/director/sharing/lifetime.js:4 | `new-argument` | KILLED | [director-107] The helper does not attach a listener to a cancelled signal |
+| a9338 | src/director/sharing/lifetime.js:4 | `new-argument` | KILLED | [director-107] The helper does not attach a listener to a cancelled signal |
+| a9339 | src/director/sharing/lifetime.js:5 | `statement-order` | KILLED | [director-107] The helper does not attach a listener to a cancelled signal |
 | a9340 | src/director/sharing/lifetime.js:9 | `statement-order` | KILLED | [director-107] The helper does not attach a listener to a cancelled signal |
-| a9341 | src/director/sharing/lifetime.js:14 | `statement-order` | KILLED | [director-107] The helper attaches its listener before the work read |
-| a9342 | src/director/sharing/lifetime.js:6 | `statement-order` | KILLED | [director-107] The helper removes its listener before the reason read |
+| a9341 | src/director/sharing/lifetime.js:14 | `statement-order` | KILLED | [director-107] The helper attaches its listener before it reads the work promise |
+| a9342 | src/director/sharing/lifetime.js:6 | `statement-order` | KILLED | [director-107] The helper removes its listener before access to the reason |
 | a9343 | src/director/sharing/lifetime.js:10 | `statement-order` | KILLED | [director-107] The helper reads cancelled work before its reason |
 | a9344 | src/director/sharing/lifetime.js:11 | `statement-order` | KILLED | [director-107] The helper does not attach a listener to a cancelled signal |
 | a9345 | src/director/sharing/lifetime.js:17 | `statement-order` | KILLED | [director-107] The helper checks cancellation after listener removal |
-| a9346 | src/director/sharing/lifetime.js:21 | `statement-order` | KILLED | [director-107] The helper handles cancellation during listener removal before a work error |
+| a9346 | src/director/sharing/lifetime.js:21 | `statement-order` | KILLED | [director-107] The helper rejects with the cancellation reason during listener removal after a work error |
 | a9347 | src/director/sharing/preview.js:5 | `destructure-remove` | KILLED | [director-109 director-110] The preview uses empty source and layer lists |
 | a9348 | src/director/sharing/preview.js:5 | `destructure-remove` | KILLED | [director-109 director-110] The preview uses empty source and layer lists |
 | a9349 | src/director/sharing/preview.js:6 | `default-shape` | KILLED | [director-109 director-110] The preview uses empty source and layer lists |
@@ -691,7 +691,7 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9364 | src/director/sharing/preview.js:9 | `new-argument` | KILLED | [director-110] The preview lists distinct absent layers |
 | a9365 | src/director/sharing/preview.js:9 | `new-argument` | KILLED | [director-110] The preview lists distinct absent layers |
 | a9366 | src/director/sharing/preview.js:31 | `spread-remove` | KILLED | [director-109 director-110] The preview uses empty source and layer lists |
-| a9367 | src/director/packs/manifest.js:24 | `regex-quantifier` | KILLED | [director-097] The source waits for stream cancellation before release |
+| a9367 | src/director/packs/manifest.js:24 | `regex-quantifier` | KILLED | [director-076] The asset path accepts A in both character positions |
 | a9368 | src/director/packs/manifest.js:44 | `template-expression` | KILLED | [director-077] The manifest checks ID before version |
 | a9369 | src/director/packs/manifest.js:48 | `template-expression` | KILLED | [director-077] The manifest names the source object |
 | a9370 | src/director/packs/manifest.js:49 | `template-expression` | KILLED | [director-076 director-077] The manifest checks source name before path |
@@ -701,11 +701,11 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9374 | src/director/packs/manifest.js:53 | `template-expression` | KILLED | [director-078] The manifest checks license before URL |
 | a9375 | src/director/packs/manifest.js:54 | `template-expression` | KILLED | [director-078 director-079] The manifest checks URL before byteLength |
 | a9376 | src/director/packs/manifest.js:83 | `template-expression` | KILLED | [director-080] The manifest checks bounds values before edge order |
-| a9377 | src/director/packs/manifest.js:100 | `template-expression` | KILLED | [director-080] The image rejects bounds outside an array |
+| a9377 | src/director/packs/manifest.js:100 | `template-expression` | KILLED | [director-080] The bounds array check comes before access to the length |
 | a9378 | src/director/packs/manifest.js:106 | `template-expression` | KILLED | [director-080] The manifest checks bounds values before edge order |
 | a9379 | src/director/packs/manifest.js:106 | `template-expression` | KILLED | [director-080] The manifest checks bounds values before edge order |
 | a9380 | src/director/packs/manifest.js:114 | `template-expression` | KILLED | [director-080] The image rejects text for each geographic field |
-| a9381 | src/director/packs/manifest.js:122 | `template-expression` | KILLED | [director-082] The list check comes before the anchor read |
+| a9381 | src/director/packs/manifest.js:122 | `template-expression` | KILLED | [director-082] The list check comes before access to the anchors |
 | a9382 | src/director/packs/manifest.js:126 | `template-expression` | KILLED | [director-077 director-082] The declaration check comes before the duplicate ID check |
 | a9383 | src/director/packs/manifest.js:126 | `template-expression` | KILLED | [director-077 director-082] The declaration check comes before the duplicate ID check |
 | a9384 | src/director/packs/manifest.js:132 | `template-expression` | KILLED | [director-082] The shot accepts eight references and rejects nine references |
@@ -722,9 +722,9 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9395 | src/director/packs/geojson.js:46 | `new-error-argument` | KILLED | [director-084] The feature rejects type |
 | a9396 | src/director/packs/geojson.js:59 | `new-error-argument` | KILLED | [director-087] The geometry rejects invalid type |
 | a9397 | src/director/packs/geojson.js:59 | `new-error-argument` | KILLED | [director-087] The geometry rejects invalid type |
-| a9398 | src/director/packs/session.js:69 | `new-error-argument` | KILLED | [director-088 director-091] The new list check follows old resource cleanup |
-| a9399 | src/director/packs/session.js:69 | `new-error-argument` | KILLED | [director-088 director-091] The new list check follows old resource cleanup |
-| a9400 | src/director/packs/session.js:72 | `template-expression` | KILLED | [director-088] The declaration check comes before the caller signal read |
+| a9398 | src/director/packs/session.js:69 | `new-error-argument` | KILLED | [director-088 director-091] The new list check follows old resource disposal |
+| a9399 | src/director/packs/session.js:69 | `new-error-argument` | KILLED | [director-088 director-091] The new list check follows old resource disposal |
+| a9400 | src/director/packs/session.js:72 | `template-expression` | KILLED | [director-088] The declaration check comes before access to the caller signal |
 | a9401 | src/director/packs/session.js:89 | `new-error-argument` | KILLED | [director-092] The deadline gives its cause to the source signal |
 | a9402 | src/director/packs/session.js:89 | `new-error-argument` | KILLED | [director-092] The deadline gives its cause to the source signal |
 | a9403 | src/director/packs/session.js:98 | `new-error-argument` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9403 |
@@ -737,17 +737,17 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9410 | src/director/packs/session.js:128 | `new-error-argument` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9410 |
 | a9411 | src/director/packs/session.js:136 | `new-error-argument` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9411 |
 | a9412 | src/director/packs/session.js:136 | `new-error-argument` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9412 |
-| a9413 | src/director/packs/session.js:154 | `new-error-argument` | KILLED | [director-092] The source event during listener removal stops success |
+| a9413 | src/director/packs/session.js:154 | `new-error-argument` | KILLED | [director-092] The source signal event during listener removal stops success |
 | a9414 | src/director/packs/source.js:18 | `new-error-argument` | KILLED | [director-094] The directory rejects protocol |
-| a9415 | src/director/packs/source.js:32 | `new-error-argument` | KILLED | [director-097] The source waits for body cancellation before an HTTP error |
-| a9416 | src/director/packs/source.js:32 | `new-error-argument` | KILLED | [director-097] The source waits for body cancellation before an HTTP error |
+| a9415 | src/director/packs/source.js:32 | `new-error-argument` | KILLED | [director-097] The source waits for body cancellation before it rejects the asset request |
+| a9416 | src/director/packs/source.js:32 | `new-error-argument` | KILLED | [director-097] The source waits for body cancellation before it rejects the asset request |
 | a9417 | src/director/packs/source.js:35 | `new-error-argument` | KILLED | [director-097] The source rejects an absent stream |
 | a9418 | src/director/packs/source.js:35 | `new-error-argument` | KILLED | [director-097] The source rejects an absent stream |
-| a9419 | src/director/packs/source.js:40 | `new-error-argument` | KILLED | [director-096] The header limit check comes before the first stream read |
-| a9420 | src/director/packs/source.js:40 | `new-error-argument` | KILLED | [director-096] The header limit check comes before the first stream read |
+| a9419 | src/director/packs/source.js:40 | `new-error-argument` | KILLED | [director-096] The header limit check comes before it reads the first stream chunk |
+| a9420 | src/director/packs/source.js:40 | `new-error-argument` | KILLED | [director-096] The header limit check comes before it reads the first stream chunk |
 | a9421 | src/director/packs/source.js:46 | `new-error-argument` | KILLED | [director-096] The stream rejects excess chunk bytes |
 | a9422 | src/director/packs/source.js:46 | `new-error-argument` | KILLED | [director-096] The stream rejects excess chunk bytes |
-| a9423 | src/director/sharing/bundle.js:33 | `call-spread-remove` | KILLED | [director-101] The export reads no chunk past the asset end |
+| a9423 | src/director/sharing/bundle.js:33 | `call-spread-remove` | KILLED | [director-099 director-101] The export writes each base64 character in plain text |
 | a9424 | src/director/sharing/bundle.js:43 | `regex-quantifier` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9424 |
 | a9425 | src/director/sharing/bundle.js:43 | `regex-quantifier` | KILLED | [director-099] The import accepts the total byte limit and rejects one more byte |
 | a9426 | src/director/sharing/bundle.js:43 | `regex-quantifier` | KILLED | [director-099] The base64 rejects invalid padding |
@@ -760,21 +760,21 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9433 | src/director/packs/manifest.js:134 | `constructor` | KILLED | [director-082] The shot accepts eight references and rejects nine references |
 | a9434 | src/director/packs/geojson.js:6 | `constructor` | KILLED | [director-085] The decoder rejects a null position |
 | a9435 | src/director/packs/geojson.js:15 | `constructor` | KILLED | [director-085] The decoder rejects a null position |
-| a9436 | src/director/packs/session.js:5 | `constructor` | KILLED | [director-089] The source listener and state check come before the work read |
-| a9437 | src/director/packs/session.js:41 | `constructor` | KILLED | [director-089] The source listener and state check come before the work read |
-| a9438 | src/director/packs/session.js:42 | `constructor` | KILLED | [director-089] The source listener and state check come before the work read |
+| a9436 | src/director/packs/session.js:5 | `constructor` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9437 | src/director/packs/session.js:41 | `constructor` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
+| a9438 | src/director/packs/session.js:42 | `constructor` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9439 | src/director/packs/session.js:70 | `constructor` | KILLED | [director-089] The session loads its media format |
-| a9440 | src/director/packs/session.js:76 | `constructor` | KILLED | [director-089] The source listener and state check come before the work read |
+| a9440 | src/director/packs/session.js:76 | `constructor` | KILLED | [director-089] The source listener and state check come before it reads the work promise |
 | a9441 | src/director/packs/session.js:124 | `constructor` | KILLED | [director-093] The session checks exact bytes and digest |
-| a9442 | src/director/packs/source.js:8 | `constructor` | KILLED | [director-097] The source waits for stream cancellation before release |
+| a9442 | src/director/packs/source.js:8 | `constructor` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9443 | src/director/packs/source.js:23 | `constructor` | KILLED | [director-095] The asset request sets its fixed options |
 | a9444 | src/director/packs/source.js:53 | `constructor` | KILLED | [director-096] The source joins chunks of different lengths |
 | a9445 | src/director/sharing/bundle.js:11 | `constructor` | KILLED | [director-101] The export writes each asset index and filename |
-| a9446 | src/director/sharing/bundle.js:27 | `constructor` | KILLED | [director-099] The bundle names the invalid duplicate path |
-| a9447 | src/director/sharing/bundle.js:67 | `constructor` | KILLED | [director-098] The plain share returns an empty asset map |
-| a9448 | src/director/sharing/bundle.js:77 | `constructor` | KILLED | [director-098] The plain share returns an empty asset map |
-| a9449 | src/director/sharing/bundle.js:82 | `constructor` | KILLED | [director-099] The bundle names the invalid duplicate path |
-| a9450 | src/director/sharing/bundle.js:98 | `constructor` | KILLED | [director-100] The bundle names the invalid reference |
+| a9446 | src/director/sharing/bundle.js:27 | `constructor` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9447 | src/director/sharing/bundle.js:67 | `constructor` | KILLED | [director-098] The plain project JSON returns an empty asset map |
+| a9448 | src/director/sharing/bundle.js:77 | `constructor` | KILLED | [director-098] The plain project JSON returns an empty asset map |
+| a9449 | src/director/sharing/bundle.js:82 | `constructor` | KILLED | [director-099] The import accepts each base64 character in plain text |
+| a9450 | src/director/sharing/bundle.js:98 | `constructor` | KILLED | [director-099] The import accepts each base64 character in plain text |
 | a9451 | src/director/sharing/bundle.js:141 | `constructor` | KILLED | [director-101] The export writes each asset index and filename |
 | a9452 | src/director/sharing/bundle.js:192 | `constructor` | KILLED | [director-101] The export writes each asset index and filename |
 | a9453 | src/director/sharing/bundle.js:199 | `constructor` | KILLED | [director-105] The store rejects absent bytes |
@@ -1053,3 +1053,10 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | `spread-remove` | 1 | 1 | 0 | 0 |
 | `statement-order` | 207 | 172 | 35 | 0 |
 | `template-expression` | 20 | 20 | 0 | 0 |
+
+## Pass 6 killer title source
+
+The automatic rows use the first failed test of the lead final rerun after pass 5.
+The source files are results-mutants.json and results-mutants-new.json under director-3-final2.
+The pass 6 title correction maps each old title to its current title.
+Worker reruns do not replace this source.

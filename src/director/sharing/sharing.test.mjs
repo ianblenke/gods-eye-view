@@ -53,7 +53,7 @@ const asset = () => ({
   mimeType: 'application/geo+json',
 });
 
-test('[director-098] The plain share returns an empty asset map', async () => {
+test('[director-098] The plain project JSON returns an empty asset map', async () => {
   const result = await parseSceneShare('{"version":6,"scenes":[]}');
   assert.equal(result.assets instanceof Map, true);
   assert.deepEqual([...result.assets], []);
@@ -344,9 +344,10 @@ test('[director-105] The byte store accepts its default byte limit', () => {
   assert.equal(store.source({ path: 'x' }).bytes.length, 8388608);
   store.clear();
 });
-test('[director-105] The byte store rejects an unsafe path before its lookup', () => {
+test('[director-105] The byte store rejects an unsafe path that it holds', () => {
   const store = createBundleAssets();
   store.replace(new Map([['../x', { bytes: new Uint8Array([1]) }]]));
+  assert.equal(store.snapshot().has('../x'), true);
   assert.throws(() => store.source({ path: '../x' }), {
     message:
       'source.path: expected a relative asset path without URL syntax or traversal',
@@ -1080,7 +1081,7 @@ test('[director-106] The share helpers accept an absent filename', async () => {
   assert.deepEqual(v.assets, new Map());
 });
 
-test('[director-106] The share helpers reject the ordinary file budget', async () => {
+test('[director-106] The share helpers reject the ordinary file limit', async () => {
   let calls = 0;
   await assert.rejects(
     readSceneShare({
@@ -1138,7 +1139,7 @@ test('[director-107] The helper rejects a work error', async () => {
   );
 });
 
-test('[director-107] The helper checks signal state at settlement', async () => {
+test('[director-107] The helper checks signal state when the work settles', async () => {
   const listeners = new Set();
   const signal = {
     aborted: false,
@@ -2247,7 +2248,7 @@ test('[director-098 director-107] The share signal check comes before the text t
 
 for (const [label, change, message] of [
   [
-    'top fields before version',
+    'top-level fields before version',
     (b) => {
       b.extra = 1;
       b.version = 2;
@@ -2357,7 +2358,7 @@ test('[director-100 director-107] The import signal check comes before the diges
   assert.equal(calls, 3);
 });
 
-test('[director-106] The file budget check comes before the signal read', async () => {
+test('[director-106] The file limit check comes before access to the signal', async () => {
   let reads = 0;
   await assert.rejects(
     readSceneShare(
@@ -2397,7 +2398,7 @@ test('[director-106 director-107] The file signal check comes before text access
   assert.equal(reads, 0);
 });
 
-test('[director-107] The file signal check follows text settlement', async () => {
+test('[director-107] The file signal check follows the text result', async () => {
   const order = [];
   const signal = {
     aborted: false,
@@ -2442,7 +2443,7 @@ test('[director-101] The export writes source then byteLength then digest', asyn
   assert.deepEqual(order, ['source', 'byteLength', 'sha256']);
 });
 
-test('[director-102] The export checks integrity before the filename read', async () => {
+test('[director-102] The export checks integrity before access to the filename', async () => {
   let reads = 0;
   await assert.rejects(
     createSceneBundle(fixture(), (p) => {
@@ -2505,7 +2506,7 @@ test('[director-102] The export checks the media type before the digest call', a
 });
 
 for (const [label, result, change, stopAt] of [
-  ['absent asset', null, () => {}, 2],
+  ['the absent asset check', null, () => {}, 2],
   [
     'declared integrity',
     asset(),
@@ -2544,7 +2545,7 @@ test('[director-105] The store signal check comes before the path check', () => 
   );
 });
 
-test('[director-107] The helper attaches its listener before the work read', async () => {
+test('[director-107] The helper attaches its listener before it reads the work promise', async () => {
   const order = [];
   const signal = {
     aborted: false,
@@ -2563,7 +2564,7 @@ test('[director-107] The helper attaches its listener before the work read', asy
   assert.deepEqual(order, ['listener', 'work']);
 });
 
-test('[director-107] The helper removes its listener before the reason read', async () => {
+test('[director-107] The helper removes its listener before access to the reason', async () => {
   let resolve;
   const promise = new Promise((r) => {
     resolve = r;
@@ -2631,7 +2632,7 @@ test('[director-107] The helper checks cancellation after listener removal', asy
   });
 });
 
-test('[director-107] The helper handles cancellation during listener removal before a work error', async () => {
+test('[director-107] The helper rejects with the cancellation reason during listener removal after a work error', async () => {
   const c = new AbortController();
   const remove = c.signal.removeEventListener.bind(c.signal);
   let first = true;
@@ -2647,3 +2648,192 @@ test('[director-107] The helper handles cancellation during listener removal bef
     { message: 'stop' },
   );
 });
+
+for (const mode of ['import', 'export']) {
+  test(`[director-107] The ${mode} stops before the second asset`, async () => {
+    const project = fixture();
+    const second = structuredClone(project.scenes[0].dataPacks[0]);
+    second.id = 'second';
+    second.source.path = 'test/second.json';
+    project.scenes[0].dataPacks.push(second);
+    const text = await createSceneBundle(project, asset);
+    let checks = 0,
+      digests = 0,
+      calls = 0;
+    const native = crypto.subtle.digest;
+    crypto.subtle.digest = function (...args) {
+      digests++;
+      return native.apply(this, args);
+    };
+    const signal = {
+      aborted: false,
+      addEventListener() {},
+      removeEventListener() {},
+      throwIfAborted() {
+        if (++checks === 4) throw new Error('stop');
+      },
+    };
+    try {
+      await assert.rejects(
+        mode === 'import'
+          ? parseSceneShare(text, { signal })
+          : createSceneBundle(
+              project,
+              () => {
+                calls++;
+                return asset();
+              },
+              { signal },
+            ),
+        { message: 'stop' },
+      );
+      assert.equal(digests, 1);
+      assert.equal(calls, mode === 'import' ? 0 : 1);
+      assert.equal(checks, 4);
+    } finally {
+      crypto.subtle.digest = native;
+    }
+  });
+}
+test('[director-099 director-102] The bundle rejects an SVG media type', async () => {
+  const value = await bundleObject();
+  value.assets[0].mimeType = 'image/svg+xml';
+  await assert.rejects(parseSceneShare(JSON.stringify(value)), {
+    message: 'assets: unsupported media type',
+  });
+  await assert.rejects(
+    createSceneBundle(fixture(), () => ({
+      ...asset(),
+      mimeType: 'image/svg+xml',
+    })),
+    { message: 'assets: unsupported media type' },
+  );
+});
+test('[director-108 director-110] The preview reaches the second scene and shot', () => {
+  const project = fixture();
+  project.scenes[0].dataPacks = [];
+  project.scenes[0].shots[0].layers = {};
+  const second = structuredClone(fixture().scenes[0]);
+  second.id = 'second';
+  second.shots.unshift({ ...second.shots[0], id: 'first', layers: {} });
+  second.shots[1].layers = { later: true };
+  second.shots[1].sourcePackId = 'external';
+  project.scenes[1] = second;
+  const result = describeSceneShare({
+    project,
+    assets: new Map([
+      ['a', { bytes: new Uint8Array([1]) }],
+      ['b', { bytes: new Uint8Array([2, 3]) }],
+    ]),
+  });
+  assert.equal(result.scenes, 2);
+  assert.equal(result.shots, 3);
+  assert.equal(result.packs.length, 1);
+  assert.equal(result.packs[0].scene, 'Example');
+  assert.equal(result.bundledBytes, 3);
+  assert.equal(result.externalContent, true);
+  assert.deepEqual(result.missingLayers, ['later']);
+});
+
+test('[director-101] The export reaches the second scene', async () => {
+  const project = fixture();
+  project.scenes[1] = { ...structuredClone(project.scenes[0]), id: 'second' };
+  project.scenes[0].dataPacks = [];
+  project.scenes[0].shots[0].dataPackIds = [];
+  let calls = 0;
+  const result = JSON.parse(
+    await createSceneBundle(project, () => {
+      calls++;
+      return asset();
+    }),
+  );
+  assert.equal(calls, 1);
+  assert.equal(result.assets.length, 1);
+  assert.equal(
+    result.project.scenes[1].dataPacks[0].source.adapter,
+    'scene-bundle',
+  );
+});
+test('[director-104] The store counts the second asset', () => {
+  const store = createBundleAssets();
+  store.replace(
+    new Map([
+      ['first', { bytes: new Uint8Array([1]) }],
+      ['second', { bytes: new Uint8Array([2, 3]) }],
+    ]),
+  );
+  assert.deepEqual(store.getState(), { count: 2, bytes: 3 });
+  assert.deepEqual([...store.snapshot().keys()], ['first', 'second']);
+});
+test('[director-108] The preview reaches the second data pack', () => {
+  const project = fixture();
+  project.scenes[0].dataPacks.push({
+    ...structuredClone(project.scenes[0].dataPacks[0]),
+    id: 'second',
+  });
+  const result = describeSceneShare({ project, assets: new Map() });
+  assert.deepEqual(
+    result.packs.map((p) => p.id),
+    ['data', 'second'],
+  );
+});
+
+test('[director-101] The export encodes the second byte chunk', async () => {
+  const data = new Uint8Array(32769);
+  data[32768] = 255;
+  const result = JSON.parse(
+    await createSceneBundle(fixture(), () => ({
+      bytes: data,
+      mimeType: 'application/json',
+    })),
+  );
+  assert.equal(result.assets[0].base64.length, 43692);
+  assert.equal(result.assets[0].base64.slice(-4), 'AAD/');
+});
+for (const mode of ['import', 'export']) {
+  test(`[director-107] The ${mode} stops after the second digest`, async () => {
+    const project = fixture();
+    project.scenes[0].dataPacks.push({
+      ...structuredClone(project.scenes[0].dataPacks[0]),
+      id: 'second',
+      source: { adapter: 'assets', path: 'test/second.json' },
+    });
+    const text = await createSceneBundle(project, asset);
+    let checks = 0,
+      digests = 0,
+      calls = 0;
+    const native = crypto.subtle.digest;
+    crypto.subtle.digest = function (...args) {
+      digests++;
+      return native.apply(this, args);
+    };
+    const signal = {
+      aborted: false,
+      addEventListener() {},
+      removeEventListener() {},
+      throwIfAborted() {
+        if (++checks === (mode === 'import' ? 5 : 6)) throw new Error('stop');
+      },
+    };
+    try {
+      await assert.rejects(
+        mode === 'import'
+          ? parseSceneShare(text, { signal })
+          : createSceneBundle(
+              project,
+              () => {
+                calls++;
+                return asset();
+              },
+              { signal },
+            ),
+        { message: 'stop' },
+      );
+      assert.equal(digests, 2);
+      assert.equal(calls, mode === 'import' ? 0 : 2);
+      assert.equal(checks, mode === 'import' ? 5 : 6);
+    } finally {
+      crypto.subtle.digest = native;
+    }
+  });
+}
