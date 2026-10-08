@@ -91,6 +91,13 @@ test('crop: a square around the pointer, clamped inside the canvas, in buffer pi
 });
 
 test('crop: a slow render gets one bounded fresh-frame recovery request', async () => {
+  const originalSetTimeout = globalThis.setTimeout;
+  const timers = new Set();
+  globalThis.setTimeout = (callback, delay, ...args) => {
+    const timer = originalSetTimeout(callback, delay, ...args);
+    timers.add(timer);
+    return timer;
+  };
   const originalDocument = globalThis.document;
   let requests = 0;
   let listener = null;
@@ -114,6 +121,8 @@ test('crop: a slow render gets one bounded fresh-frame recovery request', async 
     assert.equal(requests, 2, 'only the pointer path retries once');
     assert.equal(listener, null, 'the successful listener is removed');
   } finally {
+    for (const timer of timers) clearTimeout(timer);
+    globalThis.setTimeout = originalSetTimeout;
     globalThis.document = originalDocument;
   }
 });

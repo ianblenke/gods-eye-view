@@ -458,6 +458,17 @@ function initialisedLayer(t, providers) {
 }
 
 test('switching a provider on while the layer is off activates nothing (M01)', async (t) => {
+  const originalSetTimeout = globalThis.setTimeout;
+  const timers = new Set();
+  globalThis.setTimeout = (callback, delay, ...args) => {
+    const timer = originalSetTimeout(callback, delay, ...args);
+    timers.add(timer);
+    return timer;
+  };
+  t.after(() => {
+    for (const timer of timers) clearTimeout(timer);
+    globalThis.setTimeout = originalSetTimeout;
+  });
   const provider = fakeProvider();
   const prewarmed = [];
   const create = provider.create;

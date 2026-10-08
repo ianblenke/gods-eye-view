@@ -332,10 +332,19 @@ async function withDom(fn) {
   };
   const page = panelDom();
   globalThis.document = page.document;
-  globalThis.requestAnimationFrame = (task) => setTimeout(task, 0);
+  const frames = new Set();
+  globalThis.requestAnimationFrame = (task) => {
+    const timer = setTimeout(() => {
+      frames.delete(timer);
+      task();
+    }, 0);
+    frames.add(timer);
+    return timer;
+  };
   try {
     return await fn(page);
   } finally {
+    for (const timer of frames) clearTimeout(timer);
     globalThis.document = saved.document;
     globalThis.requestAnimationFrame = saved.requestAnimationFrame;
   }

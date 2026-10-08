@@ -495,7 +495,8 @@ test('a live window resize shrinks a floating window larger than the viewport', 
 
 const DOCK = { left: 300, top: 820, right: 1140, bottom: 882 };
 
-test('a floating header never lands under the command dock or voice pill', () => {
+test('a floating header never lands under the command dock or voice pill', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   const f = fixture();
   try {
     const shell = portableShell(f, {
@@ -541,7 +542,8 @@ test('a floating header never lands under the command dock or voice pill', () =>
   }
 });
 
-test('a collapsed floating window keeps its chosen height through a drag and a reload', () => {
+test('a collapsed floating window keeps its chosen height through a drag and a reload', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   const f = fixture();
   try {
     const { panel, handle } = floatingPanel(f, 'cctv-panel');
