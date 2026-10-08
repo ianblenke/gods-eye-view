@@ -276,7 +276,7 @@ The lead must run the two review agents, archive the change and write review.md.
 
 The lead must run make gates CHANGE=ownership-scoped-gates on the final tree and commit the change and trace files.
 
-The owner must decide whether imported sync lines need coverage against the base. The code applies the stated base diff rule.
+The pass 2 section records the owner decision for sync lines.
 
 ## Correction search
 
@@ -289,3 +289,197 @@ src/tooling/spec/gates.test.mjs:1624: function trustedFixture(body, extra = {}, 
 src/tooling/spec/gates.test.mjs:2280: }, {}, {}, { loaded: true }));
 src/tooling/spec/gates.test.mjs:2397: }, { '.gitignore': '.gev-cache/\nscripts/spec/ignored.txt\n' }, {}, { loaded: true }));
 ```
+
+## Pass 2 tree and rule
+
+Tree read: a70c24e2a5836544b7490899e9d352cbb343d053.
+
+The owner states that upstream source lines need no changed line coverage in a sync.
+
+The gate uses the intersection of the base diff lines and the adopt source diff lines.
+
+Each file uses its last own adopt source. Other files use the last source in the change.
+
+A file absent from its source uses all its current lines for the source set.
+
+Each source must be an ancestor of HEAD. An invalid source stops the check.
+
+A change without adopt source records keeps the base diff rule.
+
+Whole-file owned coverage and ledger comparisons stay in force.
+
+Scenarios: ownership-020 through ownership-025.
+
+The tests use real temporary Git repositories, including a merge with a conflict.
+
+The first test run stopped at the absent syncChangedLines export. It has no test verdict.
+
+## Pass 2 named mutation proof
+
+The proof copy records tree a70c24e2a5836544b7490899e9d352cbb343d053 and the pass 2 source edits.
+
+It has no branch. The proof does not change the clone.
+
+| Mutation | Source edit | Failed test |
+|---|---|---|
+| No source intersection | Keep the base set without the filter | ownership-020 ownership-025: exempts merge lines and counts current code |
+| Drop the conflict repair line | Replace the intersection with an empty array | ownership-021: needs the manual conflict repair line |
+| Drop the vendored author edit | Replace the intersection with an empty array | ownership-022: needs an author edit to a vendored line |
+
+Each mutation ran against its named test and gave exit status 1.
+
+The proof logs and pass2-proof.json are in /home/ianblenke/docker/gev-tools/ownership-gates/.
+
+## Pass 2 image waiver needs
+
+The ledger at tree a70c24e2a5836544b7490899e9d352cbb343d053 has these two owned branch gaps.
+
+| File | Metric | Count | Current file hash |
+|---|---|---:|---|
+| scripts/spec/lib/test-guard.mjs | branches | 1 | 9451e6303105436c50adc39c30c65ef875c0871c318a6ca26a81e3a94f1ebe9f |
+| src/layers/osh/index.js | branches | 1 | b995edb9d833d5661d0484c31a741131b3ea1439a56fa5d03aa24141bb3a8407 |
+
+If the image shows V8 artifacts, each file needs one waiver with metric branches and count 1 for its measured hash.
+
+Each record also needs the change name, a reason and the positive source line numbers from the image report.
+
+No image run occurred here. The ledger counts cannot give those line numbers or prove a V8 artifact.
+
+The lead must use the image result to select the line numbers and assess the reason.
+
+Both files still have their base content. The current waive command rejects a file with its base content.
+
+Thus these are the required record fields, but the command cannot add those records to this change as it stands.
+
+The lead must decide how to resolve this process conflict. Do not change code only to satisfy the instrument.
+
+A true branch gap needs a test. No ledger edit or upstream adopt record can hide an owned gap.
+
+## Pass 2 host checks
+
+Node version: 26.8.2. Each test file runs in its own process on cores 4 through 7 with nice value 19.
+
+| Test file | Tests | Pass | Fail |
+|---|---:|---:|---:|
+| ownership.test.mjs | 34 | 34 | 0 |
+| ownershipGate.test.mjs | 12 | 12 | 0 |
+| qaRegister.test.mjs | 39 | 39 | 0 |
+| v8Merge.test.mjs | 11 | 11 | 0 |
+| gates.test.mjs | 227 | 223 | 4 |
+
+The full legacy run finished with its test summary and exit status 1.
+
+The failed cases are coverage-gate-024, spec-trace-039 spec-trace-040, coverage-gate-031 and coverage-gate-048.
+
+These are the four cases from the pass 1 base probe. No new base probe ran in pass 2.
+
+Both scripts that pass 2 changes have 100% line, branch and function coverage on the host.
+
+| Script | Lines | Branches | Functions |
+|---|---:|---:|---:|
+| ownership.mjs | 100% | 100% | 100% |
+| gates.mjs | 759/759 | 361/361 | 88/88 |
+
+The gate script counts use 305 actual V8 process records from the two gate test files.
+
+The target-file reader checks only the gate script in those records. It does not use fixture measurements.
+
+The ownership report comes from the final 34-test run.
+
+The native format command stopped at Git EPERM. It has no format verdict.
+
+The host shim reads the successful Git output from that error. The format check then passed for 1158 source files.
+
+The STE lint passed with 0 errors. The final lint log gives the warning count.
+
+No Docker, make, project gate CLI, ratchet, adopt, waive, push or gh command ran in pass 2.
+
+The test fixtures call the gate functions to test their behavior in temporary repositories.
+
+## Pass 2 source search
+
+Tree read: a70c24e2a5836544b7490899e9d352cbb343d053, with the pass 2 edits.
+
+The final source search gives these lines:
+
+```
+openspec/config.yaml:21:     For a sync, upstream source lines need no changed line coverage.
+AGENTS.md:11:5. Keep each owned code file at 100% line, branch and function coverage. Keep each line that a change adds or edits at 100%, in every file. For a sync, upstream source lines need no changed line coverage. Rule 23 defines owned paths.
+AGENTS.md:40:24. The review of a sync reads the files resolved by hand and the change documents. `review.md` lists the files resolved by hand under `Resolved files:`, or states `none`. For a sync, `Scope: full` covers those files and documents. After round one, `Scope: diff <hash>` stays valid.
+AGENTS.md:41:A sync needs changed line coverage only for base diff lines that also differ from their adopted upstream source.
+scripts/spec/lib/ownership.mjs:69:export function syncChangedLines({ root, base, files, history, baseHistory, change }) {
+scripts/spec/lib/ownership.mjs:81:      const author = new Set(changedLines({ root, base: from, files: [file] })[file]);
+scripts/spec/lib/ownership.mjs:82:      changed[file] = changed[file].filter(line => author.has(line));
+scripts/spec/gates.mjs:2:import { readOwnership, ownershipAdvice, syncChangedLines, parseLineCoverage, coverageFaults, gapReport } from './lib/ownership.mjs';
+scripts/spec/gates.mjs:570:      const scoped = syncChangedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)), history: historyText, baseHistory: baseHistoryText, change });
+```
+
+## Pass 2 automatic mutations
+
+Tree read: a70c24e2a5836544b7490899e9d352cbb343d053, with the pass 2 edits.
+
+The current generator ran on ownership.mjs and gates.mjs only. It produced 7471 candidates.
+
+The diff filter selected all 317 candidates whose spans touch the pass 2 script lines.
+
+The tool copy uses the current generator classes and the pass 1 host process transport.
+
+It runs each test file in its own process. The source clone is read only during each campaign.
+
+Phase one used 32 ownership tests and 12 gate tests. Phase two used all 34 ownership tests and 12 gate tests.
+
+New tests check the base history prefix, each last source, source types and an author rename.
+
+Phase two has fresh baselines because the tests changed. The production source did not change between phases.
+
+The two source-length survivors then ran with the one-character bad source test and no fast-test skips.
+
+Both failed ownership-024: rejects absent and separate source commits.
+
+| Run | Candidates | Killed | Passed | Crash | Timeout |
+|---|---:|---:|---:|---:|---:|
+| Fast phase | 317 | 257 | 57 | 3 | 0 |
+| Full phase | 57 | 47 | 10 | 0 | 0 |
+| Source-length follow-up | 2 | 2 | 0 | 0 | 0 |
+
+Final assessment: 306 killed, 3 crashes, 6 bounded equivalents and 2 known limits. No candidate remains without an assessment.
+
+The three crashes change the JSON line separator. The tool reports their SyntaxError failures as crashes, separate from kills.
+
+The crash IDs are a0492, a0493 and a0499. Their failed test names are in mutation-results-pass2.json.
+
+The six equivalent probes passed all 28 cases. The bounds below state the input limits of each argument.
+
+| ID | File and line | Assessment | Bound |
+|---|---|---|---|
+| a0625 | ownership.mjs:80 | EQUIVALENT | The match is an object or undefined. The fallback is an object from a nonempty array. |
+| a0538 | ownership.mjs:72 | EQUIVALENT | The fixed Git tree gives one stable status per source. Repeat checks change only cost. |
+| a0477 | ownership.mjs:70 | EQUIVALENT | History inputs are strings. The expression serves only as a conditional test. |
+| a0515 | ownership.mjs:71 | EQUIVALENT | Records are plain JSON objects with no getters. Property reads have no side effects. |
+| a0520 | ownership.mjs:71 | EQUIVALENT | Records are plain JSON objects with no getters. Property reads have no side effects. |
+| a9618 | gates.mjs:571 | EQUIVALENT | Scoped fields are plain data. A log fault returns from the catch before the local value can matter. |
+| a9058 | ownership.mjs:72 | Known limit | The suite does not pair an invalid source with a failed base diff. The first error can change. |
+| a9495 | gates.mjs:567 | Known limit | The suite does not pair an invalid source with invalid base ledger JSON. The first error can change. |
+
+The probe source and results are pass2-equivalent-probes.mjs and pass2-equivalent-probes.json in the tool folder.
+
+The mutation bundle records each source span, code edit, run status, failed test name and final assessment.
+
+The lead must assess the two known limits during review.
+
+## Pass 2 source hashes
+
+| File | SHA-256 |
+|---|---|
+| scripts/spec/lib/ownership.mjs | 0f9e2fc8d8419b15e53953a2144c39cb8e21e3e9ea3a1014a8c104cb67b30c65 |
+| scripts/spec/gates.mjs | 3c73ee46a6252220c006b7a94e2bc052ec3242926409a436ad9a08eb93e0d904 |
+| src/tooling/spec/ownership.test.mjs | abb2b51930121340c1843859d0b6c833de269f593f606b30066198f2c60aeda6 |
+| src/tooling/spec/ownershipGate.test.mjs | d368ca267cd91cd659c234eca4a5598f7e32a633f56fbea441d447d83c307aa5 |
+
+## Pass 2 commit
+
+Implementation commit: f53f46a236840b5f553aa317b27a08624f3ee3c0.
+
+The four tested source hashes match this commit.
+
+This commit has the code, tests, AGENTS.md and config.yaml. The change documents follow in a separate commit.

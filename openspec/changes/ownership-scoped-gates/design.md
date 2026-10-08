@@ -89,3 +89,35 @@ Run each test file in its own process. Measure each changed script separately on
 Use the automatic mutation tool and record each survivor with a test, an equivalent probe or a known limit.
 
 The lead runs ratchet, final image gates and review.
+
+## Sync line scope
+
+Tree read for pass 2: a70c24e2a5836544b7490899e9d352cbb343d053.
+
+Use adopt history records with this change name and a nonempty from hash after the unchanged base history prefix.
+
+Each file uses its last own record. A file without a record uses the last source in the change.
+
+Check each source with git merge-base --is-ancestor against HEAD. Stop if that check fails.
+
+Let A be the new-side line numbers in the base diff. Let B be those in the source diff.
+
+Only the intersection of A and B needs coverage. A file absent from the source uses all its current lines for B.
+
+The gate compares the current tree so that checks before a commit also check author edits.
+
+For a committed tree, these sets are git diff -U0 base HEAD and git diff -U0 from HEAD -- file.
+
+The merge commit itself follows the same rule. Later author edits to upstream code differ from its source and need coverage.
+
+Use the current code inventory. Deleted paths have no new lines. Non-code paths do not enter this check.
+
+Use no rename detection. A new path absent from its source needs coverage for each base diff line.
+
+Binary code files use the existing text diff rule. Binary non-code files do not enter the code inventory.
+
+A fully covered upstream file can lack an adopt record. It uses the last source of the change.
+
+Without adopt records, keep the base diff rule. Whole-file owned coverage and ledger comparisons stay in force.
+
+Print COVERAGE-DIFF: N changed lines, M brought by the merged upstream commit, K need coverage.

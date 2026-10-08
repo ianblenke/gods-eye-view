@@ -16,6 +16,8 @@ Upstream code keeps its ledger gap after the merge and the adopt command.
 
 - Add a gap report by class.
 
+- Check only the base and source diff intersection for a sync.
+
 - Update the process text and sync review scope.
 
 ## Capabilities
@@ -67,8 +69,8 @@ Both paths are owned. The lead must measure them in the image and resolve any tr
 HTML and shell files have no true line data in the current Node measurement.
 Their changed lines fail the diff check.
 
-A sync base diff includes the upstream import lines.
-The diff check applies to them too, even after adopt, unless the owner changes that scope.
+A sync exempts base diff lines that equal their adopted upstream source.
+Author edits and manual conflict repairs need coverage if they differ from both the base and the source.
 
 The final source keeps phase-one kills for source spans that did not change.
 The full second phase uses the final source.
@@ -80,3 +82,9 @@ Four old gate tests fail with the host adapter. They concern worker coverage, ch
 The image must check them.
 
 The default mutation generator omits error message text.
+
+The pass 2 focused suite does not test an invalid source and a failed base diff at the same time.
+
+It does not test an invalid source and invalid base ledger JSON at the same time.
+
+Two statement order mutants can change which error appears first in those cases. Evidence names both mutants.
