@@ -116,15 +116,15 @@ test('[coverage-gate-062] The process permutations and groups give equal values'
 test('[coverage-gate-063] The merge module writes one lcov record per URL', () => {
   const result = state('aa', [{ result: [...data([fn('', [range(0, 2, 1)])], 'file:///repo/a.js?x').result, ...data([fn('', [range(0, 2, 0)])]).result] }]);
   assert.equal(coverageCounts(result).size, 2);
-  assert.equal(coverageLcov(result), 'SF:/repo/a.js\nLF:1\nLH:0\nBRF:1\nBRH:0\nFNF:0\nFNH:0\nend_of_record\nSF:/repo/a.js\nLF:1\nLH:1\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nend_of_record\n');
+  assert.equal(coverageLcov(result), 'SF:/repo/a.js\nLF:1\nLH:0\nBRF:1\nBRH:0\nFNF:0\nFNH:0\nDA:1,0\nend_of_record\nSF:/repo/a.js\nLF:1\nLH:1\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nDA:1,1\nend_of_record\n');
 });
 
 test('[coverage-gate-065] The replacement keeps unloaded lcov records', () => {
   const result = state('aa', [data([fn('', [range(0, 2, 1)])])]);
   const text = 'SF:/repo/a.js\nLF:8\nLH:0\nend_of_record\nSF:/repo/z.js\nLF:9\nLH:0\nend_of_record\n';
-  assert.equal(replaceLcov(text, result), 'SF:/repo/z.js\nLF:9\nLH:0\nend_of_record\nSF:/repo/a.js\nLF:1\nLH:1\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nend_of_record\n');
+  assert.equal(replaceLcov(text, result), 'SF:/repo/z.js\nLF:9\nLH:0\nend_of_record\nSF:/repo/a.js\nLF:1\nLH:1\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nDA:1,1\nend_of_record\n');
   const two = state('aa', [data([fn('', [range(0, 2, 1)])]), data([fn('', [range(0, 2, 0)])], 'file:///repo/z.js')]);
-  assert.equal(replaceLcov(text, two), 'SF:/repo/a.js\nLF:1\nLH:1\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nend_of_record\nSF:/repo/z.js\nLF:1\nLH:0\nBRF:1\nBRH:0\nFNF:0\nFNH:0\nend_of_record\n');
+  assert.equal(replaceLcov(text, two), 'SF:/repo/a.js\nLF:1\nLH:1\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nDA:1,1\nend_of_record\nSF:/repo/z.js\nLF:1\nLH:0\nBRF:1\nBRH:0\nFNF:0\nFNH:0\nDA:1,0\nend_of_record\n');
   const empty = createCoverage(() => { throw new Error('excluded'); });
   addProcess(empty, data([]), () => false);
   assert.equal(replaceLcov(text, empty), text);

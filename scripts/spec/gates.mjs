@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { readOwnership, ownershipAdvice, changedLines, parseLineCoverage, coverageFaults, gapReport } from './lib/ownership.mjs';
 import { changedInputs, trustMeasurement, writeMeasurement } from './lib/measurement.mjs';
 import { importReach, adoptableReached } from './lib/import-reach.mjs';
 import { spawnSync } from 'node:child_process';
@@ -49,9 +50,9 @@ const RUNNER = fileURLToPath(new URL('./lib/run-parallel.mjs', import.meta.url))
 const OUT_DIR = '.gev-cache/spec';
 const DEFAULT_BASE = 'origin/main';
 const LOCAL_ENV_FILE = /^\.env(\..+)?$/;
-const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive', 'adopt', 'rebaseline']);
+const COMMANDS = new Set(['check', 'ci', 'init', 'ratchet', 'lint', 'tree', 'waive', 'adopt', 'rebaseline', 'report']);
 const OPTIONS = new Set(['--change', '--base', '--root', '--file', '--metric', '--lines', '--count', '--reason', '--from']);
-const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt|rebaseline> [--no-measure] [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
+const USAGE = 'Usage: node scripts/spec/gates.mjs <check|ci|init|ratchet|lint|tree|waive|adopt|rebaseline|report> [--no-measure] [--change <name>] [--base <ref>] [--root <dir>] [--file <path>] [--metric <lines|branches|functions>] [--lines <n,n>] [--count <n>] [--reason <text>] [--from <commit>]';
 
 /**
  * Read the command line. Throws the usage text for a bad command line.
@@ -215,10 +216,10 @@ export function mergeRawCoverage({ root, directory, text, inventory }) {
 }
 
 /** Run the tests and measure specs, trace and coverage. */
-function measure({ root, spawn, env, allocationFiles, change, openSpec, phase }) {
+function measure({ root, spawn, env, allocationFiles, change, openSpec, phase, manifest }) {
   const errors = [];
   const tracked = listTrackedFiles(root).filter((file) => existsSync(path.join(root, file)));
-  const qaRegister = readQaRegister({ root, tracked });
+  const qaRegister = readQaRegister({ root, tracked, manifest });
   errors.push(...qaRegister.errors);
   const inventory = codeInventory(tracked, qaRegister.validQaScripts);
   const testFiles = testInventory(tracked);
@@ -316,7 +317,7 @@ function measure({ root, spawn, env, allocationFiles, change, openSpec, phase })
     errors.push(...trace.errors);
     writeTraceReport(root, trace.report);
 
-    return { errors, inventory, qaScripts: qaRegister.scripts, testFiles, records, assertions, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
+    return { errors, inventory, lineCoverage: parseLineCoverage(lcovText ?? '', root), qaScripts: qaRegister.scripts, testFiles, records, assertions, coverage, specs, trace, links: buildLinks(trace.report), untrue, current: currentGaps({ coverage, untraced: trace.untraced }) };
   } finally {
     rmSync(coverageDir, { recursive: true, force: true });
   }
@@ -337,11 +338,11 @@ function fileSpecs({ root, change, openSpec }) {
   return { specs, errors };
 }
 
-function documentMeasurement({ root, change, openSpec, snapshot, phase }) {
+function documentMeasurement({ root, change, openSpec, snapshot, phase, manifest }) {
   const { specs, errors } = phase('specs', () => fileSpecs({ root, change, openSpec }));
   const folder = changeFolder(root, change);
   const trace = evaluateTrace({ specs, records: snapshot.records, assertions: snapshot.assertions, testFiles: snapshot.testFiles, change, changeFound: folder !== null });
-  const qa = readQaRegister({ root, tracked: listTrackedFiles(root) });
+  const qa = readQaRegister({ root, tracked: listTrackedFiles(root), manifest });
   const tracked = listTrackedFiles(root).filter(file => existsSync(path.join(root, file)));
   const readFile = file => readFileSync(path.join(root, file), 'utf8');
   errors.push(...checkUntracked(listUntrackedFiles(root)));
@@ -410,6 +411,16 @@ function runGateCommand({
     for (const item of lint.errors) log(`ERROR ${item.code}${location(item)} ${item.message}`);
     log(`STE: ${lint.errors.length} errors, ${lint.warnings.length} warnings.`);
     return lint.failed ? 1 : 0;
+  }
+
+  const ownership = readOwnership(root);
+  if (ownership.errors.length > 0) return report(log, ownership.errors);
+  const { manifest } = ownership;
+  if (command === 'report') {
+    const ledger = readLedger(root);
+    if (!ledger) return report(log, [{ code: 'GATES-NO-LEDGER', file: LEDGER_FILE, message: 'The report needs the ledger file.' }]);
+    for (const line of gapReport(manifest, ledger)) log(line);
+    return 0;
   }
 
   let base;
@@ -497,6 +508,7 @@ function runGateCommand({
   }
 
   const diffFiles = diffNames(root, base);
+  if (command === 'check' || command === 'ratchet') for (const line of ownershipAdvice(manifest, diffFiles)) log(line);
   const baseFiles = new Set(listFilesAt(root, base));
   const changedTests = diffFiles.filter((file) => isTestFile(file) && existsSync(path.join(root, file)));
   const readBaseTests = () => [...baseFiles].filter(isTestFile).map((file) => readFileAt(root, base, file));
@@ -525,8 +537,8 @@ function runGateCommand({
   }
 
   const measured = options.noMeasure
-    ? documentMeasurement({ root, change, openSpec, snapshot, phase })
-    : phase('measure', () => measure({ root, spawn, env, allocationFiles, change, openSpec, phase }));
+    ? documentMeasurement({ root, change, openSpec, snapshot, phase, manifest })
+    : phase('measure', () => measure({ root, spawn, env, allocationFiles, change, openSpec, phase, manifest }));
   const { counts } = measured.trace.report;
   log(`Trace: ${counts.scenarios} scenarios, ${counts.verified} verified, ${counts.pending} open. ${counts.tests} tests, ${counts.traced} traced, ${counts.untraced} untraced.`);
   for (const line of qaAdvice({ root, change, scripts: measured.qaScripts })) log(line);
@@ -551,6 +563,16 @@ function runGateCommand({
   let historyText = readOptional(root, HISTORY_FILE) ?? '';
   const baseHistoryText = readFileAt(root, base, HISTORY_FILE) ?? '';
   const waivers = waiversOf(historyText, baseHistoryText, change);
+
+  if (command === 'check' || command === 'ratchet' || command === 'ci') {
+    let changed;
+    try {
+      changed = changedLines({ root, base, files: diffFiles.filter(file => measured.inventory.includes(file)) });
+    } catch (error) {
+      return report(log, [{ code: 'COVERAGE-DIFF', file: '', message: error.message }]);
+    }
+    measured.errors.push(...coverageFaults({ manifest, coverage: measured.coverage, changed, lineCoverage: measured.lineCoverage, waivers }));
+  }
 
   const baseLedger = parseLedger(readFileAt(root, base, LEDGER_FILE));
   const codeFiles = new Set(codeInventory(listTrackedFiles(root)));

@@ -55,6 +55,7 @@ function withFixture(body, { base = {} } = {}) {
     git(root, 'init', '-q', '-b', 'main');
     write(root, {
       '.gitignore': '.gev-cache/\n',
+      'openspec/ownership.json': '{"version":1,"owned":[]}\n',
       '.node-version': `${NODE}\n`,
       'src/math.js': 'export function add(a, b) {\n  return a + b;\n}\n',
       'src/math.test.mjs': MATH_TEST(),
@@ -1202,7 +1203,7 @@ const QA_HEADER = (covers) => `/**\n * @purpose Prove that the layer works.\n * 
 
 test('[qa-scripts-024] stops the gate for a QA header error', GUARDED_RUN, () => {
   withFixture((root) => {
-    write(root, { 'scripts/qa-example.mjs': 'export {};\n' });
+    write(root, { 'scripts/qa-example.mjs': 'export {};\n', 'openspec/ownership.json': '{"version":1,"owned":["scripts/qa-example.mjs"]}\n' });
     git(root, 'add', 'scripts/qa-example.mjs');
     const result = run(root, ['check']);
     assert.equal(result.status, 1);
@@ -1245,7 +1246,7 @@ test('[qa-scripts-014] keeps the coverage gap for a QA script with a bad header'
     const openSpec = (_root, args) => ({ status: 0, error: null, stdout: args[0] === '--version' ? '1.3.1\n' : '{"items":[]}' });
     const initial = run(root, ['init'], { openSpec });
     assert.equal(initial.status, 0, initial.output);
-    write(root, { 'scripts/qa-example.mjs': 'export {};\n' });
+    write(root, { 'scripts/qa-example.mjs': 'export {};\n', 'openspec/ownership.json': '{"version":1,"owned":["scripts/qa-example.mjs"]}\n' });
     git(root, 'add', 'scripts/qa-example.mjs');
     const result = run(root, ['check'], { openSpec });
     assert.equal(result.status, 1);
@@ -1448,7 +1449,7 @@ test('[coverage-gate-065] The raw reader excludes test and dependency URLs', () 
     writeFileSync(path.join(directory, 'notes.txt'), 'not coverage');
     writeFileSync(path.join(directory, 'coverage-1-1-0.json'), JSON.stringify({ result: urls.map(url => ({ url, functions: [fn] })) }));
     const inventory = ['src/math.js', 'src/math.test.mjs', 'node_modules/a.js'];
-    assert.equal(mergeRawCoverage({ root, directory, inventory, text: '' }), `SF:${root}/src/math.js\nLF:3\nLH:3\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nend_of_record\n`);
+    assert.equal(mergeRawCoverage({ root, directory, inventory, text: '' }), `SF:${root}/src/math.js\nLF:3\nLH:3\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nDA:1,1\nDA:2,1\nDA:3,1\nend_of_record\n`);
     assert.equal(mergeRawCoverage({ root, directory: path.join(root, 'none'), inventory, text: 'original' }), 'original');
     assert.equal(mergeRawCoverage({ root, directory, inventory: [null], text: '' }), '');
   });
@@ -1611,7 +1612,7 @@ function oneMeasurement(root, { loaded = false, assertions = 1 } = {}) {
     writeFileSync(path.join(path.dirname(args[1]), 'tests-main.jsonl.sync'), records.map(record => JSON.stringify(record) + '\n').join(''));
     if (loaded) {
       writeFileSync(path.join(runs[0].env.NODE_V8_COVERAGE, 'coverage-1-1-0.json'), '{"result":[]}');
-      writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:2\nBRF:1\nBRH:1\nFNF:1\nFNH:1\nend_of_record\n`);
+      writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:2\nBRF:1\nBRH:1\nFNF:1\nFNH:1\nDA:1,1\nDA:2,1\nDA:3,0\nend_of_record\n`);
     }
     writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ checked: loaded ? ['src/math.js'] : [], violations: [], assertions: records.map(record => ({ file: record.file, fullName: record.fullName, count: assertions })), leaks: [] }) + '\n');
     return { status: 0 };
@@ -1620,9 +1621,9 @@ function oneMeasurement(root, { loaded = false, assertions = 1 } = {}) {
   return { spawn, openSpec, calls: () => calls };
 }
 
-function trustedFixture(body, extra = {}, base = {}) {
+function trustedFixture(body, extra = {}, base = {}, measurement = {}) {
   withFixture(root => {
-    const fake = oneMeasurement(root);
+    const fake = oneMeasurement(root, measurement);
     passes(root, ['init'], { openSpec: fake.openSpec, spawn: fake.spawn });
     write(root, { ...CHANGE, 'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers'), ...extra });
     git(root, 'add', '-A');
@@ -2276,7 +2277,7 @@ test('[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with ch
   const clean = JSON.parse(readFileSync(historyFile, 'utf8').trim().split('\n').at(-1));
   assert.equal(Object.hasOwn(clean, 'dirty'), false);
   assert.match(docs().output, /^NO TEST RUN: the mode trusts the snapshot of commit /);
-}));
+}, {}, {}, { loaded: true }));
 test('[gap-ledger-131 gap-ledger-133] accept clean history without a dirty field', () => trustedFixture(({ root, fake }) => {
   const lines = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
   assert.equal(Object.hasOwn(lines.at(-1), 'dirty'), false);
@@ -2393,7 +2394,7 @@ test('[gap-ledger-130 gap-ledger-132] sort the dirty list and compare repeated h
   const after = readFileSync(historyFile, 'utf8');
   assert.equal(after.trim().split('\n').length, before.trim().split('\n').length + 1);
   assert.deepEqual(JSON.parse(after.trim().split('\n').at(-1)).dirty, ['docs/a.md', 'scripts/spec/ignored.txt', 'src/math.js']);
-}, { '.gitignore': '.gev-cache/\nscripts/spec/ignored.txt\n' }));
+}, { '.gitignore': '.gev-cache/\nscripts/spec/ignored.txt\n' }, {}, { loaded: true }));
 
 test('[gap-ledger-134] add ignored name markers before the ratchet command', () => {
   const text = readFileSync(path.join(PROJECT_ROOT, 'Makefile'), 'utf8');
