@@ -11,6 +11,7 @@ test('[credential-boundary-003] build inputs keep three public defines, plugin o
     plugins: [plugin],
     googleApiKey: 'browser-fixture',
     cesiumToken: 'ion-fixture',
+    mapillaryToken: 'mapillary-fixture',
   });
   // The Host check runs before every other plugin's middleware.
   assert.equal(config.plugins[0].name, 'host-check');
@@ -40,7 +41,7 @@ test('[credential-boundary-003] build inputs keep three public defines, plugin o
   assert.deepEqual(config.define, {
     'import.meta.env.GOOGLE_MAPS_API_KEY': '"browser-fixture"',
     'import.meta.env.CESIUM_ION_TOKEN': '"ion-fixture"',
-    'import.meta.env.MAPILLARY_CLIENT_TOKEN': undefined,
+    'import.meta.env.MAPILLARY_CLIENT_TOKEN': '"mapillary-fixture"',
   });
   assert.equal(
     createBrowserViteConfig({ mapillaryToken: 'MLY|1|abc' }).define[
@@ -80,6 +81,8 @@ test('[credential-boundary-003] build inputs keep three public defines, plugin o
 
 test('[credential-boundary-003] build helper does not discover environment values or construct local providers', () => {
   const before = process.env.GOOGLE_MAPS_API_KEY;
+  const beforeMapillary = process.env.MAPILLARY_CLIENT_TOKEN;
+  process.env.MAPILLARY_CLIENT_TOKEN = 'environment-mapillary-fixture';
   process.env.GOOGLE_MAPS_API_KEY = 'environment-fixture';
   try {
     const config = createBrowserViteConfig();
@@ -87,11 +90,22 @@ test('[credential-boundary-003] build helper does not discover environment value
       config.define['import.meta.env.GOOGLE_MAPS_API_KEY'],
       undefined,
     );
+    assert.equal(
+      Object.hasOwn(config.define, 'import.meta.env.MAPILLARY_CLIENT_TOKEN'),
+      true,
+    );
+    assert.equal(
+      config.define['import.meta.env.MAPILLARY_CLIENT_TOKEN'],
+      undefined,
+    );
     assert.deepEqual(
       config.plugins.slice(3).map((plugin) => plugin.name),
       ['embed-framing', 'panel-build'],
     );
   } finally {
+    if (beforeMapillary === undefined)
+      delete process.env.MAPILLARY_CLIENT_TOKEN;
+    else process.env.MAPILLARY_CLIENT_TOKEN = beforeMapillary;
     if (before === undefined) delete process.env.GOOGLE_MAPS_API_KEY;
     else process.env.GOOGLE_MAPS_API_KEY = before;
   }

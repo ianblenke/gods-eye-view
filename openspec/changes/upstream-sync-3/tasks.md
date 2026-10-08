@@ -23,7 +23,7 @@
 
 ## 3. Lead work before and in the image
 
-- [ ] 3.1 Review the public Mapillary spec delta and the unchanged requirement text.
+- [ ] 3.1 Review the complete public Mapillary spec delta.
 - [ ] 3.2 Check the second parent of the merge commit against the upstream remote. Record the result in review.md.
 - [ ] 3.3 Run make adopt for CHANGE=upstream-sync-3 with FROM=95fa816232456a6831172befa2f1b34b9ee73794.
 - [ ] 3.4 Run make ratchet CHANGE=upstream-sync-3 and read its comparison verdict from the command output.
@@ -32,11 +32,14 @@
 - [ ] 3.7 Check the lock file in the image and record the actual adopt volume.
 - [ ] 3.8 Commit the archive and trace files after the image checks and review.
 
-## 4. Public browser names
+## 4. Public browser credentials
 
-- [x] 4.1 Keep the test for `credential-boundary-001`.
-- [x] 4.2 Keep the test for `credential-boundary-002`.
-- [x] 4.3 Change both list tests for `credential-boundary-003` before the build helper.
-- [x] 4.4 Keep the test for `credential-boundary-004`.
-- [x] 4.5 Keep the test for `credential-boundary-016`.
-- [x] 4.6 Remove the Mapillary define default and check the host results.
+- [x] 4.1 Strengthen the fixture tests for `credential-boundary-001` with four literal sentinels.
+- [x] 4.2 Strengthen the prefix test for `credential-boundary-002` with the Mapillary sentinel.
+- [x] 4.3 Strengthen both config tests for `credential-boundary-003` with clear token values and source checks.
+- [x] 4.4 Add the Mapillary pattern and sample tests for `credential-boundary-004`.
+- [x] 4.5 Strengthen the server key test for `credential-boundary-016` with the Mapillary sentinel.
+- [x] 4.6 Prove each changed test with a fault and restore each file.
+- [ ] 4.7 Run host lint, format, boundary and token checks.
+- [ ] 4.8 Run each changed test file and the full host suite once.
+- [ ] 4.9 Record the results and commit the host change.

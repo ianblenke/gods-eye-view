@@ -27,7 +27,7 @@ None.
 
 ### Modified Capabilities
 
-- credential-boundary: Change scenario `credential-boundary-003` to list the three public browser names.
+- credential-boundary: Change Browser bundle inputs and scenarios `001`, `002`, `003`, `004` and `016` for three public credentials.
 
 ## Impact
 
@@ -43,16 +43,14 @@ The fork keeps its OSH implementation files equal to the canonical base. Only th
 The image must measure coverage and trace gaps. The lead must check the lock file and get both review results.
 This host task creates no `review.md` and sends no push.
 
-The owner allows the public Mapillary name in scenario `credential-boundary-003`.
-SECURITY.md documents the token as public. DATA_SOURCES.md lists its viewer and Graph API use.
-docs/CURRENT-STATE.md describes Street Level. server/providers/mapillary/constants.js states that the token lives in the browser by design.
 
-This token must not be a Google, OpenAI or other server credential.
-The three names must remain in order. With no parameters, each define value must be undefined.
-The server Google key must stay outside the defines. The key-shaped literal test `credential-boundary-004` stays unchanged.
+## Pass 3 decision
 
-The first requirement sentence stays unchanged to keep the other scenario hashes. The lead must assess its two-credential text.
-The unchanged upstream ranking time test also fails under the full suite load.
+Read commit: `07bf094e8df16abfe6e8b1847d2c1157b7e9ecf0`.
+The third credential supports the Mapillary viewer and direct Graph API requests.
+SECURITY.md states that the client token is public. The server provider uses the same token for tiles.
+The browser helper receives it through `mapillaryToken`. The standalone config reads `MAPILLARY_CLIENT_TOKEN` from the environment.
 
-The host lint rejects `expose` in the required unchanged sentence of the new delta file.
-The lead must resolve this conflict before the image steps. Do not change the word list or scenario hashes.
+The requirement now names three credentials. All five carried scenarios need changed tests with their scenario tags.
+The fixture tests check the Mapillary sentinel. The literal scan checks the upstream shape `MLY|1|abc` and a synthetic sample.
+The config tests check clear values and reject environment defaults. Secret credentials remain on the server.
