@@ -48,19 +48,19 @@ The current upstream tree adds five QA files without headers. The earlier estima
 Each new header has `@purpose`, `@covers`, `@run` and `@needs`.
 Each covers line names a future capability with the `pending:` prefix. The register test counts 88 QA files.
 
-| File | Purpose | Covers reason |
+| File | Purpose | Covers |
 |---|---|---|
-| `scripts/qa-browserEvidence.mjs` | Save browser evidence of a failed run, with secret values removed. | Browser evidence has no capability spec. |
-| `scripts/qa-panelDrag.mjs` | Move app panels and check each header press. | Panel test helpers have no capability spec. |
-| `scripts/qa-panel-resize.mjs` | Check CCTV panel size and position after each resize. | Panel resize has no capability spec. |
-| `scripts/qa-street-level.mjs` | Check Street Level tiles and images with browser fixtures. | Street Level has no capability spec. |
-| `scripts/qa-voice-bench.mjs` | Compare voice tool choices across providers with the same phrases. | Voice provider comparison has no capability spec. |
+| `scripts/qa-browserEvidence.mjs` | Save browser evidence of a failed run, with secret values removed. | `pending:application-shell` |
+| `scripts/qa-panelDrag.mjs` | Move app panels and check each header press. | `pending:application-shell` |
+| `scripts/qa-panel-resize.mjs` | Check CCTV panel size and position after each resize. | `pending:application-shell` |
+| `scripts/qa-street-level.mjs` | Check Street Level tiles and images with browser fixtures. | `pending:street-level` |
+| `scripts/qa-voice-bench.mjs` | Compare voice tool choices across providers with the same phrases. | `pending:voice` |
 
 ## Measured adopt volume
 
 The image adopt run records 338 entries. The trace ledger records the measured gaps.
 
-The diff from shared base `e7707d9a0f34d9fbffc300023c319f95caa5be30` to upstream changes 435 files.
+The diff from shared ancestor `e7707d9a0f34d9fbffc300023c319f95caa5be30` to upstream changes 435 files.
 It has 249 JavaScript code candidates outside QA files and 129 test file candidates.
 Not all 378 candidates have gaps. These counts do not include reached files or prove adopt eligibility.
 Use the upstream commit as FROM. Do not use the merge commit as FROM.
@@ -117,13 +117,13 @@ The allocation phase did not run after the test failure. This result is the upst
 The token width fixture serializes the added OSH digit and its separator. Its literal length changes from 69 to 71.
 The first merged subset run found the old length assertion. This is a merge defect, and the test now expects 71.
 
-## Mutation results
+## Fault results
 
-The host checks read code commit `1e208673978cffe1c6413a3f42316d7ce93479ab` with the stated mutation.
-The ledger mutation also uses the width correction from code commit `81da1e1f6ac0a0a65ca2983240cb182f1a19841b`.
-Each check restores the source files after the mutation.
+The host checks read code commit `1e208673978cffe1c6413a3f42316d7ce93479ab` with the stated fault.
+The ledger fault also uses the width correction from code commit `81da1e1f6ac0a0a65ca2983240cb182f1a19841b`.
+Each check restores the source files after the fault.
 
-| Mutation | Failed test |
+| Fault | Failed test |
 |---|---|
 | Remove the covers tag from qa-browserEvidence. | `[qa-scripts-023]` |
 | Change the environment prefix to VITE_. | `[credential-boundary-003]` |
@@ -188,9 +188,9 @@ The pristine ranking test also fails in an isolated host process. Its assertion 
 This evidence does not prove that only load causes the failure. Pass 4 supersedes this limit with a 4000 ms ceiling.
 The host checks do not give an image gate verdict.
 
-## Last mutation checks
+## Last fault checks
 
-Tree: `f00556ebeb386396aa784cf10dd17d411bf5ee7a` with each stated mutation.
+Tree: `f00556ebeb386396aa784cf10dd17d411bf5ee7a` with each stated fault.
 Remove the OSH voice-off entry: the current voice manifest test fails and names `osh-systems`.
 Remove the OSH catalog call: the current catalog count test fails.
 Remove the Gemini environment example line: `[credential-boundary-006]` fails and names `GEMINI_API_KEY`.
@@ -224,7 +224,7 @@ Remove the Mapillary define: both list tests fail for `credential-boundary-003`.
 Change the name order: both list tests fail for `credential-boundary-003`.
 Add the server Google define: both list tests fail for `credential-boundary-003`.
 Restore the empty-string default: the build-input test fails for `credential-boundary-003`.
-Each mutation restores `build/vite.js`. The source diff after the mutations is empty.
+Each fault restores `build/vite.js`. The source diff after the faults is empty.
 
 The prose lint reports one error and 563 warnings.
 It rejects `expose` in the required unchanged sentence of the new delta file.
@@ -422,3 +422,31 @@ The requirement sentences stay unchanged. Each delta keeps all scenarios of its 
 The lead must run these files in the image and check the final gate and CI counts.
 A return to larger gaps needs a ledger-refresh change. The production code stays equal to upstream.
 The owner accepts the absent child coverage of both panel key race tests. Record this fact in `review.md`.
+
+## Round 1 host result
+
+Source code tree: `77b57e88aa1084f7851dd2838f0370370a14c0e8`. Host runtime: Node `26.8.2`.
+The full host command `npm test` completes with exit zero.
+It reports 8674 tests: 8673 pass, zero fail, and one test is skipped.
+The two allocation probes need Node 24, so the host runner skips them.
+
+The first restricted suite stops before the end after local server access errors. It has no final result.
+
+The seven changed test files pass 148 tests in separate processes. All seven pass the timer guard with no leaks.
+The final bundle, Google title and QA register edits also pass separate tests and guard checks.
+The geocode report covers all 200 lines, 55 branches and seven functions.
+Format checks pass for 1327 files. Boundary checks pass for 967 modules and 76 portable entries.
+
+The final prose lint reports zero errors.
+
+Remove the geocode gate: both `credential-boundary-017` tests fail.
+Move the gate after fetch: both `credential-boundary-017` tests fail because the key read count is one.
+Invert the gate check: both new scenarios fail in both installs.
+
+The first inversion run stops before the end. The filtered scratch run completes with four failed tests.
+Restore `unmapped:` in the panelDrag header in a scratch copy: `qa-scripts-023` fails.
+Each scratch copy has no branch. The clone keeps the correct gate and QA headers.
+
+The lead must run ratchet and final gates in the Node 24 image, and get both review results.
+These corrections change no adopted upstream code file. Adopt needs no new run.
+The lead must set the Purpose after archive and record the accepted panel key child coverage gap in `review.md`.
