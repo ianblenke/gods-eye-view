@@ -1,0 +1,1922 @@
+[
+  {
+    "id": "068-tests",
+    "file": "scripts/spec/gates.mjs",
+    "old": "? documentMeasurement({ root, change, openSpec, snapshot, phase })",
+    "new": "? phase('measure', () => measure({ root, spawn, env, allocationFiles, change, openSpec, phase }))",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-068"
+  },
+  {
+    "id": "123-twice",
+    "file": "scripts/spec/gates.mjs",
+    "old": "  const { counts } = measured.trace.report;",
+    "new": "  if (command === 'ratchet') measure({ root, spawn, env, allocationFiles, change, openSpec, phase });\n  const { counts } = measured.trace.report;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-123"
+  },
+  {
+    "id": "124-review",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...(folder ? checkChangeReview(root, change, { treeHash: computeTreeHash({ root, changeDir: folder, diffFiles: reviewFiles }) }) : []),",
+    "new": "...[],",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-124"
+  },
+  {
+    "id": "125-status",
+    "file": "scripts/spec/gates.mjs",
+    "old": "return command === 'ratchet' && status !== 0 ? 2 : status;",
+    "new": "return command === 'ratchet' ? 2 : status;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-125"
+  },
+  {
+    "id": "126-ledger",
+    "file": "scripts/spec/gates.mjs",
+    "old": "    ledger = readLedger(root);",
+    "new": "    ledger = ledger;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-126"
+  },
+  {
+    "id": "069-path",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "  return inventory.has(file);",
+    "new": "  return false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-069"
+  },
+  {
+    "id": "070-path",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "  if (isTestFile(file)) return true;",
+    "new": "  if (isTestFile(file)) return false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-070"
+  },
+  {
+    "id": "071-path",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "  if (/^scripts\\/qa-.*\\.mjs$/.test(file)) return true;",
+    "new": "  if (/^scripts\\/qa-.*\\.mjs$/.test(file)) return false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-071"
+  },
+  {
+    "id": "072-path",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "  if (file === 'package-lock.json') return true;",
+    "new": "  if (file === 'package-lock.json') return false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-072"
+  },
+  {
+    "id": "073-path",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "  if (file === '.node-version') return true;",
+    "new": "  if (file === '.node-version') return false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-073"
+  },
+  {
+    "id": "074-path",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "  if (file === 'Makefile') return true;",
+    "new": "  if (file === 'Makefile') return false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-074"
+  },
+  {
+    "id": "075-path",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "  if (/(^|\\/)Dockerfile[^/]*$/.test(file)) return true;",
+    "new": "  if (/(^|\\/)Dockerfile[^/]*$/.test(file)) return false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-075"
+  },
+  {
+    "id": "076-path",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "  if (/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/.test(file)) return true;",
+    "new": "  if (/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/.test(file)) return false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-076"
+  },
+  {
+    "id": "077-path",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "  if (file.startsWith('scripts/spec/')) return true;",
+    "new": "  if (file.startsWith('scripts/spec/')) return false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-077"
+  },
+  {
+    "id": "078-untracked",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "const others = spawn('git', ['ls-files', '--others', '--exclude-standard', '-z'], options);",
+    "new": "const others = { status: 0, stdout: '' };",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-078"
+  },
+  {
+    "id": "079-history",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "['coverage', 'untraced', 'measurement'].includes(item.kind)",
+    "new": "true",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-079"
+  },
+  {
+    "id": "079-change",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "item.change === change &&",
+    "new": "true &&",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-079"
+  },
+  {
+    "id": "080-commit",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "resolveCommit(root, line.commit) : null",
+    "new": "resolveCommit(root, 'HEAD') : null",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-080"
+  },
+  {
+    "id": "081-words",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "file && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "new": "file && file !== 'openspec/ste/words.json' && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-081"
+  },
+  {
+    "id": "082-hash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "if (contentHash(text) !== line.measurement)",
+    "new": "if (false)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-082"
+  },
+  {
+    "id": "082-absent",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "if (!existsSync(absolute)) return",
+    "new": "if (false) return",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-082"
+  },
+  {
+    "id": "083-start",
+    "file": "scripts/spec/gates.mjs",
+    "old": "  log(`Started: ${started.toISOString()}`);",
+    "new": "  log('Started: wrong');",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-083"
+  },
+  {
+    "id": "083-finish",
+    "file": "scripts/spec/gates.mjs",
+    "old": "log(`Finished: ${finished.toISOString()} (${(finished.getTime() - started.getTime()) / 1000} s)`);",
+    "new": "log('Finished: wrong');",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-083"
+  },
+  {
+    "id": "084-cutoff",
+    "file": "scripts/spec/gates.mjs",
+    "old": "if (seconds > 1) log",
+    "new": "if (seconds >= 1) log",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-084"
+  },
+  {
+    "id": "084-phase",
+    "file": "scripts/spec/gates.mjs",
+    "old": "log(`Phase ${name}: ${seconds} s`)",
+    "new": "log(`Phase wrong: ${seconds} s`)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-084"
+  },
+  {
+    "id": "085-links",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...checkLinks({ links: readLinks(root), current: measured.links }),",
+    "new": "...[],",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-registry",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...checkRegistry({ registry, scenarios: measured.specs.scenarios, retired: measured.specs.retired }),",
+    "new": "...[],",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-specs",
+    "file": "scripts/spec/gates.mjs",
+    "old": "errors.push(...lintSpecs({ requirements: specs.requirements, orphans: specs.orphans, changeIds: specs.changeIds, readTasks: tasksReader(root) }));",
+    "new": "errors.push();",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-lint",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const lint = phase('lint', () => lintFindings(root, measured.records));",
+    "new": "const lint = { errors: [], warnings: [], failed: false };",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "011-precheck",
+    "file": "Makefile",
+    "old": "node scripts/check-import-directions.mjs &&",
+    "new": "true &&",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-011"
+  },
+  {
+    "id": "012-docs",
+    "file": "Makefile",
+    "old": "check --no-measure $(CHANGE_ARG) $(BASE_ARG)",
+    "new": "check $(CHANGE_ARG) $(BASE_ARG)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-012"
+  },
+  {
+    "id": "033-final",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "Then run `make gates CHANGE=<name>` on the final tree.",
+    "new": "Then continue on the final tree.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "068-own-option",
+    "file": "scripts/spec/gates.mjs",
+    "old": "options.noMeasure = true;",
+    "new": "options.noMeasure = undefined;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-068"
+  },
+  {
+    "id": "068-dependencies",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "!/(^|\\/)node_modules\\//.test(file) && ",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "trust other ignored files"
+  },
+  {
+    "id": "086-package",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "  if (file === 'package.json') return true;",
+    "new": "  if (file === 'package.json') return false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-086"
+  },
+  {
+    "id": "087-diff",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "diff.status !== 0 || others.status !== 0",
+    "new": "false || others.status !== 0",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-087"
+  },
+  {
+    "id": "087-others",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "diff.status !== 0 || others.status !== 0",
+    "new": "diff.status !== 0 || false",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-087"
+  },
+  {
+    "id": "085-openspec",
+    "file": "scripts/spec/gates.mjs",
+    "old": "errors.push(...checkOpenSpec({ root, specs, run: (args) => openSpec(root, args) }));",
+    "new": "errors.push();",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-archive",
+    "file": "scripts/spec/gates.mjs",
+    "old": "errors.push(...archived.errors, ...lintSpecs({ requirements: archived.requirements, orphans: archived.orphans, changeIds, readTasks: tasksReader(root) }));",
+    "new": "errors.push(...lintSpecs({ requirements: archived.requirements, orphans: archived.orphans, changeIds, readTasks: tasksReader(root) }));",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-filters",
+    "file": "scripts/spec/gates.mjs",
+    "old": "errors.push(...findCoverageFlags({ tracked, readFile }));",
+    "new": "errors.push();",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "126-totals",
+    "file": "scripts/spec/lib/ledger.mjs",
+    "old": "'LEDGER-STALE', 'LEDGER-NO-TOTALS', 'LEDGER-VERSION'",
+    "new": "'LEDGER-STALE', 'LEDGER-VERSION'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-126"
+  },
+  {
+    "id": "126-stale",
+    "file": "scripts/spec/lib/ledger.mjs",
+    "old": "'LEDGER-STALE', 'LEDGER-NO-TOTALS', 'LEDGER-VERSION'",
+    "new": "'LEDGER-NO-TOTALS', 'LEDGER-VERSION'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-126"
+  },
+  {
+    "id": "126-version",
+    "file": "scripts/spec/lib/ledger.mjs",
+    "old": "'LEDGER-STALE', 'LEDGER-NO-TOTALS', 'LEDGER-VERSION'",
+    "new": "'LEDGER-STALE', 'LEDGER-NO-TOTALS'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-126"
+  },
+  {
+    "id": "012-copy",
+    "file": "Makefile",
+    "old": "cp /src/.gev-cache/spec/measurement.json /tmp/work/.gev-cache/spec/measurement.json",
+    "new": "true",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-012"
+  },
+  {
+    "id": "068-command-option",
+    "file": "scripts/spec/gates.mjs",
+    "old": "key === '--no-measure' && command === 'check'",
+    "new": "key === '--no-measure' && true",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-068"
+  },
+  {
+    "id": "124-status",
+    "file": "scripts/spec/gates.mjs",
+    "old": "return command === 'ratchet' && status !== 0 ? 2 : status;",
+    "new": "return status;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-124"
+  },
+  {
+    "id": "083-check-time",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-083"
+  },
+  {
+    "id": "083-ratchet-time",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'check';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-083"
+  },
+  {
+    "id": "084-elapsed",
+    "file": "scripts/spec/gates.mjs",
+    "old": "(finished.getTime() - started.getTime()) / 1000",
+    "new": "(finished.getTime() - started.getTime()) / 1",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-084"
+  },
+  {
+    "id": "127-history",
+    "file": "scripts/spec/gates.mjs",
+    "old": "unchanged ? [] : [{ date, change, commit: headCommit(root), kind: 'measurement' }]",
+    "new": "[]",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-127"
+  },
+  {
+    "id": "127-stamp",
+    "file": "scripts/spec/gates.mjs",
+    "old": "history.map(line => ({ ...line, measurement, ...(dirty.length > 0 ? { dirty } : {}) }))",
+    "new": "history.map(line => ({ ...line, ...(dirty.length > 0 ? { dirty } : {}) }))",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-127"
+  },
+  {
+    "id": "128-same",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const unchanged = previous?.measurement === measurement && previous.commit === headCommit(root) && JSON.stringify(previous.dirty ?? []) === JSON.stringify(dirty);",
+    "new": "const unchanged = false;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-128"
+  },
+  {
+    "id": "129-hash",
+    "file": "scripts/spec/gates.mjs",
+    "old": "previous?.measurement === measurement && previous.commit === headCommit(root)",
+    "new": "true && previous.commit === headCommit(root)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-129"
+  },
+  {
+    "id": "129-commit",
+    "file": "scripts/spec/gates.mjs",
+    "old": "previous?.measurement === measurement && previous.commit === headCommit(root)",
+    "new": "previous?.measurement === measurement && true",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-129"
+  },
+  {
+    "id": "129-change",
+    "file": "scripts/spec/gates.mjs",
+    "old": "findLast(line => line.change === change)",
+    "new": "findLast(line => true)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-129"
+  },
+  {
+    "id": "011-format",
+    "file": "Makefile",
+    "old": "node scripts/format.mjs --check &&",
+    "new": "true &&",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-011"
+  },
+  {
+    "id": "011-boundaries",
+    "file": "Makefile",
+    "old": "node scripts/check-package-boundaries.mjs &&",
+    "new": "true &&",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-011"
+  },
+  {
+    "id": "011-tokens",
+    "file": "Makefile",
+    "old": "node scripts/check-layer-state-tokens.mjs --base-ref origin/main",
+    "new": "true",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-011"
+  },
+  {
+    "id": "069-tracked",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "file && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "new": "file && file !== 'src/new.js' && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-069"
+  },
+  {
+    "id": "069-base",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "file && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "new": "file && file !== 'src/math.js' && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-069"
+  },
+  {
+    "id": "078-inventory",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "file && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "new": "file && file !== 'src/new.js' && (isTestFile(file) || isCodeFile(file) || !ALLOWED_PATHS.some(prefix => file.startsWith(prefix)))",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-078"
+  },
+  {
+    "id": "085-base",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const baseErrors = compareWithBase({",
+    "new": "const baseErrors = (() => [])({",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-ledger",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const comparison = compareLedger({ ledger, current: measured.current, sameAsBase, waivers });",
+    "new": "const comparison = { errors: [], stale: [] };",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-base-registry",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...compareRegistryWithBase({ registry, baseRegistry: JSON.parse(readFileAt(root, base, 'openspec/trace/ids.json') ?? 'null'), retired: measured.specs.retired, changedTestIds: changedTestIds(measured.records) }),",
+    "new": "...[],",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-archive-reviews",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...checkArchivedReviews(root, { except: folder }),",
+    "new": "...[],",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-names",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...checkChangeNames(root),",
+    "new": "...[],",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-agents",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...checkAgents(root),",
+    "new": "...[],",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "085-command",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...checkReviewCommand(root),",
+    "new": "...[],",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-085"
+  },
+  {
+    "id": "033-precheck",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "1. Run `make precheck`.",
+    "new": "1. Continue.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "033-step1",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "Then run `make gates-docs CHANGE=<name>`.",
+    "new": "Then continue.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "033-step3",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "3. Run `make gates-docs CHANGE=<name>` again.",
+    "new": "3. Continue again.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "033-step10",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "Use `make gates-docs CHANGE=<name>` and start again at step 3.",
+    "new": "Start again at step 3.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "033-step11",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "Then run `make gates-docs CHANGE=<name>`, which must give only review errors.",
+    "new": "Then continue.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "033-step15",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "15. Run `make gates-docs CHANGE=<name>`.",
+    "new": "15. Continue.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "033-ci",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "CI must also pass before you merge.",
+    "new": "Continue.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "005-ci-phase",
+    "file": "scripts/spec/gates.mjs",
+    "old": "phase: (_name, fn) => fn ? fn() : () => {}",
+    "new": "phase: (_name, fn) => fn()",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "keep the CI verdict"
+  },
+  {
+    "id": "127-summary",
+    "file": "scripts/spec/gates.mjs",
+    "old": "log(`Ratchet: ${history.length} history lines for ${change}.`);",
+    "new": "log(`Ratchet: ${result.history.length} history lines for ${change}.`);",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-127"
+  },
+  {
+    "id": "068-trace-write",
+    "file": "scripts/spec/gates.mjs",
+    "old": "  return { ...snapshot, specs, trace, qaScripts:",
+    "new": "  writeLinks(root, buildLinks(trace.report));\n  return { ...snapshot, specs, trace, qaScripts:",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-068"
+  },
+  {
+    "id": "033-review-inputs",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "Make sure that the ratchet commit has all input files.",
+    "new": "Continue.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "033-agent-inputs",
+    "file": "AGENTS.md",
+    "old": "Commit each file outside openspec/changes/, openspec/specs/ and openspec/trace/.",
+    "new": "Continue with input files.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "012-docs-back",
+    "file": "Makefile",
+    "old": "GATES_DOCS := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; $(GATES_DOCS_MARKERS) || exit 2; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"' gates",
+    "new": "GATES_DOCS := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; $(GATES_DOCS_MARKERS) || exit 2; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"; $(GATES_BACK) || exit 2' gates",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-012"
+  },
+  {
+    "id": "012-docs-copy",
+    "file": "Makefile",
+    "old": "GATES_DOCS := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; $(GATES_DOCS_MARKERS) || exit 2; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"' gates",
+    "new": "GATES_DOCS := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c 'true || exit 2; $(GATES_DOCS_MARKERS) || exit 2; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"' gates",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-012"
+  },
+  {
+    "id": "012-docs-env",
+    "file": "Makefile",
+    "old": "GATES_DOCS := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; $(GATES_DOCS_MARKERS) || exit 2; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"' gates",
+    "new": "GATES_DOCS := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; $(GATES_DOCS_MARKERS) || exit 2; node scripts/spec/gates.mjs \"$$@\"' gates",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-012"
+  },
+  {
+    "id": "012-change",
+    "file": "Makefile",
+    "old": "$(GATES_DOCS) check --no-measure $(CHANGE_ARG) $(BASE_ARG)",
+    "new": "$(GATES_DOCS) check --no-measure $(BASE_ARG)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-012"
+  },
+  {
+    "id": "012-base",
+    "file": "Makefile",
+    "old": "$(GATES_DOCS) check --no-measure $(CHANGE_ARG) $(BASE_ARG)",
+    "new": "$(GATES_DOCS) check --no-measure $(CHANGE_ARG)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-012"
+  },
+  {
+    "id": "012-markers",
+    "file": "Makefile",
+    "old": "GATES_DOCS := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; $(GATES_DOCS_MARKERS) || exit 2; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"' gates",
+    "new": "GATES_DOCS := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"' gates",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-012"
+  },
+  {
+    "id": "088-names",
+    "file": "Makefile",
+    "old": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "new": "cd /src && : > /tmp/doc-markers && git ls-files --others --exclude-standard -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-088"
+  },
+  {
+    "id": "088-file",
+    "file": "Makefile",
+    "old": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "new": "cd /tmp/work",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-088"
+  },
+  {
+    "id": "088-content",
+    "file": "Makefile",
+    "old": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "new": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"source\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-088"
+  },
+  {
+    "id": "088-exists",
+    "file": "Makefile",
+    "old": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "new": "cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-088"
+  },
+  {
+    "id": "089-changes",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "'openspec/changes/'",
+    "new": "'no/changes/'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-089"
+  },
+  {
+    "id": "089-specs",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "'openspec/specs/'",
+    "new": "'no/specs/'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-089"
+  },
+  {
+    "id": "089-trace",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "'openspec/trace/'",
+    "new": "'no/trace/'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-089"
+  },
+  {
+    "id": "091-slash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "file.startsWith(prefix)",
+    "new": "file.startsWith(prefix.slice(0, -1))",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-091"
+  },
+  {
+    "id": "092-second-name",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "'--no-renames'",
+    "new": "'--find-renames'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-092"
+  },
+  {
+    "id": "090-all-paths",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "const changed = [...diff.stdout.split('\\0'), ...others.stdout.split('\\0')]",
+    "new": "const changed = []",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-090"
+  },
+  {
+    "id": "078-ignored",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "const ignored = spawn('git', ['ls-files', '--others', '--ignored', '--exclude-standard', '-z'], options);",
+    "new": "const ignored = { status: 0, stdout: '' };",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored file"
+  },
+  {
+    "id": "078-cache",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "!file.startsWith('.gev-cache/') && ",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "trust other ignored files"
+  },
+  {
+    "id": "087-ignored-status",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": " || ignored.status !== 0",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-087"
+  },
+  {
+    "id": "093-dirty",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "if (line.dirty?.length > 0)",
+    "new": "if (false)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-093"
+  },
+  {
+    "id": "130-dirty-field",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...(dirty.length > 0 ? { dirty } : {})",
+    "new": "...{}",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-130"
+  },
+  {
+    "id": "131-empty-field",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...(dirty.length > 0 ? { dirty } : {})",
+    "new": "...{ dirty }",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-131"
+  },
+  {
+    "id": "132-dirty-equality",
+    "file": "scripts/spec/gates.mjs",
+    "old": " && JSON.stringify(previous.dirty ?? []) === JSON.stringify(dirty)",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-132"
+  },
+  {
+    "id": "130-dirty-paths",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const dirty = difference.files;",
+    "new": "const dirty = [];",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-130"
+  },
+  {
+    "id": "130-git-failure",
+    "file": "scripts/spec/gates.mjs",
+    "old": "if (difference.reason) return report(log, [{ code: 'GATES-RATCHET', file: HISTORY_FILE, message: difference.reason }]);",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "failed ratchet file comparison"
+  },
+  {
+    "id": "133-reader",
+    "file": "scripts/spec/lib/ledger.mjs",
+    "old": ".map((line) => JSON.parse(line));",
+    "new": ".map((line) => JSON.parse(line)).filter(line => !line.dirty);",
+    "test": [
+      "src/tooling/spec/ledger.test.mjs"
+    ],
+    "pattern": "gap-ledger-133"
+  },
+  {
+    "id": "134-image-markers",
+    "file": "Makefile",
+    "old": "if [ \"$$1\" != ratchet ]; then :; else $(GATES_DOCS_MARKERS) || exit 2; fi;",
+    "new": ":",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-134"
+  },
+  {
+    "id": "078-root-deps",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "(^|\\/)node_modules",
+    "new": "(\\/)node_modules",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "trust other ignored files"
+  },
+  {
+    "id": "078-nested-deps",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "(^|\\/)node_modules",
+    "new": "(^)node_modules",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "trust other ignored files"
+  },
+  {
+    "id": "078-deps-slash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "node_modules\\//.test(file)",
+    "new": "node_modules/.test(file)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored file"
+  },
+  {
+    "id": "134-definition-order",
+    "file": "Makefile",
+    "old": "GATES_DOCS_MARKERS := cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work\nGATES := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; if [ \"$$1\" != ratchet ]; then :; else $(GATES_DOCS_MARKERS) || exit 2; fi; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"; status=$$?; $(GATES_BACK) || exit 2; exit $$status' gates",
+    "new": "GATES := docker run --rm -v \"$(CURDIR)\":/src $(IMAGE) sh -c '$(GATES_COPY) || exit 2; if [ \"$$1\" != ratchet ]; then :; else $(GATES_DOCS_MARKERS) || exit 2; fi; env -u NODE_ENV -u HOST -u PORT node scripts/spec/gates.mjs \"$$@\"; status=$$?; $(GATES_BACK) || exit 2; exit $$status' gates\nGATES_DOCS_MARKERS := cd /src && : > /tmp/doc-markers && git ls-files --others -z -- \"scripts/spec\" \"package.json\" \"package-lock.json\" \".node-version\" \"Makefile\" \":(glob)scripts/qa-*.mjs\" \":(glob)**/*.test.mjs\" \":(glob)**/Dockerfile*\" \":(glob)**/*compose*.yaml\" \":(glob)**/*compose*.yml\" \":(glob)**/*.js\" \":(glob)**/*.mjs\" \":(glob)**/*.cjs\" \":(glob)**/*.ts\" \":(glob)**/*.mts\" \":(glob)**/*.cts\" \":(glob)**/*.jsx\" \":(glob)**/*.tsx\" \":(glob)**/*.html\" \":(glob)**/*.sh\" \":(exclude,glob)**/node_modules/**\" \":(exclude,glob).gev-cache/**\" > /tmp/doc-inputs && xargs -0 -r sh -c \"for marker_file do marker_path=/tmp/work/\\$$marker_file; if [ ! -e \\\"\\$$marker_path\\\" ]; then mkdir -p \\\"\\$$(dirname \\\"\\$$marker_path\\\")\\\" && printf \\\"{}\\\" > \\\"\\$$marker_path\\\" && printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers || exit 2; fi; done\" markers < /tmp/doc-inputs && cd /tmp/work",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-134"
+  },
+  {
+    "id": "134-command",
+    "file": "Makefile",
+    "old": "if [ \"$$1\" != ratchet ]",
+    "new": "if [ \"$$1\" = ratchet ]",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-134"
+  },
+  {
+    "id": "130-sort",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "[...new Set([...changed, ...protectedIgnored])].sort()",
+    "new": "[...new Set([...changed, ...protectedIgnored])]",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "sort the dirty list"
+  },
+  {
+    "id": "078-inventory-source",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "codeInventory(listFilesAt(root, commit))",
+    "new": "codeInventory(ignored.stdout.split('\\0'))",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "trust other ignored files"
+  },
+  {
+    "id": "094-cache-marker",
+    "file": "Makefile",
+    "old": " \":(exclude,glob).gev-cache/**\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-094"
+  },
+  {
+    "id": "094-cache-back",
+    "file": "Makefile",
+    "old": "cp -a /tmp/work/.gev-cache/spec/. /src/.gev-cache/spec/",
+    "new": "cp -a /tmp/work/.gev-cache/. /src/.gev-cache/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-094"
+  },
+  {
+    "id": "091-trace-slash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "'openspec/trace/'",
+    "new": "'openspec/trace'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-091"
+  },
+  {
+    "id": "078-cache-slash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "'.gev-cache/'",
+    "new": "'.gev-cache'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "refuse the input file"
+  },
+  {
+    "id": "080-commit-name",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "files: [], commit: line.commit };\n  const difference",
+    "new": "files: [], commit: 'none' };\n  const difference",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-080"
+  },
+  {
+    "id": "095-test-class",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "isTestFile(file) || isCodeFile(file) ||",
+    "new": "isCodeFile(file) ||",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-095"
+  },
+  {
+    "id": "095-code-class",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "isTestFile(file) || isCodeFile(file) ||",
+    "new": "isTestFile(file) ||",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-095"
+  },
+  {
+    "id": "096-commit-hash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/^[a-fA-F0-9]{40}$/.test(line.commit)",
+    "new": "true",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "commit ref in history"
+  },
+  {
+    "id": "083-check-command",
+    "file": "scripts/spec/gates.mjs",
+    "old": "log(`Command: ${parsed.command}`);",
+    "new": "log('Command: ratchet');",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "name the full check command"
+  },
+  {
+    "id": "011-precheck-status",
+    "file": "Makefile",
+    "old": "node scripts/format.mjs --check &&",
+    "new": "node scripts/format.mjs --check ;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-011"
+  },
+  {
+    "id": "126-history-after",
+    "file": "scripts/spec/gates.mjs",
+    "old": "historyText = readOptional(root, HISTORY_FILE);\n    baseline",
+    "new": "historyText = historyText;\n    baseline",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "read the new totals history"
+  },
+  {
+    "id": "075-root",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/^Dockerfile$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at Dockerfileprod"
+  },
+  {
+    "id": "075-nested",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/^Dockerfile[^/]*$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at containers/Dockerfile.gates"
+  },
+  {
+    "id": "075-suffix",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/(^|\\/)Dockerfile$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at Dockerfileprod"
+  },
+  {
+    "id": "076-root",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/",
+    "new": "/^[^/]*compose[^/]*\\.ya?ml$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at containers/compose.gates.yaml"
+  },
+  {
+    "id": "076-prefix",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/",
+    "new": "/(^|\\/)compose[^/]*\\.ya?ml$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at docker-compose.yml"
+  },
+  {
+    "id": "076-suffix",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/",
+    "new": "/(^|\\/)[^/]*compose\\.ya?ml$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at containers/compose.gates.yaml"
+  },
+  {
+    "id": "076-yaml",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "\\.ya?ml$",
+    "new": "\\.yml$",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored file at compose.yaml"
+  },
+  {
+    "id": "076-yml",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "\\.ya?ml$",
+    "new": "\\.yaml$",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at docker-compose.yml"
+  },
+  {
+    "id": "075-boundary",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/Dockerfile[^/]*$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored file MyDockerfile"
+  },
+  {
+    "id": "075-end",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/(^|\\/)Dockerfile[^/]*/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored file Dockerfile.dir/notes.txt"
+  },
+  {
+    "id": "075-no-slash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)Dockerfile[^/]*$/",
+    "new": "/(^|\\/)Dockerfile.*$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored file Dockerfile.dir/notes.txt"
+  },
+  {
+    "id": "076-prefix-characters",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/",
+    "new": "/(^|\\/)[^/-]*compose[^/]*\\.ya?ml$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "input file at docker-compose.yml"
+  },
+  {
+    "id": "076-suffix-no-slash",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/(^|\\/)[^/]*compose[^/]*\\.ya?ml$/",
+    "new": "/(^|\\/)[^/]*compose.*\\.ya?ml$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored file compose/other.yaml"
+  },
+  {
+    "id": "076-dot",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "\\.ya?ml$",
+    "new": "ya?ml$",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored file composeyml"
+  },
+  {
+    "id": "076-end",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "\\.ya?ml$/",
+    "new": "\\.ya?ml/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ignored file compose.yaml.extra"
+  },
+  {
+    "id": "096-start",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/^[a-fA-F0-9]{40}$/",
+    "new": "/[a-fA-F0-9]{40}$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "commit hash with prefix"
+  },
+  {
+    "id": "096-end",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/^[a-fA-F0-9]{40}$/",
+    "new": "/^[a-fA-F0-9]{40}/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "commit hash with suffix"
+  },
+  {
+    "id": "096-length",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/^[a-fA-F0-9]{40}$/",
+    "new": "/^[a-fA-F0-9]+$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "refuse a short commit hash"
+  },
+  {
+    "id": "096-hex",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "/^[a-fA-F0-9]{40}$/",
+    "new": "/^[a-zA-Z0-9]{40}$/",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "commit hash with letters"
+  },
+  {
+    "id": "033-input-correction",
+    "file": ".claude/commands/opsx/review.md",
+    "old": "If not, commit them and run the ratchet command again.",
+    "new": "Continue.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "change-review-033"
+  },
+  {
+    "id": "094-marker-cleanup",
+    "file": "Makefile",
+    "old": "cd /tmp/work && xargs -0 -r rm -f -- < /tmp/doc-markers",
+    "new": ":",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "keep cache source contents"
+  },
+  {
+    "id": "094-marker-list",
+    "file": "Makefile",
+    "old": "&& printf \\\"%s\\\\0\\\" \\\"\\$$marker_file\\\" >> /tmp/doc-markers",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "keep cache source contents"
+  },
+  {
+    "id": "094-marker-no-list",
+    "file": "Makefile",
+    "old": "if [ ! -f /tmp/doc-markers ]",
+    "new": "if [ -f /tmp/doc-markers ]",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "copy cache contents without a marker list"
+  },
+  {
+    "id": "097-copy-status",
+    "file": "Makefile",
+    "old": "; fi && rm -rf /src/.gev-cache/spec",
+    "new": "; fi; rm -rf /src/.gev-cache/spec",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-097"
+  },
+  {
+    "id": "011-precheck-import-status",
+    "file": "Makefile",
+    "old": "node scripts/check-import-directions.mjs &&",
+    "new": "node scripts/check-import-directions.mjs ;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-011"
+  },
+  {
+    "id": "011-precheck-boundary-status",
+    "file": "Makefile",
+    "old": "node scripts/check-package-boundaries.mjs &&",
+    "new": "node scripts/check-package-boundaries.mjs ;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "ci-gates-011"
+  },
+  {
+    "id": "152",
+    "file": "Makefile",
+    "old": " \"scripts/spec\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "153",
+    "file": "Makefile",
+    "old": " \"package.json\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "154",
+    "file": "Makefile",
+    "old": " \"package-lock.json\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "155",
+    "file": "Makefile",
+    "old": " \".node-version\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "156",
+    "file": "Makefile",
+    "old": " \"Makefile\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "157",
+    "file": "Makefile",
+    "old": " \":(glob)scripts/qa-*.mjs\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "158",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.test.mjs\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "159",
+    "file": "Makefile",
+    "old": " \":(glob)**/Dockerfile*\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "160",
+    "file": "Makefile",
+    "old": " \":(glob)**/*compose*.yaml\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "161",
+    "file": "Makefile",
+    "old": " \":(glob)**/*compose*.yml\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "162",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.js\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "163",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.mjs\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "164",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.cjs\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "165",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.ts\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "166",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.mts\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "167",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.cts\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "168",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.jsx\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "169",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.tsx\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "170",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.html\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "171",
+    "file": "Makefile",
+    "old": " \":(glob)**/*.sh\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "172",
+    "file": "Makefile",
+    "old": " \":(exclude,glob)**/node_modules/**\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "173",
+    "file": "Makefile",
+    "old": " \":(exclude,glob).gev-cache/**\"",
+    "new": "",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-099"
+  },
+  {
+    "id": "174",
+    "file": "scripts/spec/gates.mjs",
+    "old": "...trace.errors, ...qa.errors], links:",
+    "new": "...trace.errors], links:",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-100"
+  },
+  {
+    "id": "175",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "file.startsWith(prefix)",
+    "new": "file.includes(prefix)",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-098"
+  },
+  {
+    "id": "176",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'lint' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for lint"
+  },
+  {
+    "id": "177",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'init' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for init"
+  },
+  {
+    "id": "178",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'adopt' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for adopt"
+  },
+  {
+    "id": "179",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'waive' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for waive"
+  },
+  {
+    "id": "180",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'rebaseline' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for rebaseline"
+  },
+  {
+    "id": "181",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'tree' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for tree"
+  },
+  {
+    "id": "182",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const timed = parsed.command === 'check' || parsed.command === 'ratchet';",
+    "new": "const timed = parsed.command === 'ci' || parsed.command === 'check' || parsed.command === 'ratchet';",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "omit time lines for ci"
+  },
+  {
+    "id": "183",
+    "file": "scripts/spec/gates.mjs",
+    "old": "const reviewFiles = command === 'ratchet' ? diffNames(root, base) : diffFiles;",
+    "new": "const reviewFiles = diffFiles;",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "gap-ledger-135"
+  },
+  {
+    "id": "184",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "files: line.dirty, commit: line.commit",
+    "new": "files: line.dirty, commit: 'none'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-093"
+  },
+  {
+    "id": "185",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "return { ...difference, commit };",
+    "new": "return { ...difference, commit: 'none' };",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-087"
+  },
+  {
+    "id": "186",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "reason: 'The ratchet snapshot is absent', files: [], commit",
+    "new": "reason: 'The ratchet snapshot is absent', files: [], commit: 'none'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-082"
+  },
+  {
+    "id": "187",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "reason: 'The snapshot hash differs from history', files: [], commit",
+    "new": "reason: 'The snapshot hash differs from history', files: [], commit: 'none'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-082"
+  },
+  {
+    "id": "188",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "reason: 'The change has no ratchet history line', files: [], commit: 'none'",
+    "new": "reason: 'The change has no ratchet history line', files: [], commit: 'HEAD'",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-079"
+  },
+  {
+    "id": "189",
+    "file": "AGENTS.md",
+    "old": "9. Read the first line of the log to find which command ran.",
+    "new": "9. Read the last line of the log to find which command ran.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "pin the agent"
+  },
+  {
+    "id": "190",
+    "file": "AGENTS.md",
+    "old": "6. Run `make gates CHANGE=<name>` on the final tree.",
+    "new": "6. Read the final tree.",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "pin the agent"
+  },
+  {
+    "id": "191",
+    "file": "scripts/spec/gates.mjs",
+    "old": "NO TEST RUN: the mode trusts the snapshot of commit ${trusted.commit}",
+    "new": "NO TEST RUN: the snapshot of commit ${trusted.commit} is trusted",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-068"
+  },
+  {
+    "id": "192",
+    "file": "scripts/spec/lib/measurement.mjs",
+    "old": "The ratchet ran with input files, code files or test files that differ from HEAD",
+    "new": "The ratchet ran with changed files",
+    "test": [
+      "src/tooling/spec/gates.test.mjs"
+    ],
+    "pattern": "coverage-gate-093"
+  }
+]
