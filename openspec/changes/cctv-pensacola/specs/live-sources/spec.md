@@ -27,15 +27,15 @@ Origin: spec-first
 - **THEN** `headingDeg` is 45 and `headingConfidence` is "low"
 
 #### Scenario: Drop a row with an image on another host, scheme, port or user information `live-sources-013`
-- **WHEN** a row has the image "https://snapshots.divas.cloud/DGI/D3CHP/US-98 at SR-281.jpg", "https://snapshots.divas.cloud/DGI/chan-1_h.jpg", "https://images-dis.divas.cloud.example.com/DGI/chan-1_h.jpg", "https://example.com/DGI/chan-1_h.jpg", "http://images-dis.divas.cloud/DGI/chan-1_h.jpg", "https://images-dis.divas.cloud:8443/DGI/chan-1_h.jpg" or "https://user@images-dis.divas.cloud/DGI/chan-1_h.jpg"
+- **WHEN** a row has the image "https://snapshots.divas.cloud/DGI/D3CHP/US-98 at SR-281.jpg", "https://snapshots.divas.cloud/DGI/chan-1_h.jpg", "https://images-dis.divas.cloud.example.com/DGI/chan-1_h.jpg", "https://example.com/DGI/chan-1_h.jpg", "http://images-dis.divas.cloud/DGI/chan-1_h.jpg", "https://images-dis.divas.cloud:8443/DGI/chan-1_h.jpg", "https://images-dis.divas.cloud:443/DGI/chan-1_h.jpg", "https://user@images-dis.divas.cloud/DGI/chan-1_h.jpg" or "https://example.com/?u=https://images-dis.divas.cloud/DGI/chan-1_h.jpg"
 - **THEN** the pack gives no source for that row
 
 #### Scenario: Drop a row with an image that is not a frame `live-sources-014`
-- **WHEN** a row has the image "https://images-dis.divas.cloud/OTHER/chan-1_h.jpg", "https://images-dis.divas.cloud/DGI/other.jpg", "https://images-dis.divas.cloud/DGI/chan-1_l.jpg", "https://images-dis.divas.cloud/DGI/chan-1_h.jpg.exe", "", "   ", the number 12345 or no image
+- **WHEN** a row has the image "https://images-dis.divas.cloud/OTHER/chan-1_h.jpg", "https://images-dis.divas.cloud/DGI/other.jpg", "https://images-dis.divas.cloud/DGI/chan-1_l.jpg", "https://images-dis.divas.cloud/DGI/chan-1_h.jpg.exe", "https://images-dis.divas.cloud/DGI/chan-_h.jpg", "", "   ", the number 12345, the list ["https://images-dis.divas.cloud/DGI/chan-1_h.jpg"] or no image
 - **THEN** the pack gives no source for that row
 
 #### Scenario: Build the frame address from the channel `live-sources-015`
-- **WHEN** a valid row has the image "https://images-dis.divas.cloud/DGI/chan-10416_h.jpg?token=abc#top"
+- **WHEN** a valid row has the image "https://images-dis.divas.cloud/DGI/chan-10416_h.jpg?token=abc#top", "https://images-dis.divas.cloud/DGI/chan-10416_h.jpg#top" or "https://images-dis.divas.cloud/DGI/chan-10416_h.jpg?"
 - **THEN** `url` and `snapshotUrl` are both "https://images-dis.divas.cloud/DGI/chan-10416_h.jpg"
 
 #### Scenario: Drop a row with a missing or text position `live-sources-016`
@@ -69,6 +69,7 @@ Origin: spec-first
 - **AND** outFields is "DESCRIPT,DIRECTION,LATITUDE,LONGITUDE,IMAGE" and resultRecordCount is "200"
 - **AND** the query has no other parameter, and the request has no header other than Accept
 - **AND** the Accept header is "application/json", the redirect mode is "manual" and the timeout is 15000 milliseconds
+- **AND** the pack writes one log line "[CCTV] Loaded Pensacola camera sources: 1 (using nearest 1)"
 
 #### Scenario: Read the rows from the features `live-sources-020`
 - **WHEN** the layer answers with HTTP 200 and a features list of four entries
@@ -76,9 +77,9 @@ Origin: spec-first
 - **THEN** the pack gives one source, for the row of live-sources-010
 
 #### Scenario: Return an empty list for an HTTP error `live-sources-021`
-- **WHEN** the layer answers with HTTP 503 and a body, with no body, or with a body that throws when the pack cancels it
+- **WHEN** the layer answers with HTTP 400 or 503, with a body, with no body, or with a body that throws on cancel
 - **THEN** the pack returns an empty list and cancels the body of the answer when it has one
-- **AND** the pack writes one warning "[CCTV] Pensacola camera download failed:" with the status 503
+- **AND** the pack writes one warning "[CCTV] Pensacola camera download failed:" with that status
 
 #### Scenario: Return an empty list for a request error `live-sources-022`
 - **WHEN** the request throws an error with the message "network down", or throws the text "boom"
@@ -86,7 +87,7 @@ Origin: spec-first
 - **AND** the pack writes one warning "[CCTV] Pensacola camera download error:" with the message "network down" or the text "boom"
 
 #### Scenario: Return an empty list for a redirect `live-sources-023`
-- **WHEN** the layer answers with HTTP 302 or HTTP 307
+- **WHEN** the layer answers with HTTP 300, 302, 307 or 399
 - **THEN** the pack returns an empty list and cancels the body of the answer
 - **AND** the pack writes one warning "[CCTV] Pensacola layer redirected; redirects are not followed"
 
@@ -111,6 +112,7 @@ Origin: spec-first
 - **AND** the setting CCTV_PENSACOLA_MAX_SOURCES is unset, "", "50", "50.9", "5", "500" or "abc"
 - **THEN** the pack returns 120, 120, 50, 50, 8, 200 or 120 sources in that order
 - **AND** for each m from 1 to the count, the m-th source has the id "fl-" and the number 1000 plus m
+- **AND** for the first value, the pack writes one log line "[CCTV] Loaded Pensacola camera sources: 250 (using nearest 120)"
 
 #### Scenario: Stop the pack with a setting `live-sources-027`
 - **WHEN** the setting CCTV_PENSACOLA_ENABLED is "0"
