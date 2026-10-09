@@ -86,7 +86,7 @@
 
 Pass 4 wrote the test of gap-ledger-156 after the guard code.
 Before this test, the `||` mutation made no test fail.
-The test fails with that mutation; proof-pass6.json records that run for mutation gap-ledger-156.
+The test fails with that mutation; proof-pass7.json records that run for mutation gap-ledger-156.
 This order differs from spec-first.
 The lead decides in review.md whether to accept it by name.
 
@@ -132,10 +132,13 @@ The lead decides in review.md whether to accept it by name.
 - [x] Restore the file scope of the three count rules for D1.
 - [x] Restore the checked change in the glossary rows for D2.
 - [x] Correct the stale rule pointers for D3.
-- [x] Remove the prose fence and name the mutation run for D4.
-- [x] Restore the Pass 4 table row and command fences for D5.
+- [x] Remove the prose fence for D4.
+- [x] Name the mutation run for D4.
+- [x] Restore the Pass 4 table row.
+- [x] Restore the Pass 4 command fences.
 - [x] State the per-run limits and metric limits for D6.
-- [x] Move the metric condition and change four titles for D7.
+- [x] Move the metric condition before THEN for D7.
+- [x] Change four test titles for D7.
 - [x] Correct the two code comment lines for D8.
 - [x] Correct the glossary rows and prose for D9.
 
@@ -145,11 +148,35 @@ The lead decides in review.md whether to accept it by name.
 - [x] Correct the glossary cases and base limit for G3 and G4.
 - [x] Correct the scope record, proof citation and task record for G5.
 - [x] Correct the listed prose and test title for G6.
-- [x] Run the scope check and title checks.
-- [x] Run both host test files and measure coverage.
+- [x] Run the scope check.
+- [x] Run the title checks.
+- [x] Run both host test files.
+- [x] Measure coverage of ledger.mjs and gates.mjs.
 - [x] Run the logical operator mutation for gap-ledger-156.
-- [x] Run STE lint and the banned word check.
+- [x] Run STE lint.
+- [x] Run the banned word check.
 - [x] Compare the level 2 and level 3 headings with commit fa34f8cb.
-- [x] Check OpenSpec show and validate the change.
+- [x] Check the JSON output of openspec show.
+- [x] Validate the change with OpenSpec.
 - [x] Replay the four coverage targets.
 - [x] Record the Pass 7 evidence.
+
+### Pass 8
+
+- [x] Correct the pre-review 6 prose.
+- [x] Split the Pass 6 and Pass 7 tasks.
+- [x] Write the metric test for gap-ledger-154.
+- [x] Run the five metric key mutations.
+- [x] Run the ledger test file.
+- [x] Run the gates test file.
+- [x] Measure coverage of both scripts.
+- [x] Check the local file scope of both requirements.
+- [x] Check the repeated titles.
+- [x] Check the new test clauses.
+- [x] Run STE lint.
+- [x] Check the banned word forms.
+- [x] Check the JSON output of openspec show.
+- [x] Validate the change with OpenSpec.
+- [x] Replay the four coverage targets.
+- [x] Compare the level 2 and level 3 section titles.
+- [x] Record the Pass 8 evidence.

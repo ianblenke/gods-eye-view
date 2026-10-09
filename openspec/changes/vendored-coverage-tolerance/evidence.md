@@ -1937,7 +1937,7 @@ D7 moves the other metric condition before THEN and changes four titles. Each cl
 
 D8 changes two comment lines only. D9 corrects the glossary rows and the lines that the search output below lists.
 
-Past proof files and logs keep their recorded titles. Pass 6 title records use the live titles.
+Past proof files and logs keep their recorded titles.
 The search for the words "red" and "Historical record" found no prose fence in the current tasks.
 A red test is a test run that fails before the code exists. zero-red.log records the run against the logical operator mutation.
 
@@ -2019,7 +2019,7 @@ The final title lint reports four titles and zero errors. The test bodies stay e
 Scenario 154 names the metric with the larger count to remove the two possible antecedents of that metric.
 
 Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass6/named.py.
-The four mutations fail the four renamed tests. proof-pass6.json records the code changes and the failed titles.
+proof-pass6.json records the code changes and the failed titles.
 The past proof files stay as recorded.
 
 Command: taskset -c 0-3 nice -n 19 node --import /home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/strict-host.mjs --test src/tooling/spec/ledger.test.mjs.
@@ -2164,7 +2164,7 @@ STE: 0 errors, 545 warnings.
 
 Tree read: commit `fa34f8cb28d4cd31cbca72771ddc5796424f4533`, with Pass 7 edits.
 
-G1 restores the metric scope beside the file scope. Each count rule uses a named metric and two count operands.
+G1 restores the metric scope next to the file scope. Each count rule uses a named metric and two counts.
 
 G2 names the metric and its ledger entry not-covered count in scenario 154. Scenarios 155 and 156 name their metric before THEN.
 
@@ -2175,17 +2175,17 @@ G4 names the two numbers of the base limit. The second number is the base count 
 
 G5 adds file scope to the tolerance rules and corrects the Pass 6 scope record.
 The Pass 6 script assigned labels by line number. The Pass 7 script extracts words from the text.
-The proposal and tasks cite proof-pass6.json for mutation gap-ledger-156. The tasks record D1 through D9 and this pass.
+At Pass 7, the proposal and tasks cite proof-pass7.json for mutation gap-ledger-156. The tasks record D1 through D9 and this pass.
 
 G6 corrects the listed prose and the title for gap-ledger-156. The test body stays as it was.
 
 I read these corrections against ledger.mjs:62-68, 188, 217-246, 374, 389-394, 413-454, 523-563 and 639-651.
 I also read scenarios 136-146 and 154-156, the test loop for 143 and 154, and the test bodies for 155 and 156.
 
-neverWorseCounts decides each metric separately. An absent total uses the current gap total count; zero stays zero.
+neverWorseCounts decides each metric separately. If a total is absent, neverWorseCounts selects the current gap total count. A total of zero is not absent.
 
 compareWithBase uses the larger of the adopted count and the sum of the base count and the waived count.
-The optional predicates change the scope of compareLedger. They do not change its error rules.
+The optional predicates change the scope of compareLedger. They change which files get the tolerance and the stale exception. They do not change the conditions of a coverage error.
 
 For lines, the not-covered count decides. For branches and functions with equal hashes, lossOf supplies the covered-count rule.
 
@@ -2195,8 +2195,8 @@ I split the sentences and the paragraph without a rule change. The next lint run
 The sandbox ledger attempt reports only the file process. The attempt gives no individual test verdict.
 The host ledger run below supplies the individual results.
 
-The scope check flags each MUST without a direct file word and prints the file scope from the surrounding text.
-The four flagged lines use that text scope. No count comparison lacks a named metric.
+The scope check flags each MUST without a direct file word and prints the file scope from the text around it.
+The four flagged lines use that text scope. Each rule of the two ADDED requirements that compares a current count with a ledger entry count names its metric.
 
 Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass7/scope-check.py.
 
@@ -2447,7 +2447,6 @@ Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass7/named
 The mutation replaces `??` with `||` in neverWorseCounts in a scratch root.
 The mutation makes the test for gap-ledger-156 fail: the actual totals are 400, but the test expects zero for each metric.
 proof-pass7.json records the live title and exit 1. gap-ledger-156-mutation.log records the command and its output.
-The output extract below omits blank lines.
 
 The first proof script attempt counted the same failed title twice. I corrected the parser and repeated the mutation run.
 
@@ -2509,7 +2508,7 @@ lint-mutation2.log: STE: 0 errors, 545 warnings.
 ```
 
 
-The replay uses a scratch root from upstream-sync-3 commit `d09e034b9c751ebe286e2f5f32773db1af48c0a3`.
+The script uses a scratch root from upstream-sync-3 commit `d09e034b9c751ebe286e2f5f32773db1af48c0a3`.
 I copied ledger.mjs and gates.mjs from commit fa34f8cb into that root. These code files have no Pass 7 change.
 
 Command: cp -a --reflink=auto /home/ianblenke/docker/gev-work/upstream-sync-3 /tmp/claude-1000/gcr/s3-replay7.
@@ -2518,7 +2517,7 @@ Command: cp scripts/spec/gates.mjs /tmp/claude-1000/gcr/s3-replay7/scripts/spec/
 
 Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/stale-check-s3.mjs /tmp/claude-1000/gcr/s3-replay7 /tmp/claude-1000/gcr/pr18-art.
 Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass7/replay-summary.py.
-The replay ended with exit zero. The summary reads the stale records from its command output.
+The script ended with exit zero. The summary reads the stale records from the output of that command.
 False means that the file has no stale coverage entry. The script copy gives no project gate verdict.
 
 ```json
@@ -2658,4 +2657,197 @@ Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/vendore
   "errors": [],
   "warnings": []
 }
+```
+
+### Pass 8
+
+Tree read: commit `4b0a44bc21a98e48689ccb59b12e1aa9e823c24c`, with Pass 8 edits.
+
+| Finding | Correction |
+| --- | --- |
+| T1 | Split tasks with two verbs or two check objects. |
+| T2 | Name the metric of both counts in each changed count rule. |
+| T3 | Delete the false sentence about blank lines. |
+| T4 | Add the metric test for gap-ledger-154 with six literal assertions. |
+| T5 | Cite proof-pass7.json, check local file scope and state the stale exception. |
+| T6 | Correct the glossary and prose. Name the accepted scope of the title for gap-ledger-156. |
+
+The tagged title for gap-ledger-155 stays as it was. It uses current total counts and ledger total counts.
+The new test passes on current code. Each of the five mutations makes that test fail.
+proof-pass8.json and metric-key-mutations.log record those runs.
+
+| Mutation | Test result |
+| --- | --- |
+| a: `gap[metric] <= entry.functions` | FAIL; exit 1 |
+| b: `gap[metric] <= entry.lines` | FAIL; exit 1 |
+| c: `next[metric] = entry.lines` | FAIL; exit 1 |
+| d: `next[metric] = entry.functions` | FAIL; exit 1 |
+| e: `gap.lines <= entry[metric]` | FAIL; exit 1 |
+
+The scope check reports 22 MUST rules and flags lines 5, 124, 125 and 132.
+I read each flag: lines 5, 124 and 132 use the file in the sentence directly before them.
+Line 125 uses the same file as lines 123 and 124 in its paragraph. The script gives no local file scope for line 125.
+The two changed count comparisons name their metric on both sides.
+
+Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass8/scope-check.py.
+
+```text
+Requirement: Count tolerance for adopted files
+4: file=direct; metric comparands=PASS
+5: file=previous sentence; metric comparands=PASS
+  FLAG: The content hash MUST equal the hash in the ledger entry.
+  Previous: The gate and the ratchet command MUST extend count tolerance to a file that equals its adopted source of the checked change.
+6: file=direct; metric comparands=PASS
+8: file=direct; metric comparands=PASS
+9: file=direct; metric comparands=PASS
+29: file=direct; metric comparands=PASS
+30: file=direct; metric comparands=PASS
+31: file=direct; metric comparands=PASS
+33: file=direct; metric comparands=PASS
+35: file=direct; metric comparands=PASS
+38: file=direct; metric comparands=PASS
+42: file=direct; metric comparands=PASS
+45: file=direct; metric comparands=PASS
+Requirement: Total counts for adopted files
+123: file=direct; metric comparands=PASS
+124: file=previous sentence; metric comparands=PASS
+  FLAG: The gate MUST NOT record the ledger entry as stale for that difference.
+  Previous: The gate MUST accept a total-only difference for a file with a valid adopt line of the checked change.
+125: file=FLAG; metric comparands=PASS
+  FLAG: Both the ledger entry and the current gap MUST have equal not-covered counts of lines, branches and functions.
+  Previous: The gate MUST NOT record the ledger entry as stale for that difference.
+126: file=direct; metric comparands=PASS
+131: file=direct; metric comparands=PASS
+132: file=previous sentence; metric comparands=PASS
+  FLAG: The ledger entry and current gap MUST also have equal not-covered counts of lines, branches and functions.
+  Previous: Both records MUST have true coverage from a test that loads the file.
+136: file=direct; metric comparands=PASS
+137: file=direct; metric comparands=PASS
+138: file=direct; metric comparands=PASS
+MUST rules: 22
+File flags: 5,124,125,132
+```
+
+Command: taskset -c 0-3 nice -n 19 node --import /home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/strict-host.mjs --test src/tooling/spec/ledger.test.mjs.
+
+```text
+ℹ tests 106
+ℹ suites 0
+ℹ pass 106
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 976.42161
+```
+
+Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/vendored-tolerance/pass8/check-test-titles.mjs.
+
+```json
+{
+  "titles": 1,
+  "errors": [],
+  "warnings": []
+}
+```
+
+Replay tree: commit `d09e034b9c751ebe286e2f5f32773db1af48c0a3`, with ledger.mjs and gates.mjs from commit `4b0a44bc`.
+
+Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/stale-check-s3.mjs /tmp/s3-replay8 /tmp/claude-1000/gcr/pr18-art. Exit: 0.
+
+Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass8/replay-summary.py.
+
+```json
+{
+  "targets": {
+    "server/providers/mapillary/tiles.js": false,
+    "src/data/localGeojsonCore.js": false,
+    "src/keySetupCore.mjs": false,
+    "src/voice/turnMetrics.js": false
+  },
+  "coverage_stale": [],
+  "untraced": 495
+}
+```
+
+Command: openspec validate vendored-coverage-tolerance.
+
+```text
+Change 'vendored-coverage-tolerance' is valid
+```
+
+Command: openspec show vendored-coverage-tolerance --json. Exit: 0. The JSON parse passed.
+
+Command: taskset -c 0-3 nice -n 19 node --import /home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/strict-host.mjs --test src/tooling/spec/gates.test.mjs.
+
+```text
+ℹ tests 240
+ℹ suites 0
+ℹ pass 240
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1011471.956329
+```
+
+Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/vct/coverage-detail.mjs scripts/spec/lib/ledger.mjs /tmp/vct8-raw-ledger.
+
+```text
+{"file":"scripts/spec/lib/ledger.mjs","processes":2,"counts":{"LF":837,"LH":837,"BRF":546,"BRH":546,"FNF":100,"FNH":100},"missingLines":[],"missingFunctions":[]}
+```
+
+Command: taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/vct/coverage-detail.mjs scripts/spec/gates.mjs /tmp/vct8-raw-gates.
+
+```text
+{"file":"scripts/spec/gates.mjs","processes":304,"counts":{"LF":741,"LH":741,"BRF":344,"BRH":344,"FNF":91,"FNH":91},"missingLines":[],"missingFunctions":[]}
+```
+Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass8/audit.py.
+
+```text
+proposal.md level 2 equal
+proposal.md level 3 equal
+design.md level 2 equal
+design.md level 3 equal
+tasks.md level 2 equal
+tasks.md level 3 changed
+--- tasks.md 4b0a44bc
++++ tasks.md Pass 8
+@@ -3,3 +3,4 @@
+ ### Pass 5
+ ### Pass 6
+ ### Pass 7
++### Pass 8
+evidence.md level 2 equal
+evidence.md level 3 changed
+--- evidence.md 4b0a44bc
++++ evidence.md Pass 8
+@@ -13,3 +13,4 @@
+ ### Pass 5
+ ### Pass 6
+ ### Pass 7
++### Pass 8
+spec.md level 2 equal
+spec.md level 3 equal
+Past command fences equal: True
+Live 105 references:
+Pass 6 and Pass 7 task verb flags:
+[]
+scripts diff: empty
+```
+
+Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass8/check-words.py.
+
+```text
+{
+  "command": "git diff --unified=0 4b0a44bc",
+  "banned_word_forms": [],
+  "scope": "Added document, test and code lines."
+}
+```
+
+Command: taskset -c 0-3 nice -n 19 node scripts/spec/gates.mjs lint --change vendored-coverage-tolerance.
+
+```text
+STE: 0 errors, 544 warnings.
 ```
