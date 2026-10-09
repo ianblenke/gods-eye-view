@@ -3706,9 +3706,11 @@ Tree read: branch ownership-gates at commit 7a699a4b, with the Pass 17 changes o
 
 Pre-review 14 (commit 7a699a4b) gave FAIL from both reviewers. The spec adversary gave 1 major and 3 minors, and the STE adversary gave 2 majors and 5 minors. The reports are in `review/pre-review-14/`. Pass 17 changes documents only.
 
+Pre-review 15 (commit 70e02e6d) gave PASS from the spec adversary and FAIL from the STE adversary. The spec adversary gave 4 minors, and the STE adversary gave 1 major and 4 minors. The reports are in `review/pre-review-15/`. This block also holds the corrections of that review.
+
 The lead corrected the text of Pass 13 to Pass 16 where the reviewers found a statement that is not correct or not clear. The lead did not correct two minors. The first is the minor of the spec adversary that `proposal.md` does not name the THEN of gap-ledger-138. The second is the minor about the row labels (see Pass 16). The file `review.md` will list both as known limits.
 
-The second run of Pass 13 has no recorded commit. The run with a commit is the run of Pass 14 at commit 85eaab08, and it passed 241 of 241 tests.
+The second run of Pass 13 has no recorded commit. The run of the whole file `gates.test.mjs` in Pass 14, at commit 85eaab08, is the passing run with a recorded commit. It passed 241 of 241 tests.
 
-The lead ran the format check, the STE lint and `openspec validate` on the host, on the working tree over commit 70e02e6d. The file `pass17/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+The lead ran the format check, the STE lint and `openspec validate` on the host, on the working tree over commit 91eee2c9. The file `pass17/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
 
