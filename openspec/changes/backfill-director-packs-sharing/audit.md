@@ -525,12 +525,12 @@ Source commit: `2dc225520cebc43bb76b8dca7b645ed3f48a1e43`.
 
 | Clause | Code | Test title | Hand row |
 | --- | --- | --- | --- |
-| Text promise settlement | src/director/sharing/bundle.js:128 | [director-107] The share helpers check the signal after the text promise settles | m480 |
+| Signal check after the text promise settles | src/director/sharing/bundle.js:128 | [director-107] The share helpers check the signal after the text promise settles | m480 |
 
 ### Pass 11 hand count
 
 Source commit: `2dc225520cebc43bb76b8dca7b645ed3f48a1e43`.
 
 The complete host command checks 480 hand rows and kills 478 rows.
-Only m172, m389 survive.
+Only m172 and m389 survive.
 The command and its counted output are in [Pass 11 evidence](evidence.md#complete-final-hand-command).

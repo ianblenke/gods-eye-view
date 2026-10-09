@@ -9861,7 +9861,7 @@ The worker changes no review file or trace file.
 | Y11 | The Pass 9 prose has subjects, articles and the requested nouns. Past command output stays unchanged. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
 | Y12 | The clause uses final slash. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
 | Y13 | The four titles have the requested articles. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
-| W5; more false claims | The worker removed redirect rejection, a replacement result, a ready state result and order clauses without assertions. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W5; more false claims | At Pass 10, the record says: The worker removed redirect rejection, a replacement result, a ready state result and order clauses without assertions. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
 
 The old source signal clause of 090 has an assertion at backfill.test.mjs:3039 to :3051.
 The test at :556 to :562 asserts false and one read of the caller signal state.
@@ -11499,24 +11499,28 @@ The worker adds one tick and a settled marker to the test of director-107.
 The spec clause stays: the share helpers check the signal after the text promise settles.
 The worker changes no production file, review file or trace file.
 
+H means sharing.test.mjs. E means evidence.md at the source commit.
+
 ### Findings
 
 | Finding | Correction | Source commit |
 | --- | --- | --- |
-| Z1; spec major | The text method adds a settled marker after one tick. The expected order puts this marker before the last two checks.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| Z2; S1 | Both full Pass 7 record sections equal f8f6a94d. The three Pass 8 New lines name current tests.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| Z3; S2 | One tag changes: H:566 gains director-105. The new command counts each changed tag cell against f057b89a.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| Z4; S3 | The import title says that excess bytes at the base64 length limit cause rejection. The next aligned length also causes rejection.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| T1 | The load call returns false and makes no source call after the caller destroys the session.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| T2 | The store title says after the clear call.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| T3 | The export copies bytes and attribution, keeps the project and calls the resolver once.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| T4 | The closed-set bullet has no blank line inside it. It has six sentences.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| T5 | The new statements below replace the incorrect Pass 10 prose claims. The past record stays.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| T6 | Each new label names a current test. The corrected task uses current.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| T7 | The titles say more than 64 assets and 64 assets. The scenario 102 list has no duplicate title.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| T8 | The design names three separate table rows from Pass 9.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| Spec minor; Stop | The session title names both the clear call and the destroy call. The body calls both methods.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
-| Spec minor; W5 | The test at backfill.test.mjs:306 asserts the order. It reports one dispose call after load(null) rejects. Mutation a9130 fails this test.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Z1; spec major | The text method adds a settled marker after one tick. The expected order puts this marker before the last two checks. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Z2; S1 | Both full Pass 7 record sections equal f8f6a94d. The three Pass 8 New lines name current tests. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Z3; S2 | One tag changes: H:566 gains director-105. The new command counts each changed tag cell against f057b89a. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Z4; S3 | The import title says that excess bytes at the base64 length limit cause rejection. The next aligned length also causes rejection. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T1 | The load call returns false and makes no source call after the caller destroys the session. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T2 | The store title says "after the clear call". | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T3 | The export copies bytes and attribution, keeps the project and calls the resolver once. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T4 | The closed-set bullet has six sentences and no blank line. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T5 | The new statements below replace the incorrect Pass 10 prose claims. The past record stays. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T6 | Each new label names a current test. The corrected task says "a current test". | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T7 | The titles say "more than 64 assets" and "64 assets". The scenario 102 list has no duplicate title. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T8 | The design names three separate table rows from Pass 9. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Spec minor; Stop | The session title names both the clear call and the destroy call. The body calls both methods. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Spec minor; W5 | The test at backfill.test.mjs:306 counts one dispose call after load(null) rejects. Mutation a9130 fails this test. | `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+
+These sentences replace the Pass 10 sentences on the cleared load title, the limit titles, the WHEN lines, the final slash and the unread titles.
 
 The cleared load title states that the load call returns false.
 Both limit titles say that the store returns bytes.
@@ -11526,7 +11530,7 @@ The clause uses the words final slash.
 The lead asks about eight unread titles.
 The commands list eleven titles that Pass 9 did not read and three dynamic templates that Pass 9 counted.
 Eleven minus three is eight.
-The flag shows no fault: the session returns false after this cancellation.
+The flag at packs.test.mjs:260 shows no fault: the session returns false after this cancellation.
 
 The worker restores every line of the Pass 7 title corrections section and the original Pass 7 section.
 The latter ends before Title corrections in pass 8.
@@ -11538,12 +11542,10 @@ Those past outputs stay as records. The new count below replaces that claim.
 At Pass 10, the hand command checked 479 rows and killed 477 rows.
 The Pass 11 hand list has 480 rows. The complete command must check all 480 rows.
 
-H means sharing.test.mjs. E means evidence.md at the read commit.
+### m480 with the old test and the new test
 
-### m480 red and green
-
-The scratch copy first has the old test body from the read commit.
-The hoist moves the signal check before the await at bundle.js:128.
+The scratch copy first has the old test body from the source commit.
+The mutation moves the signal check before the `await` at bundle.js:128.
 The old test passes this mutation.
 The new test fails this mutation with the settled marker out of order.
 Only the test of director-107 runs in these two commands.
@@ -11560,7 +11562,7 @@ SURVIVORS: []
 
 ### Changed titles
 
-| At the read commit | Current title |
+| At the source commit | Current title |
 | --- | --- |
 | [director-088] The load call returns false after the caller destroys the session and makes no source call | [director-088] The load call returns false and makes no source call after the caller destroys the session |
 | [director-089] The data pack session removes resources and cancels the transport on Stop | [director-089] The session disposes resources and aborts the source signal after the clear and destroy calls |
@@ -11768,7 +11770,11 @@ Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/direc
 
 ### Clause mutations
 
-The script covers every title with before, after, once, during, between, at, each, all, both, every or settles.
+The script reads the literal title templates.
+It does not read titles whose clause word is in a label array.
+These are the 12 before titles at backfill.test.mjs:95-114 and the 5 stop titles at sharing.test.mjs:1946-1953.
+Hand rows a9016-a9043, a9269, a9299, a9306 and m351-m355 kill those clauses.
+
 The worker reads all 125 titles with their test bodies.
 Each row names the code change and the actual failed test below.
 The clause checks use scratch copies.
@@ -15259,8 +15265,8 @@ SURVIVORS: []
 ### Full sharing file for m480
 
 The old sharing file passes m480 with no name filter.
-The new sharing file has one failed test: director-107 with the settled marker.
-No weaker test kills the hoist.
+The first failed test of the new sharing file is director-107 with the settled marker.
+No other test of the old sharing file kills the mutation.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-all /home/ianblenke/docker/gev-tools/director-3/pass11/m480-all.json
@@ -15279,10 +15285,10 @@ SURVIVORS: []
 ### Hand selector check
 
 The first complete command gives 477 killed rows and three survivors: m172, m290 and m389.
-The pattern of m290 names the old title, so it selects no test.
+The pattern of m290 names the old title, so the pattern selects no test.
 The registry name of m290 also has repeated suffix text from a past pass.
 The worker sets the name and pattern to the current title and runs m290 again.
-That test fails. The worker then starts another complete command with all 480 rows.
+The run kills m290. The worker then starts another complete command with all 480 rows.
 
 A check against literal source titles also flags dynamic titles.
 The next check uses all 670 passed runtime titles and finds no unmatched pattern.
@@ -15388,7 +15394,7 @@ Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/hand-count.p
 ### Complete final hand command
 
 The command checks 480 hand rows and kills 478 rows.
-Only m172, m389 survive.
+Only m172 and m389 survive.
 The command skips no row and has no timeout.
 
 ```text
@@ -16821,4 +16827,223 @@ The commands below ran after the task list was complete.
 {"name": "scope-last", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass11/final-scope.py", "exit": 0}
 {"name": "diff-last", "command": "taskset -c 12-15 nice -n 19 git diff --check", "exit": 0}
 STE: 0 errors, 588 warnings.
+```
+
+## Pass 12
+
+Source commit: `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf`.
+Branch: `backfill-director-3`.
+
+The worker corrects the pre-review 10 prose findings.
+The tests, their titles and the hand rows stay unchanged.
+The settled marker shows that the settle step ran before the second check.
+The review files and the past command output stay unchanged.
+
+### Corrections in Pass 12
+
+| Finding | Correction | Source commit |
+| --- | --- | --- |
+| S1 | Task 14.16 names one check group. Separate tasks name the other checks and corrections. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S2 | The design names three separate rows. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S3 | Task 14.1 names the tick and the settled marker. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S4 | The two title phrases have quotes. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S5 | Both asset count phrases have quotes. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S6 | The four current survivor statements use and. The script template also uses and. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S7 | The audit row names the signal check after the text promise settles. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S8 | Task 14.2 says which test detects m480. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S9 | The text names the first failed test and the other tests of the old file. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S10 | The heading names the old and new tests. The sentence uses mutation and code text for await. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S11 | The sentence states the dispose count after load(null) rejects. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S12 | The bullet has a clear subject. The proposal puts the coordinate lengths after the named sets. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S13; spec minor 5 | Each Findings row has three cells. The definitions come before the table. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S14 | A lead sentence names the Pass 10 subjects. The flag has its file and line. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S15 | The prose uses the source commit. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S16 | The pattern is the subject. The sentence says that the run kills m290. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| Spec minor 1 | The filter text names literal templates and both label arrays. The hand row IDs agree with the tables. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| Spec minors 2 and 3 | The proposal adds digest-asset-result-check-order and second-text-signal-error as Known limits. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| Spec minor 4 | The W5 row has the Pass 10 record label. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| Spec minor 6 | The Pass 7 hand command has a level two heading. The script template has the same heading. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+
+The worker reads every task in sections 13 and 14.
+Each task gives one instruction.
+The worker checks the neighbours of each corrected sentence and the cells of each changed table.
+No new word needs a glossary row.
+
+### Scope and limits in Pass 12
+
+The clauses at spec.md lines 383 and 384 have a limit on check order.
+The checks at bundle.js lines 94, 154 and 161 follow their awaited calls.
+The second text signal check at bundle.js line 129 has no test that makes it throw.
+The proposal names both limits for the lead decision in review.md.
+
+The hand registry still has 480 rows.
+The Pass 11 output records 478 killed rows. Only m172 and m389 survive.
+The worker does not rerun the hand rows because no test changes.
+The worker does not rerun coverage or code mutations.
+The worker runs no container, image gate, ratchet, archive, review agent, push or gh command.
+
+### Host command output in Pass 12
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass12/counts.py
+{
+  "sourceCommit": "ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf",
+  "handRows": 480,
+  "pastPass11KilledRows": 478,
+  "pastPass11Survivors": [
+    "m172",
+    "m389"
+  ],
+  "tests": {
+    "backfill": 430,
+    "packs": 12,
+    "sharing": 228
+  },
+  "sourceDiffEmpty": true
+}
+```
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass12/check-repeated-titles.py
+{
+  "sourceCommit": "ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf",
+  "runtimeTests": 670,
+  "checkedLabels": 2017,
+  "pastRecordLinesExcluded": 13010,
+  "staleLabels": [],
+  "staleLabelCount": 0,
+  "duplicateTitles": {},
+  "duplicateTitleCount": 0
+}
+```
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass12/self-check.py
+{
+  "sourceCommit": "ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf",
+  "changedTablesChecked": 5,
+  "tableShapeErrors": 0,
+  "proposalHeadingsUnchanged": true,
+  "handAnchorUnique": true,
+  "oldHeadingLinks": 0,
+  "sourceDiffEmpty": true
+}
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs
+ℹ tests 430
+ℹ suites 0
+ℹ pass 430
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1770.312193
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6979.800386
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs
+ℹ tests 228
+ℹ suites 0
+ℹ pass 228
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18731.320666
+```
+
+### Other host checks in Pass 12
+
+The predispatch command completes with exit status 0.
+Its output lists flags in past records. It gives no TASK flag.
+The full output is in [the Pass 12 log](evidence/pass12/predispatch.log).
+The OpenSpec JSON output is in [the Pass 12 log](evidence/pass12/openspec-show.log).
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110
+titles checked: 494, with a banned form: 0
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+Checked 1158 source files.
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 openspec validate backfill-director-packs-sharing
+Change 'backfill-director-packs-sharing' is valid
+```
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass12/banned-forms.py
+{
+  "sourceCommit": "ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf",
+  "newProseLines": 98,
+  "bannedOrPrefixedForms": 0,
+  "hits": []
+}
+```
+
+### Heading comparison in Pass 12
+
+The proposal headings stay unchanged.
+The Pass 7 command has a level two heading.
+The m480 heading names the old and new tests.
+The evidence adds the Pass 12 headings.
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass12/self-check.py
+Source commit: ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf
+--- openspec/changes/backfill-director-packs-sharing/evidence.md source
++++ openspec/changes/backfill-director-packs-sharing/evidence.md current
+@@ -222,7 +222,7 @@
+ ### Final evidence check
+ ## Pass 11
+ ### Findings
+-### m480 red and green
++### m480 with the old test and the new test
+ ### Changed titles
+ ### Full record comparison
+ ### Host tests and coverage
+@@ -364,3 +364,10 @@
+ ### Source edits
+ ### Final headings
+ ### Last host checks
++## Pass 12
++### Corrections in Pass 12
++### Scope and limits in Pass 12
++### Host command output in Pass 12
++### Other host checks in Pass 12
++### Heading comparison in Pass 12
++### Lint in Pass 12
+--- openspec/changes/backfill-director-packs-sharing/mutations.md source
++++ openspec/changes/backfill-director-packs-sharing/mutations.md current
+@@ -1926,5 +1926,5 @@
+ ### m480 Old
+ ### m480 New
+ ### m480 Test
+-### Final complete hand command in pass 7
++## Final complete hand command in pass 7
+ ### Pass 11 hand count
+```
+
+### Lint in Pass 12
+
+```text
+Command: taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing
+STE: 0 errors, 585 warnings.
 ```

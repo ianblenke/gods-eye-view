@@ -14575,7 +14575,7 @@ File: src/director/sharing/bundle.js
 Output: KILLED [director-107] The share helpers check the signal after the text promise settles
 ```
 
-### Final complete hand command in pass 7
+## Final complete hand command in pass 7
 
 Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
 
@@ -15077,5 +15077,5 @@ SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
 Source commit: `2dc225520cebc43bb76b8dca7b645ed3f48a1e43`.
 
 The complete host command checks 480 hand rows and kills 478 rows.
-Only m172, m389 survive.
+Only m172 and m389 survive.
 The command and its counted output are in [Pass 11 evidence](evidence.md#complete-final-hand-command).

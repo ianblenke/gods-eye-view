@@ -223,7 +223,7 @@ The reader means only the stream reader.
 | predispatch checker | gev-tools/predispatch/predispatch.py | The script that checks change prose |
 
 
-Pass 11 adds the rows clear call, destroy call and text promise.
+Pass 11 adds three rows to the table: clear call, destroy call and text promise.
 
 Pass 9 adds three rows to the table: public data pack limits, share limits and document parser.
 
