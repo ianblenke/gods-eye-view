@@ -1,0 +1,17 @@
+##### git ls-remote upstream main (canonical repo, 2026-10-09)
+6be25595b16491ce01ffd8d81e66921f321ee200	refs/heads/main
+##### git rev-parse upstream/main (canonical repo)
+6be25595b16491ce01ffd8d81e66921f321ee200
+##### git log --pretty=%H -1 4011f2a6^2 (second parent)
+6be25595b16491ce01ffd8d81e66921f321ee200
+##### git log --pretty=%H -1 4011f2a6^1 (first parent)
+7c1a511ebf92fdf3c071e3597a96b05e58d5f72b
+##### git diff --name-status 7c1a511e 4011f2a6 (files the merge brings, status A = added)
+      6 A
+     27 M
+A	scripts/qa-voice-auth-focus.mjs
+A	scripts/qa-voice-auth.mjs
+A	server/providers/openai/codex-auth.js
+A	src/codexOauthRealtime.test.mjs
+A	src/voice/cloudVoiceAuth.js
+A	src/voice/cloudVoiceAuth.test.mjs

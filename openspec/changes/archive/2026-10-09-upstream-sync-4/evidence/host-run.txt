@@ -1,0 +1,37 @@
+src/tooling/spec/ciFiles.test.mjs: ℹ fail 0 ℹ pass 4 ℹ tests 4 
+src/tooling/spec/ci.test.mjs: ℹ fail 0 ℹ pass 6 ℹ tests 6 
+src/tooling/spec/coverage.test.mjs: ℹ fail 0 ℹ pass 15 ℹ tests 15 
+src/tooling/spec/git.test.mjs: ℹ fail 0 ℹ pass 4 ℹ tests 4 
+src/tooling/spec/importReach.test.mjs: ℹ fail 0 ℹ pass 12 ℹ tests 12 
+src/tooling/spec/inventory.test.mjs: ℹ fail 0 ℹ pass 8 ℹ tests 8 
+src/tooling/spec/ledger.test.mjs: ℹ fail 0 ℹ pass 107 ℹ tests 107 
+src/tooling/spec/openspec.test.mjs: ℹ fail 0 ℹ pass 4 ℹ tests 4 
+src/tooling/spec/ownershipGate.test.mjs: ℹ fail 0 ℹ pass 40 ℹ tests 40 
+src/tooling/spec/ownership.test.mjs: ℹ fail 0 ℹ pass 50 ℹ tests 50 
+src/tooling/spec/qaRegister.test.mjs: ℹ fail 0 ℹ pass 49 ℹ tests 49 
+src/tooling/spec/registry.test.mjs: ℹ fail 0 ℹ pass 15 ℹ tests 15 
+src/tooling/spec/review.test.mjs: ℹ fail 0 ℹ pass 36 ℹ tests 36 
+src/tooling/spec/runParallel.test.mjs: ℹ fail 0 ℹ pass 3 ℹ tests 3 
+src/tooling/spec/specLint.test.mjs: ℹ fail 0 ℹ pass 17 ℹ tests 17 
+src/tooling/spec/specs.test.mjs: ℹ fail 0 ℹ pass 20 ℹ tests 20 
+src/tooling/spec/ste.test.mjs: ℹ fail 0 ℹ pass 45 ℹ tests 45 
+src/tooling/spec/testGuard.test.mjs: ℹ fail 0 ℹ pass 31 ℹ tests 31 
+src/tooling/spec/traceReporter.test.mjs: ℹ fail 0 ℹ pass 10 ℹ tests 10 
+src/tooling/spec/trace.test.mjs: ℹ fail 0 ℹ pass 25 ℹ tests 25 
+src/tooling/spec/v8Merge.test.mjs: ℹ fail 0 ℹ pass 11 ℹ tests 11 
+src/codexOauthRealtime.test.mjs: ℹ fail 0 ℹ pass 8 ℹ tests 8 
+src/voice/cloudVoiceAuth.test.mjs: ℹ fail 0 ℹ pass 1 ℹ tests 1 
+src/keySetup.test.mjs: ℹ fail 0 ℹ pass 9 ℹ tests 9 
+src/keySetupCore.test.mjs: ℹ fail 0 ℹ pass 25 ℹ tests 25 
+src/tooling/localServices.test.mjs: ℹ fail 0 ℹ pass 28 ℹ tests 28 
+src/voice/gevRealtime.test.mjs: ℹ fail 0 ℹ pass 158 ℹ tests 158 
+src/voice/realtimeBackend.test.mjs: ℹ fail 0 ℹ pass 6 ℹ tests 6 
+src/setupDoctor.test.mjs: ℹ fail 0 ℹ pass 16 ℹ tests 16 
+src/sources/vectorTiles.test.mjs: ℹ fail 0 ℹ pass 12 ℹ tests 12 
+src/tools/queries/panelRequest.test.mjs: ℹ fail 0 ℹ pass 13 ℹ tests 13 
+src/tooling/bundleCredentials.test.mjs: ℹ fail 0 ℹ pass 6 ℹ tests 6 
+src/tooling/viteBuild.test.mjs: ℹ fail 0 ℹ pass 6 ℹ tests 6 
+src/googleServerKey.test.mjs: ℹ fail 0 ℹ pass 6 ℹ tests 6 
+src/hudSummaryResponse.test.mjs: ℹ fail 0 ℹ pass 8 ℹ tests 8 
+src/tooling/spec/gates.test.mjs (change-review-03 and qa-scripts only): ℹ tests 6 ℹ pass 6 ℹ fail 0 
+RUN_END
