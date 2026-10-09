@@ -1,8 +1,36 @@
 # Round 3, spec adversary (scope: diff 81528431, tree commit 2bf9452c3014edcc7c250e8d8bcf602078ff9bc0)
 
+This file holds the final message of the agent as the lead received it (it arrived after the first copy of this file, which the lead wrote from the detail message), then the detail message that the agent sent before it.
+
+## Final message
+
 Verdict: PASS
 
-The lead copied the verdict from the sentence "Verdict PASS, two minors" in the message of the agent. This file holds that message in full, as the lead received it. The two minors are the second and the first minor of the message ("evidence.md:22" and "evidence.md:15"); the lead corrected both after the round (commit 24c2b48b).
+Tree read: clone `/home/ianblenke/docker/gev-work/upstream-sync-4`, branch `upstream-sync-4`, commit `2bf9452c3014edcc7c250e8d8bcf602078ff9bc0`. Scope: `diff 81528431`. I found no critical and no major finding. Paths are under `openspec/changes/archive/2026-10-09-upstream-sync-4/`. The detail is in a SendMessage to team-lead.
+
+**Round 2 majors, both corrected**
+- **`host-modules` contradiction.**
+  - `proposal.md:38` is now `host-skip`, and it is true. `host-run.txt` has exactly two `pass 0` lines: 126 (`focusAllocations.test.mjs`) and 389 (`worldOverlayAllocation.test.mjs`).
+  - Both skip unless the Node major version is 24 (`scripts/run-unit-tests.mjs:12-14`). `.node-version` is 24.21.0.
+  - The third file is as you wrote. `keySetupHardening.test.mjs` shows 16 of 17 passing (`host-run.txt:260`). Its skip is `process.platform !== 'win32'` (line 405), so it skips on every Linux run and is rightly outside the limit.
+  - `evidence.md:15` no longer contradicts `proposal.md`.
+- **Task 2.1 with two instructions.** Tasks 2.1 and 2.2 now have one instruction each, and 2.3, 2.5 and 2.6 also have one. Task 2.4 still lists four checks after one "Run"; you keep it by name.
+
+**Other round 2 corrections**
+- **Task order.** `upstream-check.txt` now shows the plan commit `7c1a511e` holding the delta spec (12 lines, 106 insertions in total). It also shows the order plan, merge, test, and the branch log agrees. `tasks.md:3-8` matches that history.
+- **Routes.** `proposal.md:32` is true against `server/providers/openai.js:27-49` and `realtime.js`. The change adds two routes and one mode of the token route, and all three reach `readCodexOAuthAccessToken`. Only `oauth-login` starts `codex login` (`codex-auth.js:196`).
+- **Smaller fixes.** The `| wc -l` heading, the skip sentences in `evidence.md`, and `proposal.md:30` are corrected.
+- **New-fault check.** The five documents contain no banned word. The longest paragraphs have 6 sentences, so none is over the limit. `evidence.md:15` has 5 sentences, the longest 17 words.
+
+**Minors (record and accept by name, or fix with a document edit)**
+- [ ] FINDING minor openspec/changes/archive/2026-10-09-upstream-sync-4/evidence.md:22 "The last lines show that none of the 33 files is in `openspec/ownership.json`" is a stale pointer. Your correction appended the plan-commit and log outputs to `upstream-check.txt`, so the ownership and stat lines are no longer the last lines (they are at `upstream-check.txt:47-50`). The facts are true. Read as the last lines of the part about the 33 files, the sentence is true; read literally, it is false. Write "The lines after the list of the 33 files show ...".
+- [ ] FINDING minor openspec/changes/archive/2026-10-09-upstream-sync-4/evidence.md:15 "The host has Node 26" has no record in the change. Add the output of `node --version` to `host-run-head.txt` or `checks.log`, or accept it by name.
+
+**Not checked**
+- `review.md` does not exist. It must hold the rule 21 record (`git ls-remote upstream main` equals the second parent `6be25595`) and the rule 24 line `Resolved files:` for `.env.example`, `CHANGELOG.md` and `SECURITY.md`.
+- I did not re-diff `gaps.json` and `links.json`. No trace, code or test file changed after round 2.
+
+## Detail message (before the final message)
 
 spec-adversary, sync 4 round 3 (scope diff 81528431), tree commit 2bf9452c3014edcc7c250e8d8bcf602078ff9bc0. Detail for the final message (Verdict PASS, two minors).
 
