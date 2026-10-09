@@ -20,7 +20,7 @@ Do not change the review gate, the verdict rule, the limit of three rounds or th
 The instructions define normative text with a list.
 Normative text is a requirement, a scenario, a rule of `AGENTS.md` or `openspec/config.yaml`, a message of the gate and the instructions of an agent.
 The instructions define other text with a second list. The list includes `proposal.md`, `design.md`, `evidence.md`, `tasks.md`, the `review.md` of the change and the title of a test.
-A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word that the lists do not name is also a banned word.
+A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word with the suffix -s, -ed or -ing that the lists do not name is also a banned word.
 
 A list lets the reviewer apply one rule. A principle lets the reviewer decide each case.
 
@@ -33,7 +33,7 @@ A title that does not agree with the test body is major in all cases.
 ### D3: Tests pin sentences
 
 The tests read the files of the agent and of `AGENTS.md`, and compare the sentences that the scenarios name with a literal string.
-The tests also check that three old lines of the agent file are gone.
+The tests also check that three old lines of the agent file are gone, and that the lines which start with `- **major**:` are exactly four.
 A reviewer applies the sentences, so the tests cannot check the result of a review.
 
 ### D4: Rule 16

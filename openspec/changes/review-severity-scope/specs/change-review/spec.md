@@ -4,7 +4,7 @@
 The severity instructions of the STE adversary MUST name the severity minor for two possible meanings in other text that is true under each meaning.
 Normative text is a requirement, a scenario, a rule of AGENTS.md or openspec/config.yaml, a message of the gate or the instructions of an agent.
 Other text includes proposal.md, design.md, evidence.md, tasks.md, the review.md of the change and the title of a test.
-A banned word is a word or a phrase in the lists words, phrases or newWords of openspec/ste/words.json. A form of such a word that the lists do not name is also a banned word.
+A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word with the suffix -s, -ed or -ing that the lists do not name is also a banned word.
 
 The instructions MUST give the severity major to a banned word in normative text or in a test title.
 They MUST keep the severity major for two possible meanings in normative text.
@@ -17,7 +17,7 @@ Origin: spec-first
 
 #### Scenario: Give minor to two meanings in other text `change-review-034`
 - **WHEN** a person reads the severity instructions of the STE adversary
-- **THEN** the instructions define normative text and other text with the lists of this requirement
+- **THEN** the instructions define normative text and other text with the two definitions of this requirement
 - **AND** the instructions give the severity minor to two possible meanings in other text, when the text is true under each meaning
 - **AND** the instructions give the severity minor to a text with one clear meaning and an STE fault that no major item names
 
@@ -30,7 +30,7 @@ Origin: spec-first
 - **AND** a task that gives two instructions is major, except for actions at the same time
 - **AND** the instructions do not give the severity major to two possible meanings in other text that is true under each meaning
 - **AND** the instructions tell the reviewer to report a form of a banned word that the lint does not find
-- **AND** the instructions let the evidence for a major finding be a quote of the banned word or of the two instructions
+- **AND** the instructions let the evidence for a major finding be a quote of the banned word or of the two instructions of a task
 
 #### Scenario: Name three severities in AGENTS.md `change-review-036`
 - **WHEN** a person reads rule 16 of AGENTS.md

@@ -30,5 +30,5 @@ A session that runs keeps the old agent definitions until it starts again.
 ## Known limits and later changes
 
 - Known limit `judgment`: The reviewer decides if a text is normative text. The lists in the instructions limit this decision.
-- Known limit `pin-only`: The tests pin the sentences that the scenarios name. They do not show how a reviewer applies the sentences, and they do not check where a sentence stands in the file.
+- Known limit `pin-only`: The tests pin the sentences that the scenarios name. They do not show how a reviewer applies the sentences, and they do not check where a sentence is in the file. The check of the major lines reads only lines that start with `- **major**:`.
 - Known limit `other-files`: The instructions of the spec adversary and the review command do not change.

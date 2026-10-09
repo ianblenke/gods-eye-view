@@ -2,11 +2,11 @@
 
 - [x] 1.1 Write the delta spec.
 - [x] 1.2 Write the test for `change-review-034`.
-  - Run one mutation for each pinned line of the test. Each mutation removes the line from the file of the agent. The test must fail.
+  - Run one mutation for each pinned text of the test. Each mutation removes the text from the file of the agent. The test must fail.
 - [x] 1.3 Write the test for `change-review-035`.
-  - Run one mutation for each pinned line of the test. Each mutation removes the line from the file of the agent. The test must fail.
+  - Run one mutation for each pinned text of the test. Each mutation removes the text from the file of the agent. The test must fail.
   - Run one mutation for each of the three old lines that the test lists as absent. Each mutation puts the line back in the file of the agent. The test must fail.
-  - Run the mutation that adds a fifth major line to the file of the agent. The test must fail.
+  - Run the mutation that adds a fifth major line to the severity list in the file of the agent. The test must fail.
 - [x] 1.4 Write the test for `change-review-036`.
   - Run the mutation that replaces "`critical`, `major` or `minor`" with "`blocker` or `minor`" in rule 16 of `AGENTS.md`. The test must fail.
   - Run the mutation that adds the word "blocker" to rule 16 of `AGENTS.md`. The test must fail.

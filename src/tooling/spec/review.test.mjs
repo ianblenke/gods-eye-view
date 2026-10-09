@@ -429,7 +429,7 @@ test('[change-review-034] gives the severity minor to two possible meanings in o
 
 test('[change-review-035] gives the severity major to the faults that the requirement names', () => {
   pinned(STE_AGENT, [
-    'A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word that the lists do not name is also a banned word.',
+    'A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word with the suffix -s, -ed or -ing that the lists do not name is also a banned word.',
     '- **major**: A banned word in normative text or in a test title.',
     '- **major**: Two possible meanings in normative text.',
     '- **major**: A text or a title that does not agree with the code, the specs or the other prose of the change.',
