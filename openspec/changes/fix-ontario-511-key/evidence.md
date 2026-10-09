@@ -1308,7 +1308,7 @@ The prose lint prints "STE: 0 errors, 540 warnings."
 Tree read: `ede1c684b94a133d7c699c7a45e5860d4c3dd5a6`, branch `fix-ontario-511-key`, with the Pass 5 edits.
 At Pass 5, the scratch tree has no branch. It copies this code and the Pass 5 tests.
 
-Pass 6 found that the Pass 5 automatic mutation run used another copy of the tests; see S18.
+Pass 6 found that the Pass 5 automatic mutation run used a copy of the tests from before the Pass 5 channel changes. See S18.
 Pass 5 changes no production code. The three pre-review folders and the trace files stay unchanged.
 
 ### Corrections of pre-review 3
@@ -1602,7 +1602,8 @@ Its output is:
 ```
 
 The automut command uses root /tmp/ont-pass5-tree, the Pass 5 mutants.json file and one job.
-Pass 6 found that this automatic run used another copy of the tests; see S18.
+
+Pass 6 found that the Pass 5 automatic mutation run used a copy of the tests from before the Pass 5 channel changes. See S18.
 It runs each Ontario test file in its own process. Phase 2 uses resume after Phase 1 completes.
 The command lines and output are in automatic-phase1-host.log and automatic-phase2-host.log.
 The completed counts from automatic-results.json are:
@@ -2080,7 +2081,7 @@ These 21 tests include the three tests that the sandbox denied. In the final set
 The original checks.json keeps the sandbox results. media-range-host.log records the host repeat.
 
 The text search checks the new lines and the owner's prefixed forms.
-The lead chose the README sentence in the row Spec minor: README of the table Corrections of pre-review 3, and the paragraph after that table.
+At Pass 5, the lead chose the words of the README line. The table line Spec minor: README of the table Corrections of pre-review 3 and the paragraph after that table record this choice.
 The search excludes file names from the check for the word image without Docker.
 
 
@@ -2103,7 +2104,7 @@ The change stays active. Pass 8 changes no README, code, test, server, script, t
 
 ### Corrections of pre-review 6
 
-P1: The loader sentence names calls from the catalog and the cache that holds a source.
+P1: The loader sentence names calls from the catalog and the cache that is not empty.
 The empty cache does not meet that condition. At Pass 9, catalog.js lines 156 to 201, lines 245 to 257 and constants.js line 248 support these sentences.
 
 P2: The channel limit names only the clauses at spec.md lines 21, 29, 31 and 83.
@@ -2112,7 +2113,7 @@ Pass 8 moves the reference to spec.md lines 21, 29 and 31 into its own sentence,
 Pass 8 writes log line in place of count line to match the glossary.
 
 P3: At Pass 9, the CI limit names the Node versions of the CI matrix and the newest Node 26 release.
-P4: At Pass 9, Known limits name the order of the Pass 5 changes to the tests and to the scenario text. The evidence does not show this order.
+P4: At Pass 9, Known limits state that the evidence does not show the order of the Pass 5 changes. These changes concern the tests and the scenario text.
 
 P5: The glossary adds base image and anchor. The host row distinguishes a URL host name.
 The records of the probe name the base image. The Pass 3 and Pass 3B records stay unchanged.
@@ -2120,7 +2121,7 @@ The records of the probe name the base image. The Pass 3 and Pass 3B records sta
 P6: The reset hook and fixture have separate names. The coverage gate still counts the reset hook.
 P7: The task and evidence state that the live automatic mutations ran after Pass 6.
 
-P9: The other text corrections name the request, commit option, test totals and past-pass facts.
+P8: The other text corrections name the request, commit option, test totals and past-pass facts.
 The STE corrections split a long sentence and two long paragraphs. Past run counts and command output stay unchanged.
 
 ### Host checks
@@ -2157,7 +2158,6 @@ Q1: The CI text names both matrix versions and the newest Node 26 release.
 The text follows ci.yml lines 23 and 57.
 
 Q2: Both notes say that Pass 6 found the test copy fault in the Pass 5 run.
-The scratch tree note names the older Pass 5 tests, as S18 shows.
 
 Q3: The design names the reset hook as the subject of both sentences.
 The Pass 3B record keeps its text. One new sentence gives the glossary name at Pass 9.
@@ -2204,14 +2204,18 @@ The host checks give no coverage, Docker gate or review verdict.
 
 ## Pass 10
 
+### Corrections of pre-review 8
+
+Tree read: `12e359c7d9f3b4e0e1e3bc959d2e04f82a142cac`, branch `fix-ontario-511-key`, with the Pass 10 text changes.
+
 | Finding | Correction |
 |---|---|
-| R1 | The README note uses a stable table anchor. |
-| R2 | The lint count names two runs and three errors. |
-| R3 | The proposal names a camera object from any pack and each new refresh from an empty cache. |
-| R4 | One note names the Pass 5 automatic mutation run. |
-| R5 | The Pass 9 text has dated prefixes; the reset hook notes use one name. |
-| R6 | The file check and paragraph notes name their objects. |
+| R1 README | The note on the README sentence names a table line and a table. It gives no line number. |
+| R2 Counts | The lint count names two runs and three errors. |
+| R3 Cache | The proposal names the cache that is not empty and the new refresh that an empty cache starts. |
+| R4 Copy | One note names the Pass 5 automatic mutation run. |
+| R5 Names | The Pass 9 text has "At Pass 9," prefixes. The notes on the reset hook use one name. The Pass 3B text "test helper" stays as a record. |
+| R6 Objects | The notes on the check of the files and on the paragraph breaks name the files and the paragraphs. |
 
 ```text
 Command: git rev-parse HEAD
@@ -2244,7 +2248,7 @@ Command: git diff 12e359c7 -- openspec/changes/fix-ontario-511-key/review
 
 [OpenSpec show output](evidence/pass10/openspec-show.json)
 
-[First OpenSpec command output: MODULE_NOT_FOUND](evidence/pass10/openspec-show-first.log)
+[Output of the first OpenSpec show command: it stopped with MODULE_NOT_FOUND and gives no verdict](evidence/pass10/openspec-show-first.log)
 
 [Section-title diff](evidence/pass10/section-titles.diff)
 
@@ -2254,4 +2258,63 @@ Command: git diff 12e359c7 -- openspec/changes/fix-ontario-511-key/review
 
 [Prose lint output](evidence/pass10/lint-final.log)
 
-[Status output](evidence/pass10/status-ignored.log)
+[Output of the status check for ignored files](evidence/pass10/status-ignored.log)
+
+
+[Output of the search for the reset hook name](evidence/pass10/test-function-search.log)
+
+No Docker, make, ratchet, gate comparison, mutation, ledger, archive, push, gh or review command ran in Pass 10.
+
+## Pass 11
+
+### Corrections of pre-review 9
+
+Tree read: `96ccff93b30a23f7954f1a50edd9e7753d93195f`, branch `fix-ontario-511-key`, with the Pass 11 text changes.
+
+| Finding | Correction |
+|---|---|
+| S1 | Both notes name the test copy from before the Pass 5 channel changes. Pass 11 deletes the false scratch tree sentence. |
+| S2 | The proposal names the cache that is not empty and the two loader cases without scenarios. |
+| S3 | The README note names the Pass 5 choice and the table that records it. |
+| S4 | The cache and order notes use clear words. P9 becomes P8. The links name each command. |
+| S5 | Pass 10 has a correction title, tree commit, labels and command records. The script and search output are in evidence/pass10. |
+
+No Docker, make, ratchet, gate comparison, mutation, ledger, archive, push, gh or review command ran in Pass 11.
+
+```text
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvOntarioKey.test.mjs
+ℹ tests 12
+ℹ pass 12
+ℹ fail 0
+
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvOntarioRows.test.mjs
+ℹ tests 71
+ℹ pass 71
+ℹ fail 0
+```
+
+[Key test output](evidence/pass11/cctvOntarioKey.test.log)
+
+[Rows test output](evidence/pass11/cctvOntarioRows.test.log)
+
+[First group lint output](evidence/pass11/lint-group-first.log)
+
+[Corrected group lint output](evidence/pass11/lint-group-fixed.log)
+
+[Final lint output](evidence/pass11/lint-final.log)
+
+[OpenSpec show output](evidence/pass11/openspec-show.json)
+
+[OpenSpec validate output](evidence/pass11/openspec-validate.log)
+
+[Title check output](evidence/pass11/repeated-titles.json)
+
+[Text check output](evidence/pass11/text-check.json)
+
+[Diff of README.md, src, server and scripts](evidence/pass11/code.diff)
+
+[Diff of the review reports](evidence/pass11/review.diff)
+
+[Output of the status check for ignored files](evidence/pass11/status-ignored.log)
+
+[Section-title diff](evidence/pass11/section-titles.diff)
