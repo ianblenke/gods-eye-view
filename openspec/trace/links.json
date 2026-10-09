@@ -2747,6 +2747,108 @@
   "live-sources-001": [
     "src/sources/live/contract.test.mjs › [live-sources-001] a transport abort error stays the same error"
   ],
+  "live-sources-002": [
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-002] map the Ontario rows",
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-002] send the application/json Accept header",
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-002] send the key parameter",
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-002] trim spaces from the key",
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-002] use a timeout of 15000 milliseconds"
+  ],
+  "live-sources-003": [
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-003] make no request without a key",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-003] write the first warning for an absent key"
+  ],
+  "live-sources-004": [
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-004] return an empty row list for an HTTP error with JSON rows",
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-004] write one warning for an invalid key",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-004] write the first warning for an HTTP error"
+  ],
+  "live-sources-005": [
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-005] keep the camera data error secret",
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-005] keep the fetch error secret",
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-005] keep the json error secret",
+    "src/data/cctvOntarioKey.test.mjs › [live-sources-005] keep the key text of a fetch error out of the warning",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-005] write the warning for a row error with the key text"
+  ],
+  "live-sources-006": [
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006 live-sources-007] return an empty source list for a capitalized Latitude of 0",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006 live-sources-007] return an empty source list for a capitalized Longitude of 0",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006 live-sources-007] select a view with downhill",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] accept URL text with no-break spaces at the start and end",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] accept a URL object",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] accept every view ID character",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] accept latitude 41 and longitude -95.6 at the Ontario bounds",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] accept latitude 57.5 and longitude -74 at the Ontario bounds",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a URL path prefix",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a URL path suffix",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a disabled view",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a null row",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a null view",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a null views list",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a row east of Ontario",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a row north of Ontario",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a row south of Ontario",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a row west of Ontario",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a row with a blank ID",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a row with a nonfinite latitude",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a row with a nonfinite longitude",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a row without an ID",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a slash view ID",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a view ID with a non-ASCII character",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a view ID with a slash at the end",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a view ID with a slash at the start",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a view ID with a space",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for a views object",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for absent URL text",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for an HTTP URL",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for an empty row list",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for an empty views list",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for another URL host name",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for another URL path",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for blank URL text",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for invalid URL text",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for invalid percent text",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for null ID fields",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for the traveliq.co root URL host name",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for the www.511on.ca URL host name",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list for the x511on.ca URL host name",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list without a warning for a numeric status",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] return an empty source list without a warning for invalid rows and views",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] select the first view when all descriptions contain the word down",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] select the first view without down",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006] skip fields after a row guard"
+  ],
+  "live-sources-007": [
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006 live-sources-007] return an empty source list for a capitalized Latitude of 0",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006 live-sources-007] return an empty source list for a capitalized Longitude of 0",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-006 live-sources-007] select a view with downhill",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-007] convert row values to text and numbers",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-007] read latitude before longitude",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-007] read location before roadway",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-007] set all source fields",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-007] use capitalized ID and coordinates before lower case fields",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-007] use capitalized text fields first",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-007] use lower case fields and hash pose",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-007] use the capitalized Roadway text and the view description after a blank Direction value"
+  ],
+  "live-sources-008": [
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-008] apply cap ",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-008] apply cap 2000",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-008] apply cap 3",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-008] apply cap 9.9",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-008] apply cap Infinity",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-008] apply cap bad",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-008] apply cap undefined",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-008] log both source counts",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-008] use each nearest anchor",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-008] use the last duplicate"
+  ],
+  "live-sources-009": [
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-009] return an empty source list for non-array data \"rows\"",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-009] return an empty source list for non-array data 0",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-009] return an empty source list for non-array data null",
+    "src/data/cctvOntarioRows.test.mjs › [live-sources-009] return an empty source list for non-array data {}"
+  ],
   "location-presets-001": [
     "src/locations.test.mjs › [location-presets-001] puts Taiwan before Austin"
   ],
