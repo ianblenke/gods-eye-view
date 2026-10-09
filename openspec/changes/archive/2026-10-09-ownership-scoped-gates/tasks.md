@@ -52,7 +52,7 @@
 - [x] 3.5 Run the format check.
 - [x] 3.6 Run STE lint.
 - [x] 3.7 Commit code, tests and input files before the lead runs ratchet.
-- [ ] 3.8 Ask the lead to run make ratchet CHANGE=ownership-scoped-gates in the image.
+- [x] 3.8 Ask the lead to run make ratchet CHANGE=ownership-scoped-gates in the image.
 - [ ] 3.9 Ask the lead to run the two review agents and write review.md.
 - [ ] 3.10 Ask the lead to run make gates CHANGE=ownership-scoped-gates on the final tree.
 
