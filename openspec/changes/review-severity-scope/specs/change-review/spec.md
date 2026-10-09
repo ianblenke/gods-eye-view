@@ -17,7 +17,7 @@ Origin: spec-first
 
 #### Scenario: Give minor to two meanings in other text `change-review-034`
 - **WHEN** a person reads the severity instructions of the STE adversary
-- **THEN** the instructions define normative text and other text with the two definitions of this requirement
+- **THEN** the instructions define normative text and other text with the definitions of normative text and of other text in this requirement
 - **AND** the instructions give the severity minor to two possible meanings in other text, when the text is true under each meaning
 - **AND** the instructions give the severity minor to a text with one clear meaning and an STE fault that no major item names
 
