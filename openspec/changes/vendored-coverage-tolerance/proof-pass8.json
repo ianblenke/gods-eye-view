@@ -1,0 +1,58 @@
+{
+  "tree_read": "4b0a44bc21a98e48689ccb59b12e1aa9e823c24c with Pass 8 edits",
+  "log": "metric-key-mutations.log",
+  "runs": [
+    {
+      "case": "current",
+      "before": "",
+      "after": "",
+      "exit": 0,
+      "failed_tests": []
+    },
+    {
+      "case": "a",
+      "before": "gap[metric] <= entry[metric]",
+      "after": "gap[metric] <= entry.functions",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (24.435255ms)"
+      ]
+    },
+    {
+      "case": "b",
+      "before": "gap[metric] <= entry[metric]",
+      "after": "gap[metric] <= entry.lines",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.02138ms)"
+      ]
+    },
+    {
+      "case": "c",
+      "before": "next[metric] = entry[metric]",
+      "after": "next[metric] = entry.lines",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.26475ms)"
+      ]
+    },
+    {
+      "case": "d",
+      "before": "next[metric] = entry[metric]",
+      "after": "next[metric] = entry.functions",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.967575ms)"
+      ]
+    },
+    {
+      "case": "e",
+      "before": "gap[metric] <= entry[metric]",
+      "after": "gap.lines <= entry[metric]",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.008797ms)"
+      ]
+    }
+  ]
+}

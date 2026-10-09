@@ -1683,3 +1683,16 @@ test('[gap-ledger-156] the ratchet command writes the ledger entry total count o
   assert.deepEqual([next.lines, next.branches, next.functions], [0, 0, 0]);
   assert.deepEqual(next.totals, { lines: 0, branches: 0, functions: 0 });
 });
+
+
+test('[gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count', () => {
+  const file = 'src/new.js';
+  const ledger = ledgerWith({ coverage: { [file]: LOADED(30, 10, 5, { totals: { lines: 400, branches: 300, functions: 200 } }) } });
+  const next = ratchet(ledger, gaps([loaded(file, 20, 11, 5, 'same', { lines: 401, branches: 301, functions: 199 })]), { adoptedAsIs: () => true }).ledger.coverage[file];
+  assert.equal(next.lines, 20);
+  assert.equal(next.totals.lines, 401);
+  assert.equal(next.branches, 10);
+  assert.equal(next.totals.branches, 300);
+  assert.equal(next.functions, 5);
+  assert.equal(next.totals.functions, 199);
+});
