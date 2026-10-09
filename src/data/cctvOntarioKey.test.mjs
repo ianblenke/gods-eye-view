@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
+let caseNumber = 0;
 const key = 'ONTARIO_FAKE_SECRET_A&+?';
 
 async function fixture(t, value, response) {
@@ -20,7 +21,9 @@ async function fixture(t, value, response) {
   });
   t.mock.method(console, 'warn', (...args) => logs.push(args.join(' ')));
   t.mock.method(console, 'log', (...args) => logs.push(args.join(' ')));
-  const module = await import('../../server/providers/cctv/ontarioRequest.js');
+  const module = await import(
+    '../../server/providers/cctv/ontarioRequest.js?case=' + ++caseNumber
+  );
   return { ...module, calls, logs };
 }
 
@@ -43,7 +46,7 @@ test('[live-sources-002] send the key parameter', async (t) => {
   assert.deepEqual(f.logs, []);
 });
 
-test('[live-sources-003] stop without a key', async (t) => {
+test('[live-sources-003] make no request without a key', async (t) => {
   const f = await fixture(t, undefined, { ok: true, json: async () => [] });
   let nested;
   t.mock.method(console, 'warn', (...args) => {
@@ -59,9 +62,10 @@ test('[live-sources-003] stop without a key', async (t) => {
   await nested;
   assert.equal(f.calls.length, 0);
   assert.deepEqual(f.logs, ['[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']);
+  assert.equal(f.logs.join().includes(key), false);
 });
 
-test('[live-sources-004] reject the invalid key once', async (t) => {
+test('[live-sources-004] write one warning for an invalid key', async (t) => {
   const f = await fixture(
     t,
     key,
@@ -79,7 +83,7 @@ test('[live-sources-004] reject the invalid key once', async (t) => {
   assert.deepEqual(await f.readOntarioCameraRows(), []);
   assert.equal(f.calls.length, 3);
   assert.deepEqual(f.logs, [
-    '[CCTV] Ontario 511 camera request failed. Check the server key.',
+    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
   ]);
   assert.equal(f.logs.join().includes(key), false);
 });
@@ -99,7 +103,11 @@ for (const type of ['fetch', 'json']) {
     const f = await fixture(t, key, response);
     assert.deepEqual(await f.readOntarioCameraRows(), []);
     assert.equal(f.logs.join().includes(key), false);
-    assert.deepEqual(f.logs, []);
+    assert.deepEqual(f.logs, [
+      '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
+    ]);
+    assert.deepEqual(await f.readOntarioCameraRows(), []);
+    assert.equal(f.logs.length, 1);
   });
 }
 
@@ -137,15 +145,58 @@ test('[live-sources-005] keep the camera data error secret', async (t) => {
   const { loadOntarioSourcesFromOpenData } =
     await import('../../server/providers/cctv/sources.js');
   assert.deepEqual(await loadOntarioSourcesFromOpenData(), []);
-  assert.deepEqual(f.logs, ['[CCTV] Ontario 511 camera data error.']);
+  assert.deepEqual(f.logs, ['[CCTV] Ontario 511 camera data has an error.']);
   assert.equal(f.logs.join().includes(key), false);
 });
 
-test('[live-sources-004] reject an HTTP error with JSON rows', async (t) => {
+test('[live-sources-004] return an empty list for an HTTP error with JSON rows', async (t) => {
   const f = await fixture(t, key, {
     ok: false,
     json: async () => [{ Id: 455 }],
   });
   assert.deepEqual(await f.readOntarioCameraRows(), []);
-  assert.deepEqual(f.logs, []);
+  assert.deepEqual(f.logs, [
+    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
+  ]);
+  assert.equal(f.logs.join().includes(key), false);
+});
+
+test('[live-sources-002] trim spaces from the key', async (t) => {
+  const f = await fixture(t, '  ' + key + '  ', {
+    ok: true,
+    json: async () => [],
+  });
+  assert.deepEqual(await f.readOntarioCameraRows(), []);
+  assert.equal(
+    new URL(f.calls[0][0]).searchParams.get('key'),
+    'ONTARIO_FAKE_SECRET_A&+?',
+  );
+});
+
+test('[live-sources-002] use a timeout of 15000 milliseconds', async (t) => {
+  const values = [];
+  const signal = new AbortController().signal;
+  t.mock.method(AbortSignal, 'timeout', (value) => {
+    values.push(value);
+    return signal;
+  });
+  const f = await fixture(t, key, { ok: true, json: async () => [] });
+  assert.deepEqual(await f.readOntarioCameraRows(), []);
+  assert.deepEqual(values, [15000]);
+  assert.equal(f.calls[0][1].signal, signal);
+});
+
+test('[live-sources-002] send the application/json Accept header', async (t) => {
+  const f = await fixture(t, key, { ok: true, json: async () => [] });
+  assert.deepEqual(await f.readOntarioCameraRows(), []);
+  assert.equal(f.calls[0][1].headers.Accept, 'application/json');
+});
+
+test('[live-sources-005] keep key text inside a fetch error out of the warning', async (t) => {
+  const f = await fixture(t, key, new Error('Request for ' + key + ' failed'));
+  assert.deepEqual(await f.readOntarioCameraRows(), []);
+  assert.deepEqual(f.logs, [
+    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
+  ]);
+  assert.equal(f.logs.join().includes(key), false);
 });

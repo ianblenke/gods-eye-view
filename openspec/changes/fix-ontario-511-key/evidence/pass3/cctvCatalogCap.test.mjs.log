@@ -1,0 +1,16 @@
+✔ under the cap every pack is served whole, in merge order (15.286305ms)
+✔ over the cap the packs share it round-robin, and the last pack is never starved (5.130138ms)
+✔ a duplicate inside one pack takes one slot, not two (2.351464ms)
+✔ a short pack releases its turns to the others (2.553311ms)
+✔ duplicate ids resolve last-pack-wins and count against the winning pack (2.522136ms)
+✔ resolveCatalogCap bounds the env value and falls back to the default (1.611156ms)
+✔ the catalog applies the fair cap to configured packs end to end (20.586188ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 241.85783
+[CCTV] source catalog exceeds cap 9; shared round-robin across packs (env 9/12). Raise CCTV_MAX_SOURCES or lower a per-pack cap to change the mix.

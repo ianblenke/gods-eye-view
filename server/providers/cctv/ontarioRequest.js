@@ -28,7 +28,7 @@ export async function readOntarioCameraRows() {
     if (!warnedRequestError) {
       warnedRequestError = true;
       console.warn(
-        '[CCTV] Ontario 511 camera request failed. Check the server key.',
+        '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
       );
     }
     return [];

@@ -1,0 +1,36 @@
+CHANGELOG.md: same
+DATA_SOURCES.md: same
+README.md: same
+SECURITY.md: same
+docs/CURRENT-STATE.md: same
+openspec/changes/fix-ontario-511-key/design.md: changed
+--- ae2cbaa478e412f1ddd6ec6aeda0bb62b6d078a6
++++ Pass 3
+@@ -3,3 +3,6 @@
+ ## Health decision
+ ## Documents
+ ## Checks
++## Pass 3 words
++## Files and measures
++## Purpose at archive time
+openspec/changes/fix-ontario-511-key/evidence.md: changed
+--- ae2cbaa478e412f1ddd6ec6aeda0bb62b6d078a6
++++ Pass 3
+@@ -7,3 +7,4 @@
+ ## Prose and OpenSpec
+ ## Lead checks
+ ## Pass 2
++## Pass 3
+openspec/changes/fix-ontario-511-key/proposal.md: same
+openspec/changes/fix-ontario-511-key/specs/live-sources/spec.md: same
+openspec/changes/fix-ontario-511-key/tasks.md: changed
+--- ae2cbaa478e412f1ddd6ec6aeda0bb62b6d078a6
++++ Pass 3
+@@ -1,4 +1,5 @@
+ ## 1. Spec and tests
+ ## 2. Code and host checks
+-## 3. Lead checks
+-## 4. Pass 2
++## 3. Pass 2
++## 4. Pass 3
++## 5. Lead checks
