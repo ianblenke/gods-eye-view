@@ -350,7 +350,7 @@ for (const value of ['0', undefined, '', '1', 'false'])
     const catalog = await createCctvCatalog({ sourceRoot: '/nonexistent' })();
     assert.equal(requests, value === '0' ? 0 : 1);
     assert.equal(
-      catalog.sources.some((source) => source.id === 'fl-10416'),
+      catalog.some((source) => source.id === 'fl-10416'),
       value !== '0',
     );
   });

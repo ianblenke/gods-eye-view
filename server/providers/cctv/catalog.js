@@ -20,6 +20,7 @@ import {
   loadDelDOTSourcesFromOpenData,
   loadVegvesenSourcesFromOpenData,
 } from './sources.js';
+import { loadPensacolaSourcesFromOpenData } from './pensacola.js';
 
 /** Env kill switch: unset or anything but "0" means enabled. */
 const envEnabled = (name) => String(process.env[name] || '1').trim() !== '0';
@@ -97,6 +98,11 @@ const LIVE_PACKS = [
     name: 'vegvesen',
     enabled: () => envEnabled('CCTV_VEGVESEN_ENABLED'),
     load: loadVegvesenSourcesFromOpenData,
+  },
+  {
+    name: 'pensacola',
+    enabled: () => envEnabled('CCTV_PENSACOLA_ENABLED'),
+    load: loadPensacolaSourcesFromOpenData,
   },
 ];
 /**
