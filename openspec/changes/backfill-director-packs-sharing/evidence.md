@@ -11530,7 +11530,7 @@ The clause uses the words final slash.
 The lead asks about eight unread titles.
 The commands list eleven titles that Pass 9 did not read and three dynamic templates that Pass 9 counted.
 Eleven minus three is eight.
-The flag at packs.test.mjs:260 shows no fault: the session returns false after this cancellation.
+The flag of the lead at packs.test.mjs:260 shows no fault: the session returns false after this cancellation.
 
 The worker restores every line of the Pass 7 title corrections section and the original Pass 7 section.
 The latter ends before Title corrections in pass 8.
@@ -11546,8 +11546,8 @@ The Pass 11 hand list has 480 rows. The complete command must check all 480 rows
 
 The scratch copy first has the old test body from the source commit.
 The mutation moves the signal check before the `await` at bundle.js:128.
-The old test passes this mutation.
-The new test fails this mutation with the settled marker out of order.
+The old test does not detect this mutation.
+The new test detects this mutation with the settled marker out of order.
 Only the test of director-107 runs in these two commands.
 
 ```text
@@ -11772,7 +11772,19 @@ Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/direc
 
 The script reads the literal title templates.
 It does not read titles whose clause word is in a label array.
-These are the 12 before titles at backfill.test.mjs:95-114 and the 5 stop titles at sharing.test.mjs:1946-1953.
+These include the 12 before titles at backfill.test.mjs:95-114 and the 5 bundle helper titles at sharing.test.mjs:1946-1953.
+They also include these labels at sharing.test.mjs:2256-2303:
+
+- "top-level fields before version"
+- "version before project"
+- "project before assets"
+- "asset fields before path"
+- "path before media type"
+- "media type before duplicate path"
+- "duplicate path before base64"
+
+The label "an equals sign at the start" at sharing.test.mjs:243 also has a clause word.
+Hand rows a9251, a9252, a9253, a9262, a9263, a9264, a9265, a2525 and a9230 kill these clauses.
 Hand rows a9016-a9043, a9269, a9299, a9306 and m351-m355 kill those clauses.
 
 The worker reads all 125 titles with their test bodies.
@@ -15264,9 +15276,9 @@ SURVIVORS: []
 
 ### Full sharing file for m480
 
-The old sharing file passes m480 with no name filter.
+The old sharing file does not detect m480 with no name filter.
 The first failed test of the new sharing file is director-107 with the settled marker.
-No other test of the old sharing file kills the mutation.
+No test of the old sharing file kills the mutation.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-all /home/ianblenke/docker/gev-tools/director-3/pass11/m480-all.json
@@ -15288,7 +15300,9 @@ The first complete command gives 477 killed rows and three survivors: m172, m290
 The pattern of m290 names the old title, so the pattern selects no test.
 The registry name of m290 also has repeated suffix text from a past pass.
 The worker sets the name and pattern to the current title and runs m290 again.
-The run kills m290. The worker then starts another complete command with all 480 rows.
+The test kills m290.
+
+The worker then starts another complete command with all 480 rows.
 
 A check against literal source titles also flags dynamic titles.
 The next check uses all 670 passed runtime titles and finds no unmatched pattern.
@@ -16836,7 +16850,7 @@ Branch: `backfill-director-3`.
 
 The worker corrects the pre-review 10 prose findings.
 The tests, their titles and the hand rows stay unchanged.
-The settled marker shows that the settle step ran before the second check.
+The settled marker shows that the text method ended before the second check.
 The review files and the past command output stay unchanged.
 
 ### Corrections in Pass 12
@@ -16848,39 +16862,36 @@ The review files and the past command output stay unchanged.
 | S3 | Task 14.1 names the tick and the settled marker. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | S4 | The two title phrases have quotes. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | S5 | Both asset count phrases have quotes. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
-| S6 | The four current survivor statements use and. The script template also uses and. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S6 | The four current survivor statements use the word "and". | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | S7 | The audit row names the signal check after the text promise settles. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | S8 | Task 14.2 says which test detects m480. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
-| S9 | The text names the first failed test and the other tests of the old file. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
-| S10 | The heading names the old and new tests. The sentence uses mutation and code text for await. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S9 | The text names the first failed test of the new file and says that no test of the old file kills the mutation. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S10 | The heading names the old and new tests. The sentence uses "mutation" for "hoist" and inline code for `await`. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | S11 | The sentence states the dispose count after load(null) rejects. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | S12 | The bullet has a clear subject. The proposal puts the coordinate lengths after the named sets. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | S13; spec minor 5 | Each Findings row has three cells. The definitions come before the table. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | S14 | A lead sentence names the Pass 10 subjects. The flag has its file and line. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | S15 | The prose uses the source commit. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
-| S16 | The pattern is the subject. The sentence says that the run kills m290. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| S16 | The pattern is the subject. The sentence says that the test kills m290. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | Spec minor 1 | The filter text names literal templates and both label arrays. The hand row IDs agree with the tables. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | Spec minors 2 and 3 | The proposal adds digest-asset-result-check-order and second-text-signal-error as Known limits. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 | Spec minor 4 | The W5 row has the Pass 10 record label. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
-| Spec minor 6 | The Pass 7 hand command has a level two heading. The script template has the same heading. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+| Spec minor 6 | The Pass 7 hand command has a level two heading. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
 
 The worker reads every task in sections 13 and 14.
-Each task gives one instruction.
-The worker checks the neighbours of each corrected sentence and the cells of each changed table.
+
 No new word needs a glossary row.
 
 ### Scope and limits in Pass 12
 
-The clauses at spec.md lines 383 and 384 have a limit on check order.
-The checks at bundle.js lines 94, 154 and 161 follow their awaited calls.
+The checks at bundle.js lines 94, 154 and 161 follow the calls that they await.
 The second text signal check at bundle.js line 129 has no test that makes it throw.
-The proposal names both limits for the lead decision in review.md.
+The proposal names both limits for the lead to decide in review.md.
 
 The hand registry still has 480 rows.
 The Pass 11 output records 478 killed rows. Only m172 and m389 survive.
 The worker does not rerun the hand rows because no test changes.
 The worker does not rerun coverage or code mutations.
-The worker runs no container, image gate, ratchet, archive, review agent, push or gh command.
 
 ### Host command output in Pass 12
 
@@ -16969,9 +16980,9 @@ Command: taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.te
 ### Other host checks in Pass 12
 
 The predispatch command completes with exit status 0.
-Its output lists flags in past records. It gives no TASK flag.
-The full output is in [the Pass 12 log](evidence/pass12/predispatch.log).
-The OpenSpec JSON output is in [the Pass 12 log](evidence/pass12/openspec-show.log).
+The output gives no TASK flag.
+The full output is in [the Pass 12 predispatch log](evidence/pass12/predispatch.log).
+The OpenSpec JSON output is in [the Pass 12 OpenSpec log](evidence/pass12/openspec-show.log).
 
 ```text
 Command: taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110
@@ -17046,4 +17057,43 @@ Source commit: ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf
 ```text
 Command: taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing
 STE: 0 errors, 585 warnings.
+```
+
+## Pass 13
+
+Source commit: `52d8eb8acb6021ec857b507f306557152522d14e`.
+
+| Item | Correction |
+| --- | --- |
+| K1, K2 | The limits cite director-107, its clauses and the four probe results. |
+| K3 | The filter includes eight more labels and their killer rows. |
+| K4 | Sections 15 and 16 record the work. Tasks 14.18 to 14.22 name the checks. |
+| K5 | Pass 11 hand count has its own heading. The vague template claim is absent. |
+| K6 | The prose has clear subjects, quotes and log names. Unneeded sentences are absent. |
+
+The external script pass11/append-hand.py stays unchanged under the folder scope rule.
+
+[Probe output](evidence/probe-signal-check-order.txt) and [probe mutations](evidence/probe-signal-check-order-mutations.json).
+[Host command logs](evidence/pass13/), [count check](evidence/pass13/counts.log), [label check](evidence/pass13/check-repeated-titles.log),
+[table check](evidence/pass13/self-check.log), [word scan](evidence/pass13/banned-forms.log) and [section-title diff](evidence/pass13/headings.log).
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs
+ℹ tests 430
+ℹ pass 430
+ℹ fail 0
+Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs
+ℹ tests 12
+ℹ pass 12
+ℹ fail 0
+Command: taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs
+ℹ tests 228
+ℹ pass 228
+ℹ fail 0
+Command: node scripts/spec/gates.mjs lint
+STE: 0 errors, 585 warnings.
+Command: taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110
+titles checked: 494, with a banned form: 0
+Command: taskset -c 12-15 nice -n 19 openspec validate backfill-director-packs-sharing
+Change 'backfill-director-packs-sharing' is valid
 ```
