@@ -4,7 +4,10 @@ import { readResponseJsonCapped } from '../../../src/sources/httpBody.js';
 
 const DEFAULT_ROWS_URL =
   'https://services.arcgis.com/3wFbqsFPLeKqOlIK/arcgis/rest/services/FL511_Traffic_Cameras/FeatureServer/0/query';
-const IMAGE_HOST = 'images-dis.divas.cloud';
+const IMAGE_ORIGIN = 'https://images-dis.divas.cloud';
+// The whole row address is matched as text: a URL parser would drop the default port 443.
+const FRAME_ADDRESS =
+  /^https:\/\/images-dis\.divas\.cloud\/DGI\/chan-(\d+)_h\.jpg(?:[?#].*)?$/;
 const BOUNDS = { south: 30.2, north: 30.85, west: -87.65, east: -86.8 };
 const ANCHOR = { lat: 30.4213, lon: -87.2169 };
 const DEFAULT_MAX_SOURCES = 120;
@@ -28,7 +31,7 @@ const DIRECTIONS = new Map([
  * @returns {object|null}
  */
 export function pensacolaCameraToSource(row) {
-  if (!row || typeof row !== 'object') return null;
+  if (!row) return null;
   const lat = row.LATITUDE;
   const lon = row.LONGITUDE;
   if (
@@ -41,26 +44,12 @@ export function pensacolaCameraToSource(row) {
   )
     return null;
   if (typeof row.IMAGE !== 'string') return null;
-  let image;
-  try {
-    image = new URL(row.IMAGE);
-  } catch {
-    return null;
-  }
-  if (
-    image.protocol !== 'https:' ||
-    image.hostname !== IMAGE_HOST ||
-    image.port ||
-    image.username ||
-    image.password
-  )
-    return null;
-  const match = /^\/DGI\/chan-(\d+)_h\.jpg$/.exec(image.pathname);
+  const match = FRAME_ADDRESS.exec(row.IMAGE);
   if (!match) return null;
   const channel = match[1];
   const id = `fl-${channel}`;
-  const url = `https://${IMAGE_HOST}/DGI/chan-${channel}_h.jpg`;
-  const direction = String(row.DIRECTION ?? '').trim();
+  const url = `${IMAGE_ORIGIN}/DGI/chan-${channel}_h.jpg`;
+  const direction = String(row.DIRECTION).trim();
   return {
     id,
     name: String(row.DESCRIPT ?? '').trim() || `FL511 camera ${channel}`,
