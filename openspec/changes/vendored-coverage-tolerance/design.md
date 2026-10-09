@@ -53,7 +53,7 @@ The gate computes adoptedFile from the same valid adopt lines as adoptedAsIs, wi
 
 The gate accepts total differences only with equal hashes, true loaded coverage and equal not-covered counts of lines, branches and functions.
 The requirement "Total counts for adopted files" gives this exception to the stale rule.
-compareLedger does not change the comparison that each coverage error code makes. The ratchet command applies its existing rule for total counts to files without base content that differ from their adopted source.
+compareLedger does not change the comparison in compareCoverageEntry. The ratchet command applies its rule for total counts to files without base content that differ from their adopted source.
 
 ## Files
 
@@ -88,7 +88,7 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | not-covered count | Count of items that tests do not cover. |
 | total count | Count of all measured items. |
 | stale | Ledger entry state that stops the build until the ratchet command runs. The base specs call it not current. |
-| tolerance | Allowed count difference of a metric. toleranceOf computes it from one total count. compareLedger gives it the current gap total count of that metric. |
+| tolerance | Allowed count difference of a metric. toleranceOf computes the tolerance from one total count. For a tolerant file, compareLedger gives toleranceOf the current gap total count of that metric. |
 | count tolerance | Rule from the requirement Count tolerance. |
 | check command | Command that checks the current tree. |
 | ci command | Command that selects the change and checks the current tree. |
@@ -146,6 +146,7 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | ledger entry not-covered count | Not-covered count of a ledger entry. |
 | ledger entry total count | Total count of a ledger entry. |
 | current not-covered count | Not-covered count of the current gap. |
-| waiver line | History line with the kind waiver. |
-| waived count | Sum of the counts of the waiver lines of the checked change for a metric of a file. compareWithBase adds only waiver lines with the content hash of the ledger entry. It gives zero for a file with base content or a ledger entry without loaded coverage. For a file with a ledger entry, compareLedger adds only waiver lines with the content hash of the current gap. It gives zero for equal hashes or for a ledger entry or current gap without loaded coverage. Without a ledger entry, waiversCover rejects a file with base content or a current gap without loaded coverage. |
+| waiver line | History line after the base history with the kind waiver, the name of the checked change and a count that is a positive whole number. |
+| waiversCover | Function that tests if waiver lines cover each not-covered count of a record that has no entry to compare with. |
+| waived count | Sum of the counts of the waiver lines of the checked change for a metric of a file. compareWithBase adds only waiver lines with the content hash of the ledger entry. It gives zero for a file with base content or a ledger entry without loaded coverage. For a file with a ledger entry, compareLedger adds only waiver lines with the content hash of the current gap. It gives zero when the ledger entry and the current gap have equal content hashes, or when either has no loaded coverage. Without a ledger entry, waiversCover rejects a file with base content or a current gap without loaded coverage. |
 | current gap total count | Total count of the current gap. |

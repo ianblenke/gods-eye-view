@@ -3146,7 +3146,7 @@ Tree read: commit `47d4cd2a90d11dabfa88deb04d5aafd5f9555be9`, with Pass 10 text 
 | W5 | Name the file scope that test titles at lines 1620 and 1688 do not state. |
 | W6 | Bound coverage error text in the proposal and design. |
 | W7 | The lead will record the reason for test 1665 in review.md. |
-| W8 | State change, file, metric, hash and loaded coverage conditions for waiver counts. At Pass 11, base content also rejects waiver coverage in compareLedger for a file without a ledger entry. |
+| W8 | State change, file, metric, hash and loaded coverage conditions for waiver counts. Base content gives zero in compareWithBase, not in compareLedger. |
 | W9 | Bound the Pass 8 metric claim to the rules that Pass 8 changes. |
 | W10 | Name each requirement and its effects in the design and U1 row. |
 | W11 | Name the ledger entry covered count as the comparand in the proposal. |
@@ -3166,7 +3166,9 @@ At Pass 10, the task counts are Pass 8: 17; Pass 9: 8; Pass 10: 2. Old command o
 
 Command (Node 24.14.0): taskset -c 0-3 nice -n 19 /tmp/node-v24.14.0-linux-x64/bin/node --import /home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/strict-host.mjs --test src/tooling/spec/ledger.test.mjs.
 
-The first Pass 10 command ran at file level. The second adds --test-isolation=none to give individual counts.
+The command reports one file result. It gives no individual test count.
+
+The second command adds --test-isolation=none to give individual counts.
 
 Command (Node 24.14.0): taskset -c 0-3 nice -n 19 /tmp/node-v24.14.0-linux-x64/bin/node --import /home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/strict-host.mjs --test --test-isolation=none src/tooling/spec/ledger.test.mjs.
 
@@ -3243,7 +3245,7 @@ Change 'vendored-coverage-tolerance' is valid
 
 Command: openspec show vendored-coverage-tolerance --json.
 
-At Pass 10, the command wrote JSON. No exit status and no parse result were recorded.
+At Pass 10, the command wrote JSON. The Pass 10 record has no exit status and no parse result.
 
 The author states these notes for the Pass 10 audit: Pass 9 boxes have text, test and host records.
 The author states that Pass 10 has correction and host records.
@@ -3264,6 +3266,7 @@ Tree read: commit `8ee1bd5f`, with Pass 11 text edits.
 | Y7 | Restore parser records. Bound extracts. Separate author notes from command output. |
 | Y8 | Correct title scope, Node versions, extract placement and count words. |
 | Y9 | Keep the accepted decisions. |
+| Z7 | At Pass 11, waiversCover rejects a file with base content in compareLedger when the file has no ledger entry. |
 
 At Pass 11, task counts are Pass 8: 17; Pass 9: 11; Pass 10: 5.
 Pass 10 added eight Pass 9 tasks and two Pass 10 tasks. Its command outputs keep those counts.
@@ -3305,15 +3308,11 @@ Pass 8 tasks: 17
 Pass 9 tasks: 11
 Pass 10 tasks: 5
 New task verb and object flags: []
-Task records: Pass 9 U1-U10, test 1688 extract and host outputs; Pass 10 table and host outputs
 Pass 10 JSON task: unchecked
 Banned word forms: []
 W labels: 22 unique
 Y labels: 9 unique
 U labels: 10 unique
-X3: two old rows at commit 8ee1bd5f; unchanged
-T labels: accepted Pass 3 and Pass 8 reuse
-At Pass prefixes: citation Pass 7; requirement text and audit note Pass 10; no-entry correction and current counts Pass 11
 proposal.md level 2 equal
 proposal.md level 3 equal
 design.md level 2 equal
@@ -3345,4 +3344,51 @@ Command: taskset -c 0-3 nice -n 19 node scripts/spec/gates.mjs lint --change ven
 
 ```text
 STE: 0 errors, 545 warnings.
+```
+
+### Pass 12
+
+| Item | Change |
+| --- | --- |
+| Z1 | Delete the four author lines from the Pass 11 output fence. |
+| Z2 | Define waiver line and waiversCover. Name the content hashes and loaded coverage conditions of the waived count. |
+| Z3 | Restore W8, the Pass 10 file result and the checked Pass 10 correction task. |
+| Z4 | Name compareCoverageEntry and the tolerant file. State the Pass 10 record limits. |
+| Z5 | Add three Pass 11 tasks and five Pass 12 tasks. Leave the Pass 10 JSON task unchecked. |
+
+Tree read: commit `02c2bb727cae37226e061b4024093bab61da23b8`. At Pass 12, the task counts are Pass 8: 17; Pass 9: 11; Pass 10: 5; Pass 11: 3; Pass 12: 5.
+
+Command (Node 24.14.0): taskset -c 0-3 nice -n 19 /tmp/node-v24.14.0-linux-x64/bin/node --import /home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/strict-host.mjs --test --test-isolation=none src/tooling/spec/ledger.test.mjs. Exit: 0.
+
+```text
+ℹ tests 106
+ℹ suites 0
+ℹ pass 106
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 432.405143
+```
+
+Command: openspec show vendored-coverage-tolerance --json.
+
+```text
+Command: openspec show vendored-coverage-tolerance --json
+Exit: 0
+python3 json.loads: PASS
+```
+
+Command: openspec validate vendored-coverage-tolerance.
+
+```text
+Command: openspec validate vendored-coverage-tolerance
+Change 'vendored-coverage-tolerance' is valid
+Exit: 0
+```
+
+Command: taskset -c 0-3 nice -n 19 node scripts/spec/gates.mjs lint --change vendored-coverage-tolerance.
+
+```text
+STE: 0 errors, 543 warnings.
 ```
