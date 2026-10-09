@@ -67,10 +67,20 @@ Later change `fix-director-bundle-nonnumeric-length` addresses `bundle-nonnumeri
   Other added names need separate hand rows.
 - Known limit `closed-set-added-members`: the automatic tool does not add members to any closed set.
   This covers media types, data pack formats, directory protocols and all eight allowed-field lists.
-  It also covers coordinate lengths 2 and 3 at geojson.js:19, geometry types, single-value fields and text alphabets that audit.md names.
+  It also covers the geometry types, single-value fields and text alphabets that audit.md names, and coordinate lengths 2 and 3 at geojson.js:19.
   Hand rows cover only the additions that audit.md names.
   The bundle source name, bundle file suffix and directory final slash also have this limit.
   The tests reject coordinate lengths 1 and 4; an added length 5 needs a separate test and hand row.
+
+- Known limit `digest-asset-result-check-order`: spec.md lines 383 and 384 state the two clauses below.
+  The clauses after each digest and after the asset result are shown by call counts.
+  A change that moves a signal check between the call and its `await` at bundle.js:94, 154 or 161 passes each test.
+  The lead decides in review.md whether to accept this limit by name.
+
+- Known limit `second-text-signal-error`: spec.md line 388 states the clause below.
+  No test makes the second signal check at bundle.js:129 throw.
+  A change that swallows that error passes each test.
+  The lead decides in review.md whether to accept this limit by name.
 
 ### Pass 7 notes
 

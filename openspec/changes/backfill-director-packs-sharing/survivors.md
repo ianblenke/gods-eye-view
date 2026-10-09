@@ -1074,5 +1074,5 @@ Source commit: `2dc225520cebc43bb76b8dca7b645ed3f48a1e43`.
 Source commit: `2dc225520cebc43bb76b8dca7b645ed3f48a1e43`.
 
 The complete host command checks 480 hand rows and kills 478 rows.
-Only m172, m389 survive.
+Only m172 and m389 survive.
 The command and its counted output are in [Pass 11 evidence](evidence.md#complete-final-hand-command).
