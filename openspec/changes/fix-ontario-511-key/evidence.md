@@ -796,7 +796,7 @@ The key tests import the request module once. The beforeEach callback calls the 
 The absent-key test also calls the reset hook after its first warning. The next call must write that warning again.
 The reset hook has no scenario of its own. It is a test helper.
 
-At Pass 9, the glossary calls this function the reset hook.
+At Pass 9, the glossary uses the name reset hook for this test helper.
 
 The command prefix for every Node process is taskset -c 8-11 nice -n 19.
 The test command is node --test --test-isolation=none src/data/cctvOntarioKey.test.mjs.
@@ -1308,8 +1308,7 @@ The prose lint prints "STE: 0 errors, 540 warnings."
 Tree read: `ede1c684b94a133d7c699c7a45e5860d4c3dd5a6`, branch `fix-ontario-511-key`, with the Pass 5 edits.
 At Pass 5, the scratch tree has no branch. It copies this code and the Pass 5 tests.
 
-At Pass 6, S18 shows that this is true only of the older Pass 5 tests.
-Pass 6 found that this automatic run used another copy of the tests; see S18.
+Pass 6 found that the Pass 5 automatic mutation run used another copy of the tests; see S18.
 Pass 5 changes no production code. The three pre-review folders and the trace files stay unchanged.
 
 ### Corrections of pre-review 3
@@ -2081,8 +2080,7 @@ These 21 tests include the three tests that the sandbox denied. In the final set
 The original checks.json keeps the sandbox results. media-range-host.log records the host repeat.
 
 The text search checks the new lines and the owner's prefixed forms.
-At Pass 8, the lead chose the E1 sentence at evidence.md lines 1330 to 1332.
-At Pass 8, it replaces the text that the STE report proposed for the README line in the table at evidence.md line 1318.
+The lead chose the README sentence in the row Spec minor: README of the table Corrections of pre-review 3, and the paragraph after that table.
 The search excludes file names from the check for the word image without Docker.
 
 
@@ -2106,23 +2104,21 @@ The change stays active. Pass 8 changes no README, code, test, server, script, t
 ### Corrections of pre-review 6
 
 P1: The loader sentence names calls from the catalog and the cache that holds a source.
-The empty cache does not meet that condition. catalog.js lines 156 to 201 and 245 to 257 and constants.js line 248 support these sentences.
+The empty cache does not meet that condition. At Pass 9, catalog.js lines 156 to 201, lines 245 to 257 and constants.js line 248 support these sentences.
 
 P2: The channel limit names only the clauses at spec.md lines 21, 29, 31 and 83.
 The tests assert the two channels. The lead accepts the gap.
 Pass 8 moves the reference to spec.md lines 21, 29 and 31 into its own sentence, so that no sentence has more than 25 words.
 Pass 8 writes log line in place of count line to match the glossary.
 
-P3: The CI limit names the Node versions of the CI matrix and the newest Node 26 release.
-P4: Known limits now name the order of the Pass 5 changes to the tests and to the scenario text. The evidence does not show this order.
+P3: At Pass 9, the CI limit names the Node versions of the CI matrix and the newest Node 26 release.
+P4: At Pass 9, Known limits name the order of the Pass 5 changes to the tests and to the scenario text. The evidence does not show this order.
 
 P5: The glossary adds base image and anchor. The host row distinguishes a URL host name.
 The records of the probe name the base image. The Pass 3 and Pass 3B records stay unchanged.
 
 P6: The reset hook and fixture have separate names. The coverage gate still counts the reset hook.
 P7: The task and evidence state that the live automatic mutations ran after Pass 6.
-
-P8: At Pass 8, the E1 note gives evidence.md lines 1330 to 1332 and the line 1318 of this file.
 
 P9: The other text corrections name the request, commit option, test totals and past-pass facts.
 The STE corrections split a long sentence and two long paragraphs. Past run counts and command output stay unchanged.
@@ -2137,7 +2133,7 @@ The verb script read 83 bodies. Its one item names the absent-key test, which as
 The search found zero banned words or prefixed forms in the new text.
 corrections-search.log shows the corrected sentences and the references to code files and to documents.
 
-The other matches for the word routes are a file name and old command output. No current text calls the reset hook or the fixture a test function.
+The other matches for the word routes are a file name and old command output. At Pass 10, no current text uses the name test function for the reset hook or the fixture.
 
 OpenSpec show printed JSON. OpenSpec validate printed "Change 'fix-ontario-511-key' is valid".
 The proposal section titles do not differ from 3ac3af22. The diff for README.md, src, server and scripts against that commit is empty.
@@ -2158,8 +2154,7 @@ The change stays active.
 ### Corrections of pre-review 7
 
 Q1: The CI text names both matrix versions and the newest Node 26 release.
-The text follows ci.yml lines 23 and 57. Line 111 names a separate job.
-The proposal uses the four sentences from the lead without word changes.
+The text follows ci.yml lines 23 and 57.
 
 Q2: Both notes say that Pass 6 found the test copy fault in the Pass 5 run.
 The scratch tree note names the older Pass 5 tests, as S18 shows.
@@ -2171,21 +2166,16 @@ Q4: The text names section titles, the cache of the catalog and the output of th
 The other STE corrections add articles, name the objects and remove the false sentence about P1 and P2.
 No separate index file exists for these logs. Pass 9 removes the sentence about index entries.
 
-The E1 references have an "At Pass 8," prefix because they name the lines at that pass.
-At Pass 9, the E1 sentence spans lines 1334 to 1336. The README line in the table is line 1322.
-
 Q5: The catalog citation includes lines 245 to 257, which keep the cache and set its time.
 The proposal names the empty cache case and the path of the spec of this change.
 The request clauses are at lines 21, 29 and 31 of that spec. The loader clause is at line 83.
 
-The sentence for the empty cache uses current refresh in place of the lead's term for a refresh that has not finished to meet STE.
 The spec path stays in a separate sentence to meet the 25-word limit.
-Paragraph breaks keep the two past records within the six-sentence limit.
-No other lead sentence needs a word change for STE.
+Paragraph breaks keep the Pass 3B record and the Pass 5 record within the six-sentence limit.
 
 ### Host checks
 
-The real command output is in evidence/pass9. Each log starts with its command.
+The command output is in evidence/pass9.
 Each Ontario test file ran once in its own process under taskset -c 8-11 nice -n 19.
 The key file passed 12 tests. The rows file passed 71 tests. All 83 tests passed.
 
@@ -2198,17 +2188,70 @@ The host retry printed "Checked 1159 source files."
 
 The search found no banned word or prefixed form in the new text.
 The three searches for the old CI terms and section title term found no match before this block.
-The matches for routes and test function are the sentence that describes the old search results.
 corrections-search.log shows the corrected sentences after the edits.
-The source check reads ci.yml, catalog.js, the spec clauses and design.md lines 80 to 90.
+The check of the files reads ci.yml, catalog.js, the spec clauses and design.md lines 80 to 90.
 
 The proposal section titles do not differ from 73bf05b3.
 The diff for README.md, src, server and scripts against that commit is empty.
 
-Prose lint found paragraph errors in three runs. Paragraph breaks correct each error.
+Prose lint found paragraph errors in two runs (three errors in all). Paragraph breaks correct each error.
 The final prose lint printed "STE: 0 errors, 540 warnings."
 The status check found no ignored file in the change folder. The diff for the filed review reports is empty.
 
 Pass 9 did not run the 25-file set because no code or test changed.
 No Docker, make, ratchet, gate comparison, mutation, ledger, archive, push, gh or review command ran in Pass 9.
 The host checks give no coverage, Docker gate or review verdict.
+
+## Pass 10
+
+| Finding | Correction |
+|---|---|
+| R1 | The README note uses a stable table anchor. |
+| R2 | The lint count names two runs and three errors. |
+| R3 | The proposal names a camera object from any pack and each new refresh from an empty cache. |
+| R4 | One note names the Pass 5 automatic mutation run. |
+| R5 | The Pass 9 text has dated prefixes; the reset hook notes use one name. |
+| R6 | The file check and paragraph notes name their objects. |
+
+```text
+Command: git rev-parse HEAD
+12e359c7d9f3b4e0e1e3bc959d2e04f82a142cac
+
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvOntarioKey.test.mjs
+ℹ tests 12
+ℹ pass 12
+ℹ fail 0
+
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvOntarioRows.test.mjs
+ℹ tests 71
+ℹ pass 71
+ℹ fail 0
+
+Command: python3 /tmp/pass10-titles.py
+{
+  "live_titles": 83,
+  "references": 14,
+  "flags": []
+}
+
+Command: taskset -c 8-11 nice -n 19 openspec validate fix-ontario-511-key
+Change 'fix-ontario-511-key' is valid
+
+Command: git diff 12e359c7 -- README.md src server scripts
+
+Command: git diff 12e359c7 -- openspec/changes/fix-ontario-511-key/review
+```
+
+[OpenSpec show output](evidence/pass10/openspec-show.json)
+
+[First OpenSpec command output: MODULE_NOT_FOUND](evidence/pass10/openspec-show-first.log)
+
+[Section-title diff](evidence/pass10/section-titles.diff)
+
+[Text search output](evidence/pass10/text-search.json)
+
+[Correction search output](evidence/pass10/corrections-search.log)
+
+[Prose lint output](evidence/pass10/lint-final.log)
+
+[Status output](evidence/pass10/status-ignored.log)
