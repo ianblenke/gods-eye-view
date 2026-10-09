@@ -19,7 +19,7 @@ None.
 
 ### Modified Capabilities
 
-- `live-sources`: Add the requirements "Pensacola camera rows", "Pensacola layer request" and "Pensacola pack settings". The scenarios are `live-sources-010` to `live-sources-029`.
+- `live-sources`: Add the requirements "Pensacola camera rows", "Pensacola layer request" and "Pensacola pack settings". The scenarios are `live-sources-010` to `live-sources-030`.
 
 ## Impact
 
@@ -33,10 +33,10 @@ No gap opens in `openspec/trace`. The ratchet records the new scenario IDs and t
 
 ## Known limits and later changes
 
-- Known limit `terms`: FL511 limits its content to individual non-commercial use. An ArcGIS account that is not FDOT hosts the layer. The layer metadata has no license text. Each camera carries the use limit in its `license` field, and `DATA_SOURCES.md` names it. The owner decides whether to keep the pack.
+- Known limit `terms`: FL511 limits its content to individual non-commercial use. FDOT does not host the layer. Another ArcGIS account hosts it. The layer metadata has no license text. Each camera carries the use limit in its `license` field, and `DATA_SOURCES.md` names it. The owner decides whether to keep the pack.
 - Known limit `credit`: The change adds no entry to `src/data/dataCredits.js`. The coverage of that file is untrue, and a changed line there raises a coverage error that no waiver clears. The cause of the untrue coverage is not known. A later change can look for it.
 - Known limit `layer-age`: The layer shows 2026-07-20 as its last edit. A camera that FDOT added after that date is absent.
-- Known limit `heading`: The check cannot tell whether the field DIRECTION gives the travel direction or the direction of the camera. In a check of 59 descriptions, 4 disagreed with the field. The pack uses the field as an estimate and sets the confidence "low".
+- Known limit `heading`: The field DIRECTION can differ from the camera heading. A check of 59 descriptions found 4 that disagree with the field. The check cannot tell whether the field gives the travel direction or the direction of the camera. The pack uses the field as an estimate and sets the confidence "low".
 - Known limit `florida-pack`: Upstream pull request 605 adds a Florida pack from the same layer. Both packs use the ids "fl-" and the channel number, so a camera appears once. The pose values and the heading confidence differ. A later change retires this pack after the sync that brings pull request 605.
 - Known limit `caps`: The default caps of all packs sum to 4955. This pack adds 120, so the sum is 5075, above the ceiling of 5000. The catalog cap of 4000 already cuts the number of cameras of the packs.
 - Known limit `dead-frames`: A check on 2026-10-08 found 5 of 66 frames with HTTP 404. The frame route then shows a fallback image.

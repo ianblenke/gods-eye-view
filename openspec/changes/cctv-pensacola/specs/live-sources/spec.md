@@ -3,7 +3,7 @@
 ### Requirement: Pensacola camera rows
 The Pensacola pack MUST give one still-image camera source for each channel of a valid row, up to the number that CCTV_PENSACOLA_MAX_SOURCES allows.
 A row is the attributes member of a feature in the layer answer. A valid row has a position in the Pensacola area and an image address.
-The image address uses https, the host images-dis.divas.cloud, no port, no user information and the file name `chan-<digits>_h.jpg`.
+The image address uses https, the host images-dis.divas.cloud, no port, no user information and the path `/DGI/chan-<digits>_h.jpg`.
 The pack MUST drop each row that is not valid.
 Origin: spec-first
 
@@ -26,27 +26,27 @@ Origin: spec-first
 - **WHEN** a valid row with the channel 10416 has the direction "NOT DIRECTIONAL", "NE", "e", "constructor", "" or no direction
 - **THEN** `headingDeg` is 45 and `headingConfidence` is "low"
 
-#### Scenario: Drop a row with an image on another host, scheme, port or user `live-sources-013`
-- **WHEN** a row has the image "https://snapshots.divas.cloud/DGI/D3CHP/US-98 at SR-281.jpg", "https://example.com/DGI/chan-1_h.jpg" or "http://images-dis.divas.cloud/DGI/chan-1_h.jpg"
-- **AND** the image is "https://images-dis.divas.cloud:8443/DGI/chan-1_h.jpg" or "https://user@images-dis.divas.cloud/DGI/chan-1_h.jpg"
+#### Scenario: Drop a row with an image on another host, scheme, port or user information `live-sources-013`
+- **WHEN** a row has the image "https://snapshots.divas.cloud/DGI/D3CHP/US-98 at SR-281.jpg", "https://snapshots.divas.cloud/DGI/chan-1_h.jpg", "https://images-dis.divas.cloud.example.com/DGI/chan-1_h.jpg", "https://example.com/DGI/chan-1_h.jpg", "http://images-dis.divas.cloud/DGI/chan-1_h.jpg", "https://images-dis.divas.cloud:8443/DGI/chan-1_h.jpg" or "https://user@images-dis.divas.cloud/DGI/chan-1_h.jpg"
 - **THEN** the pack gives no source for that row
 
 #### Scenario: Drop a row with an image that is not a frame `live-sources-014`
-- **WHEN** a row has the image "https://images-dis.divas.cloud/DGI/other.jpg", "https://images-dis.divas.cloud/DGI/chan-1_l.jpg" or "https://images-dis.divas.cloud/DGI/chan-1_h.jpg.exe"
-- **AND** the image is "", "   ", the number 12345 or absent
+- **WHEN** a row has the image "https://images-dis.divas.cloud/OTHER/chan-1_h.jpg", "https://images-dis.divas.cloud/DGI/other.jpg", "https://images-dis.divas.cloud/DGI/chan-1_l.jpg", "https://images-dis.divas.cloud/DGI/chan-1_h.jpg.exe", "", "   ", the number 12345 or no image
 - **THEN** the pack gives no source for that row
 
 #### Scenario: Build the frame address from the channel `live-sources-015`
 - **WHEN** a valid row has the image "https://images-dis.divas.cloud/DGI/chan-10416_h.jpg?token=abc#top"
 - **THEN** `url` and `snapshotUrl` are both "https://images-dis.divas.cloud/DGI/chan-10416_h.jpg"
 
-#### Scenario: Drop a row with a bad position `live-sources-016`
-- **WHEN** a row has no latitude, no longitude, a text latitude or longitude, the position 0 and 0, or a position outside the area
+#### Scenario: Drop a row with a missing or text position `live-sources-016`
+- **WHEN** a row has no latitude, no longitude, the text latitude "30.502183", the text longitude "-87.266586", or the position 0 and 0
 - **THEN** the pack gives no source for that row
-- **AND** the text values are "30.502183" for the latitude and "-87.266586" for the longitude
+
+#### Scenario: Drop a row outside the Pensacola area `live-sources-030`
+- **WHEN** a row has the position 30.19 and -87.65, 30.86 and -87.65, 30.20 and -87.66, or 30.85 and -86.79
+- **THEN** the pack gives no source for that row
 - **AND** the area has the latitude range 30.20 to 30.85 and the longitude range -87.65 to -86.80, and both ranges include their ends
 - **AND** rows at the corners 30.20 and -87.65, and 30.85 and -86.80, give a source
-- **AND** rows at 30.19 and -87.65, 30.86 and -87.65, 30.20 and -87.66, and 30.85 and -86.79 give no source
 
 #### Scenario: Keep one source for each channel `live-sources-017`
 - **WHEN** two valid rows have the channel 10416, and the first row has the description "Alpha"
@@ -77,7 +77,7 @@ Origin: spec-first
 
 #### Scenario: Return an empty list for an HTTP error `live-sources-021`
 - **WHEN** the layer answers with HTTP 503 and a body, with no body, or with a body that throws when the pack cancels it
-- **THEN** the pack returns an empty list and cancels the body of the answer
+- **THEN** the pack returns an empty list and cancels the body of the answer when it has one
 - **AND** the pack writes one warning "[CCTV] Pensacola camera download failed:" with the status 503
 
 #### Scenario: Return an empty list for a request error `live-sources-022`
@@ -110,7 +110,7 @@ Origin: spec-first
 - **AND** the row with the channel 1000 plus n is the n-th nearest to the point at latitude 30.4213 and longitude -87.2169
 - **AND** the setting CCTV_PENSACOLA_MAX_SOURCES is unset, "", "50", "50.9", "5", "500" or "abc"
 - **THEN** the pack returns 120, 120, 50, 50, 8, 200 or 120 sources in that order
-- **AND** the ids of the sources are "fl-1001" up to the count, nearest first
+- **AND** for each m from 1 to the count, the m-th source has the id "fl-" and the number 1000 plus m
 
 #### Scenario: Stop the pack with a setting `live-sources-027`
 - **WHEN** the setting CCTV_PENSACOLA_ENABLED is "0"
@@ -118,10 +118,10 @@ Origin: spec-first
 
 #### Scenario: Keep the pack on by default `live-sources-028`
 - **WHEN** the setting CCTV_PENSACOLA_ENABLED is unset, "", "1" or "false"
-- **AND** the layer answers with the entry of live-sources-010
+- **AND** the layer answers with an entry whose attributes are the row of live-sources-010
 - **THEN** the catalog lists the camera with the id "fl-10416"
 
 #### Scenario: Use another layer address `live-sources-029`
 - **WHEN** the setting CCTV_PENSACOLA_ROWS_URL is "http://127.0.0.1:9/layer/query"
 - **THEN** the pack sends its request to that address with the same query as in live-sources-019
-- **AND** a blank value of the setting leads to the layer address of live-sources-019
+- **AND** the value "" of the setting makes the pack use the layer address of live-sources-019

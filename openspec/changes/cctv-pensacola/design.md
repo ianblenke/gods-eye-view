@@ -21,7 +21,7 @@ The pack builds the frame address from the channel number: "https://images-dis.d
 
 A row with another host, scheme, port or user information gives no source. A row with another file name, or an extra suffix such as .exe, gives no source.
 
-A query or a fragment after the file name is allowed, and the pack drops it. The layer has a row on another host, a trailer camera.
+The pack allows a query or a fragment after the file name and removes it. The layer has a row on another host, a trailer camera.
 
 ### D3: Area and position
 
@@ -62,7 +62,7 @@ The change adds `server/providers/cctv/pensacola.js` and `src/data/cctvPensacola
 The coverage gate measures the new module. It has no ledger entry, so it needs 100% line, branch and function coverage.
 The ledger gate compares the gap of `catalog.js` with the recorded gap. The new lines must add no gap.
 
-The trace gate checks that the tests carry the scenario IDs `live-sources-010` to `live-sources-029`.
+The trace gate checks that the tests carry the scenario IDs `live-sources-010` to `live-sources-030`.
 The package boundary check measures the import directions of the new module. The format check finds files that do not use the project code style.
 
 The prose lint checks STE. The OpenSpec commands check the change structure.
