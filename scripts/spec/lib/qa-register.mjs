@@ -8,6 +8,12 @@ const HEADER_MESSAGE = (file) => `${file}: add one first block with one nonempty
 const hasQaTag = text => /@(purpose|covers|run|needs)\b/.test(text.replace(/^#![^\r\n]*\r?\n/, '').match(/^\s*\/\*[\s\S]*?(?:\*\/|$)/)?.[0] ?? '');
 const TAGS = ['purpose', 'covers', 'run', 'needs'];
 
+/** True for an upstream QA script with no current or base QA tag. */
+export function adoptableQaScript({ file, text, baseText, manifest }) {
+  return QA_FILE.test(file) && Boolean(manifest) && classify(manifest, file) === 'upstream' &&
+    !hasQaTag(text) && (baseText === null || !hasQaTag(baseText));
+}
+
 /** Read the first QA block and return its four values, or null. */
 export function parseQaHeader(text) {
   const source = text.replace(/^#![^\r\n]*\r?\n/, '');
@@ -38,8 +44,8 @@ export function readQaRegister({ root, tracked, manifest, readBaseFile = () => n
     const text = readFileSync(path.join(root, file), 'utf8');
     let header = parseQaHeader(text);
     const baseText = readBaseFile(file);
-    const eligible = (baseText !== null && !hasQaTag(baseText)) || adopts.some(item => item.file === file);
-    if (!header && manifest && classify(manifest, file) === 'upstream' && eligible && !hasQaTag(text)) {
+    const eligible = baseText !== null ? !hasQaTag(baseText) : adopts.some(item => item.file === file);
+    if (!header && eligible && adoptableQaScript({ file, text, baseText, manifest })) {
       header = { purpose: 'Check upstream code.', covers: ['unmapped: upstream'], run: `node ${file}`, needs: 'The upstream script needs its own setup.', synthetic: true };
     }
     if (!header) {

@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { listTrackedFiles } from '../../../scripts/spec/lib/inventory.mjs';
-import { readQaRegister, qaAdvice } from '../../../scripts/spec/lib/qa-register.mjs';
+import { adoptableQaScript, readQaRegister, qaAdvice } from '../../../scripts/spec/lib/qa-register.mjs';
 
 for (const key of Object.keys(process.env)) if (key.startsWith('GIT_')) delete process.env[key];
 Object.assign(process.env, {
@@ -141,7 +141,7 @@ test('[qa-scripts-025] gives no advice for a file with a capability name', () =>
 }));
 
 const manifest = { version: 1, owned: ['src/own/', 'single.js'] };
-test('[ownership-009] uses a synthetic upstream QA header', () => fixture(({ root, put }) => {
+test('[ownership-009] QA register uses a synthetic upstream QA header', () => fixture(({ root, put }) => {
   put('scripts/qa-new.mjs', '#!/usr/bin/env node\nexport {};\n');
   const result = readQaRegister({ root, tracked: ['scripts/qa-new.mjs'], manifest, readBaseFile: () => 'export {};\n' });
   assert.deepEqual(result.errors, []);
@@ -150,7 +150,7 @@ test('[ownership-009] uses a synthetic upstream QA header', () => fixture(({ roo
   assert.deepEqual(qaAdvice({ root, scripts: result.scripts }), ['QA: scripts/qa-new.mjs uses the synthetic header with the covers item unmapped: upstream.']);
   assert.deepEqual(qaAdvice({ root, change: 'unknown', scripts: result.scripts }), ['QA: scripts/qa-new.mjs uses the synthetic header with the covers item unmapped: upstream.', 'QA: no script covers the capabilities of this change.']);
 }));
-test('[ownership-010] rejects an absent owned header and an invalid upstream header', () => fixture(({ root, put }) => {
+test('[ownership-010] QA register rejects an owned script with no header and an upstream script with an invalid header', () => fixture(({ root, put }) => {
   const file = 'scripts/qa-new.mjs';
   put(file, 'export {};');
   assert.equal(readQaRegister({ root, tracked: [file], manifest: { version: 1, owned: ['scripts/'] } }).errors[0].code, 'QA-HEADER');
@@ -158,7 +158,7 @@ test('[ownership-010] rejects an absent owned header and an invalid upstream hea
   assert.equal(readQaRegister({ root, tracked: [file], manifest }).errors[0].code, 'QA-HEADER');
 }));
 
-test('[ownership-009 ownership-010] keeps a valid upstream QA header and its capability checks', () => fixture(({ root, put }) => {
+test('[ownership-009 ownership-010] QA register keeps a valid upstream QA header and its capability checks', () => fixture(({ root, put }) => {
   put(FILE, header('unknown'));
   const result = readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => '/* Base license. */\n' });
   assert.deepEqual(errorCodes(result), ['QA-COVERS-UNKNOWN']);
@@ -166,7 +166,7 @@ test('[ownership-009 ownership-010] keeps a valid upstream QA header and its cap
   assert.equal(Object.hasOwn(result.scripts[0], 'synthetic'), false);
 }));
 
-test('[ownership-015] accepts an upstream first comment with no QA tags', () => fixture(({ root, put }) => {
+test('[ownership-015] QA register accepts an upstream first comment with no QA tags', () => fixture(({ root, put }) => {
   put(FILE, '/* Upstream license. */\nexport {};\n');
   const result = readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => '/* Base license. */\n' });
   assert.deepEqual(result.errors, []);
@@ -175,43 +175,43 @@ test('[ownership-015] accepts an upstream first comment with no QA tags', () => 
   assert.deepEqual(errorCodes(readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => '/* Base license. */\n' })), ['QA-HEADER']);
 }));
 
-test('[ownership-010] rejects an upstream QA block with no end', () => fixture(({ root, put }) => {
+test('[ownership-010] QA register rejects an upstream QA block with no end', () => fixture(({ root, put }) => {
   put(FILE, '/**\n * @purpose Bad.\n');
   assert.deepEqual(errorCodes(readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => '/* Base license. */\n' })), ['QA-HEADER']);
 }));
 
-test('[ownership-010] rejects a bad upstream QA block after a shebang', () => fixture(({ root, put }) => {
+test('[ownership-010] QA register rejects a bad upstream QA block after a shebang', () => fixture(({ root, put }) => {
   put(FILE, '#!/usr/bin/env node\n/**\n * @purpose Bad.\n */\n');
   assert.deepEqual(errorCodes(readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => '/* Base license. */\n' })), ['QA-HEADER']);
 }));
 
-test('[ownership-010] rejects a shebang inside a QA comment', () => fixture(({ root, put }) => {
+test('[ownership-010] QA register rejects a shebang inside a QA comment', () => fixture(({ root, put }) => {
   put(FILE, '/**\n * #! @purpose Bad.\n */\n');
   assert.deepEqual(readQaRegister({ root, tracked: [FILE], manifest: { version: 1, owned: [] }, readBaseFile: () => '/* Base license. */\n' }).errors, [{ code: 'QA-HEADER', file: 'scripts/qa-example.mjs', message: 'scripts/qa-example.mjs: add one first block with one nonempty line for each QA tag and valid covers items.' }]);
 }));
 
-test('[ownership-009] uses the synthetic header for a later comment', () => fixture(({ root, put }) => {
+test('[ownership-009] QA register uses the synthetic header for a later comment', () => fixture(({ root, put }) => {
   put(FILE, 'export {};\n/**\n * @purpose Bad\n */\n');
   const result = readQaRegister({ root, tracked: [FILE], manifest: { version: 1, owned: [] }, readBaseFile: () => 'export {};\n' });
   assert.deepEqual(result.errors, []);
   assert.deepEqual(result.scripts, [{ file: 'scripts/qa-example.mjs', purpose: 'Check upstream code.', covers: ['unmapped: upstream'], run: 'node scripts/qa-example.mjs', needs: 'The upstream script needs its own setup.', synthetic: true }]);
 }));
 
-test('[ownership-034] reports QA-HEADER for a new unlisted script', () => fixture(({ root, put }) => {
+test('[ownership-034] QA register prints QA-HEADER for a new script that no adopt record names', () => fixture(({ root, put }) => {
   put(FILE, 'export {};\n');
   const result = readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => null, adopts: [] });
   assert.deepEqual(errorCodes(result), ['QA-HEADER']);
   assert.equal(result.validQaScripts.has(FILE), false);
   assert.deepEqual(errorCodes(readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => null, adopts: [{ file: 'scripts/qa-other.mjs' }] })), ['QA-HEADER']);
 }));
-test('[ownership-035] reports QA-HEADER after a base header is deleted', () => fixture(({ root, put }) => {
+test('[ownership-035] QA register prints QA-HEADER after a base header is deleted', () => fixture(({ root, put }) => {
   put(FILE, 'export {};\n');
   const result = readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => header(), adopts: [] });
   assert.deepEqual(errorCodes(result), ['QA-HEADER']);
   assert.equal(result.validQaScripts.has(FILE), false);
 }));
 
-test('[ownership-009 ownership-015] uses a valid adopt file for the synthetic header', () => fixture(({ root, put }) => {
+test('[ownership-009 ownership-015] QA register uses a file that a valid adopt record names for the synthetic header', () => fixture(({ root, put }) => {
   put(FILE, '/* Upstream license. */\nexport {};\n');
   const result = readQaRegister({ root, tracked: [FILE], manifest, adopts: [{ file: FILE }] });
   assert.deepEqual(result.errors, []);
@@ -220,14 +220,14 @@ test('[ownership-009 ownership-015] uses a valid adopt file for the synthetic he
 }));
 
 
-test('[ownership-010] rejects an owned base script without a header', () => fixture(({ root, put }) => {
+test('[ownership-010] QA register rejects an owned base script without a header', () => fixture(({ root, put }) => {
   put(FILE, 'export {};\n');
   const result = readQaRegister({ root, tracked: [FILE], manifest: { version: 1, owned: ['scripts/'] }, readBaseFile: () => 'export {};\n' });
   assert.deepEqual(errorCodes(result), ['QA-HEADER']);
   assert.equal(result.validQaScripts.has(FILE), false);
 }));
 
-test('[ownership-009] uses the adopt file among other records', () => fixture(({ root, put }) => {
+test('[ownership-009] QA register uses a file that a valid adopt record names among other records', () => fixture(({ root, put }) => {
   put(FILE, 'export {};\n');
   const result = readQaRegister({ root, tracked: [FILE], manifest, adopts: [{ file: 'other.js' }, { file: FILE }, { file: 'last.js' }] });
   assert.deepEqual(result.errors, []);
@@ -236,22 +236,38 @@ test('[ownership-009] uses the adopt file among other records', () => fixture(({
   assert.equal(result.scripts[0].covers[0], 'unmapped: upstream');
 }));
 
-test('[ownership-009] uses the first empty comment for the QA boundary', () => fixture(({ root, put }) => {
+test('[ownership-009] QA register gives the synthetic header when an empty comment comes before a comment with a QA tag', () => fixture(({ root, put }) => {
   put(FILE, '/**/\n/**\n * @purpose Bad.\n */\n');
   const result = readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => '/* License. */\n' });
   assert.deepEqual(result.errors, []);
   assert.equal(result.scripts[0].synthetic, true);
 }));
 
-test('[ownership-010] reports a QA error after an empty shebang', () => fixture(({ root, put }) => {
+test('[ownership-010] QA register prints a QA error after an empty shebang', () => fixture(({ root, put }) => {
   put(FILE, '#!\n/**\n * @purpose Bad.\n */\n');
   const result = readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => '/* License. */\n' });
   assert.deepEqual(errorCodes(result), ['QA-HEADER']);
 }));
 
-test('[ownership-009] keeps code after a CR inside the shebang', () => fixture(({ root, put }) => {
+test('[ownership-009] QA register gives the synthetic header when code follows a shebang that ends with CR', () => fixture(({ root, put }) => {
   put(FILE, '#!node\rtrue\n/**\n * @purpose Bad.\n */\n');
   const result = readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => '/* License. */\n' });
   assert.deepEqual(result.errors, []);
   assert.equal(result.scripts[0].synthetic, true);
 }));
+
+test('[ownership-035] QA register prints QA-HEADER for a base QA tag even with an adopt record', () => fixture(({ root, put }) => {
+  put(FILE, 'export {};\n');
+  const result = readQaRegister({ root, tracked: [FILE], manifest, readBaseFile: () => header(), adopts: [{ file: FILE }] });
+  assert.deepEqual(errorCodes(result), ['QA-HEADER']);
+  assert.equal(result.validQaScripts.has(FILE), false);
+}));
+
+test('[ownership-054] QA adopt helper accepts only upstream scripts with no current or base QA tag', () => {
+  const input = { file: FILE, text: 'export {};\n', baseText: null, manifest };
+  assert.equal(adoptableQaScript(input), true);
+  assert.equal(adoptableQaScript({ ...input, baseText: '/* License. */\n' }), true);
+  for (const patch of [{ file: 'src/not-qa.mjs' }, { manifest: undefined }, { manifest: { version: 1, owned: ['scripts/'] } }, { text: header() }, { baseText: header() }]) {
+    assert.equal(adoptableQaScript({ ...input, ...patch }), false);
+  }
+});
