@@ -2437,3 +2437,4 @@
 {"date":"2026-10-08","change":"ownership-scoped-gates","commit":"1ee5e66ab6c60d4d065a2bbcecf7bb7f419ff57e","kind":"measurement","measurement":"ce8bac5de6f39a6a83bc02bf03656005ebcd620bee7374a8a7e214e1df331c99"}
 {"date":"2026-10-08","change":"ownership-scoped-gates","commit":"f81380b42fa1c7c49cf008d4b774dca72ac4d5c2","kind":"measurement","measurement":"6dc6b64e8478ebc92835a4791c8be5ee7f0ecd4f1967421a5ea8cc57d0127c84"}
 {"date":"2026-10-09","change":"ownership-scoped-gates","commit":"f596ba38cffa3f06f3b443ae23df0c97229c2e08","kind":"measurement","measurement":"3baf2d2ca4a7013d91e5656f92b4340cc80125704d7196cebd8d4af31af45986"}
+{"date":"2026-10-09","change":"review-severity-scope","commit":"05741a7a2448c5855c0fa6f6db0336d4733f342f","kind":"measurement","measurement":"b53d192ec3ac94c0eeb3ab3fa32ba9bd921f85a0dbe8250db7b7a5411d31fed3"}

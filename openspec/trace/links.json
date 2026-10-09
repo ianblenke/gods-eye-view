@@ -105,6 +105,15 @@
     "src/tooling/spec/gates.test.mjs › [change-review-033] keep the final measurement",
     "src/tooling/spec/gates.test.mjs › [change-review-033] pin the agent verdict and final tree instructions"
   ],
+  "change-review-034": [
+    "src/tooling/spec/review.test.mjs › [change-review-034] gives the severity minor to two possible meanings in other text"
+  ],
+  "change-review-035": [
+    "src/tooling/spec/review.test.mjs › [change-review-035] gives the severity major to the faults that the requirement names"
+  ],
+  "change-review-036": [
+    "src/tooling/spec/review.test.mjs › [change-review-036] names the severities critical, major and minor in rule 16 of AGENTS.md"
+  ],
   "ci-gates-001": [
     "src/tooling/spec/ci.test.mjs › [ci-gates-001] stops for a code diff without an archived change",
     "src/tooling/spec/gates.test.mjs › [ci-gates-001 ci-gates-003 ci-gates-004] finds the change of a CI diff and checks it"
