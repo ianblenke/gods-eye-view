@@ -1,0 +1,355 @@
+Command: taskset -c 12-15 nice -n 19 openspec show backfill-director-packs-sharing --json
+{
+  "id": "backfill-director-packs-sharing",
+  "title": "backfill-director-packs-sharing",
+  "deltaCount": 8,
+  "deltas": [
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The data pack validators MUST accept valid declarations and reject invalid declarations.",
+      "requirement": {
+        "text": "The data pack validators MUST accept valid declarations and reject invalid declarations.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller supplies a relative asset path\n- **THEN** the validator accepts safe directory names and rejects traversal or URL syntax\n- **AND** The validator accepts paths of at most 1024 characters and rejects longer paths.\n- **AND** The validator accepts _ and - at the start of each path segment and returns without an error.\n- **AND** The validator returns without an error for letters A to Z and a to z, and digits 0 to 9.\n- **AND** The validator accepts those characters at the start and in other positions and returns without an error.\n- **AND** The validator names the path field in each asset path error.\n- **AND** The validator rejects the path type before it reads a segment.\n- **AND** The validator checks the source name, the path and the attribution fields in that order and rejects an invalid value.\n- **AND** The validator rejects an invalid second path segment."
+          },
+          {
+            "rawText": "- **WHEN** a caller supplies a data pack manifest\n- **THEN** the validator accepts version 1 and the geojson, image and media formats and returns without an error.\n- **AND** The validator rejects other versions and formats.\n- **AND** The validator rejects a data pack ID or source name above 256 characters.\n- **AND** The validator rejects extra fields and names each invalid field in its error.\n- **AND** The validator checks declaration fields, ID, version, format and source in that order and rejects an invalid value.\n- **AND** The validator checks the declaration before it checks for duplicate IDs and rejects an invalid value.\n- **AND** The validator rejects the unlisted format geojsonx.\n- **AND** The validator rejects an invalid second data pack declaration."
+          },
+          {
+            "rawText": "- **WHEN** a data pack declares attribution\n- **THEN** the validator checks text, license and an optional HTTPS link without credentials, query or fragment and rejects an invalid value.\n- **AND** The validator rejects text or license above 4096 characters, or an HTTPS link above 2048 characters.\n- **AND** The validator names each invalid attribution field and rejects extra attribution fields.\n- **AND** The validator checks text, license, URL and byteLength in that order and rejects an invalid value."
+          },
+          {
+            "rawText": "- **WHEN** a data pack declares byteLength or sha256\n- **THEN** the validator checks a positive integer up to 8388608 bytes and a lowercase hexadecimal digest of 64 characters and rejects an invalid value.\n- **AND** The validator rejects 63-character, 65-character and uppercase digests, and accepts exactly 64 lowercase hexadecimal characters.\n- **AND** The validator accepts each digit from 0 to 9 and each letter from a to f in the digest and returns without an error.\n- **AND** The validator names the field in each integrity error.\n- **AND** The validator checks the digest type before it converts text and rejects an invalid value.\n- **AND** The validator checks byteLength before the digest, and the digest before it reads the placement."
+          },
+          {
+            "rawText": "- **WHEN** an image data pack declares placement\n- **THEN** the validator checks geographic bounds, ordered edges, height and the ellipsoid reference and rejects an invalid value.\n- **AND** The validator rejects equal west and east edges, and equal south and north edges.\n- **AND** The validator accepts longitude limits of -180 and 180 degrees, and latitude limits of -90 and 90 degrees and returns without an error.\n- **AND** The validator rejects numeric text for bounds and height.\n- **AND** Each placement error names its field, and the validator rejects extra image placement fields.\n- **AND** The validator compares west with east before it compares south with north.\n- **AND** The validator checks bounds values, edge order and height in that order and rejects an invalid value.\n- **AND** The validator checks the height reference before it checks bounds and rejects an invalid value.\n- **AND** The validator checks the bounds array before it reads the length. It checks the length before it checks each coordinate.\n- **AND** The validator checks each bounds coordinate, with its index in the error path and rejects an invalid value."
+          },
+          {
+            "rawText": "- **WHEN** a media data pack declares placement\n- **THEN** the validator checks its scene anchor reference and rejects an invalid value.\n- **AND** The validator names the placement field in each unknown anchor error.\n- **AND** The validator accepts a reference to the second scene anchor and returns without an error."
+          },
+          {
+            "rawText": "- **WHEN** a scene declares data packs or data pack IDs for a shot\n- **THEN** the validator rejects duplicate data pack IDs, unknown shot references and duplicate shot references\n- **AND** The validator does not read a data pack list from the parent object of the scene and returns without an error.\n- **AND** The validator accepts eight distinct data packs per scene and rejects nine.\n- **AND** The validator accepts eight distinct data pack references per shot and rejects nine references before it checks distinct IDs.\n- **AND** The validator names the shot field in each reference error.\n- **AND** The validator rejects duplicate references before it searches for known IDs.\n- **AND** The validator checks the data pack list before it reads the anchors.\n- **AND** The validator rejects an unknown reference in the second shot.\n- **AND** The validator reports `$.shots[1].dataPackIds` and says expected distinct scene pack IDs for that error.\n- **AND** The validator rejects an unknown second reference ID."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The data pack validators MUST accept valid declarations and reject invalid declarations.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller supplies a relative asset path\n- **THEN** the validator accepts safe directory names and rejects traversal or URL syntax\n- **AND** The validator accepts paths of at most 1024 characters and rejects longer paths.\n- **AND** The validator accepts _ and - at the start of each path segment and returns without an error.\n- **AND** The validator returns without an error for letters A to Z and a to z, and digits 0 to 9.\n- **AND** The validator accepts those characters at the start and in other positions and returns without an error.\n- **AND** The validator names the path field in each asset path error.\n- **AND** The validator rejects the path type before it reads a segment.\n- **AND** The validator checks the source name, the path and the attribution fields in that order and rejects an invalid value.\n- **AND** The validator rejects an invalid second path segment."
+            },
+            {
+              "rawText": "- **WHEN** a caller supplies a data pack manifest\n- **THEN** the validator accepts version 1 and the geojson, image and media formats and returns without an error.\n- **AND** The validator rejects other versions and formats.\n- **AND** The validator rejects a data pack ID or source name above 256 characters.\n- **AND** The validator rejects extra fields and names each invalid field in its error.\n- **AND** The validator checks declaration fields, ID, version, format and source in that order and rejects an invalid value.\n- **AND** The validator checks the declaration before it checks for duplicate IDs and rejects an invalid value.\n- **AND** The validator rejects the unlisted format geojsonx.\n- **AND** The validator rejects an invalid second data pack declaration."
+            },
+            {
+              "rawText": "- **WHEN** a data pack declares attribution\n- **THEN** the validator checks text, license and an optional HTTPS link without credentials, query or fragment and rejects an invalid value.\n- **AND** The validator rejects text or license above 4096 characters, or an HTTPS link above 2048 characters.\n- **AND** The validator names each invalid attribution field and rejects extra attribution fields.\n- **AND** The validator checks text, license, URL and byteLength in that order and rejects an invalid value."
+            },
+            {
+              "rawText": "- **WHEN** a data pack declares byteLength or sha256\n- **THEN** the validator checks a positive integer up to 8388608 bytes and a lowercase hexadecimal digest of 64 characters and rejects an invalid value.\n- **AND** The validator rejects 63-character, 65-character and uppercase digests, and accepts exactly 64 lowercase hexadecimal characters.\n- **AND** The validator accepts each digit from 0 to 9 and each letter from a to f in the digest and returns without an error.\n- **AND** The validator names the field in each integrity error.\n- **AND** The validator checks the digest type before it converts text and rejects an invalid value.\n- **AND** The validator checks byteLength before the digest, and the digest before it reads the placement."
+            },
+            {
+              "rawText": "- **WHEN** an image data pack declares placement\n- **THEN** the validator checks geographic bounds, ordered edges, height and the ellipsoid reference and rejects an invalid value.\n- **AND** The validator rejects equal west and east edges, and equal south and north edges.\n- **AND** The validator accepts longitude limits of -180 and 180 degrees, and latitude limits of -90 and 90 degrees and returns without an error.\n- **AND** The validator rejects numeric text for bounds and height.\n- **AND** Each placement error names its field, and the validator rejects extra image placement fields.\n- **AND** The validator compares west with east before it compares south with north.\n- **AND** The validator checks bounds values, edge order and height in that order and rejects an invalid value.\n- **AND** The validator checks the height reference before it checks bounds and rejects an invalid value.\n- **AND** The validator checks the bounds array before it reads the length. It checks the length before it checks each coordinate.\n- **AND** The validator checks each bounds coordinate, with its index in the error path and rejects an invalid value."
+            },
+            {
+              "rawText": "- **WHEN** a media data pack declares placement\n- **THEN** the validator checks its scene anchor reference and rejects an invalid value.\n- **AND** The validator names the placement field in each unknown anchor error.\n- **AND** The validator accepts a reference to the second scene anchor and returns without an error."
+            },
+            {
+              "rawText": "- **WHEN** a scene declares data packs or data pack IDs for a shot\n- **THEN** the validator rejects duplicate data pack IDs, unknown shot references and duplicate shot references\n- **AND** The validator does not read a data pack list from the parent object of the scene and returns without an error.\n- **AND** The validator accepts eight distinct data packs per scene and rejects nine.\n- **AND** The validator accepts eight distinct data pack references per shot and rejects nine references before it checks distinct IDs.\n- **AND** The validator names the shot field in each reference error.\n- **AND** The validator rejects duplicate references before it searches for known IDs.\n- **AND** The validator checks the data pack list before it reads the anchors.\n- **AND** The validator rejects an unknown reference in the second shot.\n- **AND** The validator reports `$.shots[1].dataPackIds` and says expected distinct scene pack IDs for that error.\n- **AND** The validator rejects an unknown second reference ID."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The geometry decoder MUST return IDs, geometry types and coordinates without feature properties.",
+      "requirement": {
+        "text": "The geometry decoder MUST return IDs, geometry types and coordinates without feature properties.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller decodes GeoJSON\n- **THEN** the decoder rejects a type other than FeatureCollection, a feature list that is not an array or more than 2000 features\n- **AND** The decoder rejects invalid UTF8 bytes and null."
+          },
+          {
+            "rawText": "- **WHEN** a collection contains features\n- **THEN** the decoder rejects a type other than Feature, duplicate or blank IDs, IDs that are not strings and IDs above 256 characters\n- **AND** The decoder rejects a null feature with the feature ID error.\n- **AND** The decoder rejects a duplicate ID in the second feature."
+          },
+          {
+            "rawText": "- **WHEN** a geometry supplies positions without inherited coordinate values\n- **THEN** the decoder rejects longitude, latitude or height that is not finite or exceeds geographic limits\n- **AND** The decoder accepts at most 50000 positions and gives zero meters for an absent height.\n- **AND** Each position has two or three coordinates; the decoder rejects one or four coordinates.\n- **AND** The decoder accepts longitude from -180 to 180 degrees and latitude from -90 to 90 degrees and returns coordinates.\n- **AND** The decoder rejects a null position with the geographic position error.\n- **AND** The decoder keeps negative zero for a supplied height.\n- **AND** The decoder rejects an invalid second coordinate and an invalid second line position."
+          },
+          {
+            "rawText": "- **WHEN** a geometry supplies a line or ring\n- **THEN** the decoder rejects short lines, short rings and rings with unequal end positions\n- **AND** The decoder rejects a null line with the line error.\n- **AND** The decoder returns an open line with unequal end positions."
+          },
+          {
+            "rawText": "- **WHEN** a collection contains geometry\n- **THEN** the decoder returns IDs, geometry types and coordinates without properties\n- **AND** The decoder rejects unsupported or absent geometry and accepts at most 128 polygon rings.\n- **AND** The decoder rejects an unclosed second polygon ring."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The geometry decoder MUST return IDs, geometry types and coordinates without feature properties.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller decodes GeoJSON\n- **THEN** the decoder rejects a type other than FeatureCollection, a feature list that is not an array or more than 2000 features\n- **AND** The decoder rejects invalid UTF8 bytes and null."
+            },
+            {
+              "rawText": "- **WHEN** a collection contains features\n- **THEN** the decoder rejects a type other than Feature, duplicate or blank IDs, IDs that are not strings and IDs above 256 characters\n- **AND** The decoder rejects a null feature with the feature ID error.\n- **AND** The decoder rejects a duplicate ID in the second feature."
+            },
+            {
+              "rawText": "- **WHEN** a geometry supplies positions without inherited coordinate values\n- **THEN** the decoder rejects longitude, latitude or height that is not finite or exceeds geographic limits\n- **AND** The decoder accepts at most 50000 positions and gives zero meters for an absent height.\n- **AND** Each position has two or three coordinates; the decoder rejects one or four coordinates.\n- **AND** The decoder accepts longitude from -180 to 180 degrees and latitude from -90 to 90 degrees and returns coordinates.\n- **AND** The decoder rejects a null position with the geographic position error.\n- **AND** The decoder keeps negative zero for a supplied height.\n- **AND** The decoder rejects an invalid second coordinate and an invalid second line position."
+            },
+            {
+              "rawText": "- **WHEN** a geometry supplies a line or ring\n- **THEN** the decoder rejects short lines, short rings and rings with unequal end positions\n- **AND** The decoder rejects a null line with the line error.\n- **AND** The decoder returns an open line with unequal end positions."
+            },
+            {
+              "rawText": "- **WHEN** a collection contains geometry\n- **THEN** the decoder returns IDs, geometry types and coordinates without properties\n- **AND** The decoder rejects unsupported or absent geometry and accepts at most 128 polygon rings.\n- **AND** The decoder rejects an unclosed second polygon ring."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.",
+      "requirement": {
+        "text": "The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller creates a session or assigns a new value to the public data pack limits\n- **THEN** the session starts with the idle state. The load method of the session checks data pack lists before asset work and rejects an invalid data pack list.\n- **AND** The session rejects more than eight data packs and checks every declaration before the first source call.\n- **AND** The load call returns false for a destroyed session or a cancelled signal.\n- **AND** The public data pack limits throw a TypeError when a caller assigns a new value.\n- **AND** After the caller destroys the session, a new load call does not read the caller signal state.\n- **AND** An empty data pack list returns true without a source call or a deadline timer.\n- **AND** An absent source map or renderer map gives an empty registry.\n- **AND** The session reads source entries before renderer entries.\n- **AND** The session calls each source by `pack.source.adapter` and each renderer by `pack.format`. The source map and the renderer map each contain two entries.\n- **AND** The session checks the data pack list before it reads anchors. It checks declarations before it reads the caller signal.\n- **AND** During source cancellation, a destroyed session returns false for another load call.\n- **AND** An invalid second declaration gives its indexed error before the source call."
+          },
+          {
+            "rawText": "- **WHEN** a session loads assets\n- **THEN** after success, the session reports the ready state and disposes its handles when the caller clears or destroys it\n- **AND** The session rejects a null handle or a handle without a dispose function.\n- **AND** During asset work, the session reports the loading state.\n- **AND** The session keeps its state after the caller changes a returned state object.\n- **AND** The session removes the deadline timer after success.\n- **AND** The session also removes that timer after the caller clears the session.\n\n- **AND** The session removes source listeners after success or a source error.\n- **AND** The session does not read the signal reason for a completed source listener after success or a source error.\n- **AND** The session removes the caller signal listener when the caller clears it.\n- **AND** The session installs that listener with the once option set to true.\n- **AND** The session attaches the source listener, checks the source signal state and reads the work promise in that order.\n- **AND** The session does not read the signal reason for a completed source when the promise settles.\n- **AND** The session attaches the caller listener before the deadline timer starts.\n- **AND** The session checks the signal before it removes the timer. It removes the timer before it reports the ready state.\n- **AND** The session reports idle before source cancellation.\n- **AND** The session cancels the source, removes the caller listener, removes the timer and disposes resources in that order."
+          },
+          {
+            "rawText": "- **WHEN** a caller cancels asset work, or source or renderer work fails\n- **THEN** for cancellation, the session returns false and disposes late renderer resources\n- **AND** The session checks its source signal before it reads bytes and after renderer work.\n- **AND** The session does not read the caller signal state again for a cleared load call after cancellation.\n- **AND** The session rejects source errors before the renderer call and rejects null bytes or a null renderer handle.\n- **AND** After the caller clears the session, the session does not read the old source signal state and returns false.\n- **AND** The session returns false when the caller signal destroys the session after a source error.\n- **AND** The session returns false for a caller event during listener registration."
+          },
+          {
+            "rawText": "- **WHEN** a caller starts a new load call\n- **THEN** the session returns false for old work that is not complete and keeps the new resources\n- **AND** The session disposes old resources before it checks the new data pack list and rejects an invalid data pack list."
+          },
+          {
+            "rawText": "- **WHEN** a source fails, a source signal event stops work, or the asset deadline expires\n- **THEN** the session removes partial resources and reports a stable error\n- **AND** With no registered source and a byteLength field in the declaration, the session reads that field once, during validation\n- **AND** The session sets a default deadline of 15000 milliseconds.\n- **AND** The session sets the source signal reason to Asset load timed out when the deadline expires.\n- **AND** With no renderer, the session does not call the registered source.\n- **AND** The session disposes each partial resource when the deadline expires.\n- **AND** The session rejects the load call before the renderer call for a source signal event.\n- **AND** The session reads the source signal reason once when a source signal event stops work.\n- **AND** The session rejects the load call before the renderer call for a source signal event during listener removal after source success or an error.\n- **AND** The session does not read the global `error` property for a data pack failure."
+          },
+          {
+            "rawText": "- **WHEN** a source returns bytes for a data pack\n- **THEN** the session checks byte type, size, total bytes and declared integrity before the renderer call and rejects an invalid asset.\n- **AND** The session accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns true.\n- **AND** The source receives the source path and the byteLength field or the default byte limit.\n- **AND** The renderer receives the asset and the signal of the source call.\n- **AND** The renderer also receives the data pack and the scene anchors.\n- **AND** The session checks the byte type before it reads the length of an invalid byte object.\n- **AND** With null bytes, the session does not read the declared byteLength field again.\n- **AND** Without a declared byteLength field, the session does not compare bytes with that field.\n- **AND** The session checks total bytes before it reads the declared digest.\n- **AND** The session accepts a data pack that refers to the second supplied anchor and returns true."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller creates a session or assigns a new value to the public data pack limits\n- **THEN** the session starts with the idle state. The load method of the session checks data pack lists before asset work and rejects an invalid data pack list.\n- **AND** The session rejects more than eight data packs and checks every declaration before the first source call.\n- **AND** The load call returns false for a destroyed session or a cancelled signal.\n- **AND** The public data pack limits throw a TypeError when a caller assigns a new value.\n- **AND** After the caller destroys the session, a new load call does not read the caller signal state.\n- **AND** An empty data pack list returns true without a source call or a deadline timer.\n- **AND** An absent source map or renderer map gives an empty registry.\n- **AND** The session reads source entries before renderer entries.\n- **AND** The session calls each source by `pack.source.adapter` and each renderer by `pack.format`. The source map and the renderer map each contain two entries.\n- **AND** The session checks the data pack list before it reads anchors. It checks declarations before it reads the caller signal.\n- **AND** During source cancellation, a destroyed session returns false for another load call.\n- **AND** An invalid second declaration gives its indexed error before the source call."
+            },
+            {
+              "rawText": "- **WHEN** a session loads assets\n- **THEN** after success, the session reports the ready state and disposes its handles when the caller clears or destroys it\n- **AND** The session rejects a null handle or a handle without a dispose function.\n- **AND** During asset work, the session reports the loading state.\n- **AND** The session keeps its state after the caller changes a returned state object.\n- **AND** The session removes the deadline timer after success.\n- **AND** The session also removes that timer after the caller clears the session.\n\n- **AND** The session removes source listeners after success or a source error.\n- **AND** The session does not read the signal reason for a completed source listener after success or a source error.\n- **AND** The session removes the caller signal listener when the caller clears it.\n- **AND** The session installs that listener with the once option set to true.\n- **AND** The session attaches the source listener, checks the source signal state and reads the work promise in that order.\n- **AND** The session does not read the signal reason for a completed source when the promise settles.\n- **AND** The session attaches the caller listener before the deadline timer starts.\n- **AND** The session checks the signal before it removes the timer. It removes the timer before it reports the ready state.\n- **AND** The session reports idle before source cancellation.\n- **AND** The session cancels the source, removes the caller listener, removes the timer and disposes resources in that order."
+            },
+            {
+              "rawText": "- **WHEN** a caller cancels asset work, or source or renderer work fails\n- **THEN** for cancellation, the session returns false and disposes late renderer resources\n- **AND** The session checks its source signal before it reads bytes and after renderer work.\n- **AND** The session does not read the caller signal state again for a cleared load call after cancellation.\n- **AND** The session rejects source errors before the renderer call and rejects null bytes or a null renderer handle.\n- **AND** After the caller clears the session, the session does not read the old source signal state and returns false.\n- **AND** The session returns false when the caller signal destroys the session after a source error.\n- **AND** The session returns false for a caller event during listener registration."
+            },
+            {
+              "rawText": "- **WHEN** a caller starts a new load call\n- **THEN** the session returns false for old work that is not complete and keeps the new resources\n- **AND** The session disposes old resources before it checks the new data pack list and rejects an invalid data pack list."
+            },
+            {
+              "rawText": "- **WHEN** a source fails, a source signal event stops work, or the asset deadline expires\n- **THEN** the session removes partial resources and reports a stable error\n- **AND** With no registered source and a byteLength field in the declaration, the session reads that field once, during validation\n- **AND** The session sets a default deadline of 15000 milliseconds.\n- **AND** The session sets the source signal reason to Asset load timed out when the deadline expires.\n- **AND** With no renderer, the session does not call the registered source.\n- **AND** The session disposes each partial resource when the deadline expires.\n- **AND** The session rejects the load call before the renderer call for a source signal event.\n- **AND** The session reads the source signal reason once when a source signal event stops work.\n- **AND** The session rejects the load call before the renderer call for a source signal event during listener removal after source success or an error.\n- **AND** The session does not read the global `error` property for a data pack failure."
+            },
+            {
+              "rawText": "- **WHEN** a source returns bytes for a data pack\n- **THEN** the session checks byte type, size, total bytes and declared integrity before the renderer call and rejects an invalid asset.\n- **AND** The session accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns true.\n- **AND** The source receives the source path and the byteLength field or the default byte limit.\n- **AND** The renderer receives the asset and the signal of the source call.\n- **AND** The renderer also receives the data pack and the scene anchors.\n- **AND** The session checks the byte type before it reads the length of an invalid byte object.\n- **AND** With null bytes, the session does not read the declared byteLength field again.\n- **AND** Without a declared byteLength field, the session does not compare bytes with that field.\n- **AND** The session checks total bytes before it reads the declared digest.\n- **AND** The session accepts a data pack that refers to the second supplied anchor and returns true."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The directory source MUST use its directory URL and reject bytes above the asset limit.",
+      "requirement": {
+        "text": "The directory source MUST use its directory URL and reject bytes above the asset limit.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller registers an asset directory\n- **THEN** the factory rejects a directory outside HTTP or HTTPS, or with credentials, query or fragment\n- **AND** The factory rejects a directory URL without a final slash.\n- **AND** The factory rejects a directory URL that uses the file protocol."
+          },
+          {
+            "rawText": "- **WHEN** a caller asks for an asset path\n- **THEN** the source checks the path before it checks the caller signal and rejects an invalid path.\n- **AND** For a safe path, the source calls fetch with the registered directory and fixed request options.\n- **AND** The source calls fetch with no credentials, redirects as errors, no referrer and no cache.\n- **AND** Without a caller fetch function, the source calls the global fetch function."
+          },
+          {
+            "rawText": "- **WHEN** a source reads an asset stream\n- **THEN** the source checks header and stream byte limits and joins its chunks\n- **AND** The source removes media type parameters and space, and changes the media type to lowercase text.\n- **AND** The source returns empty text for an absent media type.\n- **AND** The source joins chunks of different byte lengths in their original order.\n- **AND** The source checks the header byte limit before it reads the first stream chunk.\n- **AND** The source checks the stream byte limit before it keeps a chunk."
+          },
+          {
+            "rawText": "- **WHEN** an asset request fails or its signal stops it\n- **THEN** the source rejects the asset request and releases stream resources\n- **AND** The source waits for stream cancellation before it releases the reader lock.\n- **AND** For an HTTP error, the source waits for body cancellation before it rejects the asset request.\n- **AND** The source checks its signal before each time the source reads a stream chunk and rejects cancellation.\n- **AND** With two stream chunks, cancellation before the second chunk stops the source, and the source reads only the first chunk."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The directory source MUST use its directory URL and reject bytes above the asset limit.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller registers an asset directory\n- **THEN** the factory rejects a directory outside HTTP or HTTPS, or with credentials, query or fragment\n- **AND** The factory rejects a directory URL without a final slash.\n- **AND** The factory rejects a directory URL that uses the file protocol."
+            },
+            {
+              "rawText": "- **WHEN** a caller asks for an asset path\n- **THEN** the source checks the path before it checks the caller signal and rejects an invalid path.\n- **AND** For a safe path, the source calls fetch with the registered directory and fixed request options.\n- **AND** The source calls fetch with no credentials, redirects as errors, no referrer and no cache.\n- **AND** Without a caller fetch function, the source calls the global fetch function."
+            },
+            {
+              "rawText": "- **WHEN** a source reads an asset stream\n- **THEN** the source checks header and stream byte limits and joins its chunks\n- **AND** The source removes media type parameters and space, and changes the media type to lowercase text.\n- **AND** The source returns empty text for an absent media type.\n- **AND** The source joins chunks of different byte lengths in their original order.\n- **AND** The source checks the header byte limit before it reads the first stream chunk.\n- **AND** The source checks the stream byte limit before it keeps a chunk."
+            },
+            {
+              "rawText": "- **WHEN** an asset request fails or its signal stops it\n- **THEN** the source rejects the asset request and releases stream resources\n- **AND** The source waits for stream cancellation before it releases the reader lock.\n- **AND** For an HTTP error, the source waits for body cancellation before it rejects the asset request.\n- **AND** The source checks its signal before each time the source reads a stream chunk and rejects cancellation.\n- **AND** With two stream chunks, cancellation before the second chunk stops the source, and the source reads only the first chunk."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The bundle helpers MUST check supplied assets and keep the source project.",
+      "requirement": {
+        "text": "The bundle helpers MUST check supplied assets and keep the source project.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller supplies project share text\n- **THEN** the import rejects invalid text type, excess bytes and invalid JSON syntax\n- **AND** The import rejects null and invalid projects.\n- **AND** The import rejects text above 52428800 characters or 52428800 UTF8 bytes.\n- **AND** The import reports `$: invalid JSON` for invalid JSON within the share text limit.\n- **AND** For project JSON without bundle format, the import returns the project and an empty asset Map."
+          },
+          {
+            "rawText": "- **WHEN** a caller supplies bundle assets\n- **THEN** the import rejects invalid fields, paths, media types, duplicate paths and invalid base64 syntax\n- **AND** The import accepts at most 64 assets and returns assets. The import rejects 65 different paths.\n- **AND** The import accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns assets.\n- **AND** The import rejects base64 above 11184812 characters.\n- **AND** The import rejects a bundle version other than 1.\n- **AND** The import rejects extra top-level fields and invalid bundle projects.\n- **AND** The import starts asset field, count, byte, media type, base64 and digest errors with `assets`.\n- **AND** The import starts each asset path error with `source.path`.\n- **AND** The import accepts the standard base64 alphabet, with + and /, and returns assets. The import rejects an equals sign at the start.\n- **AND** The import accepts each standard base64 character in both plain and padded text and returns assets.\n- **AND** The import checks the base64 type before it converts text and rejects an invalid asset.\n- **AND** The import checks top-level fields, version, project and the asset list in that order and rejects an invalid bundle.\n- **AND** The import checks asset fields, path, media type, duplicate path and base64 in that order and rejects an invalid asset.\n- **AND** The import checks asset byte limits before the digest call and rejects an invalid asset.\n- **AND** The import accepts these media types and returns assets: application/json, application/geo+json, image/png, video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav and audio/webm.\n- **AND** The import rejects image/svg+xml."
+          },
+          {
+            "rawText": "- **WHEN** a bundle declares data pack assets\n- **THEN** the import rejects incorrect asset digests and incorrect data pack references\n- **AND** The import starts each data pack reference error with `project`."
+          },
+          {
+            "rawText": "- **WHEN** a caller exports a project with supplied assets\n- **THEN** the export copies the project and writes bundle paths, byte lengths and digests\n- **AND** The export rejects an invalid project before the resolver call.\n- **AND** The export calls the resolver with the data pack and the signal in its options object.\n- **AND** The export writes a path with at most 160 characters from the source filename.\n- **AND** The export writes each path with files/, the asset index from zero, and a dash before the filename.\n- **AND** The export writes source, byteLength and digest fields in that order.\n- **AND** The export does not read byte chunks past the asset end.\n- **AND** The export calls the filename slice with a start of zero and a length limit of 160.\n- **AND** The export writes assets for data packs from the second scene."
+          },
+          {
+            "rawText": "- **WHEN** a caller supplies assets for bundle export or assigns a new value to the share limits\n- **THEN** the export rejects excess bytes, unsupported media types, excess assets and incorrect declared integrity\n- **AND** The export accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns bundle text.\n- **AND** The export rejects an unsupported media type during export.\n- **AND** The share limits throw a TypeError when a caller assigns a new value.\n- **AND** The export starts each asset error with `assets`.\n- **AND** The export checks byte type and per-asset size before the total size and rejects an invalid asset.\n- **AND** The export checks declared byteLength before the declared digest and rejects an invalid asset.\n- **AND** For numeric byte lengths, the export adds zero to the total for an asset without a byte length.\n- **AND** When the declared digest is absent, the export reads the digest field once before it writes the digest.\n- **AND** The export starts each text limit error with `$`.\n- **AND** The export checks declared integrity before it reads the filename.\n- **AND** The export checks the asset count before the next resolver call and rejects more than 64 assets.\n- **AND** The export checks bytes before media type, and media type before the digest call and rejects an invalid asset."
+          },
+          {
+            "rawText": "- **WHEN** data packs use the same source and path\n- **THEN** the export writes one asset and rejects integrity declarations that differ\n- **AND** The export starts each shared asset integrity error with `assets`."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The bundle helpers MUST check supplied assets and keep the source project.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller supplies project share text\n- **THEN** the import rejects invalid text type, excess bytes and invalid JSON syntax\n- **AND** The import rejects null and invalid projects.\n- **AND** The import rejects text above 52428800 characters or 52428800 UTF8 bytes.\n- **AND** The import reports `$: invalid JSON` for invalid JSON within the share text limit.\n- **AND** For project JSON without bundle format, the import returns the project and an empty asset Map."
+            },
+            {
+              "rawText": "- **WHEN** a caller supplies bundle assets\n- **THEN** the import rejects invalid fields, paths, media types, duplicate paths and invalid base64 syntax\n- **AND** The import accepts at most 64 assets and returns assets. The import rejects 65 different paths.\n- **AND** The import accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns assets.\n- **AND** The import rejects base64 above 11184812 characters.\n- **AND** The import rejects a bundle version other than 1.\n- **AND** The import rejects extra top-level fields and invalid bundle projects.\n- **AND** The import starts asset field, count, byte, media type, base64 and digest errors with `assets`.\n- **AND** The import starts each asset path error with `source.path`.\n- **AND** The import accepts the standard base64 alphabet, with + and /, and returns assets. The import rejects an equals sign at the start.\n- **AND** The import accepts each standard base64 character in both plain and padded text and returns assets.\n- **AND** The import checks the base64 type before it converts text and rejects an invalid asset.\n- **AND** The import checks top-level fields, version, project and the asset list in that order and rejects an invalid bundle.\n- **AND** The import checks asset fields, path, media type, duplicate path and base64 in that order and rejects an invalid asset.\n- **AND** The import checks asset byte limits before the digest call and rejects an invalid asset.\n- **AND** The import accepts these media types and returns assets: application/json, application/geo+json, image/png, video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav and audio/webm.\n- **AND** The import rejects image/svg+xml."
+            },
+            {
+              "rawText": "- **WHEN** a bundle declares data pack assets\n- **THEN** the import rejects incorrect asset digests and incorrect data pack references\n- **AND** The import starts each data pack reference error with `project`."
+            },
+            {
+              "rawText": "- **WHEN** a caller exports a project with supplied assets\n- **THEN** the export copies the project and writes bundle paths, byte lengths and digests\n- **AND** The export rejects an invalid project before the resolver call.\n- **AND** The export calls the resolver with the data pack and the signal in its options object.\n- **AND** The export writes a path with at most 160 characters from the source filename.\n- **AND** The export writes each path with files/, the asset index from zero, and a dash before the filename.\n- **AND** The export writes source, byteLength and digest fields in that order.\n- **AND** The export does not read byte chunks past the asset end.\n- **AND** The export calls the filename slice with a start of zero and a length limit of 160.\n- **AND** The export writes assets for data packs from the second scene."
+            },
+            {
+              "rawText": "- **WHEN** a caller supplies assets for bundle export or assigns a new value to the share limits\n- **THEN** the export rejects excess bytes, unsupported media types, excess assets and incorrect declared integrity\n- **AND** The export accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns bundle text.\n- **AND** The export rejects an unsupported media type during export.\n- **AND** The share limits throw a TypeError when a caller assigns a new value.\n- **AND** The export starts each asset error with `assets`.\n- **AND** The export checks byte type and per-asset size before the total size and rejects an invalid asset.\n- **AND** The export checks declared byteLength before the declared digest and rejects an invalid asset.\n- **AND** For numeric byte lengths, the export adds zero to the total for an asset without a byte length.\n- **AND** When the declared digest is absent, the export reads the digest field once before it writes the digest.\n- **AND** The export starts each text limit error with `$`.\n- **AND** The export checks declared integrity before it reads the filename.\n- **AND** The export checks the asset count before the next resolver call and rejects more than 64 assets.\n- **AND** The export checks bytes before media type, and media type before the digest call and rejects an invalid asset."
+            },
+            {
+              "rawText": "- **WHEN** data packs use the same source and path\n- **THEN** the export writes one asset and rejects integrity declarations that differ\n- **AND** The export starts each shared asset integrity error with `assets`."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The byte store MUST copy the asset map and return byte copies.",
+      "requirement": {
+        "text": "The byte store MUST copy the asset map and return byte copies.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller replaces or clears bundle bytes\n- **THEN** the store copies the map and reports its current byte total\n- **AND** With no replacement map, the store reports zero assets and zero bytes.\n- **AND** The store returns a separate snapshot map with the stored keys and byte values.\n- **AND** The store counts the bytes of the second stored asset."
+          },
+          {
+            "rawText": "- **WHEN** a caller asks for stored bundle bytes\n- **THEN** the store returns a byte copy and rejects absent or excess bytes and a cancelled source call\n- **AND** The store accepts bytes equal to the caller limit and rejects one more byte.\n- **AND** Without a caller limit, the store accepts an asset of 8388608 bytes and returns a byte copy.\n- **AND** The store rejects an invalid path even when the store holds that path.\n- **AND** The store checks its signal before it checks the path and rejects cancellation."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The byte store MUST copy the asset map and return byte copies.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller replaces or clears bundle bytes\n- **THEN** the store copies the map and reports its current byte total\n- **AND** With no replacement map, the store reports zero assets and zero bytes.\n- **AND** The store returns a separate snapshot map with the stored keys and byte values.\n- **AND** The store counts the bytes of the second stored asset."
+            },
+            {
+              "rawText": "- **WHEN** a caller asks for stored bundle bytes\n- **THEN** the store returns a byte copy and rejects absent or excess bytes and a cancelled source call\n- **AND** The store accepts bytes equal to the caller limit and rejects one more byte.\n- **AND** Without a caller limit, the store accepts an asset of 8388608 bytes and returns a byte copy.\n- **AND** The store rejects an invalid path even when the store holds that path.\n- **AND** The store checks its signal before it checks the path and rejects cancellation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The share helpers MUST check file limits and settle signal cancellation.",
+      "requirement": {
+        "text": "The share helpers MUST check file limits and settle signal cancellation.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller supplies a project file\n- **THEN** the share helpers check the file suffix and size before they read text\n- **AND** The share helpers reject a file above 5242880 bytes, except a file with the .gevbundle.json suffix. They reject that file above 52428800 bytes.\n- **AND** The share helpers accept the limit and reject one more byte.\n- **AND** The share helpers check the file limit before they read the signal and reject excess files."
+          },
+          {
+            "rawText": "- **WHEN** share work uses a signal\n- **THEN** the helper rejects cancelled work and settles successful work or errors\n- **AND** The bundle helpers check the signal before each asset and after each digest during import and export. They reject cancellation.\n- **AND** During export, the bundle helpers also check the signal after the asset result and reject cancellation.\n\n- **AND** The helper removes its listener after success, a work error or cancellation.\n- **AND** The import checks the signal before text type, asset fields and digest comparison and rejects cancellation.\n- **AND** The share helpers check the signal before they read text and after the text promise settles. They reject cancellation.\n- **AND** During export, the bundle helpers check the signal before they check asset presence and declared integrity and reject cancellation.\n- **AND** The helper does not attach a listener to a cancelled signal.\n- **AND** The helper attaches its listener before it reads the work promise.\n- **AND** The helper reads cancelled work before the reason, and removes its listener before it reads the reason.\n- **AND** The helper checks cancellation after listener removal and before the work settles with success.\n- **AND** For cancellation during listener removal after a work error, the helper rejects with the cancellation reason.\n- **AND** With two assets, the import calls the digest function once when cancellation occurs before the second digest call.\n- **AND** With two data packs, the export calls the resolver once when cancellation occurs before the second resolver call."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The share helpers MUST check file limits and settle signal cancellation.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller supplies a project file\n- **THEN** the share helpers check the file suffix and size before they read text\n- **AND** The share helpers reject a file above 5242880 bytes, except a file with the .gevbundle.json suffix. They reject that file above 52428800 bytes.\n- **AND** The share helpers accept the limit and reject one more byte.\n- **AND** The share helpers check the file limit before they read the signal and reject excess files."
+            },
+            {
+              "rawText": "- **WHEN** share work uses a signal\n- **THEN** the helper rejects cancelled work and settles successful work or errors\n- **AND** The bundle helpers check the signal before each asset and after each digest during import and export. They reject cancellation.\n- **AND** During export, the bundle helpers also check the signal after the asset result and reject cancellation.\n\n- **AND** The helper removes its listener after success, a work error or cancellation.\n- **AND** The import checks the signal before text type, asset fields and digest comparison and rejects cancellation.\n- **AND** The share helpers check the signal before they read text and after the text promise settles. They reject cancellation.\n- **AND** During export, the bundle helpers check the signal before they check asset presence and declared integrity and reject cancellation.\n- **AND** The helper does not attach a listener to a cancelled signal.\n- **AND** The helper attaches its listener before it reads the work promise.\n- **AND** The helper reads cancelled work before the reason, and removes its listener before it reads the reason.\n- **AND** The helper checks cancellation after listener removal and before the work settles with success.\n- **AND** For cancellation during listener removal after a work error, the helper rejects with the cancellation reason.\n- **AND** With two assets, the import calls the digest function once when cancellation occurs before the second digest call.\n- **AND** With two data packs, the export calls the resolver once when cancellation occurs before the second resolver call."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The preview MUST report project content and dependencies.",
+      "requirement": {
+        "text": "The preview MUST report project content and dependencies.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller describes a shared project\n- **THEN** the preview reports scene, shot and byte totals with data pack attribution\n- **AND** The preview counts the second scene and the second shot, and lists the second data pack. The preview adds the bytes of the second asset to the byte total."
+          },
+          {
+            "rawText": "- **WHEN** a preview describes a data pack source\n- **THEN** the preview reports included, absent, configured or unavailable source states\n- **AND** Without source IDs, the preview reports every external source as unavailable."
+          },
+          {
+            "rawText": "- **WHEN** a preview describes scene dependencies\n- **THEN** the preview reports absent layers and whether a scene has applied shot packs or a shot has a source pack ID\n- **AND** The preview lists each absent layer once, even when two shots name that layer.\n- **AND** Without layer IDs, the preview reports every named layer as absent.\n- **AND** With applied shot packs, the preview does not read source pack IDs to decide whether the scene has external content.\n- **AND** The preview reports the absent layers of the second shot in the second scene. It reports external content from the source pack ID of that shot."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The preview MUST report project content and dependencies.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller describes a shared project\n- **THEN** the preview reports scene, shot and byte totals with data pack attribution\n- **AND** The preview counts the second scene and the second shot, and lists the second data pack. The preview adds the bytes of the second asset to the byte total."
+            },
+            {
+              "rawText": "- **WHEN** a preview describes a data pack source\n- **THEN** the preview reports included, absent, configured or unavailable source states\n- **AND** Without source IDs, the preview reports every external source as unavailable."
+            },
+            {
+              "rawText": "- **WHEN** a preview describes scene dependencies\n- **THEN** the preview reports absent layers and whether a scene has applied shot packs or a shot has a source pack ID\n- **AND** The preview lists each absent layer once, even when two shots name that layer.\n- **AND** Without layer IDs, the preview reports every named layer as absent.\n- **AND** With applied shot packs, the preview does not read source pack IDs to decide whether the scene has external content.\n- **AND** The preview reports the absent layers of the second shot in the second scene. It reports external content from the source pack ID of that shot."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+Warning: Ignoring flags not applicable to change: scenarios

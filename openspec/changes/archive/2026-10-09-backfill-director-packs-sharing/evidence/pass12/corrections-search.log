@@ -1,0 +1,17 @@
+Command: rg -n 14\.16 |14\.17 |14\.19 |14\.20 |14\.21 |14\.22 |14\.23 |Pass 11 adds three|Signal check after the text promise settles|Known limit `digest|Known limit `second|## Final complete hand command in pass 7|At Pass 10, the record says: The worker removed openspec/changes/backfill-director-packs-sharing/tasks.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/proposal.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/evidence.md
+openspec/changes/backfill-director-packs-sharing/evidence.md:9864:| W5; more false claims | At Pass 10, the record says: The worker removed redirect rejection, a replacement result, a ready state result and order clauses without assertions. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+openspec/changes/backfill-director-packs-sharing/evidence.md:16846:| S1 | Task 14.16 names one check group. Separate tasks name the other checks and corrections. | `ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf` |
+openspec/changes/backfill-director-packs-sharing/evidence.md:17039:-### Final complete hand command in pass 7
+openspec/changes/backfill-director-packs-sharing/evidence.md:17040:+## Final complete hand command in pass 7
+openspec/changes/backfill-director-packs-sharing/mutations.md:14578:## Final complete hand command in pass 7
+openspec/changes/backfill-director-packs-sharing/design.md:226:Pass 11 adds three rows to the table: clear call, destroy call and text promise.
+openspec/changes/backfill-director-packs-sharing/proposal.md:75:- Known limit `digest-asset-result-check-order`: spec.md lines 383 and 384 state the two clauses below.
+openspec/changes/backfill-director-packs-sharing/proposal.md:80:- Known limit `second-text-signal-error`: spec.md line 388 states the clause below.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1592:- [x] 14.16 Run lint and the banned word scan.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1593:- [x] 14.17 Run the host format check.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1595:- [x] 14.19 Compare source edits with the source commit.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1596:- [x] 14.20 Correct the task label.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1597:- [x] 14.21 Run the predispatch check.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1598:- [x] 14.22 Run the title check.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1599:- [x] 14.23 Compare document headings with the source commit.
+openspec/changes/backfill-director-packs-sharing/audit.md:528:| Signal check after the text promise settles | src/director/sharing/bundle.js:128 | [director-107] The share helpers check the signal after the text promise settles | m480 |

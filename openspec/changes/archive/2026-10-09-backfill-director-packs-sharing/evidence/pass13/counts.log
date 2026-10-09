@@ -1,0 +1,16 @@
+Command: python3 /tmp/pass13-counts.py
+{
+  "sourceCommit": "52d8eb8acb6021ec857b507f306557152522d14e",
+  "handRows": 480,
+  "pastPass11KilledRows": 478,
+  "pastPass11Survivors": [
+    "m172",
+    "m389"
+  ],
+  "tests": {
+    "backfill": 430,
+    "packs": 12,
+    "sharing": 228
+  },
+  "sourceDiffEmpty": true
+}

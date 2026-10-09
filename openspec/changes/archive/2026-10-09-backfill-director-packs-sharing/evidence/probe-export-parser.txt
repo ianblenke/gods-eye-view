@@ -1,0 +1,49 @@
+Base commit: 290b5d2.
+Mutation m389 is equivalent for the public API of the module.
+The serializer validates the same text before the parser reads it again.
+The validation returns the parsed object without a change.
+The probe checks project getters, the signal getter and the resolver call.
+The claim excludes patched built-in functions.
+
+```js
+import assert from 'node:assert/strict';
+import { readFileSync, writeFileSync } from 'node:fs';
+const root='/home/ianblenke/docker/gev-work/director-3/src/director/sharing/';
+const text=readFileSync(root+'bundle.js','utf8').replace(/from '([^']+)'/g,(_,path)=>`from '${new URL(path,'file://'+root).href}'`);
+const outputs=[];
+for(const [label,source] of [['original',text],['m389',text.replace('const copy = parseSceneDocument(stringifySceneDocument(project));','const copy = JSON.parse(stringifySceneDocument(project));')]]) {
+ const {createSceneBundle}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+ let reads=0,calls=0,signalReads=0;
+ const controller=new AbortController();
+ const pack={id:'data',version:1,format:'geojson',source:{adapter:'assets',path:'x'},attribution:{text:'A',license:'CC0'},placement:{altitudeReference:'ellipsoid'}};
+ const project={version:6,get scenes(){reads++;return [{id:'one',dataPacks:[pack],shots:[]}];}};
+ const options={get signal(){signalReads++;return controller.signal;}};
+ const value=JSON.parse(await createSceneBundle(project,(copy,options)=>{
+  calls++;
+  assert.notEqual(copy,pack);
+  assert.equal(copy.id,'data');
+  assert.equal(options.signal,controller.signal);
+  return {bytes:new Uint8Array([1]),mimeType:'application/json'};
+ },options));
+ assert.equal(reads,1);assert.equal(calls,1);assert.equal(signalReads,1);
+ const legacy=JSON.parse(await createSceneBundle({version:1,scenes:[]},()=>{throw new Error('unexpected');}));
+ assert.equal(legacy.project.version,1);
+ let error;
+ try {await createSceneBundle({version:99,scenes:[]},()=>{throw new Error('unexpected');});}catch(e){error=e.message;}
+ assert.equal(error,'$.version: unsupported scene project version');
+ outputs.push({label,reads,calls,signalReads,version:legacy.project.version,error,value});
+}
+assert.deepEqual({...outputs[0],label:'same'},{...outputs[1],label:'same'});
+const output=outputs.map(({value,...rest})=>JSON.stringify(rest)).join('\n');
+const report='Base commit: 290b5d2.\nMutation m389 is equivalent for the public API of the module.\nThe serializer validates the same text before the parser reads it again.\nThe validation returns the parsed object without a change.\nThe probe checks project getters, the signal getter and the resolver call.\nThe claim excludes patched built-in functions.\n\n```js\n'+readFileSync(import.meta.filename,'utf8')+'\n```\n\nCommand output:\n\n```text\n'+output+'\n```\n';
+writeFileSync('openspec/changes/backfill-director-packs-sharing/evidence/probe-export-parser.txt',report);
+console.log(output);
+
+```
+
+Command output:
+
+```text
+{"label":"original","reads":1,"calls":1,"signalReads":1,"version":1,"error":"$.version: unsupported scene project version"}
+{"label":"m389","reads":1,"calls":1,"signalReads":1,"version":1,"error":"$.version: unsupported scene project version"}
+```

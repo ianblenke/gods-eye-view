@@ -56,7 +56,7 @@ test('v5 packs and shot references round trip through project migration without 
   }
 });
 
-test('manifest rejects duplicate/unknown IDs, unsupported placement and request or credential syntax', () => {
+test('[director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials', () => {
   const mutations = [
     (s) => {
       s.dataPacks = null;
@@ -90,7 +90,7 @@ test('manifest rejects duplicate/unknown IDs, unsupported placement and request 
   assert.throws(() => parseSceneDocument(JSON.stringify(old)));
 });
 
-test('image bounds and media anchor references are explicit and validated', () => {
+test('[director-080] The manifest checks given image bounds and media anchor references', () => {
   const p = project(),
     s = p.scenes[0],
     a = s.dataPacks[0];
@@ -112,7 +112,7 @@ test('image bounds and media anchor references are explicit and validated', () =
   assert.doesNotThrow(() => parseSceneDocument(JSON.stringify(p)));
 });
 
-test('directory source confines paths, strips credentials and rejects redirects, oversized streaming bodies and missing assets', async () => {
+test('[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets', async () => {
   const requests = [];
   const source = createAssetDirectorySource({
     baseUrl: 'https://assets.example.org/packs/',
@@ -125,7 +125,7 @@ test('directory source confines paths, strips credentials and rejects redirects,
   });
   assert.deepEqual(
     (await source({ path: 'a/data.json' })).bytes,
-    asset().bytes,
+    new Uint8Array([1, 2, 3]),
   );
   assert.equal(requests[0][0], 'https://assets.example.org/packs/a/data.json');
   assert.equal(requests[0][1].credentials, 'omit');
@@ -141,7 +141,7 @@ test('directory source confines paths, strips credentials and rejects redirects,
   await assert.rejects(missing({ path: 'a' }), /unavailable/);
 });
 
-test('GeoJSON preserves stable geometry IDs but never properties or remote style hints', () => {
+test('[director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints', () => {
   const data = {
     type: 'FeatureCollection',
     features: [
@@ -177,7 +177,7 @@ test('GeoJSON preserves stable geometry IDs but never properties or remote style
   assert.throws(decode, /ring/);
 });
 
-test('pack session removes presentations and cancels the transport on Stop', async () => {
+test('[director-089] The session disposes resources and aborts the source signal after the clear and destroy calls', async () => {
   let disposed = 0,
     signal;
   const session = createDataPackSession({
@@ -204,7 +204,7 @@ test('pack session removes presentations and cancels the transport on Stop', asy
   assert.equal(session.getState().count, 0);
 });
 
-test('replacing a pending source settles promptly and ignores its late bytes', async () => {
+test('[director-091] The data pack session replaces source work and ignores its late bytes', async () => {
   const first = deferred();
   let mounted = 0,
     calls = 0;
@@ -231,7 +231,7 @@ test('replacing a pending source settles promptly and ignores its late bytes', a
   assert.equal(mounted, 0);
 });
 
-test('late renderer resources are disposed after cancellation without mutating a replacement', async () => {
+test('[director-090] The data pack session disposes late renderer resources after cancellation', async () => {
   const rendering = deferred();
   let disposed = 0;
   const entered = deferred();
@@ -257,7 +257,7 @@ test('late renderer resources are disposed after cancellation without mutating a
   assert.equal(disposed, 1);
 });
 
-test('an abort between renderer settlement and continuation cannot leak the returned resource', async () => {
+test('[director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result', async () => {
   const controller = new AbortController();
   let disposed = 0;
   const session = createDataPackSession({
@@ -281,7 +281,7 @@ test('an abort between renderer settlement and continuation cannot leak the retu
   assert.equal(session.getState().count, 0);
 });
 
-test('timeout settles an uncooperative adapter and failed packs roll back earlier resources', async () => {
+test('[director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources', async () => {
   const session = createDataPackSession({
     timeoutMs: 10,
     sources: { assets: () => new Promise(() => {}) },
@@ -314,7 +314,7 @@ test('timeout settles an uncooperative adapter and failed packs roll back earlie
   assert.equal(rollback.getState().count, 0);
 });
 
-test('byte and integrity checks run before rendering; adapter names never resolve inherited properties', async () => {
+test('[director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names', async () => {
   let mounted = 0;
   const session = createDataPackSession({
     sources: { assets: asset },
@@ -339,7 +339,7 @@ test('byte and integrity checks run before rendering; adapter names never resolv
   session.destroy();
 });
 
-test('failed responses release their body and an already-cancelled source sends no request', async () => {
+test('[director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal', async () => {
   let cancelled = 0,
     requests = 0;
   const source = createAssetDirectorySource({

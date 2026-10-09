@@ -1,0 +1,117 @@
+Base commit: 290b5d2.
+This probe uses the public API of the module.
+No scenario states this behavior.
+
+// Commit: 3e1160f47c8d1f63f4b550318134c77fa3f46c5b.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createDataPackSession } from '/home/ianblenke/docker/gev-work/director-3/src/director/packs/session.js';
+import { createAssetDirectorySource } from '/home/ianblenke/docker/gev-work/director-3/src/director/packs/source.js';
+import { decodePackGeoJSON } from '/home/ianblenke/docker/gev-work/director-3/src/director/packs/geojson.js';
+const pack = () => ({
+  id: 'outline',
+  version: 1,
+  format: 'geojson',
+  source: { adapter: 'assets', path: 'example/outline.geojson' },
+  attribution: { text: 'Example author', license: 'CC0-1.0' },
+  placement: { altitudeReference: 'ellipsoid' },
+});
+const asset = () => ({
+  bytes: new Uint8Array([1, 2, 3]),
+  mimeType: 'application/json',
+});
+const deferred = () => {
+  let resolve;
+  const promise = new Promise((r) => {
+    resolve = r;
+  });
+  return { promise, resolve };
+};
+
+import {
+  validateAssetPath,
+  validateDataPack,
+  validateSceneDataPacks,
+} from '/home/ianblenke/docker/gev-work/director-3/src/director/packs/manifest.js';
+const imagePack = () => ({
+  ...pack(),
+  format: 'image',
+  placement: {
+    bounds: [-2, -1, 2, 1],
+    height: 0,
+    altitudeReference: 'ellipsoid',
+  },
+});
+const feature = (id = 'p', type = 'Point', coordinates = [0, 0]) => ({
+  type: 'Feature',
+  id,
+  geometry: { type, coordinates },
+});
+const geo = (value) =>
+  decodePackGeoJSON(new TextEncoder().encode(JSON.stringify(value)));
+const geoFeatures = (features) => geo({ type: 'FeatureCollection', features });
+const tick = () => new Promise((r) => setImmediate(r));
+const makeSession = (
+  source = asset,
+  adapter = () => ({ dispose() {} }),
+  options = {},
+) =>
+  createDataPackSession({
+    sources: { assets: source },
+    adapters: { geojson: adapter },
+    ...options,
+  });
+const response = (
+  chunks = [new Uint8Array([1, 2, 3])],
+  headers = { 'content-type': 'application/json' },
+) =>
+  new Response(
+    new ReadableStream({
+      start(c) {
+        for (const chunk of chunks) c.enqueue(chunk);
+        c.close();
+      },
+    }),
+    { headers },
+  );
+const directory = (fetchImpl) =>
+  createAssetDirectorySource({ baseUrl: 'https://example.org/a/', fetchImpl });
+test('The signal getter allows work after destruction', async () => {
+  let first = true,
+    s,
+    calls = 0;
+  const signal = {
+    get aborted() {
+      if (first) {
+        first = false;
+        s.destroy();
+      }
+      return false;
+    },
+    addEventListener() {},
+    removeEventListener() {},
+  };
+  s = makeSession(() => {
+    calls++;
+    return asset();
+  });
+  try {
+    assert.equal(await s.load([pack()], { signal }), true);
+    assert.equal(calls, 1);
+    assert.deepEqual(s.getState(), { status: 'ready', count: 1 });
+  } finally {
+    s.destroy();
+  }
+});
+
+Command output:
+✔ The position height guard checks its length (14.112404ms)
+✔ The signal getter allows work after destruction (12.478268ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 185.450701
