@@ -311,7 +311,8 @@ These titles are the names in the red logs. Later corrections renamed some title
 
 ## 16. Pass 14
 
-- [ ] 16.1 Correct the faults that pre-review 11 found.
+- [x] 16.1 Correct the major faults that pre-review 11 found.
 - [x] 16.2 Run the tests of `gap-ledger-151`, `gap-ledger-138` and `ownership-055` with four faults.
-- [ ] 16.3 Run the host tests of the whole file `gates.test.mjs` at the final commit.
-- [ ] 16.4 Run the format check, the import direction check, the package boundary check, the layer token check, the lint and OpenSpec validate on the host.
+- [x] 16.3 Run the host tests of the files `gates.test.mjs` and `ledger.test.mjs`.
+- [x] 16.4 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
+- [x] 16.5 Run the lint and OpenSpec validate on the host.
