@@ -1,18 +1,20 @@
 ## 1. Merge and host files
 
-- [x] 1.1 Write the change plan and the delta spec for `qa-scripts-023`.
-- [x] 1.2 Merge the upstream commit.
-- [x] 1.3 Resolve the three conflicts.
-- [x] 1.4 Commit the merge first.
-- [x] 1.5 Change the register test of `qa-scripts-023` to expect 90 files.
+- [x] 1.1 Write the change plan.
+- [x] 1.2 Write the delta spec for `qa-scripts-023`.
+- [x] 1.3 Merge the upstream commit.
+- [x] 1.4 Resolve the three conflicts.
+- [x] 1.5 Commit the merge first.
+- [x] 1.6 Change the register test of `qa-scripts-023` to expect 90 files.
 
 ## 2. Host evidence
 
-- [x] 2.1 Run each test file of `src/tooling/spec` on the host, and run the named tests of `gates.test.mjs`.
-- [x] 2.2 Run each other test file under `src` on the host.
-- [x] 2.3 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
-- [x] 2.4 Run the lint on the host.
-- [x] 2.5 Run `openspec validate` on the host.
+- [x] 2.1 Run each test file of `src/tooling/spec` on the host, except `gates.test.mjs`.
+- [x] 2.2 Run the tests of `gates.test.mjs` with `change-review-03` or `qa-scripts` in their names on the host.
+- [x] 2.3 Run each test file under `src` outside `src/tooling/spec` on the host.
+- [x] 2.4 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
+- [x] 2.5 Run the lint on the host.
+- [x] 2.6 Run `openspec validate` on the host.
 
 ## 3. Lead work before and in the image
 

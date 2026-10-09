@@ -12,7 +12,7 @@ The lead ran each test file under `src` on the host, except `gates.test.mjs`. Fo
 
 The runs used the files of commit c9047528. The file `evidence/host-run-head.txt` contains the commit.
 
-The file `evidence/host-run.txt` contains one line for each test file. Each line shows 0 failed tests, and no test file lacks a module on the host.
+The file `evidence/host-run.txt` contains one line for each test file. Each line shows 0 failed tests, and no test file lacks a module on the host. Two files skip all their tests on the host: `src/data/focusAllocations.test.mjs` and `src/overlays/worldOverlayAllocation.test.mjs`. The host has Node 26, and the tests need Node 24. One test of `src/keySetupHardening.test.mjs` runs only on Windows, so it skips on each Linux run.
 
 ## Upstream check
 

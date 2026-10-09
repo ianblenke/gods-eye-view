@@ -27,13 +27,13 @@ The six added files are `scripts/qa-voice-auth.mjs`, `scripts/qa-voice-auth-focu
 
 Rule 25: the merge breaks one test with a scenario ID, the test of `qa-scripts-023`. The change writes the scenario again with the new count. It does not retire the scenario.
 The tests that the merge adds or changes have no scenario ID.
-The QA exception of the `ownership` capability covers the two added QA scripts. That capability says that `qa-scripts-023` does not apply within the exception, so the scenario names no header for them.
+The QA exception of the `ownership` capability applies to the two added QA scripts and gives them the synthetic header. The scenario counts the two scripts and names no header for them.
 
-The upstream code adds three routes. One route starts the program `codex login`. Two routes read the auth file of Codex. The fork does not change this code.
+The upstream code adds two routes and one mode of the token route. One route starts the program `codex login`. Each of the three reads the auth file of Codex. The fork does not change this code.
 The change opens no new coverage gap for owned code. The adopt command records the gaps of the upstream files that the merge brings.
 
 ## Known limits and later changes
 
 - Known limit `host-node`: Host tests run on a newer Node version than the image. Host coverage cannot replace the image measurement.
-- Known limit `host-modules`: Some test files need modules that the host does not have. The image measures them.
+- Known limit `host-skip`: Two test files skip all their tests on the host. The host Node version is not the one that the tests need. The image uses that version.
 - Known limit `qa-not-run`: No gate runs the two added QA scripts, because they need a browser.
