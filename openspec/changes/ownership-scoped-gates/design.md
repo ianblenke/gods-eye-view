@@ -261,7 +261,13 @@ The gate prints LEDGER-ADOPT-FROM for a null byte in `from`, as for another inva
 
 | Word | Meaning |
 |---|---|
-| coverage item | Coverage data for one file, with gap counts and waiver counts |
+| coverage item | Measured data for one file: the file name, the hash and the uncovered counts |
+
+### Pass 8 words
+
+| Word | Meaning |
+|---|---|
+| check command | The command check of runGates |
 
 ## Pass 5 decisions
 

@@ -1,0 +1,20 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/v8Merge.test.mjs
+✔ [coverage-gate-055] A process keeps line offsets and inner zero values (20.169734ms)
+✔ [coverage-gate-056] The comments set and reset the line state (1.726564ms)
+✔ [coverage-gate-057] A process measures branches and later functions (1.959917ms)
+✔ [coverage-gate-058] The line merge keeps only process coverage (1.214723ms)
+✔ [coverage-gate-059] The function identities keep each name and extent (1.820368ms)
+✔ [coverage-gate-060] An absent branch uses the innermost parent value (8.502258ms)
+✔ [coverage-gate-060] The later equal parent gives the absent branch value (1.489939ms)
+✔ [coverage-gate-061] The equal extents keep separate occurrences (1.236919ms)
+✔ [coverage-gate-062] The process permutations and groups give equal values (105.469321ms)
+✔ [coverage-gate-063] The merge module writes one lcov record per URL (2.685581ms)
+✔ [coverage-gate-065] The replacement keeps unloaded lcov records (4.619101ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 207.0745

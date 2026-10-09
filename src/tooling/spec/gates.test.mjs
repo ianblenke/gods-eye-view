@@ -2624,7 +2624,7 @@ test('[change-review-033] pin the agent verdict and final tree instructions', ()
   assert.ok(text.includes('Run `make gates CHANGE=<name>` on the final tree.'));
 });
 
-test('[ownership-031] prints LEDGER-ADOPT-FROM for a reached line whose source is not a merge parent', () => {
+test('[ownership-031] prints LEDGER-ADOPT-FROM for a reached adopt record whose source is not a merge parent', GUARDED_RUN, () => {
   withMergeFixture((root) => {
     appendFileSync(path.join(root, 'openspec/trace/history.jsonl'), JSON.stringify(ADOPT_LINE(root, 'src/legacy.js', { from: git(root, 'rev-parse', 'main'), lines: 4, branches: null, functions: null, untraced: 0, untrue: true, reached: true })) + '\n');
     const result = run(root, ['check', '--change', 'sync'], { spawn: () => assert.fail('No test run') });

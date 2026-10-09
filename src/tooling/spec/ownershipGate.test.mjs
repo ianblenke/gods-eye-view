@@ -125,7 +125,7 @@ function oneMeasurement(root, { loaded = true, assertions = 1 } = {}) {
   return { spawn, openSpec, calls: () => calls };
 }
 
-test('[ownership-001] prints OWNERSHIP-MANIFEST for an absent or bad manifest', () => withFixture(root => {
+test('[ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest', () => withFixture(root => {
   rmSync(path.join(root, 'openspec/ownership.json'));
   const result = run(root, ['check'], { spawn: () => assert.fail('No test run') });
   assert.equal(result.status, 1);
@@ -559,7 +559,7 @@ function mergeQa(root, files = { 'scripts/qa-merge.mjs': 'export {};\n' }) {
   return from;
 }
 
-test('[ownership-031 ownership-041] stops the check command for a name that is not a full hash in a history with a merge HEAD', () => withFixture(root => {
+test('[ownership-031 ownership-041] stops the check command for a name that is not a full hash when HEAD is a merge commit', () => withFixture(root => {
   const from = mergeQa(root, { 'src/math.js': 'export function add(a, b) {\n  return a + b + 0;\n}\n' });
   assert.equal(git(root, 'rev-parse', 'HEAD^1'), git(root, 'rev-parse', 'main'));
   assert.equal(git(root, 'rev-parse', 'HEAD^2'), from);
@@ -634,7 +634,7 @@ test('[ownership-054] writes no QA record for an absent current file', () => wit
 }));
 
 
-test('[ownership-054] stops for a coverage ignore error in an eligible new QA script', () => withFixture(root => {
+test('[ownership-054] stops for a coverage ignore error in a new upstream QA script with no QA tag', () => withFixture(root => {
   const from = mergeQa(root, { 'scripts/qa-merge.mjs': '/* node:coverage ignore next */\nexport {};\n' });
   const result = run(root, ['adopt', '--change', 'add-demo', '--from', from], oneMeasurement(root));
   assert.equal(result.status, 1, result.output);

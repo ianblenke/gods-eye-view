@@ -44,9 +44,11 @@ test('[ownership-001] rejects each bad manifest field', () => {
   }
   assert.throws(() => parseOwnership('{'), SyntaxError);
 });
-test('[ownership-001] returns OWNERSHIP-MANIFEST for an absent or bad manifest file', () => fixture(({ root, put }) => {
+test('[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file', () => fixture(({ root, put }) => {
   assert.equal(readOwnership(root).errors[0].code, 'OWNERSHIP-MANIFEST');
   assert.equal(readOwnership(root).errors[0].file, 'openspec/ownership.json');
+  assert.equal(typeof readOwnership(root).errors[0].message, 'string');
+  assert.notEqual(readOwnership(root).errors[0].message.length, 0);
   put('openspec/ownership.json', '{}');
   assert.deepEqual(readOwnership(root).errors, [{ code: 'OWNERSHIP-MANIFEST', file: 'openspec/ownership.json', message: 'Use version 1 and unique safe relative paths in the owned array.' }]);
 }));
@@ -119,7 +121,7 @@ test('[ownership-011] separates code and test gaps by class', () => {
   ]);
   assert.deepEqual(gapReport(manifest, { coverage: {}, untracedTests: {} }), ['Owned gaps: 0 code files, 0 lines, 0 test files, 0 tests.', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.']);
 });
-test('[ownership-012] has the process rules and QA context in AGENTS.md and config.yaml', () => {
+test('[ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml', () => {
   const root = new URL('../../../', import.meta.url);
   const text = readFileSync(new URL('AGENTS.md', root), 'utf8');
   assert.match(text, /Keep each owned code file that a change adds or edits at 100% line, branch and function coverage\./);
@@ -188,11 +190,11 @@ test('[ownership-016] sorts all line numbers as numbers', () => {
   assert.deepEqual(parseDiffLines('@@ -1 +20 @@\n@@ -1 +2 @@\n@@ -1 +10 @@\n'), [2, 10, 20]);
   assert.deepEqual(parseLineCoverage('SF:a.js\nDA:20,1\nDA:2,1\nDA:10,1\n', '/repo'), { 'a.js': [2, 10, 20] });
 });
-test('[ownership-017] ignores extra text around a DA line or a diff header', () => {
+test('[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix', () => {
   assert.deepEqual(parseDiffLines('prefix@@ -1 +2 @@\n'), []);
   assert.deepEqual(parseLineCoverage('SF:a.js\nprefixDA:2,1\nDA:3,1suffix\n', '/repo'), { 'a.js': [] });
 });
-test('[ownership-018] adds owned file gaps and waiver counts across coverage items', () => {
+test('[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file', () => {
   assert.deepEqual(gapReport(manifest, { coverage: { 'src/own/a.js': { lines: 2 }, 'src/own/b.js': { lines: 3 } }, untracedTests: {} }), ['Owned gaps: 2 code files, 5 lines, 0 test files, 0 tests.', 'owned code: src/own/a.js', 'owned code: src/own/b.js', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.']);
   assert.deepEqual(faults({ coverage: [record(undefined, { lines: { total: 4, uncovered: 2 } })], waivers: [waiver(), waiver('lines', { lines: [3] }), waiver('branches'), waiver('functions')] }), []);
   assert.deepEqual(faults({ coverage: [record(undefined, { lines: { total: 4, uncovered: 2 } })], waivers: [waiver('lines', { count: 2, lines: [2, 3] }), waiver('branches'), waiver('functions')] }), []);
@@ -438,7 +440,7 @@ test('[ownership-052] stops for a source name with a null byte', () => syncFixtu
   });
 }));
 
-test('[ownership-031 ownership-041] stops for a name that is not a full hash in a history with a merge HEAD', () => syncFixture(({ input, git, from, adopt }) => {
+test('[ownership-031 ownership-041] stops for a name that is not a full hash when HEAD is a merge commit', () => syncFixture(({ input, git, from, adopt }) => {
   assert.equal(git('rev-parse', 'HEAD^1'), input.base);
   assert.equal(git('rev-parse', 'HEAD^2'), from);
   git('update-ref', 'refs/remotes/origin/source', from);
@@ -462,7 +464,7 @@ test('[ownership-052] returns false when Git cannot read the merge parents', () 
   finally { childProcess.spawnSync = native; syncBuiltinESMExports(); }
 });
 
-test('[ownership-031 ownership-041] rejects strings outside the hash pattern and reads no merge parents', () => {
+test('[ownership-031 ownership-041] rejects values outside the hash pattern and reads no merge parents', () => {
   const native = childProcess.spawnSync;
   let calls = 0;
   childProcess.spawnSync = () => { calls += 1; throw new Error('Git must not start.'); };
