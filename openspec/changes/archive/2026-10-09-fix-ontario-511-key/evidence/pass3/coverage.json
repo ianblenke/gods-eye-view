@@ -1,0 +1,29 @@
+{
+  "copies": 13,
+  "combined": {
+    "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js": {
+      "LF": 36,
+      "LH": 36,
+      "BRF": 11,
+      "BRH": 11,
+      "FNF": 1,
+      "FNH": 1
+    }
+  },
+  "current_gate": {
+    "server/providers/cctv/ontarioRequest.js": {
+      "lines": {
+        "total": 36,
+        "covered": 9
+      },
+      "branches": {
+        "total": 6,
+        "covered": 2
+      },
+      "functions": {
+        "total": 1,
+        "covered": 0
+      }
+    }
+  }
+}

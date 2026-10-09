@@ -1,0 +1,37 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none --test-name-pattern=without a warning for invalid rows and views src/data/cctvOntarioRows.test.mjs
+Tree: ede1c684 plus Pass 5 tests and the scratch mutation
+✖ [live-sources-006] return an empty source list without a warning for invalid rows and views (41.403238ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 230.917615
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:413:1
+✖ [live-sources-006] return an empty source list without a warning for invalid rows and views (41.403238ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      [
+  +     'warn',
+  -     'log',
+        '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'
+      ]
+    ]
+  
+      at TestContext.<anonymous> (file:///tmp/ont-pass5-tree/src/data/cctvOntarioRows.test.mjs:431:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

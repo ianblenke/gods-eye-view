@@ -1,0 +1,17 @@
+{
+  "command": "git diff 73bf05b3 -- proposal.md design.md evidence.md; scan added text",
+  "banned_hits": [],
+  "term_matches": {
+    "floating": [],
+    "was probed": [],
+    "test function": [
+      "The other matches for the word routes are a file name and old command output. No current text calls the reset hook or the fixture a test function.",
+      "The matches for routes and test function are the sentence that describes the old search results."
+    ],
+    "\\broutes\\b": [
+      "The other matches for the word routes are a file name and old command output. No current text calls the reset hook or the fixture a test function.",
+      "The matches for routes and test function are the sentence that describes the old search results."
+    ],
+    "headings": []
+  }
+}

@@ -1,0 +1,278 @@
+Command: python /home/ianblenke/docker/gev-tools/fix-ontario-511/pass5/checks.py
+[
+  {
+    "name": "cctv.test",
+    "exit": 0,
+    "tests": 55,
+    "pass": 55,
+    "fail": 0
+  },
+  {
+    "name": "cctvCalgary.test",
+    "exit": 0,
+    "tests": 13,
+    "pass": 13,
+    "fail": 0
+  },
+  {
+    "name": "cctvCards.test",
+    "exit": 0,
+    "tests": 23,
+    "pass": 23,
+    "fail": 0
+  },
+  {
+    "name": "cctvCatalogCap.test",
+    "exit": 0,
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  {
+    "name": "cctvDisplayCode.test",
+    "exit": 0,
+    "tests": 2,
+    "pass": 2,
+    "fail": 0
+  },
+  {
+    "name": "cctvDriveBcSource.test",
+    "exit": 0,
+    "tests": 6,
+    "pass": 6,
+    "fail": 0
+  },
+  {
+    "name": "cctvEstonia.test",
+    "exit": 0,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0
+  },
+  {
+    "name": "cctvFintraffic.test",
+    "exit": 0,
+    "tests": 8,
+    "pass": 8,
+    "fail": 0
+  },
+  {
+    "name": "cctvFootprint.test",
+    "exit": 0,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0
+  },
+  {
+    "name": "cctvGizmo.test",
+    "exit": 0,
+    "tests": 10,
+    "pass": 10,
+    "fail": 0
+  },
+  {
+    "name": "cctvGroundHeights.test",
+    "exit": 0,
+    "tests": 2,
+    "pass": 2,
+    "fail": 0
+  },
+  {
+    "name": "cctvHlsStream.test",
+    "exit": 0,
+    "tests": 10,
+    "pass": 10,
+    "fail": 0
+  },
+  {
+    "name": "cctvLod.test",
+    "exit": 0,
+    "tests": 29,
+    "pass": 29,
+    "fail": 0
+  },
+  {
+    "name": "cctvMediaRange.test",
+    "exit": 0,
+    "tests": 21,
+    "pass": 21,
+    "fail": 0
+  },
+  {
+    "name": "cctvNswSource.test",
+    "exit": 0,
+    "tests": 6,
+    "pass": 6,
+    "fail": 0
+  },
+  {
+    "name": "cctvOntarioKey.test",
+    "exit": 0,
+    "tests": 12,
+    "pass": 12,
+    "fail": 0
+  },
+  {
+    "name": "cctvOntarioRows.test",
+    "exit": 0,
+    "tests": 71,
+    "pass": 71,
+    "fail": 0
+  },
+  {
+    "name": "cctvProxy.test",
+    "exit": 0,
+    "tests": 14,
+    "pass": 14,
+    "fail": 0
+  },
+  {
+    "name": "cctvTxdotSource.test",
+    "exit": 0,
+    "tests": 10,
+    "pass": 10,
+    "fail": 0
+  },
+  {
+    "name": "cctvViewshed.test",
+    "exit": 0,
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  {
+    "name": "cctvWarendorf.test",
+    "exit": 0,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0
+  },
+  {
+    "name": "mediaProviders.test",
+    "exit": 0,
+    "tests": 5,
+    "pass": 5,
+    "fail": 0
+  },
+  {
+    "name": "headingConfidence.test",
+    "exit": 0,
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  {
+    "name": "source.test",
+    "exit": 0,
+    "tests": 5,
+    "pass": 5,
+    "fail": 0
+  },
+  {
+    "name": "videoPlayback.test",
+    "exit": 0,
+    "tests": 4,
+    "pass": 4,
+    "fail": 0
+  },
+  {
+    "name": "alone-0",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-1",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-2",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-3",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-4",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-5",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-6",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-7",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-8",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-9",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-10",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "alone-11",
+    "exit": 0,
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "name": "format",
+    "exit": 0
+  },
+  {
+    "name": "boundaries",
+    "exit": 0
+  },
+  {
+    "name": "coverage-key",
+    "exit": 0
+  },
+  {
+    "name": "coverage-rows",
+    "exit": 0
+  }
+]

@@ -1,0 +1,22 @@
+✔ CCTV upstream frame fetch supplies a bounded abort signal (20.547942ms)
+✔ CCTV upstream frame fetch returns a valid image response (236.492285ms)
+✔ CCTV upstream frame fetch rejects a declared oversize body without draining it (11.879886ms)
+✔ CCTV upstream frame fetch aborts an undeclared body once it crosses the cap (11.596846ms)
+✔ CCTV upstream frame fetch still returns a chunked body under the cap (15.038229ms)
+✔ CCTV media upstream fetch aborts when response headers never arrive (8.864845ms)
+✔ CCTV media upstream fetch never cuts a stream whose headers arrived in time (22.399187ms)
+✔ CCTV upstream frame fetch keeps a body that lands exactly on the cap (7.036976ms)
+✔ CCTV upstream frame fetch ignores a garbage Content-Length and still caps the stream (7.771374ms)
+✔ CCTV upstream frame fetch retains owned bytes, not the chunk's backing allocation (6.679786ms)
+✔ CCTV upstream frame fetch refuses a body it cannot stream instead of buffering it uncapped (2.706425ms)
+✔ reader-only snapshots release their lock on success, overflow and read failure (26.177159ms)
+✔ the snapshot deadline remains active after headers while reading a stalled body (25.105757ms)
+✔ rejected snapshot responses abort the upstream download (6.456622ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 581.944152

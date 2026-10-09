@@ -1,0 +1,20 @@
+Command: git status --ignored --short -- openspec/changes/fix-ontario-511-key
+M  openspec/changes/fix-ontario-511-key/evidence.md
+A  openspec/changes/fix-ontario-511-key/evidence/pass10/check-titles.py
+M  openspec/changes/fix-ontario-511-key/evidence/pass10/section-titles.diff
+A  openspec/changes/fix-ontario-511-key/evidence/pass10/test-function-search.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/cctvOntarioKey.test.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/cctvOntarioRows.test.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/check-titles.py
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/code.diff
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/lint-final.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/lint-group-first.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/lint-group-fixed.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/openspec-show.json
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/openspec-validate.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/repeated-titles.json
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/review.diff
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/section-titles.diff
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/status-ignored.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass11/text-check.json
+M  openspec/changes/fix-ontario-511-key/proposal.md

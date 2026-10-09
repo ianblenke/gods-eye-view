@@ -1,0 +1,573 @@
+{
+  "result": [
+    {
+      "scriptId": "162",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=1",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 1
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 0
+            },
+            {
+              "startOffset": 279,
+              "endOffset": 434,
+              "count": 0
+            },
+            {
+              "startOffset": 724,
+              "endOffset": 773,
+              "count": 0
+            },
+            {
+              "startOffset": 812,
+              "endOffset": 1017,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "165",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=2",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 7
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 5
+            },
+            {
+              "startOffset": 308,
+              "endOffset": 415,
+              "count": 1
+            },
+            {
+              "startOffset": 434,
+              "endOffset": 1017,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "241",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=3",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 3
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 0
+            },
+            {
+              "startOffset": 279,
+              "endOffset": 434,
+              "count": 0
+            },
+            {
+              "startOffset": 773,
+              "endOffset": 812,
+              "count": 0
+            },
+            {
+              "startOffset": 849,
+              "endOffset": 998,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "242",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=4",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 2
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 0
+            },
+            {
+              "startOffset": 279,
+              "endOffset": 434,
+              "count": 0
+            },
+            {
+              "startOffset": 701,
+              "endOffset": 812,
+              "count": 0
+            },
+            {
+              "startOffset": 849,
+              "endOffset": 998,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "243",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=5",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 2
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 0
+            },
+            {
+              "startOffset": 279,
+              "endOffset": 434,
+              "count": 0
+            },
+            {
+              "startOffset": 724,
+              "endOffset": 773,
+              "count": 0
+            },
+            {
+              "startOffset": 849,
+              "endOffset": 998,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "244",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=6",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        }
+      ]
+    },
+    {
+      "scriptId": "246",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 2
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 0
+            },
+            {
+              "startOffset": 279,
+              "endOffset": 434,
+              "count": 0
+            },
+            {
+              "startOffset": 724,
+              "endOffset": 773,
+              "count": 0
+            },
+            {
+              "startOffset": 812,
+              "endOffset": 1017,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "255",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=7",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        }
+      ]
+    },
+    {
+      "scriptId": "256",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=8",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 1
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 0
+            },
+            {
+              "startOffset": 279,
+              "endOffset": 434,
+              "count": 0
+            },
+            {
+              "startOffset": 773,
+              "endOffset": 812,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "257",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=9",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 1
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 0
+            },
+            {
+              "startOffset": 279,
+              "endOffset": 434,
+              "count": 0
+            },
+            {
+              "startOffset": 724,
+              "endOffset": 773,
+              "count": 0
+            },
+            {
+              "startOffset": 812,
+              "endOffset": 1017,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "258",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=10",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 1
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 0
+            },
+            {
+              "startOffset": 279,
+              "endOffset": 434,
+              "count": 0
+            },
+            {
+              "startOffset": 724,
+              "endOffset": 773,
+              "count": 0
+            },
+            {
+              "startOffset": 812,
+              "endOffset": 1017,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "259",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=11",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 1
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 0
+            },
+            {
+              "startOffset": 279,
+              "endOffset": 434,
+              "count": 0
+            },
+            {
+              "startOffset": 724,
+              "endOffset": 773,
+              "count": 0
+            },
+            {
+              "startOffset": 812,
+              "endOffset": 1017,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "260",
+      "url": "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js?case=12",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 1020,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "readOntarioCameraRows",
+          "ranges": [
+            {
+              "startOffset": 164,
+              "endOffset": 1019,
+              "count": 1
+            },
+            {
+              "startOffset": 252,
+              "endOffset": 257,
+              "count": 0
+            },
+            {
+              "startOffset": 279,
+              "endOffset": 434,
+              "count": 0
+            },
+            {
+              "startOffset": 701,
+              "endOffset": 812,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    }
+  ]
+}

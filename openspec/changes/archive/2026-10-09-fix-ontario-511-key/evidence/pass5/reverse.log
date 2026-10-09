@@ -1,0 +1,21 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none /tmp/ont-pass5-tree/src/data/cctvOntarioReverse.test.mjs
+✔ [live-sources-005] keep the key text of a fetch error out of the warning (25.287505ms)
+✔ [live-sources-002] send the application/json Accept header (6.74105ms)
+✔ [live-sources-002] use a timeout of 15000 milliseconds (12.009118ms)
+✔ [live-sources-002] trim spaces from the key (6.508918ms)
+✔ [live-sources-004] return an empty row list for an HTTP error with JSON rows (9.71653ms)
+✔ [live-sources-005] keep the camera data error secret (53.673489ms)
+✔ [live-sources-002] map the Ontario rows (12.497763ms)
+✔ [live-sources-005] keep the json error secret (6.044216ms)
+✔ [live-sources-005] keep the fetch error secret (5.61514ms)
+✔ [live-sources-004] write one warning for an invalid key (218.936877ms)
+✔ [live-sources-003] make no request without a key (5.241536ms)
+✔ [live-sources-002] send the key parameter (3.966241ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 512.613742

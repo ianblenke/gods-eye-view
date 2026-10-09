@@ -1,0 +1,18 @@
+✔ TxDOT catalog keeps only online cameras with finite coordinates (17.159576ms)
+✔ TxDOT ids stay distinct for distinct device keys, whatever they hash or slug to (7.052946ms)
+✔ TxDOT catalog dedupes a camera listed under two roadways (3.39336ms)
+✔ TxDOT heading comes from an explicit travel token, never the roadway direction (3.627617ms)
+✔ TxDOT heading refuses bare cardinals in Texas route names (2.680301ms)
+✔ TxDOT camera ids are district-scoped and stable across runs (3.682564ms)
+✔ TxDOT ground elevation uses a per-district prior (2.43278ms)
+✔ TxDOT catalog tolerates a malformed payload (5.827424ms)
+✔ TxDOT loader fetches each configured district and ignores unknown codes (261.376114ms)
+✔ TxDOT snapshot decodes JSON only from the official origin and only as JPEG (75.261947ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 593.809118

@@ -1,0 +1,1 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none --experimental-test-coverage --test-coverage-include=server/providers/cctv/ontarioRequest.js --test-reporter=lcov --test-reporter-destination=/home/ianblenke/docker/gev-work/fix-ontario-511/openspec/changes/fix-ontario-511-key/evidence/pass4/key.lcov src/data/cctvOntarioKey.test.mjs

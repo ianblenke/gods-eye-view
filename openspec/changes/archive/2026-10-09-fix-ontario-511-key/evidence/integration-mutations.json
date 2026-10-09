@@ -1,0 +1,22 @@
+[
+  {
+    "mutation": "drop-helper",
+    "exit": 1,
+    "failures": [
+      "\u2716 [live-sources-002] map the Ontario rows (62.071024ms)",
+      "\u2716 [live-sources-005] keep the camera data error secret (10.737165ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-002] map the Ontario rows (62.071024ms)",
+      "\u2716 [live-sources-005] keep the camera data error secret (10.737165ms)"
+    ]
+  },
+  {
+    "mutation": "log-data-error",
+    "exit": 1,
+    "failures": [
+      "\u2716 [live-sources-005] keep the camera data error secret (18.159143ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-005] keep the camera data error secret (18.159143ms)"
+    ]
+  }
+]

@@ -1,0 +1,177 @@
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=compares each metric with its own' src/tooling/spec/ledger.test.mjs
+Case: current
+✔ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (16.865548ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 445.749973
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=compares each metric with its own' src/tooling/spec/ledger.test.mjs
+Case: a
+✖ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (24.435255ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 489.607405
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (24.435255ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30 !== 20
+  
+      at TestContext.<anonymous> (file:///tmp/vct8-mutations/src/tooling/spec/ledger.test.mjs:1692:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 20,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=compares each metric with its own' src/tooling/spec/ledger.test.mjs
+Case: b
+✖ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.02138ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 452.032591
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.02138ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  11 !== 10
+  
+      at TestContext.<anonymous> (file:///tmp/vct8-mutations/src/tooling/spec/ledger.test.mjs:1694:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 11,
+    expected: 10,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=compares each metric with its own' src/tooling/spec/ledger.test.mjs
+Case: c
+✖ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.26475ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 478.99919
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.26475ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30 !== 10
+  
+      at TestContext.<anonymous> (file:///tmp/vct8-mutations/src/tooling/spec/ledger.test.mjs:1694:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 10,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=compares each metric with its own' src/tooling/spec/ledger.test.mjs
+Case: d
+✖ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.967575ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 437.015603
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.967575ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  5 !== 10
+  
+      at TestContext.<anonymous> (file:///tmp/vct8-mutations/src/tooling/spec/ledger.test.mjs:1694:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 5,
+    expected: 10,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=compares each metric with its own' src/tooling/spec/ledger.test.mjs
+Case: e
+✖ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.008797ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 448.655124
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count (22.008797ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 199
+  
+      at TestContext.<anonymous> (file:///tmp/vct8-mutations/src/tooling/spec/ledger.test.mjs:1697:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 199,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+

@@ -1,0 +1,113 @@
+[
+  {
+    "file": "openspec/changes/fix-ontario-511-key/design.md",
+    "old": [
+      "## Source",
+      "## Key decision",
+      "## Health decision",
+      "## Documents",
+      "## Checks",
+      "## Pass 3 words",
+      "## Files and measures",
+      "## Purpose at archive time"
+    ],
+    "new": [
+      "## Source",
+      "## Key decision",
+      "## Health decision",
+      "## Documents",
+      "## Checks",
+      "## Pass 3 words",
+      "## Files and measures",
+      "## Purpose at archive time"
+    ],
+    "same": true
+  },
+  {
+    "file": "openspec/changes/fix-ontario-511-key/evidence.md",
+    "old": [
+      "## Tree",
+      "## Public documentation",
+      "## Fixture tests",
+      "## Coverage",
+      "## Named mutations",
+      "## Automatic mutations",
+      "## Prose and OpenSpec",
+      "## Lead checks",
+      "## Pass 2",
+      "## Pass 3"
+    ],
+    "new": [
+      "## Tree",
+      "## Public documentation",
+      "## Fixture tests",
+      "## Coverage",
+      "## Named mutations",
+      "## Automatic mutations",
+      "## Prose and OpenSpec",
+      "## Lead checks",
+      "## Pass 2",
+      "## Pass 3",
+      "## Pass 3B"
+    ],
+    "same": true
+  },
+  {
+    "file": "openspec/changes/fix-ontario-511-key/proposal.md",
+    "old": [
+      "## Why",
+      "## What Changes",
+      "## Capabilities",
+      "## Impact",
+      "## Known limits and later changes"
+    ],
+    "new": [
+      "## Why",
+      "## What Changes",
+      "## Capabilities",
+      "## Impact",
+      "## Known limits and later changes"
+    ],
+    "same": true
+  },
+  {
+    "file": "openspec/changes/fix-ontario-511-key/review/pre-review-1/spec-adversary.md",
+    "old": [],
+    "new": [],
+    "same": true
+  },
+  {
+    "file": "openspec/changes/fix-ontario-511-key/review/pre-review-1/ste-adversary.md",
+    "old": [],
+    "new": [],
+    "same": true
+  },
+  {
+    "file": "openspec/changes/fix-ontario-511-key/specs/live-sources/spec.md",
+    "old": [
+      "## ADDED Requirements"
+    ],
+    "new": [
+      "## ADDED Requirements"
+    ],
+    "same": true
+  },
+  {
+    "file": "openspec/changes/fix-ontario-511-key/tasks.md",
+    "old": [
+      "## 1. Spec and tests",
+      "## 2. Code and host checks",
+      "## 3. Pass 2",
+      "## 4. Pass 3",
+      "## 5. Lead checks"
+    ],
+    "new": [
+      "## 1. Spec and tests",
+      "## 2. Code and host checks",
+      "## 3. Pass 2",
+      "## 4. Pass 3",
+      "## 5. Lead checks"
+    ],
+    "same": true
+  }
+]

@@ -1,0 +1,2 @@
+Command: node scripts/format.mjs --check
+Checked 1159 source files.

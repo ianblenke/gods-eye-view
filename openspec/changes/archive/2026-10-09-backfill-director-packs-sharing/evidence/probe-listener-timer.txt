@@ -1,0 +1,39 @@
+Base commit: 290b5d2.
+Known limit: session-listener-timer.
+
+The caller signal cancels the load call during listener registration.
+The session clears that load call before it creates its timer.
+The timer stays after the caller destroys the session.
+The test uses fixed timer tokens to avoid a live timer.
+This probe does not support an equivalent claim.
+
+Command:
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass5/probe-listener-timer.mjs
+
+Script:
+import assert from 'node:assert/strict';
+import {createDataPackSession} from '/home/ianblenke/docker/gev-work/director-3/src/director/packs/session.js';
+const originalSet=globalThis.setTimeout,originalClear=globalThis.clearTimeout;
+const timers=new Set();
+globalThis.setTimeout=()=>{const token={};timers.add(token);return token;};
+globalThis.clearTimeout=token=>timers.delete(token);
+const caller=new AbortController();
+const add=caller.signal.addEventListener.bind(caller.signal);
+caller.signal.addEventListener=(...args)=>{add(...args);caller.abort(new Error('stop'));};
+const p={id:'p',version:1,format:'geojson',source:{adapter:'assets',path:'x'},attribution:{text:'Author',license:'CC0'},placement:{altitudeReference:'ellipsoid'}};
+const session=createDataPackSession({sources:{assets:()=>({bytes:new Uint8Array([1])})},adapters:{geojson:()=>({dispose(){}})}});
+try{
+ const result=await session.load([p],{signal:caller.signal});
+ session.destroy();
+ assert.equal(result,false);
+ assert.deepEqual(session.getState(),{status:'idle',count:0});
+ assert.equal(timers.size,1);
+ console.log(JSON.stringify({result,state:session.getState(),timers:timers.size}));
+}finally{
+ session.destroy();
+ globalThis.setTimeout=originalSet;
+ globalThis.clearTimeout=originalClear;
+}
+
+Output:
+{"result":false,"state":{"status":"idle","count":0},"timers":1}

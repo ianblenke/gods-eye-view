@@ -1,0 +1,149 @@
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-packs-sharing
+ABBR     evidence.md:3053  "MIME" is not defined in this file  
+ABBR     evidence.md:3448  "SHA" is not defined in this file  
+ABBR     evidence.md:3461  "ABBR" is not defined in this file  
+ABBR     evidence.md:3464  "NOUN" is not defined in this file  
+ABBR     evidence.md:3468  "WORD" is not defined in this file  
+ABBR     evidence.md:6634  "LF" is not defined in this file  
+ABBR     evidence.md:6635  "LH" is not defined in this file  
+ABBR     evidence.md:6636  "BRF" is not defined in this file  
+ABBR     evidence.md:6637  "BRH" is not defined in this file  
+ABBR     evidence.md:6638  "FNF" is not defined in this file  
+ABBR     evidence.md:6639  "FNH" is not defined in this file  
+ABBR     evidence.md:6804  "WARN" is not defined in this file  
+ABBR     evidence.md:6810  "OLD" is not defined in this file  
+ABBR     evidence.md:6815  "ING" is not defined in this file  
+ABBR     evidence.md:16420  "TASK" is not defined in this file  
+ABBR     mutations.md:3033  "MIME" is not defined in this file  
+ABBR     mutations.md:14504  "SHA" is not defined in this file  
+NOUN?    design.md:220  verb used as a noun: "clear"  | clear call | src/director/sharing/bundle.js and src/director/packs/session.js | A call to the clear method |
+NOUN?    design.md:221  verb used as a noun: "destroy"  | destroy call | src/director/packs/session.js | A call to the destroy method |
+NOUN?    evidence.md:343  verb used as a noun: "clear"  [director-089] The session disposes resources and aborts the source signal after the clear and destroy calls
+NOUN?    evidence.md:645  verb used as a noun: "clear"  [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero byt
+NOUN?    evidence.md:655  verb used as a noun: "clear"  [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero byt
+NOUN?    evidence.md:858  verb used as a noun: "abort"  Old: an abort between renderer settlement and continuation cannot leak the returned resource
+NOUN?    evidence.md:969  verb used as a noun: "abort"  Old: [director-090] an abort between renderer settlement and continuation cannot leak the returned resource
+NOUN?    evidence.md:3341  verb used as a noun: "run"  1467:- [x] 9.11 Correct the run names in audit.md and evidence.md.
+NOUN?    evidence.md:3464  verb used as a noun: "abort"  evidence.md:858  verb used as a noun: "abort"  Old: an abort between renderer settlement and continuation cann
+NOUN?    evidence.md:3465  verb used as a noun: "abort"  evidence.md:969  verb used as a noun: "abort"  Old: [director-090] an abort between renderer settlement and co
+NOUN?    evidence.md:3466  verb used as a noun: "run"  evidence.md:3341  verb used as a noun: "run"  1467:- [x] 9.11 Correct the run names in audit.md and evidence.m
+NOUN?    evidence.md:3467  verb used as a noun: "run"  tasks.md:1467  verb used as a noun: "run"  - [x] 9.11 Correct the run names in audit.md and evidence.md.
+NOUN?    evidence.md:6153  verb used as a noun: "read"  The worker restored the helper as the actor that reads the work promise.
+NOUN?    evidence.md:8256  verb used as a noun: "read"  6153:The worker restored the helper as the actor that reads the work promise.
+NOUN?    evidence.md:8301  verb used as a noun: "destroy"  The worker stated reads of the signal, the destroy call of the caller and the new session state.
+NOUN?    evidence.md:9853  verb used as a noun: "destroy"  | Y3 | The title names the session after the destroy call.
+NOUN?    evidence.md:9867  verb used as a noun: "read"  The test at :556 to :562 asserts false and one read of the caller signal state.
+NOUN?    evidence.md:11513  verb used as a noun: "clear"  | T2 | The store title says "after the clear call".
+NOUN?    evidence.md:11520  verb used as a noun: "clear"  | Spec minor; Stop | The session title names both the clear call and the destroy call.
+NOUN?    evidence.md:11520  verb used as a noun: "destroy"  | Spec minor; Stop | The session title names both the clear call and the destroy call.
+NOUN?    evidence.md:11568  verb used as a noun: "clear"  | [director-089] The data pack session removes resources and cancels the transport on Stop | [director-089] Th
+NOUN?    evidence.md:11570  verb used as a noun: "clear"  | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero b
+NOUN?    evidence.md:11803  verb used as a noun: "clear"  | [director-089] The session disposes resources and aborts the source signal after the clear and destroy calls
+NOUN?    evidence.md:11891  verb used as a noun: "clear"  | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero b
+NOUN?    evidence.md:11947  verb used as a noun: "clear"  Test selector: [director-089] The session disposes resources and aborts the source signal after the clear and 
+NOUN?    evidence.md:11948  verb used as a noun: "clear"  t004-0: KILLED [director-089] The session disposes resources and aborts the source signal after the clear and 
+NOUN?    evidence.md:14277  verb used as a noun: "clear"  Test selector: [director-104 director-105] The store returns an independent byte copy, rejects cancellation, r
+NOUN?    evidence.md:15291  verb used as a noun: "run"  The run kills m290.
+NOUN?    evidence.md:15312  verb used as a noun: "clear"  src/director/packs/packs.test.mjs:180:test('[director-089] The session disposes resources and aborts the sourc
+NOUN?    evidence.md:15314  verb used as a noun: "clear"  src/director/sharing/sharing.test.mjs:566:test('[director-104 director-105] The store returns an independent b
+NOUN?    evidence.md:15649  verb used as a noun: "clear"  m248: KILLED [director-089] The session disposes resources and aborts the source signal after the clear and de
+NOUN?    evidence.md:15907  verb used as a noun: "clear"  src/director/packs/packs.test.mjs:180:test('[director-089] The session disposes resources and aborts the sourc
+NOUN?    evidence.md:15909  verb used as a noun: "clear"  src/director/sharing/sharing.test.mjs:566:test('[director-104 director-105] The store returns an independent b
+NOUN?    evidence.md:15956  verb used as a noun: "clear"  openspec/changes/backfill-director-packs-sharing/design.md:220:| clear call | src/director/sharing/bundle.js a
+NOUN?    evidence.md:15957  verb used as a noun: "destroy"  openspec/changes/backfill-director-packs-sharing/design.md:221:| destroy call | src/director/packs/session.js 
+NOUN?    evidence.md:16605  verb used as a noun: "clear"  "+test('[director-089] The session disposes resources and aborts the source signal after the clear and destroy
+NOUN?    evidence.md:16609  verb used as a noun: "clear"  "+test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports 
+NOUN?    evidence.md:16681  verb used as a noun: "clear"  "+test('[director-089] The session disposes resources and aborts the source signal after the clear and destroy
+NOUN?    evidence.md:16685  verb used as a noun: "clear"  "+test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports 
+NOUN?    evidence.md:16743  verb used as a noun: "clear"  +test('[director-089] The session disposes resources and aborts the source signal after the clear and destroy 
+NOUN?    evidence.md:16753  verb used as a noun: "clear"  +test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports z
+NOUN?    evidence.md:16857  verb used as a noun: "clear"  | S12 | The bullet has a clear subject.
+NOUN?    evidence.md:16861  verb used as a noun: "run"  The sentence says that the run kills m290.
+NOUN?    mutations.md:6759  verb used as a noun: "clear"  [director-089] The session disposes resources and aborts the source signal after the clear and destroy calls
+NOUN?    mutations.md:6760  verb used as a noun: "clear"  Output: KILLED [director-089] The session disposes resources and aborts the source signal after the clear and 
+NOUN?    mutations.md:7085  verb used as a noun: "clear"  [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero byt
+NOUN?    mutations.md:7086  verb used as a noun: "clear"  Output: KILLED [director-104 director-105] The store returns an independent byte copy, rejects cancellation, r
+NOUN?    survivors.md:662  verb used as a noun: "clear"  | a9335 | src/director/sharing/bundle.js:216 | CODE | KILLED | [director-104 director-105] The store returns a
+NOUN?    survivors.md:755  verb used as a noun: "clear"  | a9428 | src/director/sharing/bundle.js:217 | CODE | KILLED | [director-104 director-105] The store returns a
+NOUN?    survivors.md:756  verb used as a noun: "clear"  | a9429 | src/director/sharing/bundle.js:217 | CODE | KILLED | [director-104 director-105] The store returns a
+NOUN?    tasks.md:1467  verb used as a noun: "run"  - [x] 9.11 Correct the run names in audit.md and evidence.md.
+PRONOUN  evidence.md:8424  "This" starts a paragraph or list item: no antecedent  This output records the first command before the worker corrected the five titles.
+PRONOUN  evidence.md:11523  "These" starts a paragraph or list item: no antecedent  These sentences replace the Pass 10 sentences on the cleared load title, the limit titles, the WHEN 
+WORD     evidence.md:809  "explicit"  Old: image bounds and media anchor references are explicit and validated
+WORD     evidence.md:811  "preserves"  Old: GeoJSON preserves stable geometry IDs but never properties or remote style hints
+WORD     evidence.md:813  "malformed"  Old: bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files and broken integrity
+WORD     evidence.md:828  "explicit"  Old: image bounds and media anchor references are explicit and validated
+WORD     evidence.md:838  "preserves"  Old: GeoJSON preserves stable geometry IDs but never properties or remote style hints
+WORD     evidence.md:883  "malformed"  Old: bundle rejects malformed bytes, unknown fields, traversal, duplicates, missing files and broken integrity
+WORD     evidence.md:3468  "explicit"  WORD     evidence.md:809  "explicit"  Old: image bounds and media anchor references are explicit and validated
+WORD     evidence.md:3469  "preserves"  WORD     evidence.md:811  "preserves"  Old: GeoJSON preserves stable geometry IDs but never properties or remo
+WORD     evidence.md:3470  "malformed"  WORD     evidence.md:813  "malformed"  Old: bundle rejects malformed bytes, unknown fields, traversal, duplica
+WORD     evidence.md:3471  "explicit"  WORD     evidence.md:828  "explicit"  Old: image bounds and media anchor references are explicit and validated
+WORD     evidence.md:3472  "preserves"  WORD     evidence.md:838  "preserves"  Old: GeoJSON preserves stable geometry IDs but never properties or remo
+WORD     evidence.md:3473  "malformed"  WORD     evidence.md:883  "malformed"  Old: bundle rejects malformed bytes, unknown fields, traversal, duplica
+WORD     evidence.md:6810  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-17-osh-fusion/design.md:35 Use "invalid", not "malformed"
+WORD     evidence.md:6811  "explicit"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-17-osh-fusion/proposal.md:70 Use "clear", not "explicit"
+WORD     evidence.md:6812  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-17-osh-fusion/specs/osh/spec.md:172 Use "invalid", not "mal
+WORD     evidence.md:6813  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-17-osh-fusion/specs/osh/spec.md:179 Use "invalid", not "mal
+WORD     evidence.md:6814  "explicit"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-17-osh-fusion/specs/osh/spec.md:251 Use "clear", not "expli
+WORD     evidence.md:6830  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-18-osh-geo-discovery/specs/osh/spec.md:27 Use "invalid", no
+WORD     evidence.md:6831  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-18-osh-geo-discovery/specs/osh/spec.md:35 Use "invalid", no
+WORD     evidence.md:6832  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-18-osh-geo-discovery/specs/osh/spec.md:64 Use "invalid", no
+WORD     evidence.md:6835  "explicit"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-18-osh-geo-discovery/specs/osh/spec.md:146 Use "clear", not
+WORD     evidence.md:6868  "explicit"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-19-osh-observation-age/proposal.md:38 Use "clear", not "exp
+WORD     evidence.md:6919  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:4 Use "invalid", 
+WORD     evidence.md:6920  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:12 Use "invalid",
+WORD     evidence.md:6921  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:42 Use "invalid",
+WORD     evidence.md:6926  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:79 Use "invalid",
+WORD     evidence.md:6930  "explicit"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/specs/osh/spec.md:241 Use "clear", 
+WORD     evidence.md:6939  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-location-streams/tasks.md:31 Use "invalid", not "mal
+WORD     evidence.md:6969  "exposes"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-20-osh-marker-depth/design.md:11 Use "shows", not "exposes"
+WORD     evidence.md:6986  "exposes"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-22-teardown-guard/proposal.md:38 Use "shows", not "exposes"
+WORD     evidence.md:6989  "verify"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:121 Use "check", not "verify"
+WORD     evidence.md:6999  "permits"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-22-teardown-guard/tasks.md:144 Use "allows", not "permits"
+WORD     evidence.md:7035  "exposes"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/design.md:10 Use "shows", not "expos
+WORD     evidence.md:7039  "exposes"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/design.md:81 Use "shows", not "expos
+WORD     evidence.md:7041  "execute"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/design.md:177 Use "run", not "execut
+WORD     evidence.md:7050  "exposes"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:9 Use "shows", not "expo
+WORD     evidence.md:7051  "expose"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/proposal.md:14 Use "show", not "expo
+WORD     evidence.md:7059  "expose"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-credential-boundary/specs/credential-boundary/spec.md:4 
+WORD     evidence.md:7089  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:4 Use "invali
+WORD     evidence.md:7090  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:12 Use "inval
+WORD     evidence.md:7091  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:42 Use "inval
+WORD     evidence.md:7094  "malformed"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-24-osh-draw-unheld-features/specs/osh/spec.md:81 Use "inval
+WORD     evidence.md:7137  "retain"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-26-qa-script-register/design.md:102 Use "keep", not "retain
+WORD     evidence.md:7167  "expose"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-28-osh-control-auto-targets/design.md:52 Use "show", not "e
+WORD     evidence.md:7171  "expose"  WARN STE-WORD-OLD openspec/changes/archive/2026-09-28-osh-control-auto-targets/proposal.md:33 Use "show", not 
+WORD     evidence.md:7311  "expose"  WARN STE-WORD-OLD openspec/specs/credential-boundary/spec.md:4 Use "show", not "expose"
+WORD     evidence.md:7313  "expose"  WARN STE-WORD-OLD openspec/specs/credential-boundary/spec.md:7 Use "show", not "expose"
+WORD     evidence.md:7343  "malformed"  WARN STE-WORD-OLD openspec/specs/osh/spec.md:198 Use "invalid", not "malformed"
+WORD     evidence.md:7344  "malformed"  WARN STE-WORD-OLD openspec/specs/osh/spec.md:206 Use "invalid", not "malformed"
+WORD     evidence.md:7345  "malformed"  WARN STE-WORD-OLD openspec/specs/osh/spec.md:236 Use "invalid", not "malformed"
+WORD     evidence.md:7348  "malformed"  WARN STE-WORD-OLD openspec/specs/osh/spec.md:275 Use "invalid", not "malformed"
+WORD     evidence.md:7353  "explicit"  WARN STE-WORD-OLD openspec/specs/osh/spec.md:393 Use "clear", not "explicit"
+WORD     evidence.md:8779  "verify"  Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass9/verify-patterns
+
+== summary: {'NOUN?': 51, 'WORD': 53, 'PRONOUN': 2, 'ABBR': 17}
+
+== numbers per unit that differ between places (check each against its source command):
+  byte: 5242880 (audit.md:234, evidence.md:671...); 8388608 (evidence.md:446, evidence.md:4612...); 8388609 (evidence.md:504, evidence.md:659...); 52428800 (evidence.md:616, evidence.md:5727...); 33554432 (evidence.md:1946, evidence.md:2203...)
+  m: 19 (evidence.md:4797, evidence.md:7803...); 15000 (evidence.md:4802, evidence.md:7804...)
+  millisecond: 19 (evidence.md:420, evidence.md:8346...); 15000 (evidence.md:421, evidence.md:8347...)
+  mutation: 3849 (audit.md:41, audit.md:69...); 193 (audit.md:43); 118 (audit.md:44); 711 (audit.md:66, audit.md:164...); 199 (audit.md:179); 31 (audit.md:180, evidence.md:3220); 321 (audit.md:185, evidence.md:2256...); 256 (evidence.md:3448)
+  name: 102 (evidence.md:748); 093 (evidence.md:1461); 4 (evidence.md:3015); 14.16 (evidence.md:16846); 14.1 (evidence.md:16848)
+  record: 2 (audit.md:19); 260 (evidence.md:2099); 7 (evidence.md:8149, evidence.md:8155...); 10, (evidence.md:9831, evidence.md:9864...); 8 (evidence.md:11538); 10 (evidence.md:16864); 11 (evidence.md:16880); 9 (mutations.md:13234)
+  row: 56 (audit.md:439, evidence.md:6118...); 11 (audit.md:522, evidence.md:16799...); 480 (audit.md:534, evidence.md:11543...); 478 (audit.md:534, evidence.md:15396...); 406 (checks.md:53, evidence.md:2116...); 408 (checks.md:66, evidence.md:2101...); 367 (evidence.md:24, evidence.md:2275...); 166 (evidence.md:25, evidence.md:2519); 260 (evidence.md:2001, evidence.md:2520...); 711 (evidence.md:2520, evidence.md:2591); 446 (evidence.md:2629, evidence.md:2649...); 448 (evidence.md:2648); 40 (evidence.md:2652); 31 (evidence.md:3047, evidence.md:3385...); 52 (evidence.md:3236, evidence.md:8056...); 479 (evidence.md:3240, evidence.md:3383...); 476 (evidence.md:3241); 477 (evidence.md:3384, evidence.md:11542...)
+  run: 9.12 (evidence.md:3026); 107 (evidence.md:11551)
+  second: 45 (audit.md:59, audit.md:91); 10 (evidence.md:1971); 40 (evidence.md:1972)
+  test: 4 (audit.md:90); 631 (checks.md:58, evidence.md:2232); 22 (evidence.md:30, proposal.md:25); 479 (evidence.md:1940, evidence.md:2048); 098 (evidence.md:2187, probe-ranges.md:32); 104 (evidence.md:2189); 076 (evidence.md:2191); 152 (evidence.md:2211); 16 (evidence.md:2534, evidence.md:3329...); 10 (evidence.md:2534, evidence.md:3331); 657 (evidence.md:2561); 422 (evidence.md:2605); 670 (evidence.md:3114); 107 (tasks.md:1577)
+  warning: 543 (evidence.md:1892); 566 (evidence.md:7370); 567 (evidence.md:9318); 578 (evidence.md:11240); 588 (evidence.md:16415, evidence.md:16829); 585 (evidence.md:17048)
+
+== two names for one thing? (count A / count B):
+  folder 14 / directory 136
+  keep 229 / retain 1
+  allow 15 / permit 1
+  absent 695 / missing 29
+  run 198 / measurement 26
+  entry 81 / record 591
+  limit 1107 / bound 456
+  check 2282 / verify 2

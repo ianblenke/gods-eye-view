@@ -1,0 +1,89 @@
+{
+  "id": "fix-ontario-511-key",
+  "title": "fix-ontario-511-key",
+  "deltaCount": 2,
+  "deltas": [
+    {
+      "spec": "live-sources",
+      "operation": "ADDED",
+      "description": "Add requirement: The Ontario camera pack MUST use an optional server key, make no request without it, and keep the key out of logs and errors.",
+      "requirement": {
+        "text": "The Ontario camera pack MUST use an optional server key, make no request without it, and keep the key out of logs and errors.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the server has `ONTARIO_511_API_KEY`\n- **THEN** the camera request has that value in the `key` parameter\n- **AND** the pack maps the camera rows as before"
+          },
+          {
+            "rawText": "- **WHEN** the server has no key or a blank key and calls the Ontario pack twice\n- **THEN** the pack makes no request and returns an empty list each time\n- **AND** the process writes one warning that names `ONTARIO_511_API_KEY`"
+          },
+          {
+            "rawText": "- **WHEN** the camera endpoint answers HTTP 400 with `Invalid Key` twice\n- **THEN** the pack returns an empty list each time and writes one warning\n- **AND** no log or error has the key text"
+          },
+          {
+            "rawText": "- **WHEN** the fetch or JSON reader throws an error with the key text\n- **THEN** the pack returns an empty list and writes fixed warning text without the key"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The Ontario camera pack MUST use an optional server key, make no request without it, and keep the key out of logs and errors.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the server has `ONTARIO_511_API_KEY`\n- **THEN** the camera request has that value in the `key` parameter\n- **AND** the pack maps the camera rows as before"
+            },
+            {
+              "rawText": "- **WHEN** the server has no key or a blank key and calls the Ontario pack twice\n- **THEN** the pack makes no request and returns an empty list each time\n- **AND** the process writes one warning that names `ONTARIO_511_API_KEY`"
+            },
+            {
+              "rawText": "- **WHEN** the camera endpoint answers HTTP 400 with `Invalid Key` twice\n- **THEN** the pack returns an empty list each time and writes one warning\n- **AND** no log or error has the key text"
+            },
+            {
+              "rawText": "- **WHEN** the fetch or JSON reader throws an error with the key text\n- **THEN** the pack returns an empty list and writes fixed warning text without the key"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "live-sources",
+      "operation": "ADDED",
+      "description": "Add requirement: The Ontario pack MUST apply its existing row, view, source and cap rules to keyed camera data.",
+      "requirement": {
+        "text": "The Ontario pack MUST apply its existing row, view, source and cap rules to keyed camera data.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** keyed data has rows with IDs, coordinates and camera views\n- **THEN** the pack drops blank IDs, nonfinite coordinates and coordinates outside latitude 41 to 57.5 or longitude -95.6 to -74\n- **AND** the pack accepts only enabled views with HTTPS URLs on 511on.ca or a traveliq.co subdomain\n- **AND** the URL path must be /map/Cctv/ with one ID of letters, digits, underscores, periods or hyphens\n- **AND** the pack selects the first accepted view without the word down, or the first accepted view if all have that word\n- **AND** non-array views, empty views and disabled scalar statuses cause no data error warning\n- **AND** the pack reads no coordinate after a blank ID and no view after invalid coordinates"
+          },
+          {
+            "rawText": "- **WHEN** the pack accepts a row with upper or lower case field names\n- **THEN** the source has the row ID with the on- prefix and the canonical 511on.ca image URL\n- **AND** the name uses location, roadway or Ontario 511 Camera with the ID, plus a view label without the word down\n- **AND** the city uses location, roadway or Ontario\n- **AND** the source uses the row direction, then the view direction, then the ID hash for its heading\n- **AND** a known heading has high confidence, pitch -24, field of view 56, range 210 and mount height 10\n- **AND** a hash heading has low confidence, pitch -18, field of view 44, range 145 and mount height 8\n- **AND** a hash heading for `on-1` is 45\n- **AND** the source has numeric row coordinates, ground elevation 200 and image feed type\n- **AND** `cityId` is ontario and `provider` is Ontario 511\n- **AND** `sourceKind` is ontario-511-open-data and `snapshotUrl` equals `url`\n- **AND** the licence name is Open Government Licence - Ontario\n- **AND** the pack converts the selected ID, location, roadway and view description values to strings with no edge spaces\n- **AND** capitalized ID and coordinate fields take precedence unless null or absent\n- **AND** nonempty capitalized location, roadway and view text fields take precedence over lower case text fields\n- **AND** a capitalized views list takes precedence over a lower case views list\n- **AND** the pack reads latitude before longitude and location before roadway"
+          },
+          {
+            "rawText": "- **WHEN** keyed rows have duplicate IDs or exceed the source cap\n- **THEN** the last row for each ID supplies the source\n- **AND** the pack sorts sources by distance to the nearest Ontario anchor\n- **AND** the default cap is 1000\n- **AND** a finite server cap becomes an integer from 8 to 1000\n- **AND** a nonfinite server cap uses 1000\n- **AND** the pack logs the unique source count and the selected source count"
+          },
+          {
+            "rawText": "- **WHEN** keyed camera data is not an array\n- **THEN** the pack returns an empty list\n- **AND** the pack writes no log or warning"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The Ontario pack MUST apply its existing row, view, source and cap rules to keyed camera data.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** keyed data has rows with IDs, coordinates and camera views\n- **THEN** the pack drops blank IDs, nonfinite coordinates and coordinates outside latitude 41 to 57.5 or longitude -95.6 to -74\n- **AND** the pack accepts only enabled views with HTTPS URLs on 511on.ca or a traveliq.co subdomain\n- **AND** the URL path must be /map/Cctv/ with one ID of letters, digits, underscores, periods or hyphens\n- **AND** the pack selects the first accepted view without the word down, or the first accepted view if all have that word\n- **AND** non-array views, empty views and disabled scalar statuses cause no data error warning\n- **AND** the pack reads no coordinate after a blank ID and no view after invalid coordinates"
+            },
+            {
+              "rawText": "- **WHEN** the pack accepts a row with upper or lower case field names\n- **THEN** the source has the row ID with the on- prefix and the canonical 511on.ca image URL\n- **AND** the name uses location, roadway or Ontario 511 Camera with the ID, plus a view label without the word down\n- **AND** the city uses location, roadway or Ontario\n- **AND** the source uses the row direction, then the view direction, then the ID hash for its heading\n- **AND** a known heading has high confidence, pitch -24, field of view 56, range 210 and mount height 10\n- **AND** a hash heading has low confidence, pitch -18, field of view 44, range 145 and mount height 8\n- **AND** a hash heading for `on-1` is 45\n- **AND** the source has numeric row coordinates, ground elevation 200 and image feed type\n- **AND** `cityId` is ontario and `provider` is Ontario 511\n- **AND** `sourceKind` is ontario-511-open-data and `snapshotUrl` equals `url`\n- **AND** the licence name is Open Government Licence - Ontario\n- **AND** the pack converts the selected ID, location, roadway and view description values to strings with no edge spaces\n- **AND** capitalized ID and coordinate fields take precedence unless null or absent\n- **AND** nonempty capitalized location, roadway and view text fields take precedence over lower case text fields\n- **AND** a capitalized views list takes precedence over a lower case views list\n- **AND** the pack reads latitude before longitude and location before roadway"
+            },
+            {
+              "rawText": "- **WHEN** keyed rows have duplicate IDs or exceed the source cap\n- **THEN** the last row for each ID supplies the source\n- **AND** the pack sorts sources by distance to the nearest Ontario anchor\n- **AND** the default cap is 1000\n- **AND** a finite server cap becomes an integer from 8 to 1000\n- **AND** a nonfinite server cap uses 1000\n- **AND** the pack logs the unique source count and the selected source count"
+            },
+            {
+              "rawText": "- **WHEN** keyed camera data is not an array\n- **THEN** the pack returns an empty list\n- **AND** the pack writes no log or warning"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/layers/cctv/videoPlayback.test.mjs
+✔ switch during lazy import never starts the stale decoder (191.185529ms)
+✔ missing decoder uses honest failure fallback once (4.347443ms)
+✔ native HLS releases its client lease without response-header access (4.612431ms)
+✔ finite video feeds retain looping while live HLS does not loop (4.483728ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 323.816026

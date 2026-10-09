@@ -1,0 +1,52 @@
+✖ [live-sources-006] return an empty list for an ID with a non-ASCII character (53.202785ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 305.454798
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:121:3
+✖ [live-sources-006] return an empty list for an ID with a non-ASCII character (53.202785ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     city: 'Ontario',
+  +     cityId: 'ontario',
+  +     feedType: 'image',
+  +     fovDeg: 44,
+  +     groundElevationM: 200,
+  +     headingConfidence: 'low',
+  +     headingDeg: 45,
+  +     id: 'on-1',
+  +     lat: 43.6532,
+  +     license: 'Open Government Licence - Ontario',
+  +     lon: -79.3832,
+  +     mountHeightM: 8,
+  +     name: 'Ontario 511 Camera 1',
+  +     pitchDeg: -18,
+  +     provider: 'Ontario 511',
+  +     rangeM: 145,
+  +     snapshotUrl: 'https://511on.ca/map/Cctv/%C3%A9',
+  +     sourceKind: 'ontario-511-open-data',
+  +     url: 'https://511on.ca/map/Cctv/%C3%A9'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ont-pass3-tree/src/data/cctvOntarioRows.test.mjs:122:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

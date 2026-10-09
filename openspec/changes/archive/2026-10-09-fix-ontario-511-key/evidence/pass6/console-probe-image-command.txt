@@ -1,0 +1,4 @@
+Command: docker run --rm -v /home/ianblenke/docker/gev-tools/fix-ontario-511/pass6:/probe:ro node:24.21.0-bookworm-slim node /probe/console-probe.mjs > /home/ianblenke/docker/gev-tools/fix-ontario-511/pass6/console-probe-image.json 2> /home/ianblenke/docker/gev-tools/fix-ontario-511/pass6/console-probe-image.err
+Run by the lead on 2026-10-08 (Eastern time, about 21:36). Exit code: 0.
+Image: node:24.21.0-bookworm-slim, image ID 0e0ff40c39bc (the base image of the project Dockerfile, line 5).
+The only container that ran at that time besides this probe was the app container.

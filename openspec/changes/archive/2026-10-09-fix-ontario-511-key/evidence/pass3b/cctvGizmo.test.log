@@ -1,0 +1,19 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvGizmo.test.mjs
+✔ closestParamOnAxis: perpendicular ray hits the axis at its own offset (10.726166ms)
+✔ closestParamOnAxis: skew ray resolves to the geometric closest point (1.98304ms)
+✔ closestParamOnAxis: axis origin offset shifts the parameter (1.51933ms)
+✔ closestParamOnAxis: near-parallel ray/axis returns null (1.756863ms)
+✔ rayPlaneIntersect: straight-on hit lands at the expected point (2.080021ms)
+✔ rayPlaneIntersect: oblique hit resolves correctly (1.801789ms)
+✔ rayPlaneIntersect: grazing ray (|dir·n| < 0.08) returns null (1.208603ms)
+✔ rayPlaneIntersect: plane behind the ray origin returns null (1.287443ms)
+✔ ringAngle: quadrant sweep in the (basisA, basisB) frame (1.937178ms)
+✔ signedAngleDelta: shortest-path wrap (2.432228ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6820.742206

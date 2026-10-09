@@ -1,0 +1,10 @@
+{
+  "ranges": 87,
+  "zero_ranges": [],
+  "functions": [
+    "FNDA:7087,isLikelyOntarioCoordinate",
+    "FNDA:7074,normalizeOntarioCctvUrl",
+    "FNDA:7078,pickOntarioCctvView",
+    "FNDA:7096,loadOntarioSourcesFromOpenData"
+  ]
+}
