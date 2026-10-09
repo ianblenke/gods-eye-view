@@ -19,7 +19,9 @@ The field ID of the layer repeats across regions, so the pack does not ask for i
 
 The pack builds the frame address from the channel number: "https://images-dis.divas.cloud/DGI/chan-<digits>_h.jpg". It never copies the address of the row.
 
-A row with another host, another scheme, a port, user information, a suffix after the file name or no channel number gives no source. The layer has such a row, a trailer camera on another host.
+A row with another host, scheme, port or user information gives no source. A row with another file name, or an extra suffix such as .exe, gives no source.
+
+A query or a fragment after the file name is allowed, and the pack drops it. The layer has a row on another host, a trailer camera.
 
 ### D3: Area and position
 
@@ -31,7 +33,7 @@ A latitude or a longitude that is text gives no source, even when the text holds
 
 ### D4: Heading
 
-The 83 rows of the probe have only the directions N, S, E and W. The pack trims spaces at both ends of the value.
+The 83 rows of the probe of 2026-10-09 have only the directions N, S, E and W. The pack trims spaces at both ends of the value.
 The pack maps N, E, S and W to 0, 90, 180 and 270 degrees with the confidence "low". Any other value uses the fallback heading of the id, also with the confidence "low".
 The pose values are the low-confidence values of the other still packs: pitch -18, field of view 44, range 145 and mount height 8. The ground height is 5 meters.
 
