@@ -1,0 +1,2 @@
+Command: taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+Checked 1158 source files.

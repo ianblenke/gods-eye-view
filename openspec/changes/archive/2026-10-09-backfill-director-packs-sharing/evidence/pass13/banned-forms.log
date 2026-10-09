@@ -1,0 +1,7 @@
+Command: python3 /tmp/pass13-banned-forms.py
+{
+  "sourceCommit": "52d8eb8acb6021ec857b507f306557152522d14e",
+  "newProseLines": 60,
+  "bannedOrPrefixedForms": 0,
+  "hits": []
+}
