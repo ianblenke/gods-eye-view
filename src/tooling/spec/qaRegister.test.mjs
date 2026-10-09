@@ -6,6 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { listTrackedFiles } from '../../../scripts/spec/lib/inventory.mjs';
 import { adoptableQaScript, readQaRegister, qaAdvice } from '../../../scripts/spec/lib/qa-register.mjs';
+import { readOwnership } from '../../../scripts/spec/lib/ownership.mjs';
 
 for (const key of Object.keys(process.env)) if (key.startsWith('GIT_')) delete process.env[key];
 Object.assign(process.env, {
@@ -76,11 +77,14 @@ test('[qa-scripts-022] asks the spec adversary to read each QA check', () => {
 });
 test('[qa-scripts-023] checks all tracked QA scripts in this repository', () => {
   const tracked = listTrackedFiles(PROJECT).filter((file) => /^scripts\/qa-.*\.mjs$/.test(file));
-  assert.equal(tracked.length, 88);
-  const result = readQaRegister({ root: PROJECT, tracked });
-  assert.equal(result.scripts.length, 88);
-  assert.equal(result.validQaScripts.size, 88);
+  assert.equal(tracked.length, 90);
+  const adopts = readFileSync(path.join(PROJECT, 'openspec/trace/history.jsonl'), 'utf8').split('\n').filter(Boolean).map((line) => JSON.parse(line))
+    .filter((line) => line.kind === 'adopt' && /^scripts\/qa-.*\.mjs$/.test(line.file));
+  const result = readQaRegister({ root: PROJECT, tracked, manifest: readOwnership(PROJECT).manifest, adopts });
+  assert.equal(result.scripts.length, 90);
+  assert.equal(result.validQaScripts.size, 90);
   assert.deepEqual(result.errors, []);
+  assert.deepEqual(result.scripts.filter((script) => script.synthetic).map((script) => script.file), ['scripts/qa-voice-auth-focus.mjs', 'scripts/qa-voice-auth.mjs']);
   for (const file of ['scripts/qa-browserEvidence.mjs', 'scripts/qa-panel-resize.mjs', 'scripts/qa-panelDrag.mjs']) {
     assert.deepEqual(result.scripts.find((script) => script.file === file).covers, ['pending:application-shell']);
   }
