@@ -637,8 +637,8 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9310 | src/director/sharing/bundle.js:168 | `statement-order` | KILLED | [director-103] The export names different shared integrity and rejects the call |
 | a9311 | src/director/sharing/bundle.js:175 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9311 |
 | a9312 | src/director/sharing/bundle.js:150 | `await-remove` | KILLED | [director-101] The export writes each asset index and filename |
-| a9313 | src/director/sharing/bundle.js:160 | `await-remove` | KILLED | [director-101] The export copies bytes and attribution and keeps the project with one resolver call |
-| a9314 | src/director/sharing/bundle.js:190 | `destructure-remove` | KILLED | [director-101] The export copies bytes and attribution and keeps the project with one resolver call |
+| a9313 | src/director/sharing/bundle.js:160 | `await-remove` | KILLED | [director-101] The export copies bytes and attribution, keeps the project and calls the resolver once |
+| a9314 | src/director/sharing/bundle.js:190 | `destructure-remove` | KILLED | [director-101] The export copies bytes and attribution, keeps the project and calls the resolver once |
 | a9315 | src/director/sharing/bundle.js:190 | `destructure-remove` | KILLED | [director-101] The export writes each asset index and filename |
 | a9316 | src/director/sharing/bundle.js:199 | `statement-order` | KILLED | [director-104] The store reports zero bytes after an absent replacement map |
 | a9317 | src/director/sharing/bundle.js:201 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9317 |
@@ -659,7 +659,7 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9332 | src/director/sharing/bundle.js:213 | `statement-order` | KILLED | [director-105] The store checks the signal before it checks the path and rejects the call |
 | a9333 | src/director/sharing/bundle.js:214 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9333 |
 | a9334 | src/director/sharing/bundle.js:215 | `statement-order` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
-| a9335 | src/director/sharing/bundle.js:216 | `statement-order` | KILLED | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets |
+| a9335 | src/director/sharing/bundle.js:216 | `statement-order` | KILLED | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets |
 | a9336 | src/director/sharing/lifetime.js:3 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
 | a9337 | src/director/sharing/lifetime.js:4 | `new-argument` | KILLED | [director-107] The helper does not attach a listener to a cancelled signal and rejects the call |
 | a9338 | src/director/sharing/lifetime.js:4 | `new-argument` | KILLED | [director-107] The helper does not attach a listener to a cancelled signal and rejects the call |
@@ -752,8 +752,8 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9425 | src/director/sharing/bundle.js:43 | `regex-quantifier` | KILLED | [director-099] The import returns assets at the total byte limit and rejects one more byte |
 | a9426 | src/director/sharing/bundle.js:43 | `regex-quantifier` | KILLED | [director-099] The import rejects an invalid padding for the base64 |
 | a9427 | src/director/sharing/bundle.js:167 | `template-expression` | KILLED | [director-101] The export writes each asset index and filename |
-| a9428 | src/director/sharing/bundle.js:217 | `new-error-argument` | KILLED | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets |
-| a9429 | src/director/sharing/bundle.js:217 | `new-error-argument` | KILLED | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets |
+| a9428 | src/director/sharing/bundle.js:217 | `new-error-argument` | KILLED | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets |
+| a9429 | src/director/sharing/bundle.js:217 | `new-error-argument` | KILLED | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets |
 | a9430 | src/director/packs/manifest.js:58 | `constructor` | KILLED | [director-078 director-079] The validator checks URL before byteLength and rejects the call |
 | a9431 | src/director/packs/manifest.js:123 | `constructor` | KILLED | [director-082] The validator uses supplied anchors for the scene and returns without an error |
 | a9432 | src/director/packs/manifest.js:124 | `constructor` | KILLED | [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs and rejects the call |
@@ -1060,3 +1060,19 @@ The automatic rows use the first failed test of the final rerun of the lead afte
 The source files are results-mutants.json and results-mutants-new.json under director-3-final2.
 The pass 6 title correction maps each old title to its current title.
 Worker reruns do not replace this source.
+
+## Pass 11 hand row
+
+Source commit: `2dc225520cebc43bb76b8dca7b645ed3f48a1e43`.
+
+| id | file:line | class | verdict | test title |
+| --- | --- | --- | --- | --- |
+| m480 | src/director/sharing/bundle.js:128 | `order` | KILLED | [director-107] The share helpers check the signal after the text promise settles |
+
+### Pass 11 hand count
+
+Source commit: `2dc225520cebc43bb76b8dca7b645ed3f48a1e43`.
+
+The complete host command checks 480 hand rows and kills 478 rows.
+Only m172, m389 survive.
+The command and its counted output are in [Pass 11 evidence](evidence.md#complete-final-hand-command).

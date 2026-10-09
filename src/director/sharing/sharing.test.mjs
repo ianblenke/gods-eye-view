@@ -452,7 +452,7 @@ test('[director-110] The preview reports external content from applied shot pack
   assert.equal(reads, 0);
 });
 
-test('[director-101] The export copies bytes and attribution and keeps the project with one resolver call', async () => {
+test('[director-101] The export copies bytes and attribution, keeps the project and calls the resolver once', async () => {
   const original = fixture(),
     before = JSON.stringify(original);
   let reads = 0;
@@ -563,7 +563,7 @@ test('[director-109] The preview reports unavailable sources, absent layers and 
   );
 });
 
-test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets', async () => {
+test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets', async () => {
   const parsed = await parseSceneShare(
     await createSceneBundle(fixture(), () => asset()),
   );
@@ -965,7 +965,7 @@ test('[director-102] The export rejects declared digest', async () => {
   );
 });
 
-test('[director-102] The export rejects an excess asset total', async () => {
+test('[director-102] The export rejects more than 64 assets', async () => {
   const f = manyPacks(65);
   await assert.rejects(createSceneBundle(f, asset), /too many bundled assets/);
 });
@@ -1749,7 +1749,7 @@ test('[director-099] The import accepts the audio/webm media type and returns as
   );
 });
 
-test('[director-102] The export accepts its exact asset total and returns bundle text', async () => {
+test('[director-102] The export accepts 64 assets and returns bundle text', async () => {
   const b = JSON.parse(await createSceneBundle(manyPacks(64), asset));
   assert.equal(b.assets.length, 64);
 });
@@ -1901,7 +1901,7 @@ const withByteCopy = async (work) => {
     Uint8Array.from = native;
   }
 };
-test('[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length', async () =>
+test('[director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length', async () =>
   withByteCopy(async () => {
     const value = await bundleObject();
     value.assets[0].base64 = 'A'.repeat(11184812);
@@ -2419,12 +2419,14 @@ test('[director-107] The share helpers check the signal after the text promise s
       size: 1,
       async text() {
         order.push('text');
+        await Promise.resolve();
+        order.push('settled');
         return '{"version":6,"scenes":[]}';
       },
     },
     { signal },
   );
-  assert.deepEqual(order, ['check', 'text', 'check', 'check']);
+  assert.deepEqual(order, ['check', 'text', 'settled', 'check', 'check']);
 });
 
 test('[director-101] The export writes source then byteLength then digest', async () => {

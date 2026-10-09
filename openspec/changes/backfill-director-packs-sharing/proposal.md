@@ -67,11 +67,9 @@ Later change `fix-director-bundle-nonnumeric-length` addresses `bundle-nonnumeri
   Other added names need separate hand rows.
 - Known limit `closed-set-added-members`: the automatic tool does not add members to any closed set.
   This covers media types, data pack formats, directory protocols and all eight allowed-field lists.
-  It also covers coordinate lengths 2 and 3 at geojson.js:19.
-  It covers geometry types, single-value fields and text alphabets that audit.md names.
+  It also covers coordinate lengths 2 and 3 at geojson.js:19, geometry types, single-value fields and text alphabets that audit.md names.
   Hand rows cover only the additions that audit.md names.
   The bundle source name, bundle file suffix and directory final slash also have this limit.
-
   The tests reject coordinate lengths 1 and 4; an added length 5 needs a separate test and hand row.
 
 ### Pass 7 notes

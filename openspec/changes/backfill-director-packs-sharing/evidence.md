@@ -327,7 +327,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-088] The new session reports the idle state and zero handles
 [director-088] The session rejects a value that is not a data pack list
 [director-088] The session rejects more than eight data packs
-[director-088] The load call returns false after the caller destroys the session and makes no source call
+[director-088] The load call returns false and makes no source call after the caller destroys the session
 [director-088] The load call returns false for a cancelled signal and makes no source call
 [director-088] The new session reports the idle state
 [director-088] The new session reports zero handles
@@ -340,7 +340,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-089] The data pack session removes resources and cancels the transport on Stop
+[director-089] The session disposes resources and aborts the source signal after the clear and destroy calls
 ```
 
 Test file: `src/director/packs/backfill.test.mjs`.
@@ -566,7 +566,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-099] The import accepts the audio/wav media type and returns assets
 [director-099] The import accepts the audio/webm media type and returns assets
 [director-099] The import rejects 65 different asset paths
-[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length
+[director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length
 [director-099] The import returns assets at the total byte limit and rejects one more byte
 ```
 
@@ -590,7 +590,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-101] The export copies bytes and attribution and keeps the project with one resolver call
+[director-101] The export copies bytes and attribution, keeps the project and calls the resolver once
 [director-101] The export returns bundle text for a source path of 1024 characters
 [director-101] The export writes exact bundle metadata
 [director-101] The export accepts scenes without data packs and returns bundle text
@@ -609,14 +609,13 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-102] The export rejects absent assets
 [director-102] The export rejects declared byteLength
 [director-102] The export rejects declared digest
-[director-102] The export rejects an excess asset total
-[director-102] The export rejects an excess asset total
+[director-102] The export rejects more than 64 assets
 [director-102] The export accepts absent integrity fields and returns bundle text
 [director-102] The export accepts an absent digest and returns bundle text
 [director-102] The export rejects absent asset bytes
 [director-102] The export rejects encoded bundle text above 52428800 bytes
 [director-102] The export keeps its total after an asset without a byte length
-[director-102] The export accepts its exact asset total and returns bundle text
+[director-102] The export accepts 64 assets and returns bundle text
 [director-102] The export rejects an unsupported media type
 [director-102] The export accepts the text byte limit and returns bundle text
 [director-102] The export returns bundle text at the total byte limit and rejects one more byte
@@ -643,7 +642,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets
+[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets
 [director-104] The store copies the asset map
 [director-104] The store clears stored bytes
 ```
@@ -653,6 +652,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
+[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets
 [director-105] The store rejects absent bytes
 [director-105] The store rejects bytes above the caller limit
 [director-105] The store returns an independent byte copy
@@ -2691,7 +2691,7 @@ New: [director-076] The validator rejects the path type before it reads a segmen
 
 ```text
 Old: [director-089] The source listener and state check come before it reads the work promise
-New: [director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order
+New: [director-089] The source registers its listener and checks its state before it reads the work promise
 ```
 
 ```text
@@ -2706,27 +2706,27 @@ New: [director-097] The source checks the signal before it reads the stream chun
 
 ```text
 Old: [director-082] The manifest rejects the second shot reference
-New: [director-082] The validator rejects a reference in the second shot
+New: [director-082] The manifest rejects a reference in the second shot
 ```
 
 ```text
 Old: [director-094] The directory rejects the file protocol
-New: [director-094] The factory rejects the file protocol
+New: [director-094] The source rejects the file protocol
 ```
 
 ```text
 Old: [director-077 director-082] The manifest validates the second data pack
-New: [director-077 director-082] The validator rejects an invalid second data pack
+New: [director-077 director-082] The manifest rejects an invalid second data pack
 ```
 
 ```text
 Old: [director-081] The manifest uses the second anchor
-New: [director-081] The validator returns without an error for a reference to the second anchor
+New: [director-081] The manifest accepts a reference to the second anchor
 ```
 
 ```text
 Old: [director-082] The manifest checks the second reference ID
-New: [director-082] The validator rejects an unknown second reference ID
+New: [director-082] The manifest rejects an unknown second reference ID
 ```
 
 ```text
@@ -2736,7 +2736,7 @@ New: [director-088] The session rejects an invalid second data pack before the s
 
 ```text
 Old: [director-081 director-093] The session uses the second anchor
-New: [director-081 director-093] The session returns true for a reference to the second anchor
+New: [director-081 director-093] The session accepts a reference to the second anchor
 ```
 
 ```text
@@ -2751,42 +2751,42 @@ New: [director-085] The decoder rejects an invalid second coordinate
 
 ```text
 Old: [director-098] The plain project JSON returns an empty asset map
-New: [director-098] The import returns an empty asset map for plain project JSON
+New: [director-098] The parser returns an empty asset map for plain project JSON
 ```
 
 ```text
 Old: [director-105] The byte store rejects an unsafe path that it holds
-New: [director-105] The store rejects an invalid path that it holds for the byte store
+New: [director-105] The byte store rejects an invalid path that it holds
 ```
 
 ```text
 Old: [director-106] The share helpers give bundles the larger budget
-New: [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
+New: [director-106] The share helpers give bundles the larger file limit
 ```
 
 ```text
 Old: [director-099] The bundle helpers reject an extra top field
-New: [director-099] The import rejects an extra top-level field
+New: [director-099] The bundle helpers reject an extra top-level field
 ```
 
 ```text
 Old: [director-102] The absent digest stops its check after one field read
-New: [director-102] The export reads an absent declared digest once before it writes the digest
+New: [director-102] The export stops when the digest is absent after it reads one field
 ```
 
 ```text
 Old: [director-107] The file signal check follows the text result
-New: [director-107] The share helpers check the signal after the text promise settles and return the project
+New: [director-107] The reader checks the signal after the text promise settles
 ```
 
 ```text
 Old: [director-107] The helper attaches its listener before it reads the work promise
-New: [director-107] The helper attaches its listener before it reads the work promise
+New: [director-107] The helper attaches its listener before the source reads the work promise
 ```
 
 ```text
 Old: [director-108 director-110] The preview reaches the second scene and shot
-New: [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset
+New: [director-108 director-110] The preview counts the second scene and shot
 ```
 
 ```text
@@ -2809,7 +2809,7 @@ New: [director-079] The validator checks the digest before it reads the placemen
 
 ```text
 Old: [director-080] The height reference check comes before the bounds check
-New: [director-080] The validator checks the height reference before it checks the bounds and rejects the call
+New: [director-080] The validator checks the height reference before it checks the bounds
 ```
 
 ```text
@@ -2819,7 +2819,7 @@ New: [director-080] The validator checks the bounds array before it reads the le
 
 ```text
 Old: [director-080] The bounds length check comes before each coordinate check
-New: [director-080] The validator checks the bounds length before it checks each coordinate and rejects the call
+New: [director-080] The validator checks the bounds length before it checks each coordinate
 ```
 
 ```text
@@ -2829,7 +2829,7 @@ New: [director-082] The validator checks the list before it reads the anchors
 
 ```text
 Old: [director-077 director-082] The declaration check comes before the duplicate ID check
-New: [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs and rejects the call
+New: [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs
 ```
 
 ```text
@@ -2839,7 +2839,7 @@ New: [director-088 director-091] The session checks the new list after it dispos
 
 ```text
 Old: [director-088] The list check comes before access to the anchors
-New: [director-088] The session checks the list before it reads the anchors
+New: [director-088] The validator checks the list before it reads the anchors
 ```
 
 ```text
@@ -2864,7 +2864,7 @@ New: [director-093] The session checks total bytes before it reads the digest
 
 ```text
 Old: [director-095] The path check comes before the caller signal check
-New: [director-095] The source checks the path before it checks the caller signal and rejects the call
+New: [director-095] The source checks the path before it checks the caller signal
 ```
 
 ```text
@@ -2884,7 +2884,7 @@ New: [director-090] The session checks destroyed state after it reads the signal
 
 ```text
 Old: [director-090] The session sees destruction during caller signal access after a source error
-New: [director-090] The load call returns false when the caller signal destroys the session after a source error
+New: [director-090] The caller destroys the session when it reads the caller signal after a source error
 ```
 
 ```text
@@ -2894,12 +2894,12 @@ New: [director-093] The session checks byte type before it reads the length
 
 ```text
 Old: [director-079] The digest type check comes before text conversion
-New: [director-079] The validator checks the digest type before it converts text and rejects the call
+New: [director-079] The validator checks the digest type before it converts text
 ```
 
 ```text
 Old: [director-080] The edge order check starts with west and east
-New: [director-080] The validator compares west with east before it compares south with north
+New: [director-080] The validator checks west and east before south and north
 ```
 
 ```text
@@ -2909,17 +2909,17 @@ New: [director-082] The validator rejects duplicate references before it searche
 
 ```text
 Old: [director-090] The detached handle check does not read the source signal state
-New: [director-090] The cleared session returns false and does not read the source signal state
+New: [director-090] The cleared session returns false without the source signal state
 ```
 
 ```text
 Old: [director-099] The base64 type check comes before text conversion
-New: [director-099] The import checks the base64 type before it converts text and rejects the call
+New: [director-099] The parser checks the base64 type before it converts text
 ```
 
 ```text
 Old: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without state changes
-New: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+New: [director-109] The preview reports unavailable sources, absent layers and absent bundle assets without edits to state
 ```
 
 ```text
@@ -2929,22 +2929,22 @@ New: [director-106] The share helpers reject excess file bytes before they read 
 
 ```text
 Old: [director-106] The share helpers check a signal after text access
-New: [director-106] The share helpers call throwIfAborted three times and return the project
+New: [director-106] The share helpers check a signal after they read text
 ```
 
 ```text
 Old: [director-102] The absent digest stops its check after it reads one field
-New: [director-102] The export reads an absent declared digest once before it writes the digest
+New: [director-102] The export stops when the digest is absent after it reads one field
 ```
 
 ```text
 Old: [director-098 director-107] The share signal check comes before the text type check
-New: [director-098 director-107] The import checks the signal before it checks the text type and rejects the call
+New: [director-098 director-107] The parser checks the signal before it checks the text type
 ```
 
 ```text
 Old: [director-099 director-107] The asset signal check comes before its field check
-New: [director-099 director-107] The import checks the signal before it checks asset fields and rejects the call
+New: [director-099 director-107] The parser checks the signal before it checks asset fields
 ```
 
 ```text
@@ -2954,17 +2954,17 @@ New: [director-100 director-107] The import checks the signal before it compares
 
 ```text
 Old: [director-106] The file limit check comes before access to the signal
-New: [director-106] The share helpers check the file limit before they read the signal and reject the invalid input
+New: [director-106] The reader checks the file limit before it reads the signal
 ```
 
 ```text
 Old: [director-106 director-107] The file signal check comes before text access
-New: [director-106 director-107] The share helpers check the signal before they read text and reject the invalid input
+New: [director-106 director-107] The reader checks the signal before it reads text
 ```
 
 ```text
 Old: [director-107] The file signal check follows the text promise
-New: [director-107] The share helpers check the signal after the text promise settles and return the project
+New: [director-107] The reader checks the signal after the text promise settles
 ```
 
 ```text
@@ -2974,17 +2974,17 @@ New: [director-102] The export checks integrity before it reads the filename
 
 ```text
 Old: [director-102] The export count check comes before the next resolver call
-New: [director-102] The export checks the asset count before the next resolver call and rejects the call
+New: [director-102] The export checks the asset count before the next resolver call
 ```
 
 ```text
 Old: [director-102 director-107] The export signal check comes before ${label}
-New: [director-102 director-107] The export checks the signal before it checks declared integrity and rejects the call
+New: [director-102 director-107] The export checks the signal before ${label}
 ```
 
 ```text
 Old: [director-105] The store signal check comes before the path check
-New: [director-105] The store checks the signal before it checks the path and rejects the call
+New: [director-105] The store checks the signal before it checks the path
 ```
 
 ```text
@@ -5149,7 +5149,7 @@ New: [director-093] The session returns true and reads bytes.length three times 
 
 ```text
 Old: [director-090] The cleared session returns false without the source signal state
-New: [director-090] The cleared session returns false without the source signal state
+New: [director-090] The cleared session returns false and does not read the source signal state
 ```
 
 ```text
@@ -5544,7 +5544,7 @@ New: [director-099] The import rejects duplicate paths
 
 ```text
 Old: [director-099] The bundle rejects an unsupported media type
-New: [director-099] The bundle rejects an unsupported media type
+New: [director-099] The import rejects an unsupported media type
 ```
 
 ```text
@@ -6069,7 +6069,7 @@ New: [director-108 director-110] The preview counts the second scene and shot an
 
 ```text
 Old: [director-101] The export includes the asset of the second scene
-New: [director-101] The export includes the asset of the second scene
+New: [director-101] The export includes the asset of the second scene and returns bundle text
 ```
 
 ```text
@@ -9828,7 +9828,7 @@ The lead must run the image checks and the next review round.
 Source commit: `f057b89add2428964ab2bd00696b3b260b01fe94`.
 Branch: `backfill-director-3`.
 
-The worker changes test titles and change documents.
+At Pass 10, the record says: The worker changes test titles and change documents.
 The test bodies and production files stay unchanged.
 The worker changes no review file or trace file.
 
@@ -11348,7 +11348,7 @@ Documents compared: 26
 
 ### Source lines
 
-Each changed source line below is a test title. No tag cell changes in this pass.
+Each changed source line below is a test title. At Pass 10, the record says: No tag cell changes in this pass.
 
 ```text
 Command: git diff -U0 f057b89a -- src | grep '^[-+]' | grep -v '^+++\|^---'
@@ -11487,4 +11487,5338 @@ Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass10/final-scope.
   ],
   "documentsCompared": 26
 }
+```
+
+## Pass 11
+
+Source commit: `2dc225520cebc43bb76b8dca7b645ed3f48a1e43`.
+Branch: `backfill-director-3`.
+
+The worker changes test titles and the documents of this change.
+The worker adds one tick and a settled marker to the test of director-107.
+The spec clause stays: the share helpers check the signal after the text promise settles.
+The worker changes no production file, review file or trace file.
+
+### Findings
+
+| Finding | Correction | Source commit |
+| --- | --- | --- |
+| Z1; spec major | The text method adds a settled marker after one tick. The expected order puts this marker before the last two checks.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Z2; S1 | Both full Pass 7 record sections equal f8f6a94d. The three Pass 8 New lines name current tests.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Z3; S2 | One tag changes: H:566 gains director-105. The new command counts each changed tag cell against f057b89a.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Z4; S3 | The import title says that excess bytes at the base64 length limit cause rejection. The next aligned length also causes rejection.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T1 | The load call returns false and makes no source call after the caller destroys the session.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T2 | The store title says after the clear call.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T3 | The export copies bytes and attribution, keeps the project and calls the resolver once.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T4 | The closed-set bullet has no blank line inside it. It has six sentences.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T5 | The new statements below replace the incorrect Pass 10 prose claims. The past record stays.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T6 | Each new label names a current test. The corrected task uses current.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T7 | The titles say more than 64 assets and 64 assets. The scenario 102 list has no duplicate title.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| T8 | The design names three separate table rows from Pass 9.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Spec minor; Stop | The session title names both the clear call and the destroy call. The body calls both methods.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+| Spec minor; W5 | The test at backfill.test.mjs:306 asserts the order. It reports one dispose call after load(null) rejects. Mutation a9130 fails this test.  `2dc225520cebc43bb76b8dca7b645ed3f48a1e43` |
+
+The cleared load title states that the load call returns false.
+Both limit titles say that the store returns bytes.
+Both WHEN lines say that a caller assigns a new value to the limits.
+The clause uses the words final slash.
+
+The lead asks about eight unread titles.
+The commands list eleven titles that Pass 9 did not read and three dynamic templates that Pass 9 counted.
+Eleven minus three is eight.
+The flag shows no fault: the session returns false after this cancellation.
+
+The worker restores every line of the Pass 7 title corrections section and the original Pass 7 section.
+The latter ends before Title corrections in pass 8.
+
+The worker keeps the added Pass 8 records and corrects only their three false New lines.
+The old Pass 10 scope output at E:11315 and E:11478 reports zero changed tag cells.
+Those past outputs stay as records. The new count below replaces that claim.
+
+At Pass 10, the hand command checked 479 rows and killed 477 rows.
+The Pass 11 hand list has 480 rows. The complete command must check all 480 rows.
+
+H means sharing.test.mjs. E means evidence.md at the read commit.
+
+### m480 red and green
+
+The scratch copy first has the old test body from the read commit.
+The hoist moves the signal check before the await at bundle.js:128.
+The old test passes this mutation.
+The new test fails this mutation with the settled marker out of order.
+Only the test of director-107 runs in these two commands.
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/m480.json
+Old body:
+m480: SURVIVED
+SURVIVORS: [('m480', 'SURVIVED')]
+New body:
+m480: KILLED [director-107] The share helpers check the signal after the text promise settles
+SURVIVORS: []
+```
+
+### Changed titles
+
+| At the read commit | Current title |
+| --- | --- |
+| [director-088] The load call returns false after the caller destroys the session and makes no source call | [director-088] The load call returns false and makes no source call after the caller destroys the session |
+| [director-089] The data pack session removes resources and cancels the transport on Stop | [director-089] The session disposes resources and aborts the source signal after the clear and destroy calls |
+| [director-101] The export copies bytes and attribution and keeps the project with one resolver call | [director-101] The export copies bytes and attribution, keeps the project and calls the resolver once |
+| [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets |
+| [director-102] The export rejects an excess asset total | [director-102] The export rejects more than 64 assets |
+| [director-102] The export accepts its exact asset total and returns bundle text | [director-102] The export accepts 64 assets and returns bundle text |
+| [director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length | [director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length |
+
+### Full record comparison
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/restore-check.py
+{
+  "sourceCommit": "f8f6a94d2d09489b98fda4d063b8612f766f5dfa",
+  "sections": [
+    {
+      "section": "## Pass 7 title corrections",
+      "linesCompared": 311,
+      "everyLineEqualsSource": true,
+      "difference": []
+    },
+    {
+      "section": "## Pass 7",
+      "linesCompared": 504,
+      "everyLineEqualsSource": true,
+      "difference": []
+    }
+  ],
+  "Pass8TitleRecords": [
+    {
+      "prefix": "New: [director-090] The cleared",
+      "recordsCompared": 1,
+      "allEqualCurrentTitle": true
+    },
+    {
+      "prefix": "New: [director-099] The import rejects an unsupported media type",
+      "recordsCompared": 1,
+      "allEqualCurrentTitle": true
+    },
+    {
+      "prefix": "New: [director-101] The export includes the asset of the second scene",
+      "recordsCompared": 1,
+      "allEqualCurrentTitle": true
+    }
+  ]
+}
+```
+
+### Host tests and coverage
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/checks.py
+Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs
+ℹ tests 430
+ℹ suites 0
+ℹ pass 430
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1735.280576
+Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6984.544467
+Command: taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs
+ℹ tests 228
+ℹ suites 0
+ℹ pass 228
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18968.3235
+```
+
+The host commands check one test file per process.
+The next commands merge coverage for one production file at a time.
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass11/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass11/v8-packs-manifest /home/ianblenke/docker/gev-work/director-3/src/director/packs/manifest.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/manifest.js",
+    {
+      "LF": 138,
+      "LH": 138,
+      "BRF": 56,
+      "BRH": 56,
+      "FNF": 13,
+      "FNH": 13
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass11/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass11/v8-packs-geojson /home/ianblenke/docker/gev-work/director-3/src/director/packs/geojson.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/geojson.js",
+    {
+      "LF": 62,
+      "LH": 62,
+      "BRF": 54,
+      "BRH": 54,
+      "FNF": 7,
+      "FNH": 7
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass11/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass11/v8-packs-session /home/ianblenke/docker/gev-work/director-3/src/director/packs/session.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/session.js",
+    {
+      "LF": 159,
+      "LH": 159,
+      "BRF": 81,
+      "BRH": 81,
+      "FNF": 18,
+      "FNH": 18
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass11/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass11/v8-packs-source /home/ianblenke/docker/gev-work/director-3/src/director/packs/source.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/source.js",
+    {
+      "LF": 67,
+      "LH": 67,
+      "BRF": 37,
+      "BRH": 37,
+      "FNF": 4,
+      "FNH": 4
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass11/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass11/v8-sharing-bundle /home/ianblenke/docker/gev-work/director-3/src/director/sharing/bundle.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/sharing/bundle.js",
+    {
+      "LF": 221,
+      "LH": 221,
+      "BRF": 103,
+      "BRH": 103,
+      "FNF": 21,
+      "FNH": 21
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass11/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass11/v8-sharing-lifetime /home/ianblenke/docker/gev-work/director-3/src/director/sharing/lifetime.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/sharing/lifetime.js",
+    {
+      "LF": 26,
+      "LH": 26,
+      "BRF": 13,
+      "BRH": 13,
+      "FNF": 6,
+      "FNH": 6
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass11/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass11/v8-sharing-preview /home/ianblenke/docker/gev-work/director-3/src/director/sharing/preview.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/sharing/preview.js",
+    {
+      "LF": 43,
+      "LH": 43,
+      "BRF": 22,
+      "BRH": 22,
+      "FNF": 10,
+      "FNH": 10
+    }
+  ]
+]
+```
+
+
+### Clause mutations
+
+The script covers every title with before, after, once, during, between, at, each, all, both, every or settles.
+The worker reads all 125 titles with their test bodies.
+Each row names the code change and the actual failed test below.
+The clause checks use scratch copies.
+The hand registry has 480 rows.
+
+The first x391 command stops at its time limit without a failed assertion.
+It has no clause verdict. The bounded p-between-chunks mutation fails the named test.
+Two early scratch commands use old title copies and select no test.
+The worker copies the current titles and runs those mutations again.
+The final rows exclude each timeout, syntax error and command with no selected test.
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/clause-report.py
+{
+  "sourceCommit": "2dc225520cebc43bb76b8dca7b645ed3f48a1e43",
+  "clauseTitles": 125,
+  "titlesWithNamedKilledMutation": 125,
+  "titlesWithoutKilledMutation": [],
+  "timeoutCandidateExcluded": "x391",
+  "scratchChecks": true
+}
+```
+
+| Current title | Mutation | Assertion lines | Result |
+| --- | --- | --- | --- |
+| [director-089] The session disposes resources and aborts the source signal after the clear and destroy calls | [m248](#clause-0) | src/director/packs/packs.test.mjs: 199, 202, 203, 204 | KILLED |
+| [director-090] The data pack session disposes late renderer resources after cancellation | [m250](#clause-1) | src/director/packs/packs.test.mjs: 250, 257 | KILLED |
+| [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result | [m251](#clause-2) | src/director/packs/packs.test.mjs: 276, 280, 281 | KILLED |
+| [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names | [m253](#clause-3) | src/director/packs/packs.test.mjs: 333, 334, 338 | KILLED |
+| [director-076] The validator returns without an error for ${character} in both character positions for the asset path | [a0108](#clause-4) | src/director/packs/backfill.test.mjs: 33, 34 | KILLED |
+| [director-079] The validator returns without an error for each hexadecimal digest character | [a9037](#clause-5) | src/director/packs/backfill.test.mjs: 40 | KILLED |
+| [director-076] The validator rejects the path type before it reads a segment | [a9004](#clause-6) | src/director/packs/backfill.test.mjs: 89, 92 | KILLED |
+| [director-079] The validator checks the digest before it reads the placement | [a9028](#clause-7) | src/director/packs/backfill.test.mjs: 121, 122 | KILLED |
+| [director-080] The validator checks the height reference before it checks the bounds and rejects the call | [a9039](#clause-8) | src/director/packs/backfill.test.mjs: 127 | KILLED |
+| [director-080] The validator checks the bounds array before it reads the length | [a9040](#clause-9) | src/director/packs/backfill.test.mjs: 133, 134 | KILLED |
+| [director-080] The validator checks the bounds length before it checks each coordinate and rejects the call | [a9041](#clause-10) | src/director/packs/backfill.test.mjs: 139 | KILLED |
+| [director-082] The validator checks the list before it reads the anchors | [a9045](#clause-11) | src/director/packs/backfill.test.mjs: 145, 146 | KILLED |
+| [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs and rejects the call | [a9050](#clause-12) | src/director/packs/backfill.test.mjs: 152 | KILLED |
+| [director-088] The session reads source entries before renderer entries | [a9109](#clause-13) | src/director/packs/backfill.test.mjs: 162 | KILLED |
+| [director-097] The source waits for stream cancellation before it releases the reader lock | [a9218](#clause-14) | src/director/packs/backfill.test.mjs: 178 | KILLED |
+| [director-097] The source waits for body cancellation before it rejects the asset request | [a9208](#clause-15) | src/director/packs/backfill.test.mjs: 187, 188 | KILLED |
+| [director-092] The session reads the source signal reason once during another source signal event | [a1326](#clause-16) | src/director/packs/backfill.test.mjs: 221, 222 | KILLED |
+| [director-092] The session rejects the load call for a source signal event during listener removal after ${mode} | [a9089](#clause-17) | src/director/packs/backfill.test.mjs: 241, 242, 243 | KILLED |
+| [director-089] The session returns true and does not read the reason after the work promise settles | [a1394](#clause-18) | src/director/packs/backfill.test.mjs: 259, 260, 261 | KILLED |
+| [director-089] The session removes resources after source cancellation and timer removal | [a9120](#clause-19) | src/director/packs/backfill.test.mjs: 283, 284, 285 | KILLED |
+| [director-088] The session returns false for a load call during source cancellation for the destroyed session | [a9121](#clause-20) | src/director/packs/backfill.test.mjs: 300, 301 | KILLED |
+| [director-088] The session checks the list before it reads the anchors | [a9131](#clause-21) | src/director/packs/backfill.test.mjs: 321, 322 | KILLED |
+| [director-088] The session checks declarations before it reads the caller signal | [a9133](#clause-22) | src/director/packs/backfill.test.mjs: 331, 332 | KILLED |
+| [director-089] The session attaches the caller listener before the deadline timer starts | [a9140](#clause-23) | src/director/packs/backfill.test.mjs: 342, 343 | KILLED |
+| [director-090] The session returns false for a caller event during listener registration | [a9139](#clause-24) | src/director/packs/backfill.test.mjs: 355 | KILLED |
+| [director-089] The session checks the signal before it removes the timer | [a9145](#clause-25) | src/director/packs/backfill.test.mjs: 371, 372, 373 | KILLED |
+| [director-090 director-093] The session rejects the signal error before it reads bytes | [a9151](#clause-26) | src/director/packs/backfill.test.mjs: 384, 385 | KILLED |
+| [director-093] The session checks total bytes before it reads the digest | [a9154](#clause-27) | src/director/packs/backfill.test.mjs: 396, 397 | KILLED |
+| [director-095] The source checks the path before it checks the caller signal and rejects the invalid path | [a9190](#clause-28) | src/director/packs/backfill.test.mjs: 404, 407 | KILLED |
+| [director-096] The source checks the header limit before it reads the first stream chunk | [a9209](#clause-29) | src/director/packs/backfill.test.mjs: 416, 417 | KILLED |
+| [director-097] The source checks the signal before it reads the stream chunk | [a9210](#clause-30) | src/director/packs/backfill.test.mjs: 427, 428 | KILLED |
+| [director-088] The session returns false and does not read the caller signal state after the caller destroys the session | [a1613](#clause-31) | src/director/packs/backfill.test.mjs: 553, 554 | KILLED |
+| [director-090] The session returns false and does not read the caller signal state again after cancellation | [a1977](#clause-32) | src/director/packs/backfill.test.mjs: 561, 562 | KILLED |
+| [director-088] The load call returns false and makes no source call after the caller destroys the session | [m061](#clause-33) | src/director/packs/backfill.test.mjs: 1206, 1207 | KILLED |
+| [director-089] The session reports ready after the caller changes a state copy | [p-state-copy](#clause-34) | src/director/packs/backfill.test.mjs: 1243 | KILLED |
+| [director-090] The session returns false when the caller destroys it during asset work | [m067](#clause-35) | src/director/packs/backfill.test.mjs: 1291, 1294 | KILLED |
+| [director-091] The session keeps the new resources after a new load call | [m068](#clause-36) | src/director/packs/backfill.test.mjs: 1310, 1311, 1314, 1315, 1317 | KILLED |
+| [director-097] The source rejects the asset request after failed body cancellation | [x390](#clause-37) | src/director/packs/backfill.test.mjs: 1575, 1576 | KILLED |
+| [director-097] The source releases the reader lock after a stream error | [m097](#clause-38) | src/director/packs/backfill.test.mjs: 1605, 1606, 1607 | KILLED |
+| [director-097] The source checks its signal between chunks and rejects the call | [p-between-chunks](#clause-39) | src/director/packs/backfill.test.mjs: 1629, 1630 | KILLED |
+| [director-085] The decoder accepts both geographic edges for the position and returns coordinates | [m171](#clause-40) | src/director/packs/backfill.test.mjs: 1741 | KILLED |
+| [director-090] The session checks destroyed state after it reads the signal | [m179](#clause-41) | src/director/packs/backfill.test.mjs: 1820, 1821 | KILLED |
+| [director-090] The session disposes the handle before it adds the handle to its list | [m182](#clause-42) | src/director/packs/backfill.test.mjs: 1894, 1895, 1896 | KILLED |
+| [director-092] The session returns false for cancelled work and reports idle after a late source error | [x392](#clause-43) | src/director/packs/backfill.test.mjs: 1912, 1915 | KILLED |
+| [director-092] The session settles an early internal signal and reports idle | [x393](#clause-44) | src/director/packs/backfill.test.mjs: 2116, 2117 | KILLED |
+| [director-089] The session reports ready after asset work | [x394](#clause-45) | src/director/packs/backfill.test.mjs: 2140 | KILLED |
+| [director-089] The session calls the GeoJSON renderer once and returns true | [x395](#clause-46) | src/director/packs/backfill.test.mjs: 2168, 2169 | KILLED |
+| [director-089] The session calls the image renderer once and returns true | [x396](#clause-47) | src/director/packs/backfill.test.mjs: 2185, 2186 | KILLED |
+| [director-089] The session calls the media renderer once and returns true | [p-media-twice](#clause-48) | src/director/packs/backfill.test.mjs: 2204, 2205 | KILLED |
+| [director-097] The source stops between stream chunks | [m243](#clause-49) | src/director/packs/backfill.test.mjs: 2233, 2234, 2235 | KILLED |
+| [director-092] The session settles a source error before its deadline and reports idle | [p-error-at-deadline](#clause-50) | src/director/packs/backfill.test.mjs: 2247, 2248 | KILLED |
+| [director-092] The session rejects stalled work at the deadline of 19 milliseconds | [m271](#clause-51) | src/director/packs/backfill.test.mjs: 2268, 2270 | KILLED |
+| [director-092] The session rejects stalled work at the default deadline of 15000 milliseconds | [m272](#clause-52) | src/director/packs/backfill.test.mjs: 2292, 2294 | KILLED |
+| [director-092] The session removes resources after a later error | [m273](#clause-53) | src/director/packs/backfill.test.mjs: 2316, 2320, 2321 | KILLED |
+| [director-089] The session keeps every data pack handle | [m291](#clause-54) | src/director/packs/backfill.test.mjs: 2390 | KILLED |
+| [director-092] The session reads the byteLength field once without a registered source | [m071](#clause-55) | src/director/packs/backfill.test.mjs: 2452, 2456, 2457 | KILLED |
+| [director-080] The validator returns without an error for all geographic limits for the image | [m310](#clause-56) | src/director/packs/backfill.test.mjs: 2500 | KILLED |
+| [director-093] The session returns true at the asset byte limit | [m323](#clause-57) | src/director/packs/backfill.test.mjs: 2519 | KILLED |
+| [director-093] The session returns true at the total byte limit | [m324](#clause-58) | src/director/packs/backfill.test.mjs: 2527, 2533 | KILLED |
+| [director-088] The session checks every declaration before the source call and rejects the call | [x398](#clause-59) | src/director/packs/backfill.test.mjs: 2610, 2613 | KILLED |
+| [director-089] The session disposes both ready handles in reverse order and reports idle | [x399](#clause-60) | src/director/packs/backfill.test.mjs: 2625, 2627, 2628 | KILLED |
+| [director-089] The session removes its deadline after ${label} | [p-all-deadlines](#clause-61) | src/director/packs/backfill.test.mjs: 2664, 2665, 2667, 2668 | KILLED |
+| [director-080] The validator rejects text for each geographic field for the image | [m315](#clause-62) | src/director/packs/backfill.test.mjs: 2720 | KILLED |
+| [director-089] The session reports its state during asset work | [m380](#clause-63) | src/director/packs/backfill.test.mjs: 2844, 2846 | KILLED |
+| [director-089] The session removes source listeners after ${outcome} | [p-all-source-listeners](#clause-64) | src/director/packs/backfill.test.mjs: 2901, 2907, 2917, 2918, 2920, 2921, 2923, 2924 | KILLED |
+| [director-089] The session reads the reason zero times after a later event for ${outcome} | [p-late-reason](#clause-65) | src/director/packs/backfill.test.mjs: 2942, 2943, 2946 | KILLED |
+| [director-092] The source signal event stops work before the renderer | [p-event-renderer](#clause-66) | src/director/packs/backfill.test.mjs: 2961, 2962, 2963 | KILLED |
+| [director-090] The load call returns false when the caller signal destroys the session after a source error | [a1972](#clause-67) | src/director/packs/backfill.test.mjs: 2975 | KILLED |
+| [director-093] The session checks byte type before it reads the length | [a1777](#clause-68) | src/director/packs/backfill.test.mjs: 2983, 2984 | KILLED |
+| [director-092] The session sets the source signal reason at the deadline and rejects the call | [a1691](#clause-69) | src/director/packs/backfill.test.mjs: 3004, 3005 | KILLED |
+| [director-079] The validator checks the digest type before it converts text and rejects the call | [a0457](#clause-70) | src/director/packs/backfill.test.mjs: 3011 | KILLED |
+| [director-080] The validator compares west with east before it compares south with north | [a0664](#clause-71) | src/director/packs/backfill.test.mjs: 3020, 3021 | KILLED |
+| [director-082] The validator rejects duplicate references before it searches for known IDs | [a0842](#clause-72) | src/director/packs/backfill.test.mjs: 3027, 3028 | KILLED |
+| [director-091] The session keeps new resources after the old caller listener fires | [a1649](#clause-73) | src/director/packs/backfill.test.mjs: 3058, 3059, 3061 | KILLED |
+| [director-096] The source rejects excess bytes before it keeps a chunk | [a9214](#clause-74) | src/director/packs/backfill.test.mjs: 3109, 3110 | KILLED |
+| [director-088] The session rejects an invalid second data pack before the source call | [m422](#clause-75) | src/director/packs/backfill.test.mjs: 3172, 3173 | KILLED |
+| [director-097] The source cancels before it reads the second chunk | [m445](#clause-76) | src/director/packs/backfill.test.mjs: 3219, 3220, 3221 | KILLED |
+| [director-088 director-093] The session calls both registered sources and both renderers | [m452](#clause-77) | src/director/packs/backfill.test.mjs: 3240, 3241, 3245 | KILLED |
+| [director-101] The export writes each asset index and filename | [m432](#clause-78) | src/director/sharing/sharing.test.mjs: 97, 101 | KILLED |
+| [director-099] The import accepts each base64 character in ${label} text and returns assets | [a2527](#clause-79) | src/director/sharing/sharing.test.mjs: 148 | KILLED |
+| [director-099 director-101] The export writes each base64 character in ${label} text | [a9229](#clause-80) | src/director/sharing/sharing.test.mjs: 157 | KILLED |
+| [director-101] The export limits each source filename to 160 characters and returns bundle text | [a3234](#clause-81) | src/director/sharing/sharing.test.mjs: 312 | KILLED |
+| [director-104] The store reports zero bytes after an absent replacement map | [p-absent-map](#clause-82) | src/director/sharing/sharing.test.mjs: 335 | KILLED |
+| [director-099] The import checks the base64 type before it converts text and rejects the call | [a2439](#clause-83) | src/director/sharing/sharing.test.mjs: 376 | KILLED |
+| [director-102] The export checks declared byteLength before declared digest and rejects the call | [a3186](#clause-84) | src/director/sharing/sharing.test.mjs: 408, 415 | KILLED |
+| [director-102] The export checks the asset size before the total size and rejects the call | [a2570](#clause-85) | src/director/sharing/sharing.test.mjs: 431, 438 | KILLED |
+| [director-110] The preview reports external content from applied shot packs before it reads source pack IDs | [a3818](#clause-86) | src/director/sharing/sharing.test.mjs: 451, 452 | KILLED |
+| [director-101] The export copies bytes and attribution, keeps the project and calls the resolver once | [p-resolver-twice](#clause-87) | src/director/sharing/sharing.test.mjs: 467, 468, 469, 471, 472, 473, 477 | KILLED |
+| [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets | [p-store-clear](#clause-88) | src/director/sharing/sharing.test.mjs: 575, 585, 587, 588 | KILLED |
+| [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file | [m261](#clause-89) | src/director/sharing/sharing.test.mjs: 593, 603, 613, 621 | KILLED |
+| [director-107] The export rejects cancellation during asset work | [m262](#clause-90) | src/director/sharing/sharing.test.mjs: 634 | KILLED |
+| [director-107] The helper checks signal state when the work settles and rejects the call | [x403](#clause-91) | src/director/sharing/sharing.test.mjs: 1158, 1159 | KILLED |
+| [director-098] The import rejects 52428801 characters before byte conversion | [x404](#clause-92) | src/director/sharing/sharing.test.mjs: 1292, 1296 | KILLED |
+| [director-108] The preview reports three bytes for both assets | [x405](#clause-93) | src/director/sharing/sharing.test.mjs: 1495 | KILLED |
+| [director-102] The export keeps its total after an asset without a byte length | [m236](#clause-94) | src/director/sharing/sharing.test.mjs: 1602, 1614 | KILLED |
+| [director-102] The export returns bundle text at the total byte limit and rejects one more byte | [m126](#clause-95) | src/director/sharing/sharing.test.mjs: 1870, 1875, 1876, 1877, 1884 | KILLED |
+| [director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length | [m343](#clause-96) | src/director/sharing/sharing.test.mjs: 1908, 1912 | KILLED |
+| [director-099] The import returns assets at the total byte limit and rejects one more byte | [m348](#clause-97) | src/director/sharing/sharing.test.mjs: 1934, 1941 | KILLED |
+| [director-098] The import returns one asset at the multibyte text limit and rejects one more byte | [x406](#clause-98) | src/director/sharing/sharing.test.mjs: 2010, 2011, 2012 | KILLED |
+| [director-107] The helper removes its listener after ${outcome} | [p-all-helper-listeners](#clause-99) | src/director/sharing/sharing.test.mjs: 2123, 2124, 2128, 2137, 2140, 2143, 2148, 2149, 2153 | KILLED |
+| [director-102] The export reads an absent declared digest once before it writes the digest | [a3201](#clause-100) | src/director/sharing/sharing.test.mjs: 2169, 2176, 2177 | KILLED |
+| [director-098 director-107] The import checks the signal before it checks the text type and rejects the call | [a9246](#clause-101) | src/director/sharing/sharing.test.mjs: 2249 | KILLED |
+| [director-099 director-107] The import checks the signal before it checks asset fields and rejects the call | [a9261](#clause-102) | src/director/sharing/sharing.test.mjs: 2326, 2329 | KILLED |
+| [director-099] The import checks asset bytes before the digest call and rejects the call | [a9268](#clause-103) | src/director/sharing/sharing.test.mjs: 2342, 2345 | KILLED |
+| [director-100 director-107] The import checks the signal before it compares digests | [a9270](#clause-104) | src/director/sharing/sharing.test.mjs: 2360, 2363 | KILLED |
+| [director-106] The share helpers check the file limit before they read the signal and reject excess files | [a9277](#clause-105) | src/director/sharing/sharing.test.mjs: 2368, 2382 | KILLED |
+| [director-106 director-107] The share helpers check the signal before they read text and reject cancellation | [a9278](#clause-106) | src/director/sharing/sharing.test.mjs: 2389, 2403 | KILLED |
+| [director-107] The share helpers check the signal after the text promise settles | [m480](#clause-107) | src/director/sharing/sharing.test.mjs: 2429 | KILLED |
+| [director-102] The export checks integrity before it reads the filename | [a9308](#clause-108) | src/director/sharing/sharing.test.mjs: 2455, 2469 | KILLED |
+| [director-102] The export checks the asset count before the next resolver call and rejects the call | [a9298](#clause-109) | src/director/sharing/sharing.test.mjs: 2474, 2481 | KILLED |
+| [director-102] The export checks bytes before the media type and rejects the call | [a9304](#clause-110) | src/director/sharing/sharing.test.mjs: 2485 | KILLED |
+| [director-102] The export checks the media type before the digest call and rejects the call | [a9305](#clause-111) | src/director/sharing/sharing.test.mjs: 2502, 2509 | KILLED |
+| [director-102 director-107] The export checks the signal before ${label} and rejects the call | [a9300](#clause-112) | src/director/sharing/sharing.test.mjs: 2538, 2542 | KILLED |
+| [director-105] The store checks the signal before it checks the path and rejects the call | [a9332](#clause-113) | src/director/sharing/sharing.test.mjs: 2549 | KILLED |
+| [director-107] The helper attaches its listener before it reads the work promise | [a9341](#clause-114) | src/director/sharing/sharing.test.mjs: 2570, 2571 | KILLED |
+| [director-107] The helper removes its listener before it reads the reason | [a9342](#clause-115) | src/director/sharing/sharing.test.mjs: 2598, 2599 | KILLED |
+| [director-107] The helper reads cancelled work before its reason | [a9343](#clause-116) | src/director/sharing/sharing.test.mjs: 2621, 2622 | KILLED |
+| [director-107] The helper checks cancellation after listener removal and rejects the call | [a9345](#clause-117) | src/director/sharing/sharing.test.mjs: 2637 | KILLED |
+| [director-107] The helper rejects with the cancellation reason during listener removal after a work error | [a9346](#clause-118) | src/director/sharing/sharing.test.mjs: 2653 | KILLED |
+| [director-107] The ${mode} stops before the second ${mode === 'import' ? 'digest' : 'resolver call'} | [x408](#clause-119) | src/director/sharing/sharing.test.mjs: 2684, 2697, 2698, 2699 | KILLED |
+| [director-099 director-102] The bundle helpers reject an SVG media type during import and export | [m413](#clause-120) | src/director/sharing/sharing.test.mjs: 2708, 2711 | KILLED |
+| [director-107] The ${mode} stops after the second digest | [x409](#clause-121) | src/director/sharing/sharing.test.mjs: 2826, 2839, 2840, 2841 | KILLED |
+| [director-110] The preview reports both absent named layers without layer IDs | [m449](#clause-122) | src/director/sharing/sharing.test.mjs: 2851 | KILLED |
+| [director-110] The preview reports no absent layer when both layer IDs are configured | [m467](#clause-123) | src/director/sharing/sharing.test.mjs: 2874 | KILLED |
+| [director-109] The preview reports both configured sources as configured | [m468](#clause-124) | src/director/sharing/sharing.test.mjs: 2893 | KILLED |
+
+### Clause 0
+
+Mutation: `m248`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+for (const handle of run.handles.splice(0).reverse()) handle.dispose();
+```
+
+New code:
+
+```js
+run.handles.splice(0);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-089] The session disposes resources and aborts the source signal after the clear and destroy calls
+t004-0: KILLED [director-089] The session disposes resources and aborts the source signal after the clear and destr
+SURVIVORS: []
+```
+
+### Clause 1
+
+Mutation: `m250`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+if (ended) late(value);
+```
+
+New code:
+
+```js
+if (ended) {}
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-090] The data pack session disposes late renderer resources after cancellation
+t006-0: KILLED [director-090] The data pack session disposes late renderer resources after cancellation
+SURVIVORS: []
+```
+
+### Clause 2
+
+Mutation: `m251`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+if (ended) late(value);
+```
+
+New code:
+
+```js
+if (ended) {}
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result
+t007-0: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the re
+SURVIVORS: []
+```
+
+### Clause 3
+
+Mutation: `m253`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+hex !== pack.sha256
+```
+
+New code:
+
+```js
+false
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names
+t009-0: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects
+SURVIVORS: []
+```
+
+### Clause 4
+
+Mutation: `a0108`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+
+      .split('/')
+      .every((part) => /^[a-zA-Z0-9_-][a-zA-Z0-9_.-]*$/.test(part))
+  )
+    fail(
+
+```
+
+New code:
+
+```js
+
+      .split('/')
+      .every((part) => /^[a-zA-Y0-9_-][a-zA-Z0-9_.-]*$/.test(part))
+  )
+    fail(
+
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-076] The validator returns without an error for ${character} in both character positions for the asset path
+t011-1: KILLED [director-076] The validator returns without an error for Z in both character positions for the asse
+SURVIVORS: []
+```
+
+### Clause 5
+
+Mutation: `a9037`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+a-f
+```
+
+New code:
+
+```js
+
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-079] The validator returns without an error for each hexadecimal digest character
+t012-2: KILLED [director-079] The validator returns without an error for each hexadecimal digest character
+SURVIVORS: []
+```
+
+### Clause 6
+
+Mutation: `a9004`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+string(value, path, 1024);
+  if (
+    !value
+      .split('/')
+      .every((part) => /^[a-zA-Z0-9_-][a-zA-Z0-9_.-]*$/.test(part))
+  )
+    fail(
+      path,
+      'expected a relative asset path without URL syntax or traversal',
+    );
+```
+
+New code:
+
+```js
+if (
+    !value
+      .split('/')
+      .every((part) => /^[a-zA-Z0-9_-][a-zA-Z0-9_.-]*$/.test(part))
+  )
+    fail(
+      path,
+      'expected a relative asset path without URL syntax or traversal',
+    );
+  string(value, path, 1024);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-076] The validator rejects the path type before it reads a segment
+t013-4: KILLED [director-076] The validator rejects the path type before it reads a segment
+SURVIVORS: []
+```
+
+### Clause 7
+
+Mutation: `a9028`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+optional(pack, 'sha256', path, (v, at) => {
+    if (typeof v !== 'string' || !/^[a-f0-9]{64}$/.test(v))
+      fail(at, 'expected a lowercase SHA-256 digest');
+  });
+  const p = pack.placement,
+    at = `${path}.placement`;
+```
+
+New code:
+
+```js
+const p = pack.placement,
+    at = `${path}.placement`;
+  optional(pack, 'sha256', path, (v, at) => {
+    if (typeof v !== 'string' || !/^[a-f0-9]{64}$/.test(v))
+      fail(at, 'expected a lowercase SHA-256 digest');
+  });
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-079] The validator checks the digest before it reads the placement
+t014-0: KILLED [director-079] The validator checks the digest before it reads the placement
+SURVIVORS: []
+```
+
+### Clause 8
+
+Mutation: `a9039`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+if (p.altitudeReference !== 'ellipsoid')
+      fail(`${at}.altitudeReference`, 'expected ellipsoid height in meters');
+    if (pack.format === 'image') {
+      array(p.bounds, `${at}.bounds`, 4);
+      if (p.bounds.length !== 4)
+        fail(`${at}.bounds`, 'expected west, south, east, north');
+      p.bounds.forEach((v, i) =>
+        number(
+          v,
+          `${at}.bounds[${i}]`,
+          i % 2 ? -90 : -180,
+          i % 2 ? 90 : 180,
+          false,
+        ),
+      );
+      if (p.bounds[0] >= p.bounds[2] || p.bounds[1] >= p.bounds[3])
+        fail(`${at}.bounds`, 'expected increasing non-dateline bounds');
+      number(p.height, `${at}.height`, -12000, 1e9, false);
+    }
+```
+
+New code:
+
+```js
+if (pack.format === 'image') {
+      array(p.bounds, `${at}.bounds`, 4);
+      if (p.bounds.length !== 4)
+        fail(`${at}.bounds`, 'expected west, south, east, north');
+      p.bounds.forEach((v, i) =>
+        number(
+          v,
+          `${at}.bounds[${i}]`,
+          i % 2 ? -90 : -180,
+          i % 2 ? 90 : 180,
+          false,
+        ),
+      );
+      if (p.bounds[0] >= p.bounds[2] || p.bounds[1] >= p.bounds[3])
+        fail(`${at}.bounds`, 'expected increasing non-dateline bounds');
+      number(p.height, `${at}.height`, -12000, 1e9, false);
+    }
+    if (p.altitudeReference !== 'ellipsoid')
+      fail(`${at}.altitudeReference`, 'expected ellipsoid height in meters');
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-080] The validator checks the height reference before it checks the bounds and rejects the call
+t015-2: KILLED [director-080] The validator checks the height reference before it checks the bounds and rejects the
+SURVIVORS: []
+```
+
+### Clause 9
+
+Mutation: `a9040`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+array(p.bounds, `${at}.bounds`, 4);
+      if (p.bounds.length !== 4)
+        fail(`${at}.bounds`, 'expected west, south, east, north');
+```
+
+New code:
+
+```js
+if (p.bounds.length !== 4)
+        fail(`${at}.bounds`, 'expected west, south, east, north');
+      array(p.bounds, `${at}.bounds`, 4);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-080] The validator checks the bounds array before it reads the length
+t016-0: KILLED [director-080] The validator checks the bounds array before it reads the length
+SURVIVORS: []
+```
+
+### Clause 10
+
+Mutation: `a9041`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+if (p.bounds.length !== 4)
+        fail(`${at}.bounds`, 'expected west, south, east, north');
+      p.bounds.forEach((v, i) =>
+        number(
+          v,
+          `${at}.bounds[${i}]`,
+          i % 2 ? -90 : -180,
+          i % 2 ? 90 : 180,
+          false,
+        ),
+      );
+```
+
+New code:
+
+```js
+p.bounds.forEach((v, i) =>
+        number(
+          v,
+          `${at}.bounds[${i}]`,
+          i % 2 ? -90 : -180,
+          i % 2 ? 90 : 180,
+          false,
+        ),
+      );
+      if (p.bounds.length !== 4)
+        fail(`${at}.bounds`, 'expected west, south, east, north');
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-080] The validator checks the bounds length before it checks each coordinate and rejects the call
+t017-2: KILLED [director-080] The validator checks the bounds length before it checks each coordinate and rejects t
+SURVIVORS: []
+```
+
+### Clause 11
+
+Mutation: `a9045`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+array(packs, `${path}.dataPacks`, PACK_LIMITS.packs);
+  const anchors = new Set((scene.anchors || []).map((a) => a.id));
+```
+
+New code:
+
+```js
+const anchors = new Set((scene.anchors || []).map((a) => a.id));
+  array(packs, `${path}.dataPacks`, PACK_LIMITS.packs);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-082] The validator checks the list before it reads the anchors
+t018-1: KILLED [director-082] The validator checks the list before it reads the anchors
+SURVIVORS: []
+```
+
+### Clause 12
+
+Mutation: `a9050`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+validateDataPack(pack, `${path}.dataPacks[${i}]`, anchors);
+    if (seen.has(pack.id))
+      fail(`${path}.dataPacks[${i}].id`, 'duplicate pack ID');
+```
+
+New code:
+
+```js
+if (seen.has(pack.id))
+      fail(`${path}.dataPacks[${i}].id`, 'duplicate pack ID');
+    validateDataPack(pack, `${path}.dataPacks[${i}]`, anchors);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs and rejects the call
+t019-2: KILLED [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs
+SURVIVORS: []
+```
+
+### Clause 13
+
+Mutation: `a9109`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+const sourceMap = new Map(Object.entries(sources));
+  const adapterMap = new Map(Object.entries(adapters));
+```
+
+New code:
+
+```js
+const adapterMap = new Map(Object.entries(adapters));
+  const sourceMap = new Map(Object.entries(sources));
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-088] The session reads source entries before renderer entries
+t020-2: KILLED [director-088] The session reads source entries before renderer entries
+SURVIVORS: []
+```
+
+### Clause 14
+
+Mutation: `a9218`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+await reader.cancel().catch(() => {});
+      reader.releaseLock();
+```
+
+New code:
+
+```js
+reader.releaseLock();
+      await reader.cancel().catch(() => {});
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-097] The source waits for stream cancellation before it releases the reader lock
+t021-17: KILLED [director-097] The source waits for stream cancellation before it releases the reader lock
+SURVIVORS: []
+```
+
+### Clause 15
+
+Mutation: `a9208`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+await response.body?.cancel().catch(() => {})
+```
+
+New code:
+
+```js
+response.body?.cancel().catch(() => {})
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-097] The source waits for body cancellation before it rejects the asset request
+t022-2: KILLED [director-097] The source waits for body cancellation before it rejects the asset request
+SURVIVORS: []
+```
+
+### Clause 16
+
+Mutation: `a1326`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+nded = false;
+    const abort = () => {
+      if (!ended) {
+        ended = true;
+        reject(signal.re
+```
+
+New code:
+
+```js
+nded = false;
+    const abort = () => {
+      if (true) {
+        ended = true;
+        reject(signal.re
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-092] The session reads the source signal reason once during another source signal event
+t024-0: KILLED [director-092] The session reads the source signal reason once during another source signal event
+SURVIVORS: []
+```
+
+### Clause 17
+
+Mutation: `a9089`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+signal.removeEventListener('abort', abort);
+        if (ended) late(value);
+        else {
+          ended = true;
+          resolve(value);
+        }
+```
+
+New code:
+
+```js
+if (ended) late(value);
+        else {
+          ended = true;
+          resolve(value);
+        }
+        signal.removeEventListener('abort', abort);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-092] The session rejects the load call for a source signal event during listener removal after ${mode}
+t025-0: KILLED [director-092] The session rejects the load call for a source signal event during listener removal a
+SURVIVORS: []
+```
+
+### Clause 18
+
+Mutation: `a1394`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+);
+        if (ended) late(value);
+        else {
+          ended = true;
+          resolve(value);
+        }
+      },
+
+```
+
+New code:
+
+```js
+);
+        if (ended) late(value);
+        else {
+
+          resolve(value);
+        }
+      },
+
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-089] The session returns true and does not read the reason after the work promise settles
+t026-2: KILLED [director-089] The session returns true and does not read the reason after the work promise settles
+SURVIVORS: []
+```
+
+### Clause 19
+
+Mutation: `a9120`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+clearTimeout(run.timer);
+    for (const handle of run.handles.splice(0).reverse()) handle.dispose();
+```
+
+New code:
+
+```js
+for (const handle of run.handles.splice(0).reverse()) handle.dispose();
+    clearTimeout(run.timer);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-089] The session removes resources after source cancellation and timer removal
+t027-10: KILLED [director-089] The session removes resources after source cancellation and timer removal
+SURVIVORS: []
+```
+
+### Clause 20
+
+Mutation: `a9121`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+disposed = true;
+      clear();
+```
+
+New code:
+
+```js
+clear();
+      disposed = true;
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-088] The session returns false for a load call during source cancellation for the destroyed session
+t028-0: KILLED [director-088] The session returns false for a load call during source cancellation for the destroye
+SURVIVORS: []
+```
+
+### Clause 21
+
+Mutation: `a9131`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+if (!Array.isArray(packs) || packs.length > PACK_LIMITS.packs)
+        throw new Error('Too many data packs');
+      const anchorIds = new Set(anchors.map((anchor) => anchor.id));
+```
+
+New code:
+
+```js
+const anchorIds = new Set(anchors.map((anchor) => anchor.id));
+      if (!Array.isArray(packs) || packs.length > PACK_LIMITS.packs)
+        throw new Error('Too many data packs');
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-088] The session checks the list before it reads the anchors
+t030-0: KILLED [director-088] The session checks the list before it reads the anchors
+SURVIVORS: []
+```
+
+### Clause 22
+
+Mutation: `a9133`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+packs.forEach((pack, i) =>
+        validateDataPack(pack, `packs[${i}]`, anchorIds),
+      );
+      if (disposed || signal?.aborted) return false;
+```
+
+New code:
+
+```js
+if (disposed || signal?.aborted) return false;
+      packs.forEach((pack, i) =>
+        validateDataPack(pack, `packs[${i}]`, anchorIds),
+      );
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-088] The session checks declarations before it reads the caller signal
+t031-0: KILLED [director-088] The session checks declarations before it reads the caller signal
+SURVIVORS: []
+```
+
+### Clause 23
+
+Mutation: `a9140`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+signal?.addEventListener('abort', cancel, { once: true });
+      run.timer = setTimeout(
+        () => controller.abort(new Error('Asset load timed out')),
+        timeoutMs,
+      );
+```
+
+New code:
+
+```js
+run.timer = setTimeout(
+        () => controller.abort(new Error('Asset load timed out')),
+        timeoutMs,
+      );
+      signal?.addEventListener('abort', cancel, { once: true });
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-089] The session attaches the caller listener before the deadline timer starts
+t032-0: KILLED [director-089] The session attaches the caller listener before the deadline timer starts
+SURVIVORS: []
+```
+
+### Clause 24
+
+Mutation: `a9139`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+active = run;
+      signal?.addEventListener('abort', cancel, { once: true });
+```
+
+New code:
+
+```js
+signal?.addEventListener('abort', cancel, { once: true });
+      active = run;
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-090] The session returns false for a caller event during listener registration
+t033-0: KILLED [director-090] The session returns false for a caller event during listener registration
+SURVIVORS: []
+```
+
+### Clause 25
+
+Mutation: `a9145`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+controller.signal.throwIfAborted();
+        clearTimeout(run.timer);
+```
+
+New code:
+
+```js
+clearTimeout(run.timer);
+        controller.signal.throwIfAborted();
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-089] The session checks the signal before it removes the timer
+t034-7: KILLED [director-089] The session checks the signal before it removes the timer
+SURVIVORS: []
+```
+
+### Clause 26
+
+Mutation: `a9151`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+controller.signal.throwIfAborted();
+          const { bytes } = asset;
+```
+
+New code:
+
+```js
+const { bytes } = asset;
+          controller.signal.throwIfAborted();
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-090 director-093] The session rejects the signal error before it reads bytes
+t035-0: KILLED [director-090 director-093] The session rejects the signal error before it reads bytes
+SURVIVORS: []
+```
+
+### Clause 27
+
+Mutation: `a9154`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+total += bytes.length;
+          if (total > PACK_LIMITS.totalBytes)
+            throw new Error('Shot assets exceed byte limit');
+```
+
+New code:
+
+```js
+if (total > PACK_LIMITS.totalBytes)
+            throw new Error('Shot assets exceed byte limit');
+          total += bytes.length;
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-093] The session checks total bytes before it reads the digest
+t036-0: KILLED [director-093] The session checks total bytes before it reads the digest
+SURVIVORS: []
+```
+
+### Clause 28
+
+Mutation: `a9190`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+validateAssetPath(path);
+    signal?.throwIfAborted();
+```
+
+New code:
+
+```js
+signal?.throwIfAborted();
+    validateAssetPath(path);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-095] The source checks the path before it checks the caller signal and rejects the invalid path
+t037-0: KILLED [director-095] The source checks the path before it checks the caller signal and rejects the invalid
+SURVIVORS: []
+```
+
+### Clause 29
+
+Mutation: `a9209`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+if (Number(response.headers.get('content-length')) > maxBytes)
+        throw new Error('Asset exceeds byte limit');
+      for (;;) {
+        signal?.throwIfAborted();
+        const { done, value } = await reader.read();
+        if (done) break;
+        length += value.byteLength;
+        if (length > maxBytes) throw new Error('Asset exceeds byte limit');
+        chunks.push(value);
+      }
+```
+
+New code:
+
+```js
+for (;;) {
+        signal?.throwIfAborted();
+        const { done, value } = await reader.read();
+        if (done) break;
+        length += value.byteLength;
+        if (length > maxBytes) throw new Error('Asset exceeds byte limit');
+        chunks.push(value);
+      }
+      if (Number(response.headers.get('content-length')) > maxBytes)
+        throw new Error('Asset exceeds byte limit');
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-096] The source checks the header limit before it reads the first stream chunk
+t038-0: KILLED [director-096] The source checks the header limit before it reads the first stream chunk
+SURVIVORS: []
+```
+
+### Clause 30
+
+Mutation: `a9210`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+signal?.throwIfAborted();
+        const { done, value } = await reader.read();
+```
+
+New code:
+
+```js
+const { done, value } = await reader.read();
+        signal?.throwIfAborted();
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-097] The source checks the signal before it reads the stream chunk
+t039-0: KILLED [director-097] The source checks the signal before it reads the stream chunk
+SURVIVORS: []
+```
+
+### Clause 31
+
+Mutation: `a1613`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+disposed || signal?.aborted
+```
+
+New code:
+
+```js
+signal?.aborted || disposed
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-088] The session returns false and does not read the caller signal state after the caller destroys the session
+t055-0: KILLED [director-088] The session returns false and does not read the caller signal state after the caller
+SURVIVORS: []
+```
+
+### Clause 32
+
+Mutation: `a1977`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+active !== run || signal?.aborted
+```
+
+New code:
+
+```js
+signal?.aborted || active !== run
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-090] The session returns false and does not read the caller signal state again after cancellation
+t056-0: KILLED [director-090] The session returns false and does not read the caller signal state again after cance
+SURVIVORS: []
+```
+
+### Clause 33
+
+Mutation: `m061`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+disposed || signal?.aborted
+```
+
+New code:
+
+```js
+signal?.aborted
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-088] The load call returns false and makes no source call after the caller destroys the session
+t126-0: KILLED [director-088] The load call returns false and makes no source call after the caller destroys the se
+SURVIVORS: []
+```
+
+### Clause 34
+
+Mutation: `p-state-copy`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+return {
+        status: active?.status || 'idle',
+        count: active?.handles.length || 0,
+      };
+```
+
+New code:
+
+```js
+return active || { status: 'idle', count: 0 };
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-089] The session reports ready after the caller changes a state copy
+p-state-copy: KILLED [director-089] The session reports ready after the caller changes a state copy
+SURVIVORS: []
+```
+
+### Clause 35
+
+Mutation: `m067`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+if (superseded) return false;
+```
+
+New code:
+
+```js
+if (superseded) throw new Error("bad");
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-090] The session returns false when the caller destroys it during asset work
+t132-0: KILLED [director-090] The session returns false when the caller destroys it during asset work
+SURVIVORS: []
+```
+
+### Clause 36
+
+Mutation: `m068`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+if (active === run) clear();
+        if (superseded)
+```
+
+New code:
+
+```js
+clear();
+        if (superseded)
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-091] The session keeps the new resources after a new load call
+t133-0: KILLED [director-091] The session keeps the new resources after a new load call
+SURVIVORS: []
+```
+
+### Clause 37
+
+Mutation: `x390`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+      await response.body?.cancel().catch(() => {});
+```
+
+New code:
+
+```js
+      await response.body?.cancel();
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-097] The source rejects the asset request after failed body cancellation
+x390: KILLED [director-097] The source rejects the asset request after failed body cancellation
+SURVIVORS: []
+```
+
+### Clause 38
+
+Mutation: `m097`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+await reader.cancel().catch(() => {});
+```
+
+New code:
+
+```js
+await reader.cancel();
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-097] The source releases the reader lock after a stream error
+t162-0: KILLED [director-097] The source releases the reader lock after a stream error
+SURVIVORS: []
+```
+
+### Clause 39
+
+Mutation: `p-between-chunks`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+        signal?.throwIfAborted();
+```
+
+New code:
+
+```js
+        if (length === 0) signal?.throwIfAborted(); else break;
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/preferred-one.json
+Test selector: [director-097] The source checks its signal between chunks and rejects the call
+p-between-chunks: KILLED [director-097] The source checks its signal between chunks and rejects the call
+SURVIVORS: []
+```
+
+### Clause 40
+
+Mutation: `m171`. File: `src/director/packs/geojson.js`.
+
+Old code:
+
+```js
+Math.abs(p[0]) > 180
+```
+
+New code:
+
+```js
+Math.abs(p[0]) >= 180
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-085] The decoder accepts both geographic edges for the position and returns coordinates
+t180-0: KILLED [director-085] The decoder accepts both geographic edges for the position and returns coordinates
+SURVIVORS: []
+```
+
+### Clause 41
+
+Mutation: `m179`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+const superseded = active !== run || signal?.aborted || disposed;
+```
+
+New code:
+
+```js
+const superseded = active !== run || signal?.aborted;
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-090] The session checks destroyed state after it reads the signal
+t187-0: KILLED [director-090] The session checks destroyed state after it reads the signal
+SURVIVORS: []
+```
+
+### Clause 42
+
+Mutation: `m182`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+active !== run || controller.signal.aborted
+```
+
+New code:
+
+```js
+active !== run
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-090] The session disposes the handle before it adds the handle to its list
+t190-0: KILLED [director-090] The session disposes the handle before it adds the handle to its list
+SURVIVORS: []
+```
+
+### Clause 43
+
+Mutation: `x392`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+if (superseded) return false;
+```
+
+New code:
+
+```js
+if (superseded) { active = run; return false; }
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-092] The session returns false for cancelled work and reports idle after a late source error
+x392: KILLED [director-092] The session returns false for cancelled work and reports idle after a late source err
+SURVIVORS: []
+```
+
+### Clause 44
+
+Mutation: `x393`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+    if (signal.aborted) abort();
+```
+
+New code:
+
+```js
+
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-092] The session settles an early internal signal and reports idle
+x393: KILLED [director-092] The session settles an early internal signal and reports idle
+SURVIVORS: []
+```
+
+### Clause 45
+
+Mutation: `x394`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+run.status = 'ready';
+```
+
+New code:
+
+```js
+run.status = 'loading';
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-089] The session reports ready after asset work
+x394: KILLED [director-089] The session reports ready after asset work
+SURVIVORS: []
+```
+
+### Clause 46
+
+Mutation: `x395`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+adapter({ pack, asset, anchors, signal: controller.signal }),
+```
+
+New code:
+
+```js
+(adapter({ pack, asset, anchors, signal: controller.signal }), adapter({ pack, asset, anchors, signal: controller.signal })),
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-089] The session calls the GeoJSON renderer once and returns true
+x395: KILLED [director-089] The session calls the GeoJSON renderer once and returns true
+SURVIVORS: []
+```
+
+### Clause 47
+
+Mutation: `x396`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+adapter({ pack, asset, anchors, signal: controller.signal }),
+```
+
+New code:
+
+```js
+(adapter({ pack, asset, anchors, signal: controller.signal }), adapter({ pack, asset, anchors, signal: controller.signal })),
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-089] The session calls the image renderer once and returns true
+x396: KILLED [director-089] The session calls the image renderer once and returns true
+SURVIVORS: []
+```
+
+### Clause 48
+
+Mutation: `p-media-twice`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+adapter({ pack, asset, anchors, signal: controller.signal }),
+```
+
+New code:
+
+```js
+(adapter({ pack, asset, anchors, signal: controller.signal }), adapter({ pack, asset, anchors, signal: controller.signal })),
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/strong-one.json
+Test selector: [director-089] The session calls the media renderer once and returns true
+p-media-twice: KILLED [director-089] The session calls the media renderer once and returns true
+SURVIVORS: []
+```
+
+### Clause 49
+
+Mutation: `m243`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+for (;;) {
+        signal?.throwIfAborted();
+```
+
+New code:
+
+```js
+for (;;) {
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-097] The source stops between stream chunks
+t224-0: KILLED [director-097] The source stops between stream chunks
+SURVIVORS: []
+```
+
+### Clause 50
+
+Mutation: `p-error-at-deadline`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+          reject(error);
+```
+
+New code:
+
+```js
+          setTimeout(() => reject(error), 15000);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/deadline-one.json
+Test selector: [director-092] The session settles a source error before its deadline and reports idle
+p-error-at-deadline: KILLED [director-092] The session settles a source error before its deadline and reports idle
+SURVIVORS: []
+```
+
+### Clause 51
+
+Mutation: `m271`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+        timeoutMs,
+```
+
+New code:
+
+```js
+        15000,
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-092] The session rejects stalled work at the deadline of 19 milliseconds
+t226-0: KILLED [director-092] The session rejects stalled work at the deadline of 19 milliseconds
+SURVIVORS: []
+```
+
+### Clause 52
+
+Mutation: `m272`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+timeoutMs = 15000
+```
+
+New code:
+
+```js
+timeoutMs = 15001
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-092] The session rejects stalled work at the default deadline of 15000 milliseconds
+t227-0: KILLED [director-092] The session rejects stalled work at the default deadline of 15000 milliseconds
+SURVIVORS: []
+```
+
+### Clause 53
+
+Mutation: `m273`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+if (active === run) clear();
+        if (superseded)
+```
+
+New code:
+
+```js
+if (superseded)
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-092] The session removes resources after a later error
+t228-0: KILLED [director-092] The session removes resources after a later error
+SURVIVORS: []
+```
+
+### Clause 54
+
+Mutation: `m291`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+for (const handle of run.handles.splice(0).reverse()) handle.dispose();
+```
+
+New code:
+
+```js
+for (const handle of run.handles.splice(0).reverse().slice(0,1)) handle.dispose();
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-089] The session keeps every data pack handle
+t235-0: KILLED [director-089] The session keeps every data pack handle
+SURVIVORS: []
+```
+
+### Clause 55
+
+Mutation: `m071`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+!source
+```
+
+New code:
+
+```js
+false
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-092] The session reads the byteLength field once without a registered source
+t239-0: KILLED [director-092] The session reads the byteLength field once without a registered source
+SURVIVORS: []
+```
+
+### Clause 56
+
+Mutation: `m310`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+i % 2 ? -90 : -180
+```
+
+New code:
+
+```js
+i % 2 ? -89 : -180
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-080] The validator returns without an error for all geographic limits for the image
+t243-0: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+SURVIVORS: []
+```
+
+### Clause 57
+
+Mutation: `m323`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+bytes.length > PACK_LIMITS.bytes
+```
+
+New code:
+
+```js
+bytes.length >= PACK_LIMITS.bytes
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-093] The session returns true at the asset byte limit
+t245-0: KILLED [director-093] The session returns true at the asset byte limit
+SURVIVORS: []
+```
+
+### Clause 58
+
+Mutation: `m324`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+total > PACK_LIMITS.totalBytes
+```
+
+New code:
+
+```js
+total >= PACK_LIMITS.totalBytes
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-093] The session returns true at the total byte limit
+t246-0: KILLED [director-093] The session returns true at the total byte limit
+SURVIVORS: []
+```
+
+### Clause 59
+
+Mutation: `x398`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+packs.forEach((pack, i) =>
+```
+
+New code:
+
+```js
+packs.slice(0, 1).forEach((pack, i) =>
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-088] The session checks every declaration before the source call and rejects the call
+x398: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+SURVIVORS: []
+```
+
+### Clause 60
+
+Mutation: `x399`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+run.handles.splice(0).reverse()
+```
+
+New code:
+
+```js
+run.handles.splice(0)
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-089] The session disposes both ready handles in reverse order and reports idle
+x399: KILLED [director-089] The session disposes both ready handles in reverse order and reports idle
+SURVIVORS: []
+```
+
+### Clause 61
+
+Mutation: `p-all-deadlines`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+} = {}) {
+  const sourceMap
+```
+
+New code:
+
+```js
+} = {}) {
+  const clearTimeout = () => {};
+  const sourceMap
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/strong-one.json
+Test selector: [director-089] The session removes its deadline after ${label}
+p-all-deadlines: KILLED [director-089] The session removes its deadline after clear; [director-089] The session removes its deadline after success
+SURVIVORS: []
+```
+
+### Clause 62
+
+Mutation: `m315`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+          false,
+```
+
+New code:
+
+```js
+          true,
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-080] The validator rejects text for each geographic field for the image
+t259-0: KILLED [director-080] The validator rejects text for each geographic field for the image
+SURVIVORS: []
+```
+
+### Clause 63
+
+Mutation: `m380`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+status: 'loading'
+```
+
+New code:
+
+```js
+status: 'ready'
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-089] The session reports its state during asset work
+t271-0: KILLED [director-089] The session reports its state during asset work
+SURVIVORS: []
+```
+
+### Clause 64
+
+Mutation: `p-all-source-listeners`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+function untilAbort(promise, signal, late = () => {}) {
+  return new Promise((resolve, reject) => {
+    let ended = false;
+    const abort = () => {
+      if (!ended) {
+        ended = true;
+        reject(signal.reason);
+      }
+    };
+    signal.addEventListener('abort', abort, { once: true });
+    if (signal.aborted) abort();
+    Promise.resolve(promise).then(
+      (value) => {
+        signal.removeEventListener('abort', abort);
+        if (ended) late(value);
+        else {
+          ended = true;
+          resolve(value);
+        }
+      },
+      (error) => {
+        signal.removeEventListener('abort', abort);
+        if (!ended) {
+          ended = true;
+          reject(error);
+        }
+      },
+    );
+  });
+}
+```
+
+New code:
+
+```js
+function untilAbort(promise, signal, late = () => {}) {
+  return new Promise((resolve, reject) => {
+    let ended = false;
+    const abort = () => {
+      if (!ended) {
+        ended = true;
+        reject(signal.reason);
+      }
+    };
+    signal.addEventListener('abort', abort, { once: true });
+    if (signal.aborted) abort();
+    Promise.resolve(promise).then(
+      (value) => {
+
+        if (ended) late(value);
+        else {
+          ended = true;
+          resolve(value);
+        }
+      },
+      (error) => {
+
+        if (!ended) {
+          ended = true;
+          reject(error);
+        }
+      },
+    );
+  });
+}
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/strong-one.json
+Test selector: [director-089] The session removes source listeners after ${outcome}
+p-all-source-listeners: KILLED [director-089] The session removes source listeners after error; [director-089] The session removes source listeners after success
+SURVIVORS: []
+```
+
+### Clause 65
+
+Mutation: `p-late-reason`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+    const abort = () => {
+      if (!ended) {
+```
+
+New code:
+
+```js
+    const abort = () => {
+      if (true) {
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/strong-one.json
+Test selector: [director-089] The session reads the reason zero times after a later event for ${outcome}
+p-late-reason: KILLED [director-089] The session reads the reason zero times after a later event for error; [director-089] The session reads the reason zero times after a later event for success
+SURVIVORS: []
+```
+
+### Clause 66
+
+Mutation: `p-event-renderer`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+reject(signal.reason);
+```
+
+New code:
+
+```js
+resolve(signal.reason);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/repair-one.json
+Test selector: [director-092] The source signal event stops work before the renderer
+p-event-renderer: KILLED [director-092] The source signal event stops work before the renderer
+SURVIVORS: []
+```
+
+### Clause 67
+
+Mutation: `a1972`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+active !== run || signal?.aborted || disposed
+```
+
+New code:
+
+```js
+disposed || active !== run || signal?.aborted
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-090] The load call returns false when the caller signal destroys the session after a source error
+t280-0: KILLED [director-090] The load call returns false when the caller signal destroys the session after a sourc
+SURVIVORS: []
+```
+
+### Clause 68
+
+Mutation: `a1777`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+!(bytes instanceof Uint8Array) ||
+            !bytes.length ||
+            bytes.length > PACK_LIMITS.bytes
+```
+
+New code:
+
+```js
+bytes.length > PACK_LIMITS.bytes || !(bytes instanceof Uint8Array) ||
+            !bytes.length
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-093] The session checks byte type before it reads the length
+t281-0: KILLED [director-093] The session checks byte type before it reads the length
+SURVIVORS: []
+```
+
+### Clause 69
+
+Mutation: `a1691`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+new Error('Asset load timed out')
+```
+
+New code:
+
+```js
+undefined
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-092] The session sets the source signal reason at the deadline and rejects the call
+t283-0: KILLED [director-092] The session sets the source signal reason at the deadline and rejects the call
+SURVIVORS: []
+```
+
+### Clause 70
+
+Mutation: `a0457`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+typeof v !== 'string' || !/^[a-f0-9]{64}$/.test(v)
+```
+
+New code:
+
+```js
+!/^[a-f0-9]{64}$/.test(v) || typeof v !== 'string'
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-079] The validator checks the digest type before it converts text and rejects the call
+t284-0: KILLED [director-079] The validator checks the digest type before it converts text and rejects the call
+SURVIVORS: []
+```
+
+### Clause 71
+
+Mutation: `a0664`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+p.bounds[0] >= p.bounds[2] || p.bounds[1] >= p.bounds[3]
+```
+
+New code:
+
+```js
+p.bounds[1] >= p.bounds[3] || p.bounds[0] >= p.bounds[2]
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-080] The validator compares west with east before it compares south with north
+t285-0: KILLED [director-080] The validator compares west with east before it compares south with north
+SURVIVORS: []
+```
+
+### Clause 72
+
+Mutation: `a0842`. File: `src/director/packs/manifest.js`.
+
+Old code:
+
+```js
+new Set(ids).size !== ids.length || ids.some((id) => !seen.has(id))
+```
+
+New code:
+
+```js
+ids.some((id) => !seen.has(id)) || new Set(ids).size !== ids.length
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-082] The validator rejects duplicate references before it searches for known IDs
+t286-0: KILLED [director-082] The validator rejects duplicate references before it searches for known IDs
+SURVIVORS: []
+```
+
+### Clause 73
+
+Mutation: `a1649`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+      };
+      const cancel = () => {
+        if (active === run) clear();
+      };
+      active = run;
+      sign
+```
+
+New code:
+
+```js
+      };
+      const cancel = () => {
+        if (true) clear();
+      };
+      active = run;
+      sign
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-091] The session keeps new resources after the old caller listener fires
+t289-0: KILLED [director-091] The session keeps new resources after the old caller listener fires
+SURVIVORS: []
+```
+
+### Clause 74
+
+Mutation: `a9214`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+if (length > maxBytes) throw new Error('Asset exceeds byte limit');
+        chunks.push(value);
+```
+
+New code:
+
+```js
+chunks.push(value);
+        if (length > maxBytes) throw new Error('Asset exceeds byte limit');
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-096] The source rejects excess bytes before it keeps a chunk
+t292-0: KILLED [director-096] The source rejects excess bytes before it keeps a chunk
+SURVIVORS: []
+```
+
+### Clause 75
+
+Mutation: `m422`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+packs.forEach
+```
+
+New code:
+
+```js
+packs.slice(0, 1).forEach
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-088] The session rejects an invalid second data pack before the source call
+t303-0: KILLED [director-088] The session rejects an invalid second data pack before the source call
+SURVIVORS: []
+```
+
+### Clause 76
+
+Mutation: `m445`. File: `src/director/packs/source.js`.
+
+Old code:
+
+```js
+      for (;;) {
+        signal?.throwIfAborted();
+```
+
+New code:
+
+```js
+      signal?.throwIfAborted();
+      for (;;) {
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-097] The source cancels before it reads the second chunk
+t309-0: KILLED [director-097] The source cancels before it reads the second chunk
+SURVIVORS: []
+```
+
+### Clause 77
+
+Mutation: `m452`. File: `src/director/packs/session.js`.
+
+Old code:
+
+```js
+Object.entries(sources)
+```
+
+New code:
+
+```js
+Object.entries(sources).slice(0, 1)
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-088 director-093] The session calls both registered sources and both renderers
+t310-0: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+SURVIVORS: []
+```
+
+### Clause 78
+
+Mutation: `m432`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+scene.dataPacks || []
+```
+
+New code:
+
+```js
+(scene.dataPacks || []).slice(0, 1)
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-101] The export writes each asset index and filename
+t314-0: KILLED [director-101] The export writes each asset index and filename
+SURVIVORS: []
+```
+
+### Clause 79
+
+Mutation: `a2527`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+ 3) * 4 ||
+    value.length % 4 !== 0 ||
+    /[^A-Za-z0-9+/=]/.test(value) ||
+    (value.includes('='
+```
+
+New code:
+
+```js
+ 3) * 4 ||
+    value.length % 4 !== 0 ||
+    /[^A-Ya-z0-9+/=]/.test(value) ||
+    (value.includes('='
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-099] The import accepts each base64 character in ${label} text and returns assets
+t315-1: KILLED [director-099] The import accepts each base64 character in padded text and returns assets; [director-099] The import accepts each base64 character in plain text and returns assets
+SURVIVORS: []
+```
+
+### Clause 80
+
+Mutation: `a9229`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+for (let i = 0; i < bytes.length; i += 32768)
+    chunks.push(String.fromCharCode(...bytes.subarray(i, i + 32768)));
+  return btoa(chunks.join(''));
+```
+
+New code:
+
+```js
+return btoa(chunks.join(''));
+  for (let i = 0; i < bytes.length; i += 32768)
+    chunks.push(String.fromCharCode(...bytes.subarray(i, i + 32768)));
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-099 director-101] The export writes each base64 character in ${label} text
+t316-0: KILLED [director-099 director-101] The export writes each base64 character in padded text; [director-099 director-101] The export writes each base64 character in plain text
+SURVIVORS: []
+```
+
+### Clause 81
+
+Mutation: `a3234`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+160
+```
+
+New code:
+
+```js
+161
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-101] The export limits each source filename to 160 characters and returns bundle text
+t325-0: KILLED [director-101] The export limits each source filename to 160 characters and returns bundle text
+SURVIVORS: []
+```
+
+### Clause 82
+
+Mutation: `p-absent-map`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+replace(next = new Map())
+```
+
+New code:
+
+```js
+replace(next = assets)
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/strong-one.json
+Test selector: [director-104] The store reports zero bytes after an absent replacement map
+p-absent-map: KILLED [director-104] The store reports zero bytes after an absent replacement map
+SURVIVORS: []
+```
+
+### Clause 83
+
+Mutation: `a2439`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+typeof value !== 'string' ||
+    !value.length ||
+    value.length > Math.ceil(PACK_LIMITS.bytes / 3) * 4 ||
+    value.length % 4 !== 0 ||
+    /[^A-Za-z0-9+/=]/.test(value)
+```
+
+New code:
+
+```js
+/[^A-Za-z0-9+/=]/.test(value) || typeof value !== 'string' ||
+    !value.length ||
+    value.length > Math.ceil(PACK_LIMITS.bytes / 3) * 4 ||
+    value.length % 4 !== 0
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-099] The import checks the base64 type before it converts text and rejects the call
+t332-0: KILLED [director-099] The import checks the base64 type before it converts text and rejects the call
+SURVIVORS: []
+```
+
+### Clause 84
+
+Mutation: `a3186`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+(pack.byteLength && pack.byteLength !== bytes.length) ||
+        (pack.sha256 && pack.sha256 !== sha256)
+```
+
+New code:
+
+```js
+pack.sha256 && pack.sha256 !== sha256 || pack.byteLength && pack.byteLength !== bytes.length
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-102] The export checks declared byteLength before declared digest and rejects the call
+t334-0: KILLED [director-102] The export checks declared byteLength before declared digest and rejects the call
+SURVIVORS: []
+```
+
+### Clause 85
+
+Mutation: `a2570`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+!(bytes instanceof Uint8Array) ||
+    !bytes.length ||
+    bytes.length > PACK_LIMITS.bytes ||
+    total > PACK_LIMITS.totalBytes
+```
+
+New code:
+
+```js
+total > PACK_LIMITS.totalBytes || !(bytes instanceof Uint8Array) ||
+    !bytes.length ||
+    bytes.length > PACK_LIMITS.bytes
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-102] The export checks the asset size before the total size and rejects the call
+t335-0: KILLED [director-102] The export checks the asset size before the total size and rejects the call
+SURVIVORS: []
+```
+
+### Clause 86
+
+Mutation: `a3818`. File: `src/director/sharing/preview.js`.
+
+Old code:
+
+```js
+s.appliedShotPacks?.length || s.shots.some((shot) => shot.sourcePackId)
+```
+
+New code:
+
+```js
+s.shots.some((shot) => shot.sourcePackId) || s.appliedShotPacks?.length
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-110] The preview reports external content from applied shot packs before it reads source pack IDs
+t336-0: KILLED [director-110] The preview reports external content from applied shot packs before it reads source p
+SURVIVORS: []
+```
+
+### Clause 87
+
+Mutation: `p-resolver-twice`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+resolveAsset(pack, { signal }),
+```
+
+New code:
+
+```js
+(resolveAsset(pack, { signal }), resolveAsset(pack, { signal })),
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/strong-one.json
+Test selector: [director-101] The export copies bytes and attribution, keeps the project and calls the resolver once
+p-resolver-twice: KILLED [director-101] The export copies bytes and attribution, keeps the project and calls the resolver onc
+SURVIVORS: []
+```
+
+### Clause 88
+
+Mutation: `p-store-clear`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+    clear() {
+      assets.clear();
+    },
+```
+
+New code:
+
+```js
+    clear() {},
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/store-one.json
+Test selector: [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets
+p-store-clear: KILLED [director-104 director-105] The store returns an independent byte copy, rejects cancellation, report
+SURVIVORS: []
+```
+
+### Clause 89
+
+Mutation: `m261`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+if (file.size > limit)
+```
+
+New code:
+
+```js
+if (false)
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
+t343-0: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled
+SURVIVORS: []
+```
+
+### Clause 90
+
+Mutation: `m262`. File: `src/director/sharing/lifetime.js`.
+
+Old code:
+
+```js
+reject(signal.reason);
+```
+
+New code:
+
+```js
+reject(new Error('wrong'));
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-107] The export rejects cancellation during asset work
+t344-0: KILLED [director-107] The export rejects cancellation during asset work
+SURVIVORS: []
+```
+
+### Clause 91
+
+Mutation: `x403`. File: `src/director/sharing/lifetime.js`.
+
+Old code:
+
+```js
+signal.aborted ? reject(signal.reason) : resolve(value);
+```
+
+New code:
+
+```js
+resolve(value);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-107] The helper checks signal state when the work settles and rejects the call
+x403: KILLED [director-107] The helper checks signal state when the work settles and rejects the call
+SURVIVORS: []
+```
+
+### Clause 92
+
+Mutation: `x404`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+text.length > SHARE_LIMITS.bytes ||
+```
+
+New code:
+
+```js
+false ||
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-098] The import rejects 52428801 characters before byte conversion
+x404: KILLED [director-098] The import rejects 52428801 characters before byte conversion
+SURVIVORS: []
+```
+
+### Clause 93
+
+Mutation: `x405`. File: `src/director/sharing/preview.js`.
+
+Old code:
+
+```js
+[...assets.values()].reduce((n, a) => n + a.bytes.length, 0)
+```
+
+New code:
+
+```js
+[...assets.values()].slice(0, 1).reduce((n, a) => n + a.bytes.length, 0)
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-108] The preview reports three bytes for both assets
+x405: KILLED [director-108] The preview reports three bytes for both assets
+SURVIVORS: []
+```
+
+### Clause 94
+
+Mutation: `m236`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+bytes?.length || 0
+```
+
+New code:
+
+```js
+bytes?.length
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-102] The export keeps its total after an asset without a byte length
+t427-0: KILLED [director-102] The export keeps its total after an asset without a byte length
+SURVIVORS: []
+```
+
+### Clause 95
+
+Mutation: `m126`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+total > PACK_LIMITS.totalBytes
+```
+
+New code:
+
+```js
+false
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+t443-0: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+SURVIVORS: []
+```
+
+### Clause 96
+
+Mutation: `m343`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+value.length > Math.ceil(PACK_LIMITS.bytes / 3) * 4
+```
+
+New code:
+
+```js
+value.length >= Math.ceil(PACK_LIMITS.bytes / 3) * 4
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length
+t444-0: KILLED [director-099] The import rejects excess bytes at the base64 length limit and rejects the next align
+SURVIVORS: []
+```
+
+### Clause 97
+
+Mutation: `m348`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+
+    checkBytes(bytes, total);
+```
+
+New code:
+
+```js
+
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-099] The import returns assets at the total byte limit and rejects one more byte
+t445-0: KILLED [director-099] The import returns assets at the total byte limit and rejects one more byte
+SURVIVORS: []
+```
+
+### Clause 98
+
+Mutation: `x406`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+g' ||
+    text.length > SHARE_LIMITS.bytes ||
+    new TextEncoder().encode(text).length > SHARE_LIMITS.bytes
+  )
+    fail('$', 'share exceeds 50 MiB');
+  let
+```
+
+New code:
+
+```js
+g' ||
+    text.length > SHARE_LIMITS.bytes ||
+    false
+  )
+    fail('$', 'share exceeds 50 MiB');
+  let
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+x406: KILLED [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+SURVIVORS: []
+```
+
+### Clause 99
+
+Mutation: `p-all-helper-listeners`. File: `src/director/sharing/lifetime.js`.
+
+Old code:
+
+```js
+export function withShareSignal(work, signal) {
+  if (!signal) return Promise.resolve(work);
+  return new Promise((resolve, reject) => {
+    const abort = () => {
+      signal.removeEventListener('abort', abort);
+      reject(signal.reason);
+    };
+    if (signal.aborted) {
+      Promise.resolve(work).catch(() => {});
+      abort();
+      return;
+    }
+    signal.addEventListener('abort', abort, { once: true });
+    Promise.resolve(work).then(
+      (value) => {
+        signal.removeEventListener('abort', abort);
+        signal.aborted ? reject(signal.reason) : resolve(value);
+      },
+      (error) => {
+        signal.removeEventListener('abort', abort);
+        reject(error);
+      },
+    );
+  });
+}
+
+```
+
+New code:
+
+```js
+export function withShareSignal(work, signal) {
+  if (!signal) return Promise.resolve(work);
+  return new Promise((resolve, reject) => {
+    const abort = () => {
+
+      reject(signal.reason);
+    };
+    if (signal.aborted) {
+      Promise.resolve(work).catch(() => {});
+      abort();
+      return;
+    }
+    signal.addEventListener('abort', abort, { once: true });
+    Promise.resolve(work).then(
+      (value) => {
+
+        signal.aborted ? reject(signal.reason) : resolve(value);
+      },
+      (error) => {
+
+        reject(error);
+      },
+    );
+  });
+}
+
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/strong-one.json
+Test selector: [director-107] The helper removes its listener after ${outcome}
+p-all-helper-listeners: KILLED [director-107] The helper removes its listener after cancel; [director-107] The helper removes its listener after error; [director-107] The helper removes its listener after success
+SURVIVORS: []
+```
+
+### Clause 100
+
+Mutation: `a3201`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+pack.sha256 && pack.sha256 !== sha256
+```
+
+New code:
+
+```js
+pack.sha256 !== sha256 && pack.sha256
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-102] The export reads an absent declared digest once before it writes the digest
+t459-0: KILLED [director-102] The export reads an absent declared digest once before it writes the digest
+SURVIVORS: []
+```
+
+### Clause 101
+
+Mutation: `a9246`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+checkAbort(signal);
+  if (
+    typeof text !== 'string' ||
+    text.length > SHARE_LIMITS.bytes ||
+    new TextEncoder().encode(text).length > SHARE_LIMITS.bytes
+  )
+    fail('$', 'share exceeds 50 MiB');
+```
+
+New code:
+
+```js
+if (
+    typeof text !== 'string' ||
+    text.length > SHARE_LIMITS.bytes ||
+    new TextEncoder().encode(text).length > SHARE_LIMITS.bytes
+  )
+    fail('$', 'share exceeds 50 MiB');
+  checkAbort(signal);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-098 director-107] The import checks the signal before it checks the text type and rejects the call
+t464-0: KILLED [director-098 director-107] The import checks the signal before it checks the text type and rejects
+SURVIVORS: []
+```
+
+### Clause 102
+
+Mutation: `a9261`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+checkAbort(signal);
+    fields(entry, 'assets', ['path', 'mimeType', 'base64', 'sha256']);
+```
+
+New code:
+
+```js
+fields(entry, 'assets', ['path', 'mimeType', 'base64', 'sha256']);
+    checkAbort(signal);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-099 director-107] The import checks the signal before it checks asset fields and rejects the call
+t466-0: KILLED [director-099 director-107] The import checks the signal before it checks asset fields and rejects t
+SURVIVORS: []
+```
+
+### Clause 103
+
+Mutation: `a9268`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+checkBytes(bytes, total);
+    const hash = await digest(bytes);
+```
+
+New code:
+
+```js
+const hash = await digest(bytes);
+    checkBytes(bytes, total);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-099] The import checks asset bytes before the digest call and rejects the call
+t467-0: KILLED [director-099] The import checks asset bytes before the digest call and rejects the call
+SURVIVORS: []
+```
+
+### Clause 104
+
+Mutation: `a9270`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+checkAbort(signal);
+    if (entry.sha256 !== hash) fail('assets', 'asset integrity mismatch');
+```
+
+New code:
+
+```js
+if (entry.sha256 !== hash) fail('assets', 'asset integrity mismatch');
+    checkAbort(signal);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-100 director-107] The import checks the signal before it compares digests
+t468-0: KILLED [director-100 director-107] The import checks the signal before it compares digests
+SURVIVORS: []
+```
+
+### Clause 105
+
+Mutation: `a9277`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+if (file.size > limit)
+    fail(
+      '$',
+      limit === SHARE_LIMITS.bytes
+        ? 'share exceeds 50 MiB'
+        : 'file exceeds 5 MiB',
+    );
+  checkAbort(options?.signal);
+```
+
+New code:
+
+```js
+checkAbort(options?.signal);
+  if (file.size > limit)
+    fail(
+      '$',
+      limit === SHARE_LIMITS.bytes
+        ? 'share exceeds 50 MiB'
+        : 'file exceeds 5 MiB',
+    );
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-106] The share helpers check the file limit before they read the signal and reject excess files
+t469-0: KILLED [director-106] The share helpers check the file limit before they read the signal and reject excess
+SURVIVORS: []
+```
+
+### Clause 106
+
+Mutation: `a9278`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+checkAbort(options?.signal);
+  const text = await withShareSignal(file.text(), options?.signal);
+```
+
+New code:
+
+```js
+const text = await withShareSignal(file.text(), options?.signal);
+  checkAbort(options?.signal);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-106 director-107] The share helpers check the signal before they read text and reject cancellation
+t470-0: KILLED [director-106 director-107] The share helpers check the signal before they read text and reject canc
+SURVIVORS: []
+```
+
+### Clause 107
+
+Mutation: `m480`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+  const text = await withShareSignal(file.text(), options?.signal);
+  checkAbort(options?.signal);
+```
+
+New code:
+
+```js
+  const pending = withShareSignal(file.text(), options?.signal);
+  checkAbort(options?.signal);
+  const text = await pending;
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-107] The share helpers check the signal after the text promise settles
+t471-0: KILLED [director-107] The share helpers check the signal after the text promise settles
+SURVIVORS: []
+```
+
+### Clause 108
+
+Mutation: `a9308`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+if (
+        (pack.byteLength && pack.byteLength !== bytes.length) ||
+        (pack.sha256 && pack.sha256 !== sha256)
+      )
+        fail('assets', 'selected file does not match declared integrity');
+      const path = `files/${assets.length}-${pack.source.path.split('/').at(-1).slice(0, 160)}`;
+```
+
+New code:
+
+```js
+const path = `files/${assets.length}-${pack.source.path.split('/').at(-1).slice(0, 160)}`;
+      if (
+        (pack.byteLength && pack.byteLength !== bytes.length) ||
+        (pack.sha256 && pack.sha256 !== sha256)
+      )
+        fail('assets', 'selected file does not match declared integrity');
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-102] The export checks integrity before it reads the filename
+t473-0: KILLED [director-102] The export checks integrity before it reads the filename
+SURVIVORS: []
+```
+
+### Clause 109
+
+Mutation: `a9298`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+if (assets.length >= SHARE_LIMITS.assets)
+        fail('assets', 'too many bundled assets');
+      const asset = await withShareSignal(
+        resolveAsset(pack, { signal }),
+        signal,
+      );
+```
+
+New code:
+
+```js
+const asset = await withShareSignal(
+        resolveAsset(pack, { signal }),
+        signal,
+      );
+      if (assets.length >= SHARE_LIMITS.assets)
+        fail('assets', 'too many bundled assets');
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-102] The export checks the asset count before the next resolver call and rejects the call
+t474-0: KILLED [director-102] The export checks the asset count before the next resolver call and rejects the call
+SURVIVORS: []
+```
+
+### Clause 110
+
+Mutation: `a9304`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+checkBytes(bytes, total);
+      checkMime(asset.mimeType);
+```
+
+New code:
+
+```js
+checkMime(asset.mimeType);
+      checkBytes(bytes, total);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-102] The export checks bytes before the media type and rejects the call
+t475-0: KILLED [director-102] The export checks bytes before the media type and rejects the call
+SURVIVORS: []
+```
+
+### Clause 111
+
+Mutation: `a9305`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+checkMime(asset.mimeType);
+      const sha256 = await digest(bytes);
+```
+
+New code:
+
+```js
+const sha256 = await digest(bytes);
+      checkMime(asset.mimeType);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-102] The export checks the media type before the digest call and rejects the call
+t476-0: KILLED [director-102] The export checks the media type before the digest call and rejects the call
+SURVIVORS: []
+```
+
+### Clause 112
+
+Mutation: `a9300`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+checkAbort(signal);
+      if (!asset) fail('assets', 'select a file for every declared data pack');
+```
+
+New code:
+
+```js
+if (!asset) fail('assets', 'select a file for every declared data pack');
+      checkAbort(signal);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-102 director-107] The export checks the signal before ${label} and rejects the call
+t477-0: KILLED [director-102 director-107] The export checks the signal before it checks for an absent asset and re
+SURVIVORS: []
+```
+
+### Clause 113
+
+Mutation: `a9332`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+checkAbort(signal);
+      validateAssetPath(path);
+```
+
+New code:
+
+```js
+validateAssetPath(path);
+      checkAbort(signal);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-105] The store checks the signal before it checks the path and rejects the call
+t478-0: KILLED [director-105] The store checks the signal before it checks the path and rejects the call
+SURVIVORS: []
+```
+
+### Clause 114
+
+Mutation: `a9341`. File: `src/director/sharing/lifetime.js`.
+
+Old code:
+
+```js
+signal.addEventListener('abort', abort, { once: true });
+    Promise.resolve(work).then(
+      (value) => {
+        signal.removeEventListener('abort', abort);
+        signal.aborted ? reject(signal.reason) : resolve(value);
+      },
+      (error) => {
+        signal.removeEventListener('abort', abort);
+        reject(error);
+      },
+    );
+```
+
+New code:
+
+```js
+Promise.resolve(work).then(
+      (value) => {
+        signal.removeEventListener('abort', abort);
+        signal.aborted ? reject(signal.reason) : resolve(value);
+      },
+      (error) => {
+        signal.removeEventListener('abort', abort);
+        reject(error);
+      },
+    );
+    signal.addEventListener('abort', abort, { once: true });
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-107] The helper attaches its listener before it reads the work promise
+t479-0: KILLED [director-107] The helper attaches its listener before it reads the work promise
+SURVIVORS: []
+```
+
+### Clause 115
+
+Mutation: `a9342`. File: `src/director/sharing/lifetime.js`.
+
+Old code:
+
+```js
+signal.removeEventListener('abort', abort);
+      reject(signal.reason);
+```
+
+New code:
+
+```js
+reject(signal.reason);
+      signal.removeEventListener('abort', abort);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-107] The helper removes its listener before it reads the reason
+t480-0: KILLED [director-107] The helper removes its listener before it reads the reason
+SURVIVORS: []
+```
+
+### Clause 116
+
+Mutation: `a9343`. File: `src/director/sharing/lifetime.js`.
+
+Old code:
+
+```js
+Promise.resolve(work).catch(() => {});
+      abort();
+```
+
+New code:
+
+```js
+abort();
+      Promise.resolve(work).catch(() => {});
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-107] The helper reads cancelled work before its reason
+t481-0: KILLED [director-107] The helper reads cancelled work before its reason
+SURVIVORS: []
+```
+
+### Clause 117
+
+Mutation: `a9345`. File: `src/director/sharing/lifetime.js`.
+
+Old code:
+
+```js
+signal.removeEventListener('abort', abort);
+        signal.aborted ? reject(signal.reason) : resolve(value);
+```
+
+New code:
+
+```js
+signal.aborted ? reject(signal.reason) : resolve(value);
+        signal.removeEventListener('abort', abort);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-107] The helper checks cancellation after listener removal and rejects the call
+t482-0: KILLED [director-107] The helper checks cancellation after listener removal and rejects the call
+SURVIVORS: []
+```
+
+### Clause 118
+
+Mutation: `a9346`. File: `src/director/sharing/lifetime.js`.
+
+Old code:
+
+```js
+signal.removeEventListener('abort', abort);
+        reject(error);
+```
+
+New code:
+
+```js
+reject(error);
+        signal.removeEventListener('abort', abort);
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-107] The helper rejects with the cancellation reason during listener removal after a work error
+t483-0: KILLED [director-107] The helper rejects with the cancellation reason during listener removal after a work
+SURVIVORS: []
+```
+
+### Clause 119
+
+Mutation: `x408`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+const checkAbort = (signal) => signal?.throwIfAborted();
+```
+
+New code:
+
+```js
+const checkAbort = () => {};
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-107] The ${mode} stops before the second ${mode === 'import' ? 'digest' : 'resolver call'}
+x408: KILLED [director-107] The export stops before the second resolver call; [director-107] The import stops before the second digest
+SURVIVORS: []
+```
+
+### Clause 120
+
+Mutation: `m413`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+  'audio/webm',
+```
+
+New code:
+
+```js
+  'audio/webm',
+  'image/svg+xml',
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-099 director-102] The bundle helpers reject an SVG media type during import and export
+t485-0: KILLED [director-099 director-102] The bundle helpers reject an SVG media type during import and export
+SURVIVORS: []
+```
+
+### Clause 121
+
+Mutation: `x409`. File: `src/director/sharing/bundle.js`.
+
+Old code:
+
+```js
+const checkAbort = (signal) => signal?.throwIfAborted();
+```
+
+New code:
+
+```js
+const checkAbort = () => {};
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-107] The ${mode} stops after the second digest
+x409: KILLED [director-107] The export stops after the second digest; [director-107] The import stops after the second digest
+SURVIVORS: []
+```
+
+### Clause 122
+
+Mutation: `m449`. File: `src/director/sharing/preview.js`.
+
+Old code:
+
+```js
+].filter((id) => !layers.has(id))
+```
+
+New code:
+
+```js
+].filter((id) => !layers.has(id)).slice(0, 1)
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-110] The preview reports both absent named layers without layer IDs
+t492-0: KILLED [director-110] The preview reports both absent named layers without layer IDs
+SURVIVORS: []
+```
+
+### Clause 123
+
+Mutation: `m467`. File: `src/director/sharing/preview.js`.
+
+Old code:
+
+```js
+new Set(layerIds)
+```
+
+New code:
+
+```js
+new Set(layerIds.slice(0, 1))
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-110] The preview reports no absent layer when both layer IDs are configured
+t494-0: KILLED [director-110] The preview reports no absent layer when both layer IDs are configured
+SURVIVORS: []
+```
+
+### Clause 124
+
+Mutation: `m468`. File: `src/director/sharing/preview.js`.
+
+Old code:
+
+```js
+new Set(sourceIds)
+```
+
+New code:
+
+```js
+new Set(sourceIds.slice(0, 1))
+```
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-red /home/ianblenke/docker/gev-tools/director-3/pass11/timing-one.json
+Test selector: [director-109] The preview reports both configured sources as configured
+t495-0: KILLED [director-109] The preview reports both configured sources as configured
+SURVIVORS: []
+```
+
+### Full sharing file for m480
+
+The old sharing file passes m480 with no name filter.
+The new sharing file has one failed test: director-107 with the settled marker.
+No weaker test kills the hoist.
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-all /home/ianblenke/docker/gev-tools/director-3/pass11/m480-all.json
+Body: old
+m480: SURVIVED
+SURVIVORS: [('m480', 'SURVIVED')]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-all /home/ianblenke/docker/gev-tools/director-3/pass11/m480-all.json
+Body: new
+m480: KILLED [director-107] The share helpers check the signal after the text promise settles
+SURVIVORS: []
+```
+
+### Hand selector check
+
+The first complete command gives 477 killed rows and three survivors: m172, m290 and m389.
+The pattern of m290 names the old title, so it selects no test.
+The registry name of m290 also has repeated suffix text from a past pass.
+The worker sets the name and pattern to the current title and runs m290 again.
+That test fails. The worker then starts another complete command with all 480 rows.
+
+A check against literal source titles also flags dynamic titles.
+The next check uses all 670 passed runtime titles and finds no unmatched pattern.
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/hand-preflight.py
+{
+  "sourceCommit": "2dc225520cebc43bb76b8dca7b645ed3f48a1e43",
+  "handRows": 480,
+  "runtimeTitles": 670,
+  "patternsWithoutRuntimeMatch": [],
+  "changedRegistryRow": "m290"
+}
+```
+
+### Correction search
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/search.py
+src/director/packs/backfill.test.mjs:1199:test('[director-088] The load call returns false and makes no source call after the caller destroys the session', async () => {
+src/director/packs/packs.test.mjs:180:test('[director-089] The session disposes resources and aborts the source signal after the clear and destroy calls', async () => {
+src/director/sharing/sharing.test.mjs:455:test('[director-101] The export copies bytes and attribution, keeps the project and calls the resolver once', async () => {
+src/director/sharing/sharing.test.mjs:566:test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets', async () => {
+src/director/sharing/sharing.test.mjs:968:test('[director-102] The export rejects more than 64 assets', async () => {
+src/director/sharing/sharing.test.mjs:1752:test('[director-102] The export accepts 64 assets and returns bundle text', async () => {
+src/director/sharing/sharing.test.mjs:1904:test('[director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length', async () =>
+src/director/sharing/sharing.test.mjs:2406:test('[director-107] The share helpers check the signal after the text promise settles', async () => {
+src/director/sharing/sharing.test.mjs:2407:  const order = [];
+src/director/sharing/sharing.test.mjs:2408:  const signal = {
+src/director/sharing/sharing.test.mjs:2409:    aborted: false,
+src/director/sharing/sharing.test.mjs:2410:    addEventListener() {},
+src/director/sharing/sharing.test.mjs:2411:    removeEventListener() {},
+src/director/sharing/sharing.test.mjs:2412:    throwIfAborted() {
+src/director/sharing/sharing.test.mjs:2413:      order.push('check');
+src/director/sharing/sharing.test.mjs:2414:    },
+src/director/sharing/sharing.test.mjs:2415:  };
+src/director/sharing/sharing.test.mjs:2416:  await readSceneShare(
+src/director/sharing/sharing.test.mjs:2417:    {
+src/director/sharing/sharing.test.mjs:2418:      name: 'x.json',
+src/director/sharing/sharing.test.mjs:2419:      size: 1,
+src/director/sharing/sharing.test.mjs:2420:      async text() {
+src/director/sharing/sharing.test.mjs:2421:        order.push('text');
+src/director/sharing/sharing.test.mjs:2422:        await Promise.resolve();
+src/director/sharing/sharing.test.mjs:2423:        order.push('settled');
+src/director/sharing/sharing.test.mjs:2424:        return '{"version":6,"scenes":[]}';
+src/director/sharing/sharing.test.mjs:2425:      },
+src/director/sharing/sharing.test.mjs:2426:    },
+src/director/sharing/sharing.test.mjs:2427:    { signal },
+src/director/sharing/sharing.test.mjs:2428:  );
+src/director/sharing/sharing.test.mjs:2429:  assert.deepEqual(order, ['check', 'text', 'settled', 'check', 'check']);
+src/director/sharing/sharing.test.mjs:2430:});
+src/director/sharing/sharing.test.mjs:2431:
+src/director/sharing/sharing.test.mjs:2432:test('[director-101] The export writes source then byteLength then digest', async () => {
+src/director/sharing/sharing.test.mjs:2433:  const order = [];
+src/director/sharing/sharing.test.mjs:2434:  await createSceneBundle(fixture(), (p) => {
+src/director/sharing/sharing.test.mjs:2435:    for (const key of ['source', 'byteLength', 'sha256']) {
+openspec/changes/backfill-director-packs-sharing/evidence.md:5152:New: [director-090] The cleared session returns false and does not read the source signal state
+openspec/changes/backfill-director-packs-sharing/evidence.md:5547:New: [director-099] The import rejects an unsupported media type
+openspec/changes/backfill-director-packs-sharing/evidence.md:6072:New: [director-101] The export includes the asset of the second scene and returns bundle text
+openspec/changes/backfill-director-packs-sharing/proposal.md:68:- Known limit `closed-set-added-members`: the automatic tool does not add members to any closed set.
+openspec/changes/backfill-director-packs-sharing/proposal.md:69:  This covers media types, data pack formats, directory protocols and all eight allowed-field lists.
+openspec/changes/backfill-director-packs-sharing/proposal.md:70:  It also covers coordinate lengths 2 and 3 at geojson.js:19, geometry types, single-value fields and text alphabets that audit.md names.
+openspec/changes/backfill-director-packs-sharing/proposal.md:71:  Hand rows cover only the additions that audit.md names.
+openspec/changes/backfill-director-packs-sharing/proposal.md:72:  The bundle source name, bundle file suffix and directory final slash also have this limit.
+openspec/changes/backfill-director-packs-sharing/proposal.md:73:  The tests reject coordinate lengths 1 and 4; an added length 5 needs a separate test and hand row.
+openspec/changes/backfill-director-packs-sharing/proposal.md:74:
+Scenario 102 list: 17 unique titles.
+Scenario 105 list includes sharing.test.mjs:566.
+```
+
+### Invalid replacement list order
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /tmp/pass11-preferred /home/ianblenke/docker/gev-tools/director-3/pass11/w5.json
+a9130: KILLED [director-088 director-091] The session checks the new list and disposes old resources
+SURVIVORS: []
+
+```
+
+### First hand command count
+
+At Pass 11, the first command has the old selector of m290.
+The next output counts that past command. It is not the final hand result.
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/hand-count.py hand-first
+{
+  "sourceCommit": "2dc225520cebc43bb76b8dca7b645ed3f48a1e43",
+  "log": "/home/ianblenke/docker/gev-tools/director-3/pass11/hand-first.log",
+  "command": "Command: NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director-3 /home/ianblenke/docker/gev-tools/director-3/muts.json",
+  "handRows": 480,
+  "killed": 477,
+  "survivors": [
+    "m172",
+    "m290",
+    "m389"
+  ],
+  "timeouts": 0,
+  "skipped": 0
+}
+```
+
+### Complete final hand command
+
+The command checks 480 hand rows and kills 478 rows.
+Only m172, m389 survive.
+The command skips no row and has no timeout.
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director-3 /home/ianblenke/docker/gev-tools/director-3/muts.json
+m001: KILLED [director-076] The validator returns without an error for safe names for the asset path
+m002: KILLED [director-076] The validator rejects traversal for the asset path
+m003: KILLED [director-077] The validator rejects an invalid version
+m004: KILLED [director-077] The validator rejects an invalid format
+m005: KILLED [director-078] The validator rejects the protocol for the attribution
+m006: KILLED [director-078] The validator rejects the username for the attribution
+m007: KILLED [director-078] The validator rejects the password for the attribution
+m008: KILLED [director-078] The validator rejects the query for the attribution
+m009: KILLED [director-078] The validator rejects the fragment for the attribution
+m010: KILLED [director-078] The validator rejects invalid URL text for the attribution
+m011: KILLED [director-078] The validator returns without an error for a safe link for the attribution
+m012: KILLED [director-078] The validator rejects blank text for the attribution
+m013: KILLED [director-078] The validator rejects a blank license for the attribution
+m014: KILLED [director-079] The validator rejects a fraction for the byteLength field
+m015: KILLED [director-079] The validator rejects an invalid type for the digest
+m016: KILLED [director-079] The validator rejects an invalid alphabet for the digest
+m017: KILLED [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+m018: KILLED [director-080] The validator rejects reversed west for the image
+m019: KILLED [director-080] The validator rejects reversed south for the image
+m020: KILLED [director-080] The validator rejects short bounds for the image
+m021: KILLED [director-080] The validator rejects the height and the reference for the image
+m022: KILLED [director-081] The validator rejects an unknown anchor for the media
+m023: KILLED [director-082] The validator rejects duplicate data pack IDs for the scene
+m024: KILLED [director-082] The validator rejects duplicate data pack IDs for the shot
+m025: KILLED [director-082] The validator rejects unknown data pack IDs for the shot
+m026: KILLED [director-082] The validator returns without an error for absent data packs and anchors for the scen
+m027: KILLED [director-083] The decoder rejects an invalid type for the collection
+m028: KILLED [director-083] The decoder rejects an invalid array for the collection
+m029: KILLED [director-083] The decoder rejects more than 2000 features for the collection
+m030: KILLED [director-084] The decoder rejects the type for the feature
+m031: KILLED [director-084] The decoder rejects the ID type for the feature
+m032: KILLED [director-084] The decoder rejects a blank ID for the feature
+m033: KILLED [director-084] The decoder rejects a long ID for the feature
+m034: KILLED [director-084] The decoder rejects a duplicate ID for the feature
+m035: KILLED [director-085] The decoder rejects an invalid array for the position
+m036: KILLED [director-085] The decoder rejects an invalid length for the position
+m037: KILLED [director-085] The decoder rejects a coordinate that is not finite for the position
+m038: KILLED [director-085] The decoder rejects an invalid longitude for the position
+m039: KILLED [director-085] The decoder rejects an invalid latitude for the position
+m040: KILLED [director-085] The decoder rejects a height below the limit for the position
+m041: KILLED [director-085] The decoder rejects a height above the limit for the position
+m042: KILLED [director-085] The decoder rejects more than 50000 positions
+m043: KILLED [director-085] The decoder returns zero for an absent height for the position
+m044: KILLED [director-085] The decoder returns the height in the data for the position
+m045: KILLED [director-086] The decoder rejects an invalid array for the line
+m046: KILLED [director-086] The decoder rejects an invalid minimum for the line
+m047: KILLED [director-086] The decoder rejects a ring with fewer than four points for the ring
+m048: KILLED [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+m049: KILLED [director-086] The decoder rejects unclosed field 0 for the ring
+m050: KILLED [director-086] The decoder rejects unclosed field 1 for the ring
+m051: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m052: KILLED [director-087] The decoder rejects an invalid type for the geometry
+m053: KILLED [director-087] The decoder rejects an invalid array for the geometry
+m054: KILLED [director-087] The decoder rejects an empty polygon for the geometry
+m055: KILLED [director-087] The decoder rejects more than 128 rings for the geometry
+m056: KILLED [director-087] The decoder returns a closed polygon for the geometry
+m057: KILLED [director-087] The decoder removes properties for the geometry
+m058: KILLED [director-088] The new session reports the idle state and zero handles
+m059: KILLED [director-088] The session rejects a value that is not a data pack list
+m060: KILLED [director-088] The session rejects more than eight data packs
+m061: KILLED [director-088] The load call returns false and makes no source call after the caller destroys the se
+m062: KILLED [director-088] The load call returns false for a cancelled signal and makes no source call
+m063: KILLED [director-089] The session disposes handles in reverse order
+m064: KILLED [director-089] The session reports ready after the caller changes a state copy
+m065: KILLED [director-090] The session disposes late resources for the cancelled session
+m066: KILLED [director-090] The session returns false for cancelled work with a null late handle
+m067: KILLED [director-090] The session returns false when the caller destroys it during asset work
+m068: KILLED [director-091] The session keeps the new resources after a new load call
+m069: KILLED [director-092] The session reports a stable source error
+m070: KILLED [director-092] The session rejects stalled work for the deadline
+m071: KILLED [director-092] The session reads the byteLength field once without a registered source
+m072: KILLED [director-092] The session rejects an absent renderer without a source call
+m073: KILLED [director-093] The session rejects bytes that are not a Uint8Array
+m074: KILLED [director-093] The session rejects an empty asset
+m075: KILLED [director-093] The session rejects an asset above the byte limit
+m076: KILLED [director-093] The session rejects a wrong byteLength field
+m077: KILLED [director-093] The session rejects bytes above the total limit
+m078: KILLED [director-093] The session rejects a wrong digest
+m079: KILLED [director-093] The session returns true for exact bytes and digest
+m080: KILLED [director-089] The session rejects a falsy handle with inherited disposal
+m081: KILLED [director-089] The session rejects a handle without a dispose function
+m082: KILLED [director-094] The factory rejects the protocol
+m083: KILLED [director-094] The factory rejects the username
+m084: KILLED [director-094] The factory rejects the password
+m085: KILLED [director-094] The factory rejects the query
+m086: KILLED [director-094] The factory rejects the fragment
+m087: KILLED [director-094] The factory rejects a directory URL with no final slash
+m088: KILLED [director-095] The source sets its fixed options for the asset request
+m089: KILLED [director-096] The source joins distinct stream chunks
+m090: KILLED [director-096] The source rejects excess header bytes for the stream
+m091: KILLED [director-096] The source rejects excess chunk bytes for the stream
+m092: KILLED [director-096] The source returns an empty media type when the header is absent
+m093: KILLED [director-096] The source returns lowercase media type text without parameters
+m094: KILLED [director-097] The source rejects an absent stream
+m095: KILLED [director-097] The source rejects the asset request after failed body cancellation
+m096: KILLED [director-097] The source rejects a failed response without a body
+m097: KILLED [director-097] The source releases the reader lock after a stream error
+m098: KILLED [director-097] The source checks its signal between chunks and rejects the call
+m099: KILLED [director-098] The import rejects nontext input
+m100: KILLED [director-098] The import rejects invalid JSON; [director-098] The import rejects invalid JSON of 52428800 characters; [director-098] The import rejects invalid JSON of 5242881 characters
+m101: KILLED [director-098] The import accepts plain project JSON and returns the project
+m102: KILLED [director-098] The import rejects excess characters
+m103: KILLED [director-098] The import rejects excess UTF8 bytes
+m104: KILLED [director-099] The import rejects a custom text object for the base64
+m105: KILLED [director-099] The import rejects an empty base64 value
+m106: KILLED [director-099] The import rejects an invalid length for the base64
+m107: KILLED [director-099] The import rejects an invalid alignment for the base64
+m108: KILLED [director-099] The import rejects an invalid alphabet for the base64
+m109: KILLED [director-099] The import rejects an invalid padding for the base64
+m110: KILLED [director-099] The import rejects duplicate paths
+m111: KILLED [director-099] The import rejects an unsupported media type
+m112: KILLED [director-099] The import rejects unsupported version
+m113: KILLED [director-100] The import rejects an absent asset
+m114: KILLED [director-100] The import rejects a wrong byteLength field
+m115: KILLED [director-100] The import rejects a pack digest that differs from its asset
+m116: KILLED [director-100] The import rejects an asset digest that differs from its bytes
+m117: KILLED [director-100] The import rejects unused assets
+m118: KILLED [director-100] The import rejects external data pack sources
+m119: KILLED [director-101] The export writes exact bundle metadata
+m120: KILLED [director-102] The export rejects bytes that are not a Uint8Array
+m121: KILLED [director-102] The export rejects an empty asset
+m122: KILLED [director-102] The export rejects an asset above the byte limit
+m123: KILLED [director-102] The export rejects absent assets
+m124: KILLED [director-102] The export rejects declared byteLength
+m125: KILLED [director-102] The export rejects declared digest
+m126: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+m127: KILLED [director-102] The export rejects more than 64 assets
+m128: KILLED [director-103] The export reuses a shared asset and returns bundle text
+m129: KILLED [director-103] The export rejects shared byteLength
+m130: KILLED [director-103] The export rejects shared digest
+m131: KILLED [director-104] The store copies the asset map
+m132: KILLED [director-104] The store clears stored bytes
+m133: KILLED [director-105] The store rejects absent bytes
+m134: KILLED [director-105] The store rejects bytes above the caller limit
+m135: KILLED [director-105] The store returns an independent byte copy
+m136: KILLED [director-106] The share helpers return an empty asset map for an absent filename
+m137: KILLED [director-106] The share helpers reject the ordinary file limit
+m138: KILLED [director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and
+m139: KILLED [director-107] The helper resolves without a signal
+m140: KILLED [director-107] The helper rejects an early signal
+m141: KILLED [director-107] The helper resolves with an active signal
+m142: KILLED [director-107] The helper rejects a work error
+m143: KILLED [director-107] The helper checks signal state when the work settles and rejects the call
+m144: KILLED [director-107] The helper cancels work that is not complete
+m145: KILLED [director-108] The preview reports exact totals and attribution
+m146: KILLED [director-108] The preview reports the scene ID when the title is absent
+m147: KILLED [director-109] The preview reports included bundle bytes
+m148: KILLED [director-109] The preview reports absent bundle bytes
+m149: KILLED [director-109] The preview reports a configured source; [director-109] The preview reports a configured source for a supplied source ID
+m150: KILLED [director-109] The preview reports an unavailable source
+m151: KILLED [director-110] The preview lists distinct absent layers
+m152: KILLED [director-110] The preview reports external content for applied shot packs
+m153: KILLED [director-110] The preview reports external content for a shot with a source pack ID
+m154: KILLED [director-110] The preview reports no external content without source packs
+m155: KILLED [director-080] The validator returns without an error for its bounds field for the image
+m156: KILLED [director-080] The validator returns without an error for its height field for the image
+m157: KILLED [director-080] The validator returns without an error for its altitudeReference field for the image
+m158: KILLED [director-081] The validator returns without an error for its anchorId field for the media
+m159: KILLED [director-077] The validator returns without an error for a GeoJSON altitudeReference field
+m160: KILLED [director-080] The validator rejects low excess for image bounds field 0
+m161: KILLED [director-080] The validator rejects high excess for image bounds field 0
+m162: KILLED [director-080] The validator rejects low excess for image bounds field 1
+m163: KILLED [director-080] The validator rejects high excess for image bounds field 1
+m164: KILLED [director-080] The validator rejects low excess for image bounds field 2
+m165: KILLED [director-080] The validator rejects high excess for image bounds field 2
+m166: KILLED [director-080] The validator rejects low excess for image bounds field 3
+m167: KILLED [director-080] The validator rejects high excess for image bounds field 3
+m168: KILLED [director-080] The validator rejects an image height above the upper limit
+m169: KILLED [director-082] The validator uses supplied anchors for the scene and returns without an error
+m170: KILLED [director-082] The validator uses absent anchor defaults for the scene and returns without an error
+m171: KILLED [director-085] The decoder accepts both geographic edges for the position and returns coordinates
+m172: SURVIVED
+m173: KILLED [director-088] The new session reports the idle state; [director-088] The new session reports the idle state and zero handles
+m174: KILLED [director-088] The new session reports zero handles
+m175: KILLED [director-089] The session reports one active handle
+m176: KILLED [director-093] The session calls the source with a default limit of 8388608 bytes
+m177: KILLED [director-093] The session returns true without a declared size
+m178: KILLED [director-090] The session returns false for a cancelled signal without an event
+m179: KILLED [director-090] The session checks destroyed state after it reads the signal
+m180: KILLED [director-090] The session returns false for a cleared load call
+m181: KILLED [director-090] The load call returns false and disposes a detached resource
+m182: KILLED [director-090] The session disposes the handle before it adds the handle to its list
+m183: KILLED [director-092] The session settles a source error before its deadline and reports idle
+m184: KILLED [director-097] The source rejects early cancellation
+m185: KILLED [director-094] The factory returns a source for HTTP and HTTPS directories
+m186: KILLED [director-098] The import rejects 52428801 characters before byte conversion
+m187: KILLED [director-101] The export accepts scenes without data packs and returns bundle text
+m188: KILLED [director-101] The export returns one asset for a supplied data pack list
+m189: KILLED [director-102] The export accepts absent integrity fields and returns bundle text
+m190: KILLED [director-102] The export accepts an absent digest and returns bundle text
+m191: KILLED [director-103] The export accepts absent byte declarations for the shared export and returns bundle
+m192: KILLED [director-103] The export accepts an absent digest for the shared export and returns bundle text
+m193: KILLED [director-099] The import accepts bytes without padding for the base64 and returns assets
+m194: KILLED [director-108] The preview reports no packs when data pack lists are absent
+m195: KILLED [director-108] The preview reports one pack from the supplied data pack list
+m196: KILLED [director-108] The preview reports Example for the supplied scene title
+m197: KILLED [director-109] The preview reports a configured source for a supplied source ID
+m198: KILLED [director-110] The preview reports no absent layer when a shot has no layers
+m199: KILLED [director-110] The preview reports traffic as absent without layer IDs
+m200: KILLED [director-105] The store rejects 8388609 bytes without a caller limit
+m201: KILLED [director-092] The session rejects an absent renderer without a source call
+m202: KILLED [director-099] The import rejects a custom text object for the base64
+m203: KILLED [director-103] The export key uses the registered source name and returns bundle text
+m204: KILLED [director-103] The export key uses path and returns bundle text
+m205: KILLED [director-110] The preview reports ships as absent when only traffic is configured
+m206: KILLED [director-108] The preview reports three bytes for both assets
+m207: KILLED [director-095] The source sets its credentials option for the asset request
+m208: KILLED [director-095] The source sets its redirect option for the asset request
+m209: KILLED [director-095] The source sets its referrerPolicy option for the asset request
+m210: KILLED [director-095] The source sets its cache option for the asset request
+m211: KILLED [director-085] The decoder rejects field 0 that is not finite for the position
+m212: KILLED [director-085] The decoder rejects field 1 that is not finite for the position
+m213: KILLED [director-085] The decoder rejects field 2 that is not finite for the position
+m214: KILLED [director-096] The source rejects 8388609 bytes without a caller limit
+m215: KILLED [director-077] The validator returns without an error for the id field of a data pack
+m216: KILLED [director-077] The validator returns without an error for the version field of a data pack
+m217: KILLED [director-077] The validator returns without an error for the format field of a data pack
+m218: KILLED [director-077] The validator returns without an error for the source field of a data pack
+m219: KILLED [director-077] The validator returns without an error for the attribution field of a data pack
+m220: KILLED [director-077] The validator returns without an error for the placement field of a data pack
+m221: KILLED [director-079] The validator returns without an error for the byteLength field of a data pack
+m222: KILLED [director-079] The validator returns without an error for the sha256 field of a data pack
+m223: KILLED [director-077] The validator returns without an error for its source name field
+m224: KILLED [director-077] The validator returns without an error for its source path field
+m225: KILLED [director-078] The validator returns without an error for its attribution text field
+m226: KILLED [director-078] The validator returns without an error for its attribution license field
+m227: KILLED [director-078] The validator returns without an error for its attribution url field
+m228: KILLED [director-100] The import checks its second asset reference and rejects the call
+m229: KILLED [director-100] The import checks its second asset digest and rejects the call
+m230: KILLED [director-103] The export accepts equal shared integrity and returns bundle text
+m231: KILLED [director-102] The export rejects absent asset bytes
+m232: KILLED [director-092] The session settles an early internal signal and reports idle
+m233: KILLED [director-093] The session calls the renderer with the anchors and returns true
+m234: KILLED [director-106] The share helpers call throwIfAborted three times and return an empty asset map
+m235: KILLED [director-102] The export rejects encoded bundle text above 52428800 bytes
+m236: KILLED [director-102] The export keeps its total after an asset without a byte length
+m237: KILLED [director-089] The session reports ready after asset work
+m238: KILLED [director-080] The validator returns without an error for the fields of the image placement
+m239: KILLED [director-081] The validator returns without an error for the fields of the media placement
+m240: KILLED [director-089] The session calls the GeoJSON renderer once and returns true
+m241: KILLED [director-089] The session calls the image renderer once and returns true
+m242: KILLED [director-089] The session calls the media renderer once and returns true
+m243: KILLED [director-097] The source stops between stream chunks
+m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and cred
+m245: KILLED [director-080] The manifest checks given image bounds and media anchor references
+m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects inval
+m247: KILLED [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints
+m248: KILLED [director-089] The session disposes resources and aborts the source signal after the clear and destr
+m249: KILLED [director-091] The data pack session replaces source work and ignores its late bytes
+m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation
+m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the re
+m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier
+m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects
+m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancel
+m255: KILLED [director-101] The export copies bytes and attribution, keeps the project and calls the resolver onc
+m256: KILLED [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent asset
+m257: KILLED [director-102] The export rejects excess bytes, wrong integrity and absent assets
+m258: KILLED [director-103] The export writes one asset and rejects integrity declarations that differ for the da
+m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+m260: KILLED [director-104 director-105] The store returns an independent byte copy, rejects cancellation, report
+m261: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled
+m262: KILLED [director-107] The export rejects cancellation during asset work
+m263: KILLED [director-101] The export returns bundle text for a source path of 1024 characters
+m264: KILLED [director-077] The validator returns without an error for geojson
+m265: KILLED [director-077] The validator returns without an error for image
+m266: KILLED [director-077] The validator returns without an error for media
+m267: KILLED [director-080] The validator rejects bounds field 0 for the image
+m268: KILLED [director-080] The validator rejects bounds field 1 for the image
+m269: KILLED [director-080] The validator rejects bounds field 2 for the image
+m270: KILLED [director-080] The validator rejects bounds field 3 for the image
+m271: KILLED [director-092] The session rejects stalled work at the deadline of 19 milliseconds
+m272: KILLED [director-092] The session rejects stalled work at the default deadline of 15000 milliseconds
+m273: KILLED [director-092] The session removes resources after a later error
+m274: KILLED [director-099] The import accepts the application/json media type and returns assets
+m275: KILLED [director-099] The import accepts the application/geo+json media type and returns assets
+m276: KILLED [director-099] The import accepts the image/png media type and returns assets
+m277: KILLED [director-099] The import accepts the video/mp4 media type and returns assets
+m278: KILLED [director-099] The import accepts the video/webm media type and returns assets
+m279: KILLED [director-099] The import accepts the audio/mpeg media type and returns assets
+m280: KILLED [director-099] The import accepts the audio/ogg media type and returns assets
+m281: KILLED [director-099] The import accepts the audio/wav media type and returns assets
+m282: KILLED [director-099] The import accepts the audio/webm media type and returns assets
+m283: KILLED [director-089] The session rejects a falsy handle with inherited disposal
+m284: KILLED [director-088] The session returns false and does not read the caller signal state after the caller
+m285: KILLED [director-083] The decoder accepts the exact feature limit of the collection and returns 2000 featur
+m286: KILLED [director-084] The decoder accepts the exact text limit of the feature ID and returns a feature with
+m287: KILLED [director-085] The decoder accepts the exact position limit of the collection and returns 50000 posi
+m288: KILLED [director-087] The decoder accepts the exact ring limit of the polygon and returns 128 rings
+m289: KILLED [director-076] The validator rejects a path above its text limit for the asset path
+m290: KILLED [director-102] The export accepts 64 assets and returns bundle text
+m291: KILLED [director-089] The session keeps every data pack handle
+m292: KILLED [director-095] The source sets its signal option for the asset request
+m293: KILLED [director-096] The source accepts the exact byte limit of the stream and returns bytes
+m294: KILLED [director-096] The source accepts the exact byte limit of the stream and returns bytes
+m295: KILLED [director-092] The session rejects a falsy custom source
+m296: KILLED [director-101] The export writes exact bundle metadata
+m297: KILLED [director-101] The export writes exact bundle metadata
+m298: KILLED [director-101] The export writes exact bundle metadata
+m299: KILLED [director-101] The export writes exact bundle metadata
+m300: KILLED [director-101] The export writes exact bundle metadata
+m301: KILLED [director-101] The export writes exact bundle metadata
+m302: KILLED [director-105] The store returns an independent byte copy
+m303: KILLED [director-079] The validator rejects 63 characters for the digest
+m304: KILLED [director-079] The validator rejects 65 characters for the digest
+m305: KILLED [director-079] The validator rejects a prefix for the digest
+m306: KILLED [director-079] The validator rejects a suffix for the digest
+m307: KILLED [director-079] The validator rejects uppercase text for the digest
+m308: KILLED [director-080] The validator rejects equal longitude edges for the image
+m309: KILLED [director-080] The validator rejects equal latitude edges for the image
+m310: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m311: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m312: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m313: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m314: KILLED [director-082] The validator does not read a data pack list from the parent object of the scene and
+m315: KILLED [director-080] The validator rejects text for each geographic field for the image
+m316: KILLED [director-080] The validator rejects text for each geographic field for the image
+m317: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m318: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m319: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m320: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the a
+m321: KILLED [director-076] The validator rejects URL syntax with a stable message for the asset path
+m322: KILLED [director-088] The session returns true for eight data packs
+m323: KILLED [director-093] The session returns true at the asset byte limit
+m324: KILLED [director-093] The session returns true at the total byte limit
+m325: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the
+m326: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the
+m327: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the
+m328: KILLED [director-089] The session removes its deadline after success
+m329: KILLED [director-089] The session removes its deadline after clear
+m330: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m331: KILLED [director-089] The session disposes both ready handles in reverse order and reports idle
+m332: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m333: KILLED [director-083] The decoder rejects invalid UTF8 bytes
+m334: KILLED [director-083] The decoder rejects null
+m335: KILLED [director-084] The decoder rejects a null feature
+m336: KILLED [director-084] The decoder rejects a null feature
+m337: KILLED [director-087] The decoder rejects absent geometry
+m338: KILLED [director-087] The decoder rejects absent geometry
+m339: KILLED [director-087] The decoder rejects absent geometry
+m340: KILLED [director-095] The source uses the default fetch function and returns bytes
+m341: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+m342: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+m343: KILLED [director-099] The import rejects excess bytes at the base64 length limit and rejects the next align
+m344: KILLED [director-106] The share helpers accept the project file limit and reject one more byte
+m345: KILLED [director-106] The share helpers accept the bundle file limit and reject one more byte
+m346: KILLED [director-102] The export rejects an unsupported media type
+m347: KILLED [director-099] The import rejects 65 different asset paths
+m348: KILLED [director-099] The import returns assets at the total byte limit and rejects one more byte
+m349: KILLED [director-099] The import returns assets at the total byte limit and rejects one more byte
+m350: KILLED [director-105] The store rejects a cancelled source call
+m351: KILLED [director-107] The bundle helpers stop import before an asset
+m352: KILLED [director-107] The bundle helpers stop import after a digest
+m353: KILLED [director-107] The bundle helpers stop export before an asset
+m354: KILLED [director-107] The bundle helpers stop export after asset bytes
+m355: KILLED [director-107] The bundle helpers stop export after a digest
+m356: KILLED [director-108] The preview counts shots apart from scenes
+m357: KILLED [director-108] The preview counts shots apart from scenes
+m358: KILLED [director-110] The preview lists distinct absent layers
+m359: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m360: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m361: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rej
+m362: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rej
+m363: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m364: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m365: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m366: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the a
+m367: KILLED [director-102] The export rejects more than 64 assets
+m368: KILLED [director-085] The decoder rejects negative longitude for the position
+m369: KILLED [director-085] The decoder rejects negative latitude for the position
+m370: KILLED [director-085] The decoder accepts the limit for negative longitude for the position and returns coo
+m371: KILLED [director-085] The decoder accepts the limit for negative latitude for the position and returns coor
+m372: KILLED [director-085] The decoder rejects four coordinates for the position
+m373: KILLED [director-085] The decoder rejects one coordinate for the position
+m374: KILLED [director-076] The validator rejects .x for the asset path
+m375: KILLED [director-076] The validator rejects x?a=1 for the asset path
+m376: KILLED [director-079] The validator returns without an error for one byte
+m377: KILLED [director-080] The validator rejects bounds outside an array for the image
+m378: KILLED [director-082] The validator rejects nine distinct data packs for the scene
+m379: KILLED [director-082] The validator returns without an error for eight distinct data packs for the scene
+m380: KILLED [director-089] The session reports its state during asset work
+m381: KILLED [director-096] The source accepts its default byte limit and returns bytes
+m382: KILLED [director-098] The import accepts the character limit and returns the project
+m383: KILLED [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+m384: KILLED [director-098] The import rejects an invalid plain project
+m385: KILLED [director-098] The import rejects a null project
+m386: KILLED [director-099] The import rejects an extra top-level field
+m387: KILLED [director-099] The import rejects an invalid bundle project
+m388: KILLED [director-099] The import accepts 64 distinct assets and returns assets
+m389: SURVIVED
+m390: KILLED [director-101] The export calls the resolver with the data pack and signal
+m391: KILLED [director-101] The export calls the resolver with the data pack and signal
+m392: KILLED [director-102] The export accepts the text byte limit and returns bundle text
+m393: KILLED [director-105] The store accepts the caller byte limit and returns bytes
+m394: KILLED [director-093] The session calls the renderer with the data pack and the scene anchors and returns t
+m395: KILLED [director-093] The session calls the renderer with the data pack and the scene anchors and returns t
+m396: KILLED [director-089] The session removes source listeners after success
+m397: KILLED [director-089] The session removes source listeners after success
+m398: KILLED [director-089] The session removes source listeners after error
+m399: KILLED [director-079] The validator returns without an error for its byte limit
+m400: KILLED [director-080] The validator returns without an error for its minimum height for the image
+m401: KILLED [director-080] The validator returns without an error for its maximum height for the image
+m402: KILLED [director-085] The decoder accepts its minimum height for the position and returns coordinates
+m403: KILLED [director-085] The decoder accepts its maximum height for the position and returns coordinates
+m404: KILLED [director-107] The helper removes its listener after cancel
+m405: KILLED [director-107] The helper removes its listener after success
+m406: KILLED [director-107] The helper removes its listener after error
+m407: KILLED [director-107] The helper removes its listener after success
+m408: KILLED [director-101] The export rejects an invalid project
+m409: KILLED [director-107] The import stops before the second digest
+m410: KILLED [director-107] The export stops before the second resolver call
+m411: KILLED [director-082] The validator rejects a reference in the second shot
+m412: KILLED [director-082] The validator rejects a reference in the second shot
+m413: KILLED [director-099 director-102] The bundle helpers reject an SVG media type during import and export
+m414: KILLED [director-077] The validator rejects an unlisted geojsonx format
+m415: KILLED [director-094] The factory rejects the file protocol
+m416: KILLED [director-077 director-082] The validator rejects an invalid second data pack
+m417: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m418: KILLED [director-082] The validator rejects an unknown second reference ID
+m419: KILLED [director-084] The decoder rejects the second feature
+m420: KILLED [director-085 director-086] The decoder rejects the second line position
+m421: KILLED [director-087] The decoder rejects the second ring
+m422: KILLED [director-088] The session rejects an invalid second data pack before the source call
+m423: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
+m424: KILLED [director-080] The validator rejects bounds field 3 for the image
+m425: KILLED [director-076] The validator rejects an invalid second path segment
+m426: KILLED [director-085] The decoder rejects an invalid second coordinate
+m427: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m428: KILLED [director-089] The session keeps every data pack handle
+m429: KILLED [director-092] The session removes resources after a later error
+m430: KILLED [director-096] The source joins chunks of different lengths
+m431: KILLED [director-101] The export includes the asset of the second scene and returns bundle text
+m432: KILLED [director-101] The export writes each asset index and filename
+m433: KILLED [director-100] The import checks its second asset reference and rejects the call
+m434: KILLED [director-101] The export writes each asset index and filename
+m435: KILLED [director-101] The export writes each asset index and filename
+m436: KILLED [director-104] The store counts the second asset
+m437: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m438: KILLED [director-108] The preview lists the second data pack
+m439: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m440: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m441: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m442: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m443: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m444: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m445: KILLED [director-097] The source cancels before it reads the second chunk
+m446: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
+m447: KILLED [director-107] The import stops after the second digest
+m448: KILLED [director-107] The export stops after the second digest
+m449: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m450: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m451: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m452: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m453: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m454: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m455: KILLED [director-077] The validator rejects the extra fields script and adapters in the data pack
+m456: KILLED [director-077] The validator rejects the extra fields script and adapters in the source
+m457: KILLED [director-078] The validator rejects the extra fields script and adapters in the attribution
+m458: KILLED [director-080] The validator rejects the extra fields script and adapters in the image placement
+m459: KILLED [director-077] The validator rejects the extra fields script and adapters in the media placement
+m460: KILLED [director-077] The validator rejects the extra fields script and adapters in the GeoJSON placement
+m461: KILLED [director-099] The import rejects the extra fields script and adapters in the top-level object
+m462: KILLED [director-099] The import rejects the extra fields script and adapters in the asset
+m463: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m464: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m465: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m466: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m467: KILLED [director-110] The preview reports no absent layer when both layer IDs are configured
+m468: KILLED [director-109] The preview reports both configured sources as configured
+m469: KILLED [director-082] The validator returns without an error for eight references and rejects nine referenc
+m470: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m471: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
+m472: KILLED [director-104] The store counts the second asset
+m473: KILLED [director-104] The store counts the second asset
+m474: KILLED [director-104] The store counts the second asset
+m475: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m476: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
+m477: KILLED [director-093] The session returns true for exact bytes and digest
+m478: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+m479: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+m480: KILLED [director-107] The share helpers check the signal after the text promise settles
+SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
+```
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/hand-count.py
+{
+  "sourceCommit": "2dc225520cebc43bb76b8dca7b645ed3f48a1e43",
+  "log": "/home/ianblenke/docker/gev-tools/director-3/pass11/hand-final.log",
+  "command": "Command: NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director-3 /home/ianblenke/docker/gev-tools/director-3/muts.json",
+  "handRows": 480,
+  "killed": 478,
+  "survivors": [
+    "m172",
+    "m389"
+  ],
+  "timeouts": 0,
+  "skipped": 0
+}
+```
+
+### Final correction search
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/search.py
+src/director/packs/backfill.test.mjs:1199:test('[director-088] The load call returns false and makes no source call after the caller destroys the session', async () => {
+src/director/packs/packs.test.mjs:180:test('[director-089] The session disposes resources and aborts the source signal after the clear and destroy calls', async () => {
+src/director/sharing/sharing.test.mjs:455:test('[director-101] The export copies bytes and attribution, keeps the project and calls the resolver once', async () => {
+src/director/sharing/sharing.test.mjs:566:test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets', async () => {
+src/director/sharing/sharing.test.mjs:968:test('[director-102] The export rejects more than 64 assets', async () => {
+src/director/sharing/sharing.test.mjs:1752:test('[director-102] The export accepts 64 assets and returns bundle text', async () => {
+src/director/sharing/sharing.test.mjs:1904:test('[director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length', async () =>
+src/director/sharing/sharing.test.mjs:2406:test('[director-107] The share helpers check the signal after the text promise settles', async () => {
+src/director/sharing/sharing.test.mjs:2407:  const order = [];
+src/director/sharing/sharing.test.mjs:2408:  const signal = {
+src/director/sharing/sharing.test.mjs:2409:    aborted: false,
+src/director/sharing/sharing.test.mjs:2410:    addEventListener() {},
+src/director/sharing/sharing.test.mjs:2411:    removeEventListener() {},
+src/director/sharing/sharing.test.mjs:2412:    throwIfAborted() {
+src/director/sharing/sharing.test.mjs:2413:      order.push('check');
+src/director/sharing/sharing.test.mjs:2414:    },
+src/director/sharing/sharing.test.mjs:2415:  };
+src/director/sharing/sharing.test.mjs:2416:  await readSceneShare(
+src/director/sharing/sharing.test.mjs:2417:    {
+src/director/sharing/sharing.test.mjs:2418:      name: 'x.json',
+src/director/sharing/sharing.test.mjs:2419:      size: 1,
+src/director/sharing/sharing.test.mjs:2420:      async text() {
+src/director/sharing/sharing.test.mjs:2421:        order.push('text');
+src/director/sharing/sharing.test.mjs:2422:        await Promise.resolve();
+src/director/sharing/sharing.test.mjs:2423:        order.push('settled');
+src/director/sharing/sharing.test.mjs:2424:        return '{"version":6,"scenes":[]}';
+src/director/sharing/sharing.test.mjs:2425:      },
+src/director/sharing/sharing.test.mjs:2426:    },
+src/director/sharing/sharing.test.mjs:2427:    { signal },
+src/director/sharing/sharing.test.mjs:2428:  );
+src/director/sharing/sharing.test.mjs:2429:  assert.deepEqual(order, ['check', 'text', 'settled', 'check', 'check']);
+src/director/sharing/sharing.test.mjs:2430:});
+src/director/sharing/sharing.test.mjs:2431:
+src/director/sharing/sharing.test.mjs:2432:test('[director-101] The export writes source then byteLength then digest', async () => {
+src/director/sharing/sharing.test.mjs:2433:  const order = [];
+src/director/sharing/sharing.test.mjs:2434:  await createSceneBundle(fixture(), (p) => {
+src/director/sharing/sharing.test.mjs:2435:    for (const key of ['source', 'byteLength', 'sha256']) {
+openspec/changes/backfill-director-packs-sharing/evidence.md:5152:New: [director-090] The cleared session returns false and does not read the source signal state
+openspec/changes/backfill-director-packs-sharing/evidence.md:5547:New: [director-099] The import rejects an unsupported media type
+openspec/changes/backfill-director-packs-sharing/evidence.md:6072:New: [director-101] The export includes the asset of the second scene and returns bundle text
+openspec/changes/backfill-director-packs-sharing/proposal.md:68:- Known limit `closed-set-added-members`: the automatic tool does not add members to any closed set.
+openspec/changes/backfill-director-packs-sharing/proposal.md:69:  This covers media types, data pack formats, directory protocols and all eight allowed-field lists.
+openspec/changes/backfill-director-packs-sharing/proposal.md:70:  It also covers coordinate lengths 2 and 3 at geojson.js:19, geometry types, single-value fields and text alphabets that audit.md names.
+openspec/changes/backfill-director-packs-sharing/proposal.md:71:  Hand rows cover only the additions that audit.md names.
+openspec/changes/backfill-director-packs-sharing/proposal.md:72:  The bundle source name, bundle file suffix and directory final slash also have this limit.
+openspec/changes/backfill-director-packs-sharing/proposal.md:73:  The tests reject coordinate lengths 1 and 4; an added length 5 needs a separate test and hand row.
+openspec/changes/backfill-director-packs-sharing/proposal.md:74:
+Scenario 102 list: 17 unique titles.
+Scenario 105 list includes sharing.test.mjs:566.
+Proposal bullets with internal blank lines: []
+openspec/changes/backfill-director-packs-sharing/design.md:220:| clear call | src/director/sharing/bundle.js and src/director/packs/session.js | A call to the clear method |
+openspec/changes/backfill-director-packs-sharing/design.md:221:| destroy call | src/director/packs/session.js | A call to the destroy method |
+openspec/changes/backfill-director-packs-sharing/design.md:222:| text promise | src/director/sharing/bundle.js | The promise from file.text |
+openspec/changes/backfill-director-packs-sharing/design.md:226:Pass 11 adds the rows clear call, destroy call and text promise.
+openspec/changes/backfill-director-packs-sharing/design.md:228:Pass 9 adds three rows to the table: public data pack limits, share limits and document parser.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1556:- [x] 13.2 Correct each test label that names a current test.
+```
+
+The code and output records omit spaces at the end of a line.
+The tool files contain each line as the command returns it.
+
+### Final document checks
+
+The format command checks 1158 source files.
+The predispatch command returns exit status zero.
+Its notes include the required method names, code identifiers and past records.
+The worker changes no checker rule.
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+Checked 1158 source files.
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110
+titles checked: 494, with a banned form: 0
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 openspec show backfill-director-packs-sharing --json
+{
+  "id": "backfill-director-packs-sharing",
+  "title": "backfill-director-packs-sharing",
+  "deltaCount": 8,
+  "deltas": [
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The data pack validators MUST accept valid declarations and reject invalid declarations.",
+      "requirement": {
+        "text": "The data pack validators MUST accept valid declarations and reject invalid declarations.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller supplies a relative asset path\n- **THEN** the validator accepts safe directory names and rejects traversal or URL syntax\n- **AND** The validator accepts paths of at most 1024 characters and rejects longer paths.\n- **AND** The validator accepts _ and - at the start of each path segment and returns without an error.\n- **AND** The validator returns without an error for letters A to Z and a to z, and digits 0 to 9.\n- **AND** The validator accepts those characters at the start and in other positions and returns without an error.\n- **AND** The validator names the path field in each asset path error.\n- **AND** The validator rejects the path type before it reads a segment.\n- **AND** The validator checks the source name, the path and the attribution fields in that order and rejects an invalid value.\n- **AND** The validator rejects an invalid second path segment."
+          },
+          {
+            "rawText": "- **WHEN** a caller supplies a data pack manifest\n- **THEN** the validator accepts version 1 and the geojson, image and media formats and returns without an error.\n- **AND** The validator rejects other versions and formats.\n- **AND** The validator rejects a data pack ID or source name above 256 characters.\n- **AND** The validator rejects extra fields and names each invalid field in its error.\n- **AND** The validator checks declaration fields, ID, version, format and source in that order and rejects an invalid value.\n- **AND** The validator checks the declaration before it checks for duplicate IDs and rejects an invalid value.\n- **AND** The validator rejects the unlisted format geojsonx.\n- **AND** The validator rejects an invalid second data pack declaration."
+          },
+          {
+            "rawText": "- **WHEN** a data pack declares attribution\n- **THEN** the validator checks text, license and an optional HTTPS link without credentials, query or fragment and rejects an invalid value.\n- **AND** The validator rejects text or license above 4096 characters, or an HTTPS link above 2048 characters.\n- **AND** The validator names each invalid attribution field and rejects extra attribution fields.\n- **AND** The validator checks text, license, URL and byteLength in that order and rejects an invalid value."
+          },
+          {
+            "rawText": "- **WHEN** a data pack declares byteLength or sha256\n- **THEN** the validator checks a positive integer up to 8388608 bytes and a lowercase hexadecimal digest of 64 characters and rejects an invalid value.\n- **AND** The validator rejects 63-character, 65-character and uppercase digests, and accepts exactly 64 lowercase hexadecimal characters.\n- **AND** The validator accepts each digit from 0 to 9 and each letter from a to f in the digest and returns without an error.\n- **AND** The validator names the field in each integrity error.\n- **AND** The validator checks the digest type before it converts text and rejects an invalid value.\n- **AND** The validator checks byteLength before the digest, and the digest before it reads the placement."
+          },
+          {
+            "rawText": "- **WHEN** an image data pack declares placement\n- **THEN** the validator checks geographic bounds, ordered edges, height and the ellipsoid reference and rejects an invalid value.\n- **AND** The validator rejects equal west and east edges, and equal south and north edges.\n- **AND** The validator accepts longitude limits of -180 and 180 degrees, and latitude limits of -90 and 90 degrees and returns without an error.\n- **AND** The validator rejects numeric text for bounds and height.\n- **AND** Each placement error names its field, and the validator rejects extra image placement fields.\n- **AND** The validator compares west with east before it compares south with north.\n- **AND** The validator checks bounds values, edge order and height in that order and rejects an invalid value.\n- **AND** The validator checks the height reference before it checks bounds and rejects an invalid value.\n- **AND** The validator checks the bounds array before it reads the length. It checks the length before it checks each coordinate.\n- **AND** The validator checks each bounds coordinate, with its index in the error path and rejects an invalid value."
+          },
+          {
+            "rawText": "- **WHEN** a media data pack declares placement\n- **THEN** the validator checks its scene anchor reference and rejects an invalid value.\n- **AND** The validator names the placement field in each unknown anchor error.\n- **AND** The validator accepts a reference to the second scene anchor and returns without an error."
+          },
+          {
+            "rawText": "- **WHEN** a scene declares data packs or data pack IDs for a shot\n- **THEN** the validator rejects duplicate data pack IDs, unknown shot references and duplicate shot references\n- **AND** The validator does not read a data pack list from the parent object of the scene and returns without an error.\n- **AND** The validator accepts eight distinct data packs per scene and rejects nine.\n- **AND** The validator accepts eight distinct data pack references per shot and rejects nine references before it checks distinct IDs.\n- **AND** The validator names the shot field in each reference error.\n- **AND** The validator rejects duplicate references before it searches for known IDs.\n- **AND** The validator checks the data pack list before it reads the anchors.\n- **AND** The validator rejects an unknown reference in the second shot.\n- **AND** The validator reports `$.shots[1].dataPackIds` and says expected distinct scene pack IDs for that error.\n- **AND** The validator rejects an unknown second reference ID."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The data pack validators MUST accept valid declarations and reject invalid declarations.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller supplies a relative asset path\n- **THEN** the validator accepts safe directory names and rejects traversal or URL syntax\n- **AND** The validator accepts paths of at most 1024 characters and rejects longer paths.\n- **AND** The validator accepts _ and - at the start of each path segment and returns without an error.\n- **AND** The validator returns without an error for letters A to Z and a to z, and digits 0 to 9.\n- **AND** The validator accepts those characters at the start and in other positions and returns without an error.\n- **AND** The validator names the path field in each asset path error.\n- **AND** The validator rejects the path type before it reads a segment.\n- **AND** The validator checks the source name, the path and the attribution fields in that order and rejects an invalid value.\n- **AND** The validator rejects an invalid second path segment."
+            },
+            {
+              "rawText": "- **WHEN** a caller supplies a data pack manifest\n- **THEN** the validator accepts version 1 and the geojson, image and media formats and returns without an error.\n- **AND** The validator rejects other versions and formats.\n- **AND** The validator rejects a data pack ID or source name above 256 characters.\n- **AND** The validator rejects extra fields and names each invalid field in its error.\n- **AND** The validator checks declaration fields, ID, version, format and source in that order and rejects an invalid value.\n- **AND** The validator checks the declaration before it checks for duplicate IDs and rejects an invalid value.\n- **AND** The validator rejects the unlisted format geojsonx.\n- **AND** The validator rejects an invalid second data pack declaration."
+            },
+            {
+              "rawText": "- **WHEN** a data pack declares attribution\n- **THEN** the validator checks text, license and an optional HTTPS link without credentials, query or fragment and rejects an invalid value.\n- **AND** The validator rejects text or license above 4096 characters, or an HTTPS link above 2048 characters.\n- **AND** The validator names each invalid attribution field and rejects extra attribution fields.\n- **AND** The validator checks text, license, URL and byteLength in that order and rejects an invalid value."
+            },
+            {
+              "rawText": "- **WHEN** a data pack declares byteLength or sha256\n- **THEN** the validator checks a positive integer up to 8388608 bytes and a lowercase hexadecimal digest of 64 characters and rejects an invalid value.\n- **AND** The validator rejects 63-character, 65-character and uppercase digests, and accepts exactly 64 lowercase hexadecimal characters.\n- **AND** The validator accepts each digit from 0 to 9 and each letter from a to f in the digest and returns without an error.\n- **AND** The validator names the field in each integrity error.\n- **AND** The validator checks the digest type before it converts text and rejects an invalid value.\n- **AND** The validator checks byteLength before the digest, and the digest before it reads the placement."
+            },
+            {
+              "rawText": "- **WHEN** an image data pack declares placement\n- **THEN** the validator checks geographic bounds, ordered edges, height and the ellipsoid reference and rejects an invalid value.\n- **AND** The validator rejects equal west and east edges, and equal south and north edges.\n- **AND** The validator accepts longitude limits of -180 and 180 degrees, and latitude limits of -90 and 90 degrees and returns without an error.\n- **AND** The validator rejects numeric text for bounds and height.\n- **AND** Each placement error names its field, and the validator rejects extra image placement fields.\n- **AND** The validator compares west with east before it compares south with north.\n- **AND** The validator checks bounds values, edge order and height in that order and rejects an invalid value.\n- **AND** The validator checks the height reference before it checks bounds and rejects an invalid value.\n- **AND** The validator checks the bounds array before it reads the length. It checks the length before it checks each coordinate.\n- **AND** The validator checks each bounds coordinate, with its index in the error path and rejects an invalid value."
+            },
+            {
+              "rawText": "- **WHEN** a media data pack declares placement\n- **THEN** the validator checks its scene anchor reference and rejects an invalid value.\n- **AND** The validator names the placement field in each unknown anchor error.\n- **AND** The validator accepts a reference to the second scene anchor and returns without an error."
+            },
+            {
+              "rawText": "- **WHEN** a scene declares data packs or data pack IDs for a shot\n- **THEN** the validator rejects duplicate data pack IDs, unknown shot references and duplicate shot references\n- **AND** The validator does not read a data pack list from the parent object of the scene and returns without an error.\n- **AND** The validator accepts eight distinct data packs per scene and rejects nine.\n- **AND** The validator accepts eight distinct data pack references per shot and rejects nine references before it checks distinct IDs.\n- **AND** The validator names the shot field in each reference error.\n- **AND** The validator rejects duplicate references before it searches for known IDs.\n- **AND** The validator checks the data pack list before it reads the anchors.\n- **AND** The validator rejects an unknown reference in the second shot.\n- **AND** The validator reports `$.shots[1].dataPackIds` and says expected distinct scene pack IDs for that error.\n- **AND** The validator rejects an unknown second reference ID."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The geometry decoder MUST return IDs, geometry types and coordinates without feature properties.",
+      "requirement": {
+        "text": "The geometry decoder MUST return IDs, geometry types and coordinates without feature properties.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller decodes GeoJSON\n- **THEN** the decoder rejects a type other than FeatureCollection, a feature list that is not an array or more than 2000 features\n- **AND** The decoder rejects invalid UTF8 bytes and null."
+          },
+          {
+            "rawText": "- **WHEN** a collection contains features\n- **THEN** the decoder rejects a type other than Feature, duplicate or blank IDs, IDs that are not strings and IDs above 256 characters\n- **AND** The decoder rejects a null feature with the feature ID error.\n- **AND** The decoder rejects a duplicate ID in the second feature."
+          },
+          {
+            "rawText": "- **WHEN** a geometry supplies positions without inherited coordinate values\n- **THEN** the decoder rejects longitude, latitude or height that is not finite or exceeds geographic limits\n- **AND** The decoder accepts at most 50000 positions and gives zero meters for an absent height.\n- **AND** Each position has two or three coordinates; the decoder rejects one or four coordinates.\n- **AND** The decoder accepts longitude from -180 to 180 degrees and latitude from -90 to 90 degrees and returns coordinates.\n- **AND** The decoder rejects a null position with the geographic position error.\n- **AND** The decoder keeps negative zero for a supplied height.\n- **AND** The decoder rejects an invalid second coordinate and an invalid second line position."
+          },
+          {
+            "rawText": "- **WHEN** a geometry supplies a line or ring\n- **THEN** the decoder rejects short lines, short rings and rings with unequal end positions\n- **AND** The decoder rejects a null line with the line error.\n- **AND** The decoder returns an open line with unequal end positions."
+          },
+          {
+            "rawText": "- **WHEN** a collection contains geometry\n- **THEN** the decoder returns IDs, geometry types and coordinates without properties\n- **AND** The decoder rejects unsupported or absent geometry and accepts at most 128 polygon rings.\n- **AND** The decoder rejects an unclosed second polygon ring."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The geometry decoder MUST return IDs, geometry types and coordinates without feature properties.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller decodes GeoJSON\n- **THEN** the decoder rejects a type other than FeatureCollection, a feature list that is not an array or more than 2000 features\n- **AND** The decoder rejects invalid UTF8 bytes and null."
+            },
+            {
+              "rawText": "- **WHEN** a collection contains features\n- **THEN** the decoder rejects a type other than Feature, duplicate or blank IDs, IDs that are not strings and IDs above 256 characters\n- **AND** The decoder rejects a null feature with the feature ID error.\n- **AND** The decoder rejects a duplicate ID in the second feature."
+            },
+            {
+              "rawText": "- **WHEN** a geometry supplies positions without inherited coordinate values\n- **THEN** the decoder rejects longitude, latitude or height that is not finite or exceeds geographic limits\n- **AND** The decoder accepts at most 50000 positions and gives zero meters for an absent height.\n- **AND** Each position has two or three coordinates; the decoder rejects one or four coordinates.\n- **AND** The decoder accepts longitude from -180 to 180 degrees and latitude from -90 to 90 degrees and returns coordinates.\n- **AND** The decoder rejects a null position with the geographic position error.\n- **AND** The decoder keeps negative zero for a supplied height.\n- **AND** The decoder rejects an invalid second coordinate and an invalid second line position."
+            },
+            {
+              "rawText": "- **WHEN** a geometry supplies a line or ring\n- **THEN** the decoder rejects short lines, short rings and rings with unequal end positions\n- **AND** The decoder rejects a null line with the line error.\n- **AND** The decoder returns an open line with unequal end positions."
+            },
+            {
+              "rawText": "- **WHEN** a collection contains geometry\n- **THEN** the decoder returns IDs, geometry types and coordinates without properties\n- **AND** The decoder rejects unsupported or absent geometry and accepts at most 128 polygon rings.\n- **AND** The decoder rejects an unclosed second polygon ring."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.",
+      "requirement": {
+        "text": "The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller creates a session or assigns a new value to the public data pack limits\n- **THEN** the session starts with the idle state. The load method of the session checks data pack lists before asset work and rejects an invalid data pack list.\n- **AND** The session rejects more than eight data packs and checks every declaration before the first source call.\n- **AND** The load call returns false for a destroyed session or a cancelled signal.\n- **AND** The public data pack limits throw a TypeError when a caller assigns a new value.\n- **AND** After the caller destroys the session, a new load call does not read the caller signal state.\n- **AND** An empty data pack list returns true without a source call or a deadline timer.\n- **AND** An absent source map or renderer map gives an empty registry.\n- **AND** The session reads source entries before renderer entries.\n- **AND** The session calls each source by `pack.source.adapter` and each renderer by `pack.format`. The source map and the renderer map each contain two entries.\n- **AND** The session checks the data pack list before it reads anchors. It checks declarations before it reads the caller signal.\n- **AND** During source cancellation, a destroyed session returns false for another load call.\n- **AND** An invalid second declaration gives its indexed error before the source call."
+          },
+          {
+            "rawText": "- **WHEN** a session loads assets\n- **THEN** after success, the session reports the ready state and disposes its handles when the caller clears or destroys it\n- **AND** The session rejects a null handle or a handle without a dispose function.\n- **AND** During asset work, the session reports the loading state.\n- **AND** The session keeps its state after the caller changes a returned state object.\n- **AND** The session removes the deadline timer after success.\n- **AND** The session also removes that timer after the caller clears the session.\n\n- **AND** The session removes source listeners after success or a source error.\n- **AND** The session does not read the signal reason for a completed source listener after success or a source error.\n- **AND** The session removes the caller signal listener when the caller clears it.\n- **AND** The session installs that listener with the once option set to true.\n- **AND** The session attaches the source listener, checks the source signal state and reads the work promise in that order.\n- **AND** The session does not read the signal reason for a completed source when the promise settles.\n- **AND** The session attaches the caller listener before the deadline timer starts.\n- **AND** The session checks the signal before it removes the timer. It removes the timer before it reports the ready state.\n- **AND** The session reports idle before source cancellation.\n- **AND** The session cancels the source, removes the caller listener, removes the timer and disposes resources in that order."
+          },
+          {
+            "rawText": "- **WHEN** a caller cancels asset work, or source or renderer work fails\n- **THEN** for cancellation, the session returns false and disposes late renderer resources\n- **AND** The session checks its source signal before it reads bytes and after renderer work.\n- **AND** The session does not read the caller signal state again for a cleared load call after cancellation.\n- **AND** The session rejects source errors before the renderer call and rejects null bytes or a null renderer handle.\n- **AND** After the caller clears the session, the session does not read the old source signal state and returns false.\n- **AND** The session returns false when the caller signal destroys the session after a source error.\n- **AND** The session returns false for a caller event during listener registration."
+          },
+          {
+            "rawText": "- **WHEN** a caller starts a new load call\n- **THEN** the session returns false for old work that is not complete and keeps the new resources\n- **AND** The session disposes old resources before it checks the new data pack list and rejects an invalid data pack list."
+          },
+          {
+            "rawText": "- **WHEN** a source fails, a source signal event stops work, or the asset deadline expires\n- **THEN** the session removes partial resources and reports a stable error\n- **AND** With no registered source and a byteLength field in the declaration, the session reads that field once, during validation\n- **AND** The session sets a default deadline of 15000 milliseconds.\n- **AND** The session sets the source signal reason to Asset load timed out when the deadline expires.\n- **AND** With no renderer, the session does not call the registered source.\n- **AND** The session disposes each partial resource when the deadline expires.\n- **AND** The session rejects the load call before the renderer call for a source signal event.\n- **AND** The session reads the source signal reason once when a source signal event stops work.\n- **AND** The session rejects the load call before the renderer call for a source signal event during listener removal after source success or an error.\n- **AND** The session does not read the global `error` property for a data pack failure."
+          },
+          {
+            "rawText": "- **WHEN** a source returns bytes for a data pack\n- **THEN** the session checks byte type, size, total bytes and declared integrity before the renderer call and rejects an invalid asset.\n- **AND** The session accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns true.\n- **AND** The source receives the source path and the byteLength field or the default byte limit.\n- **AND** The renderer receives the asset and the signal of the source call.\n- **AND** The renderer also receives the data pack and the scene anchors.\n- **AND** The session checks the byte type before it reads the length of an invalid byte object.\n- **AND** With null bytes, the session does not read the declared byteLength field again.\n- **AND** Without a declared byteLength field, the session does not compare bytes with that field.\n- **AND** The session checks total bytes before it reads the declared digest.\n- **AND** The session accepts a data pack that refers to the second supplied anchor and returns true."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller creates a session or assigns a new value to the public data pack limits\n- **THEN** the session starts with the idle state. The load method of the session checks data pack lists before asset work and rejects an invalid data pack list.\n- **AND** The session rejects more than eight data packs and checks every declaration before the first source call.\n- **AND** The load call returns false for a destroyed session or a cancelled signal.\n- **AND** The public data pack limits throw a TypeError when a caller assigns a new value.\n- **AND** After the caller destroys the session, a new load call does not read the caller signal state.\n- **AND** An empty data pack list returns true without a source call or a deadline timer.\n- **AND** An absent source map or renderer map gives an empty registry.\n- **AND** The session reads source entries before renderer entries.\n- **AND** The session calls each source by `pack.source.adapter` and each renderer by `pack.format`. The source map and the renderer map each contain two entries.\n- **AND** The session checks the data pack list before it reads anchors. It checks declarations before it reads the caller signal.\n- **AND** During source cancellation, a destroyed session returns false for another load call.\n- **AND** An invalid second declaration gives its indexed error before the source call."
+            },
+            {
+              "rawText": "- **WHEN** a session loads assets\n- **THEN** after success, the session reports the ready state and disposes its handles when the caller clears or destroys it\n- **AND** The session rejects a null handle or a handle without a dispose function.\n- **AND** During asset work, the session reports the loading state.\n- **AND** The session keeps its state after the caller changes a returned state object.\n- **AND** The session removes the deadline timer after success.\n- **AND** The session also removes that timer after the caller clears the session.\n\n- **AND** The session removes source listeners after success or a source error.\n- **AND** The session does not read the signal reason for a completed source listener after success or a source error.\n- **AND** The session removes the caller signal listener when the caller clears it.\n- **AND** The session installs that listener with the once option set to true.\n- **AND** The session attaches the source listener, checks the source signal state and reads the work promise in that order.\n- **AND** The session does not read the signal reason for a completed source when the promise settles.\n- **AND** The session attaches the caller listener before the deadline timer starts.\n- **AND** The session checks the signal before it removes the timer. It removes the timer before it reports the ready state.\n- **AND** The session reports idle before source cancellation.\n- **AND** The session cancels the source, removes the caller listener, removes the timer and disposes resources in that order."
+            },
+            {
+              "rawText": "- **WHEN** a caller cancels asset work, or source or renderer work fails\n- **THEN** for cancellation, the session returns false and disposes late renderer resources\n- **AND** The session checks its source signal before it reads bytes and after renderer work.\n- **AND** The session does not read the caller signal state again for a cleared load call after cancellation.\n- **AND** The session rejects source errors before the renderer call and rejects null bytes or a null renderer handle.\n- **AND** After the caller clears the session, the session does not read the old source signal state and returns false.\n- **AND** The session returns false when the caller signal destroys the session after a source error.\n- **AND** The session returns false for a caller event during listener registration."
+            },
+            {
+              "rawText": "- **WHEN** a caller starts a new load call\n- **THEN** the session returns false for old work that is not complete and keeps the new resources\n- **AND** The session disposes old resources before it checks the new data pack list and rejects an invalid data pack list."
+            },
+            {
+              "rawText": "- **WHEN** a source fails, a source signal event stops work, or the asset deadline expires\n- **THEN** the session removes partial resources and reports a stable error\n- **AND** With no registered source and a byteLength field in the declaration, the session reads that field once, during validation\n- **AND** The session sets a default deadline of 15000 milliseconds.\n- **AND** The session sets the source signal reason to Asset load timed out when the deadline expires.\n- **AND** With no renderer, the session does not call the registered source.\n- **AND** The session disposes each partial resource when the deadline expires.\n- **AND** The session rejects the load call before the renderer call for a source signal event.\n- **AND** The session reads the source signal reason once when a source signal event stops work.\n- **AND** The session rejects the load call before the renderer call for a source signal event during listener removal after source success or an error.\n- **AND** The session does not read the global `error` property for a data pack failure."
+            },
+            {
+              "rawText": "- **WHEN** a source returns bytes for a data pack\n- **THEN** the session checks byte type, size, total bytes and declared integrity before the renderer call and rejects an invalid asset.\n- **AND** The session accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns true.\n- **AND** The source receives the source path and the byteLength field or the default byte limit.\n- **AND** The renderer receives the asset and the signal of the source call.\n- **AND** The renderer also receives the data pack and the scene anchors.\n- **AND** The session checks the byte type before it reads the length of an invalid byte object.\n- **AND** With null bytes, the session does not read the declared byteLength field again.\n- **AND** Without a declared byteLength field, the session does not compare bytes with that field.\n- **AND** The session checks total bytes before it reads the declared digest.\n- **AND** The session accepts a data pack that refers to the second supplied anchor and returns true."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The directory source MUST use its directory URL and reject bytes above the asset limit.",
+      "requirement": {
+        "text": "The directory source MUST use its directory URL and reject bytes above the asset limit.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller registers an asset directory\n- **THEN** the factory rejects a directory outside HTTP or HTTPS, or with credentials, query or fragment\n- **AND** The factory rejects a directory URL without a final slash.\n- **AND** The factory rejects a directory URL that uses the file protocol."
+          },
+          {
+            "rawText": "- **WHEN** a caller asks for an asset path\n- **THEN** the source checks the path before it checks the caller signal and rejects an invalid path.\n- **AND** For a safe path, the source calls fetch with the registered directory and fixed request options.\n- **AND** The source calls fetch with no credentials, redirects as errors, no referrer and no cache.\n- **AND** Without a caller fetch function, the source calls the global fetch function."
+          },
+          {
+            "rawText": "- **WHEN** a source reads an asset stream\n- **THEN** the source checks header and stream byte limits and joins its chunks\n- **AND** The source removes media type parameters and space, and changes the media type to lowercase text.\n- **AND** The source returns empty text for an absent media type.\n- **AND** The source joins chunks of different byte lengths in their original order.\n- **AND** The source checks the header byte limit before it reads the first stream chunk.\n- **AND** The source checks the stream byte limit before it keeps a chunk."
+          },
+          {
+            "rawText": "- **WHEN** an asset request fails or its signal stops it\n- **THEN** the source rejects the asset request and releases stream resources\n- **AND** The source waits for stream cancellation before it releases the reader lock.\n- **AND** For an HTTP error, the source waits for body cancellation before it rejects the asset request.\n- **AND** The source checks its signal before each time the source reads a stream chunk and rejects cancellation.\n- **AND** With two stream chunks, cancellation before the second chunk stops the source, and the source reads only the first chunk."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The directory source MUST use its directory URL and reject bytes above the asset limit.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller registers an asset directory\n- **THEN** the factory rejects a directory outside HTTP or HTTPS, or with credentials, query or fragment\n- **AND** The factory rejects a directory URL without a final slash.\n- **AND** The factory rejects a directory URL that uses the file protocol."
+            },
+            {
+              "rawText": "- **WHEN** a caller asks for an asset path\n- **THEN** the source checks the path before it checks the caller signal and rejects an invalid path.\n- **AND** For a safe path, the source calls fetch with the registered directory and fixed request options.\n- **AND** The source calls fetch with no credentials, redirects as errors, no referrer and no cache.\n- **AND** Without a caller fetch function, the source calls the global fetch function."
+            },
+            {
+              "rawText": "- **WHEN** a source reads an asset stream\n- **THEN** the source checks header and stream byte limits and joins its chunks\n- **AND** The source removes media type parameters and space, and changes the media type to lowercase text.\n- **AND** The source returns empty text for an absent media type.\n- **AND** The source joins chunks of different byte lengths in their original order.\n- **AND** The source checks the header byte limit before it reads the first stream chunk.\n- **AND** The source checks the stream byte limit before it keeps a chunk."
+            },
+            {
+              "rawText": "- **WHEN** an asset request fails or its signal stops it\n- **THEN** the source rejects the asset request and releases stream resources\n- **AND** The source waits for stream cancellation before it releases the reader lock.\n- **AND** For an HTTP error, the source waits for body cancellation before it rejects the asset request.\n- **AND** The source checks its signal before each time the source reads a stream chunk and rejects cancellation.\n- **AND** With two stream chunks, cancellation before the second chunk stops the source, and the source reads only the first chunk."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The bundle helpers MUST check supplied assets and keep the source project.",
+      "requirement": {
+        "text": "The bundle helpers MUST check supplied assets and keep the source project.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller supplies project share text\n- **THEN** the import rejects invalid text type, excess bytes and invalid JSON syntax\n- **AND** The import rejects null and invalid projects.\n- **AND** The import rejects text above 52428800 characters or 52428800 UTF8 bytes.\n- **AND** The import reports `$: invalid JSON` for invalid JSON within the share text limit.\n- **AND** For project JSON without bundle format, the import returns the project and an empty asset Map."
+          },
+          {
+            "rawText": "- **WHEN** a caller supplies bundle assets\n- **THEN** the import rejects invalid fields, paths, media types, duplicate paths and invalid base64 syntax\n- **AND** The import accepts at most 64 assets and returns assets. The import rejects 65 different paths.\n- **AND** The import accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns assets.\n- **AND** The import rejects base64 above 11184812 characters.\n- **AND** The import rejects a bundle version other than 1.\n- **AND** The import rejects extra top-level fields and invalid bundle projects.\n- **AND** The import starts asset field, count, byte, media type, base64 and digest errors with `assets`.\n- **AND** The import starts each asset path error with `source.path`.\n- **AND** The import accepts the standard base64 alphabet, with + and /, and returns assets. The import rejects an equals sign at the start.\n- **AND** The import accepts each standard base64 character in both plain and padded text and returns assets.\n- **AND** The import checks the base64 type before it converts text and rejects an invalid asset.\n- **AND** The import checks top-level fields, version, project and the asset list in that order and rejects an invalid bundle.\n- **AND** The import checks asset fields, path, media type, duplicate path and base64 in that order and rejects an invalid asset.\n- **AND** The import checks asset byte limits before the digest call and rejects an invalid asset.\n- **AND** The import accepts these media types and returns assets: application/json, application/geo+json, image/png, video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav and audio/webm.\n- **AND** The import rejects image/svg+xml."
+          },
+          {
+            "rawText": "- **WHEN** a bundle declares data pack assets\n- **THEN** the import rejects incorrect asset digests and incorrect data pack references\n- **AND** The import starts each data pack reference error with `project`."
+          },
+          {
+            "rawText": "- **WHEN** a caller exports a project with supplied assets\n- **THEN** the export copies the project and writes bundle paths, byte lengths and digests\n- **AND** The export rejects an invalid project before the resolver call.\n- **AND** The export calls the resolver with the data pack and the signal in its options object.\n- **AND** The export writes a path with at most 160 characters from the source filename.\n- **AND** The export writes each path with files/, the asset index from zero, and a dash before the filename.\n- **AND** The export writes source, byteLength and digest fields in that order.\n- **AND** The export does not read byte chunks past the asset end.\n- **AND** The export calls the filename slice with a start of zero and a length limit of 160.\n- **AND** The export writes assets for data packs from the second scene."
+          },
+          {
+            "rawText": "- **WHEN** a caller supplies assets for bundle export or assigns a new value to the share limits\n- **THEN** the export rejects excess bytes, unsupported media types, excess assets and incorrect declared integrity\n- **AND** The export accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns bundle text.\n- **AND** The export rejects an unsupported media type during export.\n- **AND** The share limits throw a TypeError when a caller assigns a new value.\n- **AND** The export starts each asset error with `assets`.\n- **AND** The export checks byte type and per-asset size before the total size and rejects an invalid asset.\n- **AND** The export checks declared byteLength before the declared digest and rejects an invalid asset.\n- **AND** For numeric byte lengths, the export adds zero to the total for an asset without a byte length.\n- **AND** When the declared digest is absent, the export reads the digest field once before it writes the digest.\n- **AND** The export starts each text limit error with `$`.\n- **AND** The export checks declared integrity before it reads the filename.\n- **AND** The export checks the asset count before the next resolver call and rejects more than 64 assets.\n- **AND** The export checks bytes before media type, and media type before the digest call and rejects an invalid asset."
+          },
+          {
+            "rawText": "- **WHEN** data packs use the same source and path\n- **THEN** the export writes one asset and rejects integrity declarations that differ\n- **AND** The export starts each shared asset integrity error with `assets`."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The bundle helpers MUST check supplied assets and keep the source project.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller supplies project share text\n- **THEN** the import rejects invalid text type, excess bytes and invalid JSON syntax\n- **AND** The import rejects null and invalid projects.\n- **AND** The import rejects text above 52428800 characters or 52428800 UTF8 bytes.\n- **AND** The import reports `$: invalid JSON` for invalid JSON within the share text limit.\n- **AND** For project JSON without bundle format, the import returns the project and an empty asset Map."
+            },
+            {
+              "rawText": "- **WHEN** a caller supplies bundle assets\n- **THEN** the import rejects invalid fields, paths, media types, duplicate paths and invalid base64 syntax\n- **AND** The import accepts at most 64 assets and returns assets. The import rejects 65 different paths.\n- **AND** The import accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns assets.\n- **AND** The import rejects base64 above 11184812 characters.\n- **AND** The import rejects a bundle version other than 1.\n- **AND** The import rejects extra top-level fields and invalid bundle projects.\n- **AND** The import starts asset field, count, byte, media type, base64 and digest errors with `assets`.\n- **AND** The import starts each asset path error with `source.path`.\n- **AND** The import accepts the standard base64 alphabet, with + and /, and returns assets. The import rejects an equals sign at the start.\n- **AND** The import accepts each standard base64 character in both plain and padded text and returns assets.\n- **AND** The import checks the base64 type before it converts text and rejects an invalid asset.\n- **AND** The import checks top-level fields, version, project and the asset list in that order and rejects an invalid bundle.\n- **AND** The import checks asset fields, path, media type, duplicate path and base64 in that order and rejects an invalid asset.\n- **AND** The import checks asset byte limits before the digest call and rejects an invalid asset.\n- **AND** The import accepts these media types and returns assets: application/json, application/geo+json, image/png, video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav and audio/webm.\n- **AND** The import rejects image/svg+xml."
+            },
+            {
+              "rawText": "- **WHEN** a bundle declares data pack assets\n- **THEN** the import rejects incorrect asset digests and incorrect data pack references\n- **AND** The import starts each data pack reference error with `project`."
+            },
+            {
+              "rawText": "- **WHEN** a caller exports a project with supplied assets\n- **THEN** the export copies the project and writes bundle paths, byte lengths and digests\n- **AND** The export rejects an invalid project before the resolver call.\n- **AND** The export calls the resolver with the data pack and the signal in its options object.\n- **AND** The export writes a path with at most 160 characters from the source filename.\n- **AND** The export writes each path with files/, the asset index from zero, and a dash before the filename.\n- **AND** The export writes source, byteLength and digest fields in that order.\n- **AND** The export does not read byte chunks past the asset end.\n- **AND** The export calls the filename slice with a start of zero and a length limit of 160.\n- **AND** The export writes assets for data packs from the second scene."
+            },
+            {
+              "rawText": "- **WHEN** a caller supplies assets for bundle export or assigns a new value to the share limits\n- **THEN** the export rejects excess bytes, unsupported media types, excess assets and incorrect declared integrity\n- **AND** The export accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns bundle text.\n- **AND** The export rejects an unsupported media type during export.\n- **AND** The share limits throw a TypeError when a caller assigns a new value.\n- **AND** The export starts each asset error with `assets`.\n- **AND** The export checks byte type and per-asset size before the total size and rejects an invalid asset.\n- **AND** The export checks declared byteLength before the declared digest and rejects an invalid asset.\n- **AND** For numeric byte lengths, the export adds zero to the total for an asset without a byte length.\n- **AND** When the declared digest is absent, the export reads the digest field once before it writes the digest.\n- **AND** The export starts each text limit error with `$`.\n- **AND** The export checks declared integrity before it reads the filename.\n- **AND** The export checks the asset count before the next resolver call and rejects more than 64 assets.\n- **AND** The export checks bytes before media type, and media type before the digest call and rejects an invalid asset."
+            },
+            {
+              "rawText": "- **WHEN** data packs use the same source and path\n- **THEN** the export writes one asset and rejects integrity declarations that differ\n- **AND** The export starts each shared asset integrity error with `assets`."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The byte store MUST copy the asset map and return byte copies.",
+      "requirement": {
+        "text": "The byte store MUST copy the asset map and return byte copies.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller replaces or clears bundle bytes\n- **THEN** the store copies the map and reports its current byte total\n- **AND** With no replacement map, the store reports zero assets and zero bytes.\n- **AND** The store returns a separate snapshot map with the stored keys and byte values.\n- **AND** The store counts the bytes of the second stored asset."
+          },
+          {
+            "rawText": "- **WHEN** a caller asks for stored bundle bytes\n- **THEN** the store returns a byte copy and rejects absent or excess bytes and a cancelled source call\n- **AND** The store accepts bytes equal to the caller limit and rejects one more byte.\n- **AND** Without a caller limit, the store accepts an asset of 8388608 bytes and returns a byte copy.\n- **AND** The store rejects an invalid path even when the store holds that path.\n- **AND** The store checks its signal before it checks the path and rejects cancellation."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The byte store MUST copy the asset map and return byte copies.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller replaces or clears bundle bytes\n- **THEN** the store copies the map and reports its current byte total\n- **AND** With no replacement map, the store reports zero assets and zero bytes.\n- **AND** The store returns a separate snapshot map with the stored keys and byte values.\n- **AND** The store counts the bytes of the second stored asset."
+            },
+            {
+              "rawText": "- **WHEN** a caller asks for stored bundle bytes\n- **THEN** the store returns a byte copy and rejects absent or excess bytes and a cancelled source call\n- **AND** The store accepts bytes equal to the caller limit and rejects one more byte.\n- **AND** Without a caller limit, the store accepts an asset of 8388608 bytes and returns a byte copy.\n- **AND** The store rejects an invalid path even when the store holds that path.\n- **AND** The store checks its signal before it checks the path and rejects cancellation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The share helpers MUST check file limits and settle signal cancellation.",
+      "requirement": {
+        "text": "The share helpers MUST check file limits and settle signal cancellation.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller supplies a project file\n- **THEN** the share helpers check the file suffix and size before they read text\n- **AND** The share helpers reject a file above 5242880 bytes, except a file with the .gevbundle.json suffix. They reject that file above 52428800 bytes.\n- **AND** The share helpers accept the limit and reject one more byte.\n- **AND** The share helpers check the file limit before they read the signal and reject excess files."
+          },
+          {
+            "rawText": "- **WHEN** share work uses a signal\n- **THEN** the helper rejects cancelled work and settles successful work or errors\n- **AND** The bundle helpers check the signal before each asset and after each digest during import and export. They reject cancellation.\n- **AND** During export, the bundle helpers also check the signal after the asset result and reject cancellation.\n\n- **AND** The helper removes its listener after success, a work error or cancellation.\n- **AND** The import checks the signal before text type, asset fields and digest comparison and rejects cancellation.\n- **AND** The share helpers check the signal before they read text and after the text promise settles. They reject cancellation.\n- **AND** During export, the bundle helpers check the signal before they check asset presence and declared integrity and reject cancellation.\n- **AND** The helper does not attach a listener to a cancelled signal.\n- **AND** The helper attaches its listener before it reads the work promise.\n- **AND** The helper reads cancelled work before the reason, and removes its listener before it reads the reason.\n- **AND** The helper checks cancellation after listener removal and before the work settles with success.\n- **AND** For cancellation during listener removal after a work error, the helper rejects with the cancellation reason.\n- **AND** With two assets, the import calls the digest function once when cancellation occurs before the second digest call.\n- **AND** With two data packs, the export calls the resolver once when cancellation occurs before the second resolver call."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The share helpers MUST check file limits and settle signal cancellation.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller supplies a project file\n- **THEN** the share helpers check the file suffix and size before they read text\n- **AND** The share helpers reject a file above 5242880 bytes, except a file with the .gevbundle.json suffix. They reject that file above 52428800 bytes.\n- **AND** The share helpers accept the limit and reject one more byte.\n- **AND** The share helpers check the file limit before they read the signal and reject excess files."
+            },
+            {
+              "rawText": "- **WHEN** share work uses a signal\n- **THEN** the helper rejects cancelled work and settles successful work or errors\n- **AND** The bundle helpers check the signal before each asset and after each digest during import and export. They reject cancellation.\n- **AND** During export, the bundle helpers also check the signal after the asset result and reject cancellation.\n\n- **AND** The helper removes its listener after success, a work error or cancellation.\n- **AND** The import checks the signal before text type, asset fields and digest comparison and rejects cancellation.\n- **AND** The share helpers check the signal before they read text and after the text promise settles. They reject cancellation.\n- **AND** During export, the bundle helpers check the signal before they check asset presence and declared integrity and reject cancellation.\n- **AND** The helper does not attach a listener to a cancelled signal.\n- **AND** The helper attaches its listener before it reads the work promise.\n- **AND** The helper reads cancelled work before the reason, and removes its listener before it reads the reason.\n- **AND** The helper checks cancellation after listener removal and before the work settles with success.\n- **AND** For cancellation during listener removal after a work error, the helper rejects with the cancellation reason.\n- **AND** With two assets, the import calls the digest function once when cancellation occurs before the second digest call.\n- **AND** With two data packs, the export calls the resolver once when cancellation occurs before the second resolver call."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The preview MUST report project content and dependencies.",
+      "requirement": {
+        "text": "The preview MUST report project content and dependencies.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller describes a shared project\n- **THEN** the preview reports scene, shot and byte totals with data pack attribution\n- **AND** The preview counts the second scene and the second shot, and lists the second data pack. The preview adds the bytes of the second asset to the byte total."
+          },
+          {
+            "rawText": "- **WHEN** a preview describes a data pack source\n- **THEN** the preview reports included, absent, configured or unavailable source states\n- **AND** Without source IDs, the preview reports every external source as unavailable."
+          },
+          {
+            "rawText": "- **WHEN** a preview describes scene dependencies\n- **THEN** the preview reports absent layers and whether a scene has applied shot packs or a shot has a source pack ID\n- **AND** The preview lists each absent layer once, even when two shots name that layer.\n- **AND** Without layer IDs, the preview reports every named layer as absent.\n- **AND** With applied shot packs, the preview does not read source pack IDs to decide whether the scene has external content.\n- **AND** The preview reports the absent layers of the second shot in the second scene. It reports external content from the source pack ID of that shot."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The preview MUST report project content and dependencies.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller describes a shared project\n- **THEN** the preview reports scene, shot and byte totals with data pack attribution\n- **AND** The preview counts the second scene and the second shot, and lists the second data pack. The preview adds the bytes of the second asset to the byte total."
+            },
+            {
+              "rawText": "- **WHEN** a preview describes a data pack source\n- **THEN** the preview reports included, absent, configured or unavailable source states\n- **AND** Without source IDs, the preview reports every external source as unavailable."
+            },
+            {
+              "rawText": "- **WHEN** a preview describes scene dependencies\n- **THEN** the preview reports absent layers and whether a scene has applied shot packs or a shot has a source pack ID\n- **AND** The preview lists each absent layer once, even when two shots name that layer.\n- **AND** Without layer IDs, the preview reports every named layer as absent.\n- **AND** With applied shot packs, the preview does not read source pack IDs to decide whether the scene has external content.\n- **AND** The preview reports the absent layers of the second shot in the second scene. It reports external content from the source pack ID of that shot."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+Warning: Ignoring flags not applicable to change: scenarios
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 openspec validate backfill-director-packs-sharing
+Change 'backfill-director-packs-sharing' is valid
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass11/restore-check.py
+{
+  "sourceCommit": "f8f6a94d2d09489b98fda4d063b8612f766f5dfa",
+  "sections": [
+    {
+      "section": "## Pass 7 title corrections",
+      "linesCompared": 311,
+      "everyLineEqualsSource": true,
+      "difference": []
+    },
+    {
+      "section": "## Pass 7",
+      "linesCompared": 504,
+      "everyLineEqualsSource": true,
+      "difference": []
+    }
+  ],
+  "Pass8TitleRecords": [
+    {
+      "prefix": "New: [director-090] The cleared",
+      "recordsCompared": 1,
+      "allEqualCurrentTitle": true
+    },
+    {
+      "prefix": "New: [director-099] The import rejects an unsupported media type",
+      "recordsCompared": 1,
+      "allEqualCurrentTitle": true
+    },
+    {
+      "prefix": "New: [director-101] The export includes the asset of the second scene",
+      "recordsCompared": 1,
+      "allEqualCurrentTitle": true
+    }
+  ]
+}
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass11/check-repeated-titles.py
+{
+  "sourceCommit": "2dc225520cebc43bb76b8dca7b645ed3f48a1e43",
+  "runtimeTests": 670,
+  "checkedLabels": 1994,
+  "pastRecordLinesExcluded": 12988,
+  "staleLabels": [],
+  "staleLabelCount": 0,
+  "duplicateTitles": {},
+  "duplicateTitleCount": 0
+}
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass11/banned-forms.py
+{
+  "sourceCommit": "2dc225520cebc43bb76b8dca7b645ed3f48a1e43",
+  "newProseLines": 778,
+  "bannedOrPrefixedForms": 0,
+  "hits": []
+}
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 git diff --check
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing
+STE: 0 errors, 588 warnings.
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-packs-sharing
+== summary: {'NOUN?': 46, 'WORD': 53, 'PRONOUN': 1, 'ABBR': 16, 'TASK': 1}
+```
+
+### Tag and hand row counts
+
+The old totals remain in past command records.
+The next command finds each past count outside the review files and counts the current hand registry.
+The two scope records replace the false tag counts at E:11315 and E:11478.
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass11/counts.py
+{
+  "sourceCommit": "2dc225520cebc43bb76b8dca7b645ed3f48a1e43",
+  "handRows": 480,
+  "handIdsUnique": true,
+  "changedTagCellsSincePass9": 1,
+  "changedTagCellsInPass11": 0,
+  "priorCountRecords": [
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 3190,
+      "section": "## Pass 7",
+      "commandRecord": true,
+      "text": "  \"rows\": 479,"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 3193,
+      "section": "## Pass 7",
+      "commandRecord": true,
+      "text": "  \"patternsMatch\": 477,"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 3240,
+      "section": "## Pass 7",
+      "commandRecord": false,
+      "text": "The first complete command checks 479 rows."
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 3383,
+      "section": "## Pass 7",
+      "commandRecord": false,
+      "text": "Complete hand check 3 checks all 479 rows after the final title corrections."
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 3384,
+      "section": "## Pass 7",
+      "commandRecord": false,
+      "text": "It gives 477 killed rows and only m172 and m389 as survivors."
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 3408,
+      "section": "## Pass 7",
+      "commandRecord": true,
+      "text": "  \"rows\": 479,"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 3409,
+      "section": "## Pass 7",
+      "commandRecord": true,
+      "text": "  \"killed\": 477,"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 6762,
+      "section": "## Pass 8",
+      "commandRecord": true,
+      "text": "  \"handRows\": 479,"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 6763,
+      "section": "## Pass 8",
+      "commandRecord": true,
+      "text": "  \"killed\": 477,"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 8782,
+      "section": "## Pass 9",
+      "commandRecord": true,
+      "text": "  \"handRows\": 479,"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 9938,
+      "section": "## Pass 10",
+      "commandRecord": true,
+      "text": "openspec/changes/backfill-director-packs-sharing/survivors.md:477:| a9150 | src/director/packs/session.js:99 | `statement-order` | KILLED | [director-089] The session checks the signal before it removes the timer |"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 10717,
+      "section": "## Pass 10",
+      "commandRecord": true,
+      "text": "  \"handRows\": 479,"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 10718,
+      "section": "## Pass 10",
+      "commandRecord": true,
+      "text": "  \"killed\": 477,"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 11538,
+      "section": "## Pass 11",
+      "commandRecord": false,
+      "text": "At Pass 10, the hand command checked 479 rows and killed 477 rows."
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 11884,
+      "section": "## Pass 11",
+      "commandRecord": false,
+      "text": "| [director-101] The export copies bytes and attribution, keeps the project and calls the resolver once | [p-resolver-twice](#clause-87) | src/director/sharing/sharing.test.mjs: 467, 468, 469, 471, 472, 473, 477 | KILLED |"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 15281,
+      "section": "## Pass 11",
+      "commandRecord": false,
+      "text": "The first complete command gives 477 killed rows and three survivors: m172, m290 and m389."
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "line": 15377,
+      "section": "## Pass 11",
+      "commandRecord": true,
+      "text": "  \"killed\": 477,"
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/mutations.md",
+      "line": 14583,
+      "section": "## m480",
+      "commandRecord": false,
+      "text": "At Pass 7, it checks all 479 rows and gives 477 killed rows."
+    }
+  ]
+}
+```
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/final-scope.py
+{
+  "sourceCommit": "2dc225520cebc43bb76b8dca7b645ed3f48a1e43",
+  "tagComparisonCommit": "f057b89add2428964ab2bd00696b3b260b01fe94",
+  "changedTagCells": 1,
+  "changedTags": [
+    {
+      "file": "src/director/sharing/sharing.test.mjs",
+      "titleIndex": 30,
+      "old": [
+        "director-104"
+      ],
+      "new": [
+        "director-104",
+        "director-105"
+      ]
+    }
+  ],
+  "Pass11ChangedTagCells": 0,
+  "Pass11ChangedTags": [],
+  "changedFiles": [
+    "openspec/changes/backfill-director-packs-sharing/audit.md",
+    "openspec/changes/backfill-director-packs-sharing/design.md",
+    "openspec/changes/backfill-director-packs-sharing/evidence.md",
+    "openspec/changes/backfill-director-packs-sharing/mutations.md",
+    "openspec/changes/backfill-director-packs-sharing/proposal.md",
+    "openspec/changes/backfill-director-packs-sharing/survivors.md",
+    "openspec/changes/backfill-director-packs-sharing/tasks.md",
+    "src/director/packs/backfill.test.mjs",
+    "src/director/packs/packs.test.mjs",
+    "src/director/sharing/sharing.test.mjs"
+  ],
+  "sourceChangedLines": [
+    "-test('[director-088] The load call returns false after the caller destroys the session and makes no source call', async () => {",
+    "+test('[director-088] The load call returns false and makes no source call after the caller destroys the session', async () => {",
+    "-test('[director-089] The data pack session removes resources and cancels the transport on Stop', async () => {",
+    "+test('[director-089] The session disposes resources and aborts the source signal after the clear and destroy calls', async () => {",
+    "-test('[director-101] The export copies bytes and attribution and keeps the project with one resolver call', async () => {",
+    "+test('[director-101] The export copies bytes and attribution, keeps the project and calls the resolver once', async () => {",
+    "-test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets', async () => {",
+    "+test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets', async () => {",
+    "-test('[director-102] The export rejects an excess asset total', async () => {",
+    "+test('[director-102] The export rejects more than 64 assets', async () => {",
+    "-test('[director-102] The export accepts its exact asset total and returns bundle text', async () => {",
+    "+test('[director-102] The export accepts 64 assets and returns bundle text', async () => {",
+    "-test('[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length', async () =>",
+    "+test('[director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length', async () =>",
+    "+        await Promise.resolve();",
+    "+        order.push('settled');",
+    "-  assert.deepEqual(order, ['check', 'text', 'check', 'check']);",
+    "+  assert.deepEqual(order, ['check', 'text', 'settled', 'check', 'check']);"
+  ],
+  "onlyBodyChange": "director-107 text promise marker and expected order",
+  "productionFilesUnchanged": [
+    "src/director/packs/manifest.js",
+    "src/director/packs/geojson.js",
+    "src/director/packs/session.js",
+    "src/director/packs/source.js",
+    "src/director/sharing/bundle.js",
+    "src/director/sharing/lifetime.js",
+    "src/director/sharing/preview.js"
+  ],
+  "reviewFilesUnchanged": true,
+  "traceFilesUnchanged": true,
+  "proposalHeadings": [
+    "## Why",
+    "## What Changes",
+    "## Capabilities",
+    "## Impact",
+    "## Known limits and later changes"
+  ],
+  "documentsCompared": 28
+}
+```
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/final-scope.py
+{
+  "sourceCommit": "2dc225520cebc43bb76b8dca7b645ed3f48a1e43",
+  "tagComparisonCommit": "f057b89add2428964ab2bd00696b3b260b01fe94",
+  "changedTagCells": 1,
+  "changedTags": [
+    {
+      "file": "src/director/sharing/sharing.test.mjs",
+      "titleIndex": 30,
+      "old": [
+        "director-104"
+      ],
+      "new": [
+        "director-104",
+        "director-105"
+      ]
+    }
+  ],
+  "Pass11ChangedTagCells": 0,
+  "Pass11ChangedTags": [],
+  "changedFiles": [
+    "openspec/changes/backfill-director-packs-sharing/audit.md",
+    "openspec/changes/backfill-director-packs-sharing/design.md",
+    "openspec/changes/backfill-director-packs-sharing/evidence.md",
+    "openspec/changes/backfill-director-packs-sharing/mutations.md",
+    "openspec/changes/backfill-director-packs-sharing/proposal.md",
+    "openspec/changes/backfill-director-packs-sharing/survivors.md",
+    "openspec/changes/backfill-director-packs-sharing/tasks.md",
+    "src/director/packs/backfill.test.mjs",
+    "src/director/packs/packs.test.mjs",
+    "src/director/sharing/sharing.test.mjs"
+  ],
+  "sourceChangedLines": [
+    "-test('[director-088] The load call returns false after the caller destroys the session and makes no source call', async () => {",
+    "+test('[director-088] The load call returns false and makes no source call after the caller destroys the session', async () => {",
+    "-test('[director-089] The data pack session removes resources and cancels the transport on Stop', async () => {",
+    "+test('[director-089] The session disposes resources and aborts the source signal after the clear and destroy calls', async () => {",
+    "-test('[director-101] The export copies bytes and attribution and keeps the project with one resolver call', async () => {",
+    "+test('[director-101] The export copies bytes and attribution, keeps the project and calls the resolver once', async () => {",
+    "-test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets', async () => {",
+    "+test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets', async () => {",
+    "-test('[director-102] The export rejects an excess asset total', async () => {",
+    "+test('[director-102] The export rejects more than 64 assets', async () => {",
+    "-test('[director-102] The export accepts its exact asset total and returns bundle text', async () => {",
+    "+test('[director-102] The export accepts 64 assets and returns bundle text', async () => {",
+    "-test('[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length', async () =>",
+    "+test('[director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length', async () =>",
+    "+        await Promise.resolve();",
+    "+        order.push('settled');",
+    "-  assert.deepEqual(order, ['check', 'text', 'check', 'check']);",
+    "+  assert.deepEqual(order, ['check', 'text', 'settled', 'check', 'check']);"
+  ],
+  "onlyBodyChange": "director-107 text promise marker and expected order",
+  "productionFilesUnchanged": [
+    "src/director/packs/manifest.js",
+    "src/director/packs/geojson.js",
+    "src/director/packs/session.js",
+    "src/director/packs/source.js",
+    "src/director/sharing/bundle.js",
+    "src/director/sharing/lifetime.js",
+    "src/director/sharing/preview.js"
+  ],
+  "reviewFilesUnchanged": true,
+  "traceFilesUnchanged": true,
+  "proposalHeadings": [
+    "## Why",
+    "## What Changes",
+    "## Capabilities",
+    "## Impact",
+    "## Known limits and later changes"
+  ],
+  "documentsCompared": 28
+}
+```
+
+### Source edits
+
+The only body edits are at sharing.test.mjs:2422, :2423 and :2429.
+The first two lines add the tick and the settled marker.
+The last line changes the expected order.
+Each other source edit changes a test title.
+All production, review and trace files stay unchanged.
+
+```text
+Command: git diff -U0 2dc225520cebc43bb76b8dca7b645ed3f48a1e43 -- src
+diff --git a/src/director/packs/backfill.test.mjs b/src/director/packs/backfill.test.mjs
+index e0fdee60..3f268d87 100644
+--- a/src/director/packs/backfill.test.mjs
++++ b/src/director/packs/backfill.test.mjs
+@@ -1199 +1199 @@ test('[director-088] The session rejects more than eight data packs', async () =
+-test('[director-088] The load call returns false after the caller destroys the session and makes no source call', async () => {
++test('[director-088] The load call returns false and makes no source call after the caller destroys the session', async () => {
+diff --git a/src/director/packs/packs.test.mjs b/src/director/packs/packs.test.mjs
+index aacfaca5..f88a0e1a 100644
+--- a/src/director/packs/packs.test.mjs
++++ b/src/director/packs/packs.test.mjs
+@@ -180 +180 @@ test('[director-087] GeoJSON keeps stable geometry IDs without properties or rem
+-test('[director-089] The data pack session removes resources and cancels the transport on Stop', async () => {
++test('[director-089] The session disposes resources and aborts the source signal after the clear and destroy calls', async () => {
+diff --git a/src/director/sharing/sharing.test.mjs b/src/director/sharing/sharing.test.mjs
+index 76587795..d47f2830 100644
+--- a/src/director/sharing/sharing.test.mjs
++++ b/src/director/sharing/sharing.test.mjs
+@@ -455 +455 @@ test('[director-110] The preview reports external content from applied shot pack
+-test('[director-101] The export copies bytes and attribution and keeps the project with one resolver call', async () => {
++test('[director-101] The export copies bytes and attribution, keeps the project and calls the resolver once', async () => {
+@@ -566 +566 @@ test('[director-109] The preview reports unavailable sources, absent layers and
+-test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets', async () => {
++test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets', async () => {
+@@ -968 +968 @@ test('[director-102] The export rejects declared digest', async () => {
+-test('[director-102] The export rejects an excess asset total', async () => {
++test('[director-102] The export rejects more than 64 assets', async () => {
+@@ -1752 +1752 @@ test('[director-099] The import accepts the audio/webm media type and returns as
+-test('[director-102] The export accepts its exact asset total and returns bundle text', async () => {
++test('[director-102] The export accepts 64 assets and returns bundle text', async () => {
+@@ -1904 +1904 @@ const withByteCopy = async (work) => {
+-test('[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length', async () =>
++test('[director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length', async () =>
+@@ -2421,0 +2422,2 @@ test('[director-107] The share helpers check the signal after the text promise s
++        await Promise.resolve();
++        order.push('settled');
+@@ -2427 +2429 @@ test('[director-107] The share helpers check the signal after the text promise s
+-  assert.deepEqual(order, ['check', 'text', 'check', 'check']);
++  assert.deepEqual(order, ['check', 'text', 'settled', 'check', 'check']);
+```
+
+### Final headings
+
+All five proposal headings stay.
+The next comparison covers every Markdown document of the change.
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass11/final-scope.py
+Source commit: 2dc225520cebc43bb76b8dca7b645ed3f48a1e43
+--- openspec/changes/backfill-director-packs-sharing/evidence.md at 2dc225520cebc43bb76b8dca7b645ed3f48a1e43
++++ openspec/changes/backfill-director-packs-sharing/evidence.md current
+@@ -17,3 +17,4 @@
+ ## Pass 8
+ ## Pass 9
+ ## Pass 10
++## Pass 11
+--- openspec/changes/backfill-director-packs-sharing/mutations.md at 2dc225520cebc43bb76b8dca7b645ed3f48a1e43
++++ openspec/changes/backfill-director-packs-sharing/mutations.md current
+@@ -484,3 +484,4 @@
+ ## m477
+ ## m478
+ ## m479
++## m480
+--- openspec/changes/backfill-director-packs-sharing/survivors.md at 2dc225520cebc43bb76b8dca7b645ed3f48a1e43
++++ openspec/changes/backfill-director-packs-sharing/survivors.md current
+@@ -1,3 +1,4 @@
+ ## Counts by class
+ ## Pass 5 extension results
+ ## Pass 6 killer title source
++## Pass 11 hand row
+--- openspec/changes/backfill-director-packs-sharing/tasks.md at 2dc225520cebc43bb76b8dca7b645ed3f48a1e43
++++ openspec/changes/backfill-director-packs-sharing/tasks.md current
+@@ -10,3 +10,4 @@
+ ## 11. Correct round 6 findings
+ ## 12. Correct pre-review 7 findings
+ ## 13. Correct pre-review 8 findings
++## 14. Correct pre-review 9 findings
+```
+
+The host scope excludes containers, image gates, ratchet, archive and new review commands.
+The worker runs no push or GitHub command.
+
+The title check reads the test title lines.
+Git hunk headers contain short context text.
+
+### Last host checks
+
+The commands below ran after the task list was complete.
+
+```text
+{"name": "lint-last", "command": "taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing", "exit": 0}
+{"name": "predispatch-last", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-packs-sharing", "exit": 0}
+{"name": "openspec-show-last", "command": "taskset -c 12-15 nice -n 19 openspec show backfill-director-packs-sharing --json", "exit": 0}
+{"name": "openspec-validate-last", "command": "taskset -c 12-15 nice -n 19 openspec validate backfill-director-packs-sharing", "exit": 0}
+{"name": "repeated-last", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass11/check-repeated-titles.py", "exit": 0}
+{"name": "banned-last", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass11/banned-forms.py", "exit": 0}
+{"name": "restore-last", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass11/restore-check.py", "exit": 0}
+{"name": "scope-last", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass11/final-scope.py", "exit": 0}
+{"name": "diff-last", "command": "taskset -c 12-15 nice -n 19 git diff --check", "exit": 0}
+STE: 0 errors, 588 warnings.
 ```

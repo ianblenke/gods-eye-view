@@ -1686,8 +1686,8 @@ signal?.aborted
 ### m061 Test
 
 ```text
-[director-088] The load call returns false after the caller destroys the session and makes no source call
-Output: KILLED [director-088] The load call returns false after the caller destroys the session and makes no source call
+[director-088] The load call returns false and makes no source call after the caller destroys the session
+Output: KILLED [director-088] The load call returns false and makes no source call after the caller destroys the session
 ```
 
 ## m062
@@ -3474,8 +3474,8 @@ false
 ### m127 Test
 
 ```text
-[director-102] The export rejects an excess asset total
-Output: KILLED [director-102] The export rejects an excess asset total
+[director-102] The export rejects more than 64 assets
+Output: KILLED [director-102] The export rejects more than 64 assets
 ```
 
 ## m128
@@ -6756,8 +6756,8 @@ run.handles.splice(0);
 ### m248 Test
 
 ```text
-[director-089] The data pack session removes resources and cancels the transport on Stop
-Output: KILLED [director-089] The data pack session removes resources and cancels the transport on Stop
+[director-089] The session disposes resources and aborts the source signal after the clear and destroy calls
+Output: KILLED [director-089] The session disposes resources and aborts the source signal after the clear and destroy calls
 ```
 
 ## m249
@@ -6947,8 +6947,8 @@ pack.source = { adapter: 'bad', path: entry.path };
 ### m255 Test
 
 ```text
-[director-101] The export copies bytes and attribution and keeps the project with one resolver call
-Output: KILLED [director-101] The export copies bytes and attribution and keeps the project with one resolver call
+[director-101] The export copies bytes and attribution, keeps the project and calls the resolver once
+Output: KILLED [director-101] The export copies bytes and attribution, keeps the project and calls the resolver once
 ```
 
 ## m256
@@ -7082,8 +7082,8 @@ bytes: asset.bytes
 ### m260 Test
 
 ```text
-[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets
-Output: KILLED [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets
+[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets
+Output: KILLED [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after the clear call and rejects unavailable assets
 ```
 
 ## m261
@@ -7901,8 +7901,8 @@ assets.length >= SHARE_LIMITS.assets - 1
 ### m290 Test
 
 ```text
-[director-102] The export accepts its exact asset total and returns bundle text
-Output: KILLED [director-102] The export accepts its exact asset total and returns bundle text
+[director-102] The export accepts 64 assets and returns bundle text
+Output: KILLED [director-102] The export accepts 64 assets and returns bundle text
 ```
 
 ## m291
@@ -9385,8 +9385,8 @@ value.length >= Math.ceil(PACK_LIMITS.bytes / 3) * 4
 ### m343 Test
 
 ```text
-[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length
-Output: KILLED [director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length
+[director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length
+Output: KILLED [director-099] The import rejects excess bytes at the base64 length limit and rejects the next aligned length
 ```
 
 ## m344
@@ -10046,8 +10046,8 @@ assets.length > SHARE_LIMITS.assets
 ### m367 Test
 
 ```text
-[director-102] The export rejects an excess asset total
-Output: KILLED [director-102] The export rejects an excess asset total
+[director-102] The export rejects more than 64 assets
+Output: KILLED [director-102] The export rejects more than 64 assets
 ```
 
 ## m368
@@ -14545,12 +14545,42 @@ Output: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the li
 ```
 
 
+## m480
+
+File: src/director/sharing/bundle.js
+
+| Old | New | Result | Failed test |
+| --- | --- | --- | --- |
+| [Old code](#m480-old) | [New code](#m480-new) | KILLED | [Test record](#m480-test) |
+
+### m480 Old
+
+```js
+  const text = await withShareSignal(file.text(), options?.signal);
+  checkAbort(options?.signal);
+```
+
+### m480 New
+
+```js
+  const pending = withShareSignal(file.text(), options?.signal);
+  checkAbort(options?.signal);
+  const text = await pending;
+```
+
+### m480 Test
+
+```text
+[director-107] The share helpers check the signal after the text promise settles
+Output: KILLED [director-107] The share helpers check the signal after the text promise settles
+```
+
 ### Final complete hand command in pass 7
 
 Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
 
 Complete hand check 3 follows the final titles and all host test and coverage commands.
-It checks all 479 rows and gives 477 killed rows.
+At Pass 7, it checks all 479 rows and gives 477 killed rows.
 Only m172 and m389 survive.
 All 31 new rows give a failed repository test.
 The command skips no row and gives no timeout.
@@ -15041,3 +15071,11 @@ m478: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the lite
 m479: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
 SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
 ```
+
+### Pass 11 hand count
+
+Source commit: `2dc225520cebc43bb76b8dca7b645ed3f48a1e43`.
+
+The complete host command checks 480 hand rows and kills 478 rows.
+Only m172, m389 survive.
+The command and its counted output are in [Pass 11 evidence](evidence.md#complete-final-hand-command).

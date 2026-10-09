@@ -1196,7 +1196,7 @@ test('[director-088] The session rejects more than eight data packs', async () =
   s.destroy();
 });
 
-test('[director-088] The load call returns false after the caller destroys the session and makes no source call', async () => {
+test('[director-088] The load call returns false and makes no source call after the caller destroys the session', async () => {
   let calls = 0;
   const s = makeSession(() => {
     calls++;

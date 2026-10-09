@@ -217,10 +217,15 @@ The reader means only the stream reader.
 | resolver | src/director/sharing/bundle.js | The resolveAsset function that createSceneBundle calls |
 | document parser | src/director/document.js | parseSceneDocument |
 | serializer | src/director/document.js | stringifySceneDocument |
+| clear call | src/director/sharing/bundle.js and src/director/packs/session.js | A call to the clear method |
+| destroy call | src/director/packs/session.js | A call to the destroy method |
+| text promise | src/director/sharing/bundle.js | The promise from file.text |
 | predispatch checker | gev-tools/predispatch/predispatch.py | The script that checks change prose |
 
 
-Pass 10 adds this note: Pass 9 adds the rows public data pack limits, share limits and document parser.
+Pass 11 adds the rows clear call, destroy call and text promise.
+
+Pass 9 adds three rows to the table: public data pack limits, share limits and document parser.
 
 A test source means the source function that the test supplies to the session.
 A resolver means the resolveAsset function that the caller supplies to the export.
