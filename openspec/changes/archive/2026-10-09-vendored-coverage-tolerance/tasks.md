@@ -50,7 +50,7 @@
 
 ## 3. Lead image checks and review
 
-- [ ] Run make ratchet CHANGE=vendored-coverage-tolerance in the image.
+- [x] Run make ratchet CHANGE=vendored-coverage-tolerance in the image.
 - [ ] Run make gates CHANGE=vendored-coverage-tolerance in the image.
 - [ ] Run both review agents.
 - [ ] Write review.md.
