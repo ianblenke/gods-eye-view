@@ -1,0 +1,21 @@
+Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs
+✔ v5 packs and shot references round trip through project migration without acquiring bytes (38.924727ms)
+✔ [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials (17.218398ms)
+✔ [director-080] The manifest checks given image bounds and media anchor references (6.490491ms)
+✔ [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets (187.600306ms)
+✔ [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints (5.95991ms)
+✔ [director-089] The session disposes resources and aborts the source signal after the clear and destroy calls (8.545195ms)
+✔ [director-091] The data pack session replaces source work and ignores its late bytes (26.119277ms)
+✔ [director-090] The data pack session disposes late renderer resources after cancellation (4.334928ms)
+✔ [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result (3.921931ms)
+✔ [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources (15.969649ms)
+✔ [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names (19.712929ms)
+✔ [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal (6.891615ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6979.800386

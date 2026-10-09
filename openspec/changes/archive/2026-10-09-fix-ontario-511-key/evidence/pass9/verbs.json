@@ -1,0 +1,471 @@
+Command: python openspec/changes/fix-ontario-511-key/evidence/pass9/check-verbs.py
+{
+  "tests": 83,
+  "flags": [
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-003] write the first warning for an absent key",
+      "flag": "named thing has no assertion: key"
+    }
+  ],
+  "negative_console_clauses": [
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list without a warning for invalid rows and views",
+      "assertions": [
+        "deepEqual(\n    await load(\n      t,\n      [\n        null,\n        {},\n        row({ Id: '' }),\n        row({ Views: {} }),\n        row({ Id: '2', Views: [] }),\n        row({ Id: '3', Views: [{ Status: 'Disabled' }] }),\n      ],\n      undefined,\n      logs,\n    ),\n    [],\n  )",
+        "deepEqual(logs, [\n    ['log', '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'],\n  ])"
+      ],
+      "killingMutation": "D-invalid"
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list without a warning for a numeric status",
+      "assertions": [
+        "deepEqual(\n    await load(\n      t,\n      [row({ Views: [{ Status: 42, Url: 'https://511on.ca/map/Cctv/A' }] })],\n      undefined,\n      logs,\n    ),\n    [],\n  )",
+        "deepEqual(logs, [\n    ['log', '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'],\n  ])"
+      ],
+      "killingMutation": "D-numeric"
+    }
+  ],
+  "clauses_for_body_review": [
+    {
+      "file": "cctvOntarioKey.test.mjs",
+      "title": "[live-sources-003] make no request without a key",
+      "assertions": [
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "equal(f.calls.length, 0)",
+        "deepEqual(f.logs, [['warn', '[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']])",
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "deepEqual(f.logs, [['warn', '[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']])"
+      ]
+    },
+    {
+      "file": "cctvOntarioKey.test.mjs",
+      "title": "[live-sources-004] write one warning for an invalid key",
+      "assertions": [
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "equal(f.calls.length, 3)",
+        "deepEqual(f.logs, [\n    ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],\n  ])",
+        "equal(f.logs.join().includes(key), false)"
+      ]
+    },
+    {
+      "file": "cctvOntarioKey.test.mjs",
+      "title": "[live-sources-005] keep the fetch error secret",
+      "assertions": [
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "equal(f.logs.join().includes(key), false)",
+        "deepEqual(f.logs, [\n      ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],\n    ])",
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "equal(f.logs.length, 1)"
+      ]
+    },
+    {
+      "file": "cctvOntarioKey.test.mjs",
+      "title": "[live-sources-005] keep the json error secret",
+      "assertions": [
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "equal(f.logs.join().includes(key), false)",
+        "deepEqual(f.logs, [\n      ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],\n    ])",
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "equal(f.logs.length, 1)"
+      ]
+    },
+    {
+      "file": "cctvOntarioKey.test.mjs",
+      "title": "[live-sources-005] keep the camera data error secret",
+      "assertions": [
+        "deepEqual(await loadOntarioSourcesFromOpenData(), [])",
+        "deepEqual(f.logs, [['warn', '[CCTV] Ontario 511 camera data has an error.']])",
+        "equal(f.logs.join().includes(key), false)"
+      ]
+    },
+    {
+      "file": "cctvOntarioKey.test.mjs",
+      "title": "[live-sources-004] return an empty row list for an HTTP error with JSON rows",
+      "assertions": [
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "deepEqual(f.logs, [\n    ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],\n  ])",
+        "equal(f.logs.join().includes(key), false)"
+      ]
+    },
+    {
+      "file": "cctvOntarioKey.test.mjs",
+      "title": "[live-sources-005] keep the key text of a fetch error out of the warning",
+      "assertions": [
+        "deepEqual(await f.readOntarioCameraRows(), [])",
+        "deepEqual(f.logs, [\n    ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],\n  ])",
+        "equal(f.logs.join().includes(key), false)"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a null row",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a row without an ID",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a row with a blank ID",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a row with a nonfinite latitude",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a row with a nonfinite longitude",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a row south of Ontario",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a row north of Ontario",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a row west of Ontario",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a row east of Ontario",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a null views list",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a views object",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for an empty views list",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a null view",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a disabled view",
+      "assertions": [
+        "deepEqual(\n      await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for blank URL text",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for absent URL text",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for invalid URL text",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for another URL path",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for an HTTP URL",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for another URL host name",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for the traveliq.co root URL host name",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a slash view ID",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for invalid percent text",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a URL path prefix",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a URL path suffix",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a view ID with a slash at the start",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a view ID with a slash at the end",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for the x511on.ca URL host name",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for the www.511on.ca URL host name",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a view ID with a space",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for a view ID with a non-ASCII character",
+      "assertions": [
+        "deepEqual(\n      await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),\n      [],\n    )"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] accept latitude 41 and longitude -95.6 at the Ontario bounds",
+      "assertions": [
+        "equal((await load(t, [row({ Latitude, Longitude })])).length, 1)"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] accept latitude 57.5 and longitude -74 at the Ontario bounds",
+      "assertions": [
+        "equal((await load(t, [row({ Latitude, Longitude })])).length, 1)"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] select the first view without down",
+      "assertions": [
+        "equal(result[0].url, 'https://511on.ca/map/Cctv/A')",
+        "equal(result[0].name, 'Ontario 511 Camera 1 - East')",
+        "equal(result[0].headingDeg, 90)"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-009] return an empty source list for non-array data null",
+      "assertions": [
+        "deepEqual(await load(t, rows, undefined, logs), [])",
+        "deepEqual(logs, [])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-009] return an empty source list for non-array data {}",
+      "assertions": [
+        "deepEqual(await load(t, rows, undefined, logs), [])",
+        "deepEqual(logs, [])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-009] return an empty source list for non-array data \"rows\"",
+      "assertions": [
+        "deepEqual(await load(t, rows, undefined, logs), [])",
+        "deepEqual(logs, [])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-009] return an empty source list for non-array data 0",
+      "assertions": [
+        "deepEqual(await load(t, rows, undefined, logs), [])",
+        "deepEqual(logs, [])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-005] write the warning for a row error with the key text",
+      "assertions": [
+        "deepEqual(\n    await load(\n      t,\n      [\n        {\n          get Id() {\n            throw new Error('FAKE_ROW_KEY')",
+        "deepEqual(logs, [['warn', '[CCTV] Ontario 511 camera data has an error.']])",
+        "equal(logs.join().includes('FAKE_ROW_KEY'), false)"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for null ID fields",
+      "assertions": [
+        "deepEqual(await load(t, [row({ Id: null, id: null })]), [])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-007] use the capitalized Roadway text and the view description after a blank Direction value",
+      "assertions": [
+        "equal(source.city, 'Upper road')",
+        "equal(source.name, 'Upper road - East')",
+        "equal(source.headingDeg, 90)"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list for an empty row list",
+      "assertions": [
+        "deepEqual(await load(t, []), [])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list without a warning for invalid rows and views",
+      "assertions": [
+        "deepEqual(\n    await load(\n      t,\n      [\n        null,\n        {},\n        row({ Id: '' }),\n        row({ Views: {} }),\n        row({ Id: '2', Views: [] }),\n        row({ Id: '3', Views: [{ Status: 'Disabled' }] }),\n      ],\n      undefined,\n      logs,\n    ),\n    [],\n  )",
+        "deepEqual(logs, [\n    ['log', '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'],\n  ])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] return an empty source list without a warning for a numeric status",
+      "assertions": [
+        "deepEqual(\n    await load(\n      t,\n      [row({ Views: [{ Status: 42, Url: 'https://511on.ca/map/Cctv/A' }] })],\n      undefined,\n      logs,\n    ),\n    [],\n  )",
+        "deepEqual(logs, [\n    ['log', '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'],\n  ])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] accept URL text with no-break spaces at the start and end",
+      "assertions": [
+        "equal(source.url, 'https://511on.ca/map/Cctv/A')"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006 live-sources-007] return an empty source list for a capitalized Latitude of 0",
+      "assertions": [
+        "deepEqual(await load(t, [row(extra)]), [])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006 live-sources-007] return an empty source list for a capitalized Longitude of 0",
+      "assertions": [
+        "deepEqual(await load(t, [row(extra)]), [])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-006] skip fields after a row guard",
+      "assertions": [
+        "equal(result.length, 1)",
+        "equal(result[0].id, 'on-1')",
+        "deepEqual(logs, [\n    ['log', '[CCTV] Loaded Ontario 511 camera sources: 1 enabled (using nearest 1)'],\n  ])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-003] write the first warning for an absent key",
+      "assertions": [
+        "deepEqual(await readOntarioCameraRows(), [])",
+        "deepEqual(logs, [['warn', warning]])"
+      ]
+    },
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-004] write the first warning for an HTTP error",
+      "assertions": [
+        "deepEqual(await readOntarioCameraRows(), [])",
+        "deepEqual(logs, [['warn', warning]])"
+      ]
+    }
+  ]
+}

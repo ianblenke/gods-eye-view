@@ -1,0 +1,3 @@
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/automut/automut.mjs run --root /tmp/ont-pass3b-tree --mutants /home/ianblenke/docker/gev-tools/fix-ontario-511/pass3b/mutants.json --tests src/data/cctvOntarioKey.test.mjs --phase 2 --jobs 1 --out /home/ianblenke/docker/gev-tools/fix-ontario-511/pass3b/results-host.json --resume
+baseline worker 1 src/data/cctvOntarioKey.test.mjs: fast 0.79s full 0.81s; skipped 0
+phase 2: 1/1, b14 SURVIVED

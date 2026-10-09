@@ -1,0 +1,157 @@
+✔ [live-sources-006] reject row 0 (32.446807ms)
+✔ [live-sources-006] reject row 1 (4.159675ms)
+✔ [live-sources-006] reject row 2 (4.354527ms)
+✔ [live-sources-006] reject row 3 (4.851039ms)
+✔ [live-sources-006] reject row 4 (4.704344ms)
+✔ [live-sources-006] reject row 5 (4.225724ms)
+✔ [live-sources-006] reject row 6 (3.359632ms)
+✔ [live-sources-006] reject row 7 (3.670625ms)
+✔ [live-sources-006] reject row 8 (4.031146ms)
+✔ [live-sources-006] reject row 9 (5.167879ms)
+✔ [live-sources-006] reject row 10 (3.016535ms)
+✔ [live-sources-006] reject row 11 (2.920229ms)
+✔ [live-sources-006] reject row 12 (5.225641ms)
+✔ [live-sources-006] reject row 13 (3.32362ms)
+✔ [live-sources-006] reject URL 0 (3.819266ms)
+✔ [live-sources-006] reject URL 1 (2.107022ms)
+✔ [live-sources-006] reject URL 2 (1.931529ms)
+✔ [live-sources-006] reject URL 3 (2.307337ms)
+✔ [live-sources-006] reject URL 4 (2.04817ms)
+✖ [live-sources-006] reject URL 5 (15.318299ms)
+✖ [live-sources-006] reject URL 6 (5.044857ms)
+✔ [live-sources-006] reject URL 7 (2.374677ms)
+✔ [live-sources-006] reject URL 8 (2.362825ms)
+✔ [live-sources-006] reject URL 9 (2.508936ms)
+✔ [live-sources-006] reject URL 10 (2.452422ms)
+✔ [live-sources-006] reject URL 11 (2.267753ms)
+✔ [live-sources-006] reject URL 12 (1.989395ms)
+✔ [live-sources-006] accept boundary 41 (3.075551ms)
+✔ [live-sources-006] accept boundary 57.5 (2.187664ms)
+✔ [live-sources-006] select the first view without down (4.706825ms)
+✔ [live-sources-006] select the first down view (3.908874ms)
+✔ [live-sources-007] set all source fields (4.262826ms)
+✔ [live-sources-007] use lower case fields and hash pose (4.944024ms)
+✔ [live-sources-008] apply cap undefined (75.618403ms)
+✔ [live-sources-008] apply cap  (58.012117ms)
+✔ [live-sources-008] apply cap bad (41.699185ms)
+✔ [live-sources-008] apply cap Infinity (36.458108ms)
+✔ [live-sources-008] apply cap 3 (36.012161ms)
+✔ [live-sources-008] apply cap 9.9 (35.490741ms)
+✔ [live-sources-008] apply cap 2000 (38.390467ms)
+✔ [live-sources-008] use the last duplicate (3.037323ms)
+✔ [live-sources-009] reject data null (2.132048ms)
+✔ [live-sources-009] reject data {} (1.803145ms)
+✔ [live-sources-009] reject data "rows" (2.221384ms)
+✔ [live-sources-009] reject data 0 (1.894035ms)
+✔ [live-sources-005] return no rows after a data error (2.831579ms)
+✔ [live-sources-007] use field precedence (3.170093ms)
+✔ [live-sources-008] use each nearest anchor (3.77025ms)
+✔ [live-sources-006] reject null ID fields (2.046168ms)
+✔ [live-sources-007] use roadway and blank direction (2.374758ms)
+✔ [live-sources-006] accept an empty row list (1.959954ms)
+✔ [live-sources-008] log both source counts (3.083036ms)
+✔ [live-sources-006] reject views without a data error (2.522884ms)
+✔ [live-sources-006] accept every ID character (2.211951ms)
+✔ [live-sources-007] convert row values to text and numbers (4.093148ms)
+✔ [live-sources-006] reject a numeric status without a data error (2.349471ms)
+✔ [live-sources-006] accept URL object (2.383196ms)
+✔ [live-sources-006] accept URL edge spaces (1.86114ms)
+✔ [live-sources-006 live-sources-007] select a view with downhill (2.356728ms)
+✔ [live-sources-007] use capitalized text fields first (2.486478ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Latitude (2.111283ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Longitude (1.715124ms)
+✔ [live-sources-006] skip fields after a row guard (2.489951ms)
+✔ [live-sources-007] read latitude before longitude (2.701669ms)
+✔ [live-sources-007] read location before roadway (2.736107ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 63
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 798.526519
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:82:3
+✖ [live-sources-006] reject URL 5 (15.318299ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     city: 'Ontario',
+  +     cityId: 'ontario',
+  +     feedType: 'image',
+  +     fovDeg: 44,
+  +     groundElevationM: 200,
+  +     headingConfidence: 'low',
+  +     headingDeg: 45,
+  +     id: 'on-1',
+  +     lat: 43.6532,
+  +     license: 'Open Government Licence - Ontario',
+  +     lon: -79.3832,
+  +     mountHeightM: 8,
+  +     name: 'Ontario 511 Camera 1',
+  +     pitchDeg: -18,
+  +     provider: 'Ontario 511',
+  +     rangeM: 145,
+  +     snapshotUrl: 'https://511on.ca/map/Cctv/A',
+  +     sourceKind: 'ontario-511-open-data',
+  +     url: 'https://511on.ca/map/Cctv/A'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:83:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:82:3
+✖ [live-sources-006] reject URL 6 (5.044857ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     city: 'Ontario',
+  +     cityId: 'ontario',
+  +     feedType: 'image',
+  +     fovDeg: 44,
+  +     groundElevationM: 200,
+  +     headingConfidence: 'low',
+  +     headingDeg: 45,
+  +     id: 'on-1',
+  +     lat: 43.6532,
+  +     license: 'Open Government Licence - Ontario',
+  +     lon: -79.3832,
+  +     mountHeightM: 8,
+  +     name: 'Ontario 511 Camera 1',
+  +     pitchDeg: -18,
+  +     provider: 'Ontario 511',
+  +     rangeM: 145,
+  +     snapshotUrl: 'https://511on.ca/map/Cctv/A',
+  +     sourceKind: 'ontario-511-open-data',
+  +     url: 'https://511on.ca/map/Cctv/A'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:83:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

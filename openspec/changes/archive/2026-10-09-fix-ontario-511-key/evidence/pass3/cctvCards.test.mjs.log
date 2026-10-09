@@ -1,0 +1,31 @@
+✔ isCctvCardAnchorSafe protects the top HUD band for ambient cards (12.485933ms)
+✔ declutterCctvCards: nearest-first greedy accept with min separation (8.518456ms)
+✔ declutterCctvCards: separation is radial (Euclidean), matching the vessel pass (1.745235ms)
+✔ declutterCctvCards: respects the limit and drops malformed rows (2.530502ms)
+✔ thumbnail entry carries the exact shipped contract and stable frame-slot reference (15.188123ms)
+✔ active CCTV thumbnail is protected while ambient and pinned policies stay distinct (2.700631ms)
+✔ CCTV card module cannot resurrect a canvas, projection, listener, or private hit store (4.415653ms)
+✔ cardScaleForAltitude: full size and opacity at or below 1,800 m (7.241977ms)
+✔ cardScaleForAltitude: hits the owner-decided waypoints (3.724815ms)
+✔ cardScaleForAltitude: fully hidden at and above the 9,500 m ceiling (4.178581ms)
+✔ cardScaleForAltitude: scale and alpha are monotonic non-increasing (3.083068ms)
+✔ cardFetchPolicy: cold fill bursts up to 4 in flight at 250 ms spacing (2.088802ms)
+✔ cardFetchPolicy: steady state keeps the 1-fetch/s single-flight gate (1.276631ms)
+✔ applyFrameResult: success replaces the frame and stamps it (1.300987ms)
+✔ applyFrameResult: a FAILED fetch persists the drawn frame and stamp (1.033143ms)
+✔ applyFrameResult: an ok result without a frame counts as a failure (1.058524ms)
+✔ frameRetryDelayMs: doubles per failure, capped at 5 minutes (1.021724ms)
+✔ frameFetchDue: an untouched slot is due immediately (0.95782ms)
+✔ frameFetchDue: a fresh frame is not due until its cadence elapses (0.819685ms)
+✔ frameFetchDue: failures back off instead of hammering the source (0.93558ms)
+✔ planFrameCachePrune: never drops live card ids (grace included) (1.584076ms)
+✔ planFrameCachePrune: spare slots kept newest-first up to the cap (1.208867ms)
+✔ planFrameCachePrune: default cap is the exported cache bound (1.784738ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 252.637757

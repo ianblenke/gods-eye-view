@@ -1,0 +1,13 @@
+[
+ {
+  "id": "m480",
+  "file": "src/director/sharing/bundle.js",
+  "old": "  const text = await withShareSignal(file.text(), options?.signal);\n  checkAbort(options?.signal);",
+  "new": "  const pending = withShareSignal(file.text(), options?.signal);\n  checkAbort(options?.signal);\n  const text = await pending;",
+  "test": [
+   "src/director/sharing/sharing.test.mjs"
+  ],
+  "name": "[director-107] The share helpers check the signal after the text promise settles",
+  "pattern": "\\[director\\-107\\]\\ The\\ share\\ helpers\\ check\\ the\\ signal\\ after\\ the\\ text\\ promise\\ settles"
+ }
+]

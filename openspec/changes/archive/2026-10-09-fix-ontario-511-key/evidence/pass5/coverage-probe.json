@@ -1,0 +1,59 @@
+{
+  "moduleRecords": [
+    "SF:server/providers/cctv/ontarioRequest.js"
+  ],
+  "counts": {
+    "lines": {
+      "total": 41,
+      "covered": 41
+    },
+    "branches": {
+      "total": 12,
+      "covered": 12
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2
+    }
+  },
+  "gaps": {
+    "lines": 0,
+    "branches": 0,
+    "functions": 0
+  },
+  "result": "NO GAP",
+  "Ontario": [
+    {
+      "name": "isLikelyOntarioCoordinate",
+      "start": 403,
+      "end": 413,
+      "branches": 7,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7088,isLikelyOntarioCoordinate"
+    },
+    {
+      "name": "normalizeOntarioCctvUrl",
+      "start": 414,
+      "end": 439,
+      "branches": 11,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7075,normalizeOntarioCctvUrl"
+    },
+    {
+      "name": "pickOntarioCctvView",
+      "start": 440,
+      "end": 463,
+      "branches": 17,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7079,pickOntarioCctvView"
+    },
+    {
+      "name": "loadOntarioSourcesFromOpenData",
+      "start": 464,
+      "end": 540,
+      "branches": 52,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7097,loadOntarioSourcesFromOpenData"
+    }
+  ]
+}

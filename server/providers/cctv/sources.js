@@ -1,3 +1,4 @@
+import { readOntarioCameraRows } from './ontarioRequest.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import {
@@ -12,7 +13,6 @@ import {
   TFL_IMAGE_ORIGIN,
   DEFAULT_TFL_MAX_SOURCES,
   LONDON_CENTER,
-  ONTARIO_511_CAMERAS_URL,
   ONTARIO_511_IMAGE_ORIGIN,
   DEFAULT_ONTARIO_MAX_SOURCES,
   ONTARIO_ANCHORS,
@@ -464,24 +464,13 @@ function pickOntarioCctvView(views) {
 }
 
 /**
- * Fetch Ontario 511 CCTV cameras. Keyless: the catalog is exposed by the
- * public 511 API, while frame URLs are stable still-image endpoints under
- * 511on.ca/map/Cctv/. Only rows with finite Ontario coords and at least one
- * enabled official still view are kept.
+ * Fetch Ontario 511 cameras with the server key.
  *
  * @returns {Promise<Array<object>>} Normalized camera source objects.
  */
 export async function loadOntarioSourcesFromOpenData() {
   try {
-    const resp = await fetch(ONTARIO_511_CAMERAS_URL, {
-      headers: { Accept: 'application/json' },
-      signal: AbortSignal.timeout(CCTV_SOURCE_FETCH_TIMEOUT_MS),
-    });
-    if (!resp.ok) {
-      console.warn('[CCTV] Ontario 511 camera download failed:', resp.status);
-      return [];
-    }
-    const rows = await resp.json();
+    const rows = await readOntarioCameraRows();
     if (!Array.isArray(rows)) return [];
 
     const cameras = [];
@@ -551,11 +540,8 @@ export async function loadOntarioSourcesFromOpenData() {
       `[CCTV] Loaded Ontario 511 camera sources: ${unique.length} enabled (using nearest ${prioritized.length})`,
     );
     return prioritized;
-  } catch (error) {
-    console.warn(
-      '[CCTV] Ontario 511 camera download error:',
-      error?.message || error,
-    );
+  } catch {
+    console.warn('[CCTV] Ontario 511 camera data has an error.');
     return [];
   }
 }

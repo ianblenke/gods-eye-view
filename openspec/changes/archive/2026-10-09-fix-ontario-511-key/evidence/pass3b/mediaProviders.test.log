@@ -1,0 +1,17 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/tooling/mediaProviders.test.mjs
+✔ CCTV instances resolve their own application source root and isolate catalogs and health (69.616938ms)
+✔ composition creates exactly one CCTV and radio provider without acquisition (38.649008ms)
+✔ CCTV configureServer maps header timeouts and cancels upstream error bodies (37.987787ms)
+✔ CCTV configurePreviewServer maps header timeouts and cancels upstream error bodies (13.155514ms)
+✔ a failed CCTV media fetch reports a fixed health message, not the error text (11.339051ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1381.237649
+[CCTV Proxy] media fetch failed
+[CCTV Proxy] media fetch failed
+[CCTV Proxy] media fetch failed

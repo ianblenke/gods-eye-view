@@ -1,0 +1,126 @@
+✔ [live-sources-002] send the key parameter (46.267256ms)
+✔ [live-sources-003] make no request without a key (14.997187ms)
+✖ [live-sources-004] write one warning for an invalid key (742.560506ms)
+✖ [live-sources-005] keep the fetch error secret (65.966219ms)
+✖ [live-sources-005] keep the json error secret (68.046049ms)
+✔ [live-sources-002] map the Ontario rows (193.56579ms)
+✖ [live-sources-005] keep the camera data error secret (17.067296ms)
+✖ [live-sources-004] return an empty list for an HTTP error with JSON rows (22.568974ms)
+✔ [live-sources-002] trim spaces from the key (35.685172ms)
+✔ [live-sources-002] use a timeout of 15000 milliseconds (40.374809ms)
+✔ [live-sources-002] send the application/json Accept header (42.83375ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 6
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1541.410719
+
+✖ failing tests:
+
+test at src/data/cctvOntarioKey.test.mjs:66:1
+✖ [live-sources-004] write one warning for an invalid key (742.560506ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   '[CCTV] Ontario 511 camera request failed. Check the server key.'
+  -   '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'
+    ]
+
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:83:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:90:3
+✖ [live-sources-005] keep the fetch error secret (65.966219ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   '[CCTV] Ontario 511 camera request failed. Check the server key.'
+  -   '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'
+    ]
+
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:104:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:90:3
+✖ [live-sources-005] keep the json error secret (68.046049ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   '[CCTV] Ontario 511 camera request failed. Check the server key.'
+  -   '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'
+    ]
+
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:104:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:136:1
+✖ [live-sources-005] keep the camera data error secret (17.067296ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   '[CCTV] Ontario 511 camera data error.'
+  -   '[CCTV] Ontario 511 camera data has an error.'
+    ]
+
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:146:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioKey.test.mjs:150:1
+✖ [live-sources-004] return an empty list for an HTTP error with JSON rows (22.568974ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   '[CCTV] Ontario 511 camera request failed. Check the server key.'
+  -   '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'
+    ]
+
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:156:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,44 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvOntarioKey.test.mjs
+✔ [live-sources-002] send the key parameter (26.774799ms)
+✖ [live-sources-003] make no request without a key (15.97742ms)
+✔ [live-sources-004] write one warning for an invalid key (214.051415ms)
+✔ [live-sources-005] keep the fetch error secret (8.456131ms)
+✔ [live-sources-005] keep the json error secret (6.275693ms)
+✔ [live-sources-002] map the Ontario rows (57.570874ms)
+✔ [live-sources-005] keep the camera data error secret (5.613286ms)
+✔ [live-sources-004] return an empty list for an HTTP error with JSON rows (3.928789ms)
+✔ [live-sources-002] trim spaces from the key (9.659934ms)
+✔ [live-sources-002] use a timeout of 15000 milliseconds (4.336043ms)
+✔ [live-sources-002] send the application/json Accept header (2.987249ms)
+✔ [live-sources-005] keep key text inside a fetch error out of the warning (2.802773ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 497.628658
+
+✖ failing tests:
+
+test at src/data/cctvOntarioKey.test.mjs:47:1
+✖ [live-sources-003] make no request without a key (15.97742ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   '[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.'
+  - ]
+  
+      at TestContext.<anonymous> (file:///tmp/ont-pass3b-tree/src/data/cctvOntarioKey.test.mjs:66:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

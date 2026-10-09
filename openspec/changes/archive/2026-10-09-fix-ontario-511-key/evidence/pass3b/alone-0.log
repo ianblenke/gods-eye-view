@@ -1,0 +1,10 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none --test-name-pattern=^\[live\-sources\-002\]\ send\ the\ key\ parameter$ src/data/cctvOntarioKey.test.mjs
+✔ [live-sources-002] send the key parameter (24.648758ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 156.206001

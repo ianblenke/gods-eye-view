@@ -1,0 +1,11 @@
+openspec/changes/backfill-director-packs-sharing/audit.md
+openspec/changes/backfill-director-packs-sharing/checks.md
+openspec/changes/backfill-director-packs-sharing/design.md
+openspec/changes/backfill-director-packs-sharing/evidence.md
+openspec/changes/backfill-director-packs-sharing/evidence/probe-inherited-height.txt
+openspec/changes/backfill-director-packs-sharing/mutations.md
+openspec/changes/backfill-director-packs-sharing/proposal.md
+openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+openspec/changes/backfill-director-packs-sharing/tasks.md
+src/director/packs/backfill.test.mjs
+src/director/sharing/sharing.test.mjs

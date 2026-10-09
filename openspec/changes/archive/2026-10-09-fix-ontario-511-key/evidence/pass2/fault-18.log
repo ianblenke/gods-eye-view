@@ -1,0 +1,221 @@
+✔ [live-sources-006] reject row 0 (32.377269ms)
+✔ [live-sources-006] reject row 1 (4.009628ms)
+✔ [live-sources-006] reject row 2 (4.546572ms)
+✔ [live-sources-006] reject row 3 (4.723362ms)
+✔ [live-sources-006] reject row 4 (4.815865ms)
+✔ [live-sources-006] reject row 5 (4.136257ms)
+✔ [live-sources-006] reject row 6 (3.321553ms)
+✔ [live-sources-006] reject row 7 (3.578824ms)
+✔ [live-sources-006] reject row 8 (4.027401ms)
+✔ [live-sources-006] reject row 9 (4.83175ms)
+✔ [live-sources-006] reject row 10 (3.213832ms)
+✔ [live-sources-006] reject row 11 (2.873893ms)
+✔ [live-sources-006] reject row 12 (3.232959ms)
+✔ [live-sources-006] reject row 13 (2.942796ms)
+✔ [live-sources-006] reject URL 0 (3.590003ms)
+✔ [live-sources-006] reject URL 1 (2.008697ms)
+✔ [live-sources-006] reject URL 2 (1.839154ms)
+✔ [live-sources-006] reject URL 3 (2.244885ms)
+✔ [live-sources-006] reject URL 4 (2.011405ms)
+✔ [live-sources-006] reject URL 5 (1.725925ms)
+✔ [live-sources-006] reject URL 6 (1.738324ms)
+✔ [live-sources-006] reject URL 7 (2.284608ms)
+✔ [live-sources-006] reject URL 8 (2.332742ms)
+✔ [live-sources-006] reject URL 9 (2.703082ms)
+✔ [live-sources-006] reject URL 10 (2.291969ms)
+✔ [live-sources-006] reject URL 11 (2.035407ms)
+✔ [live-sources-006] reject URL 12 (2.183444ms)
+✔ [live-sources-006] accept boundary 41 (4.660246ms)
+✔ [live-sources-006] accept boundary 57.5 (2.454117ms)
+✔ [live-sources-006] select the first view without down (4.662146ms)
+✔ [live-sources-006] select the first down view (4.168304ms)
+✔ [live-sources-007] set all source fields (4.303287ms)
+✔ [live-sources-007] use lower case fields and hash pose (4.714403ms)
+✖ [live-sources-008] apply cap undefined (68.91086ms)
+✖ [live-sources-008] apply cap  (47.083037ms)
+✖ [live-sources-008] apply cap bad (34.712646ms)
+✖ [live-sources-008] apply cap Infinity (36.724574ms)
+✖ [live-sources-008] apply cap 3 (32.554923ms)
+✖ [live-sources-008] apply cap 9.9 (27.719751ms)
+✖ [live-sources-008] apply cap 2000 (35.762029ms)
+✔ [live-sources-008] use the last duplicate (3.883977ms)
+✔ [live-sources-009] reject data null (2.725855ms)
+✔ [live-sources-009] reject data {} (4.381201ms)
+✔ [live-sources-009] reject data "rows" (2.34994ms)
+✔ [live-sources-009] reject data 0 (3.990514ms)
+✔ [live-sources-005] return no rows after a data error (3.507935ms)
+✔ [live-sources-007] use field precedence (3.751176ms)
+✖ [live-sources-008] use each nearest anchor (12.367342ms)
+✔ [live-sources-006] reject null ID fields (2.485325ms)
+✔ [live-sources-007] use roadway and blank direction (2.608732ms)
+✔ [live-sources-006] accept an empty row list (3.131614ms)
+✔ [live-sources-008] log both source counts (3.339038ms)
+✔ [live-sources-006] reject views without a data error (2.670799ms)
+✔ [live-sources-006] accept every ID character (2.204893ms)
+✔ [live-sources-007] convert row values to text and numbers (4.033505ms)
+✔ [live-sources-006] reject a numeric status without a data error (2.419885ms)
+✔ [live-sources-006] accept URL object (2.33443ms)
+✔ [live-sources-006] accept URL edge spaces (1.966353ms)
+✔ [live-sources-006 live-sources-007] select a view with downhill (2.548786ms)
+✔ [live-sources-007] use capitalized text fields first (2.843262ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Latitude (2.555106ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Longitude (1.895979ms)
+✔ [live-sources-006] skip fields after a row guard (2.614175ms)
+✔ [live-sources-007] read latitude before longitude (3.703103ms)
+✔ [live-sources-007] read location before roadway (3.049156ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 57
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 737.356308
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap undefined (68.91086ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'on-0' !== 'on-near'
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:238:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'on-0',
+    expected: 'on-near',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap  (47.083037ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'on-0' !== 'on-near'
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:238:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'on-0',
+    expected: 'on-near',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap bad (34.712646ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'on-0' !== 'on-near'
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:238:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'on-0',
+    expected: 'on-near',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap Infinity (36.724574ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'on-0' !== 'on-near'
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:238:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'on-0',
+    expected: 'on-near',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap 3 (32.554923ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'on-0' !== 'on-near'
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:238:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'on-0',
+    expected: 'on-near',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap 9.9 (27.719751ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'on-0' !== 'on-near'
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:238:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'on-0',
+    expected: 'on-near',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap 2000 (35.762029ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'on-0' !== 'on-near'
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:238:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'on-0',
+    expected: 'on-near',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:303:1
+✖ [live-sources-008] use each nearest anchor (12.367342ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   'on-far',
+      'on-0',
+      'on-1',
+      'on-2',
+      'on-3',
+      'on-4',
+      'on-5',
+  -   'on-far'
+    ]
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:318:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

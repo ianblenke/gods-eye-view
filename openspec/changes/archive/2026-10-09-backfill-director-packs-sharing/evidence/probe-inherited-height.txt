@@ -1,0 +1,99 @@
+Base commit: 290b5d2.
+Known limit: geojson-inherited-height.
+The probe uses an inherited value at index 2.
+The result applies to the public API of the module.
+Mutation m172 uses the same guard change as a1022.
+No scenario states this behavior.
+
+```js
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const root = '/home/ianblenke/docker/gev-work/director-3';
+const file = root + '/src/director/packs/geojson.js';
+const code = fs.readFileSync(file, 'utf8');
+const records = JSON.parse(fs.readFileSync('/home/ianblenke/docker/gev-tools/director-3/pass4/selected.json', 'utf8')).filter(m => ['a1022', 'a1025', 'a1026'].includes(m.id));
+const modules = [];
+for (const m of [{ id: 'original' }, ...records]) {
+  const text = (m.old ? code.slice(0,m.start) + m.new + code.slice(m.end) : code).replace("'./manifest.js'", "'file://" + root + "/src/director/packs/manifest.js'");
+  modules.push({ id: m.id, module: await import('data:text/javascript;base64,' + Buffer.from(text).toString('base64')) });
+}
+const bytes = new TextEncoder().encode('{"type":"FeatureCollection","features":[{"type":"Feature","id":"p","geometry":{"type":"Point","coordinates":[0,0]}}]}');
+const output = [];
+for (const [name, prototype] of [['Array.prototype', Array.prototype], ['Object.prototype', Object.prototype]]) {
+  const saved = Object.getOwnPropertyDescriptor(prototype, '2');
+  const values = [];
+  Object.defineProperty(prototype, '2', { value: -12001, writable: true, configurable: true });
+  try {
+    for (const item of modules) {
+      const result = { id: item.id };
+      try { result.coordinates = item.module.decodePackGeoJSON(bytes)[0].coordinates; }
+      catch (error) { result.error = error.message; }
+      values.push(result);
+    }
+  } finally { if (saved) Object.defineProperty(prototype, '2', saved); else delete prototype[2]; }
+  assert.deepEqual(values[0].coordinates, [0, 0, -12001]);
+  for (const value of values.slice(1)) assert.equal(value.error, 'Invalid geographic position');
+  output.push({ prototype: name, values });
+}
+const report = 'Base commit: 290b5d2.\nKnown limit: geojson-inherited-height.\nThe probe uses an inherited value at index 2.\nThe result applies to the public API of the module.\nMutation m172 uses the same guard change as a1022.\nNo scenario states this behavior.\n\n```js\n' + fs.readFileSync(import.meta.filename, 'utf8') + '\n```\n\nCommand output:\n\n```text\n' + JSON.stringify(output, null, 2) + '\n```\n';
+fs.writeFileSync(root + '/openspec/changes/backfill-director-packs-sharing/evidence/probe-inherited-height.txt', report);
+console.log(JSON.stringify(output, null, 2));
+
+```
+
+Command output:
+
+```text
+[
+  {
+    "prototype": "Array.prototype",
+    "values": [
+      {
+        "id": "original",
+        "coordinates": [
+          0,
+          0,
+          -12001
+        ]
+      },
+      {
+        "id": "a1022",
+        "error": "Invalid geographic position"
+      },
+      {
+        "id": "a1025",
+        "error": "Invalid geographic position"
+      },
+      {
+        "id": "a1026",
+        "error": "Invalid geographic position"
+      }
+    ]
+  },
+  {
+    "prototype": "Object.prototype",
+    "values": [
+      {
+        "id": "original",
+        "coordinates": [
+          0,
+          0,
+          -12001
+        ]
+      },
+      {
+        "id": "a1022",
+        "error": "Invalid geographic position"
+      },
+      {
+        "id": "a1025",
+        "error": "Invalid geographic position"
+      },
+      {
+        "id": "a1026",
+        "error": "Invalid geographic position"
+      }
+    ]
+  }
+]
+```

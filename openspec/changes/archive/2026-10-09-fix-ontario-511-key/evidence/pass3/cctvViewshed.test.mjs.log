@@ -1,0 +1,15 @@
+✔ cameraHue: deterministic golden-angle spacing in [0, 360) (14.118184ms)
+✔ cameraHue: first 20 indices pairwise separated by >= 12 degrees (4.261238ms)
+✔ cameraHue: consecutive indices separated by >= 80 degrees (1.851688ms)
+✔ viewshedColors: fill/line pairs with the designed alphas (2.889492ms)
+✔ frustumVolumeGeometryData: 5 vertices are exactly the input Cartesians (2.547763ms)
+✔ frustumVolumeGeometryData: indices form 4 side faces + 2 cap triangles over the 5 vertices (4.054681ms)
+✔ frustumVolumeGeometryData: no NaN for a tight (probe-clamped) pyramid (1.623014ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7443.439823
