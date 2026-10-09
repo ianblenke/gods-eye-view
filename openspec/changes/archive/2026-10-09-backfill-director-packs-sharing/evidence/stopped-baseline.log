@@ -1,0 +1,12 @@
+baseline worker 1 src/director/packs/backfill.test.mjs: fast 1.84s full 1.79s; skipped 0
+baseline worker 1 src/director/packs/packs.test.mjs: fast 7.26s full 7.05s; skipped 0
+baseline worker 1 src/director/sharing/sharing.test.mjs: fast 29.63s full 29.64s; skipped 0
+baseline worker 2 src/director/packs/backfill.test.mjs: fast 1.76s full 1.76s; skipped 0
+baseline worker 2 src/director/packs/packs.test.mjs: fast 6.90s full 6.95s; skipped 0
+baseline worker 2 src/director/sharing/sharing.test.mjs: fast 29.80s full 29.64s; skipped 0
+baseline worker 3 src/director/packs/backfill.test.mjs: fast 1.90s full 1.79s; skipped 0
+baseline worker 3 src/director/packs/packs.test.mjs: fast 6.97s full 6.93s; skipped 0
+baseline worker 3 src/director/sharing/sharing.test.mjs: fast 30.05s full 28.57s; skipped 0
+Error: fast baseline above 30s: src/director/sharing/sharing.test.mjs
+    at run (file:///home/ianblenke/docker/gev-tools/automut/automut.mjs:116:983)
+    at async main (file:///home/ianblenke/docker/gev-tools/automut/automut.mjs:129:589)

@@ -1,0 +1,10 @@
+Command: python3 /tmp/pass13-self-check.py
+{
+  "sourceCommit": "52d8eb8acb6021ec857b507f306557152522d14e",
+  "changedTablesChecked": 2,
+  "tableShapeErrors": 0,
+  "proposalHeadingsUnchanged": true,
+  "handAnchorUnique": true,
+  "oldHeadingLinks": 0,
+  "sourceDiffEmpty": true
+}

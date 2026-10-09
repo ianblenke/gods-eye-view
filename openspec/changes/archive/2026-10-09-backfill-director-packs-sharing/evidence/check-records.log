@@ -1,0 +1,5 @@
+campaign-first-results.json {'KILLED': 180, 'SURVIVED': 80} complete {'1': True}
+results.json {'KILLED': 192, 'SURVIVED': 68} complete {'1': True}
+Table rows: 260 results: {'KILLED': 192, 'EQUIVALENT': 64, 'KNOWN LIMIT': 4}
+Table agrees with campaign; all equivalent probe paths exist.
+Hand rows: 408

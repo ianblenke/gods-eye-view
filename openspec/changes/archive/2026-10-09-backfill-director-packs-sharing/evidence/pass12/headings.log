@@ -1,0 +1,33 @@
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass12/self-check.py
+Source commit: ac61cb3dbbe829be8d3cfe1976ac844ba3c504bf
+--- openspec/changes/backfill-director-packs-sharing/evidence.md source
++++ openspec/changes/backfill-director-packs-sharing/evidence.md current
+@@ -222,7 +222,7 @@
+ ### Final evidence check
+ ## Pass 11
+ ### Findings
+-### m480 red and green
++### m480 with the old test and the new test
+ ### Changed titles
+ ### Full record comparison
+ ### Host tests and coverage
+@@ -364,3 +364,10 @@
+ ### Source edits
+ ### Final headings
+ ### Last host checks
++## Pass 12
++### Corrections in Pass 12
++### Scope and limits in Pass 12
++### Host command output in Pass 12
++### Other host checks in Pass 12
++### Heading comparison in Pass 12
++### Lint in Pass 12
+--- openspec/changes/backfill-director-packs-sharing/mutations.md source
++++ openspec/changes/backfill-director-packs-sharing/mutations.md current
+@@ -1926,5 +1926,5 @@
+ ### m480 Old
+ ### m480 New
+ ### m480 Test
+-### Final complete hand command in pass 7
++## Final complete hand command in pass 7
+ ### Pass 11 hand count
