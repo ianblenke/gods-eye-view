@@ -48,11 +48,12 @@
 - [ ] 4.7 Run `openspec validate cctv-pensacola` on the host.
 - [ ] 4.8 Run each test file of `src/data` and `src/tooling/spec` on the host.
 
-## 5. Lead work before and in the image
+## 5. Lead work before and in Docker
 
-- [ ] 5.1 Check one real layer answer and one real frame.
-- [ ] 5.2 Write `evidence/live-check.txt` with the output of the check.
-- [ ] 5.3 Run `make ratchet CHANGE=cctv-pensacola`.
-- [ ] 5.4 Run the two review agents.
-- [ ] 5.5 Write review.md.
-- [ ] 5.6 Run `make gates CHANGE=cctv-pensacola` on the final tree.
+- [ ] 5.1 Check one real layer answer.
+- [ ] 5.2 Check one real frame through the frame function of the server.
+- [ ] 5.3 Write `evidence/live-check.txt` with the output of both checks.
+- [ ] 5.4 Run `make ratchet CHANGE=cctv-pensacola`.
+- [ ] 5.5 Run the two review agents.
+- [ ] 5.6 Write review.md.
+- [ ] 5.7 Run `make gates CHANGE=cctv-pensacola` on the final tree.
