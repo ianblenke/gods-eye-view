@@ -10,12 +10,12 @@ import fs from 'node:fs';
 import * as Cesium from 'cesium';
 import {
   CANCELLED_SEARCH,
+  CITY_POIS,
   placeFramingViewport,
   PLACE_VIEWPORT_MAX_SPAN_KM,
   PLACE_ANCHOR_OFFSET_RATIO,
   flyToGlobeView,
   flyToPresetLocation,
-  CITY_POIS,
   geocodeNavigationMode,
   regionFramingPlan,
   REGION_SWATH_SPAN_KM,
@@ -56,14 +56,19 @@ const AUSTIN_RESULT = {
 };
 
 async function runSearch(viewer, options, { result = AUSTIN_RESULT, query = 'austin' } = {}) {
+  const hadWindow = Object.hasOwn(globalThis, 'window');
+  const priorWindow = globalThis.window;
   const priorFetch = globalThis.fetch;
+  globalThis.window = { __GOOGLE_MAPS_API_KEY__: 'test-key' };
   globalThis.fetch = async () => ({
-    json: async () => ({ configured: true, status: 'OK', results: [result] }),
+    json: async () => ({ status: 'OK', results: [result] }),
   });
   try {
-    return await searchAndFlyTo(viewer, query, { placeSearch: createStandalonePlaceSearch(), ...options });
+    return await searchAndFlyTo(viewer, query, { placeSearch: createStandalonePlaceSearch({ resolveApiKey: () => globalThis.window?.__GOOGLE_MAPS_API_KEY__ }), ...options });
   } finally {
     globalThis.fetch = priorFetch;
+    if (hadWindow) globalThis.window = priorWindow;
+    else delete globalThis.window;
   }
 }
 
@@ -545,8 +550,17 @@ test('globe and city-overview flights name the world frame explicitly', () => {
 });
 
 test('city and landmark flights expose completion and cancellation hooks', (t) => {
-  // The flight completion starts the camera ground guard, which polls with timers.
-  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const originalSetTimeout = globalThis.setTimeout;
+  const timers = new Set();
+  globalThis.setTimeout = (callback, delay, ...args) => {
+    const timer = originalSetTimeout(callback, delay, ...args);
+    timers.add(timer);
+    return timer;
+  };
+  t.after(() => {
+    for (const timer of timers) clearTimeout(timer);
+    globalThis.setTimeout = originalSetTimeout;
+  });
   const overviewViewer = stubViewer();
   const overviewEvents = [];
   flyToPresetLocation(overviewViewer, 'austin', {
@@ -597,48 +611,19 @@ test('search without an authority hook preserves the existing caller contract', 
   assert.equal(viewer.flights.length, 1);
 });
 
-
-test('[location-presets-001] puts Taiwan before Austin', () => {
-  assert.deepEqual(Object.keys(CITY_POIS).slice(0, 2), ['taiwan', 'austin']);
-});
-
-test('[location-presets-002] gives Taiwan five valid places', () => {
-  const city = CITY_POIS.taiwan;
-  assert.equal(city.name, 'Taiwan');
-  assert.equal(city.groundElevation, 30);
-  assert.deepEqual(city.viewBounds, {
-    southwest: { lat: 21.8, lng: 119.3 },
-    northeast: { lat: 25.4, lng: 122.1 },
-  });
-  assert.deepEqual(city.pois, [
-    { name: 'Taiwan', lat: 23.7, lon: 121.0, alt: 700000, pitch: -60, heading: 0, buildingHeight: 30 },
-    { name: 'Taipei 101', lat: 25.0339, lon: 121.5645, alt: 700, pitch: -22, heading: 200, buildingHeight: 300 },
-    { name: 'Presidential Office Building', lat: 25.04, lon: 121.5122, alt: 450, pitch: -25, heading: 90, buildingHeight: 60 },
-    { name: 'Sun Moon Lake', lat: 23.859, lon: 120.916, alt: 6000, pitch: -30, heading: 0, buildingHeight: 30 },
-    { name: 'Taroko Gorge', lat: 24.1559, lon: 121.62, alt: 8000, pitch: -28, heading: 90, buildingHeight: 30 },
-  ]);
-  assert.equal(city.pois.length, 5);
-  assert.equal(city.pois[0].name, 'Taiwan');
-  assert.ok(city.pois[0].alt >= 500000);
-  for (const poi of city.pois) {
-    for (const key of ['lat', 'lon', 'alt', 'pitch', 'heading', 'buildingHeight'])
-      assert.equal(Number.isFinite(poi[key]), true);
-    assert.ok(poi.lat >= city.viewBounds.southwest.lat && poi.lat <= city.viewBounds.northeast.lat);
-    assert.ok(poi.lon >= city.viewBounds.southwest.lng && poi.lon <= city.viewBounds.northeast.lng);
-  }
-});
-
-test('[location-presets-004] flies to the island view', () => {
+test('near-view recovery searches through the application place search', async () => {
+  // Recovery must use the place search the application configured, not the module default.
   const viewer = stubViewer();
-  const result = flyToPresetLocation(viewer, 'taiwan');
-  assert.equal(viewer.flights.length, 1);
-  assert.equal(result.range, 700000);
-  assert.equal(viewer.flights[0].offset.range, 700000);
-  assert.ok(Math.abs(Cesium.Math.toDegrees(viewer.flights[0].offset.pitch) + 60) < 1e-8);
-  assert.equal(Cesium.Math.toDegrees(viewer.flights[0].offset.heading), 0);
-  const point = Cesium.Cartographic.fromCartesian(result.targetPosition);
-  assert.ok(Math.abs(Cesium.Math.toDegrees(point.latitude) - 23.7) < 1e-8);
-  assert.ok(Math.abs(Cesium.Math.toDegrees(point.longitude) - 121.0) < 1e-8);
+  const placeSearch = createStandalonePlaceSearch({ resolveApiKey: () => 'test-key' });
+  let received = null;
+  await runSearch(viewer, {
+    placeSearch,
+    recoverNearView: async (...args) => {
+      received = args[4];
+      return null;
+    },
+  });
+  assert.equal(received, placeSearch);
 });
 
 test('a precise search without an outline frames against the resolved ground, not sea level', async () => {
@@ -686,4 +671,102 @@ test('a precise search without an outline frames against the resolved ground, no
   assert.ok(Math.abs(target.height - (171 + 30)) < 0.5, `target ${target.height}`);
   const eye = target.height + flight.offset.range * Math.sin(-flight.offset.pitch);
   assert.ok(eye > 171 + 100, `eye ${eye} must clear the 171 m surface`);
+});
+
+test('[location-presets-001] puts Taiwan before Austin', () => {
+  assert.deepEqual(Object.keys(CITY_POIS).slice(0, 2), ['taiwan', 'austin']);
+});
+
+test('[location-presets-002] gives Taiwan five valid places', () => {
+  const city = CITY_POIS.taiwan;
+  assert.equal(city.name, 'Taiwan');
+  assert.equal(city.groundElevation, 30);
+  assert.deepEqual(city.viewBounds, {
+    southwest: { lat: 21.8, lng: 119.3 },
+    northeast: { lat: 25.4, lng: 122.1 },
+  });
+  assert.deepEqual(city.pois, [
+    {
+      name: 'Taiwan',
+      lat: 23.7,
+      lon: 121.0,
+      alt: 700000,
+      pitch: -60,
+      heading: 0,
+      buildingHeight: 30,
+    },
+    {
+      name: 'Taipei 101',
+      lat: 25.0339,
+      lon: 121.5645,
+      alt: 700,
+      pitch: -22,
+      heading: 200,
+      buildingHeight: 300,
+    },
+    {
+      name: 'Presidential Office Building',
+      lat: 25.04,
+      lon: 121.5122,
+      alt: 450,
+      pitch: -25,
+      heading: 90,
+      buildingHeight: 60,
+    },
+    {
+      name: 'Sun Moon Lake',
+      lat: 23.859,
+      lon: 120.916,
+      alt: 6000,
+      pitch: -30,
+      heading: 0,
+      buildingHeight: 30,
+    },
+    {
+      name: 'Taroko Gorge',
+      lat: 24.1559,
+      lon: 121.62,
+      alt: 8000,
+      pitch: -28,
+      heading: 90,
+      buildingHeight: 30,
+    },
+  ]);
+  assert.equal(city.pois.length, 5);
+  assert.equal(city.pois[0].name, 'Taiwan');
+  assert.ok(city.pois[0].alt >= 500000);
+  for (const poi of city.pois) {
+    for (const key of [
+      'lat',
+      'lon',
+      'alt',
+      'pitch',
+      'heading',
+      'buildingHeight',
+    ])
+      assert.equal(Number.isFinite(poi[key]), true);
+    assert.ok(
+      poi.lat >= city.viewBounds.southwest.lat &&
+        poi.lat <= city.viewBounds.northeast.lat,
+    );
+    assert.ok(
+      poi.lon >= city.viewBounds.southwest.lng &&
+        poi.lon <= city.viewBounds.northeast.lng,
+    );
+  }
+});
+
+test('[location-presets-004] flies to the island view', () => {
+  const viewer = stubViewer();
+  const result = flyToPresetLocation(viewer, 'taiwan');
+  assert.equal(viewer.flights.length, 1);
+  assert.equal(result.range, 700000);
+  assert.equal(viewer.flights[0].offset.range, 700000);
+  assert.ok(
+    Math.abs(Cesium.Math.toDegrees(viewer.flights[0].offset.pitch) + 60) < 1e-8,
+  );
+  assert.equal(Cesium.Math.toDegrees(viewer.flights[0].offset.heading), 0);
+  const point = Cesium.Cartographic.fromCartesian(result.targetPosition);
+  assert.ok(Math.abs(Cesium.Math.toDegrees(point.latitude) - 23.7) < 1e-8);
+  assert.ok(Math.abs(Cesium.Math.toDegrees(point.longitude) - 121.0) < 1e-8);
 });
