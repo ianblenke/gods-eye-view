@@ -1,0 +1,17 @@
+##### git rev-parse HEAD
+9f29ee10a626dc322358d006dfc6d0cf3124193a
+##### git status --short
+ M openspec/changes/review-severity-scope/tasks.md
+?? openspec/changes/review-severity-scope/evidence.md
+?? openspec/changes/review-severity-scope/evidence/
+##### node scripts/format.mjs --check
+Checked 1328 source files.
+##### status 0
+##### node scripts/spec/gates.mjs lint --change review-severity-scope
+WARN STE-WORD-OLD openspec/specs/wind/spec.md:72 Use "closes", not "dismisses"
+WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
+STE: 0 errors, 671 warnings.
+##### status 0
+##### openspec validate review-severity-scope
+Change 'review-severity-scope' is valid
+##### status 0
