@@ -74,7 +74,8 @@ Later change `fix-director-bundle-nonnumeric-length` addresses `bundle-nonnumeri
 
 - Known limit `digest-asset-result-check-order`: scenario director-107 states "after each digest" and "after the asset result".
   Only call counts show the clauses after each digest and after the asset result.
-  The probe in evidence/probe-signal-check-order.txt shows that the three mutations that move the check between the call and its `await` at bundle.js:93-94, 150-154 and 160-161 survive the three test files.
+  The probe in evidence/probe-signal-check-order.txt shows three mutations that survive the three test files.
+  They move the check between the call and its `await` at bundle.js:93-94, 150-154 and 160-161.
   The file evidence/probe-signal-check-order-mutations.json lists them.
   The lead keeps this limit; the owner confirms it in the pull request.
 
