@@ -146,7 +146,9 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | ledger entry not-covered count | Not-covered count of a ledger entry. |
 | ledger entry total count | Total count of a ledger entry. |
 | current not-covered count | Not-covered count of the current gap. |
-| waiver line | History line after the base history with the kind waiver, the name of the checked change and a count that is a positive whole number. |
-| waiversCover | Function that tests if waiver lines cover each not-covered count of a record that has no entry to compare with. |
-| waived count | Sum of the counts of the waiver lines of the checked change for a metric of a file. compareWithBase adds only waiver lines with the content hash of the ledger entry. It gives zero for a file with base content or a ledger entry without loaded coverage. For a file with a ledger entry, compareLedger adds only waiver lines with the content hash of the current gap. It gives zero when the ledger entry and the current gap have equal content hashes, or when either has no loaded coverage. Without a ledger entry, waiversCover rejects a file with base content or a current gap without loaded coverage. |
+| waiver line | History line with the kind waiver. |
+| valid waiver line | Waiver line after the base history with the name of the checked change and a count that is a positive whole number. |
+| compareCoverageEntry | Function that compares one current gap with its ledger entry and gives errors. |
+| waiversCover | Function that checks waiver lines for a record that has no entry to compare with. It needs loaded coverage and content different from the base. At least one valid waiver line must name the file and the content hash of the record. It checks that each not-covered count is not above the sum of the counts of those valid waiver lines for that metric. |
+| waived count | Sum of the counts of the valid waiver lines for a metric of a file. compareWithBase adds only valid waiver lines with the content hash of the ledger entry. It gives zero for a file with base content or a ledger entry without loaded coverage. For a file with a ledger entry, compareLedger adds only valid waiver lines with the content hash of the current gap. It gives zero when the ledger entry and the current gap have equal content hashes, or when either has no loaded coverage. Without a ledger entry, waiversCover rejects a file with base content or a current gap without loaded coverage. |
 | current gap total count | Total count of the current gap. |
