@@ -3714,7 +3714,9 @@ The lead corrected the text of Pass 13 to Pass 16 where the reviewers found a st
 
 The second run of Pass 13 has no recorded commit. The run of the whole file `gates.test.mjs` in Pass 14, at commit 85eaab08, is the passing run with a recorded commit. It passed 241 of 241 tests.
 
-The lead ran the format check, the STE lint and `openspec validate` on the host, on the working tree over commit 91eee2c9. The file `pass17/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+The lead ran the format check, the STE lint and `openspec validate` on the host, on the working tree over commit 70e02e6d. The file `pass17/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+
+The lead ran the same checks again after the corrections of pre-review 16, on the working tree over commit 91eee2c9. The file `pass17/host-checks-final.log` holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
 
 ## Pass 18
 
