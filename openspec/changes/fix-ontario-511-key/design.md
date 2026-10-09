@@ -41,6 +41,7 @@ The purpose of the browser QA for the CCTV layer stays the same. Camera markers 
 |---|---|
 | pack | The Ontario camera pack as a whole. |
 | loader | `loadOntarioSourcesFromOpenData`. |
+| reset hook | `_resetOntarioRequestForTest` sets both warning flags to false. It is a test helper with no scenario of its own. |
 | request helper | `readOntarioCameraRows`. |
 | key | The value of `ONTARIO_511_API_KEY`. |
 | server key | The key that stays on the server. |
@@ -58,6 +59,10 @@ The purpose of the browser QA for the CCTV layer stays the same. Camera markers 
 ## Files and measures
 
 Add `server/providers/cctv/ontarioRequest.js` for the request helper.
+Use the reset hook before each key test. Import the module once without a query string.
+The reset hook is a test helper with no scenario of its own. The existing tests cover all its code.
+The coverage gate includes the reset hook in its line, branch and function counts.
+
 Change only the Ontario catch text in `server/providers/cctv/sources.js` after Pass 1.
 Change the Ontario comment in `server/providers/cctv/constants.js`.
 

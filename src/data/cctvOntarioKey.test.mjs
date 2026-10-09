@@ -1,7 +1,8 @@
-import test from 'node:test';
+import test, { beforeEach } from 'node:test';
+import * as ontarioRequest from '../../server/providers/cctv/ontarioRequest.js';
 import assert from 'node:assert/strict';
 
-let caseNumber = 0;
+beforeEach(() => ontarioRequest._resetOntarioRequestForTest());
 const key = 'ONTARIO_FAKE_SECRET_A&+?';
 
 async function fixture(t, value, response) {
@@ -21,10 +22,7 @@ async function fixture(t, value, response) {
   });
   t.mock.method(console, 'warn', (...args) => logs.push(args.join(' ')));
   t.mock.method(console, 'log', (...args) => logs.push(args.join(' ')));
-  const module = await import(
-    '../../server/providers/cctv/ontarioRequest.js?case=' + ++caseNumber
-  );
-  return { ...module, calls, logs };
+  return { ...ontarioRequest, calls, logs };
 }
 
 test('[live-sources-002] send the key parameter', async (t) => {
@@ -61,6 +59,10 @@ test('[live-sources-003] make no request without a key', async (t) => {
   }
   await nested;
   assert.equal(f.calls.length, 0);
+  assert.deepEqual(f.logs, ['[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']);
+  ontarioRequest._resetOntarioRequestForTest();
+  f.logs.length = 0;
+  assert.deepEqual(await f.readOntarioCameraRows(), []);
   assert.deepEqual(f.logs, ['[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']);
   assert.equal(f.logs.join().includes(key), false);
 });

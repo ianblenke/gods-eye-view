@@ -6,6 +6,11 @@ import {
 let warnedMissingKey = false;
 let warnedRequestError = false;
 
+export function _resetOntarioRequestForTest() {
+  warnedMissingKey = false;
+  warnedRequestError = false;
+}
+
 export async function readOntarioCameraRows() {
   const key = (process.env.ONTARIO_511_API_KEY || '').trim();
   if (!key) {

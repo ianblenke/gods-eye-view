@@ -1,0 +1,5 @@
+Error: full baseline failed: src/data/cctvOntarioKey.test.mjs
+
+    at run (file:///home/ianblenke/docker/gev-tools/automut/automut.mjs:162:196)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async main (file:///home/ianblenke/docker/gev-tools/automut/automut.mjs:175:656)
