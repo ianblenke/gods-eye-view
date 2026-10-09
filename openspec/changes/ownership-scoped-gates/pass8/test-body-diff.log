@@ -1,0 +1,45 @@
+diff --git a/src/tooling/spec/gates.test.mjs b/src/tooling/spec/gates.test.mjs
+index 6f351156..3d6d7159 100644
+--- a/src/tooling/spec/gates.test.mjs
++++ b/src/tooling/spec/gates.test.mjs
+@@ -2627 +2627 @@ test('[change-review-033] pin the agent verdict and final tree instructions', ()
+-test('[ownership-031] prints LEDGER-ADOPT-FROM for a reached line whose source is not a merge parent', () => {
++test('[ownership-031] prints LEDGER-ADOPT-FROM for a reached adopt record whose source is not a merge parent', GUARDED_RUN, () => {
+diff --git a/src/tooling/spec/ownership.test.mjs b/src/tooling/spec/ownership.test.mjs
+index 5941757e..937dd546 100644
+--- a/src/tooling/spec/ownership.test.mjs
++++ b/src/tooling/spec/ownership.test.mjs
+@@ -47 +47 @@ test('[ownership-001] rejects each bad manifest field', () => {
+-test('[ownership-001] returns OWNERSHIP-MANIFEST for an absent or bad manifest file', () => fixture(({ root, put }) => {
++test('[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file', () => fixture(({ root, put }) => {
+@@ -49,0 +50,2 @@ test('[ownership-001] returns OWNERSHIP-MANIFEST for an absent or bad manifest f
++  assert.equal(typeof readOwnership(root).errors[0].message, 'string');
++  assert.notEqual(readOwnership(root).errors[0].message.length, 0);
+@@ -122 +124 @@ test('[ownership-011] separates code and test gaps by class', () => {
+-test('[ownership-012] has the process rules and QA context in AGENTS.md and config.yaml', () => {
++test('[ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml', () => {
+@@ -191 +193 @@ test('[ownership-016] sorts all line numbers as numbers', () => {
+-test('[ownership-017] ignores extra text around a DA line or a diff header', () => {
++test('[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix', () => {
+@@ -195 +197 @@ test('[ownership-017] ignores extra text around a DA line or a diff header', ()
+-test('[ownership-018] adds owned file gaps and waiver counts across coverage items', () => {
++test('[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file', () => {
+@@ -441 +443 @@ test('[ownership-052] stops for a source name with a null byte', () => syncFixtu
+-test('[ownership-031 ownership-041] stops for a name that is not a full hash in a history with a merge HEAD', () => syncFixture(({ input, git, from, adopt }) => {
++test('[ownership-031 ownership-041] stops for a name that is not a full hash when HEAD is a merge commit', () => syncFixture(({ input, git, from, adopt }) => {
+@@ -465 +467 @@ test('[ownership-052] returns false when Git cannot read the merge parents', ()
+-test('[ownership-031 ownership-041] rejects strings outside the hash pattern and reads no merge parents', () => {
++test('[ownership-031 ownership-041] rejects values outside the hash pattern and reads no merge parents', () => {
+diff --git a/src/tooling/spec/ownershipGate.test.mjs b/src/tooling/spec/ownershipGate.test.mjs
+index f51e6d6f..a5b51e9b 100644
+--- a/src/tooling/spec/ownershipGate.test.mjs
++++ b/src/tooling/spec/ownershipGate.test.mjs
+@@ -128 +128 @@ function oneMeasurement(root, { loaded = true, assertions = 1 } = {}) {
+-test('[ownership-001] prints OWNERSHIP-MANIFEST for an absent or bad manifest', () => withFixture(root => {
++test('[ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest', () => withFixture(root => {
+@@ -562 +562 @@ function mergeQa(root, files = { 'scripts/qa-merge.mjs': 'export {};\n' }) {
+-test('[ownership-031 ownership-041] stops the check command for a name that is not a full hash in a history with a merge HEAD', () => withFixture(root => {
++test('[ownership-031 ownership-041] stops the check command for a name that is not a full hash when HEAD is a merge commit', () => withFixture(root => {
+@@ -637 +637 @@ test('[ownership-054] writes no QA record for an absent current file', () => wit
+-test('[ownership-054] stops for a coverage ignore error in an eligible new QA script', () => withFixture(root => {
++test('[ownership-054] stops for a coverage ignore error in a new upstream QA script with no QA tag', () => withFixture(root => {

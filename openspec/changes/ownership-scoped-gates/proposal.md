@@ -122,5 +122,5 @@ A sync that brings an upstream QA script with no QA tag must change that test an
 
 The text "merged upstream commit" stays in the output message that the sync tests check.
 
-This change accepts S135 by name. The message "A merge after the base must bring that hash." stays in the five places that check it.
-The message means the commit of that hash.
+The message "A merge after the base must bring that hash." stays in the five places that check it.
+A merge brings a commit, so the message means the commit of that hash.

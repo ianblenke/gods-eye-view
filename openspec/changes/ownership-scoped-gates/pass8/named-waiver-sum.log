@@ -1,0 +1,40 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-018 src/tooling/spec/ownership.test.mjs
+✖ [ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file (22.474286ms)
+✔ [ownership-018] adds test counts across owned files (1.994983ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72.678681
+
+✖ failing tests:
+
+test at src/tooling/spec/ownership.test.mjs:197:1
+✖ [ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file (22.474286ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     code: 'COVERAGE-OWNED',
+  +     file: 'src/own/a.js',
+  +     message: 'Owned code needs full line, branch and function coverage.'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass8/named-root/src/tooling/spec/ownership.test.mjs:199:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

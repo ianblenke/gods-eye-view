@@ -9,7 +9,7 @@ Origin: spec-first
 #### Scenario: Read a manifest `ownership-001`
 - **WHEN** the gate reads valid and invalid manifest files
 - **THEN** the gate accepts valid files and prints OWNERSHIP-MANIFEST for absent or invalid files
-- **AND** for absent or invalid files, the errors array from readOwnership has an object with code OWNERSHIP-MANIFEST, the file name and the message
+- **AND** for absent or invalid files, the errors array from readOwnership has an object with the code OWNERSHIP-MANIFEST, the file name and the message
 - **AND** when the gate reads the manifest without a base, the gate uses only the current manifest
 
 ### Requirement: Path class
@@ -177,11 +177,12 @@ Origin: spec-first
 - **THEN** the gate ignores that record or header
 
 ### Requirement: Gap totals
-The gate MUST add gap counts and waiver counts across all coverage items of the same class and metric.
+The gate MUST add the line gap counts of ledger entries of the same class.
+It must add only positive whole-number waiver counts for the same file, hash and metric.
 Origin: spec-first
 
 #### Scenario: Add gap and waiver counts `ownership-018`
-- **WHEN** two owned files have 2 and 3 line gaps and two line waivers each waive one gap
+- **WHEN** two owned files have 2 and 3 line gaps and two valid line waivers for one file each waive one gap
 - **THEN** the report command prints 5 line gaps and the waivers waive a count of 2
 
 ### Requirement: Empty test names
@@ -194,7 +195,7 @@ Origin: spec-first
 
 ### Requirement: Sync line scope
 The gate MUST check coverage only for base diff lines that also differ from the file in the adopt source.
-This rule replaces Diff coverage for lines equal to the file in the adopt source.
+This requirement replaces Diff coverage for lines equal to the file in the adopt source.
 A file uses the adopt source of its last valid adopt record in the change.
 A file without such a record uses the adopt source of the last valid adopt record in the change.
 Each adopt source must come from a valid adopt record.
@@ -266,8 +267,8 @@ Origin: spec-first
 ### Requirement: Adopt record boundary
 The gate MUST stop for an adopt record for this change with an invalid file or source.
 For an adopt record of this change with an invalid `file` or `from`, this requirement replaces gap-ledger-095.
-For a reached adopt line whose `from` is not a merge parent, the stop LEDGER-ADOPT-FROM comes first.
-This stop replaces the LEDGER-ADOPT-REACHED error of gap-ledger-105.
+For a reached adopt record whose `from` is not a merge parent, the gate prints LEDGER-ADOPT-FROM and stops.
+For such a record, this requirement replaces the LEDGER-ADOPT-REACHED error of gap-ledger-105.
 
 The `file` field must be a string.
 The `from` field must be a full hash of 40 lowercase hexadecimal digits of a commit that a merge after the base brought.
@@ -287,7 +288,7 @@ Origin: spec-first
 - **THEN** the gate prints LEDGER-ADOPT-FROM
 - **AND** a short hash, a branch name, `HEAD^2`, `origin/source`, an uppercase hash and a hash with a space make the gate print LEDGER-ADOPT-FROM
 - **AND** no such record exempts a line from COVERAGE-DIFF
-- **AND** a reached adopt line with a source that is not a merge parent prints LEDGER-ADOPT-FROM at openspec/trace/history.jsonl
+- **AND** a reached adopt record with a source that is not a merge parent prints LEDGER-ADOPT-FROM at openspec/trace/history.jsonl
 - **AND** the source check reads no merge parents for strings that do not match the hash pattern
 - **AND** the gate prints this error line:
 
@@ -470,7 +471,7 @@ The script must have no QA tag in its first comment block now.
 The base script must also have no QA tag, or the script must be new.
 The record has lines 0, branches 0, functions 0, untraced 0 and untrue false.
 A QA-HEADER error for such a script must not stop the adopt command.
-For such a script, this requirement replaces qa-scripts-024 and gap-ledger-089.
+In the adopt command, for such a script, this requirement replaces qa-scripts-024 and gap-ledger-089.
 
 Any other error must stop the adopt command.
 
@@ -486,5 +487,5 @@ Origin: spec-first
 - **AND** an invalid current header or a deleted base QA header prints QA-HEADER
 - **AND** the adopt command writes one zero-count adopt record for a merged upstream base script with no current or base QA tag
 - **AND** any other error stops the adopt command without a new record
-- **AND** a coverage ignore comment in that new QA script makes the gate print COVERAGE-IGNORE and write no adopt record
+- **AND** a coverage ignore comment in a new upstream QA script of the merge makes the gate print COVERAGE-IGNORE and write no adopt record
 - **AND** the adopt command writes no QA record for an absent current file

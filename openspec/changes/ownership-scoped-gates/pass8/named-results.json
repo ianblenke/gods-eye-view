@@ -1,0 +1,72 @@
+[
+  {
+    "fault": "invalid-manifest-code",
+    "file": "scripts/spec/lib/ownership.mjs",
+    "old": "code: 'OWNERSHIP-MANIFEST'",
+    "new": "code: error.code === 'ENOENT' ? 'OWNERSHIP-MANIFEST' : 'OWNERSHIP-OTHER'",
+    "status": 1,
+    "failed": [
+      "[ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest"
+    ]
+  },
+  {
+    "fault": "absent-manifest-message",
+    "file": "scripts/spec/lib/ownership.mjs",
+    "old": "message: error.message",
+    "new": "message: error.code === 'ENOENT' ? '' : error.message",
+    "status": 1,
+    "failed": [
+      "[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file"
+    ]
+  },
+  {
+    "fault": "diff-prefix",
+    "file": "scripts/spec/lib/ownership.mjs",
+    "old": "/^@@ -",
+    "new": "/@@ -",
+    "status": 1,
+    "failed": [
+      "[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix"
+    ]
+  },
+  {
+    "fault": "DA-prefix",
+    "file": "scripts/spec/lib/ownership.mjs",
+    "old": "/^DA:",
+    "new": "/DA:",
+    "status": 1,
+    "failed": [
+      "[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix"
+    ]
+  },
+  {
+    "fault": "DA-suffix",
+    "file": "scripts/spec/lib/ownership.mjs",
+    "old": "(\\d+)$/",
+    "new": "(\\d+)/",
+    "status": 1,
+    "failed": [
+      "[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix"
+    ]
+  },
+  {
+    "fault": "gap-sum",
+    "file": "scripts/spec/lib/ownership.mjs",
+    "old": "sum + ledger.coverage[file].lines",
+    "new": "Math.max(sum, ledger.coverage[file].lines)",
+    "status": 1,
+    "failed": [
+      "[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file"
+    ]
+  },
+  {
+    "fault": "waiver-sum",
+    "file": "scripts/spec/lib/ownership.mjs",
+    "old": "sum + waiver.count",
+    "new": "Math.max(sum, waiver.count)",
+    "status": 1,
+    "failed": [
+      "[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file"
+    ]
+  }
+]

@@ -114,7 +114,7 @@
 - [x] 6.28 Write the test for `ownership-040`.
 
 - [x] 6.29 Read adopt sources after CI selects the change.
-- [x] 6.30 Stop for a JSON parse error in the history before owned gap lines, also when the gate selects no change.
+- [x] 6.30 Stop for JSON parse errors in the history before the owned gap lines, also when the gate selects no change.
 
 - [x] 6.31 Write the test for `ownership-041`.
 
@@ -191,7 +191,7 @@ These Pass 5 tests came after code tasks 7.4 through 7.6:
 | 7.13 | ownership-054: two base scripts and two new scripts | keep-first-QA-record (g4681) |
 
 The Pass 5 evidence gives the failed test for each named fault.
-The evidence does not show when the other-error loop mode was added.
+The evidence does not show when a task added the other-error loop mode.
 
 The eight failed tests in the task 7.3 red logs had these titles:
 
@@ -206,7 +206,7 @@ The eight failed tests in the task 7.3 red logs had these titles:
 [ownership-035] prints QA-HEADER for a base QA tag even with an adopt record
 ```
 
-These titles are records of the red runs. Later corrections renamed some titles; the tags are unchanged.
+These titles are the names at the time of the red runs. Later corrections renamed some titles; the tags are unchanged.
 
 | Scenario | Pass 4 named fault | Test |
 |---|---|---|

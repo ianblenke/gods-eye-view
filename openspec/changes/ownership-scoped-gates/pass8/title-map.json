@@ -1,0 +1,12 @@
+{
+  "[ownership-031] prints LEDGER-ADOPT-FROM for a reached line whose source is not a merge parent": "[ownership-031] prints LEDGER-ADOPT-FROM for a reached adopt record whose source is not a merge parent",
+  "[ownership-001] returns OWNERSHIP-MANIFEST for an absent or bad manifest file": "[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file",
+  "[ownership-017] ignores extra text around a DA line or a diff header": "[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix",
+  "[ownership-018] adds owned file gaps and waiver counts across coverage items": "[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file",
+  "[ownership-031 ownership-041] stops for a name that is not a full hash in a history with a merge HEAD": "[ownership-031 ownership-041] stops for a name that is not a full hash when HEAD is a merge commit",
+  "[ownership-031 ownership-041] rejects strings outside the hash pattern and reads no merge parents": "[ownership-031 ownership-041] rejects values outside the hash pattern and reads no merge parents",
+  "[ownership-001] prints OWNERSHIP-MANIFEST for an absent or bad manifest": "[ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest",
+  "[ownership-031 ownership-041] stops the check command for a name that is not a full hash in a history with a merge HEAD": "[ownership-031 ownership-041] stops the check command for a name that is not a full hash when HEAD is a merge commit",
+  "[ownership-054] stops for a coverage ignore error in an eligible new QA script": "[ownership-054] stops for a coverage ignore error in a new upstream QA script with no QA tag",
+  "[ownership-012] has the process rules and QA context in AGENTS.md and config.yaml": "[ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml"
+}
