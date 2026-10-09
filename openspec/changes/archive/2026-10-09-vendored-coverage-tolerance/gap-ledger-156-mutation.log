@@ -1,0 +1,39 @@
+Command: taskset -c 0-3 nice -n 19 node --test --test-name-pattern=gap-ledger-156 src/tooling/spec/ledger.test.mjs
+✖ [gap-ledger-156] the ratchet command writes the ledger entry total count of zero for a file with no base content and a larger current not-covered count (28.66537ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 464.454095
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1679:1
+✖ [gap-ledger-156] the ratchet command writes the ledger entry total count of zero for a file with no base content and a larger current not-covered count (28.66537ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   branches: 400,
+  +   functions: 400,
+  +   lines: 400
+  -   branches: 0,
+  -   functions: 0,
+  -   lines: 0
+    }
+  
+      at TestContext.<anonymous> (file:///tmp/vct7-named/src/tooling/spec/ledger.test.mjs:1684:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { lines: 400, branches: 400, functions: 400 },
+    expected: { lines: 0, branches: 0, functions: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
