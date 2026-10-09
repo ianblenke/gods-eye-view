@@ -3453,11 +3453,13 @@ The worker did not repeat the format or import direction checks. The lead's log 
 
 ## Pass 13
 
-Tree read: branch ownership-gates after the merge of main commit 6dce84b2 (merge commit 80ea3b1f), with the Pass 13 changes.
+Tree read: branch ownership-gates. Pass 13 follows two merges of main: commit 80ea3b1f (main 6dce84b2) and commit 9464af96 (main 2bb6b826).
 
-The merge of main brought the tests of `vendored-coverage-tolerance` (gap-ledger-136 to gap-ledger-156). The lead resolved the three conflicts of the merge: `scripts/spec/gates.mjs`, `src/tooling/spec/gates.test.mjs` and `openspec/trace/history.jsonl`. In `gates.mjs` the check of the adopt records runs once, before the measurement, and uses `isAdoptSource`. Both test blocks stay. The history lines of main come first.
+The first merge brought the tests of `vendored-coverage-tolerance` (gap-ledger-136 to gap-ledger-156). The lead resolved its three conflicts: `scripts/spec/gates.mjs`, `src/tooling/spec/gates.test.mjs` and `openspec/trace/history.jsonl`. In `gates.mjs` the function `validAdoptSources` checks the adopt records before the measurement, and the function `checkAdopts` uses `isAdoptSource`. Both test blocks stay. The history lines of main come first.
 
-After the merge, the lead ran the test file `gates.test.mjs` with `node --test` on the host, on cores 4 to 7. The file `pass13/first-run-summary.txt` holds the summary lines:
+The second merge (sync 3) had one conflict, in `openspec/trace/history.jsonl`. The 2436 lines of main 2bb6b826 come first, and the 2 lines of the branch follow. The merged file has 2438 lines.
+
+After the first merge, the lead ran the test file `gates.test.mjs` with `node --test` on the host, at commit 80ea3b1f, on cores 4 to 7. The file `pass13/first-run-summary.txt` holds the summary lines:
 
 ```text
 ✖ [gap-ledger-138] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line
@@ -3470,13 +3472,13 @@ After the merge, the lead ran the test file `gates.test.mjs` with `node --test` 
 
 | Test | Cause | Correction |
 |---|---|---|
-| gap-ledger-138, gap-ledger-151 | The early source check of the adopt records stops the gate with one LEDGER-ADOPT-FROM error at `openspec/trace/history.jsonl`. The tests expected a file error and LEDGER-STALE after that stop. | Spec sentence in "Adopt record boundary", scenario `ownership-055`, design D11. The two tests expect the stop. The test of gap-ledger-151 carries the tag `ownership-055`, because only that fixture has a total count difference alone. |
-| gap-ledger-147 | The fork edit line of `src/merged.js` needs line coverage (COVERAGE-DIFF), and the fake coverage file of the tolerance tests had no line records. The ratchet command stopped at COVERAGE-DIFF. | The fake coverage file has the records `DA:1,1` to `DA:200,1` after the function lines. |
+| gap-ledger-138, gap-ledger-151 | The early source check of the adopt records stops the gate with one LEDGER-ADOPT-FROM error at `openspec/trace/history.jsonl`. The tests expected a LEDGER-ADOPT-FROM error for the file of the record and a LEDGER-STALE error. The early check now stops the gate before these errors. | A sentence in "Adopt record boundary", the scenario `ownership-055` and design D11. Pass 14 changed the sentence, the scenario, D11 and the tests. |
+| gap-ledger-147 | The fork edit line of `src/merged.js` needs line coverage (COVERAGE-DIFF), and the fake coverage file of the tolerance tests had no DA records. The ratchet command stopped at COVERAGE-DIFF. | The fake coverage file has the records `DA:1,1` to `DA:200,1` after the function lines. |
 
-The fault for `ownership-055` removes the early source check: in `gates.mjs` the call of `validAdoptSources` becomes a call of `adoptsOf`. The lead ran the tests of gap-ledger-138 and gap-ledger-151 with the fault. The lead then restored the file with `git checkout` and ran the same tests again. The file `pass13/fault-early-check.txt` holds the output with the fault, and the file `pass13/restored-early-check.txt` holds the output after the restore:
+The fault for `ownership-055` removes the early source check: in `gates.mjs` the call of `validAdoptSources` becomes a call of `adoptsOf`. The lead ran the tests of gap-ledger-138 and gap-ledger-151 with the fault, after the lead retitled the test of gap-ledger-138. The lead then restored the file with `git checkout` and ran the same tests again. The file `pass13/fault-early-check.txt` holds the output with the fault, and the file `pass13/restored-early-check.txt` holds the output after the lead restored the file:
 
 ```text
-✖ [gap-ledger-138 ownership-055] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line
+✖ [gap-ledger-138] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line
 ✖ [gap-ledger-151 ownership-055] the gate stops at LEDGER-ADOPT-FROM and gives no stale ledger entry for an invalid from commit
 ℹ tests 2
 ℹ pass 0
@@ -3489,7 +3491,9 @@ The fault for `ownership-055` removes the early source check: in `gates.mjs` the
 ℹ fail 0
 ```
 
-After the corrections, the lead ran the whole test file again. The file `pass13/second-run-summary.txt` holds the summary lines:
+Pass 14 shows that this fault fails only one assertion of the test of `ownership-055`.
+
+After the corrections, the lead ran the whole test file again, with the code files and test files of commit b35c27d1. The file `pass13/second-run-summary.txt` holds the summary lines:
 
 ```text
 ℹ tests 241
@@ -3498,3 +3502,99 @@ After the corrections, the lead ran the whole test file again. The file `pass13/
 ```
 
 The lead ran the format check, the import direction check, the package boundary check and the layer token check on the host. The lead also ran the STE lint and `openspec validate`. The file `pass13/host-checks.log` holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+
+## Pass 14
+
+Tree read: branch ownership-gates at commit 85eaab08, with the Pass 14 changes of `evidence.md`, `tasks.md` and the folder `pass14/`.
+
+Pre-review 11 (commit b35c27d1) gave FAIL from both reviewers. The spec adversary gave 5 majors and 3 minors, and the STE adversary gave 7 majors and 8 minors. The reports are in `review/pre-review-11/`. The lead checked the claims of the STE adversary about `gates.mjs` before the corrections. Each claim was true.
+
+| Finding | Correction |
+|---|---|
+| Spec adversary 1, STE adversary 1 and 4 | The sentence in "Adopt record boundary" has its own subject: an adopt record of this change whose `from` is not a merge parent. It names only the clause about a stale ledger entry in gap-ledger-151. The claim about gap-ledger-138 is gone from the spec and from D11. The test of `ownership-055` in `gates.test.mjs` no longer carries the tag `gap-ledger-151`. A new test in `ledger.test.mjs` carries it and asserts the THEN of gap-ledger-151 at the library level. |
+| Spec adversary 2 | The gate test asserts the two negative results first. Four faults ran (see below). The fault that drops the throw of `validAdoptSources` fails the three assertions that need the early stop. |
+| Spec adversary 3 | The gate test counts the matches of LEDGER-ADOPT-FROM and asserts 1. The fault that prints the error twice fails it. The assertions of the status are gone, because no fault fails them alone. |
+| Spec adversary 4 | The fences of Pass 13 hold the text of the files. The lead ran the fault again after the retitle. |
+| Spec adversary 5 | Pass 13 names both merges and the history check. The commit of each run is in this block. |
+| STE adversary 2, 3 and spec adversary minor | The scenario `ownership-055` says "the full hash of the commit HEAD" in its `from` field and "the file of the record". D11 moved after the last sentence of D10. |
+| STE adversary 6, 7 | The sentences of Pass 13 about `isAdoptSource` and about the old tests have their final text. |
+
+The lead did not correct the other minors of pre-review 11. `review.md` lists them as known limits.
+
+The first fault changes `checkAdopts`. The line that pushes the error LEDGER-ADOPT-FROM pushes the adopt line to the valid lines instead. The second fault gives every file the total count exception. In `compareLedger` the call of `adoptedFile(file)` becomes `true`. The lead ran the test of gap-ledger-151 in `ledger.test.mjs` with each fault. The files `pass14/fault-151-adopt-from.txt` and `pass14/fault-151-stale.txt` hold the outputs, and the file `pass14/restored-151.txt` holds the output without a fault:
+
+```text
+✖ [gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit
+ℹ tests 1
+ℹ pass 0
+ℹ fail 1
+```
+
+```text
+✖ [gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit
+ℹ tests 1
+ℹ pass 0
+ℹ fail 1
+```
+
+```text
+ℹ tests 1
+ℹ pass 1
+ℹ fail 0
+```
+
+The third fault removes the line `throw error;` of `validAdoptSources` in `ownership.mjs`. A copy of the test of `ownership-055` printed the result of each assertion under this fault. The file `pass14/fault-drop-throw-assertions.txt` holds the printed lines, and the file `pass14/fault-drop-throw.txt` holds the summary of the tests of `ownership-055` and gap-ledger-138 under the fault:
+
+```text
+ASSERTION no file error: FAILS
+ASSERTION no LEDGER-STALE: FAILS
+ASSERTION one LEDGER-ADOPT-FROM error: passes (count 1)
+ASSERTION history error: FAILS
+ASSERTION status 1: passes (status 1)
+```
+
+```text
+✖ [gap-ledger-138] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line
+✖ [ownership-055] the gate stops at LEDGER-ADOPT-FROM and prints no LEDGER-STALE error for an invalid from commit
+ℹ tests 2
+ℹ pass 0
+ℹ fail 2
+```
+
+The fourth fault makes the gate print the history error twice: in `gates.mjs` the report of the early check lists the error two times. The file `pass14/fault-two-errors.txt` holds the summary of the same two tests under this fault. The file `pass14/restored-055-138.txt` holds the summary after the lead restored the file:
+
+```text
+✖ [ownership-055] the gate stops at LEDGER-ADOPT-FROM and prints no LEDGER-STALE error for an invalid from commit
+ℹ tests 2
+ℹ pass 1
+ℹ fail 1
+```
+
+```text
+ℹ tests 2
+ℹ pass 2
+ℹ fail 0
+```
+
+Each fault ran on the code files and test files of commit 85eaab08, and the lead restored each file with `git checkout`.
+
+The lead ran the whole test file `gates.test.mjs` with `node --test` on the host, on cores 4 to 7, at commit 85eaab08. The file `pass14/final-run-head.txt` holds the commit, and the file `pass14/final-run-summary.txt` holds the summary lines. The lead also ran the test file `ledger.test.mjs` on cores 8 to 11. The file `pass14/ledger-run-summary.txt` holds its summary lines:
+
+```text
+85eaab0877deb4e8339079dbd752574867bd416f
+```
+
+```text
+ℹ tests 241
+ℹ pass 241
+ℹ fail 0
+```
+
+```text
+ℹ tests 107
+ℹ pass 107
+ℹ fail 0
+```
+
+The lead ran the format check, the import direction check, the package boundary check and the layer token check on the host. The lead also ran the STE lint and `openspec validate`. The file `pass14/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+
