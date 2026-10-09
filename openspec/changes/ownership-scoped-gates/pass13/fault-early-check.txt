@@ -1,0 +1,5 @@
+✖ [gap-ledger-138 ownership-055] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line
+✖ [gap-ledger-151 ownership-055] the gate stops at LEDGER-ADOPT-FROM and gives no stale ledger entry for an invalid from commit
+ℹ tests 2
+ℹ pass 0
+ℹ fail 2

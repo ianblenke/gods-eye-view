@@ -2640,7 +2640,8 @@ const TOLERANCE_OPTIONS = {
     const root = options.cwd;
     const runs = JSON.parse(readFileSync(args[1], 'utf8'));
     const files = Object.keys(JSON.parse(readFileSync(path.join(root, '.gev-cache/spec/inventory.json'), 'utf8')));
-    const text = files.map(file => `SF:${root}/${file}\nLF:100\nLH:100\nBRF:100\nBRH:${file === 'src/merged.js' || file === 'src/legacy.js' ? 99 : 100}\nFNF:100\nFNH:100\nend_of_record\n`).join('');
+    const lineRecords = Array.from({ length: 200 }, (_, index) => `DA:${index + 1},1\n`).join('');
+    const text = files.map(file => `SF:${root}/${file}\nLF:100\nLH:100\nBRF:100\nBRH:${file === 'src/merged.js' || file === 'src/legacy.js' ? 99 : 100}\nFNF:100\nFNH:100\n${lineRecords}end_of_record\n`).join('');
     writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), text);
     writeFileSync(path.join(runs[0].env.NODE_V8_COVERAGE, 'coverage-1-1-0.json'), '{"result":[]}');
     writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ checked: files, violations: [], assertions: [], leaks: [] }) + '\n');
@@ -2703,14 +2704,16 @@ test('[gap-ledger-137] the gate gives no count tolerance to a file that differs 
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-138] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line', () => {
+test('[gap-ledger-138 ownership-055] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line', () => {
   withMergeFixture((root) => {
     const line = adoptedNoise(root);
     line.from = git(root, 'rev-parse', 'HEAD');
     write(root, { 'openspec/trace/history.jsonl': JSON.stringify(line) + '\n' });
     const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
-    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
-    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+    assert.equal(result.status, 1);
+    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM openspec\/trace\/history\.jsonl/);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-STALE/);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
@@ -2819,14 +2822,16 @@ test('[gap-ledger-150] the gate ignores another change for total differences', (
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit', () => {
+test('[gap-ledger-151 ownership-055] the gate stops at LEDGER-ADOPT-FROM and gives no stale ledger entry for an invalid from commit', () => {
   withMergeFixture(root => {
     const line = adoptedTotals(root);
     line.from = git(root, 'rev-parse', 'HEAD');
     write(root, { 'openspec/trace/history.jsonl': JSON.stringify(line) + '\n' });
     const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
-    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
-    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
+    assert.equal(result.status, 1);
+    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM openspec\/trace\/history\.jsonl/);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-STALE/);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
