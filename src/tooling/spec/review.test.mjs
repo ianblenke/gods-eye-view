@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -407,3 +407,34 @@ test('[change-review-032] stops for a review command without the scope rules', (
   }
   assert.deepEqual(checkReviewCommand(PROJECT_ROOT), []);
 });
+
+const STE_AGENT = '.claude/agents/ste-adversary.md';
+
+function pinned(file, lines) {
+  const text = readFileSync(path.join(PROJECT_ROOT, file), 'utf8');
+  for (const line of lines) assert.ok(text.includes(line), `${file} lacks: ${line}`);
+}
+
+test('[change-review-034] gives the severity minor to two possible meanings in other text', () => {
+  pinned(STE_AGENT, [
+    'Normative text is a requirement, a scenario, a rule of AGENTS.md or openspec/config.yaml, a message of the gate or the instructions of an agent.',
+    'Other text includes evidence.md, tasks.md, the notes and tables of design.md, review.md and the title of a test.',
+    'Two possible meanings in other text are minor when the text is true under each meaning.',
+    '- **minor**: Two possible meanings in other text, when the text is true under each meaning.',
+  ]);
+});
+
+test('[change-review-035] keeps the severity major for the faults that change a rule or a verdict', () => {
+  pinned(STE_AGENT, [
+    '- **major**: A banned word in normative text or in a test title.',
+    '- **major**: Two possible meanings in normative text.',
+    '- **major**: A text or a title that does not agree with the code, the specs or the other prose of the change.',
+    '- **major**: A task that gives two instructions.',
+  ]);
+});
+
+test('[change-review-036] names the severities critical, major and minor in rule 16 of AGENTS.md', () => {
+  pinned('AGENTS.md', ['Put the severity after that word, as `critical`, `major` or `minor`.']);
+  assert.equal(readFileSync(path.join(PROJECT_ROOT, 'AGENTS.md'), 'utf8').includes('`blocker`'), false);
+});
+

@@ -59,7 +59,7 @@ Or:
 
 ```
 Verdict: FAIL
-- [ ] S1 major openspec/changes/example/proposal.md:7 "it stops" Articles and nouns. "it" can refer to the gate or to the test. Write: "the gate stops".
+- [ ] S1 major openspec/changes/example/specs/gate/spec.md:7 "it stops" Articles and nouns. "it" can refer to the gate or to the test. Write: "the gate stops".
 - [ ] S2 minor openspec/changes/example/proposal.md:9 "is removed" Voice. Write: "the command removes".
 ```
 
@@ -70,14 +70,22 @@ Without that evidence, write "minor".
 A text that does not obey an STE rule is minor.
 Examples include a verb that the text uses as a noun, an `-ing` word and passive voice.
 Other examples include a vague verb and a word that STE does not approve.
-The text is major only when it gives two meanings or disagrees with the code, the specs or the other prose of the change.
+
+Normative text is a requirement, a scenario, a rule of AGENTS.md or openspec/config.yaml, a message of the gate or the instructions of an agent.
+Other text includes evidence.md, tasks.md, the notes and tables of design.md, review.md and the title of a test.
+Two possible meanings in other text are minor when the text is true under each meaning.
+A text that disagrees with the code, the specs or the other prose of the change is major in all text.
 
 Write one finding for each numbered check in a file when the faults have equal severity.
 Write the places as `file:7,9,12`.
 Do not report an approved word because you prefer another.
 
 Give each finding one of these severities:
-- **major**: The text has two possible meanings, or the text does not agree with the code, the specs or the other prose of the change.
-- **minor**: The text has one clear meaning, but it does not obey an STE rule.
+- **major**: A banned word in normative text or in a test title.
+- **major**: Two possible meanings in normative text.
+- **major**: A text or a title that does not agree with the code, the specs or the other prose of the change.
+- **major**: A task that gives two instructions.
+- **minor**: Two possible meanings in other text, when the text is true under each meaning.
+- **minor**: A text that has one clear meaning but does not obey an STE rule.
 
 Give the verdict FAIL when you have one or more major findings. Give PASS when you have no findings or only minor findings. With PASS, also list each minor finding. For each finding, give the severity, quote the text and give the new text.
