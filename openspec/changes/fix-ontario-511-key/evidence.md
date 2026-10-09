@@ -34,7 +34,7 @@ The endpoint example gives image IDs 815 and 816.
 
 curl -sS -I -A gods-eye-view-research https://511on.ca/map/Cctv/815 returned HTTP 200 and `image/jpeg` without a key.
 
-This HEAD request downloaded no image. Image content access: unverified.
+This HEAD request downloaded no image. Image content access: not checked.
 
 The task used three GET requests and one HEAD request. No account or credential form opened.
 
@@ -52,7 +52,7 @@ All three failures come from sandbox EPERM on loopback listen calls in `cctvMedi
 
 The host command for that file passed all 21 tests; `evidence/media-host.log` has the output.
 
-The final Ontario file has eight tests, all pass. Thus the final CCTV total is 256 tests.
+At Pass 1, the final Ontario file has eight tests, all pass. Thus the final CCTV total is 256 tests.
 
 The host socket result accounts for all three sandbox failures.
 
@@ -80,7 +80,7 @@ That command tests the Ontario path only. Other pack paths remain outside this f
 
 The requested whole-file 100% result for `sources.js` is not complete.
 
-The lead must assess its existing gaps in the image. This task does not change other pack code to close those gaps.
+The lead must assess its current gaps in the image. This task does not change other pack code to close those gaps.
 
 The same coverage command for `src/data/cctvCalgary.test.mjs` gives these whole-file results:
 
@@ -132,7 +132,7 @@ The full-test command uses run with phase 2, one job and resume with the same fi
 
 The result files show 120 phase-one kills and nine survivors, then one more kill and eight survivors.
 
-Both phases report zero crashes and zero timeouts. No candidate remains pending.
+Both phases report zero crashes and zero timeouts. No candidate waits for a result.
 
 The phase-two command serves as the probe for each EQUIVALENT claim below.
 
@@ -156,13 +156,13 @@ The final Prettier command names only the helper and Ontario test file.
 
 taskset -c 0-3 nice -n 19 node scripts/spec/gates.mjs lint --change fix-ontario-511-key reports zero errors.
 
-taskset -c 0-3 nice -n 19 openspec show fix-ontario-511-key --json prints JSON with one ADDED requirement.
+At Pass 1, taskset -c 0-3 nice -n 19 openspec show fix-ontario-511-key --json prints JSON with one ADDED requirement.
 
 taskset -c 0-3 nice -n 19 openspec validate fix-ontario-511-key reports that the change is valid.
 
-The proposal headings match the five required headings in the nearby defect change.
+The proposal section titles match the five required section titles in the nearby defect change.
 
-The design, tasks and evidence use the same `## ` heading level as that change.
+The design, tasks and evidence use the same `## ` section title level as that change.
 
 ## Lead checks
 
@@ -170,7 +170,7 @@ The lead must run the ratchet and final gates in the Node image, then both revie
 
 The host task does not archive the change or write `review.md`.
 
-The final lint command reports zero errors and 540 warnings.
+At Pass 1, the final lint command reports zero errors and 540 warnings.
 
 ## Pass 2
 
@@ -189,7 +189,7 @@ Each title below has its scenario tag in the test file.
 The table includes optional access, short circuit operands, guards and exception paths.
 The shared guard at line 404 has the OR paths of its two operands.
 The shared coordinate result at line 405 has the AND paths of its four operands.
-The URL host guard has the OR and AND paths of its listed operands.
+The URL host name guard has the OR and AND paths of its listed operands.
 
 | Line | Condition | True side test title | False side test title |
 |---:|---|---|---|
@@ -269,7 +269,7 @@ The URL host guard has the OR and AND paths of its listed operands.
 | 493 | `row?.Direction` | use lower case fields and hash pose | No path: the ID guard drops null rows |
 | 493 | `row?.direction` | use lower case fields and hash pose | No path: the ID guard drops null rows |
 
-The table has 75 rows. The lcov branch count differs because V8 reports source ranges.
+The table has 75 table lines. The lcov branch count differs because V8 reports source ranges.
 
 Optional access to a null row after its ID guard has no public path.
 Optional access to a null view after its status filter has no public path.
@@ -304,11 +304,11 @@ The first command loop reports 25 files, 303 tests, 303 passes, zero failures an
 
 The same loop with the next tests writes `/tmp/ontario-all-tests-final.log`.
 It reports 25 files, 310 tests, 310 passes, zero failures and 25 zero exit codes.
-That row file has 49 tests. The key file has eight tests.
+At Pass 1, that Rows test file has 49 tests. The key file has eight tests.
 
 ### Named faults
 
-The command `python3 /tmp/ontario-named-final.py` creates `/tmp/ontario-named-final` from the read tree plus the new tests.
+The command `python3 /tmp/ontario-named-final.py` creates `/tmp/ontario-named-final` from the tree that the worker read plus the new tests.
 It changes only the Ontario source range in that scratch tree.
 Each test command uses the host prefix and one file with --test and --test-isolation=none.
 The command saves the output in `/tmp/ontario-fault-N.log` and the results in `/tmp/ontario-named-results.json`.
@@ -330,7 +330,7 @@ The JSON result has each exact source change and its failed tests.
 | down fallback | [live-sources-006] select the first down view |
 | URL path | [live-sources-006] reject URL 3 |
 | HTTPS | [live-sources-006] reject URL 4 |
-| host | [live-sources-006] reject URL 5 |
+| URL host name | [live-sources-006] reject URL 5 |
 | view ID | [live-sources-006] reject URL 7 |
 | status | [live-sources-006] accept boundary 41 |
 | view choice | [live-sources-006] select the first view without down |
@@ -364,7 +364,7 @@ The lint command is node scripts/spec/gates.mjs lint --change fix-ontario-511-ke
 
 The OpenSpec commands use the host prefix with show fix-ontario-511-key --json and validate fix-ontario-511-key.
 The show command prints JSON. The validate command states that the change is valid.
-The heading search has the five required proposal headings in the current file and the adjacent measurement change.
+The section title search has the five required proposal section titles in the current file and the adjacent measurement change.
 
 No container, make, ledger, archive, push or gh command ran in this pass.
 The lead must run the image checks and the two reviews.
@@ -387,7 +387,7 @@ Phase 1 uses --phase 1. Phase 2 uses --phase 2 and --resume.
 Phase 1 tests the first 42 row tests and eight key tests. It reports 703 kills and 182 survivors.
 Phase 2 has fresh baselines for all 65 row tests and eight key tests. It reports 111 more kills and 71 survivors.
 
-Each phase reports zero crashes and zero timeouts. No candidate remains pending.
+Each phase reports zero crashes and zero timeouts. No candidate waits for a result.
 The total is 814 kills from 885 candidates. The table below gives an EQUIVALENT claim for each of the other 71 candidates.
 
 The final test file adds direct own-property checks with literal field names.
@@ -407,15 +407,15 @@ These hashes identify the final test file and the unchanged source file in the s
 | on206 on208 on210 on218 on219 | EQUIVALENT. The changed status fallback strings never equal enabled. The status filter drops each. | Full row and key tests pass for each ID. |
 | on98 on100 | EQUIVALENT. A null match access throws into the private URL catch. The catch returns the same empty URL. | Full row and key tests pass for each ID. |
 | on102 on140 on167 on174 | EQUIVALENT. The URL filter drops both empty strings and undefined values. The private empty return type has no public effect. | Full row and key tests pass for each ID. |
-| on108 | EQUIVALENT. The native URL parser already converts the accepted host names to lower case. | Full row and key tests pass for each ID. |
-| on118 on127 on773 on775 | EQUIVALENT. The native URL fields and host checks have no side effects. Any decode error and any failed host check return the same empty URL. | Full row and key tests pass for each ID. |
+| on108 | EQUIVALENT. The native URL parser already converts the accepted URL host names to lower case. | Full row and key tests pass for each ID. |
+| on118 on127 on773 on775 | EQUIVALENT. The native URL fields and URL host name checks have no side effects. Any decode error and any failed host check return the same empty URL. | Full row and key tests pass for each ID. |
 | on780 on781 on782 on783 on849 | EQUIVALENT. The ID rule rejects slash, question mark, hash and empty IDs. The path rule and decoder cannot supply an empty accepted ID. | Full row and key tests pass for each ID. |
 | on275 on277 on280 on281 on852 | EQUIVALENT. The empty array find result and first item are undefined. The loader drops both null and undefined views. | Full row and key tests pass for each ID. |
 | on244 on245 on267 on268 on355 on356 on367 on368 on392 on393 on417 on418 on439 on440 on503 on504 | EQUIVALENT. The ID guard drops null rows. The status filter drops null views. No later optional null path can occur. | Full row and key tests pass for each ID. |
 | on448 on451 on452 | EQUIVALENT. The description is a private string. An empty description gives an empty label on each side of the condition. | Full row and key tests pass for each ID. |
 | on854 on857 on869 on870 on872 on874 | EQUIVALENT. The moved private calculations use independent local values. They do not change the row values, source fields, errors or logs. | Full row and key tests pass for each ID. |
 
-The hostname command uses node with --input-type=module and new URL for uppercase official and traveliq hosts.
+The hostname command uses node with --input-type=module and new URL for uppercase official and traveliq URL host names.
 `/tmp/ontario-host-probe.log` has `https: 511on.ca` and `https: a.traveliq.co`.
 
 The raw candidate, result and output files record each source fault and each failed test title.
@@ -426,12 +426,12 @@ It reports 71 survivors, zero kills, zero crashes and zero timeouts. These passe
 
 The last host test loop writes `/tmp/ontario-all-tests-last.log`.
 A Python count of its test totals and exit lines reports 25 files, 326 tests, 326 passes and zero failures.
-All 25 test processes have exit code 0. The row file has 65 tests.
+All 25 test processes have exit code 0. The Rows test file has 65 tests.
 
 The last format shim command and the last Prettier test-file command both return exit code 0.
 The Prettier command states that all matched files use its code style.
 
-The lead log QA line states that no script covers the capabilities of this change.
+The QA line in the lead log states that no script covers the capabilities of this change.
 This pass adds no QA script to the project. Each scratch script has a purpose header.
 
 The final source search lists the Ontario helper declarations, loader and readOntarioCameraRows call.
@@ -447,6 +447,337 @@ All test, coverage, lint and mutation commands use the requested host prefix.
 The final lint command uses the host prefix with node scripts/spec/gates.mjs lint --change fix-ontario-511-key.
 It reports zero errors and 545 warnings.
 The final OpenSpec show command prints JSON. The final validate command states that the change is valid.
-The proposal heading search has all five required headings. The known limits text has no change.
+The proposal section title search has all five required section titles. The known limits text has no change.
 
 The stored logs have no spaces on empty lines. The source text, counts and test titles have no change.
+
+## Pass 3
+
+### Tree and commands
+
+The worker read branch fix-ontario-511-key at commit `ae2cbaa478e412f1ddd6ec6aeda0bb62b6d078a6` with the Pass 3 corrections.
+The scratch tree has no branch. It copies the corrected code and tests from this clone.
+The reports in review/pre-review-1 have no change. The trace files have no change.
+
+All Node commands use taskset -c 8-11 nice -n 19. Each test process names one test file.
+The test commands use node --test --test-isolation=none. Each Python script has a purpose comment.
+The scripts are in `/home/ianblenke/docker/gev-tools/fix-ontario-511/pass3/`.
+
+The raw output is in evidence/pass3. The JSON files record the counts and failed test titles.
+
+### Corrections
+
+| Decision | Correction |
+|---|---|
+| O1 | Each key test imports a fresh request helper. Each warning test checks the exact text and the absence of the key text. |
+| O2 | Scenario 005 names fetch, JSON and row errors. Both test files check the row warning. |
+| O3 | Both dated entries match main again. New entries state the key rule for 2026-10-08. The other documents state the server key rule. |
+| O4 | Impact lists the closed gap and the lead counts. Known limits list each case from the brief and the reader issue below. |
+| O5 | Design names files and measures. Each task has one instruction. Lead checks form the last group. |
+| O6 | Scenarios name actors, the key trim, Accept, timeout, ASCII IDs, URL text and field order. Test titles name causes. |
+| O7 | A lead task names the Purpose sentence for archive time. The current capability spec has no change. |
+| O8 | Time prefixes mark the old counts. Pass 3 stores new output in a separate block. |
+
+The glossary gives each actor and object one meaning. The two warning texts are:
+
+- "[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY."
+- "[CCTV] Ontario 511 camera data has an error."
+
+Scenario 004 states that the first request error writes the warning and later request errors write none.
+Scenario 005 states the same request rule and the separate row error rule.
+Scenario 002 names application/json and 15000 milliseconds. Scenarios 006 and 007 name the URL and field rules that the tests check.
+
+The IDs stay live-sources-002 to live-sources-009. No scenario in openspec/specs changes.
+
+### Tests and named mutations
+
+The first ordinary test processes returned a file failure with no assertion output. They gave no assertion result.
+The next commands used --test-isolation=none. Five key tests and one row test failed on the old warning text.
+The code then changed the two warning strings. The code has no other runtime correction in Pass 3.
+
+The final key file has 12 tests. The final Rows test file has 69 tests. Each passes.
+The run-alone.py command runs each of the 12 key tests with an exact --test-name-pattern. Each process returns zero.
+The reverse.mjs command reverses the key test groups and the fetch/JSON case order on the scratch tree.
+
+The reverse test process passes all 12 tests.
+
+The all-tests.py and layer-tests.py commands run each current CCTV file and mediaProviders.test.mjs.
+The sandbox has three loopback failures in cctvMediaRange.test.mjs. The host repeat passes all 21 tests in that file.
+The final counts use that repeat once and the final key file once:
+
+```json
+{
+  "files": 25,
+  "tests": 334,
+  "pass": 334,
+  "fail": 0,
+  "nonzero_exit": 0
+}
+```
+
+The pre-review files had eight key tests and 65 row tests. Pass 3 adds four key tests and four URL cases.
+The new key tests cover trim, timeout, Accept and key text inside a longer error message.
+The new URL cases cover x511on.ca, www.511on.ca, %20 and a non-ASCII ID character.
+
+The named.py command makes each mutation on a scratch copy and restores the source after each process.
+All 13 mutations return exit code 1 and fail the named target test.
+
+| Mutation | Failed test |
+|---|---|
+| warn-each-error | [live-sources-004] write one warning for an invalid key |
+| hide-first-error-warning | [live-sources-005] keep the fetch error secret |
+| put-error-message-in-warning-with-key | [live-sources-005] keep the fetch error secret |
+| put-embedded-error-message-in-warning-with-key | [live-sources-005] keep key text inside a fetch error out of the warning |
+| put-json-error-message-in-warning-with-key | [live-sources-005] keep the json error secret |
+| omit-row-error-warning | [live-sources-005] write the warning for a row error with the key text |
+| no-key-trim | [live-sources-002] trim spaces from the key |
+| timeout-one | [live-sources-002] use a timeout of 15000 milliseconds |
+| wrong-Accept | [live-sources-002] send the application/json Accept header |
+| accept-x511on.ca | [live-sources-006] return an empty list for the x511on.ca URL host name |
+| accept-www.511on.ca | [live-sources-006] return an empty list for the www.511on.ca URL host name |
+| accept-ID-space | [live-sources-006] return an empty list for an ID with a space |
+| accept-ID-non-ASCII | [live-sources-006] return an empty list for an ID with a non-ASCII character |
+
+### Coverage and reader issue
+
+The row coverage command uses --experimental-test-coverage and the lcov reporter with sources.js as its include file.
+The four Ontario functions have 87 branch ranges and zero zero-count ranges. No function has a zero count.
+The coverage output records these function counts:
+
+```text
+FNDA:7087,isLikelyOntarioCoordinate
+FNDA:7074,normalizeOntarioCctvUrl
+FNDA:7078,pickOntarioCctvView
+FNDA:7096,loadOntarioSourcesFromOpenData
+```
+
+The helper command uses NODE_V8_COVERAGE and the key test file. coverage.mjs reads the raw V8 output.
+It uses the project addProcess method to combine the 13 copies under the same physical file name.
+The combined result is 100% lines, branches and functions:
+
+```json
+{
+  "file:///home/ianblenke/docker/gev-work/fix-ontario-511/server/providers/cctv/ontarioRequest.js": {
+    "LF": 36,
+    "LH": 36,
+    "BRF": 11,
+    "BRH": 11,
+    "FNF": 1,
+    "FNH": 1
+  }
+}
+```
+
+The same script probes the current reader with separate module URLs. parseLcov selects the least covered record for each metric.
+That probe gives these counts:
+
+```json
+{
+  "server/providers/cctv/ontarioRequest.js": {
+    "lines": {
+      "total": 36,
+      "covered": 9
+    },
+    "branches": {
+      "total": 6,
+      "covered": 2
+    },
+    "functions": {
+      "total": 1,
+      "covered": 0
+    }
+  }
+}
+```
+
+The host probe shows an instrument issue with the required fresh module tests. It gives no image gate verdict.
+The worker told the lead. No test changes to satisfy the instrument, and no gate changes.
+The lead must resolve this issue before the next ratchet can close the change.
+
+### Repeated titles and verbs
+
+The check-verbs.py command checks every live test title against its assertion body.
+It checks exception verbs, result verbs, literal result claims and named objects. Its output is:
+
+```json
+{
+  "tests": 81,
+  "flags": []
+}
+```
+
+The check-repeated-titles.py command compares quoted scenario test titles with the live titles in both files.
+It omits old records and the reports. Its output is:
+
+```json
+{
+  "live_titles": 81,
+  "references": 17,
+  "flags": []
+}
+```
+
+### Automatic mutations
+
+The first sandbox campaign stopped before its baseline gave test output. It gave no mutation verdict.
+The first generator attempt stopped on a parse error. The corrected gen.mjs command produced 116 helper candidates and nine catch candidates.
+The catch candidates cover the only runtime source line that Pass 3 changes in sources.js.
+
+The run command uses the automut tool, root /tmp/ont-pass3-tree, mutants pass3/mutants.json, one job and slow-ms 1000.
+It names the key and Rows test files, with one file per process. Phase 1 uses --phase 1.
+Phase 2 uses --phase 2 and --resume with the same output file.
+
+The first host campaign had 11 key tests. The final campaign has fresh baselines for 12 key tests and 69 row tests.
+The final output is results-final.json. Each full-test probe passes all 81 Ontario tests.
+The totals from that file are:
+
+```json
+{
+  "candidates": 125,
+  "phase_one": {
+    "KILLED": 117,
+    "SURVIVED": 8
+  },
+  "full_test_probes": {
+    "SURVIVED": 8
+  },
+  "crashes": 0,
+  "timeouts": 0,
+  "pending": 0
+}
+```
+
+| IDs | Claim | Full-test probe and reason |
+|---|---|---|
+| h29, h30 | EQUIVALENT | Each passes. The private missing-key flag changes from true to another truthy value. |
+| h89, h90 | EQUIVALENT | Each passes. The private request-error flag changes from true to another truthy value. |
+| h77 | EQUIVALENT | It passes. A ReferenceError replaces the private Error. The catch returns the same list and warning. |
+| h111, h112 | EQUIVALENT | Each passes. The private Error message changes, but the catch reads no message. |
+| h115 | EQUIVALENT | It passes. The nested request awaits fetch before its error check, so the flag assignment still comes first. |
+
+All eight survivors have a claim and a full-test probe. The absent-key order mutation fails the callback test.
+The rows and helper code match the clone after the named mutations. The scratch test files have the final assertions.
+
+### Source searches and section titles
+
+The command git diff 05736e82 -- server/providers/cctv/sources.js gives only the catch string change:
+
+```diff
+diff --git a/server/providers/cctv/sources.js b/server/providers/cctv/sources.js
+index f97b9efe..fb206d71 100644
+--- a/server/providers/cctv/sources.js
++++ b/server/providers/cctv/sources.js
+@@ -534,7 +534,7 @@ export async function loadOntarioSourcesFromOpenData() {
+     );
+     return prioritized;
+   } catch {
+-    console.warn('[CCTV] Ontario 511 camera data error.');
++    console.warn('[CCTV] Ontario 511 camera data has an error.');
+     return [];
+   }
+ }
+
+```
+
+The source search after the corrections gives this output:
+
+```text
+server/providers/cctv/sources.js:537:    console.warn('[CCTV] Ontario 511 camera data has an error.');
+server/providers/cctv/ontarioRequest.js:10:  const key = (process.env.ONTARIO_511_API_KEY || '').trim();
+server/providers/cctv/ontarioRequest.js:14:      console.warn('[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.');
+server/providers/cctv/ontarioRequest.js:25:    if (!response.ok) throw new Error('Ontario camera request failed');
+server/providers/cctv/ontarioRequest.js:31:        '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
+
+```
+
+The test title search gives this output:
+
+```text
+src/data/cctvOntarioRows.test.mjs:96:  'the x511on.ca URL host name',
+src/data/cctvOntarioRows.test.mjs:97:  'the www.511on.ca URL host name',
+src/data/cctvOntarioRows.test.mjs:98:  'an ID with a space',
+src/data/cctvOntarioRows.test.mjs:99:  'an ID with a non-ASCII character',
+src/data/cctvOntarioRows.test.mjs:115:  'https://x511on.ca/map/Cctv/A',
+src/data/cctvOntarioRows.test.mjs:116:  'https://www.511on.ca/map/Cctv/A',
+src/data/cctvOntarioRows.test.mjs:491:  'URL text with spaces at the start and end',
+src/data/cctvOntarioKey.test.mjs:164:test('[live-sources-002] trim spaces from the key', async (t) => {
+src/data/cctvOntarioKey.test.mjs:176:test('[live-sources-002] use a timeout of 15000 milliseconds', async (t) => {
+src/data/cctvOntarioKey.test.mjs:189:test('[live-sources-002] send the application/json Accept header', async (t) => {
+src/data/cctvOntarioKey.test.mjs:195:test('[live-sources-005] keep key text inside a fetch error out of the warning', async (t) => {
+
+```
+
+The history probe compares the dated entries with git show e2437f94 for each file. Both old entries match main.
+The new entries state the 2026-10-08 key rule. history.json has both results and the exact new text.
+The sources.js diff and the dev-fresh.sh diff each have one string or comment change.
+The constants.js diff changes only the Ontario comment.
+
+The headings.py command compares every changed Markdown document with commit ae2cbaa478e412f1ddd6ec6aeda0bb62b6d078a6.
+Its output is:
+
+```text
+CHANGELOG.md: same
+DATA_SOURCES.md: same
+README.md: same
+SECURITY.md: same
+docs/CURRENT-STATE.md: same
+openspec/changes/fix-ontario-511-key/design.md: changed
+--- ae2cbaa478e412f1ddd6ec6aeda0bb62b6d078a6
++++ Pass 3
+@@ -3,3 +3,6 @@
+ ## Health decision
+ ## Documents
+ ## Checks
++## Pass 3 words
++## Files and measures
++## Purpose at archive time
+openspec/changes/fix-ontario-511-key/evidence.md: changed
+--- ae2cbaa478e412f1ddd6ec6aeda0bb62b6d078a6
++++ Pass 3
+@@ -7,3 +7,4 @@
+ ## Prose and OpenSpec
+ ## Lead checks
+ ## Pass 2
++## Pass 3
+openspec/changes/fix-ontario-511-key/proposal.md: same
+openspec/changes/fix-ontario-511-key/specs/live-sources/spec.md: same
+openspec/changes/fix-ontario-511-key/tasks.md: changed
+--- ae2cbaa478e412f1ddd6ec6aeda0bb62b6d078a6
++++ Pass 3
+@@ -1,4 +1,5 @@
+ ## 1. Spec and tests
+ ## 2. Code and host checks
+-## 3. Lead checks
+-## 4. Pass 2
++## 3. Pass 2
++## 4. Pass 3
++## 5. Lead checks
+
+```
+
+The proposal keeps all five required section titles. Design adds the glossary, files and measures, and Purpose sentence sections.
+Evidence adds Pass 3. Tasks add Pass 3 and move Lead checks to the last group.
+The other section titles have no change.
+
+### Limits of this run
+
+The worker ran no Docker, make, ratchet, archive, push or gh command. The trace files have no change.
+The lead must repeat the ratchet after these corrections and run the final image gates and both reviews.
+The helper reader issue above needs a lead decision. This report gives no new ledger or review verdict.
+No worker used a real Ontario key or downloaded an image in this pass.
+
+### Final host checks
+
+The format shim command checks scripts/format.mjs with --check. It returns zero and prints "Checked 1159 source files."
+The package boundary command returns zero. It lists the cctv-provider group with 19 owned modules and each other group.
+The helper and both test files pass Prettier after the last test addition.
+
+The lint command returns zero with 0 errors and 540 warnings. The worker read the warnings for the change files.
+The OpenSpec show command prints JSON with deltaCount 2. The OpenSpec validate command states that the change is valid.
+The final title checks report 81 tests and zero flags. The repeated titles check has 17 references and zero flags.
+
+The raw log copies have no spaces at line ends. Their text and counts match the command output.
+The diff check gives no whitespace error. The source and test searches above show the completed corrections.
+
+The two change warnings concern the old JavaScript undefined record and the exact phrase in scenario 005 from O2.
+The new scenario clauses use the loader as the actor.

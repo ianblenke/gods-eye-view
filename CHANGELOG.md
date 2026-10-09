@@ -1,5 +1,7 @@
 # Changelog
 
+- Ontario 511 camera requests need `ONTARIO_511_API_KEY` (2026-10-08). The pack makes no request without it.
+
 - Public Overpass instances are no longer used by default. Street Traffic
   roads come from TomTom flow tiles, OpenFreeMap vector tiles, or both, chosen
   on the layer row (TomTom / OSM / Hybrid) or with `?trafficRoads=`. With a
@@ -740,7 +742,7 @@ of current runtime behavior, see [`docs/CURRENT-STATE.md`](docs/CURRENT-STATE.md
   client renders nullschool-style animated particles in a canvas overlay that
   follows the Cesium camera and skips globe-occluded points. Forecast, not
   observations. Requires Node ≥24 for the WASM decoder.
-- Add Ontario 511 as a CCTV source pack with a server developer key, for Kitchener-area
+- Add Ontario 511 as a keyless CCTV source pack, including Kitchener-area
   highway cameras, with server-registered still URLs and attribution.
 - CCTV Mesh adds Finland: Fintraffic road weather cameras, keyless, nationwide, 300 by default. Each camera view of a station is placed separately; ambient stills refresh on the source's 10-minute cadence (the active camera keeps the usual 10-second refresh).
 - Add DriveBC highway cameras for British Columbia to the CCTV layer: the 250

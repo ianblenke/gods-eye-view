@@ -10,7 +10,7 @@ PORT="${PORT:-4173}"
 # should not be reachable from the network unless explicitly requested.
 # Set HOST=0.0.0.0 to opt in to LAN exposure (a warning is printed).
 HOST="${HOST:-localhost}"
-# CCTV source packs (all keyless): Austin (~815 live upstream), Caltrans
+# CCTV source packs (Ontario needs a server key): Austin (~815 live upstream), Caltrans
 # districts 4,7,11,3 = SF/LA/San Diego/Sacramento (~1,860 live upstream),
 # TfL London JamCams (~870 live upstream), Ontario 511 (~944 live upstream,
 # including Kitchener-area highways), and Fintraffic Finland weathercams

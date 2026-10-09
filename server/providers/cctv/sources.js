@@ -534,7 +534,7 @@ export async function loadOntarioSourcesFromOpenData() {
     );
     return prioritized;
   } catch {
-    console.warn('[CCTV] Ontario 511 camera data error.');
+    console.warn('[CCTV] Ontario 511 camera data has an error.');
     return [];
   }
 }
