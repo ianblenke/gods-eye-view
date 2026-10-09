@@ -17,3 +17,7 @@ Round 1 majors, all three corrected, and the corrections add no major fault:
 Your question about the kept items: none is a major. The code comments are outside the lint (it reads .md only) and no rule in the major list names a sentence length in a comment. The 85 titles have no word of words, phrases or newWords (grep of the titles with the forms), and none is longer than 25 words.
 
 Notes, not findings: the new text of .env.example, CHANGELOG.md and DATA_SOURCES.md is outside the three document-gate paths, and host-run.txt predates it. The final make gates runs the full tests, which include the files that read these texts (keySetupCore.test.mjs:381, bundleCredentials.test.mjs:15, drawTool.test.mjs:141, transitFeeds.test.mjs:216); run them on the host first. Every bullet of the proposal is 6 sentences or fewer (`mutants` has exactly 6). The new text has no banned word.
+
+## Correction (second message of the agent)
+
+Correction to my round 2 spec report (Verdict: PASS stays). Two references were wrong. (1) The title "[live-sources-030] checks area point 30.2 -87.65" is line 80 of r1-test-titles.txt, not 85. (2) "The layer metadata has no license text" comes from scope-source-probe.md (copyrightText and description are empty), not from live-check.txt. Nothing else changes.
