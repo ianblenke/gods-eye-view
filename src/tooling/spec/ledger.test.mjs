@@ -1508,7 +1508,7 @@ test('[gap-ledger-136 gap-ledger-140] the gate allows a count difference inside 
   assert.deepEqual(compareLedger({ ledger, current: complete, adoptedAsIs: name => name === file }), { errors: [], stale: [] });
 });
 
-test('[gap-ledger-137] the gate compares a content hash that differs from the hash in the ledger entry with no tolerance', () => {
+test('[gap-ledger-137] the gate compares counts with no tolerance for a content hash that differs from the hash in the ledger entry', () => {
   const file = 'src/new.js';
   const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 10, 10, { totals: BIG }) } });
   const current = gaps([loaded(file, 11, 11, 11, 'edited', BIG)]);
@@ -1529,7 +1529,7 @@ test('[gap-ledger-141] the gate compares untrue or unloaded coverage with no tol
   }
 });
 
-test('[gap-ledger-142] the gate reports an error for counts outside the count tolerance', () => {
+test('[gap-ledger-142] the gate reports an error for counts outside the tolerance', () => {
   const file = 'src/new.js';
   const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 10, 10, { totals: BIG }) } });
   assert.deepEqual(codes(compareLedger({ ledger, current: gaps([loaded(file, 19, 19, 19, 'same', BIG)]), adoptedAsIs: () => true })), ['LEDGER-LARGER-GAP', 'LEDGER-LOST-COVERAGE', 'LEDGER-LOST-COVERAGE']);
@@ -1537,7 +1537,7 @@ test('[gap-ledger-142] the gate reports an error for counts outside the count to
   assert.deepEqual(codes(compareLedger({ ledger: small, current: gaps([loaded(file, 2, 2, 2, 'same', { lines: 24, branches: 24, functions: 24 })]), adoptedAsIs: () => true })), ['LEDGER-LARGER-GAP', 'LEDGER-LOST-COVERAGE', 'LEDGER-LOST-COVERAGE']);
 });
 
-test('[gap-ledger-143] the ratchet command writes never-worse counts for a file that equals its adopted source', () => {
+test('[gap-ledger-143] the ratchet command writes never-worse counts for a file that equals its adopted source and has no base content', () => {
   const file = 'src/new.js';
   const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 10, 10, { totals: BIG }) } });
   const result = ratchet(ledger, gaps([loaded(file, 14, 14, 14, 'same', BIG)]), { adoptedAsIs: () => true });
@@ -1585,7 +1585,7 @@ test('[gap-ledger-148] the gate compares not-covered counts with no tolerance fo
   assert.deepEqual(codes(compareLedger({ ledger: ledgerWith(), current, adoptedFile: () => true })), ['LEDGER-NEW-COVERAGE-GAP']);
 });
 
-test('[gap-ledger-149] the gate records the ledger entry as stale for total differences without an adopt line', () => {
+test('[gap-ledger-149] the gate records the ledger entry as stale for total differences without a valid adopt line', () => {
   const file = 'src/new.js';
   const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 9, 2, { totals: BIG }) } });
   const current = gaps([loaded(file, 10, 9, 2, 'same', { lines: 399, branches: 399, functions: 399 })]);
@@ -1594,7 +1594,7 @@ test('[gap-ledger-149] the gate records the ledger entry as stale for total diff
   assert.deepEqual(result.stale, [{ kind: 'coverage', file: 'src/new.js' }]);
 });
 
-test('[gap-ledger-152] the gate records the ledger entry as stale for a content hash that differs from the ledger entry', () => {
+test('[gap-ledger-152] the gate records the ledger entry as stale for a content hash that differs from the hash in the ledger entry', () => {
   const file = 'src/new.js';
   const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 9, 2, { totals: BIG }) } });
   const current = gaps([loaded(file, 10, 9, 2, 'edited', { lines: 399, branches: 399, functions: 399 })]);
@@ -1617,7 +1617,7 @@ test('[gap-ledger-153] the gate gives no total count exception for untrue or unl
 });
 
 
-test('[gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger count, per metric', () => {
+test('[gap-ledger-154 gap-ledger-143] the ratchet command writes current counts when the current not-covered count is at or below the ledger entry count and ledger entry counts otherwise', () => {
   const file = 'src/new.js';
   const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 10, 10, { totals: BIG }) } });
   for (const metric of ['lines', 'branches', 'functions']) {
@@ -1640,7 +1640,7 @@ test('[gap-ledger-154 gap-ledger-143] the ratchet command writes the current cou
   assert.deepEqual(next.totals, { lines: 400, branches: 399, functions: 399 });
 });
 
-test('[gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source', () => {
+test('[gap-ledger-154] the ratchet command writes the total counts of a file that equals its adopted source and has no base content', () => {
   const file = 'src/new.js';
   const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 10, 10, { totals: BIG }) } });
   const larger = ratchet(ledger, gaps([loaded(file, 11, 11, 11, 'same', { lines: 399, branches: 399, functions: 399 })]), { adoptedAsIs: () => true });
@@ -1666,13 +1666,17 @@ test('[gap-ledger-155] the ratchet command writes current total counts when ledg
   const file = 'src/new.js';
   for (const totals of [undefined, {}]) {
     const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 10, 10, { totals }) } });
-    const next = ratchet(ledger, gaps([loaded(file, 11, 11, 11, 'same', BIG)]), { adoptedAsIs: () => true }).ledger.coverage[file];
+    const next = ratchet(ledger, gaps([loaded(file, 11, 11, 11, 'same', { lines: 400, branches: 300, functions: 200 })]), { adoptedAsIs: () => true }).ledger.coverage[file];
     assert.deepEqual([next.lines, next.branches, next.functions], [10, 10, 10]);
-    assert.deepEqual(next.totals, { lines: 400, branches: 400, functions: 400 });
+    assert.deepEqual(next.totals, { lines: 400, branches: 300, functions: 200 });
   }
+  const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 10, 10, { totals: { lines: 500 } }) } });
+  const next = ratchet(ledger, gaps([loaded(file, 11, 11, 11, 'same', { lines: 400, branches: 300, functions: 200 })]), { adoptedAsIs: () => true }).ledger.coverage[file];
+  assert.deepEqual([next.lines, next.branches, next.functions], [10, 10, 10]);
+  assert.deepEqual(next.totals, { lines: 500, branches: 300, functions: 200 });
 });
 
-test('[gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count', () => {
+test('[gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger current not-covered count', () => {
   const file = 'src/new.js';
   const ledger = ledgerWith({ coverage: { [file]: LOADED(0, 0, 0, { totals: { lines: 0, branches: 0, functions: 0 } }) } });
   const next = ratchet(ledger, gaps([loaded(file, 1, 1, 1, 'same', BIG)]), { adoptedAsIs: () => true }).ledger.coverage[file];
