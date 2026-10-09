@@ -1306,7 +1306,7 @@ The prose lint prints "STE: 0 errors, 540 warnings."
 ## Pass 5
 
 Tree read: `ede1c684b94a133d7c699c7a45e5860d4c3dd5a6`, branch `fix-ontario-511-key`, with the Pass 5 edits.
-At Pass 5, the scratch tree has no branch. It copies this code and the Pass 5 tests.
+At Pass 5, the scratch tree /tmp/ont-pass5-tree has no branch.
 
 Pass 6 found that the Pass 5 automatic mutation run used a copy of the tests from before the Pass 5 channel changes. See S18.
 Pass 5 changes no production code. The three pre-review folders and the trace files stay unchanged.
@@ -1604,7 +1604,7 @@ Its output is:
 The automut command uses root /tmp/ont-pass5-tree, the Pass 5 mutants.json file and one job.
 
 Pass 6 found that the Pass 5 automatic mutation run used a copy of the tests from before the Pass 5 channel changes. See S18.
-It runs each Ontario test file in its own process. Phase 2 uses resume after Phase 1 completes.
+The automut command runs each Ontario test file in its own process. Phase 2 uses resume after Phase 1 completes.
 The command lines and output are in automatic-phase1-host.log and automatic-phase2-host.log.
 The completed counts from automatic-results.json are:
 
@@ -2104,7 +2104,7 @@ The change stays active. Pass 8 changes no README, code, test, server, script, t
 
 ### Corrections of pre-review 6
 
-P1: The loader sentence names calls from the catalog and the cache that is not empty.
+P1: The loader sentence names calls from the catalog and the cache that holds a source.
 The empty cache does not meet that condition. At Pass 9, catalog.js lines 156 to 201, lines 245 to 257 and constants.js line 248 support these sentences.
 
 P2: The channel limit names only the clauses at spec.md lines 21, 29, 31 and 83.
@@ -2113,7 +2113,7 @@ Pass 8 moves the reference to spec.md lines 21, 29 and 31 into its own sentence,
 Pass 8 writes log line in place of count line to match the glossary.
 
 P3: At Pass 9, the CI limit names the Node versions of the CI matrix and the newest Node 26 release.
-P4: At Pass 9, Known limits state that the evidence does not show the order of the Pass 5 changes. These changes concern the tests and the scenario text.
+P4: At Pass 9, Known limits state a gap. The evidence does not show which came first at Pass 5: the changes to the tests or the changes to the scenario text.
 
 P5: The glossary adds base image and anchor. The host row distinguishes a URL host name.
 The records of the probe name the base image. The Pass 3 and Pass 3B records stay unchanged.
@@ -2210,9 +2210,9 @@ Tree read: `12e359c7d9f3b4e0e1e3bc959d2e04f82a142cac`, branch `fix-ontario-511-k
 
 | Finding | Correction |
 |---|---|
-| R1 README | The note on the README sentence names a table line and a table. It gives no line number. |
+| R1 README | The note on the README line names a table line and a table. It gives no line number. |
 | R2 Counts | The lint count names two runs and three errors. |
-| R3 Cache | The proposal names the cache that is not empty and the new refresh that an empty cache starts. |
+| R3 Cache | The proposal names a camera object from any pack and each new refresh from an empty cache. |
 | R4 Copy | One note names the Pass 5 automatic mutation run. |
 | R5 Names | The Pass 9 text has "At Pass 9," prefixes. The notes on the reset hook use one name. The Pass 3B text "test helper" stays as a record. |
 | R6 Objects | The notes on the check of the files and on the paragraph breaks name the files and the paragraphs. |
@@ -2273,11 +2273,13 @@ Tree read: `96ccff93b30a23f7954f1a50edd9e7753d93195f`, branch `fix-ontario-511-k
 
 | Finding | Correction |
 |---|---|
-| S1 | Both notes name the test copy from before the Pass 5 channel changes. Pass 11 deletes the false scratch tree sentence. |
-| S2 | The proposal names the cache that is not empty and the two loader cases without scenarios. |
-| S3 | The README note names the Pass 5 choice and the table that records it. |
-| S4 | The cache and order notes use clear words. P9 becomes P8. The links name each command. |
-| S5 | Pass 10 has a correction title, tree commit, labels and command records. The script and search output are in evidence/pass10. |
+| T1 Copy | The notes on the Pass 5 automatic mutation run name the copy of the tests from before the Pass 5 channel changes. Pass 11 deletes the sentence about older Pass 5 tests from the Pass 9 scratch tree note. |
+| T2 Cache | The proposal sentence names the loader calls from the catalog and the cache that is not empty. It names the two loader cases without scenarios. |
+| T3 README | The README line note names the Pass 5 choice and the table that records it. |
+| T4 Notes | Note P4 is two sentences. The label P9 becomes P8. Two Pass 10 links name their commands. |
+| T5 Records | The Pass 10 block gains a correction title, tree commit, labels and command records. |
+
+At Pass 11, the search for the name test function and the title diff ran again; their outputs are in evidence/pass10. The file evidence/pass10/check-titles.py holds the script that ran as /tmp/pass10-titles.py.
 
 No Docker, make, ratchet, gate comparison, mutation, ledger, archive, push, gh or review command ran in Pass 11.
 
@@ -2318,3 +2320,47 @@ Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/c
 [Output of the status check for ignored files](evidence/pass11/status-ignored.log)
 
 [Section-title diff](evidence/pass11/section-titles.diff)
+
+
+## Pass 12
+
+### Corrections of pre-review 10
+
+Tree read: `c597f317a23576f2d15c4c9438535442410c1280`, branch `fix-ontario-511-key`, with the Pass 12 text changes.
+
+| Finding | Correction |
+|---|---|
+| U1 History | P1 and R3 have their past-pass words again. T2 records the Pass 11 cache text. |
+| U2 Order | P4 names the changes to the tests and the changes to the scenario text. |
+| U3 Process | The automut sentence names the command that runs each test file. |
+| U4 Labels | The Pass 11 labels are T1 to T5. Their rows name the text changes. R1 uses README line. |
+| U5 Outputs | The Pass 11 block dates the two outputs in evidence/pass10 and names the stored title script. |
+| U6 Tree | The Pass 5 note names /tmp/ont-pass5-tree. Pass 12 deletes the false sentence about its tests. |
+
+No Docker, make, ratchet, gate comparison, mutation, ledger, archive, push, gh or review command ran in Pass 12. The 25-file set did not run.
+
+[Key test output](evidence/pass12/cctvOntarioKey.test.log)
+
+[Rows test output](evidence/pass12/cctvOntarioRows.test.log)
+
+[First group lint output](evidence/pass12/lint-group-first.log)
+
+[Corrected group lint output](evidence/pass12/lint-group-fixed.log)
+
+[Final lint output](evidence/pass12/lint-final.log)
+
+[OpenSpec show output](evidence/pass12/openspec-show.json)
+
+[OpenSpec validate output](evidence/pass12/openspec-validate.log)
+
+[Title check output](evidence/pass12/repeated-titles.json)
+
+[Text check output](evidence/pass12/text-check.json)
+
+[Diff of README.md, src, server and scripts](evidence/pass12/code.diff)
+
+[Diff of the review reports](evidence/pass12/review.diff)
+
+[Output of the status check for ignored files](evidence/pass12/status-ignored.log)
+
+[Section-title diff](evidence/pass12/section-titles.diff)

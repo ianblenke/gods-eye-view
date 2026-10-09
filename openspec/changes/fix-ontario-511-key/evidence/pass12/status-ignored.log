@@ -1,0 +1,17 @@
+Command: git status --ignored --short -- openspec/changes/fix-ontario-511-key
+M  openspec/changes/fix-ontario-511-key/evidence.md
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/cctvOntarioKey.test.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/cctvOntarioRows.test.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/code.diff
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/corrections-search.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/lint-final.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/lint-group-first.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/lint-group-fixed.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/openspec-show.json
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/openspec-validate.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/repeated-titles.json
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/review.diff
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/section-titles.diff
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/status-ignored-first.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/status-ignored.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass12/text-check.json
