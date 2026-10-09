@@ -1528,17 +1528,17 @@ The loop table lists 52 collection traversals in six of the seven source files.
 ## 12. Correct pre-review 7 findings
 
 - [x] 12.1 Correct the test titles.
-- [x] 12.2 Retag the three GeoJSON field rows.
+- [x] 12.2 Change the tag of the three GeoJSON field rows.
 - [x] 12.3 Check the title verbs.
 - [x] 12.4 Correct the scenario text.
 - [x] 12.5 Restore the past evidence records.
 - [x] 12.6 Correct the glossary words.
 - [x] 12.7 Add the closed-set rows.
-- [x] 12.8 Correct the repeated titles.
+- [x] 12.8 Correct each place that repeats a changed test title.
 - [x] 12.9 Run each test file alone.
 - [x] 12.10 Measure each production file.
 - [x] 12.11 Run all hand rows.
-- [x] 12.12 Check the repeated titles.
+- [x] 12.12 Check each place that repeats a test title.
 - [x] 12.13 Count duplicate titles.
 - [x] 12.14 Run the host prose checks.
 - [x] 12.15 Run the title scan.
@@ -1548,3 +1548,26 @@ The loop table lists 52 collection traversals in six of the seven source files.
 - [x] 12.19 Compare document headings.
 - [x] 12.20 Record the Pass 9 evidence.
 - [x] 12.21 Commit the corrections.
+
+
+## 13. Correct pre-review 8 findings
+
+- [x] 13.1 Correct the false title claims.
+- [x] 13.2 Correct each live test label.
+- [x] 13.3 Correct the scenario conditions.
+- [x] 13.4 Restore the Pass 7 records.
+- [x] 13.5 Correct the prose findings.
+- [x] 13.6 Read every title with a result or time clause.
+- [x] 13.7 Read each title that Pass 9 did not check.
+- [x] 13.8 Check each place that repeats a test title.
+- [x] 13.9 Run each test file in a separate process.
+- [x] 13.10 Measure each production file.
+- [x] 13.11 Run all hand rows.
+- [x] 13.12 Run the host prose checks.
+- [x] 13.13 Run the predispatch checker.
+- [x] 13.14 Run the title scan.
+- [x] 13.15 Check the source format.
+- [x] 13.16 Compare the production files and test bodies.
+- [x] 13.17 Check the OpenSpec change.
+- [x] 13.18 Compare every document heading.
+- [x] 13.19 Record the Pass 10 evidence.

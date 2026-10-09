@@ -303,7 +303,7 @@ test('[director-088] The session returns false for a load call during source can
   } finally { s.destroy(); }
 });
 
-test('[director-088 director-091] The session checks the new list after it disposes old resources', async () => {
+test('[director-088 director-091] The session checks the new list and disposes old resources', async () => {
   let disposals = 0;
   const s = makeSession(asset, () => ({ dispose() { disposals++; } }));
   try {
@@ -356,7 +356,7 @@ test('[director-090] The session returns false for a caller event during listene
   finally { s.destroy(); globalThis.setTimeout = nativeSet; globalThis.clearTimeout = nativeClear; }
 });
 
-test('[director-089] The session checks the signal before it removes the timer and reports the ready state', async () => {
+test('[director-089] The session checks the signal before it removes the timer', async () => {
   const nativeSet = globalThis.setTimeout, nativeClear = globalThis.clearTimeout;
   const timer = {}, order = [];
   let state, s;
@@ -546,7 +546,7 @@ test('[director-088] The public data pack limits throw a TypeError when a caller
   assert.equal(PACK_LIMITS.packs, 8);
 });
 
-test('[director-088] The session returns false and does not read the caller signal state after the caller destroys it', async () => {
+test('[director-088] The session returns false and does not read the caller signal state after the caller destroys the session', async () => {
   let reads = 0;
   const signal = { get aborted() { reads++; return false; } };
   const s = makeSession(); s.destroy();
@@ -570,7 +570,7 @@ test('[director-090] The session rejects asset data from a source error', async 
     assert.equal(renders, 0);
   } finally { s.destroy(); }
 });
-test('[director-090] The session checks its source signal before it reads bytes and after renderer work', async () => {
+test('[director-090] The session checks its source signal', async () => {
   let checks = 0;
   const s = makeSession(({ signal }) => {
     const check = signal.throwIfAborted.bind(signal);
@@ -783,7 +783,7 @@ test('[director-080] The validator rejects bounds field 3 for the image', async 
   assert.throws(() => validateDataPack(a, 'pack', new Set()), /bounds\[3\]/);
 });
 
-test('[director-080] The validator rejects height and reference for the image', async () => {
+test('[director-080] The validator rejects the height and the reference for the image', async () => {
   const a = imagePack();
   a.placement.height = -12001;
   assert.throws(() => validateDataPack(a, 'pack', new Set()), /height/);
@@ -882,7 +882,7 @@ test('[director-084] The decoder rejects the type for the feature', async () => 
   assert.throws(() => geo({ type: 'FeatureCollection', features: [f] }), /IDs/);
 });
 
-test('[director-084] The decoder rejects ID type for the feature', async () => {
+test('[director-084] The decoder rejects the ID type for the feature', async () => {
   const f = feature();
   f.id = 7;
   assert.throws(() => geo({ type: 'FeatureCollection', features: [f] }), /IDs/);
@@ -978,7 +978,7 @@ test('[director-085] The decoder rejects more than 50000 positions', async () =>
   );
 });
 
-test('[director-085] The decoder returns zero for absent height for the position', async () => {
+test('[director-085] The decoder returns zero for an absent height for the position', async () => {
   assert.deepEqual(
     geoFeatures([feature('p', 'Point', [0, 0])])[0].coordinates,
     [0, 0, 0],
@@ -1196,7 +1196,7 @@ test('[director-088] The session rejects more than eight data packs', async () =
   s.destroy();
 });
 
-test('[director-088] The load call returns false after the caller destroys the session without a source call', async () => {
+test('[director-088] The load call returns false after the caller destroys the session and makes no source call', async () => {
   let calls = 0;
   const s = makeSession(() => {
     calls++;
@@ -1208,7 +1208,7 @@ test('[director-088] The load call returns false after the caller destroys the s
   s.destroy();
 });
 
-test('[director-088] The load call returns false for a cancelled signal without a source call', async () => {
+test('[director-088] The load call returns false for a cancelled signal and makes no source call', async () => {
   let calls = 0;
   const s = makeSession(() => {
     calls++;
@@ -1821,7 +1821,7 @@ test('[director-090] The session checks destroyed state after it reads the signa
   assert.equal(s.getState().status, 'idle');
 });
 
-test('[director-090] The session returns false for a cleared load call and does not read the signal state', async () => {
+test('[director-090] The session returns false for a cleared load call', async () => {
   const d = deferred();
   const s = makeSession(() => d.promise);
   const work = s.load([pack()]);
@@ -2251,7 +2251,7 @@ test('[director-092] The session settles a source error before its deadline and 
   }
 });
 
-test('[director-092] The session rejects stalled work at the 19 milliseconds deadline', async () => {
+test('[director-092] The session rejects stalled work at the deadline of 19 milliseconds', async () => {
   let callback, delay;
   const nativeSet = globalThis.setTimeout,
     nativeClear = globalThis.clearTimeout;
@@ -2275,7 +2275,7 @@ test('[director-092] The session rejects stalled work at the 19 milliseconds dea
   }
 });
 
-test('[director-092] The session rejects stalled work at the default 15000 milliseconds deadline', async () => {
+test('[director-092] The session rejects stalled work at the default deadline of 15000 milliseconds', async () => {
   let callback, delay;
   const nativeSet = globalThis.setTimeout,
     nativeClear = globalThis.clearTimeout;
@@ -2994,7 +2994,7 @@ test('[director-093] The session does not read declared byteLength again for nul
     assert.equal(reads, 2);
   } finally { s.destroy(); }
 });
-test('[director-092] The session gives its reason to the source signal for the deadline and rejects the call', async () => {
+test('[director-092] The session sets the source signal reason at the deadline and rejects the call', async () => {
   let reason;
   const s = makeSession(({ signal }) => {
     signal.addEventListener('abort', () => { reason = signal.reason.message; }, { once: true });

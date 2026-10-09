@@ -112,7 +112,7 @@ test('[director-080] The manifest checks given image bounds and media anchor ref
   assert.doesNotThrow(() => parseSceneDocument(JSON.stringify(p)));
 });
 
-test('[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets', async () => {
+test('[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets', async () => {
   const requests = [];
   const source = createAssetDirectorySource({
     baseUrl: 'https://assets.example.org/packs/',
@@ -231,7 +231,7 @@ test('[director-091] The data pack session replaces source work and ignores its 
   assert.equal(mounted, 0);
 });
 
-test('[director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement', async () => {
+test('[director-090] The data pack session disposes late renderer resources after cancellation', async () => {
   const rendering = deferred();
   let disposed = 0;
   const entered = deferred();

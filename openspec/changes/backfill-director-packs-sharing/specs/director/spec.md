@@ -141,8 +141,8 @@ Origin: backfill
 
 #### Scenario: Session admission `director-088`
 
-- **WHEN** a caller creates a session
-- **THEN** the session starts with the idle state. Its load method checks data pack lists before asset work and rejects an invalid data pack list.
+- **WHEN** a caller creates a session or assigns a new value to the public data pack limits
+- **THEN** the session starts with the idle state. The load method of the session checks data pack lists before asset work and rejects an invalid data pack list.
 - **AND** The session rejects more than eight data packs and checks every declaration before the first source call.
 - **AND** The load call returns false for a destroyed session or a cancelled signal.
 - **AND** The public data pack limits throw a TypeError when a caller assigns a new value.
@@ -231,7 +231,7 @@ Origin: backfill
 
 - **WHEN** a caller registers an asset directory
 - **THEN** the factory rejects a directory outside HTTP or HTTPS, or with credentials, query or fragment
-- **AND** The factory rejects a directory URL without a slash at the end.
+- **AND** The factory rejects a directory URL without a final slash.
 - **AND** The factory rejects a directory URL that uses the file protocol.
 
 #### Scenario: Asset request options `director-095`
@@ -318,7 +318,7 @@ Origin: backfill
 
 #### Scenario: Bundle export limits `director-102`
 
-- **WHEN** a caller supplies assets for bundle export
+- **WHEN** a caller supplies assets for bundle export or assigns a new value to the share limits
 - **THEN** the export rejects excess bytes, unsupported media types, excess assets and incorrect declared integrity
 - **AND** The export accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns bundle text.
 - **AND** The export rejects an unsupported media type during export.
