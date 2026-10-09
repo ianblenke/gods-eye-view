@@ -82,7 +82,7 @@ The purpose of the browser QA for the CCTV layer stays the same. Camera markers 
 
 Add `server/providers/cctv/ontarioRequest.js` for the request helper.
 Use the reset hook before each key test. Import the module once without a query string.
-It exists for tests and has no scenario of its own. The current tests cover all its code.
+The reset hook exists for tests and has no scenario of its own. The current tests cover all the code of the reset hook.
 
 Two Rows tests check the initial warning flags without the reset hook.
 The coverage gate includes the reset hook in its line, branch and function counts.

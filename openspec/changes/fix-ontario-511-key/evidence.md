@@ -796,6 +796,8 @@ The key tests import the request module once. The beforeEach callback calls the 
 The absent-key test also calls the reset hook after its first warning. The next call must write that warning again.
 The reset hook has no scenario of its own. It is a test helper.
 
+At Pass 9, the glossary calls this function the reset hook.
+
 The command prefix for every Node process is taskset -c 8-11 nice -n 19.
 The test command is node --test --test-isolation=none src/data/cctvOntarioKey.test.mjs.
 The red run in `evidence/pass3b/red.log` has 12 tests, 0 passes and 12 failures.
@@ -1305,7 +1307,9 @@ The prose lint prints "STE: 0 errors, 540 warnings."
 
 Tree read: `ede1c684b94a133d7c699c7a45e5860d4c3dd5a6`, branch `fix-ontario-511-key`, with the Pass 5 edits.
 At Pass 5, the scratch tree has no branch. It copies this code and the Pass 5 tests.
-At Pass 6, the automatic run used another copy of the tests; see S18.
+
+At Pass 6, S18 shows that this is true only of the older Pass 5 tests.
+Pass 6 found that this automatic run used another copy of the tests; see S18.
 Pass 5 changes no production code. The three pre-review folders and the trace files stay unchanged.
 
 ### Corrections of pre-review 3
@@ -1599,7 +1603,7 @@ Its output is:
 ```
 
 The automut command uses root /tmp/ont-pass5-tree, the Pass 5 mutants.json file and one job.
-At Pass 6, the automatic run used another copy of the tests; see S18.
+Pass 6 found that this automatic run used another copy of the tests; see S18.
 It runs each Ontario test file in its own process. Phase 2 uses resume after Phase 1 completes.
 The command lines and output are in automatic-phase1-host.log and automatic-phase2-host.log.
 The completed counts from automatic-results.json are:
@@ -1715,7 +1719,7 @@ Each test asserts the empty result of the call.
 The Known limit for the loader log line now names both the absent-key case and request errors. No scenario covers those loader cases.
 
 C2: The Docker image uses Node 24.21.0. The lead ran the console probe in the base image on 2026-10-08.
-Pass 6 copies the script and the output of the base image to evidence/pass6. The lead's stderr file is empty.
+Pass 6 copies the script and the output of the probe in the base image to evidence/pass6. The lead's stderr file is empty.
 
 Pass 7 adds console-probe-image.err and console-probe-image-command.txt to evidence/pass6.
 The command file names the Docker command, the name and ID of the base image, and the exit code.
@@ -2047,7 +2051,7 @@ E2 and S7: The Limits paragraph of Pass 6 names the worker.
 The lead ran the console probe in the base image and the host mutations.
 
 E3: Pass 7 adds evidence/pass6/console-probe-image.err and evidence/pass6/console-probe-image-command.txt.
-The first file is empty. The second file names the command, name and ID of the base image, and exit code.
+The first file is empty. The second file names the command, the name and ID of the base image, and the exit code.
 
 E4: automut.mjs stores the value of the --commit option in the results file.
 When a run resumes, automut.mjs compares that value with the new option. The option does not select a commit. The evidence names the label ede1c684 and the copy commit 4f0be16d.
@@ -2055,9 +2059,7 @@ When a run resumes, automut.mjs compares that value with the new option. The opt
 E5: Past facts have Pass 5 or Pass 6 markers. Known limits name the CI version with no console probe.
 E6: The lead accepts the channel gap by name in Known limits. The scenario text stays unchanged.
 
-E7: The Pass 5 evidence, commit 33118620 and codex-6.txt do not show the order.
-This limit concerns the changes to the tests and the changes to the scenario text.
-The evidence does not show the order. The lead decides in review.md whether to accept this limit by name.
+E7: The Pass 5 evidence, commit 33118620 and codex-6.txt show no order for the changes to the tests and the changes to the scenario text. The lead decides in review.md whether to accept this limit by name.
 The task boxes stay in their current order.
 
 S2 to S6 and S8 to S21: The text uses the glossary terms, correct S labels and past-pass markers.
@@ -2079,7 +2081,8 @@ These 21 tests include the three tests that the sandbox denied. In the final set
 The original checks.json keeps the sandbox results. media-range-host.log records the host repeat.
 
 The text search checks the new lines and the owner's prefixed forms.
-The lead chose the E1 sentence at ev:1330-1332. It replaces the STE text for the README row at ev:1318.
+At Pass 8, the lead chose the E1 sentence at evidence.md lines 1330 to 1332.
+At Pass 8, it replaces the text that the STE report proposed for the README line in the table at evidence.md line 1318.
 The search excludes file names from the check for the word image without Docker.
 
 
@@ -2103,23 +2106,23 @@ The change stays active. Pass 8 changes no README, code, test, server, script, t
 ### Corrections of pre-review 6
 
 P1: The loader sentence names calls from the catalog and the cache that holds a source.
-The empty cache does not meet that condition. catalog.js lines 156 to 201 and constants.js line 248 support these sentences.
+The empty cache does not meet that condition. catalog.js lines 156 to 201 and 245 to 257 and constants.js line 248 support these sentences.
 
 P2: The channel limit names only the clauses at spec.md lines 21, 29, 31 and 83.
 The tests assert the two channels. The lead accepts the gap.
-To meet the 25-word limit, Pass 8 puts the first line reference in a separate sentence.
-Pass 8 uses log line in place of count line to match the glossary. No other P1 or P2 word changes.
+Pass 8 moves the reference to spec.md lines 21, 29 and 31 into its own sentence, so that no sentence has more than 25 words.
+Pass 8 writes log line in place of count line to match the glossary.
 
-P3: The CI limit names the job that runs npm test and the floating Node 26.x version.
-P4: Known limits now names the unknown order of the Pass 5 test and scenario changes.
+P3: The CI limit names the Node versions of the CI matrix and the newest Node 26 release.
+P4: Known limits now name the order of the Pass 5 changes to the tests and to the scenario text. The evidence does not show this order.
 
 P5: The glossary adds base image and anchor. The host row distinguishes a URL host name.
-The probe records name the base image. The Pass 3 and Pass 3B records stay unchanged.
+The records of the probe name the base image. The Pass 3 and Pass 3B records stay unchanged.
 
 P6: The reset hook and fixture have separate names. The coverage gate still counts the reset hook.
 P7: The task and evidence state that the live automatic mutations ran after Pass 6.
 
-P8: The E1 note names the README sentence at the current evidence lines 1330 to 1332 and 1318.
+P8: At Pass 8, the E1 note gives evidence.md lines 1330 to 1332 and the line 1318 of this file.
 
 P9: The other text corrections name the request, commit option, test totals and past-pass facts.
 The STE corrections split a long sentence and two long paragraphs. Past run counts and command output stay unchanged.
@@ -2132,12 +2135,12 @@ The key file passed 12 tests. The rows file passed 71 tests. All 83 tests passed
 The title script found 83 live titles, 14 references and zero stale labels.
 The verb script read 83 bodies. Its one item names the absent-key test, which asserts the literal warning.
 The search found zero banned words or prefixed forms in the new text.
-corrections-search.log shows the corrected sentences and the code and document references.
+corrections-search.log shows the corrected sentences and the references to code files and to documents.
 
-The other matches for routes are a file name and old command output. No current reset hook or fixture has the name test function.
+The other matches for the word routes are a file name and old command output. No current text calls the reset hook or the fixture a test function.
 
 OpenSpec show printed JSON. OpenSpec validate printed "Change 'fix-ontario-511-key' is valid".
-The proposal headings do not differ from 3ac3af22. The README, src, server and scripts diff is empty against that commit.
+The proposal section titles do not differ from 3ac3af22. The diff for README.md, src, server and scripts against that commit is empty.
 
 Pass 8 did not run the 25-file set because no code or test changed.
 No Docker, make, ratchet, gate comparison, mutation, ledger, archive, push, gh or review command ran in Pass 8.
@@ -2145,4 +2148,67 @@ The host checks give no coverage, Docker gate or review verdict.
 
 The format check printed "Checked 1159 source files."
 The final prose lint printed "STE: 0 errors, 542 warnings."
-All new log files have index entries. The final status check found no ignored file in the change folder.
+The final status check found no ignored file in the change folder.
+
+## Pass 9
+
+Tree read: `73bf05b3d758ff44272a1eecff2efdcc6fd98975`, branch `fix-ontario-511-key`, with the Pass 9 text changes.
+The change stays active.
+
+### Corrections of pre-review 7
+
+Q1: The CI text names both matrix versions and the newest Node 26 release.
+The text follows ci.yml lines 23 and 57. Line 111 names a separate job.
+The proposal uses the four sentences from the lead without word changes.
+
+Q2: Both notes say that Pass 6 found the test copy fault in the Pass 5 run.
+The scratch tree note names the older Pass 5 tests, as S18 shows.
+
+Q3: The design names the reset hook as the subject of both sentences.
+The Pass 3B record keeps its text. One new sentence gives the glossary name at Pass 9.
+
+Q4: The text names section titles, the cache of the catalog and the output of the probe.
+The other STE corrections add articles, name the objects and remove the false sentence about P1 and P2.
+No separate index file exists for these logs. Pass 9 removes the sentence about index entries.
+
+The E1 references have an "At Pass 8," prefix because they name the lines at that pass.
+At Pass 9, the E1 sentence spans lines 1334 to 1336. The README line in the table is line 1322.
+
+Q5: The catalog citation includes lines 245 to 257, which keep the cache and set its time.
+The proposal names the empty cache case and the path of the spec of this change.
+The request clauses are at lines 21, 29 and 31 of that spec. The loader clause is at line 83.
+
+The sentence for the empty cache uses current refresh in place of the lead's term for a refresh that has not finished to meet STE.
+The spec path stays in a separate sentence to meet the 25-word limit.
+Paragraph breaks keep the two past records within the six-sentence limit.
+No other lead sentence needs a word change for STE.
+
+### Host checks
+
+The real command output is in evidence/pass9. Each log starts with its command.
+Each Ontario test file ran once in its own process under taskset -c 8-11 nice -n 19.
+The key file passed 12 tests. The rows file passed 71 tests. All 83 tests passed.
+
+The title script found 83 live titles, 14 references and zero stale labels.
+The verb script read 83 bodies. Its one item names the absent-key test, which asserts the literal warning.
+
+OpenSpec show printed JSON. OpenSpec validate printed "Change 'fix-ontario-511-key' is valid".
+The first format run stopped at "spawnSync git EPERM". That run gives no format verdict.
+The host retry printed "Checked 1159 source files."
+
+The search found no banned word or prefixed form in the new text.
+The three searches for the old CI terms and section title term found no match before this block.
+The matches for routes and test function are the sentence that describes the old search results.
+corrections-search.log shows the corrected sentences after the edits.
+The source check reads ci.yml, catalog.js, the spec clauses and design.md lines 80 to 90.
+
+The proposal section titles do not differ from 73bf05b3.
+The diff for README.md, src, server and scripts against that commit is empty.
+
+Prose lint found paragraph errors in three runs. Paragraph breaks correct each error.
+The final prose lint printed "STE: 0 errors, 540 warnings."
+The status check found no ignored file in the change folder. The diff for the filed review reports is empty.
+
+Pass 9 did not run the 25-file set because no code or test changed.
+No Docker, make, ratchet, gate comparison, mutation, ledger, archive, push, gh or review command ran in Pass 9.
+The host checks give no coverage, Docker gate or review verdict.
