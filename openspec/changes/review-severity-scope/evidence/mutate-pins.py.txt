@@ -12,13 +12,14 @@ pins34 = [
  '- **minor**: A text that has one clear meaning but does not obey an STE rule, when no major item above names the fault.',
 ]
 pins35 = [
- 'A banned word is a word or a phrase that `openspec/ste/words.json` lists, or a form of such a word that the list does not name.',
+ 'A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word that the lists do not name is also a banned word.',
  '- **major**: A banned word in normative text or in a test title.',
  '- **major**: Two possible meanings in normative text.',
  '- **major**: A text or a title that does not agree with the code, the specs or the other prose of the change.',
  '- **major**: A task that gives two instructions, except for actions at the same time.',
  'A text that disagrees with the code, the specs or the other prose of the change is major in all text.',
  'Give the two meanings, describe the disagreement with the code, the specs or the other prose, or quote the banned word or the two instructions.',
+ 'Report a form of a banned word that the lint does not find.',
 ]
 old35 = [
  'The text is major only when it gives two meanings or disagrees with the code, the specs or the other prose of the change.',
@@ -58,6 +59,8 @@ for tid, pins in ((T34, pins34), (T35, pins35)):
 for old in old35:
     n += 1
     allok &= mutate(f"A{n} put back the old line [{old[:60]}]", AGENT, lambda s, old=old: s.rstrip('\n') + '\n' + old + '\n', T35)
+n += 1
+allok &= mutate(f"A{n} add a fifth major line", AGENT, lambda s: s.replace('- **minor**: Two possible meanings in other text, when the text is true under each meaning.', '- **major**: Two possible meanings in other text.\n- **minor**: Two possible meanings in other text, when the text is true under each meaning.', 1), T35)
 new16 = 'Put the severity after that word, as `critical`, `major` or `minor`.'
 n += 1
 allok &= mutate("B1 rule 16 names blocker and minor", 'AGENTS.md', lambda s: s.replace(new16, 'Put the severity after that word, as `blocker` or `minor`.', 1), T36)

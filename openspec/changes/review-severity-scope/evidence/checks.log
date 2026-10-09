@@ -1,9 +1,13 @@
 ##### git rev-parse HEAD
-9f29ee10a626dc322358d006dfc6d0cf3124193a
+f8e9109d9ed47b9192a1d4bf493b01c4f5168032
 ##### git status --short
+ M openspec/changes/review-severity-scope/evidence.md
+ M openspec/changes/review-severity-scope/evidence/checks.log
+ M openspec/changes/review-severity-scope/evidence/mutate-pins.py.txt
+ M openspec/changes/review-severity-scope/evidence/mutations.txt
+ M openspec/changes/review-severity-scope/evidence/runs-head.txt
+ M openspec/changes/review-severity-scope/evidence/spec-files-run.txt
  M openspec/changes/review-severity-scope/tasks.md
-?? openspec/changes/review-severity-scope/evidence.md
-?? openspec/changes/review-severity-scope/evidence/
 ##### node scripts/format.mjs --check
 Checked 1328 source files.
 ##### status 0
