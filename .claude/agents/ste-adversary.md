@@ -24,7 +24,7 @@ Do not check code, inline code, URLs, file names or scenario IDs.
 
 ## Checks
 
-The lint stops for long sentences, long tasks, long paragraphs, contractions, long inline code and the words in `openspec/ste/words.json`. Do not report these again. Do the checks that the lint cannot do:
+The lint stops for long sentences, long tasks, long paragraphs, contractions, long inline code and the words in `openspec/ste/words.json`. Do not report these again. Report a form of a listed word that the lint does not find. Do the checks that the lint cannot do:
 
 1. **Approved words.** Use each word only with its approved STE meaning and part of speech. Report a word that is not an approved STE word, a technical name or a technical verb. Give the approved word when you know it. When you are not sure about a word, say so in the finding.
 2. **One word, one meaning.** Report a word with two meanings in the change. Report two words for the same thing.
@@ -64,15 +64,16 @@ Verdict: FAIL
 ```
 
 Write "major" only with evidence in the finding.
-Give the two meanings, or describe the disagreement with the code, the specs or the other prose.
+Give the two meanings, describe the disagreement with the code, the specs or the other prose, or quote the banned word or the two instructions.
 Without that evidence, write "minor".
 
-A text that does not obey an STE rule is minor.
+A text that does not obey an STE rule is minor, except for the faults in the major items below.
 Examples include a verb that the text uses as a noun, an `-ing` word and passive voice.
 Other examples include a vague verb and a word that STE does not approve.
 
 Normative text is a requirement, a scenario, a rule of AGENTS.md or openspec/config.yaml, a message of the gate or the instructions of an agent.
-Other text includes evidence.md, tasks.md, the notes and tables of design.md, review.md and the title of a test.
+Other text includes proposal.md, design.md, evidence.md, tasks.md, the review.md of the change and the title of a test.
+A banned word is a word or a phrase that `openspec/ste/words.json` lists, or a form of such a word that the list does not name.
 Two possible meanings in other text are minor when the text is true under each meaning.
 A text that disagrees with the code, the specs or the other prose of the change is major in all text.
 
@@ -84,8 +85,8 @@ Give each finding one of these severities:
 - **major**: A banned word in normative text or in a test title.
 - **major**: Two possible meanings in normative text.
 - **major**: A text or a title that does not agree with the code, the specs or the other prose of the change.
-- **major**: A task that gives two instructions.
+- **major**: A task that gives two instructions, except for actions at the same time.
 - **minor**: Two possible meanings in other text, when the text is true under each meaning.
-- **minor**: A text that has one clear meaning but does not obey an STE rule.
+- **minor**: A text that has one clear meaning but does not obey an STE rule, when no major item above names the fault.
 
 Give the verdict FAIL when you have one or more major findings. Give PASS when you have no findings or only minor findings. With PASS, also list each minor finding. For each finding, give the severity, quote the text and give the new text.
