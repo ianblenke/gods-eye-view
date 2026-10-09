@@ -272,6 +272,7 @@ The gate MUST stop for an adopt record for this change with an invalid file or s
 For an adopt record of this change with an invalid `file` or `from`, this requirement replaces gap-ledger-095.
 For a reached adopt record whose `from` is not a merge parent, the gate prints LEDGER-ADOPT-FROM and stops.
 For such a record, this requirement replaces the LEDGER-ADOPT-REACHED error of gap-ledger-105.
+For such a record, this requirement also replaces the file error LEDGER-ADOPT-FROM of gap-ledger-138 and gap-ledger-151, and the stale ledger entry of gap-ledger-151.
 
 The `file` field must be a string.
 The `from` field must be a full hash of 40 lowercase hexadecimal digits of a commit that a merge after the base brought.
@@ -320,6 +321,12 @@ ERROR LEDGER-ADOPT-FROM openspec/trace/history.jsonl Use an adopt record with a 
 - **WHEN** the `from` string of an adopt record has a null byte
 - **THEN** the gate prints LEDGER-ADOPT-FROM with the same message as ownership-031
 - **AND** the source check returns false when Git cannot read the merge parents
+
+#### Scenario: Stop the gate before the ledger comparison `ownership-055`
+- **WHEN** an adopt record for this change has `HEAD` as its source, and its file has only a total count difference from the ledger
+- **THEN** the gate prints one LEDGER-ADOPT-FROM error at openspec/trace/history.jsonl
+- **AND** the gate prints no LEDGER-ADOPT-FROM error for the file
+- **AND** the gate prints no LEDGER-STALE error
 
 ### Requirement: QA exception boundary
 The QA register MUST print QA-HEADER for a script with no current header in these cases.

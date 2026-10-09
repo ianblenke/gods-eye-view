@@ -298,3 +298,13 @@ These titles are the names in the red logs. Later corrections renamed some title
 
 - [x] 14.1 Correct the faults that pre-review 9 found.
 - [x] 14.2 Run the ownership and ownershipGate host tests, lint, OpenSpec show and OpenSpec validate.
+
+## 15. Pass 13
+
+- [x] 15.1 Merge main into the branch.
+- [x] 15.2 Write the sentence and the scenario `ownership-055` in the adopt record boundary.
+- [x] 15.3 Change the tests of `gap-ledger-138` and `gap-ledger-151` to expect the early stop.
+- [x] 15.4 Add line records to the coverage file of the tolerance tests.
+- [x] 15.5 Run the host tests of the three changed test groups.
+- [x] 15.6 Run the fault that removes the early source check.
+
