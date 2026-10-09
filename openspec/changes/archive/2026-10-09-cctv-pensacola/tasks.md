@@ -54,7 +54,7 @@
 - [x] 5.1 Check one real layer answer.
 - [x] 5.2 Check one real frame through the route `/api/cctv/frame/:id`.
 - [x] 5.3 Write `evidence/live-check.txt` with the output of both checks.
-- [ ] 5.4 Run `make ratchet CHANGE=cctv-pensacola`.
+- [x] 5.4 Run `make ratchet CHANGE=cctv-pensacola`.
 - [ ] 5.5 Run the two review agents.
 - [ ] 5.6 Write review.md.
 - [ ] 5.7 Run `make gates CHANGE=cctv-pensacola` on the final tree.
