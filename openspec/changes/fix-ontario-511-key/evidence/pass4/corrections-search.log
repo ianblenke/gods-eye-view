@@ -1,0 +1,17 @@
+Command: rg -n 'view ID|no-break spaces|view description after|initial warning|console, .(error|info|debug)' src/data/cctvOntarioKey.test.mjs src/data/cctvOntarioRows.test.mjs openspec/changes/fix-ontario-511-key/design.md
+openspec/changes/fix-ontario-511-key/design.md:56:| view ID | The ID in a camera URL path. |
+openspec/changes/fix-ontario-511-key/design.md:72:Two Rows tests check the initial warning flags without the reset hook.
+src/data/cctvOntarioRows.test.mjs:36:  t.mock.method(console, 'error', (...args) => logs.push(args.join(' ')));
+src/data/cctvOntarioRows.test.mjs:37:  t.mock.method(console, 'info', (...args) => logs.push(args.join(' ')));
+src/data/cctvOntarioRows.test.mjs:38:  t.mock.method(console, 'debug', (...args) => logs.push(args.join(' ')));
+src/data/cctvOntarioRows.test.mjs:93:  'a slash view ID',
+src/data/cctvOntarioRows.test.mjs:97:  'a view ID with a slash at the start',
+src/data/cctvOntarioRows.test.mjs:98:  'a view ID with a slash at the end',
+src/data/cctvOntarioRows.test.mjs:101:  'a view ID with a space',
+src/data/cctvOntarioRows.test.mjs:102:  'a view ID with a non-ASCII character',
+src/data/cctvOntarioRows.test.mjs:378:test('[live-sources-007] use the Roadway text first and the view description after a blank Direction value', async (t) => {
+src/data/cctvOntarioRows.test.mjs:435:test('[live-sources-006] accept every view ID character', async (t) => {
+src/data/cctvOntarioRows.test.mjs:495:  'URL text with no-break spaces at the start and end',
+src/data/cctvOntarioKey.test.mjs:25:  t.mock.method(console, 'error', (...args) => logs.push(args.join(' ')));
+src/data/cctvOntarioKey.test.mjs:26:  t.mock.method(console, 'info', (...args) => logs.push(args.join(' ')));
+src/data/cctvOntarioKey.test.mjs:27:  t.mock.method(console, 'debug', (...args) => logs.push(args.join(' ')));

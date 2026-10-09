@@ -52,7 +52,7 @@ All three failures come from sandbox EPERM on loopback listen calls in `cctvMedi
 
 The host command for that file passed all 21 tests; `evidence/media-host.log` has the output.
 
-At Pass 1, the final Ontario file has eight tests, all pass. Thus the final CCTV total is 256 tests.
+At Pass 1, the final Ontario file has eight tests, all pass. At Pass 1, the CCTV total is 256 tests.
 
 The host socket result accounts for all three sandbox failures.
 
@@ -95,7 +95,7 @@ The logs are `evidence/sources-before.log` and `evidence/sources-after.log`.
 
 The command for each row is the Ontario fixture command above after the named source edit.
 
-Each command returned status 1. The JSON files record the failed test names.
+At Pass 1, each command returned status 1. The JSON files record the failed test names.
 
 | Mutation | Failed test |
 |---|---|
@@ -185,7 +185,7 @@ Production code has no change in this pass.
 
 ### Branch table
 
-Each title below has its scenario tag in the test file.
+At Pass 2, each title below had its scenario tag in the test file. Pass 3 renamed these tests.
 The table includes optional access, short circuit operands, guards and exception paths.
 The shared guard at line 404 has the OR paths of its two operands.
 The shared coordinate result at line 405 has the AND paths of its four operands.
@@ -304,7 +304,7 @@ The first command loop reports 25 files, 303 tests, 303 passes, zero failures an
 
 The same loop with the next tests writes `/tmp/ontario-all-tests-final.log`.
 It reports 25 files, 310 tests, 310 passes, zero failures and 25 zero exit codes.
-At Pass 1, that Rows test file has 49 tests. The key file has eight tests.
+In the second test loop of Pass 2, the Rows test file has 49 tests. The key file has eight tests.
 
 ### Named faults
 
@@ -408,7 +408,7 @@ These hashes identify the final test file and the unchanged source file in the s
 | on98 on100 | EQUIVALENT. A null match access throws into the private URL catch. The catch returns the same empty URL. | Full row and key tests pass for each ID. |
 | on102 on140 on167 on174 | EQUIVALENT. The URL filter drops both empty strings and undefined values. The private empty return type has no public effect. | Full row and key tests pass for each ID. |
 | on108 | EQUIVALENT. The native URL parser already converts the accepted URL host names to lower case. | Full row and key tests pass for each ID. |
-| on118 on127 on773 on775 | EQUIVALENT. The native URL fields and URL host name checks have no side effects. Any decode error and any failed host check return the same empty URL. | Full row and key tests pass for each ID. |
+| on118 on127 on773 on775 | EQUIVALENT. The native URL fields and URL host name checks have no side effects. Any decode error and any failed URL host name check return the same empty URL. | Full row and key tests pass for each ID. |
 | on780 on781 on782 on783 on849 | EQUIVALENT. The ID rule rejects slash, question mark, hash and empty IDs. The path rule and decoder cannot supply an empty accepted ID. | Full row and key tests pass for each ID. |
 | on275 on277 on280 on281 on852 | EQUIVALENT. The empty array find result and first item are undefined. The loader drops both null and undefined views. | Full row and key tests pass for each ID. |
 | on244 on245 on267 on268 on355 on356 on367 on368 on392 on393 on417 on418 on439 on440 on503 on504 | EQUIVALENT. The ID guard drops null rows. The status filter drops null views. No later optional null path can occur. | Full row and key tests pass for each ID. |
@@ -469,10 +469,10 @@ The raw output is in evidence/pass3. The JSON files record the counts and failed
 
 | Decision | Correction |
 |---|---|
-| O1 | Each key test imports a fresh request helper. Each warning test checks the exact text and the absence of the key text. |
+| O1 | At Pass 3, each key test imports a fresh request helper. Each warning test checks the exact text and the absence of the key text. |
 | O2 | Scenario 005 names fetch, JSON and row errors. Both test files check the row warning. |
 | O3 | Both dated entries match main again. New entries state the key rule for 2026-10-08. The other documents state the server key rule. |
-| O4 | Impact lists the closed gap and the lead counts. Known limits list each case from the brief and the reader issue below. |
+| O4 | Impact lists the closed gap and the lead counts. Known limits list each case in the task and the reader issue below. |
 | O5 | Design names files and measures. Each task has one instruction. Lead checks form the last group. |
 | O6 | Scenarios name actors, the key trim, Accept, timeout, ASCII IDs, URL text and field order. Test titles name causes. |
 | O7 | A lead task names the Purpose sentence for archive time. The current capability spec has no change. |
@@ -552,7 +552,7 @@ FNDA:7096,loadOntarioSourcesFromOpenData
 ```
 
 The helper command uses NODE_V8_COVERAGE and the key test file. coverage.mjs reads the raw V8 output.
-It uses the project addProcess method to combine the 13 copies under the same physical file name.
+At Pass 3, it uses the project addProcess method to combine the 13 copies under the same physical file name.
 The combined result is 100% lines, branches and functions:
 
 ```json
@@ -591,8 +591,8 @@ That probe gives these counts:
 ```
 
 The host probe shows an instrument issue with the required fresh module tests. It gives no image gate verdict.
-The worker told the lead. No test changes to satisfy the instrument, and no gate changes.
-The lead must resolve this issue before the next ratchet can close the change.
+The worker told the lead. The worker made no test change and no gate change to satisfy the instrument.
+At Pass 3, the lead must resolve this issue before the next ratchet can close the change.
 
 ### Repeated titles and verbs
 
@@ -649,13 +649,13 @@ The totals from that file are:
 
 | IDs | Claim | Full-test probe and reason |
 |---|---|---|
-| h29, h30 | EQUIVALENT | Each passes. The private missing-key flag changes from true to another truthy value. |
+| h29, h30 | EQUIVALENT | Each passes. The private absent-key flag changes from true to another truthy value. |
 | h89, h90 | EQUIVALENT | Each passes. The private request-error flag changes from true to another truthy value. |
 | h77 | EQUIVALENT | It passes. A ReferenceError replaces the private Error. The catch returns the same list and warning. |
 | h111, h112 | EQUIVALENT | Each passes. The private Error message changes, but the catch reads no message. |
 | h115 | EQUIVALENT | It passes. The nested request awaits fetch before its error check, so the flag assignment still comes first. |
 
-All eight survivors have a claim and a full-test probe. The absent-key order mutation fails the callback test.
+All eight survivors have a claim and a full-test probe. The absent-key order mutation fails the test with the nested warning call.
 The rows and helper code match the clone after the named mutations. The scratch test files have the final assertions.
 
 ### Source searches and section titles
@@ -787,10 +787,11 @@ The new scenario clauses use the loader as the actor.
 Tree read: `0720b2d8ccb6152a5d8d866fc5d03bd15453d129`, branch `fix-ontario-511-key`, with the Pass 3B edits.
 Past records stay unchanged.
 
-Pass 3B replaces the fresh module copies by a reset hook because parseLcov selects the least covered record of one file under several module URLs
+Pass 3B replaces the fresh module copies with a reset hook.
+The parseLcov reader selects the least covered record of one file under several module URLs.
 
-The key tests import the request module once. The beforeEach hook resets both warning flags before each test.
-The missing-key test also calls the reset hook after its first warning. The next call must write that warning again.
+The key tests import the request module once. The beforeEach callback calls the reset hook before each test.
+The absent-key test also calls the reset hook after its first warning. The next call must write that warning again.
 The reset hook has no scenario of its own. It is a test helper.
 
 The command prefix for every Node process is taskset -c 8-11 nice -n 19.
@@ -905,16 +906,16 @@ The green command also sets `NODE_V8_COVERAGE=/tmp/ont-pass3b-v8`.
 The module-urls.py probe reads each JSON file in that directory. Its output in `module-urls.json` has one URL with no query string.
 
 The named.py command changes the reset hook on the scratch tree and runs the key test file.
-At first, the reset-error-only fault passed. The extra check in the missing-key test makes that fault fail.
-The final named.json records these faults:
+At first, the reset-error-only mutation passed. The extra check in the absent-key test makes that mutation fail.
+The final named.json records these mutations:
 
-| Fault | Code change | Test that fails |
+| Mutation | Code change | Test that fails |
 |---|---|---|
 | reset-error-only | Delete the reset of warnedMissingKey. | "[live-sources-003] make no request without a key" |
 | reset-missing-only | Delete the reset of warnedRequestError. | "[live-sources-005] keep the fetch error secret" |
 | no-reset | Delete both resets. | "[live-sources-003] make no request without a key" |
 
-The gen.mjs command generates 15 automatic faults for the changed hook lines.
+The gen.mjs command generates 15 automatic mutations for the changed hook lines.
 The automatic tool runs phase 1 and phase 2 with one job on the scratch tree.
 Its commands use `automut.mjs run`, the Pass 3B mutants.json, and `--tests src/data/cctvOntarioKey.test.mjs`.
 Phase 1 has 14 kills and 1 survivor. Phase 2 has 1 survivor, b14, which swaps the two reset statements.
@@ -938,7 +939,7 @@ It returns exit code 0 and prints "Checked 1159 source files."
 The host checks.py run stops at the package boundary command. The separate coverage commands complete after that stop.
 The package boundary command also has a separate host run.
 
-The heading probe compares every existing change document with commit `0720b2d8`.
+The section title probe compares each change document with commit `0720b2d8`.
 It checks 7 documents and finds 0 unexpected changes. Only evidence.md adds the Pass 3B section title.
 The proposal keeps all its required section titles. The probe also checks that the past evidence text stays unchanged.
 
@@ -952,3 +953,342 @@ The separate host package boundary command returns exit code 0. Its output lists
 The earlier package boundary runs stopped before the end. They give no package boundary verdict.
 No image gate, ratchet, archive, push or review command ran in Pass 3B.
 The lead must run the image gates and both reviews before a merge.
+
+## Pass 4
+
+Tree read: `1911403e1798366a39d9bba455f4b1ac7ffa03ae`, branch `fix-ontario-511-key`, with the Pass 4 edits.
+
+The scratch tree has no branch. It copies the code and tests from that commit with these edits.
+
+No production code changes in Pass 4. Both pre-review folders stay unchanged.
+
+The records above describe past runs. Their new time markers do not change their counts.
+
+
+### Corrections of pre-review 2
+
+| Finding | Correction |
+|---|---|
+| Spec major 1 | Scenario 008 has a control row about 3 kilometers from Kitchener, after all six anchor rows. Its order assertion names all eight sources. |
+| Spec major 2 | Both fixtures watch warn, log, error, info and debug. Scenarios 004 and 005 name console output and state that no thrown error escapes the pack. |
+| Spec minors | The 003 test loses its unused key assertion. Impact names the loader and three helpers. Scenario 006 names status trim, letter case and field choice. |
+| Other spec minors | Scenario 007 needs a view description that is not empty for the dash. Known limits name stderr, all request failure kinds and the reset hook. |
+| Records and tasks | Pass 3 records have time markers. The fresh module tasks name their replacement. The coverage reader task stays unchecked until the Docker image ratchet. |
+| STE major 1 | The 49-test sentence names the second test loop of Pass 2. |
+| STE major 2 | Each Pass 3B check has its own task. Pass 3B has its own section. |
+| STE majors 3 to 5 | The title names the view description. The spec distinguishes a views list from a view. All six URL titles name the view ID. |
+| STE major 6 | README says that poses are first estimates. The sources publish positions, and a user moves a gizmo. |
+| STE minors | The glossary defines the developer key, view ID, two image terms, two empty lists, request helper, reset hook and beforeEach callback. |
+| Other STE minors | The prose uses mutations, absent-key, prose lint and format check. The current-state entry follows the section title style. Past evidence has time markers. |
+
+### Tests and named mutations
+
+The command prefix for each test process is taskset -c 8-11 nice -n 19.
+
+The checks.py command runs each data test file and the media provider test file in a separate process.
+
+The initial loop has 318 tests and 315 passes. Three media range tests fail at `listen EPERM` in the sandbox.
+
+The separate host run of cctvMediaRange.test.mjs has 21 tests and 21 passes.
+
+The final Rows run adds two tests for the initial warning flags. It has 71 tests and 71 passes.
+
+The key file has 12 tests and 12 passes. Each key test also passes alone. The reverse run has 12 passes.
+
+The final total is 320 tests in 22 files, with 320 passes and no failure. test-summary.json records this total.
+
+
+The old Windsor mutation runs first. It removes the Windsor anchor and passes the old scenario 008 test.
+
+The named.py command then runs the six removals with the control row. Each removal fails the same scenario 008 test.
+
+No mutation enters the commit.
+
+
+| Mutation | Test that fails |
+|---|---|
+| Remove Kitchener | [live-sources-008] use each nearest anchor |
+| Remove Toronto | [live-sources-008] use each nearest anchor |
+| Remove Ottawa | [live-sources-008] use each nearest anchor |
+| Remove Hamilton | [live-sources-008] use each nearest anchor |
+| Remove London | [live-sources-008] use each nearest anchor |
+| Remove Windsor | [live-sources-008] use each nearest anchor |
+| Add console.error(error) in the request catch | [live-sources-005] keep the key text of a fetch error out of the warning |
+| Add console.info(error) in the request catch | [live-sources-005] keep the key text of a fetch error out of the warning |
+
+The first automatic run shows two valid survivors: an initial warning flag set to true.
+
+The reset hook masks those mutations in the key tests. Two new Rows tests run without that hook.
+
+The initial.py command makes each test fail with its opposite initial flag value. The unchanged code passes both tests.
+
+The first test expects the literal absent-key warning. The second expects the literal request-error warning from scenario 004.
+
+
+| Mutation | Test that fails |
+|---|---|
+| Set warnedMissingKey to true at module load | [live-sources-003] write the first warning for an absent key |
+| Set warnedRequestError to true at module load | [live-sources-004] write the first warning for an HTTP error |
+
+### Coverage
+
+The two lcov commands measure one test file per process. probe.mjs reads key.lcov and rows.lcov.
+
+Its output is coverage-probe.json:
+
+
+```json
+{
+  "moduleRecords": [
+    "SF:server/providers/cctv/ontarioRequest.js"
+  ],
+  "counts": {
+    "lines": {
+      "total": 41,
+      "covered": 41
+    },
+    "branches": {
+      "total": 12,
+      "covered": 12
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2
+    }
+  },
+  "gaps": {
+    "lines": 0,
+    "branches": 0,
+    "functions": 0
+  },
+  "result": "NO GAP",
+  "Ontario": [
+    {
+      "name": "isLikelyOntarioCoordinate",
+      "start": 403,
+      "end": 413,
+      "branches": 7,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7088,isLikelyOntarioCoordinate"
+    },
+    {
+      "name": "normalizeOntarioCctvUrl",
+      "start": 414,
+      "end": 439,
+      "branches": 11,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7075,normalizeOntarioCctvUrl"
+    },
+    {
+      "name": "pickOntarioCctvView",
+      "start": 440,
+      "end": 463,
+      "branches": 17,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7079,pickOntarioCctvView"
+    },
+    {
+      "name": "loadOntarioSourcesFromOpenData",
+      "start": 464,
+      "end": 540,
+      "branches": 52,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7097,loadOntarioSourcesFromOpenData"
+    }
+  ]
+}
+```
+
+The request helper has 100% line, branch and function coverage. parseLcov reports no gap and one module record.
+
+The four Ontario functions have 87 branch ranges and no zero-count range. Each function runs.
+
+No Docker image coverage verdict exists for this tree.
+
+
+### Automatic mutations
+
+The gen.mjs command makes 140 candidates: 131 for the request helper and 9 for the loader catch.
+
+The first sandbox command stops at an empty baseline. It gives no mutation verdict.
+
+The next clone run completes with 129 kills and 11 survivors. It uses the tests before the two initial-flag tests.
+
+A later clone run stops while it copies .codex. It gives no mutation verdict.
+
+The final command uses the scratch tree and both final test files. Phase 1 has 131 kills and 9 survivors.
+
+Phase 2 runs all tests for the nine survivors. automatic-summary.json records its result.
+
+
+The equivalent.mjs command tests each survivor with absent, blank, HTTP, fetch and JSON fixtures.
+
+Each fixture runs with and without a nested warning call. The reset probe checks all four initial flag states.
+
+Each mutation and the unchanged code pass 28 probe cases in total. The probe asserts the literal warning and empty row list.
+
+
+| ID | EQUIVALENT reason |
+|---|---|
+| h43, h44 | The private absent-key flag remains true in each condition. |
+| h103, h104 | The private request-error flag remains true in each condition. |
+| h91 | A ReferenceError replaces the Error. The same catch writes the constant warning and returns an empty row list. |
+| h126, h127 | The catch reads no Error message. Both error text changes give the same warning and empty row list. |
+| h113 | The two reset assignments have no dependency. All four initial flag states end at false, false. |
+| h130 | A nested request must pass its fetch await before it reads the warning flag. The outer call sets the flag first. |
+
+### Title and prose checks
+
+The repeated titles script reads 83 live titles and finds no stale reference in current prose.
+
+It excludes past evidence and review reports. Its output is repeated-titles.json.
+
+The verb script reads all 83 test bodies. It also lists negative, after, at and result clauses with their assertions.
+
+The worker reads each listed body. Each changed title has an assertion for every result clause.
+
+The output is verbs.json. One flag names the absent-key fixture; it does not indicate a false title.
+
+The body deletes ONTARIO_511_API_KEY and asserts the literal absent-key warning through its fixture table. No key value exists there.
+
+The new HTTP-error title asserts the literal request-error warning through the other fixture table item.
+
+The Roadway title asserts Upper road, Upper road - East and heading 90 after a blank Direction value.
+
+The no-break-space title has a no-break-space fixture. The view ID titles name URL path values.
+
+The empty-source-list titles assert an empty source list. Their warning clauses assert the exact console list.
+
+
+The banned-word search finds no new prose hit. Its only hit is an old code quotation in Pass 3.
+
+The output is banned-words.json. The search checks prefixed forms and added user-document lines.
+
+The section title diff compares each change document with commit `1911403e`. The proposal titles have no change.
+
+Design changes Pass 3 words to Pass 4 words. Tasks add Pass 3B and Pass 4 sections and renumber Lead checks.
+
+Evidence adds this Pass 4 section. CURRENT-STATE adds the dated Ontario section that its file style needs.
+
+
+### Host checks and limits
+
+The format check with the host shim passes. It prints "Checked 1159 source files."
+
+The package boundary check passes. The prose lint has zero errors after each correction group.
+
+The OpenSpec show command prints valid JSON. The OpenSpec validate command states that the change is valid.
+
+The sources.js diff against commit `05736e82` changes only the catch string to "[CCTV] Ontario 511 camera data has an error."
+
+The named mutation logs and probes hold their command output under evidence/pass4.
+
+
+An early format command has no mode argument and returns the usage error. The final format check completes.
+
+An early coverage probe runs before the lcov files exist and stops. The final coverage probe completes.
+
+One separate package check stops at its 50-second limit. It gives no package verdict.
+
+The complete checks.py package command passes. Its full output is boundaries.log.
+
+The lead still must run the Docker image ratchet and both reviews. The change stays active.
+
+No Docker command, make command, ratchet, ledger change, archive, push or gh command ran in this pass.
+
+
+### Command output
+
+The final script commands give these summaries:
+
+The test-summary.json output is:
+
+```json
+{
+  "files": 22,
+  "tests": 320,
+  "pass": 320,
+  "fail": 0,
+  "filesWithErrors": [],
+  "keyAlone": 12
+}
+```
+
+The automatic-summary.json output is:
+
+```json
+{
+  "phase-1-KILLED": 131,
+  "phase-1-SURVIVED": 9,
+  "phase-2-SURVIVED": 9
+}
+```
+
+The repeated-titles.json output is:
+
+```json
+{
+  "live_titles": 83,
+  "references": 11,
+  "flags": []
+}
+```
+
+The verb summary is:
+
+```json
+{
+  "tests": 83,
+  "flags": [
+    {
+      "file": "cctvOntarioRows.test.mjs",
+      "title": "[live-sources-003] write the first warning for an absent key",
+      "flag": "named thing has no assertion: key"
+    }
+  ],
+  "clauseBodies": 57
+}
+```
+
+The one flag has the body explanation above.
+
+The section title diff is:
+
+```diff
+--- openspec/changes/fix-ontario-511-key/design.md @1911403e
++++ openspec/changes/fix-ontario-511-key/design.md Pass 4
+@@ -3,6 +3,6 @@
+ ## Health decision
+ ## Documents
+ ## Checks
+-## Pass 3 words
++## Pass 4 words
+ ## Files and measures
+ ## Purpose at archive time
+--- openspec/changes/fix-ontario-511-key/tasks.md @1911403e
++++ openspec/changes/fix-ontario-511-key/tasks.md Pass 4
+@@ -2,4 +2,6 @@
+ ## 2. Code and host checks
+ ## 3. Pass 2
+ ## 4. Pass 3
+-## 5. Lead checks
++## 5. Pass 3B
++## 6. Pass 4
++## 7. Lead checks
+--- openspec/changes/fix-ontario-511-key/evidence.md @1911403e
++++ openspec/changes/fix-ontario-511-key/evidence.md Pass 4
+@@ -9,3 +9,4 @@
+ ## Pass 2
+ ## Pass 3
+ ## Pass 3B
++## Pass 4
+--- docs/CURRENT-STATE.md @1911403e
++++ docs/CURRENT-STATE.md Pass 4
+@@ -1,3 +1,4 @@
++## Ontario 511 key — October 8, 2026
+ ## Cyber HUD — September 23, 2026
+ ## Vessel components and sources
+ ## Military-flight components and aircraft mechanics
+```
+
+The prose lint prints "STE: 0 errors, 540 warnings."

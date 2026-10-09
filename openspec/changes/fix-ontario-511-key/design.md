@@ -7,7 +7,7 @@ Use the live-sources capability for the two new requirements. Do not change an o
 ## Key decision
 
 Use `ONTARIO_511_API_KEY` beside the CCTV Ontario variables in `.env.example`.
-Read it only on the server. Use URLSearchParams for the documented `key` parameter.
+Read the key only on the server. Use URLSearchParams for the documented `key` parameter.
 
 Keep the catalog entry enabled. Add no source pack.
 Use the request helper and warning text that never changes for each error.
@@ -32,10 +32,10 @@ Use fixtures only. Test the key, absent or blank keys, HTTP errors and thrown er
 Run named mutations and the automatic mutation tool on changed lines.
 Measure each changed code file on the host. Run each CCTV test file in one process before and after.
 
-Run the STE lint after each edit group. The lead runs the image checks.
+Run the prose lint after each edit group. The lead runs the Docker image checks.
 The purpose of the browser QA for the CCTV layer stays the same. Camera markers and feeds work in the browser.
 
-## Pass 3 words
+## Pass 4 words
 
 | Word | Meaning |
 |---|---|
@@ -49,18 +49,27 @@ The purpose of the browser QA for the CCTV layer stays the same. Camera markers 
 | source | One camera object that the loader returns. |
 | view | One item in the upstream Views list. |
 | warning | Text that console.warn writes. |
-| log line | Text that console.log writes. |
+| log line | Text that any console channel writes. |
+| developer key | The key that Ontario 511 gives to an account holder. |
+| Docker image | The container image for the project checks. |
+| camera image | One camera frame. |
+| view ID | The ID in a camera URL path. |
+| empty row list | The empty list that the request helper returns. |
+| empty source list | The empty list that the loader returns. |
+| beforeEach callback | The callback that calls the reset hook before each test. |
 | Ontario source cap | The limit of sources from Ontario; its default is `DEFAULT_ONTARIO_MAX_SOURCES`. |
 | catalog cap | The limit of sources from all packs. |
-| deployer | The person who sets up the application. |
-| lead | The person who runs the image checks and review. |
+| deployer | The person who installs the application. |
+| lead | The person who runs the Docker image checks and review. |
 | camera list | The data that the Ontario request returns. |
 
 ## Files and measures
 
 Add `server/providers/cctv/ontarioRequest.js` for the request helper.
 Use the reset hook before each key test. Import the module once without a query string.
-The reset hook is a test helper with no scenario of its own. The existing tests cover all its code.
+The reset hook is a test helper with no scenario of its own. The current tests cover all its code.
+
+Two Rows tests check the initial warning flags without the reset hook.
 The coverage gate includes the reset hook in its line, branch and function counts.
 
 Change only the Ontario catch text in `server/providers/cctv/sources.js` after Pass 1.
@@ -74,13 +83,13 @@ Change only the CCTV comment in `scripts/dev-fresh.sh`.
 
 The trace gate checks the scenario IDs and test links. The coverage gate measures lines, branches and functions.
 The ledger gate compares the sources.js gap with the recorded gap. The request helper must have 100% coverage.
-The package boundary check measures import directions. The format check measures the adopted file format.
+The package boundary check measures import directions. The format check finds files that do not use the project code style.
 
 The prose lint checks STE. The OpenSpec commands check the change structure and print its requirements.
 The named mutations and automatic mutations measure whether a code fault makes a test fail.
-The lead runs the image gates and both review agents on the final tree.
+The lead runs the Docker image gates and both review agents on the final tree.
 
 ## Purpose at archive time
 
 The lead adds this sentence to the live-sources Purpose at archive time:
-"The capability also covers the Ontario camera credential and the Ontario row rules."
+"The capability also has requirements for the Ontario camera key. It has requirements for the Ontario row rules."
