@@ -1,0 +1,16 @@
+Command: rg -n 'README sentence|glossary uses|Pass 5 automatic mutation|P3:|P4:|camera object from any pack|refresh in progress|Paragraph breaks keep|paragraph errors in two|check of the files|command output is in evidence/pass9|name test function' openspec/changes/fix-ontario-511-key/evidence.md openspec/changes/fix-ontario-511-key/proposal.md
+openspec/changes/fix-ontario-511-key/proposal.md:43:The catalog calls the loader at most once in 15 minutes while the cache of the catalog holds a camera object from any pack. No scenario covers those cases.
+openspec/changes/fix-ontario-511-key/proposal.md:44:With an empty cache, each call to the catalog that finds no refresh in progress starts a new refresh. Each new refresh can call the loader.
+openspec/changes/fix-ontario-511-key/evidence.md:799:At Pass 9, the glossary uses the name reset hook for this test helper.
+openspec/changes/fix-ontario-511-key/evidence.md:1311:Pass 6 found that the Pass 5 automatic mutation run used another copy of the tests; see S18.
+openspec/changes/fix-ontario-511-key/evidence.md:2022:The Pass 5 automatic mutations ran on a test copy from before the Pass 5 channel changes, as the S18 diff above shows.
+openspec/changes/fix-ontario-511-key/evidence.md:2083:The lead chose the README sentence in the row Spec minor: README of the table Corrections of pre-review 3, and the paragraph after that table.
+openspec/changes/fix-ontario-511-key/evidence.md:2114:P3: At Pass 9, the CI limit names the Node versions of the CI matrix and the newest Node 26 release.
+openspec/changes/fix-ontario-511-key/evidence.md:2115:P4: At Pass 9, Known limits name the order of the Pass 5 changes to the tests and to the scenario text. The evidence does not show this order.
+openspec/changes/fix-ontario-511-key/evidence.md:2136:The other matches for the word routes are a file name and old command output. At Pass 10, no current text uses the name test function for the reset hook or the fixture.
+openspec/changes/fix-ontario-511-key/evidence.md:2174:Paragraph breaks keep the Pass 3B record and the Pass 5 record within the six-sentence limit.
+openspec/changes/fix-ontario-511-key/evidence.md:2178:The command output is in evidence/pass9.
+openspec/changes/fix-ontario-511-key/evidence.md:2192:The check of the files reads ci.yml, catalog.js, the spec clauses and design.md lines 80 to 90.
+openspec/changes/fix-ontario-511-key/evidence.md:2197:Prose lint found paragraph errors in two runs (three errors in all). Paragraph breaks correct each error.
+openspec/changes/fix-ontario-511-key/evidence.md:2211:| R3 | The proposal names a camera object from any pack and each new refresh from an empty cache. |
+openspec/changes/fix-ontario-511-key/evidence.md:2212:| R4 | One note names the Pass 5 automatic mutation run. |
