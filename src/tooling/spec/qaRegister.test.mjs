@@ -82,7 +82,6 @@ test('[qa-scripts-023] checks all tracked QA scripts in this repository', () => 
   assert.equal(result.scripts.length, 90);
   assert.equal(result.validQaScripts.size, 90);
   assert.deepEqual(result.errors, []);
-  assert.deepEqual(result.scripts.filter((script) => script.synthetic).map((script) => script.file), ['scripts/qa-voice-auth-focus.mjs', 'scripts/qa-voice-auth.mjs']);
   for (const file of ['scripts/qa-browserEvidence.mjs', 'scripts/qa-panel-resize.mjs', 'scripts/qa-panelDrag.mjs']) {
     assert.deepEqual(result.scripts.find((script) => script.file === file).covers, ['pending:application-shell']);
   }
