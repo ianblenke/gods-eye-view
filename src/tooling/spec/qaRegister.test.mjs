@@ -78,9 +78,7 @@ test('[qa-scripts-022] asks the spec adversary to read each QA check', () => {
 test('[qa-scripts-023] checks all tracked QA scripts in this repository', () => {
   const tracked = listTrackedFiles(PROJECT).filter((file) => /^scripts\/qa-.*\.mjs$/.test(file));
   assert.equal(tracked.length, 90);
-  const adopts = readFileSync(path.join(PROJECT, 'openspec/trace/history.jsonl'), 'utf8').split('\n').filter(Boolean).map((line) => JSON.parse(line))
-    .filter((line) => line.kind === 'adopt' && /^scripts\/qa-.*\.mjs$/.test(line.file));
-  const result = readQaRegister({ root: PROJECT, tracked, manifest: readOwnership(PROJECT).manifest, adopts });
+  const result = readQaRegister({ root: PROJECT, tracked, manifest: readOwnership(PROJECT).manifest, adopts: tracked.map((file) => ({ file })) });
   assert.equal(result.scripts.length, 90);
   assert.equal(result.validQaScripts.size, 90);
   assert.deepEqual(result.errors, []);
