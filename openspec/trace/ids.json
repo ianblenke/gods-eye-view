@@ -2885,7 +2885,7 @@
     "change": "osh-control-panel-layout"
   },
   "ownership-001": {
-    "hash": "c7b671173e01cf0a3992e703367286a8e667186586dc815a089075ee2360ca2b",
+    "hash": "b52ca32c809f2baeb7ccf82e9355d49f46b67fdf4d574be37ef4e26db8362972",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
@@ -2895,12 +2895,12 @@
     "change": "ownership-scoped-gates"
   },
   "ownership-003": {
-    "hash": "366dcc8485cc3f53690c40985b75f96ff20d9fd73a274de5e00c95b125caec0f",
+    "hash": "2c22c875d7c1b024bde43f66e30d6f7928f979ad421f885b264dafaef06d191d",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-004": {
-    "hash": "e9d8b6fb8a0f43c91ac7041a7b0f0064f3fa62e0d81e9116ee2351c4a297e131",
+    "hash": "61396c07bf4dd19bf6c9ffc05490bf359d05087a1f036950ef3f8845868cd092",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
@@ -2915,7 +2915,7 @@
     "change": "ownership-scoped-gates"
   },
   "ownership-007": {
-    "hash": "484a1b654fa314923b0bb50e1b0687c1a95b2c3529bdedf01c3ff975f3440907",
+    "hash": "a4d5f48ff40283bfeaf0c4aaecf097801ce707446e9cd28cfb5a9f50f4cc6812",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
@@ -2925,37 +2925,37 @@
     "change": "ownership-scoped-gates"
   },
   "ownership-009": {
-    "hash": "94b17a89910ca26f7cb06de90278d8416dce28ed1908c2e7fe0262745e81ea50",
+    "hash": "dd8b4c28977767409eed441de8e22cf603c91d8f8fbdf75ff7e783cd964e5ec1",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-010": {
-    "hash": "604e0253e556c2393236807211aae065fb222c201439294a4f87990f819e7047",
+    "hash": "0f204343e6358c711648672d8f4dfdfeb50365aac52ed7159f4d4fa374ac65b1",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-011": {
-    "hash": "a30bf9a95341398cde56b41dc1f31f7642907959225c8e3fc733a1d20ea30996",
+    "hash": "21d8703e45f54eab53391df3602f8109a5aee25e640455039a9e30ca22e9425f",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-012": {
-    "hash": "0384089baee30409444d987fd2afbdf9725661209e8dec13a2df7de59fe3066a",
+    "hash": "eed22c6bd02a85fc4726d7becc7f2db58307908050c609c49af48aa8817673de",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-013": {
-    "hash": "2e724b3ea849869f23adc6960badcd814c4ae0a4f98074f02e239e706692b74e",
+    "hash": "d82fdb68cd2c9cdff28e0e87b8cd057a117ef8e6a0c73f0c00ce023e4de66a73",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-014": {
-    "hash": "728de427bf2ff9ec968f48f134ac4d7a1e56c8a67e3918beb7e146c2ca8e4486",
+    "hash": "64597e60e6503212b05d91d79dd5fb2d76221725bedc15a95ce767822f408cd5",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-015": {
-    "hash": "0e607830aaee208940e2dbeb71a85e1bb33ee9a0a22ebee4d65915e295d1dc7d",
+    "hash": "08625e91066922ee9871fe3bb4f71d262c82dd3854e25766ee2000bc454eb3a9",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
@@ -2970,57 +2970,57 @@
     "change": "ownership-scoped-gates"
   },
   "ownership-018": {
-    "hash": "3e431e727f25fbd0e58ab0b762961389e728b4b40a3f8473bd0e94e0b6522593",
+    "hash": "6638fcc95ad7014f6a893134e72027547fe2736d4197b6fec9b6bd7edb7b08e5",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-019": {
-    "hash": "648a50487f9d4db13d19aef5f9a813ed2e75248758e8d95ce895141cff6054c5",
+    "hash": "e52c0f9a50e452d4e8821060012190e63154aa445268e612b780bbf2dd96f053",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-020": {
-    "hash": "f5b4b5e64c47c3654e72e4ef685b4671eba54c6404faf92c02821e818de29689",
+    "hash": "5c8048d3e7a76f277f0258abac66e2ef5638d08ea4fd9625eaca978028f1de5e",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-021": {
-    "hash": "911d87e056fe1a7c250e1342606157d3bfb61d84edec0f3d7c9f251c2d4376ef",
+    "hash": "8d881818aa9fe5880b7b98ea42863cadd6fb585b16a6641035074f8acbe9340b",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-022": {
-    "hash": "cdd388533235c1c974cb765f948ff1b34c139e7bdd7dd4b3e8f0682eb5dce23c",
+    "hash": "2c82752a43d9f12f8a7a652b4c8356b5d6c72c3e9cc2302ddafed2b744fec440",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-023": {
-    "hash": "0993ed55a15f59cb7d335503b2fa2e33d9ad19c08d9b2f9bbc490490e9dc2eba",
+    "hash": "80d2c4a6b0e0c3afbac18bbe9c17d965a47b6c91372be281e86344814e75f274",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-024": {
-    "hash": "bb8bc602065a542822bb4971684fa2ad22de70045459f0ba9703caa31115091a",
+    "hash": "040f1172134d43d01ea5d97aa81f0e2f459a082d54d81c31a0eca1e67654d1b1",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-025": {
-    "hash": "1ee9c2bc9aab7a2f024b18e907ad32e26f7887b58330e2c05b45cc8a8b257e92",
+    "hash": "ab0f9e254f52777bcf8cdf4b42bdf7c867b698a0e6b2b5ed8671e7891423190d",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-026": {
-    "hash": "2ce8d99a76b633f8f57047f0e7a05bb6deaa3d589bf6251e737703b626266320",
+    "hash": "9e729d97587b77b3a527f0ea3752dc2695dd2bfd042a76d8bb74166168b2fd1e",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-027": {
-    "hash": "ab854f47b8711b92177d6fec60984ec2235aa19d2533829de3a7f791a2de9f5f",
+    "hash": "9fa5f118611e530fd1fad8e7edc7382f27b263778078e33b95c2754016e65b90",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-028": {
-    "hash": "42a1584770af3e602d5a179d2045551a2fa2d4c8d284424f99e7dbf8a9bcc33b",
+    "hash": "7c802eeb359837aa97c2e0c0bf893170972460faa6cf19e6cac14053806d3fc8",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
@@ -3030,32 +3030,32 @@
     "change": "ownership-scoped-gates"
   },
   "ownership-030": {
-    "hash": "76897c5a4942a2274f85e9f7a3101fd7f4faf2001b8502bc8a38dae599b2f32d",
+    "hash": "2b4b1e9116c4b55f0f583dc6b6536f9f9f72474ff3192774474240986ab24e88",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-031": {
-    "hash": "305a5ecd720b295147f9f5d202fa850927409bd5d3e7520d10261836b731b8e3",
+    "hash": "7e0c69793dfec166a06432ea45e66ec7c46976fcdc24207902ad5629e18dee87",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-032": {
-    "hash": "f2ed781b8d8eff59a31de036c010f066f2266586c266be53a89d1cd348a6352f",
+    "hash": "feb3d0db805ded34c27f39a20ce66fb828041f88f8507d8249986bbd939da752",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-033": {
-    "hash": "719fe754b3484680f17358a1d48d08252415e50dc5ef3e484e1eee1679c79c36",
+    "hash": "b390382876c159c5bc5f85d62bd9826c15edc6580a448657df56bdf51d37730c",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-034": {
-    "hash": "b0ba2ade28108f4c96b778a4357e39620d4b1e58cdd71fbda866d4320282b3f9",
+    "hash": "d2d0505cd8432c20baa5a47773f52515a7c895e2a795400515ebd08b96f99675",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-035": {
-    "hash": "58cdb93f7a8e864eab562076e2fe6c48bf8d39c2bff7417c01e5ae0633c554cf",
+    "hash": "d10a19715a7a10a92a2a0c2420cf7902aad6c6f3c7c421af6977fda5eb7d9e56",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
@@ -3065,88 +3065,98 @@
     "change": "ownership-scoped-gates"
   },
   "ownership-037": {
-    "hash": "386d99ffbbe67cfd0647eb9791836308f458ac4baa42a05bccb0f56663116c49",
+    "hash": "03d80724a440fc3771c9b7e3d20ce423d372c16859bb921539047a6dafc79d8b",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-038": {
-    "hash": "5195d81b88b717744c2ace9b7ad65cd8d47c478d901bbd85d7200e50f6e356fc",
+    "hash": "348332c21f4e13bc9c49c8143cb898e70c413d6be6f5d0a5c1bded30f638f708",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-039": {
-    "hash": "a5a7c8e9eabb9ec50e9e103787c0b93201e291a91388b5ca8ae32c773c7a2b85",
+    "hash": "1ccc682ce3df8a0848d008029d539308ad093c2d7cc10991e4dc219a68b7e431",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-040": {
-    "hash": "6f843a051da3a4a2429a995ab6e7bda2f49c0885bf79142625e404b3e5dc51c2",
+    "hash": "0a6a9e15fc535f78ab9ef85fd63791f8cfb03284e9a0b923a756ee577acd19e0",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-041": {
-    "hash": "bae7fa186816e10af9dbef9ec1b1cc41cf969862de44724468884e3d25f798c3",
+    "hash": "3fec5b85151b452be7ea8826dfe7376fc6a5e15d37833e67b82e2c177d9136b9",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-042": {
-    "hash": "d846030b10552acd5cbe07f32bd173f6f8391cec02b4b0de789cdc6968af4f97",
+    "hash": "10541822088f02b2c911c486224788839df4ac60b6c23acbb3f2fd65fb28037d",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-043": {
-    "hash": "741dac8f77852b9228ed1e2434e1a64fa16c302f7f47ab5d9b08a360bac9b53d",
+    "hash": "9a2c45c3b1204f49b6cb2393874d9a6552fbc4b2f7294eddc399e8cf5c4e50c5",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-044": {
-    "hash": "7d9c6804e0fd28d0be4384de3ca9c7013f1589259856cdb88397f41e3ba1bca3",
+    "hash": "4d4f8663ca5dd55403c8b6b278987482e6da882f520c0cdf65b0e540b3c17eb6",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-045": {
-    "hash": "78d70006b24573d73e550309e61b805fb973fa0913a1609fe4cad6954bceabfc",
+    "hash": "40ed48acf515474e86b525022f175d67cef8f2337682f9a3a268d69c2c78b001",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-046": {
-    "hash": "d706979b4b92e9f306da0c36408bba7e504e6b412123c9079b23483072298bf0",
+    "hash": "341341e9b375b80fe5bcf7518a38a10a074312a033335776793a3b41a6bd1527",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-047": {
-    "hash": "ed5e931cbc400a8398ec9f73f1a8719753b08520331e2336c8bd09313bef7649",
+    "hash": "e5e74d86470805a7ed8ed46abf5f60c41972376ea2946a60104d80b45720984d",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-048": {
-    "hash": "773ff0f12995c6d035f928acda602cbec45ab3dc680443a271b437d5514bceea",
+    "hash": "bbfb2520687569e1dd8e137a0a2ef02b2433d919ab88f65b811234c31a49176d",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-049": {
-    "hash": "4c224891807ac17e7e75025728b6e8f6512fdb9bb971d011bee62f62a1ab84a5",
+    "hash": "564f9fe784a2149fb92590179bb759f875c055bb8fd778076d6a05e2868cea33",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-050": {
-    "hash": "5085b70f247d4566388139326918523a7ae11e3bfe46de444bde3f1304758b6f",
+    "hash": "d56e0fe82868be1ff00a0fb6aca76102ea16442f8908fb94a2b5c23198195bcb",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-051": {
-    "hash": "6413062196811da89f60155bdee0e53198eea44ab5fa3abb21a47e3254e50747",
+    "hash": "f33d15cfeed8cfdd5b49e5c8674e74847c9d6e5523dfd3a9631f9c378a7b6bc7",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-052": {
-    "hash": "d9537aaec80db260ecbb9e8ae502d76810ddcc63df5310973424552a39b4db50",
+    "hash": "7655b496e1881f56a60722d158c53aaf9e0a12e0a6e969baf3e6ae2219e298b3",
     "since": "2026-10-08",
     "change": "ownership-scoped-gates"
   },
   "ownership-053": {
-    "hash": "5844caff1b2a8d08d51cc4acfbafee2262c5a19429265bd7d0a5ba64adb91e97",
+    "hash": "784060a7907e861cf3c07aa67dde35e8ec2243636062be500294ee6384dd8462",
     "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-054": {
+    "hash": "7b3aba9faafcbe39c6960c51bb283faad2302e4cc5fca09cd51455770512c4cf",
+    "since": "2026-10-09",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-055": {
+    "hash": "88fefa17b758c419c82fe8bf08b981fb11528c8d63ab5624dc3a806737dd4b57",
+    "since": "2026-10-09",
     "change": "ownership-scoped-gates"
   },
   "perimeters-001": {
