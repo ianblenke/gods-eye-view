@@ -1,0 +1,10 @@
+baseline worker 1 src/data/cctvOntarioKey.test.mjs: fast 0.58s full 0.61s; skipped 0
+phase 2: 1/9, a0030 SURVIVED
+phase 2: 2/9, a0031 SURVIVED
+phase 2: 3/9, a0078 SURVIVED
+phase 2: 4/9, a0090 SURVIVED
+phase 2: 5/9, a0091 SURVIVED
+phase 2: 6/9, a9003 KILLED
+phase 2: 7/9, a9012 SURVIVED
+phase 2: 8/9, a9013 SURVIVED
+phase 2: 9/9, a9016 SURVIVED

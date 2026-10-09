@@ -1,0 +1,10 @@
+✔ cameraDisplayCode trims long names with an ellipsis and collapses whitespace (9.036829ms)
+✔ every pack labels by its feed name; explicit codes win; the id is the last resort (4.027974ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 153.056058

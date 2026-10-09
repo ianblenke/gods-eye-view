@@ -1,0 +1,18 @@
+Command: rg -n Pass 11 hand count|14.18|14.19|14.20|14.21|14.22|settled marker shows|does not detect|new test detects|These include|four mutations survive openspec/changes/backfill-director-packs-sharing/proposal.md openspec/changes/backfill-director-packs-sharing/tasks.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/evidence.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:15075:## Pass 11 hand count
+openspec/changes/backfill-director-packs-sharing/proposal.md:77:  The probe in evidence/probe-signal-check-order.txt shows that all four mutations survive the three test files.
+openspec/changes/backfill-director-packs-sharing/proposal.md:83:  The probe in evidence/probe-signal-check-order.txt shows that all four mutations survive the three test files.
+openspec/changes/backfill-director-packs-sharing/evidence.md:11549:The old test does not detect this mutation.
+openspec/changes/backfill-director-packs-sharing/evidence.md:11550:The new test detects this mutation with the settled marker out of order.
+openspec/changes/backfill-director-packs-sharing/evidence.md:11775:These include the 12 before titles at backfill.test.mjs:95-114 and the 5 bundle helper titles at sharing.test.mjs:1946-1953.
+openspec/changes/backfill-director-packs-sharing/evidence.md:15279:The old sharing file does not detect m480 with no name filter.
+openspec/changes/backfill-director-packs-sharing/evidence.md:16853:The settled marker shows that the text method ended before the second check.
+openspec/changes/backfill-director-packs-sharing/evidence.md:17052: ### Pass 11 hand count
+openspec/changes/backfill-director-packs-sharing/evidence.md:17070:| K4 | Sections 15 and 16 record the work. Tasks 14.18 to 14.22 name the checks. |
+openspec/changes/backfill-director-packs-sharing/evidence.md:17071:| K5 | Pass 11 hand count has its own heading. The vague template claim is absent. |
+openspec/changes/backfill-director-packs-sharing/tasks.md:1578:- [x] 14.2 Show that the old test does not detect m480 and the new test detects m480.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1594:- [x] 14.18 Run the OpenSpec show and validate commands.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1595:- [x] 14.19 Compare the production files with the source commit.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1596:- [x] 14.20 Correct the label of task 13.2.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1597:- [x] 14.21 Run the predispatch checker.
+openspec/changes/backfill-director-packs-sharing/tasks.md:1598:- [x] 14.22 Run the title scan.

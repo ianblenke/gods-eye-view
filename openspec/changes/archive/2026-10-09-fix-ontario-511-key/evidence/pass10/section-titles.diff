@@ -1,0 +1,1 @@
+Command: git diff --no-index -- /tmp/12e359c7-proposal-titles.txt /tmp/pass11-proposal-titles.txt

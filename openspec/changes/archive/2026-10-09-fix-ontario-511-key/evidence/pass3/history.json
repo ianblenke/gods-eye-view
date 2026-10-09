@@ -1,0 +1,10 @@
+{
+  "CHANGELOG.md": {
+    "old_entry_matches_main": true,
+    "new_entry": "- Ontario 511 camera requests need `ONTARIO_511_API_KEY` (2026-10-08). The pack makes no request without it."
+  },
+  "docs/CURRENT-STATE.md": {
+    "old_entry_matches_main": true,
+    "new_entry": "Ontario 511 camera requests need `ONTARIO_511_API_KEY` (2026-10-08). The pack makes no request without it."
+  }
+}

@@ -1,0 +1,17 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvCatalogCap.test.mjs
+✔ under the cap every pack is served whole, in merge order (14.499836ms)
+✔ over the cap the packs share it round-robin, and the last pack is never starved (4.909922ms)
+✔ a duplicate inside one pack takes one slot, not two (1.983909ms)
+✔ a short pack releases its turns to the others (2.300787ms)
+✔ duplicate ids resolve last-pack-wins and count against the winning pack (2.261373ms)
+✔ resolveCatalogCap bounds the env value and falls back to the default (1.483084ms)
+✔ the catalog applies the fair cap to configured packs end to end (19.186979ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 222.582126
+[CCTV] source catalog exceeds cap 9; shared round-robin across packs (env 9/12). Raise CCTV_MAX_SOURCES or lower a per-pack cap to change the mix.

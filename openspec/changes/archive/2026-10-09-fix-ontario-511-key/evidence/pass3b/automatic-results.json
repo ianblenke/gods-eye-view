@@ -1,0 +1,270 @@
+{
+  "results": [
+    {
+      "id": "b0",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-003] make no request without a key"
+      },
+      "ms": 798,
+      "failedTests": [
+        "[live-sources-003] make no request without a key"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b1",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-003] make no request without a key"
+      },
+      "ms": 754,
+      "failedTests": [
+        "[live-sources-003] make no request without a key"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b2",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-003] make no request without a key"
+      },
+      "ms": 763,
+      "failedTests": [
+        "[live-sources-003] make no request without a key"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b3",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-003] make no request without a key"
+      },
+      "ms": 736,
+      "failedTests": [
+        "[live-sources-003] make no request without a key"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b7",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-005] keep the fetch error secret"
+      },
+      "ms": 715,
+      "failedTests": [
+        "[live-sources-005] keep the fetch error secret"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b8",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-005] keep the fetch error secret"
+      },
+      "ms": 723,
+      "failedTests": [
+        "[live-sources-005] keep the fetch error secret"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b9",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-005] keep the fetch error secret"
+      },
+      "ms": 766,
+      "failedTests": [
+        "[live-sources-005] keep the fetch error secret"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b10",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "statement",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-005] keep the fetch error secret"
+      },
+      "ms": 714,
+      "failedTests": [
+        "[live-sources-005] keep the fetch error secret"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b6",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "boolean",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-003] make no request without a key"
+      },
+      "ms": 738,
+      "failedTests": [
+        "[live-sources-003] make no request without a key"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b13",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "boolean",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-004] write one warning for an invalid key"
+      },
+      "ms": 722,
+      "failedTests": [
+        "[live-sources-004] write one warning for an invalid key"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b4",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-003] make no request without a key"
+      },
+      "ms": 725,
+      "failedTests": [
+        "[live-sources-003] make no request without a key"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b5",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-003] make no request without a key"
+      },
+      "ms": 735,
+      "failedTests": [
+        "[live-sources-003] make no request without a key"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b11",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-004] write one warning for an invalid key"
+      },
+      "ms": 745,
+      "failedTests": [
+        "[live-sources-004] write one warning for an invalid key"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b12",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "value",
+      "phase": 1,
+      "status": "KILLED",
+      "killedBy": {
+        "file": "src/data/cctvOntarioKey.test.mjs",
+        "test": "[live-sources-004] write one warning for an invalid key"
+      },
+      "ms": 767,
+      "failedTests": [
+        "[live-sources-004] write one warning for an invalid key"
+      ],
+      "countsAsKill": true
+    },
+    {
+      "id": "b14",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "statement-order",
+      "phase": 1,
+      "status": "SURVIVED",
+      "killedBy": null,
+      "ms": 770
+    },
+    {
+      "id": "b14",
+      "file": "server/providers/cctv/ontarioRequest.js",
+      "class": "statement-order",
+      "phase": 2,
+      "status": "SURVIVED",
+      "killedBy": null,
+      "ms": 845
+    }
+  ],
+  "root": "/tmp/ont-pass3b-tree",
+  "tests": [
+    "src/data/cctvOntarioKey.test.mjs"
+  ],
+  "baselines": {
+    "1:src/data/cctvOntarioKey.test.mjs": {
+      "fullMs": 811,
+      "fastMs": 791,
+      "skip": "",
+      "slowTests": [],
+      "tests": 12,
+      "fastTests": 12,
+      "slowMs": 1000
+    }
+  },
+  "phaseTimes": {
+    "1": 19918,
+    "2": 7453
+  },
+  "updated": "2026-10-09T00:09:02.703Z",
+  "phaseComplete": {
+    "1": true,
+    "2": true
+  }
+}

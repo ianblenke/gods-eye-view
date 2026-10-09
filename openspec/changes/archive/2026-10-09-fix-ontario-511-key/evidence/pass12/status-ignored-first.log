@@ -1,0 +1,10 @@
+Command: git status --ignored --short -- openspec/changes/fix-ontario-511-key
+ M openspec/changes/fix-ontario-511-key/evidence.md
+?? openspec/changes/fix-ontario-511-key/evidence/pass12/
+!! openspec/changes/fix-ontario-511-key/evidence/pass12/cctvOntarioKey.test.log
+!! openspec/changes/fix-ontario-511-key/evidence/pass12/cctvOntarioRows.test.log
+!! openspec/changes/fix-ontario-511-key/evidence/pass12/corrections-search.log
+!! openspec/changes/fix-ontario-511-key/evidence/pass12/lint-final.log
+!! openspec/changes/fix-ontario-511-key/evidence/pass12/lint-group-first.log
+!! openspec/changes/fix-ontario-511-key/evidence/pass12/lint-group-fixed.log
+!! openspec/changes/fix-ontario-511-key/evidence/pass12/openspec-validate.log

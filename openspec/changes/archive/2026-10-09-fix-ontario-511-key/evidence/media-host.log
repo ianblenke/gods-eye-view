@@ -1,0 +1,30 @@
+✔ single well-formed byte ranges pass through canonicalized (8.015676ms)
+✔ multi-range is dropped so the upstream never answers multipart/byteranges (0.953215ms)
+✔ malformed, non-byte and CR/LF-bearing values are dropped, not forwarded (0.923768ms)
+✔ non-string and empty inputs yield no Range header (1.100953ms)
+✔ every accepted form is bounded to the relay body cap (1.57103ms)
+✔ inverted and unsafe-integer positions are dropped (1.281765ms)
+✔ a canonical range reaches the upstream and its 206 is passed through (111.629522ms)
+✔ an unbounded seek is bounded before it is forwarded (8.689774ms)
+✔ a rejected range is dropped and the request proceeds without one (6.710911ms)
+✔ a rejected range leaves the camera health report untouched (8.898949ms)
+✔ a multi-range request is served whole rather than as multipart (6.921778ms)
+✔ an upstream 416 is reported as the upstream status, not as a proxy error (5.262749ms)
+✔ an upstream that ignores the range still serves its whole body (5.742915ms)
+✔ an oversized declared body is refused even when a bounded range asked for it (9.267499ms)
+✔ a client that disconnects mid-stream stops the upstream read (675.376092ms)
+✔ a client that leaves before the headers arrive cancels the upstream request (417.697403ms)
+    [range] folded CR/LF request was refused by the HTTP parser
+✔ a folded CR/LF range never reaches the upstream through a real client (14.780796ms)
+✔ two sequential seeks are served as two partial responses (15.773188ms)
+✔ an upstream that goes silent after its headers is released at the idle deadline (22.840451ms)
+✔ a live feed that keeps producing is not cut off by the idle deadline (40.865693ms)
+✔ a client that cannot keep up is not mistaken for a stalled upstream (12.687551ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1703.505464

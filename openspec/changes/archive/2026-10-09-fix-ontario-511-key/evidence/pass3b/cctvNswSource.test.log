@@ -1,0 +1,15 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvNswSource.test.mjs
+✔ NSW label prefers the view sentence and falls back to the title for works notices (8.243135ms)
+✔ NSW feature maps to a source with a compass heading and a pinned image host (5.847649ms)
+✔ NSW mapping rejects off-host images and unusable geometry (2.679618ms)
+✔ NSW loader reads the keyless feed and caps around Sydney (209.917536ms)
+✔ the browser User-Agent applies to the NSW image host only (14.930965ms)
+✔ the frame path follows redirects within the host only (16.218487ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 433.073459

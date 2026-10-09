@@ -1,0 +1,15 @@
+✔ low confidence marks the bearing estimated (8.687904ms)
+✔ confidence matching is trimmed and case-insensitive (1.398003ms)
+✔ medium, high, missing, and absent cameras are not estimated (1.404926ms)
+✔ a manually saved calibration overrides a low pack flag (2.142788ms)
+✔ a curated catalog entry overrides a low pack flag (1.491793ms)
+✔ HUD token tags a synthetic bearing and rounds the degrees (1.509439ms)
+✔ HUD token stays untagged for surveyed and calibrated bearings (1.324649ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 148.799827

@@ -1,0 +1,38 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvLod.test.mjs
+✔ cctvLodBudgets scales the card budget from 20 to 40 with view height (17.095229ms)
+✔ selectCctvLod caps ambient cards at the 40 hard cap regardless of catalog size (19.372136ms)
+✔ selectCctvLod uses only in-view cameras and orders by viewer distance (2.516545ms)
+✔ video cameras never consume ambient card slots (1.949437ms)
+✔ selectCctvLod tolerates malformed candidate rows (2.056283ms)
+✔ incumbentRankKm discounts incumbents by the 20% factor (1.404751ms)
+✔ selectCctvLod: a carded camera outranks a slightly-nearer non-carded one (3.13374ms)
+✔ selectCctvLod: a meaningfully (>20%) closer camera still displaces an incumbent (2.34317ms)
+✔ selectCctvLod: no incumbents means plain nearest-first (unchanged behavior) (2.220559ms)
+✔ distributeCctvCards spreads clustered candidates across cells (4.302951ms)
+✔ distributeCctvCards: leftover budget falls back to global rank order (1.860599ms)
+✔ distributeCctvCards: empty cells are skipped, budget respected (1.667172ms)
+✔ distributeCctvCards: an under-budget cut keeps the nearest cell winners (1.382427ms)
+✔ distributeCctvCards: incumbency (effective distance) is honored inside a cell (1.676173ms)
+✔ distributeCctvCards: malformed rows dropped; offscreen anchors clamp to edge cells (1.597369ms)
+✔ selectCctvLod with viewport dims routes the fill through screen distribution (5.205291ms)
+✔ center-weight helpers are bounded and robust to invalid anchors and outliers (1.654335ms)
+✔ non-finite positive viewport dimensions retain exact legacy nearest-first selection (2.453308ms)
+✔ center weighting deterministically favors center without starving peripheral coverage (5.594327ms)
+✔ ineligible video, hidden, and malformed-distance rows cannot alter eligible winners (5.639448ms)
+✔ malformed-distance rows remain slot-neutral when valid candidates leave spare capacity (1.358911ms)
+✔ duplicate IDs are slot-neutral and choose a deterministic representative (5.273351ms)
+✔ center weighting has deterministic ID ties and preserves invalid-anchor eligibility (73.940818ms)
+✔ applyEvictionGrace keeps a fallen-out card and clears grace when it returns (2.800599ms)
+✔ applyEvictionGrace evicts a card that stays unselected past the pass budget (1.430178ms)
+✔ applyEvictionGrace evicts on wall-time even with few passes (1.329858ms)
+✔ applyEvictionGrace never exceeds the hard cap; graced cards go first, oldest first (1.306678ms)
+✔ applyEvictionGrace with a full selection keeps no graced cards (1.249906ms)
+✔ staticFrameRefreshMs follows known pack cadences and bounds explicit values (1.309637ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 318.949923

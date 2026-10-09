@@ -1,0 +1,10 @@
+baseline worker 1 src/data/cctvOntarioKey.test.mjs: fast 0.89s full 0.87s; skipped 0
+baseline worker 1 src/data/cctvOntarioRows.test.mjs: fast 1.20s full 1.25s; skipped 0
+phase 2: 1/8, h29 SURVIVED
+phase 2: 2/8, h30 SURVIVED
+phase 2: 3/8, h77 SURVIVED
+phase 2: 4/8, h89 SURVIVED
+phase 2: 5/8, h90 SURVIVED
+phase 2: 6/8, h111 SURVIVED
+phase 2: 7/8, h112 SURVIVED
+phase 2: 8/8, h115 SURVIVED

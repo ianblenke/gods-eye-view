@@ -1,0 +1,38 @@
+Command: rg -n CI matrix|newest Node|Pass 6 found|older Pass 5 tests|reset hook exists|At Pass 9|empty cache|same file|changes to the tests|records of the probe|section titles|245 to 257 openspec/changes/fix-ontario-511-key/proposal.md openspec/changes/fix-ontario-511-key/design.md openspec/changes/fix-ontario-511-key/evidence.md
+openspec/changes/fix-ontario-511-key/evidence.md:131:The full-test command uses run with phase 2, one job and resume with the same files.
+openspec/changes/fix-ontario-511-key/evidence.md:163:The proposal section titles match the five required section titles in the nearby defect change.
+openspec/changes/fix-ontario-511-key/evidence.md:367:The section title search has the five required proposal section titles in the current file and the adjacent measurement change.
+openspec/changes/fix-ontario-511-key/evidence.md:450:The proposal section title search has all five required section titles. The known limits text has no change.
+openspec/changes/fix-ontario-511-key/evidence.md:663:### Source searches and section titles
+openspec/changes/fix-ontario-511-key/evidence.md:760:The proposal keeps all five required section titles. Design adds the glossary, files and measures, and Purpose sentence sections.
+openspec/changes/fix-ontario-511-key/evidence.md:762:The other section titles have no change.
+openspec/changes/fix-ontario-511-key/evidence.md:799:At Pass 9, the glossary calls this function the reset hook.
+openspec/changes/fix-ontario-511-key/evidence.md:948:The proposal keeps all its required section titles. The probe also checks that the past evidence text stays unchanged.
+openspec/changes/fix-ontario-511-key/evidence.md:1311:At Pass 6, S18 shows that this is true only of the older Pass 5 tests.
+openspec/changes/fix-ontario-511-key/evidence.md:1312:Pass 6 found that this automatic run used another copy of the tests; see S18.
+openspec/changes/fix-ontario-511-key/evidence.md:1606:Pass 6 found that this automatic run used another copy of the tests; see S18.
+openspec/changes/fix-ontario-511-key/evidence.md:1693:The section title diff keeps all proposal section titles.
+openspec/changes/fix-ontario-511-key/evidence.md:1759:S16 to S17: The evidence names the old dependency link, the proposal draft, branch ranges and proposal section titles.
+openspec/changes/fix-ontario-511-key/evidence.md:2015:The diff of the proposal section titles is empty against d0b0c776. The diff for src, server and scripts is also empty.
+openspec/changes/fix-ontario-511-key/evidence.md:2062:E7: The Pass 5 evidence, commit 33118620 and codex-6.txt show no order for the changes to the tests and the changes to the scenario text. The lead decides in review.md whether to accept this limit by name.
+openspec/changes/fix-ontario-511-key/evidence.md:2090:The proposal section titles do not differ from 731ae583.
+openspec/changes/fix-ontario-511-key/evidence.md:2109:The empty cache does not meet that condition. catalog.js lines 156 to 201 and 245 to 257 and constants.js line 248 support these sentences.
+openspec/changes/fix-ontario-511-key/evidence.md:2116:P3: The CI limit names the Node versions of the CI matrix and the newest Node 26 release.
+openspec/changes/fix-ontario-511-key/evidence.md:2117:P4: Known limits now name the order of the Pass 5 changes to the tests and to the scenario text. The evidence does not show this order.
+openspec/changes/fix-ontario-511-key/evidence.md:2120:The records of the probe name the base image. The Pass 3 and Pass 3B records stay unchanged.
+openspec/changes/fix-ontario-511-key/evidence.md:2143:The proposal section titles do not differ from 3ac3af22. The diff for README.md, src, server and scripts against that commit is empty.
+openspec/changes/fix-ontario-511-key/evidence.md:2160:Q1: The CI text names both matrix versions and the newest Node 26 release.
+openspec/changes/fix-ontario-511-key/evidence.md:2164:Q2: Both notes say that Pass 6 found the test copy fault in the Pass 5 run.
+openspec/changes/fix-ontario-511-key/evidence.md:2165:The scratch tree note names the older Pass 5 tests, as S18 shows.
+openspec/changes/fix-ontario-511-key/evidence.md:2170:Q4: The text names section titles, the cache of the catalog and the output of the probe.
+openspec/changes/fix-ontario-511-key/evidence.md:2175:At Pass 9, the E1 sentence spans lines 1334 to 1336. The README line in the table is line 1322.
+openspec/changes/fix-ontario-511-key/evidence.md:2177:Q5: The catalog citation includes lines 245 to 257, which keep the cache and set its time.
+openspec/changes/fix-ontario-511-key/evidence.md:2178:The proposal names the empty cache case and the path of the spec of this change.
+openspec/changes/fix-ontario-511-key/evidence.md:2181:The sentence for the empty cache uses current refresh in place of the lead's term for a refresh that has not finished to meet STE.
+openspec/changes/fix-ontario-511-key/evidence.md:2205:The proposal section titles do not differ from 73bf05b3.
+openspec/changes/fix-ontario-511-key/proposal.md:44:With an empty cache, the catalog can call the loader on each call that no current refresh serves.
+openspec/changes/fix-ontario-511-key/proposal.md:69:The CI matrix runs `npm test` on Node 24.14.0 and on Node 26.x. No worker ran the console probe on Node 24.14.0.
+openspec/changes/fix-ontario-511-key/proposal.md:70:The job on Node 26.x uses the newest Node 26 release, and the probe used only Node v26.8.2 of that series.
+openspec/changes/fix-ontario-511-key/proposal.md:74:The clause of scenario 008 about the loader log line names no console channel (the same file, line 83).
+openspec/changes/fix-ontario-511-key/proposal.md:77:The evidence does not show the order of the Pass 5 changes to the tests and the Pass 5 changes to the scenario text.
+openspec/changes/fix-ontario-511-key/design.md:85:The reset hook exists for tests and has no scenario of its own. The current tests cover all the code of the reset hook.

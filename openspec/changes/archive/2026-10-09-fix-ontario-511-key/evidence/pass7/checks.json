@@ -1,0 +1,177 @@
+[
+  {
+    "file": "src/data/cctv.test.mjs",
+    "exit": 0,
+    "tests": 55,
+    "pass": 55,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvCalgary.test.mjs",
+    "exit": 0,
+    "tests": 13,
+    "pass": 13,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvCards.test.mjs",
+    "exit": 0,
+    "tests": 23,
+    "pass": 23,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvCatalogCap.test.mjs",
+    "exit": 0,
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvDisplayCode.test.mjs",
+    "exit": 0,
+    "tests": 2,
+    "pass": 2,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvDriveBcSource.test.mjs",
+    "exit": 0,
+    "tests": 6,
+    "pass": 6,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvEstonia.test.mjs",
+    "exit": 0,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvFintraffic.test.mjs",
+    "exit": 0,
+    "tests": 8,
+    "pass": 8,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvFootprint.test.mjs",
+    "exit": 0,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvGizmo.test.mjs",
+    "exit": 0,
+    "tests": 10,
+    "pass": 10,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvGroundHeights.test.mjs",
+    "exit": 0,
+    "tests": 2,
+    "pass": 2,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvHlsStream.test.mjs",
+    "exit": 0,
+    "tests": 10,
+    "pass": 10,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvLod.test.mjs",
+    "exit": 0,
+    "tests": 29,
+    "pass": 29,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvMediaRange.test.mjs",
+    "exit": 1,
+    "tests": 21,
+    "pass": 18,
+    "fail": 3
+  },
+  {
+    "file": "src/data/cctvNswSource.test.mjs",
+    "exit": 0,
+    "tests": 6,
+    "pass": 6,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvOntarioKey.test.mjs",
+    "exit": 0,
+    "tests": 12,
+    "pass": 12,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvOntarioRows.test.mjs",
+    "exit": 0,
+    "tests": 71,
+    "pass": 71,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvProxy.test.mjs",
+    "exit": 0,
+    "tests": 14,
+    "pass": 14,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvTxdotSource.test.mjs",
+    "exit": 0,
+    "tests": 10,
+    "pass": 10,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvViewshed.test.mjs",
+    "exit": 0,
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  {
+    "file": "src/data/cctvWarendorf.test.mjs",
+    "exit": 0,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0
+  },
+  {
+    "file": "src/tooling/mediaProviders.test.mjs",
+    "exit": 0,
+    "tests": 5,
+    "pass": 5,
+    "fail": 0
+  },
+  {
+    "file": "src/layers/cctv/headingConfidence.test.mjs",
+    "exit": 0,
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  {
+    "file": "src/layers/cctv/source.test.mjs",
+    "exit": 0,
+    "tests": 5,
+    "pass": 5,
+    "fail": 0
+  },
+  {
+    "file": "src/layers/cctv/videoPlayback.test.mjs",
+    "exit": 0,
+    "tests": 4,
+    "pass": 4,
+    "fail": 0
+  }
+]

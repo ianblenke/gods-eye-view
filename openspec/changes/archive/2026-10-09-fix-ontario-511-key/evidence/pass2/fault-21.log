@@ -1,0 +1,159 @@
+✔ [live-sources-006] reject row 0 (33.128997ms)
+✔ [live-sources-006] reject row 1 (4.298029ms)
+✔ [live-sources-006] reject row 2 (4.384921ms)
+✔ [live-sources-006] reject row 3 (4.907669ms)
+✔ [live-sources-006] reject row 4 (4.837258ms)
+✔ [live-sources-006] reject row 5 (4.216226ms)
+✔ [live-sources-006] reject row 6 (3.264713ms)
+✔ [live-sources-006] reject row 7 (3.604404ms)
+✔ [live-sources-006] reject row 8 (4.142716ms)
+✔ [live-sources-006] reject row 9 (4.998321ms)
+✔ [live-sources-006] reject row 10 (2.915508ms)
+✔ [live-sources-006] reject row 11 (2.880322ms)
+✔ [live-sources-006] reject row 12 (3.243056ms)
+✔ [live-sources-006] reject row 13 (2.963601ms)
+✔ [live-sources-006] reject URL 0 (3.610731ms)
+✔ [live-sources-006] reject URL 1 (2.068962ms)
+✔ [live-sources-006] reject URL 2 (1.904208ms)
+✔ [live-sources-006] reject URL 3 (2.494695ms)
+✔ [live-sources-006] reject URL 4 (2.070312ms)
+✔ [live-sources-006] reject URL 5 (1.815466ms)
+✔ [live-sources-006] reject URL 6 (1.878869ms)
+✔ [live-sources-006] reject URL 7 (2.354573ms)
+✔ [live-sources-006] reject URL 8 (2.250952ms)
+✔ [live-sources-006] reject URL 9 (2.403775ms)
+✔ [live-sources-006] reject URL 10 (2.272092ms)
+✔ [live-sources-006] reject URL 11 (2.138265ms)
+✔ [live-sources-006] reject URL 12 (2.258198ms)
+✔ [live-sources-006] accept boundary 41 (5.930167ms)
+✔ [live-sources-006] accept boundary 57.5 (2.687224ms)
+✔ [live-sources-006] select the first view without down (4.652761ms)
+✔ [live-sources-006] select the first down view (4.195665ms)
+✔ [live-sources-007] set all source fields (4.33632ms)
+✔ [live-sources-007] use lower case fields and hash pose (5.176672ms)
+✔ [live-sources-008] apply cap undefined (81.831092ms)
+✔ [live-sources-008] apply cap  (56.715287ms)
+✔ [live-sources-008] apply cap bad (42.600364ms)
+✔ [live-sources-008] apply cap Infinity (36.754667ms)
+✔ [live-sources-008] apply cap 3 (35.300427ms)
+✔ [live-sources-008] apply cap 9.9 (36.435647ms)
+✔ [live-sources-008] apply cap 2000 (37.331686ms)
+✔ [live-sources-008] use the last duplicate (3.284591ms)
+✖ [live-sources-009] reject data null (11.081622ms)
+✖ [live-sources-009] reject data {} (3.829099ms)
+✖ [live-sources-009] reject data "rows" (3.544644ms)
+✖ [live-sources-009] reject data 0 (3.097812ms)
+✔ [live-sources-005] return no rows after a data error (2.767622ms)
+✔ [live-sources-007] use field precedence (3.268386ms)
+✔ [live-sources-008] use each nearest anchor (4.17406ms)
+✔ [live-sources-006] reject null ID fields (2.169777ms)
+✔ [live-sources-007] use roadway and blank direction (2.457288ms)
+✔ [live-sources-006] accept an empty row list (2.054537ms)
+✔ [live-sources-008] log both source counts (3.034523ms)
+✔ [live-sources-006] reject views without a data error (2.399429ms)
+✔ [live-sources-006] accept every ID character (2.256137ms)
+✔ [live-sources-007] convert row values to text and numbers (3.918612ms)
+✔ [live-sources-006] reject a numeric status without a data error (2.386175ms)
+✔ [live-sources-006] accept URL object (2.254413ms)
+✔ [live-sources-006] accept URL edge spaces (1.772614ms)
+✔ [live-sources-006 live-sources-007] select a view with downhill (2.226925ms)
+✔ [live-sources-007] use capitalized text fields first (2.607562ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Latitude (2.052734ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Longitude (1.609508ms)
+✔ [live-sources-006] skip fields after a row guard (2.394654ms)
+✔ [live-sources-007] read latitude before longitude (2.895097ms)
+✔ [live-sources-007] read location before roadway (2.715006ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 61
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 762.895221
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:251:3
+✖ [live-sources-009] reject data null (11.081622ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {}
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:254:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:251:3
+✖ [live-sources-009] reject data {} (3.829099ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {}
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:254:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:251:3
+✖ [live-sources-009] reject data "rows" (3.544644ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {}
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:254:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:251:3
+✖ [live-sources-009] reject data 0 (3.097812ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {}
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:254:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
