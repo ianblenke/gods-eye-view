@@ -9,7 +9,7 @@ live-sources-017 | Remove the duplicate check | [live-sources-017] keeps the fir
 live-sources-018 | Change the fallback name | [live-sources-018] sets name for undefined
 live-sources-019 | Change the query where value | [live-sources-019] sends only the fixed query and timeout
 live-sources-020 | Read the feature instead of its attributes | [live-sources-020] reads attributes and drops invalid entries
-live-sources-021 | Change the HTTP error warning | [live-sources-021] handles HTTP error with body
+live-sources-021 | Change the text of the HTTP error warning | [live-sources-021] handles HTTP 503 with body
 live-sources-022 | Replace the request error message | [live-sources-022] handles request error Error: network down
 live-sources-023 | Return a source for a redirect | [live-sources-023] refuses redirect 302
 live-sources-024 | Raise the body limit by one byte | [live-sources-024] checks body size declared
@@ -18,4 +18,4 @@ live-sources-026 | Change the default cap to 119 | [live-sources-026] applies ca
 live-sources-027 | Ignore the Pensacola kill switch | [live-sources-027] catalog applies switch 0
 live-sources-028 | Disable the Pensacola pack for all settings | [live-sources-028] catalog applies switch undefined
 live-sources-029 | Ignore the layer address setting | [live-sources-029] applies layer address http://127.0.0.1:9/layer/query
-live-sources-030 | Drop the south boundary | [live-sources-030] checks area point 30.2 -87.65
+live-sources-030 | Reject a latitude equal to the south boundary | [live-sources-030] checks area point 30.2 -87.65
