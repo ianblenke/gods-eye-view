@@ -21,7 +21,7 @@ Origin: spec-first
 - **AND** the first request error in the process writes "[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY."
 - **AND** later request errors write no warning
 - **AND** no log line on the six console channels contains the key text
-- **AND** the request helper and the loader throw no error
+- **AND** the request helper throws no error
 
 #### Scenario: Keep error text secret `live-sources-005`
 - **WHEN** the fetch, the JSON reader or the code that reads a row throws an error with the key text
@@ -30,7 +30,8 @@ Origin: spec-first
 - **AND** later request errors write no warning
 - **AND** the loader returns an empty source list for a row error and writes "[CCTV] Ontario 511 camera data has an error."
 - **AND** no log line on the six console channels contains the key text
-- **AND** the request helper and the loader throw no error
+- **AND** the request helper throws no error for a fetch or JSON error
+- **AND** the loader throws no error for a row error
 
 ### Requirement: Ontario row rules
 The Ontario pack MUST apply its current row, view, source and cap rules to the camera list that the request returns.

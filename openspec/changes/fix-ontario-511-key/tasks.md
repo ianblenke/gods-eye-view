@@ -84,7 +84,7 @@
 - [x] Write the Pass 4 glossary.
 - [x] Correct the specs before the tests.
 - [x] Add the anchor control row.
-- [x] Watch the six console channels in both fixtures.
+- [x] Watch the five console channels in both fixtures.
 - [x] Write the tests for both initial warning flags.
 - [x] Run the Pass 4 data tests.
 - [x] Run the Pass 4 media provider tests.
@@ -102,7 +102,39 @@
 - [x] Run the Pass 4 test verb check.
 - [x] Run the Pass 4 section title check.
 
-## 7. Lead checks
+## 7. Pass 5
+
+- [x] Write the pair assertions in both fixtures.
+- [x] Watch the `dir` channel in both fixtures.
+- [x] Record the console channel with each line.
+- [x] Run the Pass 5 named mutations.
+- [x] Run the console probe on the host.
+- [x] Run the Pass 5 key tests alone.
+- [x] Run the Pass 5 key tests in reverse order.
+- [x] Run the Pass 5 data and media tests.
+- [x] Run the Pass 5 format check.
+- [x] Run the Pass 5 package boundary check.
+- [x] Run the Pass 5 prose lint.
+- [x] Run the Pass 5 OpenSpec show command.
+- [x] Run the Pass 5 OpenSpec validate command.
+- [x] Correct the specs.
+- [x] Correct the README row.
+
+## 8. Pass 6
+
+- [x] Run the console probe in the Docker image (Node 24.21.0). The lead ran this probe.
+- [x] Compare the console probe results.
+- [x] Correct the pre-review 4 text findings.
+- [x] Compare the automatic test copy with the live tests.
+- [x] Run the Pass 6 data and media tests.
+- [x] Run the Pass 6 title and prose checks.
+- [x] Run the Pass 6 format check.
+- [x] Run the Pass 6 OpenSpec show command.
+- [x] Run the Pass 6 OpenSpec validate command.
+- [x] Compare the proposal section titles.
+- [x] Check that code and tests stay unchanged.
+
+## 9. Lead checks
 
 - [ ] Resolve the coverage reader issue from evidence.md.
 - [ ] Add the Purpose sentence from design.md at archive time.

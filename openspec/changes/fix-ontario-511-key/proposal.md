@@ -37,7 +37,7 @@ The key travels in the query string. An HTTP 200 response with an error object g
 
 The layer shows no status for an empty pack. No worker sent a GET request for a camera image with a key.
 Setup doctor, Pinokio fields and key setup do not list `ONTARIO_511_API_KEY`.
-The loader writes "Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)" at each refresh without a key. No scenario covers that case.
+The loader writes "Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)" at each refresh without a key and after a request error. No scenario covers those cases.
 
 The status lines of `scripts/dev-fresh.sh` do not show the Ontario key state.
 The lead must run the Docker image checks and both reviews. The separate catalog cap issue stays outside this change.
@@ -47,20 +47,20 @@ The lead must run the Docker image checks and both reviews. The separate catalog
 
 The hook has no scenario. The lead accepts it by name.
 The request warning tells the user to check ONTARIO_511_API_KEY.
-It has this text for a timeout, an HTTP 5xx error and an HTTP 429 error, which the key does not cause.
+The warning has the same text for a timeout, an HTTP 5xx error and an HTTP 429 error. The key does not cause these errors.
 The code no longer writes the HTTP status in a log line.
 
-The tests watch the six console channels. They do not watch direct writes to process.stdout and process.stderr.
+The tests watch the six console channels. They do not watch text that code writes directly to process.stdout and process.stderr.
 
-The host probe shows that table, group labels, count, timeLog and timeEnd call console.log.
-Trace calls console.error. A failed console.assert calls console.warn.
-The host console.dirxml writes directly to stdout, so the tests do not watch it.
+The probe shows that `console.table`, `console.group` labels, `console.count`, `console.timeLog` and `console.timeEnd` call `console.log`.
+`console.trace` calls `console.error`. A failed `console.assert` calls `console.warn`.
+On both Node versions, `console.dirxml` writes directly to stdout, so the tests do not watch it.
 
-GroupEnd, a valid countReset and time write no text in the probe.
-These routes come from Node v26.8.2. The lead must check the routes in Node 24.14.0.
+`console.groupEnd`, a valid `console.countReset` and `console.time` write no text in the probe.
+These routes come from Node v26.8.2 and from Node v24.21.0 in the Docker image. The routes are the same.
 
 The scenario 008 test cannot detect a seventh anchor far from all rows.
-It cannot detect an anchor move of less than about 3 kilometers, such as Windsor, the last source by index.
+It cannot detect a move of the Windsor anchor by less than about 3 kilometers. The Windsor row is the last of the six anchor rows.
 
 The lead accepts the word image in the Pass 3 and Pass 3B records by name.
 Those records use image for the Docker image.

@@ -1304,37 +1304,37 @@ The prose lint prints "STE: 0 errors, 540 warnings."
 ## Pass 5
 
 Tree read: `ede1c684b94a133d7c699c7a45e5860d4c3dd5a6`, branch `fix-ontario-511-key`, with the Pass 5 edits.
-The scratch tree has no branch. It copies this code and the Pass 5 tests.
+At Pass 5, the scratch tree has no branch. It copies this code and the Pass 5 tests.
 Pass 5 changes no production code. The three pre-review folders and the trace files stay unchanged.
 
 ### Corrections of pre-review 3
 
 | Finding | Correction |
 |---|---|
-| Spec major 1 and F1 | Both fixtures record pairs of console method and text. Each warning and source count assertion checks both values. |
-| Spec major 2 and STE major 3 | Both fixtures also replace console.dir. The glossary names the six methods. The spec and tasks use those terms. |
+| Spec major 1 and F1 | Both fixtures record pairs of console channel and text. Each warning and source count assertion checks both values. |
+| Spec major 2 and STE major 3 | Both fixtures also replace `console.dir`. The glossary names the six console channels. The spec and tasks use those terms. |
 | STE majors 1 and 2 | The Roadway title names the capitalized field. The requirement names the key twice, with no unclear pronoun. |
-| Spec minor: README | The CCTV table line has the words from e2437f94, with only the banned noun replaced by first estimates. |
-| Spec minor: Windsor record | The old log has a Pass 5 note, the removed line and input hashes. The new run repeats the old test that passes. |
+| Spec minor: README | At Pass 5, the CCTV table line has the words from e2437f94, with only the banned noun replaced by first estimates. |
+| Spec minor: Windsor record | The old log file has a Pass 5 note, the removed line and input hashes. The new run repeats the old test that passes. |
 | Spec minor: Pass 4 count | The record states why the three layer files and their 16 tests did not run at Pass 4. |
 | Spec minor: past counts | The Pass 3 counts and final campaign claims have Pass 3 markers. The old numbers stay unchanged. |
-| Spec minor: anchor limits | Known limits name a seventh distant anchor and a move of less than about 3 kilometers. |
+| Spec minor: anchor limits | At Pass 5, Known limits name a seventh distant anchor and an anchor that moves by less than about 3 kilometers. |
 | Spec minor: empty list | Scenario 004 and its HTTP error test name the empty row list. |
 | Spec minor: unrun channel cases | The named runs include debug, log and dir in the request catch, and error and dir in the loader catch. |
-| STE part 2 | The spec names status text, letter case, field choice, the loader result and the view description. Error throw checks have separate items. |
-| Other STE part 2 | Impact names three other functions. Known limits state the warning advice and the removed HTTP status log. |
-| STE part 3 | The evidence uses mutation, test bodies and time markers. CURRENT-STATE loses the repeated date. README names the key. |
+| STE part 2 | The spec names status text, letter case, field choice, the loader result and the view description. At Pass 5, the check that the request helper and the loader throw no error has its own item. |
+| Other STE part 2 | Impact names three other functions. Known limits state the warning advice and the HTTP status that the code no longer writes. |
+| STE part 3 | The evidence uses mutation, test bodies and time markers. CURRENT-STATE has no repeated date. README names the key. |
 | Past image word | Known limits accept image in the Pass 3 and Pass 3B records by name. Those records stay unchanged. |
 
-The README line follows decision A4. It keeps the old count and the old sentence form.
-Decision A4 takes precedence over the STE replacement for that line.
-The old source at e2437f94 writes resp.status through console.warn when the Ontario response is not OK.
+The lead decided to keep the main words of that line, except for the banned word.
+This decision overrides the STE replacement for that line. At Pass 5, the line keeps the old count and sentence form.
+The old code at e2437f94 writes resp.status through console.warn when the Ontario response is not OK.
 
-### Red runs for the console method checks
+### Red runs for the console channel checks
 
-The named.py command changes one scratch file, runs one test file and restores the source for each mutation.
+The named.py command changes one scratch file, runs one test file and restores the code file for each mutation.
 Each test command uses taskset -c 8-11 nice -n 19 node --test --test-isolation=none and a test name pattern.
-All 14 runs return exit code 1. Each fails the test below. The logs show the assertion differences.
+All 14 runs return exit code 1. In each run, the test below fails. The log files show the assertion differences.
 No mutation enters the commit.
 
 | Mutation | Test that fails |
@@ -1356,8 +1356,9 @@ No mutation enters the commit.
 
 Mutation B runs the HTTP error test with JSON rows. That test has no call count assertion.
 Its deepEqual fails on error versus warn. The warning text stays equal.
-Mutation D fails both tests with without a warning in their titles.
-The pairs restore the method distinction that Pass 4 lost.
+
+Mutation D makes two tests fail. The titles of both tests have the words without a warning.
+The pairs show the console method of each line again. The Pass 4 lists had only the text.
 
 ### Console method probe
 
@@ -1460,35 +1461,35 @@ The command runs once on Node v26.8.2. Its output is console-probe.json.
 }
 ```
 
-The fixture watches table, group labels, count, timeLog and timeEnd indirectly through console.log.
-It watches trace through console.error and a failed assert through console.warn.
-The host dirxml writes directly to stdout. The six mocks do not watch that method.
-GroupEnd, a valid countReset and time write no text in this probe.
+Both fixtures watch `console.table`, `console.group` labels, `console.count`, `console.timeLog` and `console.timeEnd` indirectly through `console.log`.
+They watch `console.trace` through `console.error` and a failed `console.assert` through `console.warn`.
+On Node v26.8.2, `console.dirxml` writes directly to stdout. The six mocks do not watch that method.
+`console.groupEnd`, a valid `console.countReset` and `console.time` write no text in this probe.
 
-Direct writes to process.stdout and process.stderr are not console channels. The fixtures do not watch those writes.
-The lead must check these routes on Node 24.14.0.
+The fixtures do not watch text that code writes directly to process.stdout and process.stderr.
+These routes come from Node v26.8.2 and from Node v24.21.0 in the Docker image. The routes are the same.
 
 ### Old Windsor case
 
 The windsor.py command loads the old Rows test from commit 1911403e and removes the Windsor anchor on a scratch copy.
-The new run is windsor-old-rerun.log. It records both input hashes and this removed line:
+The log of the new run is windsor-old-rerun.log. It records both input hashes and this removed line:
 
 ```js
 { lat: 42.3149, lon: -83.0364 }, // Windsor
 ```
 
-The old scenario 008 test still passes. The Pass 4 record has the same input data as a new Pass 5 note.
+The old scenario 008 test still passes. The Pass 4 log has a Pass 5 note. The note gives the same input hashes as windsor-old-rerun.log.
 
 ### Runs that stopped
 
-The first scratch copy stopped at a stale node_modules link. It gave no test result.
+The first scratch copy stopped at an old node_modules link. It gave no test result.
 The first automatic command stopped at the child baseline with no test output. It gave no mutation verdict.
 
 The sandbox check loop had three listen EPERM failures in the media range file.
 The loop then stopped during the format command. It gave no format verdict and no completed loop total.
 The host commands repeat these checks.
 
-The first limit paragraph has nine sentences. The prose lint reports one error for that paragraph.
+The first draft of the Known limits paragraph in proposal.md has nine sentences. The prose lint reports one error for that paragraph.
 The correction splits the paragraph. The next lint command reports zero errors.
 
 
@@ -1582,7 +1583,7 @@ Its output is:
 ```
 
 The request helper has 100% line, branch and function coverage. It has one module record.
-The four Ontario functions have 87 branch ranges. None has a zero count.
+The four Ontario functions have 87 branch ranges. No branch range has a zero count.
 The host probe gives no Docker image gate verdict.
 
 ### Automatic mutations
@@ -1644,11 +1645,11 @@ No survivor changes the required result in those cases.
 
 ### Title, prose and structure checks
 
-The repeated title script reads 83 live titles and checks 14 current references. It reports zero flags.
-The clause script reads all 83 test bodies. It reports one absent-key fixture flag.
-That fixture sets no key value and asserts the literal absent-key warning from its table.
+The repeated title script reads 83 live titles and checks 14 current references. It finds no stale title.
+The clause script reads all 83 test bodies. It lists one test: the absent-key test.
+That test sets no key value and asserts the literal absent-key warning from its table.
 
-The script also names D-invalid and D-numeric for the two titles with without a warning.
+The script also names D-invalid and D-numeric for the two titles that have the words without a warning.
 Both named runs fail on the method pair assertion.
 
 The banned-word script checks prefixed forms in the change prose, tests and added user-document lines.
@@ -1682,7 +1683,7 @@ The openspec validate fix-ontario-511-key command prints:
 Change 'fix-ontario-511-key' is valid
 ```
 
-The section title diff keeps all proposal headings.
+The section title diff keeps all proposal section titles.
 Design changes Pass 4 words to Pass 5 words. Evidence adds Pass 5. No other section title changes.
 
 The server diff against 05736e82 matches the Pass 4 server diff byte for byte.
@@ -1692,5 +1693,309 @@ Pass 5 adds no server change.
 ### Limits of this pass
 
 No Docker command, make command, ratchet, gate comparison, ledger change, archive, push, gh command or review command ran.
-The lead must run the Node 24.14.0 Docker image checks and both reviews before merge.
+At Pass 5, the lead must run the Node 24.14.0 Docker image checks and both reviews before merge.
 The host results do not replace those checks.
+
+
+## Pass 6
+
+Tree read: `d0b0c776b48f7a9f2173704573c64013501088dd`, branch `fix-ontario-511-key`, with the Pass 6 text changes.
+The four pre-review folders and the trace files stay unchanged.
+
+### Text corrections
+
+C1: Scenario 004 names only the request helper. Scenario 005 names the helper for fetch and JSON errors and the loader for row errors.
+Each tagged test awaits that call and asserts its empty result. A thrown error makes that test fail.
+The loader count limit now names both the absent-key case and request errors. No scenario covers those loader cases.
+
+C2: The Docker image uses Node 24.21.0. The lead ran the console probe in that image on 2026-10-08.
+Pass 6 copies the script and image output to evidence/pass6. The lead's stderr file is empty.
+The comparison reads both JSON files and compares their 13 result objects.
+`console.dirxml` still writes directly to stdout.
+
+```text
+Command: python /tmp/pass6-check.py (console comparison)
+13 routes equal: Node v26.8.2 = Node v24.21.0
+dirxml: direct stdout on both versions
+```
+
+The lead must run the Docker image checks (Node 24.21.0) and both reviews before merge.
+The Node 24.14.0 sentence in Pass 5 has a past-pass prefix. The review reports stay unchanged.
+No current check assigns the console probe to the lead. That probe is complete.
+
+C3: Tasks section 6 names five channels for Pass 4. Section 7 records the Pass 5 work from its evidence.
+Section 8 records Pass 6. Section 9 has the lead checks. Only the lead ran the image probe.
+
+C4: Only the Windsor anchor has the stated small-distance limit. The control row is about 3.16 kilometers north of Kitchener.
+The six anchor rows have distance zero. The sort breaks equal distances by row index. Windsor is last in that group.
+
+S3: The README phrase is now "poses are first estimates". Against e2437f94, this phrase removes estimated and replaces the banned noun.
+The other words of that table row stay unchanged. The requested phrase and the noun-only diff cannot both hold.
+
+S4: The evidence names the lead and the README decision.
+S5: The evidence says that each test fails and names both titles with the words without a warning.
+S6 and S7: The proposal names Windsor alone and gives the warning text and error causes in separate sentences.
+S8 and S9: Console names have code marks. The limits name text that code writes directly to the streams and both Node versions.
+
+S10 to S13: The evidence distinguishes code files, log files, console channels and fixtures.
+The no-error item has a Pass 5 prefix because C1 changes its scope.
+S14: The Windsor file has a label for its Pass 5 hash block. The evidence names the new log file and equal input hashes.
+S15 to S17: The evidence names the old dependency link, the proposal draft, branch ranges and proposal section titles.
+
+### S18: Automatic test copy
+
+The first line of automatic-phase1-host.log names /tmp/ont-pass5-tree as the root of the automatic run.
+Pass 6 compares both test files at that root with the live test files. The differences are not only a title rename.
+Both copies have five console channels and text-only lists. The live tests have six channels and channel-text pairs.
+
+The Key copy has the old HTTP title. The Rows copy has the old Roadway title.
+The full diff output follows. The automatic-results.json record stays unchanged. These differences do not prove equal assertions.
+
+```diff
+Command: diff -u /tmp/ont-pass5-tree/src/data/cctvOntarioKey.test.mjs src/data/cctvOntarioKey.test.mjs
+--- /tmp/ont-pass5-tree/src/data/cctvOntarioKey.test.mjs	2026-10-08 20:41:33.665557113 -0400
++++ src/data/cctvOntarioKey.test.mjs	2026-10-08 21:10:32.639429362 -0400
+@@ -20,11 +20,12 @@
+     if (response instanceof Error) throw response;
+     return response;
+   });
+-  t.mock.method(console, 'warn', (...args) => logs.push(args.join(' ')));
+-  t.mock.method(console, 'log', (...args) => logs.push(args.join(' ')));
+-  t.mock.method(console, 'error', (...args) => logs.push(args.join(' ')));
+-  t.mock.method(console, 'info', (...args) => logs.push(args.join(' ')));
+-  t.mock.method(console, 'debug', (...args) => logs.push(args.join(' ')));
++  t.mock.method(console, 'warn', (...args) => logs.push(['warn', args.join(' ')]));
++  t.mock.method(console, 'log', (...args) => logs.push(['log', args.join(' ')]));
++  t.mock.method(console, 'error', (...args) => logs.push(['error', args.join(' ')]));
++  t.mock.method(console, 'info', (...args) => logs.push(['info', args.join(' ')]));
++  t.mock.method(console, 'debug', (...args) => logs.push(['debug', args.join(' ')]));
++  t.mock.method(console, 'dir', (...args) => logs.push(['dir', args.join(' ')]));
+   return { ...ontarioRequest, calls, logs };
+ }
+
+@@ -51,7 +52,7 @@
+   const f = await fixture(t, undefined, { ok: true, json: async () => [] });
+   let nested;
+   t.mock.method(console, 'warn', (...args) => {
+-    f.logs.push(args.join(' '));
++    f.logs.push(['warn', args.join(' ')]);
+     if (f.logs.length === 1) nested = f.readOntarioCameraRows();
+   });
+   for (const value of [undefined, '', '   ']) {
+@@ -62,11 +63,11 @@
+   }
+   await nested;
+   assert.equal(f.calls.length, 0);
+-  assert.deepEqual(f.logs, ['[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']);
++  assert.deepEqual(f.logs, [['warn', '[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']]);
+   ontarioRequest._resetOntarioRequestForTest();
+   f.logs.length = 0;
+   assert.deepEqual(await f.readOntarioCameraRows(), []);
+-  assert.deepEqual(f.logs, ['[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']);
++  assert.deepEqual(f.logs, [['warn', '[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']]);
+ });
+
+ test('[live-sources-004] write one warning for an invalid key', async (t) => {
+@@ -79,7 +80,7 @@
+   );
+   let nested;
+   t.mock.method(console, 'warn', (...args) => {
+-    f.logs.push(args.join(' '));
++    f.logs.push(['warn', args.join(' ')]);
+     if (f.logs.length === 1) nested = f.readOntarioCameraRows();
+   });
+   assert.deepEqual(await f.readOntarioCameraRows(), []);
+@@ -87,7 +88,7 @@
+   assert.deepEqual(await f.readOntarioCameraRows(), []);
+   assert.equal(f.calls.length, 3);
+   assert.deepEqual(f.logs, [
+-    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
++    ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],
+   ]);
+   assert.equal(f.logs.join().includes(key), false);
+ });
+@@ -108,7 +109,7 @@
+     assert.deepEqual(await f.readOntarioCameraRows(), []);
+     assert.equal(f.logs.join().includes(key), false);
+     assert.deepEqual(f.logs, [
+-      '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
++      ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],
+     ]);
+     assert.deepEqual(await f.readOntarioCameraRows(), []);
+     assert.equal(f.logs.length, 1);
+@@ -149,18 +150,18 @@
+   const { loadOntarioSourcesFromOpenData } =
+     await import('../../server/providers/cctv/sources.js');
+   assert.deepEqual(await loadOntarioSourcesFromOpenData(), []);
+-  assert.deepEqual(f.logs, ['[CCTV] Ontario 511 camera data has an error.']);
++  assert.deepEqual(f.logs, [['warn', '[CCTV] Ontario 511 camera data has an error.']]);
+   assert.equal(f.logs.join().includes(key), false);
+ });
+
+-test('[live-sources-004] return an empty list for an HTTP error with JSON rows', async (t) => {
++test('[live-sources-004] return an empty row list for an HTTP error with JSON rows', async (t) => {
+   const f = await fixture(t, key, {
+     ok: false,
+     json: async () => [{ Id: 455 }],
+   });
+   assert.deepEqual(await f.readOntarioCameraRows(), []);
+   assert.deepEqual(f.logs, [
+-    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
++    ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],
+   ]);
+   assert.equal(f.logs.join().includes(key), false);
+ });
+@@ -200,7 +201,7 @@
+   const f = await fixture(t, key, new Error('Request for ' + key + ' failed'));
+   assert.deepEqual(await f.readOntarioCameraRows(), []);
+   assert.deepEqual(f.logs, [
+-    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
++    ['warn', '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.'],
+   ]);
+   assert.equal(f.logs.join().includes(key), false);
+ });
+```
+
+```diff
+Command: diff -u /tmp/ont-pass5-tree/src/data/cctvOntarioRows.test.mjs src/data/cctvOntarioRows.test.mjs
+--- /tmp/ont-pass5-tree/src/data/cctvOntarioRows.test.mjs	2026-10-08 21:13:42.527498118 -0400
++++ src/data/cctvOntarioRows.test.mjs	2026-10-08 21:10:42.642093362 -0400
+@@ -32,11 +32,12 @@
+     ok: true,
+     json: async () => rows,
+   }));
+-  t.mock.method(console, 'log', (...args) => logs.push(args.join(' ')));
+-  t.mock.method(console, 'error', (...args) => logs.push(args.join(' ')));
+-  t.mock.method(console, 'info', (...args) => logs.push(args.join(' ')));
+-  t.mock.method(console, 'debug', (...args) => logs.push(args.join(' ')));
+-  t.mock.method(console, 'warn', (...args) => logs.push(args.join(' ')));
++  t.mock.method(console, 'log', (...args) => logs.push(['log', args.join(' ')]));
++  t.mock.method(console, 'error', (...args) => logs.push(['error', args.join(' ')]));
++  t.mock.method(console, 'info', (...args) => logs.push(['info', args.join(' ')]));
++  t.mock.method(console, 'debug', (...args) => logs.push(['debug', args.join(' ')]));
++  t.mock.method(console, 'dir', (...args) => logs.push(['dir', args.join(' ')]));
++  t.mock.method(console, 'warn', (...args) => logs.push(['warn', args.join(' ')]));
+   return loadOntarioSourcesFromOpenData();
+ }
+ const rowCauses = [
+@@ -314,7 +315,7 @@
+     ),
+     [],
+   );
+-  assert.deepEqual(logs, ['[CCTV] Ontario 511 camera data has an error.']);
++  assert.deepEqual(logs, [['warn', '[CCTV] Ontario 511 camera data has an error.']]);
+   assert.equal(logs.join().includes('FAKE_ROW_KEY'), false);
+ });
+
+@@ -375,7 +376,7 @@
+ test('[live-sources-006] return an empty source list for null ID fields', async (t) => {
+   assert.deepEqual(await load(t, [row({ Id: null, id: null })]), []);
+ });
+-test('[live-sources-007] use the Roadway text first and the view description after a blank Direction value', async (t) => {
++test('[live-sources-007] use the capitalized Roadway text and the view description after a blank Direction value', async (t) => {
+   const [source] = await load(t, [
+     row({
+       Roadway: ' Upper road ',
+@@ -405,7 +406,7 @@
+   rows.push(row({ Id: '0' }));
+   assert.equal((await load(t, rows, '8', logs)).length, 8);
+   assert.deepEqual(logs, [
+-    '[CCTV] Loaded Ontario 511 camera sources: 9 enabled (using nearest 8)',
++    ['log', '[CCTV] Loaded Ontario 511 camera sources: 9 enabled (using nearest 8)'],
+   ]);
+ });
+
+@@ -428,7 +429,7 @@
+     [],
+   );
+   assert.deepEqual(logs, [
+-    '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)',
++    ['log', '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'],
+   ]);
+ });
+
+@@ -487,7 +488,7 @@
+     [],
+   );
+   assert.deepEqual(logs, [
+-    '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)',
++    ['log', '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'],
+   ]);
+ });
+ for (const title of [
+@@ -597,7 +598,7 @@
+   assert.equal(result.length, 1);
+   assert.equal(result[0].id, 'on-1');
+   assert.deepEqual(logs, [
+-    '[CCTV] Loaded Ontario 511 camera sources: 1 enabled (using nearest 1)',
++    ['log', '[CCTV] Loaded Ontario 511 camera sources: 1 enabled (using nearest 1)'],
+   ]);
+ });
+
+@@ -644,13 +645,13 @@
+     if (value === undefined) delete process.env.ONTARIO_511_API_KEY;
+     else process.env.ONTARIO_511_API_KEY = value;
+     const logs = [];
+-    for (const channel of ['warn', 'log', 'error', 'info', 'debug']) {
+-      t.mock.method(console, channel, (...args) => logs.push(args.join(' ')));
++    for (const channel of ['warn', 'log', 'error', 'info', 'debug', 'dir']) {
++      t.mock.method(console, channel, (...args) => logs.push([channel, args.join(' ')]));
+     }
+     t.mock.method(globalThis, 'fetch', async () => ({ ok: false }));
+     const { readOntarioCameraRows } =
+       await import('../../server/providers/cctv/ontarioRequest.js');
+     assert.deepEqual(await readOntarioCameraRows(), []);
+-    assert.deepEqual(logs, [warning]);
++    assert.deepEqual(logs, [['warn', warning]]);
+   });
+ }
+```
+
+### Host checks
+
+Command: python /tmp/pass6-check.py
+The loop ran 25 files, one process per file, under taskset -c 8-11 nice -n 19.
+The Ontario files passed 12 and 71 tests, for 83 tests. The sandbox denied three local socket tests in the media range file.
+The loop then stopped at its total assertion. It gave no all-pass result and ran no later checks.
+
+The host repeat of that file passed all 21 tests. The final set has 336 passes and no failures.
+The original checks.json keeps the sandbox results. test-summary.json records the host repeat separately.
+
+```json
+{
+  "files": 25,
+  "tests": 336,
+  "sandboxPass": 333,
+  "sandboxFail": 3,
+  "hostRepeat": {
+    "tests": 21,
+    "pass": 21,
+    "fail": 0
+  },
+  "finalPass": 336,
+  "finalFail": 0
+}
+```
+
+Command: python /tmp/pass6-finish.py
+This command runs the remaining format, boundary, title and OpenSpec checks.
+Each command and its output has a file in evidence/pass6.
+
+### Limits
+
+No Docker, make, ratchet, gate, ledger, archive, push, gh or review command ran in this pass.
+The lead supplied the image probe output. The host checks give no image gate verdict.
+
+### Final text checks
+
+The title script excludes diff records of old text. It checks 83 live titles and 14 current references and finds zero stale labels.
+The verb script checks 83 bodies. Its one item is the absent-key test, which sets no key and asserts the literal warning.
+The added text has no banned-word match, including the owner's prefixed forms.
+
+The format check passes: "Checked 1159 source files." OpenSpec show gives valid JSON. OpenSpec validate says the change is valid.
+
+The proposal section title diff is empty against d0b0c776. The src, server and scripts diff is also empty.
+The search output in corrections-search.log shows the three no-error clauses, five Pass 4 channels and task sections 7, 8 and 9.
+The prose lint passes with zero errors and 542 warnings after the paragraph corrections.
+
+The package boundary check completed with exit code 0. Its output lists all package groups in boundaries.log.

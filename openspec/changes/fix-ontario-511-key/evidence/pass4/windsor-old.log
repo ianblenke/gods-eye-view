@@ -10,6 +10,7 @@ Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none --test-nam
 ℹ duration_ms 241.32372
 
 At Pass 5, the old case has a new run in evidence/pass5/windsor-old-rerun.log.
+At Pass 5, the hashes below come from the new run.
 {
   "sourceCommit": "1911403e",
   "removedLine": "{ lat: 42.3149, lon: -83.0364 }, // Windsor",
