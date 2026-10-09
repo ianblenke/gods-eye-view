@@ -1,0 +1,3 @@
+Command: python /tmp/pass6-check.py (console comparison)
+13 routes equal: Node v26.8.2 = Node v24.21.0
+dirxml: direct stdout on both versions

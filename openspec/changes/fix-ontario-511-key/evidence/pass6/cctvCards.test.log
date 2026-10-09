@@ -1,0 +1,32 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvCards.test.mjs
+✔ isCctvCardAnchorSafe protects the top HUD band for ambient cards (10.816861ms)
+✔ declutterCctvCards: nearest-first greedy accept with min separation (6.978507ms)
+✔ declutterCctvCards: separation is radial (Euclidean), matching the vessel pass (1.609893ms)
+✔ declutterCctvCards: respects the limit and drops malformed rows (1.696508ms)
+✔ thumbnail entry carries the exact shipped contract and stable frame-slot reference (3.094738ms)
+✔ active CCTV thumbnail is protected while ambient and pinned policies stay distinct (7.33187ms)
+✔ CCTV card module cannot resurrect a canvas, projection, listener, or private hit store (3.789306ms)
+✔ cardScaleForAltitude: full size and opacity at or below 1,800 m (2.136726ms)
+✔ cardScaleForAltitude: hits the owner-decided waypoints (1.945188ms)
+✔ cardScaleForAltitude: fully hidden at and above the 9,500 m ceiling (1.943348ms)
+✔ cardScaleForAltitude: scale and alpha are monotonic non-increasing (2.507559ms)
+✔ cardFetchPolicy: cold fill bursts up to 4 in flight at 250 ms spacing (1.597599ms)
+✔ cardFetchPolicy: steady state keeps the 1-fetch/s single-flight gate (1.110275ms)
+✔ applyFrameResult: success replaces the frame and stamps it (1.076866ms)
+✔ applyFrameResult: a FAILED fetch persists the drawn frame and stamp (0.86322ms)
+✔ applyFrameResult: an ok result without a frame counts as a failure (0.989966ms)
+✔ frameRetryDelayMs: doubles per failure, capped at 5 minutes (0.957306ms)
+✔ frameFetchDue: an untouched slot is due immediately (0.797688ms)
+✔ frameFetchDue: a fresh frame is not due until its cadence elapses (0.689042ms)
+✔ frameFetchDue: failures back off instead of hammering the source (0.868574ms)
+✔ planFrameCachePrune: never drops live card ids (grace included) (1.370456ms)
+✔ planFrameCachePrune: spare slots kept newest-first up to the cap (1.086967ms)
+✔ planFrameCachePrune: default cap is the exported cache bound (1.609857ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 194.551213
