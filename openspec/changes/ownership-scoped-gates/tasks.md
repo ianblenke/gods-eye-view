@@ -114,7 +114,7 @@
 - [x] 6.28 Write the test for `ownership-040`.
 
 - [x] 6.29 Read adopt sources after CI selects the change.
-- [x] 6.30 Stop for bad history JSON before the owned gap lines, also when the gate selects no change.
+- [x] 6.30 Stop for a JSON parse error in the history before owned gap lines, also when the gate selects no change.
 
 - [x] 6.31 Write the test for `ownership-041`.
 
@@ -175,12 +175,14 @@ Ownership-045 through ownership-049 describe old code. Their requirements use Or
 Their tests cover old code that had gaps in the phase time, the source option, the absent ledger and the caller environment.
 They also cover gaps in the allocation list and the selected change trace.
 
-Only the first tests of task 7.3 precede the producer code of task 7.6. The Pass 5 red logs show their failures.
-The following Pass 5 tests came after code tasks 7.4 through 7.6:
+Only the tests that task 7.3 wrote precede the code that task 7.6 added to write the adopt record. The Pass 5 red logs show their failures.
+These Pass 5 tests came after code tasks 7.4 through 7.6:
 
 | Task | Test added after code | Named fault |
 |---|---|---|
 | 7.11 | ownership-054: a second error in the same QA file | drop-other-error-code |
+| 7.10 | [ownership-052] returns false when Git cannot read the merge parents | source-catch-throw |
+| 7.10 | [ownership-054] accepts only upstream scripts with no current or base QA tag | drop-base-QA-tag, drop-current-QA-tag, drop-QA-class |
 | 7.10 | ownership-031: Git call count for a string outside the hash pattern | hash-regex-true |
 | 7.10 | ownership-054: merged base script with no QA tag | drop-base-QA-producer |
 | 7.12 | ownership-054: absent current QA file | Read every tracked merged QA file (red-absent-QA.log) |
@@ -189,6 +191,22 @@ The following Pass 5 tests came after code tasks 7.4 through 7.6:
 | 7.13 | ownership-054: two base scripts and two new scripts | keep-first-QA-record (g4681) |
 
 The Pass 5 evidence gives the failed test for each named fault.
+The evidence does not show when the other-error loop mode was added.
+
+The eight failed tests in the task 7.3 red logs had these titles:
+
+```text
+[ownership-031 ownership-024] stops an incomplete record with a merged source
+[ownership-041] stops a number in the from field with a merged branch
+[ownership-031 ownership-041] stops the gate for revision names in a merge HEAD history
+[ownership-031 ownership-041] stops the gate for revision names in CI merge HEAD history
+[ownership-054] writes the QA adopt record with a full hash from HEAD^2
+[ownership-054] writes the QA adopt record beside a coverage gap record
+[ownership-054 ownership-035] stops the adopt command for QA files outside the exception
+[ownership-035] prints QA-HEADER for a base QA tag even with an adopt record
+```
+
+These titles are records of the red runs. Later corrections renamed some titles; the tags are unchanged.
 
 | Scenario | Pass 4 named fault | Test |
 |---|---|---|
@@ -214,7 +232,7 @@ The Pass 5 evidence gives the failed test for each named fault.
 
 - [x] 8.1 Update the Pass 6 words table.
 - [x] 8.2 Correct the pre-review 3 spec clauses.
-- [x] 8.3 Change the tagged assertions before the message code.
+- [x] 8.3 Change the tagged assertions before the code that prints the message.
 - [x] 8.4 Run the tests against the old message and process text.
 - [x] 8.5 Change the message and process text.
 - [x] 8.6 Correct the titles and prose.
@@ -232,3 +250,21 @@ The Pass 5 evidence gives the failed test for each named fault.
 - [x] 8.18 Run OpenSpec show.
 - [x] 8.19 Run OpenSpec validate.
 - [x] 8.20 Compare the document headings.
+
+## 9. Pass 7
+
+- [x] 9.1 Correct the spec clauses for `ownership-001`, `ownership-031` and `ownership-053`.
+- [x] 9.2 Add the tests before the named fault runs.
+- [x] 9.3 Correct the pre-review 4 titles and prose.
+- [x] 9.4 Add the two Order rows and the eight failed red titles.
+- [x] 9.5 Compare the red titles with the live titles and Order table.
+- [x] 9.6 Run the four named faults.
+- [x] 9.7 Select the automatic mutants from changed script lines.
+- [x] 9.8 Read the changed titles and their assertion calls.
+- [x] 9.9 Run all five host test files.
+- [x] 9.10 Check fresh coverage for each script.
+- [x] 9.11 Run the final format check.
+- [x] 9.12 Run the final lint.
+- [x] 9.13 Run OpenSpec show.
+- [x] 9.14 Run OpenSpec validate.
+- [x] 9.15 Compare the final document headings.

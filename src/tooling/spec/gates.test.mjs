@@ -2623,3 +2623,13 @@ test('[change-review-033] pin the agent verdict and final tree instructions', ()
   assert.ok(text.includes('9. Read the first line of the log to find which command ran. The ratchet command gives the comparison verdict after it writes the files. A ratchet command that stops before the comparisons gives no comparison verdict.'));
   assert.ok(text.includes('Run `make gates CHANGE=<name>` on the final tree.'));
 });
+
+test('[ownership-031] prints LEDGER-ADOPT-FROM for a reached line whose source is not a merge parent', () => {
+  withMergeFixture((root) => {
+    appendFileSync(path.join(root, 'openspec/trace/history.jsonl'), JSON.stringify(ADOPT_LINE(root, 'src/legacy.js', { from: git(root, 'rev-parse', 'main'), lines: 4, branches: null, functions: null, untraced: 0, untrue: true, reached: true })) + '\n');
+    const result = run(root, ['check', '--change', 'sync'], { spawn: () => assert.fail('No test run') });
+    assert.equal(result.status, 1);
+    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM openspec\/trace\/history.jsonl/);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-ADOPT-REACHED/);
+  });
+});
