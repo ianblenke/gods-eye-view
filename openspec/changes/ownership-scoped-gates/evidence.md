@@ -3491,7 +3491,7 @@ The fault for `ownership-055` removes the early source check: in `gates.mjs` the
 ℹ fail 0
 ```
 
-After the corrections, the lead ran the whole test file again, with the code files and test files of commit b35c27d1. The file `pass13/second-run-summary.txt` holds the summary lines:
+After the corrections, the lead ran the whole test file again. The file `pass13/second-run-summary.txt` holds the summary lines:
 
 ```text
 ℹ tests 241
@@ -3516,7 +3516,7 @@ Pre-review 11 (commit b35c27d1) gave FAIL from both reviewers. The spec adversar
 | Spec adversary 5 | Pass 13 names both merges and the history check. The commit of each run is in this block. |
 | STE adversary 2, 3 and spec adversary minor | The scenario `ownership-055` says "the full hash of the commit HEAD" in its `from` field and "the file of the record". D11 moved after the last sentence of D10. |
 | STE adversary 6, 7 | The sentences of Pass 13 about `isAdoptSource` and about the old tests have their final text. |
-| Test of gap-ledger-138 | The test asserts the AND of gap-ledger-138 only, and the status assertion and the two negative assertions are gone. After the early source check the gate makes no comparison, so no gate test can assert the THEN. The title and the THEN stay in the open minors that the file `review.md` will list. |
+| Test of gap-ledger-138 | The test asserts the AND of gap-ledger-138 only, and the status assertion and the two negative assertions are gone. After the early source check the gate makes no comparison, so no gate test can assert the THEN. The title and the THEN stay in the open minor that the file `review.md` will list. |
 
 The lead did not correct the minor of the spec adversary about the file `proposal.md`. The file `review.md` will list it as a known limit, with the THEN of gap-ledger-138 that no gate test asserts.
 
@@ -3606,7 +3606,7 @@ Pre-review 12 (commit 8378c31b) gave FAIL from both reviewers. The spec adversar
 | Finding | Correction |
 |---|---|
 | STE adversary 1 | The title of the test of gap-ledger-151 in `ledger.test.mjs` now names the functions `checkAdopts` and `compareLedger`, and not the gate. The two faults ran again. |
-| Spec adversary 1, STE adversary 3 | The sentence of Pass 13 about the fault of Pass 15 is gone. The lead ran that fault against a copy of the final test of `ownership-055` (see below). |
+| Spec adversary 1, STE adversary 3 | The sentence of Pass 13 about Pass 14 is gone. The lead ran the fault of Pass 13 against a copy of the final test of `ownership-055` (see below). |
 | STE adversary 2 | Pass 14 says that the file `review.md` will list the one open minor. |
 | STE adversary 4, spec adversary 2 | Section 16 of `tasks.md` has one task for each change of Pass 14, and each task of the faults names its tests. |
 | STE adversary 5, spec adversary 3 | The requirement names the THEN line of gap-ledger-151. D11 names the requirement as the agent. |
@@ -3650,7 +3650,7 @@ The lead ran the test of gap-ledger-151 with the two faults of Pass 14. In the f
 ℹ fail 0
 ```
 
-The file `pass15/print-assertions.py.txt` makes a copy of the gate test of `ownership-055` that prints the result of each assertion. In the final test, a count line throws a TypeError when the gate prints no LEDGER-ADOPT-FROM error, and the copy gives 0. The lead ran the copy with the fault of Pass 14, which removes the line `throw error;` of `validAdoptSources`. The lead also ran the copy with the fault of Pass 13, which changes the call of `validAdoptSources` to a call of `adoptsOf`. The files `pass15/fault-drop-throw-assertions.txt` and `pass15/fault-adoptsof-assertions.txt` hold the printed lines:
+The file `pass15/print-assertions.py.txt` makes a copy of the gate test of `ownership-055` that prints the result of each assertion. In the final test, a count line throws a TypeError when the gate prints no LEDGER-ADOPT-FROM error, and the count in the copy is 0. The lead ran the copy with the third fault of Pass 14 (see above), which removes the line `throw error;` of `validAdoptSources`. The lead also ran the copy with the fault of Pass 13, which changes the call of `validAdoptSources` to a call of `adoptsOf`. The files `pass15/fault-drop-throw-assertions.txt` and `pass15/fault-adoptsof-assertions.txt` hold the printed lines:
 
 ```text
 ASSERTION no file error: FAILS
@@ -3691,11 +3691,22 @@ Pre-review 13 (commit 12b044bc) gave FAIL from both reviewers. The spec adversar
 
 | Finding | Correction |
 |---|---|
-| Evidence row of the test of gap-ledger-138 (both reviewers) | The row says that the test asserts the AND only and that no gate test can assert the THEN. The row sends the title and the THEN to the open minors. |
-| Evidence rows and tasks about "the final test" (both reviewers) | The rows say "a copy of the final test". The paragraph of Pass 15 names the TypeError of the final test. The sentence of Pass 13 about Pass 15 is gone. |
+| Evidence row of the test of gap-ledger-138 (both reviewers) | The row says that the test asserts the AND only and that no gate test can assert the THEN. The row sends the title and the THEN to the open minor. |
+| Evidence rows and tasks about "the final test" (both reviewers) | The rows say "a copy of the final test". The paragraph of Pass 15 names the TypeError of the final test. The sentence of Pass 13 about Pass 15 is gone. Task 17.4 says "a copy of the test". |
 | The words "clean commit" (both reviewers) | The runs of Pass 15 name the code files and test files of commit 0040282f. |
 | Host run of Pass 13 | The sentence without a record is gone. |
-| Other minors | The sentence about `gates.test.mjs` names the one test title. The two faults of Pass 15 have no number. Section 16 of `tasks.md` has one instruction in each task. |
+| Other minors | The sentence about `gates.test.mjs` names the one test title. The paragraph of Pass 15 about the copy names each fault by its pass. Section 16 of `tasks.md` has one instruction in each task. |
+| Row labels | The lead did not correct this minor. The file `review.md` will list it. |
 
-The lead ran the STE lint and `openspec validate` on the host for the final text. The file `pass16/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+The lead ran the format check, the STE lint and `openspec validate` on the host, on the working tree over commit 12b044bc. The file `pass16/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+
+## Pass 17
+
+Tree read: branch ownership-gates at commit 7a699a4b, with the Pass 17 changes of `evidence.md`, `tasks.md` and the folder `pass17/`.
+
+Pre-review 14 (commit 7a699a4b) gave FAIL from both reviewers. The spec adversary gave 1 major and 3 minors, and the STE adversary gave 2 majors and 5 minors. The reports are in `review/pre-review-14/`. Pass 17 changes documents only.
+
+The lead corrected the wording in the blocks of Pass 13 to Pass 16 where the reviewers found a false or unclear statement. The lead did not correct the minor of the spec adversary about the THEN of gap-ledger-138 in `proposal.md`. The file `review.md` will list it as a known limit.
+
+The lead ran the format check, the STE lint and `openspec validate` on the host, on the working tree over commit 7a699a4b. The file `pass17/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
 
