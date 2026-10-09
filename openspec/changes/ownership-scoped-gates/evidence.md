@@ -3779,5 +3779,5 @@ The fault removes the option `GUARDED_RUN` from the test of `ownership-031` in `
 ℹ fail 0
 ```
 
-The lead ran the format check, the import direction check, the package boundary check, the layer token check, the STE lint and `openspec validate` on the host, on the tree of commit 768370eb with the Pass 18 changes. The file `pass18/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+The lead ran the format check, the import direction check, the package boundary check and the layer token check on the host. The lead also ran the STE lint and `openspec validate`. The tree was commit 768370eb with the Pass 18 changes. The file `pass18/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
 
