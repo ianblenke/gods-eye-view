@@ -66,14 +66,14 @@ See scripts/spec/lib/ledger.mjs:237-246 and src/tooling/spec/ledger.test.mjs:164
 
 For a file with base content, toleranceCounts selects ledger entry branch and function counts.
 This applies when the current covered count is smaller than the ledger entry covered count.
-For lines, toleranceCounts selects the smaller not-covered count and the current gap total count.
+For lines, toleranceCounts selects the smaller of the current and ledger entry not-covered counts, and the current gap total count.
 
 The gate never records the ledger entry of a tolerant file as stale for a smaller gap of any size.
 See scripts/spec/lib/ledger.mjs:454 for the closed-gap path and :436 and :449 for an open smaller gap.
 The test at src/tooling/spec/ledger.test.mjs:1508 asserts 0 against 10 with tolerance 8.
 A partial improvement leaves a difference between the ledger entry not-covered count and the current not-covered count.
 For lines, the not-covered count can then rise to the ledger entry not-covered count plus the tolerance with no error.
-For branches and functions, an error needs a fall of the covered count that is larger than the tolerance.
+For branches and functions, the gate reports LEDGER-LOST-COVERAGE only when the covered count falls by more than the tolerance.
 
 Pass 4 wrote the test of gap-ledger-156 after the guard code.
 This order differs from spec-first. The lead decides in review.md whether to accept it by name.
@@ -85,4 +85,5 @@ They do not cover a file whose current content differs from its content at the b
 The title of the test for gap-ledger-143 and gap-ledger-154 uses the words not above in place of smaller than or equal to.
 The words not above keep the title inside the limit of 25 words.
 The lead accepts these words by name.
-The lead accepts the scope of the title for gap-ledger-156 by name.
+The title for gap-ledger-156 omits the adopted-source conditions to stay inside the limit of 25 words.
+The lead accepts this omission by name.

@@ -37,11 +37,11 @@ When a file has the adopted-source conditions and no base content, the ratchet c
 Never-worse counts are the counts that the next three rules direct the ratchet command to write.
 For each metric of a file with the adopted-source conditions and no base content, the ratchet command MUST write current counts.
 This applies when the current not-covered count of that metric is smaller than or equal to the ledger entry not-covered count of that metric.
-Current counts are the current not-covered count and total count.
+Current counts are the current not-covered count and the current gap total count.
 
 For that file, the ratchet command MUST write ledger entry counts for a metric.
 This applies when the current not-covered count of that metric is larger than the ledger entry not-covered count of that metric.
-Ledger entry counts are the ledger entry not-covered count and total count.
+Ledger entry counts are the ledger entry not-covered count and the ledger entry total count.
 For that file and a metric with an absent ledger entry total count, the ratchet command MUST write the current gap total count instead.
 Origin: spec-first
 
@@ -73,9 +73,9 @@ Origin: spec-first
 
 #### Scenario: Apply the count tolerance `gap-ledger-142`
 - **WHEN** a file meets the adopted-source conditions
-- **AND** a not-covered line count is above the ledger entry not-covered count plus the tolerance
-- **AND** for branches and functions, a not-covered count is above the ledger entry not-covered count plus the tolerance
-- **AND** for branches and functions, a covered count is below the ledger entry covered count minus the tolerance
+- **AND** for the lines metric, the current not-covered count of that metric is above the ledger entry not-covered count of that metric plus the tolerance
+- **AND** for branches and functions, the current not-covered count of that metric is above the ledger entry not-covered count of that metric plus the tolerance
+- **AND** for branches and functions, the current covered count of that metric is below the ledger entry covered count of that metric minus the tolerance
 - **THEN** the gate reports LEDGER-LARGER-GAP for lines
 - **AND** the gate reports LEDGER-LOST-COVERAGE for branches and functions
 
