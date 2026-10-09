@@ -23,7 +23,7 @@
 - [x] 3.3 Run the tests of `gates.test.mjs` that have `change-review-03` in their names on the host.
 - [x] 3.4 Run the lint on the host.
 - [x] 3.5 Run OpenSpec validate on the host.
-- [ ] 3.6 Ask the lead to run make ratchet CHANGE=review-severity-scope in the image.
+- [x] 3.6 Ask the lead to run make ratchet CHANGE=review-severity-scope in the image.
 - [ ] 3.7 Ask the lead to run the two review agents.
 - [ ] 3.8 Ask the lead to write review.md.
 - [ ] 3.9 Ask the lead to run make gates CHANGE=review-severity-scope on the final tree.
