@@ -2,16 +2,49 @@
 6be25595b16491ce01ffd8d81e66921f321ee200	refs/heads/main
 ##### git rev-parse upstream/main (canonical repo)
 6be25595b16491ce01ffd8d81e66921f321ee200
-##### git log --pretty=%H -1 4011f2a6^2 (second parent)
+##### git log --pretty=%H -1 4011f2a6^2 (second parent of the merge commit)
 6be25595b16491ce01ffd8d81e66921f321ee200
-##### git log --pretty=%H -1 4011f2a6^1 (first parent)
+##### git log --pretty=%H -1 4011f2a6^1 (first parent of the merge commit)
 7c1a511ebf92fdf3c071e3597a96b05e58d5f72b
-##### git diff --name-status 7c1a511e 4011f2a6 (files the merge brings, status A = added)
-      6 A
-     27 M
+##### git log --pretty=%H -1 7c1a511e^1 (parent of the plan commit)
+ab11cf1b2eed35481e1e2a49d82dbdcb31bd9dec
+##### git rev-list --count 95fa8162..6be25595 (upstream commits after the shared ancestor)
+22
+##### git diff --name-status 7c1a511e 4011f2a6 (the 33 files that the merge changes)
+M	.env.example
+M	CHANGELOG.md
+M	README.md
+M	SECURITY.md
+M	docs/CURRENT-STATE.md
+M	scripts/dev-fresh.sh
+M	scripts/format-scope.json
+M	scripts/package-boundaries.json
 A	scripts/qa-voice-auth-focus.mjs
 A	scripts/qa-voice-auth.mjs
+M	scripts/setup-doctor.mjs
+M	server/providers/openai.js
 A	server/providers/openai/codex-auth.js
+M	server/providers/openai/realtime.js
 A	src/codexOauthRealtime.test.mjs
+M	src/keySetup.js
+M	src/keySetup.test.mjs
+M	src/keySetupCore.mjs
+M	src/setupDoctor.test.mjs
+M	src/sources/openFreeMap.js
+M	src/sources/openFreeMap.test.mjs
+M	src/sources/vectorTiles.js
+M	src/sources/vectorTiles.test.mjs
+M	src/tooling/localServices.test.mjs
+M	src/ui/styles/provider-settings.css
 A	src/voice/cloudVoiceAuth.js
 A	src/voice/cloudVoiceAuth.test.mjs
+M	src/voice/gevRealtime.test.mjs
+M	src/voice/realtimeBackend.js
+M	src/voice/realtimeBackend.test.mjs
+M	src/voice/realtimeConnection.js
+M	src/voice/realtimeController.js
+M	src/voice/realtimeCost.js
+##### node: classify() of scripts/spec/lib/ownership.mjs for these 33 files against openspec/ownership.json
+files 33 owned 0
+##### git diff --stat 7c1a511e 4011f2a6 -- openspec .claude AGENTS.md Makefile scripts/spec
+0

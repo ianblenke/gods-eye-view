@@ -1,9 +1,13 @@
 ##### git rev-parse HEAD
-f2f00b5bbd13586df95a55a651db57d7fd2938b0
+c904752819159fcd04b9844a74f9ab00c9f58c1b
 ##### git status --short
-?? openspec/changes/archive/2026-10-09-upstream-sync-4/evidence/host-run-head.txt
-?? openspec/changes/archive/2026-10-09-upstream-sync-4/evidence/host-run.txt
-?? openspec/changes/archive/2026-10-09-upstream-sync-4/evidence/upstream-check.txt
+ M openspec/changes/upstream-sync-4/evidence/checks.log
+ M openspec/changes/upstream-sync-4/evidence/host-run-head.txt
+ M openspec/changes/upstream-sync-4/evidence/host-run.txt
+ M openspec/changes/upstream-sync-4/evidence/mutations.txt
+ M openspec/changes/upstream-sync-4/evidence/upstream-check.txt
+ M openspec/changes/upstream-sync-4/tasks.md
+?? openspec/changes/upstream-sync-4/evidence.md
 ##### node scripts/format.mjs --check
 Checked 1334 source files.
 ##### status 0
@@ -18,7 +22,7 @@ Checked osh-layer: 1 exports, 10 owned modules.
 ##### node scripts/check-layer-state-tokens.mjs --base-ref origin/main
 Layer tokens valid against origin/main: 30 published, 0 new.
 ##### status 0
-##### node scripts/spec/gates.mjs lint
+##### node scripts/spec/gates.mjs lint --change upstream-sync-4
 WARN STE-WORD-OLD openspec/specs/wind/spec.md:72 Use "closes", not "dismisses"
 WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
 STE: 0 errors, 672 warnings.
