@@ -43,7 +43,7 @@ Those counts are the ledger entry not-covered count and the ledger entry total c
 
 If the ledger entry total count of a metric is absent, neverWorseCounts selects the current gap total count of that metric.
 This change adds no error code.
-The two ADDED requirements change which files get the count tolerance and when compareLedger records a ledger entry as stale.
+The requirement "Count tolerance for adopted files" changes which files get the tolerance and when compareLedger records a ledger entry as stale. The requirement "Total counts for adopted files" changes only when compareLedger records a ledger entry as stale.
 
 ### Total count exception
 
@@ -53,7 +53,7 @@ The gate computes adoptedFile from the same valid adopt lines as adoptedAsIs, wi
 
 The gate accepts total differences only with equal hashes, true loaded coverage and equal not-covered counts of lines, branches and functions.
 The requirement "Total counts for adopted files" gives this exception to the stale rule.
-compareLedger applies all coverage error rules. The ratchet command applies its existing rule for total counts to files without base content that differ from their adopted source.
+compareLedger does not change the conditions of a coverage error. The ratchet command applies its existing rule for total counts to files without base content that differ from their adopted source.
 
 ## Files
 
@@ -88,7 +88,7 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | not-covered count | Count of items that tests do not cover. |
 | total count | Count of all measured items. |
 | stale | Ledger entry state that stops the build until the ratchet command runs. The base specs call it not current. |
-| tolerance | Allowed count difference. |
+| tolerance | Allowed count difference of a metric. toleranceOf computes it from the total count of that metric. |
 | count tolerance | Rule from the requirement Count tolerance. |
 | check command | Command that checks the current tree. |
 | ci command | Command that selects the change and checks the current tree. |
@@ -100,7 +100,7 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | gate | Code that checks the spec and ledger rules. |
 | tolerant file | File with the tolerance conditions or the adopted-source conditions. |
 | toleranceCounts | Function that selects counts for a file with base content and count tolerance. |
-| never-worse counts | For each metric: current counts if the current not-covered count is smaller than or equal to the ledger entry not-covered count of that metric. Ledger entry counts if not. The current gap total count instead of an absent ledger entry total count. |
+| never-worse counts | For each metric: current counts if the current not-covered count is smaller than or equal to the ledger entry not-covered count. Both counts are of that metric. Ledger entry counts if not. The current gap total count instead of an absent ledger entry total count. |
 | neverWorseCounts | Function that selects never-worse counts. |
 | adoptedAsIs | Predicate for a file that equals its adopted source. |
 | adoptedFile | Predicate for a file with a valid adopt line of the checked change. |
@@ -146,5 +146,5 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | ledger entry not-covered count | Not-covered count of a ledger entry. |
 | ledger entry total count | Total count of a ledger entry. |
 | current not-covered count | Not-covered count of the current gap. |
-| waived count | Sum of the waiver counts of a metric for a file. |
+| waived count | Sum of waiver counts of the checked change for a metric of a file. compareWithBase adds only lines with the ledger entry content hash. It gives zero for base content or an unloaded entry. compareLedger adds only lines with the current gap content hash. It gives zero for equal hashes or either record without loaded coverage. |
 | current gap total count | Total count of the current gap. |

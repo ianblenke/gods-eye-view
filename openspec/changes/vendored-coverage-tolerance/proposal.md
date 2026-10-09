@@ -11,7 +11,7 @@ A file that the fork edits can also have different total counts and equal not-co
 - Accept total count differences for a file with a valid adopt line, equal hashes and equal not-covered counts.
 - Apply never-worse counts to a file that equals its adopted source without base content.
 - Use toleranceCounts for a file with base content.
-- Do not change the tolerance or the coverage error rules.
+- Do not change the tolerance or the conditions of a coverage error.
 
 ## Capabilities
 
@@ -71,9 +71,9 @@ For lines, toleranceCounts selects the smaller of the current and ledger entry n
 The gate never records the ledger entry of a tolerant file as stale for a smaller gap of any size.
 See scripts/spec/lib/ledger.mjs:454 for the closed-gap path and :436 and :449 for an open smaller gap.
 The test at src/tooling/spec/ledger.test.mjs:1508 asserts 0 against 10 with tolerance 8.
-A partial improvement leaves a difference between the ledger entry not-covered count and the current not-covered count.
+A partial improvement of a metric leaves a difference between the ledger entry not-covered count and the current not-covered count of that metric.
 For lines, the not-covered count can then rise to the ledger entry not-covered count plus the tolerance with no error.
-For branches and functions, the gate reports LEDGER-LOST-COVERAGE only when the covered count falls by more than the tolerance.
+For branches and functions, the gate reports LEDGER-LOST-COVERAGE only when the covered count falls below the ledger entry covered count by more than the tolerance.
 
 Pass 4 wrote the test of gap-ledger-156 after the guard code.
 This order differs from spec-first. The lead decides in review.md whether to accept it by name.
@@ -85,5 +85,10 @@ They do not cover a file whose current content differs from its content at the b
 The title of the test for gap-ledger-143 and gap-ledger-154 uses the words not above in place of smaller than or equal to.
 The words not above keep the title inside the limit of 25 words.
 The lead accepts these words by name.
-The title for gap-ledger-156 omits the adopted-source conditions to stay inside the limit of 25 words.
-The lead accepts this omission by name.
+
+The title of the test for gap-ledger-156 does not name the adopted-source conditions.
+This keeps the title inside the limit of 25 words.
+The lead accepts this title by name.
+The titles of the tests for gap-ledger-154 (ledger.test.mjs lines 1620 and 1688) do not name the file scope.
+This keeps these titles inside the limit of 25 words.
+The lead accepts these titles by name.
