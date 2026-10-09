@@ -28,11 +28,12 @@ The lead runs the image checks and the two review agents.
 
 The tolerance is 8 counts or 4% of the metric total, the smaller of the two numbers.
 Totals below 25 give tolerance 0.
-This tolerance can hide a real coverage loss within the tolerance.
+A real coverage loss of at most the tolerance can stay hidden.
 Count tolerance applies to a file with base content and to a file that equals its adopted source.
 A file that the fork edits gets no count tolerance from this change.
 
-The gate gives no count tolerance to a code file that a changed upstream test covers, unless that code file equals its adopted source.
+The gate gives no count tolerance to a code file without base content unless the code file equals its adopted source.
+This also applies when a changed upstream test covers the code file.
 This limit applies to the requirement "Count tolerance for adopted files".
 
 Rule 21 needs the person who merges to check the merged commit against the upstream remote and record the result in review.md.
@@ -55,23 +56,25 @@ The command `make gates CHANGE=vendored-coverage-tolerance` in the Node image on
 For a file that equals its adopted source and has no base content, neverWorseCounts selects the current total count.
 This applies when the current not-covered count is smaller than or equal to the ledger entry not-covered count.
 The current total count can be larger or smaller than the ledger entry total count.
-A smaller total count with an equal not-covered count lowers the covered count by any amount.
-For branches and functions, the gate limits the covered count fall to the tolerance when the not-covered count falls.
+When the total count is smaller and the not-covered count is equal, the covered count can fall by any amount.
+For branches and functions, when the not-covered count falls, the covered count can fall by at most the tolerance per ratchet run.
+
+When the ratchet command writes a lower total for that file, the next check starts from that total.
 See scripts/spec/lib/ledger.mjs:237-246 and src/tooling/spec/ledger.test.mjs:1643-1653.
 
-For a file with base content, toleranceCounts selects ledger entry branch and function counts when the current covered count is smaller.
-The comparison is with the ledger entry covered count.
+For a file with base content, toleranceCounts selects ledger entry branch and function counts.
+This applies when the current covered count is smaller than the ledger entry covered count.
 For lines, toleranceCounts selects the smaller not-covered count and the current total count.
 
 The gate never records the ledger entry of a tolerant file as stale for a smaller gap of any size.
-See scripts/spec/lib/ledger.mjs:454 for the closed-gap path and :639-640 for an open smaller gap.
+See scripts/spec/lib/ledger.mjs:454 for the closed-gap path and :436 and :449 for an open smaller gap.
 The test at src/tooling/spec/ledger.test.mjs:1508 asserts 0 against 10 with tolerance 8.
 A partial improvement leaves a difference between the ledger entry count and the current count.
-The tolerance can then hide a rise of the not-covered count up to the ledger entry count.
+For each metric, the not-covered count can then rise to the ledger entry count plus the tolerance with no error.
 
 Pass 4 wrote the test of gap-ledger-156 after the guard code.
-Origin spec-first, order deviation named; the lead accepts it by name in review.md.
-The mutation run showed the `||` mutant alive; the test kills it in pass4/zero-red.log.
+This order differs from spec-first. The lead decides in review.md whether to accept it by name.
+The test fails against the `||` mutant; pass4/zero-red.log records that run.
 
-The gate fixtures cover an absent file at the base commit.
-They do not cover a file whose current content differs from its content at the base commit for this condition.
+For a file with no base content, the gate fixtures cover only a file absent at the base commit.
+They do not cover a file whose current content differs from its content at the base commit.

@@ -33,13 +33,14 @@ When a file has the tolerance conditions, the ratchet command MUST use tolerance
 This also applies when the file equals its adopted source.
 When a file has the adopted-source conditions and no base content, the ratchet command MUST use never-worse counts.
 
-For each metric, the ratchet command MUST write current counts.
+Never-worse counts are the counts that the following three rules select.
+For each metric of a file with the adopted-source conditions and no base content, the ratchet command MUST write current counts.
 This applies when the current not-covered count is smaller than or equal to the ledger entry not-covered count.
 Current counts are the current not-covered count and total count.
-For a current not-covered count larger than the ledger entry not-covered count, the ratchet command MUST write ledger entry counts.
-These counts are the ledger entry not-covered count and total count.
 
-If the total count is absent from the ledger entry for that metric, the ratchet command MUST write the current gap total count.
+For that file, when the current not-covered count is larger than the ledger entry not-covered count, the ratchet command MUST write ledger entry counts.
+These counts are the ledger entry not-covered count and total count.
+For that file and a metric with an absent ledger entry total count, the ratchet command MUST write the current gap total count.
 Origin: spec-first
 
 #### Scenario: Allow a file that equals its adopted source `gap-ledger-136`
@@ -97,21 +98,22 @@ Origin: spec-first
 
 #### Scenario: Write no larger count for a file that equals its adopted source `gap-ledger-154`
 - **WHEN** a file equals its adopted source, has no base content and meets the adopted-source conditions
-- **AND** a current not-covered count is above its ledger entry count inside the tolerance
-- **THEN** the ratchet command writes the ledger entry count and ledger entry total count of that metric
+- **AND** a current not-covered count is above its ledger entry not-covered count inside the tolerance
+- **AND** another metric has a current not-covered count at or below its ledger entry not-covered count
+- **THEN** the ratchet command writes ledger entry counts for the metric with the larger current not-covered count
 - **AND** the ratchet command reports no LEDGER-NOT-IN-BASE and no LEDGER-MORE-THAN-BASE
-- **AND** the ratchet command writes current counts for a metric with a current not-covered count at or below the ledger entry not-covered count
+- **AND** the ratchet command writes current counts for that other metric
 - **AND** the ratchet command does not change the total counts of the current gap
 
 #### Scenario: Write current total counts when ledger total counts are absent `gap-ledger-155`
 - **WHEN** a file has the adopted-source conditions and no base content
-- **AND** its current not-covered count is larger than the ledger entry count inside the tolerance
+- **AND** its current not-covered count is larger than the ledger entry not-covered count inside the tolerance
 - **AND** the total count is absent from the ledger entry for that metric
 - **THEN** the ratchet command writes the ledger entry not-covered count and the current gap total count
 
 #### Scenario: Write a ledger total count of zero for a larger count `gap-ledger-156`
 - **WHEN** a file has the adopted-source conditions and no base content
-- **AND** the current not-covered count is larger than the ledger entry count inside the tolerance
+- **AND** the current not-covered count is larger than the ledger entry not-covered count inside the tolerance
 - **AND** the ledger entry total count is zero
 - **THEN** the ratchet command writes the ledger entry total count of zero
 

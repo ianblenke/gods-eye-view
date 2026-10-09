@@ -231,8 +231,8 @@ function toleranceCounts(entry, gap) {
  * Select never-worse counts for a file that equals its adopted source without base content.
  * Compare each current not-covered count with the ledger entry not-covered count.
  * For a metric, the function selects current counts when the current not-covered count is smaller than or equal to the ledger entry not-covered count.
- * Otherwise it selects ledger entry counts.
- * If the ledger entry total count is absent, it selects the current gap total count.
+ * If not, the function selects ledger entry counts.
+ * If the ledger entry total count is absent, the function selects the current gap total count.
  */
 function neverWorseCounts(entry, gap) {
   const next = { ...gap, totals: { ...gap.totals } };
