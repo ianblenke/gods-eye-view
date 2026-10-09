@@ -3285,7 +3285,7 @@ Tree read: 07a3431b5d5c4bb0c94d067ccf127c797d493b2a, branch ownership-gates, wit
 | S190 | Restore the comma before because the ledger exists. |
 | S191 | Keep the word headings. Remove the two glossary full stops. |
 
-The files in pass10/ hold the command outputs. The clause list has two ownership-018 tests and seven ownership-054 tests of ownershipGate.test.mjs.
+The files in pass10/ hold the command outputs. The clause list has two ownership-018 tests of ownership.test.mjs and seven ownership-054 tests of ownershipGate.test.mjs.
 
 ```text
 Test command form: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/<name>.test.mjs
@@ -3322,19 +3322,19 @@ Apart from the gate commands in test fixtures, no Docker, make, full gate, ratch
 
 Tree read: 9efae8791322871dcb0abf11983b745d066aa3fe, branch ownership-gates, with Pass 11 document changes.
 
-K1–K3 name the spec findings in final-message order. K4–K11 name the STE findings in final-message order.
-The files in pass11/ hold the command outputs. past-command-list.log lists the Pass 9 and Pass 10 command headers.
+K1-K3 name the findings of the spec reviewer of pre-review 8, in the order of its final message. K4-K11 name the findings of the STE reviewer, in the order of its final message.
+The files in pass11/ hold the command outputs. past-command-list.log lists the first lines of the Pass 9 and Pass 10 logs.
 
 | Finding | Correction |
 |---|---|
-| K1, K5 | Name gap-ledger-084 for the history condition. State the absent gate test as a limit. Check both conditions with named faults. |
+| K1, K5 | At Pass 11, name gap-ledger-084 for the history condition. State the absent gate test as a limit. Check both conditions with named faults. At Pass 12, name both absent gate tests in the limit. |
 | K2, K10 | Name ownershipGate.test.mjs in the Pass 10 clause count. Keep the clause list as it was. |
 | K3, K4 | State the scope of the gate commands in test fixtures for Pass 9 and Pass 10. |
-| K6 | State that valid waivers name the file, file hash and metric of the gap. |
-| K7 | Use condition and check in the limit. Split the text into two paragraphs of four sentences each. |
+| K6 | State that valid waivers name the file, the file hash and the metric of the gap. |
+| K7 | Use the words condition and check in the limit. At Pass 11, split the text into two paragraphs of four sentences each. At Pass 12, state three conditions and the archive limit. |
 | K8 | Name the Pass 10 checks in task 12.2. Add the Pass 11 tasks. |
 | K9 | State what Pass 10 did in rows H2 and H4. |
-| K11 | Remove text edits from the Pass 10 command list. |
+| K11 | Remove text edits from the Pass 10 list of checks. |
 
 ```text
 Test command form: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/<name>.test.mjs
@@ -3375,10 +3375,78 @@ Section titles: add Pass 11 to evidence.md and tasks.md; all old titles stay.
 
 | Named fault | Change in the scratch copy from Tree read | Failed test |
 |---|---|---|
-| base-history-slice | Change .slice(baseHistory.length) to .slice(0) in historyLinesOf of ledger.mjs. | gap-ledger-084, ledger.test.mjs:827; actual [] differs from ['LEDGER-MORE-THAN-BASE']. |
+| base-history-slice | Change .slice(baseHistory.length) to .slice(0) in historyLinesOf of ledger.mjs. | gap-ledger-084, ledger.test.mjs:827; gap-ledger-095, ledger.test.mjs:1062; gap-ledger-114, ledger.test.mjs:1278. |
 | line-count-check | Change waiver.lines.length <= waiver.count to true in ownership.mjs. | ownership-008, ownership.test.mjs:115; no COVERAGE-DIFF fault exists for count 1 and lines [2, 3]. |
 
 The scratch copy has no branch. Both fault processes ended with status 1. The clean processes passed before the faults.
 
-At Pass 11, tests, fault processes, lint, format, import, package, layer, OpenSpec, Git, searches, copy scripts and document checks ran.
+At Pass 11, tests, fault processes, lint, format, import, package, layer, OpenSpec, Git, searches and document checks ran.
 Apart from the gate commands in test fixtures, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.
+
+## Pass 12
+
+Tree read: c214519ad41b05ed611b308fc8d28e8bf9b45d71, branch ownership-gates, with Pass 12 document changes.
+
+At Pass 11, the lead ran the four checks on the host. The output is in pass12/host-lead-checks.log.
+
+The old labels L1-L4 name limits. The labels Pass 12 L1-L15 name the pre-review 9 findings in final-message order.
+Pass 12 L1-L7 name the findings of the spec reviewer. Pass 12 L8-L15 name the findings of the STE reviewer.
+
+| Finding | Correction |
+|---|---|
+| Pass 12 L1, L13 | Name the completed checks in task 13.2. Add task 13.3 with the lead's host verdicts. |
+| Pass 12 L2, L8 | Name the title of the line-count test. |
+| Pass 12 L3, L10 | Name the history after the base. |
+| Pass 12 L4, L11 | Name both absent gate tests and both coverage error codes. |
+| Pass 12 L5 | State three conditions and the archive limit. Add the TypeError limit. |
+| Pass 12 L6, L12 | Name both files in the Pass 10 clause count. |
+| Pass 12 L7 | Name all three failed tests of the Pass 11 base-history fault. |
+| Pass 12 L9 | Name the waiver count, waived lines and the lead's accepted limits. |
+| Pass 12 L14 | Remove copy scripts from the Pass 11 list of checks. |
+| Pass 12 L15 | Name both reviewers. Correct the articles and the names of logs and checks. |
+
+```text
+At Pass 11, the lead ran:
+Command: taskset -c 4-7 nice -n 19 node scripts/format.mjs --check
+Checked 1158 source files.
+Exit status of node: 0
+Command: taskset -c 4-7 nice -n 19 node scripts/check-import-directions.mjs
+{"modules":863,"portableEntries":67}
+Exit status of node: 0
+Command: taskset -c 4-7 nice -n 19 node scripts/check-package-boundaries.mjs
+Checked perimeters: 1 exports, 6 owned modules.
+Checked perimeters-source: 1 exports, 2 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+Exit status of node: 0
+Command: taskset -c 4-7 nice -n 19 node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 29 published, 0 new.
+Exit status of node: 0
+```
+
+```text
+At Pass 12, the worker ran:
+Test command form: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/<name>.test.mjs
+ownership: tests 50, pass 50, fail 0; status 0
+ownershipGate: tests 40, pass 40, fail 0; status 0
+Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+STE: 0 errors, 585 warnings.
+Command: taskset -c 4-7 nice -n 19 openspec show ownership-scoped-gates --json
+Status: 0
+Command: taskset -c 4-7 nice -n 19 openspec validate ownership-scoped-gates
+Change 'ownership-scoped-gates' is valid
+Status: 0
+Command: taskset -c 4-7 nice -n 19 python3 /home/ianblenke/docker/gev-tools/ownership-gates/pass9/check-repeated-titles.py
+Live titles: 378
+Labels checked: 20
+Stale labels: 0
+Command: taskset -c 4-7 nice -n 19 python3 /tmp/pass12-self-check.py
+Banned words and prefixed forms in new document text: 0
+Past fenced output: unchanged
+Scripts, AGENTS.md, config.yaml, src diff: empty
+Review folders: unchanged
+Section titles: add Pass 12 to evidence.md and tasks.md; all old titles stay.
+```
+
+At Pass 12, tests, lint, OpenSpec, Git, searches, title and document checks ran. The worker also copied the lead's log.
+Apart from the gate commands in test fixtures, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.
+The worker did not repeat the format or import direction checks. The lead's log supplies those verdicts.

@@ -40,15 +40,22 @@ The ledger comparisons, test name checks, STE lint and two-agent review still ap
 
 ## Known limits and later changes
 
-The glossary row valid waiver in design.md does not state two conditions.
+The glossary row valid waiver in design.md does not state three conditions.
 waiversOf in ledger.mjs reads only the history after the base.
-The line check in ownership.mjs accepts a line waiver only when the count is not below the number of its lines.
-The test tagged ownership-008 proves the line check.
+waiversOf also reads only the waivers of the checked change.
+The line check in ownership.mjs accepts a line waiver only when the waiver count is not below the number of waived lines.
+The archive does not copy design.md to openspec/specs, so the definition of valid waiver stays in design.md.
 
-The test tagged gap-ledger-084 tests the condition of waiversOf.
-No gate test sends a waiver from the history through gates.mjs to the coverage check of owned files.
-A change that drops these waivers makes the gate report more gaps.
-The lead keeps these limits.
+The test with the title "[ownership-008] limits a line waiver to its file hash, its metric and its count" proves the line check.
+The test tagged gap-ledger-084 tests that waiversOf reads only the history after the base.
+No gate test sends a line waiver from the history through gates.mjs to the changed-line check.
+No gate test sends a waiver from the history through gates.mjs to the owned coverage check.
+A change that sends no waiver to the coverage check makes the gate print more COVERAGE-OWNED and COVERAGE-DIFF errors.
+The lead accepts the omission in the row and the missing gate tests.
+
+A history waiver for the metric lines with no lines array makes ownership.mjs stop with a TypeError.
+The gate then ends with a non-zero status.
+The lead keeps this limit.
 
 Host coverage cannot replace the image measurement on the Node version in .node-version.
 
