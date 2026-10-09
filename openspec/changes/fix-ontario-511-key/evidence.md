@@ -1999,3 +1999,19 @@ The search output in corrections-search.log shows the three no-error clauses, fi
 The prose lint passes with zero errors and 542 warnings after the paragraph corrections.
 
 The package boundary check completed with exit code 0. Its output lists all package groups in boundaries.log.
+
+### Automatic mutations on the live tests
+
+The Pass 5 automatic mutations ran on a test copy from before the Pass 5 channel changes, as the S18 diff above shows.
+After Pass 6, the lead ran the same 140 mutants again on a new copy of the live tree at commit 4f0be16d.
+
+The file automatic-live-copy-check.log shows that the copy has the same two Ontario test files and the same two server files as the live clone.
+The command lines are in automatic-phase1-live.log and automatic-phase2-live.log.
+They use the same mutants.json file, the same two test files, one job and cores 8 to 11.
+
+Phase 1 kills 131 mutants, and nine survive. Phase 2 runs all 83 live tests for each of the nine survivors, and all nine survive.
+The survivors are h43, h44, h91, h103, h104, h113, h126, h127 and h130.
+The file automatic-live-compare.log compares the 149 records with the Pass 5 records. The status of each record is the same.
+
+The Pass 5 equivalence claims for these nine mutants stand, because the same nine survive the live tests.
+The lead did not run the equivalence probes again.
