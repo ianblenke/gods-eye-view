@@ -125,14 +125,14 @@ function oneMeasurement(root, { loaded = true, assertions = 1 } = {}) {
   return { spawn, openSpec, calls: () => calls };
 }
 
-test('[ownership-001] gate stops for an absent manifest', () => withFixture(root => {
+test('[ownership-001] stops for an absent manifest', () => withFixture(root => {
   rmSync(path.join(root, 'openspec/ownership.json'));
   const result = run(root, ['check'], { spawn: () => assert.fail('No test run') });
   assert.equal(result.status, 1);
   assert.match(result.output, /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/);
 }));
 
-test('[ownership-011] gate reads the ledger without tests or a base', () => withFixture(root => {
+test('[ownership-011] reads the ledger without tests or a base', () => withFixture(root => {
   write(root, { 'openspec/trace/gaps.json': JSON.stringify({ version: 4, coverage: {}, untracedTests: {} }) });
   const result = run(root, ['report', '--base', 'absent'], { spawn: () => assert.fail('No test run') });
   assert.equal(result.status, 0, result.output);
@@ -142,7 +142,7 @@ test('[ownership-011] gate reads the ledger without tests or a base', () => with
   assert.equal(parseArgs(['report']).command, 'report');
 }));
 
-test('[ownership-003 ownership-007] gate prints classes and rejects an upstream line gap', () => withFixture(root => {
+test('[ownership-003 ownership-007] prints classes and rejects an upstream line gap', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   write(root, CHANGE);
   write(root, { 'src/math.js': 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n' });
@@ -154,7 +154,7 @@ test('[ownership-003 ownership-007] gate prints classes and rejects an upstream 
   assert.equal(result.status, 1);
 }));
 
-test('[ownership-003 ownership-004] gate rejects an owned gap before the ratchet command writes the ledger', () => withFixture(root => {
+test('[ownership-003 ownership-004] rejects an owned gap before the ratchet command writes the ledger', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   write(root, CHANGE);
   write(root, { 'openspec/ownership.json': '{"version":1,"owned":["src/"]}', 'src/math.js': 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n' });
@@ -166,7 +166,7 @@ test('[ownership-003 ownership-004] gate rejects an owned gap before the ratchet
   assert.equal(readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8'), ledger);
 }));
 
-test('[ownership-007] gate rejects uncovered changed upstream lines in CI', () => withFixture(root => {
+test('[ownership-007] rejects uncovered changed upstream lines in CI', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   const archive = 'openspec/changes/archive/2026-10-08-add-demo';
   write(root, {
@@ -181,7 +181,7 @@ test('[ownership-007] gate rejects uncovered changed upstream lines in CI', () =
   assert.equal(result.status, 1);
 }));
 
-test('[ownership-026] gate records a gap with the adopt command and prints no owned gap lines', () => withFixture(root => {
+test('[ownership-026] records a gap with the adopt command and prints no owned gap lines', () => withFixture(root => {
   write(root, { 'openspec/ownership.json': '{"version":1,"owned":["src/math.js"]}' });
   passes(root, ['init'], oneMeasurement(root));
   git(root, 'checkout', '-qb', 'upstream', 'main');
@@ -201,7 +201,7 @@ test('[ownership-026] gate records a gap with the adopt command and prints no ow
   assert.doesNotMatch(result.output, /Owned gaps:/);
 }));
 
-test('[ownership-037] gate stops when Git cannot read a code diff', () => withFixture(root => {
+test('[ownership-037] stops when Git cannot read a code diff', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   const ledger = readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8');
   write(root, { 'openspec/trace/gaps.json': '{' });
@@ -223,7 +223,7 @@ test('[ownership-037] gate stops when Git cannot read a code diff', () => withFi
   }
 }));
 
-test('[ownership-009 ownership-013] gate uses the manifest and snapshot line data', () => withFixture(root => {
+test('[ownership-009 ownership-013] uses the manifest and snapshot line data', () => withFixture(root => {
   write(root, { 'scripts/qa-upstream.mjs': 'export {};\n' });
   commitAll(root, 'base QA script');
   git(root, 'branch', '-f', 'main', 'HEAD');
@@ -242,19 +242,19 @@ test('[ownership-009 ownership-013] gate uses the manifest and snapshot line dat
   assert.doesNotMatch(docs.output, /ERROR QA-HEADER|ERROR COVERAGE-DIFF|ERROR COVERAGE-OWNED/);
 }));
 
-test('[ownership-013] gate accepts a run with no line data', () => withFixture(root => {
+test('[ownership-013] accepts a run with no line data', () => withFixture(root => {
   const result = passes(root, ['init'], oneMeasurement(root, { loaded: false }));
   assert.match(result.output, /Coverage: 1 files, 0 complete, 1 not loaded, 0 untrue\./);
   assert.equal(result.status, 0);
 }));
 
-test('[ownership-011] gate uses the manifest for ledger paths', () => withFixture(root => {
+test('[ownership-011] uses the manifest for ledger paths', () => withFixture(root => {
   write(root, { 'openspec/ownership.json': '{"version":1,"owned":["src/"]}', 'openspec/trace/gaps.json': JSON.stringify({ version: 4, coverage: { 'src/math.js': { loaded: true, sha: 'hash', untrue: false, lines: 2, branches: 0, functions: 0, totals: { lines: 3, branches: 1, functions: 1 }, origin: 'pre-spec', since: '2026-01-01' } }, untracedTests: {} }) });
   const result = run(root, ['report'], { spawn: () => assert.fail('No test run') });
   assert.equal(result.status, 0, result.output);
   assert.equal(result.output, 'Owned gaps: 1 code files, 2 lines, 0 test files, 0 tests.\nowned code: src/math.js\nUpstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.');
 }));
-test('[ownership-010] gate still prints QA-HEADER errors', () => withFixture(root => {
+test('[ownership-010] still prints QA-HEADER errors', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   write(root, { 'openspec/ownership.json': '{"version":1,"owned":["scripts/qa-demo.mjs"]}', 'scripts/qa-demo.mjs': 'export {};\n' });
   git(root, 'add', 'scripts/qa-demo.mjs');
@@ -263,7 +263,7 @@ test('[ownership-010] gate still prints QA-HEADER errors', () => withFixture(roo
   assert.match(result.output, /ERROR QA-HEADER scripts\/qa-demo.mjs/);
 }));
 
-test('[ownership-020 ownership-022] gate accepts merged lines and rejects an author line', () => withFixture(root => {
+test('[ownership-020 ownership-022] accepts merged lines and rejects an author line', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   git(root, 'checkout', '-qb', 'source', 'main');
   write(root, { 'src/math.js': 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n' });
@@ -284,7 +284,7 @@ test('[ownership-020 ownership-022] gate accepts merged lines and rejects an aut
 }));
 
 for (const [id, edit, mode] of [['026', false], ['027', true], ['026', false, true]]) {
-  test(`[ownership-${id}] gate ${edit ? 'rejects a recorded gap in an edited owned file' : 'accepts a recorded gap in an unchanged owned file'}${mode ? ' with a new file mode' : ''}`, () => withFixture(root => {
+  test(`[ownership-${id}] ${edit ? 'rejects a recorded gap in an edited owned file' : 'accepts a recorded gap in an unchanged owned file'}${mode ? ' with a new file mode' : ''}`, () => withFixture(root => {
     const source = 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n';
     write(root, { 'src/math.js': source, 'openspec/ownership.json': '{"version":1,"owned":["src/math.js"]}' });
     passes(root, ['init'], oneMeasurement(root));
@@ -310,7 +310,7 @@ for (const [id, edit, mode] of [['026', false], ['027', true], ['026', false, tr
     }
   }));
 }
-test('[ownership-028] gate rejects a new owned gap without a ledger entry', () => withFixture(root => {
+test('[ownership-028] rejects a new owned gap without a ledger entry', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   git(root, 'rm', 'src/math.js');
   commitAll(root, 'base without code');
@@ -322,7 +322,7 @@ test('[ownership-028] gate rejects a new owned gap without a ledger entry', () =
   assert.match(result.output, /ERROR COVERAGE-OWNED src\/math.js/);
 }));
 
-test('[ownership-031 ownership-024] gate checks the adopt source commit before a bad base ledger', () => withFixture(root => {
+test('[ownership-031 ownership-024] checks the adopt source commit before a bad base ledger', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   const ledger = readFileSync(path.join(root, 'openspec/trace/gaps.json'), 'utf8');
   write(root, { 'openspec/trace/gaps.json': '{' });
@@ -332,9 +332,9 @@ test('[ownership-031 ownership-024] gate checks the adopt source commit before a
   write(root, { 'openspec/trace/gaps.json': ledger, 'openspec/trace/history.jsonl': JSON.stringify({ kind: 'adopt', change: 'add-demo', from: 'HEAD' }) + '\n' });
   const result = run(root, ['check', '--change', 'add-demo'], oneMeasurement(root));
   assert.equal(result.status, 1);
-  assert.deepEqual(result.output.split('\n').filter(line => line.startsWith('ERROR ')), ['ERROR LEDGER-ADOPT-FROM openspec/trace/history.jsonl Use an adopt record with a string file, a full lowercase from hash and a source that a merge after the base brought.']);
+  assert.deepEqual(result.output.split('\n').filter(line => line.startsWith('ERROR ')), ['ERROR LEDGER-ADOPT-FROM openspec/trace/history.jsonl Use an adopt record with a file name and a full lowercase hash in the from field. A merge after the base must bring that hash.']);
 }));
-test('[ownership-038] gate stops for bad history before the owned gap lines', () => withFixture(root => {
+test('[ownership-038] stops for a JSON parse error in the history before the owned gap lines', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   write(root, CHANGE);
   write(root, { 'openspec/trace/history.jsonl': '{\n' });
@@ -344,7 +344,7 @@ test('[ownership-038] gate stops for bad history before the owned gap lines', ()
   assert.doesNotMatch(lines.join('\n'), /Owned gaps:/);
 }));
 
-test('[ownership-029] gate stops for an invalid base manifest before the test run', () => withFixture(root => {
+test('[ownership-029] stops for an invalid base manifest before the test run', () => withFixture(root => {
   write(root, { 'openspec/ownership.json': '{}' });
   commitAll(root, 'bad manifest');
   git(root, 'branch', '-f', 'main', 'HEAD');
@@ -353,7 +353,7 @@ test('[ownership-029] gate stops for an invalid base manifest before the test ru
   assert.equal(result.status, 1);
   assert.match(result.output, /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/);
 }));
-test('[ownership-029 ownership-027] gate rejects a gap after its base owned path is removed', () => withFixture(root => {
+test('[ownership-029 ownership-027] rejects a gap after its base owned path is removed', () => withFixture(root => {
   const source = 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n';
   write(root, { 'src/math.js': source, 'openspec/ownership.json': '{"version":1,"owned":["src/"]}' });
   passes(root, ['init'], oneMeasurement(root));
@@ -366,7 +366,7 @@ test('[ownership-029 ownership-027] gate rejects a gap after its base owned path
   assert.match(result.output, /ERROR COVERAGE-OWNED src\/math.js/);
 }));
 
-test('[ownership-039] gate stops for a work source in the adopt command', () => withFixture(root => {
+test('[ownership-039] stops for a work source in the adopt command', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   write(root, { 'src/math.js': 'export function add(a, b) {\n  return a + b + 0;\n}\n' });
   commitAll(root, 'work source');
@@ -377,7 +377,7 @@ test('[ownership-039] gate stops for a work source in the adopt command', () => 
   assert.doesNotMatch(result.output, /Trace:/);
 }));
 
-test('[ownership-040] gate uses the CI change for a file that a valid adopt record names', () => withFixture(root => {
+test('[ownership-040] uses the CI change for a file that a valid adopt record names', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   commitAll(root, 'base ledger');
   git(root, 'branch', '-f', 'main', 'HEAD');
@@ -395,17 +395,19 @@ test('[ownership-040] gate uses the CI change for a file that a valid adopt reco
   assert.doesNotMatch(result.output, /ERROR QA-HEADER|ERROR LEDGER-ADOPT-FROM/);
 }));
 
-test('[ownership-038] gate stops for bad JSON without a change before the owned gap lines', () => withFixture(root => {
+test('[ownership-038] stops for a JSON parse error in the history without a change before the owned gap lines', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   write(root, { 'openspec/trace/history.jsonl': '{\n' });
   const result = run(root, ['check'], oneMeasurement(root));
   assert.equal(result.status, 1);
-  assert.deepEqual(result.output.split('\n').filter(line => line.startsWith('ERROR ')), ["ERROR LEDGER-ADOPT-FROM openspec/trace/history.jsonl Expected property name or '}' in JSON at position 1 (line 1 column 2)"]);
+  const errors = result.output.split('\n').filter(line => line.startsWith('ERROR '));
+  assert.equal(errors.length, 1);
+  assert.match(errors[0], /^ERROR LEDGER-ADOPT-FROM openspec\/trace\/history\.jsonl Expected property name or '\}' in JSON/);
   assert.doesNotMatch(result.output, /Owned gaps:/);
 }));
 
 
-test('[ownership-042] gate skips a base adopt record before the test run', () => withFixture(root => {
+test('[ownership-042] skips a base adopt record before the test run', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   write(root, { 'openspec/trace/history.jsonl': JSON.stringify({ kind: 'adopt', change: 'add-demo', from: 'HEAD' }) + '\n' });
   commitAll(root, 'base history');
@@ -419,7 +421,7 @@ test('[ownership-042] gate skips a base adopt record before the test run', () =>
 }));
 
 
-test('[ownership-044] gate uses the synthetic header with a snapshot and a valid adopt record', () => withFixture(root => {
+test('[ownership-044] uses the synthetic header with a snapshot and a valid adopt record', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   commitAll(root, 'base ledger');
   git(root, 'branch', '-f', 'main', 'HEAD');
@@ -439,7 +441,7 @@ test('[ownership-044] gate uses the synthetic header with a snapshot and a valid
   assert.match(result.output, /Trace: 1 scenarios, 1 verified, 0 open\./);
 }));
 
-test('[ownership-045] gate names the measurement phase', () => withFixture(root => {
+test('[ownership-045] names the measurement phase', () => withFixture(root => {
   let elapsed = 0;
   const fake = oneMeasurement(root);
   const result = run(root, ['check'], { ...fake, spawn: (...args) => {
@@ -450,7 +452,7 @@ test('[ownership-045] gate names the measurement phase', () => withFixture(root 
 }));
 
 
-test('[ownership-046] gate stops for an absent adopt source commit', () => withFixture(root => {
+test('[ownership-046] stops for an absent adopt source commit', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   write(root, CHANGE);
   const result = run(root, ['adopt', '--change', 'add-demo', '--from', 'absent'], { spawn: () => assert.fail('No test run') });
@@ -458,7 +460,7 @@ test('[ownership-046] gate stops for an absent adopt source commit', () => withF
   assert.deepEqual(result.output.split('\n').filter(line => line.startsWith('ERROR ')), ['ERROR GATES-ADOPT Git cannot find the commit absent']);
 }));
 
-test('[ownership-047] gate stops for a valid adopt source without a ledger', () => withFixture(root => {
+test('[ownership-047] stops for a valid adopt source without a ledger', () => withFixture(root => {
   git(root, 'checkout', '-qb', 'source');
   write(root, { 'src/math.js': 'export function add(a, b) {\n  return a + b + 0;\n}\n' });
   commitAll(root, 'upstream');
@@ -471,7 +473,7 @@ test('[ownership-047] gate stops for a valid adopt source without a ledger', () 
   assert.deepEqual(result.output.split('\n').filter(line => line.startsWith('ERROR ')), ['ERROR GATES-ADOPT openspec/trace/gaps.json is not there. Run: node scripts/spec/gates.mjs init']);
 }));
 
-test('[ownership-048] gate passes the measurement environment and allocation list', () => withFixture(root => {
+test('[ownership-048] passes the measurement environment and allocation list', () => withFixture(root => {
   const fake = oneMeasurement(root);
   let calls = 0;
   run(root, ['check'], { ...fake, env: { MEASUREMENT_TOKEN: 'token' }, allocationFiles: ['tools/other.test.mjs'], spawn: (command, args, options) => {
@@ -487,7 +489,7 @@ test('[ownership-048] gate passes the measurement environment and allocation lis
 }));
 
 
-test('[ownership-049] gate stops for an untraced change scenario in both measurement modes', () => withFixture(root => {
+test('[ownership-049] stops for an untraced change scenario in both measurement modes', () => withFixture(root => {
   passes(root, ['init'], oneMeasurement(root));
   write(root, CHANGE);
   const measured = run(root, ['check', '--change', 'add-demo'], oneMeasurement(root));
@@ -523,7 +525,7 @@ test('[gap-ledger-111] stops an invalid baseline before the test run', () => wit
   assert.equal(calls, 0);
 }));
 
-test('[ownership-053] gate omits the Class, Ownership and Owned gaps lines from CI and init', () => withFixture(root => {
+test('[ownership-053] omits the Class, Ownership and Owned gaps lines from CI and init', () => withFixture(root => {
   write(root, { 'openspec/ownership.json': '{"version":1,"owned":["src/math.js"]}', 'src/math.js': 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n' });
   commitAll(root, 'owned base gap');
   git(root, 'branch', '-f', 'main', 'HEAD');
@@ -552,7 +554,7 @@ function mergeQa(root, files = { 'scripts/qa-merge.mjs': 'export {};\n' }) {
   return from;
 }
 
-test('[ownership-031 ownership-041] gate stops for revision names in CI merge HEAD history', () => withFixture(root => {
+test('[ownership-031 ownership-041] stops for revision names in a history with a merge HEAD', () => withFixture(root => {
   const from = mergeQa(root, { 'src/math.js': 'export function add(a, b) {\n  return a + b + 0;\n}\n' });
   assert.equal(git(root, 'rev-parse', 'HEAD^1'), git(root, 'rev-parse', 'main'));
   assert.equal(git(root, 'rev-parse', 'HEAD^2'), from);
@@ -568,7 +570,7 @@ test('[ownership-031 ownership-041] gate stops for revision names in CI merge HE
   }
 }));
 
-test('[ownership-054] gate writes the QA adopt record with a full hash from HEAD^2', () => withFixture(root => {
+test('[ownership-054] writes the QA adopt record with a full hash from HEAD^2', () => withFixture(root => {
   const from = mergeQa(root);
   const result = run(root, ['adopt', '--change', 'add-demo', '--from', 'HEAD^2'], oneMeasurement(root));
   assert.equal(result.status, 0, result.output);
@@ -577,10 +579,10 @@ test('[ownership-054] gate writes the QA adopt record with a full hash from HEAD
   assert.deepEqual(records[0], { date: '2026-09-13', change: 'add-demo', commit: git(root, 'rev-parse', 'HEAD'), kind: 'adopt', file: 'scripts/qa-merge.mjs', from, lines: 0, branches: 0, functions: 0, untraced: 0, untrue: false });
   const next = run(root, ['check', '--change', 'add-demo'], oneMeasurement(root));
   assert.match(next.output, /QA: scripts\/qa-merge.mjs uses the synthetic header/);
-  assert.doesNotMatch(next.output, /ERROR QA-HEADER|ERROR LEDGER-ADOPT-FROM/);
+  assert.doesNotMatch(next.output, /ERROR QA-HEADER|ERROR LEDGER-ADOPT-/);
 }));
 
-test('[ownership-054] gate writes the QA adopt record beside a coverage gap record', () => withFixture(root => {
+test('[ownership-054] writes the QA adopt record beside a coverage gap record', () => withFixture(root => {
   const from = mergeQa(root, { 'scripts/qa-merge.mjs': 'export {};\n', 'src/math.js': 'export function add(a, b) {\n  if (a < 0) {\n    return 8;\n  }\n  return a + b;\n}\n' });
   const result = run(root, ['adopt', '--change', 'add-demo', '--from', 'source'], oneMeasurement(root));
   assert.equal(result.status, 0, result.output);
@@ -588,7 +590,7 @@ test('[ownership-054] gate writes the QA adopt record beside a coverage gap reco
   assert.deepEqual(records.map(item => [item.file, item.from, item.lines]), [['src/math.js', from, 2], ['scripts/qa-merge.mjs', from, 0]]);
 }));
 
-test('[ownership-054 ownership-035] gate stops the adopt command for QA files outside the exception', () => {
+test('[ownership-054 ownership-035] stops the adopt command for QA files outside the exception and for another error', () => {
   const tag = '/**\n * @purpose Check a file.\n * @covers unmapped: upstream\n * @run node scripts/qa-merge.mjs\n * @needs None.\n */\n';
   for (const mode of ['owned', 'base-tag', 'current-tag', 'not-merged', 'other-error']) withFixture(root => {
     if (mode === 'base-tag') { write(root, { 'scripts/qa-merge.mjs': tag }); commitAll(root, 'base tag'); }
@@ -604,7 +606,7 @@ test('[ownership-054 ownership-035] gate stops the adopt command for QA files ou
   });
 });
 
-test('[ownership-054] gate writes a QA adopt record for a base script without a QA tag', () => withFixture(root => {
+test('[ownership-054] writes a QA adopt record for a base script without a QA tag', () => withFixture(root => {
   write(root, { 'scripts/qa-merge.mjs': '/* Base license. */\nexport {};\n' });
   commitAll(root, 'base QA');
   git(root, 'branch', '-f', 'main', 'HEAD');
@@ -615,7 +617,7 @@ test('[ownership-054] gate writes a QA adopt record for a base script without a 
   assert.deepEqual(records.map(item => [item.file, item.from, item.lines, item.branches, item.functions, item.untraced, item.untrue]), [['scripts/qa-merge.mjs', from, 0, 0, 0, 0, false]]);
 }));
 
-test('[ownership-054] adopt command writes no QA record for an absent current file', () => withFixture(root => {
+test('[ownership-054] writes no QA record for an absent current file', () => withFixture(root => {
   const from = mergeQa(root);
   rmSync(path.join(root, 'scripts/qa-merge.mjs'));
   const result = run(root, ['adopt', '--change', 'add-demo', '--from', from], oneMeasurement(root));
@@ -627,7 +629,7 @@ test('[ownership-054] adopt command writes no QA record for an absent current fi
 }));
 
 
-test('[ownership-054] adopt command stops for a coverage ignore error in the eligible QA file', () => withFixture(root => {
+test('[ownership-054] stops for a coverage ignore error in the eligible QA file', () => withFixture(root => {
   const from = mergeQa(root, { 'scripts/qa-merge.mjs': '/* node:coverage ignore next */\nexport {};\n' });
   const result = run(root, ['adopt', '--change', 'add-demo', '--from', from], oneMeasurement(root));
   assert.equal(result.status, 1, result.output);
@@ -639,7 +641,7 @@ test('[ownership-054] adopt command stops for a coverage ignore error in the eli
 
 
 
-test('[ownership-054] adopt command writes one record for each QA file from both candidate lists', () => withFixture(root => {
+test('[ownership-054] writes one record for each QA file from both candidate lists', () => withFixture(root => {
   write(root, { 'scripts/qa-base-a.mjs': '/* Base license. */\nexport {};\n', 'scripts/qa-base-b.mjs': '/* Base license. */\nexport {};\n' });
   commitAll(root, 'base QA');
   git(root, 'branch', '-f', 'main', 'HEAD');

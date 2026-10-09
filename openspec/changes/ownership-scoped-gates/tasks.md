@@ -114,7 +114,7 @@
 - [x] 6.28 Write the test for `ownership-040`.
 
 - [x] 6.29 Read adopt sources after CI selects the change.
-- [x] 6.30 Stop for bad history JSON before the owned gap lines, also when no change is selected.
+- [x] 6.30 Stop for bad history JSON before the owned gap lines, also when the gate selects no change.
 
 - [x] 6.31 Write the test for `ownership-041`.
 
@@ -146,51 +146,89 @@
 
 - [x] 7.1 Write the Pass 5 words table.
 - [x] 7.2 Change the spec for D7 through D10.
-- [x] 7.3 Write the red tests for `ownership-054`.
+- [x] 7.3 Write the tests for `ownership-054` before the code.
 - [x] 7.4 Reject revision names in history records.
-- [x] 7.5 Apply the base QA tag rule.
-- [x] 7.6 Add the QA adopt record producer.
+- [x] 7.5 Apply the rule for a QA tag at the base.
+- [x] 7.6 Make the adopt command write the QA adopt record.
 - [x] 7.7 Correct the round 2 prose faults.
 - [x] 7.8 Run each host test file.
 - [x] 7.9 Measure each changed script.
 - [x] 7.10 Run the named faults.
-- [x] 7.11 Add the same-file error test for `ownership-054`.
+- [x] 7.11 Add the test for `ownership-054` with a second error in the same QA file.
 - [x] 7.12 Run the automatic mutation tool.
 - [x] 7.13 Assess each survivor.
 - [x] 7.14 Run lint.
 - [x] 7.15 Run the format check.
-- [x] 7.16 Run the title echo check.
-- [x] 7.17 Run OpenSpec show and validate.
+- [x] 7.16 Run the repeated-title check.
+- [x] 7.17 Run OpenSpec show.
+- [x] 7.17a Run OpenSpec validate.
 - [x] 7.18 Compare document headings.
 - [x] 7.19 Commit the Pass 5 files.
 
 ### Order note
 
 Pass 4 wrote tests for ownership-037 through ownership-053 after the first code corrections.
-The review and mutation faults caused these tests. This list states the real order; task numbers do not change history.
+The review and mutation faults caused these tests. The task numbers show the planned order. This note gives the real order.
 
 Each scenario has a named fault and a failed test in the Pass 4 evidence tables.
 Ownership-045 through ownership-049 describe old code. Their requirements use Origin: backfill.
-Their tests close the phase time, source option, absent ledger, caller environment, allocation list and selected change trace gaps.
+Their tests cover old code that had gaps in the phase time, the source option, the absent ledger and the caller environment.
+They also cover gaps in the allocation list and the selected change trace.
 
-New Pass 5 tests for ownership-054 precede the code. The Pass 5 red logs show the failures.
+Only the first tests of task 7.3 precede the producer code of task 7.6. The Pass 5 red logs show their failures.
+The following Pass 5 tests came after code tasks 7.4 through 7.6:
+
+| Task | Test added after code | Named fault |
+|---|---|---|
+| 7.11 | ownership-054: a second error in the same QA file | drop-other-error-code |
+| 7.10 | ownership-031: Git call count for a string outside the hash pattern | hash-regex-true |
+| 7.10 | ownership-054: merged base script with no QA tag | drop-base-QA-producer |
+| 7.12 | ownership-054: absent current QA file | Read every tracked merged QA file (red-absent-QA.log) |
+| 7.13 | ownership-031: prefix before the hash | drop-hash-start-anchor (a0536) |
+| 7.13 | ownership-031: hash with 41 digits | extend-hash-count (a0541) |
+| 7.13 | ownership-054: two base scripts and two new scripts | keep-first-QA-record (g4681) |
+
+The Pass 5 evidence gives the failed test for each named fault.
 
 | Scenario | Pass 4 named fault | Test |
 |---|---|---|
-| ownership-037 | Skip the failed diff stop | [ownership-037] gate stops when Git cannot read a code diff |
-| ownership-038 | Skip history JSON checks without a change | [ownership-038] gate stops for bad history before the owned gap lines |
-| ownership-039 | Skip the work source check in the adopt command | [ownership-039] gate stops for a work source in the adopt command |
-| ownership-040 | Read sources before CI selects the change | [ownership-040] gate uses the CI change for a file that a valid adopt record names |
-| ownership-041 | Drop the from string check with branch 1 | [ownership-041] gate stops for a number or revision name in the from field |
-| ownership-042 | Read no base history | [ownership-042] gate skips a base adopt record before the test run |
-| ownership-043 | Drop the change and history prefix guard | [ownership-043] gate skips invalid adopt records outside the change |
-| ownership-044 | Drop adopt records from snapshot QA | [ownership-044] gate uses the synthetic header with a snapshot and a valid adopt record |
-| ownership-045 | Drop the measure phase name | [ownership-045] gate names the measurement phase |
-| ownership-046 | Drop the absent source fault | [ownership-046] gate stops for an absent adopt source commit |
-| ownership-047 | Drop the absent ledger fault | [ownership-047] gate stops for a valid adopt source without a ledger |
-| ownership-048 | Drop the caller environment or allocation list | [ownership-048] gate passes the measurement environment and allocation list |
-| ownership-049 | Drop the selected change in either measurement mode | [ownership-049] gate stops for an untraced change scenario in both measurement modes |
-| ownership-050 | Read only the first adopt record | [ownership-050] gate stops for an invalid record after a valid record |
-| ownership-051 | Read the diff before the source check | [ownership-051 ownership-024] gate stops for an invalid source before a diff fault |
-| ownership-052 | Remove the source check catch | [ownership-052] gate stops for a source name with a null byte |
-| ownership-053 | Print the class lines for every command | [ownership-053] gate omits the Class, Ownership and Owned gaps lines from CI and init |
+| ownership-037 | Skip the failed diff stop | [ownership-037] stops when Git cannot read a code diff |
+| ownership-038 | Skip history JSON checks without a change | [ownership-038] stops for a JSON parse error in the history without a change before the owned gap lines |
+| ownership-039 | Skip the work source check in the adopt command | [ownership-039] stops for a work source in the adopt command |
+| ownership-040 | Read sources before CI selects the change | [ownership-040] uses the CI change for a file that a valid adopt record names |
+| ownership-041 | Drop the from string check with a Git branch named 1 | [ownership-041] stops for a number or a name that is not a full hash in the from field |
+| ownership-042 | Read no base history | [ownership-042] skips a base adopt record before the test run |
+| ownership-043 | Drop the change and history prefix guard | [ownership-043] skips invalid adopt records outside the change |
+| ownership-044 | Drop adopt records from snapshot QA | [ownership-044] uses the synthetic header with a snapshot and a valid adopt record |
+| ownership-045 | Drop the measure phase name | [ownership-045] names the measurement phase |
+| ownership-046 | Drop the absent source fault | [ownership-046] stops for an absent adopt source commit |
+| ownership-047 | Drop the absent ledger fault | [ownership-047] stops for a valid adopt source without a ledger |
+| ownership-048 | Drop the caller environment or allocation list | [ownership-048] passes the measurement environment and allocation list |
+| ownership-049 | Drop the selected change in either measurement mode | [ownership-049] stops for an untraced change scenario in both measurement modes |
+| ownership-050 | Read only the first adopt record | [ownership-050] stops for an invalid record after a valid record |
+| ownership-051 | Read the diff before the source check | [ownership-051 ownership-024] stops for an invalid source before a diff fault |
+| ownership-052 | Remove the source check catch | [ownership-052] stops for a source name with a null byte |
+| ownership-053 | Print the class lines for every command | [ownership-053] omits the Class, Ownership and Owned gaps lines from CI and init |
+
+## 8. Pass 6
+
+- [x] 8.1 Update the Pass 6 words table.
+- [x] 8.2 Correct the pre-review 3 spec clauses.
+- [x] 8.3 Change the tagged assertions before the message code.
+- [x] 8.4 Run the tests against the old message and process text.
+- [x] 8.5 Change the message and process text.
+- [x] 8.6 Correct the titles and prose.
+- [x] 8.7 State the real Pass 5 test order.
+- [x] 8.8 Run the five named faults.
+- [x] 8.9 Run both automatic mutation phases.
+- [x] 8.10 Compare the survivor with the correct code.
+- [x] 8.11 Read each changed title and its assertion calls.
+- [x] 8.12 Run each host test file.
+- [x] 8.13 Measure each script with fresh coverage data.
+- [x] 8.14 Run the format check.
+- [x] 8.15 Run the final repeated-title check.
+- [x] 8.16 Run the final banned-word search.
+- [x] 8.17 Run the final lint.
+- [x] 8.18 Run OpenSpec show.
+- [x] 8.19 Run OpenSpec validate.
+- [x] 8.20 Compare the document headings.
