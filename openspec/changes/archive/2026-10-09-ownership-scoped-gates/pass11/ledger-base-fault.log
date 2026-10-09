@@ -1,0 +1,210 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/ledger.test.mjs
+Tree read: 9efae8791322871dcb0abf11983b745d066aa3fe; scratch copy; no branch; slice fault
+✔ [gap-ledger-001] makes the first ledger with each current gap, its hash and the origin pre-spec (26.62062ms)
+✔ [gap-ledger-002] does not replace the current ledger (8.421178ms)
+✔ [gap-ledger-015] does not make a ledger when the base has a ledger (2.747053ms)
+✔ [gap-ledger-016] does not record a new file as pre-spec (2.953126ms)
+✔ [gap-ledger-003] stops for a new code file below 100% (6.870228ms)
+✔ [gap-ledger-004] stops for more lines that are not covered and shows both counts (7.093928ms)
+✔ [gap-ledger-017] stops for more branches or functions that are not covered in a changed file (3.974534ms)
+✔ [gap-ledger-018] does not stop for branches that a new test shows in an unchanged file (2.869159ms)
+✔ [gap-ledger-078] does not stop for a smaller total with the same not-covered count in an unchanged file (3.151654ms)
+✔ [gap-ledger-054] stops for a loss of covered branches or functions in an unchanged file (13.466722ms)
+✔ [gap-ledger-055] stops for a ledger entry without the total counts (5.404977ms)
+✔ [gap-ledger-019] stops for a changed file that has no branch count (1.794271ms)
+✔ [gap-ledger-009] does not stop for a file that no test loaded and a test now loads with the same content (1.525165ms)
+✔ [gap-ledger-020] stops for a loaded file that no test loads now (1.307953ms)
+✔ [gap-ledger-031 coverage-gate-018] does not stop for untrue coverage that the ledger records and stops for other untrue coverage (2.041349ms)
+✔ [gap-ledger-005] stops for a new test file with untraced tests (1.283422ms)
+✔ [gap-ledger-006] stops for a new untraced test name (2.029099ms)
+✔ [gap-ledger-007] does not stop for gaps that are equal to the ledger (1.847968ms)
+✔ [gap-ledger-008] stops for a ledger that does not show a closed gap or a new hash (2.232397ms)
+✔ [gap-ledger-021] stops for a ledger entry that the base does not have (7.611556ms)
+✔ [gap-ledger-022] stops for a ledger entry that is larger than the base (4.022838ms)
+✔ [gap-ledger-032] stops for untrue coverage that the base does not record (2.116185ms)
+✔ [gap-ledger-023] stops for a removed ledger (0.983768ms)
+✔ [gap-ledger-024] stops for a removed retired ID (1.005801ms)
+✔ [gap-ledger-025] stops for a changed history (1.003042ms)
+✔ [gap-ledger-026] does not compare with the base when the base has no ledger (0.79685ms)
+✔ [gap-ledger-010] makes the ledger entries smaller and records the change and the commit (3.44358ms)
+✔ [gap-ledger-047] writes the maps of the ledger with sorted keys and adds history lines (5.931413ms)
+✔ [gap-ledger-011] removes an entry that is at zero and records the closed gap (2.080544ms)
+✔ [gap-ledger-012] removes the entry of a deleted file with the reason file removed (2.217153ms)
+✔ [gap-ledger-013] stops the ratchet command when a gap is larger (4.357832ms)
+✔ [gap-ledger-014] stops the ratchet command without a change name (1.247374ms)
+✔ [gap-ledger-027] stops the ratchet command for a change that is not active (1.103695ms)
+✔ [gap-ledger-028] records branches that a new test shows (7.640136ms)
+✔ [gap-ledger-057] records changed total counts (3.146419ms)
+✔ [gap-ledger-056] stops for changed total counts of an unchanged file without a history line (5.653327ms)
+✔ [gap-ledger-088] allows changed total counts of an unchanged file when the covered count agrees (1.65237ms)
+✔ [gap-ledger-029] records the hash of a changed file and the end of untrue coverage (1.060145ms)
+✔ [gap-ledger-040] stops for more branches than the base in a changed file (2.046365ms)
+✔ [gap-ledger-048] stops for more branches than the base with fewer covered branches (2.081413ms)
+✔ [gap-ledger-041] stops for a ledger hash that is not equal to the base hash for an unchanged file (0.804397ms)
+✔ [gap-ledger-069] does not stop for counts inside the tolerance and does not record the entry as not current (0.904747ms)
+✔ [gap-ledger-070] stops for a count outside the tolerance (0.672955ms)
+✔ [gap-ledger-071] makes the tolerance from the total of the metric (1.02962ms)
+✔ [gap-ledger-072] compares the loss of covered branches with the tolerance, also when the total moves (0.947055ms)
+✔ [gap-ledger-073] does not write a worse count for a file with the tolerance conditions (1.500709ms)
+✔ [gap-ledger-074] uses no tolerance for a file without the tolerance conditions (1.193858ms)
+✔ [gap-ledger-075] stops for a ledger entry without the total line count (0.71929ms)
+✔ [gap-ledger-076] stops for a ledger file with another version (1.816219ms)
+✔ [gap-ledger-081] allows the waived count for a changed file with the content hash of the waiver (0.828622ms)
+✔ [gap-ledger-082] gives no waived count for other content (1.275314ms)
+✔ [gap-ledger-083] allows a rise above the base by the waived count of the checked change (1.213623ms)
+✖ [gap-ledger-084] gives no waived count in the base comparison for other waiver lines (9.608754ms)
+✔ [gap-ledger-085] records a waived rise (1.218457ms)
+✔ [gap-ledger-085] records a waived rise of the line count (1.006342ms)
+✔ [gap-ledger-086] allows the waived count for a file with no entry, and records the file as not current (0.995294ms)
+✔ [gap-ledger-086] stops the build for a file with no entry and a count above the waived count (1.496209ms)
+✔ [gap-ledger-086] adds the entry for a file with no entry and a waived count, and records the rise (1.114091ms)
+✔ [gap-ledger-087] allows the waived count for a ledger entry that the base does not have (1.224332ms)
+✔ [gap-ledger-087] stops the build for a ledger entry that the base does not have and a count above the waived count (1.659383ms)
+✔ [gap-ledger-089] writes the entries and the history lines of the adopted files (4.039812ms)
+✔ [gap-ledger-091] adopts no gap of a file that the merged commit did not change (2.047901ms)
+✖ [gap-ledger-095] reads only the adopt lines of the checked change after the base history (7.462029ms)
+✔ [gap-ledger-096 gap-ledger-097] separates the valid adopt lines from the lines with a wrong commit or a wrong file (1.949968ms)
+✔ [gap-ledger-096 gap-ledger-097] The gate follows the reached rule for a reached adopt line, not the commit and file rules (1.159221ms)
+✔ [gap-ledger-092] allows a ledger entry that the base does not have for an adopted file (4.174527ms)
+✔ [gap-ledger-093] allows a rise above the base entry up to the adopted count, and not above it (2.520449ms)
+✔ [gap-ledger-094] allows an entry with more untraced tests than the base entry when its number of untraced tests is not above the adopted count (1.798708ms)
+✔ [gap-ledger-098] allows untrue coverage of an adopted file (1.485361ms)
+✔ [gap-ledger-110] The baseline records exact metric values and new gaps (3.428425ms)
+✔ [gap-ledger-111] The baseline rejects a different change or merge module state (1.461294ms)
+✔ [gap-ledger-112] The other source content keeps its old ledger entry (0.93106ms)
+✔ [gap-ledger-113] The valid history supplies the exact temporary base entries (10.517287ms)
+✖ [gap-ledger-114] The false history gives no baseline allowance (4.467275ms)
+✔ [gap-ledger-115] A second baseline step stops before tests (0.791146ms)
+✔ [gap-ledger-105 gap-ledger-106] The reached field follows its source record (1.390662ms)
+✔ [gap-ledger-116] The gate accepts the real differences (2.82416ms)
+✔ [gap-ledger-117] The new value is above the tolerance (1.990016ms)
+✔ [gap-ledger-118] The small total permits no difference (0.818762ms)
+✔ [gap-ledger-119] The source and old values stay exact (2.237798ms)
+✔ [gap-ledger-120] The unchanged metric stays within tolerance (1.495634ms)
+✔ [gap-ledger-121] The ledger entry stays within tolerance (2.488406ms)
+✔ [gap-ledger-119] The metric values use whole numbers (1.190635ms)
+✔ [gap-ledger-114] The snapshot keeps each different metric (1.437381ms)
+✔ [gap-ledger-119] The gate checks the source properties (1.41085ms)
+✔ [gap-ledger-117] The gate checks each history metric (0.653895ms)
+✔ [gap-ledger-114] The gate rejects a false metric name (0.921532ms)
+✔ [gap-ledger-113] The temporary base uses the true loaded source state (0.888826ms)
+✔ [gap-ledger-122] A fully covered file gets no new history allowance (2.22404ms)
+✔ [gap-ledger-133] accept dirty history in each reader (4.281258ms)
+ℹ tests 90
+ℹ suites 0
+ℹ pass 87
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 366.360511
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:811:1
+✖ [gap-ledger-084] gives no waived count in the base comparison for other waiver lines (9.608754ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'LEDGER-MORE-THAN-BASE'
+  - ]
+  
+      at TestContext.<anonymous> (file:///tmp/ownership-pass11-scratch/src/tooling/spec/ledger.test.mjs:827:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/tooling/spec/ledger.test.mjs:1042:1
+✖ [gap-ledger-095] reads only the adopt lines of the checked change after the base history (7.462029ms)
+  AssertionError [ERR_ASSERTION]: a line in the base history
+  + actual - expected
+  
+  + [
+  +   {
+  +     branches: null,
+  +     change: 'sync',
+  +     commit: 'abc123',
+  +     date: '2026-09-13',
+  +     file: 'src/a.js',
+  +     from: 'up1',
+  +     functions: 0,
+  +     kind: 'adopt',
+  +     lines: 3,
+  +     untraced: 0,
+  +     untrue: false
+  +   },
+  +   {
+  +     branches: null,
+  +     change: 'sync',
+  +     commit: 'abc123',
+  +     date: '2026-09-13',
+  +     file: 'src/none.test.mjs',
+  +     from: 'up1',
+  +     functions: null,
+  +     kind: 'adopt',
+  +     lines: null,
+  +     untraced: 2,
+  +     untrue: false
+  +   },
+  +   {
+  +     branches: 0,
+  +     change: 'sync',
+  +     file: 'src/l.js',
+  +     from: 'up1',
+  +     functions: 0,
+  +     kind: 'adopt',
+  +     lines: 0,
+  +     untraced: 0,
+  +     untrue: false
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///tmp/ownership-pass11-scratch/src/tooling/spec/ledger.test.mjs:1062:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/tooling/spec/ledger.test.mjs:1270:1
+✖ [gap-ledger-114] The false history gives no baseline allowance (4.467275ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3 !== 1
+  
+      at TestContext.<anonymous> (file:///tmp/ownership-pass11-scratch/src/tooling/spec/ledger.test.mjs:1278:17)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+Status: 1

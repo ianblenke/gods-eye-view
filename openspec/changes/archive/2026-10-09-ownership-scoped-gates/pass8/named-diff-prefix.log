@@ -1,0 +1,35 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-017 src/tooling/spec/ownership.test.mjs
+✖ [ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix (18.464739ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 64.604055
+
+✖ failing tests:
+
+test at src/tooling/spec/ownership.test.mjs:193:1
+✖ [ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix (18.464739ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   2
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass8/named-root/src/tooling/spec/ownership.test.mjs:194:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

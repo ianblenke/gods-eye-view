@@ -1,0 +1,413 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/gates.test.mjs
+(node:5156) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///tmp/gev-gates-LSiya0/src/math.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /tmp/gev-gates-LSiya0/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///home/ianblenke/docker/gev-work/ownership-gates/scripts/spec/lib/test-guard.mjs:276
+    throw new Error(`The test guard stopped: the hash of ${inventoryFile} is not the hash in GEV_SPEC_INVENTORY`);
+          ^
+
+Error: The test guard stopped: the hash of /tmp/gev-gates-lH1b5h/.gev-cache/spec/inventory.json is not the hash in GEV_SPEC_INVENTORY
+    at installGuard (file:///home/ianblenke/docker/gev-work/ownership-gates/scripts/spec/lib/test-guard.mjs:276:11)
+    at file:///home/ianblenke/docker/gev-work/ownership-gates/scripts/spec/lib/test-guard.mjs:318:1
+    at ModuleJobSync.runSync (node:internal/modules/esm/module_job:673:37)
+    at ModuleLoader.importSyncForRequire (node:internal/modules/esm/loader:350:47)
+    at loadESMFromCJS (node:internal/modules/cjs/loader:1752:24)
+    at Module._compile (node:internal/modules/cjs/loader:1916:5)
+    at Object..js (node:internal/modules/cjs/loader:2074:10)
+    at Module.load (node:internal/modules/cjs/loader:1656:32)
+    at Module._load (node:internal/modules/cjs/loader:1448:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+
+Node.js v26.8.2
+✔ [coverage-gate-003] runs each tracked test file with coverage and the trace reporter (6057.051921ms)
+✔ [coverage-gate-007] runs the allocation tests alone with --expose-gc and no coverage (5780.186928ms)
+✔ [coverage-gate-015] runs the tests without the Node options of the gate environment and with the test guard (1.656517ms)
+✔ [coverage-gate-016] stops for a Node version that is not the pinned version (219.073112ms)
+✔ [gap-ledger-030] stops for a base branch that Git cannot find (99.976453ms)
+✔ [gap-ledger-001 gap-ledger-007 spec-trace-030] makes the first ledger, runs the ratchet command for a change and passes the check (18845.517671ms)
+✔ [gap-ledger-003 spec-trace-016 coverage-gate-010] stops the check for a new gap, a failed test and an untracked file (9797.62392ms)
+✔ [coverage-gate-018 coverage-gate-021 spec-trace-027] stops the check for untrue coverage and a test without an assertion (11492.735773ms)
+✔ [gap-ledger-008 change-review-006 change-review-015] runs the ratchet command for a change, checks its review and its tree hash (31758.947748ms)
+✔ [gap-ledger-021] stops the check for a ledger entry that the base does not have (10750.575739ms)
+✔ [spec-trace-032 spec-trace-036 spec-trace-037] stops for changed scenario text and a changed registry without a changed test (55131.398313ms)
+✔ [gap-ledger-077] runs the ratchet command for an archived change (14649.223247ms)
+✔ [gap-ledger-013 gap-ledger-014 gap-ledger-027] stops the ratchet command for a larger gap, without a change name or for a change that is not active (26617.098928ms)
+✔ [gap-ledger-002 gap-ledger-015 gap-ledger-016] stops the init command for a ledger, a base ledger or a new file with a gap (33161.515406ms)
+✔ [spec-trace-002 coverage-gate-008 coverage-gate-017] reports spec, comment, option and ledger errors (8054.471533ms)
+✔ [change-review-007] reports an archived change without a review in the check (9801.176361ms)
+✔ [spec-trace-026] stops the check for an unknown change name (9831.85112ms)
+✔ [ste-lint-011 ste-lint-012 ste-lint-016] checks only Markdown with the lint command (191.584373ms)
+✔ [ci-gates-001 ci-gates-003 ci-gates-004] finds the change of a CI diff and checks it (24717.286909ms)
+✔ [spec-lint-021 spec-lint-022] checks the tasks and the requirement format of the archived change that the gates check (9924.790179ms)
+✔ [gap-ledger-069 gap-ledger-073] uses the tolerance of a file in the check and in the ratchet command (20584.571788ms)
+✔ [ci-gates-005] checks a diff that changes no code, without a change name (9921.82584ms)
+✔ [coverage-gate-047] stops for a local dotenv file that is not empty before the gate starts the test runs (3314.076486ms)
+✔ [coverage-gate-026] stops when the test runner or a test run cannot start (13810.31007ms)
+✔ [coverage-gate-035] stops for a failed test run without a failed test in its result file (12644.864556ms)
+✔ [ci-gates-009] shows the usage for a bad command line and reads the root option (1748.386515ms)
+✔ [coverage-gate-030] stops for a result file that the gate did not name (4915.985825ms)
+✔ [coverage-gate-023] stops for a code file that changes during the run (9826.250735ms)
+✖ [coverage-gate-024] gives 0% coverage to a file that only a worker thread loads (10369.439082ms)
+✔ [change-review-019 change-review-020] shows the tree hash of a change and stops for a change name that two folders use (11392.895812ms)
+✖ [spec-trace-039 spec-trace-040] stops for a result entry that a test writes in the result folder (11434.589954ms)
+✖ [coverage-gate-031] stops for untrue coverage from a child process that a test starts with other values for the gate variables (10626.618875ms)
+✔ [coverage-gate-034] stops for an inventory.json file that changes during the run (9405.020119ms)
+✔ [gap-ledger-053] stops the check and the ratchet command when the ledger file is not there (13331.966027ms)
+✔ [coverage-gate-037] stops for a guard error that names no file (9897.892684ms)
+✔ [coverage-gate-040] stops for untrue coverage from a test runner that a test starts, with a preload that removes the gate values (10534.686342ms)
+✔ [coverage-gate-039] stops for untrue coverage from a child process that a worker thread starts (10703.836569ms)
+✔ [spec-trace-045] stops for changed scenario text when a test only moved to a renamed test file (25152.93315ms)
+✔ [coverage-gate-043] stops the check for a code file that imports a test file (10749.871246ms)
+✔ [gap-ledger-079] records a coverage waiver, allows the rise in the ratchet command and passes the check (31994.634681ms)
+✔ [gap-ledger-080] stops the waive command for a fault in its options (5317.426625ms)
+✖ [coverage-gate-048] exits a test run that leaves a live timer (727.663018ms)
+✔ [coverage-gate-049] stops for a test that leaves a live timer (9678.129622ms)
+✔ [coverage-gate-050] does not stop for a test process without a live timer (10602.57243ms)
+✔ [coverage-gate-049] stops for a real child process that leaves a live timer, with no stub (11206.357795ms)
+✔ [gap-ledger-089 gap-ledger-091] adopts the gaps of the merged files and gives no error in the ratchet command and in the check (54208.68382ms)
+✔ [gap-ledger-090] stops the adopt command for a fault before it runs a test (6583.862884ms)
+✔ [gap-ledger-096 gap-ledger-097] stops the check for an adopt line when its commit is not a merged commit, or when the merged commit did not change its file (25934.266721ms)
+✔ [qa-scripts-024] stops the gate for a QA header error (4959.751449ms)
+✔ [qa-scripts-025] stops for both covers errors and omits scripts with valid QA headers (6491.985745ms)
+✔ [qa-scripts-016] prints QA advice after Trace (6918.37429ms)
+✔ [qa-scripts-014] keeps the coverage gap for a QA script with a bad header (4228.774934ms)
+✔ [gap-ledger-100 gap-ledger-104 gap-ledger-106] The command and gate allow a reached file with the base content (34233.490415ms)
+✔ [gap-ledger-107] The command writes no entry for a file that only base edges reach (27685.256986ms)
+✔ [gap-ledger-108] The command and gate allow a path with a new middle edge (32556.672749ms)
+✔ [gap-ledger-109] The command writes no entry for an edge that only HEAD has (24613.791299ms)
+✔ [coverage-gate-064 coverage-gate-065] The gate assigns raw coverage and replaces loaded values (230.210855ms)
+✔ [gap-ledger-111 gap-ledger-115] The command rejects an absent condition before tests (549.642472ms)
+✔ [gap-ledger-110 gap-ledger-113 gap-ledger-115] The command records one step and keeps data after a test error (1558.480468ms)
+✔ [coverage-gate-065] The raw reader excludes test and dependency URLs (85.222978ms)
+✔ [gap-ledger-114] The gate reports false baseline history (859.678081ms)
+✔ [gap-ledger-111] The command needs both ledger files before tests (334.305615ms)
+✔ [gap-ledger-115] The command keeps the base history prefix (211.189167ms)
+✔ [coverage-gate-066 coverage-gate-067] The gate removes its raw folder and reports absent raw files (1323.743758ms)
+✔ [gap-ledger-116 gap-ledger-117] The ratchet applies the count tolerance (654.467157ms)
+✔ [ste-lint-023] keeps a success status for the lint command with a noun warning (119.74869ms)
+✔ [ste-lint-037 ste-lint-012] keeps a success status for the lint command with an old prose warning (128.821659ms)
+✔ [gap-ledger-123] compare one ratchet measurement (844.165768ms)
+✔ [gap-ledger-124] fail for an absent review (815.234084ms)
+✔ [gap-ledger-125] pass after all comparisons (1504.830805ms)
+✔ [gap-ledger-126] compare repaired ledger values (1407.778875ms)
+✔ [coverage-gate-068] trust a changed document (1456.56087ms)
+✔ [coverage-gate-069] refuse a changed inventory file (920.595345ms)
+✔ [coverage-gate-070] refuse a changed test file (943.330535ms)
+✔ [coverage-gate-071] refuse a changed QA script (961.070552ms)
+✔ [coverage-gate-072] refuse a changed package lock (901.281447ms)
+✔ [coverage-gate-073] refuse a changed Node version (902.439497ms)
+✔ [coverage-gate-074] refuse a changed Makefile (934.407503ms)
+✔ [coverage-gate-075] refuse a changed Dockerfile (942.839578ms)
+✔ [coverage-gate-075] refuse a changed Dockerfile at `containers/Dockerfile.gates` (953.770638ms)
+✔ [coverage-gate-075] refuse a changed Dockerfile at `Dockerfileprod` (976.262611ms)
+✔ [coverage-gate-076] refuse a changed compose file (968.496133ms)
+✔ [coverage-gate-076] refuse a changed compose file at `docker-compose.yml` (961.830046ms)
+✔ [coverage-gate-076] refuse a changed compose file at `containers/compose.gates.yaml` (921.914705ms)
+✔ [coverage-gate-077] refuse a changed gate input file (926.484336ms)
+✔ [coverage-gate-078] refuse an untracked input file (908.777651ms)
+✔ [coverage-gate-079] refuse without ratchet history (81.393776ms)
+✔ [coverage-gate-080] refuse a commit that Git cannot find (852.83618ms)
+✔ [coverage-gate-081] refuse a changed word list (911.691846ms)
+✔ [coverage-gate-082] refuse an absent snapshot (981.800842ms)
+✔ [coverage-gate-083] show command times (2285.120727ms)
+✔ [coverage-gate-084] show slow phase times (1661.094956ms)
+✔ [coverage-gate-085] keep every file check (1862.614375ms)
+✔ [ci-gates-011] add fast checks before review (2.318524ms)
+✔ [ci-gates-012] add a document gate target (2.000723ms)
+✔ [change-review-033] keep the final measurement (3.414385ms)
+✔ [coverage-gate-079] refuse history from another change or command (845.647506ms)
+✔ [coverage-gate-085] check OpenSpec without tests (1322.624384ms)
+✔ [coverage-gate-085] check coverage filters without tests (1470.930495ms)
+✔ [coverage-gate-085] check archived specs without tests (1364.917177ms)
+✔ [coverage-gate-069] refuse a deleted input file (926.257125ms)
+✔ [gap-ledger-127 gap-ledger-128 gap-ledger-129] record a snapshot when no gap changes (1931.05954ms)
+✔ [gap-ledger-126] repair absent totals and stale test names (716.927263ms)
+✔ [coverage-gate-078] refuse a protected ignored file (995.658657ms)
+✔ [coverage-gate-086] refuse changed package metadata (1005.485801ms)
+✔ [coverage-gate-087] refuse a failed Git comparison (952.077495ms)
+✔ [coverage-gate-068] set the document option on the options object (1.602049ms)
+✔ [gap-ledger-129] record a different hash without a changed gap (1595.202987ms)
+✔ [gap-ledger-129] record a different change without a changed gap (1196.231249ms)
+✔ [coverage-gate-085] report a change folder that is absent (1322.532656ms)
+✔ [coverage-gate-079] refuse without a change name (877.158613ms)
+✔ [coverage-gate-085] compare the ledger with the base without tests (1331.958363ms)
+✔ [coverage-gate-069] refuse a new tracked inventory file (946.841515ms)
+✔ [coverage-gate-078] refuse an untracked code file (981.777839ms)
+✔ [coverage-gate-085] check the base registry without tests (1543.648876ms)
+✔ [coverage-gate-085] check all review files without tests (2296.927592ms)
+✔ [ci-gates-005 coverage-gate-083] keep the CI verdict without command times (668.702622ms)
+✔ [coverage-gate-088] refuse an omitted protected ignored file (1017.672643ms)
+✔ [coverage-gate-090 coverage-gate-091] refuse a changed file at AGENTS.md (1295.828889ms)
+✔ [coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/commands/opsx/review.md (1808.257197ms)
+✔ [coverage-gate-090 coverage-gate-091] refuse a changed file at .claude/agents/x.md (1764.269771ms)
+✔ [coverage-gate-090 coverage-gate-091] refuse a changed file at docs/x.md (2070.520163ms)
+✔ [coverage-gate-090 coverage-gate-091] refuse a changed file at .github/workflows/x.yaml (1805.27839ms)
+✔ [coverage-gate-090 coverage-gate-091] refuse a changed file at fixtures/x.json (1661.945506ms)
+✔ [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/config.yaml (1715.690532ms)
+✔ [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/other.yaml (2038.13253ms)
+✔ [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/changes-old/x.md (1667.644379ms)
+✔ [coverage-gate-090 coverage-gate-091] refuse a changed file at openspec/specs.md (1860.479863ms)
+✔ [coverage-gate-089] trust a changed file at openspec/changes/archive/x/notes.md (3107.994065ms)
+✔ [coverage-gate-089] trust a changed file at openspec/specs/x.md (2960.139633ms)
+✔ [coverage-gate-089] trust a changed file at openspec/trace/gaps.json (2396.513604ms)
+✔ [coverage-gate-092] refuse a moved file from openspec/changes/add-demo/design.md (2031.597181ms)
+✔ [coverage-gate-092] refuse a moved file from docs/base.md (1693.932665ms)
+✔ [coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with changed files after their content returns to HEAD (4938.31832ms)
+✔ [gap-ledger-131 gap-ledger-133] accept clean history without a dirty field (2427.544622ms)
+✔ [coverage-gate-069 coverage-gate-078] refuse an ignored file from the code inventory (3625.837652ms)
+✔ [coverage-gate-070 coverage-gate-078] refuse an ignored file at node_modules-old/ignored.test.mjs (1632.907796ms)
+✔ [coverage-gate-071 coverage-gate-078] refuse an ignored file at scripts/qa-ignored.mjs (1832.339445ms)
+✔ [coverage-gate-072 coverage-gate-078] refuse an ignored file at package-lock.json (1736.322641ms)
+✔ [coverage-gate-074 coverage-gate-078] refuse an ignored file at Makefile (1896.703975ms)
+✔ [coverage-gate-075 coverage-gate-078] refuse an ignored file at Dockerfile (2086.492086ms)
+✔ [coverage-gate-076 coverage-gate-078] refuse an ignored file at compose.yaml (1775.274567ms)
+✔ [coverage-gate-077 coverage-gate-078] refuse an ignored file at scripts/spec/ignored.txt (1974.045312ms)
+✔ [coverage-gate-086 coverage-gate-078] refuse an ignored file at package.json (1608.693366ms)
+✔ [coverage-gate-078 coverage-gate-089] trust other ignored files (2374.395156ms)
+✔ [coverage-gate-090] refuse a staged file edit (1629.772197ms)
+✔ [coverage-gate-090] refuse an untracked input file (1648.314672ms)
+✔ [coverage-gate-069] refuse a deleted test file (1920.603756ms)
+✔ [coverage-gate-073 coverage-gate-078] classify the ignored Node version (1.354583ms)
+✔ [gap-ledger-130] refuse a failed ratchet file comparison (2887.971105ms)
+✔ [gap-ledger-130 gap-ledger-132] sort the dirty list and compare repeated history (6327.54672ms)
+✔ [gap-ledger-134] add ignored name markers before the ratchet command (2.606753ms)
+✔ [coverage-gate-069 coverage-gate-092] refuse a moved code file (1925.429653ms)
+✔ [coverage-gate-094] keep cache source contents after the container ends (386.386098ms)
+✔ [coverage-gate-091] refuse the input file at openspec/tracex/f.md (1753.000734ms)
+✔ [coverage-gate-078] refuse the input file at .gev-cachex/ignored.test.mjs (1750.128245ms)
+✔ [coverage-gate-075 coverage-gate-078] refuse the input file at containers/Dockerfile.gates (1967.746153ms)
+✔ [coverage-gate-075 coverage-gate-078] refuse the input file at Dockerfileprod (2116.779638ms)
+✔ [coverage-gate-076 coverage-gate-078] refuse the input file at docker-compose.yml (2272.073981ms)
+✔ [coverage-gate-076 coverage-gate-078] refuse the input file at containers/compose.gates.yaml (1647.842346ms)
+✔ [coverage-gate-095] refuse a new code file at openspec/changes/code.js (1921.088507ms)
+✔ [coverage-gate-095] refuse a tracked code file at openspec/changes/code.js (1678.18785ms)
+✔ [coverage-gate-095] refuse a new test file at openspec/changes/code.test.mjs (1661.594202ms)
+✔ [coverage-gate-095] refuse a tracked test file at openspec/changes/code.test.mjs (1831.850596ms)
+✔ [coverage-gate-095] refuse a new code file at openspec/specs/code.js (1844.912178ms)
+✔ [coverage-gate-095] refuse a tracked code file at openspec/specs/code.js (1868.990896ms)
+✔ [coverage-gate-095] refuse a new test file at openspec/specs/code.test.mjs (1826.860126ms)
+✔ [coverage-gate-095] refuse a tracked test file at openspec/specs/code.test.mjs (1799.298567ms)
+✔ [coverage-gate-095] refuse a new code file at openspec/trace/code.js (2088.827992ms)
+✔ [coverage-gate-095] refuse a tracked code file at openspec/trace/code.js (2218.965228ms)
+✔ [coverage-gate-095] refuse a new test file at openspec/trace/code.test.mjs (1887.583927ms)
+✔ [coverage-gate-095] refuse a tracked test file at openspec/trace/code.test.mjs (1823.753698ms)
+✔ [coverage-gate-096] refuse a commit ref in history (1760.666294ms)
+✔ [coverage-gate-083] name the full check command (2590.893463ms)
+✔ [gap-ledger-126] read the new totals history line for the base ledger (1179.017435ms)
+✔ [coverage-gate-069 coverage-gate-078] classify a protected ignored code file (1.196233ms)
+✔ [coverage-gate-075] do not protect the ignored file MyDockerfile (0.9809ms)
+✔ [coverage-gate-075] do not protect the ignored file nested/MyDockerfile (0.454145ms)
+✔ [coverage-gate-075] do not protect the ignored file Dockerfile.dir/notes.txt (0.400941ms)
+✔ [coverage-gate-076] do not protect the ignored file compose-dir/file.yaml (0.366748ms)
+✔ [coverage-gate-076] do not protect the ignored file compose/other.yaml (0.339831ms)
+✔ [coverage-gate-076] do not protect the ignored file composeyml (0.330738ms)
+✔ [coverage-gate-076] do not protect the ignored file compose.yaml.extra (0.609418ms)
+✔ [coverage-gate-096] refuse a short commit hash (1719.25027ms)
+✔ [coverage-gate-096] refuse a commit hash with suffix (1645.442601ms)
+✔ [coverage-gate-096] refuse a commit hash with prefix (1913.863003ms)
+✔ [coverage-gate-096] refuse a commit hash with letters (1576.128427ms)
+✔ [coverage-gate-094] copy cache contents without a marker list (519.681139ms)
+✔ [coverage-gate-097] stop before the container copies files when a marker cannot be removed (366.387642ms)
+✔ [coverage-gate-098] refuse a prefix inside docs/openspec/trace/x.md (2501.423746ms)
+✔ [coverage-gate-098] refuse a prefix inside docs/openspec/changes/x.md (1887.367957ms)
+✔ [coverage-gate-098] refuse a prefix inside src/openspec/specs/x.md (1747.495979ms)
+✔ [coverage-gate-083] omit time lines for lint (190.892797ms)
+✔ [coverage-gate-083] omit time lines for init (454.745626ms)
+✔ [coverage-gate-083] omit time lines for adopt (166.788617ms)
+✔ [coverage-gate-083] omit time lines for waive (210.840994ms)
+✔ [coverage-gate-083] omit time lines for rebaseline (326.372293ms)
+✔ [coverage-gate-083] omit time lines for tree (215.639149ms)
+✔ [coverage-gate-083] omit time lines for ci (411.856533ms)
+✔ [coverage-gate-099] check the marker class at Makefile (342.567305ms)
+✔ [coverage-gate-099] check the marker class at .node-version (490.776526ms)
+✔ [coverage-gate-099] check the marker class at package.json (392.254944ms)
+✔ [coverage-gate-099] check the marker class at package-lock.json (356.264645ms)
+✔ [coverage-gate-099] check the marker class at containers/Dockerfile.gates (398.013755ms)
+✔ [coverage-gate-099] check the marker class at Dockerfile (530.585448ms)
+✔ [coverage-gate-099] check the marker class at docker-compose.yml (569.595602ms)
+✔ [coverage-gate-099] check the marker class at compose.yaml (478.858063ms)
+✔ [coverage-gate-099] check the marker class at containers/compose.gates.yaml (478.404082ms)
+✔ [coverage-gate-099] check the marker class at containers/compose.gates.yml (410.15519ms)
+✔ [coverage-gate-099] check the marker class at scripts/qa-x.mjs (361.032246ms)
+✔ [coverage-gate-099] check the marker class at src/a.test.mjs (386.334878ms)
+✔ [coverage-gate-099] check the marker class at scripts/spec/x.mjs (372.423732ms)
+✔ [coverage-gate-099] check the marker class at src/deep/x.js (496.859797ms)
+✔ [coverage-gate-099] check the marker class at src/deep/x.cjs (481.112045ms)
+✔ [coverage-gate-099] check the marker class at src/deep/x.ts (505.046745ms)
+✔ [coverage-gate-099] check the marker class at src/deep/x.mts (415.676635ms)
+✔ [coverage-gate-099] check the marker class at src/deep/x.cts (555.276874ms)
+✔ [coverage-gate-099] check the marker class at src/deep/x.jsx (388.58402ms)
+✔ [coverage-gate-099] check the marker class at src/deep/x.tsx (403.21955ms)
+✔ [coverage-gate-099] check the marker class at src/deep/x.html (437.575084ms)
+✔ [coverage-gate-099] check the marker class at src/deep/x.sh (394.228904ms)
+✔ [coverage-gate-099] check the marker class at src/deep/x.mjs (375.250065ms)
+✔ [coverage-gate-099] check the marker class at .gev-cache/x.js (344.668571ms)
+✔ [coverage-gate-099] check the marker class at node_modules/x.js (446.514733ms)
+✔ [coverage-gate-100] check QA capability names without tests (2932.886976ms)
+✔ [gap-ledger-135] include new trace content in the review tree (3758.188845ms)
+✔ [change-review-033] pin the agent verdict and final tree instructions (1.274939ms)
+✔ [ownership-031] prints LEDGER-ADOPT-FROM for a reached adopt record whose source is not a merge parent (12206.579519ms)
+ℹ tests 228
+ℹ suites 0
+ℹ pass 224
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1014358.150145
+
+✖ failing tests:
+
+test at src/tooling/spec/gates.test.mjs:621:1
+✖ [coverage-gate-024] gives 0% coverage to a file that only a worker thread loads (10369.439082ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Coverage: 1 files, 0 complete, 1 not loaded, 1 untrue\./. Input:
+  
+  'Command: check\n' +
+    'Started: 2026-10-09T02:38:59.316Z\n' +
+    'Class: upstream openspec/trace/gaps.json\n' +
+    'Class: upstream src/math.test.mjs\n' +
+    'Ownership: 0 owned, 2 upstream\n' +
+    'Phase specs: 3.081 s\n' +
+    'Phase measure: 5.104 s\n' +
+    'Trace: 0 scenarios, 0 verified, 0 open. 2 tests, 0 traced, 2 untraced.\n' +
+    'Coverage: 1 files, 0 complete, 1 not loaded, 0 untrue.\n' +
+    'Owned gaps: 0 code files, 0 lines, 0 test files, 0 tests.\n' +
+    'Upstream gaps: 0 code files, 0 lines, 2 test files, 2 tests.\n' +
+    'upstream tests: src/math.test.mjs\n' +
+    'upstream tests: tools/other.test.mjs\n' +
+    'COVERAGE-DIFF: 0 changed lines, 0 brought by the merged upstream commit, 0 need coverage.\n' +
+    'Ledger: 0 entries do not match the current gaps.\n' +
+    'STE: 0 errors, 0 warnings.\n' +
+    'ERROR LEDGER-NEW-COVERAGE-GAP src/math.js no test loads src/math.js\n' +
+    'ERROR LEDGER-NEW-UNTRACED-NAME src/math.test.mjs Untraced test "adds two numbers in a worker" is not in the ledger\n' +
+    'Gates failed with 2 errors.\n' +
+    'Finished: 2026-10-09T02:39:04.660Z (5.344 s)'
+  
+      at file:///home/ianblenke/docker/gev-work/ownership-gates/src/tooling/spec/gates.test.mjs:640:12
+      at withFixture (file:///home/ianblenke/docker/gev-work/ownership-gates/src/tooling/spec/gates.test.mjs:74:12)
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/ownership-gates/src/tooling/spec/gates.test.mjs:622:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Command: check\nStarted: 2026-10-09T02:38:59.316Z\nClass: upstream openspec/trace/gaps.json\nClass: upstream src/math.test.mjs\nOwnership: 0 owned, 2 upstream\nPhase specs: 3.081 s\nPhase measure: 5.104 s\nTrace: 0 scenarios, 0 verified, 0 open. 2 tests, 0 traced, 2 untraced.\nCoverage: 1 files, 0 complete, 1 not loaded, 0 untrue.\nOwned gaps: 0 code files, 0 lines, 0 test files, 0 tests.\n...',
+    expected: /Coverage: 1 files, 0 complete, 1 not loaded, 1 untrue\./,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at src/tooling/spec/gates.test.mjs:657:1
+✖ [spec-trace-039 spec-trace-040] stops for a result entry that a test writes in the result folder (11434.589954ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ERROR TRACE-RECORD-NAME src\/math\.test\.mjs Test "\[demo-001\] adds two numbers" has a result record with tags or a full name that do not agree with its name/. Input:
+  
+  'Command: check\n' +
+    'Started: 2026-10-09T02:39:20.908Z\n' +
+    'Class: upstream openspec/changes/add-demo/proposal.md\n' +
+    'Class: upstream openspec/changes/add-demo/specs/demo/spec.md\n' +
+    'Class: upstream openspec/changes/add-demo/tasks.md\n' +
+    'Class: upstream openspec/trace/gaps.json\n' +
+    'Class: upstream src/math.test.mjs\n' +
+    'Ownership: 0 owned, 5 upstream\n' +
+    'Phase specs: 4.58 s\n' +
+    'Phase measure: 6.224 s\n' +
+    'Trace: 1 scenarios, 1 verified, 0 open. 3 tests, 1 traced, 2 untraced.\n' +
+    'Coverage: 1 files, 1 complete, 0 not loaded, 0 untrue.\n' +
+    'Owned gaps: 0 code files, 0 lines, 0 test files, 0 tests.\n' +
+    'Upstream gaps: 0 code files, 0 lines, 2 test files, 2 tests.\n' +
+    'upstream tests: src/math.test.mjs\n' +
+    'upstream tests: tools/other.test.mjs\n' +
+    'COVERAGE-DIFF: 0 changed lines, 0 brought by the merged upstream commit, 0 need coverage.\n' +
+    'Ledger: 0 entries do not match the current gaps.\n' +
+    'STE: 0 errors, 0 warnings.\n' +
+    'ERROR TRACE-FAILED-TEST src/math.test.mjs Test "writes a result entry" failed\n' +
+    'ERROR LEDGER-NEW-UNTRACED-NAME src/math.test.mjs Untraced test "writes a result entry" is not in the ledger\n' +
+    'ERROR TRACE-ID-UNREGISTERED openspec/changes/add-demo/specs/demo/spec.md:7 Scenario ID demo-001 is not in openspec/trace/ids.json. Run the ratchet command.\n' +
+    'ERROR TRACE-LINKS-STALE openspec/trace/links.json 1 scenario links are not current (first: demo-001). Run the ratchet command.\n' +
+    'Gates failed with 4 errors.\n' +
+    'Finished: 2026-10-09T02:39:27.493Z (6.585 s)'
+  
+      at file:///home/ianblenke/docker/gev-work/ownership-gates/src/tooling/spec/gates.test.mjs:674:12
+      at withFixture (file:///home/ianblenke/docker/gev-work/ownership-gates/src/tooling/spec/gates.test.mjs:74:12)
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/ownership-gates/src/tooling/spec/gates.test.mjs:658:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Command: check\nStarted: 2026-10-09T02:39:20.908Z\nClass: upstream openspec/changes/add-demo/proposal.md\nClass: upstream openspec/changes/add-demo/specs/demo/spec.md\nClass: upstream openspec/changes/add-demo/tasks.md\nClass: upstream openspec/trace/gaps.json\nClass: upstream src/math.test.mjs\nOwnership: 0 owned, 5 upstream\nPhase specs: 4.58 s\nPhase measure: 6.224 s\n...',
+    expected: /ERROR TRACE-RECORD-NAME src\/math\.test\.mjs Test "\[demo-001\] adds two numbers" has a result record with tags or a full name that do not agree with its name/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at src/tooling/spec/gates.test.mjs:679:1
+✖ [coverage-gate-031] stops for untrue coverage from a child process that a test starts with other values for the gate variables (10626.618875ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Coverage: 1 files, 0 complete, 1 not loaded, 1 untrue\./. Input:
+  
+  'Command: check\n' +
+    'Started: 2026-10-09T02:39:32.407Z\n' +
+    'Class: upstream openspec/trace/gaps.json\n' +
+    'Class: upstream src/math.test.mjs\n' +
+    'Ownership: 0 owned, 2 upstream\n' +
+    'Phase specs: 3.033 s\n' +
+    'Phase measure: 5.47 s\n' +
+    'Trace: 0 scenarios, 0 verified, 0 open. 3 tests, 0 traced, 3 untraced.\n' +
+    'Coverage: 1 files, 1 complete, 0 not loaded, 0 untrue.\n' +
+    'Owned gaps: 0 code files, 0 lines, 0 test files, 0 tests.\n' +
+    'Upstream gaps: 0 code files, 0 lines, 2 test files, 2 tests.\n' +
+    'upstream tests: src/math.test.mjs\n' +
+    'upstream tests: tools/other.test.mjs\n' +
+    'COVERAGE-DIFF: 0 changed lines, 0 brought by the merged upstream commit, 0 need coverage.\n' +
+    'Ledger: 0 entries do not match the current gaps.\n' +
+    'STE: 0 errors, 0 warnings.\n' +
+    'ERROR LEDGER-NEW-UNTRACED-NAME src/math.test.mjs Untraced test "hides untrue coverage in child processes" is not in the ledger\n' +
+    'Gates failed with 1 errors.\n' +
+    'Finished: 2026-10-09T02:39:38.121Z (5.714 s)'
+  
+      at file:///home/ianblenke/docker/gev-work/ownership-gates/src/tooling/spec/gates.test.mjs:697:12
+      at withFixture (file:///home/ianblenke/docker/gev-work/ownership-gates/src/tooling/spec/gates.test.mjs:74:12)
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/ownership-gates/src/tooling/spec/gates.test.mjs:680:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Command: check\nStarted: 2026-10-09T02:39:32.407Z\nClass: upstream openspec/trace/gaps.json\nClass: upstream src/math.test.mjs\nOwnership: 0 owned, 2 upstream\nPhase specs: 3.033 s\nPhase measure: 5.47 s\nTrace: 0 scenarios, 0 verified, 0 open. 3 tests, 0 traced, 3 untraced.\nCoverage: 1 files, 1 complete, 0 not loaded, 0 untrue.\nOwned gaps: 0 code files, 0 lines, 0 test files, 0 tests.\n...',
+    expected: /Coverage: 1 files, 0 complete, 1 not loaded, 1 untrue\./,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at src/tooling/spec/gates.test.mjs:940:1
+✖ [coverage-gate-048] exits a test run that leaves a live timer (727.663018ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '/tmp/gev-force-exit-BWgKO4/leak.test.mjs'
+  - 'fails and leaks'
+  
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/ownership-gates/src/tooling/spec/gates.test.mjs:987:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '/tmp/gev-force-exit-BWgKO4/leak.test.mjs',
+    expected: 'fails and leaks',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

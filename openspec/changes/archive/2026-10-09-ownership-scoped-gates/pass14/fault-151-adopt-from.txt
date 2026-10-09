@@ -1,0 +1,4 @@
+✖ [gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit
+ℹ tests 1
+ℹ pass 0
+ℹ fail 1

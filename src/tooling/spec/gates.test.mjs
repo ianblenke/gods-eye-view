@@ -55,6 +55,7 @@ function withFixture(body, { base = {} } = {}) {
     git(root, 'init', '-q', '-b', 'main');
     write(root, {
       '.gitignore': '.gev-cache/\n',
+      'openspec/ownership.json': '{"version":1,"owned":[]}\n',
       '.node-version': `${NODE}\n`,
       'src/math.js': 'export function add(a, b) {\n  return a + b;\n}\n',
       'src/math.test.mjs': MATH_TEST(),
@@ -1182,19 +1183,25 @@ test('[gap-ledger-096 gap-ledger-097] stops the check for an adopt line when its
     // The work branch changed src/own.js, and `up` did not. The entry below needs an adopted count that no valid line gives.
     ledger.coverage['src/own.js'] = { loaded: true, lines: 0, branches: 1, functions: 0, totals: { lines: 4, branches: 2, functions: 1 }, sha: 'x', untrue: false, origin: 'sync', since: '2026-09-13' };
     writeFileSync(ledgerFile, `${JSON.stringify(ledger, null, 2)}\n`);
+    const historyFile = path.join(root, 'openspec/trace/history.jsonl');
+    const history = readFileSync(historyFile, 'utf8');
     const counts = { lines: 0, branches: 1, functions: 0, untraced: 0, untrue: false };
-    // The line for src/merged.js has a commit that is not a merged commit and a negative count, which gap-ledger-095 rejects. It gives no error of its own.
-    const rejected = ADOPT_LINE(root, 'src/merged.js', { ...counts, lines: -1, from: git(root, 'rev-parse', 'main') });
+    // A negative count gives no source or adopted count when the source is a merged commit.
+    const rejected = ADOPT_LINE(root, 'src/merged.js', { ...counts, lines: -1 });
     appendFileSync(
       path.join(root, 'openspec/trace/history.jsonl'),
       [ADOPT_LINE(root, 'src/math.js', { ...counts, from: git(root, 'rev-parse', 'main') }), ADOPT_LINE(root, 'src/own.js', counts), rejected].map((line) => `${JSON.stringify(line)}\n`).join(''),
     );
     const check = run(root, ['check', '--change', 'sync']);
     assert.equal(check.status, 1);
-    assert.match(check.output, new RegExp(`ERROR LEDGER-ADOPT-FROM src/math\\.js The adopt line for src/math\\.js names the commit ${git(root, 'rev-parse', 'main')}, and no merge commit`));
-    assert.match(check.output, /ERROR LEDGER-ADOPT-FILE src\/own\.js The adopt line for src\/own\.js names the commit [0-9a-f]{40}, and that commit did not change src\/own\.js/);
-    assert.match(check.output, /ERROR LEDGER-NOT-IN-BASE src\/own\.js The ledger entry for src\/own\.js is not in the base ledger/, 'the line with a file that the commit did not change gives no adopted count');
-    assert.doesNotMatch(check.output, /LEDGER-ADOPT-[A-Z]+ src\/merged\.js/, 'a line that gap-ledger-095 rejects gives no adopt error');
+    assert.match(check.output, /ERROR LEDGER-ADOPT-FROM openspec\/trace\/history.jsonl/);
+    assert.doesNotMatch(check.output, /LEDGER-NOT-IN-BASE/, 'the source fault stops before the base ledger check');
+    writeFileSync(historyFile, history + [ADOPT_LINE(root, 'src/own.js', counts), rejected].map(line => `${JSON.stringify(line)}\n`).join(''));
+    const fileCheck = run(root, ['check', '--change', 'sync']);
+    assert.equal(fileCheck.status, 1);
+    assert.match(fileCheck.output, /ERROR LEDGER-ADOPT-FILE src\/own\.js The adopt line for src\/own\.js names the commit [0-9a-f]{40}, and that commit did not change src\/own\.js/);
+    assert.match(fileCheck.output, /ERROR LEDGER-NOT-IN-BASE src\/own\.js The ledger entry for src\/own\.js is not in the base ledger/, 'the line with a file that the commit did not change gives no adopted count');
+    assert.doesNotMatch(fileCheck.output, /LEDGER-ADOPT-[A-Z]+ src\/merged\.js/, 'a line that gap-ledger-095 rejects gives no adopt error');
   });
 });
 
@@ -1202,7 +1209,7 @@ const QA_HEADER = (covers) => `/**\n * @purpose Prove that the layer works.\n * 
 
 test('[qa-scripts-024] stops the gate for a QA header error', GUARDED_RUN, () => {
   withFixture((root) => {
-    write(root, { 'scripts/qa-example.mjs': 'export {};\n' });
+    write(root, { 'scripts/qa-example.mjs': 'export {};\n', 'openspec/ownership.json': '{"version":1,"owned":["scripts/qa-example.mjs"]}\n' });
     git(root, 'add', 'scripts/qa-example.mjs');
     const result = run(root, ['check']);
     assert.equal(result.status, 1);
@@ -1245,7 +1252,7 @@ test('[qa-scripts-014] keeps the coverage gap for a QA script with a bad header'
     const openSpec = (_root, args) => ({ status: 0, error: null, stdout: args[0] === '--version' ? '1.3.1\n' : '{"items":[]}' });
     const initial = run(root, ['init'], { openSpec });
     assert.equal(initial.status, 0, initial.output);
-    write(root, { 'scripts/qa-example.mjs': 'export {};\n' });
+    write(root, { 'scripts/qa-example.mjs': 'export {};\n', 'openspec/ownership.json': '{"version":1,"owned":["scripts/qa-example.mjs"]}\n' });
     git(root, 'add', 'scripts/qa-example.mjs');
     const result = run(root, ['check'], { openSpec });
     assert.equal(result.status, 1);
@@ -1448,7 +1455,7 @@ test('[coverage-gate-065] The raw reader excludes test and dependency URLs', () 
     writeFileSync(path.join(directory, 'notes.txt'), 'not coverage');
     writeFileSync(path.join(directory, 'coverage-1-1-0.json'), JSON.stringify({ result: urls.map(url => ({ url, functions: [fn] })) }));
     const inventory = ['src/math.js', 'src/math.test.mjs', 'node_modules/a.js'];
-    assert.equal(mergeRawCoverage({ root, directory, inventory, text: '' }), `SF:${root}/src/math.js\nLF:3\nLH:3\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nend_of_record\n`);
+    assert.equal(mergeRawCoverage({ root, directory, inventory, text: '' }), `SF:${root}/src/math.js\nLF:3\nLH:3\nBRF:1\nBRH:1\nFNF:0\nFNH:0\nDA:1,1\nDA:2,1\nDA:3,1\nend_of_record\n`);
     assert.equal(mergeRawCoverage({ root, directory: path.join(root, 'none'), inventory, text: 'original' }), 'original');
     assert.equal(mergeRawCoverage({ root, directory, inventory: [null], text: '' }), '');
   });
@@ -1611,7 +1618,7 @@ function oneMeasurement(root, { loaded = false, assertions = 1 } = {}) {
     writeFileSync(path.join(path.dirname(args[1]), 'tests-main.jsonl.sync'), records.map(record => JSON.stringify(record) + '\n').join(''));
     if (loaded) {
       writeFileSync(path.join(runs[0].env.NODE_V8_COVERAGE, 'coverage-1-1-0.json'), '{"result":[]}');
-      writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:2\nBRF:1\nBRH:1\nFNF:1\nFNH:1\nend_of_record\n`);
+      writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), `SF:${root}/src/math.js\nLF:3\nLH:2\nBRF:1\nBRH:1\nFNF:1\nFNH:1\nDA:1,1\nDA:2,1\nDA:3,0\nend_of_record\n`);
     }
     writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ checked: loaded ? ['src/math.js'] : [], violations: [], assertions: records.map(record => ({ file: record.file, fullName: record.fullName, count: assertions })), leaks: [] }) + '\n');
     return { status: 0 };
@@ -1620,9 +1627,9 @@ function oneMeasurement(root, { loaded = false, assertions = 1 } = {}) {
   return { spawn, openSpec, calls: () => calls };
 }
 
-function trustedFixture(body, extra = {}, base = {}) {
+function trustedFixture(body, extra = {}, base = {}, measurement = {}) {
   withFixture(root => {
-    const fake = oneMeasurement(root);
+    const fake = oneMeasurement(root, measurement);
     passes(root, ['init'], { openSpec: fake.openSpec, spawn: fake.spawn });
     write(root, { ...CHANGE, 'src/math.test.mjs': MATH_TEST('[demo-001] adds two numbers'), ...extra });
     git(root, 'add', '-A');
@@ -2276,7 +2283,7 @@ test('[coverage-gate-093 gap-ledger-130 gap-ledger-132] refuse a ratchet with ch
   const clean = JSON.parse(readFileSync(historyFile, 'utf8').trim().split('\n').at(-1));
   assert.equal(Object.hasOwn(clean, 'dirty'), false);
   assert.match(docs().output, /^NO TEST RUN: the mode trusts the snapshot of commit /);
-}));
+}, {}, {}, { loaded: true }));
 test('[gap-ledger-131 gap-ledger-133] accept clean history without a dirty field', () => trustedFixture(({ root, fake }) => {
   const lines = readFileSync(path.join(root, 'openspec/trace/history.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
   assert.equal(Object.hasOwn(lines.at(-1), 'dirty'), false);
@@ -2393,7 +2400,7 @@ test('[gap-ledger-130 gap-ledger-132] sort the dirty list and compare repeated h
   const after = readFileSync(historyFile, 'utf8');
   assert.equal(after.trim().split('\n').length, before.trim().split('\n').length + 1);
   assert.deepEqual(JSON.parse(after.trim().split('\n').at(-1)).dirty, ['docs/a.md', 'scripts/spec/ignored.txt', 'src/math.js']);
-}, { '.gitignore': '.gev-cache/\nscripts/spec/ignored.txt\n' }));
+}, { '.gitignore': '.gev-cache/\nscripts/spec/ignored.txt\n' }, {}, { loaded: true }));
 
 test('[gap-ledger-134] add ignored name markers before the ratchet command', () => {
   const text = readFileSync(path.join(PROJECT_ROOT, 'Makefile'), 'utf8');
@@ -2617,13 +2624,24 @@ test('[change-review-033] pin the agent verdict and final tree instructions', ()
   assert.ok(text.includes('Run `make gates CHANGE=<name>` on the final tree.'));
 });
 
+test('[ownership-031] prints LEDGER-ADOPT-FROM for a reached adopt record whose source is not a merge parent', GUARDED_RUN, () => {
+  withMergeFixture((root) => {
+    appendFileSync(path.join(root, 'openspec/trace/history.jsonl'), JSON.stringify(ADOPT_LINE(root, 'src/legacy.js', { from: git(root, 'rev-parse', 'main'), lines: 4, branches: null, functions: null, untraced: 0, untrue: true, reached: true })) + '\n');
+    const result = run(root, ['check', '--change', 'sync'], { spawn: () => assert.fail('No test run') });
+    assert.equal(result.status, 1);
+    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM openspec\/trace\/history.jsonl/);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-ADOPT-REACHED/);
+  });
+});
+
 const TOLERANCE_OPTIONS = {
   openSpec: (_root, args) => ({ status: 0, stdout: args[0] === '--version' ? '1.3.1' : '{"items":[]}' }),
   spawn: (_command, args, options) => {
     const root = options.cwd;
     const runs = JSON.parse(readFileSync(args[1], 'utf8'));
     const files = Object.keys(JSON.parse(readFileSync(path.join(root, '.gev-cache/spec/inventory.json'), 'utf8')));
-    const text = files.map(file => `SF:${root}/${file}\nLF:100\nLH:100\nBRF:100\nBRH:${file === 'src/merged.js' || file === 'src/legacy.js' ? 99 : 100}\nFNF:100\nFNH:100\nend_of_record\n`).join('');
+    const lineRecords = Array.from({ length: 200 }, (_, index) => `DA:${index + 1},1\n`).join('');
+    const text = files.map(file => `SF:${root}/${file}\nLF:100\nLH:100\nBRF:100\nBRH:${file === 'src/merged.js' || file === 'src/legacy.js' ? 99 : 100}\nFNF:100\nFNH:100\n${lineRecords}end_of_record\n`).join('');
     writeFileSync(path.join(path.dirname(args[1]), 'lcov.info'), text);
     writeFileSync(path.join(runs[0].env.NODE_V8_COVERAGE, 'coverage-1-1-0.json'), '{"result":[]}');
     writeFileSync(path.join(root, '.gev-cache/spec/guard-999.jsonl'), JSON.stringify({ checked: files, violations: [], assertions: [], leaks: [] }) + '\n');
@@ -2692,8 +2710,7 @@ test('[gap-ledger-138] the gate gives no tolerance from the requirement "Count t
     line.from = git(root, 'rev-parse', 'HEAD');
     write(root, { 'openspec/trace/history.jsonl': JSON.stringify(line) + '\n' });
     const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
-    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
-    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
+    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM openspec\/trace\/history\.jsonl/);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
@@ -2802,14 +2819,16 @@ test('[gap-ledger-150] the gate ignores another change for total differences', (
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit', () => {
+test('[ownership-055] the gate stops at LEDGER-ADOPT-FROM and prints no LEDGER-STALE error for an invalid from commit', () => {
   withMergeFixture(root => {
     const line = adoptedTotals(root);
     line.from = git(root, 'rev-parse', 'HEAD');
     write(root, { 'openspec/trace/history.jsonl': JSON.stringify(line) + '\n' });
     const result = run(root, ['check', '--change', 'sync'], TOLERANCE_OPTIONS);
-    assert.match(result.output, /ERROR LEDGER-STALE [^\n]+first: src\/merged\.js/);
-    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-ADOPT-FROM src\/merged\.js/);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-STALE/);
+    assert.equal(result.output.match(/ERROR LEDGER-ADOPT-FROM/g).length, 1);
+    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM openspec\/trace\/history\.jsonl/);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 

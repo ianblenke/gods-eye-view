@@ -1,0 +1,23 @@
+src/tooling/spec/ownership.test.mjs:38:test('[ownership-001] rejects each invalid manifest field', () => {
+src/tooling/spec/ownership.test.mjs:218:  assert.deepEqual(gapReport(manifest, { coverage: {}, untracedTests: { 'single.js': { names: { one: 2, two: 1 } }, 'src/own/a.test.js': { names: { three: 4 } } } }), ['Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests.', 'owned tests: single.js', 'owned tests: src/own/a.test.js', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.']);
+openspec/changes/ownership-scoped-gates/proposal.md:125:The message "A merge after the base must bring that hash." stays the same in five places: ownership.mjs, spec.md and three tests.
+openspec/changes/ownership-scoped-gates/evidence.md:1084:src/tooling/spec/ownership.test.mjs:208:  assert.deepEqual(gapReport(manifest, { coverage: {}, untracedTests: { 'single.js': { names: { one: 2, two: 1 } }, 'src/own/a.test.js': { names: { three: 4 } } } }), ['Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests.', 'owned tests: single.js', 'owned tests: src/own/a.test.js', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.']);
+openspec/changes/ownership-scoped-gates/evidence.md:1833:180:- **WHEN** two owned files have 2 and 3 line gaps and two line waivers each waive one gap
+openspec/changes/ownership-scoped-gates/evidence.md:2705:| S135: Hash message | At Pass 8, keep S135 as an open minor for review.md. At Pass 9, the five copies of the message stay the same. |
+openspec/changes/ownership-scoped-gates/evidence.md:2957:## Pass 8
+openspec/changes/ownership-scoped-gates/evidence.md:3048:openspec/changes/ownership-scoped-gates/design.md:270:| check command | The command check of runGates |
+openspec/changes/ownership-scoped-gates/evidence.md:3190:## Pass 9
+openspec/changes/ownership-scoped-gates/design.md:49:A waiver uses the same file hash, metric and count rules as the ledger.
+openspec/changes/ownership-scoped-gates/design.md:264:| valid waiver | A waiver record with a positive whole-number count for the same file, the same file hash and the same metric. |
+openspec/changes/ownership-scoped-gates/design.md:270:| check command | runGates: command check |
+openspec/changes/ownership-scoped-gates/design.md:271:| reached adopt record | Adopt record with the field reached and the value true (gap-ledger-106) |
+openspec/changes/ownership-scoped-gates/design.md:272:| DA record | One DA line of an LCOV record. |
+openspec/changes/ownership-scoped-gates/tasks.md:193:Rows 7 and 8 are cases of the test of row 4. The table lists nine rows and seven tests.
+openspec/changes/ownership-scoped-gates/tasks.md:274:## 10. Pass 8
+openspec/changes/ownership-scoped-gates/tasks.md:280:## 11. Pass 9
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:180:The gate MUST add the line gap counts and the test instance counts of ledger entries of the same class.
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:181:The gate must add only positive whole-number waiver counts for the same file, the same file hash and the same metric.
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:185:- **WHEN** two owned files have 2 and 3 line gaps
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:187:- **AND** the owned test files single.js and src/own/a.test.js have 3 and 4 test instances
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:189:- **AND** for those test files without code gaps, it prints "Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests."
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:493:- **AND** a coverage ignore comment in one of those new upstream QA scripts with no QA tag makes the gate print COVERAGE-IGNORE. The gate writes no adopt record.

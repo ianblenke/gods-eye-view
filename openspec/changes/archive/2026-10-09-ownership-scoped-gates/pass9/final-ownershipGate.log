@@ -1,0 +1,49 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/ownershipGate.test.mjs
+✔ [ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest (113.199359ms)
+✔ [ownership-011] reads the ledger without tests or a base (79.472144ms)
+✔ [ownership-003 ownership-007] prints classes and rejects an upstream line gap (685.2646ms)
+✔ [ownership-003 ownership-004] rejects an owned gap before the ratchet command writes the ledger (491.79471ms)
+✔ [ownership-007] rejects uncovered changed upstream lines in CI (592.597994ms)
+✔ [ownership-026] records a gap with the adopt command and prints no owned gap lines (581.892558ms)
+✔ [ownership-037] stops when Git cannot read a code diff (412.714726ms)
+✔ [ownership-009 ownership-013] uses the manifest and snapshot line data (1376.446375ms)
+✔ [ownership-013] accepts a run with no line data (218.131084ms)
+✔ [ownership-011] uses the manifest for ledger paths (78.578476ms)
+✔ [ownership-010] still prints QA-HEADER errors (569.859989ms)
+✔ [ownership-020 ownership-022] accepts merged lines and rejects an author line (1248.5297ms)
+✔ [ownership-026] accepts a recorded gap in an unchanged owned file (858.380167ms)
+✔ [ownership-027] rejects a recorded gap in an edited owned file (678.425078ms)
+✔ [ownership-026] accepts a recorded gap in an unchanged owned file with a new file mode (996.775922ms)
+✔ [ownership-028] rejects a new owned gap without a ledger entry (690.530881ms)
+✔ [ownership-031 ownership-024] checks the adopt source commit before a bad base ledger (374.121327ms)
+✔ [ownership-038] stops for a JSON parse error in the history before the owned gap lines (318.531357ms)
+✔ [ownership-029] stops for an invalid base manifest before the test run (163.04314ms)
+✔ [ownership-029 ownership-027] rejects a gap in a file after a change removes the base owned path of that file (687.728193ms)
+✔ [ownership-039] stops for a work source in the adopt command (321.172205ms)
+✔ [ownership-040] uses the CI change for a file that a valid adopt record names (812.571907ms)
+✔ [ownership-038] stops for a JSON parse error in the history without a change before the owned gap lines (330.366924ms)
+✔ [ownership-042] skips a base adopt record before the test run (625.651119ms)
+✔ [ownership-044] uses the synthetic header with a snapshot and a valid adopt record (1612.848596ms)
+✔ [ownership-045] names the measurement phase (215.033892ms)
+✔ [ownership-046] stops for an absent adopt source commit (270.041879ms)
+✔ [ownership-047] stops for a valid adopt source without a ledger (281.913332ms)
+✔ [ownership-048] passes the measurement environment and allocation list (215.370828ms)
+✔ [ownership-049] stops for an untraced change scenario in both measurement modes (1485.85204ms)
+✔ [gap-ledger-111] stops an invalid baseline before the test run (195.709842ms)
+✔ [ownership-053] omits the Class, Ownership and Owned gaps lines from CI and init (787.416935ms)
+✔ [ownership-031 ownership-041] stops the check command for a name that is not a full hash when HEAD is a merge commit (1108.656255ms)
+✔ [ownership-054] writes the QA adopt record with a full hash from HEAD^2 (1171.409343ms)
+✔ [ownership-054] writes the QA adopt record beside a coverage gap record (842.831912ms)
+✔ [ownership-054 ownership-035] stops the adopt command for QA files outside the exception and for another error (3719.255446ms)
+✔ [ownership-054] writes a QA adopt record for a base script without a QA tag (788.780008ms)
+✔ [ownership-054] writes no QA record for an absent current file (690.053324ms)
+✔ [ownership-054] stops for a coverage ignore error in a new upstream QA script with no QA tag (663.968904ms)
+✔ [ownership-054] writes one record for each QA file from both candidate lists (942.998557ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28375.579194

@@ -1,0 +1,37 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-001 src/tooling/spec/ownershipGate.test.mjs
+✖ [ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest (115.172957ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 166.825678
+
+✖ failing tests:
+
+test at src/tooling/spec/ownershipGate.test.mjs:128:1
+✖ [ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest (115.172957ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/. Input:
+  
+  'Command: check\n' +
+    'Started: 2026-10-09T02:32:02.601Z\n' +
+    'ERROR OWNERSHIP-OTHER openspec/ownership.json Use version 1 and unique safe relative paths in the owned array.\n' +
+    'Gates failed with 1 errors.\n' +
+    'Finished: 2026-10-09T02:32:02.602Z (0.001 s)'
+  
+      at file:///home/ianblenke/docker/gev-tools/ownership-gates/pass8/named-root/src/tooling/spec/ownershipGate.test.mjs:136:10
+      at withFixture (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass8/named-root/src/tooling/spec/ownershipGate.test.mjs:78:12)
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass8/named-root/src/tooling/spec/ownershipGate.test.mjs:128:91)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Command: check\nStarted: 2026-10-09T02:32:02.601Z\nERROR OWNERSHIP-OTHER openspec/ownership.json Use version 1 and unique safe relative paths in the owned array.\nGates failed with 1 errors.\nFinished: 2026-10-09T02:32:02.602Z (0.001 s)',
+    expected: /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/,
+    operator: 'match',
+    diff: 'simple'
+  }

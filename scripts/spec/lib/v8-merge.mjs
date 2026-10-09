@@ -172,6 +172,8 @@ export function coverageLcov(state) {
   for (const [url, counts] of coverageCounts(state)) {
     text += `SF:${fileURLToPath(url)}\n`;
     for (const metric of ['LF', 'LH', 'BRF', 'BRH', 'FNF', 'FNH']) text += `${metric}:${counts[metric]}\n`;
+    const entry = state.files.get(url);
+    for (let index = 0; index < counts.LF; index += 1) text += `DA:${index + 1},${entry.covered.has(index) ? 1 : 0}\n`;
     text += 'end_of_record\n';
   }
   return text;

@@ -1,0 +1,662 @@
+[
+  {
+    "file": "ownership",
+    "red": "[ownership-001] accepts the manifest contract",
+    "live": "[ownership-001] accepts the manifest contract"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-001] rejects each bad manifest field",
+    "live": "[ownership-001] rejects each invalid manifest field"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-001] reports an absent or bad manifest file",
+    "live": "[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-002] classifies exact paths and directory prefixes",
+    "live": "[ownership-002] classifies exact paths and directory prefixes"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-003] shows each path class and totals",
+    "live": "[ownership-003] shows each path class and totals"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-004] rejects all owned gap metrics",
+    "live": "[ownership-004] rejects all owned gap metrics"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-005] reads only added diff ranges",
+    "live": "[ownership-005] reads only added diff ranges"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-005] reads real edited new and deleted files",
+    "live": "[ownership-005] reads real edited new and deleted files"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-006] keeps only lines that every duplicate record covers",
+    "live": "[ownership-006] keeps only lines that every duplicate LCOV record covers"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-007] lists all uncovered changed lines in both classes",
+    "live": "[ownership-007] lists all uncovered changed lines in both classes"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-008] limits a line waiver to its file hash, its metric and its count",
+    "live": "[ownership-008] limits a line waiver to its file hash, its metric and its count"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-011] separates code and test gaps by class",
+    "live": "[ownership-011] separates code and test gaps by class"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-012] has the process rules in AGENTS.md and config.yaml",
+    "live": "[ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-013] writes merged DA counts for each code line",
+    "live": "[ownership-013] writes merged DA counts for each code line"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-013] stores line data in the snapshot",
+    "live": "[ownership-013] stores line data in the snapshot"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-004 ownership-008] ignores fractional and negative waiver counts",
+    "live": "[ownership-004 ownership-008] ignores fractional and negative waiver counts"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-007 ownership-008] rejects all line waivers for an untrue file",
+    "live": "[ownership-007 ownership-008] rejects all line waivers for an untrue file"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-004] reports each owned gap after an upstream file",
+    "live": "[ownership-004] prints each owned gap after an upstream file"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-014] counts every test instance",
+    "live": "[ownership-014] counts every test instance"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-001] accepts the first and last characters of each allowed character range",
+    "live": "[ownership-001] accepts the first and last characters of each allowed character range"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-016] sorts all line numbers as numbers",
+    "live": "[ownership-016] sorts all line numbers as numbers"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-017] ignores extra line record text",
+    "live": "[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-018] adds owned file gaps and waiver counts",
+    "live": "[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-005] uses each Git diff option",
+    "live": "[ownership-005] uses each Git diff option"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-018] adds test counts across owned files",
+    "live": "[ownership-018] adds test counts across owned files"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-019] counts zero instances for an empty name map",
+    "live": "[ownership-019] counts zero instances for an empty name map"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-020 ownership-025] needs no coverage for lines that equal the merged source",
+    "live": "[ownership-020 ownership-025] needs no coverage for lines that equal the file in the adopt source"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-021] needs coverage for a line that a person resolved by hand",
+    "live": "[ownership-021] needs coverage for a line that a person resolved by hand"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-022] needs coverage for an author edit to an upstream line",
+    "live": "[ownership-022] needs coverage for an author edit to an upstream line"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-023] uses the last adopt source for each file and the last source for other files",
+    "live": "[ownership-023] uses the last adopt source for each file and the last source for other files"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-024] stops a source commit that the repository lacks or that no merge brought",
+    "live": "[ownership-024] stops for a source commit that the repository lacks or that no merge brought"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-024] keeps the base diff rule without current adopt sources",
+    "live": "[ownership-024] keeps the base diff rule without current adopt sources"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-024] ignores base adopt records and stops non-string source values",
+    "live": "[ownership-024] skips base adopt records and stops for non-string source values"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-025] checks each line of an author rename absent from the source",
+    "live": "[ownership-025] checks each line of an author rename absent from the source"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-026 ownership-027 ownership-028] accepts only unchanged owned gaps with a ledger entry",
+    "live": "[ownership-026 ownership-027 ownership-028] accepts only unchanged owned gaps with a ledger entry"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-029 ownership-001] keeps base paths after manifest removal",
+    "live": "[ownership-029 ownership-001] keeps base paths after a change removes or shortens a manifest path"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-030] owns the project sentinel files",
+    "live": "[ownership-030] classifies the gate script, the OSH layer and the OSH provider as owned paths"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-031] stops an adopt record without a file at HEAD",
+    "live": "[ownership-031] stops for an adopt record without a file and with the hash of HEAD"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-032] stops a work branch adopt source",
+    "live": "[ownership-032] stops for a work branch adopt source"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-033] stops an ancestor that no merge brought",
+    "live": "[ownership-033] stops for an ancestor that no merge brought"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-036] gives the diff a 256 MiB buffer",
+    "live": "[ownership-036] gives the diff a 256 MiB buffer"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-031 ownership-024] stops an incomplete record with a merged source",
+    "live": "[ownership-031 ownership-024] stops for an invalid file or source and skips records with invalid counts"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-041] stops a number in the from field with a merged branch",
+    "live": "[ownership-041] stops for a number or a name that is not a full hash in the from field"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-043] skips invalid adopt records outside the change",
+    "live": "[ownership-043] skips invalid adopt records outside the change"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-050] stops an invalid record after a valid record",
+    "live": "[ownership-050] stops for an invalid record after a valid record"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-051 ownership-024] stops an invalid source before a diff fault",
+    "live": "[ownership-051 ownership-024] stops for an invalid source before a diff fault"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-052] stops a source name with a null byte",
+    "live": "[ownership-052] stops for a source name with a null byte"
+  },
+  {
+    "file": "ownership",
+    "red": "[ownership-031 ownership-041] stops the gate for revision names in a merge HEAD history",
+    "live": "[ownership-031 ownership-041] stops for a name that is not a full hash when HEAD is a merge commit"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-001] stops the gate for an absent manifest",
+    "live": "[ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-011] reads the ledger without tests or a base",
+    "live": "[ownership-011] reads the ledger without tests or a base"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-003 ownership-007] prints classes and rejects an upstream line gap",
+    "live": "[ownership-003 ownership-007] prints classes and rejects an upstream line gap"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-003 ownership-004] rejects an owned gap before the ratchet command writes the ledger",
+    "live": "[ownership-003 ownership-004] rejects an owned gap before the ratchet command writes the ledger"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-007] rejects changed upstream lines",
+    "live": "[ownership-007] rejects uncovered changed upstream lines in CI"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-026] records a gap before the owned file check",
+    "live": "[ownership-026] records a gap with the adopt command and prints no owned gap lines"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-037] stops when Git cannot read a code diff",
+    "live": "[ownership-037] stops when Git cannot read a code diff"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-009 ownership-013] uses the manifest and snapshot line data",
+    "live": "[ownership-009 ownership-013] uses the manifest and snapshot line data"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-013] accepts an absent line report",
+    "live": "[ownership-013] accepts a run with no line data"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-011] uses the manifest for ledger paths",
+    "live": "[ownership-011] uses the manifest for ledger paths"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-010] still reports QA-HEADER errors",
+    "live": "[ownership-010] still prints QA-HEADER errors"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-020 ownership-022] accepts merged lines and rejects an author line",
+    "live": "[ownership-020 ownership-022] accepts merged lines and rejects an author line"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-026] accepts a recorded gap in an unchanged owned file",
+    "live": "[ownership-026] accepts a recorded gap in an unchanged owned file"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-027] rejects a recorded gap in an edited owned file",
+    "live": "[ownership-027] rejects a recorded gap in an edited owned file"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-026] accepts a recorded gap in an unchanged owned file with a new file mode",
+    "live": "[ownership-026] accepts a recorded gap in an unchanged owned file with a new file mode"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-028] rejects a new owned gap without a ledger entry",
+    "live": "[ownership-028] rejects a new owned gap without a ledger entry"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-031 ownership-024] checks the adopt source commit before a bad base ledger",
+    "live": "[ownership-031 ownership-024] checks the adopt source commit before a bad base ledger"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-038] rejects bad history before gap advice",
+    "live": "[ownership-038] stops for a JSON parse error in the history before the owned gap lines"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-029] stops an invalid base manifest before the test run",
+    "live": "[ownership-029] stops for an invalid base manifest before the test run"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-029 ownership-027] rejects a gap after its base owned path is removed",
+    "live": "[ownership-029 ownership-027] rejects a gap in a file after a change removes the base owned path of that file"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-039] stops a work source in the adopt command",
+    "live": "[ownership-039] stops for a work source in the adopt command"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-040] uses the CI change for an adopted QA file",
+    "live": "[ownership-040] uses the CI change for a file that a valid adopt record names"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-038] stops bad JSON without a change before gap advice",
+    "live": "[ownership-038] stops for a JSON parse error in the history without a change before the owned gap lines"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-042] skips a base adopt record before the test run",
+    "live": "[ownership-042] skips a base adopt record before the test run"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-044] uses an adopted QA header with a snapshot",
+    "live": "[ownership-044] uses the synthetic header with a snapshot and a valid adopt record"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-045] names the measurement phase",
+    "live": "[ownership-045] names the measurement phase"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-046] stops an absent adopt source commit",
+    "live": "[ownership-046] stops for an absent adopt source commit"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-047] stops a valid adopt source without a ledger",
+    "live": "[ownership-047] stops for a valid adopt source without a ledger"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-048] passes the measurement environment and allocation list",
+    "live": "[ownership-048] passes the measurement environment and allocation list"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-049] stops an untraced change scenario in both measurement modes",
+    "live": "[ownership-049] stops for an untraced change scenario in both measurement modes"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[gap-ledger-111] stops an invalid baseline before the test run",
+    "live": "[gap-ledger-111] stops an invalid baseline before the test run"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-053] omits class and gap advice from CI and init",
+    "live": "[ownership-053] omits the Class, Ownership and Owned gaps lines from CI and init"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-031 ownership-041] stops the gate for revision names in CI merge HEAD history",
+    "live": "[ownership-031 ownership-041] stops the check command for a name that is not a full hash when HEAD is a merge commit"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-054] writes the QA adopt record with a full hash from HEAD^2",
+    "live": "[ownership-054] writes the QA adopt record with a full hash from HEAD^2"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-054] writes the QA adopt record beside a coverage gap record",
+    "live": "[ownership-054] writes the QA adopt record beside a coverage gap record"
+  },
+  {
+    "file": "ownershipGate",
+    "red": "[ownership-054 ownership-035] stops the adopt command for QA files outside the exception",
+    "live": "[ownership-054 ownership-035] stops the adopt command for QA files outside the exception and for another error"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-001] accepts a shebang and reads all four tags",
+    "live": "[qa-scripts-001] accepts a shebang and reads all four tags"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-002] rejects code before the first block",
+    "live": "[qa-scripts-002] rejects code before the first block"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-003] rejects an absent tag",
+    "live": "[qa-scripts-003] rejects an absent tag"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-004] rejects a repeated tag",
+    "live": "[qa-scripts-004] rejects a repeated tag"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-005] rejects an empty tag",
+    "live": "[qa-scripts-005] rejects an empty tag"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-006] rejects a covers item with a space",
+    "live": "[qa-scripts-006] rejects a covers item with a space"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-007] accepts a capability folder",
+    "live": "[qa-scripts-007] accepts a capability folder"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-008] reports an unknown capability",
+    "live": "[qa-scripts-008] reports an unknown capability"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-009] accepts an open pending area",
+    "live": "[qa-scripts-009] accepts an open pending area"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-010] reports a pending area that has a capability folder",
+    "live": "[qa-scripts-010] reports a pending area that has a capability folder"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-011] accepts one unmapped reason",
+    "live": "[qa-scripts-011] accepts one unmapped reason"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-012] rejects an unmapped list",
+    "live": "[qa-scripts-012] rejects an unmapped list"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-016] gives delta advice with the script purpose",
+    "live": "[qa-scripts-016] gives delta advice with the script purpose"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-017] gives advice for a backfill area",
+    "live": "[qa-scripts-017] gives advice for a backfill area"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-018] gives the no match line",
+    "live": "[qa-scripts-018] gives the no match line"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-019] gives no advice without a change",
+    "live": "[qa-scripts-019] gives no advice without a change"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-020] tells authors to read advice and add a header",
+    "live": "[qa-scripts-020] tells authors to read advice and add a header"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-021] gives QA lines to the spec adversary",
+    "live": "[qa-scripts-021] gives QA lines to the spec adversary"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-022] asks the spec adversary to read each QA check",
+    "live": "[qa-scripts-022] asks the spec adversary to read each QA check"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-023] checks all tracked QA scripts in this repository",
+    "live": "[qa-scripts-023] checks all tracked QA scripts in this repository"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-026] gives advice from an archived change",
+    "live": "[qa-scripts-026] gives advice from an archived change"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-027] sorts advice by script then capability",
+    "live": "[qa-scripts-027] sorts advice by script then capability"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-028] rejects a header continuation line",
+    "live": "[qa-scripts-028] rejects a header continuation line"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-005] rejects a purpose without a final mark",
+    "live": "[qa-scripts-005] rejects a purpose without a final mark"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-005] rejects an empty needs value",
+    "live": "[qa-scripts-005] rejects an empty needs value"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-018] gives no match advice for an unknown change",
+    "live": "[qa-scripts-018] gives no match advice for an unknown change"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-025] sorts two covers errors for one script",
+    "live": "[qa-scripts-025] sorts two covers errors for one script"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-008] rejects a file that has a capability name",
+    "live": "[qa-scripts-008] rejects a file that has a capability name"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-025] gives no advice for invalid covers items",
+    "live": "[qa-scripts-025] gives no advice for invalid covers items"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-011] gives no advice for an unmapped reason",
+    "live": "[qa-scripts-011] gives no advice for an unmapped reason"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[qa-scripts-025] gives no advice for a file with a capability name",
+    "live": "[qa-scripts-025] gives no advice for a file with a capability name"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-009] uses a synthetic upstream QA header",
+    "live": "[ownership-009] uses a synthetic upstream QA header"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-010] rejects an absent owned header and an invalid upstream header",
+    "live": "[ownership-010] rejects an owned script with no header and an upstream script with an invalid header"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-009 ownership-010] keeps a valid upstream QA header and its capability checks",
+    "live": "[ownership-009 ownership-010] keeps a valid upstream QA header and its capability checks"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-015] accepts an upstream first comment with no QA tags",
+    "live": "[ownership-015] accepts an upstream first comment with no QA tags"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-010] rejects an upstream QA block with no end",
+    "live": "[ownership-010] rejects an upstream QA block with no end"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-010] rejects a bad upstream QA block after a shebang",
+    "live": "[ownership-010] rejects a bad upstream QA block after a shebang"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-010] rejects a shebang inside a QA comment",
+    "live": "[ownership-010] rejects a shebang inside a QA comment"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-009] uses the synthetic header for a later comment",
+    "live": "[ownership-009] uses the synthetic header for a later comment"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-034] reports QA-HEADER for a new unlisted script",
+    "live": "[ownership-034] prints QA-HEADER for a new script that no adopt record names"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-035] reports QA-HEADER after a base header is deleted",
+    "live": "[ownership-035] prints QA-HEADER for a script that had a QA tag at the base and has none now"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-009 ownership-015] uses a valid adopt file for the synthetic header",
+    "live": "[ownership-009 ownership-015] gives the synthetic header to a file that a valid adopt record names"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-010] rejects an owned base script without a header",
+    "live": "[ownership-010] rejects an owned base script without a header"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-009] uses the adopt file among other records",
+    "live": "[ownership-009] gives the synthetic header to a file that one of three adopt records names"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-009] uses the first empty comment for the QA boundary",
+    "live": "[ownership-009] gives the synthetic header when an empty comment comes before a comment with a QA tag"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-010] reports a QA error after an empty shebang",
+    "live": "[ownership-010] prints a QA error after an empty shebang"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-009] keeps code after a CR inside the shebang",
+    "live": "[ownership-009] gives the synthetic header when code follows a shebang that ends with CR"
+  },
+  {
+    "file": "qaRegister",
+    "red": "[ownership-035] prints QA-HEADER for a base QA tag even with an adopt record",
+    "live": "[ownership-035] prints QA-HEADER for a base QA tag even with an adopt record"
+  }
+]

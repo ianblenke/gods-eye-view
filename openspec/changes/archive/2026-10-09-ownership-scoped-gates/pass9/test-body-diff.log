@@ -1,0 +1,8 @@
+-test('[ownership-001] rejects each bad manifest field', () => {
++test('[ownership-001] rejects each invalid manifest field', () => {
++  put('openspec/ownership.json', '{');
++  assert.equal(readOwnership(root).errors[0].code, 'OWNERSHIP-MANIFEST');
++  write(root, { 'openspec/ownership.json': '{' });
++  const jsonError = run(root, ['check'], { spawn: () => assert.fail('No test run') });
++  assert.equal(jsonError.status, 1);
++  assert.match(jsonError.output, /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/);

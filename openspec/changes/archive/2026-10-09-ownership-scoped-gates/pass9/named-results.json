@@ -1,0 +1,49 @@
+[
+  {
+    "fault": "test-count-sum",
+    "status": 1,
+    "lines": [
+      "ownership.test.mjs:217:1",
+      "ownership.test.mjs:218:10"
+    ]
+  },
+  {
+    "fault": "absent-message-number",
+    "status": 1,
+    "lines": [
+      "ownership.test.mjs:47:1",
+      "ownership.test.mjs:50:10",
+      "ownership.test.mjs:26:16",
+      "ownership.test.mjs:47:120"
+    ]
+  },
+  {
+    "fault": "config-adopt-sentence",
+    "status": 1,
+    "lines": [
+      "ownership.test.mjs:126:1",
+      "ownership.test.mjs:147:10"
+    ]
+  },
+  {
+    "fault": "syntax-catch-unit",
+    "status": 1,
+    "lines": [
+      "ownership.test.mjs:47:1",
+      "ownership.test.mjs:55:16",
+      "ownership.test.mjs:26:16",
+      "ownership.test.mjs:47:120"
+    ]
+  },
+  {
+    "fault": "syntax-catch-gate",
+    "status": 1,
+    "lines": [
+      "ownershipGate.test.mjs:128:1",
+      "ownershipGate.test.mjs:86:18",
+      "ownershipGate.test.mjs:138:21",
+      "ownershipGate.test.mjs:78:12",
+      "ownershipGate.test.mjs:128:91"
+    ]
+  }
+]

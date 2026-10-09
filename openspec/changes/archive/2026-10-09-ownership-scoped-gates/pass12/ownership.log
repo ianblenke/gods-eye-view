@@ -1,0 +1,62 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/ownership.test.mjs
+Tree read: c214519ad41b05ed611b308fc8d28e8bf9b45d71; branch ownership-gates; Pass 12 documents
+✔ [ownership-001] accepts the manifest contract (14.98701ms)
+✔ [ownership-001] rejects each invalid manifest field (4.624388ms)
+✔ [ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file (3.603878ms)
+✔ [ownership-002] classifies exact paths and directory prefixes (1.470105ms)
+✔ [ownership-003] shows each path class and totals (1.426081ms)
+✔ [ownership-004] rejects all owned gap metrics (5.062599ms)
+✔ [ownership-005] reads only added diff ranges (2.277951ms)
+✔ [ownership-005] reads real edited new and deleted files (216.639805ms)
+✔ [ownership-006] keeps only lines that every duplicate LCOV record covers (4.145173ms)
+✔ [ownership-007] lists all uncovered changed lines in both classes (2.694204ms)
+✔ [ownership-008] limits a line waiver to its file hash, its metric and its count (1.791157ms)
+✔ [ownership-011] separates code and test gaps by class (2.268967ms)
+✔ [ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml (3.97186ms)
+✔ [ownership-013] writes merged DA counts for each code line (5.898641ms)
+✔ [ownership-013] stores line data in the snapshot (5.034445ms)
+✔ [ownership-004 ownership-008] ignores fractional and negative waiver counts (1.246869ms)
+✔ [ownership-007 ownership-008] rejects all line waivers for an untrue file (0.655728ms)
+✔ [ownership-004] prints each owned gap after an upstream file (0.465691ms)
+✔ [ownership-014] counts every test instance (0.633796ms)
+✔ [ownership-001] accepts the first and last characters of each allowed character range (0.546149ms)
+✔ [ownership-016] sorts all line numbers as numbers (0.631384ms)
+✔ [ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix (0.388846ms)
+✔ [ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file (0.92593ms)
+✔ [ownership-005] uses each Git diff option (4.012317ms)
+✔ [ownership-018] adds the test instance counts of owned test files (0.810031ms)
+✔ [ownership-019] counts zero instances for an empty name map (0.456839ms)
+✔ [ownership-020 ownership-025] needs no coverage for lines that equal the file in the adopt source (395.43693ms)
+✔ [ownership-021] needs coverage for a line that a person resolved by hand (546.145872ms)
+✔ [ownership-022] needs coverage for an author edit to an upstream line (453.861316ms)
+✔ [ownership-023] uses the last adopt source for each file and the last source for other files (702.287164ms)
+✔ [ownership-024] stops for a source commit that the repository lacks or that no merge brought (296.65264ms)
+✔ [ownership-024] keeps the base diff rule without current adopt sources (790.221647ms)
+✔ [ownership-024] skips base adopt records and stops for non-string source values (498.6159ms)
+✔ [ownership-025] checks each line of an author rename absent from the source (445.506792ms)
+✔ [ownership-026 ownership-027 ownership-028] accepts only unchanged owned gaps with a ledger entry (1.424919ms)
+✔ [ownership-029 ownership-001] keeps base paths after a change removes or shortens a manifest path (346.785688ms)
+✔ [ownership-030] classifies the gate script, the OSH layer and the OSH provider as owned paths (2.389944ms)
+✔ [ownership-031] stops for an adopt record without a file and with the hash of HEAD (207.585979ms)
+✔ [ownership-032] stops for a work branch adopt source (242.5336ms)
+✔ [ownership-033] stops for an ancestor that no merge brought (202.619528ms)
+✔ [ownership-036] gives the diff a 256 MiB buffer (3.045296ms)
+✔ [ownership-031 ownership-024] stops for an invalid file or source and skips records with invalid counts (526.620662ms)
+✔ [ownership-041] stops for a number or a name that is not a full hash in the from field (205.950994ms)
+✔ [ownership-043] skips invalid adopt records outside the change (679.196902ms)
+✔ [ownership-050] stops for an invalid record after a valid record (203.67041ms)
+✔ [ownership-051 ownership-024] stops for an invalid source before a diff fault (188.473072ms)
+✔ [ownership-052] stops for a source name with a null byte (183.795623ms)
+✔ [ownership-031 ownership-041] stops for a name that is not a full hash when HEAD is a merge commit (227.648609ms)
+✔ [ownership-052] returns false when Git cannot read the merge parents (1.76984ms)
+✔ [ownership-031 ownership-041] rejects values outside the hash pattern and reads no merge parents (1.351962ms)
+ℹ tests 50
+ℹ suites 0
+ℹ pass 50
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7701.200089
+
+Status: 0

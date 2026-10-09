@@ -1,0 +1,4 @@
+✖ [coverage-gate-046] gives a skip reason on a Node version without getTestContext to each test that needs the guard to count assertions
+ℹ tests 31
+ℹ pass 30
+ℹ fail 1
