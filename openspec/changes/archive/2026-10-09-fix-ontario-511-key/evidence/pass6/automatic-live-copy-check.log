@@ -1,0 +1,5 @@
+Command: cmp (copy against live clone)
+equal src/data/cctvOntarioKey.test.mjs
+equal src/data/cctvOntarioRows.test.mjs
+equal server/providers/cctv/ontarioRequest.js
+equal server/providers/cctv/sources.js

@@ -1,0 +1,114 @@
+[
+  {
+    "mutation": "A-error",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-003] make no request without a key (33.312303ms)",
+      "\u2716 [live-sources-003] make no request without a key (33.312303ms)"
+    ]
+  },
+  {
+    "mutation": "A-log",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-003] make no request without a key (32.631525ms)",
+      "\u2716 [live-sources-003] make no request without a key (32.631525ms)"
+    ]
+  },
+  {
+    "mutation": "B-error",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-004] return an empty row list for an HTTP error with JSON rows (34.364535ms)",
+      "\u2716 [live-sources-004] return an empty row list for an HTTP error with JSON rows (34.364535ms)"
+    ]
+  },
+  {
+    "mutation": "C-error",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] keep the camera data error secret (77.436699ms)",
+      "\u2716 [live-sources-005] keep the camera data error secret (77.436699ms)"
+    ]
+  },
+  {
+    "mutation": "D-counts",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-008] log both source counts (49.079665ms)",
+      "\u2716 [live-sources-008] log both source counts (49.079665ms)"
+    ]
+  },
+  {
+    "mutation": "D-invalid",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-006] return an empty source list without a warning for invalid rows and views (41.403238ms)",
+      "\u2716 [live-sources-006] return an empty source list without a warning for invalid rows and views (41.403238ms)"
+    ]
+  },
+  {
+    "mutation": "D-numeric",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-006] return an empty source list without a warning for a numeric status (44.417752ms)",
+      "\u2716 [live-sources-006] return an empty source list without a warning for a numeric status (44.417752ms)"
+    ]
+  },
+  {
+    "mutation": "request-debug",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (33.102735ms)",
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (33.102735ms)"
+    ]
+  },
+  {
+    "mutation": "request-log",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (34.016522ms)",
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (34.016522ms)"
+    ]
+  },
+  {
+    "mutation": "request-dir",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (33.654149ms)",
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (33.654149ms)"
+    ]
+  },
+  {
+    "mutation": "request-error",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (33.972686ms)",
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (33.972686ms)"
+    ]
+  },
+  {
+    "mutation": "request-info",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (32.943175ms)",
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (32.943175ms)"
+    ]
+  },
+  {
+    "mutation": "loader-error",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] write the warning for a row error with the key text (42.983415ms)",
+      "\u2716 [live-sources-005] write the warning for a row error with the key text (42.983415ms)"
+    ]
+  },
+  {
+    "mutation": "loader-dir",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] write the warning for a row error with the key text (42.092369ms)",
+      "\u2716 [live-sources-005] write the warning for a row error with the key text (42.092369ms)"
+    ]
+  }
+]

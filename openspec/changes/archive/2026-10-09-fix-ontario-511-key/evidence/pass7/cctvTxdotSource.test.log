@@ -1,0 +1,19 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvTxdotSource.test.mjs
+✔ TxDOT catalog keeps only online cameras with finite coordinates (16.036665ms)
+✔ TxDOT ids stay distinct for distinct device keys, whatever they hash or slug to (5.863161ms)
+✔ TxDOT catalog dedupes a camera listed under two roadways (2.707834ms)
+✔ TxDOT heading comes from an explicit travel token, never the roadway direction (3.555031ms)
+✔ TxDOT heading refuses bare cardinals in Texas route names (2.774905ms)
+✔ TxDOT camera ids are district-scoped and stable across runs (3.63357ms)
+✔ TxDOT ground elevation uses a per-district prior (2.610374ms)
+✔ TxDOT catalog tolerates a malformed payload (5.806835ms)
+✔ TxDOT loader fetches each configured district and ignores unknown codes (221.308445ms)
+✔ TxDOT snapshot decodes JSON only from the official origin and only as JPEG (49.09275ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 505.424931

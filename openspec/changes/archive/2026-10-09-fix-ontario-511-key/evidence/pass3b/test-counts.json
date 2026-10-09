@@ -1,0 +1,134 @@
+[
+  {
+    "file": "cctv.test.log",
+    "tests": 55,
+    "pass": 55,
+    "fail": 0
+  },
+  {
+    "file": "cctvCalgary.test.log",
+    "tests": 13,
+    "pass": 13,
+    "fail": 0
+  },
+  {
+    "file": "cctvCards.test.log",
+    "tests": 23,
+    "pass": 23,
+    "fail": 0
+  },
+  {
+    "file": "cctvCatalogCap.test.log",
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  {
+    "file": "cctvDisplayCode.test.log",
+    "tests": 2,
+    "pass": 2,
+    "fail": 0
+  },
+  {
+    "file": "cctvDriveBcSource.test.log",
+    "tests": 6,
+    "pass": 6,
+    "fail": 0
+  },
+  {
+    "file": "cctvEstonia.test.log",
+    "tests": 3,
+    "pass": 3,
+    "fail": 0
+  },
+  {
+    "file": "cctvFintraffic.test.log",
+    "tests": 8,
+    "pass": 8,
+    "fail": 0
+  },
+  {
+    "file": "cctvFootprint.test.log",
+    "tests": 3,
+    "pass": 3,
+    "fail": 0
+  },
+  {
+    "file": "cctvGizmo.test.log",
+    "tests": 10,
+    "pass": 10,
+    "fail": 0
+  },
+  {
+    "file": "cctvGroundHeights.test.log",
+    "tests": 2,
+    "pass": 2,
+    "fail": 0
+  },
+  {
+    "file": "cctvHlsStream.test.log",
+    "tests": 10,
+    "pass": 10,
+    "fail": 0
+  },
+  {
+    "file": "cctvLod.test.log",
+    "tests": 29,
+    "pass": 29,
+    "fail": 0
+  },
+  {
+    "file": "cctvMediaRange.test.log",
+    "tests": 21,
+    "pass": 21,
+    "fail": 0
+  },
+  {
+    "file": "cctvNswSource.test.log",
+    "tests": 6,
+    "pass": 6,
+    "fail": 0
+  },
+  {
+    "file": "cctvOntarioKey.test.log",
+    "tests": 12,
+    "pass": 12,
+    "fail": 0
+  },
+  {
+    "file": "cctvOntarioRows.test.log",
+    "tests": 69,
+    "pass": 69,
+    "fail": 0
+  },
+  {
+    "file": "cctvProxy.test.log",
+    "tests": 14,
+    "pass": 14,
+    "fail": 0
+  },
+  {
+    "file": "cctvTxdotSource.test.log",
+    "tests": 10,
+    "pass": 10,
+    "fail": 0
+  },
+  {
+    "file": "cctvViewshed.test.log",
+    "tests": 7,
+    "pass": 7,
+    "fail": 0
+  },
+  {
+    "file": "cctvWarendorf.test.log",
+    "tests": 3,
+    "pass": 3,
+    "fail": 0
+  },
+  {
+    "file": "mediaProviders.test.log",
+    "tests": 5,
+    "pass": 5,
+    "fail": 0
+  }
+]

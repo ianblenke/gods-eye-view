@@ -1,0 +1,12 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvFootprint.test.mjs
+✔ support points form a 3×3 grid across the pitched far cap (15.193884ms)
+✔ the rigid lift is the largest clearance deficit over the supports (3.090568ms)
+✔ poseHash is stable for the same pose and changes with any pose field (4.171788ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133.224026

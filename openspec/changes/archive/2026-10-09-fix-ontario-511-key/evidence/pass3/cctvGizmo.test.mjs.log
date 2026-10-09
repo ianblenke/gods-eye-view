@@ -1,0 +1,18 @@
+✔ closestParamOnAxis: perpendicular ray hits the axis at its own offset (11.179261ms)
+✔ closestParamOnAxis: skew ray resolves to the geometric closest point (2.103199ms)
+✔ closestParamOnAxis: axis origin offset shifts the parameter (1.324998ms)
+✔ closestParamOnAxis: near-parallel ray/axis returns null (1.668245ms)
+✔ rayPlaneIntersect: straight-on hit lands at the expected point (2.36129ms)
+✔ rayPlaneIntersect: oblique hit resolves correctly (1.785281ms)
+✔ rayPlaneIntersect: grazing ray (|dir·n| < 0.08) returns null (1.302572ms)
+✔ rayPlaneIntersect: plane behind the ray origin returns null (1.281251ms)
+✔ ringAngle: quadrant sweep in the (basisA, basisB) frame (2.085348ms)
+✔ signedAngleDelta: shortest-path wrap (2.406435ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7686.826055

@@ -1,0 +1,16 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvViewshed.test.mjs
+✔ cameraHue: deterministic golden-angle spacing in [0, 360) (11.953503ms)
+✔ cameraHue: first 20 indices pairwise separated by >= 12 degrees (3.787836ms)
+✔ cameraHue: consecutive indices separated by >= 80 degrees (1.734323ms)
+✔ viewshedColors: fill/line pairs with the designed alphas (2.657657ms)
+✔ frustumVolumeGeometryData: 5 vertices are exactly the input Cartesians (2.286137ms)
+✔ frustumVolumeGeometryData: indices form 4 side faces + 2 cap triangles over the 5 vertices (2.321763ms)
+✔ frustumVolumeGeometryData: no NaN for a tight (probe-clamped) pyramid (1.432745ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6482.771215

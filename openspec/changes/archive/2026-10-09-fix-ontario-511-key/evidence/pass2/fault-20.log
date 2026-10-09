@@ -1,0 +1,562 @@
+✔ [live-sources-006] reject row 0 (32.514015ms)
+✔ [live-sources-006] reject row 1 (3.751228ms)
+✔ [live-sources-006] reject row 2 (3.814806ms)
+✔ [live-sources-006] reject row 3 (3.911658ms)
+✔ [live-sources-006] reject row 4 (4.447754ms)
+✔ [live-sources-006] reject row 5 (3.498875ms)
+✔ [live-sources-006] reject row 6 (2.994545ms)
+✔ [live-sources-006] reject row 7 (3.338177ms)
+✔ [live-sources-006] reject row 8 (4.043877ms)
+✔ [live-sources-006] reject row 9 (3.970917ms)
+✔ [live-sources-006] reject row 10 (2.73122ms)
+✔ [live-sources-006] reject row 11 (2.638739ms)
+✔ [live-sources-006] reject row 12 (2.717418ms)
+✔ [live-sources-006] reject row 13 (7.259055ms)
+✔ [live-sources-006] reject URL 0 (2.454089ms)
+✔ [live-sources-006] reject URL 1 (1.663965ms)
+✔ [live-sources-006] reject URL 2 (1.582903ms)
+✔ [live-sources-006] reject URL 3 (1.829167ms)
+✔ [live-sources-006] reject URL 4 (1.569111ms)
+✔ [live-sources-006] reject URL 5 (1.412895ms)
+✔ [live-sources-006] reject URL 6 (1.402048ms)
+✔ [live-sources-006] reject URL 7 (1.614736ms)
+✔ [live-sources-006] reject URL 8 (1.727774ms)
+✔ [live-sources-006] reject URL 9 (1.977802ms)
+✔ [live-sources-006] reject URL 10 (2.013694ms)
+✔ [live-sources-006] reject URL 11 (1.571559ms)
+✔ [live-sources-006] reject URL 12 (1.687777ms)
+✖ [live-sources-006] accept boundary 41 (8.876978ms)
+✖ [live-sources-006] accept boundary 57.5 (2.995167ms)
+✖ [live-sources-006] select the first view without down (2.784449ms)
+✖ [live-sources-006] select the first down view (2.705838ms)
+✖ [live-sources-007] set all source fields (8.297527ms)
+✖ [live-sources-007] use lower case fields and hash pose (3.045945ms)
+✖ [live-sources-008] apply cap undefined (6.33934ms)
+✖ [live-sources-008] apply cap  (9.687404ms)
+✖ [live-sources-008] apply cap bad (3.353594ms)
+✖ [live-sources-008] apply cap Infinity (3.252754ms)
+✖ [live-sources-008] apply cap 3 (3.249756ms)
+✖ [live-sources-008] apply cap 9.9 (3.366173ms)
+✖ [live-sources-008] apply cap 2000 (11.738217ms)
+✖ [live-sources-008] use the last duplicate (2.78262ms)
+✖ [live-sources-009] reject data null (4.738048ms)
+✖ [live-sources-009] reject data {} (3.674202ms)
+✖ [live-sources-009] reject data "rows" (3.805431ms)
+✖ [live-sources-009] reject data 0 (3.806888ms)
+✔ [live-sources-005] return no rows after a data error (2.148614ms)
+✖ [live-sources-007] use field precedence (2.839397ms)
+✖ [live-sources-008] use each nearest anchor (3.692587ms)
+✔ [live-sources-006] reject null ID fields (2.019553ms)
+✖ [live-sources-007] use roadway and blank direction (2.528943ms)
+✔ [live-sources-006] accept an empty row list (1.76585ms)
+✖ [live-sources-008] log both source counts (2.849664ms)
+✖ [live-sources-006] reject views without a data error (3.337103ms)
+✖ [live-sources-006] accept every ID character (2.504192ms)
+✖ [live-sources-007] convert row values to text and numbers (3.102082ms)
+✖ [live-sources-006] reject a numeric status without a data error (3.159896ms)
+✖ [live-sources-006] accept URL object (2.53795ms)
+✖ [live-sources-006] accept URL edge spaces (2.363274ms)
+✖ [live-sources-006 live-sources-007] select a view with downhill (2.672326ms)
+✖ [live-sources-007] use capitalized text fields first (2.717945ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Latitude (2.127526ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Longitude (1.774765ms)
+✖ [live-sources-006] skip fields after a row guard (3.07837ms)
+✖ [live-sources-007] read latitude before longitude (2.762775ms)
+✖ [live-sources-007] read location before roadway (2.551616ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 32
+ℹ fail 33
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 463.597549
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:93:3
+✖ [live-sources-006] accept boundary 41 (8.876978ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:94:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:93:3
+✖ [live-sources-006] accept boundary 57.5 (2.995167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:94:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:97:1
+✖ [live-sources-006] select the first view without down (2.784449ms)
+  TypeError: Cannot read properties of undefined (reading 'url')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:119:26)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:123:1
+✖ [live-sources-006] select the first down view (2.705838ms)
+  TypeError: Cannot read properties of undefined (reading 'url')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:140:26)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:143:1
+✖ [live-sources-007] set all source fields (8.297527ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + undefined
+  - {
+  -   city: 'Place',
+  -   cityId: 'ontario',
+  -   feedType: 'image',
+  -   fovDeg: 56,
+  -   groundElevationM: 200,
+  -   headingConfidence: 'high',
+  -   headingDeg: 0,
+  -   id: 'on-1',
+  -   lat: 43.6532,
+  -   license: 'Open Government Licence - Ontario',
+  -   lon: -79.3832,
+  -   mountHeightM: 10,
+  -   name: 'Place',
+  -   pitchDeg: -24,
+  -   provider: 'Ontario 511',
+  -   rangeM: 210,
+  -   snapshotUrl: 'https://511on.ca/map/Cctv/A_1.-',
+  -   sourceKind: 'ontario-511-open-data',
+  -   url: 'https://511on.ca/map/Cctv/A_1.-'
+  - }
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:147:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [Object],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:192:1
+✖ [live-sources-007] use lower case fields and hash pose (3.045945ms)
+  TypeError: Cannot read properties of undefined (reading 'name')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:210:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap undefined (6.33934ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1000
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:237:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap  (9.687404ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1000
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:237:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap bad (3.353594ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1000
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:237:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap Infinity (3.252754ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1000
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:237:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap 3 (3.249756ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 8
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:237:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 8,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap 9.9 (3.366173ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 9
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:237:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 9,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:231:3
+✖ [live-sources-008] apply cap 2000 (11.738217ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1000
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:237:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:242:1
+✖ [live-sources-008] use the last duplicate (2.78262ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:247:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:251:3
+✖ [live-sources-009] reject data null (4.738048ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   '[CCTV] Ontario 511 camera data error.'
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:255:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:251:3
+✖ [live-sources-009] reject data {} (3.674202ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   '[CCTV] Ontario 511 camera data error.'
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:255:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:251:3
+✖ [live-sources-009] reject data "rows" (3.805431ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:255:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:251:3
+✖ [live-sources-009] reject data 0 (3.806888ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   '[CCTV] Ontario 511 camera data error.'
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:255:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:271:1
+✖ [live-sources-007] use field precedence (2.839397ms)
+  TypeError: Cannot read properties of undefined (reading 'id')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:296:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:303:1
+✖ [live-sources-008] use each nearest anchor (3.692587ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + []
+  - [
+  -   'on-0',
+  -   'on-1',
+  -   'on-2',
+  -   'on-3',
+  -   'on-4',
+  -   'on-5',
+  -   'on-far'
+  - ]
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:318:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:327:1
+✖ [live-sources-007] use roadway and blank direction (2.528943ms)
+  TypeError: Cannot read properties of undefined (reading 'city')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:343:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:351:1
+✖ [live-sources-008] log both source counts (2.849664ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 8
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:355:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 8,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:361:1
+✖ [live-sources-006] reject views without a data error (3.337103ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + []
+  - [
+  -   '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'
+  - ]
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:379:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:384:1
+✖ [live-sources-006] accept every ID character (2.504192ms)
+  TypeError: Cannot read properties of undefined (reading 'url')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:396:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:401:1
+✖ [live-sources-007] convert row values to text and numbers (3.102082ms)
+  TypeError: Cannot read properties of undefined (reading 'id')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:418:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:427:1
+✖ [live-sources-006] reject a numeric status without a data error (3.159896ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + []
+  - [
+  -   '[CCTV] Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)'
+  - ]
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:438:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:443:3
+✖ [live-sources-006] accept URL object (2.53795ms)
+  TypeError: Cannot read properties of undefined (reading 'url')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:451:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:443:3
+✖ [live-sources-006] accept URL edge spaces (2.363274ms)
+  TypeError: Cannot read properties of undefined (reading 'url')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:451:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:454:1
+✖ [live-sources-006 live-sources-007] select a view with downhill (2.672326ms)
+  TypeError: Cannot read properties of undefined (reading 'url')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:471:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:475:1
+✖ [live-sources-007] use capitalized text fields first (2.717945ms)
+  TypeError: Cannot read properties of undefined (reading 'id')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:505:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:520:1
+✖ [live-sources-006] skip fields after a row guard (3.07837ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 1
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:543:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:550:1
+✖ [live-sources-007] read latitude before longitude (2.762775ms)
+  TypeError: Cannot read properties of undefined (reading 'lat')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:559:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioRows.test.mjs:562:1
+✖ [live-sources-007] read location before roadway (2.551616ms)
+  TypeError: Cannot read properties of undefined (reading 'city')
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:571:23)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

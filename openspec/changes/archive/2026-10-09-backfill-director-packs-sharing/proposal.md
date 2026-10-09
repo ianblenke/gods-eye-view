@@ -1,0 +1,102 @@
+## Why
+
+The backfill records data packs and project shares at commit `290b5d2`.
+The director feature checks assets before display and carries local files in a scene bundle.
+The source files of `src/director` stay the same at this commit and at main.
+
+## What Changes
+
+- Add requirements to the director capability.
+- Tag tests in scope.
+- Add tests for old code paths.
+- Check assertions with code mutations.
+
+## Capabilities
+
+- Add requirements to `director`.
+
+## Impact
+
+The change edits tests and adds change documents.
+It does not change production code or browser QA scripts.
+The evidence records the ledger gaps and the host coverage sweep.
+The lead updates the ledger after the gate image checks.
+
+The scope sweep lists 22 old tests and 35 new scenarios.
+The evidence gives the exact source commands for these totals.
+The host coverage sweep closes the measured path gaps in scope.
+The lead confirms those results in the gate image.
+
+## Known limits and later changes
+
+- Known limit `geojson-inherited-height`: the decoder checks coordinate values of the array, then reads an inherited height at line 27 of geojson.js.
+  The position has an inherited value at index 2.
+  An inherited height can exceed the height limits.
+  No scenario states this behavior.
+- Known limit `session-signal-getter`: a custom signal getter can destroy the session at line 74 of session.js before the source call at line 100.
+  The source still receives a call.
+  The session can return true with resources in the ready state after destruction.
+  No scenario states this behavior.
+- Known limit `old-tests-outside-scope`: the project migration test and the author details test keep their names without tags.
+  They check code outside this change.
+- Known limit `code-probes-without-scenarios`: the scratch tests record the inherited height and signal getter Known limits.
+  The repository does not include these tests.
+  The scratch file is `limits.test.mjs`.
+- Known limit `row-m172`: the repository tests do not kill mutation row m172.
+  Only the scratch test `limits.test.mjs` kills this row.
+  Later change `fix-director-inherited-height` addresses `geojson-inherited-height`.
+  Later change `fix-director-signal-getter` addresses `session-signal-getter`.
+
+- Known limit `bundle-nonnumeric-length`: a custom Uint8Array length getter can return text instead of a number.
+  The export then adds text to the total at line 157 of bundle.js.
+  The byte validation can reject three real bytes as excess total bytes.
+  A later asset without a byte length can also make the total nonnumeric.
+  No scenario states this behavior.
+
+Later change `fix-director-bundle-nonnumeric-length` addresses `bundle-nonnumeric-length`.
+
+- Known limit `session-listener-timer`: a caller signal can cancel the load call during listener registration.
+  The session then creates a timer after it clears that load call.
+  The timer stays after the caller destroys the session.
+  The probe uses a custom listener method and fixed timer tokens.
+  No scenario states that the timer stays.
+  Later change `fix-director-listener-timer` addresses `session-listener-timer`.
+
+- Known limit `allowed-field-added-members`: the automatic tool does not add members to the eight allowed-field lists.
+  Hand rows add `script`, and tests reject `script` and `adapters` for each list.
+  Other added names need separate hand rows.
+- Known limit `closed-set-added-members`: the automatic tool does not add members to any closed set.
+  This covers media types, data pack formats, directory protocols and all eight allowed-field lists.
+  It also covers the geometry types, single-value fields and text alphabets that audit.md names, and coordinate lengths 2 and 3 at geojson.js:19.
+  Hand rows cover only the additions that audit.md names.
+  The bundle source name, bundle file suffix and directory final slash also have this limit.
+  The tests reject coordinate lengths 1 and 4; an added length 5 needs a separate test and hand row.
+
+- Known limit `digest-asset-result-check-order`: scenario director-107 states "after each digest" and "after the asset result".
+  Only call counts show the clauses after each digest and after the asset result.
+  The probe in evidence/probe-signal-check-order.txt shows three mutations that survive the three test files.
+  They move the check between the call and its `await` at bundle.js:93-94, 150-154 and 160-161.
+  The file evidence/probe-signal-check-order-mutations.json lists them.
+  The lead keeps this limit; the owner confirms it in the pull request.
+
+- Known limit `second-text-signal-error`: scenario director-107 states that the share helpers reject cancellation after the text promise settles.
+  No test makes the second signal check at bundle.js:129 throw.
+  A change that catches that error and does nothing passes each test.
+  The probe in evidence/probe-signal-check-order.txt shows that the mutation that catches the error at bundle.js:129 survives the three test files.
+  The file evidence/probe-signal-check-order-mutations.json lists it.
+  The lead keeps this limit; the owner confirms it in the pull request.
+
+### Pass 7 notes
+
+Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
+
+The loop table lists 52 collection traversals in six of the seven source files.
+The file lifetime.js has no collection loop.
+
+- Pass 7 note `host-gates`: the lead runs image gates, ratchet and review round 6.
+  This pass uses host tests and coverage.
+
+- Pass 7 note `predispatch-code-fence`: the predispatch checker treats the production identifiers `MIME` and `SHA-256` inside JavaScript fences as prose.
+  The pass keeps the production span and the predispatch checker.
+- Pass 7 note `predispatch-run-name`: task 9.11 uses the wording that the lead gives.
+  The predispatch checker reports run as a noun in that instruction.

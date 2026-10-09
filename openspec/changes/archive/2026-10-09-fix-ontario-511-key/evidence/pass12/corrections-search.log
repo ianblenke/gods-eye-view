@@ -1,0 +1,19 @@
+Command: rg -n At Pass 5, the scratch tree|The automut command runs|^P1:|^P4:|\| R1 README|\| R3 Cache|\| T[1-5] |\| U[1-6] |At Pass 11, the search openspec/changes/fix-ontario-511-key/evidence.md
+1309:At Pass 5, the scratch tree /tmp/ont-pass5-tree has no branch.
+1607:The automut command runs each Ontario test file in its own process. Phase 2 uses resume after Phase 1 completes.
+2107:P1: The loader sentence names calls from the catalog and the cache that holds a source.
+2116:P4: At Pass 9, Known limits state a gap. The evidence does not show which came first at Pass 5: the changes to the tests or the changes to the scenario text.
+2213:| R1 README | The note on the README line names a table line and a table. It gives no line number. |
+2215:| R3 Cache | The proposal names a camera object from any pack and each new refresh from an empty cache. |
+2276:| T1 Copy | The notes on the Pass 5 automatic mutation run name the copy of the tests from before the Pass 5 channel changes. Pass 11 deletes the sentence about older Pass 5 tests from the Pass 9 scratch tree note. |
+2277:| T2 Cache | The proposal sentence names the loader calls from the catalog and the cache that is not empty. It names the two loader cases without scenarios. |
+2278:| T3 README | The README line note names the Pass 5 choice and the table that records it. |
+2279:| T4 Notes | Note P4 is two sentences. The label P9 becomes P8. Two Pass 10 links name their commands. |
+2280:| T5 Records | The Pass 10 block gains a correction title, tree commit, labels and command records. |
+2282:At Pass 11, the search for the name test function and the title diff ran again; their outputs are in evidence/pass10. The file evidence/pass10/check-titles.py holds the script that ran as /tmp/pass10-titles.py.
+2333:| U1 History | P1 and R3 have their past-pass words again. T2 records the Pass 11 cache text. |
+2334:| U2 Order | P4 names the changes to the tests and the changes to the scenario text. |
+2335:| U3 Process | The automut sentence names the command that runs each test file. |
+2336:| U4 Labels | The Pass 11 labels are T1 to T5. Their rows name the text changes. R1 uses README line. |
+2337:| U5 Outputs | The Pass 11 block dates the two outputs in evidence/pass10 and names the stored title script. |
+2338:| U6 Tree | The Pass 5 note names /tmp/ont-pass5-tree. Pass 12 deletes the false sentence about its tests. |

@@ -1,0 +1,11 @@
+src/data/cctvOntarioRows.test.mjs:96:  'the x511on.ca URL host name',
+src/data/cctvOntarioRows.test.mjs:97:  'the www.511on.ca URL host name',
+src/data/cctvOntarioRows.test.mjs:98:  'an ID with a space',
+src/data/cctvOntarioRows.test.mjs:99:  'an ID with a non-ASCII character',
+src/data/cctvOntarioRows.test.mjs:115:  'https://x511on.ca/map/Cctv/A',
+src/data/cctvOntarioRows.test.mjs:116:  'https://www.511on.ca/map/Cctv/A',
+src/data/cctvOntarioRows.test.mjs:491:  'URL text with spaces at the start and end',
+src/data/cctvOntarioKey.test.mjs:164:test('[live-sources-002] trim spaces from the key', async (t) => {
+src/data/cctvOntarioKey.test.mjs:176:test('[live-sources-002] use a timeout of 15000 milliseconds', async (t) => {
+src/data/cctvOntarioKey.test.mjs:189:test('[live-sources-002] send the application/json Accept header', async (t) => {
+src/data/cctvOntarioKey.test.mjs:195:test('[live-sources-005] keep key text inside a fetch error out of the warning', async (t) => {

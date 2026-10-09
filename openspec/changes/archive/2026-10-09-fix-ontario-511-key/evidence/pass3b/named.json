@@ -1,0 +1,43 @@
+[
+  {
+    "fault": "reset-error-only",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-003] make no request without a key (15.97742ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-003] make no request without a key (15.97742ms)"
+    ]
+  },
+  {
+    "fault": "reset-missing-only",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] keep the fetch error secret (15.001729ms)",
+      "\u2716 [live-sources-005] keep the json error secret (6.369268ms)",
+      "\u2716 [live-sources-004] return an empty list for an HTTP error with JSON rows (11.647802ms)",
+      "\u2716 [live-sources-005] keep key text inside a fetch error out of the warning (4.138218ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-005] keep the fetch error secret (15.001729ms)",
+      "\u2716 [live-sources-005] keep the json error secret (6.369268ms)",
+      "\u2716 [live-sources-004] return an empty list for an HTTP error with JSON rows (11.647802ms)",
+      "\u2716 [live-sources-005] keep key text inside a fetch error out of the warning (4.138218ms)"
+    ]
+  },
+  {
+    "fault": "no-reset",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-003] make no request without a key (15.384086ms)",
+      "\u2716 [live-sources-005] keep the fetch error secret (9.206222ms)",
+      "\u2716 [live-sources-005] keep the json error secret (6.175014ms)",
+      "\u2716 [live-sources-004] return an empty list for an HTTP error with JSON rows (6.204234ms)",
+      "\u2716 [live-sources-005] keep key text inside a fetch error out of the warning (4.147437ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-003] make no request without a key (15.384086ms)",
+      "\u2716 [live-sources-005] keep the fetch error secret (9.206222ms)",
+      "\u2716 [live-sources-005] keep the json error secret (6.175014ms)",
+      "\u2716 [live-sources-004] return an empty list for an HTTP error with JSON rows (6.204234ms)",
+      "\u2716 [live-sources-005] keep key text inside a fetch error out of the warning (4.147437ms)"
+    ]
+  }
+]
