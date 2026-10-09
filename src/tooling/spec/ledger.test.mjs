@@ -1662,7 +1662,7 @@ test('[gap-ledger-143] the ratchet command uses toleranceCounts for a file with 
   assert.deepEqual(lower.totals, { lines: 399, branches: 400, functions: 400 });
 });
 
-test('[gap-ledger-155] the ratchet command writes current total counts for a file with no base content when ledger total counts are absent', () => {
+test('[gap-ledger-155] the ratchet command writes current gap total counts for a file with no base content when ledger entry total counts are absent', () => {
   const file = 'src/new.js';
   for (const totals of [undefined, {}]) {
     const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 10, 10, { totals }) } });
@@ -1685,7 +1685,7 @@ test('[gap-ledger-156] the ratchet command writes the ledger entry total count o
 });
 
 
-test('[gap-ledger-154] the ratchet command compares each metric with its own ledger entry not-covered count', () => {
+test('[gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric', () => {
   const file = 'src/new.js';
   const ledger = ledgerWith({ coverage: { [file]: LOADED(30, 10, 5, { totals: { lines: 400, branches: 300, functions: 200 } }) } });
   const next = ratchet(ledger, gaps([loaded(file, 20, 11, 5, 'same', { lines: 401, branches: 301, functions: 199 })]), { adoptedAsIs: () => true }).ledger.coverage[file];

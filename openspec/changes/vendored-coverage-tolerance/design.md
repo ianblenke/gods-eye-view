@@ -35,14 +35,15 @@ The covered-count rule of toleranceCounts cannot apply to that file.
 neverWorseCounts selects the counts of each metric separately.
 
 neverWorseCounts selects current counts for each metric.
-This applies when its current not-covered count is smaller than or equal to its ledger entry not-covered count.
-Those counts are the current not-covered count and total count.
-For each metric, neverWorseCounts selects ledger entry counts when the current not-covered count is larger than the ledger entry not-covered count of that metric.
-Those counts are the ledger entry not-covered count and total count.
+This applies when the current not-covered count of that metric is smaller than or equal to the ledger entry not-covered count of that metric.
+Those counts are the current not-covered count and the current gap total count.
+neverWorseCounts selects ledger entry counts for a metric.
+This applies when the current not-covered count of that metric is larger than the ledger entry not-covered count of that metric.
+Those counts are the ledger entry not-covered count and the ledger entry total count.
 
-If the ledger entry total count is absent, neverWorseCounts selects the current gap total count.
-This change adds no error code and changes no count comparison of compareLedger, compareWithBase and toleranceOf.
-The stale exception of the requirement Total counts for adopted files is the only change to LEDGER-STALE.
+If the ledger entry total count of a metric is absent, neverWorseCounts selects the current gap total count of that metric.
+This change adds no error code.
+The two ADDED requirements change which files get the count tolerance and when compareLedger records a ledger entry as stale.
 
 ### Total count exception
 
@@ -144,4 +145,6 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | base count | Not-covered count of a metric for a file in the base ledger. |
 | ledger entry not-covered count | Not-covered count of a ledger entry. |
 | ledger entry total count | Total count of a ledger entry. |
+| current not-covered count | Not-covered count of the current gap. |
+| waived count | Sum of the waiver counts of a metric for a file. |
 | current gap total count | Total count of the current gap. |

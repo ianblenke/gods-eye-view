@@ -170,13 +170,13 @@ The lead decides in review.md whether to accept it by name.
 - [x] Run the ledger test file.
 - [x] Run the gates test file.
 - [x] Measure coverage of both scripts.
-- [x] Check the local file scope of both requirements.
+- [x] Check the file scope of each MUST in both requirements.
 - [x] Check the repeated titles.
-- [x] Check the new test clauses.
+- [x] Check the title of the new test against its body.
 - [x] Run STE lint.
 - [x] Check the banned word forms.
 - [x] Check the JSON output of openspec show.
 - [x] Validate the change with OpenSpec.
 - [x] Replay the four coverage targets.
-- [x] Compare the level 2 and level 3 section titles.
+- [x] Compare the level 2 and level 3 headings with commit 4b0a44bc.
 - [x] Record the Pass 8 evidence.
