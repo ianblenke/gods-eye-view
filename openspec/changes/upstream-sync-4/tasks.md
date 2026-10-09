@@ -1,10 +1,10 @@
 ## 1. Merge and host files
 
-- [x] 1.1 Write the change plan and the delta spec.
+- [x] 1.1 Write the change plan and the delta spec for `qa-scripts-023`.
 - [x] 1.2 Merge the upstream commit.
 - [x] 1.3 Resolve the three conflicts.
 - [x] 1.4 Commit the merge first.
-- [x] 1.5 Change the register test to expect 90 files.
+- [x] 1.5 Change the register test of `qa-scripts-023` to expect 90 files.
 
 ## 2. Host evidence
 
