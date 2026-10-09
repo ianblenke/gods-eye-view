@@ -206,7 +206,7 @@
         "branches": null,
         "functions": null
       },
-      "sha": "e466ffd92db1b60eee6d6ef92197d37f4d1786001ba5479f51e63b49571327bc",
+      "sha": "d1d1ffff554f32f3017888e6a5244a3c040028027a57361f15284166f3367cff",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -457,11 +457,11 @@
       "branches": 20,
       "functions": 1,
       "totals": {
-        "lines": 263,
+        "lines": 265,
         "branches": 108,
         "functions": 22
       },
-      "sha": "65dc6d5e0c65bb4a1c6de9c7afe443e3883fc8c1db5803628bff6d5c52346301",
+      "sha": "bc8c0f57410451778ba027a6ae35dd08dfbf62883f6685ee0a5e2e0c13b62775",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -1156,6 +1156,21 @@
       "origin": "pre-spec",
       "since": "2026-09-15"
     },
+    "server/providers/openai/codex-auth.js": {
+      "loaded": true,
+      "lines": 20,
+      "branches": 17,
+      "functions": 3,
+      "totals": {
+        "lines": 360,
+        "branches": 116,
+        "functions": 26
+      },
+      "sha": "93fe2f75753dee04ddab14ce255a42a4cc7524c8fe4f346283dd4c4c4f552a2d",
+      "untrue": false,
+      "origin": "upstream-sync-4",
+      "since": "2026-10-09"
+    },
     "server/providers/openai/debug-log.js": {
       "loaded": true,
       "lines": 5,
@@ -1203,15 +1218,15 @@
     },
     "server/providers/openai/realtime.js": {
       "loaded": true,
-      "lines": 9,
-      "branches": 5,
-      "functions": 0,
+      "lines": 57,
+      "branches": 22,
+      "functions": 1,
       "totals": {
-        "lines": 186,
-        "branches": 39,
-        "functions": 5
+        "lines": 369,
+        "branches": 85,
+        "functions": 13
       },
-      "sha": "1095945026f9276eb15cb4260a8573b8f4a999833cc41bbcc66bf152db148bc1",
+      "sha": "e90aac9b41b3a7d7b693919257ebc8cd6842c24f0ebdfeb2213ef3c43f11e508",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3858,15 +3873,15 @@
     },
     "src/keySetup.js": {
       "loaded": true,
-      "lines": 235,
-      "branches": 17,
-      "functions": 14,
+      "lines": 376,
+      "branches": 18,
+      "functions": 18,
       "totals": {
-        "lines": 414,
-        "branches": 50,
-        "functions": 24
+        "lines": 593,
+        "branches": 68,
+        "functions": 30
       },
-      "sha": "332bf0ea5003a60898df61772224bb3d9878f4af894186c077004d7799a930cf",
+      "sha": "987baba6ffcf051109509b0adbefe228af2c11e81c6c728971c00ef41a8e019d",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -3881,7 +3896,7 @@
         "branches": 146,
         "functions": 22
       },
-      "sha": "9300f1841fc6964182c62ee4cd94e8b2ad8d76c6c0b8a403124c7343529788f2",
+      "sha": "9b021457d90c8b854ad3438b79cb3716fb375b01239183979b344da5863b5107",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -8778,15 +8793,15 @@
     },
     "src/sources/openFreeMap.js": {
       "loaded": false,
-      "lines": 227,
+      "lines": 234,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 227,
+        "lines": 234,
         "branches": null,
         "functions": null
       },
-      "sha": "76692e013c19fbcb6bf4740857a3a8c6ee92b074def1409b7980475e8029aa50",
+      "sha": "22ae59c6e02c095de0bda2209f3c0aae486e46874177ebd3ffb1e4ac4ffa9737",
       "untrue": true,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
@@ -8973,15 +8988,15 @@
     },
     "src/sources/vectorTiles.js": {
       "loaded": false,
-      "lines": 408,
+      "lines": 424,
       "branches": null,
       "functions": null,
       "totals": {
-        "lines": 408,
+        "lines": 424,
         "branches": null,
         "functions": null
       },
-      "sha": "223fb40b8aebb339b4b67a6d0d394f20d1c22645a4b622fff02ed7cf41ead562",
+      "sha": "3225c6e1e48ae3a8242639d3eb09c7c0d946767790782bc6142312c238b97b81",
       "untrue": true,
       "origin": "upstream-sync-2",
       "since": "2026-10-02"
@@ -10846,6 +10861,21 @@
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
+    "src/voice/cloudVoiceAuth.js": {
+      "loaded": true,
+      "lines": 6,
+      "branches": 4,
+      "functions": 0,
+      "totals": {
+        "lines": 41,
+        "branches": 12,
+        "functions": 4
+      },
+      "sha": "e39d6b7894a833d13d51a1e2260c692ba03064ca93fa7b1137822bfcd4d59416",
+      "untrue": false,
+      "origin": "upstream-sync-4",
+      "since": "2026-10-09"
+    },
     "src/voice/commands.js": {
       "loaded": true,
       "lines": 5,
@@ -11032,26 +11062,26 @@
       "branches": 8,
       "functions": 4,
       "totals": {
-        "lines": 95,
-        "branches": 30,
+        "lines": 103,
+        "branches": 32,
         "functions": 8
       },
-      "sha": "891d37c8f034934c12368f52426837d05a5fda75f737d5376371d28dc7b788b8",
+      "sha": "34572b4faa2357b070f8f9ec5e90b7512abea490219ff6eb1f976ab4e52f4dd4",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
     },
     "src/voice/realtimeConnection.js": {
       "loaded": true,
-      "lines": 106,
-      "branches": 31,
+      "lines": 104,
+      "branches": 30,
       "functions": 7,
       "totals": {
-        "lines": 383,
+        "lines": 385,
         "branches": 77,
         "functions": 28
       },
-      "sha": "5b17de17dd2c05f83f7742fe7bc62264e0b89f4157f3b40480520c54a836d454",
+      "sha": "81b3b4f238f6e506ba6b68d91a591c2d18011708acdb538e81e30122bd28b606",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -11062,11 +11092,11 @@
       "branches": 14,
       "functions": 14,
       "totals": {
-        "lines": 495,
+        "lines": 498,
         "branches": 176,
         "functions": 97
       },
-      "sha": "b114e248dc6d0cc3aba8c437ed25cf50d7d4499860b99c16c75edbed09ea5002",
+      "sha": "64a0832cfee22ee8a95f0867dbce1addac8c746b2d41324ff1123dcd0edc86df",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -11074,14 +11104,14 @@
     "src/voice/realtimeCost.js": {
       "loaded": true,
       "lines": 10,
-      "branches": 4,
+      "branches": 3,
       "functions": 1,
       "totals": {
-        "lines": 232,
-        "branches": 36,
-        "functions": 14
+        "lines": 270,
+        "branches": 49,
+        "functions": 15
       },
-      "sha": "8e4791e7bf2ad01bc72b1c334f1c36aab1bd3dda6900d903b6b742b4e5188834",
+      "sha": "37b07fcc447ff371775887c417cf9f58572e659e8cadc06acbe2edd0895385a8",
       "untrue": false,
       "origin": "upstream-sync",
       "since": "2026-09-25"
@@ -12093,6 +12123,20 @@
       },
       "origin": "pre-spec",
       "since": "2026-09-15"
+    },
+    "src/codexOauthRealtime.test.mjs": {
+      "names": {
+        "Codex OAuth reader accepts a current ChatGPT token and rejects unusable credentials": 1,
+        "Codex OAuth reader enforces expiry margin and bounds tokens without exp by file age": 1,
+        "Codex auth path follows explicit auth file, CODEX_HOME, then home directory": 1,
+        "Codex login hides spawn errors and can cancel only its owned child": 1,
+        "Codex login refuses a read/write storage mismatch before spawning": 1,
+        "Codex login resolves an installed executable before PATH and starts browser auth detached": 1,
+        "Codex login resolves relative CODEX_HOME before changing the child directory": 1,
+        "optional Codex OAuth pin fails closed on ambiguous values": 1
+      },
+      "origin": "upstream-sync-4",
+      "since": "2026-10-09"
     },
     "src/contactsDetectionPolicy.test.mjs": {
       "names": {
@@ -15763,6 +15807,10 @@
     },
     "src/keySetup.test.mjs": {
       "names": {
+        "OAuth login polling respects timeout and an aborted setup surface": 1,
+        "OAuth login polling stops as soon as local ChatGPT auth becomes available": 1,
+        "OAuth login polling stops on login or HTTP failure instead of waiting for timeout": 1,
+        "OAuth polling ignores a ready response received after the surface was aborted": 1,
         "aborting pending setup removes its surface and ignores a late response": 1,
         "collectKeyUpdates keeps only non-empty trimmed values": 1,
         "setup placement moves the same button only in Cyber and disconnects on teardown": 1,
@@ -18300,9 +18348,11 @@
         "Capitol, greenbelt and commercial property fixtures exclude non-public driving space": 1,
         "OpenMapTiles class mapping and reverse oneway preserve the animated-road contract": 1,
         "TileJSON is resolved once and decoded tile LRU prevents per-pan refetch": 1,
+        "a mirror that serves the default host TileJSON verbatim fails loudly": 1,
         "destroying a tile source aborts in-flight bodies and prevents stale cache refill": 1,
         "public road admission rejects paths, private access, service areas and tunnels": 1,
         "real z14 and z12 Austin tiles decode only drivable roads": 1,
+        "repointing tileJsonUrl at a mirror never falls back to the default tile host": 1,
         "shared TileJSON survives one camera cancellation and aborts when its last owner leaves": 1,
         "tile buffer clipping rejects slivers and does not join disconnected lines": 1,
         "tile reads cap view size, concurrency and retained bytes, and reject oversized bodies": 1
@@ -18348,6 +18398,8 @@
         "TileJSON 503 retries after cooldown and caches only success": 1,
         "TileJSON network retries after cooldown and caches only success": 1,
         "TileJSON timeout retries after cooldown and caches only success": 1,
+        "a configured tileJsonUrl sets the tile origin, and a foreign tiles[0] is still refused": 1,
+        "an explicit allowedOrigin still wins over the one derived from tileJsonUrl": 1,
         "final subscriber cancellation aborts the owned request; completed tiles publish before a straggler": 1,
         "invalid TileJSON is permanent only until clear": 2,
         "overlapping callers share XYZ; cancelling one keeps the other alive": 1,
@@ -18522,11 +18574,22 @@
     },
     "src/tooling/localServices.test.mjs": {
       "names": {
+        "OAuth launch errors are safe and cross-origin status requests cannot read credentials": 1,
+        "OAuth login endpoint selects an existing local sign-in without launching Codex": 1,
+        "OAuth login endpoint shares pending attempts and never exposes credentials": 1,
+        "OAuth login timeout and server shutdown cancel the owned process": 1,
+        "OAuth status and token minting never expose local OAuth to remote clients": 1,
+        "OAuth status and token minting report expired sign-in as re-auth required": 1,
+        "OAuth status follows process completion, permits retry, and checks credential storage": 1,
+        "OAuth status reports local sign-in availability without returning the token": 1,
         "OpenAI routes answer generically when the upstream or the request fails": 1,
+        "Realtime handler keeps API key as default and uses OAuth only when requested": 1,
         "Realtime handler preserves tools and default instructions, isolates supplied annotation guidance, and keeps the upstream key server-side": 1,
         "Realtime service configuration selects compatible endpoint/model without forwarding request model IDs or keys": 1,
         "Realtime sessions carry supplied tools, and the standalone voice adds the catalog queries": 1,
+        "a Codex OAuth pin refuses API-key minting without silently switching modes": 1,
         "a debug-log record cannot supply its own timestamp": 1,
+        "a login that spawns after timeout is cancelled and cannot replace a retry": 1,
         "an oversized debug-log request receives the fixed error response": 1,
         "caption transcription is on by default, reported to the client meter, and can be turned off": 1,
         "debug logging resolves each supplied application directory independently": 1,
@@ -19789,6 +19852,13 @@
       "origin": "upstream-sync-3",
       "since": "2026-10-08"
     },
+    "src/voice/cloudVoiceAuth.test.mjs": {
+      "names": {
+        "cloud voice auth defaults to API key and persists OAuth independently": 1
+      },
+      "origin": "upstream-sync-4",
+      "since": "2026-10-09"
+    },
     "src/voice/deixis.test.mjs": {
       "names": {
         "analyst_query: \"how many flights around here\" becomes a radius at the pointer": 1,
@@ -19926,6 +19996,8 @@
         "F5: a clean teardown does not mark the total incomplete": 1,
         "F5: a response in flight at teardown marks the accounting INCOMPLETE": 1,
         "F5: teardown always closes the channel, in one step": 1,
+        "OAuth cloud sessions count caption transcriptions without pricing them into the API cap": 1,
+        "OAuth cloud sessions report unknown cost and usage without tripping the API spend guard": 1,
         "Pause and Stop preserve independent dedicated and generic Radio ON across manager phases > dedicated ON + pause failure during enable": 1,
         "Pause and Stop preserve independent dedicated and generic Radio ON across manager phases > dedicated ON + pause failure during init": 1,
         "Pause and Stop preserve independent dedicated and generic Radio ON across manager phases > dedicated ON + pause failure during update": 1,
@@ -20172,6 +20244,7 @@
     },
     "src/voice/realtimeBackend.test.mjs": {
       "names": {
+        "OAuth is an additive token query while API key stays the default": 1,
         "cancellation rejects late token and SDP bodies without promoting a stopped connection": 1,
         "controller lifetime stops pending transport and releases resources through normal teardown": 1,
         "denied tokens never negotiate or retry; reconnect requests a fresh token": 1,
