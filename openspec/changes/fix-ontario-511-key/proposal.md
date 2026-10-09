@@ -37,8 +37,10 @@ The key travels in the query string. An HTTP 200 response with an error object g
 
 The layer shows no status for an empty pack. No worker sent a GET request for a camera image with a key.
 Setup doctor, Pinokio fields and key setup do not list `ONTARIO_511_API_KEY`.
+
 The loader writes "Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)" without a key and after a request error.
-Each time the layer loads the cameras in those cases, it writes this line. No scenario covers those cases.
+In those cases, the loader writes this line each time the catalog calls it.
+The catalog calls the loader at most once in 15 minutes while its cache holds a source. No scenario covers those cases.
 
 The status lines of `scripts/dev-fresh.sh` do not show the Ontario key state.
 The lead must run the Docker image checks and both reviews. The separate catalog cap issue stays outside this change.
@@ -48,7 +50,7 @@ The lead must run the Docker image checks and both reviews. The separate catalog
 
 The hook has no scenario. The lead accepts it by name.
 The request warning tells the user to check ONTARIO_511_API_KEY.
-The warning has the same text for a timeout, an HTTP 5xx error and an HTTP 429 error. A valid key can still get these errors.
+The warning has the same text for a timeout, an HTTP 5xx error and an HTTP 429 error. A request with a valid key can still get these errors.
 The code no longer writes the HTTP status in a log line.
 
 The tests watch the six console channels. They do not watch text that code writes directly to process.stdout and process.stderr.
@@ -58,15 +60,21 @@ The probe shows that `console.table`, the labels of `console.group`, `console.co
 On Node v26.8.2 and Node v24.21.0, `console.dirxml` writes directly to stdout, so the tests do not watch it.
 
 `console.groupEnd`, a valid `console.countReset` and `console.time` write no text in the probe.
-These results come from Node v26.8.2 and from Node v24.21.0 in the Docker image. The results are the same.
+These results come from Node v26.8.2 and from Node v24.21.0 in the base image. The results are the same.
 
 The scenario 008 test cannot detect a seventh anchor far from all rows.
 It cannot detect that the Windsor anchor moves by less than about 3 kilometers. The row at Windsor is the last of the six rows at anchors.
 
-No worker probed the console routes on Node 24.14.0 (one CI job).
+No worker ran the console probe on Node 24.14.0, the version of the CI job that runs `npm test`.
+The CI job on Node 26.x floats, and only Node v26.8.2 was probed.
 
-The scenarios 004, 005 and 008 name no console channel for a warning or a log line.
-The tests pin the channel (warn for the warnings, log for the count line). The lead accepts this.
+The clauses of scenarios 004 and 005 that quote the request error text and the row error text name no console channel.
+See spec.md lines 21, 29 and 31.
+The clause of scenario 008 about the loader log line names no console channel (spec.md line 83).
+The tests assert `console.warn` for the error texts and `console.log` for that line. The lead accepts this.
+
+The evidence does not show the order of the Pass 5 test changes and the Pass 5 changes to the scenario text.
+The lead decides in review.md whether to accept this by name.
 
 The lead accepts the word image in the Pass 3 and Pass 3B records by name.
 Those records use image for the Docker image.

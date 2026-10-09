@@ -1,0 +1,27 @@
+Command: python openspec/changes/fix-ontario-511-key/evidence/pass8/text-check.py
+Banned words and prefixed forms in new text: 0
+design.md:78: | base image | `node:24.21.0-bookworm-slim`, the image in the `FROM` line of the Dockerfile. |
+proposal.md:42: In those cases, the loader writes this line each time the catalog calls it.
+proposal.md:43: The catalog calls the loader at most once in 15 minutes while its cache holds a source. No scenario covers those cases.
+proposal.md:49: `src/renderGovernor.js` and `server/providers/places/routes.js` use the same style.
+proposal.md:63: These results come from Node v26.8.2 and from Node v24.21.0 in the base image. The results are the same.
+proposal.md:71: The clauses of scenarios 004 and 005 that quote the request error text and the row error text name no console channel.
+proposal.md:73: The clause of scenario 008 about the loader log line names no console channel (spec.md line 83).
+tasks.md:125: - [x] Run the console probe in the base image (Node 24.21.0). The lead ran this probe.
+evidence.md:1308: At Pass 6, the automatic run used another copy of the tests; see S18.
+evidence.md:1472: At Pass 6, the lead ran the same probe in the base image (Node v24.21.0). The results are the same (C2).
+evidence.md:1602: At Pass 6, the automatic run used another copy of the tests; see S18.
+evidence.md:1717: C2: The Docker image uses Node 24.21.0. The lead ran the console probe in the base image on 2026-10-08.
+evidence.md:1718: Pass 6 copies the script and the output of the base image to evidence/pass6. The lead's stderr file is empty.
+evidence.md:1721: The command file names the Docker command, the name and ID of the base image, and the exit code.
+evidence.md:1728: 13 routes equal: Node v26.8.2 = Node v24.21.0
+evidence.md:1737: Section 8 records Pass 6. Section 9 has the lead checks. Only the lead ran the probe in the base image.
+evidence.md:1999: The lead ran the console probe in the base image (C2).
+evidence.md:2047: The lead ran the console probe in the base image and the host mutations.
+evidence.md:2050: The first file is empty. The second file names the command, name and ID of the base image, and exit code.
+evidence.md:2082: The lead chose the E1 sentence at ev:1330-1332. It replaces the STE text for the README row at ev:1318.
+evidence.md:2116: P5: The glossary adds base image and anchor. The host row distinguishes a URL host name.
+evidence.md:2117: The probe records name the base image. The Pass 3 and Pass 3B records stay unchanged.
+evidence.md:2137: The other matches for routes are a file name and old command output. No current reset hook or fixture has the name test function.
+Code cross-check: catalog.js 156-201; constants.js 127-134 and 248; normalize.js 468-471; sources.js 464-539.
+Document cross-check: spec.md 21, 29, 31 and 83; ci.yml 23, 57 and 111; Dockerfile 5; automut.mjs 149-150.
