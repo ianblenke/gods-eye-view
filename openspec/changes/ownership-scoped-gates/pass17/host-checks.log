@@ -1,16 +1,17 @@
 ##### git rev-parse HEAD
-7a699a4b50139227d41db3ead7c4e3e715e470c0
+70e02e6d7604d27761586f28670f26716a8c2ba8
 ##### git status --short
  M openspec/changes/ownership-scoped-gates/evidence.md
+ M openspec/changes/ownership-scoped-gates/pass17/host-checks.log
  M openspec/changes/ownership-scoped-gates/tasks.md
-?? openspec/changes/ownership-scoped-gates/review/pre-review-14/
+?? openspec/changes/ownership-scoped-gates/review/pre-review-15/
 ##### node scripts/format.mjs --check
 Checked 1328 source files.
 ##### status 0
 ##### node scripts/spec/gates.mjs lint --change ownership-scoped-gates
 WARN STE-WORD-OLD openspec/specs/wind/spec.md:72 Use "closes", not "dismisses"
 WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
-STE: 0 errors, 667 warnings.
+STE: 0 errors, 666 warnings.
 ##### status 0
 ##### openspec validate ownership-scoped-gates
 Change 'ownership-scoped-gates' is valid

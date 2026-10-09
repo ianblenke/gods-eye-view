@@ -335,7 +335,7 @@ These titles are the names in the red logs. Later corrections renamed some title
 ## 18. Pass 16
 
 - [x] 18.1 Correct the major faults that pre-review 13 found.
-- [x] 18.2 Run the lint and OpenSpec validate on the host.
+- [x] 18.2 Run the format check, the lint and OpenSpec validate on the host.
 
 ## 19. Pass 17
 
