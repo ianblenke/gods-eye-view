@@ -323,10 +323,10 @@ These titles are the names in the red logs. Later corrections renamed some title
 
 ## 17. Pass 15
 
-- [ ] 17.1 Correct the major faults that pre-review 12 found.
-- [ ] 17.2 Rename the test of `gap-ledger-151` in `ledger.test.mjs`.
-- [ ] 17.3 Run the test of `gap-ledger-151` with two faults.
-- [ ] 17.4 Run the test of `ownership-055` with two faults and print each assertion.
-- [ ] 17.5 Run the host test of the file `ledger.test.mjs`.
-- [ ] 17.6 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
-- [ ] 17.7 Run the lint and OpenSpec validate on the host.
+- [x] 17.1 Correct the major faults that pre-review 12 found.
+- [x] 17.2 Rename the test of `gap-ledger-151` in `ledger.test.mjs`.
+- [x] 17.3 Run the test of `gap-ledger-151` with two faults.
+- [x] 17.4 Run the test of `ownership-055` with two faults and print each assertion.
+- [x] 17.5 Run the host test of the file `ledger.test.mjs`.
+- [x] 17.6 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
+- [x] 17.7 Run the lint and OpenSpec validate on the host.
