@@ -197,8 +197,22 @@ The lead decides in review.md whether to accept it by name.
 
 ### Pass 10
 
-- [x] Resolve the findings of pre-review 8.
+- [x] Correct the faults that pre-review 8 found.
 - [x] Run the ledger host test.
 - [x] Run STE lint.
 - [ ] Check the JSON output of openspec show.
+- [x] Validate the change with OpenSpec.
+
+### Pass 11
+
+- [x] Correct the faults that pre-review 9 found.
+- [x] Run the ledger host test.
+- [x] Check the JSON output of openspec show.
+
+### Pass 12
+
+- [x] Correct the major faults that pre-review 10 found.
+- [x] Run the ledger host test.
+- [x] Run STE lint.
+- [x] Check the JSON output of openspec show.
 - [x] Validate the change with OpenSpec.

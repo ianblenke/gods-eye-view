@@ -11,7 +11,7 @@ A file that the fork edits can also have different total counts and equal not-co
 - Accept total count differences for a file with a valid adopt line, equal hashes and equal not-covered counts.
 - Apply never-worse counts to a file that equals its adopted source without base content.
 - Use toleranceCounts for a file with base content.
-- Do not change the size of the tolerance or the comparison that each error code makes.
+- Do not change the size of the tolerance or the comparison in compareCoverageEntry.
 
 ## Capabilities
 
