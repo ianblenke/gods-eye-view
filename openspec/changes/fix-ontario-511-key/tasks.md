@@ -122,11 +122,11 @@
 
 ## 8. Pass 6
 
-- [x] Run the console probe in the Docker image (Node 24.21.0). The lead ran this probe.
+- [x] Run the console probe in the base image (Node 24.21.0). The lead ran this probe.
 - [x] Compare the console probe results.
 - [x] Correct the pre-review 4 text findings.
 - [x] Compare the automatic test copy with the live tests.
-- [x] Run the automatic mutations again on the live tests. The lead ran this task.
+- [x] Run the automatic mutations again on the live tests. The lead ran this task after Pass 6.
 - [x] Run the Pass 6 data and media tests.
 - [x] Run the Pass 6 title and prose checks.
 - [x] Run the Pass 6 format check.

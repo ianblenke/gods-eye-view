@@ -41,7 +41,7 @@ The purpose of the browser QA for the CCTV layer stays the same. Camera markers 
 |---|---|
 | pack | The Ontario camera pack as a whole. |
 | loader | `loadOntarioSourcesFromOpenData`. |
-| reset hook | `_resetOntarioRequestForTest` sets both warning flags to false. It is a test function with no scenario of its own. |
+| reset hook | `_resetOntarioRequestForTest` sets both warning flags to false. It exists for tests and has no scenario of its own. |
 | request helper | `readOntarioCameraRows`. |
 | key | The value of `ONTARIO_511_API_KEY`. |
 | server key | The key that stays on the server. |
@@ -69,13 +69,20 @@ The purpose of the browser QA for the CCTV layer stays the same. Camera markers 
 
 | Word | Meaning |
 |---|---|
-| host | The computer outside the Docker image. |
+| host | The computer outside the Docker image. A URL host name is a different term. |
+
+## Pass 8 words
+
+| Word | Meaning |
+|---|---|
+| base image | `node:24.21.0-bookworm-slim`, the image in the `FROM` line of the Dockerfile. |
+| anchor | One of the six city points that the loader uses to sort sources. |
 
 ## Files and measures
 
 Add `server/providers/cctv/ontarioRequest.js` for the request helper.
 Use the reset hook before each key test. Import the module once without a query string.
-The reset hook is a test function with no scenario of its own. The current tests cover all its code.
+It exists for tests and has no scenario of its own. The current tests cover all its code.
 
 Two Rows tests check the initial warning flags without the reset hook.
 The coverage gate includes the reset hook in its line, branch and function counts.
