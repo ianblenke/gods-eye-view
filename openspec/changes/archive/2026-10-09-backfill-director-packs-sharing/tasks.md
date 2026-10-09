@@ -1072,7 +1072,7 @@ assets.length > SHARE_LIMITS.assets
 
 ## 3. Gates and review
 
-- [ ] 3.1 Run `make ratchet` for this change.
+- [x] 3.1 Run `make ratchet` for this change.
 - [ ] 3.2 Run `make gates` for this change.
 - [ ] 3.3 Get both review agent verdicts.
 - [ ] 3.4 Write `review.md` from those verdicts.
