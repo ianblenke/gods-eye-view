@@ -1,10 +1,18 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
+import { classify } from './ownership.mjs';
 import { changeFolder } from './review.mjs';
 
 const QA_FILE = /^scripts\/qa-.*\.mjs$/;
 const HEADER_MESSAGE = (file) => `${file}: add one first block with one nonempty line for each QA tag and valid covers items.`;
+const hasQaTag = text => /@(purpose|covers|run|needs)\b/.test(text.replace(/^#![^\r\n]*\r?\n/, '').match(/^\s*\/\*[\s\S]*?(?:\*\/|$)/)?.[0] ?? '');
 const TAGS = ['purpose', 'covers', 'run', 'needs'];
+
+/** True for an upstream QA script with no current or base QA tag. */
+export function adoptableQaScript({ file, text, baseText, manifest }) {
+  return QA_FILE.test(file) && Boolean(manifest) && classify(manifest, file) === 'upstream' &&
+    !hasQaTag(text) && (baseText === null || !hasQaTag(baseText));
+}
 
 /** Read the first QA block and return its four values, or null. */
 export function parseQaHeader(text) {
@@ -28,12 +36,18 @@ export function parseQaHeader(text) {
 }
 
 /** Check tracked QA scripts and return their errors and valid header paths. */
-export function readQaRegister({ root, tracked }) {
+export function readQaRegister({ root, tracked, manifest, readBaseFile = () => null, adopts = [] }) {
   const errors = [];
   const scripts = [];
   const validQaScripts = new Set();
   for (const file of tracked.filter((item) => QA_FILE.test(item)).sort()) {
-    const header = parseQaHeader(readFileSync(path.join(root, file), 'utf8'));
+    const text = readFileSync(path.join(root, file), 'utf8');
+    let header = parseQaHeader(text);
+    const baseText = readBaseFile(file);
+    const eligible = baseText !== null ? !hasQaTag(baseText) : adopts.some(item => item.file === file);
+    if (!header && eligible && adoptableQaScript({ file, text, baseText, manifest })) {
+      header = { purpose: 'Check upstream code.', covers: ['unmapped: upstream'], run: `node ${file}`, needs: 'The upstream script needs its own setup.', synthetic: true };
+    }
     if (!header) {
       errors.push({ code: 'QA-HEADER', file, message: HEADER_MESSAGE(file) });
       continue;
@@ -56,7 +70,8 @@ export function readQaRegister({ root, tracked }) {
 
 /** Return the QA advice lines for an active or archived change. */
 export function qaAdvice({ root, change, scripts }) {
-  if (!change) return [];
+  const advisory = scripts.filter(script => script.synthetic).map(script => `QA: ${script.file} uses the synthetic header with the covers item unmapped: upstream.`);
+  if (!change) return advisory;
   const folder = changeFolder(root, change);
   const delta = folder ? path.join(root, folder, 'specs') : null;
   const capabilities = new Set(delta && existsSync(delta) ? readdirSync(delta) : []);
@@ -73,5 +88,5 @@ export function qaAdvice({ root, change, scripts }) {
     }
   }
   lines.sort((a, b) => a.file.localeCompare(b.file) || a.capability.localeCompare(b.capability));
-  return lines.length ? [...new Set(lines.map((line) => line.text))] : ['QA: no script covers the capabilities of this change.'];
+  return [...advisory, ...(lines.length ? [...new Set(lines.map((line) => line.text))] : ['QA: no script covers the capabilities of this change.'])];
 }

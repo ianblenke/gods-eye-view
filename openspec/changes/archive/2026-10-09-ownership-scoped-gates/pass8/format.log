@@ -1,0 +1,2 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/pass2-format-shim.mjs scripts/format.mjs --check
+Checked 1158 source files.

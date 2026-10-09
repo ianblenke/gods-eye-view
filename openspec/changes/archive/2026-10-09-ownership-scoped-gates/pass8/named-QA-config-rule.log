@@ -1,0 +1,106 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-012 src/tooling/spec/ownership.test.mjs
+✖ [ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml (23.190604ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82.600494
+
+✖ failing tests:
+
+test at src/tooling/spec/ownership.test.mjs:124:1
+✖ [ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml (23.190604ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /The adopt command writes the adopt record for that script, also when the script is new\./. Input:
+  
+  'schema: spec-driven\n' +
+    '\n' +
+    'context: |\n' +
+    "  Project: God's Eye View (GEV). GEV is a browser 3D globe. It shows live\n" +
+    '  aircraft, ships, satellites, fires, traffic, cameras and radio. A Vite dev\n' +
+    '  server supplies the page and the server-side provider proxies.\n' +
+    '\n' +
+    '  Software:\n' +
+    '  - JavaScript ES modules. No TypeScript. No test framework other than node:test.\n' +
+    '  - Browser: CesiumJS, WebGL, DOM. Server: Vite middleware in server/providers.\n' +
+    '  - Node 24 is the calibrated runtime. Run the gates in the Docker image (make gates).\n' +
+    '  - The unit tests are the files src/**/*.test.mjs. The tests use node:test and node:assert.\n' +
+    '\n' +
+    '  Spec-first process. This process is for each change:\n' +
+    '  1. Write or change the spec before you write or change code.\n' +
+    '  2. Write the tests from the scenarios. Then write the code until the tests pass.\n' +
+    '  3. Each scenario has a stable ID. Each test names one or more scenario IDs.\n' +
+    '  4. Each owned code file that a change adds or edits needs 100% line, branch and function coverage.\n' +
+    '     Each owned code file without a ledger entry also needs full coverage.\n' +
+    '     The command node scripts/spec/gates.mjs report lists all ledger gaps of both classes.\n' +
+    '     The target is zero owned gaps.\n' +
+    '     A changed line needs line coverage in every code file.\n' +
+    '     For a sync, a changed line needs no coverage when it equals the file in the commit that the adopt command names.\n' +
+    '\n' +
+    '     openspec/ownership.json defines owned paths.\n' +
+    '     Use `adopt` to record the gap of upstream code in the ledger.\n' +
+    '\n' +
+    '     For an upstream QA script with no current or base QA tag, run the adopt command.\n' +
+    '     The adopt command writes no record.\n' +
+    '     Do not write history records by hand.\n' +
+    '  5. The gates record each open gap in openspec/trace. A gap can close. A gap\n' +
+    '     cannot open. A new gap stops the build.\n' +
+    '  6. Two adversarial review agents review each change after the archive\n' +
+    '     command. The change folder contains the review result in review.md.\n' +
+    '\n' +
+    '  Scenario IDs:\n' +
+    '  - Format: <capability>-<NNN>. <capability> is the spec folder name. <NNN> is\n' +
+    '    three digits. Example: spec-trace-004.\n' +
+    '  - Put the ID at the end of the scenario heading, in backticks:\n' +
+    '    #### Scenario: Stop the build for an untraced test `spec-trace-004`\n' +
+    '  - Do not change an ID or use it again. If you remove a scenario, retire its ID.\n' +
+    '\n' +
+    '  Test tags:\n' +
+    '  - Put the scenario IDs at the start of the test name, in square brackets:\n' +
+    "    test('[spec-trace-004] stops the build for an untraced test', ...)\n" +
+    '  - Put one space between two IDs: [spec-trace-004 spec-trace-005].\n' +
+    '  - A subtest does not get the tags of its parent test. Put the tags on each\n' +
+    '    leaf test. A tag can have at most three IDs.\n' +
+    '\n' +
+    '  Prose standard: ASD-STE100 Simplified Technical English (STE) for all new\n' +
+    '  prose. This includes specs, proposals, designs, tasks, review files and\n' +
+    '  test names.\n' +
+    '\n' +
+    'rules:\n' +
+    '  proposal:\n' +
+    "    - 'Write in STE. Use sentences of 20 words or fewer for instructions and 25 words or fewer for descriptions.'\n" +
+    "    - 'Use the active voice. Use the simple present, the simple past or the simple future tense.'\n" +
+    "    - 'Do not use contractions, phrasal verbs or -ing forms as nouns or adjectives.'\n" +
+    "    - 'Put one topic in one sentence. Put 6 sentences or fewer in one paragraph.'\n" +
+    "    - 'In Impact, list each gap that this change opens or closes in openspec/trace.'\n" +
+    "    - 'Mark a change that only adds specs and tests for old code as a backfill change. Name it backfill-<capability>.'\n" +
+    '  specs:\n' +
+    "    - 'Write in STE. Use MUST for requirements. Do not use SHALL, SHOULD or MAY.'\n" +
+    "    - 'Give each scenario a stable ID at the end of its heading, in backticks, in the format <capability>-<NNN>.'\n" +
+    "    - 'Do not change a scenario ID or use it again. Retire the ID of a removed scenario.'\n" +
+    "    - 'Each scenario MUST have one WHEN line and one or more THEN lines. Use AND lines for more conditions or results.'\n" +
+    "    - 'Write each scenario so that one automatic test can check it. Do not write a scenario that no test can check.'\n" +
+    "    - 'Start the requirement text with a sentence that contains MUST. OpenSpec reads only that first line as the requirement.'\n" +
+    `    - 'Record the origin of each requirement on the last line of its text, before the first scenario. Use "Origin: spec-first" or "Origin: backfill".'\n` +
+    '  design:\n' +
+    "    - 'Write in STE. Use sentences of 25 words or fewer.'\n" +
+    "    - 'Tell how each gate measures the requirement. Name the files that the change adds or changes.'\n" +
+    '  tasks:\n' +
+    "    - 'Write in STE. Start each task with a verb in the imperative.'\n" +
+    "    - 'For each scenario, add one task to write the test before the task that writes the code.'\n" +
+    "    - 'Add a last task group for the gates and the adversarial review. Include make gates, the run of the review agents and review.md.'\n"
+  
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass8/named-root/src/tooling/spec/ownership.test.mjs:146:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "schema: spec-driven\n\ncontext: |\n  Project: God's Eye View (GEV). GEV is a browser 3D globe. It shows live\n  aircraft, ships, satellites, fires, traffic, cameras and radio. A Vite dev\n  server supplies the page and the server-side provider proxies.\n\n  Software:\n  - JavaScript ES modules. No TypeScript. No test framework other than node:test.\n  - Browser: CesiumJS, WebGL, DOM. Server: Vite middleware in server/providers.\n...",
+    expected: /The adopt command writes the adopt record for that script, also when the script is new\./,
+    operator: 'match',
+    diff: 'simple'
+  }

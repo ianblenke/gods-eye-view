@@ -1,0 +1,16 @@
+Command: taskset -c 4-7 nice -n 19 python3 /tmp/pass12-self-check.py
+Tree read: c214519ad41b05ed611b308fc8d28e8bf9b45d71; branch ownership-gates; Pass 12 documents
+proposal.md: added [], removed []
+tasks.md: added ["## 14. Pass 12"], removed []
+evidence.md: added ["## Pass 12"], removed []
+Task: - [x] 13.1 Correct the faults that pre-review 8 found.
+Task: - [x] 13.2 Run the ownership, ownershipGate and ledger host tests, the two named faults, lint, OpenSpec show and OpenSpec validate.
+Task: - [x] 13.3 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
+Task: - [x] 14.1 Correct the faults that pre-review 9 found.
+Task: - [x] 14.2 Run the ownership and ownershipGate host tests, lint, OpenSpec show and OpenSpec validate.
+Banned words and prefixed forms in new document text: 0
+Past fenced output: unchanged
+Scripts, AGENTS.md, config.yaml, src diff: empty
+Review folders: unchanged
+
+Status: 0

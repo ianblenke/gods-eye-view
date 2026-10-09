@@ -1,0 +1,22 @@
+[
+  {
+    "fault": "QA-agent-rule",
+    "file": "AGENTS.md",
+    "old": "The command writes the adopt record for that script.",
+    "new": "The command writes no record.",
+    "status": 1,
+    "failed": [
+      "[ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml"
+    ]
+  },
+  {
+    "fault": "QA-config-rule",
+    "file": "openspec/config.yaml",
+    "old": "The adopt command writes the adopt record for that script, also when the script is new.",
+    "new": "The adopt command writes no record.",
+    "status": 1,
+    "failed": [
+      "[ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml"
+    ]
+  }
+]

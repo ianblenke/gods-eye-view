@@ -1,0 +1,8 @@
+Command: ratchet
+Trace: 911 scenarios, 910 verified, 0 open. 9566 tests, 3701 traced, 5865 untraced.
+Coverage: 1065 files, 296 complete, 104 not loaded, 51 untrue.
+ERROR TRACE-FAILED-TEST src/tooling/spec/testGuard.test.mjs Test "[coverage-gate-046] gives a skip reason on a Node version without getTestContext to each test that needs the guard to count assertions" failed
+ERROR TRACE-UNVERIFIED openspec/specs/coverage-gate/spec.md:245 Scenario coverage-gate-046 has no passing test with an assertion
+Gates failed with 2 errors.
+Finished: 2026-10-09T11:55:19.456Z (1524.637 s)
+RATCHET_EXIT=2

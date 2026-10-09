@@ -1,0 +1,14 @@
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:181:It must add only positive whole-number waiver counts for the same file, hash and metric.
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:474:In the adopt command, for such a script, this requirement replaces qa-scripts-024 and gap-ledger-089.
+openspec/changes/ownership-scoped-gates/evidence.md:2695:| S125: QA and JSON | The design says prints QA-HEADER. At Pass 8, D10 names ownership-038, and task 6.30 names the JSON parse error in the history. |
+openspec/changes/ownership-scoped-gates/evidence.md:2745:- ownership-031 in gates.test.mjs: add the reached adopt record with a source that is not a merge parent.
+openspec/changes/ownership-scoped-gates/evidence.md:2972:| F6 | Add GUARDED_RUN to the real-init fixture test. Keep all assertions. |
+openspec/changes/ownership-scoped-gates/evidence.md:2975:| S139 | State that D10 names ownership-038 and task 6.30 names the JSON parse error. |
+openspec/changes/ownership-scoped-gates/evidence.md:2994:gapReport adds line counts by class, not all metrics. coverageFaults adds positive whole-number waiver counts with the same file, hash and metric.
+openspec/changes/ownership-scoped-gates/evidence.md:3033:The source diff has ten title lines, two absent-message assertions and the GUARDED_RUN option.
+openspec/changes/ownership-scoped-gates/design.md:264:| coverage item | Measured data for one file: the file name, the hash and the uncovered counts |
+openspec/changes/ownership-scoped-gates/design.md:270:| check command | The command check of runGates |
+src/tooling/spec/ownership.test.mjs:47:test('[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file', () => fixture(({ root, put }) => {
+src/tooling/spec/ownership.test.mjs:124:test('[ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml', () => {
+src/tooling/spec/ownership.test.mjs:193:test('[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix', () => {
+src/tooling/spec/ownership.test.mjs:197:test('[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file', () => {

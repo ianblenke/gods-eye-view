@@ -1,0 +1,9 @@
+Command: python3 /tmp/pass10-check.py
+Banned words and prefixed forms: 0
+Past fenced output: unchanged
+Scripts, AGENTS.md, config.yaml diff: empty
+openspec/changes/ownership-scoped-gates/proposal.md: added [], removed []
+openspec/changes/ownership-scoped-gates/design.md: added [], removed []
+openspec/changes/ownership-scoped-gates/tasks.md: added ["## 12. Pass 10"], removed []
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md: added [], removed []
+openspec/changes/ownership-scoped-gates/evidence.md: added ["## Pass 10"], removed []

@@ -25,7 +25,7 @@ export function protectedInput(file, inventory) {
 
 /** Write the snapshot and give its content hash. */
 export function writeMeasurement(root, measured) {
-  const text = JSON.stringify({ coverage: measured.coverage, records: measured.records, assertions: [...measured.assertions], inventory: measured.inventory, testFiles: measured.testFiles, untrue: [...measured.untrue] });
+  const text = JSON.stringify({ coverage: measured.coverage, lineCoverage: measured.lineCoverage, records: measured.records, assertions: [...measured.assertions], inventory: measured.inventory, testFiles: measured.testFiles, untrue: [...measured.untrue] });
   writeFileSync(path.join(root, SNAPSHOT), text);
   return contentHash(text);
 }

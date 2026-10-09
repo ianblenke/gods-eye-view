@@ -1,0 +1,4 @@
+✖ [gap-ledger-151] the functions checkAdopts and compareLedger report LEDGER-ADOPT-FROM and record the ledger entry as stale for an invalid from commit
+ℹ tests 1
+ℹ pass 0
+ℹ fail 1

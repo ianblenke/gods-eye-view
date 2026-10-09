@@ -1,0 +1,2 @@
+QA-agent-rule 1 ['[ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml']
+QA-config-rule 1 ['[ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml']

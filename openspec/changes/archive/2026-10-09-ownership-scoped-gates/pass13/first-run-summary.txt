@@ -1,0 +1,6 @@
+✖ [gap-ledger-138] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line
+✖ [gap-ledger-147] the gate accepts total differences for a file with a valid adopt line in the check, ci and ratchet commands
+✖ [gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit
+ℹ tests 241
+ℹ pass 238
+ℹ fail 3

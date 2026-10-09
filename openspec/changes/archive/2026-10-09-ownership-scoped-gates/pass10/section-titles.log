@@ -1,0 +1,7 @@
+Command: python3 /tmp/pass10-check.py
+Tree read: 07a3431b5d5c4bb0c94d067ccf127c797d493b2a with Pass 10 changes
+openspec/changes/ownership-scoped-gates/proposal.md: added [], removed []
+openspec/changes/ownership-scoped-gates/design.md: added [], removed []
+openspec/changes/ownership-scoped-gates/tasks.md: added ["## 12. Pass 10"], removed []
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md: added [], removed []
+openspec/changes/ownership-scoped-gates/evidence.md: added ["## Pass 10"], removed []

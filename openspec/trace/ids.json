@@ -2884,6 +2884,281 @@
     "since": "2026-09-29",
     "change": "osh-control-panel-layout"
   },
+  "ownership-001": {
+    "hash": "b52ca32c809f2baeb7ccf82e9355d49f46b67fdf4d574be37ef4e26db8362972",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-002": {
+    "hash": "e3fc7e106d4db464f65dd5dc319c5a0378e1f1aec5875565ad29743559f4681f",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-003": {
+    "hash": "2c22c875d7c1b024bde43f66e30d6f7928f979ad421f885b264dafaef06d191d",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-004": {
+    "hash": "61396c07bf4dd19bf6c9ffc05490bf359d05087a1f036950ef3f8845868cd092",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-005": {
+    "hash": "dc255b68e31d9995d58c3fbcb9d3b1f2aa72ac27e5e66423f0879db4d622fca2",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-006": {
+    "hash": "dd8f070645e0ce5c4449a683d2175212a3fa9e5b2d2ee5bfb9c8accaa6499581",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-007": {
+    "hash": "a4d5f48ff40283bfeaf0c4aaecf097801ce707446e9cd28cfb5a9f50f4cc6812",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-008": {
+    "hash": "006b07cc4d0b115de1c237fe553773c65f9912dd32b643a91a6564996648ec20",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-009": {
+    "hash": "dd8b4c28977767409eed441de8e22cf603c91d8f8fbdf75ff7e783cd964e5ec1",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-010": {
+    "hash": "0f204343e6358c711648672d8f4dfdfeb50365aac52ed7159f4d4fa374ac65b1",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-011": {
+    "hash": "21d8703e45f54eab53391df3602f8109a5aee25e640455039a9e30ca22e9425f",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-012": {
+    "hash": "eed22c6bd02a85fc4726d7becc7f2db58307908050c609c49af48aa8817673de",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-013": {
+    "hash": "d82fdb68cd2c9cdff28e0e87b8cd057a117ef8e6a0c73f0c00ce023e4de66a73",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-014": {
+    "hash": "64597e60e6503212b05d91d79dd5fb2d76221725bedc15a95ce767822f408cd5",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-015": {
+    "hash": "08625e91066922ee9871fe3bb4f71d262c82dd3854e25766ee2000bc454eb3a9",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-016": {
+    "hash": "013d4d233c5e9cfa5cac7a505d3fb7a3da99302d48180f29e08843cc2865f8a2",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-017": {
+    "hash": "8e5dcac4e150b33c386a8db3c31a2ee057f04f54530781371ae20fee91344541",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-018": {
+    "hash": "6638fcc95ad7014f6a893134e72027547fe2736d4197b6fec9b6bd7edb7b08e5",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-019": {
+    "hash": "e52c0f9a50e452d4e8821060012190e63154aa445268e612b780bbf2dd96f053",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-020": {
+    "hash": "5c8048d3e7a76f277f0258abac66e2ef5638d08ea4fd9625eaca978028f1de5e",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-021": {
+    "hash": "8d881818aa9fe5880b7b98ea42863cadd6fb585b16a6641035074f8acbe9340b",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-022": {
+    "hash": "2c82752a43d9f12f8a7a652b4c8356b5d6c72c3e9cc2302ddafed2b744fec440",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-023": {
+    "hash": "80d2c4a6b0e0c3afbac18bbe9c17d965a47b6c91372be281e86344814e75f274",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-024": {
+    "hash": "040f1172134d43d01ea5d97aa81f0e2f459a082d54d81c31a0eca1e67654d1b1",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-025": {
+    "hash": "ab0f9e254f52777bcf8cdf4b42bdf7c867b698a0e6b2b5ed8671e7891423190d",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-026": {
+    "hash": "9e729d97587b77b3a527f0ea3752dc2695dd2bfd042a76d8bb74166168b2fd1e",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-027": {
+    "hash": "9fa5f118611e530fd1fad8e7edc7382f27b263778078e33b95c2754016e65b90",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-028": {
+    "hash": "7c802eeb359837aa97c2e0c0bf893170972460faa6cf19e6cac14053806d3fc8",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-029": {
+    "hash": "2101309a089b7e8ece1e8e68fdb7530119ff23d09d08e1fc843f0ec715cedaf3",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-030": {
+    "hash": "2b4b1e9116c4b55f0f583dc6b6536f9f9f72474ff3192774474240986ab24e88",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-031": {
+    "hash": "7e0c69793dfec166a06432ea45e66ec7c46976fcdc24207902ad5629e18dee87",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-032": {
+    "hash": "feb3d0db805ded34c27f39a20ce66fb828041f88f8507d8249986bbd939da752",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-033": {
+    "hash": "b390382876c159c5bc5f85d62bd9826c15edc6580a448657df56bdf51d37730c",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-034": {
+    "hash": "d2d0505cd8432c20baa5a47773f52515a7c895e2a795400515ebd08b96f99675",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-035": {
+    "hash": "d10a19715a7a10a92a2a0c2420cf7902aad6c6f3c7c421af6977fda5eb7d9e56",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-036": {
+    "hash": "0e2c1c4c6dc5036bd0f8aedf54db470ae98254d3b5744bffa0934502e89cc289",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-037": {
+    "hash": "03d80724a440fc3771c9b7e3d20ce423d372c16859bb921539047a6dafc79d8b",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-038": {
+    "hash": "348332c21f4e13bc9c49c8143cb898e70c413d6be6f5d0a5c1bded30f638f708",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-039": {
+    "hash": "1ccc682ce3df8a0848d008029d539308ad093c2d7cc10991e4dc219a68b7e431",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-040": {
+    "hash": "0a6a9e15fc535f78ab9ef85fd63791f8cfb03284e9a0b923a756ee577acd19e0",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-041": {
+    "hash": "3fec5b85151b452be7ea8826dfe7376fc6a5e15d37833e67b82e2c177d9136b9",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-042": {
+    "hash": "10541822088f02b2c911c486224788839df4ac60b6c23acbb3f2fd65fb28037d",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-043": {
+    "hash": "9a2c45c3b1204f49b6cb2393874d9a6552fbc4b2f7294eddc399e8cf5c4e50c5",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-044": {
+    "hash": "4d4f8663ca5dd55403c8b6b278987482e6da882f520c0cdf65b0e540b3c17eb6",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-045": {
+    "hash": "40ed48acf515474e86b525022f175d67cef8f2337682f9a3a268d69c2c78b001",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-046": {
+    "hash": "341341e9b375b80fe5bcf7518a38a10a074312a033335776793a3b41a6bd1527",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-047": {
+    "hash": "e5e74d86470805a7ed8ed46abf5f60c41972376ea2946a60104d80b45720984d",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-048": {
+    "hash": "bbfb2520687569e1dd8e137a0a2ef02b2433d919ab88f65b811234c31a49176d",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-049": {
+    "hash": "564f9fe784a2149fb92590179bb759f875c055bb8fd778076d6a05e2868cea33",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-050": {
+    "hash": "d56e0fe82868be1ff00a0fb6aca76102ea16442f8908fb94a2b5c23198195bcb",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-051": {
+    "hash": "f33d15cfeed8cfdd5b49e5c8674e74847c9d6e5523dfd3a9631f9c378a7b6bc7",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-052": {
+    "hash": "7655b496e1881f56a60722d158c53aaf9e0a12e0a6e969baf3e6ae2219e298b3",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-053": {
+    "hash": "784060a7907e861cf3c07aa67dde35e8ec2243636062be500294ee6384dd8462",
+    "since": "2026-10-08",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-054": {
+    "hash": "7b3aba9faafcbe39c6960c51bb283faad2302e4cc5fca09cd51455770512c4cf",
+    "since": "2026-10-09",
+    "change": "ownership-scoped-gates"
+  },
+  "ownership-055": {
+    "hash": "88fefa17b758c419c82fe8bf08b981fb11528c8d63ab5624dc3a806737dd4b57",
+    "since": "2026-10-09",
+    "change": "ownership-scoped-gates"
+  },
   "perimeters-001": {
     "hash": "c950b2d41849c79df6aa9123d35a0cf495b873a7c0356228c03968863777d80d",
     "since": "2026-09-27",

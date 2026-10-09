@@ -1,0 +1,14 @@
+Command: taskset -c 4-7 nice -n 19 python3 /tmp/pass11-self-check.py
+Tree read: 9efae8791322871dcb0abf11983b745d066aa3fe with Pass 11 documents
+Task: - [x] 12.2 Run the ownership and ownershipGate host tests, lint, OpenSpec show and OpenSpec validate.
+Task: - [x] 13.1 Correct the faults that pre-review 8 found.
+Task: - [x] 13.2 Run the host checks, the format check and the document checks.
+Banned words and prefixed forms in new document text: 0
+Past fenced output: unchanged
+Scripts, AGENTS.md, config.yaml, src diff: empty
+Review folders: unchanged
+openspec/changes/ownership-scoped-gates/proposal.md: added [], removed []
+openspec/changes/ownership-scoped-gates/design.md: added [], removed []
+openspec/changes/ownership-scoped-gates/tasks.md: added ["## 13. Pass 11"], removed []
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md: added [], removed []
+openspec/changes/ownership-scoped-gates/evidence.md: added ["## Pass 11"], removed []

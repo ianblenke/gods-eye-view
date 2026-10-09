@@ -1,0 +1,4 @@
+✖ [ownership-055] the gate stops at LEDGER-ADOPT-FROM and prints no LEDGER-STALE error for an invalid from commit
+ℹ tests 2
+ℹ pass 1
+ℹ fail 1

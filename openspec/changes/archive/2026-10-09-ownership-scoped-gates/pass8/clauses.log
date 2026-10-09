@@ -1,0 +1,70 @@
+src/tooling/spec/ownership.test.mjs:47: '[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file'
+  assert.equal(readOwnership(root).errors[0].code, 'OWNERSHIP-MANIFEST')
+  assert.equal(readOwnership(root).errors[0].file, 'openspec/ownership.json')
+  assert.equal(typeof readOwnership(root).errors[0].message, 'string')
+  assert.notEqual(readOwnership(root).errors[0].message.length, 0)
+  assert.deepEqual(readOwnership(root).errors, [{ code: 'OWNERSHIP-MANIFEST', file: 'openspec/ownership.json', message: 'Use version 1 and unique safe relative paths in the owned array.' }])
+src/tooling/spec/ownership.test.mjs:124: '[ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml'
+  assert.match(text, /Keep each owned code file that a change adds or edits at 100% line, branch and function coverage\./)
+  assert.match(text, /Each owned code file without a ledger entry also needs full coverage\./)
+  assert.match(text, /Keep 100% line coverage for each line that a change adds or edits in a code file\./)
+  assert.match(text, /For a sync, a changed line needs no coverage when it equals the file in the commit that the adopt command names\./)
+  assert.match(text, /Use `adopt` for each file that the merge brings and that has a coverage gap\./)
+  assert.match(text, /23\. `openspec\/ownership.json` lists the owned paths/)
+  assert.match(text, /24\..*review.md.*files.*resolved by hand/)
+  assert.match(text, /24\..*Resolved files:.*Scope: full/)
+  assert.match(text, /25\..*retire the scenario or write it again/)
+  assert.match(text, /A backfill is a change that adds specs and tests for old code that another change needs\./)
+  assert.match(text, /node scripts\/spec\/gates.mjs report/)
+  assert.match(text, /lists all ledger gaps of both classes/)
+  assert.match(text, /The owner reads each manifest diff that removes an owned path/)
+  assert.match(text, /The command writes the adopt record for that script/)
+  assert.match(config, /Each owned code file that a change adds or edits needs 100% line, branch and function coverage\./)
+  assert.match(config, /Each owned code file without a ledger entry also needs full coverage\./)
+  assert.match(config, /For a sync, a changed line needs no coverage when it equals the file in the commit that the adopt command names\./)
+  assert.match(config, /For an upstream QA script with no current or base QA tag, run the adopt command\./)
+  assert.match(config, /The adopt command writes the adopt record for that script, also when the script is new\./)
+  assert.match(config, /Do not write history records by hand\./)
+  assert.match(config, /Use `adopt` to record the gap of upstream code in the ledger\./)
+src/tooling/spec/ownership.test.mjs:193: '[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix'
+  assert.deepEqual(parseDiffLines('prefix@@ -1 +2 @@\n'), [])
+  assert.deepEqual(parseLineCoverage('SF:a.js\nprefixDA:2,1\nDA:3,1suffix\n', '/repo'), { 'a.js': [] })
+src/tooling/spec/ownership.test.mjs:197: '[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file'
+  assert.deepEqual(gapReport(manifest, { coverage: { 'src/own/a.js': { lines: 2 }, 'src/own/b.js': { lines: 3 } }, untracedTests: {} }), ['Owned gaps: 2 code files, 5 lines, 0 test files, 0 tests.', 'owned code: src/own/a.js', 'owned code: src/own/b.js', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.'])
+  assert.deepEqual(faults({ coverage: [record(undefined, { lines: { total: 4, uncovered: 2 } })], waivers: [waiver(), waiver('lines', { lines: [3] }), waiver('branches'), waiver('functions')] }), [])
+  assert.deepEqual(faults({ coverage: [record(undefined, { lines: { total: 4, uncovered: 2 } })], waivers: [waiver('lines', { count: 2, lines: [2, 3] }), waiver('branches'), waiver('functions')] }), [])
+src/tooling/spec/ownership.test.mjs:443: '[ownership-031 ownership-041] stops for a name that is not a full hash when HEAD is a merge commit'
+  assert.equal(git('rev-parse', 'HEAD^1'), input.base)
+  assert.equal(git('rev-parse', 'HEAD^2'), from)
+  assert.throws(() => syncChangedLines({ ...input, history: adopt('a.js', source) }), error => {
+      assert.equal(error.code, 'LEDGER-ADOPT-FROM');
+      return true;
+    }, source)
+  assert.equal(error.code, 'LEDGER-ADOPT-FROM')
+src/tooling/spec/ownership.test.mjs:467: '[ownership-031 ownership-041] rejects values outside the hash pattern and reads no merge parents'
+  assert.equal(isAdoptSource('/tmp', 'base', from), false)
+  assert.equal(calls, 0)
+src/tooling/spec/ownershipGate.test.mjs:128: '[ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest'
+  assert.fail('No test run')
+  assert.equal(result.status, 1)
+  assert.match(result.output, /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/)
+  assert.fail('No test run')
+  assert.equal(bad.status, 1)
+  assert.match(bad.output, /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/)
+src/tooling/spec/ownershipGate.test.mjs:562: '[ownership-031 ownership-041] stops the check command for a name that is not a full hash when HEAD is a merge commit'
+  assert.equal(git(root, 'rev-parse', 'HEAD^1'), git(root, 'rev-parse', 'main'))
+  assert.equal(git(root, 'rev-parse', 'HEAD^2'), from)
+  assert.equal(result.status, 1, source)
+  assert.match(result.output, /ERROR LEDGER-ADOPT-FROM/)
+  assert.doesNotMatch(result.output, /COVERAGE-DIFF:.*brought/)
+  assert.equal(fake.calls(), 0)
+src/tooling/spec/ownershipGate.test.mjs:637: '[ownership-054] stops for a coverage ignore error in a new upstream QA script with no QA tag'
+  assert.equal(result.status, 1, result.output)
+  assert.match(result.output, /ERROR COVERAGE-IGNORE scripts\/qa-merge.mjs/)
+  assert.deepEqual(text.split('\n').filter(Boolean).map(JSON.parse).filter(record => record.kind === 'adopt'), [])
+src/tooling/spec/gates.test.mjs:2627: '[ownership-031] prints LEDGER-ADOPT-FROM for a reached adopt record whose source is not a merge parent'
+  assert.fail('No test run')
+  assert.equal(result.status, 1)
+  assert.match(result.output, /ERROR LEDGER-ADOPT-FROM openspec\/trace\/history.jsonl/)
+  assert.doesNotMatch(result.output, /ERROR LEDGER-ADOPT-REACHED/)
+Changed title bodies: 10

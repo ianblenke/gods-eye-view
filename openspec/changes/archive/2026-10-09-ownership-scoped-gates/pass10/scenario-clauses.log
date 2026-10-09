@@ -1,0 +1,11 @@
+Command: python3 /tmp/pass10-check.py
+Tree read: 07a3431b5d5c4bb0c94d067ccf127c797d493b2a with Pass 10 changes
+[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file => WHEN a ledger has two owned files with 2 and 3 line gaps; AND two valid line waivers; THEN 5 line gaps for the first ledger and 2 waived gaps.
+[ownership-018] adds the test instance counts of owned test files => AND a second ledger has only single.js and src/own/a.test.js with 3 and 4 test instances; AND Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests.
+[ownership-054] writes the QA adopt record with a full hash from HEAD^2 => THEN one record with the full second-parent hash; AND zero counts and untrue false; AND the next gate uses the synthetic header.
+[ownership-054] writes the QA adopt record beside a coverage gap record => THEN one QA record with the full hash; AND zero QA counts beside the coverage gap record.
+[ownership-054 ownership-035] stops the adopt command for QA files outside the exception and for another error => AND owned, not-merged, invalid current and deleted base headers print QA-HEADER; AND another error stops without a new record.
+[ownership-054] writes a QA adopt record for a base script without a QA tag => AND one zero-count record for a merged upstream base script with no current or base QA tag.
+[ownership-054] writes no QA record for an absent current file => AND no QA record for an absent current file.
+[ownership-054] stops for a coverage ignore error in a new upstream QA script with no QA tag => AND COVERAGE-IGNORE for a new upstream QA script with no QA tag; no adopt record for that script.
+[ownership-054] writes one record for each QA file from both candidate lists => THEN one record for each script with the full second-parent hash; AND zero counts and untrue false.

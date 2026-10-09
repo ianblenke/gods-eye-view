@@ -1,0 +1,32 @@
+Lead host checks of the Pass 11 tree. Run by the lead on the host (not in the worker sandbox).
+Part 1 ran at commit 5fe8d63ab4dfff1474616047fce1a574102a78ce. Part 2 ran at commit c214519ad41b05ed611b308fc8d28e8bf9b45d71. These two commits differ only in the review folder pre-review-9, so the code, the tests and the documents of the checks are the same.
+
+== Part 1: tests, lint, OpenSpec validate and the first run of the four checks (script own-verify11.sh; each node command ran under taskset -c 4-7 nice -n 19) ==
+ℹ tests 50 ℹ pass 50 ℹ fail 0 <- ownership
+ℹ tests 40 ℹ pass 40 ℹ fail 0 <- ownershipGate
+STE: 0 errors, 584 warnings.
+Change 'ownership-scoped-gates' is valid
+format:
+Checked 1158 source files.
+exit 0
+imports:
+{"modules":863,"portableEntries":67}
+(The line 'exit 0' after the format output is the exit status of the tail command, not of the format check. Part 2 has the exit status of each node command.)
+
+== Part 2: the four checks again, with the exit status of each node command (script own-exit11.sh) ==
+c214519ad41b05ed611b308fc8d28e8bf9b45d71
+Command: taskset -c 4-7 nice -n 19 node scripts/format.mjs --check
+Checked 1158 source files.
+Exit status of node: 0
+Command: taskset -c 4-7 nice -n 19 node scripts/check-import-directions.mjs
+{"modules":863,"portableEntries":67}
+Exit status of node: 0
+Command: taskset -c 4-7 nice -n 19 node scripts/check-package-boundaries.mjs
+Checked perimeters: 1 exports, 6 owned modules.
+Checked perimeters-source: 1 exports, 2 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+Exit status of node: 0
+Command: taskset -c 4-7 nice -n 19 node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 29 published, 0 new.
+Exit status of node: 0
+EXIT11_DONE

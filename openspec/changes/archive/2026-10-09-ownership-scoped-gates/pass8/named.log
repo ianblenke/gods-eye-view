@@ -1,0 +1,7 @@
+invalid-manifest-code 1 ['[ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest']
+absent-manifest-message 1 ['[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file']
+diff-prefix 1 ['[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix']
+DA-prefix 1 ['[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix']
+DA-suffix 1 ['[ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix']
+gap-sum 1 ['[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file']
+waiver-sum 1 ['[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file']

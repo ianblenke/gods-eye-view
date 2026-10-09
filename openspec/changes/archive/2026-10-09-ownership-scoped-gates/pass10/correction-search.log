@@ -1,0 +1,32 @@
+Command: rg -n second-ledger, waiver, pass, task and title corrections
+openspec/changes/ownership-scoped-gates/proposal.md:43:The glossary row valid waiver in design.md does not state the base bound of waiversOf in ledger.mjs or the line count bound in ownership.mjs.
+src/tooling/spec/ownership.test.mjs:142:  assert.match(text, /The command writes the adopt record for that script/);
+src/tooling/spec/ownership.test.mjs:148:  assert.match(config, /The adopt command writes the adopt record for that script, also when the script is new\./);
+src/tooling/spec/ownership.test.mjs:217:test('[ownership-018] adds the test instance counts of owned test files', () => {
+openspec/changes/ownership-scoped-gates/design.md:56:A first comment block with no QA tags has no QA header. Within the QA exception, the gate uses the synthetic header for that script.
+openspec/changes/ownership-scoped-gates/design.md:264:| valid waiver | A waiver with a positive whole-number count with the file, the file hash and the metric of the gap |
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:40:The gate MUST reject gaps in changed owned code files and owned code files without a ledger entry, except valid waivers.
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:46:- **THEN** the gate prints COVERAGE-OWNED unless valid waivers waive all gap counts
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:132:- **AND** the context says that the command writes the record for that script, also when the script is new
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:187:- **AND** a second ledger has only the owned test files single.js and src/own/a.test.js, with 3 and 4 test instances
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:189:- **AND** for the second ledger, the report command prints "Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests."
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:389:- **THEN** the QA register uses the synthetic header for that script
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:493:- **AND** a coverage ignore comment in one of the new upstream QA scripts with no QA tag makes the gate print COVERAGE-IGNORE. The adopt command writes no adopt record for that script.
+openspec/changes/ownership-scoped-gates/tasks.md:288:- [x] 12.1 Correct the faults that pre-review 7 found.
+openspec/changes/ownership-scoped-gates/tasks.md:289:- [x] 12.2 Run the host checks and the document checks.
+openspec/changes/ownership-scoped-gates/evidence.md:813:openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:38:The gate MUST reject gaps in changed owned code files and owned code files without a ledger entry, except valid waivers.
+openspec/changes/ownership-scoped-gates/evidence.md:816:openspec/changes/ownership-scoped-gates/specs/ownership/spec.md:44:- **THEN** the gate reports COVERAGE-OWNED unless valid waivers waive all gap counts
+openspec/changes/ownership-scoped-gates/evidence.md:1622:38:    For a new upstream script with no QA tag, a valid adopt record must name the script. Run the `adopt` command. The command writes the adopt record for that script. The covers item of that header is `unmapped: upstream`.
+openspec/changes/ownership-scoped-gates/evidence.md:1793:45:- **THEN** the gate prints COVERAGE-OWNED unless valid waivers waive all gap counts
+openspec/changes/ownership-scoped-gates/evidence.md:1912:377:- **THEN** the QA register uses the synthetic header for that script
+openspec/changes/ownership-scoped-gates/evidence.md:2080:45:- **THEN** the gate prints COVERAGE-OWNED unless valid waivers waive all gap counts
+openspec/changes/ownership-scoped-gates/evidence.md:2691:| S121: Init pronoun | At Pass 9, the result line states that init stops before the step that prints the owned gap lines, because the ledger exists. |
+openspec/changes/ownership-scoped-gates/evidence.md:2705:| S135: Hash message | At Pass 8, keep S135 as an open minor for review.md. At Pass 9, the five copies of the message stay the same. |
+openspec/changes/ownership-scoped-gates/evidence.md:3199:| F3, S160, S161 | Define valid waiver once. Name the gate and file hash in the requirement. |
+openspec/changes/ownership-scoped-gates/evidence.md:3266:At Pass 9, tests, fault processes, coverage, lint, format, OpenSpec, Git, title, clause, order and mutation checks ran.
+openspec/changes/ownership-scoped-gates/evidence.md:3267:At Pass 9, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.
+openspec/changes/ownership-scoped-gates/evidence.md:3276:| H2, S182 | Name the new upstream QA scripts with no QA tag. State no adopt record for that script. |
+openspec/changes/ownership-scoped-gates/evidence.md:3277:| H3 | Add the valid waiver limit to the proposal. The lead keeps this limit. |
+openspec/changes/ownership-scoped-gates/evidence.md:3280:| S183 | Name the test instance counts of owned test files in the title. |
+openspec/changes/ownership-scoped-gates/evidence.md:3318:At Pass 10, tests, lint, OpenSpec, Git, text edits, searches, title, clause and section-title checks ran.
+openspec/changes/ownership-scoped-gates/evidence.md:3319:At Pass 10, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.

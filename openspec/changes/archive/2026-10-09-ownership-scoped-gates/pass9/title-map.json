@@ -1,0 +1,7 @@
+{
+  "[ownership-001] rejects each bad manifest field": "[ownership-001] rejects each invalid manifest field",
+  "[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file": "[ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file",
+  "[ownership-018] adds test counts across owned files": "[ownership-018] adds test counts across owned files",
+  "[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file": "[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file",
+  "[ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest": "[ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest"
+}

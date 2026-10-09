@@ -1,0 +1,26 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-001 src/tooling/spec/ownershipGate.test.mjs
+✖ [ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest (111.651066ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 161.373998
+
+✖ failing tests:
+
+test at src/tooling/spec/ownershipGate.test.mjs:128:1
+✖ [ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifest (111.651066ms)
+  SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+      at JSON.parse (<anonymous>)
+      at parseOwnership (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/scripts/spec/lib/ownership.mjs:12:22)
+      at readOwnership (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/scripts/spec/lib/ownership.mjs:24:21)
+      at runGateCommand (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/scripts/spec/gates.mjs:416:21)
+      at runGates (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/scripts/spec/gates.mjs:760:12)
+      at run (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/src/tooling/spec/ownershipGate.test.mjs:86:18)
+      at file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/src/tooling/spec/ownershipGate.test.mjs:138:21
+      at withFixture (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/src/tooling/spec/ownershipGate.test.mjs:78:12)
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/src/tooling/spec/ownershipGate.test.mjs:128:91)
+      at Test.runInAsyncScope (node:async_hooks:226:14)

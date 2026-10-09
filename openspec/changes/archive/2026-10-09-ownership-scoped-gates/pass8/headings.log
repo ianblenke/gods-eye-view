@@ -1,0 +1,8 @@
+Tree read: d84cd029301550fc8e6a1401c88f741bd298f945 (Pass 8 work tree)
+AGENTS.md: removed 0, added none; original order stays
+openspec/changes/ownership-scoped-gates/proposal.md: removed 0, added none; original order stays
+openspec/changes/ownership-scoped-gates/design.md: removed 0, added ['### Pass 8 words']; original order stays
+openspec/changes/ownership-scoped-gates/tasks.md: removed 0, added none; original order stays
+openspec/changes/ownership-scoped-gates/evidence.md: removed 0, added ['## Pass 8', '### Corrections', '### Named faults', '### Title and order checks', '### Correction search', '### Automatic mutation selection', '### Host test output', '### Document checks', '### Fresh coverage', '### Final lint']; original order stays
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md: removed 0, added none; original order stays
+Original headings: unchanged
