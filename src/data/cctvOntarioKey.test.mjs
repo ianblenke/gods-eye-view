@@ -22,6 +22,9 @@ async function fixture(t, value, response) {
   });
   t.mock.method(console, 'warn', (...args) => logs.push(args.join(' ')));
   t.mock.method(console, 'log', (...args) => logs.push(args.join(' ')));
+  t.mock.method(console, 'error', (...args) => logs.push(args.join(' ')));
+  t.mock.method(console, 'info', (...args) => logs.push(args.join(' ')));
+  t.mock.method(console, 'debug', (...args) => logs.push(args.join(' ')));
   return { ...ontarioRequest, calls, logs };
 }
 
@@ -64,7 +67,6 @@ test('[live-sources-003] make no request without a key', async (t) => {
   f.logs.length = 0;
   assert.deepEqual(await f.readOntarioCameraRows(), []);
   assert.deepEqual(f.logs, ['[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.']);
-  assert.equal(f.logs.join().includes(key), false);
 });
 
 test('[live-sources-004] write one warning for an invalid key', async (t) => {
@@ -194,7 +196,7 @@ test('[live-sources-002] send the application/json Accept header', async (t) => 
   assert.equal(f.calls[0][1].headers.Accept, 'application/json');
 });
 
-test('[live-sources-005] keep key text inside a fetch error out of the warning', async (t) => {
+test('[live-sources-005] keep the key text of a fetch error out of the warning', async (t) => {
   const f = await fixture(t, key, new Error('Request for ' + key + ' failed'));
   assert.deepEqual(await f.readOntarioCameraRows(), []);
   assert.deepEqual(f.logs, [

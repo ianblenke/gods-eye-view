@@ -33,6 +33,9 @@ async function load(t, rows, cap, logs = []) {
     json: async () => rows,
   }));
   t.mock.method(console, 'log', (...args) => logs.push(args.join(' ')));
+  t.mock.method(console, 'error', (...args) => logs.push(args.join(' ')));
+  t.mock.method(console, 'info', (...args) => logs.push(args.join(' ')));
+  t.mock.method(console, 'debug', (...args) => logs.push(args.join(' ')));
   t.mock.method(console, 'warn', (...args) => logs.push(args.join(' ')));
   return loadOntarioSourcesFromOpenData();
 }
@@ -71,7 +74,7 @@ const badRows = [
   }),
 ];
 for (const [i, makeExtra] of badRows.entries()) {
-  test(`[live-sources-006] return an empty list for ${rowCauses[i]}`, async (t) => {
+  test(`[live-sources-006] return an empty source list for ${rowCauses[i]}`, async (t) => {
     const extra = makeExtra();
     assert.deepEqual(
       await load(t, [extra === null ? null : i === 1 ? {} : row(extra)]),
@@ -87,16 +90,16 @@ const urlCauses = [
   'an HTTP URL',
   'another URL host name',
   'the traveliq.co root URL host name',
-  'a slash ID',
+  'a slash view ID',
   'invalid percent text',
   'a URL path prefix',
   'a URL path suffix',
-  'an ID with a slash at the start',
-  'an ID with a slash at the end',
+  'a view ID with a slash at the start',
+  'a view ID with a slash at the end',
   'the x511on.ca URL host name',
   'the www.511on.ca URL host name',
-  'an ID with a space',
-  'an ID with a non-ASCII character',
+  'a view ID with a space',
+  'a view ID with a non-ASCII character',
 ];
 const urls = [
   '',
@@ -118,7 +121,7 @@ const urls = [
   'https://511on.ca/map/Cctv/é',
 ];
 for (const [i, Url] of urls.entries()) {
-  test(`[live-sources-006] return an empty list for ${urlCauses[i]}`, async (t) => {
+  test(`[live-sources-006] return an empty source list for ${urlCauses[i]}`, async (t) => {
     assert.deepEqual(
       await load(t, [row({ Views: [{ Status: 'Enabled', Url }] })]),
       [],
@@ -159,7 +162,7 @@ test('[live-sources-006] select the first view without down', async (t) => {
   assert.equal(result[0].name, 'Ontario 511 Camera 1 - East');
   assert.equal(result[0].headingDeg, 90);
 });
-test('[live-sources-006] select the first view when all descriptions have down', async (t) => {
+test('[live-sources-006] select the first view when all descriptions contain the word down', async (t) => {
   const result = await load(t, [
     row({
       Views: [
@@ -287,7 +290,7 @@ test('[live-sources-008] use the last duplicate', async (t) => {
   assert.equal(result[0].name, 'Last');
 });
 for (const title of ['null', '{}', '"rows"', '0']) {
-  test(`[live-sources-009] return an empty list for non-array data ${title}`, async (t) => {
+  test(`[live-sources-009] return an empty source list for non-array data ${title}`, async (t) => {
     const rows = JSON.parse(title);
     const logs = [];
     assert.deepEqual(await load(t, rows, undefined, logs), []);
@@ -361,17 +364,18 @@ test('[live-sources-008] use each nearest anchor', async (t) => {
     ...anchors.map(([Latitude, Longitude], i) =>
       row({ Id: String(i), Latitude, Longitude }),
     ),
+    row({ Id: 'control', Latitude: 43.48, Longitude: -80.4925 }),
   ]);
   assert.deepEqual(
     result.map((source) => source.id),
-    ['on-0', 'on-1', 'on-2', 'on-3', 'on-4', 'on-5', 'on-far'],
+    ['on-0', 'on-1', 'on-2', 'on-3', 'on-4', 'on-5', 'on-control', 'on-far'],
   );
 });
 
-test('[live-sources-006] return an empty list for null ID fields', async (t) => {
+test('[live-sources-006] return an empty source list for null ID fields', async (t) => {
   assert.deepEqual(await load(t, [row({ Id: null, id: null })]), []);
 });
-test('[live-sources-007] use Roadway first and view direction after blank Direction', async (t) => {
+test('[live-sources-007] use the Roadway text first and the view description after a blank Direction value', async (t) => {
   const [source] = await load(t, [
     row({
       Roadway: ' Upper road ',
@@ -405,7 +409,7 @@ test('[live-sources-008] log both source counts', async (t) => {
   ]);
 });
 
-test('[live-sources-006] return an empty list without a warning for invalid views', async (t) => {
+test('[live-sources-006] return an empty source list without a warning for invalid rows and views', async (t) => {
   const logs = [];
   assert.deepEqual(
     await load(
@@ -428,7 +432,7 @@ test('[live-sources-006] return an empty list without a warning for invalid view
   ]);
 });
 
-test('[live-sources-006] accept every ID character', async (t) => {
+test('[live-sources-006] accept every view ID character', async (t) => {
   const [source] = await load(t, [
     row({
       Views: [
@@ -471,7 +475,7 @@ test('[live-sources-007] convert row values to text and numbers', async (t) => {
   assert.equal(road.city, '43');
   assert.equal(road.name, '43');
 });
-test('[live-sources-006] return an empty list without a warning for a numeric status', async (t) => {
+test('[live-sources-006] return an empty source list without a warning for a numeric status', async (t) => {
   const logs = [];
   assert.deepEqual(
     await load(
@@ -487,12 +491,12 @@ test('[live-sources-006] return an empty list without a warning for a numeric st
   ]);
 });
 for (const title of [
-  'URL object',
-  'URL text with spaces at the start and end',
+  'a URL object',
+  'URL text with no-break spaces at the start and end',
 ]) {
   test(`[live-sources-006] accept ${title}`, async (t) => {
     const Url =
-      title === 'URL object'
+      title === 'a URL object'
         ? new URL('https://511on.ca/map/Cctv/A')
         : '\u00a0https://511on.ca/map/Cctv/A\u00a0';
     const [source] = await load(t, [
@@ -559,7 +563,7 @@ test('[live-sources-007] use capitalized text fields first', async (t) => {
   assert.equal(source.headingDeg, 0);
 });
 for (const axis of ['Latitude', 'Longitude']) {
-  test(`[live-sources-006 live-sources-007] return an empty list for zero capitalized ${axis}`, async (t) => {
+  test(`[live-sources-006 live-sources-007] return an empty source list for a capitalized ${axis} of 0`, async (t) => {
     const extra =
       axis === 'Latitude'
         ? { Latitude: 0, latitude: 43 }
@@ -621,3 +625,32 @@ test('[live-sources-007] read location before roadway', async (t) => {
   assert.equal(source.city, 'After');
   assert.equal(source.name, 'After');
 });
+
+for (const [title, value, warning] of [
+  ['absent key', undefined, '[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.'],
+  [
+    'HTTP error',
+    'FAKE_ROW_KEY',
+    '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',
+  ],
+]) {
+  const scenario = value === undefined ? '003' : '004';
+  test(`[live-sources-${scenario}] write the first warning for an ${title}`, async (t) => {
+    const old = process.env.ONTARIO_511_API_KEY;
+    t.after(() => {
+      if (old === undefined) delete process.env.ONTARIO_511_API_KEY;
+      else process.env.ONTARIO_511_API_KEY = old;
+    });
+    if (value === undefined) delete process.env.ONTARIO_511_API_KEY;
+    else process.env.ONTARIO_511_API_KEY = value;
+    const logs = [];
+    for (const channel of ['warn', 'log', 'error', 'info', 'debug']) {
+      t.mock.method(console, channel, (...args) => logs.push(args.join(' ')));
+    }
+    t.mock.method(globalThis, 'fetch', async () => ({ ok: false }));
+    const { readOntarioCameraRows } =
+      await import('../../server/providers/cctv/ontarioRequest.js');
+    assert.deepEqual(await readOntarioCameraRows(), []);
+    assert.deepEqual(logs, [warning]);
+  });
+}

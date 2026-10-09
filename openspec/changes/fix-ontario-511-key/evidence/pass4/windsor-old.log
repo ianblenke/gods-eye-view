@@ -1,0 +1,10 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none --test-name-pattern=use each nearest anchor src/data/cctvOntarioRows.test.mjs
+✔ [live-sources-008] use each nearest anchor (39.711216ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 241.32372
