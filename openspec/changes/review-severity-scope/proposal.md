@@ -31,4 +31,6 @@ A session that runs keeps the old agent definitions until it starts again.
 
 - Known limit `judgment`: The reviewer decides if a text is normative text. The lists in the instructions limit this decision.
 - Known limit `pin-only`: The tests pin the sentences that the scenarios name. They do not show how a reviewer applies the sentences, and they do not check where a sentence is in the file. The check of the major lines reads only lines that start with `- **major**:`.
+- Known limit `derived-words`: A derived word of a banned word, such as an adverb or a noun, is not a banned word. The reviewer rates it as an STE fault.
+- Known limit `spelling`: The suffix rule does not name a change of spelling, such as "required" or "permitting". The reviewer reads such a form as a banned form.
 - Known limit `other-files`: The instructions of the spec adversary and the review command do not change.

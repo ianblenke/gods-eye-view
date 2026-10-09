@@ -33,7 +33,7 @@ A title that does not agree with the test body is major in all cases.
 ### D3: Tests pin sentences
 
 The tests read the files of the agent and of `AGENTS.md`, and compare the sentences that the scenarios name with a literal string.
-The tests also check that three old lines of the agent file are gone, and that the lines which start with `- **major**:` are exactly four.
+The tests also check that three old lines of the agent file are gone, and that the lines that start with `- **major**:` are exactly four.
 A reviewer applies the sentences, so the tests cannot check the result of a review.
 
 ### D4: Rule 16
