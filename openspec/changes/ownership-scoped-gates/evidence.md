@@ -3708,6 +3708,8 @@ Pre-review 14 (commit 7a699a4b) gave FAIL from both reviewers. The spec adversar
 
 Pre-review 15 (commit 70e02e6d) gave PASS from the spec adversary and FAIL from the STE adversary. The spec adversary gave 4 minors, and the STE adversary gave 1 major and 4 minors. The reports are in `review/pre-review-15/`. This block also holds the corrections of that review.
 
+Pre-review 16 (commit 91eee2c9) gave PASS from both reviewers, with 2 minors from each. The reports are in `review/pre-review-16/`. The lead corrected the two minors that both reviewers named.
+
 The lead corrected the text of Pass 13 to Pass 16 where the reviewers found a statement that is not correct or not clear. The lead did not correct two minors. The first is the minor of the spec adversary that `proposal.md` does not name the THEN of gap-ledger-138. The second is the minor about the row labels (see Pass 16). The file `review.md` will list both as known limits.
 
 The second run of Pass 13 has no recorded commit. The run of the whole file `gates.test.mjs` in Pass 14, at commit 85eaab08, is the passing run with a recorded commit. It passed 241 of 241 tests.
@@ -3718,7 +3720,7 @@ The lead ran the format check, the STE lint and `openspec validate` on the host,
 
 Tree read: branch ownership-gates at commit 768370eb, with the Pass 18 changes of `testGuard.test.mjs`, `evidence.md`, `tasks.md` and the folder `pass18/`.
 
-The first image ratchet of this change ran in the Docker image `gods-eye-view:local` at commit 768370eb. Its log starts with `Command: ratchet`. The ratchet stopped before the ledger comparison and wrote no file. The file `pass18/ratchet-stop.txt` holds the verdict lines:
+An image ratchet of this change ran in the Docker image `gods-eye-view:local` at commit 768370eb. Its log starts with `Command: ratchet`. The ratchet stopped before the ledger comparison and wrote no file in `openspec/trace/`. The file `pass18/ratchet-stop.txt` holds the verdict lines:
 
 ```text
 Command: ratchet
@@ -3731,7 +3733,7 @@ Finished: 2026-10-09T11:55:19.456Z (1524.637 s)
 RATCHET_EXIT=2
 ```
 
-The test of `coverage-gate-046` in `testGuard.test.mjs` pins the titles of the tests that have the option `GUARDED_RUN` in `gates.test.mjs`. The branch has one test that main does not have: the test of `ownership-031`. The lead had not run `testGuard.test.mjs` on the host after the merges of main. The lead then ran each test file of `src/tooling/spec` on the host, except `gates.test.mjs`. The file `pass18/spec-files-run.txt` holds one line for each file. The file `testGuard.test.mjs` is the only file with a failed test in it:
+The test of `coverage-gate-046` in `testGuard.test.mjs` pins the titles of the tests that have the option `GUARDED_RUN` in `gates.test.mjs`. The branch has one test with the option `GUARDED_RUN` in `gates.test.mjs` that main does not have: the test of `ownership-031` in `gates.test.mjs`. The lead did not run `testGuard.test.mjs` on the host after the merges of main. The lead then ran each test file of `src/tooling/spec` on the host, except `gates.test.mjs`. The file `pass18/spec-files-run.txt` holds one line for each file. The file `testGuard.test.mjs` is the only file with a failed test in it:
 
 ```text
 ciFiles.test.mjs: ℹ tests 4 ℹ pass 4 ℹ fail 0 
@@ -3760,7 +3762,9 @@ ALL_DONE
 
 The lead added the title of the test of `ownership-031` as the last entry of the list for `gates.test.mjs` in `testGuard.test.mjs`. The scenario `coverage-gate-046` names no title, so its text does not change.
 
-The fault removes the option `GUARDED_RUN` from the test of `ownership-031` in `gates.test.mjs`. The lead ran `testGuard.test.mjs` with the fault and without it. The runs used the files of commit 768370eb and the changed list in `testGuard.test.mjs`. The file `pass18/runs-head.txt` holds the commit. The file `pass18/fault-no-guarded-run.txt` holds the output with the fault, and the file `pass18/guard-run-summary.txt` holds the output without it. The lead restored the file with `git checkout`:
+The fault removes the option `GUARDED_RUN` from the test of `ownership-031` in `gates.test.mjs`. The lead ran `testGuard.test.mjs` with the fault and without it. The runs used the files of commit 768370eb and the changed list in `testGuard.test.mjs`. The file `pass18/runs-head.txt` holds the commit. The file `pass18/fault-no-guarded-run.txt` holds the output with the fault, and the file `pass18/guard-run-summary.txt` holds the output without it. The lead restored `gates.test.mjs` with `git checkout`.
+
+The three blocks hold the commit, the output with the fault and the output without it:
 
 ```text
 768370eb4e3676f8b704edb52da5e1b5186bdd04
@@ -3779,5 +3783,7 @@ The fault removes the option `GUARDED_RUN` from the test of `ownership-031` in `
 ℹ fail 0
 ```
 
-The lead ran the format check, the import direction check, the package boundary check and the layer token check on the host. The lead also ran the STE lint and `openspec validate`. The tree was commit 768370eb with the Pass 18 changes. The file `pass18/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+The lead ran the format check, the import direction check, the package boundary check and the layer token check on the host. The lead also ran the STE lint and `openspec validate`. The file `pass18/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+
+Pre-review 17 (commit 2284f19d) gave FAIL from both reviewers. The spec adversary gave 2 majors and 4 minors, and the STE adversary gave 4 majors and 5 minors. The reports are in `review/pre-review-17/`. The lead corrected the text of Pass 18 and the tasks of section 20.
 

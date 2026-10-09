@@ -1,10 +1,10 @@
 ##### git rev-parse HEAD
-768370eb4e3676f8b704edb52da5e1b5186bdd04
+2284f19d3aed55cf02d9fc268307dc6c7a53ef3a
 ##### git status --short
  M openspec/changes/ownership-scoped-gates/evidence.md
+ M openspec/changes/ownership-scoped-gates/pass18/host-checks.log
  M openspec/changes/ownership-scoped-gates/tasks.md
- M src/tooling/spec/testGuard.test.mjs
-?? openspec/changes/ownership-scoped-gates/pass18/
+?? openspec/changes/ownership-scoped-gates/review/pre-review-17/
 ##### node scripts/format.mjs --check
 Checked 1328 source files.
 ##### status 0
