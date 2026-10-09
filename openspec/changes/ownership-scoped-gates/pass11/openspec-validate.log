@@ -1,0 +1,4 @@
+Command: taskset -c 4-7 nice -n 19 openspec validate ownership-scoped-gates
+Tree read: 9efae8791322871dcb0abf11983b745d066aa3fe with Pass 11 documents
+Change 'ownership-scoped-gates' is valid
+Status: 0

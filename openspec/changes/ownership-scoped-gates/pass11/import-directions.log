@@ -1,0 +1,4 @@
+Command: taskset -c 4-7 nice -n 19 node scripts/check-import-directions.mjs
+Tree read: 9efae8791322871dcb0abf11983b745d066aa3fe with Pass 11 documents
+spawnSync git EPERM
+Status: 1

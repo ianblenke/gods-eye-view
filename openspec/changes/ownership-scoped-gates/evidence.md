@@ -3264,7 +3264,7 @@ Each of the five fault processes ended with status 1. The test processes of the 
 The scratch copy has no branch. Its source is the commit in Tree read, with the Pass 9 tests.
 
 At Pass 9, tests, fault processes, coverage, lint, format, OpenSpec, Git, title, clause, order and mutation checks ran.
-At Pass 9, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.
+Apart from the gate commands in test fixtures, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.
 
 ## Pass 10
 
@@ -3273,9 +3273,9 @@ Tree read: 07a3431b5d5c4bb0c94d067ccf127c797d493b2a, branch ownership-gates, wit
 | Finding | Correction |
 |---|---|
 | H1, S178 | State two ledgers in ownership-018. Keep both test clauses. |
-| H2, S182 | Name the new upstream QA scripts with no QA tag. State no adopt record for that script. |
+| H2, S182 | Name the new upstream QA scripts with no QA tag. State that the adopt command writes no adopt record for the script. |
 | H3 | Add the valid waiver limit to the proposal. The lead keeps this limit. |
-| H4, S179 | Name the Pass 9 commands. State no full gate command. |
+| H4, S179 | Name the Pass 9 commands. State that no full gate command ran. |
 | S180, S181 | State the file, file hash and metric of the gap. Use waiver in the glossary. |
 | S183 | Name the test instance counts of owned test files in the title. |
 | S184, S185 | Name the Order rows by content. Use one verb for each task. Add Pass 10 tasks. |
@@ -3285,7 +3285,7 @@ Tree read: 07a3431b5d5c4bb0c94d067ccf127c797d493b2a, branch ownership-gates, wit
 | S190 | Restore the comma before because the ledger exists. |
 | S191 | Keep the word headings. Remove the two glossary full stops. |
 
-The files in pass10/ hold the command outputs. The clause list has two ownership-018 tests and seven ownership-054 tests.
+The files in pass10/ hold the command outputs. The clause list has two ownership-018 tests and seven ownership-054 tests of ownershipGate.test.mjs.
 
 ```text
 Test command form: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/<name>.test.mjs
@@ -3315,5 +3315,70 @@ Section titles: add Pass 10 to evidence.md and tasks.md; all old titles stay.
 Source diff: one test title.
 ```
 
-At Pass 10, tests, lint, OpenSpec, Git, text edits, searches, title, clause and section-title checks ran.
-At Pass 10, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.
+At Pass 10, tests, lint, OpenSpec, Git, searches, title, clause and section-title checks ran.
+Apart from the gate commands in test fixtures, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.
+
+## Pass 11
+
+Tree read: 9efae8791322871dcb0abf11983b745d066aa3fe, branch ownership-gates, with Pass 11 document changes.
+
+K1–K3 name the spec findings in final-message order. K4–K11 name the STE findings in final-message order.
+The files in pass11/ hold the command outputs. past-command-list.log lists the Pass 9 and Pass 10 command headers.
+
+| Finding | Correction |
+|---|---|
+| K1, K5 | Name gap-ledger-084 for the history condition. State the absent gate test as a limit. Check both conditions with named faults. |
+| K2, K10 | Name ownershipGate.test.mjs in the Pass 10 clause count. Keep the clause list as it was. |
+| K3, K4 | State the scope of the gate commands in test fixtures for Pass 9 and Pass 10. |
+| K6 | State that valid waivers name the file, file hash and metric of the gap. |
+| K7 | Use condition and check in the limit. Split the text into two paragraphs of four sentences each. |
+| K8 | Name the Pass 10 checks in task 12.2. Add the Pass 11 tasks. |
+| K9 | State what Pass 10 did in rows H2 and H4. |
+| K11 | Remove text edits from the Pass 10 command list. |
+
+```text
+Test command form: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/<name>.test.mjs
+ownership: tests 50, pass 50, fail 0; status 0
+ownershipGate: tests 40, pass 40, fail 0; status 0
+ledger-clean: tests 90, pass 90, fail 0; status 0
+ledger-base-fault (scratch): tests 90, pass 87, fail 3; status 1
+line-count-fault (scratch, ownership): tests 50, pass 49, fail 1; status 1
+Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+STE: 0 errors, 584 warnings.
+Command: taskset -c 4-7 nice -n 19 node scripts/format.mjs --check
+spawnSync git EPERM
+Status: 1; stopped before the checks ended; no format verdict
+Command: taskset -c 4-7 nice -n 19 node scripts/check-import-directions.mjs
+spawnSync git EPERM
+Status: 1; stopped before the checks ended; no import-direction verdict
+Command: taskset -c 4-7 nice -n 19 node scripts/check-package-boundaries.mjs
+Status: 0; all package groups passed
+Command: taskset -c 4-7 nice -n 19 node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 29 published, 0 new.
+Status: 0
+Command: taskset -c 4-7 nice -n 19 openspec show ownership-scoped-gates --json
+Status: 0
+Command: taskset -c 4-7 nice -n 19 openspec validate ownership-scoped-gates
+Change 'ownership-scoped-gates' is valid
+Status: 0
+Command: taskset -c 4-7 nice -n 19 python3 /home/ianblenke/docker/gev-tools/ownership-gates/pass9/check-repeated-titles.py
+Live titles: 378
+Labels checked: 19
+Stale labels: 0
+Command: taskset -c 4-7 nice -n 19 python3 /tmp/pass11-self-check.py
+Banned words and prefixed forms in new document text: 0
+Past fenced output: unchanged
+Scripts, AGENTS.md, config.yaml, src diff: empty
+Review folders: unchanged
+Section titles: add Pass 11 to evidence.md and tasks.md; all old titles stay.
+```
+
+| Named fault | Change in the scratch copy from Tree read | Failed test |
+|---|---|---|
+| base-history-slice | Change .slice(baseHistory.length) to .slice(0) in historyLinesOf of ledger.mjs. | gap-ledger-084, ledger.test.mjs:827; actual [] differs from ['LEDGER-MORE-THAN-BASE']. |
+| line-count-check | Change waiver.lines.length <= waiver.count to true in ownership.mjs. | ownership-008, ownership.test.mjs:115; no COVERAGE-DIFF fault exists for count 1 and lines [2, 3]. |
+
+The scratch copy has no branch. Both fault processes ended with status 1. The clean processes passed before the faults.
+
+At Pass 11, tests, fault processes, lint, format, import, package, layer, OpenSpec, Git, searches, copy scripts and document checks ran.
+Apart from the gate commands in test fixtures, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.

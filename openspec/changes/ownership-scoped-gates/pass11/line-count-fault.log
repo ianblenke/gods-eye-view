@@ -1,0 +1,74 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/ownership.test.mjs
+Tree read: 9efae8791322871dcb0abf11983b745d066aa3fe; scratch copy; no branch; line count fault
+✔ [ownership-001] accepts the manifest contract (21.713802ms)
+✔ [ownership-001] rejects each invalid manifest field (6.351975ms)
+✔ [ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file (5.210475ms)
+✔ [ownership-002] classifies exact paths and directory prefixes (1.930319ms)
+✔ [ownership-003] shows each path class and totals (1.940204ms)
+✔ [ownership-004] rejects all owned gap metrics (7.118963ms)
+✔ [ownership-005] reads only added diff ranges (2.957352ms)
+✔ [ownership-005] reads real edited new and deleted files (230.304584ms)
+✔ [ownership-006] keeps only lines that every duplicate LCOV record covers (4.827888ms)
+✔ [ownership-007] lists all uncovered changed lines in both classes (2.821758ms)
+✖ [ownership-008] limits a line waiver to its file hash, its metric and its count (2.710079ms)
+✔ [ownership-011] separates code and test gaps by class (2.146252ms)
+✔ [ownership-012] has the process rules and the adopt rules for QA scripts in AGENTS.md and config.yaml (4.387457ms)
+✔ [ownership-013] writes merged DA counts for each code line (5.878187ms)
+✔ [ownership-013] stores line data in the snapshot (5.261855ms)
+✔ [ownership-004 ownership-008] ignores fractional and negative waiver counts (1.398712ms)
+✔ [ownership-007 ownership-008] rejects all line waivers for an untrue file (0.659594ms)
+✔ [ownership-004] prints each owned gap after an upstream file (0.537728ms)
+✔ [ownership-014] counts every test instance (0.612284ms)
+✔ [ownership-001] accepts the first and last characters of each allowed character range (0.578713ms)
+✔ [ownership-016] sorts all line numbers as numbers (0.594029ms)
+✔ [ownership-017] ignores a DA record with a text prefix or suffix and a diff header with a text prefix (0.433479ms)
+✔ [ownership-018] adds owned file gaps across ledger entries and adds the waiver counts of one file (0.894142ms)
+✔ [ownership-005] uses each Git diff option (4.535751ms)
+✔ [ownership-018] adds the test instance counts of owned test files (0.806022ms)
+✔ [ownership-019] counts zero instances for an empty name map (0.573236ms)
+✔ [ownership-020 ownership-025] needs no coverage for lines that equal the file in the adopt source (481.795475ms)
+✔ [ownership-021] needs coverage for a line that a person resolved by hand (593.088731ms)
+✔ [ownership-022] needs coverage for an author edit to an upstream line (610.624824ms)
+✔ [ownership-023] uses the last adopt source for each file and the last source for other files (973.577722ms)
+✔ [ownership-024] stops for a source commit that the repository lacks or that no merge brought (373.810626ms)
+✔ [ownership-024] keeps the base diff rule without current adopt sources (946.400276ms)
+✔ [ownership-024] skips base adopt records and stops for non-string source values (524.25343ms)
+✔ [ownership-025] checks each line of an author rename absent from the source (604.529722ms)
+✔ [ownership-026 ownership-027 ownership-028] accepts only unchanged owned gaps with a ledger entry (1.813203ms)
+✔ [ownership-029 ownership-001] keeps base paths after a change removes or shortens a manifest path (403.967507ms)
+✔ [ownership-030] classifies the gate script, the OSH layer and the OSH provider as owned paths (3.349755ms)
+✔ [ownership-031] stops for an adopt record without a file and with the hash of HEAD (236.624207ms)
+✔ [ownership-032] stops for a work branch adopt source (271.408323ms)
+✔ [ownership-033] stops for an ancestor that no merge brought (241.546787ms)
+✔ [ownership-036] gives the diff a 256 MiB buffer (3.64053ms)
+✔ [ownership-031 ownership-024] stops for an invalid file or source and skips records with invalid counts (619.867871ms)
+✔ [ownership-041] stops for a number or a name that is not a full hash in the from field (222.933505ms)
+✔ [ownership-043] skips invalid adopt records outside the change (764.03153ms)
+✔ [ownership-050] stops for an invalid record after a valid record (202.382146ms)
+✔ [ownership-051 ownership-024] stops for an invalid source before a diff fault (196.505964ms)
+✔ [ownership-052] stops for a source name with a null byte (191.65472ms)
+✔ [ownership-031 ownership-041] stops for a name that is not a full hash when HEAD is a merge commit (243.923652ms)
+✔ [ownership-052] returns false when Git cannot read the merge parents (3.572899ms)
+✔ [ownership-031 ownership-041] rejects values outside the hash pattern and reads no merge parents (1.593346ms)
+ℹ tests 50
+ℹ suites 0
+ℹ pass 49
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9112.136499
+
+✖ failing tests:
+
+test at src/tooling/spec/ownership.test.mjs:112:1
+✖ [ownership-008] limits a line waiver to its file hash, its metric and its count (2.710079ms)
+  TypeError: Cannot read properties of undefined (reading 'code')
+      at TestContext.<anonymous> (file:///tmp/ownership-pass11-scratch/src/tooling/spec/ownership.test.mjs:115:232)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+Status: 1

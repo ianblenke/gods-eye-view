@@ -261,7 +261,7 @@ The gate prints LEDGER-ADOPT-FROM for a null byte in `from`, as for another inva
 
 | Word | Meaning |
 |---|---|
-| valid waiver | A waiver with a positive whole-number count with the file, the file hash and the metric of the gap |
+| valid waiver | A waiver that has a positive whole-number count and names the file, the file hash and the metric of the gap |
 
 ### Pass 8 words
 

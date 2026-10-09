@@ -178,7 +178,7 @@ Origin: spec-first
 
 ### Requirement: Gap totals
 The gate MUST add the line gap counts and the test instance counts of ledger entries of the same class.
-The gate must add only positive whole-number waiver counts with the file, the file hash and the metric of the gap.
+The gate must add only positive whole-number counts of waivers that name the file, the file hash and the metric of the gap.
 Origin: spec-first
 
 #### Scenario: Add gap and waiver counts `ownership-018`
