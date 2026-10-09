@@ -18,11 +18,11 @@
 
 ## 3. Checks
 
-- [ ] 3.1 Run the host test of the file `review.test.mjs`.
-- [ ] 3.2 Run each other test file of `src/tooling/spec` on the host, except `gates.test.mjs`.
-- [ ] 3.3 Run the tests of `gates.test.mjs` that have `change-review-03` in their names on the host.
-- [ ] 3.4 Run the lint on the host.
-- [ ] 3.5 Run OpenSpec validate on the host.
+- [x] 3.1 Run the host test of the file `review.test.mjs`.
+- [x] 3.2 Run each other test file of `src/tooling/spec` on the host, except `gates.test.mjs`.
+- [x] 3.3 Run the tests of `gates.test.mjs` that have `change-review-03` in their names on the host.
+- [x] 3.4 Run the lint on the host.
+- [x] 3.5 Run OpenSpec validate on the host.
 - [ ] 3.6 Ask the lead to run make ratchet CHANGE=review-severity-scope in the image.
 - [ ] 3.7 Ask the lead to run the two review agents.
 - [ ] 3.8 Ask the lead to write review.md.

@@ -20,4 +20,4 @@ traceReporter.test.mjs: ℹ tests 10 ℹ pass 10 ℹ fail 0
 trace.test.mjs: ℹ tests 25 ℹ pass 25 ℹ fail 0 
 v8Merge.test.mjs: ℹ tests 11 ℹ pass 11 ℹ fail 0 
 gates.test.mjs (change-review-03 only): ℹ tests 2 ℹ pass 2 ℹ fail 0 
-ALL_DONE
+RUN_END
