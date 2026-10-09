@@ -11,7 +11,7 @@ import { ALLOCATION_TEST_FILES } from '../run-unit-tests.mjs';
 import { planCi } from './lib/ci.mjs';
 import { contentHash, findCoverageFlags, findIgnoreComments, findTestImports, measureCoverage, parseLcov, untrueFiles } from './lib/coverage.mjs';
 import { changedByCommit, diffNames, headCommit, listFilesAt, readFileAt, resolveCommit, resolveMergeBase } from './lib/git.mjs';
-import { qaAdvice, readQaRegister } from './lib/qa-register.mjs';
+import { adoptableQaScript, qaAdvice, readQaRegister } from './lib/qa-register.mjs';
 import { checkUntracked, codeInventory, isTestFile, listTrackedFiles, listUntrackedFiles, testInventory } from './lib/inventory.mjs';
 import {
   baselineFault,
@@ -609,11 +609,15 @@ function runGateCommand({
   }
 
   if (command === 'adopt') {
-    if (measured.errors.length > 0) return report(log, measured.errors);
     const merged = changedByCommit(root, base, fromCommit);
+    const qaCandidates = [...measured.qaScripts.map(script => script.file), ...measured.errors.filter(error => error.code === 'QA-HEADER').map(error => error.file)];
+    const qaFiles = qaCandidates.filter(file => merged.has(file) &&
+      adoptableQaScript({ file, text: readFileSync(path.join(root, file), 'utf8'), baseText: readFileAt(root, base, file), manifest }));
+    const errors = measured.errors.filter(error => error.code !== 'QA-HEADER' || !qaFiles.includes(error.file));
+    if (errors.length > 0) return report(log, errors);
     const result = adoptLedger({
       ledger,
-      current: measured.current,
+      current: { ...measured.current, coverage: new Map([...measured.current.coverage].filter(([file]) => !qaFiles.includes(file))) },
       eligible: (file) => merged.has(file) && !sameAsBase(file),
       reached: (file) => reachedValid(file, fromCommit, merged),
       change,
@@ -621,6 +625,9 @@ function runGateCommand({
       commit: headCommit(root),
       from: fromCommit,
     });
+    for (const file of qaFiles) {
+      result.history.push({ date, change, commit: headCommit(root), kind: 'adopt', file, from: fromCommit, lines: 0, branches: 0, functions: 0, untraced: 0, untrue: false });
+    }
     writeLedger(root, result.ledger);
     appendHistory(root, result.history);
     log(`Adopt: ${result.history.length} files from ${fromCommit}.`);

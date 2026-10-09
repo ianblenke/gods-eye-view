@@ -1,7 +1,7 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-import { readFileAt, mergeParents, resolveCommit } from './git.mjs';
+import { readFileAt, mergeParents } from './git.mjs';
 import { adoptsOf } from './ledger.mjs';
 
 const MANIFEST = 'openspec/ownership.json';
@@ -73,7 +73,7 @@ export function changedLines({ root, base, files }) {
 /** True when a merge after the base brought the adopt source. */
 export function isAdoptSource(root, base, from) {
   try {
-    return mergeParents(root, base).has(resolveCommit(root, from));
+    return typeof from === 'string' && /^[0-9a-f]{40}$/.test(from) && mergeParents(root, base).has(from);
   } catch {
     return false;
   }
@@ -88,7 +88,7 @@ export function validAdoptSources({ root, base, history, baseHistory, change }) 
   const adopts = adoptsOf(history, baseHistory, change);
   for (const record of records) {
     if (typeof record.file !== 'string' || typeof record.from !== 'string' || !isAdoptSource(root, base, record.from)) {
-      const error = new Error('LEDGER-ADOPT-FROM: Use a complete adopt record with a source that a merge after the base brought.');
+      const error = new Error('Use an adopt record with a string file, a full lowercase from hash and a source that a merge after the base brought.');
       error.code = 'LEDGER-ADOPT-FROM';
       throw error;
     }

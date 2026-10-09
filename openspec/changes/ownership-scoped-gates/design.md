@@ -6,7 +6,7 @@ The owner needs whole-file coverage for changed owned code and owned code withou
 
 ## TERMS
 
-- owned: A path that either the base manifest or the current manifest lists, or that starts with a listed directory prefix.
+- owned: With a base, a path is owned when the base manifest or the current manifest lists it. Without a base, only the current manifest counts.
 
 - upstream: A path that is not owned.
 
@@ -48,17 +48,18 @@ Count only current inventory files. Deleted files have no new lines.
 
 A waiver uses the same file hash, metric and count rules as the ledger.
 
-A line waiver also names the uncovered changed line. A waiver cannot cover an untrue file.
+A line waiver also names the uncovered changed line. A waiver cannot waive a gap in an untrue file.
 
-The QA register accepts a base upstream script with no QA header, or a script that a valid adopt record names. An invalid QA block still gives QA-HEADER.
+The QA register accepts an upstream script with no current or base QA tag.
+For a new script, a valid adopt record must name the script. The QA register prints QA-HEADER for an invalid QA block.
 
 A first comment block with no QA tags has no QA header. Within the QA exception, the gate uses the synthetic header for that script.
 
 Print a QA advisory for each synthetic header, even without a change name.
 
-The scenarios qa-scripts-002 and qa-scripts-003 do not apply within the QA exception.
+The scenarios qa-scripts-002, qa-scripts-003 and qa-scripts-023 do not apply within the QA exception.
 
-The old header checks apply to owned scripts and to the register function when it has no manifest argument.
+The old header checks apply to owned scripts and to the QA register when it has no manifest argument.
 
 The scenario qa-scripts-019 does not apply to a synthetic header. The gate prints the synthetic header advisory when no change name is given.
 
@@ -96,30 +97,30 @@ Tree read for pass 2: a70c24e2a5836544b7490899e9d352cbb343d053.
 
 Use only records that adoptsOf accepts for this change after the unchanged base history prefix.
 
-Each file uses its last own record. A file without a record uses the last source in the change.
+Each file uses its last adopt record. A file without a record uses the last adopt source in the change.
 
-Use isAdoptSource for the adopt command, checkAdopts and syncChangedLines. It checks mergeParents(root, base).has(resolveCommit(root, from)).
+Use isAdoptSource for the adopt command, checkAdopts and syncChangedLines. The function isAdoptSource checks the full lowercase hash and mergeParents(root, base).has(from).
 
-Stop with LEDGER-ADOPT-FROM for an absent string file or a source that no merge after the base brought.
+The gate prints LEDGER-ADOPT-FROM and stops for a record with no string `file` value or an invalid adopt source.
 Other records that adoptsOf does not accept give no source.
 
-A is the set of new-side line numbers in the base diff. B is the set of those in the adopt source diff.
+A is the set of new-side line numbers in the base diff. B is the set of those in the diff against the file in the adopt source.
 
-Only the intersection of A and B needs coverage. A file absent from the source uses all its current lines for B.
+Only the intersection of A and B needs coverage. A file absent from the adopt source uses all its current lines for B.
 
 The gate compares the current tree so that checks before a commit also check author edits.
 
 For a committed tree, these sets come from git diff -U0 base HEAD and git diff -U0 from HEAD -- file.
 
-The merge commit itself follows the sync line rule. Later author edits to upstream code differ from its source and need coverage.
+The merge commit itself follows the sync line rule. Later author edits to upstream code differ from the file in the adopt source and need coverage.
 
 Use the current code inventory. Deleted paths have no new lines. The check does not read non-code paths.
 
-Use no rename detection. A new path absent from its source needs coverage for each base diff line.
+Use no rename detection. A new path absent from the file in the adopt source needs coverage for each base diff line.
 
-Binary code files use the text diff rule. Binary non-code files do not enter the code inventory.
+Binary code files use the text diff rule. Binary non-code files are not in the code inventory.
 
-A fully covered upstream file can lack an adopt record. It uses the last source of the change.
+A fully covered upstream file can lack an adopt record. The file uses the last adopt source of the change.
 
 Without adopt records, keep the base diff rule. The owned coverage scope and ledger comparisons still apply.
 
@@ -133,7 +134,7 @@ Check whole-file coverage for owned code that differs from its base content, or 
 
 An unchanged owned file with a recorded gap passes this check. The ledger comparison still rejects larger gaps.
 
-The report and the owned gap advice list all owned gaps. The target is zero.
+The report command and the owned gap lines list all owned gaps. The target is zero.
 
 Use base content, not the sync line set, to select changed files for whole-file coverage.
 
@@ -141,7 +142,7 @@ Tests use temporary Git repositories with fixed identity, main branch, locale an
 
 Pass 3 code commit: 3a72f0f21b160c6c2a9cdabede2df2dda7ec2c23.
 
-Print owned gap advice after valid history and before the changed line check.
+Print the owned gap lines after valid history and before the changed line check.
 
 Check sync sources before the base ledger JSON.
 
@@ -154,22 +155,127 @@ For a run with a base, the owned class is the union of paths from the base manif
 The report command has no base and reads only the current manifest.
 An absent base manifest is empty. An invalid base manifest gives OWNERSHIP-MANIFEST.
 
-A synthetic QA header needs a base script with no QA tag in its first comment block, or a valid adopt record.
-A new unlisted script and a script whose base header had a QA tag keep QA-HEADER.
+The QA register uses a synthetic header for a base script only when the base script has no QA tag in its first comment block.
+For a new script, the QA register needs a valid adopt record.
+A new script that no valid adopt record names, and a script whose base header had a QA tag, keep QA-HEADER.
 
 Git diff uses a 256 MiB output buffer.
 
 
 The host mutation copy has no Git index. Its QA run omits qa-scripts-023, the project inventory test.
-That test runs in the source clone. The host adapter uses file output to avoid the host pipe error.
-It reads that output during each test and stops on the first failed test, as the automatic tool does.
+That test runs in the clone of the project. The host adapter uses file output to avoid the host pipe error.
+The host adapter reads that output during each test and stops on the first failed test, as the automatic mutation tool does.
 
-CI selects the change before the gate reads its adopt list.
-The gate checks history JSON before advice even when it has no change name.
+The ci command selects the change before the gate reads the adopt records of that change.
+The gate checks history JSON before the owned gap lines even when it has no change name.
 
-Both measurement modes use the selected active change for its scenario checks.
-The host measurement keeps the caller environment, allocation list and measure phase name.
-The source check reads each record in the accepted suffix, not only the first record.
+The measurement and the snapshot check use the selected change for the scenario checks.
+The measurement uses the caller environment and the allocation file list. The phase time line names the phase measure.
+The history check reads each record after the base history prefix, not only the first record.
 
-The shared source predicate returns false for a source name that Git cannot read.
-A null byte in from gives the same LEDGER-ADOPT-FROM error as another invalid source.
+The source check returns false for a full hash when Git cannot read the merge parents.
+The gate prints LEDGER-ADOPT-FROM for a null byte in `from`, as for another invalid adopt source.
+
+## Pass 5 words
+
+| Word | File and function, or object |
+|---|---|
+| gate | scripts/spec/gates.mjs: runGates |
+| ratchet command | runGates: command ratchet |
+| adopt command | runGates: command adopt |
+| ci command | runGates: command ci |
+| init command | runGates: command init |
+| report command | runGates: command report |
+| snapshot check | gates.mjs: documentMeasurement |
+| base | Git commit for the comparison |
+| base manifest | ownership.json at the base |
+| current manifest | ownership.json in the current tree |
+| manifest | openspec/ownership.json |
+| class | ownership.mjs: classify; owned or upstream |
+| adopt record | ledger.mjs: adoptsOf |
+| adopt source | Commit in the from field of an adopt record |
+| history | openspec/trace/history.jsonl |
+| history prefix | History text at the base |
+| QA register | qa-register.mjs: readQaRegister |
+| synthetic header | Header object that readQaRegister creates |
+| QA advisory | qa-register.mjs: qaAdvice synthetic header lines |
+| QA candidate lists | measured.qaScripts files and QA-HEADER error files; gates.mjs: adopt |
+| ledger entry | gaps.json: coverage or untracedTests entry |
+| gap | Code below full coverage or a test without a scenario ID |
+| owned gap lines | gapReport output for the owned class |
+| measurement | gates.mjs: measure |
+| measure phase | Phase time for the measurement |
+| merge parent | Parent other than the first parent of a merge after the base |
+| merged commit | Commit that a merge after the base brought |
+| valid adopt record | Record that passes adoptsOf for this change and names a merge parent with its full lowercase hash |
+| source check | ownership.mjs: isAdoptSource |
+| history check | ownership.mjs: validAdoptSources |
+| history parse error | JSON.parse fault in validAdoptSources |
+| diff process | ownership.mjs: changedLines |
+| agent | Person or AI agent that reads the process text |
+| process text | AGENTS.md and openspec/config.yaml |
+| report | Output of the report command |
+| line check | ownership.mjs: coverageFaults |
+| record | One history or measurement data item |
+| file | Path and its current content |
+| waiver | History record that waives a gap |
+| test instance | One run of a test name |
+| scenario | Spec clause with a stable ID |
+| owner | Person who sets the process rules |
+| lead | Person who runs the image checks and review |
+| person | Human who writes or merges code |
+| caller | Code that calls runGates |
+| child environment | Environment that measure passes to the child process |
+| allocation file list | allocationFiles argument of measure |
+| clock | clock argument of runGates |
+| phase time line | phase output of runGates |
+| change | Named OpenSpec folder that the gate selects |
+| change documents | Proposal, design, tasks, evidence and delta specs |
+| base file | readFileAt result for a file at the base |
+| current file | readFileSync result for a file in the current tree |
+| header block | First block that parseQaHeader reads, with a QA tag |
+| QA tag | purpose, covers, run or needs in the first comment block |
+| code inventory | inventory.mjs: codeInventory result |
+| line data | Covered DA line numbers from LCOV |
+| changed line | New-side line number in the diff against the base |
+| test run | One Node process that runs one test file |
+| assertion | node:assert call counted by the test guard |
+| source option | from option that the adopt command resolves |
+| source hash | Full hash of 40 lowercase hexadecimal digits |
+| hash pattern | The JavaScript pattern /^[0-9a-f]{40}$/ in isAdoptSource |
+| history record | JSON object in history.jsonl |
+| measurement snapshot | measurement.mjs: writeMeasurement output |
+| ledger | openspec/trace/gaps.json |
+| manifest reader | ownership.mjs: readOwnership |
+| hash resolver | git.mjs: resolveCommit |
+| merge parent reader | git.mjs: mergeParents |
+| merged file set | git.mjs: changedByCommit result |
+| QA adopt helper | qa-register.mjs: adoptableQaScript |
+| adopt check | ledger.mjs: checkAdopts |
+| record filter | ledger.mjs: adoptsOf |
+| owned coverage check | ownership.mjs: coverageFaults owned file loop |
+| gap report function | ownership.mjs: gapReport |
+
+## Pass 5 decisions
+
+D7: The source check accepts only a full hash of 40 lowercase hexadecimal digits and a merge parent after the base.
+The adopt command resolves the `--from` option before the source check and writes the full hash.
+
+D8: The base QA tag blocks the synthetic header even when a valid adopt record names the file.
+The function adoptableQaScript checks the class, current tag and base tag.
+The adopt command takes QA candidates from the QA register scripts and QA-HEADER errors.
+The adopt command also checks that the merged commit changed the file.
+The adopt command writes the zero-count record and removes only that file's QA-HEADER error.
+
+D9: The Order note states the real test order. Requirements for ownership-045 through ownership-049 have Origin: backfill.
+
+D10: The bad history scenario names the error line. The init scenario states its early stop.
+The known limits name the source check cost and the absence of a real sync run.
+
+### Purpose after archive
+
+With a base, a path is owned when the base manifest or the current manifest lists it.
+Without a base, only the current manifest counts.
+Each owned code file that a change adds or edits, and each owned code file without a ledger entry, needs full coverage.
+Each changed line needs coverage, except a line that equals the file in the adopt source in a sync.
+The report command lists all ledger gaps of both classes.

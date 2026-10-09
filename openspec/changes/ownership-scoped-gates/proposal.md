@@ -1,6 +1,6 @@
 ## Why
 
-The owner accepts a boundary for strict checks for the fork.
+The owner accepts that strict checks apply to owned code and not to upstream code.
 
 Changed owned files and owned files without a ledger entry need full coverage. Each changed line needs coverage in every code file.
 
@@ -12,11 +12,11 @@ Upstream code keeps its ledger gap after the merge and the adopt command.
 
 - Add whole-file checks for changed owned code and owned code without a ledger entry. Check each code diff line.
 
-- Use a synthetic QA header only within the base script or valid adopt exception.
+- Use a synthetic QA header for an upstream script with no current or base QA tag. For a new script, the QA register needs a valid adopt record.
 
 - Add a gap report by class.
 
-- Check only the lines that differ from both the base and the adopt source for a sync.
+- Check only the lines that differ from both the base file and the file in the adopt source for a sync.
 
 - Update the process text and sync review scope.
 
@@ -36,11 +36,11 @@ The change edits gate code, gate tests, AGENTS.md and openspec/config.yaml.
 
 The ledger comparisons, test name checks, STE lint and two-agent review still apply.
 
-## Known limits
+## Known limits and later changes
 
 Host coverage cannot replace the image measurement on the Node version in .node-version.
 
-The manifest uses exact paths and directory prefixes. It has no glob syntax.
+The manifest uses exact paths and directory prefixes. The manifest has no glob syntax.
 
 The manifest accepts ASCII letters, digits, underscores, dots, hyphens and slashes in paths.
 
@@ -54,13 +54,13 @@ The first review round still uses Scope: full. Later rounds can use Scope: diff 
 
 QA scripts with valid register headers remain outside the code inventory, as before.
 
-Upstream QA scripts within the base script or valid adopt exception also stay outside the code inventory.
+Such scripts also stay outside the code inventory.
 
 The owner must review new code outside the manifest and the reason for its class.
 
-Line coverage follows the V8 line result. It does not show each branch of an upstream line.
+Line coverage follows the V8 line result. The line result does not show each branch of an upstream line.
 
-The mutation test tool tests only the mutants on the changed lines. It does not test every old gate statement.
+The mutation test tool tests only the mutants on the changed lines. The mutation test tool does not test every old gate statement.
 
 The base ledger lists one branch gap in scripts/spec/lib/test-guard.mjs and one in src/layers/osh/index.js.
 
@@ -69,14 +69,15 @@ Two owned files keep one recorded branch gap each. A later change closes them. T
 HTML and shell files have no true line data in the current Node measurement.
 Their changed lines fail the diff check.
 
-For a sync, a changed line needs no coverage when it equals the adopted upstream source.
-Author edits and lines that a person resolved by hand need coverage if they differ from both the base and the source.
+For a sync, a changed line needs no coverage when it equals the file in the adopt source.
+Author edits and lines that a person resolved by hand need coverage.
+This rule applies when the lines differ from the base file and the file in the adopt source.
 
 The final code keeps phase-one kills for source spans that did not change.
 The full second phase uses the final code.
 
 The pass 2 focused mutation set had limits for old commands, phase time names and measurement options.
-It also had limits for trace links and repeated QA covers items.
+Pass 2 also had limits for trace links and repeated QA covers items.
 Evidence lists each such survivor.
 
 Four old gate tests fail with the host adapter. They concern worker coverage, child coverage, parent process arguments and forced exit records.
@@ -88,20 +89,25 @@ Pass 4 tests an invalid source with a failed diff and with invalid base ledger J
 The source fault stops before both later checks.
 
 
-Pass 4 reads commit bf174f99d5eb799c0f3fd17648b5b6042dab1402.
+Pass 4 has base commit bf174f99d5eb799c0f3fd17648b5b6042dab1402 and code commit 799372f0.
 
-A real merge of an own branch followed by adopt is still accepted. Rule 21 needs a manual check of the upstream remote.
+The gate still accepts a real merge of a branch that a person wrote in this project, followed by the adopt command.
+Rule 21 in AGENTS.md says that a person checks the upstream remote.
 
-An owned path leaves the owned set only through a later change that changes this rule.
-This is a process rule for the owner review of each manifest diff.
-The union protects the current comparison. The owner rejects path removals that would remove this protection at the next base.
+A change that removes a path from openspec/ownership.json keeps the path owned for that change, because the base manifest lists it.
+The path is upstream for the next change. The owner rejects each removal of an owned path when the owner reads the manifest diff.
 
-Manifest entries that match no file are not checked. This includes a typo or a directory without its final slash.
+The gate does not check manifest entries that match no file. For example, an entry can have a typo or lack its final slash.
 The owner reviews each manifest diff.
 
-The follow-up change html-shell-line-data must treat zero-script HTML as code with no code lines.
-It must add a waiver path for files without line data. A person tells the lead when a change needs it, per rule 18.
+The follow-up change html-shell-line-data must count HTML with no script as code with no code lines.
+The follow-up change must also add a way to waive a file with no line data.
+Tell the lead when a change needs this way, as AGENTS.md rule 18 says.
 
-The old gate plural style, such as 1 code files, stays.
+The new messages use the plural form for a count of 1, as the old messages do, for example 1 files.
 
-Pass 4 adds the ci and init cases for survivor class L4. Both cases use a recorded owned gap.
+Pass 4 adds the ci and init cases for the known limit L4 of evidence.md. Both cases use a recorded owned gap.
+
+A full check run calls mergeParents three times for each valid adopt record. A sync with many adopt records can be slow.
+
+No real sync or upstream class change has run through the new gates. The first sync will be the first real use.

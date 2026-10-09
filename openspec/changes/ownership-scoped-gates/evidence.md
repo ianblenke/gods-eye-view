@@ -8,7 +8,7 @@ Upstream read: 95fa816232456a6831172befa2f1b34b9ee73794.
 
 The specs and tests came before the code. The manifest has 92 exact paths and prefixes.
 
-It covers all 1025 fork-only files from the requested tree comparison.
+The manifest lists all 1025 fork-only files from the requested tree comparison.
 
 The QA register has 83 script purposes, no errors and no script for ownership.
 
@@ -35,6 +35,8 @@ Each test file runs in its own process. The local tool copy has no test isolatio
 | qaRegister.test.mjs | 39 | 39 | 0 |
 | v8Merge.test.mjs | 11 | 11 | 0 |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 The first complete gates.test.mjs run had 227 tests: 218 passed and 9 failed.
 
 Three fixture checks now pass with the line data that the new rule needs.
@@ -59,6 +61,8 @@ The scratch copy has no branch. Its TREE_READ file names the base commit.
 | spec-trace-039 spec-trace-040 | fail | fail |
 | coverage-gate-031 | fail | fail |
 | coverage-gate-048 | fail | fail |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 The first base probe stopped before tests because the scratch copy lacked a dependency. It has no test verdict.
 
@@ -89,9 +93,11 @@ The target-file reader merges actual V8 records for the other two files, one tar
 | gates.mjs | 757/757 | 363/363 | 88/88 |
 | measurement.mjs | 65/65 | 58/58 | 8/8 |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 Those merged counts use 311 process records. They do not use fake fixture measurements.
 
-The image must supply the pinned Node result. No host result is an image gate verdict.
+The image must supply the Node result of the image. No host result is an image gate verdict.
 
 ## Automatic mutations
 
@@ -118,6 +124,8 @@ The full second phase uses the final source and the stronger tests.
 | Current set | Phase one killed | Phase one survived | Timeout | Crash | Phase two killed | Final survivors |
 |---|---:|---:|---:|---:|---:|---:|
 | 1622 | 1360 | 248 | 12 | 2 | 173 | 75 |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 The 75 survivors have 44 equivalent probes and 31 known limits.
 
@@ -231,6 +239,8 @@ The probe source is equivalent-probes.mjs. The probe result has 44 passed cases.
 | b0063 | scripts/spec/lib/qa-register.mjs:39 | E |
 | b0064 | scripts/spec/lib/qa-register.mjs:39 | E |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 ## Failed mutation tests
 
 The result file gives the full name and source file for every killed mutant.
@@ -248,6 +258,8 @@ The result file gives the full name and source file for every killed mutant.
 | b0009 | Use only the last test file count | [ownership-018] sums test counts across owned files |
 | b0013 | Remove the initial zero count | [ownership-019] counts zero instances for an empty name map |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 ## Source hashes
 
 The hash file uses SHA-256 for the tested source.
@@ -259,6 +271,8 @@ The hash file uses SHA-256 for the tested source.
 | scripts/spec/lib/measurement.mjs | af009427eb2145d384180e8867a87bad838d3f0c1d661b4b2c3eccda6902d7d8 |
 | scripts/spec/lib/qa-register.mjs | 96e100f8dd7390d83e4cae328452b3f45c371d34e03afcad877f0e0dfdb0fd96 |
 | scripts/spec/lib/v8-merge.mjs | 19c743fe91e7c878ac61471736bb15e5835b2b23932a81f4852dc152de599fae |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 ## Lead work
 
@@ -298,7 +312,7 @@ The owner states that upstream source lines need no changed line coverage in a s
 
 The gate uses the intersection of the base diff lines and the adopt source diff lines.
 
-Each file uses its last own adopt source. Other files use the last source in the change.
+Each file uses the adopt source of its last adopt record. Other files use the last source in the change.
 
 A file absent from its source uses all its current lines for the source set.
 
@@ -326,6 +340,8 @@ It has no branch. The proof does not change the clone.
 | Drop the conflict repair line | Replace the intersection with an empty array | ownership-021: needs the manual conflict repair line |
 | Drop the vendored author edit | Replace the intersection with an empty array | ownership-022: needs an author edit to a vendored line |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 Each mutation ran against its named test and gave exit status 1.
 
 The proof logs and pass2-proof.json are in /home/ianblenke/docker/gev-tools/ownership-gates/.
@@ -338,6 +354,8 @@ The ledger at tree a70c24e2a5836544b7490899e9d352cbb343d053 has these two owned 
 |---|---|---:|---|
 | scripts/spec/lib/test-guard.mjs | branches | 1 | 9451e6303105436c50adc39c30c65ef875c0871c318a6ca26a81e3a94f1ebe9f |
 | src/layers/osh/index.js | branches | 1 | b995edb9d833d5661d0484c31a741131b3ea1439a56fa5d03aa24141bb3a8407 |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 If the image shows V8 artifacts, each file needs one waiver with metric branches and count 1 for its measured hash.
 
@@ -367,6 +385,8 @@ Node version: 26.8.2. Each test file runs in its own process on cores 4 through 
 | v8Merge.test.mjs | 11 | 11 | 0 |
 | gates.test.mjs | 227 | 223 | 4 |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 The full legacy run finished with its test summary and exit status 1.
 
 The failed cases are coverage-gate-024, spec-trace-039 spec-trace-040, coverage-gate-031 and coverage-gate-048.
@@ -379,6 +399,8 @@ Both scripts that pass 2 changes have 100% line, branch and function coverage on
 |---|---:|---:|---:|
 | ownership.mjs | 100% | 100% | 100% |
 | gates.mjs | 759/759 | 361/361 | 88/88 |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 The gate script counts use 305 actual V8 process records from the two gate test files.
 
@@ -424,7 +446,7 @@ The diff filter selected all 317 candidates whose spans touch the pass 2 script 
 
 The tool copy uses the current generator classes and the pass 1 host process transport.
 
-It runs each test file in its own process. The source clone is read-only.
+It runs each test file in its own process. The project clone is read-only.
 
 Phase one used 32 ownership tests and 12 gate tests. Phase two used all 34 ownership tests and 12 gate tests.
 
@@ -441,6 +463,8 @@ Both failed ownership-024: rejects absent and separate source commits.
 | Fast phase | 317 | 257 | 57 | 3 | 0 |
 | Full phase | 57 | 47 | 10 | 0 | 0 |
 | Source-length follow-up | 2 | 2 | 0 | 0 | 0 |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 Final assessment: 306 killed, 3 crashes, 6 bounded equivalents and 2 known limits. No candidate remains without an assessment.
 
@@ -461,6 +485,8 @@ The six equivalent probes passed all 28 cases. The bounds below state the input 
 | a9058 | ownership.mjs:72 | Known limit | The suite does not pair an invalid source with a failed base diff. The first error can change. |
 | a9495 | gates.mjs:567 | Known limit | The suite does not pair an invalid source with invalid base ledger JSON. The first error can change. |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 The probe source and results are pass2-equivalent-probes.mjs and pass2-equivalent-probes.json in the tool folder.
 
 The mutation bundle records each source span, code edit, run status, failed test name and final assessment.
@@ -475,6 +501,8 @@ The lead must assess the two known limits during review.
 | scripts/spec/gates.mjs | 3c73ee46a6252220c006b7a94e2bc052ec3242926409a436ad9a08eb93e0d904 |
 | src/tooling/spec/ownership.test.mjs | abb2b51930121340c1843859d0b6c833de269f593f606b30066198f2c60aeda6 |
 | src/tooling/spec/ownershipGate.test.mjs | d368ca267cd91cd659c234eca4a5598f7e32a633f56fbea441d447d83c307aa5 |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 ## Pass 2 commit
 
@@ -523,6 +551,8 @@ The command node scripts/spec/gates.mjs lint --change ownership-scoped-gates rep
 | Treat unchanged as changed | ownership-026 checks an old owned gap |
 | Drop the changed check | ownership-027 checks an old owned gap |
 | Drop the report line | ownership-026 checks an old owned gap |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 Each mutation runs node --import host.mjs --test-name-pattern=ownership-NNN src/tooling/spec/ownershipGate.test.mjs in the scratch copy.
 The scratch copy has no branch. Its source is commit 88894512 with the pass 3 edits.
@@ -581,6 +611,8 @@ It runs all 35 ownership tests and 18 gate tests.
 | pass3-p2.log | 68 | 53 | 15 | 0 | 0 |
 | pass3-followup.log | 10 | 9 | 0 | 1 | 0 |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 Final result: 123 killed, one crash, five bounded equivalents and zero timeouts. No candidate lacks an assessment.
 
 The crash is a9624. The test ownership-024 checks the source before a bad base ledger and fails with SyntaxError.
@@ -595,6 +627,8 @@ The other two kills concern bad history before gap advice and advice before a di
 | a9227 | a1408 | EQUIVALENT | Both skip checks read plain records and arrays with no getters. |
 | a9228 | a1409 | EQUIVALENT | A waiver filter reads plain JSON records and has no side effects. |
 | a5241 | a5385 | EQUIVALENT | The command is a string. Either check order selects check and ratchet. |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 The probe command passes 39 cases. mutation-results-pass3.json records each edit, status, failed test name and assessment.
 The tool folder has the full commands, logs, ID map, final result file and probe source.
@@ -612,18 +646,22 @@ No listed QA purpose conflicts with this spec. This pass starts no container and
 | src/tooling/spec/ownershipGate.test.mjs | 79b17016f38e33c5c21d2466eeeadbd3a1bc810bb56ea18a5428836798308c31 |
 | src/tooling/spec/qaRegister.test.mjs | 4bf29fc98c16f84eff64866986e0872b0bd89deeb1ae44f68cde94abe3d930ad |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 
 ## Pass 4
 
+The merge parent rule replaces the ancestor rule of pass 2.
+
 Tree read: bf174f99d5eb799c0f3fd17648b5b6042dab1402, branch ownership-gates.
-The corrections use the lead decisions D1 through D6. The round 1 reports stay unchanged.
+The corrections use the lead decisions The pass 4 decisions in design.md. The round 1 reports stay unchanged.
 New scenario IDs are ownership-029 through ownership-053.
 
 ### Round 1 spec findings
 
 | First words | Correction | Tree read |
 | --- | --- | --- |
-| A one-line hand-written history entry | Use adoptsOf and the shared isAdoptSource predicate. Stop records with no string file or no merged source with LEDGER-ADOPT-FROM. | bf174f99 |
+| A one-line hand-written history entry | Use adoptsOf and the shared isAdoptSource predicate. Stop with LEDGER-ADOPT-FROM for a record with no string file or no merged source. | bf174f99 |
 | The QA synthetic header is open | Use only a base script without a QA tag, or a valid adopt file. | bf174f99 |
 | Scenario ownership-012 is unmet | AGENTS.md and config.yaml state the no-ledger case. The test asserts both texts. | bf174f99 |
 | The manifest is read only | Read the base manifest and use its union with the current manifest. Test the real sentinel paths. | bf174f99 |
@@ -634,6 +672,8 @@ New scenario IDs are ownership-029 through ownership-053.
 | Survivor class L4 | Add ownership-053 for ci and init with a recorded owned gap. Both cases pass. | bf174f99 |
 | Each sync change uses adopt | Say each file that the merge brings and that has a coverage gap. | bf174f99 |
 | The manifest check accepts entries | Name paths that match no file in Known limits. The owner reviews each manifest diff. | bf174f99 |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 ### Round 1 STE findings
 
@@ -670,14 +710,16 @@ New scenario IDs are ownership-029 through ownership-053.
 | S29 | Terms and references | Use test instances, adopt source, and the upstream project. | bf174f99 |
 | S30 | Rule 22 | Bound the header exception, name the proposal, use active review prose, and state the scenario instruction. | bf174f99 |
 | S31 | All owned JS code | Use owned code files and the adopt instruction. | bf174f99 |
-| S32 | Purpose | The lead restored the specs before archive. The applied ownership spec has no file to edit in this tree. | bf174f99 |
+| S32 | Purpose | The lead set the applied Purpose after the archive. Pass 5 has no applied ownership spec after the lead restored the base specs. | bf174f99 |
 | S33 | Test titles | Use plain verbs and name the line rule, character ranges and adopt source. | bf174f99 |
 | S34 | Test titles | Remove command subjects and name the ratchet command and QA-HEADER. | bf174f99 |
 | S35 | Test titles | Name each header error and use shebang. | bf174f99 |
 | S36 | Gate messages | Clarify the synthetic header covers item. Keep the old plural style, as the lead directs. | bf174f99 |
 
-All clear STE replacements apply. No unclear replacement remains under spec-wording-minors.
-S32 has no applied file in this active tree. S36 keeps the plural style that the lead names.
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
+Pass 4 applied the replacements listed in its table. No unclear replacement remains under prose faults.
+The lead set the applied Purpose after the archive. S36 keeps the plural style that the lead names.
 
 ### Fault tests and named mutations
 
@@ -693,7 +735,7 @@ The logs are /tmp/pass4-red-own.log and /tmp/pass4-red-qa.log.
 A command with --test stopped at the host child process adapter before test details. It gives no scenario verdict.
 
 The named mutation command is python /tmp/pass4-named.py.
-It writes only an isolated copy under the tool folder. The source clone stays unchanged.
+It writes only an isolated copy under the tool folder. The project clone stays unchanged.
 Each row has exit status 1 and names the failed test in named-results.json.
 
 | Fault | Failed test |
@@ -705,6 +747,8 @@ Each row has exit status 1 and names the failed test in named-results.json.
 | Give a script with a deleted base header the synthetic header | ownership-035 |
 | Drop the base manifest paths | ownership-029 |
 | Drop maxBuffer from Git diff | ownership-036 |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 The other ownership-031 test uses a valid merged source with absent ledger fields.
 An absent file stops the run. Invalid count fields give no source and keep the base diff rule.
@@ -1134,6 +1178,8 @@ It uses --experimental-test-coverage with one --test-coverage-include path for e
 | ownershipGate.test.mjs | /tmp/pass4-check-ownershipGate.log | 32 | 0 |
 | v8Merge.test.mjs | /tmp/pass4-v8-final.log | 11 | 0 |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 The two focused library logs each show 100% line, branch and function coverage.
 The final gates.test.mjs command uses the host adapter and omits only the four known host cases.
 It passes 223 tests with no failure in /tmp/pass4-legacy-null-final.log.
@@ -1183,6 +1229,8 @@ Each named fault has exit status 1 and a failed test in those files.
 | Change the first comment or shebang bound | ownership-009 ownership-010 |
 | Drop the error code field | ownership-031 |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 The null source command first fails ownership-052 with ERR_INVALID_ARG_VALUE in /tmp/pass4-null-red.log.
 After the source predicate correction, the same command passes in /tmp/pass4-null-green.log.
 The code now gives LEDGER-ADOPT-FROM and the STE message of ownership-031.
@@ -1208,7 +1256,7 @@ It then runs the two no-change guard mutants again in /tmp/pass4-guard-p2.log.
 
 The host runner copies the official tool and changes only the test process adapter.
 It uses file output to avoid the host pipe fault and stops at the first failed test.
-The QA inventory test qa-scripts-023 runs in the source clone. Worker copies have no Git index and omit it.
+The QA inventory test qa-scripts-023 runs in the project clone. Worker copies have no Git index and omit it.
 The old interrupted campaigns give no final mutation verdict.
 
 
@@ -1264,6 +1312,8 @@ These data use the current gate script and the unchanged measurement and V8 scri
 | gates.mjs | 769/769 | 376/376 | 91/91 | /tmp/pass4-cov-gates-current.json |
 | measurement.mjs | 65/65 | 57/57 | 8/8 | /tmp/pass4-cov-measurement-current.json |
 | v8-merge.mjs | 190/190 | 111/111 | 19/19 | /tmp/pass4-cov-v8-current.json |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 Each host merge command has exit status 0. The first two merged reports read 292 process records.
 The V8 report reads 293 records. Each script has 100% line, branch and function coverage.
@@ -1334,6 +1384,8 @@ The final artifact is mutation-results-pass4.json. It has the input spans, raw t
 | scripts/spec/lib/ownership.mjs | 266 | 12 | 5 |
 | scripts/spec/lib/qa-register.mjs | 153 | 12 | 0 |
 
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
+
 Each survivor has an EQUIVALENT probe and a reason below.
 The probes use readable stable input files, plain JSON records and fixed Git refs.
 They do not claim the same result for a concurrent file edit or a permission fault.
@@ -1359,9 +1411,9 @@ They do not claim the same result for a concurrent file edit or a permission fau
 | c0588 | 12 | The Boolean checks have the same result for plain JSON and fixed Git refs. |
 | c0614 | 12 | The Boolean checks have the same result for plain JSON and fixed Git refs. |
 | c0619 | 12 | The Boolean checks have the same result for plain JSON and fixed Git refs. |
-| c4477 | 6 | The earlier fault in the fault list stops a missing or absent source. |
-| c4481 | 6 | The earlier fault in the fault list stops a missing or absent source. |
-| c4482 | 6 | The earlier fault in the fault list stops a missing or absent source. |
+| c4477 | 6 | The earlier fault in the fault list stops an absent source. |
+| c4481 | 6 | The earlier fault in the fault list stops an absent source. |
+| c4482 | 6 | The earlier fault in the fault list stops an absent source. |
 | c4952 | 4 | The optional history value is null or a string. Both operators select the same text. |
 | c4966 | 4 | The optional history value is null or a string. Both operators select the same text. |
 | c4995 | 4 | The optional history value is null or a string. Both operators select the same text. |
@@ -1384,6 +1436,8 @@ They do not claim the same result for a concurrent file edit or a permission fau
 | c9631 | 26 | The moved read has no error or side effect on the readable fixture. |
 | c9659 | 26 | The independent QA, trace and ledger comparisons give the same errors and data. |
 | n0014 | 16 | The callers test the result as a Boolean. False and undefined both stop the source. |
+
+These titles are the names at the time of the run. Later corrections renamed some titles; the tags are unchanged.
 
 The probe commands are:
 
@@ -1421,3 +1475,893 @@ It gives STE: 0 errors, 554 warnings. The final git diff --check command has no 
 The document and result artifact commit is f8c3c0d3.
 The code and test commit remains 799372f06a74a793d63b4939dd98b7e035a4df69.
 After the document commit, task 6.26 is complete.
+
+## Pass 5
+
+Tree read: fbdb630ae4b8af37437e808a023f7569c9276510, branch ownership-gates.
+
+The text before this section contains Old records. Each table keeps the titles at the time of its run.
+The echo check excludes those Old records. The tags keep the same IDs.
+
+### Findings
+
+All rows concern tree fbdb630ae4b8af37437e808a023f7569c9276510 and the Pass 5 work tree.
+
+| First words | Correction |
+|---|---|
+| Critical: A forged adopt line | D7 rejects every revision name. The option still resolves names. |
+| Major: Code and spec disagree | D8 makes the base QA tag decisive. |
+| Major: The adopt arm has no producer | D8 writes the zero-count QA record. Other errors still stop the command. |
+| Major: Order and origin | D9 states the real order and the backfill origin. |
+| Minor: qa-scripts-023 calls readQaRegister | The QA exception now names qa-scripts-023. |
+| Minor: The survivor table has 39 rows | The initial tree already has all 44 rows. The audit counts them. |
+| Minor: Bad history JSON gets the code | Ownership-038 names the error line. Both tests check the code; the no-change test checks the full line. |
+| Minor: An owned path leaves | The proposal states the one-change effect. Rule 23 names the owner read. |
+| Extra: Cost | The proposal names three mergeParents calls per record. The code has no cache. |
+| Extra: Pass 4 reads commit | The proposal names the pass base and the code commit. |
+| Extra: AGENTS.md and config.yaml say report | Both texts say all ledger gaps of both classes. |
+| Extra: AGENTS.md unnumbered lines | Rule 21 has its sentence on the same line. Rule 24 has no duplicate coverage sentence. |
+| Extra: No real upstream-class or sync change | The proposal names this limit. |
+
+| ID and first words | Correction |
+|---|---|
+| S37: The third AND | The process text is the actor of the review.md clause. |
+| S38: MUST keep QA-HEADER | The QA clauses bound new scripts and base QA tags. |
+| S39: Valid adopt record | The definition needs adoptsOf and the full merged hash. Two sentences keep the STE word limit. |
+| S40: Omit advice from CI and init | Class lines and owned gap lines have separate names. |
+| S41: The host measurement | The gate prints the measure phase time. Host means the machine outside the image. |
+| S42: Is not a merge parent | The clause excludes the first parent of a merge. |
+| S43: An owned path leaves | The proposal states the next change effect and the owner read. |
+| S44: Rejects changed upstream lines | The title names uncovered changed upstream lines in CI. |
+| S45: New unlisted script | The title and design name the absent adopt record. |
+| S46: A path is owned | The design bounds the union by the base. The Purpose after archive text has the same rule. |
+| S47: A read without a base | The gate reads the manifest without a base. |
+| S48: Stop a record without a file | The headings and titles name the gate stop. |
+| S49: The waivers cover | The spec and design use waive for the waiver. |
+| S50: A total of 3 tests | The clause names test instances. |
+| S51: Reject an absent owned header | The clause names a script with no header. |
+| S52: The eligibility rule | The spec has one QA rule and no duplicate base clause. |
+| S53: Vendored code | The clause uses upstream file. |
+| S54: Adopt source | The source is the commit. File content is the file in the adopt source. |
+| S55: From has no code format | The spec formats the field and the Git branch name. |
+| S56: Unquoted literals with periods | The spec puts each literal in a text block. |
+| S57: Articles and pronouns | The ci command, snapshot check and history clauses have named actors and objects. |
+| S58: Four verbs for one event | The gate prints error codes. The history check skips records. |
+| S59: The actor is the test | The gate reads the project manifest. |
+| S60: It checks mergeParents | The design names isAdoptSource and the full hash check. |
+| S61: An absent string file | The design names a record with no string file value. |
+| S62: Its last own record | The design uses last adopt record and are not in the code inventory. |
+| S63: A synthetic QA header needs | The QA register is the actor. The base tag rule also applies. |
+| S64: Source clone | The design names the project clone, mutation tool and ci command. |
+| S65: The accepted suffix | The design names records after the base history prefix. |
+| S66: Within the base script | The proposal names the QA rule and says such scripts stay outside the code inventory. |
+| S67: A boundary for strict checks | The proposal states the owner decision about owned and upstream code. |
+| S68: A real merge of an own branch | The proposal names a branch that a person wrote in this project and AGENTS.md rule 21. |
+| S69: Manifest entries that match no file | The gate does not check such entries. The proposal gives examples. |
+| S70: It in when a change needs it | The proposal names the follow-up change and the way to waive absent line data. |
+| S71: The old gate plural style | The proposal says the new messages use the old plural form. |
+| S72: Survivor class L4 | The proposal names the known limit L4 of evidence.md. |
+| S73: Task numbers are out of order | The task numbers now follow the document order. The Order note keeps the real history. |
+| S74: State the no-ledger rule | The tasks name the owned file, diff process and owned gap lines. |
+| S75: The coverage sentence stays | Rule 24 has no duplicate coverage sentence. |
+| S76: Two backfill sentences | The second sentence now gives only the backfill name. |
+| S77: The gate gives a header | Rule 22 names the synthetic header and the adopt command producer. |
+| S78: New fault of title renames | Each old table has its title-date note. Current labels use live titles. |
+| S79: All clear STE replacements apply | The old claim now names only the pass 4 table. The manifest lists files and the image has a Node result. |
+| S80: Pass 2 text with old rules | The pass 4 note says the merge parent rule replaces the ancestor rule. |
+| S81: D1 through D6 | The evidence links the pass 4 decisions to design.md and states the lead set the applied Purpose. |
+| S82: Missing or absent source | The survivor rows say stops an absent source. |
+| S83: Stop records with no string file | The evidence names the error code first and the cause second. |
+| S84: Keeps base paths after manifest removal | The title names a change that removes or shortens a manifest path. |
+| S85: Records a gap before the check | The title names the adopt command and no owned gap lines. |
+| S86: Cryptic titles and two names | The titles name the empty comment, CR shebang and valid adopt record. |
+| S87: Accepts an absent line report | The title names a run with no line data. |
+| S88: Rejects bad history | The titles name the gate stop and the file in the adopt source. |
+| S89: Owns the project sentinel files | The title names the gate, OSH layer and OSH provider paths. |
+| S90: The message repeats the code | The message has no code prefix. The full lowercase hash wording follows D7. |
+
+The S49, S50, S62, S67, S75, S77 and S79 corrections also close the open round 1 prose faults.
+The active tree has no applied ownership spec. The design gives the Purpose text for the next archive.
+
+### Search output
+
+The search reads the Pass 5 work tree at base commit fbdb630ae4b8af37437e808a023f7569c9276510.
+
+```text
+D7
+$ rg -n return typeof from|new Error scripts/spec/lib/ownership.mjs
+16:    throw new Error('Use version 1 and unique safe relative paths in the owned array.');
+61:    if (diff.status !== 0) throw new Error(`Git cannot read the diff of ${file}: ${diff.stderr}`);
+76:    return typeof from === 'string' && /^[0-9a-f]{40}$/.test(from) && mergeParents(root, base).has(from);
+91:      const error = new Error('Use an adopt record with a string file, a full lowercase from hash and a source that a merge after the base brought.');
+
+D8
+$ rg -n function adoptableQaScript|const eligible|adoptableQaScript\(\{ file, text scripts/spec/lib/qa-register.mjs
+12:export function adoptableQaScript({ file, text, baseText, manifest }) {
+47:    const eligible = baseText !== null ? !hasQaTag(baseText) : adopts.some(item => item.file === file);
+48:    if (!header && eligible && adoptableQaScript({ file, text, baseText, manifest })) {
+
+D8 producer
+$ rg -n const qaFiles|const errors = measured.errors.filter|current: \{ .*qaFiles|result.history.push\(\{ date scripts/spec/gates.mjs
+614:    const qaFiles = qaCandidates.filter(file => merged.has(file) &&
+616:    const errors = measured.errors.filter(error => error.code !== 'QA-HEADER' || !qaFiles.includes(error.file));
+620:      current: { ...measured.current, coverage: new Map([...measured.current.coverage].filter(([file]) => !qaFiles.includes(file))) },
+629:      result.history.push({ date, change, commit: headCommit(root), kind: 'adopt', file, from: fromCommit, lines: 0, branches: 0, functions: 0, untraced: 0, untrue: false });
+
+D9
+$ rg -n Origin: backfill openspec/changes/ownership-scoped-gates/specs/ownership/spec.md
+412:Origin: backfill
+424:Origin: backfill
+444:Origin: backfill
+453:Origin: backfill
+
+D9 order
+$ rg -n Order note|Pass 4 wrote|Their tests close openspec/changes/ownership-scoped-gates/tasks.md
+167:### Order note
+169:Pass 4 wrote tests for ownership-037 through ownership-053 after the first code corrections.
+174:Their tests close the phase time, source option, absent ledger, caller environment, allocation list and selected change trace gaps.
+
+D10 QA inventory
+$ rg -n qa-scripts-023 openspec/changes/ownership-scoped-gates/specs/ownership/spec.md
+97:The scenario qa-scripts-019 does not apply to a synthetic header: the gate prints the QA advisory when no change name is given. The scenarios qa-scripts-002, qa-scripts-003 and qa-scripts-023 do not apply within this exception.
+
+D10 history
+$ rg -n Expected property name src/tooling/spec/ownershipGate.test.mjs
+403:  assert.deepEqual(result.output.split('\n').filter(line => line.startsWith('ERROR ')), ["ERROR LEDGER-ADOPT-FROM openspec/trace/history.jsonl Expected property name or '}' in JSON at position 1 (line 1 column 2)"]);
+
+D10 limits
+$ rg -n three times|No real sync|Pass 4 has base openspec/changes/ownership-scoped-gates/proposal.md
+92:Pass 4 has base commit bf174f99d5eb799c0f3fd17648b5b6042dab1402 and code commit 799372f0.
+111:A full check run calls mergeParents three times for each valid adopt record. A sync with many adopt records can be slow.
+113:No real sync or upstream class change has run through the new gates. The first sync will be the first real use.
+
+D10 process
+$ rg -n all ledger gaps|owner reads|synthetic header|writes the adopt record AGENTS.md
+11:5. Keep each owned code file that a change adds or edits at 100% line, branch and function coverage. Each owned code file without a ledger entry also needs full coverage. The command `node scripts/spec/gates.mjs report` lists all ledger gaps of both classes. The target is zero owned gaps. Keep 100% line coverage for each line that a change adds or edits in a code file. For a sync, a changed line needs no coverage when it equals the file in the adopt source.
+36:22. For a spec change, read the QA lines in the gate output. Avoid a conflict with a listed purpose. Add a header to each new QA script that the fork writes. The gate uses a synthetic header for an upstream QA script with no QA tag in its first comment block. For a script that exists at the base, the base header must also have no QA tag.
+38:    For a new upstream script with no QA tag, a valid adopt record must name the script. Run the `adopt` command. The command writes the adopt record for that script. The covers item of that header is `unmapped: upstream`.
+40:23. `openspec/ownership.json` lists the owned paths. For each new code file, add its path to the manifest or state the reason for its upstream class in the proposal. The owner reads each removal of an owned path from the manifest.
+
+D10 survivor rows
+$ rg -n ^\| (c9613|c9629|c9631|c9659|n0014)  openspec/changes/ownership-scoped-gates/evidence.md
+1434:| c9613 | 26 | The moved read has no error or side effect on the readable fixture. |
+1435:| c9629 | 26 | The local declaration has no effect before CI selects the change. |
+1436:| c9631 | 26 | The moved read has no error or side effect on the readable fixture. |
+1437:| c9659 | 26 | The independent QA, trace and ledger comparisons give the same errors and data. |
+1438:| n0014 | 16 | The callers test the result as a Boolean. False and undefined both stop the source. |
+
+D11 test titles
+$ rg -n ^test\( src/tooling/spec/ownership.test.mjs
+32:test('[ownership-001] gate accepts the manifest contract', () => fixture(({ root, put }) => {
+38:test('[ownership-001] gate rejects each bad manifest field', () => {
+47:test('[ownership-001] gate reports an absent or bad manifest file', () => fixture(({ root, put }) => {
+53:test('[ownership-002] gate classifies exact paths and directory prefixes', () => {
+60:test('[ownership-003] gate shows each path class and totals', () => {
+65:test('[ownership-004] gate rejects all owned gap metrics', () => {
+78:test('[ownership-005] gate reads only added diff ranges', () => {
+82:test('[ownership-005] gate reads real edited new and deleted files', () => fixture(({ root, put }) => {
+91:test('[ownership-006] gate keeps only lines that every duplicate record covers', () => {
+98:test('[ownership-007] gate lists all uncovered changed lines in both classes', () => {
+108:test('[ownership-008] gate limits a line waiver to its file hash, its metric and its count', () => {
+115:test('[ownership-011] gate separates code and test gaps by class', () => {
+122:test('[ownership-012] gate has the process rules in AGENTS.md and config.yaml', () => {
+145:test('[ownership-013] gate writes merged DA counts for each code line', () => {
+150:test('[ownership-013] gate stores line data in the snapshot', () => fixture(({ root, put }) => {
+158:test('[ownership-004 ownership-008] gate ignores fractional and negative waiver counts', () => {
+165:test('[ownership-007 ownership-008] gate rejects all line waivers for an untrue file', () => {
+170:test('[ownership-004] gate reports each owned gap after an upstream file', () => {
+174:test('[ownership-014] gate counts every test instance', () => {
+181:test('[ownership-001] gate accepts the first and last characters of each allowed character range', () => {
+184:test('[ownership-016] gate sorts all line numbers as numbers', () => {
+188:test('[ownership-017] gate ignores extra line record text', () => {
+192:test('[ownership-018] gate adds owned file gaps and waiver counts', () => {
+198:test('[ownership-005] gate uses each Git diff option', () => fixture(({ root, put }) => {
+210:test('[ownership-018] gate adds test counts across owned files', () => {
+213:test('[ownership-019] gate counts zero instances for an empty name map', () => {
+241:test('[ownership-020 ownership-025] gate needs no coverage for lines that equal the file in the adopt source', () => syncFixture(({ input }) => {
+248:test('[ownership-021] gate needs coverage for a line that a person resolved by hand', () => syncFixture(({ root, put, git, commit, base, from, input }) => {
+259:test('[ownership-022] gate needs coverage for an author edit to an upstream line', () => syncFixture(({ put, commit, input }) => {
+267:test('[ownership-023] gate uses the last adopt source for each file and the last source for other files', () => syncFixture(({ put, git, commit, from, adopt, input }) => {
+278:test('[ownership-024] gate stops for a source commit that the repository lacks or that no merge brought', () => syncFixture(({ git, put, commit, input, adopt, base }) => {
+287:test('[ownership-024] gate keeps the base diff rule without current adopt sources', () => syncFixture(({ input, adopt }) => {
+296:test('[ownership-024] gate skips base adopt records and stops for non-string source values', () => syncFixture(({ input, adopt }) => {
+308:test('[ownership-025] gate checks each line of an author rename absent from the source', () => syncFixture(({ git, commit, input }) => {
+315:test('[ownership-026 ownership-027 ownership-028] gate accepts only unchanged owned gaps with a ledger entry', () => {
+324:test('[ownership-029 ownership-001] gate keeps base paths after a change removes or shortens a manifest path', () => syncFixture(({ root, put, git, base: absentBase }) => {
+345:test('[ownership-030] gate lists the gate, the OSH layer and the OSH provider as owned paths', () => {
+349:test('[ownership-031] gate stops for an adopt record without a file at HEAD', () => syncFixture(({ input, git }) => {
+356:test('[ownership-032] gate stops for a work branch adopt source', () => syncFixture(({ input, put, commit, adopt }) => {
+360:test('[ownership-033] gate stops for an ancestor that no merge brought', () => syncFixture(({ input, base, adopt }) => {
+363:test('[ownership-036] gate gives the diff a 256 MiB buffer', () => fixture(({ root, put }) => {
+373:test('[ownership-031 ownership-024] gate stops for an invalid file or source and skips records with invalid counts', () => syncFixture(({ input, from, adopt }) => {
+384:test('[ownership-041] gate stops for a number or revision name in the from field', () => syncFixture(({ input, git, from, adopt }) => {
+391:test('[ownership-043] gate skips invalid adopt records outside the change', () => syncFixture(({ input }) => {
+404:test('[ownership-050] gate stops for an invalid record after a valid record', () => syncFixture(({ input, from }) => {
+409:test('[ownership-051 ownership-024] gate stops for an invalid source before a diff fault', () => syncFixture(({ input }) => {
+430:test('[ownership-052] gate stops for a source name with a null byte', () => syncFixture(({ input, adopt }) => {
+438:test('[ownership-031 ownership-041] gate stops for revision names in a merge HEAD history', () => syncFixture(({ input, git, from, adopt }) => {
+450:test('[ownership-052] source check returns false when Git cannot read the merge parents', () => {
+462:test('[ownership-031 ownership-041] source check rejects strings outside the hash pattern before it reads merge parents', () => {
+
+D11 gate test titles
+$ rg -n ^test\(|^  test\( src/tooling/spec/ownershipGate.test.mjs
+128:test('[ownership-001] gate stops for an absent manifest', () => withFixture(root => {
+135:test('[ownership-011] gate reads the ledger without tests or a base', () => withFixture(root => {
+145:test('[ownership-003 ownership-007] gate prints classes and rejects an upstream line gap', () => withFixture(root => {
+157:test('[ownership-003 ownership-004] gate rejects an owned gap before the ratchet command writes the ledger', () => withFixture(root => {
+169:test('[ownership-007] gate rejects uncovered changed upstream lines in CI', () => withFixture(root => {
+184:test('[ownership-026] gate records a gap with the adopt command and prints no owned gap lines', () => withFixture(root => {
+204:test('[ownership-037] gate stops when Git cannot read a code diff', () => withFixture(root => {
+226:test('[ownership-009 ownership-013] gate uses the manifest and snapshot line data', () => withFixture(root => {
+245:test('[ownership-013] gate accepts a run with no line data', () => withFixture(root => {
+251:test('[ownership-011] gate uses the manifest for ledger paths', () => withFixture(root => {
+257:test('[ownership-010] gate still prints QA-HEADER errors', () => withFixture(root => {
+266:test('[ownership-020 ownership-022] gate accepts merged lines and rejects an author line', () => withFixture(root => {
+287:  test(`[ownership-${id}] gate ${edit ? 'rejects a recorded gap in an edited owned file' : 'accepts a recorded gap in an unchanged owned file'}${mode ? ' with a new file mode' : ''}`, () => withFixture(root => {
+313:test('[ownership-028] gate rejects a new owned gap without a ledger entry', () => withFixture(root => {
+325:test('[ownership-031 ownership-024] gate checks the adopt source commit before a bad base ledger', () => withFixture(root => {
+337:test('[ownership-038] gate stops for bad history before the owned gap lines', () => withFixture(root => {
+347:test('[ownership-029] gate stops for an invalid base manifest before the test run', () => withFixture(root => {
+356:test('[ownership-029 ownership-027] gate rejects a gap after its base owned path is removed', () => withFixture(root => {
+369:test('[ownership-039] gate stops for a work source in the adopt command', () => withFixture(root => {
+380:test('[ownership-040] gate uses the CI change for a file that a valid adopt record names', () => withFixture(root => {
+398:test('[ownership-038] gate stops for bad JSON without a change before the owned gap lines', () => withFixture(root => {
+408:test('[ownership-042] gate skips a base adopt record before the test run', () => withFixture(root => {
+422:test('[ownership-044] gate uses the synthetic header with a snapshot and a valid adopt record', () => withFixture(root => {
+442:test('[ownership-045] gate names the measurement phase', () => withFixture(root => {
+453:test('[ownership-046] gate stops for an absent adopt source commit', () => withFixture(root => {
+461:test('[ownership-047] gate stops for a valid adopt source without a ledger', () => withFixture(root => {
+474:test('[ownership-048] gate passes the measurement environment and allocation list', () => withFixture(root => {
+490:test('[ownership-049] gate stops for an untraced change scenario in both measurement modes', () => withFixture(root => {
+513:test('[gap-ledger-111] stops an invalid baseline before the test run', () => withFixture(root => {
+526:test('[ownership-053] gate omits the Class, Ownership and Owned gaps lines from CI and init', () => withFixture(root => {
+555:test('[ownership-031 ownership-041] gate stops for revision names in CI merge HEAD history', () => withFixture(root => {
+571:test('[ownership-054] gate writes the QA adopt record with a full hash from HEAD^2', () => withFixture(root => {
+583:test('[ownership-054] gate writes the QA adopt record beside a coverage gap record', () => withFixture(root => {
+591:test('[ownership-054 ownership-035] gate stops the adopt command for QA files outside the exception', () => {
+607:test('[ownership-054] gate writes a QA adopt record for a base script without a QA tag', () => withFixture(root => {
+618:test('[ownership-054] adopt command writes no QA record for an absent current file', () => withFixture(root => {
+630:test('[ownership-054] adopt command stops for a coverage ignore error in the eligible QA file', () => withFixture(root => {
+642:test('[ownership-054] adopt command writes one record for each QA file from both candidate lists', () => withFixture(root => {
+
+D11 QA test titles
+$ rg -n ^test\( src/tooling/spec/qaRegister.test.mjs
+38:test('[qa-scripts-001] accepts a shebang and reads all four tags', () => fixture(({ put, scan }) => {
+45:test('[qa-scripts-002] rejects code before the first block', () => fixture(({ put, scan }) => { put(FILE, `export {};\n${header()}`); headerError(scan()); }));
+46:test('[qa-scripts-003] rejects an absent tag', () => fixture(({ put, scan }) => { put(FILE, header().replace(' * @needs A browser and a server.\n', '')); headerError(scan()); }));
+47:test('[qa-scripts-004] rejects a repeated tag', () => fixture(({ put, scan }) => { put(FILE, header().replace(' * @covers', ' * @purpose Another purpose.\n * @covers')); headerError(scan()); }));
+48:test('[qa-scripts-005] rejects an empty tag', () => fixture(({ put, scan }) => { put(FILE, header().replace('@run node scripts/qa-example.mjs', '@run ')); headerError(scan()); }));
+49:test('[qa-scripts-006] rejects a covers item with a space', () => fixture(({ put, scan }) => { put(FILE, header('pending:example, pending:other')); headerError(scan()); }));
+50:test('[qa-scripts-007] accepts a capability folder', () => fixture(({ put, scan }) => { put(FILE, header('example')); put('openspec/specs/example/spec.md'); assert.deepEqual(scan().errors, []); }));
+51:test('[qa-scripts-008] reports an unknown capability', () => fixture(({ put, scan }) => { put(FILE, header('example')); assert.deepEqual(scan().errors, [{ code: 'QA-COVERS-UNKNOWN', file: FILE, message: 'scripts/qa-example.mjs: example has no capability folder in openspec/specs/.' }]); }));
+52:test('[qa-scripts-009] accepts an open pending area', () => fixture(({ put, scan }) => { put(FILE, header('pending:example')); assert.deepEqual(scan().errors, []); }));
+53:test('[qa-scripts-010] reports a pending area that has a capability folder', () => fixture(({ put, scan }) => { put(FILE, header('pending:example')); put('openspec/specs/example/spec.md'); assert.deepEqual(scan().errors, [{ code: 'QA-COVERS-LANDED', file: FILE, message: 'scripts/qa-example.mjs: replace pending:example with example; its capability folder exists.' }]); }));
+54:test('[qa-scripts-011] accepts one unmapped reason', () => fixture(({ put, scan }) => { put(FILE, header('unmapped: No area fits this check')); assert.deepEqual(scan().errors, []); }));
+55:test('[qa-scripts-012] rejects an unmapped list', () => fixture(({ put, scan }) => { put(FILE, header('unmapped: reason,pending:example')); headerError(scan()); }));
+56:test('[qa-scripts-016] gives delta advice with the script purpose', () => fixture(({ root, put, scan }) => { put(FILE, header('example')); put('openspec/specs/example/spec.md'); put('openspec/changes/add-example/specs/example/spec.md'); assert.deepEqual(qaAdvice({ root, change: 'add-example', scripts: scan().scripts }), ['QA: scripts/qa-example.mjs covers example: Prove that the layer works.']); }));
+57:test('[qa-scripts-017] gives advice for a backfill area', () => fixture(({ root, put, scan }) => { put(FILE, header('pending:example')); put('openspec/changes/backfill-example/proposal.md'); assert.deepEqual(qaAdvice({ root, change: 'backfill-example', scripts: scan().scripts }), ['QA: scripts/qa-example.mjs covers example: Prove that the layer works.']); }));
+58:test('[qa-scripts-018] gives the no match line', () => fixture(({ root, put, scan }) => { put(FILE, header()); put('openspec/changes/add-other/specs/other/spec.md'); assert.deepEqual(qaAdvice({ root, change: 'add-other', scripts: scan().scripts }), ['QA: no script covers the capabilities of this change.']); }));
+59:test('[qa-scripts-019] gives no advice without a change', () => fixture(({ root, put, scan }) => { put(FILE, header()); assert.deepEqual(qaAdvice({ root, scripts: scan().scripts }), []); }));
+60:test('[qa-scripts-020] tells authors to read advice and add a header', () => {
+66:test('[qa-scripts-021] gives QA lines to the spec adversary', () => {
+70:test('[qa-scripts-022] asks the spec adversary to read each QA check', () => {
+77:test('[qa-scripts-023] checks all tracked QA scripts in this repository', () => {
+85:test('[qa-scripts-026] gives advice from an archived change', () => fixture(({ root, put, scan }) => { put(FILE, header('example')); put('openspec/specs/example/spec.md'); put('openspec/changes/archive/2026-09-26-add-example/specs/example/spec.md'); assert.deepEqual(qaAdvice({ root, change: 'add-example', scripts: scan().scripts }), ['QA: scripts/qa-example.mjs covers example: Prove that the layer works.']); }));
+86:test('[qa-scripts-027] sorts advice by script then capability', () => fixture(({ root, put, scan }) => {
+96:test('[qa-scripts-028] rejects a header continuation line', () => fixture(({ put, scan }) => { put(FILE, header().replace(' * @covers', ' * Extra text.\n * @covers')); headerError(scan()); }));
+98:test('[qa-scripts-005] rejects a purpose without a final mark', () => fixture(({ put, scan }) => {
+102:test('[qa-scripts-005] rejects an empty needs value', () => fixture(({ put, scan }) => {
+106:test('[qa-scripts-018] gives no match advice for an unknown change', () => fixture(({ root, put, scan }) => {
+110:test('[qa-scripts-025] sorts two covers errors for one script', () => fixture(({ put, scan }) => {
+116:test('[qa-scripts-008] rejects a file that has a capability name', () => fixture(({ put, scan }) => {
+122:test('[qa-scripts-025] gives no advice for invalid covers items', () => fixture(({ root, put, scan }) => {
+130:test('[qa-scripts-011] gives no advice for an unmapped reason', () => fixture(({ root, put, scan }) => {
+136:test('[qa-scripts-025] gives no advice for a file with a capability name', () => fixture(({ root, put, scan }) => {
+144:test('[ownership-009] QA register uses a synthetic upstream QA header', () => fixture(({ root, put }) => {
+153:test('[ownership-010] QA register rejects an owned script with no header and an upstream script with an invalid header', () => fixture(({ root, put }) => {
+161:test('[ownership-009 ownership-010] QA register keeps a valid upstream QA header and its capability checks', () => fixture(({ root, put }) => {
+169:test('[ownership-015] QA register accepts an upstream first comment with no QA tags', () => fixture(({ root, put }) => {
+178:test('[ownership-010] QA register rejects an upstream QA block with no end', () => fixture(({ root, put }) => {
+183:test('[ownership-010] QA register rejects a bad upstream QA block after a shebang', () => fixture(({ root, put }) => {
+188:test('[ownership-010] QA register rejects a shebang inside a QA comment', () => fixture(({ root, put }) => {
+193:test('[ownership-009] QA register uses the synthetic header for a later comment', () => fixture(({ root, put }) => {
+200:test('[ownership-034] QA register prints QA-HEADER for a new script that no adopt record names', () => fixture(({ root, put }) => {
+207:test('[ownership-035] QA register prints QA-HEADER after a base header is deleted', () => fixture(({ root, put }) => {
+214:test('[ownership-009 ownership-015] QA register uses a file that a valid adopt record names for the synthetic header', () => fixture(({ root, put }) => {
+223:test('[ownership-010] QA register rejects an owned base script without a header', () => fixture(({ root, put }) => {
+230:test('[ownership-009] QA register uses a file that a valid adopt record names among other records', () => fixture(({ root, put }) => {
+239:test('[ownership-009] QA register gives the synthetic header when an empty comment comes before a comment with a QA tag', () => fixture(({ root, put }) => {
+246:test('[ownership-010] QA register prints a QA error after an empty shebang', () => fixture(({ root, put }) => {
+252:test('[ownership-009] QA register gives the synthetic header when code follows a shebang that ends with CR', () => fixture(({ root, put }) => {
+259:test('[ownership-035] QA register prints QA-HEADER for a base QA tag even with an adopt record', () => fixture(({ root, put }) => {
+266:test('[ownership-054] QA adopt helper accepts only upstream scripts with no current or base QA tag', () => {
+
+D11 definition and literals
+$ rg -n valid adopt record is|condition|ERROR |Phase measure|QA-HEADER|read.*without a base|whole DA|waivers waive|test instances|\*\*(WHEN|THEN|AND)\*\* openspec/changes/ownership-scoped-gates/specs/ownership/spec.md
+10:- **WHEN** the gate reads valid and invalid manifest files
+11:- **THEN** the gate accepts valid files and prints OWNERSHIP-MANIFEST for absent or invalid files
+12:- **AND** when the gate reads the manifest without a base, the gate uses only the current manifest
+19:- **WHEN** the manifest lists `single.js` and `src/own/`
+20:- **THEN** `single.js` and `src/own/a.js` have the owned class
+21:- **AND** `single.jsx` and `src/owner/a.js` have the upstream class
+30:- **WHEN** check or ratchet has paths in the diff
+31:- **THEN** the log names each class and shows Ownership: N owned, M upstream
+34:- **WHEN** a ledger has a recorded owned gap and the command is ci or init
+35:- **THEN** the gate prints no Class, Ownership or Owned gaps line
+36:- **AND** init stops before the owned gap line code because the ledger exists
+44:- **WHEN** a changed owned code file or an owned code file without a ledger entry has a gap
+45:- **THEN** the gate prints COVERAGE-OWNED unless valid waivers waive all gap counts
+52:- **WHEN** the diff has added, edited or deleted lines
+53:- **THEN** the gate selects only the new line numbers and all lines of a new file
+60:- **WHEN** a file has duplicate LCOV records
+61:- **THEN** the gate counts a line as covered only if every record covers it
+68:- **WHEN** a changed line has no covered line data from a loaded file whose coverage is not untrue
+69:- **THEN** the gate prints COVERAGE-DIFF with the file and all uncovered line numbers
+76:- **WHEN** an uncovered changed line has a waiver
+77:- **THEN** the file is loaded
+78:- **AND** its coverage is not untrue
+79:- **AND** its hash equals the waiver hash
+80:- **AND** the waiver metric is lines
+81:- **AND** the waiver count is not below the number of waived lines
+101:- **WHEN** an upstream QA script has no header block at the start of the file
+102:- **AND** the base file had no QA tag, or the script is new and a valid adopt record names the script
+103:- **THEN** the QA register uses the covers item `unmapped: upstream` and prints the QA advisory
+110:- **WHEN** an owned script has no header or an upstream script has an invalid first block
+111:- **THEN** the QA register prints QA-HEADER and keeps all other register checks
+118:- **WHEN** the ledger has owned and upstream code and test gaps
+119:- **THEN** the report command lists the paths and totals of both classes without a test run
+126:- **WHEN** an agent reads AGENTS.md and the OpenSpec context
+127:- **THEN** the text says that a changed owned code file and an owned code file without a ledger entry need full coverage
+128:- **AND** the text says that a changed line needs coverage and that a sync uses `adopt`
+129:- **AND** the text says that review.md lists the files that a person resolved by hand
+137:- **WHEN** the gate writes V8 coverage and a measurement snapshot
+138:- **THEN** covered lines have the DA count 1 and uncovered lines have the DA count 0
+139:- **AND** the snapshot check reads the line data for document mode
+142:The report command MUST count all test instances in each ledger name map.
+145:#### Scenario: Count test instances `ownership-014`
+146:- **WHEN** one test name has a count of 2 and another has a count of 1
+147:- **THEN** the report command prints a total of 3 test instances
+154:- **WHEN** an upstream QA script starts with a comment block that has no QA tags
+155:- **AND** the script meets the QA exception
+156:- **THEN** the QA register uses the synthetic upstream header
+157:- **AND** an invalid first block with a QA tag still prints QA-HEADER
+164:- **WHEN** diff ranges or line records have lines 2, 10 and 20
+165:- **THEN** the result has the order 2, 10, 20
+168:The gate MUST accept only whole DA records and diff headers at the start of a line.
+172:- **WHEN** a DA record has a text prefix or suffix, or a diff header has a text prefix
+173:- **THEN** the gate ignores that record or header
+180:- **WHEN** two owned files have 2 and 3 line gaps and two line waivers each waive one gap
+181:- **THEN** the report command prints 5 line gaps and the waivers waive a count of 2
+184:The report command MUST count zero test instances for an empty name map.
+188:- **WHEN** a test file has an empty name map
+189:- **THEN** the report command counts zero test instances
+200:- **WHEN** a merge brings 5 code lines equal to the file in the adopt source
+201:- **THEN** those lines need no changed line coverage
+202:- **AND** the gate prints this line:
+209:- **WHEN** a person resolves a conflict and line 1 of the result differs from the base file and the file in the adopt source
+210:- **THEN** that line needs coverage
+211:- **AND** the gate prints COVERAGE-DIFF for an uncovered line
+214:- **WHEN** a person edits line 2 of an upstream file in the sync change
+215:- **THEN** the line needs coverage if the line differs from the base file and from the file in the adopt source
+216:- **AND** other lines that equal the file in the adopt source need no changed line coverage
+219:- **WHEN** a change has more than one adopt source
+220:- **THEN** each file uses the adopt source of its last valid adopt record and other files use the last adopt source
+221:- **AND** a file absent from the adopt source needs coverage for all its base diff lines
+224:- **WHEN** an adopt source commit is absent from the repository
+226:- **THEN** the gate prints LEDGER-ADOPT-FROM and stops
+227:- **AND** a change with no adopt source keeps the base diff rule
+228:- **AND** an invalid source stops before the base ledger JSON check
+231:- **WHEN** the upstream project deletes or renames a code file
+232:- **THEN** deleted paths have no new lines and new paths use the same path in the adopt source without rename detection
+233:- **AND** the line check reads only current code inventory paths
+236:- **WHEN** an unchanged owned code file has a recorded gap
+237:- **THEN** the owned coverage check passes
+238:- **AND** the report and the owned gap lines of check and ratchet list the gap
+239:- **AND** the adopt command prints no owned gap lines
+242:- **WHEN** a changed owned code file has a recorded gap
+243:- **THEN** the gate prints COVERAGE-OWNED
+246:- **WHEN** a new owned code file has a gap and no ledger entry
+247:- **THEN** the gate prints COVERAGE-OWNED
+254:- **WHEN** the current manifest removes or shortens a base owned prefix
+255:- **THEN** paths that the base manifest lists stay owned
+256:- **AND** an absent base manifest is empty and an invalid base manifest gives OWNERSHIP-MANIFEST
+257:- **AND** each path occurs once in the union manifest
+260:- **WHEN** the gate reads the project manifest openspec/ownership.json
+261:- **THEN** scripts/spec/gates.mjs, src/layers/osh/index.js and server/providers/osh.js are owned
+271:A valid adopt record is a record that `adoptsOf` accepts for this change and that meets the next condition.
+280:- **WHEN** an adopt record for this change has no file and its `from` value is `HEAD`
+281:- **THEN** the gate prints LEDGER-ADOPT-FROM
+282:- **AND** a short hash, a branch name, `HEAD^2`, `origin/source`, an uppercase hash and a hash with a space make the gate print LEDGER-ADOPT-FROM
+283:- **AND** no such record exempts a line from COVERAGE-DIFF
+284:- **AND** the source check reads no merge parents for strings that do not match the hash pattern
+285:- **AND** the gate prints this error line:
+288:ERROR LEDGER-ADOPT-FROM openspec/trace/history.jsonl Use an adopt record with a string file, a full lowercase from hash and a source that a merge after the base brought.
+292:- **WHEN** an adopt record names a work branch commit that no merge brought
+293:- **THEN** the gate prints LEDGER-ADOPT-FROM
+296:- **WHEN** an adopt record names an ancestor that no merge after the base brought
+297:- **THEN** the gate prints LEDGER-ADOPT-FROM
+300:- **WHEN** an adopt record has the `from` value 1 and the Git branch named `1` points to a valid adopt source
+301:- **THEN** the gate prints LEDGER-ADOPT-FROM
+302:- **AND** the gate also prints LEDGER-ADOPT-FROM for the string value `1`
+305:- **WHEN** a valid adopt record comes before a record for this change without a file
+306:- **THEN** the gate prints LEDGER-ADOPT-FROM for the later record
+309:- **WHEN** the `from` string of an adopt record has a null byte
+310:- **THEN** the gate prints LEDGER-ADOPT-FROM with the same message as ownership-031
+311:- **AND** the source check returns false when Git cannot read the merge parents
+314:The QA register MUST print QA-HEADER for a script with no current header in these cases.
+319:- **WHEN** a new upstream script has no header and no valid adopt record names it
+320:- **THEN** the QA register prints QA-HEADER
+323:- **WHEN** an upstream script had a QA tag at the base and has no header now
+324:- **THEN** the QA register prints QA-HEADER even when a valid adopt record names the script
+331:- **WHEN** the gate starts the Git diff process
+332:- **THEN** maxBuffer is 268435456 bytes
+339:- **WHEN** Git cannot read a diff
+340:- **THEN** the gate prints COVERAGE-DIFF before the base ledger check
+343:- **WHEN** history has a line with the text `{`
+344:- **THEN** the run stops before the owned gap lines
+345:- **AND** a run without a change name also stops before the owned gap lines
+346:- **AND** the gate prints this error line:
+349:ERROR LEDGER-ADOPT-FROM openspec/trace/history.jsonl Expected property name or '}' in JSON at position 1 (line 1 column 2)
+354:- **WHEN** an adopt source is invalid and Git cannot read the diff
+355:- **THEN** LEDGER-ADOPT-FROM stops the run before the diff process starts
+362:- **WHEN** the adopt command names a work branch commit that no merge after the base brought
+363:- **THEN** the gate prints GATES-ADOPT before the test run
+364:- **AND** a source named HEAD has this literal error line:
+367:ERROR GATES-ADOPT The commit HEAD is not a merged commit. It must be a parent, other than the first parent, of a merge commit after the base commit.
+376:- **WHEN** the ci command selects a change with a valid adopt record for a new upstream QA script
+377:- **THEN** the QA register uses the synthetic header for that script
+378:- **AND** the log has no QA-HEADER error
+385:- **WHEN** a base history record lacks a file and the current history has the same record
+386:- **THEN** the gate prints no LEDGER-ADOPT-FROM error for that record
+387:- **AND** the gate starts the test run
+394:- **WHEN** an invalid adopt record names another change, no change is selected, or the history does not start with the base history
+395:- **THEN** the line check keeps the base diff rule without LEDGER-ADOPT-FROM
+402:- **WHEN** a trusted snapshot has a new QA script with no header and a valid adopt record
+403:- **THEN** the snapshot check uses the synthetic header without QA-HEADER
+404:- **AND** the snapshot check prints this text because the selected change has one scenario with one passed test:
+415:- **WHEN** a measurement takes 2 seconds on the test clock
+416:- **THEN** the gate prints this line:
+419:Phase measure: 2 s
+427:- **WHEN** the adopt command names a commit `absent` that the repository lacks
+428:- **THEN** the gate prints this error line:
+431:ERROR GATES-ADOPT Git cannot find the commit absent
+435:- **WHEN** the adopt command names a valid merged source and no ledger exists
+436:- **THEN** the gate prints this error line:
+439:ERROR GATES-ADOPT openspec/trace/gaps.json is not there. Run: node scripts/spec/gates.mjs init
+447:- **WHEN** the caller sets MEASUREMENT_TOKEN to token and lists tools/other.test.mjs as an allocation file
+448:- **THEN** the child environment has MEASUREMENT_TOKEN with the value token
+449:- **AND** the allocation run names tools/other.test.mjs and uses --expose-gc
+456:- **WHEN** a measurement or a trusted snapshot has no assertion for scenario demo-001 of the selected active change
+457:- **THEN** the gate prints TRACE-UNVERIFIED for demo-001
+464:A QA-HEADER error for such a script must not stop the adopt command.
+471:- **WHEN** a merge brings one or more new upstream QA scripts with no QA tag and the adopt command names `HEAD^2`
+472:- **THEN** the adopt command writes one record for each script with the full hash of the second parent
+473:- **AND** lines, branches, functions and untraced are 0 and untrue is false
+474:- **AND** the next gate run uses the synthetic header
+475:- **AND** an owned script with no header, or a script that the merged commit did not change, keeps QA-HEADER
+476:- **AND** an invalid current header or a deleted base QA header keeps QA-HEADER
+477:- **AND** a merged upstream base script with no current or base QA tag gets one zero-count adopt record
+478:- **AND** any other error stops the adopt command without a new record
+479:- **AND** a coverage ignore comment in that QA script makes the gate print COVERAGE-IGNORE and write no adopt record
+480:- **AND** the adopt command writes no QA record for an absent current file
+
+D11 tasks
+$ rg -n ^- \[.*\] [1-7]\. openspec/changes/ownership-scoped-gates/tasks.md
+3:- [x] 1.1 Write the test for `ownership-001`.
+4:- [x] 1.2 Write the test for `ownership-002`.
+5:- [x] 1.3 Write the test for `ownership-003`.
+6:- [x] 1.4 Write the test for `ownership-004`.
+7:- [x] 1.5 Write the test for `ownership-005`.
+8:- [x] 1.6 Write the test for `ownership-006`.
+9:- [x] 1.7 Write the test for `ownership-007`.
+10:- [x] 1.8 Write the test for `ownership-008`.
+11:- [x] 1.9 Write the test for `ownership-009`.
+12:- [x] 1.10 Write the test for `ownership-010`.
+13:- [x] 1.11 Write the test for `ownership-011`.
+14:- [x] 1.12 Write the test for `ownership-012`.
+16:- [x] 1.13 Write the test for `ownership-013`.
+18:- [x] 1.14 Write the test for `ownership-014`.
+19:- [x] 1.15 Write the test for `ownership-015`.
+21:- [x] 1.16 Write the test for `ownership-016`.
+22:- [x] 1.17 Write the test for `ownership-017`.
+23:- [x] 1.18 Write the test for `ownership-018`.
+25:- [x] 1.19 Write the test for `ownership-019`.
+27:- [x] 1.20 Write the test for `ownership-020`.
+28:- [x] 1.21 Write the test for `ownership-021`.
+29:- [x] 1.22 Write the test for `ownership-022`.
+30:- [x] 1.23 Write the test for `ownership-023`.
+31:- [x] 1.24 Write the test for `ownership-024`.
+32:- [x] 1.25 Write the test for `ownership-025`.
+33:- [x] 1.26 Write the test for `ownership-026`.
+34:- [x] 1.27 Write the test for `ownership-027`.
+35:- [x] 1.28 Write the test for `ownership-028`.
+39:- [x] 2.1 Add the manifest and path class module.
+40:- [x] 2.2 Add the coverage checks.
+41:- [x] 2.3 Add snapshot data.
+42:- [x] 2.4 Add the QA exception.
+43:- [x] 2.5 Add the report command.
+44:- [x] 2.6 Update the process text.
+48:- [x] 3.1 Run host tests.
+49:- [x] 3.2 Measure coverage for each changed script.
+50:- [x] 3.3 Run the automatic mutation tool.
+51:- [x] 3.4 Assess each survivor.
+52:- [x] 3.5 Run the format check.
+53:- [x] 3.6 Run STE lint.
+54:- [x] 3.7 Commit code, tests and input files before the lead runs ratchet.
+55:- [ ] 3.8 Ask the lead to run make ratchet CHANGE=ownership-scoped-gates in the image.
+56:- [ ] 3.9 Ask the lead to run the two review agents and write review.md.
+57:- [ ] 3.10 Ask the lead to run make gates CHANGE=ownership-scoped-gates on the final tree.
+61:- [x] 4.1 Write tests for `ownership-020` through `ownership-025` before code.
+62:- [x] 4.2 Add the source diff intersection.
+63:- [x] 4.3 Add the count report.
+64:- [x] 4.4 Update the process text for sync lines.
+65:- [x] 4.5 Run host tests.
+66:- [x] 4.6 Measure coverage.
+67:- [x] 4.7 Run mutations.
+68:- [x] 4.8 Run lint.
+69:- [x] 4.9 Run the format check.
+70:- [x] 4.10 Record proof.
+71:- [x] 4.11 Commit the pass 2 files.
+75:- [x] 5.1 Set fixed Git config and identity for the tests.
+76:- [x] 5.2 Add the check for changed owned files and for owned files without a ledger entry.
+77:- [x] 5.3 Print the owned gap lines in the check and ratchet output.
+78:- [x] 5.4 Run host checks.
+79:- [x] 5.5 Record all results.
+80:- [x] 5.6 Commit the pass 3 code, tests and process text.
+84:- [x] 6.1 Write the tests for `ownership-029`.
+85:- [x] 6.2 Write the tests for `ownership-030`.
+86:- [x] 6.3 Write the tests for `ownership-031`.
+87:- [x] 6.4 Write the tests for `ownership-032`.
+88:- [x] 6.5 Write the tests for `ownership-033`.
+89:- [x] 6.6 Write the tests for `ownership-034`.
+90:- [x] 6.7 Write the tests for `ownership-035`.
+91:- [x] 6.8 Write the tests for `ownership-036`.
+92:- [x] 6.9 Write the tests for `ownership-037`.
+93:- [x] 6.10 Write the tests for `ownership-038`.
+95:- [x] 6.11 Share the adopt source predicate.
+96:- [x] 6.12 Stop the gate for records of this change with no string file or full source hash.
+97:- [x] 6.13 Limit the synthetic QA header exception.
+98:- [x] 6.14 Add the base manifest union.
+99:- [x] 6.15 State the rule for an owned code file without a ledger entry.
+100:- [x] 6.16 Set the output buffer of the Git diff process.
+101:- [x] 6.17 Correct the round 1 prose faults.
+102:- [x] 6.18 Run the named mutations.
+103:- [x] 6.19 Run the full host tests.
+104:- [x] 6.20 Measure coverage for each changed script.
+105:- [x] 6.21 Run the automatic mutation tool.
+106:- [x] 6.22 Assess each survivor.
+107:- [x] 6.23 Run the format check.
+108:- [x] 6.24 Run STE lint.
+109:- [x] 6.25 Record the pass 4 results.
+110:- [x] 6.26 Commit the pass 4 files.
+112:- [x] 6.27 Write the test for `ownership-039`.
+114:- [x] 6.28 Write the test for `ownership-040`.
+116:- [x] 6.29 Read adopt sources after CI selects the change.
+117:- [x] 6.30 Stop for bad history JSON before the owned gap lines, also when no change is selected.
+119:- [x] 6.31 Write the test for `ownership-041`.
+121:- [x] 6.32 Write the test for `ownership-042`.
+123:- [x] 6.33 Write the test for `ownership-043`.
+124:- [x] 6.34 Write the test for `ownership-044`.
+125:- [x] 6.35 Write the test for `ownership-045`.
+127:- [x] 6.36 Write the test for `ownership-046`.
+128:- [x] 6.37 Write the test for `ownership-047`.
+130:- [x] 6.38 Write the test for `ownership-048`.
+132:- [x] 6.39 Write the test for `ownership-049`.
+134:- [x] 6.40 Write the test for `ownership-050`.
+136:- [x] 6.41 Write the test for `ownership-051`.
+138:- [x] 6.42 Write the test for `ownership-052`.
+139:- [x] 6.43 Return false when Git cannot read an adopt source name.
+141:- [x] 6.44 Write the test for `gap-ledger-111`.
+143:- [x] 6.45 Write the test for `ownership-053`.
+147:- [x] 7.1 Write the Pass 5 words table.
+148:- [x] 7.2 Change the spec for D7 through D10.
+149:- [x] 7.3 Write the red tests for `ownership-054`.
+150:- [x] 7.4 Reject revision names in history records.
+151:- [x] 7.5 Apply the base QA tag rule.
+152:- [x] 7.6 Add the QA adopt record producer.
+153:- [x] 7.7 Correct the round 2 prose faults.
+154:- [x] 7.8 Run each host test file.
+155:- [x] 7.9 Measure each changed script.
+156:- [x] 7.10 Run the named faults.
+157:- [x] 7.11 Add the same-file error test for `ownership-054`.
+158:- [x] 7.12 Run the automatic mutation tool.
+159:- [x] 7.13 Assess each survivor.
+160:- [ ] 7.14 Run lint.
+161:- [ ] 7.15 Run the format check.
+162:- [ ] 7.16 Run the title echo check.
+163:- [ ] 7.17 Run OpenSpec show and validate.
+164:- [ ] 7.18 Compare document headings.
+165:- [ ] 7.19 Commit the Pass 5 files.
+
+D11 clauses
+$ rg -n text says that review|no valid adopt record|valid adopt record must|owned gap lines|measurement phase under|parent, other than|test instances|waivers waive|upstream file|records after|snapshot check MUST openspec/changes/ownership-scoped-gates/specs/ownership/spec.md
+25:The owned gap lines apply only to check and ratchet.
+26:Invalid history stops before the owned gap lines. The owned gap lines come before the changed line check.
+45:- **THEN** the gate prints COVERAGE-OWNED unless valid waivers waive all gap counts
+86:For a new script, a valid adopt record must name the script.
+129:- **AND** the text says that review.md lists the files that a person resolved by hand
+142:The report command MUST count all test instances in each ledger name map.
+145:#### Scenario: Count test instances `ownership-014`
+147:- **THEN** the report command prints a total of 3 test instances
+181:- **THEN** the report command prints 5 line gaps and the waivers waive a count of 2
+184:The report command MUST count zero test instances for an empty name map.
+189:- **THEN** the report command counts zero test instances
+214:- **WHEN** a person edits line 2 of an upstream file in the sync change
+225:- **OR** the commit is not a parent, other than the first parent, of a merge commit after the base
+238:- **AND** the report and the owned gap lines of check and ratchet list the gap
+239:- **AND** the adopt command prints no owned gap lines
+267:The commit must be a parent, other than the first parent, of a merge commit after the base.
+315:The script is new and no valid adopt record names the script, or the base header has a QA tag.
+319:- **WHEN** a new upstream script has no header and no valid adopt record names it
+342:#### Scenario: Stop the gate for bad history before the owned gap lines `ownership-038`
+344:- **THEN** the run stops before the owned gap lines
+345:- **AND** a run without a change name also stops before the owned gap lines
+367:ERROR GATES-ADOPT The commit HEAD is not a merged commit. It must be a parent, other than the first parent, of a merge commit after the base commit.
+381:The history check MUST read only records after the base history prefix.
+398:The snapshot check MUST use the current valid adopt records for QA headers.
+411:The gate MUST print the time of the measurement phase under the name measure.
+452:The measurement and the snapshot check MUST check the scenarios of the selected change.
+
+D11 design
+$ rg -n With a base|isAdoptSource checks|last adopt record|are not in|clone of the project|automatic mutation tool does|allocation file list openspec/changes/ownership-scoped-gates/design.md
+9:- owned: With a base, a path is owned when the base manifest or the current manifest lists it. Without a base, only the current manifest counts.
+100:Each file uses its last adopt record. A file without a record uses the last adopt source in the change.
+102:Use isAdoptSource for the adopt command, checkAdopts and syncChangedLines. The function isAdoptSource checks the full lowercase hash and mergeParents(root, base).has(from).
+121:Binary code files use the text diff rule. Binary non-code files are not in the code inventory.
+166:That test runs in the clone of the project. The host adapter uses file output to avoid the host pipe error.
+167:The host adapter reads that output during each test and stops on the first failed test, as the automatic mutation tool does.
+173:The measurement uses the caller environment and the allocation file list. The phase time line names the phase measure.
+229:| allocation file list | allocationFiles argument of measure |
+277:With a base, a path is owned when the base manifest or the current manifest lists it.
+
+D11 proposal
+$ rg -n owner accepts|Such scripts|path is upstream|owner rejects|does not check manifest|follow-up change|plural form|known limit L4 openspec/changes/ownership-scoped-gates/proposal.md
+3:The owner accepts that strict checks apply to owned code and not to upstream code.
+57:Such scripts also stay outside the code inventory.
+98:The path is upstream for the next change. The owner rejects each removal of an owned path when the owner reads the manifest diff.
+100:The gate does not check manifest entries that match no file. For example, an entry can have a typo or lack its final slash.
+103:The follow-up change html-shell-line-data must count HTML with no script as code with no code lines.
+104:The follow-up change must also add a way to waive a file with no line data.
+107:The new messages use the plural form for a count of 1, as the old messages do, for example 1 files.
+109:Pass 4 adds the ci and init cases for the known limit L4 of evidence.md. Both cases use a recorded owned gap.
+
+D11 historical prose
+$ rg -n ^(The manifest lists all 1025|The image must supply|The merge parent rule replaces|The lead set the applied Purpose)|^\| c44(77|81|82)  openspec/changes/ownership-scoped-gates/evidence.md
+11:The manifest lists all 1025 fork-only files from the requested tree comparison.
+100:The image must supply the Node result of the image. No host result is an image gate verdict.
+654:The merge parent rule replaces the ancestor rule of pass 2.
+722:The lead set the applied Purpose after the archive. S36 keeps the plural style that the lead names.
+1414:| c4477 | 6 | The earlier fault in the fault list stops an absent source. |
+1415:| c4481 | 6 | The earlier fault in the fault list stops an absent source. |
+1416:| c4482 | 6 | The earlier fault in the fault list stops an absent source. |
+```
+
+### Red runs and named faults
+
+The red runs used the code from tree fbdb630ae4b8af37437e808a023f7569c9276510.
+Red ownership and gate tests failed for revision names. The QA base-tag test failed because the register gave a synthetic header.
+The two producer tests stopped with QA-HEADER. The red producer log also found an absent history file in a fixture.
+The fixture now treats absent history as empty text.
+
+The first base-script red run stopped in init because the fixture had not moved the base ref. It gives no producer verdict.
+The corrected fixture moves the base ref before init. The named drop-base-QA-producer fault fails that test.
+
+The first regex fault passed because exact membership also rejects revision names. That result gave no proof of the regex check.
+The spec now says the source check reads no merge parents for a string outside the hash pattern.
+The new test checks the Git call count. The regex fault now fails that test.
+
+The first catch test had a hash of 42 digits and reached no Git call. That test gave no proof of the catch path.
+The corrected test uses 40 digits and checks one Git call. The source-catch-throw fault fails that test.
+
+
+The automatic selector first used offsets from other files. That run stopped before the end and has no final verdict.
+A second run stopped to add the shape test before the mutation phase. That run also has no final verdict.
+The final selector compares each mutant with the changed lines of its own file.
+
+
+The new producer first read each tracked merged file. A deleted current QA script caused an uncaught file read error.
+The red-absent-QA.log test shows that fault. The producer now uses only the QA register scripts and QA-HEADER errors as candidates.
+The absent script has no candidate and gets no record. The two candidate arms have named faults.
+
+The automatic run stopped before the end for this correction and gives no final verdict.
+
+### Named fault results
+
+Command: `python3 /home/ianblenke/docker/gev-tools/ownership-gates/pass5/named-faults.py`.
+The command ran each test process with taskset and nice. All 22 faults failed a test.
+The table and final logs use current titles.
+
+| Fault | Failed test | Exit status |
+|---|---|---:|
+| source-catch-throw | [ownership-052] source check returns false when Git cannot read the merge parents | 1 |
+| hash-regex-true | [ownership-031 ownership-041] source check rejects strings outside the hash pattern before it reads merge parents | 1 |
+| drop-merge-membership | [ownership-032] gate stops for a work branch adopt source | 1 |
+| revision-resolver | [ownership-031 ownership-024] gate stops for an invalid file or source and skips records with invalid counts | 1 |
+| base-tag-adopt-override | [ownership-035] QA register prints QA-HEADER for a base QA tag even with an adopt record | 1 |
+| drop-QA-exception | [ownership-009] QA register uses a synthetic upstream QA header | 1 |
+| drop-base-QA-producer | [ownership-054] gate writes a QA adopt record for a base script without a QA tag | 1 |
+| drop-base-QA-candidates | [ownership-054] gate writes a QA adopt record for a base script without a QA tag | 1 |
+| drop-new-QA-candidates | [ownership-054] gate writes the QA adopt record with a full hash from HEAD^2 | 1 |
+| drop-QA-coverage-filter | [ownership-054] gate writes the QA adopt record with a full hash from HEAD^2 | 1 |
+| drop-QA-record | [ownership-054] gate writes the QA adopt record with a full hash from HEAD^2 | 1 |
+| stop-eligible-QA | [ownership-054] gate writes the QA adopt record with a full hash from HEAD^2 | 1 |
+| drop-merged-QA-bound | [ownership-054 ownership-035] gate stops the adopt command for QA files outside the exception | 1 |
+| drop-other-error-code | [ownership-054] adopt command stops for a coverage ignore error in the eligible QA file | 1 |
+| drop-other-error-stop | [ownership-054 ownership-035] gate stops the adopt command for QA files outside the exception | 1 |
+| drop-base-QA-tag | [ownership-054] QA adopt helper accepts only upstream scripts with no current or base QA tag | 1 |
+| drop-current-QA-tag | [ownership-054] QA adopt helper accepts only upstream scripts with no current or base QA tag | 1 |
+| drop-QA-class | [ownership-054] QA adopt helper accepts only upstream scripts with no current or base QA tag | 1 |
+| drop-history-error-code | [ownership-038] gate stops for bad history before the owned gap lines | 1 |
+| extend-hash-count | [ownership-031 ownership-041] source check rejects strings outside the hash pattern before it reads merge parents | 1 |
+| drop-hash-start-anchor | [ownership-031 ownership-041] source check rejects strings outside the hash pattern before it reads merge parents | 1 |
+| keep-first-QA-record | [ownership-054] adopt command writes one record for each QA file from both candidate lists | 1 |
+
+The base-tag-adopt-override fault changes both base tag checks to allow the adopt record.
+One check alone gives no proof because the other check still blocks the synthetic header.
+
+The new same-file error test fails when the error code check is false.
+That fault would remove both QA-HEADER and COVERAGE-IGNORE for the eligible QA file.
+The correct code keeps COVERAGE-IGNORE and writes no adopt record.
+
+### Host tests and coverage
+
+Tree read: fbdb630ae4b8af37437e808a023f7569c9276510. These checks use the Pass 5 work tree.
+All commands use taskset and nice, as the brief says. Each process runs one test file.
+
+| Test file | Tests | Passed | Failed | Log |
+|---|---:|---:|---:|---|
+| ownership.test.mjs | 50 | 50 | 0 | own-last.log |
+| ownershipGate.test.mjs | 40 | 40 | 0 | gate-final-40.log |
+| qaRegister.test.mjs | 49 | 49 | 0 | qa-last.log |
+| v8Merge.test.mjs | 11 | 11 | 0 | green-v8Merge.log |
+| gates.test.mjs, all cases | 227 | 223 | 4 | final-gates.log |
+| gates.test.mjs, known four omitted | 223 | 223 | 0 | legacy-current.log |
+
+The full legacy run failed only the four known host adapter cases. That run used the producer before the candidate correction.
+The final code passed all 223 other legacy cases. The final producer passed all 40 ownership gate cases.
+
+| Script | Lines hit / total | Branches hit / total | Functions hit / total |
+|---|---:|---:|---:|
+| scripts/spec/lib/ownership.mjs | 168 / 168 | 130 / 130 | 44 / 44 |
+| scripts/spec/lib/qa-register.mjs | 92 / 92 | 94 / 94 | 16 / 16 |
+| scripts/spec/gates.mjs | 776 / 776 | 389 / 389 | 97 / 97 |
+
+Command:
+
+```text
+node /home/ianblenke/docker/gev-tools/ownership-gates/host-coverage.mjs <script> <raw directories>
+```
+
+Each script has 100% line, branch and function coverage. Each command checks one script.
+The gate script uses only raw-legacy-current and raw-gate-final-40. Both runs used the final code.
+
+The ownership script uses raw-own-last. The QA register uses raw-qa-last and raw-gate-final-40. Both runs used the final code.
+
+
+### Automatic mutation results
+
+Tree read: fbdb630ae4b8af37437e808a023f7569c9276510. The source hashes are in mutation-results-pass5.json.
+The selector found 401 faults on changed script lines. Both phases finished.
+
+| Phase | Killed | Crash | Survived |
+|---|---:|---:|---:|
+| Fast tests | 326 | 1 | 74 |
+| Full tests of the 74 survivors | 50 | 0 | 24 |
+
+The totals are 376 kills, one crash and 24 equivalent faults. The 22 named faults are separate from these totals.
+The native results and each fault are in mutation-results-pass5.json.
+
+The crash g4687 failed the coverage gap producer test and the base script producer test.
+
+The crash changed a history record to undefined. JSON.parse then failed on the history line.
+
+The first full phase finished with 47 kills and 27 survivors. The stop request arrived after that phase had finished.
+Three survivors were real faults: a0536, a0541 and g4681. New tests killed all three in the final full phase.
+
+The hash tests now include a prefix before the hash and a hash with 41 digits.
+The producer test uses two base scripts and two new scripts. It checks all four full-hash records.
+
+The probe command compared each survivor with the correct code. Each row states the number of cases and the code reason.
+The claims apply to the same readable tree, valid API input types and measurement data. Git refs must not change during a run.
+
+| ID | Probe cases | Reason |
+|---|---:|---|
+| a1821 | 720 | The QA adopt helper rejects a current header with a QA tag. |
+| a0517 | 70 | The regex and exact hash set reject non-string values. The history check first checks the string type. |
+| a1800 | 720 | The QA adopt helper also rejects a base header with a QA tag. |
+| a1805 | 720 | The QA adopt helper also rejects a base header with a QA tag. |
+| g4627 | 48 | adoptLedger reads the entries with for-of. The array has the same unique entries as the Map. |
+| g4496 | 48 | Any other error stays in the error list and stops the command before a record write. |
+| g4497 | 48 | Any other error stays in the error list and stops the command before a record write. |
+| g4516 | 48 | The checks give the same result for readable files. The merged set still bounds the records. |
+| g4570 | 48 | Both checks have no side effects. |
+| g9376 | 48 | The command arms are mutually exclusive and both return. |
+| g9377 | 48 | The extra phase timer is unused in the adopt arm. No extra phase time line appears. |
+| g9507 | 48 | The two declarations read separate data without side effects. |
+| g9511 | 48 | adoptLedger computes data without a file write. The error stop discards that data. |
+| g9513 | 48 | writeLedger changes no history record or Git ref. The QA records still precede appendHistory. |
+| g9521 | 48 | adoptLedger reads the entries with for-of. The Set has the same unique entry arrays as the Map. |
+| a0527 | 70 | The regex and exact hash set reject non-string values. The history check first checks the string type. |
+| a0528 | 70 | Both checks have no side effects for valid API input types. |
+| a9201 | 70 | adoptsOf reads records without side effects. The history check still checks each record before return. |
+| a1475 | 720 | The checks have no side effects and give the same result for valid API input types. |
+| a1485 | 720 | Both checks have no side effects. The manifest guard still precedes classify. |
+| a1806 | 720 | The QA adopt helper also rejects a base header with a QA tag. |
+| a1826 | 720 | The checks have no side effects and the QA adopt helper uses the same inputs. |
+| a1830 | 720 | The QA adopt helper rejects a current header with a QA tag. |
+| a1831 | 720 | Both checks have no side effects. |
+
+Commands:
+
+```text
+node /home/ianblenke/docker/gev-tools/ownership-gates/pass5/equivalent-probe.mjs
+python3 /home/ianblenke/docker/gev-tools/ownership-gates/pass5/named-anchor.py
+python3 /home/ianblenke/docker/gev-tools/ownership-gates/pass5/named-multiple.py
+```
+
+The Node processes used taskset -c 4-7 and nice -n 19. The probe log is probe-final.log.
+The anchor logs and the four-file log show the three more named fault failures.
+
+
+### Self-check and final host checks
+
+Tree read: fbdb630ae4b8af37437e808a023f7569c9276510. The Pass 5 self-check reads the code, scenario clauses and five test files.
+The words table names the actors and objects. The scenario clauses and test titles name an outcome and match the code.
+Each changed scenario has a changed tagged test. The title echo check excludes only review reports and Old records.
+
+```text
+python3 /home/ianblenke/docker/gev-tools/ownership-gates/pass5/check-echoes.py
+Live titles: 377
+Labels checked: 175
+Stale labels: 0
+```
+
+The heading check reads every change document and AGENTS.md against the base commit.
+Only the proposal heading Known limits changes to Known limits and later changes, as the brief directs.
+The five proposal headings match the brief. All other old headings stay the same.
+
+The delta spec has 54 unique scenario IDs. No scenario clause uses bare it or the test as its actor.
+
+OpenSpec show and validate both passed. The package boundary command passed; no new code module needs a manifest entry.
+The mutation JSON file contains data, not code. The review report files have no diff.
+
+No image command, full project gate, ratchet, archive or review agent ran in this pass.
+The lead must run those checks. The host checks give no image gate or review verdict.
+
+
+The final lint command has 0 errors and 584 warnings in lint-end4.log.
+The diff check has no error output.
+
+Command:
+
+```text
+taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+```
+
+The mutation report command reads the native results. Its total row is:
+
+```text
+all | 401 | 326 | 1 | 0 | 74 | 50 | 0 | 0 | 24 | 0 | 0
+```
+
+The columns are faults, phase 1 kills, crashes, timeouts and survivors, then phase 2 kills, crashes and timeouts.
+The last three columns are real survivors and pending phase 1 and phase 2 faults.
+
+Command:
+
+```text
+taskset -c 4-7 nice -n 19 node /home/ianblenke/docker/gev-tools/ownership-gates/pass5/automut-host.mjs report --mutants /home/ianblenke/docker/gev-tools/ownership-gates/pass5/mutants.json --results /home/ianblenke/docker/gev-tools/ownership-gates/pass5/results.json --out /home/ianblenke/docker/gev-tools/ownership-gates/pass5/survivors-final.md
+```
+
+
+The final format check passed with Checked 1158 source files in format-end.log.
+The latest record lint passed with 0 errors and 585 warnings in lint-record.log.
+
+Command:
+
+```text
+taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/pass2-format-shim.mjs scripts/format.mjs --check
+```
+
+The final OpenSpec outputs are show-end.json and validate-end.log. Both commands have exit status 0.
+The final heading audit and title echo check passed. The source hashes still match mutation-results-pass5.json.
