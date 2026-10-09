@@ -2688,7 +2688,7 @@ No script code changes. At Pass 7, the Pass 7 words table defined coverage item.
 | S118: Voice | Both titles use the active voice. The owned path belongs to the file. |
 | S119: Synthetic header | Both titles name the synthetic header as the result. One title names one of three adopt records. |
 | S120: Coverage terms | At Pass 7, the row said to use LCOV record, coverage item and extra text around a DA line or diff header. At Pass 8, the title names a DA text prefix or suffix and a diff header text prefix. |
-| S121: Init pronoun | At Pass 9, the result line states that init stops before the step that prints the owned gap lines because the ledger exists. |
+| S121: Init pronoun | At Pass 9, the result line states that init stops before the step that prints the owned gap lines, because the ledger exists. |
 | S122: Context | Name the new script and say not to write history records by hand. Use two AND lines. |
 | S123: Rule relation | Use replaces in both requirements. The QA clause names the requirement and its script scope. |
 | S124: Source terms | Use second parent in the result line and adopt source in the design. The text of the message stays. |
@@ -3193,14 +3193,14 @@ Tree read: 18600a4012c3df1b1a9f0b1b4313e622a7acc63e, branch ownership-gates, wit
 
 | Finding | Correction |
 |---|---|
-| F1, S158, S176 | Cover both ownership-018 tests. State 3 plus 4 test instances and the exact output. Split the WHEN conditions. Delete the incomplete sum note. |
+| F1, S158, S176 | Add a clause for each ownership-018 test. State 3 plus 4 test instances and the exact output. Split the WHEN conditions. Delete the incomplete sum note. |
 | S159 | Name the five message copies: code, spec and three tests. |
-| F2 | Bound the QA comment to a new upstream script with no QA tag. Split the result to meet the word limit. |
+| F2 | Limit the coverage ignore comment to a new upstream QA script with no QA tag. Split the result to meet the word limit. |
 | F3, S160, S161 | Define valid waiver once. Name the gate and file hash in the requirement. |
-| F4, F5 | Test the message type and config sentence faults. Add the JSON parse error cases before the red fault processes. |
+| F4, F5 | Test the faults that make the message a number and that remove the config sentence. Add the cases with the manifest text `{` before the red fault processes. |
 | F6 | State nine rows and seven tests. Add Pass 8 and Pass 9 tasks. |
 | F7, S177 | Delete the unused coverage item row. |
-| S162–S175 | Correct the terms and title. Add reached adopt record and DA record. Delete faulty Pass 8 commentary. |
+| S162–S175 | Correct the terms and the title. Add glossary rows for reached adopt record and DA record. Delete the faulty text of Pass 8. |
 
 The files in pass9/ hold the commands and output. scenario-clauses.log lists both ownership-018 tests and their clauses.
 
@@ -3256,11 +3256,64 @@ The gates process has four known host failures: coverage-gate-024, coverage-gate
 |---|---|---|
 | test-count-sum | Change the outer test-name sum to Math.max. | ownership.test.mjs:218; 4 tests differ from 7. |
 | absent-message-number | Set the absent-file message to 1. | ownership.test.mjs:50; number differs from string. |
-| config-adopt-sentence | Remove the sentence with run the adopt command. | ownership.test.mjs:147; the text does not match. |
-| syntax-catch-unit | Throw SyntaxError again in the catch. | ownership.test.mjs:55; the new readOwnership call throws. |
-| syntax-catch-gate | Throw SyntaxError again in the catch. | ownershipGate.test.mjs:138; the new check call throws. |
+| config-adopt-sentence | Remove the sentence "For an upstream QA script with no current or base QA tag, run the adopt command." from openspec/config.yaml. | ownership.test.mjs:147; the text does not match. |
+| syntax-catch-unit | Make the catch block of readOwnership throw the SyntaxError again. | ownership.test.mjs:55; the new readOwnership call throws. |
+| syntax-catch-gate | Make the catch block of readOwnership throw the SyntaxError again. | ownershipGate.test.mjs:138; the new check call throws. |
 
-All five fault processes ended with status 1 before the test processes of the correct code.
-The scratch copy has no branch. Its source is the commit above with the Pass 9 tests.
+Each of the five fault processes ended with status 1. The test processes of the correct code ran after them.
+The scratch copy has no branch. Its source is the commit in Tree read, with the Pass 9 tests.
 
-Outside tests, this pass uses no Docker, make, gate, ratchet, adopt, waive, archive, push, gh or review command.
+At Pass 9, tests, fault processes, coverage, lint, format, OpenSpec, Git, title, clause, order and mutation checks ran.
+At Pass 9, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.
+
+## Pass 10
+
+Tree read: 07a3431b5d5c4bb0c94d067ccf127c797d493b2a, branch ownership-gates, with Pass 10 changes.
+
+| Finding | Correction |
+|---|---|
+| H1, S178 | State two ledgers in ownership-018. Keep both test clauses. |
+| H2, S182 | Name the new upstream QA scripts with no QA tag. State no adopt record for that script. |
+| H3 | Add the valid waiver limit to the proposal. The lead keeps this limit. |
+| H4, S179 | Name the Pass 9 commands. State no full gate command. |
+| S180, S181 | State the file, file hash and metric of the gap. Use waiver in the glossary. |
+| S183 | Name the test instance counts of owned test files in the title. |
+| S184, S185 | Name the Order rows by content. Use one verb for each task. Add Pass 10 tasks. |
+| S186, S187 | Name the manifest text and faults. Name the clauses and glossary rows. |
+| S188 | Name openspec/config.yaml and the catch block of readOwnership. |
+| S189 | Split the fault results and process order. Name Tree read as the source. |
+| S190 | Restore the comma before because the ledger exists. |
+| S191 | Keep the word headings. Remove the two glossary full stops. |
+
+The files in pass10/ hold the command outputs. The clause list has two ownership-018 tests and seven ownership-054 tests.
+
+```text
+Test command form: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/<name>.test.mjs
+ownership
+ℹ tests 50
+ℹ pass 50
+ℹ fail 0
+ownershipGate
+ℹ tests 40
+ℹ pass 40
+ℹ fail 0
+Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+STE: 0 errors, 584 warnings.
+Command: taskset -c 4-7 nice -n 19 openspec show ownership-scoped-gates --json
+Status: 0
+Command: taskset -c 4-7 nice -n 19 openspec validate ownership-scoped-gates
+Change 'ownership-scoped-gates' is valid
+Command: python3 /home/ianblenke/docker/gev-tools/ownership-gates/pass9/check-repeated-titles.py
+Live titles: 378
+Labels checked: 19
+Stale labels: 0
+Command: python3 /tmp/pass10-check.py
+Banned words and prefixed forms: 0
+Past fenced output: unchanged
+Scripts, AGENTS.md, config.yaml diff: empty
+Section titles: add Pass 10 to evidence.md and tasks.md; all old titles stay.
+Source diff: one test title.
+```
+
+At Pass 10, tests, lint, OpenSpec, Git, text edits, searches, title, clause and section-title checks ran.
+At Pass 10, no Docker, make, full gate, ratchet, adopt, waive, archive, push, gh or review command ran.

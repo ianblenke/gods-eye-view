@@ -40,6 +40,10 @@ The ledger comparisons, test name checks, STE lint and two-agent review still ap
 
 ## Known limits and later changes
 
+The glossary row valid waiver in design.md does not state the base bound of waiversOf in ledger.mjs or the line count bound in ownership.mjs.
+The tests tagged ownership-004 and ownership-008 prove both bounds.
+The lead keeps this limit.
+
 Host coverage cannot replace the image measurement on the Node version in .node-version.
 
 The manifest uses exact paths and directory prefixes. The manifest has no glob syntax.

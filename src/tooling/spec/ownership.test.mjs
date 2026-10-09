@@ -214,7 +214,7 @@ test('[ownership-005] uses each Git diff option', () => fixture(({ root, put }) 
   } finally { childProcess.spawnSync = native; syncBuiltinESMExports(); }
 }));
 
-test('[ownership-018] adds test counts across owned files', () => {
+test('[ownership-018] adds the test instance counts of owned test files', () => {
   assert.deepEqual(gapReport(manifest, { coverage: {}, untracedTests: { 'single.js': { names: { one: 2, two: 1 } }, 'src/own/a.test.js': { names: { three: 4 } } } }), ['Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests.', 'owned tests: single.js', 'owned tests: src/own/a.test.js', 'Upstream gaps: 0 code files, 0 lines, 0 test files, 0 tests.']);
 });
 test('[ownership-019] counts zero instances for an empty name map', () => {

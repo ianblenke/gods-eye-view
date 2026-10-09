@@ -1,0 +1,2 @@
+Command: taskset -c 4-7 nice -n 19 openspec validate ownership-scoped-gates
+Change 'ownership-scoped-gates' is valid
