@@ -2463,3 +2463,4 @@
 {"date":"2026-10-09","change":"upstream-sync-4","commit":"0c40fe3d82b0da7da7766ae3e88c74d427826ee2","kind":"adopt","file":"scripts/qa-voice-auth-focus.mjs","from":"6be25595b16491ce01ffd8d81e66921f321ee200","lines":0,"branches":0,"functions":0,"untraced":0,"untrue":false}
 {"date":"2026-10-09","change":"upstream-sync-4","commit":"0c40fe3d82b0da7da7766ae3e88c74d427826ee2","kind":"adopt","file":"scripts/qa-voice-auth.mjs","from":"6be25595b16491ce01ffd8d81e66921f321ee200","lines":0,"branches":0,"functions":0,"untraced":0,"untrue":false}
 {"date":"2026-10-09","change":"upstream-sync-4","commit":"16ea31f43372e2ff0612dd48fedba34b75624615","kind":"measurement","measurement":"bcc08548e384af0145d4992b53b6c5b6dbe5110dc77a2f8886706aaea31d5a29"}
+{"date":"2026-10-09","change":"upstream-sync-4","commit":"4865e3d2249e217faf5bee863fe2d6afacdc4d20","kind":"measurement","measurement":"cad629fe358c70efd0588c809182159b2ab74e61ef43d4baead47c0e04000d58"}
