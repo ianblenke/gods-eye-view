@@ -74,14 +74,16 @@ Later change `fix-director-bundle-nonnumeric-length` addresses `bundle-nonnumeri
 
 - Known limit `digest-asset-result-check-order`: scenario director-107 states "after each digest" and "after the asset result".
   Only call counts show the clauses after each digest and after the asset result.
-  The probe in evidence/probe-signal-check-order.txt shows that all four mutations survive the three test files.
-  The lead decides in review.md whether to accept this limit by name.
+  The probe in evidence/probe-signal-check-order.txt shows that the three mutations that move the check between the call and its `await` at bundle.js:93-94, 150-154 and 160-161 survive the three test files.
+  The file evidence/probe-signal-check-order-mutations.json lists them.
+  The lead keeps this limit; the owner confirms it in the pull request.
 
-- Known limit `second-text-signal-error`: scenario director-107 states "after the text promise settles. They reject cancellation."
+- Known limit `second-text-signal-error`: scenario director-107 states that the share helpers reject cancellation after the text promise settles.
   No test makes the second signal check at bundle.js:129 throw.
   A change that catches that error and does nothing passes each test.
-  The probe in evidence/probe-signal-check-order.txt shows that all four mutations survive the three test files.
-  The lead decides in review.md whether to accept this limit by name.
+  The probe in evidence/probe-signal-check-order.txt shows that the mutation that catches the error at bundle.js:129 survives the three test files.
+  The file evidence/probe-signal-check-order-mutations.json lists it.
+  The lead keeps this limit; the owner confirms it in the pull request.
 
 ### Pass 7 notes
 

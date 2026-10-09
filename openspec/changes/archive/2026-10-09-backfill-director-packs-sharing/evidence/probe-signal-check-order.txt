@@ -5,3 +5,9 @@ f3c: SURVIVED
 f3d: SURVIVED 
 SURVIVORS: [('f3a', 'SURVIVED'), ('f3b', 'SURVIVED'), ('f3c', 'SURVIVED'), ('f3d', 'SURVIVED')]
 EXIT=0
+
+Control: the same harness kills the hoist at bundle.js:128, which scenario director-107 pins.
+Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/d3-f3 /home/ianblenke/docker/gev-tools/director-3/pass13/f3-control-run.json
+m480: KILLED [director-107] The share helpers check the signal after the text promise settles
+SURVIVORS: []
+EXIT=0
