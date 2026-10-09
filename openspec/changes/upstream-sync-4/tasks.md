@@ -8,16 +8,16 @@
 
 ## 2. Host evidence
 
-- [ ] 2.1 Run each test file of `src/tooling/spec` on the host, and run the named tests of `gates.test.mjs`.
-- [ ] 2.2 Run each other test file under `src` on the host.
-- [ ] 2.3 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
-- [ ] 2.4 Run the lint on the host.
-- [ ] 2.5 Run `openspec validate` on the host.
+- [x] 2.1 Run each test file of `src/tooling/spec` on the host, and run the named tests of `gates.test.mjs`.
+- [x] 2.2 Run each other test file under `src` on the host.
+- [x] 2.3 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
+- [x] 2.4 Run the lint on the host.
+- [x] 2.5 Run `openspec validate` on the host.
 
 ## 3. Lead work before and in the image
 
-- [ ] 3.1 Check the second parent of the merge commit against the upstream remote.
-- [ ] 3.2 Run `make adopt CHANGE=upstream-sync-4 FROM=6be25595b16491ce01ffd8d81e66921f321ee200`.
+- [x] 3.1 Check the second parent of the merge commit against the upstream remote.
+- [x] 3.2 Run `make adopt CHANGE=upstream-sync-4 FROM=6be25595b16491ce01ffd8d81e66921f321ee200`.
 - [ ] 3.3 Run `make ratchet CHANGE=upstream-sync-4`.
 - [ ] 3.4 Run the two review agents.
 - [ ] 3.5 Write review.md.

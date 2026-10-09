@@ -1,4 +1,4 @@
-F1 drop the manifest argument: failed 1 test, fail count 1: ✖ [qa-scripts-023] checks all tracked QA scripts in this repository
-F2 drop the adopts argument: failed 1 test, fail count 1: ✖ [qa-scripts-023] checks all tracked QA scripts in this repository
-F3 expect 89 tracked scripts: failed 1 test, fail count 1: ✖ [qa-scripts-023] checks all tracked QA scripts in this repository
+F1 remove the argument manifest: fail count 1, test ✖ [qa-scripts-023] checks all tracked QA scripts in this repository
+F2 remove the argument adopts: fail count 1, test ✖ [qa-scripts-023] checks all tracked QA scripts in this repository
+F3 expect 89 tracked scripts: fail count 1, test ✖ [qa-scripts-023] checks all tracked QA scripts in this repository
 restored: fail count 0
