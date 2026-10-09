@@ -220,7 +220,8 @@ The reader means only the stream reader.
 | predispatch checker | gev-tools/predispatch/predispatch.py | The script that checks change prose |
 
 
-The document parser means parseSceneDocument in src/director/document.js.
+Pass 10 adds this note: Pass 9 adds the rows public data pack limits, share limits and document parser.
+
 A test source means the source function that the test supplies to the session.
 A resolver means the resolveAsset function that the caller supplies to the export.
 
@@ -237,7 +238,5 @@ Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
 
 Check each place that repeats a test title with check-repeated-titles.py in the pass9 scratch folder.
 Check title verbs and body assertions with check-verbs.py in that folder.
-The store is createBundleAssets; the import is parseSceneShare.
-The document parser is parseSceneDocument.
-The placement tests prove valid fields only.
-The allowed-field-added-members limit stays in force.
+The two tests at backfill.test.mjs:2144 and :2149 show only that the validator accepts valid fields.
+The `allowed-field-added-members` limit stays.

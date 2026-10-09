@@ -184,7 +184,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-080] The validator rejects bounds field 1 for the image
 [director-080] The validator rejects bounds field 2 for the image
 [director-080] The validator rejects bounds field 3 for the image
-[director-080] The validator rejects height and reference for the image
+[director-080] The validator rejects the height and the reference for the image
 [director-080] The validator returns without an error for its bounds field for the image
 [director-080] The validator returns without an error for its height field for the image
 [director-080] The validator returns without an error for its altitudeReference field for the image
@@ -254,7 +254,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
 [director-084] The decoder rejects the type for the feature
-[director-084] The decoder rejects ID type for the feature
+[director-084] The decoder rejects the ID type for the feature
 [director-084] The decoder rejects a blank ID for the feature
 [director-084] The decoder rejects a long ID for the feature
 [director-084] The decoder rejects a duplicate ID for the feature
@@ -275,7 +275,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-085] The decoder rejects a height below the limit for the position
 [director-085] The decoder rejects a height above the limit for the position
 [director-085] The decoder rejects more than 50000 positions
-[director-085] The decoder returns zero for absent height for the position
+[director-085] The decoder returns zero for an absent height for the position
 [director-085] The decoder returns the height in the data for the position
 [director-085] The decoder accepts both geographic edges for the position and returns coordinates
 [director-085] The decoder rejects field 0 that is not finite for the position
@@ -327,8 +327,8 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-088] The new session reports the idle state and zero handles
 [director-088] The session rejects a value that is not a data pack list
 [director-088] The session rejects more than eight data packs
-[director-088] The load call returns false after the caller destroys the session without a source call
-[director-088] The load call returns false for a cancelled signal without a source call
+[director-088] The load call returns false after the caller destroys the session and makes no source call
+[director-088] The load call returns false for a cancelled signal and makes no source call
 [director-088] The new session reports the idle state
 [director-088] The new session reports zero handles
 [director-088] The session returns true for eight data packs
@@ -367,7 +367,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement
+[director-090] The data pack session disposes late renderer resources after cancellation
 [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result
 ```
 
@@ -379,7 +379,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-090] The session returns false when the caller destroys it during asset work
 [director-090] The session returns false for a cancelled signal without an event
 [director-090] The session checks destroyed state after it reads the signal
-[director-090] The session returns false for a cleared load call and does not read the signal state
+[director-090] The session returns false for a cleared load call
 [director-090] The load call returns false and disposes a detached resource
 [director-090] The session disposes the handle before it adds the handle to its list
 ```
@@ -417,8 +417,8 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-092] The session rejects an absent renderer without a source call
 [director-092] The session settles an early internal signal and reports idle
 [director-092] The session settles a source error before its deadline and reports idle
-[director-092] The session rejects stalled work at the 19 milliseconds deadline
-[director-092] The session rejects stalled work at the default 15000 milliseconds deadline
+[director-092] The session rejects stalled work at the deadline of 19 milliseconds
+[director-092] The session rejects stalled work at the default deadline of 15000 milliseconds
 [director-092] The session removes resources after a later error
 [director-092] The session rejects a falsy custom source
 [director-092] The session reads the byteLength field once without a registered source
@@ -470,7 +470,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
+[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets
 ```
 
 Test file: `src/director/packs/backfill.test.mjs`.
@@ -490,7 +490,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
+[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets
 ```
 
 Test file: `src/director/packs/backfill.test.mjs`.
@@ -510,7 +510,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/packs.test.mjs`.
 
 ```text
-[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
+[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets
 [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal
 ```
 
@@ -566,7 +566,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-099] The import accepts the audio/wav media type and returns assets
 [director-099] The import accepts the audio/webm media type and returns assets
 [director-099] The import rejects 65 different asset paths
-[director-099] The import returns assets at the base64 length limit and rejects the next aligned length
+[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length
 [director-099] The import returns assets at the total byte limit and rejects one more byte
 ```
 
@@ -590,7 +590,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-101] The export copies bytes and attribution and keeps the project without an asset request
+[director-101] The export copies bytes and attribution and keeps the project with one resolver call
 [director-101] The export returns bundle text for a source path of 1024 characters
 [director-101] The export writes exact bundle metadata
 [director-101] The export accepts scenes without data packs and returns bundle text
@@ -609,8 +609,8 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-102] The export rejects absent assets
 [director-102] The export rejects declared byteLength
 [director-102] The export rejects declared digest
-[director-102] The export rejects excess asset total
-[director-102] The export rejects excess asset total
+[director-102] The export rejects an excess asset total
+[director-102] The export rejects an excess asset total
 [director-102] The export accepts absent integrity fields and returns bundle text
 [director-102] The export accepts an absent digest and returns bundle text
 [director-102] The export rejects absent asset bytes
@@ -643,7 +643,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-104] The store removes old data after replacement and uses no network source
+[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets
 [director-104] The store copies the asset map
 [director-104] The store clears stored bytes
 ```
@@ -668,7 +668,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
 [director-106] The share helpers return an empty asset map for an absent filename
 [director-106] The share helpers reject the ordinary file limit
-[director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
+[director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes
 [director-106] The share helpers call throwIfAborted three times and return an empty asset map
 [director-106] The share helpers accept the project file limit and reject one more byte
 [director-106] The share helpers accept the bundle file limit and reject one more byte
@@ -679,7 +679,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-107] The export stops before the next asset and returns no partial output
+[director-107] The export rejects cancellation during asset work
 [director-107] The helper resolves without a signal
 [director-107] The helper rejects an early signal
 [director-107] The helper resolves with an active signal
@@ -2999,7 +2999,7 @@ Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
 Base commit: `290b5d2`.
 
 The first words identify findings in the unchanged round 5 reports.
-The correction does not change production code.
+The correction has no production code edit.
 The lead runs image gates, ratchet and review round 6.
 
 | finding | first words | correction |
@@ -3016,12 +3016,12 @@ The lead runs image gates, ratchet and review round 6.
 | S6 | 3514 Campaign | The audit states kills after each phase and names Complete hand check 2. The stream paragraph states cancellation before the second chunk. |
 | S7 | The verbs validates | Titles state rejection, acceptance, counts or list results. Echoes follow those titles. |
 | S8 | check comes before it | The source registers its listener and checks its state before it reads work. The parser returns an empty map for plain project JSON. |
-| S9 | The validator checks | The clause states rejection of the invalid second declaration. The source rejects the file protocol. After cancellation before the second chunk, the source reads only the first chunk. |
+| S9 | The validator checks | The clause states rejection of the invalid second declaration. The source rejects the file protocol and reads only the first chunk after cancellation. |
 | S10 | give bundles the larger | The tests use larger file limit and extra top-level field. All echoes use those titles. |
 | S11 | `MIME types` | Documents use media type and delete the unused definitions. The same term applies to old tagged titles. |
 | S12 | before source access | Titles use source call, invalid path, text promise, second digest and second resolver call. Documents use killer titles. |
 | S13 | The extension run checks | The evidence gives input counts, test counts, past events, clear subjects and the pass 6 scope. It names a failed repository test for each killed row. |
-| S14 | This additive edits limit | The audit states the limit on added members with articles and separate sentences. The allowed-field rows extend that limit. |
+| S14 | This additive edits limit | The audit states the limit on additive edits with articles and separate sentences. The allowed-field rows extend that limit. |
 | S15 | both 52428800 checks | The probe states character and byte units and the JSON parse. |
 | S16 | Correct the command names | Tasks 9.11 and 9.12 name run names and the final rerun after pass 5. |
 
@@ -3042,8 +3042,8 @@ This pass needs no automatic tool command for new classes.
 
 ### Test additions
 
-The worker adds seven backfill tests and six sharing tests.
-They use only the scenario IDs of this change.
+The test edits add seven backfill tests and six sharing tests.
+They use existing scenario IDs only.
 The hand list adds 31 rows, m449 to m479.
 Each new row must give a failed repository test before this pass ends.
 
@@ -3061,7 +3061,7 @@ New: [director-096] The source returns lowercase media type text without paramet
 
 ```text
 Old: [director-090] The session validates the detached handle without the source signal state
-New: [director-090] The cleared session returns false and does not read the source signal state
+New: [director-090] The cleared session returns false without the source signal state
 ```
 
 ```text
@@ -3071,12 +3071,12 @@ New: [director-095 director-096 director-097] The directory source sends no cred
 
 ```text
 Old: [director-099] The bundle rejects unsupported MIME
-New: [director-099] The import rejects an unsupported media type
+New: [director-099] The bundle rejects an unsupported media type
 ```
 
 ```text
 Old: [director-101] The export reaches the second scene
-New: [director-101] The export includes the asset of the second scene and returns bundle text
+New: [director-101] The export includes the asset of the second scene
 ```
 
 
@@ -3396,7 +3396,7 @@ cd /home/ianblenke/docker/gev-work/director-3 && NODE_OPTIONS=--test-isolation=n
 The final scope command compares all seven production files with commits 0bf26a8e and 290b5d2.
 All seven files match byte for byte after the complete hand command.
 It also checks each old span and the allowed changed paths.
-The worker changes no review report, main spec, trace ledger or QA script.
+No review report, main spec, trace ledger or QA script changes.
 
 ```sh
 cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass7/finish.py
@@ -3445,7 +3445,7 @@ The git whitespace command gives no output.
 The production file comparison gives seven unchanged files.
 
 The predispatch command gives only Old records, code identifiers and the exact task 9.11 wording.
-The code fence limit applies to `MIME` and `SHA-256` in mutation spans.
+The code fence limit applies to MIME and SHA-256 in mutation spans.
 The pass keeps the production spans, Old records and required task text.
 The pass does not change the helper.
 
@@ -5149,7 +5149,7 @@ New: [director-093] The session returns true and reads bytes.length three times 
 
 ```text
 Old: [director-090] The cleared session returns false without the source signal state
-New: [director-090] The cleared session returns false and does not read the source signal state
+New: [director-090] The cleared session returns false without the source signal state
 ```
 
 ```text
@@ -5544,7 +5544,7 @@ New: [director-099] The import rejects duplicate paths
 
 ```text
 Old: [director-099] The bundle rejects an unsupported media type
-New: [director-099] The import rejects an unsupported media type
+New: [director-099] The bundle rejects an unsupported media type
 ```
 
 ```text
@@ -6069,7 +6069,7 @@ New: [director-108 director-110] The preview counts the second scene and shot an
 
 ```text
 Old: [director-101] The export includes the asset of the second scene
-New: [director-101] The export includes the asset of the second scene and returns bundle text
+New: [director-101] The export includes the asset of the second scene
 ```
 
 ```text
@@ -8045,7 +8045,7 @@ The fenced outputs keep those keys.
 Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
 Base commit: `290b5d2`.
 
-The worker changes test titles and three tag cells only.
+In the two test files, the worker changes only test titles and three tag cells.
 The worker changes no test body or production file.
 Review reports and trace files stay unchanged.
 
@@ -8058,7 +8058,7 @@ The Pass 7 phrase 52 table rows stays as a record.
 ### F1 and Spec major
 Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
 First words: The titles say rejects media fields.
-The worker gave both placement tests positive titles. The allowed-field-added-members limit stays.
+The worker gave both placement tests positive titles. The `allowed-field-added-members` limit stays.
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n fields of the (image|media) placement src/director/packs/backfill.test.mjs
 2144:test('[director-080] The validator returns without an error for the fields of the image placement', async () => {
@@ -8078,7 +8078,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n receives the path,|calls the renderer
 ### F3
 Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
 First words: The tail rejects an invalid asset.
-The worker named an invalid data pack list, invalid bundle and excess asset count.
+The worker named an invalid data pack list, an invalid bundle and an excess asset count.
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n invalid data pack list|invalid bundle|more than 64 assets openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
 145:- **THEN** the session starts with the idle state. Its load method checks data pack lists before asset work and rejects an invalid data pack list.
@@ -8138,7 +8138,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n absent layers of the second|source pa
 ### F9
 Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
 First words: The import byte store title.
-The worker used store for createBundleAssets and removed the import term.
+The worker used the word store for createBundleAssets and removed the import term.
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n removes old data after replacement src/director/sharing/sharing.test.mjs
 566:test('[director-104] The store removes old data after replacement and uses no network source', async () => {
@@ -8215,7 +8215,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n A length 5 added openspec/changes/bac
 ### M7
 Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
 First words: mutations of built-in functions.
-The worker used changes for functions outside the mutation command.
+The worker used the word changes for functions outside the mutation command.
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n changes to built-in functions openspec/changes/backfill-director-packs-sharing/probe-ranges.md
 12:The claims exclude changes to built-in functions and their prototypes.
@@ -8288,8 +8288,8 @@ Command: taskset -c 12-15 nice -n 19 rg -n ^The worker (named|restored|stated|ch
 
 ### M11
 Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
-First words: The heading echoes.
-The worker used repeated titles in new prose and created check-repeated-titles.py.
+First words: A/evidence.md:6533 heading
+The worker used the heading repeated titles and created check-repeated-titles.py.
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n repeated titles|repeats a test title openspec/changes/backfill-director-packs-sharing/design.md
 236:Check each place that repeats a test title with check-repeated-titles.py in the pass9 scratch folder.
@@ -8298,7 +8298,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n repeated titles|repeats a test title 
 ### M12
 Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
 First words: Nouns made from verbs.
-The worker stated signal reads, caller destruction and the new session state.
+The worker stated reads of the signal, the destroy call of the caller and the new session state.
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n The new session|caller destroys it|does not read the signal state src/director/packs/backfill.test.mjs
 549:test('[director-088] The session returns false and does not read the caller signal state after the caller destroys it', async () => {
@@ -8351,7 +8351,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n work promise settles|milliseconds dea
 ### M16
 Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
 First words: The export share one asset.
-The worker used writes and rejects with integrity declarations.
+The worker used the verbs writes and rejects and the noun integrity declarations.
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n writes one asset and rejects integrity declarations src/director/sharing/sharing.test.mjs
 531:test('[director-103] The export writes one asset and rejects integrity declarations that differ for the data packs with the same path', async () => {
@@ -8494,11 +8494,11 @@ Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/di
 ```
 
 The worker read each flagged body.
-The destroyed and cancelled load calls assert false and zero source calls.
-The detached resource test asserts false and one disposal.
+The tests of the destroyed and cancelled load calls assert false and no source call.
+The detached resource test asserts false and one dispose call.
 The absent filename test asserts an empty asset map.
 The signal method test asserts an empty asset map and three calls.
-The worker corrected all five titles; no false alarm remains.
+The worker corrected all five titles; no flag remains.
 
 ### Final verb check
 
@@ -9821,3 +9821,1670 @@ Pass 9 note: the host rule excludes Docker, make, ratchet, gates, adopt, waive a
 The worker did not run them.
 The worker did not push or use gh.
 The lead must run the image checks and the next review round.
+
+
+## Pass 10
+
+Source commit: `f057b89add2428964ab2bd00696b3b260b01fe94`.
+Branch: `backfill-director-3`.
+
+The worker changes test titles and change documents.
+The test bodies and production files stay unchanged.
+The worker changes no review file or trace file.
+
+### Findings
+
+| Finding | Correction | Source commit |
+| --- | --- | --- |
+| W1; X1 | The cleared load title states false. It has no claim about reads of the signal. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W1; base64 length | The title states the byte check error at the length limit and rejection at the next aligned length. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W1; store | The title states a byte copy, cancellation rejection, zero bytes after clear and the unavailable error. Tags 104 and 105 fit. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W1; X2 | The title states the signal check after the text promise settles. It has no claim about a report. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W1; X3 | The title states an empty asset map above 5242880 bytes and rejection of excess bytes. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W2; resolver | The title states one resolver call. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W2; next asset | The title states cancellation during asset work. It has no claim about a second asset or partial output. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W2; byte copies | Both limit titles state bytes. The copy test stays at sharing.test.mjs:1062. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W2; limits | Both WHEN lines include the assignment to the limits object. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W2; placement | The design names the two positive tests. It makes no claim about all placement tests. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W3; X4 | The Pass 9 sentence now names the two test files. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W3; records | The worker restored the grep records, the prose and the New lines of the Pass 7 section. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y1 | Both deadline titles use milliseconds after the number. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y2 | The title names the source signal reason. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y3 | The title names the session after the destroy call. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y4 | Both titles state that the load call makes no source call. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y5 | The scenario names the load method of the session. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y6 | Both audit rows name the source name. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y7 | The proposal has no blank line at the old position. The source name sentence follows the hand rows sentence. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y8 | Tasks use one phrase for each place that repeats a title. The tag task starts with Change. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y9 | The limit names use inline code. The design states only the result of the two positive tests. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y10 | The glossary note names the rows from Pass 9. The duplicate definitions are absent. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y11 | The Pass 9 prose has subjects, articles and the requested nouns. Past command output stays unchanged. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y12 | The clause uses final slash. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| Y13 | The four titles have the requested articles. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+| W5; more false claims | The worker removed redirect rejection, a replacement result, a ready state result and order clauses without assertions. | `f057b89add2428964ab2bd00696b3b260b01fe94` |
+
+The old source signal clause of 090 has an assertion at backfill.test.mjs:3039 to :3051.
+The test at :556 to :562 asserts false and one read of the caller signal state.
+These signals are different objects. The title at :1824 makes no claim about either signal.
+
+### Search after corrections
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-090\]\ The\ session\ returns\ false\ for\ a\ cleared\ load\ call(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:4911:[director-090] The session returns false for a cleared load call
+openspec/changes/backfill-director-packs-sharing/mutations.md:4912:Output: KILLED [director-090] The session returns false for a cleared load call
+src/director/packs/backfill.test.mjs:1824:test('[director-090] The session returns false for a cleared load call', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-088\]\ The\ session\ returns\ false\ and\ does\ not\ read\ the\ caller\ signal\ state\ after\ the\ caller\ destroys\ the\ session(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+src/director/packs/backfill.test.mjs:549:test('[director-088] The session returns false and does not read the caller signal state after the caller destroys the session', async () => {
+openspec/changes/backfill-director-packs-sharing/survivors.md:155:| a1613 | src/director/packs/session.js:74 | `operand-order` | KILLED | [director-088] The session returns false and does not read the caller signal state after the caller destroys the session |
+openspec/changes/backfill-director-packs-sharing/mutations.md:7738:[director-088] The session returns false and does not read the caller signal state after the caller destroys the session
+openspec/changes/backfill-director-packs-sharing/mutations.md:7739:Output: KILLED [director-088] The session returns false and does not read the caller signal state after the caller destroys the session
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-088\]\ The\ load\ call\ returns\ false\ after\ the\ caller\ destroys\ the\ session\ and\ makes\ no\ source\ call(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:1689:[director-088] The load call returns false after the caller destroys the session and makes no source call
+openspec/changes/backfill-director-packs-sharing/mutations.md:1690:Output: KILLED [director-088] The load call returns false after the caller destroys the session and makes no source call
+src/director/packs/backfill.test.mjs:1199:test('[director-088] The load call returns false after the caller destroys the session and makes no source call', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-088\]\ The\ load\ call\ returns\ false\ for\ a\ cancelled\ signal\ and\ makes\ no\ source\ call(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:1716:[director-088] The load call returns false for a cancelled signal and makes no source call
+openspec/changes/backfill-director-packs-sharing/mutations.md:1717:Output: KILLED [director-088] The load call returns false for a cancelled signal and makes no source call
+src/director/packs/backfill.test.mjs:1211:test('[director-088] The load call returns false for a cancelled signal and makes no source call', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-092\]\ The\ session\ rejects\ stalled\ work\ at\ the\ deadline\ of\ 19\ milliseconds(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:7386:[director-092] The session rejects stalled work at the deadline of 19 milliseconds
+openspec/changes/backfill-director-packs-sharing/mutations.md:7387:Output: KILLED [director-092] The session rejects stalled work at the deadline of 19 milliseconds
+src/director/packs/backfill.test.mjs:2254:test('[director-092] The session rejects stalled work at the deadline of 19 milliseconds', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-092\]\ The\ session\ rejects\ stalled\ work\ at\ the\ default\ deadline\ of\ 15000\ milliseconds(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:7413:[director-092] The session rejects stalled work at the default deadline of 15000 milliseconds
+openspec/changes/backfill-director-packs-sharing/mutations.md:7414:Output: KILLED [director-092] The session rejects stalled work at the default deadline of 15000 milliseconds
+src/director/packs/backfill.test.mjs:2278:test('[director-092] The session rejects stalled work at the default deadline of 15000 milliseconds', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-092\]\ The\ session\ sets\ the\ source\ signal\ reason\ at\ the\ deadline\ and\ rejects\ the\ call(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+src/director/packs/backfill.test.mjs:2997:test('[director-092] The session sets the source signal reason at the deadline and rejects the call', async () => {
+openspec/changes/backfill-director-packs-sharing/survivors.md:172:| a1691 | src/director/packs/session.js:89 | `arguments` | KILLED | [director-092] The session sets the source signal reason at the deadline and rejects the call |
+openspec/changes/backfill-director-packs-sharing/survivors.md:173:| a1692 | src/director/packs/session.js:89 | `argument-drop` | KILLED | [director-092] The session sets the source signal reason at the deadline and rejects the call |
+openspec/changes/backfill-director-packs-sharing/survivors.md:728:| a9401 | src/director/packs/session.js:89 | `new-error-argument` | KILLED | [director-092] The session sets the source signal reason at the deadline and rejects the call |
+openspec/changes/backfill-director-packs-sharing/survivors.md:729:| a9402 | src/director/packs/session.js:89 | `new-error-argument` | KILLED | [director-092] The session sets the source signal reason at the deadline and rejects the call |
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-084\]\ The\ decoder\ rejects\ the\ ID\ type\ for\ the\ feature(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:879:[director-084] The decoder rejects the ID type for the feature
+openspec/changes/backfill-director-packs-sharing/mutations.md:880:Output: KILLED [director-084] The decoder rejects the ID type for the feature
+src/director/packs/backfill.test.mjs:885:test('[director-084] The decoder rejects the ID type for the feature', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-080\]\ The\ validator\ rejects\ the\ height\ and\ the\ reference\ for\ the\ image(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+src/director/packs/backfill.test.mjs:786:test('[director-080] The validator rejects the height and the reference for the image', async () => {
+openspec/changes/backfill-director-packs-sharing/mutations.md:609:[director-080] The validator rejects the height and the reference for the image
+openspec/changes/backfill-director-packs-sharing/mutations.md:610:Output: KILLED [director-080] The validator rejects the height and the reference for the image
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-085\]\ The\ decoder\ returns\ zero\ for\ an\ absent\ height\ for\ the\ position(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:1203:[director-085] The decoder returns zero for an absent height for the position
+openspec/changes/backfill-director-packs-sharing/mutations.md:1204:Output: KILLED [director-085] The decoder returns zero for an absent height for the position
+src/director/packs/backfill.test.mjs:981:test('[director-085] The decoder returns zero for an absent height for the position', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-089\]\ The\ session\ checks\ the\ signal\ before\ it\ removes\ the\ timer(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/survivors.md:176:| a1757 | src/director/packs/session.js:107 | `statement` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:177:| a1758 | src/director/packs/session.js:107 | `statement` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:178:| a1759 | src/director/packs/session.js:107 | `statement` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:179:| a1760 | src/director/packs/session.js:106 | `statement` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:190:| a1944 | src/director/packs/session.js:144 | `statement` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:191:| a1945 | src/director/packs/session.js:144 | `statement` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:192:| a1946 | src/director/packs/session.js:144 | `statement` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:193:| a1947 | src/director/packs/session.js:143 | `statement` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:471:| a9144 | src/director/packs/session.js:94 | `statement-order` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:472:| a9145 | src/director/packs/session.js:144 | `statement-order` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:473:| a9146 | src/director/packs/session.js:145 | `statement-order` | KILLED | [director-089] The session checks the signal before it removes the timer |
+openspec/changes/backfill-director-packs-sharing/survivors.md:477:| a9150 | src/director/packs/session.js:99 | `statement-order` | KILLED | [director-089] The session checks the signal before it removes the timer |
+src/director/packs/backfill.test.mjs:359:test('[director-089] The session checks the signal before it removes the timer', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-088\ director\-091\]\ The\ session\ checks\ the\ new\ list\ and\ disposes\ old\ resources(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+src/director/packs/backfill.test.mjs:306:test('[director-088 director-091] The session checks the new list and disposes old resources', async () => {
+openspec/changes/backfill-director-packs-sharing/survivors.md:154:| a1567 | src/director/packs/session.js:68 | `operand-order` | KILLED | [director-088 director-091] The session checks the new list and disposes old resources |
+openspec/changes/backfill-director-packs-sharing/survivors.md:457:| a9130 | src/director/packs/session.js:67 | `statement-order` | KILLED | [director-088 director-091] The session checks the new list and disposes old resources |
+openspec/changes/backfill-director-packs-sharing/survivors.md:725:| a9398 | src/director/packs/session.js:69 | `new-error-argument` | KILLED | [director-088 director-091] The session checks the new list and disposes old resources |
+openspec/changes/backfill-director-packs-sharing/survivors.md:726:| a9399 | src/director/packs/session.js:69 | `new-error-argument` | KILLED | [director-088 director-091] The session checks the new list and disposes old resources |
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-090\]\ The\ session\ checks\ its\ source\ signal(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+src/director/packs/backfill.test.mjs:573:test('[director-090] The session checks its source signal', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-099\]\ The\ import\ passes\ the\ base64\ length\ limit\ to\ the\ byte\ check\ and\ rejects\ the\ next\ aligned\ length(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+src/director/sharing/sharing.test.mjs:1904:test('[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length', async () =>
+openspec/changes/backfill-director-packs-sharing/mutations.md:9388:[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length
+openspec/changes/backfill-director-packs-sharing/mutations.md:9389:Output: KILLED [director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-104\ director\-105\]\ The\ store\ returns\ an\ independent\ byte\ copy,\ rejects\ cancellation,\ reports\ zero\ bytes\ after\ clear\ and\ rejects\ unavailable\ assets(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:7085:[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets
+openspec/changes/backfill-director-packs-sharing/mutations.md:7086:Output: KILLED [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets
+src/director/sharing/sharing.test.mjs:566:test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets', async () => {
+openspec/changes/backfill-director-packs-sharing/survivors.md:662:| a9335 | src/director/sharing/bundle.js:216 | `statement-order` | KILLED | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets |
+openspec/changes/backfill-director-packs-sharing/survivors.md:755:| a9428 | src/director/sharing/bundle.js:217 | `new-error-argument` | KILLED | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets |
+openspec/changes/backfill-director-packs-sharing/survivors.md:756:| a9429 | src/director/sharing/bundle.js:217 | `new-error-argument` | KILLED | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets |
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-106\]\ The\ share\ helpers\ return\ an\ empty\ asset\ map\ for\ a\ bundle\ file\ above\ 5242880\ bytes\ and\ reject\ excess\ bytes(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:3774:[director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes
+openspec/changes/backfill-director-packs-sharing/mutations.md:3775:Output: KILLED [director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes
+src/director/sharing/sharing.test.mjs:1099:test('[director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes', async () => {
+openspec/changes/backfill-director-packs-sharing/audit.md:234:| Bundle file suffix | bundle.js:117 | .gevbundle.json; [director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes |
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-107\]\ The\ share\ helpers\ check\ the\ signal\ after\ the\ text\ promise\ settles(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+src/director/sharing/sharing.test.mjs:2406:test('[director-107] The share helpers check the signal after the text promise settles', async () => {
+openspec/changes/backfill-director-packs-sharing/survivors.md:606:| a9279 | src/director/sharing/bundle.js:128 | `statement-order` | KILLED | [director-107] The share helpers check the signal after the text promise settles |
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-101\]\ The\ export\ copies\ bytes\ and\ attribution\ and\ keeps\ the\ project\ with\ one\ resolver\ call(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:6950:[director-101] The export copies bytes and attribution and keeps the project with one resolver call
+openspec/changes/backfill-director-packs-sharing/mutations.md:6951:Output: KILLED [director-101] The export copies bytes and attribution and keeps the project with one resolver call
+openspec/changes/backfill-director-packs-sharing/survivors.md:640:| a9313 | src/director/sharing/bundle.js:160 | `await-remove` | KILLED | [director-101] The export copies bytes and attribution and keeps the project with one resolver call |
+openspec/changes/backfill-director-packs-sharing/survivors.md:641:| a9314 | src/director/sharing/bundle.js:190 | `destructure-remove` | KILLED | [director-101] The export copies bytes and attribution and keeps the project with one resolver call |
+src/director/sharing/sharing.test.mjs:455:test('[director-101] The export copies bytes and attribution and keeps the project with one resolver call', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-107\]\ The\ export\ rejects\ cancellation\ during\ asset\ work(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:7139:[director-107] The export rejects cancellation during asset work
+openspec/changes/backfill-director-packs-sharing/mutations.md:7140:Output: KILLED [director-107] The export rejects cancellation during asset work
+src/director/sharing/sharing.test.mjs:625:test('[director-107] The export rejects cancellation during asset work', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-105\]\ The\ store\ accepts\ its\ default\ byte\ limit\ and\ returns\ bytes(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+src/director/sharing/sharing.test.mjs:337:test('[director-105] The store accepts its default byte limit and returns bytes', () => {
+openspec/changes/backfill-director-packs-sharing/survivors.md:273:| a3477 | src/director/sharing/bundle.js:212 | `default` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+openspec/changes/backfill-director-packs-sharing/survivors.md:648:| a9321 | src/director/sharing/bundle.js:202 | `new-argument` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+openspec/changes/backfill-director-packs-sharing/survivors.md:649:| a9322 | src/director/sharing/bundle.js:202 | `new-argument` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+openspec/changes/backfill-director-packs-sharing/survivors.md:652:| a9325 | src/director/sharing/bundle.js:212 | `destructure-remove` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+openspec/changes/backfill-director-packs-sharing/survivors.md:653:| a9326 | src/director/sharing/bundle.js:212 | `destructure-remove` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+openspec/changes/backfill-director-packs-sharing/survivors.md:654:| a9327 | src/director/sharing/bundle.js:212 | `destructure-remove` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+openspec/changes/backfill-director-packs-sharing/survivors.md:655:| a9328 | src/director/sharing/bundle.js:212 | `default-shape` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+openspec/changes/backfill-director-packs-sharing/survivors.md:657:| a9330 | src/director/sharing/bundle.js:212 | `default-shape` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+openspec/changes/backfill-director-packs-sharing/survivors.md:658:| a9331 | src/director/sharing/bundle.js:212 | `default-shape` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+openspec/changes/backfill-director-packs-sharing/survivors.md:661:| a9334 | src/director/sharing/bundle.js:215 | `statement-order` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+openspec/changes/backfill-director-packs-sharing/survivors.md:782:| a9455 | src/director/sharing/bundle.js:202 | `constructor` | KILLED | [director-105] The store accepts its default byte limit and returns bytes |
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-105\]\ The\ store\ accepts\ the\ caller\ byte\ limit\ and\ returns\ bytes(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:10756:[director-105] The store accepts the caller byte limit and returns bytes
+openspec/changes/backfill-director-packs-sharing/mutations.md:10757:Output: KILLED [director-105] The store accepts the caller byte limit and returns bytes
+src/director/sharing/sharing.test.mjs:2100:test('[director-105] The store accepts the caller byte limit and returns bytes', () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-102\]\ The\ export\ rejects\ an\ excess\ asset\ total(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:3477:[director-102] The export rejects an excess asset total
+openspec/changes/backfill-director-packs-sharing/mutations.md:3478:Output: KILLED [director-102] The export rejects an excess asset total
+openspec/changes/backfill-director-packs-sharing/mutations.md:10049:[director-102] The export rejects an excess asset total
+openspec/changes/backfill-director-packs-sharing/mutations.md:10050:Output: KILLED [director-102] The export rejects an excess asset total
+src/director/sharing/sharing.test.mjs:968:test('[director-102] The export rejects an excess asset total', async () => {
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-095\ director\-096\ director\-097\]\ The\ directory\ source\ sends\ no\ credentials\ and\ rejects\ invalid\ paths,\ excess\ bytes\ and\ absent\ assets(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+src/director/packs/packs.test.mjs:115:test('[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets', async () => {
+openspec/changes/backfill-director-packs-sharing/mutations.md:6705:[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets
+openspec/changes/backfill-director-packs-sharing/mutations.md:6706:Output: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets
+
+Command: taskset -c 12-15 nice -n 19 rg -n -e '\[director\-090\]\ The\ data\ pack\ session\ disposes\ late\ renderer\ resources\ after\ cancellation(['"'"'"`]|\s*\|\s*$|$)' src/director openspec/changes/backfill-director-packs-sharing/audit.md openspec/changes/backfill-director-packs-sharing/design.md openspec/changes/backfill-director-packs-sharing/mutations.md openspec/changes/backfill-director-packs-sharing/survivors.md
+openspec/changes/backfill-director-packs-sharing/mutations.md:6813:[director-090] The data pack session disposes late renderer resources after cancellation
+openspec/changes/backfill-director-packs-sharing/mutations.md:6814:Output: KILLED [director-090] The data pack session disposes late renderer resources after cancellation
+src/director/packs/packs.test.mjs:234:test('[director-090] The data pack session disposes late renderer resources after cancellation', async () => {
+```
+
+### Pass 7 records
+
+The numbered facts below are command output. Each fact compares a restored record with commit `f8f6a94d`.
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass10/restore-check.py
+Source commit: f8f6a94d2d09489b98fda4d063b8612f766f5dfa
+{
+  "numberedFacts": [
+    {
+      "number": 1,
+      "record": "Pass 7 grep records",
+      "equalsSource": true
+    },
+    {
+      "number": 2,
+      "record": "The correction has no production code edit.",
+      "equalsSource": true
+    },
+    {
+      "number": 3,
+      "record": "| S9 |",
+      "equalsSource": true
+    },
+    {
+      "number": 4,
+      "record": "| S14 |",
+      "equalsSource": true
+    },
+    {
+      "number": 5,
+      "record": "The test edits add seven",
+      "equalsSource": true
+    },
+    {
+      "number": 6,
+      "record": "They use existing",
+      "equalsSource": true
+    },
+    {
+      "number": 7,
+      "record": "New: [director-090] The cleared",
+      "equalsSource": true
+    },
+    {
+      "number": 8,
+      "record": "New: [director-099] The bundle rejects",
+      "equalsSource": true
+    },
+    {
+      "number": 9,
+      "record": "New: [director-101] The export includes",
+      "equalsSource": true
+    },
+    {
+      "number": 10,
+      "record": "No review report, main spec",
+      "equalsSource": true
+    },
+    {
+      "number": 11,
+      "record": "The code fence limit applies to MIME",
+      "equalsSource": true
+    }
+  ]
+}
+```
+
+### Title count difference
+
+The question names eight titles. The commands show eleven omitted titles and three dynamic templates in the other count.
+The net difference is eight. The worker read all eleven omitted titles first.
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass10/read-review.py
+{
+  "sourceCommit": "f057b89add2428964ab2bd00696b3b260b01fe94",
+  "pass9Templates": 486,
+  "pass9LiteralTemplates": 483,
+  "pass9DynamicTemplates": 3,
+  "scanLiteralTitles": 494,
+  "omittedLiteralTitles": 11,
+  "netCountDifference": 8,
+  "allTemplates": 497,
+  "clauseTableRows": 315,
+  "plainRejectionTemplates": 182,
+  "personReadTemplates": 338,
+  "omittedTitles": [
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 59,
+      "title": "[director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials"
+    },
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 93,
+      "title": "[director-080] The manifest checks given image bounds and media anchor references"
+    },
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 115,
+      "title": "[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets"
+    },
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 144,
+      "title": "[director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints"
+    },
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 180,
+      "title": "[director-089] The data pack session removes resources and cancels the transport on Stop"
+    },
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 207,
+      "title": "[director-091] The data pack session replaces source work and ignores its late bytes"
+    },
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 234,
+      "title": "[director-090] The data pack session disposes late renderer resources after cancellation"
+    },
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 260,
+      "title": "[director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result"
+    },
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 284,
+      "title": "[director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources"
+    },
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 317,
+      "title": "[director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names"
+    },
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 342,
+      "title": "[director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal"
+    }
+  ],
+  "dynamicTitles": [
+    {
+      "file": "src/director/packs/backfill.test.mjs",
+      "line": 453,
+      "title": "[director-${tag}] The validator names the ${label} and rejects the call"
+    },
+    {
+      "file": "src/director/packs/backfill.test.mjs",
+      "line": 3257,
+      "title": "[director-${tag}] The validator rejects the extra fields script and adapters in the ${label}"
+    },
+    {
+      "file": "src/director/sharing/sharing.test.mjs",
+      "line": 222,
+      "title": "[director-${tag}] The import names the invalid ${label} and rejects the call"
+    }
+  ],
+  "flags": [
+    {
+      "file": "src/director/packs/packs.test.mjs",
+      "line": 260,
+      "title": "[director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result",
+      "assertions": [
+        "equal",
+        "equal",
+        "equal"
+      ],
+      "flags": [
+        "a: rejection or stop has no error assertion"
+      ]
+    }
+  ]
+}
+```
+
+### Clause method
+
+The worker read 338 title templates with their bodies.
+The table has 315 templates with result, negative, order or time clauses.
+The script checks 182 plain rejection templates and prints their assertion methods and counts.
+
+The combined catalog has 497 templates. It contains all 494 literal titles and three dynamic tag templates.
+The script reads exact callback spans from the syntax tree. It does not count assertions from the next test or a fixture.
+
+One flag remains: packs.test.mjs:260 has a stop clause and no error assertion.
+The test asserts false at :276, one dispose call at :280 and zero handles at :281.
+The flag is a false alarm: this cancellation returns false. The worker keeps the title.
+
+The split clauses keep each input and time condition in the table.
+The assertion cell lists every assertion line in that test body.
+The worker read each clause against these lines and the fixture in the body.
+
+### Clause review
+
+| Title | Clauses | The asserting body line | Verdict |
+| --- | --- | --- | --- |
+| [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and credentials | The manifest rejects duplicate IDs / unknown IDs / wrong placement / URL syntax / credentials | packs.test.mjs:86 assert.throws ; packs.test.mjs:90 assert.throws | PASS |
+| [director-080] The manifest checks given image bounds and media anchor references | The manifest checks given image bounds / media anchor references | packs.test.mjs:103 assert.doesNotThrow ; packs.test.mjs:105 assert.throws ; packs.test.mjs:108 assert.throws ; packs.test.mjs:112 assert.doesNotThrow | PASS |
+| [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets | The directory source sends no credentials / rejects invalid paths / excess bytes / absent assets | packs.test.mjs:126 assert.deepEqual ; packs.test.mjs:130 assert.equal ; packs.test.mjs:131 assert.equal ; packs.test.mjs:132 assert.equal ; packs.test.mjs:133 assert.equal ; packs.test.mjs:134 assert.rejects ; packs.test.mjs:135 assert.equal ; packs.test.mjs:136 assert.rejects ; packs.test.mjs:141 assert.rejects | PASS |
+| [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints | GeoJSON keeps stable geometry IDs / properties or remote style hints | packs.test.mjs:158 assert.deepEqual ; packs.test.mjs:162 assert.throws ; packs.test.mjs:165 assert.throws ; packs.test.mjs:177 assert.throws | PASS |
+| [director-089] The data pack session removes resources and cancels the transport on Stop | The data pack session removes resources / cancels the transport on Stop | packs.test.mjs:199 assert.deepEqual ; packs.test.mjs:202 assert.equal ; packs.test.mjs:203 assert.equal ; packs.test.mjs:204 assert.equal | PASS |
+| [director-091] The data pack session replaces source work and ignores its late bytes | The data pack session replaces source work / ignores its late bytes | packs.test.mjs:226 assert.equal ; packs.test.mjs:229 assert.equal ; packs.test.mjs:231 assert.equal | PASS |
+| [director-090] The data pack session disposes late renderer resources after cancellation | The data pack session disposes late renderer resources / cancellation | packs.test.mjs:250 assert.equal ; packs.test.mjs:257 assert.equal | PASS |
+| [director-090] The data pack session disposes a renderer resource when its signal stops after the renderer result | The data pack session disposes a renderer resource when its signal stops / the renderer result | packs.test.mjs:276 assert.equal ; packs.test.mjs:280 assert.equal ; packs.test.mjs:281 assert.equal | PASS |
+| [director-092] The deadline stops a stalled registered source and a data pack error removes earlier resources | The deadline stops a stalled registered source / a data pack error removes earlier resources | packs.test.mjs:288 assert.fail ; packs.test.mjs:290 assert.rejects ; packs.test.mjs:291 assert.equal ; packs.test.mjs:309 assert.rejects ; packs.test.mjs:313 assert.equal ; packs.test.mjs:314 assert.equal | PASS |
+| [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names | The data pack session checks bytes / integrity / the renderer call / rejects inherited registered source names | packs.test.mjs:333 assert.rejects ; packs.test.mjs:334 assert.equal ; packs.test.mjs:338 assert.equal | PASS |
+| [director-097] The directory source cancels response bodies and sends no asset request with a cancelled signal | The directory source cancels response bodies / sends no asset request / a cancelled signal | packs.test.mjs:359 assert.rejects ; packs.test.mjs:360 assert.equal ; packs.test.mjs:363 assert.rejects ; packs.test.mjs:364 assert.equal | PASS |
+| [director-076] The validator returns without an error for ${character} in both character positions for the asset path | The validator returns / an error / ${character} in both character positions / the asset path | backfill.test.mjs:33 assert.doesNotThrow ; backfill.test.mjs:34 assert.doesNotThrow | PASS |
+| [director-079] The validator returns without an error for each hexadecimal digest character | The validator returns / an error / each hexadecimal digest character | backfill.test.mjs:40 assert.doesNotThrow | PASS |
+| [director-076] The validator rejects the path type before it reads a segment | The validator rejects the path type / it reads a segment | backfill.test.mjs:89 assert.throws ; backfill.test.mjs:92 assert.equal | PASS |
+| [director-079] The validator checks the digest before it reads the placement | The validator checks the digest / it reads the placement | backfill.test.mjs:121 assert.throws ; backfill.test.mjs:122 assert.equal | PASS |
+| [director-080] The validator checks the height reference before it checks the bounds and rejects the call | The validator checks the height reference / it checks the bounds / rejects the call | backfill.test.mjs:127 assert.throws | PASS |
+| [director-080] The validator checks the bounds array before it reads the length | The validator checks the bounds array / it reads the length | backfill.test.mjs:133 assert.throws ; backfill.test.mjs:134 assert.equal | PASS |
+| [director-080] The validator checks the bounds length before it checks each coordinate and rejects the call | The validator checks the bounds length / it checks each coordinate / rejects the call | backfill.test.mjs:139 assert.throws | PASS |
+| [director-082] The validator checks the list before it reads the anchors | The validator checks the list / it reads the anchors | backfill.test.mjs:145 assert.throws ; backfill.test.mjs:146 assert.equal | PASS |
+| [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs and rejects the call | The validator checks the declaration / it checks / duplicate IDs / rejects the call | backfill.test.mjs:152 assert.throws | PASS |
+| [director-088] The session reads source entries before renderer entries | The session reads source entries / renderer entries | backfill.test.mjs:162 assert.deepEqual | PASS |
+| [director-097] The source waits for stream cancellation before it releases the reader lock | The source waits / stream cancellation / it releases the reader lock | backfill.test.mjs:178 assert.deepEqual | PASS |
+| [director-097] The source waits for body cancellation before it rejects the asset request | The source waits / body cancellation / it rejects the asset request | backfill.test.mjs:187 assert.rejects ; backfill.test.mjs:188 assert.equal | PASS |
+| [director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order | The session attaches the source listener / checks the source signal state / reads the work promise in that order | backfill.test.mjs:201 assert.equal ; backfill.test.mjs:202 assert.deepEqual | PASS |
+| [director-092] The session reads the source signal reason once during another source signal event | The session reads the source signal reason once during another source signal event | backfill.test.mjs:221 assert.equal ; backfill.test.mjs:222 assert.equal | PASS |
+| [director-092] The session rejects the load call for a source signal event during listener removal after ${mode} | The session rejects the load call / a source signal event during listener removal / ${mode} | backfill.test.mjs:241 assert.rejects ; backfill.test.mjs:242 assert.equal ; backfill.test.mjs:243 assert.equal | PASS |
+| [director-089] The session returns true and does not read the reason after the work promise settles | The session returns true / does not read the reason / the work promise settles | backfill.test.mjs:259 assert.equal ; backfill.test.mjs:260 assert.equal ; backfill.test.mjs:261 assert.equal | PASS |
+| [director-089] The session removes resources after source cancellation and timer removal | The session removes resources / source cancellation / timer removal | backfill.test.mjs:283 assert.equal ; backfill.test.mjs:284 assert.deepEqual ; backfill.test.mjs:285 assert.deepEqual | PASS |
+| [director-088] The session returns false for a load call during source cancellation for the destroyed session | The session returns false / a load call during source cancellation / the destroyed session | backfill.test.mjs:300 assert.equal ; backfill.test.mjs:301 assert.equal | PASS |
+| [director-088 director-091] The session checks the new list and disposes old resources | The session checks the new list / disposes old resources | backfill.test.mjs:310 assert.equal ; backfill.test.mjs:311 assert.rejects ; backfill.test.mjs:312 assert.equal ; backfill.test.mjs:313 assert.deepEqual | PASS |
+| [director-088] The session checks the list before it reads the anchors | The session checks the list / it reads the anchors | backfill.test.mjs:321 assert.rejects ; backfill.test.mjs:322 assert.equal | PASS |
+| [director-088] The session checks declarations before it reads the caller signal | The session checks declarations / it reads the caller signal | backfill.test.mjs:331 assert.rejects ; backfill.test.mjs:332 assert.equal | PASS |
+| [director-089] The session attaches the caller listener before the deadline timer starts | The session attaches the caller listener / the deadline timer starts | backfill.test.mjs:342 assert.equal ; backfill.test.mjs:343 assert.deepEqual | PASS |
+| [director-090] The session returns false for a caller event during listener registration | The session returns false / a caller event during listener registration | backfill.test.mjs:355 assert.equal | PASS |
+| [director-089] The session checks the signal before it removes the timer | The session checks the signal / it removes the timer | backfill.test.mjs:371 assert.equal ; backfill.test.mjs:372 assert.deepEqual ; backfill.test.mjs:373 assert.equal | PASS |
+| [director-090 director-093] The session rejects the signal error before it reads bytes | The session rejects the signal error / it reads bytes | backfill.test.mjs:384 assert.rejects ; backfill.test.mjs:385 assert.equal | PASS |
+| [director-093] The session checks total bytes before it reads the digest | The session checks total bytes / it reads the digest | backfill.test.mjs:396 assert.rejects ; backfill.test.mjs:397 assert.equal | PASS |
+| [director-095] The source checks the path before it checks the caller signal and rejects the invalid path | The source checks the path / it checks the caller signal / rejects the invalid path | backfill.test.mjs:404 assert.rejects ; backfill.test.mjs:407 assert.equal | PASS |
+| [director-096] The source checks the header limit before it reads the first stream chunk | The source checks the header limit / it reads the first stream chunk | backfill.test.mjs:416 assert.rejects ; backfill.test.mjs:417 assert.equal | PASS |
+| [director-097] The source checks the signal before it reads the stream chunk | The source checks the signal / it reads the stream chunk | backfill.test.mjs:427 assert.rejects ; backfill.test.mjs:428 assert.equal | PASS |
+| [director-076] The validator returns without an error for ${path} for the asset path | The validator returns / an error / ${path} / the asset path | backfill.test.mjs:433 assert.doesNotThrow | PASS |
+| [director-${tag}] The validator names the ${label} and rejects the call | The validator names the ${label} / rejects the call | backfill.test.mjs:455 assert.throws | PASS |
+| [director-081] The validator names an unknown anchor and rejects the call | The validator names an unknown anchor / rejects the call | backfill.test.mjs:460 assert.throws | PASS |
+| [director-082] The validator returns without an error for eight references and rejects nine references for the shot | The validator returns / an error / eight references / rejects nine references / the shot | backfill.test.mjs:467 assert.doesNotThrow ; backfill.test.mjs:469 assert.throws | PASS |
+| [director-085] The decoder keeps a negative zero height | The decoder keeps a negative zero height | backfill.test.mjs:486 assert.equal | PASS |
+| [director-086] The decoder accepts an open line and returns coordinates | The decoder accepts an open line / returns coordinates | backfill.test.mjs:492 assert.deepEqual | PASS |
+| [director-088] The session returns true for an empty list without asset work | The session returns true / an empty list / asset work | backfill.test.mjs:500 assert.equal ; backfill.test.mjs:501 assert.deepEqual ; backfill.test.mjs:502 assert.equal ; backfill.test.mjs:503 assert.equal | PASS |
+| [director-089] The session sets and removes the caller listener | The session sets / removes the caller listener | backfill.test.mjs:527 assert.equal ; backfill.test.mjs:531 assert.equal ; backfill.test.mjs:533 assert.deepEqual ; backfill.test.mjs:534 assert.equal | PASS |
+| [director-088] The session returns false and does not read the caller signal state after the caller destroys the session | The session returns false / does not read the caller signal state / the caller destroys the session | backfill.test.mjs:553 assert.equal ; backfill.test.mjs:554 assert.equal | PASS |
+| [director-090] The session returns false and does not read the caller signal state again after cancellation | The session returns false / does not read the caller signal state again / cancellation | backfill.test.mjs:561 assert.equal ; backfill.test.mjs:562 assert.equal | PASS |
+| [director-090] The session checks its source signal | The session checks its source signal | backfill.test.mjs:581 assert.equal ; backfill.test.mjs:582 assert.equal | PASS |
+| [director-076] The validator returns without an error for safe names for the asset path | The validator returns / an error / safe names / the asset path | backfill.test.mjs:587 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for geojson | The validator returns / an error / geojson | backfill.test.mjs:616 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for image | The validator returns / an error / image | backfill.test.mjs:627 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for media | The validator returns / an error / media | backfill.test.mjs:634 assert.doesNotThrow | PASS |
+| [director-078] The validator returns without an error for a safe link for the attribution | The validator returns / an error / a safe link / the attribution | backfill.test.mjs:694 assert.doesNotThrow | PASS |
+| [director-079] The validator accepts integrity limits and rejects zero or excess byteLength | The validator accepts integrity limits / rejects zero or excess byteLength | backfill.test.mjs:737 assert.doesNotThrow ; backfill.test.mjs:739 assert.throws ; backfill.test.mjs:741 assert.throws | PASS |
+| [director-080] The validator rejects the height and the reference for the image | The validator rejects the height / the reference / the image | backfill.test.mjs:789 assert.throws ; backfill.test.mjs:792 assert.throws | PASS |
+| [director-082] The validator returns without an error for absent data packs and anchors for the scene | The validator returns / an error / absent data packs / anchors / the scene | backfill.test.mjs:842 assert.doesNotThrow ; backfill.test.mjs:843 assert.doesNotThrow ; backfill.test.mjs:846 assert.throws | PASS |
+| [director-085] The decoder returns zero for an absent height for the position | The decoder returns zero / an absent height / the position | backfill.test.mjs:982 assert.deepEqual | PASS |
+| [director-085] The decoder returns the height in the data for the position | The decoder returns the height in the data / the position | backfill.test.mjs:989 assert.deepEqual | PASS |
+| [director-086] The decoder rejects a ring with fewer than four points for the ring | The decoder rejects a ring / fewer than four points / the ring | backfill.test.mjs:1010 assert.throws | PASS |
+| [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates | The decoder accepts two distinct endpoints / the line / returns coordinates | backfill.test.mjs:1026 assert.deepEqual | PASS |
+| [director-087] The decoder returns a closed polygon for the geometry | The decoder returns a closed polygon / the geometry | backfill.test.mjs:1152 assert.deepEqual | PASS |
+| [director-087] The decoder removes properties for the geometry | The decoder removes properties / the geometry | backfill.test.mjs:1171 assert.deepEqual | PASS |
+| [director-088] The new session reports the idle state and zero handles | The new session reports the idle state / zero handles | backfill.test.mjs:1178 assert.deepEqual ; backfill.test.mjs:1179 assert.equal ; backfill.test.mjs:1181 assert.equal | PASS |
+| [director-088] The load call returns false after the caller destroys the session and makes no source call | The load call returns false / the caller destroys the session / makes no source call | backfill.test.mjs:1206 assert.equal ; backfill.test.mjs:1207 assert.equal | PASS |
+| [director-088] The load call returns false for a cancelled signal and makes no source call | The load call returns false / a cancelled signal / makes no source call | backfill.test.mjs:1219 assert.equal ; backfill.test.mjs:1220 assert.equal | PASS |
+| [director-089] The session reports ready after the caller changes a state copy | The session reports ready / the caller changes a state copy | backfill.test.mjs:1243 assert.equal | PASS |
+| [director-090] The session returns false for cancelled work with a null late handle | The session returns false / cancelled work / a null late handle | backfill.test.mjs:1279 assert.equal ; backfill.test.mjs:1283 assert.equal | PASS |
+| [director-090] The session returns false when the caller destroys it during asset work | The session returns false when the caller destroys it during asset work | backfill.test.mjs:1291 assert.equal ; backfill.test.mjs:1294 assert.deepEqual | PASS |
+| [director-091] The session keeps the new resources after a new load call | The session keeps the new resources / a new load call | backfill.test.mjs:1310 assert.equal ; backfill.test.mjs:1311 assert.equal ; backfill.test.mjs:1314 assert.deepEqual ; backfill.test.mjs:1315 assert.equal ; backfill.test.mjs:1317 assert.equal | PASS |
+| [director-092] The session reports a stable source error | The session reports a stable source error | backfill.test.mjs:1322 assert.rejects ; backfill.test.mjs:1326 assert.equal | PASS |
+| [director-093] The session returns true for exact bytes and digest | The session returns true / exact bytes / digest | backfill.test.mjs:1406 assert.equal ; backfill.test.mjs:1417 assert.equal | PASS |
+| [director-089] The session rejects a handle without a dispose function | The session rejects a handle / a dispose function | backfill.test.mjs:1429 assert.rejects | PASS |
+| [director-094] The factory rejects a directory URL with no final slash | The factory rejects a directory URL / no final slash | backfill.test.mjs:1489 assert.throws ; backfill.test.mjs:1493 assert.fail | PASS |
+| [director-096] The source returns an empty media type when the header is absent | The source returns an empty media type when the header is absent | backfill.test.mjs:1549 assert.equal | PASS |
+| [director-096] The source returns lowercase media type text without parameters | The source returns lowercase media type text / parameters | backfill.test.mjs:1556 assert.equal | PASS |
+| [director-097] The source rejects the asset request after failed body cancellation | The source rejects the asset request / failed body cancellation | backfill.test.mjs:1575 assert.rejects ; backfill.test.mjs:1576 assert.equal | PASS |
+| [director-097] The source rejects a failed response without a body | The source rejects a failed response / a body | backfill.test.mjs:1580 assert.rejects | PASS |
+| [director-097] The source releases the reader lock after a stream error | The source releases the reader lock / a stream error | backfill.test.mjs:1605 assert.rejects ; backfill.test.mjs:1606 assert.equal ; backfill.test.mjs:1607 assert.equal | PASS |
+| [director-097] The source checks its signal between chunks and rejects the call | The source checks its signal between chunks / rejects the call | backfill.test.mjs:1629 assert.rejects ; backfill.test.mjs:1630 assert.equal | PASS |
+| [director-080] The validator returns without an error for its bounds field for the image | The validator returns / an error / its bounds field / the image | backfill.test.mjs:1636 assert.doesNotThrow | PASS |
+| [director-080] The validator returns without an error for its height field for the image | The validator returns / an error / its height field / the image | backfill.test.mjs:1642 assert.doesNotThrow | PASS |
+| [director-080] The validator returns without an error for its altitudeReference field for the image | The validator returns / an error / its altitudeReference field / the image | backfill.test.mjs:1648 assert.doesNotThrow | PASS |
+| [director-081] The validator returns without an error for its anchorId field for the media | The validator returns / an error / its anchorId field / the media | backfill.test.mjs:1655 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for a GeoJSON altitudeReference field | The validator returns / an error / a GeoJSON altitudeReference field | backfill.test.mjs:1661 assert.doesNotThrow | PASS |
+| [director-082] The validator uses supplied anchors for the scene and returns without an error | The validator uses supplied anchors / the scene / returns / an error | backfill.test.mjs:1726 assert.doesNotThrow | PASS |
+| [director-082] The validator uses absent anchor defaults for the scene and returns without an error | The validator uses absent anchor defaults / the scene / returns / an error | backfill.test.mjs:1735 assert.doesNotThrow | PASS |
+| [director-085] The decoder accepts both geographic edges for the position and returns coordinates | The decoder accepts both geographic edges / the position / returns coordinates | backfill.test.mjs:1741 assert.deepEqual | PASS |
+| [director-088] The new session reports the idle state | The new session reports the idle state | backfill.test.mjs:1754 assert.deepEqual | PASS |
+| [director-088] The new session reports zero handles | The new session reports zero handles | backfill.test.mjs:1761 assert.equal | PASS |
+| [director-089] The session reports one active handle | The session reports one active handle | backfill.test.mjs:1767 assert.equal | PASS |
+| [director-093] The session calls the source with a default limit of 8388608 bytes | The session calls the source / a default limit of 8388608 bytes | backfill.test.mjs:1778 assert.equal | PASS |
+| [director-093] The session returns true without a declared size | The session returns true / a declared size | backfill.test.mjs:1784 assert.equal | PASS |
+| [director-090] The session returns false for a cancelled signal without an event | The session returns false / a cancelled signal / an event | backfill.test.mjs:1801 assert.equal | PASS |
+| [director-090] The session checks destroyed state after it reads the signal | The session checks destroyed state / it reads the signal | backfill.test.mjs:1820 assert.equal ; backfill.test.mjs:1821 assert.equal | PASS |
+| [director-090] The session returns false for a cleared load call | The session returns false / a cleared load call | backfill.test.mjs:1829 assert.equal | PASS |
+| [director-090] The load call returns false and disposes a detached resource | The load call returns false / disposes a detached resource | backfill.test.mjs:1856 assert.equal ; backfill.test.mjs:1857 assert.equal | PASS |
+| [director-090] The session disposes the handle before it adds the handle to its list | The session disposes the handle / it adds the handle to its list | backfill.test.mjs:1894 assert.rejects ; backfill.test.mjs:1895 assert.equal ; backfill.test.mjs:1896 assert.equal | PASS |
+| [director-092] The session returns false for cancelled work and reports idle after a late source error | The session returns false / cancelled work / reports idle / a late source error | backfill.test.mjs:1912 assert.equal ; backfill.test.mjs:1915 assert.equal | PASS |
+| [director-094] The factory returns a source for HTTP and HTTPS directories | The factory returns a source / HTTP / HTTPS directories | backfill.test.mjs:1931 assert.equal ; backfill.test.mjs:1934 assert.fail ; backfill.test.mjs:1938 assert.equal ; backfill.test.mjs:1938 assert.fail | PASS |
+| [director-092] The session rejects an absent renderer without a source call | The session rejects an absent renderer / a source call | backfill.test.mjs:1951 assert.rejects ; backfill.test.mjs:1952 assert.equal | PASS |
+| [director-096] The source rejects 8388609 bytes without a caller limit | The source rejects 8388609 bytes / a caller limit | backfill.test.mjs:2023 assert.rejects | PASS |
+| [director-077] The validator returns without an error for the id field of a data pack | The validator returns / an error / the id field of a data pack | backfill.test.mjs:2028 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for the version field of a data pack | The validator returns / an error / the version field of a data pack | backfill.test.mjs:2033 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for the format field of a data pack | The validator returns / an error / the format field of a data pack | backfill.test.mjs:2038 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for the source field of a data pack | The validator returns / an error / the source field of a data pack | backfill.test.mjs:2043 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for the attribution field of a data pack | The validator returns / an error / the attribution field of a data pack | backfill.test.mjs:2048 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for the placement field of a data pack | The validator returns / an error / the placement field of a data pack | backfill.test.mjs:2053 assert.doesNotThrow | PASS |
+| [director-079] The validator returns without an error for the byteLength field of a data pack | The validator returns / an error / the byteLength field of a data pack | backfill.test.mjs:2059 assert.doesNotThrow | PASS |
+| [director-079] The validator returns without an error for the sha256 field of a data pack | The validator returns / an error / the sha256 field of a data pack | backfill.test.mjs:2065 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for its source name field | The validator returns / an error / its source name field | backfill.test.mjs:2070 assert.doesNotThrow | PASS |
+| [director-077] The validator returns without an error for its source path field | The validator returns / an error / its source path field | backfill.test.mjs:2075 assert.doesNotThrow | PASS |
+| [director-078] The validator returns without an error for its attribution text field | The validator returns / an error / its attribution text field | backfill.test.mjs:2080 assert.doesNotThrow | PASS |
+| [director-078] The validator returns without an error for its attribution license field | The validator returns / an error / its attribution license field | backfill.test.mjs:2085 assert.doesNotThrow | PASS |
+| [director-078] The validator returns without an error for its attribution url field | The validator returns / an error / its attribution url field | backfill.test.mjs:2091 assert.doesNotThrow | PASS |
+| [director-092] The session settles an early internal signal and reports idle | The session settles an early internal signal / reports idle | backfill.test.mjs:2116 assert.equal ; backfill.test.mjs:2117 assert.equal | PASS |
+| [director-093] The session calls the renderer with the anchors and returns true | The session calls the renderer / the anchors / returns true | backfill.test.mjs:2132 assert.equal ; backfill.test.mjs:2133 assert.deepEqual | PASS |
+| [director-089] The session reports ready after asset work | The session reports ready / asset work | backfill.test.mjs:2140 assert.equal | PASS |
+| [director-080] The validator returns without an error for the fields of the image placement | The validator returns / an error / the fields of the image placement | backfill.test.mjs:2146 assert.doesNotThrow | PASS |
+| [director-081] The validator returns without an error for the fields of the media placement | The validator returns / an error / the fields of the media placement | backfill.test.mjs:2153 assert.doesNotThrow | PASS |
+| [director-089] The session calls the GeoJSON renderer once and returns true | The session calls the GeoJSON renderer once / returns true | backfill.test.mjs:2168 assert.equal ; backfill.test.mjs:2169 assert.equal | PASS |
+| [director-089] The session calls the image renderer once and returns true | The session calls the image renderer once / returns true | backfill.test.mjs:2185 assert.equal ; backfill.test.mjs:2186 assert.equal | PASS |
+| [director-089] The session calls the media renderer once and returns true | The session calls the media renderer once / returns true | backfill.test.mjs:2204 assert.equal ; backfill.test.mjs:2205 assert.equal | PASS |
+| [director-097] The source stops between stream chunks | The source stops between stream chunks | backfill.test.mjs:2233 assert.rejects ; backfill.test.mjs:2234 assert.equal ; backfill.test.mjs:2235 assert.equal | PASS |
+| [director-092] The session settles a source error before its deadline and reports idle | The session settles a source error / its deadline / reports idle | backfill.test.mjs:2247 assert.equal ; backfill.test.mjs:2248 assert.equal | PASS |
+| [director-092] The session rejects stalled work at the deadline of 19 milliseconds | The session rejects stalled work / the deadline of 19 milliseconds | backfill.test.mjs:2268 assert.equal ; backfill.test.mjs:2270 assert.rejects | PASS |
+| [director-092] The session rejects stalled work at the default deadline of 15000 milliseconds | The session rejects stalled work / the default deadline of 15000 milliseconds | backfill.test.mjs:2292 assert.equal ; backfill.test.mjs:2294 assert.rejects | PASS |
+| [director-092] The session removes resources after a later error | The session removes resources / a later error | backfill.test.mjs:2316 assert.rejects ; backfill.test.mjs:2320 assert.equal ; backfill.test.mjs:2321 assert.equal | PASS |
+| [director-089] The session rejects a falsy handle with inherited disposal | The session rejects a falsy handle / inherited disposal | backfill.test.mjs:2333 assert.rejects | PASS |
+| [director-083] The decoder accepts the exact feature limit of the collection and returns 2000 features | The decoder accepts the exact feature limit of the collection / returns 2000 features | backfill.test.mjs:2343 assert.equal | PASS |
+| [director-084] The decoder accepts the exact text limit of the feature ID and returns a feature with an ID length of 256 | The decoder accepts the exact text limit of the feature ID / returns a feature / an ID length of 256 | backfill.test.mjs:2347 assert.equal | PASS |
+| [director-085] The decoder accepts the exact position limit of the collection and returns 50000 positions | The decoder accepts the exact position limit of the collection / returns 50000 positions | backfill.test.mjs:2351 assert.equal | PASS |
+| [director-087] The decoder accepts the exact ring limit of the polygon and returns 128 rings | The decoder accepts the exact ring limit of the polygon / returns 128 rings | backfill.test.mjs:2370 assert.equal | PASS |
+| [director-089] The session keeps every data pack handle | The session keeps every data pack handle | backfill.test.mjs:2390 assert.deepEqual | PASS |
+| [director-096] The source accepts the exact byte limit of the stream and returns bytes | The source accepts the exact byte limit of the stream / returns bytes | backfill.test.mjs:2412 assert.deepEqual | PASS |
+| [director-092] The session reads the byteLength field once without a registered source | The session reads the byteLength field once / a registered source | backfill.test.mjs:2452 assert.rejects ; backfill.test.mjs:2456 assert.equal ; backfill.test.mjs:2457 assert.deepEqual | PASS |
+| [director-079] The validator returns without an error for 64 lowercase characters for the digest | The validator returns / an error / 64 lowercase characters / the digest | backfill.test.mjs:2477 assert.doesNotThrow | PASS |
+| [director-080] The validator returns without an error for all geographic limits for the image | The validator returns / an error / all geographic limits / the image | backfill.test.mjs:2500 assert.doesNotThrow | PASS |
+| [director-088] The session returns true for eight data packs | The session returns true / eight data packs | backfill.test.mjs:2505 assert.equal ; backfill.test.mjs:2511 assert.deepEqual | PASS |
+| [director-093] The session returns true at the asset byte limit | The session returns true / the asset byte limit | backfill.test.mjs:2519 assert.equal | PASS |
+| [director-093] The session returns true at the total byte limit | The session returns true / the total byte limit | backfill.test.mjs:2527 assert.equal ; backfill.test.mjs:2533 assert.equal | PASS |
+| [director-093] The source receives the path, the renderer receives the asset and the signal, and the load call returns true | The source receives the path / the renderer receives the asset / the signal / the load call returns true | backfill.test.mjs:2585 assert.equal ; backfill.test.mjs:2590 assert.deepEqual ; backfill.test.mjs:2591 assert.equal ; backfill.test.mjs:2592 assert.equal ; backfill.test.mjs:2593 assert.equal ; backfill.test.mjs:2598 assert.equal | PASS |
+| [director-088] The session checks every declaration before the source call and rejects the call | The session checks every declaration / the source call / rejects the call | backfill.test.mjs:2610 assert.rejects ; backfill.test.mjs:2613 assert.equal | PASS |
+| [director-089] The session disposes both ready handles in reverse order and reports idle | The session disposes both ready handles in reverse order / reports idle | backfill.test.mjs:2625 assert.equal ; backfill.test.mjs:2627 assert.deepEqual ; backfill.test.mjs:2628 assert.deepEqual | PASS |
+| [director-089] The session removes its deadline after ${label} | The session removes its deadline / ${label} | backfill.test.mjs:2664 assert.equal ; backfill.test.mjs:2665 assert.equal ; backfill.test.mjs:2667 assert.equal ; backfill.test.mjs:2668 assert.equal | PASS |
+| [director-092] The session removes partial resources for the deadline | The session removes partial resources / the deadline | backfill.test.mjs:2689 assert.rejects ; backfill.test.mjs:2693 assert.deepEqual ; backfill.test.mjs:2694 assert.deepEqual | PASS |
+| [director-076] The validator rejects URL syntax with a stable message for the asset path | The validator rejects URL syntax / a stable message / the asset path | backfill.test.mjs:2700 assert.throws | PASS |
+| [director-082] The validator does not read a data pack list from the parent object of the scene and returns without an error | The validator does not read a data pack list from the parent object of the scene / returns / an error | backfill.test.mjs:2709 assert.doesNotThrow | PASS |
+| [director-078] The validator returns without an error for its text limits and rejects excess text for the attribution | The validator returns / an error / its text limits / rejects excess text / the attribution | backfill.test.mjs:2732 assert.doesNotThrow ; backfill.test.mjs:2734 assert.throws ; backfill.test.mjs:2740 assert.doesNotThrow ; backfill.test.mjs:2742 assert.throws | PASS |
+| [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the asset path | The validator returns / an error / 1024 characters / rejects 1025 / the asset path | backfill.test.mjs:2748 assert.doesNotThrow ; backfill.test.mjs:2749 assert.throws | PASS |
+| [director-095] The source uses the default fetch function and returns bytes | The source uses the default fetch function / returns bytes | backfill.test.mjs:2758 assert.equal ; backfill.test.mjs:2765 assert.deepEqual ; backfill.test.mjs:2769 assert.equal | PASS |
+| [director-077] The validator returns without an error for 256 characters for its ${label} and rejects 257 | The validator returns / an error / 256 characters / its ${label} / rejects 257 | backfill.test.mjs:2783 assert.doesNotThrow ; backfill.test.mjs:2786 assert.throws | PASS |
+| [director-079] The validator returns without an error for one byte | The validator returns / an error / one byte | backfill.test.mjs:2803 assert.doesNotThrow | PASS |
+| [director-082] The validator returns without an error for eight distinct data packs for the scene | The validator returns / an error / eight distinct data packs / the scene | backfill.test.mjs:2813 assert.doesNotThrow | PASS |
+| [director-085] The decoder accepts the limit for ${label} for the position and returns coordinates | The decoder accepts the limit / ${label} / the position / returns coordinates | backfill.test.mjs:2836 assert.deepEqual | PASS |
+| [director-089] The session reports its state during asset work | The session reports its state during asset work | backfill.test.mjs:2844 assert.deepEqual ; backfill.test.mjs:2846 assert.equal | PASS |
+| [director-096] The source accepts its default byte limit and returns bytes | The source accepts its default byte limit / returns bytes | backfill.test.mjs:2855 assert.equal | PASS |
+| [director-093] The session calls the renderer with the data pack and the scene anchors and returns true | The session calls the renderer / the data pack / the scene anchors / returns true | backfill.test.mjs:2864 assert.equal ; backfill.test.mjs:2865 assert.equal ; backfill.test.mjs:2866 assert.equal ; backfill.test.mjs:2867 assert.equal ; backfill.test.mjs:2871 assert.equal ; backfill.test.mjs:2872 assert.equal | PASS |
+| [director-080] The validator returns without an error for its ${label} height for the image | The validator returns / an error / its ${label} height / the image | backfill.test.mjs:2881 assert.doesNotThrow | PASS |
+| [director-085] The decoder accepts its ${label} height for the position and returns coordinates | The decoder accepts its ${label} height / the position / returns coordinates | backfill.test.mjs:2884 assert.deepEqual | PASS |
+| [director-079] The validator returns without an error for its byte limit | The validator returns / an error / its byte limit | backfill.test.mjs:2888 assert.doesNotThrow | PASS |
+| [director-089] The session removes source listeners after ${outcome} | The session removes source listeners / ${outcome} | backfill.test.mjs:2901 assert.equal ; backfill.test.mjs:2907 assert.equal ; backfill.test.mjs:2917 assert.rejects ; backfill.test.mjs:2918 assert.equal ; backfill.test.mjs:2920 assert.equal ; backfill.test.mjs:2921 assert.equal ; backfill.test.mjs:2923 assert.deepEqual ; backfill.test.mjs:2924 assert.equal | PASS |
+| [director-089] The session reads the reason zero times after a later event for ${outcome} | The session reads the reason zero times / a later event / ${outcome} | backfill.test.mjs:2942 assert.equal ; backfill.test.mjs:2943 assert.rejects ; backfill.test.mjs:2946 assert.equal | PASS |
+| [director-092] The source signal event stops work before the renderer | The source signal event stops work / the renderer | backfill.test.mjs:2961 assert.rejects ; backfill.test.mjs:2962 assert.equal ; backfill.test.mjs:2963 assert.equal | PASS |
+| [director-090] The load call returns false when the caller signal destroys the session after a source error | The load call returns false when the caller signal destroys the session / a source error | backfill.test.mjs:2975 assert.equal | PASS |
+| [director-093] The session checks byte type before it reads the length | The session checks byte type / it reads the length | backfill.test.mjs:2983 assert.rejects ; backfill.test.mjs:2984 assert.equal | PASS |
+| [director-093] The session does not read declared byteLength again for null bytes and rejects the call | The session does not read declared byteLength again / null bytes / rejects the call | backfill.test.mjs:2993 assert.rejects ; backfill.test.mjs:2994 assert.equal | PASS |
+| [director-092] The session sets the source signal reason at the deadline and rejects the call | The session sets the source signal reason / the deadline / rejects the call | backfill.test.mjs:3004 assert.rejects ; backfill.test.mjs:3005 assert.equal | PASS |
+| [director-079] The validator checks the digest type before it converts text and rejects the call | The validator checks the digest type / it converts text / rejects the call | backfill.test.mjs:3011 assert.throws | PASS |
+| [director-080] The validator compares west with east before it compares south with north | The validator compares west / east / it compares south / north | backfill.test.mjs:3020 assert.throws ; backfill.test.mjs:3021 assert.deepEqual | PASS |
+| [director-082] The validator rejects duplicate references before it searches for known IDs | The validator rejects duplicate references / it searches / known IDs | backfill.test.mjs:3027 assert.throws ; backfill.test.mjs:3028 assert.equal | PASS |
+| [director-093] The session returns true and reads bytes.length three times without declared byteLength | The session returns true / reads bytes.length three times / declared byteLength | backfill.test.mjs:3035 assert.equal ; backfill.test.mjs:3036 assert.equal | PASS |
+| [director-090] The cleared session returns false and does not read the source signal state | The cleared session returns false / does not read the source signal state | backfill.test.mjs:3050 assert.equal ; backfill.test.mjs:3051 assert.equal | PASS |
+| [director-091] The session keeps new resources after the old caller listener fires | The session keeps new resources / the old caller listener fires | backfill.test.mjs:3058 assert.equal ; backfill.test.mjs:3059 assert.equal ; backfill.test.mjs:3061 assert.deepEqual | PASS |
+| [director-088 director-092] The session rejects a numeric source name with no source map | The session rejects a numeric source name / no source map | backfill.test.mjs:3071 assert.rejects ; backfill.test.mjs:3072 assert.equal ; backfill.test.mjs:3073 assert.deepEqual | PASS |
+| [director-088 director-092] The session rejects a numeric renderer name with no renderer map | The session rejects a numeric renderer name / no renderer map | backfill.test.mjs:3082 assert.rejects ; backfill.test.mjs:3083 assert.equal ; backfill.test.mjs:3084 assert.deepEqual | PASS |
+| [director-096] The source rejects excess bytes before it keeps a chunk | The source rejects excess bytes / it keeps a chunk | backfill.test.mjs:3109 assert.rejects ; backfill.test.mjs:3110 assert.equal | PASS |
+| [director-092] The session does not read the global error property for ${mode} and rejects the call | The session does not read the global error property / ${mode} / rejects the call | backfill.test.mjs:3131 assert.rejects ; backfill.test.mjs:3132 assert.equal | PASS |
+| [director-081] The validator returns without an error for a reference to the second anchor | The validator returns / an error / a reference to the second anchor | backfill.test.mjs:3154 assert.doesNotThrow | PASS |
+| [director-088] The session rejects an invalid second data pack before the source call | The session rejects an invalid second data pack / the source call | backfill.test.mjs:3172 assert.rejects ; backfill.test.mjs:3173 assert.equal | PASS |
+| [director-081 director-093] The session returns true for a reference to the second anchor | The session returns true / a reference to the second anchor | backfill.test.mjs:3178 assert.equal | PASS |
+| [director-097] The source cancels before it reads the second chunk | The source cancels / it reads the second chunk | backfill.test.mjs:3219 assert.rejects ; backfill.test.mjs:3220 assert.equal ; backfill.test.mjs:3221 assert.equal | PASS |
+| [director-088 director-093] The session calls both registered sources and both renderers | The session calls both registered sources / both renderers | backfill.test.mjs:3240 assert.equal ; backfill.test.mjs:3241 assert.deepEqual ; backfill.test.mjs:3245 assert.equal | PASS |
+| [director-${tag}] The validator rejects the extra fields script and adapters in the ${label} | The validator rejects the extra fields script / adapters in the ${label} | backfill.test.mjs:3261 assert.throws | PASS |
+| [director-098] The import returns an empty asset map for plain project JSON | The import returns an empty asset map / plain project JSON | sharing.test.mjs:58 assert.equal ; sharing.test.mjs:59 assert.deepEqual ; sharing.test.mjs:60 assert.equal | PASS |
+| [director-107] The helper does not attach a listener to a cancelled signal and rejects the call | The helper does not attach a listener to a cancelled signal / rejects the call | sharing.test.mjs:75 assert.rejects ; sharing.test.mjs:84 assert.equal | PASS |
+| [director-101] The export writes each asset index and filename | The export writes each asset index / filename | sharing.test.mjs:97 assert.deepEqual ; sharing.test.mjs:101 assert.deepEqual | PASS |
+| [director-099] The import accepts each base64 character in ${label} text and returns assets | The import accepts each base64 character in ${label} text / returns assets | sharing.test.mjs:148 assert.deepEqual | PASS |
+| [director-099 director-101] The export writes each base64 character in ${label} text | The export writes each base64 character in ${label} text | sharing.test.mjs:157 assert.equal | PASS |
+| [director-${tag}] The import names the invalid ${label} and rejects the call | The import names the invalid ${label} / rejects the call | sharing.test.mjs:225 assert.rejects | PASS |
+| [director-098] The import names the invalid JSON path and rejects the call | The import names the invalid JSON path / rejects the call | sharing.test.mjs:229 assert.rejects | PASS |
+| [director-099] The import accepts base64 ${base64} and returns assets | The import accepts base64 ${base64} / returns assets | sharing.test.mjs:235 assert.equal ; sharing.test.mjs:236 assert.equal | PASS |
+| [director-102] The export names the invalid ${label} and rejects the call | The export names the invalid ${label} / rejects the call | sharing.test.mjs:290 assert.rejects | PASS |
+| [director-102] The export names excess asset entries and rejects the call | The export names excess asset entries / rejects the call | sharing.test.mjs:294 assert.rejects | PASS |
+| [director-103] The export names different shared integrity and rejects the call | The export names different shared integrity / rejects the call | sharing.test.mjs:304 assert.rejects | PASS |
+| [director-101] The export limits each source filename to 160 characters and returns bundle text | The export limits each source filename to 160 characters / returns bundle text | sharing.test.mjs:312 assert.equal | PASS |
+| [director-101] The export reads no chunk past the asset end | The export reads no chunk past the asset end | sharing.test.mjs:328 assert.equal ; sharing.test.mjs:329 assert.deepEqual | PASS |
+| [director-104] The store reports zero bytes after an absent replacement map | The store reports zero bytes / an absent replacement map | sharing.test.mjs:335 assert.deepEqual | PASS |
+| [director-105] The store accepts its default byte limit and returns bytes | The store accepts its default byte limit / returns bytes | sharing.test.mjs:344 assert.equal | PASS |
+| [director-109 director-110] The preview reports unavailable sources and absent layers without ID lists | The preview reports unavailable sources / absent layers / ID lists | sharing.test.mjs:361 assert.equal ; sharing.test.mjs:362 assert.deepEqual | PASS |
+| [director-099] The import checks the base64 type before it converts text and rejects the call | The import checks the base64 type / it converts text / rejects the call | sharing.test.mjs:376 assert.rejects | PASS |
+| [director-102] The export does not compare an absent declared byteLength and returns bundle text | The export does not compare an absent declared byteLength / returns bundle text | sharing.test.mjs:394 assert.equal ; sharing.test.mjs:395 assert.equal | PASS |
+| [director-102] The export checks declared byteLength before declared digest and rejects the call | The export checks declared byteLength / declared digest / rejects the call | sharing.test.mjs:408 assert.rejects ; sharing.test.mjs:415 assert.equal | PASS |
+| [director-102] The export checks the asset size before the total size and rejects the call | The export checks the asset size / the total size / rejects the call | sharing.test.mjs:431 assert.rejects ; sharing.test.mjs:438 assert.equal | PASS |
+| [director-110] The preview reports external content from applied shot packs before it reads source pack IDs | The preview reports external content from applied shot packs / it reads source pack IDs | sharing.test.mjs:451 assert.equal ; sharing.test.mjs:452 assert.equal | PASS |
+| [director-101] The export copies bytes and attribution and keeps the project with one resolver call | The export copies bytes / attribution / keeps the project / one resolver call | sharing.test.mjs:467 assert.equal ; sharing.test.mjs:468 assert.equal ; sharing.test.mjs:469 assert.equal ; sharing.test.mjs:471 assert.equal ; sharing.test.mjs:472 assert.equal ; sharing.test.mjs:473 assert.deepEqual ; sharing.test.mjs:477 assert.deepEqual | PASS |
+| [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity | The import rejects invalid bytes / unknown fields / traversal / duplicates / absent assets / wrong integrity | sharing.test.mjs:507 assert.rejects | PASS |
+| [director-102] The export rejects excess bytes, wrong integrity and absent assets | The export rejects excess bytes / wrong integrity / absent assets | sharing.test.mjs:512 assert.rejects ; sharing.test.mjs:521 assert.rejects ; sharing.test.mjs:525 assert.rejects | PASS |
+| [director-103] The export writes one asset and rejects integrity declarations that differ for the data packs with the same path | The export writes one asset / rejects integrity declarations that differ / the data packs / the same path | sharing.test.mjs:542 assert.equal ; sharing.test.mjs:543 assert.equal ; sharing.test.mjs:545 assert.rejects | PASS |
+| [director-109] The preview reports unavailable sources, absent layers and absent bundle assets | The preview reports unavailable sources / absent layers / absent bundle assets | sharing.test.mjs:557 assert.equal ; sharing.test.mjs:558 assert.deepEqual ; sharing.test.mjs:560 assert.match | PASS |
+| [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets | The store returns an independent byte copy / rejects cancellation / reports zero bytes / clear / rejects unavailable assets | sharing.test.mjs:575 assert.deepEqual ; sharing.test.mjs:585 assert.throws ; sharing.test.mjs:587 assert.deepEqual ; sharing.test.mjs:588 assert.throws | PASS |
+| [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file | The share helpers reject excess file bytes / they read text / cancel a stalled project file | sharing.test.mjs:593 assert.rejects ; sharing.test.mjs:603 assert.rejects ; sharing.test.mjs:613 assert.equal ; sharing.test.mjs:621 assert.rejects | PASS |
+| [director-101] The export returns bundle text for a source path of 1024 characters | The export returns bundle text / a source path of 1024 characters | sharing.test.mjs:689 assert.equal | PASS |
+| [director-098] The import accepts plain project JSON and returns the project | The import accepts plain project JSON / returns the project | sharing.test.mjs:724 assert.deepEqual ; sharing.test.mjs:725 assert.deepEqual | PASS |
+| [director-101] The export writes exact bundle metadata | The export writes exact bundle metadata | sharing.test.mjs:896 assert.equal ; sharing.test.mjs:897 assert.equal ; sharing.test.mjs:898 assert.equal ; sharing.test.mjs:899 assert.equal ; sharing.test.mjs:903 assert.equal ; sharing.test.mjs:907 assert.equal ; sharing.test.mjs:908 assert.equal | PASS |
+| [director-103] The export reuses a shared asset and returns bundle text | The export reuses a shared asset / returns bundle text | sharing.test.mjs:986 assert.equal ; sharing.test.mjs:987 assert.equal ; sharing.test.mjs:988 assert.equal | PASS |
+| [director-105] The store returns an independent byte copy | The store returns an independent byte copy | sharing.test.mjs:1070 assert.deepEqual | PASS |
+| [director-106] The share helpers return an empty asset map for an absent filename | The share helpers return an empty asset map / an absent filename | sharing.test.mjs:1081 assert.deepEqual | PASS |
+| [director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes | The share helpers return an empty asset map / a bundle file above 5242880 bytes / reject excess bytes | sharing.test.mjs:1105 assert.equal ; sharing.test.mjs:1106 assert.rejects ; sharing.test.mjs:1110 assert.fail | PASS |
+| [director-107] The helper resolves without a signal | The helper resolves / a signal | sharing.test.mjs:1117 assert.equal | PASS |
+| [director-107] The helper resolves with an active signal | The helper resolves / an active signal | sharing.test.mjs:1131 assert.equal | PASS |
+| [director-107] The helper checks signal state when the work settles and rejects the call | The helper checks signal state when the work settles / rejects the call | sharing.test.mjs:1158 assert.rejects ; sharing.test.mjs:1159 assert.equal | PASS |
+| [director-108] The preview reports exact totals and attribution | The preview reports exact totals / attribution | sharing.test.mjs:1182 assert.equal ; sharing.test.mjs:1183 assert.equal ; sharing.test.mjs:1184 assert.equal ; sharing.test.mjs:1185 assert.equal ; sharing.test.mjs:1186 assert.equal ; sharing.test.mjs:1187 assert.equal ; sharing.test.mjs:1188 assert.deepEqual | PASS |
+| [director-108] The preview reports the scene ID when the title is absent | The preview reports the scene ID when the title is absent | sharing.test.mjs:1198 assert.equal | PASS |
+| [director-109] The preview reports included bundle bytes | The preview reports included bundle bytes | sharing.test.mjs:1207 assert.equal | PASS |
+| [director-109] The preview reports absent bundle bytes | The preview reports absent bundle bytes | sharing.test.mjs:1219 assert.equal | PASS |
+| [director-109] The preview reports a configured source | The preview reports a configured source | sharing.test.mjs:1226 assert.equal | PASS |
+| [director-109] The preview reports an unavailable source | The preview reports an unavailable source | sharing.test.mjs:1236 assert.equal | PASS |
+| [director-110] The preview reports external content for applied shot packs | The preview reports external content / applied shot packs | sharing.test.mjs:1259 assert.equal | PASS |
+| [director-110] The preview reports external content for a shot with a source pack ID | The preview reports external content / a shot / a source pack ID | sharing.test.mjs:1268 assert.equal | PASS |
+| [director-110] The preview reports no external content without source packs | The preview reports no external content / source packs | sharing.test.mjs:1275 assert.equal | PASS |
+| [director-098] The import rejects 52428801 characters before byte conversion | The import rejects 52428801 characters / byte conversion | sharing.test.mjs:1292 assert.rejects ; sharing.test.mjs:1296 assert.equal | PASS |
+| [director-101] The export accepts scenes without data packs and returns bundle text | The export accepts scenes / data packs / returns bundle text | sharing.test.mjs:1306 assert.fail ; sharing.test.mjs:1309 assert.deepEqual | PASS |
+| [director-101] The export returns one asset for a supplied data pack list | The export returns one asset / a supplied data pack list | sharing.test.mjs:1313 assert.equal | PASS |
+| [director-102] The export accepts absent integrity fields and returns bundle text | The export accepts absent integrity fields / returns bundle text | sharing.test.mjs:1317 assert.equal | PASS |
+| [director-102] The export accepts an absent digest and returns bundle text | The export accepts an absent digest / returns bundle text | sharing.test.mjs:1321 assert.equal | PASS |
+| [director-103] The export accepts absent byte declarations for the shared export and returns bundle text | The export accepts absent byte declarations / the shared export / returns bundle text | sharing.test.mjs:1330 assert.equal | PASS |
+| [director-103] The export accepts an absent digest for the shared export and returns bundle text | The export accepts an absent digest / the shared export / returns bundle text | sharing.test.mjs:1339 assert.equal | PASS |
+| [director-099] The import accepts bytes without padding for the base64 and returns assets | The import accepts bytes / padding / the base64 / returns assets | sharing.test.mjs:1349 assert.deepEqual | PASS |
+| [director-108] The preview reports no packs when data pack lists are absent | The preview reports no packs when data pack lists are absent | sharing.test.mjs:1358 assert.deepEqual | PASS |
+| [director-108] The preview reports one pack from the supplied data pack list | The preview reports one pack from the supplied data pack list | sharing.test.mjs:1368 assert.equal | PASS |
+| [director-108] The preview reports Example for the supplied scene title | The preview reports Example / the supplied scene title | sharing.test.mjs:1375 assert.equal | PASS |
+| [director-109] The preview reports a configured source for a supplied source ID | The preview reports a configured source / a supplied source ID | sharing.test.mjs:1384 assert.equal | PASS |
+| [director-110] The preview reports no absent layer when a shot has no layers | The preview reports no absent layer when a shot has no layers | sharing.test.mjs:1394 assert.deepEqual | PASS |
+| [director-110] The preview reports traffic as absent without layer IDs | The preview reports traffic as absent / layer IDs | sharing.test.mjs:1404 assert.deepEqual | PASS |
+| [director-105] The store rejects 8388609 bytes without a caller limit | The store rejects 8388609 bytes / a caller limit | sharing.test.mjs:1415 assert.throws | PASS |
+| [director-103] The export key uses the registered source name and returns bundle text | The export key uses the registered source name / returns bundle text | sharing.test.mjs:1455 assert.equal ; sharing.test.mjs:1456 assert.equal | PASS |
+| [director-103] The export key uses path and returns bundle text | The export key uses path / returns bundle text | sharing.test.mjs:1471 assert.equal ; sharing.test.mjs:1472 assert.equal | PASS |
+| [director-110] The preview reports ships as absent when only traffic is configured | The preview reports ships as absent when only traffic is configured | sharing.test.mjs:1478 assert.deepEqual | PASS |
+| [director-108] The preview reports three bytes for both assets | The preview reports three bytes / both assets | sharing.test.mjs:1495 assert.equal | PASS |
+| [director-100] The import checks its second asset reference and rejects the call | The import checks its second asset reference / rejects the call | sharing.test.mjs:1508 assert.rejects | PASS |
+| [director-100] The import checks its second asset digest and rejects the call | The import checks its second asset digest / rejects the call | sharing.test.mjs:1523 assert.rejects | PASS |
+| [director-103] The export accepts equal shared integrity and returns bundle text | The export accepts equal shared integrity / returns bundle text | sharing.test.mjs:1538 assert.equal | PASS |
+| [director-106] The share helpers call throwIfAborted three times and return an empty asset map | The share helpers call throwIfAborted three times / return an empty asset map | sharing.test.mjs:1566 assert.equal ; sharing.test.mjs:1567 assert.equal | PASS |
+| [director-102] The export keeps its total after an asset without a byte length | The export keeps its total / an asset / a byte length | sharing.test.mjs:1602 assert.rejects ; sharing.test.mjs:1614 assert.equal | PASS |
+| [director-099] The import accepts the application/json media type and returns assets | The import accepts the application/json media type / returns assets | sharing.test.mjs:1624 assert.equal | PASS |
+| [director-099] The import accepts the application/geo+json media type and returns assets | The import accepts the application/geo+json media type / returns assets | sharing.test.mjs:1639 assert.equal | PASS |
+| [director-099] The import accepts the image/png media type and returns assets | The import accepts the image/png media type / returns assets | sharing.test.mjs:1654 assert.equal | PASS |
+| [director-099] The import accepts the video/mp4 media type and returns assets | The import accepts the video/mp4 media type / returns assets | sharing.test.mjs:1669 assert.equal | PASS |
+| [director-099] The import accepts the video/webm media type and returns assets | The import accepts the video/webm media type / returns assets | sharing.test.mjs:1684 assert.equal | PASS |
+| [director-099] The import accepts the audio/mpeg media type and returns assets | The import accepts the audio/mpeg media type / returns assets | sharing.test.mjs:1699 assert.equal | PASS |
+| [director-099] The import accepts the audio/ogg media type and returns assets | The import accepts the audio/ogg media type / returns assets | sharing.test.mjs:1714 assert.equal | PASS |
+| [director-099] The import accepts the audio/wav media type and returns assets | The import accepts the audio/wav media type / returns assets | sharing.test.mjs:1729 assert.equal | PASS |
+| [director-099] The import accepts the audio/webm media type and returns assets | The import accepts the audio/webm media type / returns assets | sharing.test.mjs:1744 assert.equal | PASS |
+| [director-102] The export accepts its exact asset total and returns bundle text | The export accepts its exact asset total / returns bundle text | sharing.test.mjs:1754 assert.equal | PASS |
+| [director-105] The store rejects a cancelled source call | The store rejects a cancelled source call | sharing.test.mjs:1788 assert.throws | PASS |
+| [director-106] The share helpers accept the ${label} file limit and reject one more byte | The share helpers accept the ${label} file limit / reject one more byte | sharing.test.mjs:1806 assert.equal ; sharing.test.mjs:1807 assert.equal ; sharing.test.mjs:1809 assert.rejects ; sharing.test.mjs:1815 assert.equal | PASS |
+| [director-102] The export returns bundle text at the total byte limit and rejects one more byte | The export returns bundle text / the total byte limit / rejects one more byte | sharing.test.mjs:1870 assert.equal ; sharing.test.mjs:1875 assert.equal ; sharing.test.mjs:1876 assert.equal ; sharing.test.mjs:1877 assert.equal ; sharing.test.mjs:1884 assert.rejects | PASS |
+| [director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length | The import passes the base64 length limit to the byte check / rejects the next aligned length | sharing.test.mjs:1908 assert.rejects ; sharing.test.mjs:1912 assert.rejects | PASS |
+| [director-099] The import returns assets at the total byte limit and rejects one more byte | The import returns assets / the total byte limit / rejects one more byte | sharing.test.mjs:1934 assert.equal ; sharing.test.mjs:1941 assert.rejects | PASS |
+| [director-107] The bundle helpers stop ${label} | The bundle helpers stop ${label} | sharing.test.mjs:1973 assert.rejects ; sharing.test.mjs:1986 assert.equal ; sharing.test.mjs:1987 assert.equal ; sharing.test.mjs:1988 assert.equal | PASS |
+| [director-098] The import accepts the character limit and returns the project | The import accepts the character limit / returns the project | sharing.test.mjs:2001 assert.deepEqual | PASS |
+| [director-098] The import returns one asset at the multibyte text limit and rejects one more byte | The import returns one asset / the multibyte text limit / rejects one more byte | sharing.test.mjs:2010 assert.equal ; sharing.test.mjs:2011 assert.equal ; sharing.test.mjs:2012 assert.rejects | PASS |
+| [director-099] The import accepts 64 distinct assets and returns assets | The import accepts 64 distinct assets / returns assets | sharing.test.mjs:2047 assert.equal | PASS |
+| [director-101] The export calls the resolver with the data pack and signal | The export calls the resolver / the data pack / signal | sharing.test.mjs:2071 assert.equal ; sharing.test.mjs:2072 assert.deepEqual ; sharing.test.mjs:2076 assert.equal ; sharing.test.mjs:2077 assert.equal ; sharing.test.mjs:2082 assert.equal | PASS |
+| [director-102] The export accepts the text byte limit and returns bundle text | The export accepts the text byte limit / returns bundle text | sharing.test.mjs:2092 assert.equal | PASS |
+| [director-105] The store accepts the caller byte limit and returns bytes | The store accepts the caller byte limit / returns bytes | sharing.test.mjs:2107 assert.deepEqual ; sharing.test.mjs:2111 assert.throws | PASS |
+| [director-107] The helper removes its listener after ${outcome} | The helper removes its listener / ${outcome} | sharing.test.mjs:2123 assert.equal ; sharing.test.mjs:2124 assert.deepEqual ; sharing.test.mjs:2128 assert.equal ; sharing.test.mjs:2137 assert.equal ; sharing.test.mjs:2140 assert.equal ; sharing.test.mjs:2143 assert.rejects ; sharing.test.mjs:2148 assert.equal ; sharing.test.mjs:2149 assert.rejects ; sharing.test.mjs:2153 assert.equal | PASS |
+| [director-102] The export reads an absent declared digest once before it writes the digest | The export reads an absent declared digest once / it writes the digest | sharing.test.mjs:2169 assert.equal ; sharing.test.mjs:2176 assert.equal ; sharing.test.mjs:2177 assert.equal | PASS |
+| [director-101] The export calls the filename slice with a start of zero | The export calls the filename slice / a start of zero | sharing.test.mjs:2186 assert.equal ; sharing.test.mjs:2189 assert.equal ; sharing.test.mjs:2203 assert.equal ; sharing.test.mjs:2204 assert.deepEqual | PASS |
+| [director-099] The import accepts the standard alphabet ${base64} and returns assets | The import accepts the standard alphabet ${base64} / returns assets | sharing.test.mjs:2230 assert.deepEqual | PASS |
+| [director-099 director-101] The export uses the standard alphabet ${base64} and returns bundle text | The export uses the standard alphabet ${base64} / returns bundle text | sharing.test.mjs:2237 assert.equal ; sharing.test.mjs:2239 assert.deepEqual | PASS |
+| [director-098 director-107] The import checks the signal before it checks the text type and rejects the call | The import checks the signal / it checks the text type / rejects the call | sharing.test.mjs:2249 assert.rejects | PASS |
+| [director-099] The import checks ${label} and rejects the call | The import checks ${label} / rejects the call | sharing.test.mjs:2313 assert.rejects | PASS |
+| [director-099 director-107] The import checks the signal before it checks asset fields and rejects the call | The import checks the signal / it checks asset fields / rejects the call | sharing.test.mjs:2326 assert.rejects ; sharing.test.mjs:2329 assert.equal | PASS |
+| [director-099] The import checks asset bytes before the digest call and rejects the call | The import checks asset bytes / the digest call / rejects the call | sharing.test.mjs:2342 assert.rejects ; sharing.test.mjs:2345 assert.equal | PASS |
+| [director-100 director-107] The import checks the signal before it compares digests | The import checks the signal / it compares digests | sharing.test.mjs:2360 assert.rejects ; sharing.test.mjs:2363 assert.equal | PASS |
+| [director-106] The share helpers check the file limit before they read the signal and reject excess files | The share helpers check the file limit / they read the signal / reject excess files | sharing.test.mjs:2368 assert.rejects ; sharing.test.mjs:2382 assert.equal | PASS |
+| [director-106 director-107] The share helpers check the signal before they read text and reject cancellation | The share helpers check the signal / they read text / reject cancellation | sharing.test.mjs:2389 assert.rejects ; sharing.test.mjs:2403 assert.equal | PASS |
+| [director-107] The share helpers check the signal after the text promise settles | The share helpers check the signal / the text promise settles | sharing.test.mjs:2427 assert.deepEqual | PASS |
+| [director-101] The export writes source then byteLength then digest | The export writes source then byteLength then digest | sharing.test.mjs:2448 assert.deepEqual | PASS |
+| [director-102] The export checks integrity before it reads the filename | The export checks integrity / it reads the filename | sharing.test.mjs:2453 assert.rejects ; sharing.test.mjs:2467 assert.equal | PASS |
+| [director-102] The export checks the asset count before the next resolver call and rejects the call | The export checks the asset count / the next resolver call / rejects the call | sharing.test.mjs:2472 assert.rejects ; sharing.test.mjs:2479 assert.equal | PASS |
+| [director-102] The export checks bytes before the media type and rejects the call | The export checks bytes / the media type / rejects the call | sharing.test.mjs:2483 assert.rejects | PASS |
+| [director-102] The export checks the media type before the digest call and rejects the call | The export checks the media type / the digest call / rejects the call | sharing.test.mjs:2500 assert.rejects ; sharing.test.mjs:2507 assert.equal | PASS |
+| [director-102 director-107] The export checks the signal before ${label} and rejects the call | The export checks the signal / ${label} / rejects the call | sharing.test.mjs:2536 assert.rejects ; sharing.test.mjs:2540 assert.equal | PASS |
+| [director-105] The store checks the signal before it checks the path and rejects the call | The store checks the signal / it checks the path / rejects the call | sharing.test.mjs:2547 assert.throws | PASS |
+| [director-107] The helper attaches its listener before it reads the work promise | The helper attaches its listener / it reads the work promise | sharing.test.mjs:2568 assert.equal ; sharing.test.mjs:2569 assert.deepEqual | PASS |
+| [director-107] The helper removes its listener before it reads the reason | The helper removes its listener / it reads the reason | sharing.test.mjs:2596 assert.rejects ; sharing.test.mjs:2597 assert.equal | PASS |
+| [director-107] The helper reads cancelled work before its reason | The helper reads cancelled work / its reason | sharing.test.mjs:2619 assert.rejects ; sharing.test.mjs:2620 assert.deepEqual | PASS |
+| [director-107] The helper checks cancellation after listener removal and rejects the call | The helper checks cancellation / listener removal / rejects the call | sharing.test.mjs:2635 assert.rejects | PASS |
+| [director-107] The helper rejects with the cancellation reason during listener removal after a work error | The helper rejects / the cancellation reason during listener removal / a work error | sharing.test.mjs:2651 assert.rejects | PASS |
+| [director-107] The ${mode} stops before the second ${mode === 'import' ? 'digest' : 'resolver call'} | The ${mode} stops / the second ${mode === 'import' ? 'digest' : 'resolver call'} | sharing.test.mjs:2682 assert.rejects ; sharing.test.mjs:2695 assert.equal ; sharing.test.mjs:2696 assert.equal ; sharing.test.mjs:2697 assert.equal | PASS |
+| [director-099 director-102] The bundle helpers reject an SVG media type during import and export | The bundle helpers reject an SVG media type during import / export | sharing.test.mjs:2706 assert.rejects ; sharing.test.mjs:2709 assert.rejects | PASS |
+| [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the second asset | The preview counts the second scene / shot / adds the bytes of the second asset | sharing.test.mjs:2734 assert.equal ; sharing.test.mjs:2735 assert.equal ; sharing.test.mjs:2736 assert.equal ; sharing.test.mjs:2737 assert.equal ; sharing.test.mjs:2738 assert.equal ; sharing.test.mjs:2739 assert.equal ; sharing.test.mjs:2740 assert.deepEqual | PASS |
+| [director-101] The export includes the asset of the second scene and returns bundle text | The export includes the asset of the second scene / returns bundle text | sharing.test.mjs:2755 assert.equal ; sharing.test.mjs:2756 assert.equal ; sharing.test.mjs:2757 assert.equal | PASS |
+| [director-101] The export encodes the second byte chunk and returns bundle text | The export encodes the second byte chunk / returns bundle text | sharing.test.mjs:2795 assert.equal ; sharing.test.mjs:2796 assert.equal | PASS |
+| [director-107] The ${mode} stops after the second digest | The ${mode} stops / the second digest | sharing.test.mjs:2824 assert.rejects ; sharing.test.mjs:2837 assert.equal ; sharing.test.mjs:2838 assert.equal ; sharing.test.mjs:2839 assert.equal | PASS |
+| [director-110] The preview reports both absent named layers without layer IDs | The preview reports both absent named layers / layer IDs | sharing.test.mjs:2849 assert.deepEqual | PASS |
+| [director-099] The import rejects the extra fields script and adapters in the ${label} | The import rejects the extra fields script / adapters in the ${label} | sharing.test.mjs:2862 assert.rejects | PASS |
+| [director-110] The preview reports no absent layer when both layer IDs are configured | The preview reports no absent layer when both layer IDs are configured | sharing.test.mjs:2872 assert.deepEqual | PASS |
+| [director-109] The preview reports both configured sources as configured | The preview reports both configured sources as configured | sharing.test.mjs:2891 assert.deepEqual | PASS |
+| [director-099] The import returns the bytes 1, 2 and 3 and the literal digest | The import returns the bytes 1 / 2 / 3 / the literal digest | sharing.test.mjs:2908 assert.deepEqual ; sharing.test.mjs:2912 assert.equal | PASS |
+
+### Changed titles
+
+Each row gives the old title and the live title. The test body stays unchanged.
+
+| Old title | Live title |
+| --- | --- |
+| The session returns false for a cleared load call and does not read the signal state | [director-090] The session returns false for a cleared load call |
+| The session returns false and does not read the caller signal state after the caller destroys it | [director-088] The session returns false and does not read the caller signal state after the caller destroys the session |
+| The load call returns false after the caller destroys the session without a source call | [director-088] The load call returns false after the caller destroys the session and makes no source call |
+| The load call returns false for a cancelled signal without a source call | [director-088] The load call returns false for a cancelled signal and makes no source call |
+| The session rejects stalled work at the 19 milliseconds deadline | [director-092] The session rejects stalled work at the deadline of 19 milliseconds |
+| The session rejects stalled work at the default 15000 milliseconds deadline | [director-092] The session rejects stalled work at the default deadline of 15000 milliseconds |
+| The session gives its reason to the source signal for the deadline and rejects the call | [director-092] The session sets the source signal reason at the deadline and rejects the call |
+| The decoder rejects ID type for the feature | [director-084] The decoder rejects the ID type for the feature |
+| The validator rejects height and reference for the image | [director-080] The validator rejects the height and the reference for the image |
+| The decoder returns zero for absent height for the position | [director-085] The decoder returns zero for an absent height for the position |
+| The session checks the signal before it removes the timer and reports the ready state | [director-089] The session checks the signal before it removes the timer |
+| The session checks the new list after it disposes old resources | [director-088 director-091] The session checks the new list and disposes old resources |
+| The session checks its source signal before it reads bytes and after renderer work | [director-090] The session checks its source signal |
+| The import returns assets at the base64 length limit and rejects the next aligned length | [director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length |
+| The store removes old data after replacement and uses no network source | [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets |
+| The share helpers return a project with the larger bundle file limit and reject excess bytes | [director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes |
+| The share helpers check the signal after the text promise settles and report the call order | [director-107] The share helpers check the signal after the text promise settles |
+| The export copies bytes and attribution and keeps the project without an asset request | [director-101] The export copies bytes and attribution and keeps the project with one resolver call |
+| The export stops before the next asset and returns no partial output | [director-107] The export rejects cancellation during asset work |
+| The store accepts its default byte limit and returns byte copies | [director-105] The store accepts its default byte limit and returns bytes |
+| The store accepts the caller byte limit and returns byte copies | [director-105] The store accepts the caller byte limit and returns bytes |
+| The export rejects excess asset total | [director-102] The export rejects an excess asset total |
+| The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets | [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets |
+| The data pack session disposes late renderer resources after cancellation and keeps the replacement | [director-090] The data pack session disposes late renderer resources after cancellation |
+
+### Host command results
+
+Source commit: `f057b89add2428964ab2bd00696b3b260b01fe94`.
+
+The test files run in separate processes. The coverage command measures one production file at a time.
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass10/report-checks.py
+{
+  "sourceCommit": "f057b89add2428964ab2bd00696b3b260b01fe94",
+  "tests": [
+    {
+      "file": "backfill",
+      "command": "Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs",
+      "tests": 430,
+      "fail": 0,
+      "summary": [
+        "\u2139 tests 430",
+        "\u2139 suites 0",
+        "\u2139 pass 430",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 1888.339244"
+      ]
+    },
+    {
+      "file": "packs",
+      "command": "Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs",
+      "tests": 12,
+      "fail": 0,
+      "summary": [
+        "\u2139 tests 12",
+        "\u2139 suites 0",
+        "\u2139 pass 12",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 7138.657574"
+      ]
+    },
+    {
+      "file": "sharing",
+      "command": "Command: NODE_OPTIONS=--test-isolation=none taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs",
+      "tests": 228,
+      "fail": 0,
+      "summary": [
+        "\u2139 tests 228",
+        "\u2139 suites 0",
+        "\u2139 pass 228",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 19080.17278"
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "file": "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/manifest.js",
+      "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass10/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass10/v8-packs-manifest /home/ianblenke/docker/gev-work/director-3/src/director/packs/manifest.js",
+      "counts": {
+        "LF": 138,
+        "LH": 138,
+        "BRF": 56,
+        "BRH": 56,
+        "FNF": 13,
+        "FNH": 13
+      }
+    },
+    {
+      "file": "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/geojson.js",
+      "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass10/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass10/v8-packs-geojson /home/ianblenke/docker/gev-work/director-3/src/director/packs/geojson.js",
+      "counts": {
+        "LF": 62,
+        "LH": 62,
+        "BRF": 54,
+        "BRH": 54,
+        "FNF": 7,
+        "FNH": 7
+      }
+    },
+    {
+      "file": "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/session.js",
+      "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass10/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass10/v8-packs-session /home/ianblenke/docker/gev-work/director-3/src/director/packs/session.js",
+      "counts": {
+        "LF": 159,
+        "LH": 159,
+        "BRF": 81,
+        "BRH": 81,
+        "FNF": 18,
+        "FNH": 18
+      }
+    },
+    {
+      "file": "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/source.js",
+      "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass10/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass10/v8-packs-source /home/ianblenke/docker/gev-work/director-3/src/director/packs/source.js",
+      "counts": {
+        "LF": 67,
+        "LH": 67,
+        "BRF": 37,
+        "BRH": 37,
+        "FNF": 4,
+        "FNH": 4
+      }
+    },
+    {
+      "file": "file:///home/ianblenke/docker/gev-work/director-3/src/director/sharing/bundle.js",
+      "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass10/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass10/v8-sharing-bundle /home/ianblenke/docker/gev-work/director-3/src/director/sharing/bundle.js",
+      "counts": {
+        "LF": 221,
+        "LH": 221,
+        "BRF": 103,
+        "BRH": 103,
+        "FNF": 21,
+        "FNH": 21
+      }
+    },
+    {
+      "file": "file:///home/ianblenke/docker/gev-work/director-3/src/director/sharing/lifetime.js",
+      "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass10/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass10/v8-sharing-lifetime /home/ianblenke/docker/gev-work/director-3/src/director/sharing/lifetime.js",
+      "counts": {
+        "LF": 26,
+        "LH": 26,
+        "BRF": 13,
+        "BRH": 13,
+        "FNF": 6,
+        "FNH": 6
+      }
+    },
+    {
+      "file": "file:///home/ianblenke/docker/gev-work/director-3/src/director/sharing/preview.js",
+      "command": "Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass10/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass10/v8-sharing-preview /home/ianblenke/docker/gev-work/director-3/src/director/sharing/preview.js",
+      "counts": {
+        "LF": 43,
+        "LH": 43,
+        "BRF": 22,
+        "BRH": 22,
+        "FNF": 10,
+        "FNH": 10
+      }
+    }
+  ],
+  "handCommand": "Command: NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director-3 /home/ianblenke/docker/gev-tools/director-3/muts.json",
+  "handRows": 479,
+  "killed": 477,
+  "survivors": [
+    "m172",
+    "m389"
+  ],
+  "timeouts": 0,
+  "skips": 0,
+  "allRunsComplete": true
+}
+```
+
+### Hand command
+
+The command limits each test label to 100 characters. The display omits final spaces.
+The raw log keeps the exact command output.
+Raw log: `/home/ianblenke/docker/gev-tools/director-3/pass10/hand-complete.log`.
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director-3 /home/ianblenke/docker/gev-tools/director-3/muts.json
+m001: KILLED [director-076] The validator returns without an error for safe names for the asset path
+m002: KILLED [director-076] The validator rejects traversal for the asset path
+m003: KILLED [director-077] The validator rejects an invalid version
+m004: KILLED [director-077] The validator rejects an invalid format
+m005: KILLED [director-078] The validator rejects the protocol for the attribution
+m006: KILLED [director-078] The validator rejects the username for the attribution
+m007: KILLED [director-078] The validator rejects the password for the attribution
+m008: KILLED [director-078] The validator rejects the query for the attribution
+m009: KILLED [director-078] The validator rejects the fragment for the attribution
+m010: KILLED [director-078] The validator rejects invalid URL text for the attribution
+m011: KILLED [director-078] The validator returns without an error for a safe link for the attribution
+m012: KILLED [director-078] The validator rejects blank text for the attribution
+m013: KILLED [director-078] The validator rejects a blank license for the attribution
+m014: KILLED [director-079] The validator rejects a fraction for the byteLength field
+m015: KILLED [director-079] The validator rejects an invalid type for the digest
+m016: KILLED [director-079] The validator rejects an invalid alphabet for the digest
+m017: KILLED [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+m018: KILLED [director-080] The validator rejects reversed west for the image
+m019: KILLED [director-080] The validator rejects reversed south for the image
+m020: KILLED [director-080] The validator rejects short bounds for the image
+m021: KILLED [director-080] The validator rejects the height and the reference for the image
+m022: KILLED [director-081] The validator rejects an unknown anchor for the media
+m023: KILLED [director-082] The validator rejects duplicate data pack IDs for the scene
+m024: KILLED [director-082] The validator rejects duplicate data pack IDs for the shot
+m025: KILLED [director-082] The validator rejects unknown data pack IDs for the shot
+m026: KILLED [director-082] The validator returns without an error for absent data packs and anchors for the scen
+m027: KILLED [director-083] The decoder rejects an invalid type for the collection
+m028: KILLED [director-083] The decoder rejects an invalid array for the collection
+m029: KILLED [director-083] The decoder rejects more than 2000 features for the collection
+m030: KILLED [director-084] The decoder rejects the type for the feature
+m031: KILLED [director-084] The decoder rejects the ID type for the feature
+m032: KILLED [director-084] The decoder rejects a blank ID for the feature
+m033: KILLED [director-084] The decoder rejects a long ID for the feature
+m034: KILLED [director-084] The decoder rejects a duplicate ID for the feature
+m035: KILLED [director-085] The decoder rejects an invalid array for the position
+m036: KILLED [director-085] The decoder rejects an invalid length for the position
+m037: KILLED [director-085] The decoder rejects a coordinate that is not finite for the position
+m038: KILLED [director-085] The decoder rejects an invalid longitude for the position
+m039: KILLED [director-085] The decoder rejects an invalid latitude for the position
+m040: KILLED [director-085] The decoder rejects a height below the limit for the position
+m041: KILLED [director-085] The decoder rejects a height above the limit for the position
+m042: KILLED [director-085] The decoder rejects more than 50000 positions
+m043: KILLED [director-085] The decoder returns zero for an absent height for the position
+m044: KILLED [director-085] The decoder returns the height in the data for the position
+m045: KILLED [director-086] The decoder rejects an invalid array for the line
+m046: KILLED [director-086] The decoder rejects an invalid minimum for the line
+m047: KILLED [director-086] The decoder rejects a ring with fewer than four points for the ring
+m048: KILLED [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+m049: KILLED [director-086] The decoder rejects unclosed field 0 for the ring
+m050: KILLED [director-086] The decoder rejects unclosed field 1 for the ring
+m051: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m052: KILLED [director-087] The decoder rejects an invalid type for the geometry
+m053: KILLED [director-087] The decoder rejects an invalid array for the geometry
+m054: KILLED [director-087] The decoder rejects an empty polygon for the geometry
+m055: KILLED [director-087] The decoder rejects more than 128 rings for the geometry
+m056: KILLED [director-087] The decoder returns a closed polygon for the geometry
+m057: KILLED [director-087] The decoder removes properties for the geometry
+m058: KILLED [director-088] The new session reports the idle state and zero handles
+m059: KILLED [director-088] The session rejects a value that is not a data pack list
+m060: KILLED [director-088] The session rejects more than eight data packs
+m061: KILLED [director-088] The load call returns false after the caller destroys the session and makes no source
+m062: KILLED [director-088] The load call returns false for a cancelled signal and makes no source call
+m063: KILLED [director-089] The session disposes handles in reverse order
+m064: KILLED [director-089] The session reports ready after the caller changes a state copy
+m065: KILLED [director-090] The session disposes late resources for the cancelled session
+m066: KILLED [director-090] The session returns false for cancelled work with a null late handle
+m067: KILLED [director-090] The session returns false when the caller destroys it during asset work
+m068: KILLED [director-091] The session keeps the new resources after a new load call
+m069: KILLED [director-092] The session reports a stable source error
+m070: KILLED [director-092] The session rejects stalled work for the deadline
+m071: KILLED [director-092] The session reads the byteLength field once without a registered source
+m072: KILLED [director-092] The session rejects an absent renderer without a source call
+m073: KILLED [director-093] The session rejects bytes that are not a Uint8Array
+m074: KILLED [director-093] The session rejects an empty asset
+m075: KILLED [director-093] The session rejects an asset above the byte limit
+m076: KILLED [director-093] The session rejects a wrong byteLength field
+m077: KILLED [director-093] The session rejects bytes above the total limit
+m078: KILLED [director-093] The session rejects a wrong digest
+m079: KILLED [director-093] The session returns true for exact bytes and digest
+m080: KILLED [director-089] The session rejects a falsy handle with inherited disposal
+m081: KILLED [director-089] The session rejects a handle without a dispose function
+m082: KILLED [director-094] The factory rejects the protocol
+m083: KILLED [director-094] The factory rejects the username
+m084: KILLED [director-094] The factory rejects the password
+m085: KILLED [director-094] The factory rejects the query
+m086: KILLED [director-094] The factory rejects the fragment
+m087: KILLED [director-094] The factory rejects a directory URL with no final slash
+m088: KILLED [director-095] The source sets its fixed options for the asset request
+m089: KILLED [director-096] The source joins distinct stream chunks
+m090: KILLED [director-096] The source rejects excess header bytes for the stream
+m091: KILLED [director-096] The source rejects excess chunk bytes for the stream
+m092: KILLED [director-096] The source returns an empty media type when the header is absent
+m093: KILLED [director-096] The source returns lowercase media type text without parameters
+m094: KILLED [director-097] The source rejects an absent stream
+m095: KILLED [director-097] The source rejects the asset request after failed body cancellation
+m096: KILLED [director-097] The source rejects a failed response without a body
+m097: KILLED [director-097] The source releases the reader lock after a stream error
+m098: KILLED [director-097] The source checks its signal between chunks and rejects the call
+m099: KILLED [director-098] The import rejects nontext input
+m100: KILLED [director-098] The import rejects invalid JSON; [director-098] The import rejects invalid JSON of 52428800 characters; [director-098] The import rejects invalid JSON of 5242881 characters
+m101: KILLED [director-098] The import accepts plain project JSON and returns the project
+m102: KILLED [director-098] The import rejects excess characters
+m103: KILLED [director-098] The import rejects excess UTF8 bytes
+m104: KILLED [director-099] The import rejects a custom text object for the base64
+m105: KILLED [director-099] The import rejects an empty base64 value
+m106: KILLED [director-099] The import rejects an invalid length for the base64
+m107: KILLED [director-099] The import rejects an invalid alignment for the base64
+m108: KILLED [director-099] The import rejects an invalid alphabet for the base64
+m109: KILLED [director-099] The import rejects an invalid padding for the base64
+m110: KILLED [director-099] The import rejects duplicate paths
+m111: KILLED [director-099] The import rejects an unsupported media type
+m112: KILLED [director-099] The import rejects unsupported version
+m113: KILLED [director-100] The import rejects an absent asset
+m114: KILLED [director-100] The import rejects a wrong byteLength field
+m115: KILLED [director-100] The import rejects a pack digest that differs from its asset
+m116: KILLED [director-100] The import rejects an asset digest that differs from its bytes
+m117: KILLED [director-100] The import rejects unused assets
+m118: KILLED [director-100] The import rejects external data pack sources
+m119: KILLED [director-101] The export writes exact bundle metadata
+m120: KILLED [director-102] The export rejects bytes that are not a Uint8Array
+m121: KILLED [director-102] The export rejects an empty asset
+m122: KILLED [director-102] The export rejects an asset above the byte limit
+m123: KILLED [director-102] The export rejects absent assets
+m124: KILLED [director-102] The export rejects declared byteLength
+m125: KILLED [director-102] The export rejects declared digest
+m126: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+m127: KILLED [director-102] The export rejects an excess asset total
+m128: KILLED [director-103] The export reuses a shared asset and returns bundle text
+m129: KILLED [director-103] The export rejects shared byteLength
+m130: KILLED [director-103] The export rejects shared digest
+m131: KILLED [director-104] The store copies the asset map
+m132: KILLED [director-104] The store clears stored bytes
+m133: KILLED [director-105] The store rejects absent bytes
+m134: KILLED [director-105] The store rejects bytes above the caller limit
+m135: KILLED [director-105] The store returns an independent byte copy
+m136: KILLED [director-106] The share helpers return an empty asset map for an absent filename
+m137: KILLED [director-106] The share helpers reject the ordinary file limit
+m138: KILLED [director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and
+m139: KILLED [director-107] The helper resolves without a signal
+m140: KILLED [director-107] The helper rejects an early signal
+m141: KILLED [director-107] The helper resolves with an active signal
+m142: KILLED [director-107] The helper rejects a work error
+m143: KILLED [director-107] The helper checks signal state when the work settles and rejects the call
+m144: KILLED [director-107] The helper cancels work that is not complete
+m145: KILLED [director-108] The preview reports exact totals and attribution
+m146: KILLED [director-108] The preview reports the scene ID when the title is absent
+m147: KILLED [director-109] The preview reports included bundle bytes
+m148: KILLED [director-109] The preview reports absent bundle bytes
+m149: KILLED [director-109] The preview reports a configured source; [director-109] The preview reports a configured source for a supplied source ID
+m150: KILLED [director-109] The preview reports an unavailable source
+m151: KILLED [director-110] The preview lists distinct absent layers
+m152: KILLED [director-110] The preview reports external content for applied shot packs
+m153: KILLED [director-110] The preview reports external content for a shot with a source pack ID
+m154: KILLED [director-110] The preview reports no external content without source packs
+m155: KILLED [director-080] The validator returns without an error for its bounds field for the image
+m156: KILLED [director-080] The validator returns without an error for its height field for the image
+m157: KILLED [director-080] The validator returns without an error for its altitudeReference field for the image
+m158: KILLED [director-081] The validator returns without an error for its anchorId field for the media
+m159: KILLED [director-077] The validator returns without an error for a GeoJSON altitudeReference field
+m160: KILLED [director-080] The validator rejects low excess for image bounds field 0
+m161: KILLED [director-080] The validator rejects high excess for image bounds field 0
+m162: KILLED [director-080] The validator rejects low excess for image bounds field 1
+m163: KILLED [director-080] The validator rejects high excess for image bounds field 1
+m164: KILLED [director-080] The validator rejects low excess for image bounds field 2
+m165: KILLED [director-080] The validator rejects high excess for image bounds field 2
+m166: KILLED [director-080] The validator rejects low excess for image bounds field 3
+m167: KILLED [director-080] The validator rejects high excess for image bounds field 3
+m168: KILLED [director-080] The validator rejects an image height above the upper limit
+m169: KILLED [director-082] The validator uses supplied anchors for the scene and returns without an error
+m170: KILLED [director-082] The validator uses absent anchor defaults for the scene and returns without an error
+m171: KILLED [director-085] The decoder accepts both geographic edges for the position and returns coordinates
+m172: SURVIVED
+m173: KILLED [director-088] The new session reports the idle state; [director-088] The new session reports the idle state and zero handles
+m174: KILLED [director-088] The new session reports zero handles
+m175: KILLED [director-089] The session reports one active handle
+m176: KILLED [director-093] The session calls the source with a default limit of 8388608 bytes
+m177: KILLED [director-093] The session returns true without a declared size
+m178: KILLED [director-090] The session returns false for a cancelled signal without an event
+m179: KILLED [director-090] The session checks destroyed state after it reads the signal
+m180: KILLED [director-090] The session returns false for a cleared load call
+m181: KILLED [director-090] The load call returns false and disposes a detached resource
+m182: KILLED [director-090] The session disposes the handle before it adds the handle to its list
+m183: KILLED [director-092] The session settles a source error before its deadline and reports idle
+m184: KILLED [director-097] The source rejects early cancellation
+m185: KILLED [director-094] The factory returns a source for HTTP and HTTPS directories
+m186: KILLED [director-098] The import rejects 52428801 characters before byte conversion
+m187: KILLED [director-101] The export accepts scenes without data packs and returns bundle text
+m188: KILLED [director-101] The export returns one asset for a supplied data pack list
+m189: KILLED [director-102] The export accepts absent integrity fields and returns bundle text
+m190: KILLED [director-102] The export accepts an absent digest and returns bundle text
+m191: KILLED [director-103] The export accepts absent byte declarations for the shared export and returns bundle
+m192: KILLED [director-103] The export accepts an absent digest for the shared export and returns bundle text
+m193: KILLED [director-099] The import accepts bytes without padding for the base64 and returns assets
+m194: KILLED [director-108] The preview reports no packs when data pack lists are absent
+m195: KILLED [director-108] The preview reports one pack from the supplied data pack list
+m196: KILLED [director-108] The preview reports Example for the supplied scene title
+m197: KILLED [director-109] The preview reports a configured source for a supplied source ID
+m198: KILLED [director-110] The preview reports no absent layer when a shot has no layers
+m199: KILLED [director-110] The preview reports traffic as absent without layer IDs
+m200: KILLED [director-105] The store rejects 8388609 bytes without a caller limit
+m201: KILLED [director-092] The session rejects an absent renderer without a source call
+m202: KILLED [director-099] The import rejects a custom text object for the base64
+m203: KILLED [director-103] The export key uses the registered source name and returns bundle text
+m204: KILLED [director-103] The export key uses path and returns bundle text
+m205: KILLED [director-110] The preview reports ships as absent when only traffic is configured
+m206: KILLED [director-108] The preview reports three bytes for both assets
+m207: KILLED [director-095] The source sets its credentials option for the asset request
+m208: KILLED [director-095] The source sets its redirect option for the asset request
+m209: KILLED [director-095] The source sets its referrerPolicy option for the asset request
+m210: KILLED [director-095] The source sets its cache option for the asset request
+m211: KILLED [director-085] The decoder rejects field 0 that is not finite for the position
+m212: KILLED [director-085] The decoder rejects field 1 that is not finite for the position
+m213: KILLED [director-085] The decoder rejects field 2 that is not finite for the position
+m214: KILLED [director-096] The source rejects 8388609 bytes without a caller limit
+m215: KILLED [director-077] The validator returns without an error for the id field of a data pack
+m216: KILLED [director-077] The validator returns without an error for the version field of a data pack
+m217: KILLED [director-077] The validator returns without an error for the format field of a data pack
+m218: KILLED [director-077] The validator returns without an error for the source field of a data pack
+m219: KILLED [director-077] The validator returns without an error for the attribution field of a data pack
+m220: KILLED [director-077] The validator returns without an error for the placement field of a data pack
+m221: KILLED [director-079] The validator returns without an error for the byteLength field of a data pack
+m222: KILLED [director-079] The validator returns without an error for the sha256 field of a data pack
+m223: KILLED [director-077] The validator returns without an error for its source name field
+m224: KILLED [director-077] The validator returns without an error for its source path field
+m225: KILLED [director-078] The validator returns without an error for its attribution text field
+m226: KILLED [director-078] The validator returns without an error for its attribution license field
+m227: KILLED [director-078] The validator returns without an error for its attribution url field
+m228: KILLED [director-100] The import checks its second asset reference and rejects the call
+m229: KILLED [director-100] The import checks its second asset digest and rejects the call
+m230: KILLED [director-103] The export accepts equal shared integrity and returns bundle text
+m231: KILLED [director-102] The export rejects absent asset bytes
+m232: KILLED [director-092] The session settles an early internal signal and reports idle
+m233: KILLED [director-093] The session calls the renderer with the anchors and returns true
+m234: KILLED [director-106] The share helpers call throwIfAborted three times and return an empty asset map
+m235: KILLED [director-102] The export rejects encoded bundle text above 52428800 bytes
+m236: KILLED [director-102] The export keeps its total after an asset without a byte length
+m237: KILLED [director-089] The session reports ready after asset work
+m238: KILLED [director-080] The validator returns without an error for the fields of the image placement
+m239: KILLED [director-081] The validator returns without an error for the fields of the media placement
+m240: KILLED [director-089] The session calls the GeoJSON renderer once and returns true
+m241: KILLED [director-089] The session calls the image renderer once and returns true
+m242: KILLED [director-089] The session calls the media renderer once and returns true
+m243: KILLED [director-097] The source stops between stream chunks
+m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and cred
+m245: KILLED [director-080] The manifest checks given image bounds and media anchor references
+m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects inval
+m247: KILLED [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints
+m248: KILLED [director-089] The data pack session removes resources and cancels the transport on Stop
+m249: KILLED [director-091] The data pack session replaces source work and ignores its late bytes
+m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation
+m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the re
+m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier
+m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects
+m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancel
+m255: KILLED [director-101] The export copies bytes and attribution and keeps the project with one resolver call
+m256: KILLED [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent asset
+m257: KILLED [director-102] The export rejects excess bytes, wrong integrity and absent assets
+m258: KILLED [director-103] The export writes one asset and rejects integrity declarations that differ for the da
+m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+m260: KILLED [director-104 director-105] The store returns an independent byte copy, rejects cancellation, report
+m261: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled
+m262: KILLED [director-107] The export rejects cancellation during asset work
+m263: KILLED [director-101] The export returns bundle text for a source path of 1024 characters
+m264: KILLED [director-077] The validator returns without an error for geojson
+m265: KILLED [director-077] The validator returns without an error for image
+m266: KILLED [director-077] The validator returns without an error for media
+m267: KILLED [director-080] The validator rejects bounds field 0 for the image
+m268: KILLED [director-080] The validator rejects bounds field 1 for the image
+m269: KILLED [director-080] The validator rejects bounds field 2 for the image
+m270: KILLED [director-080] The validator rejects bounds field 3 for the image
+m271: KILLED [director-092] The session rejects stalled work at the deadline of 19 milliseconds
+m272: KILLED [director-092] The session rejects stalled work at the default deadline of 15000 milliseconds
+m273: KILLED [director-092] The session removes resources after a later error
+m274: KILLED [director-099] The import accepts the application/json media type and returns assets
+m275: KILLED [director-099] The import accepts the application/geo+json media type and returns assets
+m276: KILLED [director-099] The import accepts the image/png media type and returns assets
+m277: KILLED [director-099] The import accepts the video/mp4 media type and returns assets
+m278: KILLED [director-099] The import accepts the video/webm media type and returns assets
+m279: KILLED [director-099] The import accepts the audio/mpeg media type and returns assets
+m280: KILLED [director-099] The import accepts the audio/ogg media type and returns assets
+m281: KILLED [director-099] The import accepts the audio/wav media type and returns assets
+m282: KILLED [director-099] The import accepts the audio/webm media type and returns assets
+m283: KILLED [director-089] The session rejects a falsy handle with inherited disposal
+m284: KILLED [director-088] The session returns false and does not read the caller signal state after the caller
+m285: KILLED [director-083] The decoder accepts the exact feature limit of the collection and returns 2000 featur
+m286: KILLED [director-084] The decoder accepts the exact text limit of the feature ID and returns a feature with
+m287: KILLED [director-085] The decoder accepts the exact position limit of the collection and returns 50000 posi
+m288: KILLED [director-087] The decoder accepts the exact ring limit of the polygon and returns 128 rings
+m289: KILLED [director-076] The validator rejects a path above its text limit for the asset path
+m290: KILLED [director-102] The export accepts its exact asset total and returns bundle text
+m291: KILLED [director-089] The session keeps every data pack handle
+m292: KILLED [director-095] The source sets its signal option for the asset request
+m293: KILLED [director-096] The source accepts the exact byte limit of the stream and returns bytes
+m294: KILLED [director-096] The source accepts the exact byte limit of the stream and returns bytes
+m295: KILLED [director-092] The session rejects a falsy custom source
+m296: KILLED [director-101] The export writes exact bundle metadata
+m297: KILLED [director-101] The export writes exact bundle metadata
+m298: KILLED [director-101] The export writes exact bundle metadata
+m299: KILLED [director-101] The export writes exact bundle metadata
+m300: KILLED [director-101] The export writes exact bundle metadata
+m301: KILLED [director-101] The export writes exact bundle metadata
+m302: KILLED [director-105] The store returns an independent byte copy
+m303: KILLED [director-079] The validator rejects 63 characters for the digest
+m304: KILLED [director-079] The validator rejects 65 characters for the digest
+m305: KILLED [director-079] The validator rejects a prefix for the digest
+m306: KILLED [director-079] The validator rejects a suffix for the digest
+m307: KILLED [director-079] The validator rejects uppercase text for the digest
+m308: KILLED [director-080] The validator rejects equal longitude edges for the image
+m309: KILLED [director-080] The validator rejects equal latitude edges for the image
+m310: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m311: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m312: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m313: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m314: KILLED [director-082] The validator does not read a data pack list from the parent object of the scene and
+m315: KILLED [director-080] The validator rejects text for each geographic field for the image
+m316: KILLED [director-080] The validator rejects text for each geographic field for the image
+m317: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m318: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m319: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m320: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the a
+m321: KILLED [director-076] The validator rejects URL syntax with a stable message for the asset path
+m322: KILLED [director-088] The session returns true for eight data packs
+m323: KILLED [director-093] The session returns true at the asset byte limit
+m324: KILLED [director-093] The session returns true at the total byte limit
+m325: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the
+m326: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the
+m327: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the
+m328: KILLED [director-089] The session removes its deadline after success
+m329: KILLED [director-089] The session removes its deadline after clear
+m330: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m331: KILLED [director-089] The session disposes both ready handles in reverse order and reports idle
+m332: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m333: KILLED [director-083] The decoder rejects invalid UTF8 bytes
+m334: KILLED [director-083] The decoder rejects null
+m335: KILLED [director-084] The decoder rejects a null feature
+m336: KILLED [director-084] The decoder rejects a null feature
+m337: KILLED [director-087] The decoder rejects absent geometry
+m338: KILLED [director-087] The decoder rejects absent geometry
+m339: KILLED [director-087] The decoder rejects absent geometry
+m340: KILLED [director-095] The source uses the default fetch function and returns bytes
+m341: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+m342: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+m343: KILLED [director-099] The import passes the base64 length limit to the byte check and rejects the next alig
+m344: KILLED [director-106] The share helpers accept the project file limit and reject one more byte
+m345: KILLED [director-106] The share helpers accept the bundle file limit and reject one more byte
+m346: KILLED [director-102] The export rejects an unsupported media type
+m347: KILLED [director-099] The import rejects 65 different asset paths
+m348: KILLED [director-099] The import returns assets at the total byte limit and rejects one more byte
+m349: KILLED [director-099] The import returns assets at the total byte limit and rejects one more byte
+m350: KILLED [director-105] The store rejects a cancelled source call
+m351: KILLED [director-107] The bundle helpers stop import before an asset
+m352: KILLED [director-107] The bundle helpers stop import after a digest
+m353: KILLED [director-107] The bundle helpers stop export before an asset
+m354: KILLED [director-107] The bundle helpers stop export after asset bytes
+m355: KILLED [director-107] The bundle helpers stop export after a digest
+m356: KILLED [director-108] The preview counts shots apart from scenes
+m357: KILLED [director-108] The preview counts shots apart from scenes
+m358: KILLED [director-110] The preview lists distinct absent layers
+m359: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m360: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m361: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rej
+m362: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rej
+m363: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m364: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m365: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m366: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the a
+m367: KILLED [director-102] The export rejects an excess asset total
+m368: KILLED [director-085] The decoder rejects negative longitude for the position
+m369: KILLED [director-085] The decoder rejects negative latitude for the position
+m370: KILLED [director-085] The decoder accepts the limit for negative longitude for the position and returns coo
+m371: KILLED [director-085] The decoder accepts the limit for negative latitude for the position and returns coor
+m372: KILLED [director-085] The decoder rejects four coordinates for the position
+m373: KILLED [director-085] The decoder rejects one coordinate for the position
+m374: KILLED [director-076] The validator rejects .x for the asset path
+m375: KILLED [director-076] The validator rejects x?a=1 for the asset path
+m376: KILLED [director-079] The validator returns without an error for one byte
+m377: KILLED [director-080] The validator rejects bounds outside an array for the image
+m378: KILLED [director-082] The validator rejects nine distinct data packs for the scene
+m379: KILLED [director-082] The validator returns without an error for eight distinct data packs for the scene
+m380: KILLED [director-089] The session reports its state during asset work
+m381: KILLED [director-096] The source accepts its default byte limit and returns bytes
+m382: KILLED [director-098] The import accepts the character limit and returns the project
+m383: KILLED [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+m384: KILLED [director-098] The import rejects an invalid plain project
+m385: KILLED [director-098] The import rejects a null project
+m386: KILLED [director-099] The import rejects an extra top-level field
+m387: KILLED [director-099] The import rejects an invalid bundle project
+m388: KILLED [director-099] The import accepts 64 distinct assets and returns assets
+m389: SURVIVED
+m390: KILLED [director-101] The export calls the resolver with the data pack and signal
+m391: KILLED [director-101] The export calls the resolver with the data pack and signal
+m392: KILLED [director-102] The export accepts the text byte limit and returns bundle text
+m393: KILLED [director-105] The store accepts the caller byte limit and returns bytes
+m394: KILLED [director-093] The session calls the renderer with the data pack and the scene anchors and returns t
+m395: KILLED [director-093] The session calls the renderer with the data pack and the scene anchors and returns t
+m396: KILLED [director-089] The session removes source listeners after success
+m397: KILLED [director-089] The session removes source listeners after success
+m398: KILLED [director-089] The session removes source listeners after error
+m399: KILLED [director-079] The validator returns without an error for its byte limit
+m400: KILLED [director-080] The validator returns without an error for its minimum height for the image
+m401: KILLED [director-080] The validator returns without an error for its maximum height for the image
+m402: KILLED [director-085] The decoder accepts its minimum height for the position and returns coordinates
+m403: KILLED [director-085] The decoder accepts its maximum height for the position and returns coordinates
+m404: KILLED [director-107] The helper removes its listener after cancel
+m405: KILLED [director-107] The helper removes its listener after success
+m406: KILLED [director-107] The helper removes its listener after error
+m407: KILLED [director-107] The helper removes its listener after success
+m408: KILLED [director-101] The export rejects an invalid project
+m409: KILLED [director-107] The import stops before the second digest
+m410: KILLED [director-107] The export stops before the second resolver call
+m411: KILLED [director-082] The validator rejects a reference in the second shot
+m412: KILLED [director-082] The validator rejects a reference in the second shot
+m413: KILLED [director-099 director-102] The bundle helpers reject an SVG media type during import and export
+m414: KILLED [director-077] The validator rejects an unlisted geojsonx format
+m415: KILLED [director-094] The factory rejects the file protocol
+m416: KILLED [director-077 director-082] The validator rejects an invalid second data pack
+m417: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m418: KILLED [director-082] The validator rejects an unknown second reference ID
+m419: KILLED [director-084] The decoder rejects the second feature
+m420: KILLED [director-085 director-086] The decoder rejects the second line position
+m421: KILLED [director-087] The decoder rejects the second ring
+m422: KILLED [director-088] The session rejects an invalid second data pack before the source call
+m423: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
+m424: KILLED [director-080] The validator rejects bounds field 3 for the image
+m425: KILLED [director-076] The validator rejects an invalid second path segment
+m426: KILLED [director-085] The decoder rejects an invalid second coordinate
+m427: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m428: KILLED [director-089] The session keeps every data pack handle
+m429: KILLED [director-092] The session removes resources after a later error
+m430: KILLED [director-096] The source joins chunks of different lengths
+m431: KILLED [director-101] The export includes the asset of the second scene and returns bundle text
+m432: KILLED [director-101] The export writes each asset index and filename
+m433: KILLED [director-100] The import checks its second asset reference and rejects the call
+m434: KILLED [director-101] The export writes each asset index and filename
+m435: KILLED [director-101] The export writes each asset index and filename
+m436: KILLED [director-104] The store counts the second asset
+m437: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m438: KILLED [director-108] The preview lists the second data pack
+m439: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m440: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m441: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m442: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m443: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m444: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m445: KILLED [director-097] The source cancels before it reads the second chunk
+m446: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
+m447: KILLED [director-107] The import stops after the second digest
+m448: KILLED [director-107] The export stops after the second digest
+m449: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m450: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m451: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m452: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m453: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m454: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m455: KILLED [director-077] The validator rejects the extra fields script and adapters in the data pack
+m456: KILLED [director-077] The validator rejects the extra fields script and adapters in the source
+m457: KILLED [director-078] The validator rejects the extra fields script and adapters in the attribution
+m458: KILLED [director-080] The validator rejects the extra fields script and adapters in the image placement
+m459: KILLED [director-077] The validator rejects the extra fields script and adapters in the media placement
+m460: KILLED [director-077] The validator rejects the extra fields script and adapters in the GeoJSON placement
+m461: KILLED [director-099] The import rejects the extra fields script and adapters in the top-level object
+m462: KILLED [director-099] The import rejects the extra fields script and adapters in the asset
+m463: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m464: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m465: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m466: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m467: KILLED [director-110] The preview reports no absent layer when both layer IDs are configured
+m468: KILLED [director-109] The preview reports both configured sources as configured
+m469: KILLED [director-082] The validator returns without an error for eight references and rejects nine referenc
+m470: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m471: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
+m472: KILLED [director-104] The store counts the second asset
+m473: KILLED [director-104] The store counts the second asset
+m474: KILLED [director-104] The store counts the second asset
+m475: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m476: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
+m477: KILLED [director-093] The session returns true for exact bytes and digest
+m478: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+m479: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
+```
+
+### Final document checks
+
+The predispatch checker reports past records and code identifiers. It returns status zero.
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass10/final-checks.py
+{"name": "format-write", "command": "taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --write", "exit": 0}
+{"name": "format-check", "command": "taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check", "exit": 0}
+{"name": "lint-final", "command": "taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing", "exit": 0}
+{"name": "predispatch", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-packs-sharing", "exit": 0}
+{"name": "titles", "command": "taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110", "exit": 0}
+{"name": "openspec-show", "command": "taskset -c 12-15 nice -n 19 openspec show backfill-director-packs-sharing --json", "exit": 0}
+{"name": "openspec-validate", "command": "taskset -c 12-15 nice -n 19 openspec validate backfill-director-packs-sharing", "exit": 0}
+{"name": "repeated-final", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass10/check-repeated-titles.py", "exit": 0}
+{"name": "banned-forms", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass10/banned-forms.py", "exit": 0}
+{"name": "scope", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass10/final-scope.py", "exit": 0}
+{"name": "diff-check", "command": "taskset -c 12-15 nice -n 19 git diff --check", "exit": 0}
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing
+STE: 0 errors, 578 warnings.
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass10/banned-forms.py
+{
+  "sourceCommit": "f057b89add2428964ab2bd00696b3b260b01fe94",
+  "newProseLines": 484,
+  "bannedOrPrefixedForms": 0,
+  "hits": []
+}
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110
+titles checked: 494, with a banned form: 0
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+Checked 1158 source files.
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 openspec validate backfill-director-packs-sharing
+Change 'backfill-director-packs-sharing' is valid
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass10/check-repeated-titles.py
+{
+  "sourceCommit": "f057b89add2428964ab2bd00696b3b260b01fe94",
+  "runtimeTests": 670,
+  "checkedLabels": 2646,
+  "pastRecordLinesExcluded": 11220,
+  "staleLabels": [],
+  "staleLabelCount": 0,
+  "duplicateTitles": {},
+  "duplicateTitleCount": 0
+}
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass10/final-scope.py
+{
+  "sourceCommit": "f057b89add2428964ab2bd00696b3b260b01fe94",
+  "changedFiles": [
+    "openspec/changes/backfill-director-packs-sharing/audit.md",
+    "openspec/changes/backfill-director-packs-sharing/design.md",
+    "openspec/changes/backfill-director-packs-sharing/evidence.md",
+    "openspec/changes/backfill-director-packs-sharing/mutations.md",
+    "openspec/changes/backfill-director-packs-sharing/proposal.md",
+    "openspec/changes/backfill-director-packs-sharing/specs/director/spec.md",
+    "openspec/changes/backfill-director-packs-sharing/survivors.md",
+    "openspec/changes/backfill-director-packs-sharing/tasks.md",
+    "src/director/packs/backfill.test.mjs",
+    "src/director/packs/packs.test.mjs",
+    "src/director/sharing/sharing.test.mjs"
+  ],
+  "productionFilesUnchanged": [
+    "src/director/packs/manifest.js",
+    "src/director/packs/geojson.js",
+    "src/director/packs/session.js",
+    "src/director/packs/source.js",
+    "src/director/sharing/bundle.js",
+    "src/director/sharing/lifetime.js",
+    "src/director/sharing/preview.js"
+  ],
+  "testBodiesUnchanged": [
+    "src/director/packs/backfill.test.mjs",
+    "src/director/packs/packs.test.mjs",
+    "src/director/sharing/sharing.test.mjs"
+  ],
+  "changedSourceLines": 48,
+  "changedTitleTemplates": 24,
+  "changedTagCells": 0,
+  "reviewFilesUnchanged": true,
+  "traceFilesUnchanged": true,
+  "requiredProposalHeadings": [
+    "## Why",
+    "## What Changes",
+    "## Capabilities",
+    "## Impact",
+    "## Known limits and later changes"
+  ],
+  "documentsCompared": 26
+}
+```
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass10/final-scope.py
+Source commit: f057b89add2428964ab2bd00696b3b260b01fe94
+Documents compared: 26
+--- openspec/changes/backfill-director-packs-sharing/evidence.md at f057b89add2428964ab2bd00696b3b260b01fe94
++++ openspec/changes/backfill-director-packs-sharing/evidence.md in the work tree
+@@ -16,3 +16,4 @@
+ ## Pass 7
+ ## Pass 8
+ ## Pass 9
++## Pass 10
+--- openspec/changes/backfill-director-packs-sharing/tasks.md at f057b89add2428964ab2bd00696b3b260b01fe94
++++ openspec/changes/backfill-director-packs-sharing/tasks.md in the work tree
+@@ -9,3 +9,4 @@
+ ## 10. Corrections of review round 5
+ ## 11. Correct round 6 findings
+ ## 12. Correct pre-review 7 findings
++## 13. Correct pre-review 8 findings
+```
+
+### Source lines
+
+Each changed source line below is a test title. No tag cell changes in this pass.
+
+```text
+Command: git diff -U0 f057b89a -- src | grep '^[-+]' | grep -v '^+++\|^---'
+-test('[director-088 director-091] The session checks the new list after it disposes old resources', async () => {
++test('[director-088 director-091] The session checks the new list and disposes old resources', async () => {
+-test('[director-089] The session checks the signal before it removes the timer and reports the ready state', async () => {
++test('[director-089] The session checks the signal before it removes the timer', async () => {
+-test('[director-088] The session returns false and does not read the caller signal state after the caller destroys it', async () => {
++test('[director-088] The session returns false and does not read the caller signal state after the caller destroys the session', async () => {
+-test('[director-090] The session checks its source signal before it reads bytes and after renderer work', async () => {
++test('[director-090] The session checks its source signal', async () => {
+-test('[director-080] The validator rejects height and reference for the image', async () => {
++test('[director-080] The validator rejects the height and the reference for the image', async () => {
+-test('[director-084] The decoder rejects ID type for the feature', async () => {
++test('[director-084] The decoder rejects the ID type for the feature', async () => {
+-test('[director-085] The decoder returns zero for absent height for the position', async () => {
++test('[director-085] The decoder returns zero for an absent height for the position', async () => {
+-test('[director-088] The load call returns false after the caller destroys the session without a source call', async () => {
++test('[director-088] The load call returns false after the caller destroys the session and makes no source call', async () => {
+-test('[director-088] The load call returns false for a cancelled signal without a source call', async () => {
++test('[director-088] The load call returns false for a cancelled signal and makes no source call', async () => {
+-test('[director-090] The session returns false for a cleared load call and does not read the signal state', async () => {
++test('[director-090] The session returns false for a cleared load call', async () => {
+-test('[director-092] The session rejects stalled work at the 19 milliseconds deadline', async () => {
++test('[director-092] The session rejects stalled work at the deadline of 19 milliseconds', async () => {
+-test('[director-092] The session rejects stalled work at the default 15000 milliseconds deadline', async () => {
++test('[director-092] The session rejects stalled work at the default deadline of 15000 milliseconds', async () => {
+-test('[director-092] The session gives its reason to the source signal for the deadline and rejects the call', async () => {
++test('[director-092] The session sets the source signal reason at the deadline and rejects the call', async () => {
+-test('[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets', async () => {
++test('[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets', async () => {
+-test('[director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement', async () => {
++test('[director-090] The data pack session disposes late renderer resources after cancellation', async () => {
+-test('[director-105] The store accepts its default byte limit and returns byte copies', () => {
++test('[director-105] The store accepts its default byte limit and returns bytes', () => {
+-test('[director-101] The export copies bytes and attribution and keeps the project without an asset request', async () => {
++test('[director-101] The export copies bytes and attribution and keeps the project with one resolver call', async () => {
+-test('[director-104] The store removes old data after replacement and uses no network source', async () => {
++test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets', async () => {
+-test('[director-107] The export stops before the next asset and returns no partial output', async () => {
++test('[director-107] The export rejects cancellation during asset work', async () => {
+-test('[director-102] The export rejects excess asset total', async () => {
++test('[director-102] The export rejects an excess asset total', async () => {
+-test('[director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes', async () => {
++test('[director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes', async () => {
+-test('[director-099] The import returns assets at the base64 length limit and rejects the next aligned length', async () =>
++test('[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length', async () =>
+-test('[director-105] The store accepts the caller byte limit and returns byte copies', () => {
++test('[director-105] The store accepts the caller byte limit and returns bytes', () => {
+-test('[director-107] The share helpers check the signal after the text promise settles and report the call order', async () => {
++test('[director-107] The share helpers check the signal after the text promise settles', async () => {
+```
+
+Pass 10 note: the host Node version is 26.8.2. The checks above do not replace the Node 24.14.0 image gates.
+The worker runs no container, make command, ratchet, ledger command, archive, push or remote pull request command.
+The lead must run the image gates and the next review round.
+
+### Final evidence check
+
+Source commit: `f057b89add2428964ab2bd00696b3b260b01fe94`.
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass10/run-doc-checks.py
+{"name": "titles", "command": "taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110", "exit": 0}
+{"name": "predispatch", "command": "taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/predispatch/predispatch.py openspec/changes/backfill-director-packs-sharing", "exit": 0}
+{"name": "openspec-show", "command": "taskset -c 12-15 nice -n 19 openspec show backfill-director-packs-sharing --json", "exit": 0}
+{"name": "openspec-validate", "command": "taskset -c 12-15 nice -n 19 openspec validate backfill-director-packs-sharing", "exit": 0}
+```
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass10/check-repeated-titles.py
+{
+  "sourceCommit": "f057b89add2428964ab2bd00696b3b260b01fe94",
+  "runtimeTests": 670,
+  "checkedLabels": 2670,
+  "pastRecordLinesExcluded": 11743,
+  "staleLabels": [],
+  "staleLabelCount": 0,
+  "duplicateTitles": {},
+  "duplicateTitleCount": 0
+}
+```
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass10/banned-forms.py
+{
+  "sourceCommit": "f057b89add2428964ab2bd00696b3b260b01fe94",
+  "newProseLines": 494,
+  "bannedOrPrefixedForms": 0,
+  "hits": []
+}
+```
+
+```text
+Command: python3 /home/ianblenke/docker/gev-tools/director-3/pass10/final-scope.py
+{
+  "sourceCommit": "f057b89add2428964ab2bd00696b3b260b01fe94",
+  "changedFiles": [
+    "openspec/changes/backfill-director-packs-sharing/audit.md",
+    "openspec/changes/backfill-director-packs-sharing/design.md",
+    "openspec/changes/backfill-director-packs-sharing/evidence.md",
+    "openspec/changes/backfill-director-packs-sharing/mutations.md",
+    "openspec/changes/backfill-director-packs-sharing/proposal.md",
+    "openspec/changes/backfill-director-packs-sharing/specs/director/spec.md",
+    "openspec/changes/backfill-director-packs-sharing/survivors.md",
+    "openspec/changes/backfill-director-packs-sharing/tasks.md",
+    "src/director/packs/backfill.test.mjs",
+    "src/director/packs/packs.test.mjs",
+    "src/director/sharing/sharing.test.mjs"
+  ],
+  "productionFilesUnchanged": [
+    "src/director/packs/manifest.js",
+    "src/director/packs/geojson.js",
+    "src/director/packs/session.js",
+    "src/director/packs/source.js",
+    "src/director/sharing/bundle.js",
+    "src/director/sharing/lifetime.js",
+    "src/director/sharing/preview.js"
+  ],
+  "testBodiesUnchanged": [
+    "src/director/packs/backfill.test.mjs",
+    "src/director/packs/packs.test.mjs",
+    "src/director/sharing/sharing.test.mjs"
+  ],
+  "changedSourceLines": 48,
+  "changedTitleTemplates": 24,
+  "changedTagCells": 0,
+  "reviewFilesUnchanged": true,
+  "traceFilesUnchanged": true,
+  "requiredProposalHeadings": [
+    "## Why",
+    "## What Changes",
+    "## Capabilities",
+    "## Impact",
+    "## Known limits and later changes"
+  ],
+  "documentsCompared": 26
+}
+```

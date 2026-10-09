@@ -606,8 +606,8 @@ false
 ### m021 Test
 
 ```text
-[director-080] The validator rejects height and reference for the image
-Output: KILLED [director-080] The validator rejects height and reference for the image
+[director-080] The validator rejects the height and the reference for the image
+Output: KILLED [director-080] The validator rejects the height and the reference for the image
 ```
 
 ## m022
@@ -876,8 +876,8 @@ false
 ### m031 Test
 
 ```text
-[director-084] The decoder rejects ID type for the feature
-Output: KILLED [director-084] The decoder rejects ID type for the feature
+[director-084] The decoder rejects the ID type for the feature
+Output: KILLED [director-084] The decoder rejects the ID type for the feature
 ```
 
 ## m032
@@ -1200,8 +1200,8 @@ p[2] ?? 1
 ### m043 Test
 
 ```text
-[director-085] The decoder returns zero for absent height for the position
-Output: KILLED [director-085] The decoder returns zero for absent height for the position
+[director-085] The decoder returns zero for an absent height for the position
+Output: KILLED [director-085] The decoder returns zero for an absent height for the position
 ```
 
 ## m044
@@ -1686,8 +1686,8 @@ signal?.aborted
 ### m061 Test
 
 ```text
-[director-088] The load call returns false after the caller destroys the session without a source call
-Output: KILLED [director-088] The load call returns false after the caller destroys the session without a source call
+[director-088] The load call returns false after the caller destroys the session and makes no source call
+Output: KILLED [director-088] The load call returns false after the caller destroys the session and makes no source call
 ```
 
 ## m062
@@ -1713,8 +1713,8 @@ disposed
 ### m062 Test
 
 ```text
-[director-088] The load call returns false for a cancelled signal without a source call
-Output: KILLED [director-088] The load call returns false for a cancelled signal without a source call
+[director-088] The load call returns false for a cancelled signal and makes no source call
+Output: KILLED [director-088] The load call returns false for a cancelled signal and makes no source call
 ```
 
 ## m063
@@ -3474,8 +3474,8 @@ false
 ### m127 Test
 
 ```text
-[director-102] The export rejects excess asset total
-Output: KILLED [director-102] The export rejects excess asset total
+[director-102] The export rejects an excess asset total
+Output: KILLED [director-102] The export rejects an excess asset total
 ```
 
 ## m128
@@ -3771,8 +3771,8 @@ false
 ### m138 Test
 
 ```text
-[director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
-Output: KILLED [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
+[director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes
+Output: KILLED [director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes
 ```
 
 ## m139
@@ -4908,8 +4908,8 @@ const superseded = signal?.aborted || disposed;
 ### m180 Test
 
 ```text
-[director-090] The session returns false for a cleared load call and does not read the signal state
-Output: KILLED [director-090] The session returns false for a cleared load call and does not read the signal state
+[director-090] The session returns false for a cleared load call
+Output: KILLED [director-090] The session returns false for a cleared load call
 ```
 
 ## m181
@@ -6702,8 +6702,8 @@ redirect: 'follow'
 ### m246 Test
 
 ```text
-[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
-Output: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, redirects, excess bytes and absent assets
+[director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets
+Output: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects invalid paths, excess bytes and absent assets
 ```
 
 ## m247
@@ -6810,8 +6810,8 @@ if (ended) {}
 ### m250 Test
 
 ```text
-[director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement
-Output: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps the replacement
+[director-090] The data pack session disposes late renderer resources after cancellation
+Output: KILLED [director-090] The data pack session disposes late renderer resources after cancellation
 ```
 
 ## m251
@@ -6947,8 +6947,8 @@ pack.source = { adapter: 'bad', path: entry.path };
 ### m255 Test
 
 ```text
-[director-101] The export copies bytes and attribution and keeps the project without an asset request
-Output: KILLED [director-101] The export copies bytes and attribution and keeps the project without an asset request
+[director-101] The export copies bytes and attribution and keeps the project with one resolver call
+Output: KILLED [director-101] The export copies bytes and attribution and keeps the project with one resolver call
 ```
 
 ## m256
@@ -7082,8 +7082,8 @@ bytes: asset.bytes
 ### m260 Test
 
 ```text
-[director-104] The store removes old data after replacement and uses no network source
-Output: KILLED [director-104] The store removes old data after replacement and uses no network source
+[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets
+Output: KILLED [director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets
 ```
 
 ## m261
@@ -7136,8 +7136,8 @@ reject(new Error('wrong'));
 ### m262 Test
 
 ```text
-[director-107] The export stops before the next asset and returns no partial output
-Output: KILLED [director-107] The export stops before the next asset and returns no partial output
+[director-107] The export rejects cancellation during asset work
+Output: KILLED [director-107] The export rejects cancellation during asset work
 ```
 
 ## m263
@@ -7383,8 +7383,8 @@ File: src/director/packs/session.js
 ### m271 Test
 
 ```text
-[director-092] The session rejects stalled work at the 19 milliseconds deadline
-Output: KILLED [director-092] The session rejects stalled work at the 19 milliseconds deadline
+[director-092] The session rejects stalled work at the deadline of 19 milliseconds
+Output: KILLED [director-092] The session rejects stalled work at the deadline of 19 milliseconds
 ```
 
 ## m272
@@ -7410,8 +7410,8 @@ timeoutMs = 15001
 ### m272 Test
 
 ```text
-[director-092] The session rejects stalled work at the default 15000 milliseconds deadline
-Output: KILLED [director-092] The session rejects stalled work at the default 15000 milliseconds deadline
+[director-092] The session rejects stalled work at the default deadline of 15000 milliseconds
+Output: KILLED [director-092] The session rejects stalled work at the default deadline of 15000 milliseconds
 ```
 
 ## m273
@@ -7735,8 +7735,8 @@ if (signal?.aborted || disposed) return false;
 ### m284 Test
 
 ```text
-[director-088] The session returns false and does not read the caller signal state after the caller destroys it
-Output: KILLED [director-088] The session returns false and does not read the caller signal state after the caller destroys it
+[director-088] The session returns false and does not read the caller signal state after the caller destroys the session
+Output: KILLED [director-088] The session returns false and does not read the caller signal state after the caller destroys the session
 ```
 
 Probe: evidence/probe-signal-getter.txt.
@@ -9385,8 +9385,8 @@ value.length >= Math.ceil(PACK_LIMITS.bytes / 3) * 4
 ### m343 Test
 
 ```text
-[director-099] The import returns assets at the base64 length limit and rejects the next aligned length
-Output: KILLED [director-099] The import returns assets at the base64 length limit and rejects the next aligned length
+[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length
+Output: KILLED [director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length
 ```
 
 ## m344
@@ -10046,8 +10046,8 @@ assets.length > SHARE_LIMITS.assets
 ### m367 Test
 
 ```text
-[director-102] The export rejects excess asset total
-Output: KILLED [director-102] The export rejects excess asset total
+[director-102] The export rejects an excess asset total
+Output: KILLED [director-102] The export rejects an excess asset total
 ```
 
 ## m368
@@ -10753,8 +10753,8 @@ asset.bytes.length >= maxBytes
 ### m393 Test
 
 ```text
-[director-105] The store accepts the caller byte limit and returns byte copies
-Output: KILLED [director-105] The store accepts the caller byte limit and returns byte copies
+[director-105] The store accepts the caller byte limit and returns bytes
+Output: KILLED [director-105] The store accepts the caller byte limit and returns bytes
 ```
 
 ## m394

@@ -334,7 +334,7 @@ test('[director-104] The store reports zero bytes after an absent replacement ma
   store.replace();
   assert.deepEqual(store.getState(), { count: 0, bytes: 0 });
 });
-test('[director-105] The store accepts its default byte limit and returns byte copies', () => {
+test('[director-105] The store accepts its default byte limit and returns bytes', () => {
   const store = createBundleAssets();
   store.replace(
     new Map([
@@ -452,7 +452,7 @@ test('[director-110] The preview reports external content from applied shot pack
   assert.equal(reads, 0);
 });
 
-test('[director-101] The export copies bytes and attribution and keeps the project without an asset request', async () => {
+test('[director-101] The export copies bytes and attribution and keeps the project with one resolver call', async () => {
   const original = fixture(),
     before = JSON.stringify(original);
   let reads = 0;
@@ -563,7 +563,7 @@ test('[director-109] The preview reports unavailable sources, absent layers and 
   );
 });
 
-test('[director-104] The store removes old data after replacement and uses no network source', async () => {
+test('[director-104 director-105] The store returns an independent byte copy, rejects cancellation, reports zero bytes after clear and rejects unavailable assets', async () => {
   const parsed = await parseSceneShare(
     await createSceneBundle(fixture(), () => asset()),
   );
@@ -622,7 +622,7 @@ test('[director-106] The share helpers reject excess file bytes before they read
   resolve(JSON.stringify(fixture()));
 });
 
-test('[director-107] The export stops before the next asset and returns no partial output', async () => {
+test('[director-107] The export rejects cancellation during asset work', async () => {
   let resolve;
   const owner = new AbortController();
   const work = createSceneBundle(
@@ -965,7 +965,7 @@ test('[director-102] The export rejects declared digest', async () => {
   );
 });
 
-test('[director-102] The export rejects excess asset total', async () => {
+test('[director-102] The export rejects an excess asset total', async () => {
   const f = manyPacks(65);
   await assert.rejects(createSceneBundle(f, asset), /too many bundled assets/);
 });
@@ -1096,7 +1096,7 @@ test('[director-106] The share helpers reject the ordinary file limit', async ()
   assert.equal(calls, 0);
 });
 
-test('[director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes', async () => {
+test('[director-106] The share helpers return an empty asset map for a bundle file above 5242880 bytes and reject excess bytes', async () => {
   const v = await readSceneShare({
     name: 'x.gevbundle.json',
     size: 5242881,
@@ -1901,7 +1901,7 @@ const withByteCopy = async (work) => {
     Uint8Array.from = native;
   }
 };
-test('[director-099] The import returns assets at the base64 length limit and rejects the next aligned length', async () =>
+test('[director-099] The import passes the base64 length limit to the byte check and rejects the next aligned length', async () =>
   withByteCopy(async () => {
     const value = await bundleObject();
     value.assets[0].base64 = 'A'.repeat(11184812);
@@ -2097,7 +2097,7 @@ test('[director-102] The export accepts the text byte limit and returns bundle t
     globalThis.TextEncoder = Native;
   }
 });
-test('[director-105] The store accepts the caller byte limit and returns byte copies', () => {
+test('[director-105] The store accepts the caller byte limit and returns bytes', () => {
   const store = createBundleAssets();
   store.replace(
     new Map([
@@ -2403,7 +2403,7 @@ test('[director-106 director-107] The share helpers check the signal before they
   assert.equal(reads, 0);
 });
 
-test('[director-107] The share helpers check the signal after the text promise settles and report the call order', async () => {
+test('[director-107] The share helpers check the signal after the text promise settles', async () => {
   const order = [];
   const signal = {
     aborted: false,
