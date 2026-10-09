@@ -918,15 +918,15 @@
     },
     "server/providers/cctv/sources.js": {
       "loaded": true,
-      "lines": 420,
-      "branches": 125,
-      "functions": 7,
+      "lines": 323,
+      "branches": 121,
+      "functions": 3,
       "totals": {
-        "lines": 1865,
-        "branches": 473,
-        "functions": 42
+        "lines": 1851,
+        "branches": 554,
+        "functions": 46
       },
-      "sha": "8169df358c01832b28b1e8a5fdc88ae0c0c92cebe83606a258cfcd6ab83970b5",
+      "sha": "b97683f46f75f2ef8bdfc36fa225016b825ff2d8ae4db4ef211efdcfc245ded7",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
