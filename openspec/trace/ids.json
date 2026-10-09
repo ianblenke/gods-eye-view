@@ -2054,6 +2054,46 @@
     "since": "2026-09-27",
     "change": "backfill-live-sources"
   },
+  "live-sources-002": {
+    "hash": "dbe5644ea5a7a4f9ffdf3ed87dc57ab4a7dd3c20da9f1e31cfd70ca4a24ea7a6",
+    "since": "2026-10-09",
+    "change": "fix-ontario-511-key"
+  },
+  "live-sources-003": {
+    "hash": "d4e6f7099889268b72e23e85d4da945ca5c6abd57472b30573138f6a997fcbb0",
+    "since": "2026-10-09",
+    "change": "fix-ontario-511-key"
+  },
+  "live-sources-004": {
+    "hash": "793944e9bf5a5fd8e8592a2ac6fd11b1eaa8009d87e436b32e5ce14014ffc1a6",
+    "since": "2026-10-09",
+    "change": "fix-ontario-511-key"
+  },
+  "live-sources-005": {
+    "hash": "d7f4785a12d2e709240633e99213d7d160788d96264734adbbbf33827134d8a8",
+    "since": "2026-10-09",
+    "change": "fix-ontario-511-key"
+  },
+  "live-sources-006": {
+    "hash": "5805e6a808058599980bef09f274e22a554bf7118e4bcd80a7bdaebe0b875b3a",
+    "since": "2026-10-09",
+    "change": "fix-ontario-511-key"
+  },
+  "live-sources-007": {
+    "hash": "c6d3edad3b6155d1ad05857ad8a6ca73d9ba22700006829e6760dce560e07150",
+    "since": "2026-10-09",
+    "change": "fix-ontario-511-key"
+  },
+  "live-sources-008": {
+    "hash": "e8928a40754130caac58fbc7a1d6c1ad2002c4417e0e4ae6ffe90fb43940e4e9",
+    "since": "2026-10-09",
+    "change": "fix-ontario-511-key"
+  },
+  "live-sources-009": {
+    "hash": "6eb30c866639e4297e40a45c97a39f3922ec85a776a726fb8138d666a07b7f21",
+    "since": "2026-10-09",
+    "change": "fix-ontario-511-key"
+  },
   "location-presets-001": {
     "hash": "0522fe9936ceec4087e54a6ddebd46847313b613e50b7fdc5deef7ed94569f5b",
     "since": "2026-09-27",
