@@ -1,0 +1,21 @@
+live-sources-010 | Change provider to WRONG | [live-sources-010] maps each source field
+live-sources-011 | Change east heading to 91 | [live-sources-011] maps direction E
+live-sources-012 | Change fallback heading to 0 | [live-sources-012] uses fallback for NOT DIRECTIONAL
+live-sources-013 | Allow a port after the host in the frame pattern | [live-sources-013] drops address https://images-dis.divas.cloud:8443/DGI/chan-1_h.jpg
+live-sources-014 | Accept any letter after the underscore in the frame pattern | [live-sources-014] drops frame "https://images-dis.divas.cloud/DGI/chan-1_l.jpg"
+live-sources-015 | Copy the raw image address of the row | [live-sources-015] builds the clean frame address for ?token=abc#top
+live-sources-016 | Remove the numeric latitude check | [live-sources-016] drops no latitude
+live-sources-017 | Remove the duplicate check | [live-sources-017] keeps the first channel
+live-sources-018 | Change the fallback name | [live-sources-018] sets name for undefined
+live-sources-019 | Change the query where value | [live-sources-019] sends only the fixed query and timeout
+live-sources-020 | Read the feature instead of its attributes | [live-sources-020] reads attributes and drops invalid entries
+live-sources-021 | Change the HTTP error warning | [live-sources-021] handles HTTP error with body
+live-sources-022 | Replace the request error message | [live-sources-022] handles request error Error: network down
+live-sources-023 | Return a source for a redirect | [live-sources-023] refuses redirect 302
+live-sources-024 | Raise the body limit by one byte | [live-sources-024] checks body size declared
+live-sources-025 | Change the payload warning | [live-sources-025] handles error payload {"error":{"message":"bad"}}
+live-sources-026 | Change the default cap to 119 | [live-sources-026] applies cap undefined
+live-sources-027 | Ignore the Pensacola kill switch | [live-sources-027] catalog applies switch 0
+live-sources-028 | Disable the Pensacola pack for all settings | [live-sources-028] catalog applies switch undefined
+live-sources-029 | Ignore the layer address setting | [live-sources-029] applies layer address http://127.0.0.1:9/layer/query
+live-sources-030 | Drop the south boundary | [live-sources-030] checks area point 30.2 -87.65

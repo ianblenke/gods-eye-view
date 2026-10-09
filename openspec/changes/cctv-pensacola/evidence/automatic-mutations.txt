@@ -1,0 +1,95 @@
+Automatic mutation run of server/providers/cctv/pensacola.js against src/data/cctvPensacola.test.mjs (85 tests)
+Tool: /home/ianblenke/docker/gev-tools/automut/automut.mjs gen, run --phase 1 --jobs 4, run --phase 2 --jobs 2 --resume, report
+Clone commit of the module: a3534623 plus the working tree edits (regex frame address, simple guards)
+
+# Mutation survivors (two phases)
+
+Commit: undefined. Phase times (including setup): {"1":288620,"2":27868} ms. Phase completion: {"1":true,"2":true}.
+
+TIMEOUT is unresolved unless explicitly marked as a kill; crashes are separate. Only completed phase-2 passes are real survivors.
+
+## By total
+
+| total | mutants | P1 killed | P1 crash | P1 timeout | P1 survived | P2 killed | P2 crash | P2 timeout | real survivors | pending P1 | pending P2 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| all | 656 | 633 | 1 | 0 | 22 | 0 | 0 | 0 | 22 | 0 | 0 |
+
+## By file
+
+| file | mutants | P1 killed | P1 crash | P1 timeout | P1 survived | P2 killed | P2 crash | P2 timeout | real survivors | pending P1 | pending P2 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| server/providers/cctv/pensacola.js | 656 | 633 | 1 | 0 | 22 | 0 | 0 | 0 | 22 | 0 | 0 |
+
+## By class
+
+| class | mutants | P1 killed | P1 crash | P1 timeout | P1 survived | P2 killed | P2 crash | P2 timeout | real survivors | pending P1 | pending P2 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| string | 31 | 31 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| regex | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| object | 144 | 144 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| number | 88 | 86 | 0 | 0 | 2 | 0 | 0 | 0 | 2 | 0 | 0 |
+| arith | 4 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| condition | 22 | 22 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| branch | 10 | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| statement | 55 | 55 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| negation | 7 | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| logical | 14 | 13 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 |
+| operand | 32 | 32 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| operand-drop | 28 | 28 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| operand-order | 14 | 7 | 0 | 0 | 7 | 0 | 0 | 0 | 7 | 0 | 0 |
+| arguments | 31 | 31 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| argument-drop | 31 | 31 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| call-value | 21 | 21 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| method | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| predicate | 23 | 23 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| relational | 12 | 12 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| equality | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| value | 16 | 16 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| method-remove | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| constant | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| optional | 3 | 1 | 0 | 0 | 2 | 0 | 0 | 0 | 2 | 0 | 0 |
+| iteration | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| regex-member | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| regex-quantifier | 2 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| new-argument | 5 | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| constructor | 3 | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| statement-order | 34 | 24 | 0 | 0 | 10 | 0 | 0 | 0 | 10 | 0 | 0 |
+| template-expression | 6 | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| await-remove | 3 | 2 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+## Real survivors
+
+| id | file:line | class | old | new |
+|---|---|---|---|---|
+| a0130 | server/providers/cctv/pensacola.js:38 | operand-order | `!Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon) \|\| ↵     lat < BOUNDS.south \|\| ↵     lat > BOUNDS.north \|\| ↵     lon < BOUNDS.west \|\| ↵     lon > BOUNDS.east` | `lon > BOUNDS.east \|\| !Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon) \|\| ↵     lat < BOUNDS.south \|\| ↵     lat > BOUNDS.north \|\| ↵     lon < BOUNDS.west` |
+| a0135 | server/providers/cctv/pensacola.js:38 | operand-order | `!Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon) \|\| ↵     lat < BOUNDS.south \|\| ↵     lat > BOUNDS.north \|\| ↵     lon < BOUNDS.west` | `lon < BOUNDS.west \|\| !Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon) \|\| ↵     lat < BOUNDS.south \|\| ↵     lat > BOUNDS.north` |
+| a0140 | server/providers/cctv/pensacola.js:38 | operand-order | `!Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon) \|\| ↵     lat < BOUNDS.south \|\| ↵     lat > BOUNDS.north` | `lat > BOUNDS.north \|\| !Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon) \|\| ↵     lat < BOUNDS.south` |
+| a0145 | server/providers/cctv/pensacola.js:38 | operand-order | `!Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon) \|\| ↵     lat < BOUNDS.south` | `lat < BOUNDS.south \|\| !Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon)` |
+| a0150 | server/providers/cctv/pensacola.js:38 | operand-order | `!Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon)` | `!Number.isFinite(lon) \|\| !Number.isFinite(lat)` |
+| a0277 | server/providers/cctv/pensacola.js:55 | logical | `??` | `\|\|` |
+| a0420 | server/providers/cctv/pensacola.js:108 | optional | `?.` | `.` |
+| a0431 | server/providers/cctv/pensacola.js:114 | operand-order | `resp.status >= 300 && resp.status < 400` | `resp.status < 400 && resp.status >= 300` |
+| a0436 | server/providers/cctv/pensacola.js:114 | number | `300` | `299` |
+| a0438 | server/providers/cctv/pensacola.js:114 | number | `300` | `300 - 1` |
+| a0486 | server/providers/cctv/pensacola.js:125 | operand-order | `payload.error \|\| !Array.isArray(payload.features)` | `!Array.isArray(payload.features) \|\| payload.error` |
+| a0600 | server/providers/cctv/pensacola.js:151 | optional | `?.` | `.` |
+| a9008 | server/providers/cctv/pensacola.js:35 | statement-order | `const lat = row.LATITUDE; ↵   const lon = row.LONGITUDE;` | `const lon = row.LONGITUDE; ↵   const lat = row.LATITUDE;` |
+| a9010 | server/providers/cctv/pensacola.js:37 | statement-order | `if ( ↵     !Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon) \|\| ↵     lat < BOUNDS.south \|\| ↵     lat > BOUNDS.north \|\| ↵     lon < BOUNDS.west \|\| ↵     lon > BOUNDS.east ↵   ) ↵     return null; ↵   if (typeof row.IMAGE !== 'string') return null;` | `if (typeof row.IMAGE !== 'string') return null; ↵   if ( ↵     !Number.isFinite(lat) \|\| ↵     !Number.isFinite(lon) \|\| ↵     lat < BOUNDS.south \|\| ↵     lat > BOUNDS.north \|\| ↵     lon < BOUNDS.west \|\| ↵     lon > BOUNDS.east ↵   ) ↵     return null;` |
+| a9011 | server/providers/cctv/pensacola.js:46 | statement-order | `if (typeof row.IMAGE !== 'string') return null; ↵   const match = FRAME_ADDRESS.exec(row.IMAGE);` | `const match = FRAME_ADDRESS.exec(row.IMAGE); ↵   if (typeof row.IMAGE !== 'string') return null;` |
+| a9015 | server/providers/cctv/pensacola.js:50 | statement-order | `const id = ˋfl-${channel}ˋ; ↵   const url = ˋ${IMAGE_ORIGIN}/DGI/chan-${channel}_h.jpgˋ;` | `const url = ˋ${IMAGE_ORIGIN}/DGI/chan-${channel}_h.jpgˋ; ↵   const id = ˋfl-${channel}ˋ;` |
+| a9016 | server/providers/cctv/pensacola.js:51 | statement-order | `const url = ˋ${IMAGE_ORIGIN}/DGI/chan-${channel}_h.jpgˋ; ↵   const direction = String(row.DIRECTION).trim();` | `const direction = String(row.DIRECTION).trim(); ↵   const url = ˋ${IMAGE_ORIGIN}/DGI/chan-${channel}_h.jpgˋ;` |
+| a9024 | server/providers/cctv/pensacola.js:101 | statement-order | `const resp = await fetch(endpoint.toString(), { ↵       headers: { Accept: 'application/json' }, ↵       redirect: 'manual', ↵       signal: AbortSignal.timeout(CCTV_SOURCE_FETCH_TIMEOUT_MS), ↵     }); ↵     const discard = async () => { ↵       try { ↵         await resp.body?.cancel(); ↵       } catch { ↵         /* no-op */ ↵       } ↵       return []; ↵     };` | `const discard = async () => { ↵       try { ↵         await resp.body?.cancel(); ↵       } catch { ↵         /* no-op */ ↵       } ↵       return []; ↵     }; ↵     const resp = await fetch(endpoint.toString(), { ↵       headers: { Accept: 'application/json' }, ↵       redirect: 'manual', ↵       signal: AbortSignal.timeout(CCTV_SOURCE_FETCH_TIMEOUT_MS), ↵     });` |
+| a9029 | server/providers/cctv/pensacola.js:125 | statement-order | `if (payload.error \|\| !Array.isArray(payload.features)) { ↵       console.warn('[CCTV] Pensacola layer answered with an error.'); ↵       return []; ↵     } ↵     const cameras = [];` | `const cameras = []; ↵     if (payload.error \|\| !Array.isArray(payload.features)) { ↵       console.warn('[CCTV] Pensacola layer answered with an error.'); ↵       return []; ↵     }` |
+| a9030 | server/providers/cctv/pensacola.js:129 | statement-order | `const cameras = []; ↵     const seen = new Set();` | `const seen = new Set(); ↵     const cameras = [];` |
+| a9032 | server/providers/cctv/pensacola.js:131 | statement-order | `for (const feature of payload.features) { ↵       const camera = pensacolaCameraToSource(feature?.attributes); ↵       if (!camera \|\| seen.has(camera.id)) continue; ↵       seen.add(camera.id); ↵       cameras.push(camera); ↵     } ↵     const maxRaw = Number( ↵       process.env.CCTV_PENSACOLA_MAX_SOURCES \|\| DEFAULT_MAX_SOURCES, ↵     );` | `const maxRaw = Number( ↵       process.env.CCTV_PENSACOLA_MAX_SOURCES \|\| DEFAULT_MAX_SOURCES, ↵     ); ↵     for (const feature of payload.features) { ↵       const camera = pensacolaCameraToSource(feature?.attributes); ↵       if (!camera \|\| seen.has(camera.id)) continue; ↵       seen.add(camera.id); ↵       cameras.push(camera); ↵     }` |
+| a9051 | server/providers/cctv/pensacola.js:134 | statement-order | `seen.add(camera.id); ↵       cameras.push(camera);` | `cameras.push(camera); ↵       seen.add(camera.id);` |
+
+## TIMEOUT mutants
+
+
+## Classification of the 22 real survivors (lead)
+17 swaps of independent statements or of the operands of pure conditions (a0130 a0135 a0140 a0145 a0150 a0431 a0486 a9008 a9010 a9011 a9015 a9016 a9024 a9029 a9030 a9032 a9051): same result.
+1 change of ?? to || for the description (a0277): differs only for the numeric description 0.
+2 changes of ?. to . (a0420 a0600): the body of an answer with no body, and a thrown null or undefined; a catch block covers the first.
+2 changes of the number 300 to 299 (a0436 a0438): differs only for HTTP 299, which no test sends (limit status-299).
+1 crash (a9043): removing await makes an unhandled rejection that stops the test process, so a test run detects it.

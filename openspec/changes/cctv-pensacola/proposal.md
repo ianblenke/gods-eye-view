@@ -8,7 +8,8 @@ The owner asks for traffic cameras of the Pensacola area. The FL511 layer has mo
 - Add the pack `pensacola` to `server/providers/cctv/catalog.js`, after the pack `vegvesen`.
 - Add the settings `CCTV_PENSACOLA_ENABLED`, `CCTV_PENSACOLA_MAX_SOURCES` and `CCTV_PENSACOLA_ROWS_URL` to `.env.example`.
 - Write the notice of the FL511 use limit in `DATA_SOURCES.md`.
-- Add the Pensacola pack to the CCTV rows of `README.md` and `docs/CURRENT-STATE.md`, and write an entry in `CHANGELOG.md`.
+- Add the Pensacola pack to the CCTV rows of `README.md` and `docs/CURRENT-STATE.md`. The README row states the catalog cap of 4,000 cameras.
+- Write an entry in `CHANGELOG.md`.
 - Add the module and its test file to `openspec/ownership.json`, the module to `scripts/package-boundaries.json` and the test file to `scripts/format-scope.json`.
 
 ## Capabilities
@@ -39,6 +40,7 @@ No gap opens in `openspec/trace`. The ratchet records the new scenario IDs and t
 - Known limit `heading`: The field DIRECTION can differ from the camera heading. A check of 59 descriptions found 4 that disagree with the field. The check cannot tell whether the field gives the travel direction or the direction of the camera. The pack uses the field as an estimate and sets the confidence "low".
 - Known limit `florida-pack`: Upstream pull request 605 adds a Florida pack from the same layer. Both packs use the ids "fl-" and the channel number, so a camera appears once. The pose values and the heading confidence differ. A later change retires this pack after the sync that brings pull request 605.
 - Known limit `caps`: The default caps of all packs sum to 4955. This pack adds 120, so the sum is 5075, above the ceiling of 5000. The catalog cap of 4000 already cuts the number of cameras of the packs.
-- Known limit `dead-frames`: A check on 2026-10-08 found 5 of 66 frames with HTTP 404. The frame route then shows a fallback image.
+- Known limit `dead-frames`: A check on 2026-10-09 found that 17 of 65 frames answer HTTP 200 and 48 answer HTTP 404. The frame route shows a fallback image for each dead frame. The file `evidence/frame-census.txt` lists each channel. The owner decides whether 17 cameras justify the pack.
 - Known limit `one-page`: The pack reads one page of 200 rows and ignores the flag exceededTransferLimit. A probe of 2026-10-09 found 83 rows in an area that reaches farther east.
+- Known limit `mutants`: The automatic mutation run of `pensacola.js` has 656 changes, and tests fail for 634 of them. The 22 changes that no test fails have no effect on a real FL511 answer. They are 17 swaps of independent statements or conditions and one change for the numeric description 0. They are also two optional calls that a catch block covers and two changes for the status 299. The file `evidence/automatic-mutations.txt` lists them.
 - Known limit `live-check`: The tests use fake responses. The lead checks one real layer answer and one real frame, and stores the output in `evidence/live-check.txt`.
