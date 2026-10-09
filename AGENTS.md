@@ -26,7 +26,7 @@ Each rule below comes from a defect that reached this project. Obey each one.
 13. Name the change to the code that must make each test fail. Make that change. Report the test that failed. A test that passes against the code and against the opposite of the code proves nothing.
 14. Do not compare a value with the constant that gave it. Compare it with the literal value that the specification names.
 15. Ask whether this code set a property, or whether the property came from somewhere else. A property that comes from a parent object or from a default passes each test of its value and no test of its source.
-16. Write each review finding as a checkbox item of a list. Start its text with the word `FINDING`. Put the severity after that word, as `blocker` or `minor`. The gate reads no other shape. A line with no checkbox is silent, and the gate then passes with no record of the review.
+16. Write each review finding as a checkbox item of a list. Start its text with the word `FINDING`. Put the severity after that word, as `critical`, `major` or `minor`. The gate reads no other shape. A line with no checkbox is silent, and the gate then passes with no record of the review.
 17. Do not check a box for work that is not complete.
 18. Tell the lead when a gate stops correct work. Do not make the gate weaker, and do not change the code to satisfy an instrument that counts it wrongly.
 19. Look at the file again before you report a correction as complete. Give the output of the search that shows it. A report of work that is not done costs a reviewer a full round, and it is worse than slow work.

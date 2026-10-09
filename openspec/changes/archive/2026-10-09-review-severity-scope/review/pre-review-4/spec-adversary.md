@@ -1,0 +1,53 @@
+Verdict: PASS
+
+I read commit b30303efbaec0ec63216ffb6e8985de4ccfd3789 (clone review-severity-scope). I ran no code and no git. Details are in SendMessage parts 1 and 2.
+
+I found no critical and no major fault. The pre-review 3 major is corrected. The sentence "A form of such a word with the suffix -s, -ed or -ing that the lists do not name is also a banned word." is identical in the five places: `ste-adversary.md:76`, `spec.md:7`, `design.md:23`, `review.test.mjs:432` and `mutate-pins.py.txt:15`. `mutate-pins.py.txt` equals the runner in gev-tools. I found no key of `words`, `phrases` or `newWords`, and no -s, -ed or -ing form of one, in the change folder or in the three test titles. The only hits are "requirement" and the inline-code mentions of SHALL, SHOULD and MAY.
+
+Other corrections I checked and found true:
+- Scenarios 034 and 035 now match the agent file, and the tests pin them with literal strings.
+- Design D3 and Known limit `pin-only` now match the exact-set check in `review.test.mjs:445-451`.
+- Tasks and evidence now say "pinned text".
+- No record names "echo" as an owner word, so the deletion of its Known limit is correct.
+- `checks.log` was made at HEAD d7e4e6b8, so the lint covered the final spec, design, proposal and tasks.
+- The counts agree: 20 mutations, 22 test files, 36 tests in `review.test.mjs`, 2 gates tests with `change-review-03`.
+
+New minor findings of this diff (they do not change the verdict):
+- [ ] FINDING minor openspec/changes/review-severity-scope/proposal.md:32-34 The narrowed definition leaves out derived words such as "explicitly" or "execution". Neither the lint nor a Known limit records this. -> Add: "Known limit `derived-words`: A derived word of a banned word, such as an adverb or a noun, is not a banned word. The reviewer rates it as an STE fault."
+- [ ] FINDING minor .claude/agents/ste-adversary.md:76 (also spec.md:7, design.md:23, review.test.mjs:432, mutate-pins.py.txt:15) "with the suffix -s, -ed or -ing": a word that ends in e adds -d or loses the e ("required", "ensuring"), and a word such as "permit" doubles a letter ("permitting"). A strict reader says these words have another suffix. -> "with the ending -s, -ed or -ing, also after a change of spelling", or add this case to Known limit `judgment`.
+- [ ] FINDING minor openspec/changes/review-severity-scope/specs/change-review/spec.md:32 (also ste-adversary.md:27, review.test.mjs:439) "report a form of a banned word" has no qualifier, while line 76 limits "form". No verdict changes, because a derived word is not a banned word under line 76. -> Optional: "report a banned word that the lint does not find", or accept.
+- [ ] FINDING minor openspec/changes/review-severity-scope/specs/change-review/spec.md:20 "the two definitions of this requirement": the requirement holds three definitions. The words "normative text and other text" in the same line fix the referent. -> "with the definitions of normative text and other text in this requirement".
+
+Note on freshness: `mutations.txt` and `spec-files-run.txt` are not in `round4.diff`, so they are byte-equal to 01e745c0. The RUN_END marker was already there, so the content does not prove a new run. The file modification order from Glob puts both files after the spec, design, proposal, tasks and runner edits. That fits a rerun, and I accept it, but I cannot prove it.
+
+
+---- Part 1 of 2 (sent to the lead by SendMessage) ----
+
+Pre-review 4 (spec adversary), part 1 of 2. Tree: commit b30303efbaec0ec63216ffb6e8985de4ccfd3789 (clone review-severity-scope). I ran no code and no git. Verdict in the final message: PASS (no critical, no major).
+
+NEW MINOR FAULTS OF THIS DIFF (none changes the verdict):
+
+M1 proposal.md:32-34 (Known limits). The narrowed definition (ste-adversary.md:76, spec.md:7, design.md:23) covers only the endings -s, -ed and -ing. So a derived word such as "explicitly", "execution", "verification" or "unverified" is no longer a banned word. The lint misses it too: scripts/spec/lib/ste.mjs:159-166 matches exact tokens of the lists. A reviewer now rates such a word as an STE fault, minor, also in normative text. Pre-review 3 said "name any other accepted form in the same sentence", and the round 1 brief listed "prefixed forms". No Known limit records the narrowing. I found no owner record for prefixed or -ly forms (memory owner-decisions-2026-10-06 and -10-08 do not name them), so I rate it minor. -> Add a Known limit, for example: "Known limit `derived-words`: A derived word of a banned word, such as an adverb or a noun, is not a banned word. The reviewer rates it as an STE fault." Only proposal.md changes; no pin changes.
+
+M2 ste-adversary.md:76 (also spec.md:7, design.md:23, review.test.mjs:432, mutate-pins.py.txt:15) "with the suffix -s, -ed or -ing". Many entries of `words` end in e (require, ensure, obtain, terminate, utilize, commence). Their forms add -d or drop the e ("required", "ensuring"). A strict reader says "required" has the suffix -d, so it is not a banned word. A normal reader says it is the -ed form, so it is banned (major in normative text). The same applies to consonant doubling ("permitting", "emitting"). The change itself uses no such form (I searched requir*, ensur*, obtain*, terminat*, utili*, commenc*, execut*, permit*, emit*, retain*, preserv*, renew*, verif*, expos*, dismiss*, explicit*: only "requirement"). I rate it minor because the normal reading is clear. -> "with the ending -s, -ed or -ing" does not fix it; name it: "A form of such a word with the ending -s, -ed or -ing, also after a change of spelling, that the lists do not name is also a banned word." (5 places and a new R7 run.) Or add the case to Known limit `judgment`.
+
+M3 spec.md:32 and ste-adversary.md:27 "report a form of a banned word that the lint does not find" (pinned at review.test.mjs:439). These two places still say "form" with no qualifier; the definition at :76 limits it. A reader who takes "form" as a derived word reports "requirement". That word is not a banned word under :76, so the severity is not major and the verdict does not change. -> Optional: "Report a banned word that the lint does not find." (the definition already includes the forms), or leave it and accept.
+
+M4 spec.md:20 "the two definitions of this requirement". The requirement holds three definitions (normative text, other text, banned word; the banned word has two sentences). The words "normative text and other text" in the same line fix the referent (spec.md:5 and :6), and the test pins exactly those two (review.test.mjs:421-422). So I rate it minor. -> "with the definitions of normative text and other text in this requirement". Only spec.md changes; scenario 034 is ADDED, so there is no rehash problem. The test does not change.
+
+NOT REPORTED (accepted as before): the label "remove the line" in mutations.txt is inexact for R14 (one sentence of line 27); it is a runner label, not a statement of evidence.md.
+
+
+---- Part 2 of 2 ----
+
+Pre-review 4 (spec adversary), part 2 of 2. Tree: commit b30303efbaec0ec63216ffb6e8985de4ccfd3789. I ran no code and no git.
+
+CONFIRMED TRUE (read in the files):
+1. Correction 1: the sentence "A form of such a word with the suffix -s, -ed or -ing that the lists do not name is also a banned word." is character for character equal in ste-adversary.md:76, spec.md:7, design.md:23, review.test.mjs:432 and mutate-pins.py.txt:15 (grep -o finds exactly these 5 places; the old sentence is in no live file). The copy mutate-pins.py.txt equals gev-tools/review-severity-scope/mutate-pins.py (72 lines, same pins). The pin is whole in line 76 of the agent file and appears once. "requirement" has the ending -ment, so it is not a banned form; my search for every key of `words`, `phrases` and `newWords` with the endings -s, -ed, -ing, -d in the change folder (not review/), the agent file and the three test titles finds only "requirement(s)" and the SHALL/SHOULD/MAY mentions in inline code at ste-adversary.md:37.
+2. Correction 2: spec.md:7 has the backticks on `words`, `phrases`, `newWords` and `openspec/ste/words.json`. Scenario 034 THEN and scenario 035 AND are changed as described (spec.md:20, :33). design.md:36 names the exact-set check; it is true (review.test.mjs:445-451 compares the lines that start with "- **major**:" with the four lines). proposal.md:33 pin-only is true.
+3. Correction 3: tasks.md:5,7 "pinned text", tasks.md:9 "to the severity list in the file of the agent" (design.md:4 uses "severity list" for the same list); evidence.md:4 "at one place" is true for all 20 runner mutations (remove, append at the end, one replace); evidence.md:13-14 "Remove pinned text".
+4. Correction 4: no record names "echo" as an owner word. The 16 owner words (memory owner-decisions-2026-10-06) and owner-decisions-2026-10-08 (item 6, the severity rule) do not hold it; it appears only in the pre-review 1 and 2 reports and in the lead's round 1 brief. The deletion of Known limit `echo` removes a record with no source. No finding.
+5. Correction 5, the commit chain from .git/logs/HEAD: d7e4e6b8 "fix(spec): name the suffixes ..." (agent, test, runner copy, spec, design, proposal, tasks), 34b3456d "docs(spec): evidence ... after pre-review 3", b30303ef "file the pre-review 3 reports". checks.log was made at HEAD d7e4e6b8 and its git status lists only evidence.md, checks.log and runs-head.txt as changed, so the lint ran on the final spec, design, proposal and tasks. evidence.md:7 and runs-head.txt agree on d7e4e6b8.
+6. Freshness of mutations.txt and spec-files-run.txt. Neither file is in round4.diff, so both are byte-equal to 01e745c0. The labels cut the pin at 60 characters, and the RUN_END line was already in 01e745c0, so the content and the marker do not prove a new run. The only file-level evidence: a Glob of the change folder, sorted by modification time, puts both files after spec.md, design.md, proposal.md, tasks.md and mutate-pins.py.txt, and before evidence.md and checks.log. That fits a rewrite after the d7e4e6b8 edits. I accept it; I cannot prove it.
+7. Counts: 22 test files in src/tooling/spec; spec-files-run.txt has 21 plus the gates line (2 tests with change-review-03: gates.test.mjs:1914 and :2621); review.test.mjs has 36 tests (run line: 36). 6+8+3+1+2 = 20 mutations, all OK, restored 0 of 3.
+8. Tests 034-036 pin every THEN and AND of the three scenarios with literal strings (rule 14); A18 isolates the exact-set assertion; no child process, no write, no /proc. The pins cannot pass against the old sentence (includes of the whole new sentence). AGENTS.md:29 holds the 036 pin and no "blocker".

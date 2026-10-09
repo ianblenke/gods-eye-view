@@ -1,0 +1,72 @@
+# Mutation runner for the pin tests of review-severity-scope. Run from any directory.
+import re, subprocess, sys
+root = '/home/ianblenke/docker/gev-work/review-severity-scope'
+AGENT = '.claude/agents/ste-adversary.md'
+T34 = 'change-review-034'; T35 = 'change-review-035'; T36 = 'change-review-036'
+pins34 = [
+ 'Normative text is a requirement, a scenario, a rule of AGENTS.md or openspec/config.yaml, a message of the gate or the instructions of an agent.',
+ 'Other text includes proposal.md, design.md, evidence.md, tasks.md, the review.md of the change and the title of a test.',
+ 'Two possible meanings in other text are minor when the text is true under each meaning.',
+ '- **minor**: Two possible meanings in other text, when the text is true under each meaning.',
+ 'A text that does not obey an STE rule is minor, except for the faults in the major items below.',
+ '- **minor**: A text that has one clear meaning but does not obey an STE rule, when no major item above names the fault.',
+]
+pins35 = [
+ 'A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word with the suffix -s, -ed or -ing that the lists do not name is also a banned word.',
+ '- **major**: A banned word in normative text or in a test title.',
+ '- **major**: Two possible meanings in normative text.',
+ '- **major**: A text or a title that does not agree with the code, the specs or the other prose of the change.',
+ '- **major**: A task that gives two instructions, except for actions at the same time.',
+ 'A text that disagrees with the code, the specs or the other prose of the change is major in all text.',
+ 'Give the two meanings, describe the disagreement with the code, the specs or the other prose, or quote the banned word or the two instructions.',
+ 'Report a form of a banned word that the lint does not find.',
+]
+old35 = [
+ 'The text is major only when it gives two meanings or disagrees with the code, the specs or the other prose of the change.',
+ '- **major**: The text has two possible meanings, or the text does not agree with the code, the specs or the other prose of the change.',
+ '- **minor**: The text has one clear meaning, but it does not obey an STE rule.',
+]
+def run_tests():
+    out = subprocess.run("taskset -c 8-11 node --test --test-name-pattern='change-review-03[456]' src/tooling/spec/review.test.mjs 2>&1", shell=True, cwd=root, capture_output=True, text=True).stdout
+    failed = []
+    for l in out.splitlines():
+        m = re.match(r'^✖ \[(change-review-\d+)\]', l)
+        if m and m.group(1) not in failed: failed.append(m.group(1))
+    tests = re.search(r'^ℹ tests (\d+)', out, re.M).group(1)
+    fail = re.search(r'^ℹ fail (\d+)', out, re.M).group(1)
+    return failed, tests, fail
+def mutate(label, file, fn, expect):
+    p = root + '/' + file
+    s = open(p).read()
+    m = fn(s)
+    assert m != s, label
+    open(p, 'w').write(m)
+    try:
+        failed, tests, fail = run_tests()
+    finally:
+        open(p, 'w').write(s)
+    ok = (failed == [expect])
+    lines.append(f"{label}: failed {','.join(failed) or 'none'} ({fail} of {tests}); expected {expect}; {'OK' if ok else 'WRONG'}")
+    return ok
+lines = []
+allok = True
+n = 0
+for tid, pins in ((T34, pins34), (T35, pins35)):
+    for pin in pins:
+        n += 1
+        assert open(root + '/' + AGENT).read().count(pin) == 1, pin
+        allok &= mutate(f"R{n} remove the line [{pin[:60]}]", AGENT, lambda s, pin=pin: s.replace(pin, '', 1), tid)
+for old in old35:
+    n += 1
+    allok &= mutate(f"A{n} put back the old line [{old[:60]}]", AGENT, lambda s, old=old: s.rstrip('\n') + '\n' + old + '\n', T35)
+n += 1
+allok &= mutate(f"A{n} add a fifth major line", AGENT, lambda s: s.replace('- **minor**: Two possible meanings in other text, when the text is true under each meaning.', '- **major**: Two possible meanings in other text.\n- **minor**: Two possible meanings in other text, when the text is true under each meaning.', 1), T35)
+new16 = 'Put the severity after that word, as `critical`, `major` or `minor`.'
+n += 1
+allok &= mutate("B1 rule 16 names blocker and minor", 'AGENTS.md', lambda s: s.replace(new16, 'Put the severity after that word, as `blocker` or `minor`.', 1), T36)
+n += 1
+allok &= mutate("B2 rule 16 adds the word blocker", 'AGENTS.md', lambda s: s.replace(new16, new16 + ' Do not use blocker.', 1), T36)
+failed, tests, fail = run_tests()
+lines.append(f"restored: failed {','.join(failed) or 'none'} ({fail} of {tests})")
+open(root + '/openspec/changes/review-severity-scope/evidence/mutations.txt', 'w').write('\n'.join(lines) + '\n')
+print('\n'.join(lines)); print('ALL OK' if allok else 'SOME WRONG')

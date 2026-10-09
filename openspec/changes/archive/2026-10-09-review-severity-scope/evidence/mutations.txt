@@ -1,0 +1,21 @@
+R1 remove the line [Normative text is a requirement, a scenario, a rule of AGENT]: failed change-review-034 (1 of 3); expected change-review-034; OK
+R2 remove the line [Other text includes proposal.md, design.md, evidence.md, tas]: failed change-review-034 (1 of 3); expected change-review-034; OK
+R3 remove the line [Two possible meanings in other text are minor when the text ]: failed change-review-034 (1 of 3); expected change-review-034; OK
+R4 remove the line [- **minor**: Two possible meanings in other text, when the t]: failed change-review-034 (1 of 3); expected change-review-034; OK
+R5 remove the line [A text that does not obey an STE rule is minor, except for t]: failed change-review-034 (1 of 3); expected change-review-034; OK
+R6 remove the line [- **minor**: A text that has one clear meaning but does not ]: failed change-review-034 (1 of 3); expected change-review-034; OK
+R7 remove the line [A banned word is a word or a phrase in the lists `words`, `p]: failed change-review-035 (1 of 3); expected change-review-035; OK
+R8 remove the line [- **major**: A banned word in normative text or in a test ti]: failed change-review-035 (1 of 3); expected change-review-035; OK
+R9 remove the line [- **major**: Two possible meanings in normative text.]: failed change-review-035 (1 of 3); expected change-review-035; OK
+R10 remove the line [- **major**: A text or a title that does not agree with the ]: failed change-review-035 (1 of 3); expected change-review-035; OK
+R11 remove the line [- **major**: A task that gives two instructions, except for ]: failed change-review-035 (1 of 3); expected change-review-035; OK
+R12 remove the line [A text that disagrees with the code, the specs or the other ]: failed change-review-035 (1 of 3); expected change-review-035; OK
+R13 remove the line [Give the two meanings, describe the disagreement with the co]: failed change-review-035 (1 of 3); expected change-review-035; OK
+R14 remove the line [Report a form of a banned word that the lint does not find.]: failed change-review-035 (1 of 3); expected change-review-035; OK
+A15 put back the old line [The text is major only when it gives two meanings or disagre]: failed change-review-035 (1 of 3); expected change-review-035; OK
+A16 put back the old line [- **major**: The text has two possible meanings, or the text]: failed change-review-035 (1 of 3); expected change-review-035; OK
+A17 put back the old line [- **minor**: The text has one clear meaning, but it does not]: failed change-review-035 (1 of 3); expected change-review-035; OK
+A18 add a fifth major line: failed change-review-035 (1 of 3); expected change-review-035; OK
+B1 rule 16 names blocker and minor: failed change-review-036 (1 of 3); expected change-review-036; OK
+B2 rule 16 adds the word blocker: failed change-review-036 (1 of 3); expected change-review-036; OK
+restored: failed none (0 of 3)
