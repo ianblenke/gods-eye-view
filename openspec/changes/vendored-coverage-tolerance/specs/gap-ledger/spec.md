@@ -8,12 +8,12 @@ A valid adopt line is an adopt line that meets the requirement "Adoption of merg
 The file MUST have a valid adopt line of the checked change.
 The file content MUST equal its content at the `from` commit.
 
-The four conditions above are the adopted-source conditions.
+The conditions on the content hash, the coverage, the adopt line and the file content are the adopted-source conditions.
 This requirement is an exception to the base content condition of "Count tolerance" and to gap-ledger-028, gap-ledger-073 and gap-ledger-074.
 The exception applies only to a file with the adopted-source conditions and no base content.
 For that file, gap-ledger-028 does not direct the ratchet command to write the larger count.
 For that file, gap-ledger-073 does not direct the ratchet command to write ledger entry counts for a smaller covered count.
-For that file, gap-ledger-074 does not direct comparison with no tolerance because the file has no base content.
+For that file, gap-ledger-074 does not direct the gate to compare the counts of that file with no tolerance.
 
 The exception also extends the stale exception sentence of "Ratchet rule" to that file.
 For that file, the clauses in gap-ledger-004, gap-ledger-013 and gap-ledger-054 use the adopted-source conditions instead of the tolerance conditions.
@@ -21,29 +21,31 @@ The stale clauses in gap-ledger-008 and gap-ledger-078 use the adopted-source co
 The count clauses in gap-ledger-057, gap-ledger-069, gap-ledger-070 and gap-ledger-072 use the adopted-source conditions instead of the tolerance conditions.
 The term "tolerance conditions" has only the meaning from the base requirement "Count tolerance".
 
-For a file with base content, the sentence of "Ratchet rule" has its base meaning.
-These scenarios also have their base meanings:
+For a file with base content, the stale exception sentence of "Ratchet rule" has its base meaning.
+For a file with base content, these scenarios also have their base meanings:
 gap-ledger-004, gap-ledger-008, gap-ledger-013, gap-ledger-054, gap-ledger-057, gap-ledger-069, gap-ledger-070, gap-ledger-072 and gap-ledger-078.
 Scenario gap-ledger-071 does not use that term. Its tolerance sizes have their base meaning for all files.
 
-Each command MUST apply the count tolerance of the requirement "Count tolerance" and report its coverage loss errors.
-The gate MUST NOT record a ledger entry as stale for counts inside this count tolerance.
+The gate and the ratchet command MUST apply the count tolerance of the requirement "Count tolerance" and report the coverage loss errors of that requirement.
+The gate MUST NOT record a ledger entry as stale for counts inside the tolerance.
 
-When a file has the tolerance conditions, the ratchet command MUST use toleranceCounts if the file has base content.
+When a file has the tolerance conditions, the ratchet command MUST use toleranceCounts.
 This also applies when the file equals its adopted source.
 When a file has the adopted-source conditions and no base content, the ratchet command MUST use never-worse counts.
 
-For each metric, never-worse counts MUST write current counts when the current not-covered count is smaller than or equal to the ledger entry not-covered count.
+For each metric, the ratchet command MUST write current counts.
+This applies when the current not-covered count is smaller than or equal to the ledger entry not-covered count.
 Current counts are the current not-covered count and total count.
-For a current not-covered count larger than the ledger entry not-covered count, never-worse counts MUST write ledger entry counts.
+For a current not-covered count larger than the ledger entry not-covered count, the ratchet command MUST write ledger entry counts.
 These counts are the ledger entry not-covered count and total count.
-If the ledger entry has no total count for that metric, never-worse counts MUST write the current gap total count.
+
+If the total count is absent from the ledger entry for that metric, the ratchet command MUST write the current gap total count.
 Origin: spec-first
 
 #### Scenario: Allow a file that equals its adopted source `gap-ledger-136`
 - **WHEN** a file meets the adopted-source conditions
 - **THEN** the gate applies the count tolerance of the requirement "Count tolerance"
-- **AND** the gate does not record the ledger entry as stale for counts inside this count tolerance
+- **AND** the gate does not record the ledger entry as stale for counts inside the tolerance
 
 #### Scenario: Use no tolerance after an edit `gap-ledger-137`
 - **WHEN** a file differs from its adopted source or its content hash differs from the hash in its ledger entry
@@ -69,9 +71,10 @@ Origin: spec-first
 #### Scenario: Apply the count tolerance `gap-ledger-142`
 - **WHEN** a file meets the adopted-source conditions
 - **AND** a not-covered line count is above the ledger entry count plus the tolerance
+- **AND** for branches and functions, a not-covered count is above the ledger entry count plus the tolerance
+- **AND** for branches and functions, a covered count is below the ledger entry covered count minus the tolerance
 - **THEN** the gate reports LEDGER-LARGER-GAP for lines
-- **AND** when the not-covered count rises by more than the tolerance and the covered count falls by more than the tolerance
-- **AND** the gate reports LEDGER-LOST-COVERAGE for branches or functions
+- **AND** the gate reports LEDGER-LOST-COVERAGE for branches and functions
 
 #### Scenario: Write never-worse counts `gap-ledger-143`
 - **WHEN** the ratchet command compares a ledger entry with a file that meets the adopted-source conditions
@@ -97,14 +100,13 @@ Origin: spec-first
 - **AND** a current not-covered count is above its ledger entry count inside the tolerance
 - **THEN** the ratchet command writes the ledger entry count and ledger entry total count of that metric
 - **AND** the ratchet command reports no LEDGER-NOT-IN-BASE and no LEDGER-MORE-THAN-BASE
-- **AND** for each metric, compare the current not-covered count with the ledger entry not-covered count
-- **AND** for a smaller or equal current count, the ratchet command writes the current count and current total count
+- **AND** the ratchet command writes current counts for a metric with a current not-covered count at or below the ledger entry not-covered count
 - **AND** the ratchet command does not change the total counts of the current gap
 
 #### Scenario: Write current total counts when ledger total counts are absent `gap-ledger-155`
 - **WHEN** a file has the adopted-source conditions and no base content
 - **AND** its current not-covered count is larger than the ledger entry count inside the tolerance
-- **AND** the ledger entry has no total count for that metric
+- **AND** the total count is absent from the ledger entry for that metric
 - **THEN** the ratchet command writes the ledger entry not-covered count and the current gap total count
 
 #### Scenario: Write a ledger total count of zero for a larger count `gap-ledger-156`
@@ -121,10 +123,10 @@ Both the ledger entry and the current gap MUST have equal content hashes and tru
 
 This requirement is an exception to scenario gap-ledger-078 and to the stale exception sentence of the requirement "Ratchet rule".
 That sentence names the tolerance conditions as an exception to the stale rule.
-The exception applies only to a file with a valid adopt line of the checked change and equal content hashes.
+This requirement gives the total count exception only to a file with a valid adopt line of the checked change and equal content hashes.
 Both records MUST have true coverage from a test that loads the file.
 The ledger entry and current gap MUST also have equal not-covered counts of lines, branches and functions.
-The exception applies to no other file.
+The total count exception applies to no other file.
 
 
 This requirement MUST NOT extend count tolerance to a file that differs from its adopted source.

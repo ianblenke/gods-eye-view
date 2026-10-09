@@ -71,7 +71,7 @@
 - [x] Run the host checks that evidence.md lists under Host commands and verdicts.
 - [x] Run each named mutation.
 - [x] Run automatic mutations on the changed code.
-- [x] Check each document title against the live test titles with the repeated titles script.
+- [x] Check each title that a document repeats against the live test titles with the repeated titles script.
 - [x] Record the self-check in evidence.md.
 - [x] Replay the real CI data on s3-replay3.
 - [x] Commit the code, the tests and the change folder.
@@ -83,15 +83,46 @@
 - [x] Write the test for gap-ledger-155 before its code.
 - [x] Add the total count guard.
 - [x] Write the test for gap-ledger-156.
+
+Historical record:
+
+```text
+Pass 4 wrote the test of gap-ledger-156 after the guard code; the mutation run showed the `||` mutant alive, and the test kills it; the red run is zero-red.log.
+```
+
 - [x] Run the logical operator mutation for gap-ledger-156.
 - [x] Check the ratchet output in the gate test.
 - [x] Run the host checks.
 - [x] Run each named mutation.
 - [x] Run automatic mutations.
-- [x] Check repeated titles.
+- [x] Check each title that a document repeats against the live test titles.
 - [x] Check each test title against its body.
 - [x] Replay the real CI data on s3-replay4.
 - [x] Check the JSON output of openspec show.
 - [x] Validate the change with OpenSpec.
 - [x] Compare document headings with commit 25ba5d2d.
 - [x] Commit the code, the tests and the change folder.
+
+### Pass 5
+
+- [x] Correct the glossary before the other document edits.
+- [x] Correct the pre-review 3 findings.
+- [x] Strengthen the test for gap-ledger-155.
+- [x] Run both wrong metric key mutations before the green ledger test.
+- [x] Read each changed sentence against the code.
+- [x] Check all changed titles against their assertion calls.
+- [x] Check the repeated document titles.
+- [x] Check banned words and their forms.
+- [x] Run the ledger test file.
+- [x] Measure ledger coverage.
+- [x] Run the mutation generator on the changed comment lines.
+- [x] Compare the code AST with parent commit 9357d762.
+- [x] Replay the real CI data on s3-replay5.
+- [x] Run all 240 gate titles with complete output reports.
+- [x] Repeat the three gate runs that stopped before the end.
+- [x] Measure gate coverage.
+- [x] Check the JSON output of openspec show.
+- [x] Validate the active change with OpenSpec.
+- [x] Diff the level 2 and level 3 headings against parent commit 9357d762.
+- [x] Record the Pass 5 evidence.
+- [x] Run STE lint after each correction group.

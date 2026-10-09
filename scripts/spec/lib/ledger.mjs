@@ -230,9 +230,9 @@ function toleranceCounts(entry, gap) {
 /**
  * Select never-worse counts for a file that equals its adopted source without base content.
  * Compare each current not-covered count with the ledger entry not-covered count.
- * A smaller or equal current count uses the current count and total count.
- * A larger current not-covered count uses the ledger entry count and total count.
- * An absent ledger entry total count uses the current gap total count.
+ * For a metric, the function selects current counts when the current not-covered count is smaller than or equal to the ledger entry not-covered count.
+ * Otherwise it selects ledger entry counts.
+ * If the ledger entry total count is absent, it selects the current gap total count.
  */
 function neverWorseCounts(entry, gap) {
   const next = { ...gap, totals: { ...gap.totals } };
@@ -398,9 +398,9 @@ function compareCoverageEntry(file, entry, gap, tolerance = () => 0, waived) {
 
 /**
  * Compare the current gaps with the ledger.
- * A file with count tolerance has true loaded coverage and the hash of its ledger entry.
+ * A file that the tolerance applies to has true loaded coverage and the hash of its ledger entry.
  * The file has the tolerance conditions or the adopted-source conditions.
- * The not-covered line count and the loss of covered branches and functions can differ inside count tolerance.
+ * The not-covered line count and the loss of covered branches and functions can differ inside the tolerance.
  * See "Count tolerance", "Count tolerance for adopted files" and "Total counts for adopted files".
  *
  * @param {object} input

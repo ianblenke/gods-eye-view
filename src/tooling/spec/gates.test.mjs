@@ -2686,7 +2686,7 @@ test('[gap-ledger-137] the gate gives no count tolerance to a file that differs 
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-138] the gate uses no tolerance from the requirement Count tolerance for adopted files for an invalid adopt line', () => {
+test('[gap-ledger-138] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line', () => {
   withMergeFixture((root) => {
     const line = adoptedNoise(root);
     line.from = git(root, 'rev-parse', 'HEAD');
@@ -2707,7 +2707,7 @@ test('[gap-ledger-139] the gate gives no tolerance for an adopt line of another 
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-145] the gate gives no tolerance from the requirement Count tolerance for adopted files to an absent file with a valid adopt line', () => {
+test('[gap-ledger-145] the gate gives no tolerance from the requirement "Count tolerance for adopted files" to an absent file with a valid adopt line', () => {
   withMergeFixture((root) => {
     adoptedNoise(root);
     rmSync(path.join(root, 'src/merged.js'));
@@ -2813,7 +2813,7 @@ test('[gap-ledger-151] the gate records the ledger entry as stale and reports LE
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-154] the ratchet command writes no larger count for a file that equals its adopted source', () => {
+test('[gap-ledger-154] the ratchet command writes no larger count for a file that equals its adopted source and has no base content', () => {
   withMergeFixture(root => {
     adoptedNoise(root);
     const ledgerPath = path.join(root, 'openspec/trace/gaps.json');
