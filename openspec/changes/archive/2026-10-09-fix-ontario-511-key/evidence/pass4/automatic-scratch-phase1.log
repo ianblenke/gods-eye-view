@@ -1,0 +1,13 @@
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/automut/automut.mjs run --root /tmp/ont-pass4-tree --mutants /home/ianblenke/docker/gev-tools/fix-ontario-511/pass4/mutants.json --tests src/data/cctvOntarioKey.test.mjs,src/data/cctvOntarioRows.test.mjs --phase 1 --jobs 2 --slow-ms 1000 --out /home/ianblenke/docker/gev-tools/fix-ontario-511/pass4/results-scratch.json
+baseline worker 1 src/data/cctvOntarioKey.test.mjs: fast 0.89s full 0.79s; skipped 0
+baseline worker 1 src/data/cctvOntarioRows.test.mjs: fast 1.21s full 1.62s; skipped 0
+baseline worker 2 src/data/cctvOntarioKey.test.mjs: fast 1.01s full 0.94s; skipped 0
+baseline worker 2 src/data/cctvOntarioRows.test.mjs: fast 1.14s full 1.50s; skipped 0
+phase 1: 20/140, h63 KILLED
+phase 1: 40/140, h47 KILLED
+phase 1: 60/140, c0 KILLED
+phase 1: 80/140, h73 KILLED
+phase 1: 100/140, h60 KILLED
+phase 1 estimate after 100: 1.0 minutes; classes prioritized, string last
+phase 1: 120/140, h118 KILLED
+phase 1: 140/140, c6 KILLED

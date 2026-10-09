@@ -1,0 +1,11 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvGroundHeights.test.mjs
+✔ a shipped entry attaches only while the nominal pose still matches (14.991795ms)
+✔ the sidecar loads from the source root and tolerates a missing or malformed file (5.989317ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 157.152431

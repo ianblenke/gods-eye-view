@@ -1,0 +1,17 @@
+--- openspec/changes/fix-ontario-511-key/design.md @ede1c684
++++ openspec/changes/fix-ontario-511-key/design.md Pass 5
+@@ -3,6 +3,6 @@
+ ## Health decision
+ ## Documents
+ ## Checks
+-## Pass 4 words
++## Pass 5 words
+ ## Files and measures
+ ## Purpose at archive time
+--- openspec/changes/fix-ontario-511-key/evidence.md @ede1c684
++++ openspec/changes/fix-ontario-511-key/evidence.md Pass 5
+@@ -10,3 +10,4 @@
+ ## Pass 3
+ ## Pass 3B
+ ## Pass 4
++## Pass 5

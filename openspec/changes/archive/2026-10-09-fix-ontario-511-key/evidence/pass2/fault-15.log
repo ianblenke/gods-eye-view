@@ -1,0 +1,95 @@
+✔ [live-sources-006] reject row 0 (33.54401ms)
+✔ [live-sources-006] reject row 1 (4.2278ms)
+✔ [live-sources-006] reject row 2 (4.332772ms)
+✔ [live-sources-006] reject row 3 (4.792736ms)
+✔ [live-sources-006] reject row 4 (4.82787ms)
+✔ [live-sources-006] reject row 5 (4.181179ms)
+✔ [live-sources-006] reject row 6 (3.363467ms)
+✔ [live-sources-006] reject row 7 (3.554873ms)
+✔ [live-sources-006] reject row 8 (4.07733ms)
+✔ [live-sources-006] reject row 9 (5.025193ms)
+✔ [live-sources-006] reject row 10 (2.934028ms)
+✔ [live-sources-006] reject row 11 (2.835563ms)
+✔ [live-sources-006] reject row 12 (3.317879ms)
+✔ [live-sources-006] reject row 13 (7.85893ms)
+✔ [live-sources-006] reject URL 0 (3.896751ms)
+✔ [live-sources-006] reject URL 1 (2.092127ms)
+✔ [live-sources-006] reject URL 2 (1.934432ms)
+✔ [live-sources-006] reject URL 3 (2.390293ms)
+✔ [live-sources-006] reject URL 4 (2.331073ms)
+✔ [live-sources-006] reject URL 5 (1.958188ms)
+✔ [live-sources-006] reject URL 6 (1.836467ms)
+✔ [live-sources-006] reject URL 7 (2.117126ms)
+✔ [live-sources-006] reject URL 8 (2.286961ms)
+✔ [live-sources-006] reject URL 9 (2.40942ms)
+✔ [live-sources-006] reject URL 10 (2.287007ms)
+✔ [live-sources-006] reject URL 11 (2.073142ms)
+✔ [live-sources-006] reject URL 12 (2.085847ms)
+✔ [live-sources-006] accept boundary 41 (5.495722ms)
+✔ [live-sources-006] accept boundary 57.5 (2.477331ms)
+✖ [live-sources-006] select the first view without down (12.165129ms)
+✔ [live-sources-006] select the first down view (4.137998ms)
+✔ [live-sources-007] set all source fields (4.470892ms)
+✔ [live-sources-007] use lower case fields and hash pose (4.983182ms)
+✔ [live-sources-008] apply cap undefined (76.93366ms)
+✔ [live-sources-008] apply cap  (57.175494ms)
+✔ [live-sources-008] apply cap bad (41.90351ms)
+✔ [live-sources-008] apply cap Infinity (34.771542ms)
+✔ [live-sources-008] apply cap 3 (35.457127ms)
+✔ [live-sources-008] apply cap 9.9 (34.93018ms)
+✔ [live-sources-008] apply cap 2000 (34.894617ms)
+✔ [live-sources-008] use the last duplicate (3.0803ms)
+✔ [live-sources-009] reject data null (2.080163ms)
+✔ [live-sources-009] reject data {} (1.858104ms)
+✔ [live-sources-009] reject data "rows" (1.879036ms)
+✔ [live-sources-009] reject data 0 (1.716706ms)
+✔ [live-sources-005] return no rows after a data error (2.668687ms)
+✔ [live-sources-007] use field precedence (2.908887ms)
+✔ [live-sources-008] use each nearest anchor (3.459064ms)
+✔ [live-sources-006] reject null ID fields (1.991051ms)
+✔ [live-sources-007] use roadway and blank direction (2.279607ms)
+✔ [live-sources-006] accept an empty row list (1.86251ms)
+✔ [live-sources-008] log both source counts (2.935909ms)
+✔ [live-sources-006] reject views without a data error (2.28216ms)
+✔ [live-sources-006] accept every ID character (2.105635ms)
+✔ [live-sources-007] convert row values to text and numbers (3.944194ms)
+✔ [live-sources-006] reject a numeric status without a data error (2.319221ms)
+✔ [live-sources-006] accept URL object (2.226847ms)
+✔ [live-sources-006] accept URL edge spaces (1.703613ms)
+✔ [live-sources-006 live-sources-007] select a view with downhill (2.144268ms)
+✔ [live-sources-007] use capitalized text fields first (2.395742ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Latitude (1.974231ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Longitude (1.607213ms)
+✔ [live-sources-006] skip fields after a row guard (2.328118ms)
+✔ [live-sources-007] read latitude before longitude (2.54377ms)
+✔ [live-sources-007] read location before roadway (2.624838ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 64
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 778.830478
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:97:1
+✖ [live-sources-006] select the first view without down (12.165129ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'https://511on.ca/map/Cctv/D'
+  - 'https://511on.ca/map/Cctv/A'
+                               ^
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:119:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'https://511on.ca/map/Cctv/D',
+    expected: 'https://511on.ca/map/Cctv/A',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,22 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvCalgary.test.mjs
+✔ a Calgary row maps to a source on the pinned HTTPS frame host (14.233773ms)
+✔ no heading is derived from the quadrant or the address suffix (7.033542ms)
+✔ rows outside Calgary, off-host frames and unusable geometry are dropped (1.900862ms)
+✔ frame URLs upgrade to HTTPS and ids stay stable (3.679126ms)
+✔ a nameless row still gets a label (1.622498ms)
+✔ the loader reads the keyless catalog and collapses duplicate ids (223.288846ms)
+✔ an upstream failure yields an empty pack and releases the response (9.369097ms)
+✔ the unselected label is the intersection, trimmed to the code width (1.815721ms)
+✔ the catalog fetch refuses redirects and oversized bodies (33.16463ms)
+✔ a reduced catalog cap thins every pack instead of dropping Calgary (9.049736ms)
+✔ the Calgary lane is wired into the catalog and its loader runs (61.798755ms)
+✔ CCTV_CALGARY_ENABLED=0 keeps the lane from being loaded at all (18.431646ms)
+✔ the shipped catalog ceiling is not raised to make room for this pack (0.833204ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 578.828687

@@ -1,0 +1,16 @@
+✔ [live-sources-002] send the key parameter (27.281324ms)
+✔ [live-sources-003] stop without a key (4.608252ms)
+✔ [live-sources-004] reject the invalid key once (151.266287ms)
+✔ [live-sources-005] keep the fetch error secret (3.407141ms)
+✔ [live-sources-005] keep the json error secret (4.166276ms)
+✔ [live-sources-002] map the Ontario rows (39.455027ms)
+✔ [live-sources-005] keep the camera data error secret (3.869408ms)
+✔ [live-sources-004] reject an HTTP error with JSON rows (2.689734ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 333.244941

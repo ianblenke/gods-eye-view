@@ -1,0 +1,31 @@
+{
+  "phaseComplete": {
+    "1": true,
+    "2": true
+  },
+  "phases": {
+    "1": {
+      "KILLED": 131,
+      "SURVIVED": 9,
+      "CRASH": 0,
+      "TIMEOUT": 0
+    },
+    "2": {
+      "KILLED": 0,
+      "SURVIVED": 9,
+      "CRASH": 0,
+      "TIMEOUT": 0
+    }
+  },
+  "survivors": [
+    "h43",
+    "h44",
+    "h91",
+    "h103",
+    "h104",
+    "h113",
+    "h126",
+    "h127",
+    "h130"
+  ]
+}
