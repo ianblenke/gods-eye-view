@@ -72,14 +72,15 @@ Later change `fix-director-bundle-nonnumeric-length` addresses `bundle-nonnumeri
   The bundle source name, bundle file suffix and directory final slash also have this limit.
   The tests reject coordinate lengths 1 and 4; an added length 5 needs a separate test and hand row.
 
-- Known limit `digest-asset-result-check-order`: spec.md lines 383 and 384 state the two clauses below.
-  The clauses after each digest and after the asset result are shown by call counts.
-  A change that moves a signal check between the call and its `await` at bundle.js:94, 154 or 161 passes each test.
+- Known limit `digest-asset-result-check-order`: scenario director-107 states "after each digest" and "after the asset result".
+  Only call counts show the clauses after each digest and after the asset result.
+  The probe in evidence/probe-signal-check-order.txt shows that all four mutations survive the three test files.
   The lead decides in review.md whether to accept this limit by name.
 
-- Known limit `second-text-signal-error`: spec.md line 388 states the clause below.
+- Known limit `second-text-signal-error`: scenario director-107 states "after the text promise settles. They reject cancellation."
   No test makes the second signal check at bundle.js:129 throw.
-  A change that swallows that error passes each test.
+  A change that catches that error and does nothing passes each test.
+  The probe in evidence/probe-signal-check-order.txt shows that all four mutations survive the three test files.
   The lead decides in review.md whether to accept this limit by name.
 
 ### Pass 7 notes

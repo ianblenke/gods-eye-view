@@ -1,0 +1,25 @@
+Command: python3 /tmp/pass13-self-check.py
+Source commit: 52d8eb8acb6021ec857b507f306557152522d14e
+--- openspec/changes/backfill-director-packs-sharing/evidence.md source
++++ openspec/changes/backfill-director-packs-sharing/evidence.md current
+@@ -371,3 +371,4 @@
+ ### Other host checks in Pass 12
+ ### Heading comparison in Pass 12
+ ### Lint in Pass 12
++## Pass 13
+--- openspec/changes/backfill-director-packs-sharing/mutations.md source
++++ openspec/changes/backfill-director-packs-sharing/mutations.md current
+@@ -1927,4 +1927,4 @@
+ ### m480 New
+ ### m480 Test
+ ## Final complete hand command in pass 7
+-### Pass 11 hand count
++## Pass 11 hand count
+--- openspec/changes/backfill-director-packs-sharing/tasks.md source
++++ openspec/changes/backfill-director-packs-sharing/tasks.md current
+@@ -11,3 +11,5 @@
+ ## 12. Correct pre-review 7 findings
+ ## 13. Correct pre-review 8 findings
+ ## 14. Correct pre-review 9 findings
++## 15. Correct pre-review 10 findings
++## 16. Post-ratchet text corrections

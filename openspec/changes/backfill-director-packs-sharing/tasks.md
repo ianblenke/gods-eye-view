@@ -1591,9 +1591,21 @@ The loop table lists 52 collection traversals in six of the seven source files.
 - [x] 14.15 Check each place that repeats a current test title.
 - [x] 14.16 Run lint and the banned word scan.
 - [x] 14.17 Run the host format check.
-- [x] 14.18 Run the OpenSpec check.
-- [x] 14.19 Compare source edits with the source commit.
-- [x] 14.20 Correct the task label.
-- [x] 14.21 Run the predispatch check.
-- [x] 14.22 Run the title check.
+- [x] 14.18 Run the OpenSpec show and validate commands.
+- [x] 14.19 Compare the production files with the source commit.
+- [x] 14.20 Correct the label of task 13.2.
+- [x] 14.21 Run the predispatch checker.
+- [x] 14.22 Run the title scan.
 - [x] 14.23 Compare document headings with the source commit.
+
+## 15. Correct pre-review 10 findings
+
+- [x] 15.1 Correct the prose.
+- [x] 15.2 Add the two Known limits.
+- [x] 15.3 Check the host results.
+
+## 16. Post-ratchet text corrections
+
+- [x] 16.1 Correct the prose.
+- [x] 16.2 Copy the probe files.
+- [x] 16.3 Run the host checks.

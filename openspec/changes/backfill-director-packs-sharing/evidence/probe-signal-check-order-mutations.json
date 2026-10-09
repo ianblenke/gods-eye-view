@@ -1,0 +1,50 @@
+[
+ {
+  "id": "f3a",
+  "file": "src/director/sharing/bundle.js",
+  "old": "    const hash = await digest(bytes);\n    checkAbort(signal);",
+  "new": "    const pendingHash = digest(bytes);\n    checkAbort(signal);\n    const hash = await pendingHash;",
+  "test": [
+   "src/director/packs/backfill.test.mjs",
+   "src/director/packs/packs.test.mjs",
+   "src/director/sharing/sharing.test.mjs"
+  ],
+  "name": "hoist the signal check between the digest call and its await (bundle.js:93-94)"
+ },
+ {
+  "id": "f3b",
+  "file": "src/director/sharing/bundle.js",
+  "old": "      const asset = await withShareSignal(\n        resolveAsset(pack, { signal }),\n        signal,\n      );\n      checkAbort(signal);",
+  "new": "      const pendingAsset = withShareSignal(\n        resolveAsset(pack, { signal }),\n        signal,\n      );\n      checkAbort(signal);\n      const asset = await pendingAsset;",
+  "test": [
+   "src/director/packs/backfill.test.mjs",
+   "src/director/packs/packs.test.mjs",
+   "src/director/sharing/sharing.test.mjs"
+  ],
+  "name": "hoist the signal check between the asset call and its await (bundle.js:150-154)"
+ },
+ {
+  "id": "f3c",
+  "file": "src/director/sharing/bundle.js",
+  "old": "      const sha256 = await digest(bytes);\n      checkAbort(signal);",
+  "new": "      const pendingSha = digest(bytes);\n      checkAbort(signal);\n      const sha256 = await pendingSha;",
+  "test": [
+   "src/director/packs/backfill.test.mjs",
+   "src/director/packs/packs.test.mjs",
+   "src/director/sharing/sharing.test.mjs"
+  ],
+  "name": "hoist the signal check between the export digest call and its await (bundle.js:160-161)"
+ },
+ {
+  "id": "f3d",
+  "file": "src/director/sharing/bundle.js",
+  "old": "  checkAbort(options?.signal);\n  return parseSceneShare(text, options);",
+  "new": "  try {\n    checkAbort(options?.signal);\n  } catch {}\n  return parseSceneShare(text, options);",
+  "test": [
+   "src/director/packs/backfill.test.mjs",
+   "src/director/packs/packs.test.mjs",
+   "src/director/sharing/sharing.test.mjs"
+  ],
+  "name": "swallow the error of the second signal check (bundle.js:129)"
+ }
+]
