@@ -1,0 +1,10 @@
+##### date (UTC), run after the host run, on the same machine
+2026-10-09T20:19Z
+##### node --version (the Node version of the host)
+v26.8.2
+##### cat .node-version (the Node version that the tests need)
+24.21.0
+##### sed -n 12,14p scripts/run-unit-tests.mjs (the function that accepts only Node major 24)
+export function isCalibratedAllocationRuntime(version = process.versions.node) {
+  return Number.parseInt(String(version).split('.')[0], 10) === 24;
+}

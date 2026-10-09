@@ -1,0 +1,4 @@
+F1 remove the argument manifest: fail count 1, test ✖ [qa-scripts-023] checks all tracked QA scripts in this repository
+F2 remove the argument adopts: fail count 1, test ✖ [qa-scripts-023] checks all tracked QA scripts in this repository
+F3 expect 89 tracked scripts: fail count 1, test ✖ [qa-scripts-023] checks all tracked QA scripts in this repository
+restored: fail count 0
