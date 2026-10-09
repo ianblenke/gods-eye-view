@@ -286,4 +286,9 @@ These titles are the names in the red logs. Later corrections renamed some title
 ## 12. Pass 10
 
 - [x] 12.1 Correct the faults that pre-review 7 found.
-- [x] 12.2 Run the host checks and the document checks.
+- [x] 12.2 Run the ownership and ownershipGate host tests, lint, OpenSpec show and OpenSpec validate.
+
+## 13. Pass 11
+
+- [x] 13.1 Correct the faults that pre-review 8 found.
+- [x] 13.2 Run the host checks, the format check and the document checks.

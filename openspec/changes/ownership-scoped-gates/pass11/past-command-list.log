@@ -1,0 +1,33 @@
+Command: rg -n command headers in pass9 and pass10 logs
+Tree read: 9efae8791322871dcb0abf11983b745d066aa3fe
+openspec/changes/ownership-scoped-gates/pass9/final-qaRegister.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/qaRegister.test.mjs
+openspec/changes/ownership-scoped-gates/pass9/lint-tests.log:1:Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass10/validate.log:1:Command: taskset -c 4-7 nice -n 19 openspec validate ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass10/self-check.log:1:Command: python3 /tmp/pass10-check.py
+openspec/changes/ownership-scoped-gates/pass9/lint-records.log:1:Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass10/section-titles.log:1:Command: python3 /tmp/pass10-check.py
+openspec/changes/ownership-scoped-gates/pass9/lint-final.log:1:Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass10/scenario-clauses.log:1:Command: python3 /tmp/pass10-check.py
+openspec/changes/ownership-scoped-gates/pass9/lint-evidence.log:1:Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass10/repeated-titles.log:1:Command: python3 /home/ianblenke/docker/gev-tools/ownership-gates/pass9/check-repeated-titles.py
+openspec/changes/ownership-scoped-gates/pass9/lint-evidence-corrected.log:1:Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass10/ownershipGate.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/ownershipGate.test.mjs
+openspec/changes/ownership-scoped-gates/pass9/lint-docs.log:1:Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass9/final-ownership.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/ownership.test.mjs
+openspec/changes/ownership-scoped-gates/pass10/ownership.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/ownership.test.mjs
+openspec/changes/ownership-scoped-gates/pass9/named-test-count-sum.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-018 src/tooling/spec/ownership.test.mjs
+openspec/changes/ownership-scoped-gates/pass10/lint-final.log:1:Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass9/lint-QA.log:1:Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass9/named-syntax-catch-unit.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-001 src/tooling/spec/ownership.test.mjs
+openspec/changes/ownership-scoped-gates/pass9/lint-QA-corrected.log:1:Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass9/named-syntax-catch-gate.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-001 src/tooling/spec/ownershipGate.test.mjs
+openspec/changes/ownership-scoped-gates/pass10/correction-search.log:1:Command: rg -n second-ledger, waiver, pass, task and title corrections
+openspec/changes/ownership-scoped-gates/pass10/lint-corrections.log:1:Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass9/named-config-adopt-sentence.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-012 src/tooling/spec/ownership.test.mjs
+openspec/changes/ownership-scoped-gates/pass9/format.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/pass2-format-shim.mjs scripts/format.mjs --check
+openspec/changes/ownership-scoped-gates/pass9/validate.log:1:Command: taskset -c 4-7 nice -n 19 openspec validate ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass9/named-absent-message-number.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-001 src/tooling/spec/ownership.test.mjs
+openspec/changes/ownership-scoped-gates/pass9/validate-final.log:1:Command: taskset -c 4-7 nice -n 19 openspec validate ownership-scoped-gates
+openspec/changes/ownership-scoped-gates/pass9/final-v8Merge.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/v8Merge.test.mjs
+openspec/changes/ownership-scoped-gates/pass9/final-ownershipGate.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/ownershipGate.test.mjs
+openspec/changes/ownership-scoped-gates/pass9/final-gates.log:1:Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/gates.test.mjs
