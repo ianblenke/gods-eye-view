@@ -1,0 +1,5 @@
+server/providers/cctv/sources.js:537:    console.warn('[CCTV] Ontario 511 camera data has an error.');
+server/providers/cctv/ontarioRequest.js:10:  const key = (process.env.ONTARIO_511_API_KEY || '').trim();
+server/providers/cctv/ontarioRequest.js:14:      console.warn('[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.');
+server/providers/cctv/ontarioRequest.js:25:    if (!response.ok) throw new Error('Ontario camera request failed');
+server/providers/cctv/ontarioRequest.js:31:        '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',

@@ -1,0 +1,50 @@
+[
+  {
+    "title": "[live-sources-002] send the key parameter",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-003] make no request without a key",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-004] write one warning for an invalid key",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-005] keep the fetch error secret",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-005] keep the json error secret",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-002] map the Ontario rows",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-005] keep the camera data error secret",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-004] return an empty list for an HTTP error with JSON rows",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-002] trim spaces from the key",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-002] use a timeout of 15000 milliseconds",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-002] send the application/json Accept header",
+    "exit": 0
+  },
+  {
+    "title": "[live-sources-005] keep key text inside a fetch error out of the warning",
+    "exit": 0
+  }
+]

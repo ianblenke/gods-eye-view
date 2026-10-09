@@ -1,0 +1,47 @@
+baseline worker 1 src/data/cctvOntarioRows.test.mjs: fast 1.42s full 1.44s; skipped 0
+baseline worker 1 src/data/cctvOntarioKey.test.mjs: fast 0.93s full 0.97s; skipped 0
+phase 1: 20/885, on211 KILLED
+phase 1: 40/885, on6 SURVIVED
+phase 1: 60/885, on238 KILLED
+phase 1: 80/885, on388 KILLED
+phase 1: 100/885, on603 KILLED
+phase 1 estimate after 100: 21.0 minutes; classes prioritized, string last
+phase 1: 120/885, on187 KILLED
+phase 1: 140/885, on631 KILLED
+phase 1: 160/885, on398 KILLED
+phase 1: 180/885, on440 SURVIVED
+phase 1: 200/885, on382 KILLED
+phase 1: 220/885, on745 KILLED
+phase 1: 240/885, on313 SURVIVED
+phase 1: 260/885, on763 KILLED
+phase 1: 280/885, on202 KILLED
+phase 1: 300/885, on470 KILLED
+phase 1: 320/885, on64 KILLED
+phase 1: 340/885, on641 KILLED
+phase 1: 360/885, on673 KILLED
+phase 1: 380/885, on25 KILLED
+phase 1: 400/885, on96 KILLED
+phase 1: 420/885, on474 KILLED
+phase 1: 440/885, on556 KILLED
+phase 1: 460/885, on576 KILLED
+phase 1: 480/885, on697 KILLED
+phase 1: 500/885, on44 KILLED
+phase 1: 520/885, on117 KILLED
+phase 1: 540/885, on177 KILLED
+phase 1: 560/885, on222 KILLED
+phase 1: 580/885, on270 KILLED
+phase 1: 600/885, on315 KILLED
+phase 1: 620/885, on354 SURVIVED
+phase 1: 640/885, on409 KILLED
+phase 1: 660/885, on451 SURVIVED
+phase 1: 680/885, on501 KILLED
+phase 1: 700/885, on609 KILLED
+phase 1: 720/885, on689 KILLED
+phase 1: 740/885, on746 KILLED
+phase 1: 760/885, on784 KILLED
+phase 1: 780/885, on804 SURVIVED
+phase 1: 800/885, on824 SURVIVED
+phase 1: 820/885, on844 KILLED
+phase 1: 840/885, on864 SURVIVED
+phase 1: 860/885, on884 KILLED
+phase 1: 880/885, on629 KILLED

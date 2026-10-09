@@ -1,0 +1,71 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvMediaRange.test.mjs
+✔ single well-formed byte ranges pass through canonicalized (11.915163ms)
+✔ multi-range is dropped so the upstream never answers multipart/byteranges (1.299763ms)
+✔ malformed, non-byte and CR/LF-bearing values are dropped, not forwarded (1.540803ms)
+✔ non-string and empty inputs yield no Range header (2.241691ms)
+✔ every accepted form is bounded to the relay body cap (2.019782ms)
+✔ inverted and unsafe-integer positions are dropped (1.370317ms)
+✔ a canonical range reaches the upstream and its 206 is passed through (154.212386ms)
+✔ an unbounded seek is bounded before it is forwarded (12.147998ms)
+✔ a rejected range is dropped and the request proceeds without one (10.89493ms)
+✔ a rejected range leaves the camera health report untouched (12.908998ms)
+✔ a multi-range request is served whole rather than as multipart (9.858117ms)
+✔ an upstream 416 is reported as the upstream status, not as a proxy error (6.541075ms)
+✔ an upstream that ignores the range still serves its whole body (8.599012ms)
+✔ an oversized declared body is refused even when a bounded range asked for it (20.751549ms)
+✖ a client that disconnects mid-stream stops the upstream read (65.626731ms)
+✖ a client that leaves before the headers arrive cancels the upstream request (11.776629ms)
+✖ a folded CR/LF range never reaches the upstream through a real client (6.052852ms)
+✔ two sequential seeks are served as two partial responses (15.718821ms)
+✔ an upstream that goes silent after its headers is released at the idle deadline (35.878556ms)
+✔ a live feed that keeps producing is not cut off by the idle deadline (40.143865ms)
+✔ a client that cannot keep up is not mistaken for a stalled upstream (16.766345ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 18
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 893.941234
+
+✖ failing tests:
+
+test at src/data/cctvMediaRange.test.mjs:367:1
+✖ a client that disconnects mid-stream stops the upstream read (65.626731ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2306:21)
+      at listenInCluster (node:net:2437:12)
+      at node:net:2666:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at src/data/cctvMediaRange.test.mjs:454:1
+✖ a client that leaves before the headers arrive cancels the upstream request (11.776629ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2306:21)
+      at listenInCluster (node:net:2437:12)
+      at node:net:2666:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at src/data/cctvMediaRange.test.mjs:505:1
+✖ a folded CR/LF range never reaches the upstream through a real client (6.052852ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2306:21)
+      at listenInCluster (node:net:2437:12)
+      at node:net:2666:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }

@@ -1,0 +1,10 @@
+{
+  "hits": [
+    {
+      "file": "openspec/changes/fix-ontario-511-key/evidence.md",
+      "line": 674,
+      "text": "     return prioritized;",
+      "codeQuote": true
+    }
+  ]
+}

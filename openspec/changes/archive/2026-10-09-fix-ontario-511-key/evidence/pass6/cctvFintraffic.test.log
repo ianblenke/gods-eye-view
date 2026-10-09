@@ -1,0 +1,26 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvFintraffic.test.mjs
+[CCTV] Loaded Fintraffic camera sources: 2 live presets across 1 stations (using nearest 2)
+[CCTV] Loaded Fintraffic camera sources: 1 live presets across 1 stations (using nearest 1)
+[CCTV] Loaded Fintraffic camera sources: 1 live presets across 1 stations (using nearest 1)
+[CCTV] Loaded Fintraffic camera sources: 3 live presets across 3 stations (using nearest 3)
+[CCTV] Loaded Fintraffic camera sources: 1 live presets across 1 stations (using nearest 1)
+[CCTV] Loaded Fintraffic camera sources: 40 live presets across 1 stations (using nearest 8)
+✔ Fintraffic loader turns every in-collection preset into one camera (219.206152ms)
+✔ Fintraffic frame URLs are built on the official image origin (5.65518ms)
+✔ Fintraffic loader drops dead stations, uncollected presets and bad ids (9.974882ms)
+✔ Fintraffic ground elevation uses a reported altitude and falls back otherwise (5.623377ms)
+✔ Fintraffic loader identifies itself to Digitraffic and refuses redirects (7.419397ms)
+✔ Fintraffic pack caps itself and fails to an empty list, never a throw (16.852719ms)
+✔ fintrafficCameraName unpacks the machine station name and the view number (1.472095ms)
+✔ isLikelyFinlandCoordinate spans the catalog extent and rejects the rest (1.15098ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 436.091334
+[CCTV] Fintraffic station list redirected; redirects are not followed
+[CCTV] Fintraffic station download error: network down
+[CCTV] Fintraffic station download failed: 503

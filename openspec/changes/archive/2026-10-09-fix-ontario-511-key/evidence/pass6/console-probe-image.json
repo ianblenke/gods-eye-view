@@ -1,0 +1,93 @@
+{
+  "node": "v24.21.0",
+  "results": [
+    {
+      "method": "table",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "group",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "groupCollapsed",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "groupEnd",
+      "watchedVia": [],
+      "direct": []
+    },
+    {
+      "method": "count",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "countReset",
+      "watchedVia": [],
+      "direct": []
+    },
+    {
+      "method": "time",
+      "watchedVia": [],
+      "direct": []
+    },
+    {
+      "method": "timeLog",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "timeEnd",
+      "watchedVia": [
+        "log"
+      ],
+      "direct": []
+    },
+    {
+      "method": "dirxml",
+      "watchedVia": [],
+      "direct": [
+        [
+          "stdout",
+          "probe\n"
+        ]
+      ]
+    },
+    {
+      "method": "trace",
+      "watchedVia": [
+        "error"
+      ],
+      "direct": []
+    },
+    {
+      "method": "assert",
+      "watchedVia": [
+        "warn"
+      ],
+      "direct": []
+    },
+    {
+      "method": "dir",
+      "watchedVia": [
+        "dir"
+      ],
+      "direct": []
+    }
+  ]
+}

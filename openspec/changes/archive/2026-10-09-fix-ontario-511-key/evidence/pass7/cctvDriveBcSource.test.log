@@ -1,0 +1,15 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvDriveBcSource.test.mjs
+✔ DriveBC loader keeps published cameras and builds frame URLs from the camera id (221.648965ms)
+✔ DriveBC loader keeps the cameras nearest Vancouver and Victoria under its cap (15.316063ms)
+✔ DriveBC loader fails soft on HTTP errors, unexpected payloads and network errors (7.743036ms)
+✔ CCTV catalog merges DriveBC cameras and CCTV_DRIVEBC_ENABLED=0 skips the request (75.33204ms)
+✔ default per-pack camera caps fit inside the default catalog cap (1.2087ms)
+✔ DriveBC credit keeps partner attribution and drops operational notes (1.246992ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 503.14015

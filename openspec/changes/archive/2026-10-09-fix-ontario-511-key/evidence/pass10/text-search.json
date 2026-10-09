@@ -1,0 +1,23 @@
+{
+  "command": "git diff 12e359c7; check added prose",
+  "banned_flags": [],
+  "terms": {
+    "real": [],
+    "source": [],
+    "call": [
+      "With an empty cache, each call to the catalog that finds no refresh in progress starts a new refresh. Each new refresh can call the loader."
+    ],
+    "runs": [
+      "Prose lint found paragraph errors in two runs (three errors in all). Paragraph breaks correct each error.",
+      "| R2 | The lint count names two runs and three errors. |"
+    ],
+    "At Pass": [
+      "At Pass 9, the glossary uses the name reset hook for this test helper.",
+      "The empty cache does not meet that condition. At Pass 9, catalog.js lines 156 to 201, lines 245 to 257 and constants.js line 248 support these sentences.",
+      "P3: At Pass 9, the CI limit names the Node versions of the CI matrix and the newest Node 26 release.",
+      "P4: At Pass 9, Known limits name the order of the Pass 5 changes to the tests and to the scenario text. The evidence does not show this order.",
+      "The other matches for the word routes are a file name and old command output. At Pass 10, no current text uses the name test function for the reset hook or the fixture."
+    ],
+    "evidence.md": []
+  }
+}

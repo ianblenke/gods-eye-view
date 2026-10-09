@@ -1,0 +1,14 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/layers/cctv/source.test.mjs
+✔ camera catalog and health use fixed source routes and caller cancellation (174.848355ms)
+✔ camera sources reject malformed snapshots and failures (10.817272ms)
+✔ cancellation while reading a camera response body prevents publication (2.994092ms)
+✔ frame and media URLs preserve registered camera identity and encoded metadata (4.666618ms)
+✔ camera construction is inert and destruction cancels a pending catalog and its visibility listener (30.316095ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6771.141722

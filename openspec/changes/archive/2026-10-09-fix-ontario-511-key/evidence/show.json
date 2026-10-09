@@ -1,0 +1,48 @@
+{
+  "id": "fix-ontario-511-key",
+  "title": "fix-ontario-511-key",
+  "deltaCount": 1,
+  "deltas": [
+    {
+      "spec": "live-sources",
+      "operation": "ADDED",
+      "description": "Add requirement: The Ontario camera pack MUST use an optional server key, make no request without it, and keep the key out of logs and errors.",
+      "requirement": {
+        "text": "The Ontario camera pack MUST use an optional server key, make no request without it, and keep the key out of logs and errors.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the server has `ONTARIO_511_API_KEY`\n- **THEN** the camera request has that value in the `key` parameter\n- **AND** the pack maps the camera rows as before"
+          },
+          {
+            "rawText": "- **WHEN** the server has no key or a blank key and calls the Ontario pack twice\n- **THEN** the pack makes no request and returns an empty list each time\n- **AND** the process writes one warning that names `ONTARIO_511_API_KEY`"
+          },
+          {
+            "rawText": "- **WHEN** the camera endpoint answers HTTP 400 with `Invalid Key` twice\n- **THEN** the pack returns an empty list each time and writes one warning\n- **AND** no log or error has the key text"
+          },
+          {
+            "rawText": "- **WHEN** the fetch or JSON reader throws an error with the key text\n- **THEN** the pack returns an empty list and writes fixed warning text without the key"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The Ontario camera pack MUST use an optional server key, make no request without it, and keep the key out of logs and errors.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the server has `ONTARIO_511_API_KEY`\n- **THEN** the camera request has that value in the `key` parameter\n- **AND** the pack maps the camera rows as before"
+            },
+            {
+              "rawText": "- **WHEN** the server has no key or a blank key and calls the Ontario pack twice\n- **THEN** the pack makes no request and returns an empty list each time\n- **AND** the process writes one warning that names `ONTARIO_511_API_KEY`"
+            },
+            {
+              "rawText": "- **WHEN** the camera endpoint answers HTTP 400 with `Invalid Key` twice\n- **THEN** the pack returns an empty list each time and writes one warning\n- **AND** no log or error has the key text"
+            },
+            {
+              "rawText": "- **WHEN** the fetch or JSON reader throws an error with the key text\n- **THEN** the pack returns an empty list and writes fixed warning text without the key"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

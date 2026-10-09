@@ -1,0 +1,40 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none --test-name-pattern=use each nearest anchor src/data/cctvOntarioRows.test.mjs
+✖ [live-sources-008] use each nearest anchor (49.18976ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 244.844102
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:353:1
+✖ [live-sources-008] use each nearest anchor (49.18976ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'on-0',
+      'on-1',
+      'on-2',
+      'on-3',
+      'on-4',
+  +   'on-control',
+      'on-5',
+  -   'on-control',
+      'on-far'
+    ]
+  
+      at TestContext.<anonymous> (file:///tmp/ont-pass4-tree/src/data/cctvOntarioRows.test.mjs:369:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,24 @@
+README.md:122:Use **Node.js 24.x (24.14.0 or later) or 26.x**. The setup doctor warns about
+README.md:295:| 📹 **CCTV Mesh**            | ~3,600 public cameras projected _into_ the 3D space — Austin · Texas (TxDOT) · California (Caltrans) · London (TfL) · Ontario (511) · Finland (Fintraffic) · British Columbia (DriveBC) · Estonia (Tallinn, Tarktee) · Delaware (DelDOT live video) · New South Wales (Live Traffic NSW) · Calgary. Positions are published; poses are first estimates **you calibrate by dragging a gizmo on the camera itself** | City APIs                               | 🟢                                                                                                  |
+openspec/changes/fix-ontario-511-key/specs/live-sources/spec.md:24:- **AND** the request helper throws no error
+openspec/changes/fix-ontario-511-key/specs/live-sources/spec.md:33:- **AND** the request helper throws no error for a fetch or JSON error
+openspec/changes/fix-ontario-511-key/specs/live-sources/spec.md:34:- **AND** the loader throws no error for a row error
+openspec/changes/fix-ontario-511-key/evidence.md:163:The proposal section titles match the five required section titles in the nearby defect change.
+openspec/changes/fix-ontario-511-key/evidence.md:367:The section title search has the five required proposal section titles in the current file and the adjacent measurement change.
+openspec/changes/fix-ontario-511-key/evidence.md:982:| STE major 6 | At Pass 4, README says that poses are first estimates. The sources publish positions, and a user moves a gizmo. |
+openspec/changes/fix-ontario-511-key/evidence.md:1284:+## 7. Lead checks
+openspec/changes/fix-ontario-511-key/evidence.md:1317:| Spec minor: README | At Pass 5, the CCTV table line has the words from e2437f94, with only the banned noun replaced by first estimates. |
+openspec/changes/fix-ontario-511-key/evidence.md:1586:The four Ontario functions have 87 branch ranges. No branch range has a zero count.
+openspec/changes/fix-ontario-511-key/evidence.md:1686:The section title diff keeps all proposal section titles.
+openspec/changes/fix-ontario-511-key/evidence.md:1687:Design changes Pass 4 words to Pass 5 words. Evidence adds Pass 5. No other section title changes.
+openspec/changes/fix-ontario-511-key/evidence.md:1696:At Pass 5, the lead must run the Node 24.14.0 Docker image checks and both reviews before merge.
+openspec/changes/fix-ontario-511-key/evidence.md:1723:The Node 24.14.0 sentence in Pass 5 has a past-pass prefix. The review reports stay unchanged.
+openspec/changes/fix-ontario-511-key/evidence.md:1732:S3: The README phrase is now "poses are first estimates". Against e2437f94, this phrase removes estimated and replaces the banned noun.
+openspec/changes/fix-ontario-511-key/evidence.md:1743:S15 to S17: The evidence names the old dependency link, the proposal draft, branch ranges and proposal section titles.
+openspec/changes/fix-ontario-511-key/evidence.md:1749:Both copies have five console channels and text-only lists. The live tests have six channels and channel-text pairs.
+openspec/changes/fix-ontario-511-key/tasks.md:87:- [x] Watch the five console channels in both fixtures.
+openspec/changes/fix-ontario-511-key/tasks.md:105:## 7. Pass 5
+openspec/changes/fix-ontario-511-key/tasks.md:123:## 8. Pass 6
+openspec/changes/fix-ontario-511-key/tasks.md:134:- [x] Compare the proposal section titles.
+openspec/changes/fix-ontario-511-key/tasks.md:137:## 9. Lead checks
+openspec/changes/fix-ontario-511-key/design.md:38:## Pass 6 words

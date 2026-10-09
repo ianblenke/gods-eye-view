@@ -1,0 +1,93 @@
+{
+  "command": "git diff 96ccff93 -- change prose; check added lines and current text",
+  "banned_matches": [],
+  "new_evidence_line_numbers": [],
+  "search": {
+    "older Pass 5": [],
+    "another copy": [],
+    "test function": [
+      "The other matches for the word routes are a file name and old command output. At Pass 10, no current text uses the name test function for the reset hook or the fixture."
+    ],
+    "At Pass": [
+      "At Pass 1, the final Ontario file has eight tests, all pass. At Pass 1, the CCTV total is 256 tests.",
+      "At Pass 1, each command returned status 1. The JSON files record the failed test names.",
+      "At Pass 1, taskset -c 0-3 nice -n 19 openspec show fix-ontario-511-key --json prints JSON with one ADDED requirement.",
+      "At Pass 1, the final lint command reports zero errors and 540 warnings.",
+      "At Pass 2, each title below had its scenario tag in the test file. Pass 3 renamed these tests.",
+      "| O1 | At Pass 3, each key test imports a fresh request helper. Each warning test checks the exact text and the absence of the key text. |",
+      "At Pass 3, the final key file has 12 tests. The final Rows test file has 69 tests. Each passes.",
+      "At Pass 3, the final counts use that repeat once and the final key file once:",
+      "At Pass 3, the tests had these titles. Pass 4 renamed five of them.",
+      "At Pass 3, it uses the project addProcess method to combine the 13 copies under the same physical file name.",
+      "The worker told the lead. At Pass 3, the worker made no test change and no gate change to satisfy the instrument.",
+      "At Pass 3, the lead must resolve this issue before the next ratchet can close the change.",
+      "At Pass 3, the first host campaign had 11 key tests. The final campaign has fresh baselines for 12 key tests and 69 row tests.",
+      "At Pass 3, the final output is results-final.json. Each full-test probe passes all 81 Ontario tests.",
+      "At Pass 9, the glossary uses the name reset hook for this test helper.",
+      "| Spec major 2 | At Pass 4, both fixtures watch warn, log, error, info and debug. At Pass 4, scenarios 004 and 005 named console channels and stated that no thrown error escaped the pack. |",
+      "| STE major 6 | At Pass 4, README says that poses are first estimates. The sources publish positions, and a user moves a gizmo. |",
+      "At Pass 4, all 320 tests in 22 files pass. test-summary.json records this total.",
+      "At Pass 5, the scratch tree has no branch. It copies this code and the Pass 5 tests.",
+      "| Spec minor: README | At Pass 5, the lead chose the words from e2437f94 with only a change of the banned noun. See S3. |",
+      "| Spec minor: anchor limits | At Pass 5, Known limits name a seventh distant anchor and an anchor that moves by less than about 3 kilometers. |",
+      "| STE part 2 | The spec names status text, letter case, field choice, the loader result and the view description. At Pass 5, the check that the request helper and the loader throw no error has its own item. |",
+      "At Pass 5, the lead decided to keep the words of that line on main, except for the banned word.",
+      "At Pass 5, this decision overrode the STE replacement.",
+      "At Pass 6, the line has that replacement (see S3). The lead accepts that the line now also drops the word estimated.",
+      "At Pass 6, the lead ran the same probe in the base image (Node v24.21.0). The results are the same (C2).",
+      "At Pass 5, the lead must run the Node 24.14.0 Docker image checks and both reviews before merge.",
+      "The Node 24.14.0 sentence in Pass 5 has an \"At Pass 5,\" prefix. The review reports stay unchanged.",
+      "S13: The no-error item has an \"At Pass 5,\" prefix because C1 changes its scope.",
+      "E1 and S1: The README decision now uses the past tense and an \"At Pass 5,\" prefix.",
+      "At Pass 5, the lead chose the words of the README line. The table line Spec minor: README of the table Corrections of pre-review 3 and the paragraph after that table record this choice.",
+      "The empty cache does not meet that condition. At Pass 9, catalog.js lines 156 to 201, lines 245 to 257 and constants.js line 248 support these sentences.",
+      "P3: At Pass 9, the CI limit names the Node versions of the CI matrix and the newest Node 26 release.",
+      "P4: At Pass 9, Known limits state that the evidence does not show the order of the Pass 5 changes. These changes concern the tests and the scenario text.",
+      "The other matches for the word routes are a file name and old command output. At Pass 10, no current text uses the name test function for the reset hook or the fixture.",
+      "| R5 Names | The Pass 9 text has \"At Pass 9,\" prefixes. The notes on the reset hook use one name. The Pass 3B text \"test helper\" stays as a record. |"
+    ],
+    "P1:": [
+      "P1: The loader sentence names calls from the catalog and the cache that is not empty."
+    ],
+    "P2:": [
+      "P2: The channel limit names only the clauses at spec.md lines 21, 29, 31 and 83."
+    ],
+    "P3:": [
+      "P3: At Pass 9, the CI limit names the Node versions of the CI matrix and the newest Node 26 release."
+    ],
+    "P4:": [
+      "P4: At Pass 9, Known limits state that the evidence does not show the order of the Pass 5 changes. These changes concern the tests and the scenario text."
+    ],
+    "P5:": [
+      "P5: The glossary adds base image and anchor. The host row distinguishes a URL host name."
+    ],
+    "P6:": [
+      "P6: The reset hook and fixture have separate names. The coverage gate still counts the reset hook."
+    ],
+    "P7:": [
+      "P7: The task and evidence state that the live automatic mutations ran after Pass 6."
+    ],
+    "P8:": [
+      "P8: The other text corrections name the request, commit option, test totals and past-pass facts."
+    ],
+    "P9:": [],
+    "R1": [
+      "| R1 README | The note on the README sentence names a table line and a table. It gives no line number. |"
+    ],
+    "R2": [
+      "| R2 Counts | The lint count names two runs and three errors. |"
+    ],
+    "R3": [
+      "| R3 Cache | The proposal names the cache that is not empty and the new refresh that an empty cache starts. |"
+    ],
+    "R4": [
+      "| R4 Copy | One note names the Pass 5 automatic mutation run. |"
+    ],
+    "R5": [
+      "| R5 Names | The Pass 9 text has \"At Pass 9,\" prefixes. The notes on the reset hook use one name. The Pass 3B text \"test helper\" stays as a record. |"
+    ],
+    "R6": [
+      "| R6 Objects | The notes on the check of the files and on the paragraph breaks name the files and the paragraphs. |"
+    ]
+  }
+}

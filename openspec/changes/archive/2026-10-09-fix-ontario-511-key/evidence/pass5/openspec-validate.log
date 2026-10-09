@@ -1,0 +1,2 @@
+Command: taskset -c 8-11 nice -n 19 openspec validate fix-ontario-511-key
+Change 'fix-ontario-511-key' is valid

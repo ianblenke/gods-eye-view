@@ -1,0 +1,21 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvOntarioKey.test.mjs
+✔ [live-sources-002] send the key parameter (25.036904ms)
+✔ [live-sources-003] make no request without a key (7.214691ms)
+✔ [live-sources-004] write one warning for an invalid key (197.484338ms)
+✔ [live-sources-005] keep the fetch error secret (7.755949ms)
+✔ [live-sources-005] keep the json error secret (5.644721ms)
+✔ [live-sources-002] map the Ontario rows (53.517907ms)
+✔ [live-sources-005] keep the camera data error secret (5.501508ms)
+✔ [live-sources-004] return an empty row list for an HTTP error with JSON rows (9.504902ms)
+✔ [live-sources-002] trim spaces from the key (3.78944ms)
+✔ [live-sources-002] use a timeout of 15000 milliseconds (4.273074ms)
+✔ [live-sources-002] send the application/json Accept header (2.921762ms)
+✔ [live-sources-005] keep the key text of a fetch error out of the warning (2.830533ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 455.495056

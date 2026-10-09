@@ -1,0 +1,12 @@
+Command: taskset -c 8-11 nice -n 19 node /home/ianblenke/docker/gev-tools/automut/automut.mjs run --root /tmp/ont-pass5-tree --commit ede1c684 --mutants /home/ianblenke/docker/gev-tools/fix-ontario-511/pass5/mutants.json --tests src/data/cctvOntarioKey.test.mjs,src/data/cctvOntarioRows.test.mjs --phase 2 --jobs 1 --slow-ms 1000 --out /home/ianblenke/docker/gev-tools/fix-ontario-511/pass5/results.json --resume
+baseline worker 1 src/data/cctvOntarioKey.test.mjs: fast 0.84s full 0.83s; skipped 0
+baseline worker 1 src/data/cctvOntarioRows.test.mjs: fast 1.20s full 1.13s; skipped 0
+phase 2: 1/9, h43 SURVIVED
+phase 2: 2/9, h44 SURVIVED
+phase 2: 3/9, h91 SURVIVED
+phase 2: 4/9, h103 SURVIVED
+phase 2: 5/9, h104 SURVIVED
+phase 2: 6/9, h113 SURVIVED
+phase 2: 7/9, h126 SURVIVED
+phase 2: 8/9, h127 SURVIVED
+phase 2: 9/9, h130 SURVIVED

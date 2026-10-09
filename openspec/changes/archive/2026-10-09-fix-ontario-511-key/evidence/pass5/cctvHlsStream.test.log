@@ -1,0 +1,19 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvHlsStream.test.mjs
+✔ playlist parser uses sequence, refuses escaping and unsupported references (25.692043ms)
+✔ downloads reject redirect responses, oversized declared and chunked bodies (195.220987ms)
+✔ one session is reserved before await; disk-free cache and capacity remain bounded (72.337744ms)
+✔ shutdown cancels in-flight downloads and late responses cannot refill cache (5.665077ms)
+✔ idle cleanup stops all polling without a background sweep (30.138996ms)
+✔ agency sequence rollback creates a monotonic local discontinuity (23.804723ms)
+✔ upstream discontinuity tags survive the media parser (1.534805ms)
+✔ a reused agency sequence with changed segment URI cannot remain stale (17.023716ms)
+✔ two consumers share downloads but release and abandoned expiry are independent (57.68298ms)
+✔ an abandoned consumer expires while a renewed consumer keeps the session (11.500492ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 597.380058

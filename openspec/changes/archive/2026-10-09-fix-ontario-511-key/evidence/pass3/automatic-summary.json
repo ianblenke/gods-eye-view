@@ -1,0 +1,13 @@
+{
+  "candidates": 125,
+  "phase_one": {
+    "KILLED": 117,
+    "SURVIVED": 8
+  },
+  "full_test_probes": {
+    "SURVIVED": 8
+  },
+  "crashes": 0,
+  "timeouts": 0,
+  "pending": 0
+}

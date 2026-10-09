@@ -1,0 +1,113 @@
+✔ [live-sources-006] reject row 0 (33.331098ms)
+✔ [live-sources-006] reject row 1 (4.334723ms)
+✔ [live-sources-006] reject row 2 (4.385504ms)
+✔ [live-sources-006] reject row 3 (4.912549ms)
+✔ [live-sources-006] reject row 4 (4.742668ms)
+✔ [live-sources-006] reject row 5 (4.073704ms)
+✔ [live-sources-006] reject row 6 (3.251105ms)
+✔ [live-sources-006] reject row 7 (3.564716ms)
+✔ [live-sources-006] reject row 8 (3.950833ms)
+✔ [live-sources-006] reject row 9 (4.906197ms)
+✔ [live-sources-006] reject row 10 (3.09053ms)
+✔ [live-sources-006] reject row 11 (2.869357ms)
+✔ [live-sources-006] reject row 12 (3.443837ms)
+✔ [live-sources-006] reject row 13 (3.051668ms)
+✔ [live-sources-006] reject URL 0 (7.607934ms)
+✔ [live-sources-006] reject URL 1 (2.057506ms)
+✔ [live-sources-006] reject URL 2 (1.969276ms)
+✔ [live-sources-006] reject URL 3 (2.454832ms)
+✔ [live-sources-006] reject URL 4 (2.154205ms)
+✔ [live-sources-006] reject URL 5 (1.927428ms)
+✔ [live-sources-006] reject URL 6 (1.951623ms)
+✔ [live-sources-006] reject URL 7 (2.231427ms)
+✔ [live-sources-006] reject URL 8 (2.269257ms)
+✔ [live-sources-006] reject URL 9 (2.513276ms)
+✔ [live-sources-006] reject URL 10 (2.457816ms)
+✔ [live-sources-006] reject URL 11 (2.20115ms)
+✔ [live-sources-006] reject URL 12 (2.08679ms)
+✔ [live-sources-006] accept boundary 41 (5.874656ms)
+✔ [live-sources-006] accept boundary 57.5 (2.833758ms)
+✔ [live-sources-006] select the first view without down (4.925065ms)
+✔ [live-sources-006] select the first down view (4.058538ms)
+✔ [live-sources-007] set all source fields (4.724378ms)
+✔ [live-sources-007] use lower case fields and hash pose (5.263537ms)
+✔ [live-sources-008] apply cap undefined (75.944418ms)
+✔ [live-sources-008] apply cap  (54.939251ms)
+✔ [live-sources-008] apply cap bad (42.92422ms)
+✔ [live-sources-008] apply cap Infinity (33.520013ms)
+✔ [live-sources-008] apply cap 3 (32.223267ms)
+✔ [live-sources-008] apply cap 9.9 (33.192536ms)
+✔ [live-sources-008] apply cap 2000 (30.485076ms)
+✖ [live-sources-008] use the last duplicate (9.70367ms)
+✔ [live-sources-009] reject data null (5.495939ms)
+✔ [live-sources-009] reject data {} (1.89929ms)
+✔ [live-sources-009] reject data "rows" (1.864853ms)
+✔ [live-sources-009] reject data 0 (1.720824ms)
+✔ [live-sources-005] return no rows after a data error (2.697264ms)
+✔ [live-sources-007] use field precedence (3.08871ms)
+✔ [live-sources-008] use each nearest anchor (3.726306ms)
+✔ [live-sources-006] reject null ID fields (2.091666ms)
+✔ [live-sources-007] use roadway and blank direction (2.377807ms)
+✔ [live-sources-006] accept an empty row list (2.027868ms)
+✖ [live-sources-008] log both source counts (7.112774ms)
+✔ [live-sources-006] reject views without a data error (2.391227ms)
+✔ [live-sources-006] accept every ID character (2.161684ms)
+✔ [live-sources-007] convert row values to text and numbers (3.876708ms)
+✔ [live-sources-006] reject a numeric status without a data error (2.269488ms)
+✔ [live-sources-006] accept URL object (2.363332ms)
+✔ [live-sources-006] accept URL edge spaces (1.834172ms)
+✔ [live-sources-006 live-sources-007] select a view with downhill (2.269346ms)
+✔ [live-sources-007] use capitalized text fields first (2.470177ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Latitude (2.056133ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Longitude (1.679597ms)
+✔ [live-sources-006] skip fields after a row guard (2.429356ms)
+✔ [live-sources-007] read latitude before longitude (2.656883ms)
+✔ [live-sources-007] read location before roadway (2.651167ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 63
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 736.067915
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:242:1
+✖ [live-sources-008] use the last duplicate (9.70367ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  2 !== 1
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:247:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at src/data/cctvOntarioRows.test.mjs:351:1
+✖ [live-sources-008] log both source counts (7.112774ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   '[CCTV] Loaded Ontario 511 camera sources: 10 enabled (using nearest 8)'
+  -   '[CCTV] Loaded Ontario 511 camera sources: 9 enabled (using nearest 8)'
+    ]
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:356:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

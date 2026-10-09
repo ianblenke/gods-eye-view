@@ -1,0 +1,13 @@
+diff --git a/server/providers/cctv/sources.js b/server/providers/cctv/sources.js
+index f97b9efe..fb206d71 100644
+--- a/server/providers/cctv/sources.js
++++ b/server/providers/cctv/sources.js
+@@ -534,7 +534,7 @@ export async function loadOntarioSourcesFromOpenData() {
+     );
+     return prioritized;
+   } catch {
+-    console.warn('[CCTV] Ontario 511 camera data error.');
++    console.warn('[CCTV] Ontario 511 camera data has an error.');
+     return [];
+   }
+ }

@@ -1,0 +1,21 @@
+Command: NODE_V8_COVERAGE=/tmp/ont-pass3b-v8 taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvOntarioKey.test.mjs
+✔ [live-sources-002] send the key parameter (34.378549ms)
+✔ [live-sources-003] make no request without a key (13.310387ms)
+✔ [live-sources-004] write one warning for an invalid key (274.529471ms)
+✔ [live-sources-005] keep the fetch error secret (8.89675ms)
+✔ [live-sources-005] keep the json error secret (5.562926ms)
+✔ [live-sources-002] map the Ontario rows (69.095671ms)
+✔ [live-sources-005] keep the camera data error secret (8.420691ms)
+✔ [live-sources-004] return an empty list for an HTTP error with JSON rows (4.086857ms)
+✔ [live-sources-002] trim spaces from the key (5.217699ms)
+✔ [live-sources-002] use a timeout of 15000 milliseconds (10.681402ms)
+✔ [live-sources-002] send the application/json Accept header (4.113295ms)
+✔ [live-sources-005] keep key text inside a fetch error out of the warning (3.188517ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 618.439832

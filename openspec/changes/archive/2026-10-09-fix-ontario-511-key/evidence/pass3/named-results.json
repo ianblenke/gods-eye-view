@@ -1,0 +1,106 @@
+[
+  {
+    "mutation": "warn-each-error",
+    "test": "[live-sources-004] write one warning for an invalid key",
+    "exit": 1,
+    "failed": [
+      "[live-sources-004] write one warning for an invalid key"
+    ]
+  },
+  {
+    "mutation": "hide-first-error-warning",
+    "test": "[live-sources-005] keep the fetch error secret",
+    "exit": 1,
+    "failed": [
+      "[live-sources-005] keep the fetch error secret"
+    ]
+  },
+  {
+    "mutation": "put-error-message-in-warning-with-key",
+    "test": "[live-sources-005] keep the fetch error secret",
+    "exit": 1,
+    "failed": [
+      "[live-sources-005] keep the fetch error secret"
+    ]
+  },
+  {
+    "mutation": "put-embedded-error-message-in-warning-with-key",
+    "test": "[live-sources-005] keep key text inside a fetch error out of the warning",
+    "exit": 1,
+    "failed": [
+      "[live-sources-005] keep key text inside a fetch error out of the warning"
+    ]
+  },
+  {
+    "mutation": "put-json-error-message-in-warning-with-key",
+    "test": "[live-sources-005] keep the json error secret",
+    "exit": 1,
+    "failed": [
+      "[live-sources-005] keep the json error secret"
+    ]
+  },
+  {
+    "mutation": "omit-row-error-warning",
+    "test": "[live-sources-005] write the warning for a row error with the key text",
+    "exit": 1,
+    "failed": [
+      "[live-sources-005] write the warning for a row error with the key text"
+    ]
+  },
+  {
+    "mutation": "no-key-trim",
+    "test": "[live-sources-002] trim spaces from the key",
+    "exit": 1,
+    "failed": [
+      "[live-sources-002] trim spaces from the key"
+    ]
+  },
+  {
+    "mutation": "timeout-one",
+    "test": "[live-sources-002] use a timeout of 15000 milliseconds",
+    "exit": 1,
+    "failed": [
+      "[live-sources-002] use a timeout of 15000 milliseconds"
+    ]
+  },
+  {
+    "mutation": "wrong-Accept",
+    "test": "[live-sources-002] send the application/json Accept header",
+    "exit": 1,
+    "failed": [
+      "[live-sources-002] send the application/json Accept header"
+    ]
+  },
+  {
+    "mutation": "accept-x511on.ca",
+    "test": "[live-sources-006] return an empty list for the x511on.ca URL host name",
+    "exit": 1,
+    "failed": [
+      "[live-sources-006] return an empty list for the x511on.ca URL host name"
+    ]
+  },
+  {
+    "mutation": "accept-www.511on.ca",
+    "test": "[live-sources-006] return an empty list for the www.511on.ca URL host name",
+    "exit": 1,
+    "failed": [
+      "[live-sources-006] return an empty list for the www.511on.ca URL host name"
+    ]
+  },
+  {
+    "mutation": "accept-ID-space",
+    "test": "[live-sources-006] return an empty list for an ID with a space",
+    "exit": 1,
+    "failed": [
+      "[live-sources-006] return an empty list for an ID with a space"
+    ]
+  },
+  {
+    "mutation": "accept-ID-non-ASCII",
+    "test": "[live-sources-006] return an empty list for an ID with a non-ASCII character",
+    "exit": 1,
+    "failed": [
+      "[live-sources-006] return an empty list for an ID with a non-ASCII character"
+    ]
+  }
+]
