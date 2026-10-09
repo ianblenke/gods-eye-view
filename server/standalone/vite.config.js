@@ -1,14 +1,21 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig, loadEnv } from 'vite';
+import { resolveAllowedHosts } from '../../build/allowedHosts.js';
 import { createBrowserViteConfig } from '../../build/vite.js';
 import { localProviderPlugins } from '../providers/local.js';
+import { localMcpPlugin } from '../mcp/plugin.js';
 import { apiNotFoundPlugin } from './api-not-found.js';
+import { standaloneVoiceTools } from './voiceTools.js';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 
-/** The production browser plugins: local providers, then the API 404. */
+/** Return the production browser plugins. */
 export function standalonePlugins() {
-  return [...localProviderPlugins(), apiNotFoundPlugin()];
+  return [
+    ...localProviderPlugins({ realtime: { tools: standaloneVoiceTools() } }),
+    localMcpPlugin(),
+    apiNotFoundPlugin(),
+  ];
 }
 
 /** Load this checkout's configuration and attach its local provider middleware. */
@@ -21,8 +28,10 @@ export default defineConfig(({ command, mode }) => {
     plugins: standalonePlugins(),
     googleApiKey: process.env.GOOGLE_MAPS_API_KEY,
     cesiumToken: process.env.CESIUM_ION_TOKEN,
+    mapillaryToken: process.env.MAPILLARY_CLIENT_TOKEN,
     host: process.env.HOST,
     port: process.env.PORT,
+    allowedHosts: resolveAllowedHosts(process.env.GEV_ALLOWED_HOSTS),
     command,
   });
 });

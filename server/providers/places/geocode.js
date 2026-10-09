@@ -1,4 +1,5 @@
 import { keylessGooglePlacesResponse } from './google-key.js';
+import { admitSameSite } from '../common/same-site.js';
 import { clientKey } from '../common/rate-limit.js';
 import { readResponseTextCapped } from '../common/http.js';
 import { validatePlacesCoordinates } from './coordinates.js';
@@ -90,6 +91,7 @@ export function installGoogleGeocodeRoute(
   { resolveApiKey, rateLimiter = null },
 ) {
   middlewares.use('/api/google/geocode', async (req, res) => {
+    if (admitSameSite(req, res)) return;
     if (req.method !== 'GET') {
       // The key is not known yet, so the body has no `configured` flag.
       sendJson(res, 405, {
