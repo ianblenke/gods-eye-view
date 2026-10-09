@@ -1,0 +1,12 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvWarendorf.test.mjs
+✔ Warendorf catalog registers the Marktplatz webcam on official hosts only (17.506569ms)
+✔ Warendorf loader tolerates a missing catalog file (1.819172ms)
+✔ Warendorf loader skips malformed rows without throwing (3.804008ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 178.730848
