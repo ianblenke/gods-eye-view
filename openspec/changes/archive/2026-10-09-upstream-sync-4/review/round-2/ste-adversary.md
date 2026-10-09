@@ -1,8 +1,34 @@
 # Round 2, STE adversary (scope: diff 39198826, tree commit 8152843125343ac3ed85dfc07869f37ba013a67a)
 
+This file holds the final message of the agent as the lead received it (the channel cut it, the tool result says "result truncated"), then the evidence message that the agent sent before it.
+
+## Final message
+
 Verdict: FAIL
 
-The lead copied the verdict from the first line of the message of the agent ("Verdict FAIL (3 majors)"). This file holds that message in full, as the lead received it.
+Tree: commit 8152843125343ac3ed85dfc07869f37ba013a67a, clone `/home/ianblenke/docker/gev-work/upstream-sync-4`, scope `diff 39198826`. Paths are under `openspec/changes/archive/2026-10-09-upstream-sync-4/`. I ran no code. I sent the full evidence to team-lead in one message.
+
+- [ ] FINDING major proposal.md:32 "The upstream code adds three routes. One route starts the program `codex login`. Two routes read the auth file of Codex." This is false, and the "three routes" came from my own round 1 finding m3, which was wrong. `server/providers/openai.js` registers five routes (lines 27, 29, 34, 41, 46). Three of them exist before the merge: hud-summary, debug-log and `/api/realtime/token`. Only oauth-status (`openai.js:41-44`) and oauth-login (`:46-49`) are new. No other changed file registers a route. Both new routes read the auth file (`codex-auth.js:243,262,281`). -> "The upstream code adds two routes. One route starts the program `codex login`. Both routes read the auth file of Codex." The paragraph keeps 6 sentences, which is the limit.
+- [ ] FINDING major proposal.md:38 "Known limit `host-modules`: Some test files need modules that the host does not have." This contradicts evidence.md:15 "no test file lacks a module on the host". `host-run.txt` has no failing line. The real host difference is the Node version. `host-run.txt:126` and `:389` show tests with 0 passed, and both test files call `t.skip` when the Node version is not 24. -> delete the bullet, or write "Known limit `host-skip`: Some tests skip on the host Node version, for example in `src/data/focusAllocations.test.mjs`. The image measures them." I give no count of skipped files.
+- [ ] FINDING major tasks.md:11 Task 2.1 "Run each test file of `src/tooling/spec` on the host, and run the named tests of `gates.test.mjs`." The task has two imperative verbs, so it gives two instructions. This text is my own round 1 replacement, and it was wrong. "the named tests" also has no antecedent in tasks.md. -> "2.1 Run each test file of `src/tooling/spec` on the host, except `gates.test.mjs`." followed by the unnumbered checked item "Run the tests of `gates.test.mjs` with `change-review-03` or `qa-scripts` in their names on the host." Sync 3 used the same style.
+- [ ] FINDING minor tasks.md:3 Task 1.1 "Write the change plan and the delta spec for `qa-scripts-023`." The round 1 tree said "without spec deltas" for the plan commit 7c1a511e, and the delta spec was task 1.6 after the test task 1.5. The round 1 spec adversary mapped 1.1 to 7c1a511e and offered "reorder or accept by name". The new 1.1 contradicts that. It is minor because the reorder was offered and the file exists. -> Choose one: (a) restore 1.1 "without spec deltas" and swap the delta spec task before the register test task, only if the spec text changed before the test text in commit c9047528, or (b) restore the round 1 order and accept the spec adversary's F4 by name in `review.md`.
+- [ ] FINDING minor tasks.md:12 Task 2.2 "each other test file" reads as a reciprocal pronoun. -> "Run each remaining test file under `src` on the host."
+- [ ] FINDING minor proposal.md:30 "covers the two added QA scripts" uses a vague verb. -> "applies to the two added QA scripts."
+
+Round 1 majors:
+- Design first parent: corrected. `design.md:8-10` agrees with `evidence/upstream-check.txt:7-10`.
+- The word "new" and the adopt wording in `proposal.md`: corrected.
+- Host evidence: corrected. `host-run.txt` has 583 test files plus the partial `gates.test.mjs`, which equals the 584 test files found in `src`. `openFreeMap.test.mjs` is at line 433.
+- The qa-scripts-023 conflict with `ownership/spec.md:105`: the AND line is gone from the delta, the main spec and the test. The delta equals the main requirement, and the test title is unchanged.
+
+Other checks:
+- `host-run-head.txt`, `checks.log` and `evidence.md:3,13` all name c9047528.
+- `evidence.md:5` matches `mutations.txt`.
+- `evidence.md:19-22` matches `upstream-check.txt`.
+-
+[result truncated — ask the agent for the rest via SendMessage]
+
+## Evidence message (before the final message)
 
 STE adversary, upstream-sync-4 round 2 (diff 39198826). Tree read: clone /home/ianblenke/docker/gev-work/upstream-sync-4, commit 8152843125343ac3ed85dfc07869f37ba013a67a. Paths are under openspec/changes/archive/2026-10-09-upstream-sync-4/. Verdict FAIL (3 majors). Part 1 of 1: evidence and replacements.
 

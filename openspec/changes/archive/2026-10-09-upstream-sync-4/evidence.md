@@ -12,14 +12,14 @@ The lead ran each test file under `src` on the host, except `gates.test.mjs`. Fo
 
 The runs used the files of commit c9047528. The file `evidence/host-run-head.txt` contains the commit.
 
-The file `evidence/host-run.txt` contains one line for each test file. Each line shows 0 failed tests, and no test file lacks a module on the host. Two files skip all their tests on the host: `src/data/focusAllocations.test.mjs` and `src/overlays/worldOverlayAllocation.test.mjs`. The host has Node 26, and the tests need Node 24. One test of `src/keySetupHardening.test.mjs` runs only on Windows, so it skips on each Linux run.
+The file `evidence/host-run.txt` contains one line for each test file. Each line shows 0 failed tests, and no test file lacks a module on the host. Two files skip all their tests on the host: `src/data/focusAllocations.test.mjs` and `src/overlays/worldOverlayAllocation.test.mjs`. The host has Node 26, and the tests need Node 24. The file `evidence/host-node.txt` shows both versions. One test of `src/keySetupHardening.test.mjs` runs only on Windows, so it skips on each Linux run.
 
 ## Upstream check
 
 The file `evidence/upstream-check.txt` contains the answer of the upstream remote for its main branch and the local ref `upstream/main`. It contains the two parents of the merge commit 4011f2a6 and the number of upstream commits.
 
 It lists the 33 files that the merge changes. The merge adds six of them, and all six are upstream code.
-The last lines show that none of the 33 files is in `openspec/ownership.json`. They also show that the merge changes nothing under `openspec`, `.claude`, `AGENTS.md`, `Makefile` or `scripts/spec`.
+The lines after the list of the 33 files show that none of the 33 files is in `openspec/ownership.json`. They also show that the merge changes nothing under `openspec`, `.claude`, `AGENTS.md`, `Makefile` or `scripts/spec`. The last lines show that the plan commit 7c1a511e holds the delta spec. They also show the order of the plan commit, the merge commit and the test commit.
 
 ## Checks
 
