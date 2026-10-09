@@ -1,0 +1,2 @@
+Command: taskset -c 12-15 nice -n 19 openspec validate backfill-director-packs-sharing
+Change 'backfill-director-packs-sharing' is valid
