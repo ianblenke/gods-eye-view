@@ -18,23 +18,26 @@ An absent current file gives no evidence.
 If the current file differs from its content at the from commit, the file gives no evidence.
 This includes a conflict that a person resolves by hand.
 
-A new file can have count tolerance without base content. Another change or an invalid adopt line gives no count tolerance.
+A file with the adopted-source conditions can have count tolerance without base content. Another change or an invalid adopt line gives no count tolerance.
 The gate still reports LEDGER-ADOPT-FROM and the other adopt errors.
 The gate computes adoptedAsIs before the ratchet command and the ledger comparison.
 The ci command selects the change first. The ci, check and ratchet commands use the same predicate.
 
-The ratchet command uses toleranceCounts for a file with base content, also when adoptedAsIs returns true.
+The ratchet command uses toleranceCounts when a file has the tolerance conditions, also when adoptedAsIs returns true.
 
-For a file that equals its adopted source without base content, the ratchet command uses neverWorseCounts.
-An adopt line has no total counts. The base comparison bounds a new ledger entry by the adopt line not-covered counts.
+For a file with the adopted-source conditions and no base content, the ratchet command uses neverWorseCounts.
+An adopt line has no total counts. compareWithBase bounds a ledger entry without base content by the not-covered counts in the adopt line.
 The covered-count rule of toleranceCounts cannot apply to that file.
 neverWorseCounts selects each metric separately.
 
-A smaller or equal current not-covered count selects the current count and current total count.
-A larger current not-covered count selects the entry count and entry total count.
-The change does not change compareWithBase, compareLedger, toleranceOf or the coverage error rules.
+A current not-covered count smaller than or equal to the ledger entry not-covered count selects current counts.
+Those counts are the current not-covered count and total count.
+A current not-covered count larger than the ledger entry not-covered count selects ledger entry counts.
+Those counts are the ledger entry not-covered count and total count.
+If that total count is absent, neverWorseCounts writes the current gap total count.
+This change leaves compareWithBase, compareLedger, toleranceOf and the coverage error rules as they are.
 
-### Pass 2
+### Total count exception
 
 Commit read: `125dc3ae92f9687a830e230914ec0e2b393dda18`.
 Add the optional adoptedFile predicate to compareLedger. Its default returns false.
@@ -42,14 +45,14 @@ The gate computes adoptedFile from the same valid adopt lines as adoptedAsIs, wi
 
 The gate accepts total differences only with equal hashes, true loaded coverage and equal not-covered counts of lines, branches and functions.
 The requirement "Total counts for adopted files" gives this exception to the stale rule.
-The comparison applies all coverage error rules. The ratchet command applies its existing rule for total counts to files without base content that differ from their adopted source.
+compareLedger applies all coverage error rules. The ratchet command applies its existing rule for total counts to files without base content that differ from their adopted source.
 
 ## Files
 
 Change scripts/spec/lib/ledger.mjs and scripts/spec/gates.mjs.
 Add tests to src/tooling/spec/ledger.test.mjs and src/tooling/spec/gates.test.mjs.
-Keep the first sentence of Count tolerance unchanged. Add a separate requirement for the adopted source content condition.
-The new requirement adds an exception to the base content condition.
+Do not change the first sentence of Count tolerance. Add a separate requirement for the adopted source content condition.
+The requirement "Count tolerance for adopted files" adds an exception to the base content condition.
 
 ## Checks
 
@@ -59,32 +62,36 @@ Measure line, branch and function coverage. Run named mutations and automatic co
 Replay the real CI artifact against a scratch copy of upstream-sync-3.
 Run only the lint command from the gate CLI. The lead runs the ratchet command, image gates and reviews.
 
-### Pass 3 words
+### Pass 4 words
 
 | Word | Meaning |
 | --- | --- |
 | file that equals its adopted source | File with current content equal to its adopted source. |
+| requirement titles | Labels: Count tolerance for adopted files uses adopted-source conditions; Total counts for adopted files uses a valid adopt line. |
 | file with a valid adopt line | File that the valid adopt line names, with any current content. |
-| adopt line | History line that meets Adoption of merged code. |
+| adopt line | History line with the kind adopt. |
+| valid adopt line | Adopt line of the checked change that meets Adoption of merged code. |
+| adopted-source conditions | Loaded file, true coverage, equal ledger content hash, and content equal to its adopted source through a valid adopt line. |
 | adopted source | Content of the file at the `from` commit. |
 | ledger entry | Coverage record in gaps.json. |
 | current gap | Coverage record from the current measurement. |
 | content hash | Hash of file content. |
 | not-covered count | Count of items that tests do not cover. |
 | total count | Count of all measured items. |
-| stale | Entry state that stops the build until the ratchet command runs. |
+| stale | Ledger entry state that stops the build until the ratchet command runs. |
 | tolerance | Allowed count difference. |
-| count tolerance | Limits from the requirement Count tolerance. |
+| count tolerance | Rule from the requirement Count tolerance. |
 | check command | Command that checks the current tree. |
 | ci command | Command that selects the change and checks the current tree. |
 | ratchet command | Command that writes ledger counts and compares the ledger with the base ledger. |
-| merged commit | Commit from a parent other than the first parent of a merge commit. |
-| base commit | Commit that supplies the gate base ledger. |
+| merged commit | A parent of a merge commit, except the first parent. |
+| base commit | The commit that the gate compares with the checked tree. |
 | main commit e2437f94 | Main tree before this change. |
 | pass 1 commit 125dc3ae | Tree after pass 1. |
 | gate | Code that checks the spec and ledger rules. |
+| tolerant file | File with the tolerance conditions or the adopted-source conditions. |
 | toleranceCounts | Function that selects counts for a file with base content and count tolerance. |
-| never-worse counts | Use the current count and total for a smaller or equal not-covered count. Otherwise use the entry count and total. |
+| never-worse counts | Counts that use current counts when the current not-covered count does not exceed the ledger entry not-covered count; otherwise, ledger entry counts. |
 | neverWorseCounts | Function that selects never-worse counts. |
 | adoptedAsIs | Predicate for a file that equals its adopted source. |
 | adoptedFile | Predicate for a file with a valid adopt line. |
@@ -100,19 +107,16 @@ Run only the lint command from the gate CLI. The lead runs the ratchet command, 
 | checkAdopts | Function that checks adopt lines. |
 | toleranceOf | Function that computes the count tolerance. |
 | compareWithBase | Function that compares the ledger with the base ledger. |
-| lead | Person who decides the correction for a design defect. |
-
+| lead | Person who decides design corrections, runs image checks and gets both review passes. |
 | metric | Lines, branches or functions. |
 | history line | JSON object in history.jsonl. |
 | base ledger | Ledger at the base commit. |
 | test | Node test that calls a method of node:assert. |
 | fork | This project with changes to upstream code. |
 | sync | Change that merges upstream code into this project. |
-| CI artifact | Coverage and guard files from the CI command. |
-| covered baseline | Entry total count minus entry not-covered count. |
+| CI artifact | Coverage and guard files from the CI run. |
 | hand-edit check | Base comparison that rejects ledger changes without history evidence. |
 | V8 split | One measured range becomes two ranges. |
-
 | host | Machine that runs Node commands outside the image. |
 | Node process | Process that runs one Node command. |
 | fixture | Temporary Git project for a gate test. |

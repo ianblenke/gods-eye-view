@@ -2686,7 +2686,7 @@ test('[gap-ledger-137] the gate gives no count tolerance to a file that differs 
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-138] the gate uses no tolerance from the adopted source requirement for an invalid adopt line', () => {
+test('[gap-ledger-138] the gate uses no tolerance from the requirement Count tolerance for adopted files for an invalid adopt line', () => {
   withMergeFixture((root) => {
     const line = adoptedNoise(root);
     line.from = git(root, 'rev-parse', 'HEAD');
@@ -2697,7 +2697,7 @@ test('[gap-ledger-138] the gate uses no tolerance from the adopted source requir
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-139] the gate uses no tolerance from the adopted source requirement from another change', () => {
+test('[gap-ledger-139] the gate gives no tolerance for an adopt line of another change', () => {
   withMergeFixture((root) => {
     const line = adoptedNoise(root);
     line.change = 'another';
@@ -2707,7 +2707,7 @@ test('[gap-ledger-139] the gate uses no tolerance from the adopted source requir
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-145] the gate gives no tolerance from the adopted source requirement to an absent file with a valid adopt line', () => {
+test('[gap-ledger-145] the gate gives no tolerance from the requirement Count tolerance for adopted files to an absent file with a valid adopt line', () => {
   withMergeFixture((root) => {
     adoptedNoise(root);
     rmSync(path.join(root, 'src/merged.js'));
@@ -2716,7 +2716,7 @@ test('[gap-ledger-145] the gate gives no tolerance from the adopted source requi
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-146] the gate needs the code file in a valid adopt line', () => {
+test('[gap-ledger-146] the gate gives no tolerance to a code file that no valid adopt line names', () => {
   withMergeFixture((root) => {
     adoptedNoise(root);
     const lines = historyLines(root).filter(line => line.file !== 'src/merged.js');
@@ -2782,7 +2782,7 @@ test('[gap-ledger-147] the gate accepts total differences for a file with a vali
 });
 
 
-test('[gap-ledger-149] the gate needs a valid adopt line for total differences', () => {
+test('[gap-ledger-149] the gate records the ledger entry as stale when no valid adopt line names the file', () => {
   withMergeFixture(root => {
     const line = adoptedTotals(root);
     const lines = historyLines(root).filter(item => item.file !== 'src/merged.js');
@@ -2802,7 +2802,7 @@ test('[gap-ledger-150] the gate ignores another change for total differences', (
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-151] the gate rejects an invalid from commit for total differences', () => {
+test('[gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit', () => {
   withMergeFixture(root => {
     const line = adoptedTotals(root);
     line.from = git(root, 'rev-parse', 'HEAD');
@@ -2817,9 +2817,6 @@ test('[gap-ledger-154] the ratchet command writes no larger count for a file tha
   withMergeFixture(root => {
     adoptedNoise(root);
     const ledgerPath = path.join(root, 'openspec/trace/gaps.json');
-    const ledger = JSON.parse(readFileSync(ledgerPath, 'utf8'));
-    ledger.coverage['src/merged.js'].lines = 0;
-    writeFileSync(ledgerPath, JSON.stringify(ledger) + '\n');
     commitAll(root, 'record adopted counts');
     const splitOptions = {
       ...TOLERANCE_OPTIONS,
@@ -2827,13 +2824,20 @@ test('[gap-ledger-154] the ratchet command writes no larger count for a file tha
         const result = TOLERANCE_OPTIONS.spawn(...args);
         const lcov = path.join(path.dirname(args[1][1]), 'lcov.info');
         const text = readFileSync(lcov, 'utf8');
-        writeFileSync(lcov, text.replace(`SF:${root}/src/merged.js\nLF:100\nLH:100\nBRF:100\nBRH:99`, `SF:${root}/src/merged.js\nLF:100\nLH:100\nBRF:101\nBRH:99`));
+        const split = text.replace(`SF:${root}/src/merged.js\nLF:100\nLH:100\nBRF:100\nBRH:99`, `SF:${root}/src/merged.js\nLF:100\nLH:100\nBRF:101\nBRH:99`);
+        assert.notEqual(split, text);
+        writeFileSync(lcov, split);
         return result;
       },
     };
     const result = run(root, ['ratchet', '--change', 'sync'], splitOptions);
     const next = JSON.parse(readFileSync(ledgerPath, 'utf8')).coverage['src/merged.js'];
     assert.deepEqual([next.branches, next.totals.branches], [1, 100]);
+    assert.equal(next.lines, 0);
+    const written = historyLines(root).filter(line => line.kind === 'coverage' && line.file === 'src/merged.js' && line.metric === 'lines');
+    assert.deepEqual(written.map(line => [line.before, line.after]), [[1, 0]]);
+    assert.match(result.output, /Ratchet: \d+ history lines for sync\./);
+    assert.match(result.output, /Ledger: 0 entries do not match the current gaps\./);
     assert.doesNotMatch(result.output, /ERROR LEDGER-(?:NOT-IN-BASE|MORE-THAN-BASE)/, result.output);
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
