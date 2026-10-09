@@ -429,17 +429,25 @@ test('[change-review-034] gives the severity minor to two possible meanings in o
 
 test('[change-review-035] gives the severity major to the faults that the requirement names', () => {
   pinned(STE_AGENT, [
-    'A banned word is a word or a phrase that `openspec/ste/words.json` lists, or a form of such a word that the list does not name.',
+    'A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word that the lists do not name is also a banned word.',
     '- **major**: A banned word in normative text or in a test title.',
     '- **major**: Two possible meanings in normative text.',
     '- **major**: A text or a title that does not agree with the code, the specs or the other prose of the change.',
     '- **major**: A task that gives two instructions, except for actions at the same time.',
     'A text that disagrees with the code, the specs or the other prose of the change is major in all text.',
     'Give the two meanings, describe the disagreement with the code, the specs or the other prose, or quote the banned word or the two instructions.',
+    'Report a form of a banned word that the lint does not find.',
   ], [
     'The text is major only when it gives two meanings or disagrees with the code, the specs or the other prose of the change.',
     '- **major**: The text has two possible meanings, or the text does not agree with the code, the specs or the other prose of the change.',
     '- **minor**: The text has one clear meaning, but it does not obey an STE rule.',
+  ]);
+  const majorLines = readFileSync(path.join(PROJECT_ROOT, STE_AGENT), 'utf8').split('\n').filter((line) => line.startsWith('- **major**:'));
+  assert.deepEqual(majorLines, [
+    '- **major**: A banned word in normative text or in a test title.',
+    '- **major**: Two possible meanings in normative text.',
+    '- **major**: A text or a title that does not agree with the code, the specs or the other prose of the change.',
+    '- **major**: A task that gives two instructions, except for actions at the same time.',
   ]);
 });
 

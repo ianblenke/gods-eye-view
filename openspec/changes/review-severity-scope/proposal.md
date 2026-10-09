@@ -11,7 +11,7 @@ The owner asked on 2026-10-08 for a severity rule for this case.
 - Give the severity major to a banned word in normative text or in a test title.
 - Keep the severity major for two possible meanings in normative text.
 - Keep the severity major for a text that disagrees with the code, the specs or the other prose.
-- Give the severity major to a task with two instructions.
+- Give the severity major to a task with two instructions, except for actions at the same time.
 - Change rule 16 of `AGENTS.md` to name the severities `critical`, `major` and `minor`.
 
 ## Capabilities
@@ -30,6 +30,5 @@ A session that runs keeps the old agent definitions until it starts again.
 ## Known limits and later changes
 
 - Known limit `judgment`: The reviewer decides if a text is normative text. The lists in the instructions limit this decision.
-- Known limit `pin-only`: The tests pin the sentences that the scenarios name. They do not show how a reviewer applies the sentences.
+- Known limit `pin-only`: The tests pin the sentences that the scenarios name. They do not show how a reviewer applies the sentences, and they do not check where a sentence stands in the file.
 - Known limit `other-files`: The instructions of the spec adversary and the review command do not change.
-- Known limit `echo`: The owner word "echo" is in no list of `openspec/ste/words.json`, so it is not a banned word in this change.

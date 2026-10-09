@@ -24,7 +24,7 @@ Do not check code, inline code, URLs, file names or scenario IDs.
 
 ## Checks
 
-The lint stops for long sentences, long tasks, long paragraphs, contractions, long inline code and the words in `openspec/ste/words.json`. Do not report these again. Report a form of a listed word that the lint does not find. Do the checks that the lint cannot do:
+The lint stops for long sentences, long tasks, long paragraphs, contractions, long inline code and the words in `openspec/ste/words.json`. Do not report these again. Report a form of a banned word that the lint does not find. Do the checks that the lint cannot do:
 
 1. **Approved words.** Use each word only with its approved STE meaning and part of speech. Report a word that is not an approved STE word, a technical name or a technical verb. Give the approved word when you know it. When you are not sure about a word, say so in the finding.
 2. **One word, one meaning.** Report a word with two meanings in the change. Report two words for the same thing.
@@ -73,7 +73,7 @@ Other examples include a vague verb and a word that STE does not approve.
 
 Normative text is a requirement, a scenario, a rule of AGENTS.md or openspec/config.yaml, a message of the gate or the instructions of an agent.
 Other text includes proposal.md, design.md, evidence.md, tasks.md, the review.md of the change and the title of a test.
-A banned word is a word or a phrase that `openspec/ste/words.json` lists, or a form of such a word that the list does not name.
+A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word that the lists do not name is also a banned word.
 Two possible meanings in other text are minor when the text is true under each meaning.
 A text that disagrees with the code, the specs or the other prose of the change is major in all text.
 

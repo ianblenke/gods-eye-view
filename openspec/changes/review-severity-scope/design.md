@@ -7,7 +7,7 @@ Rule 16 of `AGENTS.md` names the severities `blocker` and `minor`. The agents an
 
 ## Goals and non-goals
 
-Give a fault in the words of other text the severity minor, so that the fault does not fail a round.
+Give a fault in the words of other text the severity minor, except for the faults that the requirement names.
 Keep the severity major for a fault that changes a rule.
 Give the severity major to the faults that the requirement names.
 Make rule 16 agree with the agents.
@@ -20,7 +20,7 @@ Do not change the review gate, the verdict rule, the limit of three rounds or th
 The instructions define normative text with a list.
 Normative text is a requirement, a scenario, a rule of `AGENTS.md` or `openspec/config.yaml`, a message of the gate and the instructions of an agent.
 The instructions define other text with a second list. The list includes `proposal.md`, `design.md`, `evidence.md`, `tasks.md`, the `review.md` of the change and the title of a test.
-A banned word is a word or a phrase that `openspec/ste/words.json` lists, or a form of such a word that the list does not name.
+A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word that the lists do not name is also a banned word.
 
 A list lets the reviewer apply one rule. A principle lets the reviewer decide each case.
 
