@@ -40,7 +40,7 @@ Setup doctor, Pinokio fields and key setup do not list `ONTARIO_511_API_KEY`.
 
 The loader writes "Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)" without a key and after a request error.
 In those cases, the loader writes this line each time the catalog calls it.
-The catalog calls the loader at most once in 15 minutes while the cache of the catalog holds a camera object from any pack. No scenario covers those cases.
+The catalog calls the loader at most once in 15 minutes while the cache of the catalog is not empty. No scenario covers the loader without a key or after a request error.
 With an empty cache, each call to the catalog that finds no refresh in progress starts a new refresh. Each new refresh can call the loader.
 
 The status lines of `scripts/dev-fresh.sh` do not show the Ontario key state.
