@@ -17,6 +17,9 @@
 - [ ] 1.15 Write the test for `live-sources-024`.
 - [ ] 1.16 Write the test for `live-sources-025`.
 - [ ] 1.17 Write the test for `live-sources-026`.
+- [ ] 1.18 Write the test for `live-sources-027`.
+- [ ] 1.19 Write the test for `live-sources-028`.
+- [ ] 1.20 Write the test for `live-sources-029`.
 
 ## 2. Write the code
 
@@ -37,16 +40,19 @@
 ## 4. Check on the host
 
 - [ ] 4.1 Run the test file `src/data/cctvPensacola.test.mjs` on the host.
-- [ ] 4.2 Run the named fault of each test and write `evidence/mutations.txt`.
-- [ ] 4.3 Run the four checks of `make precheck` on the host.
-- [ ] 4.4 Run the STE lint on the host.
-- [ ] 4.5 Run `openspec validate cctv-pensacola` on the host.
-- [ ] 4.6 Run each test file of `src/data` and `src/tooling/spec` on the host.
+- [ ] 4.2 Name one fault of the code for each scenario.
+- [ ] 4.3 Run the named fault of each scenario.
+- [ ] 4.4 Write `evidence/mutations.txt` with the result of each fault.
+- [ ] 4.5 Run the four checks of `make precheck` on the host.
+- [ ] 4.6 Run the STE lint on the host.
+- [ ] 4.7 Run `openspec validate cctv-pensacola` on the host.
+- [ ] 4.8 Run each test file of `src/data` and `src/tooling/spec` on the host.
 
 ## 5. Lead work before and in the image
 
-- [ ] 5.1 Check one real layer answer and one real frame, and write `evidence/live-check.txt`.
-- [ ] 5.2 Run `make ratchet CHANGE=cctv-pensacola`.
-- [ ] 5.3 Run the two review agents.
-- [ ] 5.4 Write review.md.
-- [ ] 5.5 Run `make gates CHANGE=cctv-pensacola` on the final tree.
+- [ ] 5.1 Check one real layer answer and one real frame.
+- [ ] 5.2 Write `evidence/live-check.txt` with the output of the check.
+- [ ] 5.3 Run `make ratchet CHANGE=cctv-pensacola`.
+- [ ] 5.4 Run the two review agents.
+- [ ] 5.5 Write review.md.
+- [ ] 5.6 Run `make gates CHANGE=cctv-pensacola` on the final tree.
