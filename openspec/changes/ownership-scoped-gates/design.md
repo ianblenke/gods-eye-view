@@ -285,9 +285,9 @@ The adopt command writes the zero-count record and removes only that file's QA-H
 D9: The Order note states the real test order. Requirements for ownership-045 through ownership-049 have Origin: backfill.
 
 D10: The scenario ownership-038 names the error code and the stable prefix of the message. The init scenario states its early stop.
-
-D11: The source check of the adopt records runs before the ledger comparison. For a source that is not a merge parent, the scenario ownership-055 replaces the file error and the stale ledger entry of gap-ledger-138 and gap-ledger-151.
 The known limits name the source check cost and the absence of a real sync run.
+
+D11: The source check of the adopt records runs before the ledger comparison. The requirement "Adopt record boundary" names the clause of gap-ledger-151 that this check replaces.
 
 ### Purpose after archive
 
