@@ -40,7 +40,8 @@ Setup doctor, Pinokio fields and key setup do not list `ONTARIO_511_API_KEY`.
 
 The loader writes "Loaded Ontario 511 camera sources: 0 enabled (using nearest 0)" without a key and after a request error.
 In those cases, the loader writes this line each time the catalog calls it.
-The catalog calls the loader at most once in 15 minutes while its cache holds a source. No scenario covers those cases.
+The catalog calls the loader at most once in 15 minutes while the cache of the catalog holds a source. No scenario covers those cases.
+With an empty cache, the catalog can call the loader on each call that no current refresh serves.
 
 The status lines of `scripts/dev-fresh.sh` do not show the Ontario key state.
 The lead must run the Docker image checks and both reviews. The separate catalog cap issue stays outside this change.
@@ -65,16 +66,16 @@ These results come from Node v26.8.2 and from Node v24.21.0 in the base image. T
 The scenario 008 test cannot detect a seventh anchor far from all rows.
 It cannot detect that the Windsor anchor moves by less than about 3 kilometers. The row at Windsor is the last of the six rows at anchors.
 
-No worker ran the console probe on Node 24.14.0, the version of the CI job that runs `npm test`.
-The CI job on Node 26.x floats, and only Node v26.8.2 was probed.
+The CI matrix runs `npm test` on Node 24.14.0 and on Node 26.x. No worker ran the console probe on Node 24.14.0.
+The job on Node 26.x uses the newest Node 26 release, and the probe used only Node v26.8.2 of that series.
 
 The clauses of scenarios 004 and 005 that quote the request error text and the row error text name no console channel.
-See spec.md lines 21, 29 and 31.
-The clause of scenario 008 about the loader log line names no console channel (spec.md line 83).
+See the clauses (the file specs/live-sources/spec.md of this change, lines 21, 29 and 31).
+The clause of scenario 008 about the loader log line names no console channel (the same file, line 83).
 The tests assert `console.warn` for the error texts and `console.log` for that line. The lead accepts this.
 
-The evidence does not show the order of the Pass 5 test changes and the Pass 5 changes to the scenario text.
-The lead decides in review.md whether to accept this by name.
+The evidence does not show the order of the Pass 5 changes to the tests and the Pass 5 changes to the scenario text.
+The lead decides in review.md whether to accept this limit by name.
 
 The lead accepts the word image in the Pass 3 and Pass 3B records by name.
 Those records use image for the Docker image.

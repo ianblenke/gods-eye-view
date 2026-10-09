@@ -1,0 +1,24 @@
+Command: git status --short --ignored -- openspec/changes/fix-ontario-511-key
+M  openspec/changes/fix-ontario-511-key/design.md
+M  openspec/changes/fix-ontario-511-key/evidence.md
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/cctvOntarioKey.test.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/cctvOntarioRows.test.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/check-titles.py
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/check-verbs.py
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/code.diff
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/corrections-search.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/format-retry.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/format.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/lint-block-first.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/lint-block-second.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/lint-final.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/lint-group.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/lint-group2.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/lint-group3.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/openspec-show.json
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/openspec-validate.log
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/repeated-titles.json
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/section-titles.diff
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/text-search.json
+A  openspec/changes/fix-ontario-511-key/evidence/pass9/verbs.json
+M  openspec/changes/fix-ontario-511-key/proposal.md
