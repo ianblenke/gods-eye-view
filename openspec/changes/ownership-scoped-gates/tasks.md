@@ -183,12 +183,14 @@ These Pass 5 tests came after code tasks 7.4 through 7.6:
 | 7.11 | ownership-054: a second error in the same QA file | drop-other-error-code |
 | 7.10 | [ownership-052] returns false when Git cannot read the merge parents | source-catch-throw |
 | 7.10 | [ownership-054] accepts only upstream scripts with no current or base QA tag | drop-base-QA-tag, drop-current-QA-tag, drop-QA-class |
-| 7.10 | ownership-031: Git call count for a string outside the hash pattern | hash-regex-true |
+| 7.10 | ownership-031: Git call count for a value outside the hash pattern | hash-regex-true |
 | 7.10 | ownership-054: merged base script with no QA tag | drop-base-QA-producer |
 | 7.12 | ownership-054: absent current QA file | Read every tracked merged QA file (red-absent-QA.log) |
 | 7.13 | ownership-031: prefix before the hash | drop-hash-start-anchor (a0536) |
 | 7.13 | ownership-031: hash with 41 digits | extend-hash-count (a0541) |
 | 7.13 | ownership-054: two base scripts and two new scripts | keep-first-QA-record (g4681) |
+
+Rows 7 and 8 are cases of the test of row 4. The table lists nine rows and seven tests.
 
 The Pass 5 evidence gives the failed test for each named fault.
 The evidence does not show when a task added the other-error loop mode.
@@ -206,7 +208,7 @@ The eight failed tests in the task 7.3 red logs had these titles:
 [ownership-035] prints QA-HEADER for a base QA tag even with an adopt record
 ```
 
-These titles are the names at the time of the red runs. Later corrections renamed some titles; the tags are unchanged.
+These titles are the names in the red logs. Later corrections renamed some titles; the tags are unchanged.
 
 | Scenario | Pass 4 named fault | Test |
 |---|---|---|
@@ -268,3 +270,15 @@ These titles are the names at the time of the red runs. Later corrections rename
 - [x] 9.13 Run OpenSpec show.
 - [x] 9.14 Run OpenSpec validate.
 - [x] 9.15 Compare the final document headings.
+
+## 10. Pass 8
+
+- [x] 10.1 Correct the pre-review 5 clauses and titles.
+- [x] 10.2 Test the nine named faults.
+- [x] 10.3 Complete the host and document checks.
+
+## 11. Pass 9
+
+- [x] 11.1 Correct the pre-review 6 clauses and prose.
+- [x] 11.2 Test the five named fault processes.
+- [x] 11.3 Complete the host and document checks.

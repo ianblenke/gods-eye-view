@@ -35,7 +35,7 @@ test('[ownership-001] accepts the manifest contract', () => fixture(({ root, put
   put('openspec/ownership.json', JSON.stringify(manifest));
   assert.deepEqual(readOwnership(root), { manifest: { version: 1, owned: ['src/own/', 'single.js'] }, errors: [] });
 }));
-test('[ownership-001] rejects each bad manifest field', () => {
+test('[ownership-001] rejects each invalid manifest field', () => {
   for (const bad of [null, [], {}, { ...manifest, version: 2 }, { ...manifest, version: '1' }, { ...manifest, owned: 'src/' }, { ...manifest, extra: 1 }, { ...manifest, owned: ['a', 'a'] }]) {
     assert.throws(() => parseOwnership(JSON.stringify(bad)), /version 1/);
   }
@@ -51,6 +51,8 @@ test('[ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an a
   assert.notEqual(readOwnership(root).errors[0].message.length, 0);
   put('openspec/ownership.json', '{}');
   assert.deepEqual(readOwnership(root).errors, [{ code: 'OWNERSHIP-MANIFEST', file: 'openspec/ownership.json', message: 'Use version 1 and unique safe relative paths in the owned array.' }]);
+  put('openspec/ownership.json', '{');
+  assert.equal(readOwnership(root).errors[0].code, 'OWNERSHIP-MANIFEST');
 }));
 test('[ownership-002] classifies exact paths and directory prefixes', () => {
   for (const file of ['single.js', 'src/own/a.js', 'src/own/sub/a.js']) assert.equal(classify(manifest, file), 'owned');

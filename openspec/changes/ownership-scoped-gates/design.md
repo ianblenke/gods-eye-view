@@ -261,13 +261,15 @@ The gate prints LEDGER-ADOPT-FROM for a null byte in `from`, as for another inva
 
 | Word | Meaning |
 |---|---|
-| coverage item | Measured data for one file: the file name, the hash and the uncovered counts |
+| valid waiver | A waiver record with a positive whole-number count for the same file, the same file hash and the same metric. |
 
 ### Pass 8 words
 
 | Word | Meaning |
 |---|---|
-| check command | The command check of runGates |
+| check command | runGates: command check |
+| reached adopt record | Adopt record with the field reached and the value true (gap-ledger-106) |
+| DA record | One DA line of an LCOV record. |
 
 ## Pass 5 decisions
 
