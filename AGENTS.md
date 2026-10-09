@@ -8,7 +8,7 @@ These rules are for each person and each AI agent that changes this project.
 2. Give each scenario a stable ID. Put the ID at the end of the scenario heading, in backticks.
 3. Write the tests from the scenarios. Put the scenario IDs at the start of each test name. Use a method of `node:assert`, such as `assert.equal`. The gate does not count a direct `assert()` call.
 4. Write the code until the tests pass.
-5. Keep each owned code file that a change adds or edits at 100% line, branch and function coverage. Each owned code file without a ledger entry also needs full coverage. The command `node scripts/spec/gates.mjs report` lists all ledger gaps of both classes. The target is zero owned gaps. Keep 100% line coverage for each line that a change adds or edits in a code file. For a sync, a changed line needs no coverage when it equals the file in the adopt source.
+5. Keep each owned code file that a change adds or edits at 100% line, branch and function coverage. Each owned code file without a ledger entry also needs full coverage. The command `node scripts/spec/gates.mjs report` lists all ledger gaps of both classes. The target is zero owned gaps. Keep 100% line coverage for each line that a change adds or edits in a code file. For a sync, a changed line needs no coverage when it equals the file in the commit that the adopt command names.
 6. Write all new prose in ASD-STE100 Simplified Technical English.
 7. Get a passed review from the two review agents before you merge the change.
 
@@ -33,11 +33,11 @@ Each rule below comes from a defect that reached this project. Obey each one.
 20. Look for the fault that your own correction adds. A correction to prose frequently adds a new fault to the same file. Run `make lint` after each group of corrections.
 21. Use the ledger command `adopt` only for code that a merge commit brought from the upstream project. Do not use it for code that a person wrote in this project. The person who merges a change that uses `adopt` must check the merge commit of that change. The upstream remote must have the second parent of that merge commit. That person must also record the result in `review.md`. Use `adopt` for each file that the merge brings and that has a coverage gap.
 
-22. For a spec change, read the QA lines in the gate output. Avoid a conflict with a listed purpose. Add a header to each new QA script that the fork writes. The gate uses a synthetic header for an upstream QA script with no QA tag in its first comment block. For a script that exists at the base, the base header must also have no QA tag.
+22. For a spec change, read the QA lines in the gate output. Avoid a conflict with a listed purpose. Add a header to each new QA script that the fork writes. The gate uses a synthetic header for an upstream QA script with no QA tag in its first comment block. For a script that exists at the base, the first comment block of the base script must also have no QA tag.
 
-    For a new upstream script with no QA tag, a valid adopt record must name the script. Run the `adopt` command. The command writes the adopt record for that script. The covers item of that header is `unmapped: upstream`.
+    For a new upstream script with no QA tag, a valid adopt record must name the script. Run the `adopt` command. The command writes the adopt record for that script. The covers item of the synthetic header is `unmapped: upstream`.
 
-23. `openspec/ownership.json` lists the owned paths. For each new code file, add its path to the manifest or state the reason for its upstream class in the proposal. The owner reads each removal of an owned path from the manifest.
+23. `openspec/ownership.json` lists the owned paths. For each new code file, add its path to the manifest or state the reason for its upstream class in the proposal. The owner reads each manifest diff that removes an owned path.
 24. For a sync, the two review agents read the files that a person resolved by hand and the change documents. `review.md` lists the files that a person resolved by hand under `Resolved files:`, or states `none`. For a sync, `Scope: full` covers those files and documents. After round one, `Scope: diff <hash>` stays valid.
 25. When a sync breaks a test with a scenario ID for upstream code, retire the scenario or write it again. State the choice in the proposal.
 

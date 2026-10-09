@@ -6,7 +6,7 @@ The owner needs whole-file coverage for changed owned code and owned code withou
 
 ## TERMS
 
-- owned: With a base, a path is owned when the base manifest or the current manifest lists it. Without a base, only the current manifest counts.
+- owned: With a base, a path is owned when the base manifest or the current manifest lists it. Without a base, the gate uses only the current manifest.
 
 - upstream: A path that is not owned.
 
@@ -61,7 +61,7 @@ The scenarios qa-scripts-002, qa-scripts-003 and qa-scripts-023 do not apply wit
 
 The old header checks apply to owned scripts and to the QA register when it has no manifest argument.
 
-The scenario qa-scripts-019 does not apply to a synthetic header. The gate prints the synthetic header advisory when no change name is given.
+The scenario qa-scripts-019 does not apply to a synthetic header. The gate prints the QA advisory when the caller gives no change name.
 
 The report command reads the ledger without a test run and lists code and test gaps by class.
 
@@ -157,7 +157,8 @@ An absent base manifest is empty. An invalid base manifest gives OWNERSHIP-MANIF
 
 The QA register uses a synthetic header for a base script only when the base script has no QA tag in its first comment block.
 For a new script, the QA register needs a valid adopt record.
-A new script that no valid adopt record names, and a script whose base header had a QA tag, keep QA-HEADER.
+A new script that no valid adopt record names keeps QA-HEADER.
+A script whose base script had a QA tag in its first comment block also keeps QA-HEADER.
 
 Git diff uses a 256 MiB output buffer.
 
@@ -177,6 +178,8 @@ The source check returns false for a full hash when Git cannot read the merge pa
 The gate prints LEDGER-ADOPT-FROM for a null byte in `from`, as for another invalid adopt source.
 
 ## Pass 5 words
+
+### Pass 6 words
 
 | Word | File and function, or object |
 |---|---|
@@ -204,19 +207,18 @@ The gate prints LEDGER-ADOPT-FROM for a null byte in `from`, as for another inva
 | gap | Code below full coverage or a test without a scenario ID |
 | owned gap lines | gapReport output for the owned class |
 | measurement | gates.mjs: measure |
-| measure phase | Phase time for the measurement |
+| measurement phase | Phase time that the gate prints under the name measure |
 | merge parent | Parent other than the first parent of a merge after the base |
-| merged commit | Commit that a merge after the base brought |
 | valid adopt record | Record that passes adoptsOf for this change and names a merge parent with its full lowercase hash |
 | source check | ownership.mjs: isAdoptSource |
 | history check | ownership.mjs: validAdoptSources |
-| history parse error | JSON.parse fault in validAdoptSources |
+| JSON parse error in the history | JSON.parse fault in validAdoptSources |
 | diff process | ownership.mjs: changedLines |
 | agent | Person or AI agent that reads the process text |
 | process text | AGENTS.md and openspec/config.yaml |
 | report | Output of the report command |
 | line check | ownership.mjs: coverageFaults |
-| record | One history or measurement data item |
+| LCOV record | One SF block with coverage data in LCOV |
 | file | Path and its current content |
 | waiver | History record that waives a gap |
 | test instance | One run of a test name |
@@ -238,7 +240,7 @@ The gate prints LEDGER-ADOPT-FROM for a null byte in `from`, as for another inva
 | code inventory | inventory.mjs: codeInventory result |
 | line data | Covered DA line numbers from LCOV |
 | changed line | New-side line number in the diff against the base |
-| test run | One Node process that runs one test file |
+| test run | All test processes that the gate starts |
 | assertion | node:assert call counted by the test guard |
 | source option | from option that the adopt command resolves |
 | source hash | Full hash of 40 lowercase hexadecimal digits |
@@ -252,7 +254,6 @@ The gate prints LEDGER-ADOPT-FROM for a null byte in `from`, as for another inva
 | merged file set | git.mjs: changedByCommit result |
 | QA adopt helper | qa-register.mjs: adoptableQaScript |
 | adopt check | ledger.mjs: checkAdopts |
-| record filter | ledger.mjs: adoptsOf |
 | owned coverage check | ownership.mjs: coverageFaults owned file loop |
 | gap report function | ownership.mjs: gapReport |
 
@@ -275,7 +276,7 @@ The known limits name the source check cost and the absence of a real sync run.
 ### Purpose after archive
 
 With a base, a path is owned when the base manifest or the current manifest lists it.
-Without a base, only the current manifest counts.
+Without a base, the gate uses only the current manifest.
 Each owned code file that a change adds or edits, and each owned code file without a ledger entry, needs full coverage.
 Each changed line needs coverage, except a line that equals the file in the adopt source in a sync.
 The report command lists all ledger gaps of both classes.

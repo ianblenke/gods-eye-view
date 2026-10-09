@@ -1,6 +1,6 @@
 ## Why
 
-The owner accepts that strict checks apply to owned code and not to upstream code.
+The owner accepts whole-file coverage checks for owned code only. Each changed line in upstream code still needs coverage.
 
 Changed owned files and owned files without a ledger entry need full coverage. Each changed line needs coverage in every code file.
 
@@ -13,6 +13,8 @@ Upstream code keeps its ledger gap after the merge and the adopt command.
 - Add whole-file checks for changed owned code and owned code without a ledger entry. Check each code diff line.
 
 - Use a synthetic QA header for an upstream script with no current or base QA tag. For a new script, the QA register needs a valid adopt record.
+
+- Make the adopt command write zero-count records for merged upstream QA scripts that meet the QA exception (`ownership-054`).
 
 - Add a gap report by class.
 
@@ -54,13 +56,16 @@ The first review round still uses Scope: full. Later rounds can use Scope: diff 
 
 QA scripts with valid register headers remain outside the code inventory, as before.
 
-Such scripts also stay outside the code inventory.
+Upstream QA scripts with a synthetic header also stay outside the code inventory.
+Before this change, header-less upstream QA scripts were in the code inventory.
+A script with a synthetic header gets no coverage check, COVERAGE-IGNORE check, test-import check or coverage-flag check.
+It also gets no line check, even for lines that a person wrote or resolved by hand.
 
 The owner must review new code outside the manifest and the reason for its class.
 
 Line coverage follows the V8 line result. The line result does not show each branch of an upstream line.
 
-The mutation test tool tests only the mutants on the changed lines. The mutation test tool does not test every old gate statement.
+The automatic mutation tool tests only the mutants on the changed lines. The automatic mutation tool does not test every old gate statement.
 
 The base ledger lists one branch gap in scripts/spec/lib/test-guard.mjs and one in src/layers/osh/index.js.
 
@@ -95,7 +100,7 @@ The gate still accepts a real merge of a branch that a person wrote in this proj
 Rule 21 in AGENTS.md says that a person checks the upstream remote.
 
 A change that removes a path from openspec/ownership.json keeps the path owned for that change, because the base manifest lists it.
-The path is upstream for the next change. The owner rejects each removal of an owned path when the owner reads the manifest diff.
+The path is upstream for the next change. The owner reads each manifest diff that removes an owned path.
 
 The gate does not check manifest entries that match no file. For example, an entry can have a typo or lack its final slash.
 The owner reviews each manifest diff.
@@ -110,4 +115,9 @@ Pass 4 adds the ci and init cases for the known limit L4 of evidence.md. Both ca
 
 A full check run calls mergeParents three times for each valid adopt record. A sync with many adopt records can be slow.
 
-No real sync or upstream class change has run through the new gates. The first sync will be the first real use.
+No real sync, and no change that moves a path to the upstream class, ran through the new gates. The first sync will be the first real use.
+
+The repository-state test qa-scripts-023 calls readQaRegister with no manifest and pins 83 scripts.
+A sync that brings a header-less upstream QA script must update that test and its count in the same change.
+
+The literal "merged upstream commit" stays in the output message that the sync tests pin (S109).

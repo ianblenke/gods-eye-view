@@ -88,7 +88,7 @@ export function validAdoptSources({ root, base, history, baseHistory, change }) 
   const adopts = adoptsOf(history, baseHistory, change);
   for (const record of records) {
     if (typeof record.file !== 'string' || typeof record.from !== 'string' || !isAdoptSource(root, base, record.from)) {
-      const error = new Error('Use an adopt record with a string file, a full lowercase from hash and a source that a merge after the base brought.');
+      const error = new Error('Use an adopt record with a file name and a full lowercase hash in the from field. A merge after the base must bring that hash.');
       error.code = 'LEDGER-ADOPT-FROM';
       throw error;
     }
