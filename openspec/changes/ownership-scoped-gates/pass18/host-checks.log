@@ -1,0 +1,29 @@
+##### git rev-parse HEAD
+768370eb4e3676f8b704edb52da5e1b5186bdd04
+##### git status --short
+ M openspec/changes/ownership-scoped-gates/evidence.md
+ M openspec/changes/ownership-scoped-gates/tasks.md
+ M src/tooling/spec/testGuard.test.mjs
+?? openspec/changes/ownership-scoped-gates/pass18/
+##### node scripts/format.mjs --check
+Checked 1328 source files.
+##### status 0
+##### node scripts/check-import-directions.mjs
+{"modules":968,"portableEntries":76}
+##### status 0
+##### node scripts/check-package-boundaries.mjs
+Checked osh-provider: 1 exports, 13 owned modules.
+Checked osh-control-provider: 1 exports, 14 owned modules.
+Checked osh-layer: 1 exports, 10 owned modules.
+##### status 0
+##### node scripts/check-layer-state-tokens.mjs --base-ref origin/main
+Layer tokens valid against origin/main: 30 published, 0 new.
+##### status 0
+##### node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+WARN STE-WORD-OLD openspec/specs/wind/spec.md:72 Use "closes", not "dismisses"
+WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
+STE: 0 errors, 667 warnings.
+##### status 0
+##### openspec validate ownership-scoped-gates
+Change 'ownership-scoped-gates' is valid
+##### status 0
