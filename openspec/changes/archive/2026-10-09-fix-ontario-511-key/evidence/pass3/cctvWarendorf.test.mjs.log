@@ -1,0 +1,11 @@
+✔ Warendorf catalog registers the Marktplatz webcam on official hosts only (19.843587ms)
+✔ Warendorf loader tolerates a missing catalog file (2.140789ms)
+✔ Warendorf loader skips malformed rows without throwing (5.045127ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 218.057494

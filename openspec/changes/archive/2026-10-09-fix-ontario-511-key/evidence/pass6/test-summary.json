@@ -1,0 +1,13 @@
+{
+  "files": 25,
+  "tests": 336,
+  "sandboxPass": 333,
+  "sandboxFail": 3,
+  "hostRepeat": {
+    "tests": 21,
+    "pass": 21,
+    "fail": 0
+  },
+  "finalPass": 336,
+  "finalFail": 0
+}

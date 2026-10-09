@@ -1,0 +1,18 @@
+[
+  {
+    "mutation": "initial-absent-key",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-003] write the first warning for an absent key (13.876056ms)",
+      "\u2716 [live-sources-003] write the first warning for an absent key (13.876056ms)"
+    ]
+  },
+  {
+    "mutation": "initial-request-error",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-004] write the first warning for an HTTP error (12.682975ms)",
+      "\u2716 [live-sources-004] write the first warning for an HTTP error (12.682975ms)"
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "server/providers/cctv/ontarioRequest.js": {
+    "sha256": "55b4461a49a40ba69b407805cdec304265a2d7fea0f445bedf82b2b13192fc4a",
+    "scratch_matches": true
+  },
+  "server/providers/cctv/sources.js": {
+    "sha256": "9eed31d3b96d63b5854fbd6c795a11857f439680fd7b7fb0d45847c3fc626ae8",
+    "scratch_matches": true
+  },
+  "src/data/cctvOntarioKey.test.mjs": {
+    "sha256": "96faff4e5dc5a05aa4c5e7cbf82a0df2241b3aebcdd08bcb05593883043953fa",
+    "scratch_matches": true
+  },
+  "src/data/cctvOntarioRows.test.mjs": {
+    "sha256": "f3935f50f0079309b104a544e9049d4f2892ff76cb5377a8dc0d3e53e9ecc315",
+    "scratch_matches": true
+  }
+}

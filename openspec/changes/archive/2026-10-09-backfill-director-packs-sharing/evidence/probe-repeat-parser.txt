@@ -1,0 +1,285 @@
+Base commit: 290b5d2.
+The mutation is equivalent for the public API of the module with standard built-in functions.
+The claim covers returned data, error fields, getters and callback calls.
+The claim excludes source text and diagnostic stack locations.
+
+The serializer validates the same text first. The second parser returns that JSON object without a change.
+
+
+Pass 5 extends the input cases.
+
+```js
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { pathToFileURL } from 'node:url';
+import { createHash } from 'node:crypto';
+
+const hash = b => createHash('sha256').update(b).digest('hex');
+const pack = () => ({ id: 'p', version: 1, format: 'geojson', source: { adapter: 'assets', path: 'data/x.json' }, attribution: { text: 'Author', license: 'CC0' }, placement: { altitudeReference: 'ellipsoid' } });
+const project = () => ({ version: 6, scenes: [{ id: 's', dataPacks: [pack()], shots: [{ id: 't', durationSec: 1, holdSec: 0, camera: { lat: 0, lon: 0, alt: 1, pitch: -60 }, layers: {} }] }] });
+const settle = async (call) => { try { return { value: await call() }; } catch (e) { return { error: e?.message, name: e?.name, path: e?.path }; } };
+async function cases(mod, file) {
+ const trace = [], result = [];
+ const observe = (name, fn) => settle(fn).then(value => result.push({ name, ...value }));
+ if (file.endsWith('manifest.js')) {
+   for (const size of [undefined, '1', 1, 0, 1.5]) {
+     const p = new Proxy(pack(), { get(t,k,r) { trace.push(String(k)); return Reflect.get(t,k,r); } });
+     if (size !== undefined) p.byteLength = size;
+     await observe(`size ${String(size)}`, () => mod.validateDataPack(p, 'pack', new Set()));
+   }
+   const p = pack(); p.sha256 = Symbol('digest');
+   await observe('symbol digest', () => mod.validateDataPack(p, 'pack', new Set()));
+   for (const url of ['https://example.org/', 'http://example.org/', 'https://x:y@example.org/?x#y']) {
+     const p = pack(); p.attribution.url = url;
+     await observe(url, () => mod.validateDataPack(p, 'pack', new Set()));
+   }
+   const image = { ...pack(), format: 'image', placement: { bounds: [2, -1, 1, 1], height: 0, altitudeReference: 'ellipsoid' } };
+   const values = [2, -1, 1, 1];
+   image.placement.bounds = new Proxy(values, { get(t,k,r) { if (/^[0-3]$/.test(String(k))) trace.push(`edge ${k}`); return Reflect.get(t,k,r); } });
+   await observe('edge order', () => mod.validateDataPack(image, 'pack', new Set()));
+   for (const placement of [
+     { bounds: [-1, -1, 1, 1], height: '0', altitudeReference: 'ellipsoid' },
+     { bounds: ['-1', -1, 1, 1], height: 0, altitudeReference: 'ellipsoid' },
+   ]) await observe('numeric placement text', () => mod.validateDataPack({ ...pack(), format: 'image', placement }, 'pack', new Set()));
+   const ids = ['p', 'p'];
+   Object.defineProperty(ids, 'some', { get() { trace.push('reference search'); return Array.prototype.some; } });
+   await observe('duplicate references', () => mod.validateSceneDataPacks({ dataPacks: [pack()], shots: [{ dataPackIds: ids }] }, '$'));
+ } else if (file.endsWith('geojson.js')) {
+   class Bytes extends Uint8Array { get byteLength() { trace.push('input byte length'); return super.byteLength; } }
+   const bytesFor = text => new Bytes(new TextEncoder().encode(text));
+   for (const coordinates of [[0, 0], [0, 0, -12000], [0, 0, 1e9], null, [181, 0], [0, 91]]) {
+     const input = { type: 'FeatureCollection', features: [{ type: 'Feature', id: 'p', geometry: { type: 'Point', coordinates } }] };
+     trace.push(`decode ${JSON.stringify(coordinates)}`);
+     await observe('position', () => mod.decodePackGeoJSON(bytesFor(JSON.stringify(input))));
+   }
+   for (const feature of [null, { type: 'NotFeature', id: 'p' }, { type: 'Feature', id: 1 }]) {
+     trace.push(`feature ${JSON.stringify(feature)}`);
+     await observe('feature', () => mod.decodePackGeoJSON(bytesFor(JSON.stringify({ type: 'FeatureCollection', features: [feature] }))));
+   }
+   for (const coordinates of [null, [[0,0],[1,1]], [[0,0],[1,1],[0,0]]]) {
+     await observe('line', () => mod.decodePackGeoJSON(bytesFor(JSON.stringify({ type: 'FeatureCollection', features: [{ type: 'Feature', id: 'p', geometry: { type: 'LineString', coordinates } }] }))));
+   }
+ } else if (file.endsWith('source.js')) {
+   for (const text of ['https://example.org/data/', 'http://example.org/data/', 'https://x:y@example.org/?a#b', 'https://example.org/data']) {
+     const baseUrl = { toString() { trace.push('base input'); return text; } };
+     await observe('directory', async () => {
+       const source = mod.createAssetDirectorySource({ baseUrl, fetchImpl: async (url, options) => {
+         trace.push([url, options.credentials, options.redirect]);
+         return new Response(new Uint8Array([1,2,3]), { headers: { 'content-type': 'application/json' } });
+       } });
+       return [...(await source({ path: 'x' })).bytes];
+     });
+   }
+ } else if (file.endsWith('session.js')) {
+   for (const mode of ['default', 'no source', 'no renderer', 'bad bytes', 'bad handle', 'bad digest', 'success', 'source error', 'cancel', 'late error', 'total']) {
+     let callbacks = [], signal, s, resolve, reject, sourceCalls = 0;
+     const data = { bytes: new Uint8Array([1,2,3]), mimeType: 'application/json' };
+     const source = input => {
+       trace.push(['source', input.path, input.maxBytes]); signal = input.signal;
+       const add = signal.addEventListener.bind(signal);
+       signal.addEventListener = (type, callback, options) => { callbacks.push(callback); trace.push(['listener', type, options]); add(type, callback, options); };
+       Object.defineProperty(signal, 'reason', { configurable: true, get() { trace.push('reason'); return new Error('stop'); } });
+       if (mode === 'total') {
+         const length = ++sourceCalls === 5 ? 1 : 8388608;
+         class Bytes extends Uint8Array { get length() { return length; } }
+         return { bytes: new Bytes([1]) };
+       }
+       if (mode === 'cancel' || mode === 'late error') return new Promise((r,j) => { resolve=r; reject=j; });
+       if (mode === 'source error') return Promise.reject(new Error('source'));
+       return mode === 'bad bytes' ? { bytes: null } : data;
+     };
+     const adapter = input => { trace.push(['renderer', input.pack.id, input.anchors.length]); return mode === 'bad handle' ? null : { dispose() { trace.push('dispose'); } }; };
+     s = mode === 'default' ? mod.createDataPackSession() : mod.createDataPackSession({ sources: mode === 'no source' ? {} : { assets: source }, adapters: mode === 'no renderer' ? {} : { geojson: adapter } });
+     const p = pack(); if (mode === 'bad digest') p.sha256 = '0'.repeat(64);
+     const work = settle(() => s.load(mode === 'total' ? Array.from({ length: 5 }, (_, i) => ({ ...p, id: `p${i}` })) : [p]));
+     if (mode === 'cancel' || mode === 'late error') s.clear();
+     result.push({ name: mode, ...(await work), state: s.getState() });
+     if (mode === 'cancel') resolve(data);
+     if (mode === 'late error') reject(new Error('late'));
+     await new Promise(r => setImmediate(r));
+     for (const callback of callbacks) { callback(); callback(); }
+     s.destroy();
+   }
+   for (const args of [undefined, { sources: undefined }, { adapters: undefined }]) {
+     const s = mod.createDataPackSession(args);
+     result.push({ name: 'defaults', ...(await settle(() => s.load([]))), state: s.getState() }); s.destroy();
+   }
+ } else if (file.endsWith('bundle.js')) {
+   const options = { get signal() { trace.push('signal argument'); return { throwIfAborted() { trace.push('JSON signal'); } }; } };
+   await observe('invalid JSON', () => mod.parseSceneShare('{', options));
+   await observe('default options', () => mod.parseSceneShare('{"version":6,"scenes":[]}'));
+   const makeBundle = () => {
+     const p = project(), data = new Uint8Array([1,2,3]);
+     p.scenes[0].dataPacks[0].source = { adapter: 'scene-bundle', path: 'data/x.json' };
+     p.scenes[0].dataPacks[0].byteLength = 3; p.scenes[0].dataPacks[0].sha256 = hash(data);
+     return { format: 'gev-scene-bundle', version: 1, project: p, assets: [{ path: 'data/x.json', mimeType: 'application/json', base64: 'AQID', sha256: hash(data) }] };
+   };
+   for (const base64 of ['AQID', 'AA==', null, { toString: null }, '=AA=', 'zZ09']) {
+     const b = makeBundle(); b.assets[0].base64 = base64;
+     const signal = { throwIfAborted() { trace.push('import signal'); } };
+     await observe('base64', async () => { const v = await mod.parseSceneShare(JSON.stringify(b), { signal }); return { project: v.project, assets: [...v.assets].map(([p,a]) => [p, [...a.bytes], a.mimeType]) }; });
+   }
+   for (const declared of [undefined, 3]) {
+     const p = project(); if (declared) p.scenes[0].dataPacks[0].byteLength = declared;
+     class Bytes extends Uint8Array { get length() { trace.push('byte length'); return super.length; } }
+     await observe('export', () => mod.createSceneBundle(p, (pack, options) => { trace.push(['resolver', pack.id, Object.keys(options)]); return { bytes: new Bytes([1,2,3]), mimeType: 'application/json' }; }));
+   }
+   const bad = project(); bad.scenes[0].dataPacks[0].sha256 = '0'.repeat(64); bad.scenes[0].dataPacks[0].byteLength = 3;
+   class Bytes extends Uint8Array { get length() { trace.push('digest byte length'); return super.length; } }
+   await observe('digest order', () => mod.createSceneBundle(bad, () => ({ bytes: new Bytes([1,2,3]), mimeType: 'application/json' })));
+   await observe('resolver digest getter', () => mod.createSceneBundle(project(), p => {
+     let value;
+     Object.defineProperty(p, 'sha256', { enumerable: true, get() { trace.push('declared digest'); return value; }, set(next) { trace.push('digest assignment'); value = next; } });
+     return { bytes: new Uint8Array([1,2,3]), mimeType: 'application/json' };
+   }));
+   await observe('absent byte length', () => mod.createSceneBundle(project(), () => {
+     let reads = 0;
+     class Bytes extends Uint8Array { get length() { trace.push('absent byte length'); return ++reads === 1 ? undefined : super.length; } }
+     return { bytes: new Bytes([1]), mimeType: 'application/json' };
+   }));
+   for (const mode of ['default', 'length', 'digest', 'valid']) {
+     const p = project(), second = { ...pack(), id: 'second' };
+     if (mode === 'length') second.byteLength = 1;
+     if (mode === 'digest') second.sha256 = '0'.repeat(64);
+     if (mode === 'valid') { second.byteLength = 3; second.sha256 = hash(new Uint8Array([1,2,3])); }
+     p.scenes[0].dataPacks.push(second);
+     await observe('cache ' + mode, () => mod.createSceneBundle(p, (dataPack, options) => {
+       trace.push(['cache resolver', dataPack.id, Object.keys(options)]);
+       return { bytes: new Uint8Array([1,2,3]), mimeType: 'application/json' };
+     }));
+   }
+   for (const version of [1, 99]) await observe('export version ' + version, () => mod.createSceneBundle({ version, scenes: [] }, () => { trace.push('version resolver'); }));
+   const getterProject = { version: 6, get scenes() { trace.push('project scenes'); return []; } };
+   await observe('export getter', () => mod.createSceneBundle(getterProject, () => { trace.push('getter resolver'); }));
+   const store = mod.createBundleAssets(); store.replace();
+   result.push({ name: 'empty store', value: store.getState() });
+   store.replace(new Map([['x', { bytes: new Uint8Array([1]), mimeType: 'application/json' }]]));
+   store.replace(); result.push({ name: 'default replacement', value: store.getState() });
+   store.replace(new Map([['x', { bytes: new Uint8Array([1]), mimeType: 'application/json' }]]));
+   const signal = { throwIfAborted() { trace.push('store signal'); } };
+   await observe('store', () => ({ ...store.source({ path: 'x', signal }), bytes: [...store.source({ path: 'x', signal }).bytes] }));
+   store.clear();
+ } else if (file.endsWith('preview.js')) {
+   const p = project(); p.scenes[0].appliedShotPacks = ['x'];
+   Object.defineProperty(p.scenes[0].shots[0], 'sourcePackId', { get() { trace.push('source pack ID'); return 'x'; } });
+   Object.defineProperty(p.scenes[0].shots[0], 'layers', { configurable: true, get() { trace.push('layer field'); return null; } });
+   p.scenes[0].dataPacks[0].source.adapter = '1';
+   const assets = { has(path) { trace.push(['asset lookup', path]); return false; }, values() { trace.push('asset values'); return new Map().values(); } };
+   await observe('preview', () => mod.describeSceneShare({ project: p, assets }));
+   Object.defineProperty(p.scenes[0].shots[0], 'layers', { get() { trace.push('named layer field'); return { '1': true }; } });
+   await observe('preview named layer', () => mod.describeSceneShare({ project: p, assets }));
+ }
+
+ if (file.endsWith('manifest.js')) {
+  for (const value of [NaN, Infinity, -Infinity, -1, 0, 1, 8388608, 8388609, '', '1', null]) {
+   const p = pack(); p.byteLength = value;
+   await observe('numeric limit ' + String(value), () => mod.validateDataPack(p, 'pack', new Set()));
+  }
+  for (const path of ['', '_x/-y', 'z/Z', 'é', '__proto__', 'constructor', 'x'.repeat(1024), 'x'.repeat(1025)]) {
+   await observe('path ' + path.length, () => mod.validateAssetPath(path));
+  }
+  for (const url of ['https://example.org/?x', 'https://example.org/#x', 'https://u@example.org/', 'https://:p@example.org/', 'https://example.org/é']) {
+   const p = pack(); p.attribution.url = url;
+   await observe('URL', () => mod.validateDataPack(p, 'pack', new Set()));
+  }
+  const inherited = Object.create({ dataPacks: [pack()] }); inherited.shots = [];
+  await observe('inherited declaration', () => mod.validateSceneDataPacks(inherited, '$'));
+  const sparse = { dataPacks: new Array(8), shots: [] };
+  await observe('sparse declarations', () => mod.validateSceneDataPacks(sparse, '$'));
+ } else if (file.endsWith('geojson.js')) {
+  for (const coordinates of [[], [0], [0,0,0,0], [-180,-90,-12000], [180,90,1e9], [0,0,-12001], [0,0,1000000001], [null,0], [0,Infinity], new Array(2)]) {
+   await observe('coordinate limits', () => mod.decodePackGeoJSON(new TextEncoder().encode(JSON.stringify({ type: 'FeatureCollection', features: [{ type:'Feature', id:'p', geometry:{type:'Point', coordinates} }] }))));
+  }
+  for (const text of ['{}', '', '{', '{"type":"FeatureCollection","features":[]}', '{"type":"FeatureCollection","features":[null]}']) {
+   await observe('JSON classes', () => mod.decodePackGeoJSON(new TextEncoder().encode(text)));
+  }
+  for (const length of [49999,50000,50001]) {
+   const coordinates=Array.from({length},()=>[0,0]);
+   await observe('position count ' + length, () => mod.decodePackGeoJSON(new TextEncoder().encode(JSON.stringify({type:'FeatureCollection',features:[{type:'Feature',id:'p',geometry:{type:'LineString',coordinates}}]}))));
+  }
+ } else if (file.endsWith('source.js')) {
+  for (const baseUrl of ['https://u@example.org/', 'https://:p@example.org/', 'https://example.org/?x', 'https://example.org/#x', 'https://example.org/é/']) {
+   await observe('URL fields', () => mod.createAssetDirectorySource({baseUrl,fetchImpl:()=>{throw new Error('unused');}}));
+  }
+ } else if (file.endsWith('session.js')) {
+  for (const count of [0,1,8,9]) {
+   const s=mod.createDataPackSession({sources:{assets:()=>({bytes:new Uint8Array([1])})},adapters:{geojson:()=>({dispose(){trace.push('dispose limit');}})}});
+   await observe('declaration count ' + count,()=>s.load(Array.from({length:count},(_,i)=>({...pack(),id:'p'+i}))));s.destroy();
+  }
+  for (const handle of [null,undefined,false,0,{}, {dispose:1}, {dispose(){trace.push('handle disposal');}}]) {
+   const s=mod.createDataPackSession({sources:{assets:()=>({bytes:new Uint8Array([1])})},adapters:{geojson:()=>handle}});
+   await observe('handle classes',()=>s.load([pack()]));s.destroy();
+  }
+ } else if (file.endsWith('bundle.js')) {
+  for (const text of ['', '\u0000', 'é', 'null', '{}', '{"version":6,"scenes":[]}']) await observe('text classes',()=>mod.parseSceneShare(text));
+  for (const value of [undefined,null,false,0,'']) {
+   const store=mod.createBundleAssets();
+   await observe('map input ' + String(value),()=>{store.replace(value);return store.getState();});
+  }
+ } else if (file.endsWith('preview.js')) {
+  for (const layers of [undefined,null,false,0,'',{}, {__proto__:null}, {'__proto__':true,constructor:true}, {'é':true}]) {
+   const p=project();p.scenes[0].shots[0].layers=layers;
+   await observe('layer classes',()=>mod.describeSceneShare({project:p,assets:new Map()}));
+  }
+ }
+
+ return { result, trace };
+}
+
+const root = "/home/ianblenke/docker/gev-work/director-3";
+const work = "/home/ianblenke/docker/gev-tools/director-3/pass5/group-probes/repeat-parser";
+const mutants = [
+  {
+    "file": "src/director/sharing/bundle.js",
+    "start": 4642,
+    "end": 4660,
+    "class": "method",
+    "old": "parseSceneDocument",
+    "new": "JSON.parse",
+    "note": "method",
+    "line": 139,
+    "col": 16,
+    "id": "a3054"
+  }
+];
+await fs.mkdir(work, { recursive: true });
+await fs.cp(root + '/src/director', work + '/original/src/director', { recursive: true, filter: p => !p.endsWith('.test.mjs') });
+await fs.writeFile(work + '/original/package.json', '{"type":"module"}');
+const outputs = [];
+for (const m of mutants) {
+ const dest = work + '/' + m.id;
+ await fs.cp(work + '/original', dest, { recursive: true });
+ const code = await fs.readFile(dest + '/' + m.file, 'utf8');
+ assert.equal(code.slice(m.start, m.end), m.old);
+ await fs.writeFile(dest + '/' + m.file, code.slice(0,m.start) + m.new + code.slice(m.end));
+ const before = await cases(await import(pathToFileURL(work + '/original/' + m.file)), m.file);
+ const after = await cases(await import(pathToFileURL(dest + '/' + m.file)), m.file);
+ 
+ assert.deepEqual(after, before);
+ outputs.push({ id: m.id, same: true, cases: before.result.length, before: createHash('sha256').update(JSON.stringify(before)).digest('hex'), after: createHash('sha256').update(JSON.stringify(after)).digest('hex'), trace: createHash('sha256').update(JSON.stringify(before.trace)).digest('hex') });
+ console.log(m.id + ' SAME');
+}
+await fs.writeFile(work + '/output.json', JSON.stringify(outputs, null, 2));
+
+```
+
+Command:
+
+```sh
+cd /home/ianblenke/docker/gev-work/director-3 && taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass5/probe-repeat-parser.mjs
+```
+
+Command output:
+
+```text
+[
+  {
+    "id": "a3054",
+    "same": true,
+    "cases": 34,
+    "before": "98706fa453bffb0b176e9563ffc5dd6437f503e2295785996b55f74915a5206f",
+    "after": "98706fa453bffb0b176e9563ffc5dd6437f503e2295785996b55f74915a5206f",
+    "trace": "9e38bb6a467c8cf6c645c6791dd5f477cd828e106df5c8e05d714cdec7af390b"
+  }
+]
+```

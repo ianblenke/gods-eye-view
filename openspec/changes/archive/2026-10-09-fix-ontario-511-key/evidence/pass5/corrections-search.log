@@ -1,0 +1,19 @@
+README.md:309:Ask for the key on [the developer page](https://511on.ca/developers/doc). The Ontario pack returns no cameras without the key.
+src/data/cctvOntarioRows.test.mjs:379:test('[live-sources-007] use the capitalized Roadway text and the view description after a blank Direction value', async (t) => {
+src/data/cctvOntarioKey.test.mjs:157:test('[live-sources-004] return an empty row list for an HTTP error with JSON rows', async (t) => {
+openspec/changes/fix-ontario-511-key/evidence.md:498:At Pass 3, the final key file has 12 tests. The final Rows test file has 69 tests. Each passes.
+openspec/changes/fix-ontario-511-key/evidence.md:506:At Pass 3, the final counts use that repeat once and the final key file once:
+openspec/changes/fix-ontario-511-key/evidence.md:632:At Pass 3, the first host campaign had 11 key tests. The final campaign has fresh baselines for 12 key tests and 69 row tests.
+openspec/changes/fix-ontario-511-key/evidence.md:633:At Pass 3, the final output is results-final.json. Each full-test probe passes all 81 Ontario tests.
+openspec/changes/fix-ontario-511-key/evidence.md:927:Mutation b14 is EQUIVALENT. The run has no timeout or crash.
+openspec/changes/fix-ontario-511-key/evidence.md:975:| Spec major 2 | At Pass 4, both fixtures watch warn, log, error, info and debug. Scenarios 004 and 005 name console channels and state that no thrown error escapes the pack. |
+openspec/changes/fix-ontario-511-key/evidence.md:1001:The three src/layers/cctv test files, with 16 tests, did not run at Pass 4.
+openspec/changes/fix-ontario-511-key/evidence.md:1344:| B: request-error warn to error | [live-sources-004] return an empty row list for an HTTP error with JSON rows |
+openspec/changes/fix-ontario-511-key/evidence.md:1468:Direct writes to process.stdout and process.stderr are not console channels. The fixtures do not watch those writes.
+openspec/changes/fix-ontario-511-key/design.md:51:| console channel | One of console.log, console.info, console.debug, console.warn, console.error and console.dir. |
+openspec/changes/fix-ontario-511-key/design.md:53:| log line | Text that any console channel writes. |
+openspec/changes/fix-ontario-511-key/specs/live-sources/spec.md:4:The Ontario pack MUST use a server key, make no request without the key and keep the key text out of the console channels.
+openspec/changes/fix-ontario-511-key/specs/live-sources/spec.md:23:- **AND** no log line on the six console channels contains the key text
+openspec/changes/fix-ontario-511-key/specs/live-sources/spec.md:32:- **AND** no log line on the six console channels contains the key text
+openspec/changes/fix-ontario-511-key/proposal.md:53:The tests watch the six console channels. They do not watch direct writes to process.stdout and process.stderr.
+openspec/changes/fix-ontario-511-key/proposal.md:62:The scenario 008 test cannot detect a seventh anchor far from all rows.

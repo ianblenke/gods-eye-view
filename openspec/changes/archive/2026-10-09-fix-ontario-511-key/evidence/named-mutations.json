@@ -1,0 +1,60 @@
+[
+  {
+    "mutation": "drop-key",
+    "exit": 1,
+    "failures": [
+      "\u2716 [live-sources-002] send the key parameter (34.590838ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-002] send the key parameter (34.590838ms)"
+    ]
+  },
+  {
+    "mutation": "request-without-key",
+    "exit": 1,
+    "failures": [
+      "\u2716 [live-sources-003] stop without a key (11.00299ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-003] stop without a key (11.00299ms)"
+    ]
+  },
+  {
+    "mutation": "log-key",
+    "exit": 1,
+    "failures": [
+      "\u2716 [live-sources-004] reject the invalid key once (161.2165ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-004] reject the invalid key once (161.2165ms)"
+    ]
+  },
+  {
+    "mutation": "fetch-without-key",
+    "exit": 1,
+    "failures": [
+      "\u2716 [live-sources-003] stop without a key (9.488068ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-003] stop without a key (9.488068ms)"
+    ]
+  },
+  {
+    "mutation": "warn-each-call",
+    "exit": 1,
+    "failures": [
+      "\u2716 [live-sources-003] stop without a key (11.156818ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-003] stop without a key (11.156818ms)"
+    ]
+  },
+  {
+    "mutation": "warn-each-error",
+    "exit": 1,
+    "failures": [
+      "\u2716 [live-sources-004] reject the invalid key once (156.426175ms)",
+      "\u2716 [live-sources-005] keep the fetch error secret (9.203264ms)",
+      "\u2716 [live-sources-005] keep the json error secret (4.893084ms)",
+      "\u2716 failing tests:",
+      "\u2716 [live-sources-004] reject the invalid key once (156.426175ms)",
+      "\u2716 [live-sources-005] keep the fetch error secret (9.203264ms)",
+      "\u2716 [live-sources-005] keep the json error secret (4.893084ms)"
+    ]
+  }
+]

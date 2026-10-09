@@ -1,0 +1,16 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none --test-name-pattern=use each nearest anchor src/data/cctvOntarioRows.test.mjs
+{
+  "sourceCommit": "1911403e",
+  "removedLine": "{ lat: 42.3149, lon: -83.0364 }, // Windsor",
+  "constantsSha256": "b8f94c9b000dccffd8ea063bd98b0461e429988552aae6845cf85f45bd224ced",
+  "testSha256": "f3935f50f0079309b104a544e9049d4f2892ff76cb5377a8dc0d3e53e9ecc315"
+}
+✔ [live-sources-008] use each nearest anchor (42.187226ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 249.807786

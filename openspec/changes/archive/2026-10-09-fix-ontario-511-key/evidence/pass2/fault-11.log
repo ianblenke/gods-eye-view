@@ -1,0 +1,116 @@
+✔ [live-sources-006] reject row 0 (33.955833ms)
+✔ [live-sources-006] reject row 1 (4.046542ms)
+✔ [live-sources-006] reject row 2 (4.265392ms)
+✔ [live-sources-006] reject row 3 (4.808639ms)
+✔ [live-sources-006] reject row 4 (5.093458ms)
+✔ [live-sources-006] reject row 5 (4.520062ms)
+✔ [live-sources-006] reject row 6 (3.365353ms)
+✔ [live-sources-006] reject row 7 (3.728299ms)
+✔ [live-sources-006] reject row 8 (4.120203ms)
+✔ [live-sources-006] reject row 9 (4.939554ms)
+✔ [live-sources-006] reject row 10 (3.049858ms)
+✔ [live-sources-006] reject row 11 (2.86906ms)
+✔ [live-sources-006] reject row 12 (3.419555ms)
+✔ [live-sources-006] reject row 13 (3.080721ms)
+✔ [live-sources-006] reject URL 0 (3.758995ms)
+✔ [live-sources-006] reject URL 1 (2.126426ms)
+✔ [live-sources-006] reject URL 2 (1.97847ms)
+✔ [live-sources-006] reject URL 3 (2.349634ms)
+✖ [live-sources-006] reject URL 4 (15.846389ms)
+✔ [live-sources-006] reject URL 5 (2.188168ms)
+✔ [live-sources-006] reject URL 6 (1.910074ms)
+✔ [live-sources-006] reject URL 7 (2.529564ms)
+✔ [live-sources-006] reject URL 8 (2.327093ms)
+✔ [live-sources-006] reject URL 9 (2.545423ms)
+✔ [live-sources-006] reject URL 10 (2.595874ms)
+✔ [live-sources-006] reject URL 11 (2.102227ms)
+✔ [live-sources-006] reject URL 12 (2.003082ms)
+✔ [live-sources-006] accept boundary 41 (3.409376ms)
+✔ [live-sources-006] accept boundary 57.5 (2.452949ms)
+✔ [live-sources-006] select the first view without down (4.865393ms)
+✔ [live-sources-006] select the first down view (4.293654ms)
+✔ [live-sources-007] set all source fields (4.481758ms)
+✔ [live-sources-007] use lower case fields and hash pose (5.272705ms)
+✔ [live-sources-008] apply cap undefined (79.928362ms)
+✔ [live-sources-008] apply cap  (57.499493ms)
+✔ [live-sources-008] apply cap bad (41.769221ms)
+✔ [live-sources-008] apply cap Infinity (35.144232ms)
+✔ [live-sources-008] apply cap 3 (35.751762ms)
+✔ [live-sources-008] apply cap 9.9 (35.660922ms)
+✔ [live-sources-008] apply cap 2000 (36.269699ms)
+✔ [live-sources-008] use the last duplicate (3.247607ms)
+✔ [live-sources-009] reject data null (2.041423ms)
+✔ [live-sources-009] reject data {} (1.753104ms)
+✔ [live-sources-009] reject data "rows" (1.898299ms)
+✔ [live-sources-009] reject data 0 (1.729816ms)
+✔ [live-sources-005] return no rows after a data error (2.591212ms)
+✔ [live-sources-007] use field precedence (3.063947ms)
+✔ [live-sources-008] use each nearest anchor (3.804057ms)
+✔ [live-sources-006] reject null ID fields (2.048688ms)
+✔ [live-sources-007] use roadway and blank direction (2.438925ms)
+✔ [live-sources-006] accept an empty row list (1.979296ms)
+✔ [live-sources-008] log both source counts (2.951976ms)
+✔ [live-sources-006] reject views without a data error (2.38035ms)
+✔ [live-sources-006] accept every ID character (2.138585ms)
+✔ [live-sources-007] convert row values to text and numbers (3.95213ms)
+✔ [live-sources-006] reject a numeric status without a data error (2.308765ms)
+✔ [live-sources-006] accept URL object (2.238322ms)
+✔ [live-sources-006] accept URL edge spaces (1.86037ms)
+✔ [live-sources-006 live-sources-007] select a view with downhill (2.379957ms)
+✔ [live-sources-007] use capitalized text fields first (2.500027ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Latitude (2.11381ms)
+✔ [live-sources-006 live-sources-007] reject zero upper Longitude (1.698721ms)
+✔ [live-sources-006] skip fields after a row guard (2.367253ms)
+✔ [live-sources-007] read latitude before longitude (2.5649ms)
+✔ [live-sources-007] read location before roadway (2.649839ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 64
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 798.484671
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:82:3
+✖ [live-sources-006] reject URL 4 (15.846389ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     city: 'Ontario',
+  +     cityId: 'ontario',
+  +     feedType: 'image',
+  +     fovDeg: 44,
+  +     groundElevationM: 200,
+  +     headingConfidence: 'low',
+  +     headingDeg: 45,
+  +     id: 'on-1',
+  +     lat: 43.6532,
+  +     license: 'Open Government Licence - Ontario',
+  +     lon: -79.3832,
+  +     mountHeightM: 8,
+  +     name: 'Ontario 511 Camera 1',
+  +     pitchDeg: -18,
+  +     provider: 'Ontario 511',
+  +     rangeM: 145,
+  +     snapshotUrl: 'https://511on.ca/map/Cctv/A',
+  +     sourceKind: 'ontario-511-open-data',
+  +     url: 'https://511on.ca/map/Cctv/A'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (file:///tmp/ontario-named-final/src/data/cctvOntarioRows.test.mjs:83:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

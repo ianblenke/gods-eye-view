@@ -1,0 +1,10 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none --test-name-pattern=^\[live\-sources\-005\]\ keep\ the\ key\ text\ of\ a\ fetch\ error\ out\ of\ the\ warning$ src/data/cctvOntarioKey.test.mjs
+✔ [live-sources-005] keep the key text of a fetch error out of the warning (24.572071ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 155.392323

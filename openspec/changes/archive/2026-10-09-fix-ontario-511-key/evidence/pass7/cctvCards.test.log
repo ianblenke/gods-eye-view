@@ -1,0 +1,32 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvCards.test.mjs
+✔ isCctvCardAnchorSafe protects the top HUD band for ambient cards (10.780774ms)
+✔ declutterCctvCards: nearest-first greedy accept with min separation (6.730551ms)
+✔ declutterCctvCards: separation is radial (Euclidean), matching the vessel pass (1.52758ms)
+✔ declutterCctvCards: respects the limit and drops malformed rows (1.701876ms)
+✔ thumbnail entry carries the exact shipped contract and stable frame-slot reference (7.809029ms)
+✔ active CCTV thumbnail is protected while ambient and pinned policies stay distinct (2.429379ms)
+✔ CCTV card module cannot resurrect a canvas, projection, listener, or private hit store (3.766507ms)
+✔ cardScaleForAltitude: full size and opacity at or below 1,800 m (2.16089ms)
+✔ cardScaleForAltitude: hits the owner-decided waypoints (1.865071ms)
+✔ cardScaleForAltitude: fully hidden at and above the 9,500 m ceiling (1.962021ms)
+✔ cardScaleForAltitude: scale and alpha are monotonic non-increasing (2.476442ms)
+✔ cardFetchPolicy: cold fill bursts up to 4 in flight at 250 ms spacing (1.617079ms)
+✔ cardFetchPolicy: steady state keeps the 1-fetch/s single-flight gate (1.069751ms)
+✔ applyFrameResult: success replaces the frame and stamps it (1.068144ms)
+✔ applyFrameResult: a FAILED fetch persists the drawn frame and stamp (0.848946ms)
+✔ applyFrameResult: an ok result without a frame counts as a failure (0.907683ms)
+✔ frameRetryDelayMs: doubles per failure, capped at 5 minutes (0.909815ms)
+✔ frameFetchDue: an untouched slot is due immediately (0.794293ms)
+✔ frameFetchDue: a fresh frame is not due until its cadence elapses (0.686119ms)
+✔ frameFetchDue: failures back off instead of hammering the source (0.826546ms)
+✔ planFrameCachePrune: never drops live card ids (grace included) (1.321244ms)
+✔ planFrameCachePrune: spare slots kept newest-first up to the cap (1.04476ms)
+✔ planFrameCachePrune: default cap is the exported cache bound (1.59483ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 196.284866

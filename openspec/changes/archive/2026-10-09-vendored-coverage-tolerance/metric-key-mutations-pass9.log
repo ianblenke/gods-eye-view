@@ -1,0 +1,243 @@
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=writes ledger entry counts or current counts' src/tooling/spec/ledger.test.mjs
+Case: current
+✔ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (18.036801ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 417.961716
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=writes ledger entry counts or current counts' src/tooling/spec/ledger.test.mjs
+Case: a
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (23.537958ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 435.069658
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (23.537958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30 !== 20
+  
+      at TestContext.<anonymous> (file:///tmp/vct9-mutations/src/tooling/spec/ledger.test.mjs:1692:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 20,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=writes ledger entry counts or current counts' src/tooling/spec/ledger.test.mjs
+Case: b
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (22.532444ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 428.239912
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (22.532444ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  11 !== 10
+  
+      at TestContext.<anonymous> (file:///tmp/vct9-mutations/src/tooling/spec/ledger.test.mjs:1694:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 11,
+    expected: 10,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=writes ledger entry counts or current counts' src/tooling/spec/ledger.test.mjs
+Case: c
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (22.719712ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 427.257206
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (22.719712ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30 !== 10
+  
+      at TestContext.<anonymous> (file:///tmp/vct9-mutations/src/tooling/spec/ledger.test.mjs:1694:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 10,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=writes ledger entry counts or current counts' src/tooling/spec/ledger.test.mjs
+Case: d
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (24.749973ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 434.571041
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (24.749973ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  5 !== 10
+  
+      at TestContext.<anonymous> (file:///tmp/vct9-mutations/src/tooling/spec/ledger.test.mjs:1694:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 5,
+    expected: 10,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=writes ledger entry counts or current counts' src/tooling/spec/ledger.test.mjs
+Case: e
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (21.799835ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 425.594911
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (21.799835ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 199
+  
+      at TestContext.<anonymous> (file:///tmp/vct9-mutations/src/tooling/spec/ledger.test.mjs:1697:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 199,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=writes ledger entry counts or current counts' src/tooling/spec/ledger.test.mjs
+Case: f
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (30.779739ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 526.139882
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (30.779739ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  400 !== 300
+  
+      at TestContext.<anonymous> (file:///tmp/vct9-mutations/src/tooling/spec/ledger.test.mjs:1695:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 300,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test '--test-name-pattern=writes ledger entry counts or current counts' src/tooling/spec/ledger.test.mjs
+Case: g
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (22.832505ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 452.02181
+
+✖ failing tests:
+
+test at src/tooling/spec/ledger.test.mjs:1688:1
+✖ [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (22.832505ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 199
+  
+      at TestContext.<anonymous> (file:///tmp/vct9-mutations/src/tooling/spec/ledger.test.mjs:1697:10)
+      at Test.runInAsyncScope (node:async_hooks:228:14)
+      at Test.run (node:internal/test_runner/test:1118:25)
+      at Test.start (node:internal/test_runner/test:1015:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 199,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+

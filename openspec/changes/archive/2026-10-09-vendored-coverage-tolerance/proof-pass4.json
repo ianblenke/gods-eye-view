@@ -1,0 +1,386 @@
+{
+  "tree_commit": "25ba5d2d1bce13b0aace29d49a7779043003493a",
+  "tree": "Pass 4 corrections",
+  "source_sha256": "b9bf339d70b4749083e9c1078743e43f9de3ad61d573710177fd784063ff9879",
+  "generator_command": "taskset -c 0-3 nice -n 19 node /home/ianblenke/docker/gev-tools/automut/automut.mjs gen --root /home/ianblenke/docker/gev-work/vendored-tolerance --files scripts/spec/lib/ledger.mjs --out /home/ianblenke/docker/gev-tools/vendored-tolerance/pass4/all-mutants.json",
+  "run_command": "python /home/ianblenke/docker/gev-tools/vendored-tolerance/pass4/automatic.py",
+  "selection": "The changed code line of the total count guard. Comment changes have no code mutations.",
+  "mutants": [
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10133,
+      "end": 10200,
+      "class": "statement",
+      "old": "next.totals[metric] = entry.totals?.[metric] ?? gap.totals[metric];",
+      "new": ";",
+      "note": "statement",
+      "line": 242,
+      "col": 5,
+      "id": "a0966"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10133,
+      "end": 10200,
+      "class": "statement",
+      "old": "next.totals[metric] = entry.totals?.[metric] ?? gap.totals[metric];",
+      "new": "",
+      "note": "statement",
+      "line": 242,
+      "col": 5,
+      "id": "a0967"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10129,
+      "end": 10200,
+      "class": "statement",
+      "old": "    next.totals[metric] = entry.totals?.[metric] ?? gap.totals[metric];",
+      "new": "",
+      "note": "statement",
+      "line": 242,
+      "col": 1,
+      "id": "a0968"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10155,
+      "end": 10199,
+      "class": "value",
+      "old": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "new": "[]",
+      "note": "value",
+      "line": 242,
+      "col": 27,
+      "id": "a0970"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10155,
+      "end": 10199,
+      "class": "value",
+      "old": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "new": "1",
+      "note": "value",
+      "line": 242,
+      "col": 27,
+      "id": "a0971"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10178,
+      "end": 10180,
+      "class": "logical",
+      "old": "??",
+      "new": "||",
+      "note": "logical",
+      "line": 242,
+      "col": 50,
+      "id": "a0972"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10155,
+      "end": 10177,
+      "class": "operand",
+      "old": "entry.totals?.[metric]",
+      "new": "undefined",
+      "note": "operand",
+      "line": 242,
+      "col": 27,
+      "id": "a0973"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10181,
+      "end": 10199,
+      "class": "operand",
+      "old": "gap.totals[metric]",
+      "new": "undefined",
+      "note": "operand",
+      "line": 242,
+      "col": 53,
+      "id": "a0974"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10155,
+      "end": 10199,
+      "class": "operand-drop",
+      "old": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "new": "entry.totals?.[metric]",
+      "note": "operand-drop",
+      "line": 242,
+      "col": 27,
+      "id": "a0975"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10155,
+      "end": 10199,
+      "class": "operand-drop",
+      "old": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "new": "gap.totals[metric]",
+      "note": "operand-drop",
+      "line": 242,
+      "col": 27,
+      "id": "a0976"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10155,
+      "end": 10199,
+      "class": "operand-order",
+      "old": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "new": "gap.totals[metric] ?? entry.totals?.[metric]",
+      "note": "operand-order",
+      "line": 242,
+      "col": 27,
+      "id": "a0977"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10167,
+      "end": 10169,
+      "class": "optional",
+      "old": "?.",
+      "new": "",
+      "note": "optional",
+      "line": 242,
+      "col": 39,
+      "id": "a0978"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10181,
+      "end": 10199,
+      "class": "predicate",
+      "old": "gap.totals[metric]",
+      "new": "false",
+      "note": "predicate",
+      "line": 242,
+      "col": 53,
+      "id": "a0979"
+    },
+    {
+      "file": "scripts/spec/lib/ledger.mjs",
+      "start": 10181,
+      "end": 10199,
+      "class": "predicate",
+      "old": "gap.totals[metric]",
+      "new": "true",
+      "note": "predicate",
+      "line": 242,
+      "col": 53,
+      "id": "a0980"
+    }
+  ],
+  "results": [
+    {
+      "id": "a0966",
+      "class": "statement",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (7.293096ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (5.325924ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.852584ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (7.293096ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (5.325924ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.852584ms)"
+      ],
+      "old": "next.totals[metric] = entry.totals?.[metric] ?? gap.totals[metric];",
+      "new": ";"
+    },
+    {
+      "id": "a0967",
+      "class": "statement",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (10.184425ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (6.545886ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (3.550888ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (10.184425ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (6.545886ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (3.550888ms)"
+      ],
+      "old": "next.totals[metric] = entry.totals?.[metric] ?? gap.totals[metric];",
+      "new": ""
+    },
+    {
+      "id": "a0968",
+      "class": "statement",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (7.035829ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (5.048595ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.672456ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (7.035829ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (5.048595ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.672456ms)"
+      ],
+      "old": "    next.totals[metric] = entry.totals?.[metric] ?? gap.totals[metric];",
+      "new": ""
+    },
+    {
+      "id": "a0970",
+      "class": "value",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-143] the ratchet command writes never-worse counts for a file that equals its adopted source (10.457969ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (3.122488ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (2.501218ms)",
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (3.120871ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.174716ms)",
+        "\u2716 [gap-ledger-143] the ratchet command writes never-worse counts for a file that equals its adopted source (10.457969ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (3.122488ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (2.501218ms)",
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (3.120871ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.174716ms)"
+      ],
+      "old": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "new": "[]"
+    },
+    {
+      "id": "a0971",
+      "class": "value",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-143] the ratchet command writes never-worse counts for a file that equals its adopted source (10.437724ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (3.069744ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (2.311216ms)",
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (2.968741ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.294634ms)",
+        "\u2716 [gap-ledger-143] the ratchet command writes never-worse counts for a file that equals its adopted source (10.437724ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (3.069744ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (2.311216ms)",
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (2.968741ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.294634ms)"
+      ],
+      "old": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "new": "1"
+    },
+    {
+      "id": "a0972",
+      "class": "logical",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (9.631551ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (9.631551ms)"
+      ],
+      "old": "??",
+      "new": "||"
+    },
+    {
+      "id": "a0973",
+      "class": "operand",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (7.179684ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (4.982234ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.63635ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (7.179684ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (4.982234ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.63635ms)"
+      ],
+      "old": "entry.totals?.[metric]",
+      "new": "undefined"
+    },
+    {
+      "id": "a0974",
+      "class": "operand",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (11.139849ms)",
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (11.139849ms)"
+      ],
+      "old": "gap.totals[metric]",
+      "new": "undefined"
+    },
+    {
+      "id": "a0975",
+      "class": "operand-drop",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (10.496715ms)",
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (10.496715ms)"
+      ],
+      "old": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "new": "entry.totals?.[metric]"
+    },
+    {
+      "id": "a0976",
+      "class": "operand-drop",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (7.607885ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (5.6118ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.699859ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (7.607885ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (5.6118ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.699859ms)"
+      ],
+      "old": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "new": "gap.totals[metric]"
+    },
+    {
+      "id": "a0977",
+      "class": "operand-order",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (7.668409ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (5.47753ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.842617ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes the current count for a smaller or equal not-covered count and the ledger entry count for a larger one, for each metric (7.668409ms)",
+        "\u2716 [gap-ledger-154] the ratchet command selects totals for a file that equals its adopted source (5.47753ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes a ledger total count of zero for a larger count (2.842617ms)"
+      ],
+      "old": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "new": "gap.totals[metric] ?? entry.totals?.[metric]"
+    },
+    {
+      "id": "a0978",
+      "class": "optional",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (2.237775ms)",
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (2.237775ms)"
+      ],
+      "old": "?.",
+      "new": ""
+    },
+    {
+      "id": "a0979",
+      "class": "predicate",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (10.108727ms)",
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (10.108727ms)"
+      ],
+      "old": "gap.totals[metric]",
+      "new": "false"
+    },
+    {
+      "id": "a0980",
+      "class": "predicate",
+      "status": "KILLED",
+      "failed": [
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (10.401061ms)",
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts when ledger total counts are absent (10.401061ms)"
+      ],
+      "old": "gap.totals[metric]",
+      "new": "true"
+    }
+  ],
+  "named_results": [
+    {
+      "mutation": "guard",
+      "status": 1
+    },
+    {
+      "mutation": "stop",
+      "status": 1
+    }
+  ],
+  "zero_total_log": "/home/ianblenke/docker/gev-tools/vendored-tolerance/pass4/zero-red.log",
+  "final_gate_test_log": "/home/ianblenke/docker/gev-tools/vendored-tolerance/pass4/gate-history-final.log"
+}

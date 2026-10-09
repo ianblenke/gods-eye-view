@@ -1,0 +1,50 @@
+{
+  "tree_read": "a20922f947fa4fb99fc9810d8f30072ae0181f0c with Pass 6 edits",
+  "source_sha256": "5f36769d866bf958eeac2673d8219469ccb07c34d2414902576584dd60e4cc23",
+  "mutations": [
+    {
+      "id": "gap-ledger-142",
+      "before": "return (metric) => toleranceOf(gap.totals[metric]);",
+      "after": "return () => 100;",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-142] the gate reports errors for counts outside the tolerance (25.629264ms)",
+        "\u2716 [gap-ledger-142] the gate reports errors for counts outside the tolerance (25.629264ms)"
+      ],
+      "log": "/home/ianblenke/docker/gev-tools/vendored-tolerance/pass6/gap-ledger-142-mutation.log"
+    },
+    {
+      "id": "gap-ledger-143",
+      "before": "if (gap[metric] <= entry[metric]) continue;",
+      "after": "if (gap[metric] < entry[metric]) continue;",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes current counts when the current not-covered count is not above the ledger entry not-covered count and ledger entry counts if not (7.821739ms)",
+        "\u2716 [gap-ledger-154 gap-ledger-143] the ratchet command writes current counts when the current not-covered count is not above the ledger entry not-covered count and ledger entry counts if not (7.821739ms)"
+      ],
+      "log": "/home/ianblenke/docker/gev-tools/vendored-tolerance/pass6/gap-ledger-143-mutation.log"
+    },
+    {
+      "id": "gap-ledger-155",
+      "before": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "after": "entry.totals?.lines ?? gap.totals[metric]",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts for a file with no base content when ledger total counts are absent (31.655206ms)",
+        "\u2716 [gap-ledger-155] the ratchet command writes current total counts for a file with no base content when ledger total counts are absent (31.655206ms)"
+      ],
+      "log": "/home/ianblenke/docker/gev-tools/vendored-tolerance/pass6/gap-ledger-155-mutation.log"
+    },
+    {
+      "id": "gap-ledger-156",
+      "before": "entry.totals?.[metric] ?? gap.totals[metric]",
+      "after": "entry.totals?.[metric] || gap.totals[metric]",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-156] the ratchet command writes the ledger entry total count of zero for a larger current not-covered count (29.660207ms)",
+        "\u2716 [gap-ledger-156] the ratchet command writes the ledger entry total count of zero for a larger current not-covered count (29.660207ms)"
+      ],
+      "log": "/home/ianblenke/docker/gev-tools/vendored-tolerance/pass6/gap-ledger-156-mutation.log"
+    }
+  ]
+}

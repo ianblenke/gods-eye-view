@@ -1,0 +1,76 @@
+{
+  "tree_read": "78a0fc149515f698e03a67dceaec58f81a43d424 with Pass 9 edits",
+  "log": "metric-key-mutations-pass9.log",
+  "runs": [
+    {
+      "case": "current",
+      "before": "",
+      "after": "",
+      "exit": 0,
+      "failed_tests": []
+    },
+    {
+      "case": "a",
+      "before": "gap[metric] <= entry[metric]",
+      "after": "gap[metric] <= entry.functions",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (23.537958ms)"
+      ]
+    },
+    {
+      "case": "b",
+      "before": "gap[metric] <= entry[metric]",
+      "after": "gap[metric] <= entry.lines",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (22.532444ms)"
+      ]
+    },
+    {
+      "case": "c",
+      "before": "next[metric] = entry[metric]",
+      "after": "next[metric] = entry.lines",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (22.719712ms)"
+      ]
+    },
+    {
+      "case": "d",
+      "before": "next[metric] = entry[metric]",
+      "after": "next[metric] = entry.functions",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (24.749973ms)"
+      ]
+    },
+    {
+      "case": "e",
+      "before": "gap[metric] <= entry[metric]",
+      "after": "gap.lines <= entry[metric]",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (21.799835ms)"
+      ]
+    },
+    {
+      "case": "f",
+      "before": "entry.totals?.[metric]",
+      "after": "entry.totals?.lines",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (30.779739ms)"
+      ]
+    },
+    {
+      "case": "g",
+      "before": "gap[metric] <= entry[metric]",
+      "after": "gap[metric] < entry[metric]",
+      "exit": 1,
+      "failed_tests": [
+        "\u2716 [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric (22.832505ms)"
+      ]
+    }
+  ]
+}

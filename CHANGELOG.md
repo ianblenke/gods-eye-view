@@ -1,5 +1,7 @@
 # Changelog
 
+- Ontario 511 camera requests need `ONTARIO_511_API_KEY` (2026-10-08). The Ontario pack makes no request without it.
+
 - MCP setup examples use the app's default port, `4173`. Thanks to
   [Huanyi Xie](https://github.com/xiehuanyi) (#934) and
   [shirunjies8-png](https://github.com/shirunjies8-png) (#959) for the same fix.
