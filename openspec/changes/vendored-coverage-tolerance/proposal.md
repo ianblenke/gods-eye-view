@@ -11,7 +11,7 @@ A file that the fork edits can also have different total counts and equal not-co
 - Accept total count differences for a file with a valid adopt line, equal hashes and equal not-covered counts.
 - Apply never-worse counts to a file that equals its adopted source without base content.
 - Use toleranceCounts for a file with base content.
-- Do not change the tolerance or the conditions of a coverage error.
+- Do not change the size of the tolerance or the comparison that each error code makes.
 
 ## Capabilities
 
@@ -89,6 +89,6 @@ The lead accepts these words by name.
 The title of the test for gap-ledger-156 does not name the adopted-source conditions.
 This keeps the title inside the limit of 25 words.
 The lead accepts this title by name.
-The titles of the tests for gap-ledger-154 (ledger.test.mjs lines 1620 and 1688) do not name the file scope.
+Two titles of tests for gap-ledger-154 (ledger.test.mjs lines 1620 and 1688) do not name the file scope.
 This keeps these titles inside the limit of 25 words.
 The lead accepts these titles by name.

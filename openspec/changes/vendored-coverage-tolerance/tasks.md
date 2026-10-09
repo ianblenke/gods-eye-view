@@ -185,14 +185,20 @@ The lead decides in review.md whether to accept it by name.
 
 - [x] Rename the two test titles.
 - [x] Run the seven metric mutations.
-- [x] Correct the design, spec and proposal text.
+- [x] Correct the design text.
+- [x] Correct the spec text.
+- [x] Correct the proposal text.
 - [x] Correct the evidence prose.
 - [x] Change the scope-check script.
 - [x] Name the metric in scenario 142.
-- [x] Print the title and the six body assertions of the new tests.
+- [x] Print the title of the test at ledger.test.mjs line 1688.
+- [x] Print the six body assertions of the test at ledger.test.mjs line 1688.
 - [x] Run the host checks.
 
 ### Pass 10
 
-- [x] 10.1 Correct the faults that pre-review 8 found.
-- [x] 10.2 Run the ledger host test, lint, OpenSpec show and OpenSpec validate.
+- [x] Resolve the findings of pre-review 8.
+- [x] Run the ledger host test.
+- [x] Run STE lint.
+- [ ] Check the JSON output of openspec show.
+- [x] Validate the change with OpenSpec.

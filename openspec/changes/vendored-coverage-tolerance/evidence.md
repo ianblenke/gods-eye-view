@@ -14,7 +14,7 @@ Result: v26.8.2. The lead must check the Node 24 image.
 
 Each Node command uses taskset -c 4-7 nice -n 19. Each test process names one test file.
 
-The host uses normal Node test isolation. No command uses --test-isolation=none.
+Before Pass 10, the host uses normal Node test isolation. Before Pass 10, no command uses --test-isolation=none.
 No project container, make command, ratchet command or gate command ran on the host, except the lint command.
 Some tests call the gate functions with a temporary Git fixture. Those calls do not change the project ledger.
 
@@ -2776,7 +2776,7 @@ Command: openspec validate vendored-coverage-tolerance.
 Change 'vendored-coverage-tolerance' is valid
 ```
 
-Command: openspec show vendored-coverage-tolerance --json. Exit: 0. At Pass 10, this record states that the command wrote JSON and exited with 0.
+Command: openspec show vendored-coverage-tolerance --json. Exit: 0. The parser read the JSON without an error.
 
 Command: taskset -c 0-3 nice -n 19 node --import /home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/strict-host.mjs --test src/tooling/spec/gates.test.mjs.
 
@@ -2856,19 +2856,19 @@ STE: 0 errors, 544 warnings.
 
 ### Pass 9
 
-Tree read: commit `78a0fc149515f698e03a67dceaec58f81a43d424`, with Pass 9 edits. Host Node: ledger and mutations 24.14.0; gates 26.8.2.
+Tree read: commit `78a0fc149515f698e03a67dceaec58f81a43d424`, with Pass 9 edits. Host Node: ledger and mutations 24.14.0; gates 24.14.0 and 26.8.2.
 
 | Finding | Correction |
 | --- | --- |
-| U1 | Replace the false design sentences. The requirement "Count tolerance for adopted files" changes which files get the tolerance and when compareLedger records a ledger entry as stale. The requirement "Total counts for adopted files" changes only when compareLedger records a ledger entry as stale. |
-| U2 | Restore two Pass 7 records. Pass 8 moves the citation to proof-pass7.json. Pass 7 gave the second comparand no metric. Pass 8 names the metric on both comparands of the rules that Pass 8 changes. Pass 8 added the prefix "At Pass 7," to the citation and added a sentence to the note on the stale exception. Pass 9 keeps both. |
+| U1 | Replace the false design sentences. At Pass 10, the requirement "Count tolerance for adopted files" changes which files get the tolerance and when compareLedger records a ledger entry as stale. At Pass 10, the requirement "Total counts for adopted files" changes only when compareLedger records a ledger entry as stale. |
+| U2 | Restore two Pass 7 records with the Pass 8 citation change to proof-pass7.json. Pass 7 gave the second comparand no metric. Pass 8 names the metric on both comparands of the rules that Pass 8 changes. Pass 8 added the prefix "At Pass 7," to the citation. Pass 8 also added a sentence to the note on the stale exception and replaced "its error rules" there. Pass 9 keeps these changes. |
 | U3 | Name current gap total counts and ledger entry total counts in test 155. The accepted title list has no test 155. |
 | U4 | Name the counts that test 154 writes. proof-pass9.json and metric-key-mutations-pass9.log record seven mutations that make the test fail and a run with no mutation that makes it pass. |
 | U5 | Name each count and metric in the design and the first ADDED requirement. Add current not-covered count and waived count to the glossary. |
-| U6 | Name the comparands of the lines metric, LEDGER-LOST-COVERAGE and the adopted-source conditions that the title does not name in the proposal. |
+| U6 | Name the comparands of the lines metric and LEDGER-LOST-COVERAGE. Name the adopted-source conditions that the title of the test for gap-ledger-156 does not name. |
 | U7 | Name the task checks. The test text below shows the title and the six body assertions. |
 | U8 | Correct the listed Pass 7 and Pass 8 prose. State that the Pass 8 audit extract does not show 13 lines. |
-| U9 | Print n/a for a rule without a matched comparison. The rules at S lines 38 and 42 pass the metric check. The metric check proves the metric only for rules that use the phrases larger than or smaller than or equal to. The other 20 rules need a reading by a person. |
+| U9 | Print n/a for a rule without a matched comparison. The rules at lines 38 and 42 of spec.md pass the metric check. The metric check proves the metric only for rules with the phrase "larger than" or "smaller than or equal to". A person must read the other 20 rules. |
 | U10 | Name the metric on both comparands of scenario 142. Its ID, tagged test title and body stay the same. |
 
 | Mutation | Test result | First failed assertion |
@@ -2921,8 +2921,6 @@ MUST rules: 22
 File flags: 5,124,125,132
 ```
 
-The first extract ends before the heading check. The second extract starts at the heading check.
-
 Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass9/audit.py.
 
 ```text
@@ -2942,6 +2940,8 @@ test('[gap-ledger-154] the ratchet command writes ledger entry counts or current
   assert.equal(next.totals.functions, 199);
 });
 ```
+
+The output of audit.py stands in two extracts. The first extract ends before the heading check. The second extract starts at the heading check.
 
 Scenario 142 text at commit 9b5652a6 and with Pass 9 edits:
 
@@ -3062,7 +3062,7 @@ Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass9/repla
 }
 ```
 
-Command: openspec show vendored-coverage-tolerance --json. Exit: 0. The command wrote JSON and exited with 0.
+Command: openspec show vendored-coverage-tolerance --json. Exit: 0. The parser read the JSON without an error.
 
 Command: openspec validate vendored-coverage-tolerance.
 
@@ -3139,34 +3139,34 @@ Tree read: commit `47d4cd2a90d11dabfa88deb04d5aafd5f9555be9`, with Pass 10 text 
 
 | Finding | Correction or decision |
 | --- | --- |
-| V1 | Restore all three changed Pass 8 boxes from commit 9b5652a6. Add eight Pass 9 tasks and two Pass 10 tasks. |
-| V2 | Name the two old lines that Pass 8 changed in the U2 row. |
-| V3 | Delete the claim that the lead read 20 rules. Name the first ADDED requirement in U5. |
-| V4 | State both waiver functions in the glossary; see V8. |
-| V5 | Name the file scope that test titles at lines 1620 and 1688 do not state. |
-| V6 | Bound coverage error text in the proposal and design. |
-| V7 | The lead will record the reason for test 1665 in review.md. |
-| V8 | State change, file, metric, hash and loaded coverage conditions for waiver counts. Base content gives zero in compareWithBase, not in compareLedger. |
-| V9 | Bound the Pass 8 metric claim to the rules that Pass 8 changes. |
-| V10 | Name each requirement and its effects in the design and U1 row. |
-| V11 | Name the ledger entry covered count as the comparand in the proposal. |
-| V12 | Name test titles and the scope that they do not state. Keep each paragraph at six sentences or fewer. |
-| V13 | Use the conditions of a coverage error in both live documents. |
-| V14 | State that seven mutations make the test fail and the control makes it pass. |
-| V15 | Put the stale-check command before its summary command. |
-| V16 | Correct U1, U5, U6, U7, U8 and U9 terms. The metric check covers only two phrase forms. |
-| V17 | Use does not name or does not show for the audit extract and title scope. |
-| V18 | Name metric scope in the partial improvement sentence and never-worse counts row. |
-| V19 | Define tolerance per metric. Keep scenario 142 text unchanged. |
-| V20 | Use full mutation expressions, Node versions and extract bounds. State the JSON command exit result. |
-| V21 | Keep the T labels, test 154 words, scenario 154 text and old script header. The lead records the test 1665 reason. |
-| V22 | Check unchanged code, titles, task records, word forms, pass dates and section titles. |
+| W1 | Restore all three changed Pass 8 boxes from commit 9b5652a6. Add eight Pass 9 tasks and two Pass 10 tasks. |
+| W2 | Name the two old lines that Pass 8 changed in the U2 row. |
+| W3 | Delete the claim that the lead read 20 rules. Name the first ADDED requirement in U5. |
+| W4 | State both waiver functions in the glossary; see W8. |
+| W5 | Name the file scope that test titles at lines 1620 and 1688 do not state. |
+| W6 | Bound coverage error text in the proposal and design. |
+| W7 | The lead will record the reason for test 1665 in review.md. |
+| W8 | State change, file, metric, hash and loaded coverage conditions for waiver counts. At Pass 11, base content also rejects waiver coverage in compareLedger for a file without a ledger entry. |
+| W9 | Bound the Pass 8 metric claim to the rules that Pass 8 changes. |
+| W10 | Name each requirement and its effects in the design and U1 row. |
+| W11 | Name the ledger entry covered count as the comparand in the proposal. |
+| W12 | Name test titles and the scope that they do not state. Keep each paragraph at six sentences or fewer. |
+| W13 | Use the conditions of a coverage error in both live documents. |
+| W14 | State that seven mutations make the test fail and the control makes it pass. |
+| W15 | Put the stale-check command before its summary command. |
+| W16 | Correct U1, U5, U6, U7, U8 and U9 terms. The metric check covers only two phrase forms. |
+| W17 | Use does not name or does not show for the audit extract and title scope. |
+| W18 | Name metric scope in the partial improvement sentence and never-worse counts row. |
+| W19 | Define tolerance per metric. Keep scenario 142 text unchanged. |
+| W20 | Use full mutation expressions, Node versions and extract bounds. State the JSON command exit result. |
+| W21 | Keep the T labels, test 154 words, scenario 154 text and old script header. The lead records the test 1665 reason. |
+| W22 | Check unchanged code, titles, task records, word forms, pass names in the At Pass prefixes and section titles. |
 
-At Pass 10, the task counts are Pass 8: 17; Pass 9: 8; Pass 10: 2. Old command outputs keep their counts.
+At Pass 10, the task counts are Pass 8: 17; Pass 9: 8; Pass 10: 2. Old command outputs keep the counts that they printed.
 
 Command (Node 24.14.0): taskset -c 0-3 nice -n 19 /tmp/node-v24.14.0-linux-x64/bin/node --import /home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/strict-host.mjs --test src/tooling/spec/ledger.test.mjs.
 
-The command reports one file result. It gives no individual test count.
+The first Pass 10 command ran at file level. The second adds --test-isolation=none to give individual counts.
 
 Command (Node 24.14.0): taskset -c 0-3 nice -n 19 /tmp/node-v24.14.0-linux-x64/bin/node --import /home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/strict-host.mjs --test --test-isolation=none src/tooling/spec/ledger.test.mjs.
 
@@ -3180,6 +3180,8 @@ Command (Node 24.14.0): taskset -c 0-3 nice -n 19 /tmp/node-v24.14.0-linux-x64/b
 ℹ todo 0
 ℹ duration_ms 437.855884
 ```
+
+The extract shows three lines of the output of pass9/audit.py.
 
 Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass9/audit.py.
 
@@ -3199,8 +3201,6 @@ Task verb flags: []
 Pass 8 tasks: 17
 Pass 9 tasks: 8
 Pass 10 tasks: 2
-Pass 9 box records: U3/U4 titles; mutation table; U1/U5/U6/U10 text; U2/U8 prose; scope output; scenario text; test text; host outputs
-Pass 10 box records: correction table; ledger, lint, show and validate outputs
 Banned word forms: []
 proposal.md level 2 equal
 proposal.md level 3 equal
@@ -3227,7 +3227,6 @@ evidence.md level 3 changed
 +### Pass 10
 spec.md level 2 equal
 spec.md level 3 equal
-At Pass prefixes: Pass 7 citation names Pass 7; two Pass 10 notes name Pass 10; Pass 10 task counts name Pass 10
 ```
 
 Command: taskset -c 0-3 nice -n 19 node scripts/spec/gates.mjs lint --change vendored-coverage-tolerance.
@@ -3244,4 +3243,106 @@ Change 'vendored-coverage-tolerance' is valid
 
 Command: openspec show vendored-coverage-tolerance --json.
 
-The command writes JSON and exits with 0.
+At Pass 10, the command wrote JSON. No exit status and no parse result were recorded.
+
+The author states these notes for the Pass 10 audit: Pass 9 boxes have text, test and host records.
+The author states that Pass 10 has correction and host records.
+The author states that the At Pass prefixes name the pass of each fact.
+
+### Pass 11
+
+Tree read: commit `8ee1bd5f`, with Pass 11 text edits.
+
+| Finding | Correction or decision |
+| --- | --- |
+| Y1 | Define waiver line. Bound the ledger-entry sum. Name the no-entry path. |
+| Y2 | Name the current gap total for compareLedger. checkRebaseline uses the smaller of two totals. |
+| Y3 | Change Pass 10 labels to W1 through W22. Keep the engine name V8. |
+| Y4 | Split the Pass 9 file tasks and test print tasks. Split the Pass 10 commands. Leave its JSON box unchecked. |
+| Y5 | Name the tolerance size and the error comparisons. |
+| Y6 | Date U1 text by pass. Name both Pass 8 note changes. Correct U6 and U9 terms. |
+| Y7 | Restore parser records. Bound extracts. Separate author notes from command output. |
+| Y8 | Correct title scope, Node versions, extract placement and count words. |
+| Y9 | Keep the accepted decisions. |
+
+At Pass 11, task counts are Pass 8: 17; Pass 9: 11; Pass 10: 5.
+Pass 10 added eight Pass 9 tasks and two Pass 10 tasks. Its command outputs keep those counts.
+The Pass 9 test extract shows only the test at ledger.test.mjs line 1688.
+The parser in pass8/check-final.py and pass9/finish.py runs json.loads on the output of openspec show.
+
+Command (Node 24.14.0): taskset -c 0-3 nice -n 19 /tmp/node-v24.14.0-linux-x64/bin/node --import /home/ianblenke/docker/gev-tools/vendored-tolerance/pass3/strict-host.mjs --test --test-isolation=none src/tooling/spec/ledger.test.mjs. Exit: 0.
+
+```text
+ℹ tests 106
+ℹ suites 0
+ℹ pass 106
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 954.921892
+```
+
+Command: openspec show vendored-coverage-tolerance --json. Exit: 0.
+
+```text
+python3 json.loads: PASS
+```
+
+Command: openspec validate vendored-coverage-tolerance. Exit: 0.
+
+```text
+Change 'vendored-coverage-tolerance' is valid
+```
+
+Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass11/audit.py.
+
+```text
+Code diff from 766e8290: empty
+Review reports: unchanged
+Pass 1 through Pass 8 tasks: unchanged
+Pass 8 tasks: 17
+Pass 9 tasks: 11
+Pass 10 tasks: 5
+New task verb and object flags: []
+Task records: Pass 9 U1-U10, test 1688 extract and host outputs; Pass 10 table and host outputs
+Pass 10 JSON task: unchecked
+Banned word forms: []
+W labels: 22 unique
+Y labels: 9 unique
+U labels: 10 unique
+X3: two old rows at commit 8ee1bd5f; unchanged
+T labels: accepted Pass 3 and Pass 8 reuse
+At Pass prefixes: citation Pass 7; requirement text and audit note Pass 10; no-entry correction and current counts Pass 11
+proposal.md level 2 equal
+proposal.md level 3 equal
+design.md level 2 equal
+design.md level 3 equal
+tasks.md level 2 equal
+tasks.md level 3 equal
+evidence.md level 2 equal
+evidence.md level 3 changed
+--- evidence.md 8ee1bd5f
++++ evidence.md Pass 11
+@@ -16,3 +16,4 @@
+ ### Pass 8
+ ### Pass 9
+ ### Pass 10
++### Pass 11
+spec.md level 2 equal
+spec.md level 3 equal
+```
+
+Command: python3 /home/ianblenke/docker/gev-tools/vendored-tolerance/pass9/audit.py.
+
+The extract shows the title result only.
+
+```text
+Stale titles: 0
+```
+
+Command: taskset -c 0-3 nice -n 19 node scripts/spec/gates.mjs lint --change vendored-coverage-tolerance.
+
+```text
+STE: 0 errors, 545 warnings.
+```
