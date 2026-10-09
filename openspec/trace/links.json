@@ -2473,6 +2473,7 @@
   ],
   "gap-ledger-069": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-069 gap-ledger-073] uses the tolerance of a file in the check and in the ratchet command",
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-069] the gate applies count tolerance to a file with base content",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-069] does not stop for counts inside the tolerance and does not record the entry as not current"
   ],
   "gap-ledger-070": [
@@ -2510,6 +2511,7 @@
     "src/tooling/spec/gates.test.mjs › [gap-ledger-080] stops the waive command for a fault in its options"
   ],
   "gap-ledger-081": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-081] the gate applies the waived count to a file that differs from its adopted source",
     "src/tooling/spec/ledger.test.mjs › [gap-ledger-081] allows the waived count for a changed file with the content hash of the waiver"
   ],
   "gap-ledger-082": [
@@ -2724,6 +2726,79 @@
   ],
   "gap-ledger-135": [
     "src/tooling/spec/gates.test.mjs › [gap-ledger-135] include new trace content in the review tree"
+  ],
+  "gap-ledger-136": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-136 gap-ledger-140 gap-ledger-144] the gate uses the adopted source in the check, ci and ratchet commands",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-136 gap-ledger-140] the gate allows a count difference inside tolerance for a file that equals its adopted source"
+  ],
+  "gap-ledger-137": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-137] the gate gives no count tolerance to a file that differs from its adopted source",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-137] the gate compares counts with no tolerance for a content hash that differs from the hash in the ledger entry"
+  ],
+  "gap-ledger-138": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-138] the gate gives no tolerance from the requirement \"Count tolerance for adopted files\" for an invalid adopt line"
+  ],
+  "gap-ledger-139": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-139] the gate gives no tolerance for an adopt line of another change"
+  ],
+  "gap-ledger-140": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-136 gap-ledger-140 gap-ledger-144] the gate uses the adopted source in the check, ci and ratchet commands",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-136 gap-ledger-140] the gate allows a count difference inside tolerance for a file that equals its adopted source"
+  ],
+  "gap-ledger-141": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-141] the gate compares untrue or unloaded coverage with no tolerance"
+  ],
+  "gap-ledger-142": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-142] the gate reports errors for counts outside the tolerance"
+  ],
+  "gap-ledger-143": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-143] the ratchet command uses toleranceCounts for a file with base content that also equals its adopted source",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-143] the ratchet command writes never-worse counts for a file that equals its adopted source and has no base content",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-154 gap-ledger-143] the ratchet command writes current counts when the current not-covered count is not above the ledger entry not-covered count and ledger entry counts if not"
+  ],
+  "gap-ledger-144": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-136 gap-ledger-140 gap-ledger-144] the gate uses the adopted source in the check, ci and ratchet commands"
+  ],
+  "gap-ledger-145": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-145] the gate gives no tolerance from the requirement \"Count tolerance for adopted files\" to an absent file with a valid adopt line"
+  ],
+  "gap-ledger-146": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-146] the gate gives no tolerance to a code file that no valid adopt line names"
+  ],
+  "gap-ledger-147": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-147] the gate accepts total differences for a file with a valid adopt line in the check, ci and ratchet commands",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-147] the gate accepts total differences for a file with a valid adopt line"
+  ],
+  "gap-ledger-148": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-148] the gate compares not-covered counts with no tolerance for a file that differs from its adopted source"
+  ],
+  "gap-ledger-149": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-149] the gate records the ledger entry as stale when no valid adopt line names the file",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-149] the gate records the ledger entry as stale for total differences without a valid adopt line"
+  ],
+  "gap-ledger-150": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-150] the gate ignores another change for total differences"
+  ],
+  "gap-ledger-151": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit"
+  ],
+  "gap-ledger-152": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-152] the gate records the ledger entry as stale for a content hash that differs from the hash in the ledger entry"
+  ],
+  "gap-ledger-153": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-153] the gate gives no total count exception for untrue or unloaded coverage"
+  ],
+  "gap-ledger-154": [
+    "src/tooling/spec/gates.test.mjs › [gap-ledger-154] the ratchet command writes no larger count for a file that equals its adopted source and has no base content",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-154 gap-ledger-143] the ratchet command writes current counts when the current not-covered count is not above the ledger entry not-covered count and ledger entry counts if not",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-154] the ratchet command writes ledger entry counts or current counts for each metric by the ledger entry not-covered count of that metric",
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-154] the ratchet command writes the total counts of a file that equals its adopted source and has no base content"
+  ],
+  "gap-ledger-155": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-155] the ratchet command writes current gap total counts for a file with no base content when ledger entry total counts are absent"
+  ],
+  "gap-ledger-156": [
+    "src/tooling/spec/ledger.test.mjs › [gap-ledger-156] the ratchet command writes the ledger entry total count of zero for a file with no base content and a larger current not-covered count"
   ],
   "hud-markings-001": [
     "src/hudMarkings.test.mjs › [hud-markings-001] shows no classification marking in a HUD file, in any letter case"
