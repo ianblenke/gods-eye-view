@@ -611,16 +611,16 @@
     "src/tooling/spec/gates.test.mjs › [coverage-gate-100] check QA capability names without tests"
   ],
   "credential-boundary-001": [
-    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] a fixture build exposes only the allowed sentinels",
+    "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] a fixture build has only the four allowed sentinels",
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-001] every secret sentinel stays out of the built output, by name"
   ],
   "credential-boundary-002": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-002] a VITE_ value outside the AIS prefix never reaches the bundle"
   ],
   "credential-boundary-003": [
-    "src/googleServerKey.test.mjs › [credential-boundary-003] browser defines contain the browser key and exclude the server key",
+    "src/googleServerKey.test.mjs › [credential-boundary-003] lists three public names and no server key in the browser define",
     "src/tooling/viteBuild.test.mjs › [credential-boundary-003] build helper does not discover environment values or construct local providers",
-    "src/tooling/viteBuild.test.mjs › [credential-boundary-003] explicit build inputs preserve browser-only defines, plugin order and loopback protections"
+    "src/tooling/viteBuild.test.mjs › [credential-boundary-003] keeps three public names, plugin order and loopback protections"
   ],
   "credential-boundary-004": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-004] no key-shaped literal appears in browser source"
@@ -696,6 +696,14 @@
   ],
   "credential-boundary-016": [
     "src/tooling/bundleCredentials.test.mjs › [credential-boundary-016] the server key stays out of the bundle and out of main.js, and a failure names it"
+  ],
+  "credential-boundary-017": [
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-017] configurePreviewServer refuses cross-site geocode before key access",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-017] configureServer refuses cross-site geocode before key access"
+  ],
+  "credential-boundary-018": [
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-018] configurePreviewServer admits same-site geocode",
+    "src/googleGeocodeProxy.test.mjs › [credential-boundary-018] configureServer admits same-site geocode"
   ],
   "cyclones-001": [
     "src/layers/cyclones/source.test.mjs › [cyclones-001] a track of one line and a cone of one polygon keep their types",
@@ -3200,7 +3208,7 @@
     "src/layers/osh/detail.test.mjs › [osh-032] the system id stands in for its name when the system has neither, for a stream-placed system"
   ],
   "osh-033": [
-    "src/data/layerState.test.mjs › [osh-033] registers the OSH systems layer with the token o, and localLayers.js exports it"
+    "src/data/layerState.test.mjs › [osh-033] registers the OSH systems layer with token 3, and localLayers.js includes it"
   ],
   "osh-034": [
     "src/data/oshRepositoryHygiene.test.mjs › [osh-034] .env.example has the three OSH keys and OSH_LOCATION_PROPERTIES, each with an empty value",

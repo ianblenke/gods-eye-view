@@ -116,15 +116,26 @@ test('both Places routes select the intended key and keep it out of responses', 
   }
 });
 
-test('[credential-boundary-003] browser defines contain the browser key and exclude the server key', () => {
+test('[credential-boundary-003] lists three public names and no server key in the browser define', () => {
   withKeys({ server: 'server-secret', browser: 'browser-public' }, () => {
-    const defines = config({ mode: 'test' }).define;
+    const previousToken = process.env.MAPILLARY_CLIENT_TOKEN;
+    process.env.MAPILLARY_CLIENT_TOKEN = 'mapillary-public-fixture';
+    let defines;
+    try {
+      defines = config({ mode: 'test' }).define;
+    } finally {
+      if (previousToken === undefined) delete process.env.MAPILLARY_CLIENT_TOKEN;
+      else process.env.MAPILLARY_CLIENT_TOKEN = previousToken;
+    }
+    assert.equal(Object.hasOwn(defines, 'import.meta.env.MAPILLARY_CLIENT_TOKEN'), true);
+    assert.equal(defines['import.meta.env.MAPILLARY_CLIENT_TOKEN'], '"mapillary-public-fixture"');
     assert.equal(defines['import.meta.env.GOOGLE_MAPS_API_KEY'], '"browser-public"');
     assert.ok(!JSON.stringify(defines).includes('server-secret'));
     assert.ok(!Object.keys(defines).some((key) => key.includes('SERVER_API_KEY')));
     assert.deepEqual(Object.keys(defines), [
       'import.meta.env.GOOGLE_MAPS_API_KEY',
       'import.meta.env.CESIUM_ION_TOKEN',
+      'import.meta.env.MAPILLARY_CLIENT_TOKEN',
     ]);
   });
 });

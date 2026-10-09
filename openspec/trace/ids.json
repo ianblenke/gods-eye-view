@@ -720,22 +720,22 @@
     "change": "gates-one-measurement"
   },
   "credential-boundary-001": {
-    "hash": "eaef1a424e119ef144eb60a230f3592743ea14ab6d772b1c441006589caf402c",
+    "hash": "85a103eb9d7ba249fb78bf1b422b413ad69259efa0985971941c2ef466b6a623",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
   "credential-boundary-002": {
-    "hash": "cf48d9414be622796b0eb7200db0dd76b38ec70fd8dfa625060a58a9db79b129",
+    "hash": "850c748f7350a0eba7df77c010b84cc5516fd7a6f0fd581d1d6a6a1f6daac805",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
   "credential-boundary-003": {
-    "hash": "4ee19ddc019c308b7757109df30d846e81fa664b9987c5491c544473e077e62a",
+    "hash": "f45d293c30403b1624f10f3d5198d6e6bde86f0490340002005f5f9709fbac6c",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
   "credential-boundary-004": {
-    "hash": "c505cba67b70853dd986505bcd6b20d84053186ee0b4b87360fc6876ede89de5",
+    "hash": "6bf030f951c2b22dd075e5715b88a2ab85305b16f6eaf5fd3d30ddb7bdcbc541",
     "since": "2026-09-23",
     "change": "credential-boundary"
   },
@@ -795,9 +795,19 @@
     "change": "credential-boundary"
   },
   "credential-boundary-016": {
-    "hash": "d3c20d65d212ef4630a17d03d5261e9c76722736a56cccd3e19182381499625d",
+    "hash": "84c9b5f1c514c3881c2f686d7d61e9ce3407aad97fd49bb6d804b03b2175b2f7",
     "since": "2026-09-23",
     "change": "credential-boundary"
+  },
+  "credential-boundary-017": {
+    "hash": "1fc376a2bfc4ed2bfe7507e4aa9e958b02b3425c3954dddffee36b4e3aa5486f",
+    "since": "2026-10-08",
+    "change": "upstream-sync-3"
+  },
+  "credential-boundary-018": {
+    "hash": "f431813f9e42a1f8a6bc7b26b4f8ad50058c2855b530225343548e0cede66fbd",
+    "since": "2026-10-08",
+    "change": "upstream-sync-3"
   },
   "cyclones-001": {
     "hash": "66b1f031cbf46738d3d303d18e8cc31b6ddee0744e2237f07fe3bf48f45ba2c7",
@@ -2385,7 +2395,7 @@
     "change": "osh-fusion"
   },
   "osh-033": {
-    "hash": "65581634838bfee7ffd7f9d39a035d00167a113fbd2ef4eb60b78c0c827c1851",
+    "hash": "f64b34c358a789ac9c33fdd7ef3d9acd94615f5bb17f11f8c3ba382526fd5941",
     "since": "2026-09-17",
     "change": "osh-fusion"
   },
@@ -3385,7 +3395,7 @@
     "change": "qa-script-register"
   },
   "qa-scripts-023": {
-    "hash": "e8db48cf46a098cbb10afabd371e36d776c8e637f42246062e8a2031d9474d4c",
+    "hash": "10f7df10bfa09293c3200a079fb05591260bee1a0d63ca80d27dd8f7e4386805",
     "since": "2026-09-26",
     "change": "qa-script-register"
   },
