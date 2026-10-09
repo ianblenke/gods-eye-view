@@ -3470,7 +3470,7 @@ After the merge, the lead ran the test file `gates.test.mjs` with `node --test` 
 
 | Test | Cause | Correction |
 |---|---|---|
-| gap-ledger-138, gap-ledger-151 | The early source check of the adopt records stops the gate with one LEDGER-ADOPT-FROM error at `openspec/trace/history.jsonl`. The tests expected a file error and LEDGER-STALE after that stop. | Spec sentence in "Adopt record boundary", scenario `ownership-055`, design D11. The two tests expect the stop and carry the tag `ownership-055`. |
+| gap-ledger-138, gap-ledger-151 | The early source check of the adopt records stops the gate with one LEDGER-ADOPT-FROM error at `openspec/trace/history.jsonl`. The tests expected a file error and LEDGER-STALE after that stop. | Spec sentence in "Adopt record boundary", scenario `ownership-055`, design D11. The two tests expect the stop. The test of gap-ledger-151 carries the tag `ownership-055`, because only that fixture has a total count difference alone. |
 | gap-ledger-147 | The fork edit line of `src/merged.js` needs line coverage (COVERAGE-DIFF), and the fake coverage file of the tolerance tests had no line records. The ratchet command stopped at COVERAGE-DIFF. | The fake coverage file has the records `DA:1,1` to `DA:200,1` after the function lines. |
 
 The fault for `ownership-055` removes the early source check: in `gates.mjs` the call of `validAdoptSources` becomes a call of `adoptsOf`. The lead ran the tests of gap-ledger-138 and gap-ledger-151 with the fault. The lead then restored the file with `git checkout` and ran the same tests again. The file `pass13/fault-early-check.txt` holds the output with the fault, and the file `pass13/restored-early-check.txt` holds the output after the restore:

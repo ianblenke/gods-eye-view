@@ -2704,7 +2704,7 @@ test('[gap-ledger-137] the gate gives no count tolerance to a file that differs 
   }, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);
 });
 
-test('[gap-ledger-138 ownership-055] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line', () => {
+test('[gap-ledger-138] the gate gives no tolerance from the requirement "Count tolerance for adopted files" for an invalid adopt line', () => {
   withMergeFixture((root) => {
     const line = adoptedNoise(root);
     line.from = git(root, 'rev-parse', 'HEAD');

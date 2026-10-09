@@ -303,8 +303,8 @@ These titles are the names in the red logs. Later corrections renamed some title
 
 - [x] 15.1 Merge main into the branch.
 - [x] 15.2 Write the sentence and the scenario `ownership-055` in the adopt record boundary.
-- [x] 15.3 Change the tests of `gap-ledger-138` and `gap-ledger-151` to expect the early stop.
+- [x] 15.3 Change the tests of `gap-ledger-138` and `gap-ledger-151` to expect the early stop, and tag the test of `gap-ledger-151` with `ownership-055`.
 - [x] 15.4 Add line records to the coverage file of the tolerance tests.
-- [x] 15.5 Run the host tests of the three changed test groups.
+- [x] 15.5 Run the host tests of the whole file `gates.test.mjs`.
 - [x] 15.6 Run the fault that removes the early source check.
 

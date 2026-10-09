@@ -1,19 +1,19 @@
 ##### node scripts/format.mjs --check
-Checked 1159 source files.
+Checked 1328 source files.
 ##### status 0
 ##### node scripts/check-import-directions.mjs
-{"modules":864,"portableEntries":67}
+{"modules":968,"portableEntries":76}
 ##### status 0
 ##### node scripts/check-package-boundaries.mjs
-Checked transit-source-factory: 1 exports, 2 owned modules.
-Checked transit-service: 1 exports, 8 owned modules.
-Checked map-feature-source: 1 exports, 5 owned modules.
-Checked perimeters: 1 exports, 6 owned modules.
-Checked perimeters-source: 1 exports, 2 owned modules.
+Checked tools-panel: 1 exports, 3 owned modules.
+Checked tools-services: 1 exports, 59 owned modules.
+Checked view: 1 exports, 3 owned modules.
+Checked osh-provider: 1 exports, 13 owned modules.
+Checked osh-control-provider: 1 exports, 14 owned modules.
 Checked osh-layer: 1 exports, 10 owned modules.
 ##### status 0
 ##### node scripts/check-layer-state-tokens.mjs --base-ref origin/main
-Layer tokens valid against origin/main: 29 published, 0 new.
+Layer tokens valid against origin/main: 30 published, 0 new.
 ##### status 0
 ##### node scripts/spec/gates.mjs lint --change ownership-scoped-gates
 WARN STE-ING openspec/specs/qa-scripts/spec.md:47 Check the -ing word "pending"
@@ -21,7 +21,7 @@ WARN STE-ING openspec/specs/qa-scripts/spec.md:84 Check the -ing word "pending"
 WARN STE-ING openspec/specs/wind/spec.md:4 Check the -ing word "archiving"
 WARN STE-WORD-OLD openspec/specs/wind/spec.md:72 Use "closes", not "dismisses"
 WARN STE-NOUN openspec/specs/wind/spec.md:191 Check for a verb used as a noun: "abort"
-STE: 0 errors, 640 warnings.
+STE: 0 errors, 664 warnings.
 ##### status 0
 ##### openspec validate ownership-scoped-gates
 Change 'ownership-scoped-gates' is valid
