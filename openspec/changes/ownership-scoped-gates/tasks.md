@@ -342,3 +342,11 @@ These titles are the names in the red logs. Later corrections renamed some title
 - [x] 19.1 Correct the major faults that pre-review 14 found.
 - [x] 19.2 Correct the major fault that pre-review 15 found.
 - [x] 19.3 Run the format check, the lint and OpenSpec validate on the host.
+
+## 20. Pass 18
+
+- [x] 20.1 Add the title of the test of `ownership-031` to the list in `testGuard.test.mjs`.
+- [x] 20.2 Run the test file `testGuard.test.mjs` with the fault that removes `GUARDED_RUN`.
+- [x] 20.3 Run the other test files of `src/tooling/spec` on the host.
+- [x] 20.4 Run the format check, the lint and OpenSpec validate on the host.
+

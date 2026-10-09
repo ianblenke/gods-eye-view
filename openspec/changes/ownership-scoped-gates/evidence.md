@@ -3714,3 +3714,70 @@ The second run of Pass 13 has no recorded commit. The run of the whole file `gat
 
 The lead ran the format check, the STE lint and `openspec validate` on the host, on the working tree over commit 91eee2c9. The file `pass17/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
 
+## Pass 18
+
+Tree read: branch ownership-gates at commit 768370eb, with the Pass 18 changes of `testGuard.test.mjs`, `evidence.md`, `tasks.md` and the folder `pass18/`.
+
+The first image ratchet of this change ran in the Docker image `gods-eye-view:local` at commit 768370eb. Its log starts with `Command: ratchet`. The ratchet stopped before the ledger comparison and wrote no file. The file `pass18/ratchet-stop.txt` holds the verdict lines:
+
+```text
+Command: ratchet
+Trace: 911 scenarios, 910 verified, 0 open. 9566 tests, 3701 traced, 5865 untraced.
+Coverage: 1065 files, 296 complete, 104 not loaded, 51 untrue.
+ERROR TRACE-FAILED-TEST src/tooling/spec/testGuard.test.mjs Test "[coverage-gate-046] gives a skip reason on a Node version without getTestContext to each test that needs the guard to count assertions" failed
+ERROR TRACE-UNVERIFIED openspec/specs/coverage-gate/spec.md:245 Scenario coverage-gate-046 has no passing test with an assertion
+Gates failed with 2 errors.
+Finished: 2026-10-09T11:55:19.456Z (1524.637 s)
+RATCHET_EXIT=2
+```
+
+The test of `coverage-gate-046` in `testGuard.test.mjs` pins the titles of the tests that have the option `GUARDED_RUN` in `gates.test.mjs`. The branch has one test that main does not have: the test of `ownership-031`. The lead had not run `testGuard.test.mjs` on the host after the merges of main. The lead then ran each test file of `src/tooling/spec` on the host, except `gates.test.mjs`. The file `pass18/spec-files-run.txt` holds one line for each file. The file `testGuard.test.mjs` is the only file with a failed test in it:
+
+```text
+ciFiles.test.mjs: ℹ tests 4 ℹ pass 4 ℹ fail 0 
+ci.test.mjs: ℹ tests 6 ℹ pass 6 ℹ fail 0 
+coverage.test.mjs: ℹ tests 15 ℹ pass 15 ℹ fail 0 
+git.test.mjs: ℹ tests 4 ℹ pass 4 ℹ fail 0 
+importReach.test.mjs: ℹ tests 12 ℹ pass 12 ℹ fail 0 
+inventory.test.mjs: ℹ tests 8 ℹ pass 8 ℹ fail 0 
+ledger.test.mjs: ℹ tests 107 ℹ pass 107 ℹ fail 0 
+openspec.test.mjs: ℹ tests 4 ℹ pass 4 ℹ fail 0 
+ownershipGate.test.mjs: ℹ tests 40 ℹ pass 40 ℹ fail 0 
+ownership.test.mjs: ℹ tests 50 ℹ pass 50 ℹ fail 0 
+qaRegister.test.mjs: ℹ tests 49 ℹ pass 49 ℹ fail 0 
+registry.test.mjs: ℹ tests 15 ℹ pass 15 ℹ fail 0 
+review.test.mjs: ℹ tests 33 ℹ pass 33 ℹ fail 0 
+runParallel.test.mjs: ℹ tests 3 ℹ pass 3 ℹ fail 0 
+specLint.test.mjs: ℹ tests 17 ℹ pass 17 ℹ fail 0 
+specs.test.mjs: ℹ tests 20 ℹ pass 20 ℹ fail 0 
+ste.test.mjs: ℹ tests 45 ℹ pass 45 ℹ fail 0 
+testGuard.test.mjs: ℹ tests 31 ℹ pass 30 ℹ fail 1 
+traceReporter.test.mjs: ℹ tests 10 ℹ pass 10 ℹ fail 0 
+trace.test.mjs: ℹ tests 25 ℹ pass 25 ℹ fail 0 
+v8Merge.test.mjs: ℹ tests 11 ℹ pass 11 ℹ fail 0 
+ALL_DONE
+```
+
+The lead added the title of the test of `ownership-031` as the last entry of the list for `gates.test.mjs` in `testGuard.test.mjs`. The scenario `coverage-gate-046` names no title, so its text does not change.
+
+The fault removes the option `GUARDED_RUN` from the test of `ownership-031` in `gates.test.mjs`. The lead ran `testGuard.test.mjs` with the fault and without it. The runs used the files of commit 768370eb and the changed list in `testGuard.test.mjs`. The file `pass18/runs-head.txt` holds the commit. The file `pass18/fault-no-guarded-run.txt` holds the output with the fault, and the file `pass18/guard-run-summary.txt` holds the output without it. The lead restored the file with `git checkout`:
+
+```text
+768370eb4e3676f8b704edb52da5e1b5186bdd04
+```
+
+```text
+✖ [coverage-gate-046] gives a skip reason on a Node version without getTestContext to each test that needs the guard to count assertions
+ℹ tests 31
+ℹ pass 30
+ℹ fail 1
+```
+
+```text
+ℹ tests 31
+ℹ pass 31
+ℹ fail 0
+```
+
+The lead ran the format check, the import direction check, the package boundary check, the layer token check, the STE lint and `openspec validate` on the host, on the tree of commit 768370eb with the Pass 18 changes. The file `pass18/host-checks.log` starts with the commit and the changed files of the tree, and it holds the last lines of each output. Each status is 0, and the lint gives 0 errors.
+
