@@ -47,8 +47,11 @@ function setup(t, env = {}) {
   t.after(() => {
     process.env = saved;
   });
-  t.mock.method(console, 'log', () => {});
-  return t.mock.method(console, 'warn', () => {});
+  const log = t.mock.method(console, 'log', () => {});
+  return Object.assign(
+    t.mock.method(console, 'warn', () => {}),
+    { log },
+  );
 }
 function fake(t, response) {
   t.mock.method(globalThis, 'fetch', async () => response);
@@ -115,7 +118,9 @@ for (const image of [
   'https://example.com/DGI/chan-1_h.jpg',
   'http://images-dis.divas.cloud/DGI/chan-1_h.jpg',
   'https://images-dis.divas.cloud:8443/DGI/chan-1_h.jpg',
+  'https://images-dis.divas.cloud:443/DGI/chan-1_h.jpg',
   'https://user@images-dis.divas.cloud/DGI/chan-1_h.jpg',
+  'https://example.com/?u=https://images-dis.divas.cloud/DGI/chan-1_h.jpg',
 ])
   test(`[live-sources-013] drops address ${image}`, () => {
     assert.equal(map(row({ IMAGE: image })), null);
@@ -125,31 +130,33 @@ for (const image of [
   'https://images-dis.divas.cloud/DGI/other.jpg',
   'https://images-dis.divas.cloud/DGI/chan-1_l.jpg',
   'https://images-dis.divas.cloud/DGI/chan-1_h.jpg.exe',
+  'https://images-dis.divas.cloud/DGI/chan-_h.jpg',
+  ['https://images-dis.divas.cloud/DGI/chan-1_h.jpg'],
   '',
   '   ',
   12345,
   undefined,
   'not a URL',
 ])
-  test(`[live-sources-014] drops frame ${String(image)}`, () => {
+  test(`[live-sources-014] drops frame ${JSON.stringify(image) ?? 'absent'}`, () => {
     assert.equal(map(row({ IMAGE: image })), null);
   });
-test('[live-sources-015] builds the clean frame address', () => {
-  const source = map(
-    row({
-      IMAGE:
-        'https://images-dis.divas.cloud/DGI/chan-10416_h.jpg?token=abc#top',
-    }),
-  );
-  assert.equal(
-    source.url,
-    'https://images-dis.divas.cloud/DGI/chan-10416_h.jpg',
-  );
-  assert.equal(
-    source.snapshotUrl,
-    'https://images-dis.divas.cloud/DGI/chan-10416_h.jpg',
-  );
-});
+for (const suffix of ['?token=abc#top', '#top', '?'])
+  test(`[live-sources-015] builds the clean frame address for ${suffix}`, () => {
+    const source = map(
+      row({
+        IMAGE: `https://images-dis.divas.cloud/DGI/chan-10416_h.jpg${suffix}`,
+      }),
+    );
+    assert.equal(
+      source.url,
+      'https://images-dis.divas.cloud/DGI/chan-10416_h.jpg',
+    );
+    assert.equal(
+      source.snapshotUrl,
+      'https://images-dis.divas.cloud/DGI/chan-10416_h.jpg',
+    );
+  });
 for (const [label, changes] of [
   ['no latitude', { LATITUDE: undefined }],
   ['no longitude', { LONGITUDE: undefined }],
@@ -183,7 +190,7 @@ for (const description of [undefined, '', '   ', ' Alpha '])
     );
   });
 test('[live-sources-019] sends only the fixed query and timeout', async (t) => {
-  setup(t);
+  const mocks = setup(t);
   const signal = new AbortController().signal;
   const timeout = t.mock.method(AbortSignal, 'timeout', () => signal);
   const request = t.mock.method(globalThis, 'fetch', async () =>
@@ -201,6 +208,10 @@ test('[live-sources-019] sends only the fixed query and timeout', async (t) => {
     signal,
   });
   assert.deepEqual(timeout.mock.calls[0].arguments, [15000]);
+  assert.deepEqual(
+    mocks.log.mock.calls.map((call) => call.arguments),
+    [['[CCTV] Loaded Pensacola camera sources: 1 (using nearest 1)']],
+  );
 });
 test('[live-sources-020] reads attributes and drops invalid entries', async (t) => {
   setup(t);
@@ -216,12 +227,17 @@ test('[live-sources-020] reads attributes and drops invalid entries', async (t) 
   assert.equal(map(null), null);
   assert.equal(map(7), null);
 });
-for (const variant of ['body', 'no body', 'cancel error'])
-  test(`[live-sources-021] handles HTTP error with ${variant}`, async (t) => {
+for (const [status, variant] of [
+  [503, 'body'],
+  [503, 'no body'],
+  [503, 'cancel error'],
+  [400, 'body'],
+])
+  test(`[live-sources-021] handles HTTP ${status} with ${variant}`, async (t) => {
     const warn = setup(t);
     let cancelled = 0;
     const response = {
-      status: 503,
+      status,
       ok: false,
       body:
         variant === 'no body'
@@ -238,7 +254,7 @@ for (const variant of ['body', 'no body', 'cancel error'])
     assert.equal(cancelled, variant === 'no body' ? 0 : 1);
     assert.deepEqual(
       warn.mock.calls.map((call) => call.arguments),
-      [['[CCTV] Pensacola camera download failed:', 503]],
+      [['[CCTV] Pensacola camera download failed:', status]],
     );
   });
 for (const error of [new Error('network down'), 'boom'])
@@ -253,7 +269,7 @@ for (const error of [new Error('network down'), 'boom'])
       error === 'boom' ? 'boom' : 'network down',
     ]);
   });
-for (const status of [302, 307])
+for (const status of [300, 302, 307, 399])
   test(`[live-sources-023] refuses redirect ${status}`, async (t) => {
     const warn = setup(t);
     let cancelled = 0;
@@ -319,11 +335,14 @@ for (const [value, count] of [
   ['abc', 120],
 ])
   test(`[live-sources-026] applies cap ${String(value)}`, async (t) => {
-    setup(t, value === undefined ? {} : { CCTV_PENSACOLA_MAX_SOURCES: value });
+    const mocks = setup(
+      t,
+      value === undefined ? {} : { CCTV_PENSACOLA_MAX_SOURCES: value },
+    );
     const rows = Array.from({ length: 250 }, (_, i) => {
       const n = 250 - i;
       return row({
-        LATITUDE: 30.4213 + n * 0.001,
+        LATITUDE: 30.4213 + (n % 2 ? -n : n) * 0.0004,
         LONGITUDE: -87.2169,
         IMAGE: `https://images-dis.divas.cloud/DGI/chan-${1000 + n}_h.jpg`,
       });
@@ -334,6 +353,14 @@ for (const [value, count] of [
     assert.deepEqual(
       sources.map((source) => source.id),
       Array.from({ length: count }, (_, i) => `fl-${1001 + i}`),
+    );
+    assert.deepEqual(
+      mocks.log.mock.calls.map((call) => call.arguments),
+      [
+        [
+          `[CCTV] Loaded Pensacola camera sources: 250 (using nearest ${count})`,
+        ],
+      ],
     );
   });
 for (const value of ['0', undefined, '', '1', 'false'])
