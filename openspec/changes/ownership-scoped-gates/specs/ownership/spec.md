@@ -273,7 +273,7 @@ For an adopt record of this change with an invalid `file` or `from`, this requir
 For a reached adopt record whose `from` is not a merge parent, the gate prints LEDGER-ADOPT-FROM and stops.
 For such a record, this requirement replaces the LEDGER-ADOPT-REACHED error of gap-ledger-105.
 For an adopt record of this change whose `from` is not a merge parent, the gate stops before the ledger comparison.
-This requirement replaces the clause about a stale ledger entry in gap-ledger-151.
+This requirement replaces the THEN line of gap-ledger-151.
 
 The `file` field must be a string.
 The `from` field must be a full hash of 40 lowercase hexadecimal digits of a commit that a merge after the base brought.

@@ -312,7 +312,21 @@ These titles are the names in the red logs. Later corrections renamed some title
 ## 16. Pass 14
 
 - [x] 16.1 Correct the major faults that pre-review 11 found.
-- [x] 16.2 Run the tests of `gap-ledger-151`, `gap-ledger-138` and `ownership-055` with four faults.
-- [x] 16.3 Run the host tests of the files `gates.test.mjs` and `ledger.test.mjs`.
-- [x] 16.4 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
-- [x] 16.5 Run the lint and OpenSpec validate on the host.
+- [x] 16.2 Retitle the gate test of `ownership-055` and change its assertions.
+- [x] 16.3 Write the test of `gap-ledger-151` in `ledger.test.mjs`.
+- [x] 16.4 Remove the status assertion and the two negative assertions from the test of `gap-ledger-138`.
+- [x] 16.5 Run the test of `gap-ledger-151` with two faults.
+- [x] 16.6 Run the tests of `gap-ledger-138` and `ownership-055` with two other faults.
+- [x] 16.7 Run the host tests of the files `gates.test.mjs` and `ledger.test.mjs`.
+- [x] 16.8 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
+- [x] 16.9 Run the lint and OpenSpec validate on the host.
+
+## 17. Pass 15
+
+- [ ] 17.1 Correct the major faults that pre-review 12 found.
+- [ ] 17.2 Rename the test of `gap-ledger-151` in `ledger.test.mjs`.
+- [ ] 17.3 Run the test of `gap-ledger-151` with two faults.
+- [ ] 17.4 Run the test of `ownership-055` with two faults and print each assertion.
+- [ ] 17.5 Run the host test of the file `ledger.test.mjs`.
+- [ ] 17.6 Run the format check, the import direction check, the package boundary check and the layer token check on the host.
+- [ ] 17.7 Run the lint and OpenSpec validate on the host.
