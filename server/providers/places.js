@@ -9,7 +9,7 @@ export { installGoogleGeocodeRoute } from './places/geocode.js';
 export { installRouteMiddleware } from './places/routes.js';
 export {
   makeRateLimiter,
-  makeOptInRateLimiter,
+  makeCostRateLimiter,
   clientKey,
 } from './common/rate-limit.js';
 export { haversineKm } from './common/geo.js';

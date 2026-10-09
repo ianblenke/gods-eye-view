@@ -6,7 +6,7 @@ import { projectGeocodeResults } from './data/placeProviderPayloads.js';
 
 /** Return a small request helper for one route handler. */
 function requestFor(handler) {
-  const request = async (query, { method = 'GET' } = {}) => {
+  const request = async (query, { method = 'GET', headers = {} } = {}) => {
     const res = {
       statusCode: 200,
       headers: {},
@@ -18,7 +18,7 @@ function requestFor(handler) {
       },
     };
     await handler(
-      { method, url: `/${query}`, socket: { remoteAddress: 'fixture' } },
+      { method, headers, url: `/${query}`, socket: { remoteAddress: 'fixture' } },
       res,
     );
     return res;
@@ -556,3 +556,60 @@ test('[credential-boundary-011] when the body does not arrive in 5 s, the route 
   });
   assert.equal(result.headers['cache-control'], 'no-store');
 });
+
+for (const mode of ['configureServer', 'configurePreviewServer']) {
+  test(`[credential-boundary-017] ${mode} refuses cross-site geocode before key access`, async (t) => {
+    let keys = 0;
+    let calls = 0;
+    t.mock.method(globalThis, 'fetch', async () => {
+      calls += 1;
+      return Response.json({ status: 'OK', results: [] });
+    });
+    const routes = new Map();
+    googlePlacesContextProxy({ resolveApiKey: () => {
+      keys += 1;
+      return 'fixture-server-key';
+    } })[mode]({ middlewares: { use: (path, handler) => routes.set(path, handler) } });
+    const request = requestFor(routes.get('/api/google/geocode'));
+    for (const headers of [
+      { host: 'localhost:5173', origin: 'https://foreign.example' },
+      { host: 'localhost:5173', origin: 'null' },
+      { host: 'localhost:5173', 'sec-fetch-site': 'cross-site' },
+      { host: 'localhost:5173', 'x-forwarded-for': '192.0.2.1' },
+    ]) {
+      const result = await request('?address=austin', { headers });
+      assert.equal(result.statusCode, 403);
+      assert.equal(result.headers['cache-control'], 'no-store');
+      assert.equal(result.headers['content-type'], 'application/json');
+      assert.equal(typeof result.body.error, 'string');
+      assert.equal(keys, 0);
+      assert.equal(calls, 0);
+      const places = await requestFor(routes.get('/api/google/nearby-places'))('?lat=1&lon=2', { headers });
+      assert.deepEqual(result.body, places.body);
+    }
+    const result = await request('?address=austin', { method: 'POST', headers: { 'sec-fetch-site': 'cross-site' } });
+    assert.equal(result.statusCode, 403);
+    assert.equal(keys, 0);
+    assert.equal(calls, 0);
+  });
+  test(`[credential-boundary-018] ${mode} admits same-site geocode`, async (t) => {
+    let keys = 0;
+    let calls = 0;
+    t.mock.method(globalThis, 'fetch', async () => {
+      calls += 1;
+      return Response.json({ status: 'OK', results: [] });
+    });
+    const routes = new Map();
+    googlePlacesContextProxy({ resolveApiKey: () => {
+      keys += 1;
+      return 'fixture-server-key';
+    } })[mode]({ middlewares: { use: (path, handler) => routes.set(path, handler) } });
+    const result = await requestFor(routes.get('/api/google/geocode'))('?address=austin', {
+      headers: { host: 'localhost:5173', origin: 'http://localhost:5173', 'sec-fetch-site': 'same-origin' },
+    });
+    assert.equal(result.statusCode, 200);
+    assert.equal(result.body.status, 'OK');
+    assert.equal(keys, 1);
+    assert.equal(calls, 1);
+  });
+}
