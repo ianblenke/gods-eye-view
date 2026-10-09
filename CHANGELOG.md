@@ -1,5 +1,9 @@
 # Changelog
 
+- Add Pensacola traffic cameras as a keyless FL511 pack. Frames are stills from the FDOT DIVAS server.
+  FL511 content is for individual non-commercial use only. The default cap is 120 cameras nearest Pensacola.
+  `CCTV_PENSACOLA_MAX_SOURCES` sets the cap, and `CCTV_PENSACOLA_ENABLED=0` stops the pack.
+
 - Ontario 511 camera requests need `ONTARIO_511_API_KEY` (2026-10-08). The Ontario pack makes no request without it.
 
 - Vector tile sources take their allowed tile origin from the configured
