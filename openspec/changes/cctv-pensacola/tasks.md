@@ -20,6 +20,7 @@
 - [ ] 1.18 Write the test for `live-sources-027`.
 - [ ] 1.19 Write the test for `live-sources-028`.
 - [ ] 1.20 Write the test for `live-sources-029`.
+- [ ] 1.21 Write the test for `live-sources-030`.
 
 ## 2. Write the code
 
@@ -51,7 +52,7 @@
 ## 5. Lead work before and in Docker
 
 - [ ] 5.1 Check one real layer answer.
-- [ ] 5.2 Check one real frame through the frame function of the server.
+- [ ] 5.2 Check one real frame through the route `/api/cctv/frame/:id`.
 - [ ] 5.3 Write `evidence/live-check.txt` with the output of both checks.
 - [ ] 5.4 Run `make ratchet CHANGE=cctv-pensacola`.
 - [ ] 5.5 Run the two review agents.
