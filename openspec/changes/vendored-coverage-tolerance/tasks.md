@@ -170,13 +170,29 @@ The lead decides in review.md whether to accept it by name.
 - [x] Run the ledger test file.
 - [x] Run the gates test file.
 - [x] Measure coverage of both scripts.
-- [x] Check the file scope of each MUST in both requirements.
+- [x] Check the local file scope of both requirements.
 - [x] Check the repeated titles.
-- [x] Check the title of the new test against its body.
+- [x] Check the new test clauses.
 - [x] Run STE lint.
 - [x] Check the banned word forms.
 - [x] Check the JSON output of openspec show.
 - [x] Validate the change with OpenSpec.
 - [x] Replay the four coverage targets.
-- [x] Compare the level 2 and level 3 headings with commit 4b0a44bc.
+- [x] Compare the level 2 and level 3 section titles.
 - [x] Record the Pass 8 evidence.
+
+### Pass 9
+
+- [x] Rename the two test titles.
+- [x] Run the seven metric mutations.
+- [x] Correct the design, spec and proposal text.
+- [x] Correct the evidence prose.
+- [x] Change the scope-check script.
+- [x] Name the metric in scenario 142.
+- [x] Print the title and the six body assertions of the new tests.
+- [x] Run the host checks.
+
+### Pass 10
+
+- [x] 10.1 Correct the faults that pre-review 8 found.
+- [x] 10.2 Run the ledger host test, lint, OpenSpec show and OpenSpec validate.
