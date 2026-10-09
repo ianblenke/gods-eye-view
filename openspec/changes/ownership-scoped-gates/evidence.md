@@ -2669,7 +2669,7 @@ The checks use the Pass 7 work tree.
 
 The rows below describe the Pass 7 work tree from commit 087615f536a53f514cfcee9a94ca2752843029a5.
 The review folders and past run output stay as records.
-No script code changes. The Pass 7 words table defines coverage item.
+No script code changes. At Pass 7, the Pass 7 words table defined coverage item.
 
 | Finding | Correction |
 |---|---|
@@ -2688,7 +2688,7 @@ No script code changes. The Pass 7 words table defines coverage item.
 | S118: Voice | Both titles use the active voice. The owned path belongs to the file. |
 | S119: Synthetic header | Both titles name the synthetic header as the result. One title names one of three adopt records. |
 | S120: Coverage terms | At Pass 7, the row said to use LCOV record, coverage item and extra text around a DA line or diff header. At Pass 8, the title names a DA text prefix or suffix and a diff header text prefix. |
-| S121: Init pronoun | The result line states that init stops before the report step because the ledger exists. |
+| S121: Init pronoun | At Pass 9, the result line states that init stops before the step that prints the owned gap lines because the ledger exists. |
 | S122: Context | Name the new script and say not to write history records by hand. Use two AND lines. |
 | S123: Rule relation | Use replaces in both requirements. The QA clause names the requirement and its script scope. |
 | S124: Source terms | Use second parent in the result line and adopt source in the design. The text of the message stays. |
@@ -2702,7 +2702,7 @@ No script code changes. The Pass 7 words table defines coverage item.
 | S132: Assertions | Say that an assertion fails a test. Name the assertions for the JSON prefix and LEDGER-ADOPT codes. |
 | S133: Labels | Use note and change of the count. Name ownership-038, ownership-012 and the next run of ownership-054. |
 | S134: Tree | Use tree of this pass and commit named in Tree read. |
-| S135: Hash message | At Pass 8, keep S135 as an open minor for review.md. The five strings that check the message stay the same. |
+| S135: Hash message | At Pass 8, keep S135 as an open minor for review.md. At Pass 9, the five copies of the message stay the same. |
 
 ### Order count
 
@@ -2829,7 +2829,7 @@ Changed-line mutants: 0
 No script code line changes against 087615f536a53f514cfcee9a94ca2752843029a5, so there is no selected mutant or mutation phase.
 The wrapper with synchronous file access also calls the same generate function and gives Generated mutants: 9191 in pass7/gen-sync.log.
 At Pass 7, the four named fault runs gave proof for the returned error and some stronger gate assertions.
-At Pass 8, those runs did not reach the invalid-manifest block. The Pass 8 fault fails its printed-error assertion.
+At Pass 8, those runs did not reach the invalid-manifest block. The invalid-manifest-code fault of Pass 8 fails its printed-error assertion.
 
 ### Host test output
 
@@ -2964,14 +2964,14 @@ Past output blocks and filed reviews stay the same.
 
 | Finding | Correction |
 |---|---|
-| F1 | Keep the absent-file code in a named fault. Fail the invalid-manifest assertion at ownershipGate.test.mjs:136. |
+| F1 | Make a named fault that keeps OWNERSHIP-MANIFEST for an absent file. The fault must fail the invalid-manifest assertion. |
 | F2, S136 | Name only the diff prefix and the DA prefix or suffix that the body checks. |
 | F3 | State that table rows 7 and 8 are extra cases of row 4. That test came after the code. |
 | F4 | Check that the absent-file message is a non-empty string. An empty-message fault fails at ownership.test.mjs:51. |
 | F5 | State that the QA replacement applies in the adopt command. |
 | F6 | Add GUARDED_RUN to the real-init fixture test. Keep all assertions. |
-| S137 | Name ledger entries and waiver counts for one file. Define coverage item without waivers. |
-| S138 | Name a new upstream QA script of the merge as the source of the coverage ignore comment. |
+| S137 | At Pass 8, name ledger entries and waiver counts for one file. Define coverage item without waivers. |
+| S138 | At Pass 8, name a new upstream QA script of the merge as the source of the coverage ignore comment. |
 | S139 | State that D10 names ownership-038 and task 6.30 names the JSON parse error. |
 | S140 | Name the returned error object, its code and invalid files. |
 | S141, S143 | Name the reached adopt record and state that the gate prints LEDGER-ADOPT-FROM and stops. |
@@ -2990,16 +2990,11 @@ Past output blocks and filed reviews stay the same.
 | S156 | State that this pass claims no image verdict. |
 | S157 | State what the notes say. Use plain clauses for init and its cause. |
 
-The suggested gap sentence was too broad for the code at this commit.
-gapReport adds line counts by class, not all metrics. coverageFaults adds positive whole-number waiver counts with the same file, hash and metric.
-The requirement now states those bounds. A waiver remains a history record, not a field of a coverage item.
-
 ### Named faults
 
 Command: python3 /home/ianblenke/docker/gev-tools/ownership-gates/pass8/named-faults.py.
 Each fault changes one code expression in a scratch copy of this commit and the Pass 8 tests.
 The copy has no branch. Each test process uses taskset -c 4-7 nice -n 19 and the host adapter.
-The empty-message red run precedes the green run. No production code correction is needed.
 
 | Fault | Code change | Failed assertion |
 |---|---|---|
@@ -3027,11 +3022,11 @@ Commands use the scripts in /home/ianblenke/docker/gev-tools/ownership-gates/pas
 check-clauses.py prints ten changed titles and their assertion calls. I read each clause against its body.
 
 check-order.py compares the three red logs, the live titles and the Order table.
-Its missing-title output is empty. The counts stay 48/50/2, 36/40/4 and 48/49/1.
+Its output of absent titles is empty. The counts stay 48/50/2, 36/40/4 and 48/49/1.
 check-repeated-titles.py checks current labels and excludes past evidence output and filed reviews.
 
 The source diff has ten title lines, two absent-message assertions and the GUARDED_RUN option.
-The scripts, AGENTS.md and openspec/config.yaml have no diff against the tree read for this pass.
+The scripts, AGENTS.md and openspec/config.yaml have no diff against the tree that this pass read.
 The QA register code and the gate code stay the same.
 
 ### Correction search
@@ -3070,8 +3065,8 @@ Changed-line mutants: 0
 {}
 ```
 
-Both commands finish with status 0. No production code line differs from the tree read for this pass.
-The empty selection needs no automatic fault run. The nine named faults check the assertions of this pass.
+Both commands finish with status 0. No production code line differs from the tree that this pass read.
+The empty selection needs no automatic fault process. The nine named faults check the assertions of this pass.
 
 ### Host test output
 
@@ -3118,11 +3113,11 @@ gates
 ℹ skipped 0
 ```
 
-The legacy process has status 1. The other four have status 0.
+The gates process has status 1. The other four have status 0.
 Its only failures have tags coverage-gate-024, coverage-gate-031, coverage-gate-048 and spec-trace-039/spec-trace-040.
 
-These are the four known host failures from Pass 7. The reached-adopt-record test passes in the full run.
-The final ownership title run also passes all 50 tests. No new node:test API is needed.
+These are the four known host failures from Pass 7. The reached-adopt-record test passes in the full process.
+The final ownership title process also passes all 50 tests. The tests use no new node:test API.
 
 ### Document checks
 
@@ -3145,7 +3140,7 @@ The first all-heading check stopped on duplicate heading labels and gave no comp
 The corrected sequence check passes for all heading levels. No old heading is absent or out of order.
 All proposal headings stay the same. New headings name the Pass 8 words and evidence sections.
 
-The title check has 0 stale labels. The order check has empty output. The banned-word search also has empty output.
+The title check has 0 stale labels. The order check gives no output. The banned-word search also gives no output.
 
 The review folders, trace files, applied specs and production scripts have no diff against d84cd029301550fc8e6a1401c88f741bd298f945.
 The source diff has only the ten title lines, two message assertions and GUARDED_RUN.
@@ -3191,3 +3186,81 @@ STE: 0 errors, 586 warnings.
 ```
 
 Each correction group ends with 0 lint errors. The final log keeps all warnings.
+
+## Pass 9
+
+Tree read: 18600a4012c3df1b1a9f0b1b4313e622a7acc63e, branch ownership-gates, with Pass 9 changes.
+
+| Finding | Correction |
+|---|---|
+| F1, S158, S176 | Cover both ownership-018 tests. State 3 plus 4 test instances and the exact output. Split the WHEN conditions. Delete the incomplete sum note. |
+| S159 | Name the five message copies: code, spec and three tests. |
+| F2 | Bound the QA comment to a new upstream script with no QA tag. Split the result to meet the word limit. |
+| F3, S160, S161 | Define valid waiver once. Name the gate and file hash in the requirement. |
+| F4, F5 | Test the message type and config sentence faults. Add the JSON parse error cases before the red fault processes. |
+| F6 | State nine rows and seven tests. Add Pass 8 and Pass 9 tasks. |
+| F7, S177 | Delete the unused coverage item row. |
+| S162–S175 | Correct the terms and title. Add reached adopt record and DA record. Delete faulty Pass 8 commentary. |
+
+The files in pass9/ hold the commands and output. scenario-clauses.log lists both ownership-018 tests and their clauses.
+
+```text
+Test command form: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec src/tooling/spec/<name>.test.mjs
+ownership
+ℹ tests 50
+ℹ pass 50
+ℹ fail 0
+ownershipGate
+ℹ tests 40
+ℹ pass 40
+ℹ fail 0
+qaRegister
+ℹ tests 49
+ℹ pass 49
+ℹ fail 0
+v8Merge
+ℹ tests 11
+ℹ pass 11
+ℹ fail 0
+gates
+ℹ tests 228
+ℹ pass 224
+ℹ fail 4
+Coverage command form: taskset -c 4-7 nice -n 19 node /home/ianblenke/docker/gev-tools/ownership-gates/host-coverage.mjs <file> <raw directories>
+{"file":"scripts/spec/lib/ownership.mjs","processes":1,"counts":{"LF":168,"LH":168,"BRF":130,"BRH":130,"FNF":44,"FNH":44}}
+{"file":"scripts/spec/lib/qa-register.mjs","processes":2,"counts":{"LF":92,"LH":92,"BRF":94,"BRH":94,"FNF":16,"FNH":16}}
+{"file":"scripts/spec/gates.mjs","processes":307,"counts":{"LF":776,"LH":776,"BRF":389,"BRH":389,"FNF":97,"FNH":97}}
+Command: taskset -c 4-7 nice -n 19 node scripts/spec/gates.mjs lint --change ownership-scoped-gates
+STE: 0 errors, 584 warnings.
+Command: taskset -c 4-7 nice -n 19 openspec show ownership-scoped-gates --json
+Status: 0
+Command: taskset -c 4-7 nice -n 19 openspec validate ownership-scoped-gates
+Change 'ownership-scoped-gates' is valid
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/pass2-format-shim.mjs scripts/format.mjs --check
+Checked 1158 source files.
+Live titles: 378
+Labels checked: 19
+Stale labels: 0
+Order output: empty
+Banned-word output: empty
+Command: taskset -c 4-7 nice -n 19 node /home/ianblenke/docker/gev-tools/ownership-gates/pass9/gen-sync.mjs
+Generated mutants: 9191
+Command: python3 /home/ianblenke/docker/gev-tools/ownership-gates/pass9/select-mutants.py
+Changed-line mutants: 0
+{}
+```
+
+The gates process has four known host failures: coverage-gate-024, coverage-gate-031, coverage-gate-048 and spec-trace-039/spec-trace-040.
+
+| Named fault | Change in the scratch copy | Failed line |
+|---|---|---|
+| test-count-sum | Change the outer test-name sum to Math.max. | ownership.test.mjs:218; 4 tests differ from 7. |
+| absent-message-number | Set the absent-file message to 1. | ownership.test.mjs:50; number differs from string. |
+| config-adopt-sentence | Remove the sentence with run the adopt command. | ownership.test.mjs:147; the text does not match. |
+| syntax-catch-unit | Throw SyntaxError again in the catch. | ownership.test.mjs:55; the new readOwnership call throws. |
+| syntax-catch-gate | Throw SyntaxError again in the catch. | ownershipGate.test.mjs:138; the new check call throws. |
+
+All five fault processes ended with status 1 before the test processes of the correct code.
+The scratch copy has no branch. Its source is the commit above with the Pass 9 tests.
+
+Outside tests, this pass uses no Docker, make, gate, ratchet, adopt, waive, archive, push, gh or review command.

@@ -1,0 +1,10 @@
+Past fenced output: unchanged
+Banned words: 0
+New evidence line references: 0
+Tree read: 18600a4012c3df1b1a9f0b1b4313e622a7acc63e with Pass 9 changes
+openspec/changes/ownership-scoped-gates/proposal.md: added [], removed []
+openspec/changes/ownership-scoped-gates/design.md: added [], removed []
+openspec/changes/ownership-scoped-gates/tasks.md: added ["## 10. Pass 8", "## 11. Pass 9"], removed []
+openspec/changes/ownership-scoped-gates/specs/ownership/spec.md: added [], removed []
+openspec/changes/ownership-scoped-gates/evidence.md: added ["## Pass 9"], removed []
+Scripts, AGENTS.md, config.yaml diff: empty

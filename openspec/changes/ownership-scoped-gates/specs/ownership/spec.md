@@ -177,13 +177,16 @@ Origin: spec-first
 - **THEN** the gate ignores that record or header
 
 ### Requirement: Gap totals
-The gate MUST add the line gap counts of ledger entries of the same class.
-It must add only positive whole-number waiver counts for the same file, hash and metric.
+The gate MUST add the line gap counts and the test instance counts of ledger entries of the same class.
+The gate must add only positive whole-number waiver counts for the same file, the same file hash and the same metric.
 Origin: spec-first
 
 #### Scenario: Add gap and waiver counts `ownership-018`
-- **WHEN** two owned files have 2 and 3 line gaps and two valid line waivers for one file each waive one gap
+- **WHEN** two owned files have 2 and 3 line gaps
+- **AND** two valid line waivers for one file each waive one gap
+- **AND** the owned test files single.js and src/own/a.test.js have 3 and 4 test instances
 - **THEN** the report command prints 5 line gaps and the waivers waive a count of 2
+- **AND** for those test files without code gaps, it prints "Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests."
 
 ### Requirement: Empty test names
 The report command MUST count zero test instances for an empty name map.
@@ -274,7 +277,7 @@ The `file` field must be a string.
 The `from` field must be a full hash of 40 lowercase hexadecimal digits of a commit that a merge after the base brought.
 The commit must be a parent, other than the first parent, of a merge commit after the base.
 The hash pattern is `/^[0-9a-f]{40}$/`.
-The source check must not read merge parents for a string that does not match the hash pattern.
+The source check must not read merge parents for a value that does not match the hash pattern.
 
 A valid adopt record is a record that `adoptsOf` accepts for this change and that meets the next condition.
 The record must also name, in `from`, the full hash of a commit that a merge after the base brought.
@@ -288,8 +291,8 @@ Origin: spec-first
 - **THEN** the gate prints LEDGER-ADOPT-FROM
 - **AND** a short hash, a branch name, `HEAD^2`, `origin/source`, an uppercase hash and a hash with a space make the gate print LEDGER-ADOPT-FROM
 - **AND** no such record exempts a line from COVERAGE-DIFF
-- **AND** a reached adopt record with a source that is not a merge parent prints LEDGER-ADOPT-FROM at openspec/trace/history.jsonl
-- **AND** the source check reads no merge parents for strings that do not match the hash pattern
+- **AND** a reached adopt record with a source that is not a merge parent makes the gate print LEDGER-ADOPT-FROM at openspec/trace/history.jsonl
+- **AND** the source check reads no merge parents for values that do not match the hash pattern
 - **AND** the gate prints this error line:
 
 ```text
@@ -487,5 +490,5 @@ Origin: spec-first
 - **AND** an invalid current header or a deleted base QA header prints QA-HEADER
 - **AND** the adopt command writes one zero-count adopt record for a merged upstream base script with no current or base QA tag
 - **AND** any other error stops the adopt command without a new record
-- **AND** a coverage ignore comment in a new upstream QA script of the merge makes the gate print COVERAGE-IGNORE and write no adopt record
+- **AND** a coverage ignore comment in one of those new upstream QA scripts with no QA tag makes the gate print COVERAGE-IGNORE. The gate writes no adopt record.
 - **AND** the adopt command writes no QA record for an absent current file

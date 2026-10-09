@@ -1,0 +1,39 @@
+Command: taskset -c 4-7 nice -n 19 node --import /home/ianblenke/docker/gev-tools/ownership-gates/host.mjs --test-reporter=spec --test-name-pattern=ownership-001 src/tooling/spec/ownership.test.mjs
+✔ [ownership-001] accepts the manifest contract (16.043966ms)
+✔ [ownership-001] rejects each invalid manifest field (4.736961ms)
+✖ [ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file (7.950495ms)
+✔ [ownership-001] accepts the first and last characters of each allowed character range (1.787111ms)
+✔ [ownership-029 ownership-001] keeps base paths after a change removes or shortens a manifest path (380.412467ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 462.780048
+
+✖ failing tests:
+
+test at src/tooling/spec/ownership.test.mjs:47:1
+✖ [ownership-001] returns an error with the code OWNERSHIP-MANIFEST for an absent or invalid manifest file (7.950495ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'number' !== 'string'
+  
+      at file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/src/tooling/spec/ownership.test.mjs:50:10
+      at fixture (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/src/tooling/spec/ownership.test.mjs:26:16)
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-tools/ownership-gates/pass9/named-root/src/tooling/spec/ownership.test.mjs:47:120)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'number',
+    expected: 'string',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

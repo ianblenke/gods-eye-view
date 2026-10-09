@@ -1,0 +1,926 @@
+{
+  "id": "ownership-scoped-gates",
+  "title": "ownership-scoped-gates",
+  "deltaCount": 35,
+  "deltas": [
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST accept only a version 1 manifest with an array of unique paths; each path is relative and safe.",
+      "requirement": {
+        "text": "The gate MUST accept only a version 1 manifest with an array of unique paths; each path is relative and safe.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the gate reads valid and invalid manifest files\n- **THEN** the gate accepts valid files and prints OWNERSHIP-MANIFEST for absent or invalid files\n- **AND** for absent or invalid files, the errors array from readOwnership has an object with the code OWNERSHIP-MANIFEST, the file name and the message\n- **AND** when the gate reads the manifest without a base, the gate uses only the current manifest"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST accept only a version 1 manifest with an array of unique paths; each path is relative and safe.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the gate reads valid and invalid manifest files\n- **THEN** the gate accepts valid files and prints OWNERSHIP-MANIFEST for absent or invalid files\n- **AND** for absent or invalid files, the errors array from readOwnership has an object with the code OWNERSHIP-MANIFEST, the file name and the message\n- **AND** when the gate reads the manifest without a base, the gate uses only the current manifest"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST use exact paths and directory prefixes to classify each path.",
+      "requirement": {
+        "text": "The gate MUST use exact paths and directory prefixes to classify each path.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the manifest lists `single.js` and `src/own/`\n- **THEN** `single.js` and `src/own/a.js` have the owned class\n- **AND** `single.jsx` and `src/owner/a.js` have the upstream class"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST use exact paths and directory prefixes to classify each path.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the manifest lists `single.js` and `src/own/`\n- **THEN** `single.js` and `src/own/a.js` have the owned class\n- **AND** `single.jsx` and `src/owner/a.js` have the upstream class"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST print the class of each path in the diff against the base and the owned and upstream totals in check and ratchet.",
+      "requirement": {
+        "text": "The gate MUST print the class of each path in the diff against the base and the owned and upstream totals in check and ratchet.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** check or ratchet has paths in the diff\n- **THEN** the log names each class and shows Ownership: N owned, M upstream"
+          },
+          {
+            "rawText": "- **WHEN** a ledger has a recorded owned gap and the command is ci or init\n- **THEN** the gate prints no Class, Ownership or Owned gaps line\n- **AND** init stops with an error before the step that prints the owned gap lines, because the ledger exists"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST print the class of each path in the diff against the base and the owned and upstream totals in check and ratchet.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** check or ratchet has paths in the diff\n- **THEN** the log names each class and shows Ownership: N owned, M upstream"
+            },
+            {
+              "rawText": "- **WHEN** a ledger has a recorded owned gap and the command is ci or init\n- **THEN** the gate prints no Class, Ownership or Owned gaps line\n- **AND** init stops with an error before the step that prints the owned gap lines, because the ledger exists"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST reject gaps in changed owned code files and owned code files without a ledger entry, except valid waivers.",
+      "requirement": {
+        "text": "The gate MUST reject gaps in changed owned code files and owned code files without a ledger entry, except valid waivers.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a changed owned code file or an owned code file without a ledger entry has a gap\n- **THEN** the gate prints COVERAGE-OWNED unless valid waivers waive all gap counts"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST reject gaps in changed owned code files and owned code files without a ledger entry, except valid waivers.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a changed owned code file or an owned code file without a ledger entry has a gap\n- **THEN** the gate prints COVERAGE-OWNED unless valid waivers waive all gap counts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST select the added line ranges of each current code file against the base.",
+      "requirement": {
+        "text": "The gate MUST select the added line ranges of each current code file against the base.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the diff has added, edited or deleted lines\n- **THEN** the gate selects only the new line numbers and all lines of a new file"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST select the added line ranges of each current code file against the base.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the diff has added, edited or deleted lines\n- **THEN** the gate selects only the new line numbers and all lines of a new file"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST use the covered DA lines of every LCOV record for a file.",
+      "requirement": {
+        "text": "The gate MUST use the covered DA lines of every LCOV record for a file.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a file has duplicate LCOV records\n- **THEN** the gate counts a line as covered only if every record covers it"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST use the covered DA lines of every LCOV record for a file.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a file has duplicate LCOV records\n- **THEN** the gate counts a line as covered only if every record covers it"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST reject each uncovered changed line in owned and upstream code.",
+      "requirement": {
+        "text": "The gate MUST reject each uncovered changed line in owned and upstream code.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a changed line has no covered line data from a loaded file whose coverage is not untrue\n- **THEN** the gate prints COVERAGE-DIFF with the file and all uncovered line numbers"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST reject each uncovered changed line in owned and upstream code.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a changed line has no covered line data from a loaded file whose coverage is not untrue\n- **THEN** the gate prints COVERAGE-DIFF with the file and all uncovered line numbers"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST accept a line waiver only for its file hash and named lines within its count.",
+      "requirement": {
+        "text": "The gate MUST accept a line waiver only for its file hash and named lines within its count.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** an uncovered changed line has a waiver\n- **THEN** the file is loaded\n- **AND** its coverage is not untrue\n- **AND** its hash equals the waiver hash\n- **AND** the waiver metric is lines\n- **AND** the waiver count is not below the number of waived lines"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST accept a line waiver only for its file hash and named lines within its count.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** an uncovered changed line has a waiver\n- **THEN** the file is loaded\n- **AND** its coverage is not untrue\n- **AND** its hash equals the waiver hash\n- **AND** the waiver metric is lines\n- **AND** the waiver count is not below the number of waived lines"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The QA register MUST limit the synthetic header to upstream scripts with no QA tag in their first comment block.",
+      "requirement": {
+        "text": "The QA register MUST limit the synthetic header to upstream scripts with no QA tag in their first comment block.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** an upstream QA script has no header block at the start of the file\n- **AND** the base script had no QA tag, or the script is new and a valid adopt record names the script\n- **THEN** the QA register uses the covers item `unmapped: upstream` and prints the QA advisory"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The QA register MUST limit the synthetic header to upstream scripts with no QA tag in their first comment block.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** an upstream QA script has no header block at the start of the file\n- **AND** the base script had no QA tag, or the script is new and a valid adopt record names the script\n- **THEN** the QA register uses the covers item `unmapped: upstream` and prints the QA advisory"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The QA register MUST reject an owned script with no header and an upstream script with an invalid header.",
+      "requirement": {
+        "text": "The QA register MUST reject an owned script with no header and an upstream script with an invalid header.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** an owned script has no header or an upstream script has an invalid first block\n- **THEN** the QA register prints QA-HEADER and keeps all other register checks"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The QA register MUST reject an owned script with no header and an upstream script with an invalid header.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** an owned script has no header or an upstream script has an invalid first block\n- **THEN** the QA register prints QA-HEADER and keeps all other register checks"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The report command MUST list owned and upstream code and test gaps separately without a test run.",
+      "requirement": {
+        "text": "The report command MUST list owned and upstream code and test gaps separately without a test run.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the ledger has owned and upstream code and test gaps\n- **THEN** the report command lists the paths and totals of both classes without a test run"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The report command MUST list owned and upstream code and test gaps separately without a test run.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the ledger has owned and upstream code and test gaps\n- **THEN** the report command lists the paths and totals of both classes without a test run"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The process text MUST define the manifest, the sync review scope and the rule for a scenario that a sync breaks.",
+      "requirement": {
+        "text": "The process text MUST define the manifest, the sync review scope and the rule for a scenario that a sync breaks.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** an agent reads AGENTS.md and the OpenSpec context\n- **THEN** the text says that a changed owned code file and an owned code file without a ledger entry need full coverage\n- **AND** the text says that a changed line needs coverage and that a sync uses `adopt`\n- **AND** the text says that review.md lists the files that a person resolved by hand\n- **AND** the context says to run the adopt command for an upstream QA script with no current or base QA tag\n- **AND** the context says that the command writes the record for that script, also when the script is new\n- **AND** the context says not to write history records by hand"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The process text MUST define the manifest, the sync review scope and the rule for a scenario that a sync breaks.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** an agent reads AGENTS.md and the OpenSpec context\n- **THEN** the text says that a changed owned code file and an owned code file without a ledger entry need full coverage\n- **AND** the text says that a changed line needs coverage and that a sync uses `adopt`\n- **AND** the text says that review.md lists the files that a person resolved by hand\n- **AND** the context says to run the adopt command for an upstream QA script with no current or base QA tag\n- **AND** the context says that the command writes the record for that script, also when the script is new\n- **AND** the context says not to write history records by hand"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The measurement MUST store merged V8 line data in the trusted snapshot.",
+      "requirement": {
+        "text": "The measurement MUST store merged V8 line data in the trusted snapshot.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the gate writes V8 coverage and a measurement snapshot\n- **THEN** covered lines have the DA count 1 and uncovered lines have the DA count 0\n- **AND** the snapshot check reads the line data for document mode"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The measurement MUST store merged V8 line data in the trusted snapshot.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the gate writes V8 coverage and a measurement snapshot\n- **THEN** covered lines have the DA count 1 and uncovered lines have the DA count 0\n- **AND** the snapshot check reads the line data for document mode"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The report command MUST count all test instances in each ledger name map.",
+      "requirement": {
+        "text": "The report command MUST count all test instances in each ledger name map.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** one test name has a count of 2 and another has a count of 1\n- **THEN** the report command prints a total of 3 test instances"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The report command MUST count all test instances in each ledger name map.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** one test name has a count of 2 and another has a count of 1\n- **THEN** the report command prints a total of 3 test instances"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The QA register MUST treat a first comment block with no QA tags as no QA header.",
+      "requirement": {
+        "text": "The QA register MUST treat a first comment block with no QA tags as no QA header.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** an upstream QA script starts with a comment block that has no QA tags\n- **AND** the script meets the QA exception\n- **THEN** the QA register uses the synthetic upstream header\n- **AND** an invalid first block with a QA tag still prints QA-HEADER"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The QA register MUST treat a first comment block with no QA tags as no QA header.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** an upstream QA script starts with a comment block that has no QA tags\n- **AND** the script meets the QA exception\n- **THEN** the QA register uses the synthetic upstream header\n- **AND** an invalid first block with a QA tag still prints QA-HEADER"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST sort line numbers in numeric order.",
+      "requirement": {
+        "text": "The gate MUST sort line numbers in numeric order.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** diff ranges or line records have lines 2, 10 and 20\n- **THEN** the result has the order 2, 10, 20"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST sort line numbers in numeric order.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** diff ranges or line records have lines 2, 10 and 20\n- **THEN** the result has the order 2, 10, 20"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST accept only whole DA records and diff headers at the start of a line.",
+      "requirement": {
+        "text": "The gate MUST accept only whole DA records and diff headers at the start of a line.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a DA record has a text prefix or suffix, or a diff header has a text prefix\n- **THEN** the gate ignores that record or header"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST accept only whole DA records and diff headers at the start of a line.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a DA record has a text prefix or suffix, or a diff header has a text prefix\n- **THEN** the gate ignores that record or header"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST add the line gap counts and the test instance counts of ledger entries of the same class.",
+      "requirement": {
+        "text": "The gate MUST add the line gap counts and the test instance counts of ledger entries of the same class.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** two owned files have 2 and 3 line gaps\n- **AND** two valid line waivers for one file each waive one gap\n- **AND** the owned test files single.js and src/own/a.test.js have 3 and 4 test instances\n- **THEN** the report command prints 5 line gaps and the waivers waive a count of 2\n- **AND** for those test files without code gaps, it prints \"Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests.\""
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST add the line gap counts and the test instance counts of ledger entries of the same class.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** two owned files have 2 and 3 line gaps\n- **AND** two valid line waivers for one file each waive one gap\n- **AND** the owned test files single.js and src/own/a.test.js have 3 and 4 test instances\n- **THEN** the report command prints 5 line gaps and the waivers waive a count of 2\n- **AND** for those test files without code gaps, it prints \"Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests.\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The report command MUST count zero test instances for an empty name map.",
+      "requirement": {
+        "text": "The report command MUST count zero test instances for an empty name map.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a test file has an empty name map\n- **THEN** the report command counts zero test instances"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The report command MUST count zero test instances for an empty name map.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a test file has an empty name map\n- **THEN** the report command counts zero test instances"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST check coverage only for base diff lines that also differ from the file in the adopt source.",
+      "requirement": {
+        "text": "The gate MUST check coverage only for base diff lines that also differ from the file in the adopt source.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a merge brings 5 code lines equal to the file in the adopt source\n- **THEN** those lines need no changed line coverage\n- **AND** the gate prints this line:\n\n```text\nCOVERAGE-DIFF: 5 changed lines, 5 brought by the merged upstream commit, 0 need coverage.\n```"
+          },
+          {
+            "rawText": "- **WHEN** a person resolves a conflict and line 1 of the result differs from the base file and the file in the adopt source\n- **THEN** that line needs coverage\n- **AND** the gate prints COVERAGE-DIFF for an uncovered line"
+          },
+          {
+            "rawText": "- **WHEN** a person edits line 2 of an upstream file in the sync change\n- **THEN** the line needs coverage if the line differs from the base file and from the file in the adopt source\n- **AND** other lines that equal the file in the adopt source need no changed line coverage"
+          },
+          {
+            "rawText": "- **WHEN** a change has more than one adopt source\n- **THEN** each file uses the adopt source of its last valid adopt record and other files use the last adopt source\n- **AND** a file absent from the adopt source needs coverage for all its base diff lines"
+          },
+          {
+            "rawText": "- **WHEN** the adopt source is absent from the repository, or is not a parent, other than the first parent, of a merge after the base\n- **THEN** the gate prints LEDGER-ADOPT-FROM and stops\n- **AND** a change with no adopt source keeps the base diff rule\n- **AND** an invalid source stops before the base ledger JSON check"
+          },
+          {
+            "rawText": "- **WHEN** the upstream project deletes or renames a code file\n- **THEN** deleted paths have no new lines and new paths use the same path in the adopt source without rename detection\n- **AND** the line check reads only current code inventory paths"
+          },
+          {
+            "rawText": "- **WHEN** an unchanged owned code file has a recorded gap\n- **THEN** the owned coverage check passes\n- **AND** the report and the owned gap lines of check and ratchet list the gap\n- **AND** the adopt command prints no owned gap lines"
+          },
+          {
+            "rawText": "- **WHEN** a changed owned code file has a recorded gap\n- **THEN** the gate prints COVERAGE-OWNED"
+          },
+          {
+            "rawText": "- **WHEN** a new owned code file has a gap and no ledger entry\n- **THEN** the gate prints COVERAGE-OWNED"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST check coverage only for base diff lines that also differ from the file in the adopt source.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a merge brings 5 code lines equal to the file in the adopt source\n- **THEN** those lines need no changed line coverage\n- **AND** the gate prints this line:\n\n```text\nCOVERAGE-DIFF: 5 changed lines, 5 brought by the merged upstream commit, 0 need coverage.\n```"
+            },
+            {
+              "rawText": "- **WHEN** a person resolves a conflict and line 1 of the result differs from the base file and the file in the adopt source\n- **THEN** that line needs coverage\n- **AND** the gate prints COVERAGE-DIFF for an uncovered line"
+            },
+            {
+              "rawText": "- **WHEN** a person edits line 2 of an upstream file in the sync change\n- **THEN** the line needs coverage if the line differs from the base file and from the file in the adopt source\n- **AND** other lines that equal the file in the adopt source need no changed line coverage"
+            },
+            {
+              "rawText": "- **WHEN** a change has more than one adopt source\n- **THEN** each file uses the adopt source of its last valid adopt record and other files use the last adopt source\n- **AND** a file absent from the adopt source needs coverage for all its base diff lines"
+            },
+            {
+              "rawText": "- **WHEN** the adopt source is absent from the repository, or is not a parent, other than the first parent, of a merge after the base\n- **THEN** the gate prints LEDGER-ADOPT-FROM and stops\n- **AND** a change with no adopt source keeps the base diff rule\n- **AND** an invalid source stops before the base ledger JSON check"
+            },
+            {
+              "rawText": "- **WHEN** the upstream project deletes or renames a code file\n- **THEN** deleted paths have no new lines and new paths use the same path in the adopt source without rename detection\n- **AND** the line check reads only current code inventory paths"
+            },
+            {
+              "rawText": "- **WHEN** an unchanged owned code file has a recorded gap\n- **THEN** the owned coverage check passes\n- **AND** the report and the owned gap lines of check and ratchet list the gap\n- **AND** the adopt command prints no owned gap lines"
+            },
+            {
+              "rawText": "- **WHEN** a changed owned code file has a recorded gap\n- **THEN** the gate prints COVERAGE-OWNED"
+            },
+            {
+              "rawText": "- **WHEN** a new owned code file has a gap and no ledger entry\n- **THEN** the gate prints COVERAGE-OWNED"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: For a comparison with a base, the gate MUST classify a path as owned when the base manifest or the current manifest lists it.",
+      "requirement": {
+        "text": "For a comparison with a base, the gate MUST classify a path as owned when the base manifest or the current manifest lists it.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the current manifest removes or shortens a base owned prefix\n- **THEN** paths that the base manifest lists stay owned\n- **AND** an absent base manifest is empty and an invalid base manifest gives OWNERSHIP-MANIFEST\n- **AND** each path occurs once in the union manifest"
+          },
+          {
+            "rawText": "- **WHEN** the gate reads the project manifest openspec/ownership.json\n- **THEN** scripts/spec/gates.mjs, src/layers/osh/index.js and server/providers/osh.js are owned"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "For a comparison with a base, the gate MUST classify a path as owned when the base manifest or the current manifest lists it.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the current manifest removes or shortens a base owned prefix\n- **THEN** paths that the base manifest lists stay owned\n- **AND** an absent base manifest is empty and an invalid base manifest gives OWNERSHIP-MANIFEST\n- **AND** each path occurs once in the union manifest"
+            },
+            {
+              "rawText": "- **WHEN** the gate reads the project manifest openspec/ownership.json\n- **THEN** scripts/spec/gates.mjs, src/layers/osh/index.js and server/providers/osh.js are owned"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST stop for an adopt record for this change with an invalid file or source.",
+      "requirement": {
+        "text": "The gate MUST stop for an adopt record for this change with an invalid file or source.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** an adopt record for this change has no file and its `from` value is `HEAD`\n- **THEN** the gate prints LEDGER-ADOPT-FROM\n- **AND** a short hash, a branch name, `HEAD^2`, `origin/source`, an uppercase hash and a hash with a space make the gate print LEDGER-ADOPT-FROM\n- **AND** no such record exempts a line from COVERAGE-DIFF\n- **AND** a reached adopt record with a source that is not a merge parent makes the gate print LEDGER-ADOPT-FROM at openspec/trace/history.jsonl\n- **AND** the source check reads no merge parents for values that do not match the hash pattern\n- **AND** the gate prints this error line:\n\n```text\nERROR LEDGER-ADOPT-FROM openspec/trace/history.jsonl Use an adopt record with a file name and a full lowercase hash in the from field. A merge after the base must bring that hash.\n```"
+          },
+          {
+            "rawText": "- **WHEN** an adopt record names a work branch commit that no merge brought\n- **THEN** the gate prints LEDGER-ADOPT-FROM"
+          },
+          {
+            "rawText": "- **WHEN** an adopt record names an ancestor that no merge after the base brought\n- **THEN** the gate prints LEDGER-ADOPT-FROM"
+          },
+          {
+            "rawText": "- **WHEN** an adopt record has the `from` value 1 and the Git branch named `1` points to a valid adopt source\n- **THEN** the gate prints LEDGER-ADOPT-FROM\n- **AND** the gate also prints LEDGER-ADOPT-FROM for the string value `1`"
+          },
+          {
+            "rawText": "- **WHEN** a valid adopt record comes before a record for this change without a file\n- **THEN** the gate prints LEDGER-ADOPT-FROM for the later record"
+          },
+          {
+            "rawText": "- **WHEN** the `from` string of an adopt record has a null byte\n- **THEN** the gate prints LEDGER-ADOPT-FROM with the same message as ownership-031\n- **AND** the source check returns false when Git cannot read the merge parents"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST stop for an adopt record for this change with an invalid file or source.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** an adopt record for this change has no file and its `from` value is `HEAD`\n- **THEN** the gate prints LEDGER-ADOPT-FROM\n- **AND** a short hash, a branch name, `HEAD^2`, `origin/source`, an uppercase hash and a hash with a space make the gate print LEDGER-ADOPT-FROM\n- **AND** no such record exempts a line from COVERAGE-DIFF\n- **AND** a reached adopt record with a source that is not a merge parent makes the gate print LEDGER-ADOPT-FROM at openspec/trace/history.jsonl\n- **AND** the source check reads no merge parents for values that do not match the hash pattern\n- **AND** the gate prints this error line:\n\n```text\nERROR LEDGER-ADOPT-FROM openspec/trace/history.jsonl Use an adopt record with a file name and a full lowercase hash in the from field. A merge after the base must bring that hash.\n```"
+            },
+            {
+              "rawText": "- **WHEN** an adopt record names a work branch commit that no merge brought\n- **THEN** the gate prints LEDGER-ADOPT-FROM"
+            },
+            {
+              "rawText": "- **WHEN** an adopt record names an ancestor that no merge after the base brought\n- **THEN** the gate prints LEDGER-ADOPT-FROM"
+            },
+            {
+              "rawText": "- **WHEN** an adopt record has the `from` value 1 and the Git branch named `1` points to a valid adopt source\n- **THEN** the gate prints LEDGER-ADOPT-FROM\n- **AND** the gate also prints LEDGER-ADOPT-FROM for the string value `1`"
+            },
+            {
+              "rawText": "- **WHEN** a valid adopt record comes before a record for this change without a file\n- **THEN** the gate prints LEDGER-ADOPT-FROM for the later record"
+            },
+            {
+              "rawText": "- **WHEN** the `from` string of an adopt record has a null byte\n- **THEN** the gate prints LEDGER-ADOPT-FROM with the same message as ownership-031\n- **AND** the source check returns false when Git cannot read the merge parents"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The QA register MUST print QA-HEADER for a script with no current header in these cases.",
+      "requirement": {
+        "text": "The QA register MUST print QA-HEADER for a script with no current header in these cases.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a new upstream script has no header and no valid adopt record names it\n- **THEN** the QA register prints QA-HEADER"
+          },
+          {
+            "rawText": "- **WHEN** an upstream script had a QA tag at the base and has no header now\n- **THEN** the QA register prints QA-HEADER even when a valid adopt record names the script"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The QA register MUST print QA-HEADER for a script with no current header in these cases.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a new upstream script has no header and no valid adopt record names it\n- **THEN** the QA register prints QA-HEADER"
+            },
+            {
+              "rawText": "- **WHEN** an upstream script had a QA tag at the base and has no header now\n- **THEN** the QA register prints QA-HEADER even when a valid adopt record names the script"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The diff process MUST use a 256 MiB output buffer.",
+      "requirement": {
+        "text": "The diff process MUST use a 256 MiB output buffer.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the gate starts the Git diff process\n- **THEN** maxBuffer is 268435456 bytes"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The diff process MUST use a 256 MiB output buffer.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the gate starts the Git diff process\n- **THEN** maxBuffer is 268435456 bytes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST stop after a failed diff or a JSON parse error in the history before later checks.",
+      "requirement": {
+        "text": "The gate MUST stop after a failed diff or a JSON parse error in the history before later checks.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** Git cannot read a diff\n- **THEN** the gate prints COVERAGE-DIFF before the base ledger check"
+          },
+          {
+            "rawText": "- **WHEN** history has a line with the text `{`\n- **THEN** the run stops before the owned gap lines\n- **AND** a run without a change name also stops before the owned gap lines\n- **AND** the gate prints the code LEDGER-ADOPT-FROM for openspec/trace/history.jsonl\n- **AND** the message starts with this text:\n\n```text\nExpected property name or '}' in JSON\n```"
+          },
+          {
+            "rawText": "- **WHEN** an adopt source is invalid and Git cannot read the diff\n- **THEN** LEDGER-ADOPT-FROM stops the run before the diff process starts"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST stop after a failed diff or a JSON parse error in the history before later checks.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** Git cannot read a diff\n- **THEN** the gate prints COVERAGE-DIFF before the base ledger check"
+            },
+            {
+              "rawText": "- **WHEN** history has a line with the text `{`\n- **THEN** the run stops before the owned gap lines\n- **AND** a run without a change name also stops before the owned gap lines\n- **AND** the gate prints the code LEDGER-ADOPT-FROM for openspec/trace/history.jsonl\n- **AND** the message starts with this text:\n\n```text\nExpected property name or '}' in JSON\n```"
+            },
+            {
+              "rawText": "- **WHEN** an adopt source is invalid and Git cannot read the diff\n- **THEN** LEDGER-ADOPT-FROM stops the run before the diff process starts"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The adopt command MUST stop for a source commit that no merge after the base brought.",
+      "requirement": {
+        "text": "The adopt command MUST stop for a source commit that no merge after the base brought.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the adopt command names a work branch commit that no merge after the base brought\n- **THEN** the gate prints GATES-ADOPT before the test run\n- **AND** a source named HEAD has this literal error line:\n\n```text\nERROR GATES-ADOPT The commit HEAD is not a merged commit. It must be a parent, other than the first parent, of a merge commit after the base commit.\n```"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The adopt command MUST stop for a source commit that no merge after the base brought.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the adopt command names a work branch commit that no merge after the base brought\n- **THEN** the gate prints GATES-ADOPT before the test run\n- **AND** a source named HEAD has this literal error line:\n\n```text\nERROR GATES-ADOPT The commit HEAD is not a merged commit. It must be a parent, other than the first parent, of a merge commit after the base commit.\n```"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The ci command MUST read the adopt sources of the change that the ci command selects before the measurement.",
+      "requirement": {
+        "text": "The ci command MUST read the adopt sources of the change that the ci command selects before the measurement.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the ci command selects a change with a valid adopt record for a new upstream QA script\n- **THEN** the QA register uses the synthetic header for that script\n- **AND** the log has no QA-HEADER error"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The ci command MUST read the adopt sources of the change that the ci command selects before the measurement.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the ci command selects a change with a valid adopt record for a new upstream QA script\n- **THEN** the QA register uses the synthetic header for that script\n- **AND** the log has no QA-HEADER error"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The history check MUST read only records after the base history prefix.",
+      "requirement": {
+        "text": "The history check MUST read only records after the base history prefix.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a base history record lacks a file and the current history has the same record\n- **THEN** the gate prints no LEDGER-ADOPT-FROM error for that record\n- **AND** the gate starts the test run"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The history check MUST read only records after the base history prefix.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a base history record lacks a file and the current history has the same record\n- **THEN** the gate prints no LEDGER-ADOPT-FROM error for that record\n- **AND** the gate starts the test run"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The history check MUST skip records outside the current change and records before the end of the base history prefix.",
+      "requirement": {
+        "text": "The history check MUST skip records outside the current change and records before the end of the base history prefix.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** an invalid adopt record names another change, the gate selects no change, or the history does not start with the base history\n- **THEN** the line check keeps the base diff rule without LEDGER-ADOPT-FROM"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The history check MUST skip records outside the current change and records before the end of the base history prefix.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** an invalid adopt record names another change, the gate selects no change, or the history does not start with the base history\n- **THEN** the line check keeps the base diff rule without LEDGER-ADOPT-FROM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The snapshot check MUST use the current valid adopt records for QA headers.",
+      "requirement": {
+        "text": "The snapshot check MUST use the current valid adopt records for QA headers.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a trusted snapshot has a new QA script with no header and a valid adopt record\n- **THEN** the snapshot check uses the synthetic header without QA-HEADER\n- **AND** the snapshot check prints this text because the selected change has one scenario with one passed test:\n\n```text\nTrace: 1 scenarios, 1 verified, 0 open.\n```"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The snapshot check MUST use the current valid adopt records for QA headers.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a trusted snapshot has a new QA script with no header and a valid adopt record\n- **THEN** the snapshot check uses the synthetic header without QA-HEADER\n- **AND** the snapshot check prints this text because the selected change has one scenario with one passed test:\n\n```text\nTrace: 1 scenarios, 1 verified, 0 open.\n```"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The gate MUST print the time of the measurement phase under the name measure.",
+      "requirement": {
+        "text": "The gate MUST print the time of the measurement phase under the name measure.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a measurement takes 2 seconds on the test clock\n- **THEN** the gate prints this line:\n\n```text\nPhase measure: 2 s\n```"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The gate MUST print the time of the measurement phase under the name measure.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a measurement takes 2 seconds on the test clock\n- **THEN** the gate prints this line:\n\n```text\nPhase measure: 2 s\n```"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The adopt command MUST stop before tests for an absent source commit or an absent ledger.",
+      "requirement": {
+        "text": "The adopt command MUST stop before tests for an absent source commit or an absent ledger.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the adopt command names a commit `absent` that the repository lacks\n- **THEN** the gate prints this error line:\n\n```text\nERROR GATES-ADOPT Git cannot find the commit absent\n```"
+          },
+          {
+            "rawText": "- **WHEN** the adopt command names a valid adopt source and no ledger exists\n- **THEN** the gate prints this error line:\n\n```text\nERROR GATES-ADOPT openspec/trace/gaps.json is not there. Run: node scripts/spec/gates.mjs init\n```"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The adopt command MUST stop before tests for an absent source commit or an absent ledger.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the adopt command names a commit `absent` that the repository lacks\n- **THEN** the gate prints this error line:\n\n```text\nERROR GATES-ADOPT Git cannot find the commit absent\n```"
+            },
+            {
+              "rawText": "- **WHEN** the adopt command names a valid adopt source and no ledger exists\n- **THEN** the gate prints this error line:\n\n```text\nERROR GATES-ADOPT openspec/trace/gaps.json is not there. Run: node scripts/spec/gates.mjs init\n```"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The measurement MUST use the caller environment and allocation file list.",
+      "requirement": {
+        "text": "The measurement MUST use the caller environment and allocation file list.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** the caller sets MEASUREMENT_TOKEN to token and lists tools/other.test.mjs as an allocation file\n- **THEN** the child environment has MEASUREMENT_TOKEN with the value token\n- **AND** the allocation run names tools/other.test.mjs and uses --expose-gc"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The measurement MUST use the caller environment and allocation file list.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** the caller sets MEASUREMENT_TOKEN to token and lists tools/other.test.mjs as an allocation file\n- **THEN** the child environment has MEASUREMENT_TOKEN with the value token\n- **AND** the allocation run names tools/other.test.mjs and uses --expose-gc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The measurement and the snapshot check MUST check the scenarios of the selected change.",
+      "requirement": {
+        "text": "The measurement and the snapshot check MUST check the scenarios of the selected change.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a measurement or a trusted snapshot has no assertion for scenario demo-001 of the selected active change\n- **THEN** the gate prints TRACE-UNVERIFIED for demo-001"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The measurement and the snapshot check MUST check the scenarios of the selected change.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a measurement or a trusted snapshot has no assertion for scenario demo-001 of the selected active change\n- **THEN** the gate prints TRACE-UNVERIFIED for demo-001"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "ownership",
+      "operation": "ADDED",
+      "description": "Add requirement: The adopt command MUST write one zero-count adopt record for each merged upstream QA script that can use the QA exception.",
+      "requirement": {
+        "text": "The adopt command MUST write one zero-count adopt record for each merged upstream QA script that can use the QA exception.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a merge brings one or more new upstream QA scripts with no QA tag and the adopt command names `HEAD^2`\n- **THEN** the adopt command writes one record for each script with the full hash of the second parent\n- **AND** lines, branches, functions and untraced are 0 and untrue is false\n- **AND** the next gate run uses the synthetic header\n- **AND** an owned script with no header, or a new script that the second parent did not change, prints QA-HEADER\n- **AND** an invalid current header or a deleted base QA header prints QA-HEADER\n- **AND** the adopt command writes one zero-count adopt record for a merged upstream base script with no current or base QA tag\n- **AND** any other error stops the adopt command without a new record\n- **AND** a coverage ignore comment in one of the new upstream QA scripts of the merge that has no QA tag makes the gate print COVERAGE-IGNORE and write no adopt record\n- **AND** the adopt command writes no QA record for an absent current file"
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The adopt command MUST write one zero-count adopt record for each merged upstream QA script that can use the QA exception.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a merge brings one or more new upstream QA scripts with no QA tag and the adopt command names `HEAD^2`\n- **THEN** the adopt command writes one record for each script with the full hash of the second parent\n- **AND** lines, branches, functions and untraced are 0 and untrue is false\n- **AND** the next gate run uses the synthetic header\n- **AND** an owned script with no header, or a new script that the second parent did not change, prints QA-HEADER\n- **AND** an invalid current header or a deleted base QA header prints QA-HEADER\n- **AND** the adopt command writes one zero-count adopt record for a merged upstream base script with no current or base QA tag\n- **AND** any other error stops the adopt command without a new record\n- **AND** a coverage ignore comment in one of the new upstream QA scripts of the merge that has no QA tag makes the gate print COVERAGE-IGNORE and write no adopt record\n- **AND** the adopt command writes no QA record for an absent current file"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

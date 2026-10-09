@@ -134,6 +134,10 @@ test('[ownership-001] prints OWNERSHIP-MANIFEST for an absent or invalid manifes
   const bad = run(root, ['check'], { spawn: () => assert.fail('No test run') });
   assert.equal(bad.status, 1);
   assert.match(bad.output, /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/);
+  write(root, { 'openspec/ownership.json': '{' });
+  const jsonError = run(root, ['check'], { spawn: () => assert.fail('No test run') });
+  assert.equal(jsonError.status, 1);
+  assert.match(jsonError.output, /ERROR OWNERSHIP-MANIFEST openspec\/ownership.json/);
 }));
 
 test('[ownership-011] reads the ledger without tests or a base', () => withFixture(root => {
