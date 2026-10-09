@@ -46,5 +46,18 @@ M	src/voice/realtimeController.js
 M	src/voice/realtimeCost.js
 ##### node: classify() of scripts/spec/lib/ownership.mjs for these 33 files against openspec/ownership.json
 files 33 owned 0
-##### git diff --stat 7c1a511e 4011f2a6 -- openspec .claude AGENTS.md Makefile scripts/spec
+##### git diff --stat 7c1a511e 4011f2a6 -- openspec .claude AGENTS.md Makefile scripts/spec | wc -l
 0
+##### git show --stat --format=%s 7c1a511e (the plan commit holds the delta spec)
+docs(spec): plan upstream-sync-4
+
+ openspec/changes/upstream-sync-4/.openspec.yaml    |  2 ++
+ openspec/changes/upstream-sync-4/design.md         | 33 ++++++++++++++++++++
+ openspec/changes/upstream-sync-4/proposal.md       | 35 ++++++++++++++++++++++
+ .../upstream-sync-4/specs/qa-scripts/spec.md       | 12 ++++++++
+ openspec/changes/upstream-sync-4/tasks.md          | 24 +++++++++++++++
+ 5 files changed, 106 insertions(+)
+##### git log --format='%h %s' ab11cf1b..dc01990d --first-parent (order of the plan, merge and test commits)
+dc01990d test(spec): expect 90 tracked QA scripts and the synthetic header of two upstream scripts
+4011f2a6 Merge upstream/main (6be25595) into upstream-sync-4
+7c1a511e docs(spec): plan upstream-sync-4
