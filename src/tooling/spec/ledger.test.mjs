@@ -1594,7 +1594,7 @@ test('[gap-ledger-149] the gate records the ledger entry as stale for total diff
   assert.deepEqual(result.stale, [{ kind: 'coverage', file: 'src/new.js' }]);
 });
 
-test('[gap-ledger-151] the gate records the ledger entry as stale and reports LEDGER-ADOPT-FROM for an invalid from commit', () => {
+test('[gap-ledger-151] the functions checkAdopts and compareLedger report LEDGER-ADOPT-FROM and record the ledger entry as stale for an invalid from commit', () => {
   const file = 'src/new.js';
   const ledger = ledgerWith({ coverage: { [file]: LOADED(10, 9, 2, { totals: BIG }) } });
   const current = gaps([loaded(file, 10, 9, 2, 'same', { lines: 399, branches: 399, functions: 399 })]);

@@ -1,0 +1,19 @@
+# Make a copy of the gate test of ownership-055 that prints the result of each assertion.
+# Run it from the root of the clone. The copy is src/tooling/spec/gates.debug.test.mjs.
+t = open('src/tooling/spec/gates.test.mjs').read()
+a = t.index("test('[ownership-055]")
+b = t.index("}, {}, { 'src/merged.js': NOISE_SOURCE }, TOLERANCE_OPTIONS);", a)
+body = t[a:b]
+old = """    assert.doesNotMatch(result.output, /ERROR LEDGER-ADOPT-FROM src\\/merged\\.js/);
+    assert.doesNotMatch(result.output, /ERROR LEDGER-STALE/);
+    assert.equal(result.output.match(/ERROR LEDGER-ADOPT-FROM/g).length, 1);
+    assert.match(result.output, /ERROR LEDGER-ADOPT-FROM openspec\\/trace\\/history\\.jsonl/);
+"""
+new = """    const count = (result.output.match(/ERROR LEDGER-ADOPT-FROM/g) ?? []).length;
+    console.error(`ASSERTION no file error: ${!/ERROR LEDGER-ADOPT-FROM src\\/merged\\.js/.test(result.output) ? 'passes' : 'FAILS'}`);
+    console.error(`ASSERTION no LEDGER-STALE: ${!/ERROR LEDGER-STALE/.test(result.output) ? 'passes' : 'FAILS'}`);
+    console.error(`ASSERTION one LEDGER-ADOPT-FROM error: ${count === 1 ? 'passes' : 'FAILS'} (count ${count})`);
+    console.error(`ASSERTION history error: ${/ERROR LEDGER-ADOPT-FROM openspec\\/trace\\/history\\.jsonl/.test(result.output) ? 'passes' : 'FAILS'}`);
+"""
+assert old in body
+open('src/tooling/spec/gates.debug.test.mjs', 'w').write(t[:a] + body.replace(old, new) + t[b:])

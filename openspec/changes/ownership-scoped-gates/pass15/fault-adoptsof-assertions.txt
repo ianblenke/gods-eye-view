@@ -1,0 +1,4 @@
+ASSERTION no file error: passes
+ASSERTION no LEDGER-STALE: passes
+ASSERTION one LEDGER-ADOPT-FROM error: FAILS (count 0)
+ASSERTION history error: FAILS
