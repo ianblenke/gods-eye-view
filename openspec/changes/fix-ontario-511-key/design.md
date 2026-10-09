@@ -28,7 +28,7 @@ The developer page gives no price for a key.
 
 ## Checks
 
-Use fixtures only. Test the key, absent or blank keys, HTTP errors and thrown errors.
+Use fake responses only. Test the key, absent or blank keys, HTTP errors and thrown errors.
 Run named mutations and the automatic mutation tool on changed lines.
 Measure each changed code file on the host. Run each CCTV test file in one process before and after.
 
@@ -41,7 +41,7 @@ The purpose of the browser QA for the CCTV layer stays the same. Camera markers 
 |---|---|
 | pack | The Ontario camera pack as a whole. |
 | loader | `loadOntarioSourcesFromOpenData`. |
-| reset hook | `_resetOntarioRequestForTest` sets both warning flags to false. It is a test helper with no scenario of its own. |
+| reset hook | `_resetOntarioRequestForTest` sets both warning flags to false. It is a test function with no scenario of its own. |
 | request helper | `readOntarioCameraRows`. |
 | key | The value of `ONTARIO_511_API_KEY`. |
 | server key | The key that stays on the server. |
@@ -50,7 +50,7 @@ The purpose of the browser QA for the CCTV layer stays the same. Camera markers 
 | view | One item in the upstream Views list. |
 | console channel | One of console.log, console.info, console.debug, console.warn, console.error and console.dir. |
 | warning | Text that console.warn writes. |
-| fixture | The helper in each Ontario test file that sets the key and replaces fetch and the console channels. |
+| fixture | The function in each Ontario test file that sets the key and replaces fetch and the console channels. |
 | log line | Text that any console channel writes. |
 | developer key | The key that Ontario 511 gives to an account holder. |
 | Docker image | The container image for the project checks. |
@@ -65,11 +65,17 @@ The purpose of the browser QA for the CCTV layer stays the same. Camera markers 
 | lead | The person who runs the Docker image checks and review. |
 | camera list | The data that the Ontario request returns. |
 
+## Pass 7 words
+
+| Word | Meaning |
+|---|---|
+| host | The computer outside the Docker image. |
+
 ## Files and measures
 
 Add `server/providers/cctv/ontarioRequest.js` for the request helper.
 Use the reset hook before each key test. Import the module once without a query string.
-The reset hook is a test helper with no scenario of its own. The current tests cover all its code.
+The reset hook is a test function with no scenario of its own. The current tests cover all its code.
 
 Two Rows tests check the initial warning flags without the reset hook.
 The coverage gate includes the reset hook in its line, branch and function counts.

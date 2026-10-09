@@ -1,0 +1,23 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvProxy.test.mjs
+✔ CCTV upstream frame fetch supplies a bounded abort signal (17.823348ms)
+✔ CCTV upstream frame fetch returns a valid image response (202.981382ms)
+✔ CCTV upstream frame fetch rejects a declared oversize body without draining it (11.111388ms)
+✔ CCTV upstream frame fetch aborts an undeclared body once it crosses the cap (9.888456ms)
+✔ CCTV upstream frame fetch still returns a chunked body under the cap (6.872183ms)
+✔ CCTV media upstream fetch aborts when response headers never arrive (6.825206ms)
+✔ CCTV media upstream fetch never cuts a stream whose headers arrived in time (19.070799ms)
+✔ CCTV upstream frame fetch keeps a body that lands exactly on the cap (5.615362ms)
+✔ CCTV upstream frame fetch ignores a garbage Content-Length and still caps the stream (5.660564ms)
+✔ CCTV upstream frame fetch retains owned bytes, not the chunk's backing allocation (5.714029ms)
+✔ CCTV upstream frame fetch refuses a body it cannot stream instead of buffering it uncapped (2.252012ms)
+✔ reader-only snapshots release their lock on success, overflow and read failure (22.841897ms)
+✔ the snapshot deadline remains active after headers while reading a stalled body (22.454921ms)
+✔ rejected snapshot responses abort the upstream download (5.364834ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 485.117991

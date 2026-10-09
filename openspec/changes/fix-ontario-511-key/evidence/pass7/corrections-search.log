@@ -1,0 +1,11 @@
+Command: rg -n correction terms in evidence.md and design.md
+openspec/changes/fix-ontario-511-key/design.md:53:| fixture | The function in each Ontario test file that sets the key and replaces fetch and the console channels. |
+openspec/changes/fix-ontario-511-key/design.md:68:## Pass 7 words
+openspec/changes/fix-ontario-511-key/evidence.md:1318:| Spec minor: README | At Pass 5, the lead chose the words from e2437f94 with only a change of the banned noun. See S3. |
+openspec/changes/fix-ontario-511-key/evidence.md:1330:At Pass 5, the lead decided to keep the words of that line on main, except for the banned word.
+openspec/changes/fix-ontario-511-key/evidence.md:1332:At Pass 6, the line has that replacement (see S3). The lead accepts that the line now also drops the word estimated.
+openspec/changes/fix-ontario-511-key/evidence.md:1699:At Pass 5, the lead must run the Node 24.14.0 Docker image checks and both reviews before merge.
+openspec/changes/fix-ontario-511-key/evidence.md:1744:The lead accepts that the line now also drops the word estimated.
+openspec/changes/fix-ontario-511-key/evidence.md:1998:No worker ran a Docker, make, ratchet, gate, ledger, archive, push, gh or review command in Pass 6.
+openspec/changes/fix-ontario-511-key/evidence.md:2033:The option is a label of the results file only; the copy is at commit 4f0be16d.
+openspec/changes/fix-ontario-511-key/evidence.md:2055:E7: The Pass 5 evidence, commit 33118620 and codex-6.txt do not show the order of the test and scenario text changes.

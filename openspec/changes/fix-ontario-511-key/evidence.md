@@ -972,7 +972,7 @@ The records above describe past runs. Their new time markers do not change their
 | Finding | Correction |
 |---|---|
 | Spec major 1 | Scenario 008 has a control row about 3 kilometers from Kitchener, after all six anchor rows. Its order assertion names all eight sources. |
-| Spec major 2 | At Pass 4, both fixtures watch warn, log, error, info and debug. Scenarios 004 and 005 name console channels and state that no thrown error escapes the pack. |
+| Spec major 2 | At Pass 4, both fixtures watch warn, log, error, info and debug. At Pass 4, scenarios 004 and 005 named console channels and stated that no thrown error escaped the pack. |
 | Spec minors | The 003 test loses its unused key assertion. Impact names the loader and three other functions. Scenario 006 names the trim of status text, letter case and field choice. |
 | Other spec minors | Scenario 007 needs a view description that is not empty for the dash. Known limits name stderr, all kinds of request error and the reset hook. |
 | Records and tasks | Pass 3 records have time markers. The fresh module tasks name their replacement. The coverage reader task stays unchecked until the Docker image ratchet. |
@@ -1305,6 +1305,7 @@ The prose lint prints "STE: 0 errors, 540 warnings."
 
 Tree read: `ede1c684b94a133d7c699c7a45e5860d4c3dd5a6`, branch `fix-ontario-511-key`, with the Pass 5 edits.
 At Pass 5, the scratch tree has no branch. It copies this code and the Pass 5 tests.
+The automatic run used another copy of the tests; see S18.
 Pass 5 changes no production code. The three pre-review folders and the trace files stay unchanged.
 
 ### Corrections of pre-review 3
@@ -1314,7 +1315,7 @@ Pass 5 changes no production code. The three pre-review folders and the trace fi
 | Spec major 1 and F1 | Both fixtures record pairs of console channel and text. Each warning and source count assertion checks both values. |
 | Spec major 2 and STE major 3 | Both fixtures also replace `console.dir`. The glossary names the six console channels. The spec and tasks use those terms. |
 | STE majors 1 and 2 | The Roadway title names the capitalized field. The requirement names the key twice, with no unclear pronoun. |
-| Spec minor: README | At Pass 5, the CCTV table line has the words from e2437f94, with only the banned noun replaced by first estimates. |
+| Spec minor: README | At Pass 5, the lead chose the words from e2437f94 with only a change of the banned noun. See S3. |
 | Spec minor: Windsor record | The old log file has a Pass 5 note, the removed line and input hashes. The new run repeats the old test that passes. |
 | Spec minor: Pass 4 count | The record states why the three layer files and their 16 tests did not run at Pass 4. |
 | Spec minor: past counts | The Pass 3 counts and final campaign claims have Pass 3 markers. The old numbers stay unchanged. |
@@ -1326,8 +1327,9 @@ Pass 5 changes no production code. The three pre-review folders and the trace fi
 | STE part 3 | The evidence uses mutation, test bodies and time markers. CURRENT-STATE has no repeated date. README names the key. |
 | Past image word | Known limits accept image in the Pass 3 and Pass 3B records by name. Those records stay unchanged. |
 
-The lead decided to keep the main words of that line, except for the banned word.
-This decision overrides the STE replacement for that line. At Pass 5, the line keeps the old count and sentence form.
+At Pass 5, the lead decided to keep the words of that line on main, except for the banned word.
+At Pass 5, this decision overrode the STE replacement.
+At Pass 6, the line has that replacement (see S3). The lead accepts that the line now also drops the word estimated.
 The old code at e2437f94 writes resp.status through console.warn when the Ontario response is not OK.
 
 ### Red runs for the console channel checks
@@ -1358,7 +1360,7 @@ Mutation B runs the HTTP error test with JSON rows. That test has no call count 
 Its deepEqual fails on error versus warn. The warning text stays equal.
 
 Mutation D makes two tests fail. The titles of both tests have the words without a warning.
-The pairs show the console method of each line again. The Pass 4 lists had only the text.
+The pairs show the console channel of each line again. The Pass 4 lists had only the text.
 
 ### Console method probe
 
@@ -1461,13 +1463,13 @@ The command runs once on Node v26.8.2. Its output is console-probe.json.
 }
 ```
 
-Both fixtures watch `console.table`, `console.group` labels, `console.count`, `console.timeLog` and `console.timeEnd` indirectly through `console.log`.
+Both fixtures watch `console.table`, the labels of `console.group`, `console.count`, `console.timeLog` and `console.timeEnd` indirectly through `console.log`.
 They watch `console.trace` through `console.error` and a failed `console.assert` through `console.warn`.
 On Node v26.8.2, `console.dirxml` writes directly to stdout. The six mocks do not watch that method.
 `console.groupEnd`, a valid `console.countReset` and `console.time` write no text in this probe.
 
 The fixtures do not watch text that code writes directly to process.stdout and process.stderr.
-These routes come from Node v26.8.2 and from Node v24.21.0 in the Docker image. The routes are the same.
+At Pass 6, the lead ran the same probe in the Docker image (Node v24.21.0). The results are the same (C2).
 
 ### Old Windsor case
 
@@ -1597,6 +1599,7 @@ Its output is:
 ```
 
 The automut command uses root /tmp/ont-pass5-tree, the Pass 5 mutants.json file and one job.
+The automatic run used another copy of the tests; see S18.
 It runs each Ontario test file in its own process. Phase 2 uses resume after Phase 1 completes.
 The command lines and output are in automatic-phase1-host.log and automatic-phase2-host.log.
 The completed counts from automatic-results.json are:
@@ -1650,7 +1653,7 @@ The clause script reads all 83 test bodies. It lists one test: the absent-key te
 That test sets no key value and asserts the literal absent-key warning from its table.
 
 The script also names D-invalid and D-numeric for the two titles that have the words without a warning.
-Both named runs fail on the method pair assertion.
+Both named runs fail on the channel pair assertion.
 
 The banned-word script checks prefixed forms in the change prose, tests and added user-document lines.
 It finds no new prose hit. Its one hit is an old code quote at evidence.md:674.
@@ -1694,6 +1697,7 @@ Pass 5 adds no server change.
 
 No Docker command, make command, ratchet, gate comparison, ledger change, archive, push, gh command or review command ran.
 At Pass 5, the lead must run the Node 24.14.0 Docker image checks and both reviews before merge.
+At Pass 6, this sentence is known to be wrong: the Docker image already ran Node 24.21.0 (C2).
 The host results do not replace those checks.
 
 
@@ -1704,12 +1708,18 @@ The four pre-review folders and the trace files stay unchanged.
 
 ### Text corrections
 
-C1: Scenario 004 names only the request helper. Scenario 005 names the helper for fetch and JSON errors and the loader for row errors.
-Each tagged test awaits that call and asserts its empty result. A thrown error makes that test fail.
-The loader count limit now names both the absent-key case and request errors. No scenario covers those loader cases.
+C1: Scenario 004 names only the request helper. Scenario 005 names the request helper for fetch and JSON errors and the loader for row errors.
+Each tagged test awaits that call. If the call throws an error, the test fails.
+Each test asserts the empty result of the call.
 
-C2: The Docker image uses Node 24.21.0. The lead ran the console probe in that image on 2026-10-08.
-Pass 6 copies the script and image output to evidence/pass6. The lead's stderr file is empty.
+The Known limit for the loader log line now names both the absent-key case and request errors. No scenario covers those loader cases.
+
+C2: The Docker image uses Node 24.21.0. The lead ran the console probe in the Docker image on 2026-10-08.
+Pass 6 copies the script and the output of the Docker image to evidence/pass6. The lead's stderr file is empty.
+
+Pass 7 adds console-probe-image.err and console-probe-image-command.txt to evidence/pass6.
+The command file names the Docker command, the Docker image name and ID, and the exit code.
+
 The comparison reads both JSON files and compares their 13 result objects.
 `console.dirxml` still writes directly to stdout.
 
@@ -1720,29 +1730,31 @@ dirxml: direct stdout on both versions
 ```
 
 The lead must run the Docker image checks (Node 24.21.0) and both reviews before merge.
-The Node 24.14.0 sentence in Pass 5 has a past-pass prefix. The review reports stay unchanged.
+The Node 24.14.0 sentence in Pass 5 has an "At Pass 5," prefix. The review reports stay unchanged.
 No current check assigns the console probe to the lead. That probe is complete.
 
 C3: Tasks section 6 names five channels for Pass 4. Section 7 records the Pass 5 work from its evidence.
-Section 8 records Pass 6. Section 9 has the lead checks. Only the lead ran the image probe.
+Section 8 records Pass 6. Section 9 has the lead checks. Only the lead ran the probe in the Docker image.
 
 C4: Only the Windsor anchor has the stated small-distance limit. The control row is about 3.16 kilometers north of Kitchener.
 The six anchor rows have distance zero. The sort breaks equal distances by row index. Windsor is last in that group.
 
 S3: The README phrase is now "poses are first estimates". Against e2437f94, this phrase removes estimated and replaces the banned noun.
-The other words of that table row stay unchanged. The requested phrase and the noun-only diff cannot both hold.
+The other words of that table row stay unchanged. The phrase of pre-review 2 and a change of the banned noun alone cannot both hold.
+The lead accepts that the line now also drops the word estimated.
 
 S4: The evidence names the lead and the README decision.
 S5: The evidence says that each test fails and names both titles with the words without a warning.
 S6 and S7: The proposal names Windsor alone and gives the warning text and error causes in separate sentences.
 S8 and S9: Console names have code marks. The limits name text that code writes directly to the streams and both Node versions.
 
-S10 to S13: The evidence distinguishes code files, log files, console channels and fixtures.
-The no-error item has a Pass 5 prefix because C1 changes its scope.
-S14: The Windsor file has a label for its Pass 5 hash block. The evidence names the new log file and equal input hashes.
-S15 to S17: The evidence names the old dependency link, the proposal draft, branch ranges and proposal section titles.
+S10 to S12: The evidence distinguishes code files, log files and console channels.
+S13: The no-error item has an "At Pass 5," prefix because C1 changes its scope.
+S14: The glossary defines fixture as a test function.
+S15: The Windsor file has a label for its Pass 5 hash block. The evidence names the new log file and equal input hashes.
+S16 to S17: The evidence names the old dependency link, the proposal draft, branch ranges and proposal section titles.
 
-### S18: Automatic test copy
+### S18: The automatic test copy
 
 The first line of automatic-phase1-host.log names /tmp/ont-pass5-tree as the root of the automatic run.
 Pass 6 compares both test files at that root with the live test files. The differences are not only a title rename.
@@ -1955,10 +1967,10 @@ Command: diff -u /tmp/ont-pass5-tree/src/data/cctvOntarioRows.test.mjs src/data/
 
 Command: python /tmp/pass6-check.py
 The loop ran 25 files, one process per file, under taskset -c 8-11 nice -n 19.
-The Ontario files passed 12 and 71 tests, for 83 tests. The sandbox denied three local socket tests in the media range file.
+In the Ontario files, 12 and 71 tests passed, 83 in all. The sandbox denied three local socket tests in the media range file.
 The loop then stopped at its total assertion. It gave no all-pass result and ran no later checks.
 
-The host repeat of that file passed all 21 tests. The final set has 336 passes and no failures.
+The host repeat of that file passed all 21 tests. In the final set, 336 tests pass and none fail.
 The original checks.json keeps the sandbox results. test-summary.json records the host repeat separately.
 
 ```json
@@ -1978,23 +1990,24 @@ The original checks.json keeps the sandbox results. test-summary.json records th
 ```
 
 Command: python /tmp/pass6-finish.py
-This command runs the remaining format, boundary, title and OpenSpec checks.
+This command runs the other format, boundary, title and OpenSpec checks.
 Each command and its output has a file in evidence/pass6.
 
 ### Limits
 
-No Docker, make, ratchet, gate, ledger, archive, push, gh or review command ran in this pass.
-The lead supplied the image probe output. The host checks give no image gate verdict.
+No worker ran a Docker, make, ratchet, gate, ledger, archive, push, gh or review command in Pass 6.
+The lead ran the console probe in the Docker image (C2) and the automatic mutations on the live tests on the host.
+The host checks give no Docker image gate verdict.
 
 ### Final text checks
 
 The title script excludes diff records of old text. It checks 83 live titles and 14 current references and finds zero stale labels.
 The verb script checks 83 bodies. Its one item is the absent-key test, which sets no key and asserts the literal warning.
-The added text has no banned-word match, including the owner's prefixed forms.
+The added text has no banned-word match. The search covered the owner's prefixed forms.
 
 The format check passes: "Checked 1159 source files." OpenSpec show gives valid JSON. OpenSpec validate says the change is valid.
 
-The proposal section title diff is empty against d0b0c776. The src, server and scripts diff is also empty.
+The diff of the proposal section titles is empty against d0b0c776. The src, server and scripts diff is also empty.
 The search output in corrections-search.log shows the three no-error clauses, five Pass 4 channels and task sections 7, 8 and 9.
 The prose lint passes with zero errors and 542 warnings after the paragraph corrections.
 
@@ -2003,15 +2016,74 @@ The package boundary check completed with exit code 0. Its output lists all pack
 ### Automatic mutations on the live tests
 
 The Pass 5 automatic mutations ran on a test copy from before the Pass 5 channel changes, as the S18 diff above shows.
-After Pass 6, the lead ran the same 140 mutants again on a new copy of the live tree at commit 4f0be16d.
+After Pass 6, the lead ran the same 140 mutations again on a new copy of the live tree at commit 4f0be16d.
 
-The file automatic-live-copy-check.log shows that the copy has the same two Ontario test files and the same two server files as the live clone.
+The file automatic-live-copy-check.log shows that the copy has the same two Ontario test files and the same two server files as the live tree.
 The command lines are in automatic-phase1-live.log and automatic-phase2-live.log.
 They use the same mutants.json file, the same two test files, one job and cores 8 to 11.
 
-Phase 1 kills 131 mutants, and nine survive. Phase 2 runs all 83 live tests for each of the nine survivors, and all nine survive.
+Phase 1 kills 131 mutations, and nine survive. Phase 2 runs all 83 live tests for each of the nine survivors, and all nine survive.
 The survivors are h43, h44, h91, h103, h104, h113, h126, h127 and h130.
 The file automatic-live-compare.log compares the 149 records with the Pass 5 records. The status of each record is the same.
 
-The Pass 5 equivalence claims for these nine mutants stand, because the same nine survive the live tests.
+The live tests do not contradict the Pass 5 equivalence claims for these nine survivors: the same nine survive.
 The lead did not run the equivalence probes again.
+
+The command line has the option --commit ede1c684.
+The option is a label of the results file only; the copy is at commit 4f0be16d.
+
+
+## Pass 7
+
+Tree read: `731ae58318635cd98e66f50c9bd85c1d97c7fb45`, branch `fix-ontario-511-key`, with the Pass 7 text changes.
+The five pre-review folders, README, code, tests, scripts and trace files stay unchanged.
+
+### Corrections of pre-review 5
+
+E1 and S1: The README decision has its Pass 5 tense. The lead accepts the loss of the word estimated.
+E2 and S7: The command limit names the worker. The lead ran the Docker image probe and the host mutations.
+
+E3: Pass 7 adds evidence/pass6/console-probe-image.err and evidence/pass6/console-probe-image-command.txt.
+The first file is empty. The second file names the command, Docker image name and ID, and exit code.
+
+E4: automut.mjs stores the --commit option in the results file and checks the label on resume.
+It does not select a commit. The evidence names the label ede1c684 and the copy commit 4f0be16d.
+
+E5: Past facts have Pass 5 or Pass 6 markers. Known limits name the CI version with no console probe.
+E6: The lead accepts the channel gap by name in Known limits. The scenario text stays unchanged.
+
+E7: The Pass 5 evidence, commit 33118620 and codex-6.txt do not show the order of the test and scenario text changes.
+The evidence does not show the order. The lead decides in review.md whether to accept this limit by name.
+The task boxes stay in their current order.
+
+S2 to S6 and S8 to S21: The text uses the glossary terms, correct S labels and past-pass markers.
+The glossary defines host and fixture. The request helper and test functions have separate names.
+The Windsor limit names the anchor that moves. The survival sentence states only what the live tests show.
+
+### Host checks
+
+The command output is in evidence/pass7. Each test file runs in one process under taskset -c 8-11 nice -n 19.
+No worker runs Docker, make, ratchet, ledger, archive, push, gh or review commands in Pass 7.
+The host results give no Docker image gate verdict or review verdict.
+
+The 25-file loop stopped at its total assertion after three socket errors. It ran no later checks.
+In the Ontario files, 12 and 71 tests passed, 83 in all. The sandbox set has 333 tests that pass.
+The host repeat has 21 tests that pass and none that fail. Thus, the final set has 336 tests that pass.
+
+The original checks.json keeps the sandbox results. media-range-host.log records the host repeat.
+
+The text search checks the new lines and the owner’s prefixed forms.
+The lead chose the E1 sentence. E1 overrides E8 for this sentence.
+The search excludes file names from the check for the word image without Docker.
+
+
+The format check prints "Checked 1159 source files." OpenSpec show prints JSON, and OpenSpec validate says the change is valid.
+The proposal section titles have no difference against 731ae583. Design adds Pass 7 words. Evidence adds Pass 7.
+The diff against 731ae583 for src, server and scripts is empty.
+
+The first title script lists two old titles inside the S18 diff record.
+The current-title check excludes those diff records. It checks 83 titles and 14 references with zero stale labels.
+The verb script reads 83 test bodies. Its one item is the absent-key test that asserts the literal warning.
+The correction search lists the new text in corrections-search.log.
+
+The final prose lint prints "STE: 0 errors, 540 warnings."

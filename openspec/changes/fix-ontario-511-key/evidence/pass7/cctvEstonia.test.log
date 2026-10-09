@@ -1,0 +1,13 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvEstonia.test.mjs
+[CCTV] Loaded Tallinn camera sources: 255 (using nearest 255)
+✔ Tallinn catalog loads curated ristmikud stills only (33.124986ms)
+✔ Tarktee DATEX parsers join location UUIDs to image URLs (6.670632ms)
+✔ Tarktee DATEX image parser rejects non-official hosts (1.668086ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 195.970487
