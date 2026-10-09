@@ -73,7 +73,7 @@ Other examples include a vague verb and a word that STE does not approve.
 
 Normative text is a requirement, a scenario, a rule of AGENTS.md or openspec/config.yaml, a message of the gate or the instructions of an agent.
 Other text includes proposal.md, design.md, evidence.md, tasks.md, the review.md of the change and the title of a test.
-A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word that the lists do not name is also a banned word.
+A banned word is a word or a phrase in the lists `words`, `phrases` or `newWords` of `openspec/ste/words.json`. A form of such a word with the suffix -s, -ed or -ing that the lists do not name is also a banned word.
 Two possible meanings in other text are minor when the text is true under each meaning.
 A text that disagrees with the code, the specs or the other prose of the change is major in all text.
 
