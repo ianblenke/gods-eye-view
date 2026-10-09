@@ -205,7 +205,7 @@ The lead decides in review.md whether to accept it by name.
 
 ### Pass 11
 
-- [x] Correct the faults that pre-review 9 found.
+- [x] Correct the major faults that pre-review 9 found.
 - [x] Run the ledger host test.
 - [x] Check the JSON output of openspec show.
 
