@@ -109,8 +109,8 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-077] The validator rejects invalid version
-[director-077] The validator rejects invalid format
+[director-077] The validator rejects an invalid version
+[director-077] The validator rejects an invalid format
 [director-077] The validator returns without an error for geojson
 [director-077] The validator returns without an error for image
 [director-077] The validator returns without an error for media
@@ -132,15 +132,15 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-078] The validator rejects protocol for the attribution
-[director-078] The validator rejects username for the attribution
-[director-078] The validator rejects password for the attribution
-[director-078] The validator rejects query for the attribution
-[director-078] The validator rejects fragment for the attribution
+[director-078] The validator rejects the protocol for the attribution
+[director-078] The validator rejects the username for the attribution
+[director-078] The validator rejects the password for the attribution
+[director-078] The validator rejects the query for the attribution
+[director-078] The validator rejects the fragment for the attribution
 [director-078] The validator rejects invalid URL text for the attribution
 [director-078] The validator returns without an error for a safe link for the attribution
 [director-078] The validator rejects blank text for the attribution
-[director-078] The validator rejects blank license for the attribution
+[director-078] The validator rejects a blank license for the attribution
 [director-078] The validator returns without an error for its attribution text field
 [director-078] The validator returns without an error for its attribution license field
 [director-078] The validator returns without an error for its attribution url field
@@ -153,8 +153,8 @@ Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
 [director-079] The validator rejects a fraction for the byteLength field
-[director-079] The validator rejects invalid type for the digest
-[director-079] The validator rejects invalid alphabet for the digest
+[director-079] The validator rejects an invalid type for the digest
+[director-079] The validator rejects an invalid alphabet for the digest
 [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
 [director-079] The validator returns without an error for the byteLength field of a data pack
 [director-079] The validator returns without an error for the sha256 field of a data pack
@@ -196,8 +196,8 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-080] The validator rejects high excess for image bounds field 2
 [director-080] The validator rejects low excess for image bounds field 3
 [director-080] The validator rejects high excess for image bounds field 3
-[director-080] The validator rejects image height outside both limits
-[director-080] The validator rejects media fields in image placement for the placement
+[director-080] The validator rejects an image height above the upper limit
+[director-080] The validator returns without an error for the fields of the image placement
 [director-080] The validator rejects equal longitude edges for the image
 [director-080] The validator rejects equal latitude edges for the image
 [director-080] The validator returns without an error for all geographic limits for the image
@@ -212,7 +212,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-081] The validator rejects an unknown anchor for the media
 [director-081] The validator returns without an error for its anchorId field for the media
 [director-093] The session calls the renderer with the anchors and returns true
-[director-081] The validator rejects image fields in media placement for the placement
+[director-081] The validator returns without an error for the fields of the media placement
 ```
 
 ### director-082
@@ -232,7 +232,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-082] The validator returns without an error for absent data packs and anchors for the scene
 [director-082] The validator uses supplied anchors for the scene and returns without an error
 [director-082] The validator uses absent anchor defaults for the scene and returns without an error
-[director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
+[director-082] The validator does not read a data pack list from the parent object of the scene and returns without an error
 ```
 
 ### director-083
@@ -240,10 +240,10 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-083] The decoder rejects invalid type for the collection
-[director-083] The decoder rejects invalid array for the collection
+[director-083] The decoder rejects an invalid type for the collection
+[director-083] The decoder rejects an invalid array for the collection
 [director-083] The decoder rejects more than 2000 features for the collection
-[director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
+[director-083] The decoder accepts the exact feature limit of the collection and returns 2000 features
 [director-083] The decoder rejects invalid UTF8 bytes
 [director-083] The decoder rejects null
 ```
@@ -253,12 +253,12 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-084] The decoder rejects type for the feature
+[director-084] The decoder rejects the type for the feature
 [director-084] The decoder rejects ID type for the feature
-[director-084] The decoder rejects blank ID for the feature
-[director-084] The decoder rejects long ID for the feature
-[director-084] The decoder rejects duplicate ID for the feature
-[director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
+[director-084] The decoder rejects a blank ID for the feature
+[director-084] The decoder rejects a long ID for the feature
+[director-084] The decoder rejects a duplicate ID for the feature
+[director-084] The decoder accepts the exact text limit of the feature ID and returns a feature with an ID length of 256
 [director-084] The decoder rejects a null feature
 ```
 
@@ -267,21 +267,21 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-085] The decoder rejects invalid array for the position
-[director-085] The decoder rejects invalid length for the position
+[director-085] The decoder rejects an invalid array for the position
+[director-085] The decoder rejects an invalid length for the position
 [director-085] The decoder rejects a coordinate that is not finite for the position
-[director-085] The decoder rejects invalid longitude for the position
-[director-085] The decoder rejects invalid latitude for the position
+[director-085] The decoder rejects an invalid longitude for the position
+[director-085] The decoder rejects an invalid latitude for the position
 [director-085] The decoder rejects a height below the limit for the position
 [director-085] The decoder rejects a height above the limit for the position
-[director-085] The decoder rejects excess for the position total
+[director-085] The decoder rejects more than 50000 positions
 [director-085] The decoder returns zero for absent height for the position
 [director-085] The decoder returns the height in the data for the position
 [director-085] The decoder accepts both geographic edges for the position and returns coordinates
 [director-085] The decoder rejects field 0 that is not finite for the position
 [director-085] The decoder rejects field 1 that is not finite for the position
 [director-085] The decoder rejects field 2 that is not finite for the position
-[director-085] The decoder accepts its exact total limit for the position and returns coordinates
+[director-085] The decoder accepts the exact position limit of the collection and returns 50000 positions
 ```
 
 ### director-086
@@ -289,8 +289,8 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-086] The decoder rejects invalid array for the line
-[director-086] The decoder rejects invalid minimum for the line
+[director-086] The decoder rejects an invalid array for the line
+[director-086] The decoder rejects an invalid minimum for the line
 [director-086] The decoder rejects a ring with fewer than four points for the ring
 [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
 [director-086] The decoder rejects unclosed field 0 for the ring
@@ -309,13 +309,13 @@ Test file: `src/director/packs/packs.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-087] The decoder rejects invalid type for the geometry
-[director-087] The decoder rejects invalid array for the geometry
+[director-087] The decoder rejects an invalid type for the geometry
+[director-087] The decoder rejects an invalid array for the geometry
 [director-087] The decoder rejects an empty polygon for the geometry
 [director-087] The decoder rejects more than 128 rings for the geometry
 [director-087] The decoder returns a closed polygon for the geometry
 [director-087] The decoder removes properties for the geometry
-[director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
+[director-087] The decoder accepts the exact ring limit of the polygon and returns 128 rings
 [director-087] The decoder rejects absent geometry
 ```
 
@@ -324,13 +324,13 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-088] The session reports idle state after creation
+[director-088] The new session reports the idle state and zero handles
 [director-088] The session rejects a value that is not a data pack list
 [director-088] The session rejects more than eight data packs
-[director-088] The session rejects destroyed state
-[director-088] The session rejects cancelled state
-[director-088] The session reports idle after creation
-[director-088] The session reports zero handles after creation
+[director-088] The load call returns false after the caller destroys the session without a source call
+[director-088] The load call returns false for a cancelled signal without a source call
+[director-088] The new session reports the idle state
+[director-088] The new session reports zero handles
 [director-088] The session returns true for eight data packs
 [director-088] The session checks every declaration before the source call and rejects the call
 ```
@@ -376,11 +376,11 @@ Test file: `src/director/packs/backfill.test.mjs`.
 ```text
 [director-090] The session disposes late resources for the cancelled session
 [director-090] The session returns false for cancelled work with a null late handle
-[director-090] The session returns false for work that destruction stops
+[director-090] The session returns false when the caller destroys it during asset work
 [director-090] The session returns false for a cancelled signal without an event
 [director-090] The session checks destroyed state after it reads the signal
-[director-090] The session returns false for a cleared load call without a signal state access
-[director-090] The session guard rejects a detached resource
+[director-090] The session returns false for a cleared load call and does not read the signal state
+[director-090] The load call returns false and disposes a detached resource
 [director-090] The session disposes the handle before it adds the handle to its list
 ```
 
@@ -395,7 +395,7 @@ Test file: `src/director/packs/packs.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-091] The session keeps its resources for the replacement
+[director-091] The session keeps the new resources after a new load call
 ```
 
 ### director-092
@@ -417,11 +417,11 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-092] The session rejects an absent renderer without a source call
 [director-092] The session settles an early internal signal and reports idle
 [director-092] The session settles a source error before its deadline and reports idle
-[director-092] The session rejects stalled work at the 19 ms deadline
-[director-092] The session rejects stalled work at the default 15000 ms deadline
+[director-092] The session rejects stalled work at the 19 milliseconds deadline
+[director-092] The session rejects stalled work at the default 15000 milliseconds deadline
 [director-092] The session removes resources after a later error
 [director-092] The session rejects a falsy custom source
-[director-092] The session reads the byteLength field once without a registered source for the data pack session
+[director-092] The session reads the byteLength field once without a registered source
 [director-092] The session removes partial resources for the deadline
 ```
 
@@ -448,7 +448,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-093] The session returns true at the asset byte limit
 [director-093] The session returns true at the total byte limit
 [director-093] The session rejects one byte above the total limit
-[director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+[director-093] The source receives the path, the renderer receives the asset and the signal, and the load call returns true
 ```
 
 ### director-094
@@ -456,12 +456,12 @@ Test file: `src/director/packs/backfill.test.mjs`.
 Test file: `src/director/packs/backfill.test.mjs`.
 
 ```text
-[director-094] The factory rejects protocol
-[director-094] The factory rejects username
-[director-094] The factory rejects password
-[director-094] The factory rejects query
-[director-094] The factory rejects fragment
-[director-094] The factory rejects an address with no final slash
+[director-094] The factory rejects the protocol
+[director-094] The factory rejects the username
+[director-094] The factory rejects the password
+[director-094] The factory rejects the query
+[director-094] The factory rejects the fragment
+[director-094] The factory rejects a directory URL with no final slash
 [director-094] The factory returns a source for HTTP and HTTPS directories
 ```
 
@@ -502,7 +502,7 @@ Test file: `src/director/packs/backfill.test.mjs`.
 [director-096] The source returns an empty media type when the header is absent
 [director-096] The source returns lowercase media type text without parameters
 [director-096] The source rejects 8388609 bytes without a caller limit
-[director-096] The source accepts its exact byte limit for the stream and returns bytes
+[director-096] The source accepts the exact byte limit of the stream and returns bytes
 ```
 
 ### director-097
@@ -545,12 +545,12 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
 [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent assets and wrong integrity
-[director-099] The import rejects invalid type for the base64
-[director-099] The import rejects invalid empty for the base64
-[director-099] The import rejects invalid length for the base64
-[director-099] The import rejects invalid alignment for the base64
-[director-099] The import rejects invalid alphabet for the base64
-[director-099] The import rejects invalid padding for the base64
+[director-099] The import rejects an invalid type for the base64
+[director-099] The import rejects an empty base64 value
+[director-099] The import rejects an invalid length for the base64
+[director-099] The import rejects an invalid alignment for the base64
+[director-099] The import rejects an invalid alphabet for the base64
+[director-099] The import rejects an invalid padding for the base64
 [director-099] The import rejects duplicate paths
 [director-099] The import rejects an unsupported media type
 [director-099] The import rejects unsupported version
@@ -566,8 +566,8 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-099] The import accepts the audio/wav media type and returns assets
 [director-099] The import accepts the audio/webm media type and returns assets
 [director-099] The import rejects 65 different asset paths
-[director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
-[director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+[director-099] The import returns assets at the base64 length limit and rejects the next aligned length
+[director-099] The import returns assets at the total byte limit and rejects one more byte
 ```
 
 ### director-100
@@ -590,8 +590,8 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
-[director-101] The export returns a bundle for a source path of 1024 characters
+[director-101] The export copies bytes and attribution and keeps the project without an asset request
+[director-101] The export returns bundle text for a source path of 1024 characters
 [director-101] The export writes exact bundle metadata
 [director-101] The export accepts scenes without data packs and returns bundle text
 [director-101] The export returns one asset for a supplied data pack list
@@ -619,7 +619,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 [director-102] The export accepts its exact asset total and returns bundle text
 [director-102] The export rejects an unsupported media type
 [director-102] The export accepts the text byte limit and returns bundle text
-[director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+[director-102] The export returns bundle text at the total byte limit and rejects one more byte
 ```
 
 ### director-103
@@ -627,7 +627,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
+[director-103] The export writes one asset and rejects integrity declarations that differ for the data packs with the same path
 [director-103] The export reuses a shared asset and returns bundle text
 [director-103] The export rejects shared byteLength
 [director-103] The export rejects shared digest
@@ -643,7 +643,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-104] The store removes old data after replacement and uses no network source for the import byte store
+[director-104] The store removes old data after replacement and uses no network source
 [director-104] The store copies the asset map
 [director-104] The store clears stored bytes
 ```
@@ -666,10 +666,10 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
 [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file
-[director-106] The share helpers return the project for an absent filename
+[director-106] The share helpers return an empty asset map for an absent filename
 [director-106] The share helpers reject the ordinary file limit
 [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
-[director-106] The share helpers call throwIfAborted three times and return the project
+[director-106] The share helpers call throwIfAborted three times and return an empty asset map
 [director-106] The share helpers accept the project file limit and reject one more byte
 [director-106] The share helpers accept the bundle file limit and reject one more byte
 ```
@@ -679,7 +679,7 @@ Test file: `src/director/sharing/sharing.test.mjs`.
 Test file: `src/director/sharing/sharing.test.mjs`.
 
 ```text
-[director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
+[director-107] The export stops before the next asset and returns no partial output
 [director-107] The helper resolves without a signal
 [director-107] The helper rejects an early signal
 [director-107] The helper resolves with an active signal
@@ -2999,7 +2999,7 @@ Source commit: `0bf26a8ec20c1f6685f25e4f7ec57bb113204822`.
 Base commit: `290b5d2`.
 
 The first words identify findings in the unchanged round 5 reports.
-The correction has no production code edit.
+The correction does not change production code.
 The lead runs image gates, ratchet and review round 6.
 
 | finding | first words | correction |
@@ -3021,7 +3021,7 @@ The lead runs image gates, ratchet and review round 6.
 | S11 | `MIME types` | Documents use media type and delete the unused definitions. The same term applies to old tagged titles. |
 | S12 | before source access | Titles use source call, invalid path, text promise, second digest and second resolver call. Documents use killer titles. |
 | S13 | The extension run checks | The evidence gives input counts, test counts, past events, clear subjects and the pass 6 scope. It names a failed repository test for each killed row. |
-| S14 | This limit on added members | The audit states the limit on added members with articles and separate sentences. The allowed-field rows extend that limit. |
+| S14 | This additive edits limit | The audit states the limit on added members with articles and separate sentences. The allowed-field rows extend that limit. |
 | S15 | both 52428800 checks | The probe states character and byte units and the JSON parse. |
 | S16 | Correct the command names | Tasks 9.11 and 9.12 name run names and the final rerun after pass 5. |
 
@@ -3272,7 +3272,7 @@ read|write|check|setup|cleanup|changes|access
 }
 ```
 
-The grep outputs below show each correction.
+The following grep outputs show each correction after the edits.
 
 ```text
 Finding: S1
@@ -3286,7 +3286,7 @@ Finding: S1 S9
 Command: grep -nE reads the first stream chunk|before each time|after it reads one field openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
 251:- **AND** The source checks the header byte limit before it reads the first stream chunk.
 260:- **AND** The source checks its signal before each time the source reads a stream chunk.
-329:- **AND** The export reads an absent declared digest once before it writes the digest.
+329:- **AND** The export stops when the digest is absent after it reads one field.
 Finding: S2
 Command: grep -nE 52 collection traversals|lifetime.js has no openspec/changes/backfill-director-packs-sharing/audit.md
 408:The loop table lists 52 collection traversals in six of the seven source files.
@@ -3296,43 +3296,43 @@ Command: grep -nE The preview counts the second scene openspec/changes/backfill-
 407:- **AND** The preview counts the second scene and the second shot, and lists the second data pack. The preview adds the bytes of the second asset to the byte total.
 Finding: S4 S7
 Command: grep -nE reference in the second shot|invalid second data pack|reference to the second anchor|invalid second path|invalid second coordinate src/director/packs/backfill.test.mjs
-3141:test('[director-082] The validator rejects a reference in the second shot
-3150:test('[director-077 director-082] The validator rejects an invalid second data pack
-3153:test('[director-081] The validator returns without an error for a reference to the second anchor
-3168:test('[director-088] The session rejects an invalid second data pack before the source call
-3176:test('[director-081 director-093] The session returns true for a reference to the second anchor
-3182:test('[director-076] The validator rejects an invalid second path segment
-3185:test('[director-085] The decoder rejects an invalid second coordinate
+3141:test('[director-082] The manifest rejects a reference in the second shot', () => {
+3150:test('[director-077 director-082] The manifest rejects an invalid second data pack', () => {
+3153:test('[director-081] The manifest accepts a reference to the second anchor', () => {
+3168:test('[director-088] The session rejects an invalid second data pack before the source call', async () => {
+3176:test('[director-081 director-093] The session accepts a reference to the second anchor', async () => {
+3182:test('[director-076] The validator rejects an invalid second path segment', () => {
+3185:test('[director-085] The decoder rejects an invalid second coordinate', () => {
 Finding: S5
 Command: grep -nE rerun after pass 4 openspec/changes/backfill-director-packs-sharing/design.md
-119:The lead ran all 3849 mutations again after pass 4.
+119:The rerun after pass 4 is the lead test of all 3849 mutations.
 Finding: S6
 Command: grep -nE 3514 kills|checks the signal before the second chunk openspec/changes/backfill-director-packs-sharing/audit.md
 48:That rule gives 3514 kills after Campaign 2 phase 1 and 3589 kills after phase 2.
-485:The stream test supplies two chunks. The source stops when it checks the signal before the second chunk.
+485:The stream test supplies two chunks and stops when it checks the signal before the second chunk.
 Finding: S8
 Command: grep -nE parser returns an empty asset map src/director/sharing/sharing.test.mjs
-56:test('[director-098] The import returns an empty asset map for plain project JSON
+56:test('[director-098] The parser returns an empty asset map for plain project JSON', async () => {
 Finding: S10
 Command: grep -nE larger file limit|extra top-level field src/director/sharing/sharing.test.mjs
-1099:test('[director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes
-2028:test('[director-099] The import rejects an extra top-level field
+1099:test('[director-106] The share helpers give bundles the larger file limit', async () => {
+2028:test('[director-099] The bundle helpers reject an extra top-level field', async () => {
 Finding: S11
 Command: grep -nE accepted media type set openspec/changes/backfill-director-packs-sharing/design.md
 157:The accepted media type set contains exactly nine types.
 Finding: S12
 Command: grep -nE invalid path|text promise settles|second.*digest.*resolver call src/director/sharing/sharing.test.mjs
-347:test('[director-105] The store rejects an invalid path that it holds for the byte store
-2406:test('[director-107] The share helpers check the signal after the text promise settles and return the project
-2658:  test(`[director-107] The export stops before the second resolver call`, async () => {
+347:test('[director-105] The byte store rejects an invalid path that it holds', () => {
+2406:test('[director-107] The reader checks the signal after the text promise settles', async () => {
+2658:  test(`[director-107] The ${mode} stops before the second ${mode === 'import' ? 'digest' : 'resolver call'}`, async () => {
 Finding: S13
 Command: grep -nE Extension checks 1 to 4|16 backfill tests|In pass 6 the worker openspec/changes/backfill-director-packs-sharing/evidence.md
 2256:Extension checks 1 to 4 have inputs of 367, 199, 104 and 321 mutations.
 2534:The tests add 16 backfill tests and 10 sharing tests.
 2669:In pass 6 the worker changes two test files and ten change documents only.
 Finding: S14
-Command: grep -nE limit on added members openspec/changes/backfill-director-packs-sharing/audit.md
-234:This limit covers additions to the nine media types at bundle.js:11 to 21.
+Command: grep -nE limit on additive edits openspec/changes/backfill-director-packs-sharing/audit.md
+234:This limit on additive edits covers the nine media types at bundle.js:11 to 21.
 Finding: S15
 Command: grep -nE 52428800-character openspec/changes/backfill-director-packs-sharing/evidence/probe-extension.txt
 398:The private input declaration has no value or callback. Signal checks, type checks, the 52428800-character check, the 52428800-byte check and the JSON parse keep their order for every text length.
@@ -3344,24 +3344,24 @@ Finding: Spec Without layer IDs
 Command: grep -nE both absent named layers|traffic.*ships src/director/sharing/sharing.test.mjs
 1245:  f.scenes[0].shots.push({ id: 'b', layers: { traffic: true, ships: false } });
 1477:  f.scenes[0].shots[0].layers = { traffic: false, ships: false };
-2846:test('[director-110] The preview reports both absent named layers without layer IDs
+2846:test('[director-110] The preview reports both absent named layers without layer IDs', () => {
 2848:  project.scenes[0].shots[0].layers = { traffic: true, ships: true };
 2851:    ['traffic', 'ships'],
 2871:  project.scenes[0].shots[0].layers = { traffic: true, ships: true };
 2875:      { layerIds: ['traffic', 'ships'] },
 Finding: Spec The registry copies
 Command: grep -nE both registered sources and both renderers src/director/packs/backfill.test.mjs
-3225:test('[director-088 director-093] The session calls both registered sources and both renderers
+3225:test('[director-088 director-093] The session calls both registered sources and both renderers', async () => {
 Finding: Spec The table covers each
 Command: grep -nE 52 collection traversals|Preview absent layer filter|registry|digest bytes|Base64 input bytes openspec/changes/backfill-director-packs-sharing/audit.md
 408:The loop table lists 52 collection traversals in six of the seven source files.
-448:| Entries of the source registry | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m452 |
-449:| Map of the source registry | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m463 |
-450:| Entries of the renderer registry | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m453 |
-451:| Map of the renderer registry | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m464 |
-455:| Session digest bytes | src/director/packs/session.js:124 | [director-093] The session returns true for exact bytes and digest | m477 |
-456:| Bundle digest bytes | src/director/sharing/bundle.js:26 | [director-099] The import returns the bytes 1, 2 and 3 and the literal digest | m478 |
-457:| Base64 input bytes | src/director/sharing/bundle.js:46 | [director-099] The import returns the bytes 1, 2 and 3 and the literal digest | m479 |
+448:| Source registry entries | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m452 |
+449:| Source registry Map | src/director/packs/session.js:41 | [director-088 director-093] The session calls both registered sources and both renderers | m463 |
+450:| Renderer registry entries | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m453 |
+451:| Renderer registry Map | src/director/packs/session.js:42 | [director-088 director-093] The session calls both registered sources and both renderers | m464 |
+455:| Session digest bytes | src/director/packs/session.js:124 | [director-093] The session checks exact bytes and digest | m477 |
+456:| Bundle digest bytes | src/director/sharing/bundle.js:26 | [director-099] The import accepts a literal digest for three distinct bytes | m478 |
+457:| Base64 input bytes | src/director/sharing/bundle.js:46 | [director-099] The import accepts a literal digest for three distinct bytes | m479 |
 466:| Preview absent layer filter | src/director/sharing/preview.js:36 | [director-110] The preview reports both absent named layers without layer IDs | m449, m450, m451 |
 Finding: Spec The closed-sets table
 Command: grep -nE fields.*manifest.js|fields.*bundle.js|m455 to m462 openspec/changes/backfill-director-packs-sharing/audit.md
@@ -6124,7 +6124,7 @@ The scope command counts 56 rows and 52 distinct traversals.
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The reader checks.
-Named the share helpers for file and text work.
+The worker named the share helpers for file and text work.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n share helpers check openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
@@ -6138,7 +6138,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n share helpers check openspec/changes/
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: During export, the helper.
-Named the bundle helpers for export signal checks.
+The worker named the bundle helpers for export signal checks.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n During export, the bundle helpers check openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
@@ -6150,7 +6150,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n During export, the bundle helpers che
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The helper attaches.
-Restored the helper as the actor that reads the work promise.
+The worker restored the helper as the actor that reads the work promise.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n helper attaches its listener before it reads openspec/changes/backfill-director-packs-sharing/../../../src/director/sharing/sharing.test.mjs
@@ -6162,7 +6162,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n helper attaches its listener before i
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The source registers.
-Named the session for listener, state and work promise order.
+The worker named the session for listener, state and work promise order.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n session attaches the source listener openspec/changes/backfill-director-packs-sharing/../../../src/director/packs/backfill.test.mjs
@@ -6174,7 +6174,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n session attaches the source listener 
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The export stops.
-Stated one digest field access before the export writes the digest.
+The worker stated one digest field access before the export writes the digest.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n declared digest openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
@@ -6188,7 +6188,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n declared digest openspec/changes/back
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The caller destroys.
-Stated the false result of the load call.
+The worker stated the false result of the load call.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n caller signal destroys openspec/changes/backfill-director-packs-sharing/../../../src/director/packs/backfill.test.mjs
@@ -6200,7 +6200,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n caller signal destroys openspec/chang
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The validator checks west.
-Named edge comparison instead of field order.
+The worker named edge comparison instead of field order.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n compares west with east openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
@@ -6212,7 +6212,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n compares west with east openspec/chan
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: the session calls the source.
-Named pack.source.adapter for sources and pack.format for renderers.
+The worker named pack.source.adapter for sources and pack.format for renderers.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n pack.source.adapter openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
@@ -6224,7 +6224,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n pack.source.adapter openspec/changes/
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The rows keep.
-Restored each killer for m432, m434, m447 and m448.
+The worker restored each killer for m432, m434, m447 and m448.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n m432 openspec/changes/backfill-director-packs-sharing/audit.md
@@ -6236,7 +6236,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n m432 openspec/changes/backfill-direct
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The validator checks the list.
-Named the session for the list check.
+The worker named the session for the list check.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n session checks the list openspec/changes/backfill-director-packs-sharing/../../../src/director/packs/backfill.test.mjs
@@ -6248,7 +6248,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n session checks the list openspec/chan
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: the original test.
-Named commands separately from test functions.
+The worker named commands separately from test functions.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n 3849 mutations openspec/changes/backfill-director-packs-sharing/audit.md
@@ -6263,7 +6263,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n 3849 mutations openspec/changes/backf
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: edit as a noun.
-Changed noun uses and removed the false preview state claim.
+The worker changed noun uses and removed the false preview state claim.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n The worker adds seven openspec/changes/backfill-director-packs-sharing/evidence.md
@@ -6275,7 +6275,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n The worker adds seven openspec/change
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: existing scenario IDs.
-Used the scenario IDs of this change and a finite sentence.
+The worker used the scenario IDs of this change and a finite sentence.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n They use only openspec/changes/backfill-director-packs-sharing/evidence.md
@@ -6287,7 +6287,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n They use only openspec/changes/backfi
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The preview accepts.
-Stated preview reports and the import byte and digest result.
+The worker stated preview reports and the import byte and digest result.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n returns the bytes 1 openspec/changes/backfill-director-packs-sharing/../../../src/director/sharing/sharing.test.mjs
@@ -6299,7 +6299,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n returns the bytes 1 openspec/changes/
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: before declared integrity.
-Added the verb for the declared integrity check.
+The worker added the verb for the declared integrity check.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n it checks declared integrity openspec/changes/backfill-director-packs-sharing/../../../src/director/sharing/sharing.test.mjs
@@ -6311,7 +6311,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n it checks declared integrity openspec
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: rejects script and adapters.
-Named script and adapters as extra fields.
+The worker named script and adapters as extra fields.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n rejects the extra fields openspec/changes/backfill-director-packs-sharing/../../../src/director/packs/backfill.test.mjs
@@ -6323,7 +6323,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n rejects the extra fields openspec/cha
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: the parser.
-Used import for parseSceneShare.
+The worker used import for parseSceneShare.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n The import checks asset fields openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
@@ -6335,7 +6335,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n The import checks asset fields opensp
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: without the old source signal state.
-Stated no source signal access and a false result.
+The worker stated no source signal access and a false result.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n does not read the old source signal state openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
@@ -6347,7 +6347,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n does not read the old source signal s
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: byteLength and the digest.
-Restored byteLength before digest before placement.
+The worker restored byteLength before digest before placement.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n checks byteLength before the digest openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
@@ -6359,7 +6359,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n checks byteLength before the digest o
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The stream test supplies.
-Named the source that stops before the second chunk.
+The worker named the source that stops before the second chunk.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n The stream test supplies two chunks. openspec/changes/backfill-director-packs-sharing/audit.md
@@ -6371,7 +6371,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n The stream test supplies two chunks. 
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The source rejects the file protocol and.
-Used separate sentences for protocol and cancellation.
+The worker used separate sentences for protocol and cancellation.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n After cancellation before the second chunk openspec/changes/backfill-director-packs-sharing/evidence.md
@@ -6383,7 +6383,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n After cancellation before the second 
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: No review report.
-Stated the scope of the worker.
+The worker stated the scope of the worker.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n The worker changes no review report openspec/changes/backfill-director-packs-sharing/evidence.md
@@ -6396,7 +6396,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n The worker changes no review report o
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: because it has 28 words.
-Named the sentence and corrected the rerun phrase.
+The worker named the sentence and corrected the rerun phrase.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n because the sentence has 28 words openspec/changes/backfill-director-packs-sharing/design.md
@@ -6408,7 +6408,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n because the sentence has 28 words ope
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: Known limit host-gates.
-Moved process notes under the Known limits section as Pass 7 notes.
+The worker moved process notes under the Known limits section as Pass 7 notes.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n Pass 7 note openspec/changes/backfill-director-packs-sharing/proposal.md
@@ -6423,7 +6423,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n Pass 7 note openspec/changes/backfill
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: MIME and SHA-256.
-Marked the production identifiers as code.
+The worker marked the production identifiers as code.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n `MIME` and `SHA-256` openspec/changes/backfill-director-packs-sharing/evidence.md
@@ -6436,7 +6436,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n `MIME` and `SHA-256` openspec/changes
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: counts the second scene and shot.
-Added the second asset bytes to the title.
+The worker added the second asset bytes to the title.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n adds the bytes of the second asset openspec/changes/backfill-director-packs-sharing/../../../src/director/sharing/sharing.test.mjs
@@ -6448,7 +6448,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n adds the bytes of the second asset op
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: Asset store replacement Map.
-Used Map of the asset store and entries of each registry.
+The worker used Map of the asset store and entries of each registry.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n Map of the asset store openspec/changes/backfill-director-packs-sharing/audit.md
@@ -6461,7 +6461,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n Map of the asset store openspec/chang
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: The four new Known limits.
-Moved limits and named additions to every closed set, with coordinate lengths.
+The worker moved limits and named additions to every closed set, with coordinate lengths.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n closed-set-added-members openspec/changes/backfill-director-packs-sharing/proposal.md
@@ -6473,7 +6473,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n closed-set-added-members openspec/cha
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: Rows name one test.
-Named each killer with its hand row.
+The worker named each killer with its hand row.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n m434 openspec/changes/backfill-director-packs-sharing/audit.md
@@ -6485,7 +6485,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n m434 openspec/changes/backfill-direct
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: before the source reads.
-Named the helper and the session in titles.
+The worker named the helper and the session in titles.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n helper attaches its listener openspec/changes/backfill-director-packs-sharing/../../../src/director/sharing/sharing.test.mjs
@@ -6497,7 +6497,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n helper attaches its listener openspec
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: calls the source and renderer.
-Stated the distinct registry keys.
+The worker stated the distinct registry keys.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n pack.format openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
@@ -6510,7 +6510,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n pack.format openspec/changes/backfill
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: dropped the order.
-Restored integrity order and no old signal access.
+The worker restored integrity order and no old signal access.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n byteLength before the digest openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
@@ -6522,7 +6522,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n byteLength before the digest openspec
 Source commit: `f8f6a94d2d09489b98fda4d063b8612f766f5dfa`.
 
 First words: Two new tests.
-Tagged GeoJSON and media extra fields with director-077.
+The worker tagged GeoJSON and media extra fields with director-077.
 
 ```text
 Command: taskset -c 12-15 nice -n 19 rg -n 077.*,.*placement openspec/changes/backfill-director-packs-sharing/../../../src/director/packs/backfill.test.mjs
@@ -6530,7 +6530,7 @@ Command: taskset -c 12-15 nice -n 19 rg -n 077.*,.*placement openspec/changes/ba
 3255:  ['077', 'media placement', () => ({ ...pack(), format: 'media', placement: { anchorId: 'anchor' } }), p => p.placement, 'pack.placement'],
 ```
 
-### echoes
+### repeated titles
 
 ```text
 Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass8/check-echoes.py
@@ -8040,3 +8040,1784 @@ The final commands replace those incomplete attempts.
 
 The predispatch checker also reports coverage keys in command output.
 The fenced outputs keep those keys.
+
+## Pass 9
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+Base commit: `290b5d2`.
+
+The worker changes test titles and three tag cells only.
+The worker changes no test body or production file.
+Review reports and trace files stay unchanged.
+
+Pass 9 note: the host checks do not replace the Node 24.14.0 image gates.
+The lead must run the image gates and the next review round.
+
+The table has 56 rows for 52 traversals since pass 8.
+The Pass 7 phrase 52 table rows stays as a record.
+
+### F1 and Spec major
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The titles say rejects media fields.
+The worker gave both placement tests positive titles. The allowed-field-added-members limit stays.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n fields of the (image|media) placement src/director/packs/backfill.test.mjs
+2144:test('[director-080] The validator returns without an error for the fields of the image placement', async () => {
+2149:test('[director-081] The validator returns without an error for the fields of the media placement', async () => {
+```
+
+### F2 and Spec minor 1
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The tails and returns coordinates.
+The worker named the renderer call and the true load result.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n receives the path,|calls the renderer with the data pack src/director/packs/backfill.test.mjs
+2581:test('[director-093] The source receives the path, the renderer receives the asset and the signal, and the load call returns true', async () => {
+2858:test('[director-093] The session calls the renderer with the data pack and the scene anchors and returns true', async () => {
+```
+
+### F3
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The tail rejects an invalid asset.
+The worker named an invalid data pack list, invalid bundle and excess asset count.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n invalid data pack list|invalid bundle|more than 64 assets openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+145:- **THEN** the session starts with the idle state. Its load method checks data pack lists before asset work and rejects an invalid data pack list.
+194:- **AND** The session disposes old resources before it checks the new data pack list and rejects an invalid data pack list.
+288:- **AND** The import rejects extra top-level fields and invalid bundle projects.
+294:- **AND** The import checks top-level fields, version, project and the asset list in that order and rejects an invalid bundle.
+333:- **AND** The export checks the asset count before the next resolver call and rejects more than 64 assets.
+```
+
+### F4 and Spec minor 2
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The frozen PACK_LIMITS and SHARE_LIMITS.
+The worker named the public limits as the actor in titles and clauses.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n limits throw a TypeError openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+148:- **AND** The public data pack limits throw a TypeError when a caller assigns a new value.
+325:- **AND** The share limits throw a TypeError when a caller assigns a new value.
+```
+
+### F5
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The share helpers reject files.
+The worker stated the bundle suffix exception to the ordinary file limit.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n reject a file above|reject that file openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+375:- **AND** The share helpers reject a file above 5242880 bytes, except a file with the .gevbundle.json suffix. They reject that file above 52428800 bytes.
+```
+
+### F6
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The tail reject the invalid input.
+The worker named cancellation and excess files as the rejected inputs.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n reject cancellation|reject excess files src/director/sharing/sharing.test.mjs
+2366:test('[director-106] The share helpers check the file limit before they read the signal and reject excess files', async () => {
+2385:test('[director-106 director-107] The share helpers check the signal before they read text and reject cancellation', async () => {
+```
+
+### F7
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The 095 tail rejects cancellation.
+The worker named the invalid path as the rejected input.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n checks the path before src/director/packs/backfill.test.mjs
+401:test('[director-095] The source checks the path before it checks the caller signal and rejects the invalid path', async () => {
+```
+
+### F8
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The preview reports absent layers.
+The worker separated absent layers from the source pack ID.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n absent layers of the second|source pack ID of that shot openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+423:- **AND** The preview reports the absent layers of the second shot in the second scene. It reports external content from the source pack ID of that shot.
+```
+
+### F9
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The import byte store title.
+The worker used store for createBundleAssets and removed the import term.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n removes old data after replacement src/director/sharing/sharing.test.mjs
+566:test('[director-104] The store removes old data after replacement and uses no network source', async () => {
+```
+
+### F10
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: Pass 8 edited the old Pass 7 grep records.
+The worker restored the Pass 7 search section from f8f6a94d. New searches appear in Pass 9.
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass9/report-findings.py
+{
+  "sourceCommit": "b7653ad75c059af9b1305d81922fd76bbc20d66a",
+  "Pass 7 search record equals f8f6a94d": true,
+  "Old records equal f8f6a94d": true
+}
+```
+
+### M1
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: A stray blank line.
+The worker deleted the repeated image placement clause.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n extra image placement fields openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+64:- **AND** Each placement error names its field, and the validator rejects extra image placement fields.
+```
+
+### M2
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: pack.source.adapter and pack.format.
+The worker marked the keys as code and named both maps.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n calls each source by openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+153:- **AND** The session calls each source by `pack.source.adapter` and each renderer by `pack.format`. The source map and the renderer map each contain two entries.
+```
+
+### M3
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The session returns false.
+The worker named the load call as the actor.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n load call returns false for a destroyed openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+147:- **AND** The load call returns false for a destroyed session or a cancelled signal.
+```
+
+### M4
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: non-FeatureCollection.
+The worker used finite clauses for types, arrays and string IDs.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n other than Feature|not an array|not strings openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+101:- **THEN** the decoder rejects a type other than FeatureCollection, a feature list that is not an array or more than 2000 features
+107:- **THEN** the decoder rejects a type other than Feature, duplicate or blank IDs, IDs that are not strings and IDs above 256 characters
+```
+
+### M5
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The import calls the digest once.
+The worker distinguished the digest function from the digest call.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n digest function once openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+395:- **AND** With two assets, the import calls the digest function once when cancellation occurs before the second digest call.
+```
+
+### M6
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: Adding 5 to that set.
+The worker used a length as the subject and marked script and adapters as code.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n A length 5 added openspec/changes/backfill-director-packs-sharing/audit.md
+261:A length 5 added to that set remains a Known limit.
+```
+
+### M7
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: mutations of built-in functions.
+The worker used changes for functions outside the mutation command.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n changes to built-in functions openspec/changes/backfill-director-packs-sharing/probe-ranges.md
+12:The claims exclude changes to built-in functions and their prototypes.
+```
+
+### M8
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: because the validator gives them.
+The worker named the scene and added the document parser to the glossary.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n scene declares|document parser openspec/changes/backfill-director-packs-sharing/design.md
+55:The old title about stated references now says given references, because the scene declares them.
+78:The second call to the document parser is equivalent for the public API when built-in functions keep their standard behavior.
+80:The document parser returns that parsed object without a change.
+216:| document parser | src/director/document.js | parseSceneDocument |
+221:The document parser means parseSceneDocument in src/director/document.js.
+239:The document parser is parseSceneDocument.
+```
+
+### M9
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The correction has no production code edit.
+The worker used a finite clause and restored the first words from the earlier report.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n correction does not change production|S14.*This additive edits limit openspec/changes/backfill-director-packs-sharing/evidence.md
+3002:The correction does not change production code.
+3024:| S14 | This additive edits limit | The audit states the limit on added members with articles and separate sentences. The allowed-field rows extend that limit. |
+```
+
+### M10
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: Sentences with a past verb and no subject.
+The worker added a subject to each Pass 8 correction sentence.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n ^The worker (named|restored|stated|changed|used|added|marked|tagged|moved) openspec/changes/backfill-director-packs-sharing/evidence.md
+6127:The worker named the share helpers for file and text work.
+6141:The worker named the bundle helpers for export signal checks.
+6153:The worker restored the helper as the actor that reads the work promise.
+6165:The worker named the session for listener, state and work promise order.
+6177:The worker stated one digest field access before the export writes the digest.
+6191:The worker stated the false result of the load call.
+6203:The worker named edge comparison instead of field order.
+6215:The worker named pack.source.adapter for sources and pack.format for renderers.
+6227:The worker restored each killer for m432, m434, m447 and m448.
+6239:The worker named the session for the list check.
+6251:The worker named commands separately from test functions.
+6266:The worker changed noun uses and removed the false preview state claim.
+6278:The worker used the scenario IDs of this change and a finite sentence.
+6290:The worker stated preview reports and the import byte and digest result.
+6302:The worker added the verb for the declared integrity check.
+6314:The worker named script and adapters as extra fields.
+6326:The worker used import for parseSceneShare.
+6338:The worker stated no source signal access and a false result.
+6350:The worker restored byteLength before digest before placement.
+6362:The worker named the source that stops before the second chunk.
+6374:The worker used separate sentences for protocol and cancellation.
+6386:The worker stated the scope of the worker.
+6399:The worker named the sentence and corrected the rerun phrase.
+6411:The worker moved process notes under the Known limits section as Pass 7 notes.
+6426:The worker marked the production identifiers as code.
+6439:The worker added the second asset bytes to the title.
+6451:The worker used Map of the asset store and entries of each registry.
+6464:The worker moved limits and named additions to every closed set, with coordinate lengths.
+6476:The worker named each killer with its hand row.
+6488:The worker named the helper and the session in titles.
+6500:The worker stated the distinct registry keys.
+6513:The worker restored integrity order and no old signal access.
+6525:The worker tagged GeoJSON and media extra fields with director-077.
+```
+
+### M11
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The heading echoes.
+The worker used repeated titles in new prose and created check-repeated-titles.py.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n repeated titles|repeats a test title openspec/changes/backfill-director-packs-sharing/design.md
+236:Check each place that repeats a test title with check-repeated-titles.py in the pass9 scratch folder.
+```
+
+### M12
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: Nouns made from verbs.
+The worker stated signal reads, caller destruction and the new session state.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n The new session|caller destroys it|does not read the signal state src/director/packs/backfill.test.mjs
+549:test('[director-088] The session returns false and does not read the caller signal state after the caller destroys it', async () => {
+1176:test('[director-088] The new session reports the idle state and zero handles', async () => {
+1286:test('[director-090] The session returns false when the caller destroys it during asset work', async () => {
+1753:test('[director-088] The new session reports the idle state', async () => {
+1760:test('[director-088] The new session reports zero handles', async () => {
+1824:test('[director-090] The session returns false for a cleared load call and does not read the signal state', async () => {
+```
+
+### M13
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: Titles without an article.
+The worker added articles to the named singular nouns and stated the position limit.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n rejects an invalid version|rejects the protocol|rejects more than 50000 positions src/director/packs/backfill.test.mjs
+594:test('[director-077] The validator rejects an invalid version', async () => {
+637:test('[director-078] The validator rejects the protocol for the attribution', async () => {
+967:test('[director-085] The decoder rejects more than 50000 positions', async () => {
+1433:test('[director-094] The factory rejects the protocol', async () => {
+```
+
+### M14
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The pronoun its.
+The worker named the new resources and literal feature, ID, position and ring counts.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n new resources after|returns 2000 features|ID length of 256|returns 50000 positions|returns 128 rings src/director/packs/backfill.test.mjs
+1297:test('[director-091] The session keeps the new resources after a new load call', async () => {
+2341:test('[director-083] The decoder accepts the exact feature limit of the collection and returns 2000 features', async () => {
+2346:test('[director-084] The decoder accepts the exact text limit of the feature ID and returns a feature with an ID length of 256', async () => {
+2350:test('[director-085] The decoder accepts the exact position limit of the collection and returns 50000 positions', async () => {
+2363:test('[director-087] The decoder accepts the exact ring limit of the polygon and returns 128 rings', async () => {
+3054:test('[director-091] The session keeps new resources after the old caller listener fires', async () => {
+```
+
+### M15
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: Two words for one thing.
+The worker used work promise, reason, milliseconds and directory URL and removed repeated actor terms.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n work promise settles|milliseconds deadline|gives its reason|directory URL with no final slash src/director/packs/backfill.test.mjs
+248:test('[director-089] The session returns true and does not read the reason after the work promise settles', async () => {
+1488:test('[director-094] The factory rejects a directory URL with no final slash', async () => {
+2254:test('[director-092] The session rejects stalled work at the 19 milliseconds deadline', async () => {
+2278:test('[director-092] The session rejects stalled work at the default 15000 milliseconds deadline', async () => {
+2997:test('[director-092] The session gives its reason to the source signal for the deadline and rejects the call', async () => {
+```
+
+### M16
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The export share one asset.
+The worker used writes and rejects with integrity declarations.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n writes one asset and rejects integrity declarations src/director/sharing/sharing.test.mjs
+531:test('[director-103] The export writes one asset and rejects integrity declarations that differ for the data packs with the same path', async () => {
+```
+
+### M17
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: accepts X and rejects Y and returns.
+The worker attached the returned result to the accepted limit.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n returns bundle text at the total|returns assets at the src/director/sharing/sharing.test.mjs
+1859:test('[director-102] The export returns bundle text at the total byte limit and rejects one more byte', async () =>
+1904:test('[director-099] The import returns assets at the base64 length limit and rejects the next aligned length', async () =>
+1916:test('[director-099] The import returns assets at the total byte limit and rejects one more byte', async () =>
+```
+
+### Spec minor 3
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The director-082 clause lost ignores.
+The worker stated that the validator does not read the parent list.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n does not read a data pack list from the parent openspec/changes/backfill-director-packs-sharing/specs/director/spec.md
+82:- **AND** The validator does not read a data pack list from the parent object of the scene and returns without an error.
+```
+
+### Spec minor 4
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The rows keep tag 080.
+The worker retagged the three GeoJSON field rows to director-077. Scenario 077 states extra-field rejection.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n 077.*(extra placement field|placement object|height reference) src/director/packs/backfill.test.mjs
+448:  ['077', 'extra placement field', p => { p.placement.extra = 1; }, 'pack.placement.extra: unsupported field'],
+449:  ['077', 'placement object', p => { p.placement = null; }, 'pack.placement: expected an object'],
+450:  ['077', 'height reference', p => { p.placement.altitudeReference = 'bad'; }, 'pack.placement.altitudeReference: expected ellipsoid height in meters'],
+```
+
+### Spec minor 5
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: The table names each such set.
+The worker added source name, suffix and final slash rows with tests and the closed-set limit.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n Bundle source|Preview bundle source|Bundle file suffix|Directory final slash openspec/changes/backfill-director-packs-sharing/audit.md
+232:| Bundle source | bundle.js:100 | scene-bundle; [director-100] The import rejects external data pack sources |
+233:| Preview bundle source | preview.js:17 | scene-bundle; [director-109] The preview reports absent bundle bytes |
+234:| Bundle file suffix | bundle.js:117 | .gevbundle.json; [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes |
+235:| Directory final slash | source.js:15 | /; [director-094] The factory rejects a directory URL with no final slash |
+```
+
+### Spec minor 6
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: 52 table rows.
+The worker kept the Pass 7 count as a record. The table has 56 rows for 52 traversals since pass 8.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n 56 rows|52 table rows openspec/changes/backfill-director-packs-sharing/evidence.md
+3236:These groups give the 52 table rows.
+6118:The scope command counts 56 rows and 52 distinct traversals.
+```
+
+### Spec minor 7
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+First words: Final complete pass 6 output.
+The worker stated that Pass 8 replaced the killer labels.
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n Pass 8 replaced the killer labels openspec/changes/backfill-director-packs-sharing/mutations.md
+13233:Pass 8 replaced the killer labels in this list.
+```
+
+### First verb check
+
+This output records the first command before the worker corrected the five titles.
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass9/check-verbs.py
+{
+  "sourceCommit": "b7653ad75c059af9b1305d81922fd76bbc20d66a",
+  "testTemplatesRead": 486,
+  "flagCount": 5,
+  "flags": [
+    {
+      "file": "src/director/packs/backfill.test.mjs",
+      "line": 1199,
+      "title": "[director-088] The session rejects destroyed state",
+      "assertions": [
+        "equal",
+        "equal"
+      ],
+      "flags": [
+        "a: rejection or stop has no error assertion"
+      ]
+    },
+    {
+      "file": "src/director/packs/backfill.test.mjs",
+      "line": 1211,
+      "title": "[director-088] The session rejects cancelled state",
+      "assertions": [
+        "equal",
+        "equal"
+      ],
+      "flags": [
+        "a: rejection or stop has no error assertion"
+      ]
+    },
+    {
+      "file": "src/director/packs/backfill.test.mjs",
+      "line": 1834,
+      "title": "[director-090] The session guard rejects a detached resource",
+      "assertions": [
+        "equal",
+        "equal"
+      ],
+      "flags": [
+        "a: rejection or stop has no error assertion"
+      ]
+    },
+    {
+      "file": "src/director/sharing/sharing.test.mjs",
+      "line": 1076,
+      "title": "[director-106] The share helpers return the project for an absent filename",
+      "assertions": [
+        "deepEqual"
+      ],
+      "flags": [
+        "d: no project assertion"
+      ]
+    },
+    {
+      "file": "src/director/sharing/sharing.test.mjs",
+      "line": 1548,
+      "title": "[director-106] The share helpers call throwIfAborted three times and return the project",
+      "assertions": [
+        "equal",
+        "equal"
+      ],
+      "flags": [
+        "d: no project assertion"
+      ]
+    }
+  ]
+}
+```
+
+The worker read each flagged body.
+The destroyed and cancelled load calls assert false and zero source calls.
+The detached resource test asserts false and one disposal.
+The absent filename test asserts an empty asset map.
+The signal method test asserts an empty asset map and three calls.
+The worker corrected all five titles; no false alarm remains.
+
+### Final verb check
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass9/check-verbs.py
+{
+  "sourceCommit": "b7653ad75c059af9b1305d81922fd76bbc20d66a",
+  "testTemplatesRead": 486,
+  "flagCount": 0,
+  "flags": []
+}
+```
+
+### Spec minor 1 result tails
+
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+
+First words: Titles end returns bytes and returns coordinates.
+The worker stated the feature and ID counts, the upper height limit and the call order.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n upper limit|returns 2000 features|ID length of 256 src/director/packs/backfill.test.mjs
+1712:test('[director-080] The validator rejects an image height above the upper limit', async () => {
+2341:test('[director-083] The decoder accepts the exact feature limit of the collection and returns 2000 features', async () => {
+2346:test('[director-084] The decoder accepts the exact text limit of the feature ID and returns a feature with an ID length of 256', async () => {
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n report the call order src/director/sharing/sharing.test.mjs
+2406:test('[director-107] The share helpers check the signal after the text promise settles and report the call order', async () => {
+```
+
+### Current labels
+
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+
+First words: The false titles are the killer records.
+The worker corrected the live placement and public limit labels.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n fields of the (image|media) placement|a0004 openspec/changes/backfill-director-packs-sharing/survivors.md
+26:| a0004 | src/director/packs/manifest.js:10 | `object` | KILLED | [director-088] The public data pack limits throw a TypeError when a caller assigns a new value |
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n ^\[director-08[01]\] The validator returns without an error for the fields openspec/changes/backfill-director-packs-sharing/mutations.md
+6486:[director-080] The validator returns without an error for the fields of the image placement
+6515:[director-081] The validator returns without an error for the fields of the media placement
+```
+
+### M6 code words
+
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+
+First words: script and adapters outside inline code.
+The worker marked both field names as code in the proposal.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n Hand rows add openspec/changes/backfill-director-packs-sharing/proposal.md
+66:  Hand rows add `script`, and tests reject `script` and `adapters` for each list.
+```
+
+### M15 share words
+
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+
+First words: Two words for one thing.
+The worker used bundle text and integrity declarations and removed the repeated store terms.
+
+```text
+Command: taskset -c 12-15 nice -n 19 rg -n returns bundle text for a source path|integrity declarations that differ|caller byte limit and returns byte copies src/director/sharing/sharing.test.mjs
+531:test('[director-103] The export writes one asset and rejects integrity declarations that differ for the data packs with the same path', async () => {
+683:test('[director-101] The export returns bundle text for a source path of 1024 characters', async () => {
+2100:test('[director-105] The store accepts the caller byte limit and returns byte copies', () => {
+```
+
+### Final host checks
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+Pass 9 note: the first hand command loaded old filters.
+It does not check the final filters or titles.
+The worker corrected the filters and repeated the complete command.
+
+### Repository tests
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/backfill.test.mjs
+ℹ tests 430
+ℹ suites 0
+ℹ pass 430
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2141.832359
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --test src/director/packs/packs.test.mjs
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7924.368311
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --test src/director/sharing/sharing.test.mjs
+ℹ tests 228
+ℹ suites 0
+ℹ pass 228
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20953.949495
+```
+
+### Production coverage
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass9/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass9/v8-packs-manifest /home/ianblenke/docker/gev-work/director-3/src/director/packs/manifest.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/manifest.js",
+    {
+      "LF": 138,
+      "LH": 138,
+      "BRF": 56,
+      "BRH": 56,
+      "FNF": 13,
+      "FNH": 13
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass9/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass9/v8-packs-geojson /home/ianblenke/docker/gev-work/director-3/src/director/packs/geojson.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/geojson.js",
+    {
+      "LF": 62,
+      "LH": 62,
+      "BRF": 54,
+      "BRH": 54,
+      "FNF": 7,
+      "FNH": 7
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass9/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass9/v8-packs-session /home/ianblenke/docker/gev-work/director-3/src/director/packs/session.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/session.js",
+    {
+      "LF": 159,
+      "LH": 159,
+      "BRF": 81,
+      "BRH": 81,
+      "FNF": 18,
+      "FNH": 18
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass9/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass9/v8-packs-source /home/ianblenke/docker/gev-work/director-3/src/director/packs/source.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/packs/source.js",
+    {
+      "LF": 67,
+      "LH": 67,
+      "BRF": 37,
+      "BRH": 37,
+      "FNF": 4,
+      "FNH": 4
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass9/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass9/v8-sharing-bundle /home/ianblenke/docker/gev-work/director-3/src/director/sharing/bundle.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/sharing/bundle.js",
+    {
+      "LF": 221,
+      "LH": 221,
+      "BRF": 103,
+      "BRH": 103,
+      "FNF": 21,
+      "FNH": 21
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass9/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass9/v8-sharing-lifetime /home/ianblenke/docker/gev-work/director-3/src/director/sharing/lifetime.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/sharing/lifetime.js",
+    {
+      "LF": 26,
+      "LH": 26,
+      "BRF": 13,
+      "BRH": 13,
+      "FNF": 6,
+      "FNH": 6
+    }
+  ]
+]
+```
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /home/ianblenke/docker/gev-tools/director-3/pass9/merge-coverage.mjs /home/ianblenke/docker/gev-tools/director-3/pass9/v8-sharing-preview /home/ianblenke/docker/gev-work/director-3/src/director/sharing/preview.js
+[
+  [
+    "file:///home/ianblenke/docker/gev-work/director-3/src/director/sharing/preview.js",
+    {
+      "LF": 43,
+      "LH": 43,
+      "BRF": 22,
+      "BRH": 22,
+      "FNF": 10,
+      "FNH": 10
+    }
+  ]
+]
+```
+
+### Repeated titles
+
+The checker excludes past command records and the first verb check.
+It checks every current label in the audit, mutation and survivor documents.
+It also checks the current scenario test list, evidence tables and the new Pass 9 searches.
+The earlier complete command lists in mutations.md stay as records from the source commit.
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass9/check-repeated-titles.py
+{
+  "sourceCommit": "b7653ad75c059af9b1305d81922fd76bbc20d66a",
+  "runtimeTests": 670,
+  "checkedLabels": 2240,
+  "pastRecordLinesExcluded": 9728,
+  "staleLabels": [],
+  "staleLabelCount": 0,
+  "duplicateTitles": {},
+  "duplicateTitleCount": 0
+}
+```
+
+### verbs final
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass9/check-verbs.py
+{
+  "sourceCommit": "b7653ad75c059af9b1305d81922fd76bbc20d66a",
+  "testTemplatesRead": 486,
+  "flagCount": 0,
+  "flags": []
+}
+```
+
+### patterns final
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass9/verify-patterns.py
+{
+  "sourceCommit": "b7653ad75c059af9b1305d81922fd76bbc20d66a",
+  "handRows": 479,
+  "unmatchedPatterns": []
+}
+```
+
+### titles
+
+```text
+Command: taskset -c 12-15 nice -n 19 node /tmp/claude-1000/gcr/scan-titles.mjs director-3 76 110
+titles checked: 494, with a banned form: 0
+```
+
+### format check
+
+```text
+Command: taskset -c 12-15 nice -n 19 node --import /home/ianblenke/docker/gev-tools/director-4c/format-host.mjs scripts/format.mjs --check
+Checked 1158 source files.
+```
+
+### openspec show
+
+```text
+Command: taskset -c 12-15 nice -n 19 openspec show backfill-director-packs-sharing --json
+{
+  "id": "backfill-director-packs-sharing",
+  "title": "backfill-director-packs-sharing",
+  "deltaCount": 8,
+  "deltas": [
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The data pack validators MUST accept valid declarations and reject invalid declarations.",
+      "requirement": {
+        "text": "The data pack validators MUST accept valid declarations and reject invalid declarations.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller supplies a relative asset path\n- **THEN** the validator accepts safe directory names and rejects traversal or URL syntax\n- **AND** The validator accepts paths of at most 1024 characters and rejects longer paths.\n- **AND** The validator accepts _ and - at the start of each path segment and returns without an error.\n- **AND** The validator returns without an error for letters A to Z and a to z, and digits 0 to 9.\n- **AND** The validator accepts those characters at the start and in other positions and returns without an error.\n- **AND** The validator names the path field in each asset path error.\n- **AND** The validator rejects the path type before it reads a segment.\n- **AND** The validator checks the source name, the path and the attribution fields in that order and rejects an invalid value.\n- **AND** The validator rejects an invalid second path segment."
+          },
+          {
+            "rawText": "- **WHEN** a caller supplies a data pack manifest\n- **THEN** the validator accepts version 1 and the geojson, image and media formats and returns without an error.\n- **AND** The validator rejects other versions and formats.\n- **AND** The validator rejects a data pack ID or source name above 256 characters.\n- **AND** The validator rejects extra fields and names each invalid field in its error.\n- **AND** The validator checks declaration fields, ID, version, format and source in that order and rejects an invalid value.\n- **AND** The validator checks the declaration before it checks for duplicate IDs and rejects an invalid value.\n- **AND** The validator rejects the unlisted format geojsonx.\n- **AND** The validator rejects an invalid second data pack declaration."
+          },
+          {
+            "rawText": "- **WHEN** a data pack declares attribution\n- **THEN** the validator checks text, license and an optional HTTPS link without credentials, query or fragment and rejects an invalid value.\n- **AND** The validator rejects text or license above 4096 characters, or an HTTPS link above 2048 characters.\n- **AND** The validator names each invalid attribution field and rejects extra attribution fields.\n- **AND** The validator checks text, license, URL and byteLength in that order and rejects an invalid value."
+          },
+          {
+            "rawText": "- **WHEN** a data pack declares byteLength or sha256\n- **THEN** the validator checks a positive integer up to 8388608 bytes and a lowercase hexadecimal digest of 64 characters and rejects an invalid value.\n- **AND** The validator rejects 63-character, 65-character and uppercase digests, and accepts exactly 64 lowercase hexadecimal characters.\n- **AND** The validator accepts each digit from 0 to 9 and each letter from a to f in the digest and returns without an error.\n- **AND** The validator names the field in each integrity error.\n- **AND** The validator checks the digest type before it converts text and rejects an invalid value.\n- **AND** The validator checks byteLength before the digest, and the digest before it reads the placement."
+          },
+          {
+            "rawText": "- **WHEN** an image data pack declares placement\n- **THEN** the validator checks geographic bounds, ordered edges, height and the ellipsoid reference and rejects an invalid value.\n- **AND** The validator rejects equal west and east edges, and equal south and north edges.\n- **AND** The validator accepts longitude limits of -180 and 180 degrees, and latitude limits of -90 and 90 degrees and returns without an error.\n- **AND** The validator rejects numeric text for bounds and height.\n- **AND** Each placement error names its field, and the validator rejects extra image placement fields.\n- **AND** The validator compares west with east before it compares south with north.\n- **AND** The validator checks bounds values, edge order and height in that order and rejects an invalid value.\n- **AND** The validator checks the height reference before it checks bounds and rejects an invalid value.\n- **AND** The validator checks the bounds array before it reads the length. It checks the length before it checks each coordinate.\n- **AND** The validator checks each bounds coordinate, with its index in the error path and rejects an invalid value."
+          },
+          {
+            "rawText": "- **WHEN** a media data pack declares placement\n- **THEN** the validator checks its scene anchor reference and rejects an invalid value.\n- **AND** The validator names the placement field in each unknown anchor error.\n- **AND** The validator accepts a reference to the second scene anchor and returns without an error."
+          },
+          {
+            "rawText": "- **WHEN** a scene declares data packs or data pack IDs for a shot\n- **THEN** the validator rejects duplicate data pack IDs, unknown shot references and duplicate shot references\n- **AND** The validator does not read a data pack list from the parent object of the scene and returns without an error.\n- **AND** The validator accepts eight distinct data packs per scene and rejects nine.\n- **AND** The validator accepts eight distinct data pack references per shot and rejects nine references before it checks distinct IDs.\n- **AND** The validator names the shot field in each reference error.\n- **AND** The validator rejects duplicate references before it searches for known IDs.\n- **AND** The validator checks the data pack list before it reads the anchors.\n- **AND** The validator rejects an unknown reference in the second shot.\n- **AND** The validator reports `$.shots[1].dataPackIds` and says expected distinct scene pack IDs for that error.\n- **AND** The validator rejects an unknown second reference ID."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The data pack validators MUST accept valid declarations and reject invalid declarations.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller supplies a relative asset path\n- **THEN** the validator accepts safe directory names and rejects traversal or URL syntax\n- **AND** The validator accepts paths of at most 1024 characters and rejects longer paths.\n- **AND** The validator accepts _ and - at the start of each path segment and returns without an error.\n- **AND** The validator returns without an error for letters A to Z and a to z, and digits 0 to 9.\n- **AND** The validator accepts those characters at the start and in other positions and returns without an error.\n- **AND** The validator names the path field in each asset path error.\n- **AND** The validator rejects the path type before it reads a segment.\n- **AND** The validator checks the source name, the path and the attribution fields in that order and rejects an invalid value.\n- **AND** The validator rejects an invalid second path segment."
+            },
+            {
+              "rawText": "- **WHEN** a caller supplies a data pack manifest\n- **THEN** the validator accepts version 1 and the geojson, image and media formats and returns without an error.\n- **AND** The validator rejects other versions and formats.\n- **AND** The validator rejects a data pack ID or source name above 256 characters.\n- **AND** The validator rejects extra fields and names each invalid field in its error.\n- **AND** The validator checks declaration fields, ID, version, format and source in that order and rejects an invalid value.\n- **AND** The validator checks the declaration before it checks for duplicate IDs and rejects an invalid value.\n- **AND** The validator rejects the unlisted format geojsonx.\n- **AND** The validator rejects an invalid second data pack declaration."
+            },
+            {
+              "rawText": "- **WHEN** a data pack declares attribution\n- **THEN** the validator checks text, license and an optional HTTPS link without credentials, query or fragment and rejects an invalid value.\n- **AND** The validator rejects text or license above 4096 characters, or an HTTPS link above 2048 characters.\n- **AND** The validator names each invalid attribution field and rejects extra attribution fields.\n- **AND** The validator checks text, license, URL and byteLength in that order and rejects an invalid value."
+            },
+            {
+              "rawText": "- **WHEN** a data pack declares byteLength or sha256\n- **THEN** the validator checks a positive integer up to 8388608 bytes and a lowercase hexadecimal digest of 64 characters and rejects an invalid value.\n- **AND** The validator rejects 63-character, 65-character and uppercase digests, and accepts exactly 64 lowercase hexadecimal characters.\n- **AND** The validator accepts each digit from 0 to 9 and each letter from a to f in the digest and returns without an error.\n- **AND** The validator names the field in each integrity error.\n- **AND** The validator checks the digest type before it converts text and rejects an invalid value.\n- **AND** The validator checks byteLength before the digest, and the digest before it reads the placement."
+            },
+            {
+              "rawText": "- **WHEN** an image data pack declares placement\n- **THEN** the validator checks geographic bounds, ordered edges, height and the ellipsoid reference and rejects an invalid value.\n- **AND** The validator rejects equal west and east edges, and equal south and north edges.\n- **AND** The validator accepts longitude limits of -180 and 180 degrees, and latitude limits of -90 and 90 degrees and returns without an error.\n- **AND** The validator rejects numeric text for bounds and height.\n- **AND** Each placement error names its field, and the validator rejects extra image placement fields.\n- **AND** The validator compares west with east before it compares south with north.\n- **AND** The validator checks bounds values, edge order and height in that order and rejects an invalid value.\n- **AND** The validator checks the height reference before it checks bounds and rejects an invalid value.\n- **AND** The validator checks the bounds array before it reads the length. It checks the length before it checks each coordinate.\n- **AND** The validator checks each bounds coordinate, with its index in the error path and rejects an invalid value."
+            },
+            {
+              "rawText": "- **WHEN** a media data pack declares placement\n- **THEN** the validator checks its scene anchor reference and rejects an invalid value.\n- **AND** The validator names the placement field in each unknown anchor error.\n- **AND** The validator accepts a reference to the second scene anchor and returns without an error."
+            },
+            {
+              "rawText": "- **WHEN** a scene declares data packs or data pack IDs for a shot\n- **THEN** the validator rejects duplicate data pack IDs, unknown shot references and duplicate shot references\n- **AND** The validator does not read a data pack list from the parent object of the scene and returns without an error.\n- **AND** The validator accepts eight distinct data packs per scene and rejects nine.\n- **AND** The validator accepts eight distinct data pack references per shot and rejects nine references before it checks distinct IDs.\n- **AND** The validator names the shot field in each reference error.\n- **AND** The validator rejects duplicate references before it searches for known IDs.\n- **AND** The validator checks the data pack list before it reads the anchors.\n- **AND** The validator rejects an unknown reference in the second shot.\n- **AND** The validator reports `$.shots[1].dataPackIds` and says expected distinct scene pack IDs for that error.\n- **AND** The validator rejects an unknown second reference ID."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The geometry decoder MUST return IDs, geometry types and coordinates without feature properties.",
+      "requirement": {
+        "text": "The geometry decoder MUST return IDs, geometry types and coordinates without feature properties.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller decodes GeoJSON\n- **THEN** the decoder rejects a type other than FeatureCollection, a feature list that is not an array or more than 2000 features\n- **AND** The decoder rejects invalid UTF8 bytes and null."
+          },
+          {
+            "rawText": "- **WHEN** a collection contains features\n- **THEN** the decoder rejects a type other than Feature, duplicate or blank IDs, IDs that are not strings and IDs above 256 characters\n- **AND** The decoder rejects a null feature with the feature ID error.\n- **AND** The decoder rejects a duplicate ID in the second feature."
+          },
+          {
+            "rawText": "- **WHEN** a geometry supplies positions without inherited coordinate values\n- **THEN** the decoder rejects longitude, latitude or height that is not finite or exceeds geographic limits\n- **AND** The decoder accepts at most 50000 positions and gives zero meters for an absent height.\n- **AND** Each position has two or three coordinates; the decoder rejects one or four coordinates.\n- **AND** The decoder accepts longitude from -180 to 180 degrees and latitude from -90 to 90 degrees and returns coordinates.\n- **AND** The decoder rejects a null position with the geographic position error.\n- **AND** The decoder keeps negative zero for a supplied height.\n- **AND** The decoder rejects an invalid second coordinate and an invalid second line position."
+          },
+          {
+            "rawText": "- **WHEN** a geometry supplies a line or ring\n- **THEN** the decoder rejects short lines, short rings and rings with unequal end positions\n- **AND** The decoder rejects a null line with the line error.\n- **AND** The decoder returns an open line with unequal end positions."
+          },
+          {
+            "rawText": "- **WHEN** a collection contains geometry\n- **THEN** the decoder returns IDs, geometry types and coordinates without properties\n- **AND** The decoder rejects unsupported or absent geometry and accepts at most 128 polygon rings.\n- **AND** The decoder rejects an unclosed second polygon ring."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The geometry decoder MUST return IDs, geometry types and coordinates without feature properties.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller decodes GeoJSON\n- **THEN** the decoder rejects a type other than FeatureCollection, a feature list that is not an array or more than 2000 features\n- **AND** The decoder rejects invalid UTF8 bytes and null."
+            },
+            {
+              "rawText": "- **WHEN** a collection contains features\n- **THEN** the decoder rejects a type other than Feature, duplicate or blank IDs, IDs that are not strings and IDs above 256 characters\n- **AND** The decoder rejects a null feature with the feature ID error.\n- **AND** The decoder rejects a duplicate ID in the second feature."
+            },
+            {
+              "rawText": "- **WHEN** a geometry supplies positions without inherited coordinate values\n- **THEN** the decoder rejects longitude, latitude or height that is not finite or exceeds geographic limits\n- **AND** The decoder accepts at most 50000 positions and gives zero meters for an absent height.\n- **AND** Each position has two or three coordinates; the decoder rejects one or four coordinates.\n- **AND** The decoder accepts longitude from -180 to 180 degrees and latitude from -90 to 90 degrees and returns coordinates.\n- **AND** The decoder rejects a null position with the geographic position error.\n- **AND** The decoder keeps negative zero for a supplied height.\n- **AND** The decoder rejects an invalid second coordinate and an invalid second line position."
+            },
+            {
+              "rawText": "- **WHEN** a geometry supplies a line or ring\n- **THEN** the decoder rejects short lines, short rings and rings with unequal end positions\n- **AND** The decoder rejects a null line with the line error.\n- **AND** The decoder returns an open line with unequal end positions."
+            },
+            {
+              "rawText": "- **WHEN** a collection contains geometry\n- **THEN** the decoder returns IDs, geometry types and coordinates without properties\n- **AND** The decoder rejects unsupported or absent geometry and accepts at most 128 polygon rings.\n- **AND** The decoder rejects an unclosed second polygon ring."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.",
+      "requirement": {
+        "text": "The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller creates a session\n- **THEN** the session starts with the idle state. Its load method checks data pack lists before asset work and rejects an invalid data pack list.\n- **AND** The session rejects more than eight data packs and checks every declaration before the first source call.\n- **AND** The load call returns false for a destroyed session or a cancelled signal.\n- **AND** The public data pack limits throw a TypeError when a caller assigns a new value.\n- **AND** After the caller destroys the session, a new load call does not read the caller signal state.\n- **AND** An empty data pack list returns true without a source call or a deadline timer.\n- **AND** An absent source map or renderer map gives an empty registry.\n- **AND** The session reads source entries before renderer entries.\n- **AND** The session calls each source by `pack.source.adapter` and each renderer by `pack.format`. The source map and the renderer map each contain two entries.\n- **AND** The session checks the data pack list before it reads anchors. It checks declarations before it reads the caller signal.\n- **AND** During source cancellation, a destroyed session returns false for another load call.\n- **AND** An invalid second declaration gives its indexed error before the source call."
+          },
+          {
+            "rawText": "- **WHEN** a session loads assets\n- **THEN** after success, the session reports the ready state and disposes its handles when the caller clears or destroys it\n- **AND** The session rejects a null handle or a handle without a dispose function.\n- **AND** During asset work, the session reports the loading state.\n- **AND** The session keeps its state after the caller changes a returned state object.\n- **AND** The session removes the deadline timer after success.\n- **AND** The session also removes that timer after the caller clears the session.\n\n- **AND** The session removes source listeners after success or a source error.\n- **AND** The session does not read the signal reason for a completed source listener after success or a source error.\n- **AND** The session removes the caller signal listener when the caller clears it.\n- **AND** The session installs that listener with the once option set to true.\n- **AND** The session attaches the source listener, checks the source signal state and reads the work promise in that order.\n- **AND** The session does not read the signal reason for a completed source when the promise settles.\n- **AND** The session attaches the caller listener before the deadline timer starts.\n- **AND** The session checks the signal before it removes the timer. It removes the timer before it reports the ready state.\n- **AND** The session reports idle before source cancellation.\n- **AND** The session cancels the source, removes the caller listener, removes the timer and disposes resources in that order."
+          },
+          {
+            "rawText": "- **WHEN** a caller cancels asset work, or source or renderer work fails\n- **THEN** for cancellation, the session returns false and disposes late renderer resources\n- **AND** The session checks its source signal before it reads bytes and after renderer work.\n- **AND** The session does not read the caller signal state again for a cleared load call after cancellation.\n- **AND** The session rejects source errors before the renderer call and rejects null bytes or a null renderer handle.\n- **AND** After the caller clears the session, the session does not read the old source signal state and returns false.\n- **AND** The session returns false when the caller signal destroys the session after a source error.\n- **AND** The session returns false for a caller event during listener registration."
+          },
+          {
+            "rawText": "- **WHEN** a caller starts a new load call\n- **THEN** the session returns false for old work that is not complete and keeps the new resources\n- **AND** The session disposes old resources before it checks the new data pack list and rejects an invalid data pack list."
+          },
+          {
+            "rawText": "- **WHEN** a source fails, a source signal event stops work, or the asset deadline expires\n- **THEN** the session removes partial resources and reports a stable error\n- **AND** With no registered source and a byteLength field in the declaration, the session reads that field once, during validation\n- **AND** The session sets a default deadline of 15000 milliseconds.\n- **AND** The session sets the source signal reason to Asset load timed out when the deadline expires.\n- **AND** With no renderer, the session does not call the registered source.\n- **AND** The session disposes each partial resource when the deadline expires.\n- **AND** The session rejects the load call before the renderer call for a source signal event.\n- **AND** The session reads the source signal reason once when a source signal event stops work.\n- **AND** The session rejects the load call before the renderer call for a source signal event during listener removal after source success or an error.\n- **AND** The session does not read the global `error` property for a data pack failure."
+          },
+          {
+            "rawText": "- **WHEN** a source returns bytes for a data pack\n- **THEN** the session checks byte type, size, total bytes and declared integrity before the renderer call and rejects an invalid asset.\n- **AND** The session accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns true.\n- **AND** The source receives the source path and the byteLength field or the default byte limit.\n- **AND** The renderer receives the asset and the signal of the source call.\n- **AND** The renderer also receives the data pack and the scene anchors.\n- **AND** The session checks the byte type before it reads the length of an invalid byte object.\n- **AND** With null bytes, the session does not read the declared byteLength field again.\n- **AND** Without a declared byteLength field, the session does not compare bytes with that field.\n- **AND** The session checks total bytes before it reads the declared digest.\n- **AND** The session accepts a data pack that refers to the second supplied anchor and returns true."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The data pack session MUST load valid assets and dispose its resources when the caller clears or destroys it.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller creates a session\n- **THEN** the session starts with the idle state. Its load method checks data pack lists before asset work and rejects an invalid data pack list.\n- **AND** The session rejects more than eight data packs and checks every declaration before the first source call.\n- **AND** The load call returns false for a destroyed session or a cancelled signal.\n- **AND** The public data pack limits throw a TypeError when a caller assigns a new value.\n- **AND** After the caller destroys the session, a new load call does not read the caller signal state.\n- **AND** An empty data pack list returns true without a source call or a deadline timer.\n- **AND** An absent source map or renderer map gives an empty registry.\n- **AND** The session reads source entries before renderer entries.\n- **AND** The session calls each source by `pack.source.adapter` and each renderer by `pack.format`. The source map and the renderer map each contain two entries.\n- **AND** The session checks the data pack list before it reads anchors. It checks declarations before it reads the caller signal.\n- **AND** During source cancellation, a destroyed session returns false for another load call.\n- **AND** An invalid second declaration gives its indexed error before the source call."
+            },
+            {
+              "rawText": "- **WHEN** a session loads assets\n- **THEN** after success, the session reports the ready state and disposes its handles when the caller clears or destroys it\n- **AND** The session rejects a null handle or a handle without a dispose function.\n- **AND** During asset work, the session reports the loading state.\n- **AND** The session keeps its state after the caller changes a returned state object.\n- **AND** The session removes the deadline timer after success.\n- **AND** The session also removes that timer after the caller clears the session.\n\n- **AND** The session removes source listeners after success or a source error.\n- **AND** The session does not read the signal reason for a completed source listener after success or a source error.\n- **AND** The session removes the caller signal listener when the caller clears it.\n- **AND** The session installs that listener with the once option set to true.\n- **AND** The session attaches the source listener, checks the source signal state and reads the work promise in that order.\n- **AND** The session does not read the signal reason for a completed source when the promise settles.\n- **AND** The session attaches the caller listener before the deadline timer starts.\n- **AND** The session checks the signal before it removes the timer. It removes the timer before it reports the ready state.\n- **AND** The session reports idle before source cancellation.\n- **AND** The session cancels the source, removes the caller listener, removes the timer and disposes resources in that order."
+            },
+            {
+              "rawText": "- **WHEN** a caller cancels asset work, or source or renderer work fails\n- **THEN** for cancellation, the session returns false and disposes late renderer resources\n- **AND** The session checks its source signal before it reads bytes and after renderer work.\n- **AND** The session does not read the caller signal state again for a cleared load call after cancellation.\n- **AND** The session rejects source errors before the renderer call and rejects null bytes or a null renderer handle.\n- **AND** After the caller clears the session, the session does not read the old source signal state and returns false.\n- **AND** The session returns false when the caller signal destroys the session after a source error.\n- **AND** The session returns false for a caller event during listener registration."
+            },
+            {
+              "rawText": "- **WHEN** a caller starts a new load call\n- **THEN** the session returns false for old work that is not complete and keeps the new resources\n- **AND** The session disposes old resources before it checks the new data pack list and rejects an invalid data pack list."
+            },
+            {
+              "rawText": "- **WHEN** a source fails, a source signal event stops work, or the asset deadline expires\n- **THEN** the session removes partial resources and reports a stable error\n- **AND** With no registered source and a byteLength field in the declaration, the session reads that field once, during validation\n- **AND** The session sets a default deadline of 15000 milliseconds.\n- **AND** The session sets the source signal reason to Asset load timed out when the deadline expires.\n- **AND** With no renderer, the session does not call the registered source.\n- **AND** The session disposes each partial resource when the deadline expires.\n- **AND** The session rejects the load call before the renderer call for a source signal event.\n- **AND** The session reads the source signal reason once when a source signal event stops work.\n- **AND** The session rejects the load call before the renderer call for a source signal event during listener removal after source success or an error.\n- **AND** The session does not read the global `error` property for a data pack failure."
+            },
+            {
+              "rawText": "- **WHEN** a source returns bytes for a data pack\n- **THEN** the session checks byte type, size, total bytes and declared integrity before the renderer call and rejects an invalid asset.\n- **AND** The session accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns true.\n- **AND** The source receives the source path and the byteLength field or the default byte limit.\n- **AND** The renderer receives the asset and the signal of the source call.\n- **AND** The renderer also receives the data pack and the scene anchors.\n- **AND** The session checks the byte type before it reads the length of an invalid byte object.\n- **AND** With null bytes, the session does not read the declared byteLength field again.\n- **AND** Without a declared byteLength field, the session does not compare bytes with that field.\n- **AND** The session checks total bytes before it reads the declared digest.\n- **AND** The session accepts a data pack that refers to the second supplied anchor and returns true."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The directory source MUST use its directory URL and reject bytes above the asset limit.",
+      "requirement": {
+        "text": "The directory source MUST use its directory URL and reject bytes above the asset limit.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller registers an asset directory\n- **THEN** the factory rejects a directory outside HTTP or HTTPS, or with credentials, query or fragment\n- **AND** The factory rejects a directory URL without a slash at the end.\n- **AND** The factory rejects a directory URL that uses the file protocol."
+          },
+          {
+            "rawText": "- **WHEN** a caller asks for an asset path\n- **THEN** the source checks the path before it checks the caller signal and rejects an invalid path.\n- **AND** For a safe path, the source calls fetch with the registered directory and fixed request options.\n- **AND** The source calls fetch with no credentials, redirects as errors, no referrer and no cache.\n- **AND** Without a caller fetch function, the source calls the global fetch function."
+          },
+          {
+            "rawText": "- **WHEN** a source reads an asset stream\n- **THEN** the source checks header and stream byte limits and joins its chunks\n- **AND** The source removes media type parameters and space, and changes the media type to lowercase text.\n- **AND** The source returns empty text for an absent media type.\n- **AND** The source joins chunks of different byte lengths in their original order.\n- **AND** The source checks the header byte limit before it reads the first stream chunk.\n- **AND** The source checks the stream byte limit before it keeps a chunk."
+          },
+          {
+            "rawText": "- **WHEN** an asset request fails or its signal stops it\n- **THEN** the source rejects the asset request and releases stream resources\n- **AND** The source waits for stream cancellation before it releases the reader lock.\n- **AND** For an HTTP error, the source waits for body cancellation before it rejects the asset request.\n- **AND** The source checks its signal before each time the source reads a stream chunk and rejects cancellation.\n- **AND** With two stream chunks, cancellation before the second chunk stops the source, and the source reads only the first chunk."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The directory source MUST use its directory URL and reject bytes above the asset limit.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller registers an asset directory\n- **THEN** the factory rejects a directory outside HTTP or HTTPS, or with credentials, query or fragment\n- **AND** The factory rejects a directory URL without a slash at the end.\n- **AND** The factory rejects a directory URL that uses the file protocol."
+            },
+            {
+              "rawText": "- **WHEN** a caller asks for an asset path\n- **THEN** the source checks the path before it checks the caller signal and rejects an invalid path.\n- **AND** For a safe path, the source calls fetch with the registered directory and fixed request options.\n- **AND** The source calls fetch with no credentials, redirects as errors, no referrer and no cache.\n- **AND** Without a caller fetch function, the source calls the global fetch function."
+            },
+            {
+              "rawText": "- **WHEN** a source reads an asset stream\n- **THEN** the source checks header and stream byte limits and joins its chunks\n- **AND** The source removes media type parameters and space, and changes the media type to lowercase text.\n- **AND** The source returns empty text for an absent media type.\n- **AND** The source joins chunks of different byte lengths in their original order.\n- **AND** The source checks the header byte limit before it reads the first stream chunk.\n- **AND** The source checks the stream byte limit before it keeps a chunk."
+            },
+            {
+              "rawText": "- **WHEN** an asset request fails or its signal stops it\n- **THEN** the source rejects the asset request and releases stream resources\n- **AND** The source waits for stream cancellation before it releases the reader lock.\n- **AND** For an HTTP error, the source waits for body cancellation before it rejects the asset request.\n- **AND** The source checks its signal before each time the source reads a stream chunk and rejects cancellation.\n- **AND** With two stream chunks, cancellation before the second chunk stops the source, and the source reads only the first chunk."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The bundle helpers MUST check supplied assets and keep the source project.",
+      "requirement": {
+        "text": "The bundle helpers MUST check supplied assets and keep the source project.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller supplies project share text\n- **THEN** the import rejects invalid text type, excess bytes and invalid JSON syntax\n- **AND** The import rejects null and invalid projects.\n- **AND** The import rejects text above 52428800 characters or 52428800 UTF8 bytes.\n- **AND** The import reports `$: invalid JSON` for invalid JSON within the share text limit.\n- **AND** For project JSON without bundle format, the import returns the project and an empty asset Map."
+          },
+          {
+            "rawText": "- **WHEN** a caller supplies bundle assets\n- **THEN** the import rejects invalid fields, paths, media types, duplicate paths and invalid base64 syntax\n- **AND** The import accepts at most 64 assets and returns assets. The import rejects 65 different paths.\n- **AND** The import accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns assets.\n- **AND** The import rejects base64 above 11184812 characters.\n- **AND** The import rejects a bundle version other than 1.\n- **AND** The import rejects extra top-level fields and invalid bundle projects.\n- **AND** The import starts asset field, count, byte, media type, base64 and digest errors with `assets`.\n- **AND** The import starts each asset path error with `source.path`.\n- **AND** The import accepts the standard base64 alphabet, with + and /, and returns assets. The import rejects an equals sign at the start.\n- **AND** The import accepts each standard base64 character in both plain and padded text and returns assets.\n- **AND** The import checks the base64 type before it converts text and rejects an invalid asset.\n- **AND** The import checks top-level fields, version, project and the asset list in that order and rejects an invalid bundle.\n- **AND** The import checks asset fields, path, media type, duplicate path and base64 in that order and rejects an invalid asset.\n- **AND** The import checks asset byte limits before the digest call and rejects an invalid asset.\n- **AND** The import accepts these media types and returns assets: application/json, application/geo+json, image/png, video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav and audio/webm.\n- **AND** The import rejects image/svg+xml."
+          },
+          {
+            "rawText": "- **WHEN** a bundle declares data pack assets\n- **THEN** the import rejects incorrect asset digests and incorrect data pack references\n- **AND** The import starts each data pack reference error with `project`."
+          },
+          {
+            "rawText": "- **WHEN** a caller exports a project with supplied assets\n- **THEN** the export copies the project and writes bundle paths, byte lengths and digests\n- **AND** The export rejects an invalid project before the resolver call.\n- **AND** The export calls the resolver with the data pack and the signal in its options object.\n- **AND** The export writes a path with at most 160 characters from the source filename.\n- **AND** The export writes each path with files/, the asset index from zero, and a dash before the filename.\n- **AND** The export writes source, byteLength and digest fields in that order.\n- **AND** The export does not read byte chunks past the asset end.\n- **AND** The export calls the filename slice with a start of zero and a length limit of 160.\n- **AND** The export writes assets for data packs from the second scene."
+          },
+          {
+            "rawText": "- **WHEN** a caller supplies assets for bundle export\n- **THEN** the export rejects excess bytes, unsupported media types, excess assets and incorrect declared integrity\n- **AND** The export accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns bundle text.\n- **AND** The export rejects an unsupported media type during export.\n- **AND** The share limits throw a TypeError when a caller assigns a new value.\n- **AND** The export starts each asset error with `assets`.\n- **AND** The export checks byte type and per-asset size before the total size and rejects an invalid asset.\n- **AND** The export checks declared byteLength before the declared digest and rejects an invalid asset.\n- **AND** For numeric byte lengths, the export adds zero to the total for an asset without a byte length.\n- **AND** When the declared digest is absent, the export reads the digest field once before it writes the digest.\n- **AND** The export starts each text limit error with `$`.\n- **AND** The export checks declared integrity before it reads the filename.\n- **AND** The export checks the asset count before the next resolver call and rejects more than 64 assets.\n- **AND** The export checks bytes before media type, and media type before the digest call and rejects an invalid asset."
+          },
+          {
+            "rawText": "- **WHEN** data packs use the same source and path\n- **THEN** the export writes one asset and rejects integrity declarations that differ\n- **AND** The export starts each shared asset integrity error with `assets`."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The bundle helpers MUST check supplied assets and keep the source project.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller supplies project share text\n- **THEN** the import rejects invalid text type, excess bytes and invalid JSON syntax\n- **AND** The import rejects null and invalid projects.\n- **AND** The import rejects text above 52428800 characters or 52428800 UTF8 bytes.\n- **AND** The import reports `$: invalid JSON` for invalid JSON within the share text limit.\n- **AND** For project JSON without bundle format, the import returns the project and an empty asset Map."
+            },
+            {
+              "rawText": "- **WHEN** a caller supplies bundle assets\n- **THEN** the import rejects invalid fields, paths, media types, duplicate paths and invalid base64 syntax\n- **AND** The import accepts at most 64 assets and returns assets. The import rejects 65 different paths.\n- **AND** The import accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns assets.\n- **AND** The import rejects base64 above 11184812 characters.\n- **AND** The import rejects a bundle version other than 1.\n- **AND** The import rejects extra top-level fields and invalid bundle projects.\n- **AND** The import starts asset field, count, byte, media type, base64 and digest errors with `assets`.\n- **AND** The import starts each asset path error with `source.path`.\n- **AND** The import accepts the standard base64 alphabet, with + and /, and returns assets. The import rejects an equals sign at the start.\n- **AND** The import accepts each standard base64 character in both plain and padded text and returns assets.\n- **AND** The import checks the base64 type before it converts text and rejects an invalid asset.\n- **AND** The import checks top-level fields, version, project and the asset list in that order and rejects an invalid bundle.\n- **AND** The import checks asset fields, path, media type, duplicate path and base64 in that order and rejects an invalid asset.\n- **AND** The import checks asset byte limits before the digest call and rejects an invalid asset.\n- **AND** The import accepts these media types and returns assets: application/json, application/geo+json, image/png, video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav and audio/webm.\n- **AND** The import rejects image/svg+xml."
+            },
+            {
+              "rawText": "- **WHEN** a bundle declares data pack assets\n- **THEN** the import rejects incorrect asset digests and incorrect data pack references\n- **AND** The import starts each data pack reference error with `project`."
+            },
+            {
+              "rawText": "- **WHEN** a caller exports a project with supplied assets\n- **THEN** the export copies the project and writes bundle paths, byte lengths and digests\n- **AND** The export rejects an invalid project before the resolver call.\n- **AND** The export calls the resolver with the data pack and the signal in its options object.\n- **AND** The export writes a path with at most 160 characters from the source filename.\n- **AND** The export writes each path with files/, the asset index from zero, and a dash before the filename.\n- **AND** The export writes source, byteLength and digest fields in that order.\n- **AND** The export does not read byte chunks past the asset end.\n- **AND** The export calls the filename slice with a start of zero and a length limit of 160.\n- **AND** The export writes assets for data packs from the second scene."
+            },
+            {
+              "rawText": "- **WHEN** a caller supplies assets for bundle export\n- **THEN** the export rejects excess bytes, unsupported media types, excess assets and incorrect declared integrity\n- **AND** The export accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns bundle text.\n- **AND** The export rejects an unsupported media type during export.\n- **AND** The share limits throw a TypeError when a caller assigns a new value.\n- **AND** The export starts each asset error with `assets`.\n- **AND** The export checks byte type and per-asset size before the total size and rejects an invalid asset.\n- **AND** The export checks declared byteLength before the declared digest and rejects an invalid asset.\n- **AND** For numeric byte lengths, the export adds zero to the total for an asset without a byte length.\n- **AND** When the declared digest is absent, the export reads the digest field once before it writes the digest.\n- **AND** The export starts each text limit error with `$`.\n- **AND** The export checks declared integrity before it reads the filename.\n- **AND** The export checks the asset count before the next resolver call and rejects more than 64 assets.\n- **AND** The export checks bytes before media type, and media type before the digest call and rejects an invalid asset."
+            },
+            {
+              "rawText": "- **WHEN** data packs use the same source and path\n- **THEN** the export writes one asset and rejects integrity declarations that differ\n- **AND** The export starts each shared asset integrity error with `assets`."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The byte store MUST copy the asset map and return byte copies.",
+      "requirement": {
+        "text": "The byte store MUST copy the asset map and return byte copies.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller replaces or clears bundle bytes\n- **THEN** the store copies the map and reports its current byte total\n- **AND** With no replacement map, the store reports zero assets and zero bytes.\n- **AND** The store returns a separate snapshot map with the stored keys and byte values.\n- **AND** The store counts the bytes of the second stored asset."
+          },
+          {
+            "rawText": "- **WHEN** a caller asks for stored bundle bytes\n- **THEN** the store returns a byte copy and rejects absent or excess bytes and a cancelled source call\n- **AND** The store accepts bytes equal to the caller limit and rejects one more byte.\n- **AND** Without a caller limit, the store accepts an asset of 8388608 bytes and returns a byte copy.\n- **AND** The store rejects an invalid path even when the store holds that path.\n- **AND** The store checks its signal before it checks the path and rejects cancellation."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The byte store MUST copy the asset map and return byte copies.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller replaces or clears bundle bytes\n- **THEN** the store copies the map and reports its current byte total\n- **AND** With no replacement map, the store reports zero assets and zero bytes.\n- **AND** The store returns a separate snapshot map with the stored keys and byte values.\n- **AND** The store counts the bytes of the second stored asset."
+            },
+            {
+              "rawText": "- **WHEN** a caller asks for stored bundle bytes\n- **THEN** the store returns a byte copy and rejects absent or excess bytes and a cancelled source call\n- **AND** The store accepts bytes equal to the caller limit and rejects one more byte.\n- **AND** Without a caller limit, the store accepts an asset of 8388608 bytes and returns a byte copy.\n- **AND** The store rejects an invalid path even when the store holds that path.\n- **AND** The store checks its signal before it checks the path and rejects cancellation."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The share helpers MUST check file limits and settle signal cancellation.",
+      "requirement": {
+        "text": "The share helpers MUST check file limits and settle signal cancellation.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller supplies a project file\n- **THEN** the share helpers check the file suffix and size before they read text\n- **AND** The share helpers reject a file above 5242880 bytes, except a file with the .gevbundle.json suffix. They reject that file above 52428800 bytes.\n- **AND** The share helpers accept the limit and reject one more byte.\n- **AND** The share helpers check the file limit before they read the signal and reject excess files."
+          },
+          {
+            "rawText": "- **WHEN** share work uses a signal\n- **THEN** the helper rejects cancelled work and settles successful work or errors\n- **AND** The bundle helpers check the signal before each asset and after each digest during import and export. They reject cancellation.\n- **AND** During export, the bundle helpers also check the signal after the asset result and reject cancellation.\n\n- **AND** The helper removes its listener after success, a work error or cancellation.\n- **AND** The import checks the signal before text type, asset fields and digest comparison and rejects cancellation.\n- **AND** The share helpers check the signal before they read text and after the text promise settles. They reject cancellation.\n- **AND** During export, the bundle helpers check the signal before they check asset presence and declared integrity and reject cancellation.\n- **AND** The helper does not attach a listener to a cancelled signal.\n- **AND** The helper attaches its listener before it reads the work promise.\n- **AND** The helper reads cancelled work before the reason, and removes its listener before it reads the reason.\n- **AND** The helper checks cancellation after listener removal and before the work settles with success.\n- **AND** For cancellation during listener removal after a work error, the helper rejects with the cancellation reason.\n- **AND** With two assets, the import calls the digest function once when cancellation occurs before the second digest call.\n- **AND** With two data packs, the export calls the resolver once when cancellation occurs before the second resolver call."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The share helpers MUST check file limits and settle signal cancellation.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller supplies a project file\n- **THEN** the share helpers check the file suffix and size before they read text\n- **AND** The share helpers reject a file above 5242880 bytes, except a file with the .gevbundle.json suffix. They reject that file above 52428800 bytes.\n- **AND** The share helpers accept the limit and reject one more byte.\n- **AND** The share helpers check the file limit before they read the signal and reject excess files."
+            },
+            {
+              "rawText": "- **WHEN** share work uses a signal\n- **THEN** the helper rejects cancelled work and settles successful work or errors\n- **AND** The bundle helpers check the signal before each asset and after each digest during import and export. They reject cancellation.\n- **AND** During export, the bundle helpers also check the signal after the asset result and reject cancellation.\n\n- **AND** The helper removes its listener after success, a work error or cancellation.\n- **AND** The import checks the signal before text type, asset fields and digest comparison and rejects cancellation.\n- **AND** The share helpers check the signal before they read text and after the text promise settles. They reject cancellation.\n- **AND** During export, the bundle helpers check the signal before they check asset presence and declared integrity and reject cancellation.\n- **AND** The helper does not attach a listener to a cancelled signal.\n- **AND** The helper attaches its listener before it reads the work promise.\n- **AND** The helper reads cancelled work before the reason, and removes its listener before it reads the reason.\n- **AND** The helper checks cancellation after listener removal and before the work settles with success.\n- **AND** For cancellation during listener removal after a work error, the helper rejects with the cancellation reason.\n- **AND** With two assets, the import calls the digest function once when cancellation occurs before the second digest call.\n- **AND** With two data packs, the export calls the resolver once when cancellation occurs before the second resolver call."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "spec": "director",
+      "operation": "ADDED",
+      "description": "Add requirement: The preview MUST report project content and dependencies.",
+      "requirement": {
+        "text": "The preview MUST report project content and dependencies.",
+        "scenarios": [
+          {
+            "rawText": "- **WHEN** a caller describes a shared project\n- **THEN** the preview reports scene, shot and byte totals with data pack attribution\n- **AND** The preview counts the second scene and the second shot, and lists the second data pack. The preview adds the bytes of the second asset to the byte total."
+          },
+          {
+            "rawText": "- **WHEN** a preview describes a data pack source\n- **THEN** the preview reports included, absent, configured or unavailable source states\n- **AND** Without source IDs, the preview reports every external source as unavailable."
+          },
+          {
+            "rawText": "- **WHEN** a preview describes scene dependencies\n- **THEN** the preview reports absent layers and whether a scene has applied shot packs or a shot has a source pack ID\n- **AND** The preview lists each absent layer once, even when two shots name that layer.\n- **AND** Without layer IDs, the preview reports every named layer as absent.\n- **AND** With applied shot packs, the preview does not read source pack IDs to decide whether the scene has external content.\n- **AND** The preview reports the absent layers of the second shot in the second scene. It reports external content from the source pack ID of that shot."
+          }
+        ]
+      },
+      "requirements": [
+        {
+          "text": "The preview MUST report project content and dependencies.",
+          "scenarios": [
+            {
+              "rawText": "- **WHEN** a caller describes a shared project\n- **THEN** the preview reports scene, shot and byte totals with data pack attribution\n- **AND** The preview counts the second scene and the second shot, and lists the second data pack. The preview adds the bytes of the second asset to the byte total."
+            },
+            {
+              "rawText": "- **WHEN** a preview describes a data pack source\n- **THEN** the preview reports included, absent, configured or unavailable source states\n- **AND** Without source IDs, the preview reports every external source as unavailable."
+            },
+            {
+              "rawText": "- **WHEN** a preview describes scene dependencies\n- **THEN** the preview reports absent layers and whether a scene has applied shot packs or a shot has a source pack ID\n- **AND** The preview lists each absent layer once, even when two shots name that layer.\n- **AND** Without layer IDs, the preview reports every named layer as absent.\n- **AND** With applied shot packs, the preview does not read source pack IDs to decide whether the scene has external content.\n- **AND** The preview reports the absent layers of the second shot in the second scene. It reports external content from the source pack ID of that shot."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+Warning: Ignoring flags not applicable to change: scenarios
+```
+
+### openspec validate
+
+```text
+Command: taskset -c 12-15 nice -n 19 openspec validate backfill-director-packs-sharing
+Change 'backfill-director-packs-sharing' is valid
+```
+
+### headings
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass9/final-docs-checks.py
+{
+  "sourceCommit": "b7653ad75c059af9b1305d81922fd76bbc20d66a",
+  "documentsChecked": 52,
+  "changedHeadings": [
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/evidence.md",
+      "previous": [
+        "## Source commands",
+        "## Base scope",
+        "## Repository tests of pass 2",
+        "## Host coverage",
+        "## Scenario tests",
+        "## Review corrections",
+        "## Text that stays the same",
+        "## Known limits",
+        "## Tests without tags",
+        "## Title correction",
+        "## Corrections of review round 2",
+        "## Pass 4",
+        "## Pass 5",
+        "## Pass 6",
+        "## Pass 7 title corrections",
+        "## Pass 7",
+        "## Pass 8"
+      ],
+      "current": [
+        "## Source commands",
+        "## Base scope",
+        "## Repository tests of pass 2",
+        "## Host coverage",
+        "## Scenario tests",
+        "## Review corrections",
+        "## Text that stays the same",
+        "## Known limits",
+        "## Tests without tags",
+        "## Title correction",
+        "## Corrections of review round 2",
+        "## Pass 4",
+        "## Pass 5",
+        "## Pass 6",
+        "## Pass 7 title corrections",
+        "## Pass 7",
+        "## Pass 8",
+        "## Pass 9"
+      ]
+    },
+    {
+      "file": "openspec/changes/backfill-director-packs-sharing/tasks.md",
+      "previous": [
+        "## 1. Spec documents",
+        "## 2. Scenario tests",
+        "## Corrections of review round 1",
+        "## 3. Gates and review",
+        "## Corrections of review round 2",
+        "## 7 Pass 4",
+        "## 8 Pass 5",
+        "## 9. Corrections of review round 4",
+        "## 10. Corrections of review round 5",
+        "## 11. Correct round 6 findings"
+      ],
+      "current": [
+        "## 1. Spec documents",
+        "## 2. Scenario tests",
+        "## Corrections of review round 1",
+        "## 3. Gates and review",
+        "## Corrections of review round 2",
+        "## 7 Pass 4",
+        "## 8 Pass 5",
+        "## 9. Corrections of review round 4",
+        "## 10. Corrections of review round 5",
+        "## 11. Correct round 6 findings",
+        "## 12. Correct pre-review 7 findings"
+      ]
+    }
+  ],
+  "requiredProposalHeadings": [
+    "## Why",
+    "## What Changes",
+    "## Capabilities",
+    "## Impact",
+    "## Known limits and later changes"
+  ]
+}
+```
+
+### scope
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass9/final-docs-checks.py
+{
+  "sourceCommit": "b7653ad75c059af9b1305d81922fd76bbc20d66a",
+  "productionFilesUnchanged": [
+    "packs/manifest",
+    "packs/geojson",
+    "packs/session",
+    "packs/source",
+    "sharing/bundle",
+    "sharing/lifetime",
+    "sharing/preview"
+  ],
+  "productionDiff": "",
+  "testBodiesUnchanged": true,
+  "retaggedRows": 3,
+  "changedFiles": [
+    "openspec/changes/backfill-director-packs-sharing/audit.md",
+    "openspec/changes/backfill-director-packs-sharing/design.md",
+    "openspec/changes/backfill-director-packs-sharing/evidence.md",
+    "openspec/changes/backfill-director-packs-sharing/mutations.md",
+    "openspec/changes/backfill-director-packs-sharing/probe-ranges.md",
+    "openspec/changes/backfill-director-packs-sharing/proposal.md",
+    "openspec/changes/backfill-director-packs-sharing/specs/director/spec.md",
+    "openspec/changes/backfill-director-packs-sharing/survivors.md",
+    "openspec/changes/backfill-director-packs-sharing/tasks.md",
+    "src/director/packs/backfill.test.mjs",
+    "src/director/sharing/sharing.test.mjs"
+  ]
+}
+```
+
+### source audits
+
+```text
+Command: taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/director-3/pass9/source-audits.py
+{
+  "sourceCommit": "b7653ad75c059af9b1305d81922fd76bbc20d66a",
+  "pastSearchRecordEqualsF8f6a94d": true,
+  "oldRecordCount": 245,
+  "oldRecordsEqualF8f6a94d": true,
+  "additionalPass8RecordsUnchanged": 520,
+  "pass8CorrectionSubjects": 33,
+  "missingSubjects": [],
+  "stableScenarioIds": 35,
+  "requirementSentencesUnchanged": true
+}
+```
+
+### diff check
+
+```text
+Command: taskset -c 12-15 nice -n 19 git diff --check
+```
+
+### Host prose checks
+
+```text
+Command: taskset -c 12-15 nice -n 19 node scripts/spec/gates.mjs lint --change backfill-director-packs-sharing
+STE: 0 errors, 567 warnings.
+```
+
+The full lint output is lint-final.log in the pass9 scratch folder.
+The predispatch output is predispatch.log in that folder.
+The checker lists old records, code abbreviations and finite verbs as possible prose faults.
+Pass 9 keeps those records.
+The worker changes no QA script, production file or review report.
+
+### Hand command
+
+The tool clips each failed title at 100 characters.
+The current document labels keep the full titles.
+Pass 9 note: the report removes spaces at line ends.
+The raw command output stays in hand-final.log in the pass9 scratch folder.
+
+```text
+Command: NODE_OPTIONS=--test-isolation=none PYTHONUNBUFFERED=1 taskset -c 12-15 nice -n 19 python3 /home/ianblenke/docker/gev-tools/mut-host.py /home/ianblenke/docker/gev-work/director-3 /home/ianblenke/docker/gev-tools/director-3/muts.json
+m001: KILLED [director-076] The validator returns without an error for safe names for the asset path
+m002: KILLED [director-076] The validator rejects traversal for the asset path
+m003: KILLED [director-077] The validator rejects an invalid version
+m004: KILLED [director-077] The validator rejects an invalid format
+m005: KILLED [director-078] The validator rejects the protocol for the attribution
+m006: KILLED [director-078] The validator rejects the username for the attribution
+m007: KILLED [director-078] The validator rejects the password for the attribution
+m008: KILLED [director-078] The validator rejects the query for the attribution
+m009: KILLED [director-078] The validator rejects the fragment for the attribution
+m010: KILLED [director-078] The validator rejects invalid URL text for the attribution
+m011: KILLED [director-078] The validator returns without an error for a safe link for the attribution
+m012: KILLED [director-078] The validator rejects blank text for the attribution
+m013: KILLED [director-078] The validator rejects a blank license for the attribution
+m014: KILLED [director-079] The validator rejects a fraction for the byteLength field
+m015: KILLED [director-079] The validator rejects an invalid type for the digest
+m016: KILLED [director-079] The validator rejects an invalid alphabet for the digest
+m017: KILLED [director-079] The validator accepts integrity limits and rejects zero or excess byteLength
+m018: KILLED [director-080] The validator rejects reversed west for the image
+m019: KILLED [director-080] The validator rejects reversed south for the image
+m020: KILLED [director-080] The validator rejects short bounds for the image
+m021: KILLED [director-080] The validator rejects height and reference for the image
+m022: KILLED [director-081] The validator rejects an unknown anchor for the media
+m023: KILLED [director-082] The validator rejects duplicate data pack IDs for the scene
+m024: KILLED [director-082] The validator rejects duplicate data pack IDs for the shot
+m025: KILLED [director-082] The validator rejects unknown data pack IDs for the shot
+m026: KILLED [director-082] The validator returns without an error for absent data packs and anchors for the scen
+m027: KILLED [director-083] The decoder rejects an invalid type for the collection
+m028: KILLED [director-083] The decoder rejects an invalid array for the collection
+m029: KILLED [director-083] The decoder rejects more than 2000 features for the collection
+m030: KILLED [director-084] The decoder rejects the type for the feature
+m031: KILLED [director-084] The decoder rejects ID type for the feature
+m032: KILLED [director-084] The decoder rejects a blank ID for the feature
+m033: KILLED [director-084] The decoder rejects a long ID for the feature
+m034: KILLED [director-084] The decoder rejects a duplicate ID for the feature
+m035: KILLED [director-085] The decoder rejects an invalid array for the position
+m036: KILLED [director-085] The decoder rejects an invalid length for the position
+m037: KILLED [director-085] The decoder rejects a coordinate that is not finite for the position
+m038: KILLED [director-085] The decoder rejects an invalid longitude for the position
+m039: KILLED [director-085] The decoder rejects an invalid latitude for the position
+m040: KILLED [director-085] The decoder rejects a height below the limit for the position
+m041: KILLED [director-085] The decoder rejects a height above the limit for the position
+m042: KILLED [director-085] The decoder rejects more than 50000 positions
+m043: KILLED [director-085] The decoder returns zero for absent height for the position
+m044: KILLED [director-085] The decoder returns the height in the data for the position
+m045: KILLED [director-086] The decoder rejects an invalid array for the line
+m046: KILLED [director-086] The decoder rejects an invalid minimum for the line
+m047: KILLED [director-086] The decoder rejects a ring with fewer than four points for the ring
+m048: KILLED [director-086] The decoder accepts two distinct endpoints for the line and returns coordinates
+m049: KILLED [director-086] The decoder rejects unclosed field 0 for the ring
+m050: KILLED [director-086] The decoder rejects unclosed field 1 for the ring
+m051: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m052: KILLED [director-087] The decoder rejects an invalid type for the geometry
+m053: KILLED [director-087] The decoder rejects an invalid array for the geometry
+m054: KILLED [director-087] The decoder rejects an empty polygon for the geometry
+m055: KILLED [director-087] The decoder rejects more than 128 rings for the geometry
+m056: KILLED [director-087] The decoder returns a closed polygon for the geometry
+m057: KILLED [director-087] The decoder removes properties for the geometry
+m058: KILLED [director-088] The new session reports the idle state and zero handles
+m059: KILLED [director-088] The session rejects a value that is not a data pack list
+m060: KILLED [director-088] The session rejects more than eight data packs
+m061: KILLED [director-088] The load call returns false after the caller destroys the session without a source ca
+m062: KILLED [director-088] The load call returns false for a cancelled signal without a source call
+m063: KILLED [director-089] The session disposes handles in reverse order
+m064: KILLED [director-089] The session reports ready after the caller changes a state copy
+m065: KILLED [director-090] The session disposes late resources for the cancelled session
+m066: KILLED [director-090] The session returns false for cancelled work with a null late handle
+m067: KILLED [director-090] The session returns false when the caller destroys it during asset work
+m068: KILLED [director-091] The session keeps the new resources after a new load call
+m069: KILLED [director-092] The session reports a stable source error
+m070: KILLED [director-092] The session rejects stalled work for the deadline
+m071: KILLED [director-092] The session reads the byteLength field once without a registered source
+m072: KILLED [director-092] The session rejects an absent renderer without a source call
+m073: KILLED [director-093] The session rejects bytes that are not a Uint8Array
+m074: KILLED [director-093] The session rejects an empty asset
+m075: KILLED [director-093] The session rejects an asset above the byte limit
+m076: KILLED [director-093] The session rejects a wrong byteLength field
+m077: KILLED [director-093] The session rejects bytes above the total limit
+m078: KILLED [director-093] The session rejects a wrong digest
+m079: KILLED [director-093] The session returns true for exact bytes and digest
+m080: KILLED [director-089] The session rejects a falsy handle with inherited disposal
+m081: KILLED [director-089] The session rejects a handle without a dispose function
+m082: KILLED [director-094] The factory rejects the protocol
+m083: KILLED [director-094] The factory rejects the username
+m084: KILLED [director-094] The factory rejects the password
+m085: KILLED [director-094] The factory rejects the query
+m086: KILLED [director-094] The factory rejects the fragment
+m087: KILLED [director-094] The factory rejects a directory URL with no final slash
+m088: KILLED [director-095] The source sets its fixed options for the asset request
+m089: KILLED [director-096] The source joins distinct stream chunks
+m090: KILLED [director-096] The source rejects excess header bytes for the stream
+m091: KILLED [director-096] The source rejects excess chunk bytes for the stream
+m092: KILLED [director-096] The source returns an empty media type when the header is absent
+m093: KILLED [director-096] The source returns lowercase media type text without parameters
+m094: KILLED [director-097] The source rejects an absent stream
+m095: KILLED [director-097] The source rejects the asset request after failed body cancellation
+m096: KILLED [director-097] The source rejects a failed response without a body
+m097: KILLED [director-097] The source releases the reader lock after a stream error
+m098: KILLED [director-097] The source checks its signal between chunks and rejects the call
+m099: KILLED [director-098] The import rejects nontext input
+m100: KILLED [director-098] The import rejects invalid JSON; [director-098] The import rejects invalid JSON of 52428800 characters; [director-098] The import rejects invalid JSON of 5242881 characters
+m101: KILLED [director-098] The import accepts plain project JSON and returns the project
+m102: KILLED [director-098] The import rejects excess characters
+m103: KILLED [director-098] The import rejects excess UTF8 bytes
+m104: KILLED [director-099] The import rejects a custom text object for the base64
+m105: KILLED [director-099] The import rejects an empty base64 value
+m106: KILLED [director-099] The import rejects an invalid length for the base64
+m107: KILLED [director-099] The import rejects an invalid alignment for the base64
+m108: KILLED [director-099] The import rejects an invalid alphabet for the base64
+m109: KILLED [director-099] The import rejects an invalid padding for the base64
+m110: KILLED [director-099] The import rejects duplicate paths
+m111: KILLED [director-099] The import rejects an unsupported media type
+m112: KILLED [director-099] The import rejects unsupported version
+m113: KILLED [director-100] The import rejects an absent asset
+m114: KILLED [director-100] The import rejects a wrong byteLength field
+m115: KILLED [director-100] The import rejects a pack digest that differs from its asset
+m116: KILLED [director-100] The import rejects an asset digest that differs from its bytes
+m117: KILLED [director-100] The import rejects unused assets
+m118: KILLED [director-100] The import rejects external data pack sources
+m119: KILLED [director-101] The export writes exact bundle metadata
+m120: KILLED [director-102] The export rejects bytes that are not a Uint8Array
+m121: KILLED [director-102] The export rejects an empty asset
+m122: KILLED [director-102] The export rejects an asset above the byte limit
+m123: KILLED [director-102] The export rejects absent assets
+m124: KILLED [director-102] The export rejects declared byteLength
+m125: KILLED [director-102] The export rejects declared digest
+m126: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+m127: KILLED [director-102] The export rejects excess asset total
+m128: KILLED [director-103] The export reuses a shared asset and returns bundle text
+m129: KILLED [director-103] The export rejects shared byteLength
+m130: KILLED [director-103] The export rejects shared digest
+m131: KILLED [director-104] The store copies the asset map
+m132: KILLED [director-104] The store clears stored bytes
+m133: KILLED [director-105] The store rejects absent bytes
+m134: KILLED [director-105] The store rejects bytes above the caller limit
+m135: KILLED [director-105] The store returns an independent byte copy
+m136: KILLED [director-106] The share helpers return an empty asset map for an absent filename
+m137: KILLED [director-106] The share helpers reject the ordinary file limit
+m138: KILLED [director-106] The share helpers return a project with the larger bundle file limit and reject exces
+m139: KILLED [director-107] The helper resolves without a signal
+m140: KILLED [director-107] The helper rejects an early signal
+m141: KILLED [director-107] The helper resolves with an active signal
+m142: KILLED [director-107] The helper rejects a work error
+m143: KILLED [director-107] The helper checks signal state when the work settles and rejects the call
+m144: KILLED [director-107] The helper cancels work that is not complete
+m145: KILLED [director-108] The preview reports exact totals and attribution
+m146: KILLED [director-108] The preview reports the scene ID when the title is absent
+m147: KILLED [director-109] The preview reports included bundle bytes
+m148: KILLED [director-109] The preview reports absent bundle bytes
+m149: KILLED [director-109] The preview reports a configured source; [director-109] The preview reports a configured source for a supplied source ID
+m150: KILLED [director-109] The preview reports an unavailable source
+m151: KILLED [director-110] The preview lists distinct absent layers
+m152: KILLED [director-110] The preview reports external content for applied shot packs
+m153: KILLED [director-110] The preview reports external content for a shot with a source pack ID
+m154: KILLED [director-110] The preview reports no external content without source packs
+m155: KILLED [director-080] The validator returns without an error for its bounds field for the image
+m156: KILLED [director-080] The validator returns without an error for its height field for the image
+m157: KILLED [director-080] The validator returns without an error for its altitudeReference field for the image
+m158: KILLED [director-081] The validator returns without an error for its anchorId field for the media
+m159: KILLED [director-077] The validator returns without an error for a GeoJSON altitudeReference field
+m160: KILLED [director-080] The validator rejects low excess for image bounds field 0
+m161: KILLED [director-080] The validator rejects high excess for image bounds field 0
+m162: KILLED [director-080] The validator rejects low excess for image bounds field 1
+m163: KILLED [director-080] The validator rejects high excess for image bounds field 1
+m164: KILLED [director-080] The validator rejects low excess for image bounds field 2
+m165: KILLED [director-080] The validator rejects high excess for image bounds field 2
+m166: KILLED [director-080] The validator rejects low excess for image bounds field 3
+m167: KILLED [director-080] The validator rejects high excess for image bounds field 3
+m168: KILLED [director-080] The validator rejects an image height above the upper limit
+m169: KILLED [director-082] The validator uses supplied anchors for the scene and returns without an error
+m170: KILLED [director-082] The validator uses absent anchor defaults for the scene and returns without an error
+m171: KILLED [director-085] The decoder accepts both geographic edges for the position and returns coordinates
+m172: SURVIVED
+m173: KILLED [director-088] The new session reports the idle state; [director-088] The new session reports the idle state and zero handles
+m174: KILLED [director-088] The new session reports zero handles
+m175: KILLED [director-089] The session reports one active handle
+m176: KILLED [director-093] The session calls the source with a default limit of 8388608 bytes
+m177: KILLED [director-093] The session returns true without a declared size
+m178: KILLED [director-090] The session returns false for a cancelled signal without an event
+m179: KILLED [director-090] The session checks destroyed state after it reads the signal
+m180: KILLED [director-090] The session returns false for a cleared load call and does not read the signal state
+m181: KILLED [director-090] The load call returns false and disposes a detached resource
+m182: KILLED [director-090] The session disposes the handle before it adds the handle to its list
+m183: KILLED [director-092] The session settles a source error before its deadline and reports idle
+m184: KILLED [director-097] The source rejects early cancellation
+m185: KILLED [director-094] The factory returns a source for HTTP and HTTPS directories
+m186: KILLED [director-098] The import rejects 52428801 characters before byte conversion
+m187: KILLED [director-101] The export accepts scenes without data packs and returns bundle text
+m188: KILLED [director-101] The export returns one asset for a supplied data pack list
+m189: KILLED [director-102] The export accepts absent integrity fields and returns bundle text
+m190: KILLED [director-102] The export accepts an absent digest and returns bundle text
+m191: KILLED [director-103] The export accepts absent byte declarations for the shared export and returns bundle
+m192: KILLED [director-103] The export accepts an absent digest for the shared export and returns bundle text
+m193: KILLED [director-099] The import accepts bytes without padding for the base64 and returns assets
+m194: KILLED [director-108] The preview reports no packs when data pack lists are absent
+m195: KILLED [director-108] The preview reports one pack from the supplied data pack list
+m196: KILLED [director-108] The preview reports Example for the supplied scene title
+m197: KILLED [director-109] The preview reports a configured source for a supplied source ID
+m198: KILLED [director-110] The preview reports no absent layer when a shot has no layers
+m199: KILLED [director-110] The preview reports traffic as absent without layer IDs
+m200: KILLED [director-105] The store rejects 8388609 bytes without a caller limit
+m201: KILLED [director-092] The session rejects an absent renderer without a source call
+m202: KILLED [director-099] The import rejects a custom text object for the base64
+m203: KILLED [director-103] The export key uses the registered source name and returns bundle text
+m204: KILLED [director-103] The export key uses path and returns bundle text
+m205: KILLED [director-110] The preview reports ships as absent when only traffic is configured
+m206: KILLED [director-108] The preview reports three bytes for both assets
+m207: KILLED [director-095] The source sets its credentials option for the asset request
+m208: KILLED [director-095] The source sets its redirect option for the asset request
+m209: KILLED [director-095] The source sets its referrerPolicy option for the asset request
+m210: KILLED [director-095] The source sets its cache option for the asset request
+m211: KILLED [director-085] The decoder rejects field 0 that is not finite for the position
+m212: KILLED [director-085] The decoder rejects field 1 that is not finite for the position
+m213: KILLED [director-085] The decoder rejects field 2 that is not finite for the position
+m214: KILLED [director-096] The source rejects 8388609 bytes without a caller limit
+m215: KILLED [director-077] The validator returns without an error for the id field of a data pack
+m216: KILLED [director-077] The validator returns without an error for the version field of a data pack
+m217: KILLED [director-077] The validator returns without an error for the format field of a data pack
+m218: KILLED [director-077] The validator returns without an error for the source field of a data pack
+m219: KILLED [director-077] The validator returns without an error for the attribution field of a data pack
+m220: KILLED [director-077] The validator returns without an error for the placement field of a data pack
+m221: KILLED [director-079] The validator returns without an error for the byteLength field of a data pack
+m222: KILLED [director-079] The validator returns without an error for the sha256 field of a data pack
+m223: KILLED [director-077] The validator returns without an error for its source name field
+m224: KILLED [director-077] The validator returns without an error for its source path field
+m225: KILLED [director-078] The validator returns without an error for its attribution text field
+m226: KILLED [director-078] The validator returns without an error for its attribution license field
+m227: KILLED [director-078] The validator returns without an error for its attribution url field
+m228: KILLED [director-100] The import checks its second asset reference and rejects the call
+m229: KILLED [director-100] The import checks its second asset digest and rejects the call
+m230: KILLED [director-103] The export accepts equal shared integrity and returns bundle text
+m231: KILLED [director-102] The export rejects absent asset bytes
+m232: KILLED [director-092] The session settles an early internal signal and reports idle
+m233: KILLED [director-093] The session calls the renderer with the anchors and returns true
+m234: KILLED [director-106] The share helpers call throwIfAborted three times and return an empty asset map
+m235: KILLED [director-102] The export rejects encoded bundle text above 52428800 bytes
+m236: KILLED [director-102] The export keeps its total after an asset without a byte length
+m237: KILLED [director-089] The session reports ready after asset work
+m238: KILLED [director-080] The validator returns without an error for the fields of the image placement
+m239: KILLED [director-081] The validator returns without an error for the fields of the media placement
+m240: KILLED [director-089] The session calls the GeoJSON renderer once and returns true
+m241: KILLED [director-089] The session calls the image renderer once and returns true
+m242: KILLED [director-089] The session calls the media renderer once and returns true
+m243: KILLED [director-097] The source stops between stream chunks
+m244: KILLED [director-082] The manifest rejects duplicate IDs, unknown IDs, wrong placement, URL syntax and cred
+m245: KILLED [director-080] The manifest checks given image bounds and media anchor references
+m246: KILLED [director-095 director-096 director-097] The directory source sends no credentials and rejects inval
+m247: KILLED [director-087] GeoJSON keeps stable geometry IDs without properties or remote style hints
+m248: KILLED [director-089] The data pack session removes resources and cancels the transport on Stop
+m249: KILLED [director-091] The data pack session replaces source work and ignores its late bytes
+m250: KILLED [director-090] The data pack session disposes late renderer resources after cancellation and keeps t
+m251: KILLED [director-090] The data pack session disposes a renderer resource when its signal stops after the re
+m252: KILLED [director-092] The deadline stops a stalled registered source and a data pack error removes earlier
+m253: KILLED [director-093] The data pack session checks bytes and integrity before the renderer call and rejects
+m254: KILLED [director-097] The directory source cancels response bodies and sends no asset request with a cancel
+m255: KILLED [director-101] The export copies bytes and attribution and keeps the project without an asset reques
+m256: KILLED [director-099] The import rejects invalid bytes, unknown fields, traversal, duplicates, absent asset
+m257: KILLED [director-102] The export rejects excess bytes, wrong integrity and absent assets
+m258: KILLED [director-103] The export writes one asset and rejects integrity declarations that differ for the da
+m259: KILLED [director-109] The preview reports unavailable sources, absent layers and absent bundle assets
+m260: KILLED [director-104] The store removes old data after replacement and uses no network source
+m261: KILLED [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled
+m262: KILLED [director-107] The export stops before the next asset and returns no partial output
+m263: KILLED [director-101] The export returns bundle text for a source path of 1024 characters
+m264: KILLED [director-077] The validator returns without an error for geojson
+m265: KILLED [director-077] The validator returns without an error for image
+m266: KILLED [director-077] The validator returns without an error for media
+m267: KILLED [director-080] The validator rejects bounds field 0 for the image
+m268: KILLED [director-080] The validator rejects bounds field 1 for the image
+m269: KILLED [director-080] The validator rejects bounds field 2 for the image
+m270: KILLED [director-080] The validator rejects bounds field 3 for the image
+m271: KILLED [director-092] The session rejects stalled work at the 19 milliseconds deadline
+m272: KILLED [director-092] The session rejects stalled work at the default 15000 milliseconds deadline
+m273: KILLED [director-092] The session removes resources after a later error
+m274: KILLED [director-099] The import accepts the application/json media type and returns assets
+m275: KILLED [director-099] The import accepts the application/geo+json media type and returns assets
+m276: KILLED [director-099] The import accepts the image/png media type and returns assets
+m277: KILLED [director-099] The import accepts the video/mp4 media type and returns assets
+m278: KILLED [director-099] The import accepts the video/webm media type and returns assets
+m279: KILLED [director-099] The import accepts the audio/mpeg media type and returns assets
+m280: KILLED [director-099] The import accepts the audio/ogg media type and returns assets
+m281: KILLED [director-099] The import accepts the audio/wav media type and returns assets
+m282: KILLED [director-099] The import accepts the audio/webm media type and returns assets
+m283: KILLED [director-089] The session rejects a falsy handle with inherited disposal
+m284: KILLED [director-088] The session returns false and does not read the caller signal state after the caller
+m285: KILLED [director-083] The decoder accepts the exact feature limit of the collection and returns 2000 featur
+m286: KILLED [director-084] The decoder accepts the exact text limit of the feature ID and returns a feature with
+m287: KILLED [director-085] The decoder accepts the exact position limit of the collection and returns 50000 posi
+m288: KILLED [director-087] The decoder accepts the exact ring limit of the polygon and returns 128 rings
+m289: KILLED [director-076] The validator rejects a path above its text limit for the asset path
+m290: KILLED [director-102] The export accepts its exact asset total and returns bundle text
+m291: KILLED [director-089] The session keeps every data pack handle
+m292: KILLED [director-095] The source sets its signal option for the asset request
+m293: KILLED [director-096] The source accepts the exact byte limit of the stream and returns bytes
+m294: KILLED [director-096] The source accepts the exact byte limit of the stream and returns bytes
+m295: KILLED [director-092] The session rejects a falsy custom source
+m296: KILLED [director-101] The export writes exact bundle metadata
+m297: KILLED [director-101] The export writes exact bundle metadata
+m298: KILLED [director-101] The export writes exact bundle metadata
+m299: KILLED [director-101] The export writes exact bundle metadata
+m300: KILLED [director-101] The export writes exact bundle metadata
+m301: KILLED [director-101] The export writes exact bundle metadata
+m302: KILLED [director-105] The store returns an independent byte copy
+m303: KILLED [director-079] The validator rejects 63 characters for the digest
+m304: KILLED [director-079] The validator rejects 65 characters for the digest
+m305: KILLED [director-079] The validator rejects a prefix for the digest
+m306: KILLED [director-079] The validator rejects a suffix for the digest
+m307: KILLED [director-079] The validator rejects uppercase text for the digest
+m308: KILLED [director-080] The validator rejects equal longitude edges for the image
+m309: KILLED [director-080] The validator rejects equal latitude edges for the image
+m310: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m311: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m312: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m313: KILLED [director-080] The validator returns without an error for all geographic limits for the image
+m314: KILLED [director-082] The validator does not read a data pack list from the parent object of the scene and
+m315: KILLED [director-080] The validator rejects text for each geographic field for the image
+m316: KILLED [director-080] The validator rejects text for each geographic field for the image
+m317: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m318: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m319: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m320: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the a
+m321: KILLED [director-076] The validator rejects URL syntax with a stable message for the asset path
+m322: KILLED [director-088] The session returns true for eight data packs
+m323: KILLED [director-093] The session returns true at the asset byte limit
+m324: KILLED [director-093] The session returns true at the total byte limit
+m325: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the
+m326: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the
+m327: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the
+m328: KILLED [director-089] The session removes its deadline after success
+m329: KILLED [director-089] The session removes its deadline after clear
+m330: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m331: KILLED [director-089] The session disposes both ready handles in reverse order and reports idle
+m332: KILLED [director-088] The session checks every declaration before the source call and rejects the call
+m333: KILLED [director-083] The decoder rejects invalid UTF8 bytes
+m334: KILLED [director-083] The decoder rejects null
+m335: KILLED [director-084] The decoder rejects a null feature
+m336: KILLED [director-084] The decoder rejects a null feature
+m337: KILLED [director-087] The decoder rejects absent geometry
+m338: KILLED [director-087] The decoder rejects absent geometry
+m339: KILLED [director-087] The decoder rejects absent geometry
+m340: KILLED [director-095] The source uses the default fetch function and returns bytes
+m341: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+m342: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
+m343: KILLED [director-099] The import returns assets at the base64 length limit and rejects the next aligned len
+m344: KILLED [director-106] The share helpers accept the project file limit and reject one more byte
+m345: KILLED [director-106] The share helpers accept the bundle file limit and reject one more byte
+m346: KILLED [director-102] The export rejects an unsupported media type
+m347: KILLED [director-099] The import rejects 65 different asset paths
+m348: KILLED [director-099] The import returns assets at the total byte limit and rejects one more byte
+m349: KILLED [director-099] The import returns assets at the total byte limit and rejects one more byte
+m350: KILLED [director-105] The store rejects a cancelled source call
+m351: KILLED [director-107] The bundle helpers stop import before an asset
+m352: KILLED [director-107] The bundle helpers stop import after a digest
+m353: KILLED [director-107] The bundle helpers stop export before an asset
+m354: KILLED [director-107] The bundle helpers stop export after asset bytes
+m355: KILLED [director-107] The bundle helpers stop export after a digest
+m356: KILLED [director-108] The preview counts shots apart from scenes
+m357: KILLED [director-108] The preview counts shots apart from scenes
+m358: KILLED [director-110] The preview lists distinct absent layers
+m359: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m360: KILLED [director-077] The validator returns without an error for 256 characters for its ID and rejects 257
+m361: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rej
+m362: KILLED [director-077] The validator returns without an error for 256 characters for its source name and rej
+m363: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m364: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m365: KILLED [director-078] The validator returns without an error for its text limits and rejects excess text fo
+m366: KILLED [director-076] The validator returns without an error for 1024 characters and rejects 1025 for the a
+m367: KILLED [director-102] The export rejects excess asset total
+m368: KILLED [director-085] The decoder rejects negative longitude for the position
+m369: KILLED [director-085] The decoder rejects negative latitude for the position
+m370: KILLED [director-085] The decoder accepts the limit for negative longitude for the position and returns coo
+m371: KILLED [director-085] The decoder accepts the limit for negative latitude for the position and returns coor
+m372: KILLED [director-085] The decoder rejects four coordinates for the position
+m373: KILLED [director-085] The decoder rejects one coordinate for the position
+m374: KILLED [director-076] The validator rejects .x for the asset path
+m375: KILLED [director-076] The validator rejects x?a=1 for the asset path
+m376: KILLED [director-079] The validator returns without an error for one byte
+m377: KILLED [director-080] The validator rejects bounds outside an array for the image
+m378: KILLED [director-082] The validator rejects nine distinct data packs for the scene
+m379: KILLED [director-082] The validator returns without an error for eight distinct data packs for the scene
+m380: KILLED [director-089] The session reports its state during asset work
+m381: KILLED [director-096] The source accepts its default byte limit and returns bytes
+m382: KILLED [director-098] The import accepts the character limit and returns the project
+m383: KILLED [director-098] The import returns one asset at the multibyte text limit and rejects one more byte
+m384: KILLED [director-098] The import rejects an invalid plain project
+m385: KILLED [director-098] The import rejects a null project
+m386: KILLED [director-099] The import rejects an extra top-level field
+m387: KILLED [director-099] The import rejects an invalid bundle project
+m388: KILLED [director-099] The import accepts 64 distinct assets and returns assets
+m389: SURVIVED
+m390: KILLED [director-101] The export calls the resolver with the data pack and signal
+m391: KILLED [director-101] The export calls the resolver with the data pack and signal
+m392: KILLED [director-102] The export accepts the text byte limit and returns bundle text
+m393: KILLED [director-105] The store accepts the caller byte limit and returns byte copies
+m394: KILLED [director-093] The session calls the renderer with the data pack and the scene anchors and returns t
+m395: KILLED [director-093] The session calls the renderer with the data pack and the scene anchors and returns t
+m396: KILLED [director-089] The session removes source listeners after success
+m397: KILLED [director-089] The session removes source listeners after success
+m398: KILLED [director-089] The session removes source listeners after error
+m399: KILLED [director-079] The validator returns without an error for its byte limit
+m400: KILLED [director-080] The validator returns without an error for its minimum height for the image
+m401: KILLED [director-080] The validator returns without an error for its maximum height for the image
+m402: KILLED [director-085] The decoder accepts its minimum height for the position and returns coordinates
+m403: KILLED [director-085] The decoder accepts its maximum height for the position and returns coordinates
+m404: KILLED [director-107] The helper removes its listener after cancel
+m405: KILLED [director-107] The helper removes its listener after success
+m406: KILLED [director-107] The helper removes its listener after error
+m407: KILLED [director-107] The helper removes its listener after success
+m408: KILLED [director-101] The export rejects an invalid project
+m409: KILLED [director-107] The import stops before the second digest
+m410: KILLED [director-107] The export stops before the second resolver call
+m411: KILLED [director-082] The validator rejects a reference in the second shot
+m412: KILLED [director-082] The validator rejects a reference in the second shot
+m413: KILLED [director-099 director-102] The bundle helpers reject an SVG media type during import and export
+m414: KILLED [director-077] The validator rejects an unlisted geojsonx format
+m415: KILLED [director-094] The factory rejects the file protocol
+m416: KILLED [director-077 director-082] The validator rejects an invalid second data pack
+m417: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m418: KILLED [director-082] The validator rejects an unknown second reference ID
+m419: KILLED [director-084] The decoder rejects the second feature
+m420: KILLED [director-085 director-086] The decoder rejects the second line position
+m421: KILLED [director-087] The decoder rejects the second ring
+m422: KILLED [director-088] The session rejects an invalid second data pack before the source call
+m423: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
+m424: KILLED [director-080] The validator rejects bounds field 3 for the image
+m425: KILLED [director-076] The validator rejects an invalid second path segment
+m426: KILLED [director-085] The decoder rejects an invalid second coordinate
+m427: KILLED [director-086] The decoder rejects unclosed field 2 for the ring
+m428: KILLED [director-089] The session keeps every data pack handle
+m429: KILLED [director-092] The session removes resources after a later error
+m430: KILLED [director-096] The source joins chunks of different lengths
+m431: KILLED [director-101] The export includes the asset of the second scene and returns bundle text
+m432: KILLED [director-101] The export writes each asset index and filename
+m433: KILLED [director-100] The import checks its second asset reference and rejects the call
+m434: KILLED [director-101] The export writes each asset index and filename
+m435: KILLED [director-101] The export writes each asset index and filename
+m436: KILLED [director-104] The store counts the second asset
+m437: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m438: KILLED [director-108] The preview lists the second data pack
+m439: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m440: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m441: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m442: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m443: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m444: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m445: KILLED [director-097] The source cancels before it reads the second chunk
+m446: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
+m447: KILLED [director-107] The import stops after the second digest
+m448: KILLED [director-107] The export stops after the second digest
+m449: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m450: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m451: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m452: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m453: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m454: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m455: KILLED [director-077] The validator rejects the extra fields script and adapters in the data pack
+m456: KILLED [director-077] The validator rejects the extra fields script and adapters in the source
+m457: KILLED [director-078] The validator rejects the extra fields script and adapters in the attribution
+m458: KILLED [director-080] The validator rejects the extra fields script and adapters in the image placement
+m459: KILLED [director-077] The validator rejects the extra fields script and adapters in the media placement
+m460: KILLED [director-077] The validator rejects the extra fields script and adapters in the GeoJSON placement
+m461: KILLED [director-099] The import rejects the extra fields script and adapters in the top-level object
+m462: KILLED [director-099] The import rejects the extra fields script and adapters in the asset
+m463: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m464: KILLED [director-088 director-093] The session calls both registered sources and both renderers
+m465: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m466: KILLED [director-110] The preview reports both absent named layers without layer IDs
+m467: KILLED [director-110] The preview reports no absent layer when both layer IDs are configured
+m468: KILLED [director-109] The preview reports both configured sources as configured
+m469: KILLED [director-082] The validator returns without an error for eight references and rejects nine referenc
+m470: KILLED [director-081] The validator returns without an error for a reference to the second anchor
+m471: KILLED [director-081 director-093] The session returns true for a reference to the second anchor
+m472: KILLED [director-104] The store counts the second asset
+m473: KILLED [director-104] The store counts the second asset
+m474: KILLED [director-104] The store counts the second asset
+m475: KILLED [director-108 director-110] The preview counts the second scene and shot and adds the bytes of the s
+m476: KILLED [director-101] The export encodes the second byte chunk and returns bundle text
+m477: KILLED [director-093] The session returns true for exact bytes and digest
+m478: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+m479: KILLED [director-099] The import returns the bytes 1, 2 and 3 and the literal digest
+SURVIVORS: [('m172', 'SURVIVED'), ('m389', 'SURVIVED')]
+```
+
+### Checks outside this pass
+
+Pass 9 note: the host rule excludes Docker, make, ratchet, gates, adopt, waive and archive.
+The worker did not run them.
+The worker did not push or use gh.
+The lead must run the image checks and the next review round.

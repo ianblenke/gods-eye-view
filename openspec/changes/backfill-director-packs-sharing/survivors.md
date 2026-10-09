@@ -23,7 +23,7 @@ The source audit is [audit.md](audit.md).
 
 | id | file:line | class | verdict | test title or probe file or limit name |
 | --- | --- | --- | --- | --- |
-| a0004 | src/director/packs/manifest.js:10 | `object` | KILLED | [director-088] The session rejects a caller change to the data pack limits |
+| a0004 | src/director/packs/manifest.js:10 | `object` | KILLED | [director-088] The public data pack limits throw a TypeError when a caller assigns a new value |
 | a0107 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The validator returns without an error for z in both character positions for the asset path |
 | a0108 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The validator returns without an error for Z in both character positions for the asset path |
 | a0110 | src/director/packs/manifest.js:24 | `regex` | KILLED | [director-076] The validator returns without an error for z in both character positions for the asset path |
@@ -59,11 +59,11 @@ The source audit is [audit.md](audit.md).
 | a0431 | src/director/packs/manifest.js:76 | `arguments` | KILLED | [director-079] The validator names the integer field and rejects the call |
 | a0433 | src/director/packs/manifest.js:76 | `argument-drop` | KILLED | [director-079] The validator names the integer field and rejects the call |
 | a0457 | src/director/packs/manifest.js:79 | `operand-order` | KILLED | [director-079] The validator checks the digest type before it converts text and rejects the call |
-| a0484 | src/director/packs/manifest.js:84 | `statement` | KILLED | [director-080] The validator names the extra placement field and rejects the call |
-| a0485 | src/director/packs/manifest.js:84 | `statement` | KILLED | [director-080] The validator names the extra placement field and rejects the call |
-| a0486 | src/director/packs/manifest.js:84 | `statement` | KILLED | [director-080] The validator names the extra placement field and rejects the call |
-| a0487 | src/director/packs/manifest.js:83 | `statement` | KILLED | [director-080] The validator names the extra placement field and rejects the call |
-| a0489 | src/director/packs/manifest.js:86 | `arguments` | KILLED | [director-080] The validator names the extra placement field and rejects the call |
+| a0484 | src/director/packs/manifest.js:84 | `statement` | KILLED | [director-077] The validator names the extra placement field and rejects the call |
+| a0485 | src/director/packs/manifest.js:84 | `statement` | KILLED | [director-077] The validator names the extra placement field and rejects the call |
+| a0486 | src/director/packs/manifest.js:84 | `statement` | KILLED | [director-077] The validator names the extra placement field and rejects the call |
+| a0487 | src/director/packs/manifest.js:83 | `statement` | KILLED | [director-077] The validator names the extra placement field and rejects the call |
+| a0489 | src/director/packs/manifest.js:86 | `arguments` | KILLED | [director-077] The validator names the extra placement field and rejects the call |
 | a0536 | src/director/packs/manifest.js:95 | `arguments` | KILLED | [director-081] The validator names an unknown anchor and rejects the call |
 | a0538 | src/director/packs/manifest.js:95 | `argument-drop` | KILLED | [director-081] The validator names an unknown anchor and rejects the call |
 | a0552 | src/director/packs/manifest.js:98 | `arguments` | KILLED | [director-080] The validator checks the height reference before it checks the bounds and rejects the call |
@@ -117,13 +117,13 @@ The source audit is [audit.md](audit.md).
 | a1342 | src/director/packs/session.js:10 | `arguments` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
 | a1343 | src/director/packs/session.js:10 | `argument-drop` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
 | a1344 | src/director/packs/session.js:10 | `method` | KILLED | [director-092] The source signal event stops work before the renderer |
-| a1392 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The session returns true and does not read the reason after the source promise settles |
-| a1393 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The session returns true and does not read the reason after the source promise settles |
-| a1394 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The session returns true and does not read the reason after the source promise settles |
-| a1395 | src/director/packs/session.js:19 | `statement` | KILLED | [director-089] The session returns true and does not read the reason after the source promise settles |
+| a1392 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The session returns true and does not read the reason after the work promise settles |
+| a1393 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The session returns true and does not read the reason after the work promise settles |
+| a1394 | src/director/packs/session.js:20 | `statement` | KILLED | [director-089] The session returns true and does not read the reason after the work promise settles |
+| a1395 | src/director/packs/session.js:19 | `statement` | KILLED | [director-089] The session returns true and does not read the reason after the work promise settles |
 | a1396 | src/director/packs/session.js:20 | `value` | EQUIVALENT | [evidence/probe-truth-state.txt](evidence/probe-truth-state.txt) |
 | a1397 | src/director/packs/session.js:20 | `value` | EQUIVALENT | [evidence/probe-truth-state.txt](evidence/probe-truth-state.txt) |
-| a1398 | src/director/packs/session.js:20 | `boolean` | KILLED | [director-089] The session returns true and does not read the reason after the source promise settles |
+| a1398 | src/director/packs/session.js:20 | `boolean` | KILLED | [director-089] The session returns true and does not read the reason after the work promise settles |
 | a1415 | src/director/packs/session.js:26 | `condition` | EQUIVALENT | [evidence/probe-late-rejection.txt](evidence/probe-late-rejection.txt) |
 | a1417 | src/director/packs/session.js:26 | `branch` | EQUIVALENT | [evidence/probe-late-rejection.txt](evidence/probe-late-rejection.txt) |
 | a1420 | src/director/packs/session.js:27 | `statement` | KILLED | [director-089] The session reads the reason zero times after a later event for error |
@@ -152,7 +152,7 @@ The source audit is [audit.md](audit.md).
 | a1549 | src/director/packs/session.js:66 | `default` | EQUIVALENT | [evidence/probe-empty-options.txt](evidence/probe-empty-options.txt) |
 | a1550 | src/director/packs/session.js:66 | `default` | EQUIVALENT | [evidence/probe-empty-options.txt](evidence/probe-empty-options.txt) |
 | a1567 | src/director/packs/session.js:68 | `operand-order` | KILLED | [director-088 director-091] The session checks the new list after it disposes old resources |
-| a1613 | src/director/packs/session.js:74 | `operand-order` | KILLED | [director-088] The session returns false without a caller signal access after destruction |
+| a1613 | src/director/packs/session.js:74 | `operand-order` | KILLED | [director-088] The session returns false and does not read the caller signal state after the caller destroys it |
 | a1618 | src/director/packs/session.js:75 | `condition` | KILLED | [director-088] The session returns true for an empty list without asset work |
 | a1620 | src/director/packs/session.js:75 | `statement` | KILLED | [director-088] The session returns true for an empty list without asset work |
 | a1623 | src/director/packs/session.js:75 | `predicate` | KILLED | [director-088] The session returns true for an empty list without asset work |
@@ -169,8 +169,8 @@ The source audit is [audit.md](audit.md).
 | a1675 | src/director/packs/session.js:87 | `object` | KILLED | [director-089] The session sets and removes the caller listener |
 | a1676 | src/director/packs/session.js:87 | `object` | KILLED | [director-089] The session sets and removes the caller listener |
 | a1677 | src/director/packs/session.js:87 | `boolean` | KILLED | [director-089] The session sets and removes the caller listener |
-| a1691 | src/director/packs/session.js:89 | `arguments` | KILLED | [director-092] The session gives its cause to the source signal for the deadline and rejects the call |
-| a1692 | src/director/packs/session.js:89 | `argument-drop` | KILLED | [director-092] The session gives its cause to the source signal for the deadline and rejects the call |
+| a1691 | src/director/packs/session.js:89 | `arguments` | KILLED | [director-092] The session gives its reason to the source signal for the deadline and rejects the call |
+| a1692 | src/director/packs/session.js:89 | `argument-drop` | KILLED | [director-092] The session gives its reason to the source signal for the deadline and rejects the call |
 | a1717 | src/director/packs/session.js:97 | `operand-order` | EQUIVALENT | [evidence/probe-registry-order.txt](evidence/probe-registry-order.txt) |
 | a1722 | src/director/packs/session.js:98 | `exception` | KILLED | [director-092] The session does not read the global error property for absent source and rejects the call |
 | a1757 | src/director/packs/session.js:107 | `statement` | KILLED | [director-089] The session checks the signal before it removes the timer and reports the ready state |
@@ -199,7 +199,7 @@ The source audit is [audit.md](audit.md).
 | a2027 | src/director/packs/source.js:10 | `operand-order` | EQUIVALENT | [evidence/probe-url-fields.txt](evidence/probe-url-fields.txt) |
 | a2032 | src/director/packs/source.js:10 | `operand-order` | EQUIVALENT | [evidence/probe-url-fields.txt](evidence/probe-url-fields.txt) |
 | a2210 | src/director/packs/source.js:57 | `value` | KILLED | [director-096] The source joins chunks of different lengths |
-| a2254 | src/director/sharing/bundle.js:7 | `object` | KILLED | [director-102] The bundle helpers reject a caller change to the share limits |
+| a2254 | src/director/sharing/bundle.js:7 | `object` | KILLED | [director-102] The share limits throw a TypeError when a caller assigns a new value |
 | a2385 | src/director/sharing/bundle.js:32 | `relational` | KILLED | [director-101] The export reads no chunk past the asset end |
 | a2439 | src/director/sharing/bundle.js:38 | `operand-order` | KILLED | [director-099] The import checks the base64 type before it converts text and rejects the call |
 | a2444 | src/director/sharing/bundle.js:38 | `operand-order` | KILLED | [director-099] The import rejects a null base64 value |
@@ -270,11 +270,11 @@ The source audit is [audit.md](audit.md).
 | a3403 | src/director/sharing/bundle.js:193 | `arguments` | KILLED | [director-102] The export rejects encoded bundle text above 52428800 bytes |
 | a3405 | src/director/sharing/bundle.js:193 | `argument-drop` | KILLED | [director-102] The export rejects encoded bundle text above 52428800 bytes |
 | a3424 | src/director/sharing/bundle.js:201 | `default` | EQUIVALENT | [evidence/probe-empty-map.txt](evidence/probe-empty-map.txt) |
-| a3477 | src/director/sharing/bundle.js:212 | `default` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
-| a3484 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The store rejects an invalid path that it holds for the byte store |
-| a3485 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The store rejects an invalid path that it holds for the byte store |
-| a3486 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The store rejects an invalid path that it holds for the byte store |
-| a3487 | src/director/sharing/bundle.js:213 | `statement` | KILLED | [director-105] The store rejects an invalid path that it holds for the byte store |
+| a3477 | src/director/sharing/bundle.js:212 | `default` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
+| a3484 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The store rejects an invalid path that it holds |
+| a3485 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The store rejects an invalid path that it holds |
+| a3486 | src/director/sharing/bundle.js:214 | `statement` | KILLED | [director-105] The store rejects an invalid path that it holds |
+| a3487 | src/director/sharing/bundle.js:213 | `statement` | KILLED | [director-105] The store rejects an invalid path that it holds |
 | a3635 | src/director/sharing/preview.js:6 | `default` | EQUIVALENT | [evidence/probe-empty-options.txt](evidence/probe-empty-options.txt) |
 | a3636 | src/director/sharing/preview.js:6 | `default` | EQUIVALENT | [evidence/probe-empty-options.txt](evidence/probe-empty-options.txt) |
 | a3637 | src/director/sharing/preview.js:6 | `default` | EQUIVALENT | [evidence/probe-empty-set.txt](evidence/probe-empty-set.txt) |
@@ -354,7 +354,7 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9027 | src/director/packs/manifest.js:74 | `statement-order` | KILLED | [director-079] The validator checks byteLength before digest and rejects the call |
 | a9028 | src/director/packs/manifest.js:78 | `statement-order` | KILLED | [director-079] The validator checks the digest before it reads the placement |
 | a9029 | src/director/packs/manifest.js:82 | `statement-order` | KILLED | [director-079] The validator returns without an error for each hexadecimal digest character |
-| a9030 | src/director/packs/manifest.js:84 | `statement-order` | KILLED | [director-080] The validator names the placement object and rejects the call |
+| a9030 | src/director/packs/manifest.js:84 | `statement-order` | KILLED | [director-077] The validator names the placement object and rejects the call |
 | a9031 | src/director/packs/manifest.js:55 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9031 |
 | a9032 | src/director/packs/manifest.js:56 | `statement-order` | KILLED | [director-078] The validator names the link protocol and rejects the call |
 | a9033 | src/director/packs/manifest.js:57 | `statement-order` | KILLED | [director-078 director-079] The validator checks URL before byteLength and rejects the call |
@@ -414,19 +414,19 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9087 | src/director/packs/session.js:14 | `statement-order` | KILLED | [director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order |
 | a9088 | src/director/packs/session.js:9 | `statement-order` | KILLED | [director-092] The session reads the source signal reason once during another source signal event |
 | a9089 | src/director/packs/session.js:17 | `statement-order` | KILLED | [director-092] The session rejects the load call for a source signal event during listener removal after success |
-| a9090 | src/director/packs/session.js:20 | `statement-order` | KILLED | [director-089] The session returns true and does not read the reason after the source promise settles |
+| a9090 | src/director/packs/session.js:20 | `statement-order` | KILLED | [director-089] The session returns true and does not read the reason after the work promise settles |
 | a9091 | src/director/packs/session.js:25 | `statement-order` | KILLED | [director-092] The session rejects the load call for a source signal event during listener removal after error |
 | a9092 | src/director/packs/session.js:27 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9092 |
-| a9093 | src/director/packs/session.js:40 | `default-shape` | KILLED | [director-088] The session reports idle state after creation |
+| a9093 | src/director/packs/session.js:40 | `default-shape` | KILLED | [director-088] The new session reports the idle state and zero handles |
 | a9094 | src/director/packs/session.js:40 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9094 |
 | a9095 | src/director/packs/session.js:40 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9095 |
 | a9096 | src/director/packs/session.js:37 | `destructure-remove` | KILLED | [director-088] The session reads source entries before renderer entries |
 | a9097 | src/director/packs/session.js:38 | `destructure-remove` | KILLED | [director-088] The session reads source entries before renderer entries |
 | a9098 | src/director/packs/session.js:38 | `destructure-remove` | KILLED | [director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order |
-| a9099 | src/director/packs/session.js:37 | `default-shape` | KILLED | [director-088] The session reports idle state after creation |
+| a9099 | src/director/packs/session.js:37 | `default-shape` | KILLED | [director-088] The new session reports the idle state and zero handles |
 | a9100 | src/director/packs/session.js:37 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9100 |
 | a9101 | src/director/packs/session.js:37 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9101 |
-| a9102 | src/director/packs/session.js:38 | `default-shape` | KILLED | [director-088] The session reports idle state after creation |
+| a9102 | src/director/packs/session.js:38 | `default-shape` | KILLED | [director-088] The new session reports the idle state and zero handles |
 | a9103 | src/director/packs/session.js:38 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9103 |
 | a9104 | src/director/packs/session.js:38 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9104 |
 | a9105 | src/director/packs/session.js:39 | `default-shape` | KILLED | [director-093] The session returns true for exact bytes and digest |
@@ -482,7 +482,7 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9155 | src/director/packs/session.js:117 | `statement-order` | KILLED | [director-093] The session checks total bytes before it reads the digest |
 | a9156 | src/director/packs/session.js:119 | `statement-order` | KILLED | [director-093] The data pack session checks bytes and integrity before the renderer call and rejects inherited registered source names |
 | a9157 | src/director/packs/session.js:130 | `statement-order` | KILLED | [director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order |
-| a9158 | src/director/packs/session.js:135 | `statement-order` | KILLED | [director-090] The session guard rejects a detached resource |
+| a9158 | src/director/packs/session.js:135 | `statement-order` | KILLED | [director-090] The load call returns false and disposes a detached resource |
 | a9159 | src/director/packs/session.js:137 | `statement-order` | KILLED | [director-090] The session disposes the handle before it adds the handle to its list |
 | a9160 | src/director/packs/session.js:99 | `await-remove` | KILLED | [director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order |
 | a9161 | src/director/packs/session.js:108 | `destructure-remove` | KILLED | [director-089] The session attaches the source listener, checks the source signal state and reads the work promise in that order |
@@ -504,7 +504,7 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9177 | src/director/packs/source.js:6 | `default-shape` | KILLED | [director-095] The source uses the default fetch function and returns bytes |
 | a9178 | src/director/packs/source.js:6 | `default-shape` | KILLED | [director-095] The source uses the default fetch function and returns bytes |
 | a9179 | src/director/packs/source.js:8 | `statement-order` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
-| a9180 | src/director/packs/source.js:9 | `statement-order` | KILLED | [director-094] The factory rejects protocol |
+| a9180 | src/director/packs/source.js:9 | `statement-order` | KILLED | [director-094] The factory rejects the protocol |
 | a9181 | src/director/packs/source.js:8 | `new-argument` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9182 | src/director/packs/source.js:8 | `new-argument` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9183 | src/director/packs/source.js:20 | `destructure-remove` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
@@ -514,7 +514,7 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9187 | src/director/packs/source.js:20 | `default-shape` | KILLED | [director-096] The source rejects 8388609 bytes without a caller limit |
 | a9188 | src/director/packs/source.js:20 | `default-shape` | KILLED | [director-096] The source joins chunks of different lengths |
 | a9189 | src/director/packs/source.js:20 | `default-shape` | KILLED | [director-096] The source joins chunks of different lengths |
-| a9190 | src/director/packs/source.js:21 | `statement-order` | KILLED | [director-095] The source checks the path before it checks the caller signal and rejects the call |
+| a9190 | src/director/packs/source.js:21 | `statement-order` | KILLED | [director-095] The source checks the path before it checks the caller signal and rejects the invalid path |
 | a9191 | src/director/packs/source.js:22 | `statement-order` | KILLED | [director-097] The source rejects early cancellation |
 | a9192 | src/director/packs/source.js:23 | `statement-order` | KILLED | [director-097] The source waits for stream cancellation before it releases the reader lock |
 | a9193 | src/director/packs/source.js:30 | `statement-order` | KILLED | [director-097] The source waits for body cancellation before it rejects the asset request |
@@ -591,7 +591,7 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9264 | src/director/sharing/bundle.js:88 | `statement-order` | KILLED | [director-099] The import checks media type before duplicate path and rejects the call |
 | a9265 | src/director/sharing/bundle.js:89 | `statement-order` | KILLED | [director-099] The import checks duplicate path before base64 and rejects the call |
 | a9266 | src/director/sharing/bundle.js:90 | `statement-order` | KILLED | [director-099] The import accepts each base64 character in plain text and returns assets |
-| a9267 | src/director/sharing/bundle.js:91 | `statement-order` | KILLED | [director-099] The import accepts the total byte limit and rejects one more byte and returns assets |
+| a9267 | src/director/sharing/bundle.js:91 | `statement-order` | KILLED | [director-099] The import returns assets at the total byte limit and rejects one more byte |
 | a9268 | src/director/sharing/bundle.js:92 | `statement-order` | KILLED | [director-099] The import checks asset bytes before the digest call and rejects the call |
 | a9269 | src/director/sharing/bundle.js:93 | `statement-order` | KILLED | [director-107] The bundle helpers stop import after a digest |
 | a9270 | src/director/sharing/bundle.js:94 | `statement-order` | KILLED | [director-100 director-107] The import checks the signal before it compares digests |
@@ -601,10 +601,10 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9274 | src/director/sharing/bundle.js:102 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9274 |
 | a9275 | src/director/sharing/bundle.js:103 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9275 |
 | a9276 | src/director/sharing/bundle.js:117 | `statement-order` | KILLED | [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file |
-| a9277 | src/director/sharing/bundle.js:120 | `statement-order` | KILLED | [director-106] The share helpers check the file limit before they read the signal and reject the invalid input |
-| a9278 | src/director/sharing/bundle.js:127 | `statement-order` | KILLED | [director-106 director-107] The share helpers check the signal before they read text and reject the invalid input |
-| a9279 | src/director/sharing/bundle.js:128 | `statement-order` | KILLED | [director-107] The share helpers check the signal after the text promise settles and return the project |
-| a9280 | src/director/sharing/bundle.js:129 | `statement-order` | KILLED | [director-106] The share helpers call throwIfAborted three times and return the project |
+| a9277 | src/director/sharing/bundle.js:120 | `statement-order` | KILLED | [director-106] The share helpers check the file limit before they read the signal and reject excess files |
+| a9278 | src/director/sharing/bundle.js:127 | `statement-order` | KILLED | [director-106 director-107] The share helpers check the signal before they read text and reject cancellation |
+| a9279 | src/director/sharing/bundle.js:128 | `statement-order` | KILLED | [director-107] The share helpers check the signal after the text promise settles and report the call order |
+| a9280 | src/director/sharing/bundle.js:129 | `statement-order` | KILLED | [director-106] The share helpers call throwIfAborted three times and return an empty asset map |
 | a9281 | src/director/sharing/bundle.js:128 | `await-remove` | KILLED | [director-106] The share helpers reject excess file bytes before they read text and cancel a stalled project file |
 | a9282 | src/director/sharing/bundle.js:137 | `default-shape` | KILLED | [director-101] The export writes each asset index and filename |
 | a9283 | src/director/sharing/bundle.js:137 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9283 |
@@ -637,29 +637,29 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9310 | src/director/sharing/bundle.js:168 | `statement-order` | KILLED | [director-103] The export names different shared integrity and rejects the call |
 | a9311 | src/director/sharing/bundle.js:175 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9311 |
 | a9312 | src/director/sharing/bundle.js:150 | `await-remove` | KILLED | [director-101] The export writes each asset index and filename |
-| a9313 | src/director/sharing/bundle.js:160 | `await-remove` | KILLED | [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle |
-| a9314 | src/director/sharing/bundle.js:190 | `destructure-remove` | KILLED | [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle |
+| a9313 | src/director/sharing/bundle.js:160 | `await-remove` | KILLED | [director-101] The export copies bytes and attribution and keeps the project without an asset request |
+| a9314 | src/director/sharing/bundle.js:190 | `destructure-remove` | KILLED | [director-101] The export copies bytes and attribution and keeps the project without an asset request |
 | a9315 | src/director/sharing/bundle.js:190 | `destructure-remove` | KILLED | [director-101] The export writes each asset index and filename |
 | a9316 | src/director/sharing/bundle.js:199 | `statement-order` | KILLED | [director-104] The store reports zero bytes after an absent replacement map |
 | a9317 | src/director/sharing/bundle.js:201 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9317 |
 | a9318 | src/director/sharing/bundle.js:201 | `default-shape` | KILLED | [director-104] The store reports zero bytes after an absent replacement map |
 | a9319 | src/director/sharing/bundle.js:201 | `default-shape` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9319 |
 | a9320 | src/director/sharing/bundle.js:201 | `default-shape` | KILLED | [director-104] The store reports zero bytes after an absent replacement map |
-| a9321 | src/director/sharing/bundle.js:202 | `new-argument` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
-| a9322 | src/director/sharing/bundle.js:202 | `new-argument` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
+| a9321 | src/director/sharing/bundle.js:202 | `new-argument` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
+| a9322 | src/director/sharing/bundle.js:202 | `new-argument` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
 | a9323 | src/director/sharing/bundle.js:207 | `new-argument` | KILLED | [director-104] The store copies the asset map |
 | a9324 | src/director/sharing/bundle.js:207 | `new-argument` | KILLED | [director-104] The store copies the asset map |
-| a9325 | src/director/sharing/bundle.js:212 | `destructure-remove` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
-| a9326 | src/director/sharing/bundle.js:212 | `destructure-remove` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
-| a9327 | src/director/sharing/bundle.js:212 | `destructure-remove` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
-| a9328 | src/director/sharing/bundle.js:212 | `default-shape` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
+| a9325 | src/director/sharing/bundle.js:212 | `destructure-remove` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
+| a9326 | src/director/sharing/bundle.js:212 | `destructure-remove` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
+| a9327 | src/director/sharing/bundle.js:212 | `destructure-remove` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
+| a9328 | src/director/sharing/bundle.js:212 | `default-shape` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
 | a9329 | src/director/sharing/bundle.js:212 | `default-shape` | KILLED | [director-105] The store rejects 8388609 bytes without a caller limit |
-| a9330 | src/director/sharing/bundle.js:212 | `default-shape` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
-| a9331 | src/director/sharing/bundle.js:212 | `default-shape` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
+| a9330 | src/director/sharing/bundle.js:212 | `default-shape` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
+| a9331 | src/director/sharing/bundle.js:212 | `default-shape` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
 | a9332 | src/director/sharing/bundle.js:213 | `statement-order` | KILLED | [director-105] The store checks the signal before it checks the path and rejects the call |
 | a9333 | src/director/sharing/bundle.js:214 | `statement-order` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9333 |
-| a9334 | src/director/sharing/bundle.js:215 | `statement-order` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
-| a9335 | src/director/sharing/bundle.js:216 | `statement-order` | KILLED | [director-104] The store removes old data after replacement and uses no network source for the import byte store |
+| a9334 | src/director/sharing/bundle.js:215 | `statement-order` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
+| a9335 | src/director/sharing/bundle.js:216 | `statement-order` | KILLED | [director-104] The store removes old data after replacement and uses no network source |
 | a9336 | src/director/sharing/lifetime.js:3 | `statement-order` | KILLED | [director-101] The export writes each asset index and filename |
 | a9337 | src/director/sharing/lifetime.js:4 | `new-argument` | KILLED | [director-107] The helper does not attach a listener to a cancelled signal and rejects the call |
 | a9338 | src/director/sharing/lifetime.js:4 | `new-argument` | KILLED | [director-107] The helper does not attach a listener to a cancelled signal and rejects the call |
@@ -710,23 +710,23 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9383 | src/director/packs/manifest.js:126 | `template-expression` | KILLED | [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs and rejects the call |
 | a9384 | src/director/packs/manifest.js:132 | `template-expression` | KILLED | [director-082] The validator returns without an error for eight references and rejects nine references for the shot |
 | a9385 | src/director/packs/manifest.js:132 | `template-expression` | KILLED | [director-082] The validator returns without an error for eight references and rejects nine references for the shot |
-| a9386 | src/director/packs/geojson.js:13 | `new-error-argument` | KILLED | [director-083] The decoder rejects invalid type for the collection |
-| a9387 | src/director/packs/geojson.js:13 | `new-error-argument` | KILLED | [director-083] The decoder rejects invalid type for the collection |
+| a9386 | src/director/packs/geojson.js:13 | `new-error-argument` | KILLED | [director-083] The decoder rejects an invalid type for the collection |
+| a9387 | src/director/packs/geojson.js:13 | `new-error-argument` | KILLED | [director-083] The decoder rejects an invalid type for the collection |
 | a9388 | src/director/packs/geojson.js:26 | `new-error-argument` | KILLED | [director-085] The decoder rejects a null position |
 | a9389 | src/director/packs/geojson.js:26 | `new-error-argument` | KILLED | [director-085] The decoder rejects a null position |
 | a9390 | src/director/packs/geojson.js:31 | `new-error-argument` | KILLED | [director-086] The decoder rejects a null line |
 | a9391 | src/director/packs/geojson.js:31 | `new-error-argument` | KILLED | [director-086] The decoder rejects a null line |
 | a9392 | src/director/packs/geojson.js:34 | `new-error-argument` | KILLED | [director-086] The decoder rejects unclosed field 0 for the ring |
 | a9393 | src/director/packs/geojson.js:34 | `new-error-argument` | KILLED | [director-086] The decoder rejects unclosed field 0 for the ring |
-| a9394 | src/director/packs/geojson.js:46 | `new-error-argument` | KILLED | [director-084] The decoder rejects type for the feature |
-| a9395 | src/director/packs/geojson.js:46 | `new-error-argument` | KILLED | [director-084] The decoder rejects type for the feature |
-| a9396 | src/director/packs/geojson.js:59 | `new-error-argument` | KILLED | [director-087] The decoder rejects invalid type for the geometry |
-| a9397 | src/director/packs/geojson.js:59 | `new-error-argument` | KILLED | [director-087] The decoder rejects invalid type for the geometry |
+| a9394 | src/director/packs/geojson.js:46 | `new-error-argument` | KILLED | [director-084] The decoder rejects the type for the feature |
+| a9395 | src/director/packs/geojson.js:46 | `new-error-argument` | KILLED | [director-084] The decoder rejects the type for the feature |
+| a9396 | src/director/packs/geojson.js:59 | `new-error-argument` | KILLED | [director-087] The decoder rejects an invalid type for the geometry |
+| a9397 | src/director/packs/geojson.js:59 | `new-error-argument` | KILLED | [director-087] The decoder rejects an invalid type for the geometry |
 | a9398 | src/director/packs/session.js:69 | `new-error-argument` | KILLED | [director-088 director-091] The session checks the new list after it disposes old resources |
 | a9399 | src/director/packs/session.js:69 | `new-error-argument` | KILLED | [director-088 director-091] The session checks the new list after it disposes old resources |
 | a9400 | src/director/packs/session.js:72 | `template-expression` | KILLED | [director-088] The session checks declarations before it reads the caller signal |
-| a9401 | src/director/packs/session.js:89 | `new-error-argument` | KILLED | [director-092] The session gives its cause to the source signal for the deadline and rejects the call |
-| a9402 | src/director/packs/session.js:89 | `new-error-argument` | KILLED | [director-092] The session gives its cause to the source signal for the deadline and rejects the call |
+| a9401 | src/director/packs/session.js:89 | `new-error-argument` | KILLED | [director-092] The session gives its reason to the source signal for the deadline and rejects the call |
+| a9402 | src/director/packs/session.js:89 | `new-error-argument` | KILLED | [director-092] The session gives its reason to the source signal for the deadline and rejects the call |
 | a9403 | src/director/packs/session.js:98 | `new-error-argument` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9403 |
 | a9404 | src/director/packs/session.js:98 | `new-error-argument` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9404 |
 | a9405 | src/director/packs/session.js:115 | `new-error-argument` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9405 |
@@ -738,7 +738,7 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9411 | src/director/packs/session.js:136 | `new-error-argument` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9411 |
 | a9412 | src/director/packs/session.js:136 | `new-error-argument` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9412 |
 | a9413 | src/director/packs/session.js:154 | `new-error-argument` | KILLED | [director-092] The session rejects the load call for a source signal event during listener removal after success |
-| a9414 | src/director/packs/source.js:18 | `new-error-argument` | KILLED | [director-094] The factory rejects protocol |
+| a9414 | src/director/packs/source.js:18 | `new-error-argument` | KILLED | [director-094] The factory rejects the protocol |
 | a9415 | src/director/packs/source.js:32 | `new-error-argument` | KILLED | [director-097] The source waits for body cancellation before it rejects the asset request |
 | a9416 | src/director/packs/source.js:32 | `new-error-argument` | KILLED | [director-097] The source waits for body cancellation before it rejects the asset request |
 | a9417 | src/director/packs/source.js:35 | `new-error-argument` | KILLED | [director-097] The source rejects an absent stream |
@@ -749,11 +749,11 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9422 | src/director/packs/source.js:46 | `new-error-argument` | KILLED | [director-096] The source rejects excess chunk bytes for the stream |
 | a9423 | src/director/sharing/bundle.js:33 | `call-spread-remove` | KILLED | [director-099 director-101] The export writes each base64 character in plain text |
 | a9424 | src/director/sharing/bundle.js:43 | `regex-quantifier` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9424 |
-| a9425 | src/director/sharing/bundle.js:43 | `regex-quantifier` | KILLED | [director-099] The import accepts the total byte limit and rejects one more byte and returns assets |
-| a9426 | src/director/sharing/bundle.js:43 | `regex-quantifier` | KILLED | [director-099] The import rejects invalid padding for the base64 |
+| a9425 | src/director/sharing/bundle.js:43 | `regex-quantifier` | KILLED | [director-099] The import returns assets at the total byte limit and rejects one more byte |
+| a9426 | src/director/sharing/bundle.js:43 | `regex-quantifier` | KILLED | [director-099] The import rejects an invalid padding for the base64 |
 | a9427 | src/director/sharing/bundle.js:167 | `template-expression` | KILLED | [director-101] The export writes each asset index and filename |
-| a9428 | src/director/sharing/bundle.js:217 | `new-error-argument` | KILLED | [director-104] The store removes old data after replacement and uses no network source for the import byte store |
-| a9429 | src/director/sharing/bundle.js:217 | `new-error-argument` | KILLED | [director-104] The store removes old data after replacement and uses no network source for the import byte store |
+| a9428 | src/director/sharing/bundle.js:217 | `new-error-argument` | KILLED | [director-104] The store removes old data after replacement and uses no network source |
+| a9429 | src/director/sharing/bundle.js:217 | `new-error-argument` | KILLED | [director-104] The store removes old data after replacement and uses no network source |
 | a9430 | src/director/packs/manifest.js:58 | `constructor` | KILLED | [director-078 director-079] The validator checks URL before byteLength and rejects the call |
 | a9431 | src/director/packs/manifest.js:123 | `constructor` | KILLED | [director-082] The validator uses supplied anchors for the scene and returns without an error |
 | a9432 | src/director/packs/manifest.js:124 | `constructor` | KILLED | [director-077 director-082] The validator checks the declaration before it checks for duplicate IDs and rejects the call |
@@ -779,7 +779,7 @@ The [extension probe](evidence/probe-extension.txt) gives the script, output and
 | a9452 | src/director/sharing/bundle.js:192 | `constructor` | KILLED | [director-101] The export writes each asset index and filename |
 | a9453 | src/director/sharing/bundle.js:199 | `constructor` | KILLED | [director-105] The store rejects absent bytes |
 | a9454 | src/director/sharing/bundle.js:201 | `constructor` | EQUIVALENT | [probe-extension.txt](evidence/probe-extension.txt): a9454 |
-| a9455 | src/director/sharing/bundle.js:202 | `constructor` | KILLED | [director-105] The store accepts its default byte limit for the byte store and returns byte copies |
+| a9455 | src/director/sharing/bundle.js:202 | `constructor` | KILLED | [director-105] The store accepts its default byte limit and returns byte copies |
 | a9456 | src/director/sharing/bundle.js:207 | `constructor` | KILLED | [director-104] The store copies the asset map |
 | a9457 | src/director/sharing/lifetime.js:4 | `constructor` | KILLED | [director-107] The helper does not attach a listener to a cancelled signal and rejects the call |
 | a9458 | src/director/sharing/preview.js:8 | `constructor` | KILLED | [director-109 director-110] The preview reports unavailable sources and absent layers without ID lists |

@@ -61,14 +61,12 @@ Origin: backfill
 - **AND** The validator rejects equal west and east edges, and equal south and north edges.
 - **AND** The validator accepts longitude limits of -180 and 180 degrees, and latitude limits of -90 and 90 degrees and returns without an error.
 - **AND** The validator rejects numeric text for bounds and height.
-- **AND** Each placement error names its field, and the validator rejects extra placement fields.
+- **AND** Each placement error names its field, and the validator rejects extra image placement fields.
 - **AND** The validator compares west with east before it compares south with north.
 - **AND** The validator checks bounds values, edge order and height in that order and rejects an invalid value.
 - **AND** The validator checks the height reference before it checks bounds and rejects an invalid value.
 - **AND** The validator checks the bounds array before it reads the length. It checks the length before it checks each coordinate.
 - **AND** The validator checks each bounds coordinate, with its index in the error path and rejects an invalid value.
-
-- **AND** The validator rejects extra image placement fields.
 
 #### Scenario: Media placement `director-081`
 
@@ -81,7 +79,7 @@ Origin: backfill
 
 - **WHEN** a scene declares data packs or data pack IDs for a shot
 - **THEN** the validator rejects duplicate data pack IDs, unknown shot references and duplicate shot references
-- **AND** The validator returns without an error for a data pack list from the parent object of the scene.
+- **AND** The validator does not read a data pack list from the parent object of the scene and returns without an error.
 - **AND** The validator accepts eight distinct data packs per scene and rejects nine.
 - **AND** The validator accepts eight distinct data pack references per shot and rejects nine references before it checks distinct IDs.
 - **AND** The validator names the shot field in each reference error.
@@ -100,13 +98,13 @@ Origin: backfill
 #### Scenario: GeoJSON collections `director-083`
 
 - **WHEN** a caller decodes GeoJSON
-- **THEN** the decoder rejects a non-FeatureCollection, a non-array feature list or more than 2000 features
+- **THEN** the decoder rejects a type other than FeatureCollection, a feature list that is not an array or more than 2000 features
 - **AND** The decoder rejects invalid UTF8 bytes and null.
 
 #### Scenario: GeoJSON feature IDs `director-084`
 
 - **WHEN** a collection contains features
-- **THEN** the decoder rejects a non-Feature type, duplicate or blank IDs, non-string IDs and IDs above 256 characters
+- **THEN** the decoder rejects a type other than Feature, duplicate or blank IDs, IDs that are not strings and IDs above 256 characters
 - **AND** The decoder rejects a null feature with the feature ID error.
 - **AND** The decoder rejects a duplicate ID in the second feature.
 
@@ -144,15 +142,15 @@ Origin: backfill
 #### Scenario: Session admission `director-088`
 
 - **WHEN** a caller creates a session
-- **THEN** the session starts with the idle state and its load method checks data pack lists before asset work and rejects an invalid asset.
+- **THEN** the session starts with the idle state. Its load method checks data pack lists before asset work and rejects an invalid data pack list.
 - **AND** The session rejects more than eight data packs and checks every declaration before the first source call.
-- **AND** The session returns false for a destroyed session or a cancelled signal.
-- **AND** The session rejects a caller change to the public data pack limits.
+- **AND** The load call returns false for a destroyed session or a cancelled signal.
+- **AND** The public data pack limits throw a TypeError when a caller assigns a new value.
 - **AND** After the caller destroys the session, a new load call does not read the caller signal state.
 - **AND** An empty data pack list returns true without a source call or a deadline timer.
 - **AND** An absent source map or renderer map gives an empty registry.
 - **AND** The session reads source entries before renderer entries.
-- **AND** The session calls each source by pack.source.adapter and each renderer by pack.format. Both registries contain two entries.
+- **AND** The session calls each source by `pack.source.adapter` and each renderer by `pack.format`. The source map and the renderer map each contain two entries.
 - **AND** The session checks the data pack list before it reads anchors. It checks declarations before it reads the caller signal.
 - **AND** During source cancellation, a destroyed session returns false for another load call.
 - **AND** An invalid second declaration gives its indexed error before the source call.
@@ -193,7 +191,7 @@ Origin: backfill
 
 - **WHEN** a caller starts a new load call
 - **THEN** the session returns false for old work that is not complete and keeps the new resources
-- **AND** The session disposes old resources before it checks the new data pack list and rejects an invalid asset.
+- **AND** The session disposes old resources before it checks the new data pack list and rejects an invalid data pack list.
 
 #### Scenario: Session errors `director-092`
 
@@ -239,7 +237,7 @@ Origin: backfill
 #### Scenario: Asset request options `director-095`
 
 - **WHEN** a caller asks for an asset path
-- **THEN** the source checks the path before it checks the caller signal and rejects cancellation.
+- **THEN** the source checks the path before it checks the caller signal and rejects an invalid path.
 - **AND** For a safe path, the source calls fetch with the registered directory and fixed request options.
 - **AND** The source calls fetch with no credentials, redirects as errors, no referrer and no cache.
 - **AND** Without a caller fetch function, the source calls the global fetch function.
@@ -293,7 +291,7 @@ Origin: backfill
 - **AND** The import accepts the standard base64 alphabet, with + and /, and returns assets. The import rejects an equals sign at the start.
 - **AND** The import accepts each standard base64 character in both plain and padded text and returns assets.
 - **AND** The import checks the base64 type before it converts text and rejects an invalid asset.
-- **AND** The import checks top-level fields, version, project and the asset list in that order and rejects an invalid asset.
+- **AND** The import checks top-level fields, version, project and the asset list in that order and rejects an invalid bundle.
 - **AND** The import checks asset fields, path, media type, duplicate path and base64 in that order and rejects an invalid asset.
 - **AND** The import checks asset byte limits before the digest call and rejects an invalid asset.
 - **AND** The import accepts these media types and returns assets: application/json, application/geo+json, image/png, video/mp4, video/webm, audio/mpeg, audio/ogg, audio/wav and audio/webm.
@@ -324,7 +322,7 @@ Origin: backfill
 - **THEN** the export rejects excess bytes, unsupported media types, excess assets and incorrect declared integrity
 - **AND** The export accepts up to 8388608 bytes per asset and up to 33554432 total bytes and returns bundle text.
 - **AND** The export rejects an unsupported media type during export.
-- **AND** The export rejects a caller change to the public share limits.
+- **AND** The share limits throw a TypeError when a caller assigns a new value.
 - **AND** The export starts each asset error with `assets`.
 - **AND** The export checks byte type and per-asset size before the total size and rejects an invalid asset.
 - **AND** The export checks declared byteLength before the declared digest and rejects an invalid asset.
@@ -332,7 +330,7 @@ Origin: backfill
 - **AND** When the declared digest is absent, the export reads the digest field once before it writes the digest.
 - **AND** The export starts each text limit error with `$`.
 - **AND** The export checks declared integrity before it reads the filename.
-- **AND** The export checks the asset count before the next resolver call and rejects an invalid asset.
+- **AND** The export checks the asset count before the next resolver call and rejects more than 64 assets.
 - **AND** The export checks bytes before media type, and media type before the digest call and rejects an invalid asset.
 
 #### Scenario: Shared asset reuse `director-103`
@@ -374,7 +372,7 @@ Origin: backfill
 
 - **WHEN** a caller supplies a project file
 - **THEN** the share helpers check the file suffix and size before they read text
-- **AND** The share helpers reject files above 5242880 bytes. For names with the .gevbundle.json suffix, they reject files above 52428800 bytes.
+- **AND** The share helpers reject a file above 5242880 bytes, except a file with the .gevbundle.json suffix. They reject that file above 52428800 bytes.
 - **AND** The share helpers accept the limit and reject one more byte.
 - **AND** The share helpers check the file limit before they read the signal and reject excess files.
 
@@ -394,7 +392,7 @@ Origin: backfill
 - **AND** The helper reads cancelled work before the reason, and removes its listener before it reads the reason.
 - **AND** The helper checks cancellation after listener removal and before the work settles with success.
 - **AND** For cancellation during listener removal after a work error, the helper rejects with the cancellation reason.
-- **AND** With two assets, the import calls the digest once when cancellation occurs before the second digest.
+- **AND** With two assets, the import calls the digest function once when cancellation occurs before the second digest call.
 - **AND** With two data packs, the export calls the resolver once when cancellation occurs before the second resolver call.
 
 ### Requirement: Share preview
@@ -422,4 +420,4 @@ Origin: backfill
 - **AND** The preview lists each absent layer once, even when two shots name that layer.
 - **AND** Without layer IDs, the preview reports every named layer as absent.
 - **AND** With applied shot packs, the preview does not read source pack IDs to decide whether the scene has external content.
-- **AND** The preview reports absent layers and external content from source pack IDs of the second shot in the second scene.
+- **AND** The preview reports the absent layers of the second shot in the second scene. It reports external content from the source pack ID of that shot.

@@ -9,7 +9,7 @@ The table checks the input limits of the 22 pass 4 probe groups.
 A sample alone does not prove that a mutation is equivalent.
 Each claim also needs the code guard in the last column.
 The claims use the public API of the module with standard built-in functions.
-The claims exclude mutations of built-in functions and their prototypes.
+The claims exclude changes to built-in functions and their prototypes.
 
 | probe | Original input cases | Other public input classes | Code guard or pass 5 check |
 | --- | --- | --- | --- |
