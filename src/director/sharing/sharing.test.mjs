@@ -334,7 +334,7 @@ test('[director-104] The store reports zero bytes after an absent replacement ma
   store.replace();
   assert.deepEqual(store.getState(), { count: 0, bytes: 0 });
 });
-test('[director-105] The store accepts its default byte limit for the byte store and returns byte copies', () => {
+test('[director-105] The store accepts its default byte limit and returns byte copies', () => {
   const store = createBundleAssets();
   store.replace(
     new Map([
@@ -344,7 +344,7 @@ test('[director-105] The store accepts its default byte limit for the byte store
   assert.equal(store.source({ path: 'x' }).bytes.length, 8388608);
   store.clear();
 });
-test('[director-105] The store rejects an invalid path that it holds for the byte store', () => {
+test('[director-105] The store rejects an invalid path that it holds', () => {
   const store = createBundleAssets();
   store.replace(new Map([['../x', { bytes: new Uint8Array([1]) }]]));
   assert.equal(store.snapshot().has('../x'), true);
@@ -361,7 +361,7 @@ test('[director-109 director-110] The preview reports unavailable sources and ab
   assert.equal(value.packs[0].status, 'Source unavailable');
   assert.deepEqual(value.missingLayers, ['1']);
 });
-test('[director-102] The bundle helpers reject a caller change to the share limits', async () => {
+test('[director-102] The share limits throw a TypeError when a caller assigns a new value', async () => {
   const { SHARE_LIMITS } = await import('./bundle.js');
   assert.equal(Object.isFrozen(SHARE_LIMITS), true);
   assert.throws(() => {
@@ -452,7 +452,7 @@ test('[director-110] The preview reports external content from applied shot pack
   assert.equal(reads, 0);
 });
 
-test('[director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle', async () => {
+test('[director-101] The export copies bytes and attribution and keeps the project without an asset request', async () => {
   const original = fixture(),
     before = JSON.stringify(original);
   let reads = 0;
@@ -528,7 +528,7 @@ test('[director-102] The export rejects excess bytes, wrong integrity and absent
   );
 });
 
-test('[director-103] The export share one asset and reject integrity values that differ for the data packs with the same path', async () => {
+test('[director-103] The export writes one asset and rejects integrity declarations that differ for the data packs with the same path', async () => {
   const p = fixture();
   p.scenes[0].dataPacks.push({
     ...structuredClone(p.scenes[0].dataPacks[0]),
@@ -563,7 +563,7 @@ test('[director-109] The preview reports unavailable sources, absent layers and 
   );
 });
 
-test('[director-104] The store removes old data after replacement and uses no network source for the import byte store', async () => {
+test('[director-104] The store removes old data after replacement and uses no network source', async () => {
   const parsed = await parseSceneShare(
     await createSceneBundle(fixture(), () => asset()),
   );
@@ -622,7 +622,7 @@ test('[director-106] The share helpers reject excess file bytes before they read
   resolve(JSON.stringify(fixture()));
 });
 
-test('[director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export', async () => {
+test('[director-107] The export stops before the next asset and returns no partial output', async () => {
   let resolve;
   const owner = new AbortController();
   const work = createSceneBundle(
@@ -680,7 +680,7 @@ test('details editing preserves content IDs, layers and provenance, rejects inva
   assert.equal(JSON.stringify(p), before);
 });
 
-test('[director-101] The export returns a bundle for a source path of 1024 characters', async () => {
+test('[director-101] The export returns bundle text for a source path of 1024 characters', async () => {
   const p = fixture();
   p.scenes[0].dataPacks[0].source.path = 'x'.repeat(1024);
   const parsed = await parseSceneShare(
@@ -752,7 +752,7 @@ test('[director-098] The import rejects excess UTF8 bytes', async () => {
   );
 });
 
-test('[director-099] The import rejects invalid type for the base64', async () => {
+test('[director-099] The import rejects an invalid type for the base64', async () => {
   const b = await bundleObject();
   b.assets[0].base64 = 7;
   await assert.rejects(
@@ -761,7 +761,7 @@ test('[director-099] The import rejects invalid type for the base64', async () =
   );
 });
 
-test('[director-099] The import rejects invalid empty for the base64', async () => {
+test('[director-099] The import rejects an empty base64 value', async () => {
   const b = await bundleObject();
   b.assets[0].base64 = '';
   await assert.rejects(
@@ -770,7 +770,7 @@ test('[director-099] The import rejects invalid empty for the base64', async () 
   );
 });
 
-test('[director-099] The import rejects invalid length for the base64', async () => {
+test('[director-099] The import rejects an invalid length for the base64', async () => {
   const b = await bundleObject();
   b.assets[0].base64 = 'A'.repeat(11184816);
   await assert.rejects(
@@ -779,7 +779,7 @@ test('[director-099] The import rejects invalid length for the base64', async ()
   );
 });
 
-test('[director-099] The import rejects invalid alignment for the base64', async () => {
+test('[director-099] The import rejects an invalid alignment for the base64', async () => {
   const b = await bundleObject();
   b.assets[0].base64 = 'AAA';
   await assert.rejects(
@@ -788,7 +788,7 @@ test('[director-099] The import rejects invalid alignment for the base64', async
   );
 });
 
-test('[director-099] The import rejects invalid alphabet for the base64', async () => {
+test('[director-099] The import rejects an invalid alphabet for the base64', async () => {
   const b = await bundleObject();
   b.assets[0].base64 = '____';
   await assert.rejects(
@@ -797,7 +797,7 @@ test('[director-099] The import rejects invalid alphabet for the base64', async 
   );
 });
 
-test('[director-099] The import rejects invalid padding for the base64', async () => {
+test('[director-099] The import rejects an invalid padding for the base64', async () => {
   const b = await bundleObject();
   b.assets[0].base64 = 'A===';
   await assert.rejects(
@@ -1073,7 +1073,7 @@ test('[director-105] The store returns an independent byte copy', async () => {
   });
 });
 
-test('[director-106] The share helpers return the project for an absent filename', async () => {
+test('[director-106] The share helpers return an empty asset map for an absent filename', async () => {
   const v = await readSceneShare({
     size: 2,
     text: async () => JSON.stringify({ version: 6, scenes: [] }),
@@ -1545,7 +1545,7 @@ test('[director-102] The export rejects absent asset bytes', async () => {
   );
 });
 
-test('[director-106] The share helpers call throwIfAborted three times and return the project', async () => {
+test('[director-106] The share helpers call throwIfAborted three times and return an empty asset map', async () => {
   let calls = 0;
   const signal = {
     throwIfAborted() {
@@ -1856,7 +1856,7 @@ const withBase64 = async (work) => {
     globalThis.btoa = native;
   }
 };
-test('[director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text', async () =>
+test('[director-102] The export returns bundle text at the total byte limit and rejects one more byte', async () =>
   withBase64(async () => {
     const sizes = [8388608, 8388608, 8388608, 8388608];
     let i = 0;
@@ -1901,7 +1901,7 @@ const withByteCopy = async (work) => {
     Uint8Array.from = native;
   }
 };
-test('[director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets', async () =>
+test('[director-099] The import returns assets at the base64 length limit and rejects the next aligned length', async () =>
   withByteCopy(async () => {
     const value = await bundleObject();
     value.assets[0].base64 = 'A'.repeat(11184812);
@@ -1913,7 +1913,7 @@ test('[director-099] The import accepts its length limit and rejects the next al
       message: 'assets: invalid or oversized base64 asset',
     });
   }));
-test('[director-099] The import accepts the total byte limit and rejects one more byte and returns assets', async () =>
+test('[director-099] The import returns assets at the total byte limit and rejects one more byte', async () =>
   withByteCopy(async () => {
     const value = {
       format: 'gev-scene-bundle',
@@ -2097,7 +2097,7 @@ test('[director-102] The export accepts the text byte limit and returns bundle t
     globalThis.TextEncoder = Native;
   }
 });
-test('[director-105] The store accepts the caller byte limit for the byte store and returns byte copies', () => {
+test('[director-105] The store accepts the caller byte limit and returns byte copies', () => {
   const store = createBundleAssets();
   store.replace(
     new Map([
@@ -2363,7 +2363,7 @@ test('[director-100 director-107] The import checks the signal before it compare
   assert.equal(calls, 3);
 });
 
-test('[director-106] The share helpers check the file limit before they read the signal and reject the invalid input', async () => {
+test('[director-106] The share helpers check the file limit before they read the signal and reject excess files', async () => {
   let reads = 0;
   await assert.rejects(
     readSceneShare(
@@ -2382,7 +2382,7 @@ test('[director-106] The share helpers check the file limit before they read the
   assert.equal(reads, 0);
 });
 
-test('[director-106 director-107] The share helpers check the signal before they read text and reject the invalid input', async () => {
+test('[director-106 director-107] The share helpers check the signal before they read text and reject cancellation', async () => {
   let reads = 0;
   const c = new AbortController();
   c.abort(new Error('stop'));
@@ -2403,7 +2403,7 @@ test('[director-106 director-107] The share helpers check the signal before they
   assert.equal(reads, 0);
 });
 
-test('[director-107] The share helpers check the signal after the text promise settles and return the project', async () => {
+test('[director-107] The share helpers check the signal after the text promise settles and report the call order', async () => {
   const order = [];
   const signal = {
     aborted: false,

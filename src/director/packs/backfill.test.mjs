@@ -245,7 +245,7 @@ for (const mode of ['success', 'error']) {
   });
 }
 
-test('[director-089] The session returns true and does not read the reason after the source promise settles', async () => {
+test('[director-089] The session returns true and does not read the reason after the work promise settles', async () => {
   let reads = 0, thenReads = 0, callback;
   const s = makeSession(({ signal }) => {
     const add = signal.addEventListener.bind(signal);
@@ -398,7 +398,7 @@ test('[director-093] The session checks total bytes before it reads the digest',
   } finally { s.destroy(); }
 });
 
-test('[director-095] The source checks the path before it checks the caller signal and rejects the call', async () => {
+test('[director-095] The source checks the path before it checks the caller signal and rejects the invalid path', async () => {
   let calls = 0;
   const source = directory(() => { throw new Error('unused'); });
   await assert.rejects(source({ path: '../x', signal: { throwIfAborted() { calls++; throw new Error('stop'); } } }), {
@@ -445,9 +445,9 @@ for (const [tag, label, alter, message] of [
   ['079', 'numeric text', p => { p.byteLength = '1'; }, 'pack.byteLength: expected a number from 1 to 8388608'],
   ['079', 'byteLength field', p => { p.byteLength = 0; }, 'pack.byteLength: expected a number from 1 to 8388608'],
   ['079', 'integer field', p => { p.byteLength = 1.5; }, 'pack.byteLength: expected an integer'],
-  ['080', 'extra placement field', p => { p.placement.extra = 1; }, 'pack.placement.extra: unsupported field'],
-  ['080', 'placement object', p => { p.placement = null; }, 'pack.placement: expected an object'],
-  ['080', 'height reference', p => { p.placement.altitudeReference = 'bad'; }, 'pack.placement.altitudeReference: expected ellipsoid height in meters'],
+  ['077', 'extra placement field', p => { p.placement.extra = 1; }, 'pack.placement.extra: unsupported field'],
+  ['077', 'placement object', p => { p.placement = null; }, 'pack.placement: expected an object'],
+  ['077', 'height reference', p => { p.placement.altitudeReference = 'bad'; }, 'pack.placement.altitudeReference: expected ellipsoid height in meters'],
   ['080', 'bound list', p => { p.format = 'image'; p.placement = { bounds: [0, 0, 1], height: 0, altitudeReference: 'ellipsoid' }; }, 'pack.placement.bounds: expected west, south, east, north'],
 ]) {
   test(`[director-${tag}] The validator names the ${label} and rejects the call`, () => {
@@ -539,14 +539,14 @@ test('[director-096] The source joins chunks of different lengths', async () => 
   assert.deepEqual([...(await source({ path: 'x' })).bytes], [1, 2, 3, 4, 5]);
 });
 
-test('[director-088] The session rejects a caller change to the data pack limits', async () => {
+test('[director-088] The public data pack limits throw a TypeError when a caller assigns a new value', async () => {
   const { PACK_LIMITS } = await import('./manifest.js');
   assert.equal(Object.isFrozen(PACK_LIMITS), true);
   assert.throws(() => { PACK_LIMITS.packs = 9; }, TypeError);
   assert.equal(PACK_LIMITS.packs, 8);
 });
 
-test('[director-088] The session returns false without a caller signal access after destruction', async () => {
+test('[director-088] The session returns false and does not read the caller signal state after the caller destroys it', async () => {
   let reads = 0;
   const signal = { get aborted() { reads++; return false; } };
   const s = makeSession(); s.destroy();
@@ -591,7 +591,7 @@ test('[director-076] The validator rejects traversal for the asset path', async 
   assert.throws(() => validateAssetPath('../x'), /relative asset path/);
 });
 
-test('[director-077] The validator rejects invalid version', async () => {
+test('[director-077] The validator rejects an invalid version', async () => {
   const a = pack();
   a.version = 2;
   assert.throws(
@@ -600,7 +600,7 @@ test('[director-077] The validator rejects invalid version', async () => {
   );
 });
 
-test('[director-077] The validator rejects invalid format', async () => {
+test('[director-077] The validator rejects an invalid format', async () => {
   const a = pack();
   a.format = 'other';
   assert.throws(
@@ -634,7 +634,7 @@ test('[director-077] The validator returns without an error for media', async ()
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set(['a'])));
 });
 
-test('[director-078] The validator rejects protocol for the attribution', async () => {
+test('[director-078] The validator rejects the protocol for the attribution', async () => {
   const a = pack();
   a.attribution.url = 'http://example.org/a';
   assert.throws(
@@ -643,7 +643,7 @@ test('[director-078] The validator rejects protocol for the attribution', async 
   );
 });
 
-test('[director-078] The validator rejects username for the attribution', async () => {
+test('[director-078] The validator rejects the username for the attribution', async () => {
   const a = pack();
   a.attribution.url = 'https://u@example.org/a';
   assert.throws(
@@ -652,7 +652,7 @@ test('[director-078] The validator rejects username for the attribution', async 
   );
 });
 
-test('[director-078] The validator rejects password for the attribution', async () => {
+test('[director-078] The validator rejects the password for the attribution', async () => {
   const a = pack();
   a.attribution.url = 'https://:p@example.org/a';
   assert.throws(
@@ -661,7 +661,7 @@ test('[director-078] The validator rejects password for the attribution', async 
   );
 });
 
-test('[director-078] The validator rejects query for the attribution', async () => {
+test('[director-078] The validator rejects the query for the attribution', async () => {
   const a = pack();
   a.attribution.url = 'https://example.org/a?q=1';
   assert.throws(
@@ -670,7 +670,7 @@ test('[director-078] The validator rejects query for the attribution', async () 
   );
 });
 
-test('[director-078] The validator rejects fragment for the attribution', async () => {
+test('[director-078] The validator rejects the fragment for the attribution', async () => {
   const a = pack();
   a.attribution.url = 'https://example.org/a#x';
   assert.throws(
@@ -703,7 +703,7 @@ test('[director-078] The validator rejects blank text for the attribution', asyn
   );
 });
 
-test('[director-078] The validator rejects blank license for the attribution', async () => {
+test('[director-078] The validator rejects a blank license for the attribution', async () => {
   const a = pack();
   a.attribution.license = ' ';
   assert.throws(
@@ -718,13 +718,13 @@ test('[director-079] The validator rejects a fraction for the byteLength field',
   assert.throws(() => validateDataPack(a, 'pack', new Set()), /integer/);
 });
 
-test('[director-079] The validator rejects invalid type for the digest', async () => {
+test('[director-079] The validator rejects an invalid type for the digest', async () => {
   const a = pack();
   a.sha256 = { toString: () => 'a'.repeat(64) };
   assert.throws(() => validateDataPack(a, 'pack', new Set()), /digest/);
 });
 
-test('[director-079] The validator rejects invalid alphabet for the digest', async () => {
+test('[director-079] The validator rejects an invalid alphabet for the digest', async () => {
   const a = pack();
   a.sha256 = 'G'.repeat(64);
   assert.throws(() => validateDataPack(a, 'pack', new Set()), /digest/);
@@ -851,14 +851,14 @@ test('[director-082] The validator returns without an error for absent data pack
   );
 });
 
-test('[director-083] The decoder rejects invalid type for the collection', async () => {
+test('[director-083] The decoder rejects an invalid type for the collection', async () => {
   assert.throws(
     () => geo({ type: 'Other', features: [] }),
     /bounded FeatureCollection/,
   );
 });
 
-test('[director-083] The decoder rejects invalid array for the collection', async () => {
+test('[director-083] The decoder rejects an invalid array for the collection', async () => {
   assert.throws(
     () => geo({ type: 'FeatureCollection', features: {} }),
     /bounded FeatureCollection/,
@@ -876,7 +876,7 @@ test('[director-083] The decoder rejects more than 2000 features for the collect
   );
 });
 
-test('[director-084] The decoder rejects type for the feature', async () => {
+test('[director-084] The decoder rejects the type for the feature', async () => {
   const f = feature();
   f.type = 'Other';
   assert.throws(() => geo({ type: 'FeatureCollection', features: [f] }), /IDs/);
@@ -888,19 +888,19 @@ test('[director-084] The decoder rejects ID type for the feature', async () => {
   assert.throws(() => geo({ type: 'FeatureCollection', features: [f] }), /IDs/);
 });
 
-test('[director-084] The decoder rejects blank ID for the feature', async () => {
+test('[director-084] The decoder rejects a blank ID for the feature', async () => {
   const f = feature();
   f.id = ' ';
   assert.throws(() => geo({ type: 'FeatureCollection', features: [f] }), /IDs/);
 });
 
-test('[director-084] The decoder rejects long ID for the feature', async () => {
+test('[director-084] The decoder rejects a long ID for the feature', async () => {
   const f = feature();
   f.id = 'a'.repeat(257);
   assert.throws(() => geo({ type: 'FeatureCollection', features: [f] }), /IDs/);
 });
 
-test('[director-084] The decoder rejects duplicate ID for the feature', async () => {
+test('[director-084] The decoder rejects a duplicate ID for the feature', async () => {
   const f = feature();
   assert.throws(
     () => geo({ type: 'FeatureCollection', features: [f, f] }),
@@ -908,7 +908,7 @@ test('[director-084] The decoder rejects duplicate ID for the feature', async ()
   );
 });
 
-test('[director-085] The decoder rejects invalid array for the position', async () => {
+test('[director-085] The decoder rejects an invalid array for the position', async () => {
   const saved = Object.getOwnPropertyDescriptor(Object.prototype, 'some');
   Object.defineProperty(Object.prototype, 'some', {
     configurable: true,
@@ -925,7 +925,7 @@ test('[director-085] The decoder rejects invalid array for the position', async 
   }
 });
 
-test('[director-085] The decoder rejects invalid length for the position', async () => {
+test('[director-085] The decoder rejects an invalid length for the position', async () => {
   assert.throws(() => geoFeatures([feature('p', 'Point', [0])]), /position/);
 });
 
@@ -936,14 +936,14 @@ test('[director-085] The decoder rejects a coordinate that is not finite for the
   );
 });
 
-test('[director-085] The decoder rejects invalid longitude for the position', async () => {
+test('[director-085] The decoder rejects an invalid longitude for the position', async () => {
   assert.throws(
     () => geoFeatures([feature('p', 'Point', [181, 0])]),
     /position/,
   );
 });
 
-test('[director-085] The decoder rejects invalid latitude for the position', async () => {
+test('[director-085] The decoder rejects an invalid latitude for the position', async () => {
   assert.throws(
     () => geoFeatures([feature('p', 'Point', [0, 91])]),
     /position/,
@@ -964,7 +964,7 @@ test('[director-085] The decoder rejects a height above the limit for the positi
   );
 });
 
-test('[director-085] The decoder rejects excess for the position total', async () => {
+test('[director-085] The decoder rejects more than 50000 positions', async () => {
   assert.throws(
     () =>
       geoFeatures([
@@ -992,14 +992,14 @@ test('[director-085] The decoder returns the height in the data for the position
   );
 });
 
-test('[director-086] The decoder rejects invalid array for the line', async () => {
+test('[director-086] The decoder rejects an invalid array for the line', async () => {
   assert.throws(
     () => geoFeatures([feature('p', 'LineString', {})]),
     /Invalid line/,
   );
 });
 
-test('[director-086] The decoder rejects invalid minimum for the line', async () => {
+test('[director-086] The decoder rejects an invalid minimum for the line', async () => {
   assert.throws(
     () => geoFeatures([feature('p', 'LineString', [[0, 0]])]),
     /Invalid line/,
@@ -1079,7 +1079,7 @@ test('[director-086] The decoder rejects unclosed field 2 for the ring', async (
   );
 });
 
-test('[director-087] The decoder rejects invalid type for the geometry', async () => {
+test('[director-087] The decoder rejects an invalid type for the geometry', async () => {
   const f = feature();
   f.geometry = {
     type: 'MultiPoint',
@@ -1095,7 +1095,7 @@ test('[director-087] The decoder rejects invalid type for the geometry', async (
   assert.throws(() => geoFeatures([f]), /Unsupported geometry/);
 });
 
-test('[director-087] The decoder rejects invalid array for the geometry', async () => {
+test('[director-087] The decoder rejects an invalid array for the geometry', async () => {
   const f = feature();
   f.geometry = {
     type: 'Polygon',
@@ -1173,7 +1173,7 @@ test('[director-087] The decoder removes properties for the geometry', async () 
   ]);
 });
 
-test('[director-088] The session reports idle state after creation', async () => {
+test('[director-088] The new session reports the idle state and zero handles', async () => {
   const s = createDataPackSession();
   assert.deepEqual(s.getState(), { status: 'idle', count: 0 });
   assert.equal(await s.load([]), true);
@@ -1196,7 +1196,7 @@ test('[director-088] The session rejects more than eight data packs', async () =
   s.destroy();
 });
 
-test('[director-088] The session rejects destroyed state', async () => {
+test('[director-088] The load call returns false after the caller destroys the session without a source call', async () => {
   let calls = 0;
   const s = makeSession(() => {
     calls++;
@@ -1208,7 +1208,7 @@ test('[director-088] The session rejects destroyed state', async () => {
   s.destroy();
 });
 
-test('[director-088] The session rejects cancelled state', async () => {
+test('[director-088] The load call returns false for a cancelled signal without a source call', async () => {
   let calls = 0;
   const s = makeSession(() => {
     calls++;
@@ -1283,7 +1283,7 @@ test('[director-090] The session returns false for cancelled work with a null la
   assert.equal(s.getState().status, 'idle');
 });
 
-test('[director-090] The session returns false for work that destruction stops', async () => {
+test('[director-090] The session returns false when the caller destroys it during asset work', async () => {
   const d = deferred();
   const s = makeSession(() => d.promise);
   const work = s.load([pack()]);
@@ -1294,7 +1294,7 @@ test('[director-090] The session returns false for work that destruction stops',
   assert.deepEqual(s.getState(), { status: 'idle', count: 0 });
 });
 
-test('[director-091] The session keeps its resources for the replacement', async () => {
+test('[director-091] The session keeps the new resources after a new load call', async () => {
   const d = deferred();
   let calls = 0,
     disposed = 0;
@@ -1430,7 +1430,7 @@ test('[director-089] The session rejects a handle without a dispose function', a
   s.destroy();
 });
 
-test('[director-094] The factory rejects protocol', async () => {
+test('[director-094] The factory rejects the protocol', async () => {
   assert.throws(
     () =>
       createAssetDirectorySource({
@@ -1441,7 +1441,7 @@ test('[director-094] The factory rejects protocol', async () => {
   );
 });
 
-test('[director-094] The factory rejects username', async () => {
+test('[director-094] The factory rejects the username', async () => {
   assert.throws(
     () =>
       createAssetDirectorySource({
@@ -1452,7 +1452,7 @@ test('[director-094] The factory rejects username', async () => {
   );
 });
 
-test('[director-094] The factory rejects password', async () => {
+test('[director-094] The factory rejects the password', async () => {
   assert.throws(
     () =>
       createAssetDirectorySource({
@@ -1463,7 +1463,7 @@ test('[director-094] The factory rejects password', async () => {
   );
 });
 
-test('[director-094] The factory rejects query', async () => {
+test('[director-094] The factory rejects the query', async () => {
   assert.throws(
     () =>
       createAssetDirectorySource({
@@ -1474,7 +1474,7 @@ test('[director-094] The factory rejects query', async () => {
   );
 });
 
-test('[director-094] The factory rejects fragment', async () => {
+test('[director-094] The factory rejects the fragment', async () => {
   assert.throws(
     () =>
       createAssetDirectorySource({
@@ -1485,7 +1485,7 @@ test('[director-094] The factory rejects fragment', async () => {
   );
 });
 
-test('[director-094] The factory rejects an address with no final slash', async () => {
+test('[director-094] The factory rejects a directory URL with no final slash', async () => {
   assert.throws(
     () =>
       createAssetDirectorySource({
@@ -1709,7 +1709,7 @@ test('[director-080] The validator rejects high excess for image bounds field 3'
   assert.throws(() => validateDataPack(a, 'pack', new Set()), /bounds\[3\]/);
 });
 
-test('[director-080] The validator rejects image height outside both limits', async () => {
+test('[director-080] The validator rejects an image height above the upper limit', async () => {
   const a = imagePack();
   a.placement.height = 1000000001;
   assert.throws(() => validateDataPack(a, 'pack', new Set()), /height/);
@@ -1750,14 +1750,14 @@ test('[director-085] The decoder accepts both geographic edges for the position 
   );
 });
 
-test('[director-088] The session reports idle after creation', async () => {
+test('[director-088] The new session reports the idle state', async () => {
   assert.deepEqual(createDataPackSession().getState(), {
     status: 'idle',
     count: 0,
   });
 });
 
-test('[director-088] The session reports zero handles after creation', async () => {
+test('[director-088] The new session reports zero handles', async () => {
   assert.equal(createDataPackSession().getState().count, 0);
 });
 
@@ -1821,7 +1821,7 @@ test('[director-090] The session checks destroyed state after it reads the signa
   assert.equal(s.getState().status, 'idle');
 });
 
-test('[director-090] The session returns false for a cleared load call without a signal state access', async () => {
+test('[director-090] The session returns false for a cleared load call and does not read the signal state', async () => {
   const d = deferred();
   const s = makeSession(() => d.promise);
   const work = s.load([pack()]);
@@ -1831,7 +1831,7 @@ test('[director-090] The session returns false for a cleared load call without a
   await tick();
 });
 
-test('[director-090] The session guard rejects a detached resource', async () => {
+test('[director-090] The load call returns false and disposes a detached resource', async () => {
   const Native = globalThis.AbortController;
   let s,
     disposed = 0;
@@ -2141,12 +2141,12 @@ test('[director-089] The session reports ready after asset work', async () => {
   s.destroy();
 });
 
-test('[director-080] The validator rejects media fields in image placement for the placement', async () => {
+test('[director-080] The validator returns without an error for the fields of the image placement', async () => {
   const a = imagePack();
   assert.doesNotThrow(() => validateDataPack(a, 'pack', new Set(['a'])));
 });
 
-test('[director-081] The validator rejects image fields in media placement for the placement', async () => {
+test('[director-081] The validator returns without an error for the fields of the media placement', async () => {
   const a = pack();
   a.format = 'media';
   a.placement = { anchorId: 'a' };
@@ -2251,7 +2251,7 @@ test('[director-092] The session settles a source error before its deadline and 
   }
 });
 
-test('[director-092] The session rejects stalled work at the 19 ms deadline', async () => {
+test('[director-092] The session rejects stalled work at the 19 milliseconds deadline', async () => {
   let callback, delay;
   const nativeSet = globalThis.setTimeout,
     nativeClear = globalThis.clearTimeout;
@@ -2275,7 +2275,7 @@ test('[director-092] The session rejects stalled work at the 19 ms deadline', as
   }
 });
 
-test('[director-092] The session rejects stalled work at the default 15000 ms deadline', async () => {
+test('[director-092] The session rejects stalled work at the default 15000 milliseconds deadline', async () => {
   let callback, delay;
   const nativeSet = globalThis.setTimeout,
     nativeClear = globalThis.clearTimeout;
@@ -2338,16 +2338,16 @@ test('[director-089] The session rejects a falsy handle with inherited disposal'
   }
 });
 
-test('[director-083] The decoder accepts its exact feature limit for the collection and returns coordinates', async () => {
+test('[director-083] The decoder accepts the exact feature limit of the collection and returns 2000 features', async () => {
   const features = Array.from({ length: 2000 }, (_, i) => feature(String(i)));
   assert.equal(geoFeatures(features).length, 2000);
 });
 
-test('[director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates', async () => {
+test('[director-084] The decoder accepts the exact text limit of the feature ID and returns a feature with an ID length of 256', async () => {
   assert.equal(geoFeatures([feature('a'.repeat(256))])[0].id.length, 256);
 });
 
-test('[director-085] The decoder accepts its exact total limit for the position and returns coordinates', async () => {
+test('[director-085] The decoder accepts the exact position limit of the collection and returns 50000 positions', async () => {
   assert.equal(
     geoFeatures([
       feature(
@@ -2360,7 +2360,7 @@ test('[director-085] The decoder accepts its exact total limit for the position 
   );
 });
 
-test('[director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates', async () => {
+test('[director-087] The decoder accepts the exact ring limit of the polygon and returns 128 rings', async () => {
   const rings = Array.from({ length: 128 }, () => [
     [0, 0],
     [1, 0],
@@ -2402,7 +2402,7 @@ test('[director-095] The source sets its signal option for the asset request', a
   assert.equal(options.signal.token, 's');
 });
 
-test('[director-096] The source accepts its exact byte limit for the stream and returns bytes', async () => {
+test('[director-096] The source accepts the exact byte limit of the stream and returns bytes', async () => {
   const source = directory(() =>
     response([new Uint8Array([1, 2, 3])], {
       'content-length': '3',
@@ -2435,7 +2435,7 @@ test('[director-092] The session rejects a falsy custom source', async () => {
   s.destroy();
 });
 
-test('[director-092] The session reads the byteLength field once without a registered source for the data pack session', async () => {
+test('[director-092] The session reads the byteLength field once without a registered source', async () => {
   let reads = 0;
   const value = pack();
   Object.defineProperty(value, 'byteLength', {
@@ -2578,7 +2578,7 @@ test('[director-087] The decoder rejects absent geometry', () => {
     message: 'Unsupported geometry',
   });
 });
-test('[director-093] The source receives the path and the renderer receives the asset and signal and returns bytes', async () => {
+test('[director-093] The source receives the path, the renderer receives the asset and the signal, and the load call returns true', async () => {
   let sourceSignal;
   const session = makeSession(
     (options) => {
@@ -2702,7 +2702,7 @@ test('[director-076] The validator rejects URL syntax with a stable message for 
       'source.path: expected a relative asset path without URL syntax or traversal',
   });
 });
-test('[director-082] The validator ignores a data pack list from its parent for the scene and returns without an error', () => {
+test('[director-082] The validator does not read a data pack list from the parent object of the scene and returns without an error', () => {
   const scene = Object.assign(Object.create({ dataPacks: [null] }), {
     shots: [],
   });
@@ -2836,7 +2836,7 @@ for (const [label, coordinates, expected] of [
     assert.deepEqual(geoFeatures([feature('p', 'Point', coordinates)])[0].coordinates, expected);
   });
 }
-test('[director-089] The session reports its state during asset work for the data pack session', async () => {
+test('[director-089] The session reports its state during asset work', async () => {
   const work = deferred();
   const session = makeSession(() => work.promise);
   const result = session.load([pack()]);
@@ -2855,7 +2855,7 @@ test('[director-096] The source accepts its default byte limit and returns bytes
   assert.equal((await source({ path: 'x' })).bytes.length, 8388608);
 });
 
-test('[director-093] The renderer receives the data pack and scene anchors and returns coordinates', async () => {
+test('[director-093] The session calls the renderer with the data pack and the scene anchors and returns true', async () => {
   const declaration = pack();
   const sceneAnchors = [{ id: 'a' }];
   let calls = 0;
@@ -2888,7 +2888,7 @@ test('[director-079] The validator returns without an error for its byte limit',
   assert.doesNotThrow(() => validateDataPack({ ...pack(), byteLength: 8388608 }, 'pack', new Set()));
 });
 for (const outcome of ['success', 'error']) {
-  test(`[director-089] The session removes source listeners after ${outcome} for the data pack session`, async () => {
+  test(`[director-089] The session removes source listeners after ${outcome}`, async () => {
     const Native = globalThis.AbortController;
     const listeners = new Set();
     const options = [];
@@ -2994,7 +2994,7 @@ test('[director-093] The session does not read declared byteLength again for nul
     assert.equal(reads, 2);
   } finally { s.destroy(); }
 });
-test('[director-092] The session gives its cause to the source signal for the deadline and rejects the call', async () => {
+test('[director-092] The session gives its reason to the source signal for the deadline and rejects the call', async () => {
   let reason;
   const s = makeSession(({ signal }) => {
     signal.addEventListener('abort', () => { reason = signal.reason.message; }, { once: true });

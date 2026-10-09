@@ -52,7 +52,7 @@ It does not edit the earlier director change folders.
 ## Corrections of review round 1
 
 Pass 2 uses the terms data pack, shot pack, load call, asset request, renderer and registered source with one meaning each.
-The old title about stated references now says given references, because the validator gives them.
+The old title about stated references now says given references, because the scene declares them.
 The fixed request options belong to the directory source.
 The tests call public functions with local assets, custom signals and call spies.
 The production files stay the same as base commit `290b5d2`.
@@ -75,9 +75,9 @@ The export serializer checks the project before the second call to parseSceneDoc
 A test of invalid export input alone cannot prove the second call to parseSceneDocument.
 The production files stay unchanged.
 
-The repeated export validator is equivalent for the public API of the module when built-in functions keep their standard behavior.
+The second call to the document parser is equivalent for the public API when built-in functions keep their standard behavior.
 The serializer validates the same text first.
-The validator returns that parsed object without a change.
+The document parser returns that parsed object without a change.
 The getter and resolver probe is evidence/probe-export-parser.txt.
 The probe also checks an invalid project and a version 1 project.
 
@@ -196,6 +196,8 @@ The reader means only the stream reader.
 | source | src/director/packs/source.js and src/director/sharing/bundle.js | The function from createAssetDirectorySource, or source method of createBundleAssets; a test can supply another source function. |
 | renderer | src/director/packs/session.js | The function from adapterMap that load calls for pack.format |
 | validator | src/director/packs/manifest.js | validateAssetPath, validateDataPack and validateSceneDataPacks |
+| public data pack limits | src/director/packs/manifest.js | PACK_LIMITS |
+| share limits | src/director/sharing/bundle.js | SHARE_LIMITS |
 | decoder | src/director/packs/geojson.js | decodePackGeoJSON, position and line |
 | import | src/director/sharing/bundle.js | parseSceneShare |
 | export | src/director/sharing/bundle.js | createSceneBundle |
@@ -213,11 +215,12 @@ The reader means only the stream reader.
 | load call | src/director/packs/session.js | A call to the session load method |
 | caller | All public functions in scope | The code that calls the named function |
 | resolver | src/director/sharing/bundle.js | The resolveAsset function that createSceneBundle calls |
+| document parser | src/director/document.js | parseSceneDocument |
 | serializer | src/director/document.js | stringifySceneDocument |
 | predispatch checker | gev-tools/predispatch/predispatch.py | The script that checks change prose |
 
 
-The word validator also covers manifest validation through parseSceneDocument in src/director/document.js.
+The document parser means parseSceneDocument in src/director/document.js.
 A test source means the source function that the test supplies to the session.
 A resolver means the resolveAsset function that the caller supplies to the export.
 
@@ -227,3 +230,14 @@ Pass 8 keeps all five required proposal headings.
 The pass moves the Pass 7 notes below Known limits and later changes.
 The closed-set limit includes coordinate lengths 2 and 3.
 The pass changes test titles and scenario results, but changes no production function.
+
+### Pass 9 note
+
+Source commit: `b7653ad75c059af9b1305d81922fd76bbc20d66a`.
+
+Check each place that repeats a test title with check-repeated-titles.py in the pass9 scratch folder.
+Check title verbs and body assertions with check-verbs.py in that folder.
+The store is createBundleAssets; the import is parseSceneShare.
+The document parser is parseSceneDocument.
+The placement tests prove valid fields only.
+The allowed-field-added-members limit stays in force.

@@ -229,6 +229,10 @@ The closed sets are:
 | Feature type | geojson.js:40 | Feature |
 | Geometry types | geojson.js:50-58 | Point, LineString, Polygon |
 | Bundle version | bundle.js:79 | 1 |
+| Bundle source | bundle.js:100 | scene-bundle; [director-100] The import rejects external data pack sources |
+| Preview bundle source | preview.js:17 | scene-bundle; [director-109] The preview reports absent bundle bytes |
+| Bundle file suffix | bundle.js:117 | .gevbundle.json; [director-106] The share helpers return a project with the larger bundle file limit and reject excess bytes |
+| Directory final slash | source.js:15 | /; [director-094] The factory rejects a directory URL with no final slash |
 | Bundle format | bundle.js:76 | gev-scene-bundle; other text follows the project document path |
 | Path characters | manifest.js:24 | `[a-zA-Z0-9_-]` first; `[a-zA-Z0-9_.-]` after the first |
 | Digest characters | manifest.js:79 | `[a-f0-9]` |
@@ -254,10 +258,12 @@ Other added names remain a tool limit.
 
 The same limit covers additions to the coordinate lengths 2 and 3 at geojson.js:19.
 The tests reject lengths 1 and 4, but do not reject length 5.
-Adding 5 to that set remains a Known limit.
+A length 5 added to that set remains a Known limit.
 
 The same limit covers additions to geometry types, single-value fields and text alphabets.
 The table names each such set in the seven files.
+The new rows use tests from scenarios director-100, director-109, director-106 and director-094.
+The closed-set-added-members limit also covers the source name, suffix and final slash.
 The tool does not narrow a collection with slice or move a call outside its loop.
 The loop table names the separate hand rows for these mutations.
 

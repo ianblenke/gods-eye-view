@@ -120,8 +120,8 @@ false
 ### m003 Test
 
 ```text
-[director-077] The validator rejects invalid version
-Output: KILLED [director-077] The validator rejects invalid version
+[director-077] The validator rejects an invalid version
+Output: KILLED [director-077] The validator rejects an invalid version
 ```
 
 ## m004
@@ -147,8 +147,8 @@ false
 ### m004 Test
 
 ```text
-[director-077] The validator rejects invalid format
-Output: KILLED [director-077] The validator rejects invalid format
+[director-077] The validator rejects an invalid format
+Output: KILLED [director-077] The validator rejects an invalid format
 ```
 
 ## m005
@@ -174,8 +174,8 @@ false
 ### m005 Test
 
 ```text
-[director-078] The validator rejects protocol for the attribution
-Output: KILLED [director-078] The validator rejects protocol for the attribution
+[director-078] The validator rejects the protocol for the attribution
+Output: KILLED [director-078] The validator rejects the protocol for the attribution
 ```
 
 ## m006
@@ -201,8 +201,8 @@ false
 ### m006 Test
 
 ```text
-[director-078] The validator rejects username for the attribution
-Output: KILLED [director-078] The validator rejects username for the attribution
+[director-078] The validator rejects the username for the attribution
+Output: KILLED [director-078] The validator rejects the username for the attribution
 ```
 
 ## m007
@@ -228,8 +228,8 @@ false
 ### m007 Test
 
 ```text
-[director-078] The validator rejects password for the attribution
-Output: KILLED [director-078] The validator rejects password for the attribution
+[director-078] The validator rejects the password for the attribution
+Output: KILLED [director-078] The validator rejects the password for the attribution
 ```
 
 ## m008
@@ -255,8 +255,8 @@ false
 ### m008 Test
 
 ```text
-[director-078] The validator rejects query for the attribution
-Output: KILLED [director-078] The validator rejects query for the attribution
+[director-078] The validator rejects the query for the attribution
+Output: KILLED [director-078] The validator rejects the query for the attribution
 ```
 
 ## m009
@@ -282,8 +282,8 @@ false
 ### m009 Test
 
 ```text
-[director-078] The validator rejects fragment for the attribution
-Output: KILLED [director-078] The validator rejects fragment for the attribution
+[director-078] The validator rejects the fragment for the attribution
+Output: KILLED [director-078] The validator rejects the fragment for the attribution
 ```
 
 ## m010
@@ -390,8 +390,8 @@ string(pack.attribution.license, `${path}.attribution.license`, 4096);
 ### m013 Test
 
 ```text
-[director-078] The validator rejects blank license for the attribution
-Output: KILLED [director-078] The validator rejects blank license for the attribution
+[director-078] The validator rejects a blank license for the attribution
+Output: KILLED [director-078] The validator rejects a blank license for the attribution
 ```
 
 ## m014
@@ -444,8 +444,8 @@ typeof v !== 'string' || !/^[a-f0-9]{64}$/.test(v)
 ### m015 Test
 
 ```text
-[director-079] The validator rejects invalid type for the digest
-Output: KILLED [director-079] The validator rejects invalid type for the digest
+[director-079] The validator rejects an invalid type for the digest
+Output: KILLED [director-079] The validator rejects an invalid type for the digest
 ```
 
 ## m016
@@ -471,8 +471,8 @@ typeof v !== 'string'
 ### m016 Test
 
 ```text
-[director-079] The validator rejects invalid alphabet for the digest
-Output: KILLED [director-079] The validator rejects invalid alphabet for the digest
+[director-079] The validator rejects an invalid alphabet for the digest
+Output: KILLED [director-079] The validator rejects an invalid alphabet for the digest
 ```
 
 ## m017
@@ -768,8 +768,8 @@ false
 ### m027 Test
 
 ```text
-[director-083] The decoder rejects invalid type for the collection
-Output: KILLED [director-083] The decoder rejects invalid type for the collection
+[director-083] The decoder rejects an invalid type for the collection
+Output: KILLED [director-083] The decoder rejects an invalid type for the collection
 ```
 
 ## m028
@@ -795,8 +795,8 @@ false
 ### m028 Test
 
 ```text
-[director-083] The decoder rejects invalid array for the collection
-Output: KILLED [director-083] The decoder rejects invalid array for the collection
+[director-083] The decoder rejects an invalid array for the collection
+Output: KILLED [director-083] The decoder rejects an invalid array for the collection
 ```
 
 ## m029
@@ -849,8 +849,8 @@ false
 ### m030 Test
 
 ```text
-[director-084] The decoder rejects type for the feature
-Output: KILLED [director-084] The decoder rejects type for the feature
+[director-084] The decoder rejects the type for the feature
+Output: KILLED [director-084] The decoder rejects the type for the feature
 ```
 
 ## m031
@@ -903,8 +903,8 @@ false
 ### m032 Test
 
 ```text
-[director-084] The decoder rejects blank ID for the feature
-Output: KILLED [director-084] The decoder rejects blank ID for the feature
+[director-084] The decoder rejects a blank ID for the feature
+Output: KILLED [director-084] The decoder rejects a blank ID for the feature
 ```
 
 ## m033
@@ -930,8 +930,8 @@ false
 ### m033 Test
 
 ```text
-[director-084] The decoder rejects long ID for the feature
-Output: KILLED [director-084] The decoder rejects long ID for the feature
+[director-084] The decoder rejects a long ID for the feature
+Output: KILLED [director-084] The decoder rejects a long ID for the feature
 ```
 
 ## m034
@@ -957,8 +957,8 @@ false
 ### m034 Test
 
 ```text
-[director-084] The decoder rejects duplicate ID for the feature
-Output: KILLED [director-084] The decoder rejects duplicate ID for the feature
+[director-084] The decoder rejects a duplicate ID for the feature
+Output: KILLED [director-084] The decoder rejects a duplicate ID for the feature
 ```
 
 ## m035
@@ -984,8 +984,8 @@ false
 ### m035 Test
 
 ```text
-[director-085] The decoder rejects invalid array for the position
-Output: KILLED [director-085] The decoder rejects invalid array for the position
+[director-085] The decoder rejects an invalid array for the position
+Output: KILLED [director-085] The decoder rejects an invalid array for the position
 ```
 
 ## m036
@@ -1011,8 +1011,8 @@ false
 ### m036 Test
 
 ```text
-[director-085] The decoder rejects invalid length for the position
-Output: KILLED [director-085] The decoder rejects invalid length for the position
+[director-085] The decoder rejects an invalid length for the position
+Output: KILLED [director-085] The decoder rejects an invalid length for the position
 ```
 
 ## m037
@@ -1065,8 +1065,8 @@ false
 ### m038 Test
 
 ```text
-[director-085] The decoder rejects invalid longitude for the position
-Output: KILLED [director-085] The decoder rejects invalid longitude for the position
+[director-085] The decoder rejects an invalid longitude for the position
+Output: KILLED [director-085] The decoder rejects an invalid longitude for the position
 ```
 
 ## m039
@@ -1092,8 +1092,8 @@ false
 ### m039 Test
 
 ```text
-[director-085] The decoder rejects invalid latitude for the position
-Output: KILLED [director-085] The decoder rejects invalid latitude for the position
+[director-085] The decoder rejects an invalid latitude for the position
+Output: KILLED [director-085] The decoder rejects an invalid latitude for the position
 ```
 
 ## m040
@@ -1173,8 +1173,8 @@ false
 ### m042 Test
 
 ```text
-[director-085] The decoder rejects excess for the position total
-Output: KILLED [director-085] The decoder rejects excess for the position total
+[director-085] The decoder rejects more than 50000 positions
+Output: KILLED [director-085] The decoder rejects more than 50000 positions
 ```
 
 ## m043
@@ -1254,8 +1254,8 @@ false
 ### m045 Test
 
 ```text
-[director-086] The decoder rejects invalid array for the line
-Output: KILLED [director-086] The decoder rejects invalid array for the line
+[director-086] The decoder rejects an invalid array for the line
+Output: KILLED [director-086] The decoder rejects an invalid array for the line
 ```
 
 ## m046
@@ -1281,8 +1281,8 @@ false
 ### m046 Test
 
 ```text
-[director-086] The decoder rejects invalid minimum for the line
-Output: KILLED [director-086] The decoder rejects invalid minimum for the line
+[director-086] The decoder rejects an invalid minimum for the line
+Output: KILLED [director-086] The decoder rejects an invalid minimum for the line
 ```
 
 ## m047
@@ -1443,8 +1443,8 @@ true
 ### m052 Test
 
 ```text
-[director-087] The decoder rejects invalid type for the geometry
-Output: KILLED [director-087] The decoder rejects invalid type for the geometry
+[director-087] The decoder rejects an invalid type for the geometry
+Output: KILLED [director-087] The decoder rejects an invalid type for the geometry
 ```
 
 ## m053
@@ -1470,8 +1470,8 @@ true
 ### m053 Test
 
 ```text
-[director-087] The decoder rejects invalid array for the geometry
-Output: KILLED [director-087] The decoder rejects invalid array for the geometry
+[director-087] The decoder rejects an invalid array for the geometry
+Output: KILLED [director-087] The decoder rejects an invalid array for the geometry
 ```
 
 ## m054
@@ -1605,8 +1605,8 @@ if (!packs.length) return false;
 ### m058 Test
 
 ```text
-[director-088] The session reports idle state after creation
-Output: KILLED [director-088] The session reports idle state after creation
+[director-088] The new session reports the idle state and zero handles
+Output: KILLED [director-088] The new session reports the idle state and zero handles
 ```
 
 ## m059
@@ -1686,8 +1686,8 @@ signal?.aborted
 ### m061 Test
 
 ```text
-[director-088] The session rejects destroyed state
-Output: KILLED [director-088] The session rejects destroyed state
+[director-088] The load call returns false after the caller destroys the session without a source call
+Output: KILLED [director-088] The load call returns false after the caller destroys the session without a source call
 ```
 
 ## m062
@@ -1713,8 +1713,8 @@ disposed
 ### m062 Test
 
 ```text
-[director-088] The session rejects cancelled state
-Output: KILLED [director-088] The session rejects cancelled state
+[director-088] The load call returns false for a cancelled signal without a source call
+Output: KILLED [director-088] The load call returns false for a cancelled signal without a source call
 ```
 
 ## m063
@@ -1848,8 +1848,8 @@ if (superseded) throw new Error("bad");
 ### m067 Test
 
 ```text
-[director-090] The session returns false for work that destruction stops
-Output: KILLED [director-090] The session returns false for work that destruction stops
+[director-090] The session returns false when the caller destroys it during asset work
+Output: KILLED [director-090] The session returns false when the caller destroys it during asset work
 ```
 
 ## m068
@@ -1877,8 +1877,8 @@ clear();
 ### m068 Test
 
 ```text
-[director-091] The session keeps its resources for the replacement
-Output: KILLED [director-091] The session keeps its resources for the replacement
+[director-091] The session keeps the new resources after a new load call
+Output: KILLED [director-091] The session keeps the new resources after a new load call
 ```
 
 ## m069
@@ -1960,8 +1960,8 @@ false
 ### m071 Test
 
 ```text
-[director-092] The session reads the byteLength field once without a registered source for the data pack session
-Output: KILLED [director-092] The session reads the byteLength field once without a registered source for the data pack session
+[director-092] The session reads the byteLength field once without a registered source
+Output: KILLED [director-092] The session reads the byteLength field once without a registered source
 ```
 
 ## m072
@@ -2257,8 +2257,8 @@ false
 ### m082 Test
 
 ```text
-[director-094] The factory rejects protocol
-Output: KILLED [director-094] The factory rejects protocol
+[director-094] The factory rejects the protocol
+Output: KILLED [director-094] The factory rejects the protocol
 ```
 
 ## m083
@@ -2284,8 +2284,8 @@ false
 ### m083 Test
 
 ```text
-[director-094] The factory rejects username
-Output: KILLED [director-094] The factory rejects username
+[director-094] The factory rejects the username
+Output: KILLED [director-094] The factory rejects the username
 ```
 
 ## m084
@@ -2311,8 +2311,8 @@ false
 ### m084 Test
 
 ```text
-[director-094] The factory rejects password
-Output: KILLED [director-094] The factory rejects password
+[director-094] The factory rejects the password
+Output: KILLED [director-094] The factory rejects the password
 ```
 
 ## m085
@@ -2338,8 +2338,8 @@ false
 ### m085 Test
 
 ```text
-[director-094] The factory rejects query
-Output: KILLED [director-094] The factory rejects query
+[director-094] The factory rejects the query
+Output: KILLED [director-094] The factory rejects the query
 ```
 
 ## m086
@@ -2365,8 +2365,8 @@ false
 ### m086 Test
 
 ```text
-[director-094] The factory rejects fragment
-Output: KILLED [director-094] The factory rejects fragment
+[director-094] The factory rejects the fragment
+Output: KILLED [director-094] The factory rejects the fragment
 ```
 
 ## m087
@@ -2392,8 +2392,8 @@ false
 ### m087 Test
 
 ```text
-[director-094] The factory rejects an address with no final slash
-Output: KILLED [director-094] The factory rejects an address with no final slash
+[director-094] The factory rejects a directory URL with no final slash
+Output: KILLED [director-094] The factory rejects a directory URL with no final slash
 ```
 
 ## m088
@@ -2880,8 +2880,8 @@ false
 ### m105 Test
 
 ```text
-[director-099] The import rejects invalid empty for the base64
-Output: KILLED [director-099] The import rejects invalid empty for the base64
+[director-099] The import rejects an empty base64 value
+Output: KILLED [director-099] The import rejects an empty base64 value
 ```
 
 ## m106
@@ -2907,8 +2907,8 @@ false
 ### m106 Test
 
 ```text
-[director-099] The import rejects invalid length for the base64
-Output: KILLED [director-099] The import rejects invalid length for the base64
+[director-099] The import rejects an invalid length for the base64
+Output: KILLED [director-099] The import rejects an invalid length for the base64
 ```
 
 ## m107
@@ -2934,8 +2934,8 @@ false
 ### m107 Test
 
 ```text
-[director-099] The import rejects invalid alignment for the base64
-Output: KILLED [director-099] The import rejects invalid alignment for the base64
+[director-099] The import rejects an invalid alignment for the base64
+Output: KILLED [director-099] The import rejects an invalid alignment for the base64
 ```
 
 ## m108
@@ -2961,8 +2961,8 @@ false
 ### m108 Test
 
 ```text
-[director-099] The import rejects invalid alphabet for the base64
-Output: KILLED [director-099] The import rejects invalid alphabet for the base64
+[director-099] The import rejects an invalid alphabet for the base64
+Output: KILLED [director-099] The import rejects an invalid alphabet for the base64
 ```
 
 ## m109
@@ -2988,8 +2988,8 @@ false
 ### m109 Test
 
 ```text
-[director-099] The import rejects invalid padding for the base64
-Output: KILLED [director-099] The import rejects invalid padding for the base64
+[director-099] The import rejects an invalid padding for the base64
+Output: KILLED [director-099] The import rejects an invalid padding for the base64
 ```
 
 ## m110
@@ -3447,8 +3447,8 @@ false
 ### m126 Test
 
 ```text
-[director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
-Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+[director-102] The export returns bundle text at the total byte limit and rejects one more byte
+Output: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
 ```
 
 ## m127
@@ -3717,8 +3717,8 @@ file.name.endsWith('.gevbundle.json')
 ### m136 Test
 
 ```text
-[director-106] The share helpers return the project for an absent filename
-Output: KILLED [director-106] The share helpers return the project for an absent filename
+[director-106] The share helpers return an empty asset map for an absent filename
+Output: KILLED [director-106] The share helpers return an empty asset map for an absent filename
 ```
 
 ## m137
@@ -4581,8 +4581,8 @@ number(p.height, `${at}.height`, -12000, 1e9 + 1, false);
 ### m168 Test
 
 ```text
-[director-080] The validator rejects image height outside both limits
-Output: KILLED [director-080] The validator rejects image height outside both limits
+[director-080] The validator rejects an image height above the upper limit
+Output: KILLED [director-080] The validator rejects an image height above the upper limit
 ```
 
 ## m169
@@ -4719,8 +4719,8 @@ active?.status || 'bad'
 ### m173 Test
 
 ```text
-[director-088] The session reports idle after creation
-Output: KILLED [director-088] The session reports idle after creation
+[director-088] The new session reports the idle state
+Output: KILLED [director-088] The new session reports the idle state
 ```
 
 ## m174
@@ -4746,8 +4746,8 @@ active?.handles.length || 1
 ### m174 Test
 
 ```text
-[director-088] The session reports zero handles after creation
-Output: KILLED [director-088] The session reports zero handles after creation
+[director-088] The new session reports zero handles
+Output: KILLED [director-088] The new session reports zero handles
 ```
 
 ## m175
@@ -4908,8 +4908,8 @@ const superseded = signal?.aborted || disposed;
 ### m180 Test
 
 ```text
-[director-090] The session returns false for a cleared load call without a signal state access
-Output: KILLED [director-090] The session returns false for a cleared load call without a signal state access
+[director-090] The session returns false for a cleared load call and does not read the signal state
+Output: KILLED [director-090] The session returns false for a cleared load call and does not read the signal state
 ```
 
 ## m181
@@ -4935,8 +4935,8 @@ controller.signal.aborted
 ### m181 Test
 
 ```text
-[director-090] The session guard rejects a detached resource
-Output: KILLED [director-090] The session guard rejects a detached resource
+[director-090] The load call returns false and disposes a detached resource
+Output: KILLED [director-090] The load call returns false and disposes a detached resource
 ```
 
 ## m182
@@ -6373,8 +6373,8 @@ File: src/director/sharing/bundle.js
 ### m234 Test
 
 ```text
-[director-106] The share helpers call throwIfAborted three times and return the project
-Output: KILLED [director-106] The share helpers call throwIfAborted three times and return the project
+[director-106] The share helpers call throwIfAborted three times and return an empty asset map
+Output: KILLED [director-106] The share helpers call throwIfAborted three times and return an empty asset map
 ```
 
 ## m235
@@ -6483,8 +6483,8 @@ false
 ### m238 Test
 
 ```text
-[director-080] The validator rejects media fields in image placement for the placement
-Output: KILLED [director-080] The validator rejects media fields in image placement for the placement
+[director-080] The validator returns without an error for the fields of the image placement
+Output: KILLED [director-080] The validator returns without an error for the fields of the image placement
 ```
 
 ## m239
@@ -6512,8 +6512,8 @@ false
 ### m239 Test
 
 ```text
-[director-081] The validator rejects image fields in media placement for the placement
-Output: KILLED [director-081] The validator rejects image fields in media placement for the placement
+[director-081] The validator returns without an error for the fields of the media placement
+Output: KILLED [director-081] The validator returns without an error for the fields of the media placement
 ```
 
 ## m240
@@ -6947,8 +6947,8 @@ pack.source = { adapter: 'bad', path: entry.path };
 ### m255 Test
 
 ```text
-[director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
-Output: KILLED [director-101] The export copies bytes and attribution and keeps the project without an asset request for the selected scene bundle
+[director-101] The export copies bytes and attribution and keeps the project without an asset request
+Output: KILLED [director-101] The export copies bytes and attribution and keeps the project without an asset request
 ```
 
 ## m256
@@ -7028,8 +7028,8 @@ false
 ### m258 Test
 
 ```text
-[director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
-Output: KILLED [director-103] The export share one asset and reject integrity values that differ for the data packs with the same path
+[director-103] The export writes one asset and rejects integrity declarations that differ for the data packs with the same path
+Output: KILLED [director-103] The export writes one asset and rejects integrity declarations that differ for the data packs with the same path
 ```
 
 ## m259
@@ -7082,8 +7082,8 @@ bytes: asset.bytes
 ### m260 Test
 
 ```text
-[director-104] The store removes old data after replacement and uses no network source for the import byte store
-Output: KILLED [director-104] The store removes old data after replacement and uses no network source for the import byte store
+[director-104] The store removes old data after replacement and uses no network source
+Output: KILLED [director-104] The store removes old data after replacement and uses no network source
 ```
 
 ## m261
@@ -7136,8 +7136,8 @@ reject(new Error('wrong'));
 ### m262 Test
 
 ```text
-[director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
-Output: KILLED [director-107] The export stops before the next asset and returns no partial output for the cancelled bundle export
+[director-107] The export stops before the next asset and returns no partial output
+Output: KILLED [director-107] The export stops before the next asset and returns no partial output
 ```
 
 ## m263
@@ -7163,8 +7163,8 @@ File: src/director/sharing/bundle.js
 ### m263 Test
 
 ```text
-[director-101] The export returns a bundle for a source path of 1024 characters
-Output: KILLED [director-101] The export returns a bundle for a source path of 1024 characters
+[director-101] The export returns bundle text for a source path of 1024 characters
+Output: KILLED [director-101] The export returns bundle text for a source path of 1024 characters
 ```
 
 ## m264
@@ -7383,8 +7383,8 @@ File: src/director/packs/session.js
 ### m271 Test
 
 ```text
-[director-092] The session rejects stalled work at the 19 ms deadline
-Output: KILLED [director-092] The session rejects stalled work at the 19 ms deadline
+[director-092] The session rejects stalled work at the 19 milliseconds deadline
+Output: KILLED [director-092] The session rejects stalled work at the 19 milliseconds deadline
 ```
 
 ## m272
@@ -7410,8 +7410,8 @@ timeoutMs = 15001
 ### m272 Test
 
 ```text
-[director-092] The session rejects stalled work at the default 15000 ms deadline
-Output: KILLED [director-092] The session rejects stalled work at the default 15000 ms deadline
+[director-092] The session rejects stalled work at the default 15000 milliseconds deadline
+Output: KILLED [director-092] The session rejects stalled work at the default 15000 milliseconds deadline
 ```
 
 ## m273
@@ -7735,8 +7735,8 @@ if (signal?.aborted || disposed) return false;
 ### m284 Test
 
 ```text
-[director-088] The session returns false without a caller signal access after destruction
-Output: KILLED [director-088] The session returns false without a caller signal access after destruction
+[director-088] The session returns false and does not read the caller signal state after the caller destroys it
+Output: KILLED [director-088] The session returns false and does not read the caller signal state after the caller destroys it
 ```
 
 Probe: evidence/probe-signal-getter.txt.
@@ -7766,8 +7766,8 @@ value.features.length >= PACK_LIMITS.features
 ### m285 Test
 
 ```text
-[director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
-Output: KILLED [director-083] The decoder accepts its exact feature limit for the collection and returns coordinates
+[director-083] The decoder accepts the exact feature limit of the collection and returns 2000 features
+Output: KILLED [director-083] The decoder accepts the exact feature limit of the collection and returns 2000 features
 ```
 
 ## m286
@@ -7793,8 +7793,8 @@ id.length >= 256
 ### m286 Test
 
 ```text
-[director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
-Output: KILLED [director-084] The decoder accepts its exact text limit for the feature ID and returns coordinates
+[director-084] The decoder accepts the exact text limit of the feature ID and returns a feature with an ID length of 256
+Output: KILLED [director-084] The decoder accepts the exact text limit of the feature ID and returns a feature with an ID length of 256
 ```
 
 ## m287
@@ -7820,8 +7820,8 @@ File: src/director/packs/geojson.js
 ### m287 Test
 
 ```text
-[director-085] The decoder accepts its exact total limit for the position and returns coordinates
-Output: KILLED [director-085] The decoder accepts its exact total limit for the position and returns coordinates
+[director-085] The decoder accepts the exact position limit of the collection and returns 50000 positions
+Output: KILLED [director-085] The decoder accepts the exact position limit of the collection and returns 50000 positions
 ```
 
 ## m288
@@ -7847,8 +7847,8 @@ g.coordinates.length < 128
 ### m288 Test
 
 ```text
-[director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
-Output: KILLED [director-087] The decoder accepts its exact ring limit for the polygon and returns coordinates
+[director-087] The decoder accepts the exact ring limit of the polygon and returns 128 rings
+Output: KILLED [director-087] The decoder accepts the exact ring limit of the polygon and returns 128 rings
 ```
 
 ## m289
@@ -7982,8 +7982,8 @@ length >= maxBytes
 ### m293 Test
 
 ```text
-[director-096] The source accepts its exact byte limit for the stream and returns bytes
-Output: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
+[director-096] The source accepts the exact byte limit of the stream and returns bytes
+Output: KILLED [director-096] The source accepts the exact byte limit of the stream and returns bytes
 ```
 
 ## m294
@@ -8009,8 +8009,8 @@ Number(response.headers.get('content-length')) >= maxBytes
 ### m294 Test
 
 ```text
-[director-096] The source accepts its exact byte limit for the stream and returns bytes
-Output: KILLED [director-096] The source accepts its exact byte limit for the stream and returns bytes
+[director-096] The source accepts the exact byte limit of the stream and returns bytes
+Output: KILLED [director-096] The source accepts the exact byte limit of the stream and returns bytes
 ```
 
 ## m295
@@ -8551,8 +8551,8 @@ Object.hasOwn(scene, 'dataPacks')
 ### m314 Test
 
 ```text
-[director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
-Output: KILLED [director-082] The validator ignores a data pack list from its parent for the scene and returns without an error
+[director-082] The validator does not read a data pack list from the parent object of the scene and returns without an error
+Output: KILLED [director-082] The validator does not read a data pack list from the parent object of the scene and returns without an error
 ```
 
 ## m315
@@ -8848,8 +8848,8 @@ path: 'wrong',
 ### m325 Test
 
 ```text
-[director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
-Output: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+[director-093] The source receives the path, the renderer receives the asset and the signal, and the load call returns true
+Output: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the load call returns true
 ```
 
 ## m326
@@ -8875,8 +8875,8 @@ adapter({ pack, anchors, signal: controller.signal })
 ### m326 Test
 
 ```text
-[director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
-Output: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+[director-093] The source receives the path, the renderer receives the asset and the signal, and the load call returns true
+Output: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the load call returns true
 ```
 
 ## m327
@@ -8902,8 +8902,8 @@ adapter({ pack, asset, anchors })
 ### m327 Test
 
 ```text
-[director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
-Output: KILLED [director-093] The source receives the path and the renderer receives the asset and signal and returns bytes
+[director-093] The source receives the path, the renderer receives the asset and the signal, and the load call returns true
+Output: KILLED [director-093] The source receives the path, the renderer receives the asset and the signal, and the load call returns true
 ```
 
 ## m328
@@ -9331,8 +9331,8 @@ bytes.length >= PACK_LIMITS.bytes
 ### m341 Test
 
 ```text
-[director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
-Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+[director-102] The export returns bundle text at the total byte limit and rejects one more byte
+Output: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
 ```
 
 ## m342
@@ -9358,8 +9358,8 @@ total >= PACK_LIMITS.totalBytes
 ### m342 Test
 
 ```text
-[director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
-Output: KILLED [director-102] The export accepts the total byte limit and rejects one more byte and returns bundle text
+[director-102] The export returns bundle text at the total byte limit and rejects one more byte
+Output: KILLED [director-102] The export returns bundle text at the total byte limit and rejects one more byte
 ```
 
 ## m343
@@ -9385,8 +9385,8 @@ value.length >= Math.ceil(PACK_LIMITS.bytes / 3) * 4
 ### m343 Test
 
 ```text
-[director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
-Output: KILLED [director-099] The import accepts its length limit and rejects the next aligned length for the base64 and returns assets
+[director-099] The import returns assets at the base64 length limit and rejects the next aligned length
+Output: KILLED [director-099] The import returns assets at the base64 length limit and rejects the next aligned length
 ```
 
 ## m344
@@ -9521,8 +9521,8 @@ File: src/director/sharing/bundle.js
 ### m348 Test
 
 ```text
-[director-099] The import accepts the total byte limit and rejects one more byte and returns assets
-Output: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+[director-099] The import returns assets at the total byte limit and rejects one more byte
+Output: KILLED [director-099] The import returns assets at the total byte limit and rejects one more byte
 ```
 
 ## m349
@@ -9548,8 +9548,8 @@ total > PACK_LIMITS.totalBytes + 1
 ### m349 Test
 
 ```text
-[director-099] The import accepts the total byte limit and rejects one more byte and returns assets
-Output: KILLED [director-099] The import accepts the total byte limit and rejects one more byte and returns assets
+[director-099] The import returns assets at the total byte limit and rejects one more byte
+Output: KILLED [director-099] The import returns assets at the total byte limit and rejects one more byte
 ```
 
 ## m350
@@ -10397,8 +10397,8 @@ status: 'ready'
 ### m380 Test
 
 ```text
-[director-089] The session reports its state during asset work for the data pack session
-Output: KILLED [director-089] The session reports its state during asset work for the data pack session
+[director-089] The session reports its state during asset work
+Output: KILLED [director-089] The session reports its state during asset work
 ```
 
 ## m381
@@ -10753,8 +10753,8 @@ asset.bytes.length >= maxBytes
 ### m393 Test
 
 ```text
-[director-105] The store accepts the caller byte limit for the byte store and returns byte copies
-Output: KILLED [director-105] The store accepts the caller byte limit for the byte store and returns byte copies
+[director-105] The store accepts the caller byte limit and returns byte copies
+Output: KILLED [director-105] The store accepts the caller byte limit and returns byte copies
 ```
 
 ## m394
@@ -10780,8 +10780,8 @@ adapter({ asset, anchors, signal: controller.signal })
 ### m394 Test
 
 ```text
-[director-093] The renderer receives the data pack and scene anchors and returns coordinates
-Output: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+[director-093] The session calls the renderer with the data pack and the scene anchors and returns true
+Output: KILLED [director-093] The session calls the renderer with the data pack and the scene anchors and returns true
 ```
 
 ## m395
@@ -10807,8 +10807,8 @@ adapter({ pack, asset, signal: controller.signal })
 ### m395 Test
 
 ```text
-[director-093] The renderer receives the data pack and scene anchors and returns coordinates
-Output: KILLED [director-093] The renderer receives the data pack and scene anchors and returns coordinates
+[director-093] The session calls the renderer with the data pack and the scene anchors and returns true
+Output: KILLED [director-093] The session calls the renderer with the data pack and the scene anchors and returns true
 ```
 
 ## m396
@@ -10834,8 +10834,8 @@ signal.addEventListener('abort', abort);
 ### m396 Test
 
 ```text
-[director-089] The session removes source listeners after success for the data pack session
-Output: KILLED [director-089] The session removes source listeners after success for the data pack session
+[director-089] The session removes source listeners after success
+Output: KILLED [director-089] The session removes source listeners after success
 ```
 
 ## m397
@@ -10862,8 +10862,8 @@ File: src/director/packs/session.js
 ### m397 Test
 
 ```text
-[director-089] The session removes source listeners after success for the data pack session
-Output: KILLED [director-089] The session removes source listeners after success for the data pack session
+[director-089] The session removes source listeners after success
+Output: KILLED [director-089] The session removes source listeners after success
 ```
 
 ## m398
@@ -10890,8 +10890,8 @@ File: src/director/packs/session.js
 ### m398 Test
 
 ```text
-[director-089] The session removes source listeners after error for the data pack session
-Output: KILLED [director-089] The session removes source listeners after error for the data pack session
+[director-089] The session removes source listeners after error
+Output: KILLED [director-089] The session removes source listeners after error
 ```
 
 ## m399
@@ -13229,6 +13229,9 @@ Output: KILLED [director-107] The export stops after the second digest
 ```
 
 ## Final complete pass 6 output
+
+Pass 8 replaced the killer labels in this list.
+Pass 9 records the current results in evidence.md.
 
 The report deletes spaces at line ends.
 The command checks all rows after the final test change.

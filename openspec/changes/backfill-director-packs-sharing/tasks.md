@@ -1512,7 +1512,7 @@ The loop table lists 52 collection traversals in six of the seven source files.
 - [x] 11.5 Record every closed-set limit.
 - [x] 11.6 Name each killer test in the loop table.
 - [x] 11.7 Check every title and scenario result.
-- [x] 11.8 Check all title echoes.
+- [x] 11.8 Check each place that repeats a test title.
 - [x] 11.9 Run each test file alone.
 - [x] 11.10 Measure each production file.
 - [x] 11.11 Run all hand mutations.
@@ -1524,3 +1524,27 @@ The loop table lists 52 collection traversals in six of the seven source files.
 - [x] 11.17 Compare every document heading.
 - [x] 11.18 Record the Pass 8 evidence.
 - [x] 11.19 Commit the corrections.
+
+## 12. Correct pre-review 7 findings
+
+- [x] 12.1 Correct the test titles.
+- [x] 12.2 Retag the three GeoJSON field rows.
+- [x] 12.3 Check the title verbs.
+- [x] 12.4 Correct the scenario text.
+- [x] 12.5 Restore the past evidence records.
+- [x] 12.6 Correct the glossary words.
+- [x] 12.7 Add the closed-set rows.
+- [x] 12.8 Correct the repeated titles.
+- [x] 12.9 Run each test file alone.
+- [x] 12.10 Measure each production file.
+- [x] 12.11 Run all hand rows.
+- [x] 12.12 Check the repeated titles.
+- [x] 12.13 Count duplicate titles.
+- [x] 12.14 Run the host prose checks.
+- [x] 12.15 Run the title scan.
+- [x] 12.16 Check the source format.
+- [x] 12.17 Compare the production files.
+- [x] 12.18 Check the OpenSpec change.
+- [x] 12.19 Compare document headings.
+- [x] 12.20 Record the Pass 9 evidence.
+- [x] 12.21 Commit the corrections.
