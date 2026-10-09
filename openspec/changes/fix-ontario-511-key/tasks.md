@@ -63,9 +63,17 @@
 - [x] Compare the section titles with commit `ae2cbaa478e412f1ddd6ec6aeda0bb62b6d078a6`.
 - [x] Commit Pass 3.
 
+- [x] Write the Pass 3B reset hook tests before the hook.
+- [x] Show the Pass 3B tests fail without the hook.
+- [x] Add the reset hook.
+- [x] Run the Pass 3B named reset faults.
+- [x] Run the Pass 3B automatic reset faults.
+- [x] Complete the Pass 3B host checks.
+- [x] Commit Pass 3B.
+
 ## 5. Lead checks
 
-- [ ] Resolve the coverage reader issue from evidence.md.
+- [x] Resolve the coverage reader issue from evidence.md.
 - [ ] Add the Purpose sentence from design.md at archive time.
 - [ ] Run `make ratchet CHANGE=fix-ontario-511-key` in the image.
 - [ ] Keep the sources.js gap at or below the ledger.

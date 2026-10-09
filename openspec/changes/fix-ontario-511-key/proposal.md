@@ -42,5 +42,5 @@ The loader writes "Loaded Ontario 511 camera sources: 0 enabled" at each refresh
 The status lines of `scripts/dev-fresh.sh` do not show the Ontario key state.
 The lead must run the image checks and both reviews. The separate catalog cap issue stays outside this change.
 
-The fresh module tests produce separate coverage records. The current coverage reader uses the least covered record.
-The combined helper coverage is complete, but the current reader reports a gap. The lead must resolve this instrument issue.
+The production module has a test reset hook.
+`src/renderGovernor.js` and `server/providers/places/routes.js` use the same style.

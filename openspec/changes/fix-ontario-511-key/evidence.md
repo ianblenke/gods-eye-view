@@ -781,3 +781,174 @@ The diff check gives no whitespace error. The source and test searches above sho
 
 The two change warnings concern the old JavaScript undefined record and the exact phrase in scenario 005 from O2.
 The new scenario clauses use the loader as the actor.
+
+## Pass 3B
+
+Tree read: `0720b2d8ccb6152a5d8d866fc5d03bd15453d129`, branch `fix-ontario-511-key`, with the Pass 3B edits.
+Past records stay unchanged.
+
+Pass 3B replaces the fresh module copies by a reset hook because parseLcov selects the least covered record of one file under several module URLs
+
+The key tests import the request module once. The beforeEach hook resets both warning flags before each test.
+The missing-key test also calls the reset hook after its first warning. The next call must write that warning again.
+The reset hook has no scenario of its own. It is a test helper.
+
+The command prefix for every Node process is taskset -c 8-11 nice -n 19.
+The test command is node --test --test-isolation=none src/data/cctvOntarioKey.test.mjs.
+The red run in `evidence/pass3b/red.log` has 12 tests, 0 passes and 12 failures.
+Each test fails because `_resetOntarioRequestForTest` is not a function.
+The green run in `evidence/pass3b/green.log` has 12 tests, 12 passes and 0 failures.
+
+The checks.py command runs each test file in one process. Its file path is `/home/ianblenke/docker/gev-tools/fix-ontario-511/pass3b/checks.py`.
+The final runs have these counts:
+
+| File log | Tests | Pass | Fail |
+|---|---:|---:|---:|
+| cctv.test.log | 55 | 55 | 0 |
+| cctvCalgary.test.log | 13 | 13 | 0 |
+| cctvCards.test.log | 23 | 23 | 0 |
+| cctvCatalogCap.test.log | 7 | 7 | 0 |
+| cctvDisplayCode.test.log | 2 | 2 | 0 |
+| cctvDriveBcSource.test.log | 6 | 6 | 0 |
+| cctvEstonia.test.log | 3 | 3 | 0 |
+| cctvFintraffic.test.log | 8 | 8 | 0 |
+| cctvFootprint.test.log | 3 | 3 | 0 |
+| cctvGizmo.test.log | 10 | 10 | 0 |
+| cctvGroundHeights.test.log | 2 | 2 | 0 |
+| cctvHlsStream.test.log | 10 | 10 | 0 |
+| cctvLod.test.log | 29 | 29 | 0 |
+| cctvMediaRange.test.log | 21 | 21 | 0 |
+| cctvNswSource.test.log | 6 | 6 | 0 |
+| cctvOntarioKey.test.log | 12 | 12 | 0 |
+| cctvOntarioRows.test.log | 69 | 69 | 0 |
+| cctvProxy.test.log | 14 | 14 | 0 |
+| cctvTxdotSource.test.log | 10 | 10 | 0 |
+| cctvViewshed.test.log | 7 | 7 | 0 |
+| cctvWarendorf.test.log | 3 | 3 | 0 |
+| mediaProviders.test.log | 5 | 5 | 0 |
+
+The checks.py loop runs each key test in its own process with an exact `--test-name-pattern`.
+The 12 test logs each show 1 pass and 0 failures.
+The reverse.mjs command writes the test groups in reverse order on `/tmp/ont-pass3b-tree`.
+The reverse test command runs its one test file. It shows 12 passes and 0 failures in `reverse.log`.
+
+The coverage commands use `--experimental-test-coverage`, `--test-reporter=lcov` and `--test-reporter-destination`.
+The key command includes `server/providers/cctv/ontarioRequest.js`; the Rows command includes `server/providers/cctv/sources.js`.
+The destinations are `evidence/pass3b/key.lcov` and `evidence/pass3b/rows.lcov`.
+The probe.mjs command calls the current parseLcov reader on the new lcov. It changes no gate.
+Its output is:
+
+```json
+{
+  "moduleRecords": [
+    "SF:server/providers/cctv/ontarioRequest.js"
+  ],
+  "counts": {
+    "lines": {
+      "total": 41,
+      "covered": 41
+    },
+    "branches": {
+      "total": 12,
+      "covered": 12
+    },
+    "functions": {
+      "total": 2,
+      "covered": 2
+    }
+  },
+  "gaps": {
+    "lines": 0,
+    "branches": 0,
+    "functions": 0
+  },
+  "result": "NO GAP",
+  "Ontario": [
+    {
+      "name": "isLikelyOntarioCoordinate",
+      "start": 403,
+      "end": 413,
+      "branches": 7,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7087,isLikelyOntarioCoordinate"
+    },
+    {
+      "name": "normalizeOntarioCctvUrl",
+      "start": 414,
+      "end": 439,
+      "branches": 11,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7074,normalizeOntarioCctvUrl"
+    },
+    {
+      "name": "pickOntarioCctvView",
+      "start": 440,
+      "end": 463,
+      "branches": 17,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7078,pickOntarioCctvView"
+    },
+    {
+      "name": "loadOntarioSourcesFromOpenData",
+      "start": 464,
+      "end": 540,
+      "branches": 52,
+      "zeroCountRanges": 0,
+      "functionCount": "FNDA:7096,loadOntarioSourcesFromOpenData"
+    }
+  ]
+}
+```
+
+The request helper has 100% line, branch and function coverage. The lcov has one module record.
+The green command also sets `NODE_V8_COVERAGE=/tmp/ont-pass3b-v8`.
+The module-urls.py probe reads each JSON file in that directory. Its output in `module-urls.json` has one URL with no query string.
+
+The named.py command changes the reset hook on the scratch tree and runs the key test file.
+At first, the reset-error-only fault passed. The extra check in the missing-key test makes that fault fail.
+The final named.json records these faults:
+
+| Fault | Code change | Test that fails |
+|---|---|---|
+| reset-error-only | Delete the reset of warnedMissingKey. | "[live-sources-003] make no request without a key" |
+| reset-missing-only | Delete the reset of warnedRequestError. | "[live-sources-005] keep the fetch error secret" |
+| no-reset | Delete both resets. | "[live-sources-003] make no request without a key" |
+
+The gen.mjs command generates 15 automatic faults for the changed hook lines.
+The automatic tool runs phase 1 and phase 2 with one job on the scratch tree.
+Its commands use `automut.mjs run`, the Pass 3B mutants.json, and `--tests src/data/cctvOntarioKey.test.mjs`.
+Phase 1 has 14 kills and 1 survivor. Phase 2 has 1 survivor, b14, which swaps the two reset statements.
+
+The equivalent.mjs probe checks each of the four initial flag states for both statement orders.
+Each result equals the literal array `[false, false]`. The statements have no call between them.
+Fault b14 is EQUIVALENT. The run has no timeout or crash.
+The result files are `automatic-results.json` and `equivalent.json`.
+
+The sandbox automatic runs stopped at the baseline with no test output. They gave no mutation verdict.
+The sandbox check run stopped before the format command ended. It gave no final format verdict.
+The host repeats complete these checks.
+
+The Pass 3 repeated-title and verb commands are `python3` with `pass3/check-repeated-titles.py` and `pass3/check-verbs.py`.
+The repeated-title command reports 81 live titles, 17 references and 0 flags.
+The verb command reports 81 tests and 0 flags.
+Their outputs are `titles.json` and `verbs.json`.
+
+The host format shim command uses node --import with `/home/ianblenke/docker/gev-tools/director-4c/format-host.mjs` and `scripts/format.mjs --check`.
+It returns exit code 0 and prints "Checked 1159 source files."
+The host checks.py run stops at the package boundary command. The separate coverage commands complete after that stop.
+The package boundary command also has a separate host run.
+
+The heading probe compares every existing change document with commit `0720b2d8`.
+It checks 7 documents and finds 0 unexpected changes. Only evidence.md adds the Pass 3B section title.
+The proposal keeps all its required section titles. The probe also checks that the past evidence text stays unchanged.
+
+The OpenSpec show command uses `openspec show fix-ontario-511-key --json`. It returns exit code 0 and valid JSON.
+The validate command uses `openspec validate fix-ontario-511-key`. It returns exit code 0 and states that the change is valid.
+
+The final repeated-title command checks 20 references and reports 0 flags. The final verb command reports 0 flags.
+The final prose lint command reports 0 errors and 542 warnings.
+
+The separate host package boundary command returns exit code 0. Its output lists each package group in `boundaries-host.log`.
+The earlier package boundary runs stopped before the end. They give no package boundary verdict.
+No image gate, ratchet, archive, push or review command ran in Pass 3B.
+The lead must run the image gates and both reviews before a merge.
