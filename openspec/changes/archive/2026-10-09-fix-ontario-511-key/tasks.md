@@ -138,9 +138,9 @@
 ## 9. Lead checks
 
 - [ ] Resolve the coverage reader issue from evidence.md.
-- [ ] Add the Purpose sentence from design.md at archive time.
-- [ ] Run `make ratchet CHANGE=fix-ontario-511-key` in the Docker image.
-- [ ] Keep the sources.js gap at or below the ledger.
+- [x] Add the Purpose sentence from design.md at archive time.
+- [x] Run `make ratchet CHANGE=fix-ontario-511-key` in the Docker image.
+- [x] Keep the sources.js gap at or below the ledger.
 - [ ] Run both review agents.
 - [ ] Write `review.md`.
 - [ ] Run `make gates CHANGE=fix-ontario-511-key` in the Docker image.

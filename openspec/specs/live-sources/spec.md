@@ -1,7 +1,7 @@
 # live-sources Specification
 
 ## Purpose
-Keep the identity of an error that a transport aborts. Reject a fetch with the same error object that the fetch function gave. The capability also covers the Ontario camera credential and the Ontario row rules.
+Keep the identity of an error that a transport aborts. Reject a fetch with the same error object that the fetch function gave. The capability also has requirements for the Ontario camera key. It has requirements for the Ontario row rules.
 ## Requirements
 ### Requirement: Transport abort error
 `readResponse()` MUST reject with the same error object when a fetch function rejects with an `AbortError` and no external abort signal aborts the request.
