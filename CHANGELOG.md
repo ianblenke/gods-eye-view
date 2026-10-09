@@ -1,5 +1,7 @@
 # Changelog
 
+- Ontario 511 camera requests need `ONTARIO_511_API_KEY` (2026-10-08). The Ontario pack makes no request without it.
+
 - Public Overpass instances are no longer used by default. Street Traffic
   roads come from TomTom flow tiles, OpenFreeMap vector tiles, or both, chosen
   on the layer row (TomTom / OSM / Hybrid) or with `?trafficRoads=`. With a

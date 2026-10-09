@@ -1,0 +1,74 @@
+[
+  {
+    "file": "alone-0.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-1.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-10.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-11.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-2.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-3.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-4.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-5.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-6.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-7.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-8.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  },
+  {
+    "file": "alone-9.log",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0
+  }
+]

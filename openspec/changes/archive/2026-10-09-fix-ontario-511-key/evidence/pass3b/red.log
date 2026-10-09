@@ -1,0 +1,189 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvOntarioKey.test.mjs
+✖ [live-sources-002] send the key parameter (10.491532ms)
+✖ [live-sources-003] make no request without a key (1.704038ms)
+✖ [live-sources-004] write one warning for an invalid key (1.693504ms)
+✖ [live-sources-005] keep the fetch error secret (1.515713ms)
+✖ [live-sources-005] keep the json error secret (1.820193ms)
+✖ [live-sources-002] map the Ontario rows (2.191123ms)
+✖ [live-sources-005] keep the camera data error secret (1.540993ms)
+✖ [live-sources-004] return an empty list for an HTTP error with JSON rows (1.393614ms)
+✖ [live-sources-002] trim spaces from the key (1.748901ms)
+✖ [live-sources-002] use a timeout of 15000 milliseconds (2.124065ms)
+✖ [live-sources-002] send the application/json Accept header (5.752112ms)
+✖ [live-sources-005] keep key text inside a fetch error out of the warning (1.104549ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 0
+ℹ fail 12
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 164.05684
+
+✖ failing tests:
+
+test at src/data/cctvOntarioKey.test.mjs:28:1
+✖ [live-sources-002] send the key parameter (10.491532ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at src/data/cctvOntarioKey.test.mjs:47:1
+✖ [live-sources-003] make no request without a key (1.704038ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at src/data/cctvOntarioKey.test.mjs:66:1
+✖ [live-sources-004] write one warning for an invalid key (1.693504ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioKey.test.mjs:90:3
+✖ [live-sources-005] keep the fetch error secret (1.515713ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioKey.test.mjs:90:3
+✖ [live-sources-005] keep the json error secret (1.820193ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioKey.test.mjs:112:1
+✖ [live-sources-002] map the Ontario rows (2.191123ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioKey.test.mjs:136:1
+✖ [live-sources-005] keep the camera data error secret (1.540993ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioKey.test.mjs:150:1
+✖ [live-sources-004] return an empty list for an HTTP error with JSON rows (1.393614ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioKey.test.mjs:162:1
+✖ [live-sources-002] trim spaces from the key (1.748901ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioKey.test.mjs:174:1
+✖ [live-sources-002] use a timeout of 15000 milliseconds (2.124065ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioKey.test.mjs:187:1
+✖ [live-sources-002] send the application/json Accept header (5.752112ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at src/data/cctvOntarioKey.test.mjs:193:1
+✖ [live-sources-005] keep key text inside a fetch error out of the warning (1.104549ms)
+  TypeError: ontarioRequest._resetOntarioRequestForTest is not a function
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioKey.test.mjs:5:33)
+      at TestHook.runInAsyncScope (node:async_hooks:226:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at Test.runHook (node:internal/test_runner/test:1289:20)
+      at Test.run (node:internal/test_runner/test:1362:27)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

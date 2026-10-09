@@ -1,0 +1,11 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvDisplayCode.test.mjs
+✔ cameraDisplayCode trims long names with an ellipsis and collapses whitespace (8.816448ms)
+✔ every pack labels by its feed name; explicit codes win; the id is the last resort (4.627349ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 153.122989

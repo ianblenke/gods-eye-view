@@ -1,0 +1,31 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvMediaRange.test.mjs
+✔ single well-formed byte ranges pass through canonicalized (12.562471ms)
+✔ multi-range is dropped so the upstream never answers multipart/byteranges (1.394777ms)
+✔ malformed, non-byte and CR/LF-bearing values are dropped, not forwarded (1.557053ms)
+✔ non-string and empty inputs yield no Range header (1.40966ms)
+✔ every accepted form is bounded to the relay body cap (2.109073ms)
+✔ inverted and unsafe-integer positions are dropped (1.433446ms)
+✔ a canonical range reaches the upstream and its 206 is passed through (161.315112ms)
+✔ an unbounded seek is bounded before it is forwarded (12.954184ms)
+✔ a rejected range is dropped and the request proceeds without one (10.117718ms)
+✔ a rejected range leaves the camera health report untouched (12.964467ms)
+✔ a multi-range request is served whole rather than as multipart (9.858039ms)
+✔ an upstream 416 is reported as the upstream status, not as a proxy error (7.118227ms)
+✔ an upstream that ignores the range still serves its whole body (8.597957ms)
+✔ an oversized declared body is refused even when a bounded range asked for it (11.910727ms)
+✔ a client that disconnects mid-stream stops the upstream read (721.01627ms)
+✔ a client that leaves before the headers arrive cancels the upstream request (419.0739ms)
+    [range] folded CR/LF request was refused by the HTTP parser
+✔ a folded CR/LF range never reaches the upstream through a real client (21.976473ms)
+✔ two sequential seeks are served as two partial responses (21.980522ms)
+✔ an upstream that goes silent after its headers is released at the idle deadline (31.081389ms)
+✔ a live feed that keeps producing is not cut off by the idle deadline (50.254956ms)
+✔ a client that cannot keep up is not mistaken for a stalled upstream (17.315869ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1971.289031

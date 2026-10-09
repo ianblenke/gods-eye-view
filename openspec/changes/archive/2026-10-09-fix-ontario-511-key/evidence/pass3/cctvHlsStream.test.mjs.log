@@ -1,0 +1,18 @@
+✔ playlist parser uses sequence, refuses escaping and unsupported references (19.551053ms)
+✔ downloads reject redirect responses, oversized declared and chunked bodies (209.097482ms)
+✔ one session is reserved before await; disk-free cache and capacity remain bounded (72.903003ms)
+✔ shutdown cancels in-flight downloads and late responses cannot refill cache (6.927763ms)
+✔ idle cleanup stops all polling without a background sweep (32.108436ms)
+✔ agency sequence rollback creates a monotonic local discontinuity (42.74524ms)
+✔ upstream discontinuity tags survive the media parser (1.665238ms)
+✔ a reused agency sequence with changed segment URI cannot remain stale (19.472031ms)
+✔ two consumers share downloads but release and abandoned expiry are independent (59.154815ms)
+✔ an abandoned consumer expires while a renewed consumer keeps the session (25.600379ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 665.61357

@@ -1,0 +1,16 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/layers/cctv/headingConfidence.test.mjs
+✔ low confidence marks the bearing estimated (7.816057ms)
+✔ confidence matching is trimmed and case-insensitive (1.418667ms)
+✔ medium, high, missing, and absent cameras are not estimated (1.334665ms)
+✔ a manually saved calibration overrides a low pack flag (1.365232ms)
+✔ a curated catalog entry overrides a low pack flag (1.258942ms)
+✔ HUD token tags a synthetic bearing and rounds the degrees (1.441397ms)
+✔ HUD token stays untagged for surveyed and calibrated bearings (1.522603ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.113572

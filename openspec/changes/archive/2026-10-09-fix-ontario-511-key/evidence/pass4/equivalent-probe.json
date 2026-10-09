@@ -1,0 +1,65 @@
+[
+  {
+    "id": "h43",
+    "old": "true",
+    "new": "[]",
+    "cases": 28,
+    "result": "EQUIVALENT"
+  },
+  {
+    "id": "h44",
+    "old": "true",
+    "new": "1",
+    "cases": 28,
+    "result": "EQUIVALENT"
+  },
+  {
+    "id": "h91",
+    "old": "new Error('Ontario camera request failed')",
+    "new": "error",
+    "cases": 28,
+    "result": "EQUIVALENT"
+  },
+  {
+    "id": "h103",
+    "old": "true",
+    "new": "[]",
+    "cases": 28,
+    "result": "EQUIVALENT"
+  },
+  {
+    "id": "h104",
+    "old": "true",
+    "new": "1",
+    "cases": 28,
+    "result": "EQUIVALENT"
+  },
+  {
+    "id": "h113",
+    "old": "warnedMissingKey = false;\n  warnedRequestError = false;",
+    "new": "warnedRequestError = false;\n  warnedMissingKey = false;",
+    "cases": 28,
+    "result": "EQUIVALENT"
+  },
+  {
+    "id": "h126",
+    "old": "'Ontario camera request failed'",
+    "new": "undefined",
+    "cases": 28,
+    "result": "EQUIVALENT"
+  },
+  {
+    "id": "h127",
+    "old": "'Ontario camera request failed'",
+    "new": "",
+    "cases": 28,
+    "result": "EQUIVALENT"
+  },
+  {
+    "id": "h130",
+    "old": "warnedRequestError = true;\n      console.warn(\n        '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',\n      );",
+    "new": "console.warn(\n        '[CCTV] Ontario 511 camera request failed. Check ONTARIO_511_API_KEY.',\n      );\n      warnedRequestError = true;",
+    "cases": 28,
+    "result": "EQUIVALENT"
+  }
+]

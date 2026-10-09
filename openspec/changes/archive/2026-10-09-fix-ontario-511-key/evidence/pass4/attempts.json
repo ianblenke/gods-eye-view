@@ -1,0 +1,25 @@
+{
+  "initialDataLoop": {
+    "tests": 318,
+    "pass": 315,
+    "fail": 3,
+    "cause": "sandbox listen EPERM"
+  },
+  "mediaRangeHost": {
+    "tests": 21,
+    "pass": 21,
+    "exit": 0
+  },
+  "separatePackageTimeout": {
+    "exit": 124,
+    "verdict": null
+  },
+  "finalPackageCheck": {
+    "exit": 0,
+    "log": "boundaries.log"
+  },
+  "finalFormatCheck": {
+    "exit": 0,
+    "log": "format-final.log"
+  }
+}

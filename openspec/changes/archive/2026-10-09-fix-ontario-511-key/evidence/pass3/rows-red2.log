@@ -1,0 +1,100 @@
+✔ [live-sources-006] return an empty list for a null row (75.959976ms)
+✔ [live-sources-006] return an empty list for a row without an ID (5.6658ms)
+✔ [live-sources-006] return an empty list for a row with a blank ID (6.554244ms)
+✔ [live-sources-006] return an empty list for a row with a nonfinite latitude (6.828726ms)
+✔ [live-sources-006] return an empty list for a row with a nonfinite longitude (8.658715ms)
+✔ [live-sources-006] return an empty list for a row south of Ontario (7.346646ms)
+✔ [live-sources-006] return an empty list for a row north of Ontario (4.075502ms)
+✔ [live-sources-006] return an empty list for a row west of Ontario (6.18333ms)
+✔ [live-sources-006] return an empty list for a row east of Ontario (8.603287ms)
+✔ [live-sources-006] return an empty list for a null views list (7.837686ms)
+✔ [live-sources-006] return an empty list for a views object (4.079524ms)
+✔ [live-sources-006] return an empty list for an empty views list (4.420888ms)
+✔ [live-sources-006] return an empty list for a null view (11.399547ms)
+✔ [live-sources-006] return an empty list for a disabled view (3.033903ms)
+✔ [live-sources-006] return an empty list for blank URL text (3.861489ms)
+✔ [live-sources-006] return an empty list for absent URL text (2.260018ms)
+✔ [live-sources-006] return an empty list for invalid URL text (2.528496ms)
+✔ [live-sources-006] return an empty list for another URL path (3.995135ms)
+✔ [live-sources-006] return an empty list for an HTTP URL (2.589074ms)
+✔ [live-sources-006] return an empty list for another URL host name (2.450911ms)
+✔ [live-sources-006] return an empty list for the traveliq.co root URL host name (2.470833ms)
+✔ [live-sources-006] return an empty list for a slash ID (2.87308ms)
+✔ [live-sources-006] return an empty list for invalid percent text (3.284427ms)
+✔ [live-sources-006] return an empty list for a URL path prefix (3.125016ms)
+✔ [live-sources-006] return an empty list for a URL path suffix (8.582688ms)
+✔ [live-sources-006] return an empty list for an ID with a slash at the start (3.038632ms)
+✔ [live-sources-006] return an empty list for an ID with a slash at the end (2.54196ms)
+✔ [live-sources-006] return an empty list for the x511on.ca URL host name (2.316868ms)
+✔ [live-sources-006] return an empty list for the www.511on.ca URL host name (2.27928ms)
+✔ [live-sources-006] return an empty list for an ID with a space (2.170678ms)
+✔ [live-sources-006] return an empty list for an ID with a non-ASCII character (3.057465ms)
+✔ [live-sources-006] accept latitude 41 and longitude -95.6 at the Ontario bounds (6.521429ms)
+✔ [live-sources-006] accept latitude 57.5 and longitude -74 at the Ontario bounds (3.188179ms)
+✔ [live-sources-006] select the first view without down (5.453429ms)
+✔ [live-sources-006] select the first view when all descriptions have down (5.869302ms)
+✔ [live-sources-007] set all source fields (5.881388ms)
+✔ [live-sources-007] use lower case fields and hash pose (6.014137ms)
+✔ [live-sources-008] apply cap undefined (391.598169ms)
+✔ [live-sources-008] apply cap  (201.51048ms)
+✔ [live-sources-008] apply cap bad (122.683424ms)
+✔ [live-sources-008] apply cap Infinity (75.889429ms)
+✔ [live-sources-008] apply cap 3 (91.08921ms)
+✔ [live-sources-008] apply cap 9.9 (92.510871ms)
+✔ [live-sources-008] apply cap 2000 (77.145859ms)
+✔ [live-sources-008] use the last duplicate (10.391574ms)
+✔ [live-sources-009] return an empty list for non-array data null (2.787255ms)
+✔ [live-sources-009] return an empty list for non-array data {} (4.307518ms)
+✔ [live-sources-009] return an empty list for non-array data "rows" (5.225615ms)
+✔ [live-sources-009] return an empty list for non-array data 0 (3.339076ms)
+✖ [live-sources-005] write the warning for a row error with the key text (31.791993ms)
+✔ [live-sources-007] use capitalized ID and coordinates before lower case fields (12.824151ms)
+✔ [live-sources-008] use each nearest anchor (12.226439ms)
+✔ [live-sources-006] return an empty list for null ID fields (4.989985ms)
+✔ [live-sources-007] use Roadway first and view direction after blank Direction (5.054142ms)
+✔ [live-sources-006] return an empty source list for an empty row list (4.939951ms)
+✔ [live-sources-008] log both source counts (17.942745ms)
+✔ [live-sources-006] return an empty list without a warning for invalid views (18.031559ms)
+✔ [live-sources-006] accept every ID character (9.940678ms)
+✔ [live-sources-007] convert row values to text and numbers (12.995467ms)
+✔ [live-sources-006] return an empty list without a warning for a numeric status (8.908206ms)
+✔ [live-sources-006] accept URL object (10.732299ms)
+✔ [live-sources-006] accept URL text with spaces at the start and end (11.462357ms)
+✔ [live-sources-006 live-sources-007] select a view with downhill (13.366173ms)
+✔ [live-sources-007] use capitalized text fields first (11.228801ms)
+✔ [live-sources-006 live-sources-007] return an empty list for zero capitalized Latitude (11.076314ms)
+✔ [live-sources-006 live-sources-007] return an empty list for zero capitalized Longitude (6.578177ms)
+✔ [live-sources-006] skip fields after a row guard (5.387074ms)
+✔ [live-sources-007] read latitude before longitude (3.198491ms)
+✔ [live-sources-007] read location before roadway (7.752978ms)
+ℹ tests 69
+ℹ suites 0
+ℹ pass 68
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2075.170727
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:264:1
+✖ [live-sources-005] write the warning for a row error with the key text (31.791993ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+  +   '[CCTV] Ontario 511 camera data error.'
+  -   '[CCTV] Ontario 511 camera data has an error.'
+    ]
+
+      at TestContext.<anonymous> (file:///home/ianblenke/docker/gev-work/fix-ontario-511/src/data/cctvOntarioRows.test.mjs:276:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [Array],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

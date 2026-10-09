@@ -1,0 +1,2 @@
+Command: node scripts/format.mjs --check
+spawnSync git EPERM

@@ -1,0 +1,103 @@
+Command: taskset -c 8-11 nice -n 19 node --test --test-isolation=none src/data/cctvOntarioRows.test.mjs
+✔ [live-sources-006] return an empty source list for a null row (52.608135ms)
+✔ [live-sources-006] return an empty source list for a row without an ID (5.431206ms)
+✔ [live-sources-006] return an empty source list for a row with a blank ID (4.823873ms)
+✔ [live-sources-006] return an empty source list for a row with a nonfinite latitude (5.026878ms)
+✔ [live-sources-006] return an empty source list for a row with a nonfinite longitude (5.472897ms)
+✔ [live-sources-006] return an empty source list for a row south of Ontario (4.581965ms)
+✔ [live-sources-006] return an empty source list for a row north of Ontario (3.785563ms)
+✔ [live-sources-006] return an empty source list for a row west of Ontario (4.037139ms)
+✔ [live-sources-006] return an empty source list for a row east of Ontario (4.54563ms)
+✔ [live-sources-006] return an empty source list for a null views list (5.372433ms)
+✔ [live-sources-006] return an empty source list for a views object (3.593592ms)
+✔ [live-sources-006] return an empty source list for an empty views list (13.917931ms)
+✔ [live-sources-006] return an empty source list for a null view (15.006653ms)
+✔ [live-sources-006] return an empty source list for a disabled view (6.376309ms)
+✔ [live-sources-006] return an empty source list for blank URL text (3.995679ms)
+✔ [live-sources-006] return an empty source list for absent URL text (2.511399ms)
+✔ [live-sources-006] return an empty source list for invalid URL text (2.851205ms)
+✔ [live-sources-006] return an empty source list for another URL path (2.672143ms)
+✔ [live-sources-006] return an empty source list for an HTTP URL (3.22306ms)
+✔ [live-sources-006] return an empty source list for another URL host name (3.141465ms)
+✔ [live-sources-006] return an empty source list for the traveliq.co root URL host name (2.708128ms)
+✔ [live-sources-006] return an empty source list for a slash view ID (3.025302ms)
+✔ [live-sources-006] return an empty source list for invalid percent text (4.32863ms)
+✔ [live-sources-006] return an empty source list for a URL path prefix (3.43926ms)
+✔ [live-sources-006] return an empty source list for a URL path suffix (9.263875ms)
+✔ [live-sources-006] return an empty source list for a view ID with a slash at the start (3.352566ms)
+✔ [live-sources-006] return an empty source list for a view ID with a slash at the end (5.290086ms)
+✔ [live-sources-006] return an empty source list for the x511on.ca URL host name (2.89488ms)
+✔ [live-sources-006] return an empty source list for the www.511on.ca URL host name (2.280504ms)
+✔ [live-sources-006] return an empty source list for a view ID with a space (2.331839ms)
+✔ [live-sources-006] return an empty source list for a view ID with a non-ASCII character (3.883077ms)
+✔ [live-sources-006] accept latitude 41 and longitude -95.6 at the Ontario bounds (14.263849ms)
+✔ [live-sources-006] accept latitude 57.5 and longitude -74 at the Ontario bounds (3.803587ms)
+✔ [live-sources-006] select the first view without down (7.177282ms)
+✔ [live-sources-006] select the first view when all descriptions contain the word down (6.03249ms)
+✔ [live-sources-007] set all source fields (16.737834ms)
+✔ [live-sources-007] use lower case fields and hash pose (5.461257ms)
+✔ [live-sources-008] apply cap undefined (122.11008ms)
+✔ [live-sources-008] apply cap  (114.19863ms)
+✔ [live-sources-008] apply cap bad (55.846713ms)
+✔ [live-sources-008] apply cap Infinity (49.722287ms)
+✔ [live-sources-008] apply cap 3 (39.311488ms)
+✔ [live-sources-008] apply cap 9.9 (42.874361ms)
+✔ [live-sources-008] apply cap 2000 (43.757775ms)
+✔ [live-sources-008] use the last duplicate (7.718219ms)
+✔ [live-sources-009] return an empty source list for non-array data null (2.867442ms)
+✔ [live-sources-009] return an empty source list for non-array data {} (2.227064ms)
+✔ [live-sources-009] return an empty source list for non-array data "rows" (4.890302ms)
+✔ [live-sources-009] return an empty source list for non-array data 0 (2.186825ms)
+✔ [live-sources-005] write the warning for a row error with the key text (3.768956ms)
+✔ [live-sources-007] use capitalized ID and coordinates before lower case fields (4.384701ms)
+✔ [live-sources-008] use each nearest anchor (4.225472ms)
+✔ [live-sources-006] return an empty source list for null ID fields (2.542766ms)
+✔ [live-sources-007] use the Roadway text first and the view description after a blank Direction value (2.927963ms)
+✔ [live-sources-006] return an empty source list for an empty row list (2.392146ms)
+✔ [live-sources-008] log both source counts (4.032259ms)
+✔ [live-sources-006] return an empty source list without a warning for invalid rows and views (2.635975ms)
+✔ [live-sources-006] accept every view ID character (2.45535ms)
+✔ [live-sources-007] convert row values to text and numbers (4.265352ms)
+✔ [live-sources-006] return an empty source list without a warning for a numeric status (2.340017ms)
+✔ [live-sources-006] accept a URL object (2.483914ms)
+✔ [live-sources-006] accept URL text with no-break spaces at the start and end (2.039326ms)
+✔ [live-sources-006 live-sources-007] select a view with downhill (3.290417ms)
+✔ [live-sources-007] use capitalized text fields first (2.94329ms)
+✔ [live-sources-006 live-sources-007] return an empty source list for a capitalized Latitude of 0 (4.345974ms)
+✔ [live-sources-006 live-sources-007] return an empty source list for a capitalized Longitude of 0 (2.565882ms)
+✔ [live-sources-006] skip fields after a row guard (5.299719ms)
+✔ [live-sources-007] read latitude before longitude (3.356403ms)
+✔ [live-sources-007] read location before roadway (2.831089ms)
+✖ [live-sources-003] write the first warning for an absent key (13.876056ms)
+✔ [live-sources-004] write the first warning for an HTTP error (3.173122ms)
+ℹ tests 71
+ℹ suites 0
+ℹ pass 70
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1265.218798
+
+✖ failing tests:
+
+test at src/data/cctvOntarioRows.test.mjs:638:3
+✖ [live-sources-003] write the first warning for an absent key (13.876056ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   '[CCTV] Ontario 511 needs ONTARIO_511_API_KEY.'
+  - ]
+  
+      at TestContext.<anonymous> (file:///tmp/ont-pass4-tree/src/data/cctvOntarioRows.test.mjs:654:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [Array],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

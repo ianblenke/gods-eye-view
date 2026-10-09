@@ -1,0 +1,16 @@
+✔ CCTV instances resolve their own application source root and isolate catalogs and health (79.80629ms)
+✔ composition creates exactly one CCTV and radio provider without acquisition (39.88331ms)
+✔ CCTV configureServer maps header timeouts and cancels upstream error bodies (39.639688ms)
+✔ CCTV configurePreviewServer maps header timeouts and cancels upstream error bodies (12.984633ms)
+✔ a failed CCTV media fetch reports a fixed health message, not the error text (11.692755ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1494.951509
+[CCTV Proxy] media fetch failed
+[CCTV Proxy] media fetch failed
+[CCTV Proxy] media fetch failed

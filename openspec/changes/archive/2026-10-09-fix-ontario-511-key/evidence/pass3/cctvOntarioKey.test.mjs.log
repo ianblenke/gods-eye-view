@@ -1,0 +1,19 @@
+✔ [live-sources-002] send the key parameter (40.753791ms)
+✔ [live-sources-003] make no request without a key (13.74518ms)
+✔ [live-sources-004] write one warning for an invalid key (242.184835ms)
+✔ [live-sources-005] keep the fetch error secret (21.334923ms)
+✔ [live-sources-005] keep the json error secret (15.833774ms)
+✔ [live-sources-002] map the Ontario rows (69.878614ms)
+✔ [live-sources-005] keep the camera data error secret (10.324264ms)
+✔ [live-sources-004] return an empty list for an HTTP error with JSON rows (8.922804ms)
+✔ [live-sources-002] trim spaces from the key (9.142383ms)
+✔ [live-sources-002] use a timeout of 15000 milliseconds (9.83414ms)
+✔ [live-sources-002] send the application/json Accept header (8.581083ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 594.05361

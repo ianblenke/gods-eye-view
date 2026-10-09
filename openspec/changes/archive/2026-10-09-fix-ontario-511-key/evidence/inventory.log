@@ -1,0 +1,33 @@
+✔ provider requirements name the registry env vars and next step (8.131875ms)
+✔ the boot provenance snapshot survives in-process Vite config re-evaluation (3.301553ms)
+✔ external ownership uses boot provenance even when store and shell values match (1.261214ms)
+✔ the status payload reports presence without any credential material (2.742865ms)
+✔ whitespace-only env values do not count as configured (1.558893ms)
+✔ subprocess success requires a clean zero exit (5.550783ms)
+✔ Windows owner SID parsing reads only the structured user-SID CSV field (4.505691ms)
+✔ validation accepts every registry env var and only those (3.56523ms)
+✔ validation trims, and refuses empties, newlines, spaces, and oversize values (1.740908ms)
+✔ upsert replaces the last active assignment in place (4.035265ms)
+✔ upsert uncomments a commented assignment in place, keeping file shape (1.999938ms)
+✔ upsert appends unknown keys under one shared header, once (1.298864ms)
+✔ upsert births a well-formed file from nothing (0.922475ms)
+✔ upsert handles export-prefixed lines and never touches lookalike keys (1.026023ms)
+✔ upsert is idempotent for a repeated save (1.171976ms)
+✔ a real .env.example round-trip: the curated file keeps its shape (5.985072ms)
+✔ the admission gate refuses every non-local shape, one assertion per refusal (5.416077ms)
+✔ a null value validates as a removal; an empty string still does not (0.722945ms)
+✔ removal comments the assignment back out, returning the file to template shape (0.758212ms)
+✔ the sharing gate treats a real PINOKIO_SHARE_VAR as sharing, but not the empty/sentinel normal state (1.666532ms)
+✔ the gate refuses proxied requests even from a loopback socket with local headers (1.734497ms)
+✔ validation rejects dotenv metacharacters that would round-trip wrong (0.951922ms)
+✔ server Google key remains supported without appearing in setup or its missing count (6.941476ms)
+✔ [credential-boundary-005] the client-exposed registry names equal the names in the define of the browser build (768.963494ms)
+✔ [credential-boundary-006] the registry or .env.example documents each credential name that the server reads (192.957108ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1209.985023

@@ -146,7 +146,7 @@
         "branches": null,
         "functions": null
       },
-      "sha": "12072d0d72c82c46abdb910ad3353744b549092c033b7e6b7650bed19462861a",
+      "sha": "e466ffd92db1b60eee6d6ef92197d37f4d1786001ba5479f51e63b49571327bc",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -618,15 +618,15 @@
     },
     "server/providers/cctv/sources.js": {
       "loaded": true,
-      "lines": 411,
-      "branches": 107,
-      "functions": 7,
+      "lines": 314,
+      "branches": 103,
+      "functions": 3,
       "totals": {
-        "lines": 1703,
-        "branches": 408,
-        "functions": 39
+        "lines": 1689,
+        "branches": 489,
+        "functions": 43
       },
-      "sha": "478d831772d4176a33ff49dbb9a03a10b0611583ffa00cde4f23f2f1a3518127",
+      "sha": "9eed31d3b96d63b5854fbd6c795a11857f439680fd7b7fb0d45847c3fc626ae8",
       "untrue": false,
       "origin": "pre-spec",
       "since": "2026-09-15"
@@ -2498,7 +2498,7 @@
       "functions": 0,
       "totals": {
         "lines": 49,
-        "branches": 32,
+        "branches": 33,
         "functions": 1
       },
       "sha": "9bdc54abdbddf128bb4d52adc0b1bd80ececd837a68c60c421a6bdaf47644f9c",

@@ -1,0 +1,535 @@
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctv.test.mjs
+✔ geometry drain coalesces 40 progress ticks and always publishes the final state (16.213249ms)
+✔ lazy coverage inserts nothing at catalog init, then materializes only eligible records (8.806792ms)
+✔ default COVERAGE refresh materializes the active and visible camera frustums (19.252344ms)
+✔ geometry drain pacing yields to tracked and cockpit camera ownership (1.410088ms)
+✔ geometry drain rechecks pacing when tracking releases between batches (2.165042ms)
+✔ vFov formula: vFov = 2·atan(tan(hFov/2) / (16/9)); halfW/halfH follow (1.286843ms)
+✔ mount altitude = groundAlt + mountHeightM (1.228505ms)
+✔ cap center sits rangeM along the view axis from the mount (ε < 0.5 m) (1.622043ms)
+✔ corner/plane coincidence: all 4 corners lie on the far-cap plane (ε < 0.5 m) (1.65664ms)
+✔ cap rectangle spans 2·halfW × 2·halfH (ε < 0.5 m) (1.731764ms)
+✔ unclamped pose: corners keep their true plane altitudes (no clamp applied) (15.736358ms)
+✔ ground clearance lifts the whole rectangle rigidly until its lowest support clears the floor (1.342546ms)
+✔ measured ground under a far support raises the plane further, still rigidly (1.071687ms)
+✔ clamped pose keeps corner/plane coincidence and the rigid 2·halfW × 2·halfH span (1.703919ms)
+✔ range override (activation probe clamp) shortens but never lengthens the range (0.879379ms)
+✔ activation obstruction clamp uses the field-derived 12 m floor (0.692977ms)
+✔ deactivation clears the probe clamp and restores nominal frustum geometry (0.780318ms)
+✔ CCTV disable hide sweep hides record visuals and destroys viewsheds without restyling (1.965802ms)
+✔ real active monitor plane owns one protected host label and no native label entity (20.328113ms)
+✔ CCTV disable→enable defers the active-camera re-probe until its next activation (1.916811ms)
+✔ CCTV focus distinguishes tracking ownership from a missing active camera (1.303147ms)
+✔ CCTV focus reports when the camera flight starts (0.734833ms)
+✔ CCTV focus refuses camera flights while cockpit owns the view (0.701516ms)
+✔ CCTV repeated in-world clicks dispatch focus only for the one real activation (6.885046ms)
+✔ CCTV empty-click gate excludes every identified scene object, ADJUST, and null-active clicks (2.412403ms)
+✔ CCTV camera extraction requires layer ownership, not a colliding sibling ID (1.721439ms)
+✔ CCTV deselect publishes one null state and leaves the complete camera pose unchanged (23.381467ms)
+✔ CCTV null-active coverage, auto-hop, cycling, and panel targets stay honest (21.314682ms)
+✔ CCTV disable clears and hides its shared-host source through the real layer lifecycle (2.807186ms)
+✔ pristine module default publishes no active-camera card (shipped behavior needs no setter call) (1.080286ms)
+✔ active CCTV camera is absent from host by default and protected only when opted in (3.002833ms)
+✔ CCTV drag-then-release over a camera is inert, while a clean tap activates and dispatches (3.178722ms)
+✔ CCTV auto-hop remains activation-only and never dispatches a focus request (0.887338ms)
+✔ heading wrap: heading 350° produces a symmetric cap (left/right corners equidistant) (0.694756ms)
+✔ calibration v2 round-trip: writeCalibrationStoreV2 → readCalibrationStoreV2 preserves values/source/savedAt (2.283336ms)
+✔ calibration v2: removing an entry (reset) then re-writing produces an empty store (0.748843ms)
+✔ calibration v2: malformed/partial entries are dropped defensively (0.605464ms)
+✔ calibration v2: a corrupt v1 key never leaks into the v2 store (v1 is dead data, never read) (0.418256ms)
+✔ deriveCalBadge: CALIBRATED when the camera carries a manual v2 calibration (0.267244ms)
+✔ deriveCalBadge: CURATED for a hand-authored catalog prior with no manual save (0.21495ms)
+✔ deriveCalBadge: RAW PRIOR for everything else (all Austin Open Data today) (0.234888ms)
+✔ surfaceRegimeKey: globe hidden (photoreal) → google-3d; globe visible → terrain-globe (0.211168ms)
+✔ surfaceRegimeKey: unknown globe state (no viewer / no scene) defaults to terrain-globe (never samples) (0.199602ms)
+✔ calibrationPatchMovesAnchor: only north/east translation re-resolves ground (0.475192ms)
+✔ normalizeCoverageMode: passes through the three valid modes (0.258745ms)
+✔ normalizeCoverageMode: boolean back-compat (showCoverage semantics) (0.218367ms)
+✔ normalizeCoverageMode: garbage keeps the current mode (0.228706ms)
+✔ frameSignatureFromPixels: identical pixels hash identically (0.904688ms)
+✔ frameSignatureFromPixels: a single changed channel changes the hash (0.450192ms)
+✔ frameSignatureFromPixels: order matters (a swap is not a collision) (0.29241ms)
+✔ frameSignatureFromPixels: alpha is deliberately ignored (0.274388ms)
+✔ frameSignatureFromPixels: returns an unsigned 32-bit value (0.291649ms)
+✔ frameSignatureFromPixels: empty or junk input yields null (always redraw) (0.264971ms)
+✔ a saved rangeScale keeps its effective range when the catalog range floor drops (0.677231ms)
+✔ the footprint lift is capped so a tower under the far edge cannot launch the plane (0.776293ms)
+ℹ tests 55
+ℹ suites 0
+ℹ pass 55
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4739.20156
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvCalgary.test.mjs
+✔ a Calgary row maps to a source on the pinned HTTPS frame host (10.180353ms)
+✔ no heading is derived from the quadrant or the address suffix (4.837856ms)
+✔ rows outside Calgary, off-host frames and unusable geometry are dropped (1.421424ms)
+✔ frame URLs upgrade to HTTPS and ids stay stable (3.003834ms)
+✔ a nameless row still gets a label (1.124569ms)
+✔ the loader reads the keyless catalog and collapses duplicate ids (185.972692ms)
+✔ an upstream failure yields an empty pack and releases the response (6.437888ms)
+✔ the unselected label is the intersection, trimmed to the code width (1.173739ms)
+✔ the catalog fetch refuses redirects and oversized bodies (26.518421ms)
+✔ a reduced catalog cap thins every pack instead of dropping Calgary (6.915261ms)
+✔ the Calgary lane is wired into the catalog and its loader runs (44.876698ms)
+✔ CCTV_CALGARY_ENABLED=0 keeps the lane from being loaded at all (10.90412ms)
+✔ the shipped catalog ceiling is not raised to make room for this pack (0.611688ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 446.935967
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvCards.test.mjs
+✔ isCctvCardAnchorSafe protects the top HUD band for ambient cards (7.139271ms)
+✔ declutterCctvCards: nearest-first greedy accept with min separation (5.534382ms)
+✔ declutterCctvCards: separation is radial (Euclidean), matching the vessel pass (1.095185ms)
+✔ declutterCctvCards: respects the limit and drops malformed rows (6.154955ms)
+✔ thumbnail entry carries the exact shipped contract and stable frame-slot reference (2.601455ms)
+✔ active CCTV thumbnail is protected while ambient and pinned policies stay distinct (1.80357ms)
+✔ CCTV card module cannot resurrect a canvas, projection, listener, or private hit store (3.18407ms)
+✔ cardScaleForAltitude: full size and opacity at or below 1,800 m (1.489757ms)
+✔ cardScaleForAltitude: hits the owner-decided waypoints (1.181702ms)
+✔ cardScaleForAltitude: fully hidden at and above the 9,500 m ceiling (1.525243ms)
+✔ cardScaleForAltitude: scale and alpha are monotonic non-increasing (1.762715ms)
+✔ cardFetchPolicy: cold fill bursts up to 4 in flight at 250 ms spacing (1.10416ms)
+✔ cardFetchPolicy: steady state keeps the 1-fetch/s single-flight gate (0.593676ms)
+✔ applyFrameResult: success replaces the frame and stamps it (0.658248ms)
+✔ applyFrameResult: a FAILED fetch persists the drawn frame and stamp (0.519445ms)
+✔ applyFrameResult: an ok result without a frame counts as a failure (0.481208ms)
+✔ frameRetryDelayMs: doubles per failure, capped at 5 minutes (0.624146ms)
+✔ frameFetchDue: an untouched slot is due immediately (0.474437ms)
+✔ frameFetchDue: a fresh frame is not due until its cadence elapses (0.357253ms)
+✔ frameFetchDue: failures back off instead of hammering the source (0.393844ms)
+✔ planFrameCachePrune: never drops live card ids (grace included) (0.949408ms)
+✔ planFrameCachePrune: spare slots kept newest-first up to the cap (0.669256ms)
+✔ planFrameCachePrune: default cap is the exported cache bound (1.061842ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.437074
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvCatalogCap.test.mjs
+[CCTV] source catalog exceeds cap 9; shared round-robin across packs (env 9/12). Raise CCTV_MAX_SOURCES or lower a per-pack cap to change the mix.
+✔ under the cap every pack is served whole, in merge order (10.125298ms)
+✔ over the cap the packs share it round-robin, and the last pack is never starved (3.449603ms)
+✔ a duplicate inside one pack takes one slot, not two (1.329223ms)
+✔ a short pack releases its turns to the others (1.536809ms)
+✔ duplicate ids resolve last-pack-wins and count against the winning pack (1.440118ms)
+✔ resolveCatalogCap bounds the env value and falls back to the default (0.931019ms)
+✔ the catalog applies the fair cap to configured packs end to end (13.232063ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 159.258683
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvDisplayCode.test.mjs
+✔ cameraDisplayCode trims long names with an ellipsis and collapses whitespace (5.967916ms)
+✔ every pack labels by its feed name; explicit codes win; the id is the last resort (2.853726ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 102.214281
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvDriveBcSource.test.mjs
+✔ DriveBC loader keeps published cameras and builds frame URLs from the camera id (177.003053ms)
+✔ DriveBC loader keeps the cameras nearest Vancouver and Victoria under its cap (7.167405ms)
+✔ DriveBC loader fails soft on HTTP errors, unexpected payloads and network errors (5.30279ms)
+✔ CCTV catalog merges DriveBC cameras and CCTV_DRIVEBC_ENABLED=0 skips the request (51.106829ms)
+✔ default per-pack camera caps fit inside the default catalog cap (0.910629ms)
+✔ DriveBC credit keeps partner attribution and drops operational notes (0.945983ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 381.236145
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvEstonia.test.mjs
+[CCTV] Loaded Tallinn camera sources: 255 (using nearest 255)
+✔ Tallinn catalog loads curated ristmikud stills only (24.442099ms)
+✔ Tarktee DATEX parsers join location UUIDs to image URLs (5.420713ms)
+✔ Tarktee DATEX image parser rejects non-official hosts (1.244463ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 144.177672
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvFintraffic.test.mjs
+[CCTV] Loaded Fintraffic camera sources: 2 live presets across 1 stations (using nearest 2)
+[CCTV] Loaded Fintraffic camera sources: 1 live presets across 1 stations (using nearest 1)
+[CCTV] Loaded Fintraffic camera sources: 1 live presets across 1 stations (using nearest 1)
+[CCTV] Loaded Fintraffic camera sources: 3 live presets across 3 stations (using nearest 3)
+[CCTV] Loaded Fintraffic camera sources: 1 live presets across 1 stations (using nearest 1)
+[CCTV] Fintraffic station list redirected; redirects are not followed
+[CCTV] Loaded Fintraffic camera sources: 40 live presets across 1 stations (using nearest 8)
+[CCTV] Fintraffic station download error: network down
+[CCTV] Fintraffic station download failed: 503
+✔ Fintraffic loader turns every in-collection preset into one camera (159.105358ms)
+✔ Fintraffic frame URLs are built on the official image origin (3.985994ms)
+✔ Fintraffic loader drops dead stations, uncollected presets and bad ids (7.212741ms)
+✔ Fintraffic ground elevation uses a reported altitude and falls back otherwise (3.907488ms)
+✔ Fintraffic loader identifies itself to Digitraffic and refuses redirects (5.72895ms)
+✔ Fintraffic pack caps itself and fails to an empty list, never a throw (13.613763ms)
+✔ fintrafficCameraName unpacks the machine station name and the view number (1.036304ms)
+✔ isLikelyFinlandCoordinate spans the catalog extent and rejects the rest (0.677505ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 314.674719
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvFootprint.test.mjs
+✔ support points form a 3×3 grid across the pitched far cap (11.579478ms)
+✔ the rigid lift is the largest clearance deficit over the supports (2.323684ms)
+✔ poseHash is stable for the same pose and changes with any pose field (3.169957ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 99.527543
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvGizmo.test.mjs
+✔ closestParamOnAxis: perpendicular ray hits the axis at its own offset (8.648765ms)
+✔ closestParamOnAxis: skew ray resolves to the geometric closest point (1.502153ms)
+✔ closestParamOnAxis: axis origin offset shifts the parameter (0.84997ms)
+✔ closestParamOnAxis: near-parallel ray/axis returns null (1.020633ms)
+✔ rayPlaneIntersect: straight-on hit lands at the expected point (1.384479ms)
+✔ rayPlaneIntersect: oblique hit resolves correctly (1.171479ms)
+✔ rayPlaneIntersect: grazing ray (|dir·n| < 0.08) returns null (0.683948ms)
+✔ rayPlaneIntersect: plane behind the ray origin returns null (0.571863ms)
+✔ ringAngle: quadrant sweep in the (basisA, basisB) frame (1.599791ms)
+✔ signedAngleDelta: shortest-path wrap (1.608413ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4305.890427
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvGroundHeights.test.mjs
+✔ a shipped entry attaches only while the nominal pose still matches (10.505885ms)
+✔ the sidecar loads from the source root and tolerates a missing or malformed file (3.873947ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 114.416096
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvHlsStream.test.mjs
+✔ playlist parser uses sequence, refuses escaping and unsupported references (21.434568ms)
+✔ downloads reject redirect responses, oversized declared and chunked bodies (184.798723ms)
+✔ one session is reserved before await; disk-free cache and capacity remain bounded (67.346348ms)
+✔ shutdown cancels in-flight downloads and late responses cannot refill cache (4.111375ms)
+✔ idle cleanup stops all polling without a background sweep (23.386579ms)
+✔ agency sequence rollback creates a monotonic local discontinuity (15.081177ms)
+✔ upstream discontinuity tags survive the media parser (0.952201ms)
+✔ a reused agency sequence with changed segment URI cannot remain stale (11.075553ms)
+✔ two consumers share downloads but release and abandoned expiry are independent (54.759247ms)
+✔ an abandoned consumer expires while a renewed consumer keeps the session (8.110108ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 504.523434
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvLod.test.mjs
+✔ cctvLodBudgets scales the card budget from 20 to 40 with view height (11.534865ms)
+✔ selectCctvLod caps ambient cards at the 40 hard cap regardless of catalog size (15.31321ms)
+✔ selectCctvLod uses only in-view cameras and orders by viewer distance (2.202282ms)
+✔ video cameras never consume ambient card slots (1.828649ms)
+✔ selectCctvLod tolerates malformed candidate rows (1.411141ms)
+✔ incumbentRankKm discounts incumbents by the 20% factor (1.014122ms)
+✔ selectCctvLod: a carded camera outranks a slightly-nearer non-carded one (3.234979ms)
+✔ selectCctvLod: a meaningfully (>20%) closer camera still displaces an incumbent (1.665549ms)
+✔ selectCctvLod: no incumbents means plain nearest-first (unchanged behavior) (1.408426ms)
+✔ distributeCctvCards spreads clustered candidates across cells (3.768232ms)
+✔ distributeCctvCards: leftover budget falls back to global rank order (1.526379ms)
+✔ distributeCctvCards: empty cells are skipped, budget respected (1.472054ms)
+✔ distributeCctvCards: an under-budget cut keeps the nearest cell winners (1.467626ms)
+✔ distributeCctvCards: incumbency (effective distance) is honored inside a cell (1.25044ms)
+✔ distributeCctvCards: malformed rows dropped; offscreen anchors clamp to edge cells (1.04467ms)
+✔ selectCctvLod with viewport dims routes the fill through screen distribution (4.155859ms)
+✔ center-weight helpers are bounded and robust to invalid anchors and outliers (1.125047ms)
+✔ non-finite positive viewport dimensions retain exact legacy nearest-first selection (1.679423ms)
+✔ center weighting deterministically favors center without starving peripheral coverage (4.361283ms)
+✔ ineligible video, hidden, and malformed-distance rows cannot alter eligible winners (4.218137ms)
+✔ malformed-distance rows remain slot-neutral when valid candidates leave spare capacity (1.131402ms)
+✔ duplicate IDs are slot-neutral and choose a deterministic representative (3.815628ms)
+✔ center weighting has deterministic ID ties and preserves invalid-anchor eligibility (53.822589ms)
+✔ applyEvictionGrace keeps a fallen-out card and clears grace when it returns (2.349278ms)
+✔ applyEvictionGrace evicts a card that stays unselected past the pass budget (1.159909ms)
+✔ applyEvictionGrace evicts on wall-time even with few passes (0.912689ms)
+✔ applyEvictionGrace never exceeds the hard cap; graced cards go first, oldest first (0.761363ms)
+✔ applyEvictionGrace with a full selection keeps no graced cards (0.632635ms)
+✔ staticFrameRefreshMs follows known pack cadences and bounds explicit values (0.815741ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 257.561592
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvMediaRange.test.mjs
+✔ single well-formed byte ranges pass through canonicalized (8.236776ms)
+✔ multi-range is dropped so the upstream never answers multipart/byteranges (0.943974ms)
+✔ malformed, non-byte and CR/LF-bearing values are dropped, not forwarded (0.958237ms)
+✔ non-string and empty inputs yield no Range header (1.142389ms)
+✔ every accepted form is bounded to the relay body cap (1.583205ms)
+✔ inverted and unsafe-integer positions are dropped (1.288229ms)
+✔ a canonical range reaches the upstream and its 206 is passed through (112.012101ms)
+✔ an unbounded seek is bounded before it is forwarded (8.671525ms)
+✔ a rejected range is dropped and the request proceeds without one (7.539296ms)
+✔ a rejected range leaves the camera health report untouched (8.963939ms)
+✔ a multi-range request is served whole rather than as multipart (7.314034ms)
+✔ an upstream 416 is reported as the upstream status, not as a proxy error (5.152578ms)
+✔ an upstream that ignores the range still serves its whole body (6.14327ms)
+✔ an oversized declared body is refused even when a bounded range asked for it (9.594969ms)
+✖ a client that disconnects mid-stream stops the upstream read (70.115244ms)
+✖ a client that leaves before the headers arrive cancels the upstream request (8.376085ms)
+✖ a folded CR/LF range never reaches the upstream through a real client (3.694872ms)
+✔ two sequential seeks are served as two partial responses (11.82856ms)
+✔ an upstream that goes silent after its headers is released at the idle deadline (25.77029ms)
+✔ a live feed that keeps producing is not cut off by the idle deadline (26.538497ms)
+✔ a client that cannot keep up is not mistaken for a stalled upstream (16.38024ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 18
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 679.685128
+
+✖ failing tests:
+
+test at src/data/cctvMediaRange.test.mjs:367:1
+✖ a client that disconnects mid-stream stops the upstream read (70.115244ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2306:21)
+      at listenInCluster (node:net:2437:12)
+      at node:net:2666:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at src/data/cctvMediaRange.test.mjs:454:1
+✖ a client that leaves before the headers arrive cancels the upstream request (8.376085ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2306:21)
+      at listenInCluster (node:net:2437:12)
+      at node:net:2666:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at src/data/cctvMediaRange.test.mjs:505:1
+✖ a folded CR/LF range never reaches the upstream through a real client (3.694872ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2306:21)
+      at listenInCluster (node:net:2437:12)
+      at node:net:2666:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvNswSource.test.mjs
+✔ NSW label prefers the view sentence and falls back to the title for works notices (7.833315ms)
+✔ NSW feature maps to a source with a compass heading and a pinned image host (5.89677ms)
+✔ NSW mapping rejects off-host images and unusable geometry (2.536203ms)
+✔ NSW loader reads the keyless feed and caps around Sydney (219.889078ms)
+✔ the browser User-Agent applies to the NSW image host only (11.289566ms)
+✔ the frame path follows redirects within the host only (10.31961ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 415.43485
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvOntarioKey.test.mjs
+✔ [live-sources-002] send the key parameter (32.549084ms)
+✔ [live-sources-003] stop without a key (4.264158ms)
+✔ [live-sources-004] reject the invalid key once (144.505585ms)
+✔ [live-sources-005] keep the fetch error secret (3.88715ms)
+✔ [live-sources-005] keep the json error secret (3.865452ms)
+✔ [live-sources-002] map the Ontario rows (38.843387ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 313.727569
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvProxy.test.mjs
+✔ CCTV upstream frame fetch supplies a bounded abort signal (12.579065ms)
+✔ CCTV upstream frame fetch returns a valid image response (157.520226ms)
+✔ CCTV upstream frame fetch rejects a declared oversize body without draining it (6.755546ms)
+✔ CCTV upstream frame fetch aborts an undeclared body once it crosses the cap (6.783318ms)
+✔ CCTV upstream frame fetch still returns a chunked body under the cap (4.248086ms)
+✔ CCTV media upstream fetch aborts when response headers never arrive (5.138772ms)
+✔ CCTV media upstream fetch never cuts a stream whose headers arrived in time (12.029452ms)
+✔ CCTV upstream frame fetch keeps a body that lands exactly on the cap (3.832236ms)
+✔ CCTV upstream frame fetch ignores a garbage Content-Length and still caps the stream (3.518497ms)
+✔ CCTV upstream frame fetch retains owned bytes, not the chunk's backing allocation (4.149927ms)
+✔ CCTV upstream frame fetch refuses a body it cannot stream instead of buffering it uncapped (1.482746ms)
+✔ reader-only snapshots release their lock on success, overflow and read failure (17.063897ms)
+✔ the snapshot deadline remains active after headers while reading a stalled body (22.197319ms)
+✔ rejected snapshot responses abort the upstream download (3.885919ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 367.535182
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvTxdotSource.test.mjs
+✔ TxDOT catalog keeps only online cameras with finite coordinates (10.372684ms)
+✔ TxDOT ids stay distinct for distinct device keys, whatever they hash or slug to (3.597015ms)
+✔ TxDOT catalog dedupes a camera listed under two roadways (1.72956ms)
+✔ TxDOT heading comes from an explicit travel token, never the roadway direction (2.138855ms)
+✔ TxDOT heading refuses bare cardinals in Texas route names (1.519556ms)
+✔ TxDOT camera ids are district-scoped and stable across runs (1.96149ms)
+✔ TxDOT ground elevation uses a per-district prior (1.301351ms)
+✔ TxDOT catalog tolerates a malformed payload (4.080699ms)
+✔ TxDOT loader fetches each configured district and ignores unknown codes (157.184321ms)
+✔ TxDOT snapshot decodes JSON only from the official origin and only as JPEG (36.165386ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 351.137885
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvViewshed.test.mjs
+✔ cameraHue: deterministic golden-angle spacing in [0, 360) (8.148887ms)
+✔ cameraHue: first 20 indices pairwise separated by >= 12 degrees (2.363722ms)
+✔ cameraHue: consecutive indices separated by >= 80 degrees (0.989972ms)
+✔ viewshedColors: fill/line pairs with the designed alphas (1.822592ms)
+✔ frustumVolumeGeometryData: 5 vertices are exactly the input Cartesians (1.539814ms)
+✔ frustumVolumeGeometryData: indices form 4 side faces + 2 cap triangles over the 5 vertices (1.382406ms)
+✔ frustumVolumeGeometryData: no NaN for a tight (probe-clamped) pyramid (0.841633ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4138.872838
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/data/cctvWarendorf.test.mjs
+✔ Warendorf catalog registers the Marktplatz webcam on official hosts only (13.04049ms)
+✔ Warendorf loader tolerates a missing catalog file (1.388724ms)
+✔ Warendorf loader skips malformed rows without throwing (2.97111ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 141.047002
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/layers/cctv/headingConfidence.test.mjs
+✔ low confidence marks the bearing estimated (5.210519ms)
+✔ confidence matching is trimmed and case-insensitive (0.884896ms)
+✔ medium, high, missing, and absent cameras are not estimated (0.800706ms)
+✔ a manually saved calibration overrides a low pack flag (0.731162ms)
+✔ a curated catalog entry overrides a low pack flag (0.739995ms)
+✔ HUD token tags a synthetic bearing and rounds the degrees (0.939132ms)
+✔ HUD token stays untagged for surveyed and calibrated bearings (0.686265ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 97.860659
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/layers/cctv/source.test.mjs
+✔ camera catalog and health use fixed source routes and caller cancellation (156.723673ms)
+✔ camera sources reject malformed snapshots and failures (10.845025ms)
+✔ cancellation while reading a camera response body prevents publication (3.037754ms)
+✔ frame and media URLs preserve registered camera identity and encoded metadata (4.995073ms)
+✔ camera construction is inert and destruction cancels a pending catalog and its visibility listener (27.194615ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4390.078646
+
+Command: taskset -c 0-3 nice -n 19 node --test --test-isolation=none src/layers/cctv/videoPlayback.test.mjs
+✔ switch during lazy import never starts the stale decoder (148.96916ms)
+✔ missing decoder uses honest failure fallback once (2.589424ms)
+✔ native HLS releases its client lease without response-header access (3.060978ms)
+✔ finite video feeds retain looping while live HLS does not loop (2.759905ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 246.987213

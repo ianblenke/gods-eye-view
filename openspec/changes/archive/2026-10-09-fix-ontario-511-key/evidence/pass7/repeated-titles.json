@@ -1,0 +1,17 @@
+Command: python /home/ianblenke/docker/gev-tools/fix-ontario-511/pass5/check-repeated-titles.py
+{
+  "live_titles": 83,
+  "references": 20,
+  "flags": [
+    {
+      "file": "openspec/changes/fix-ontario-511-key/evidence.md",
+      "line": 544,
+      "title": "[live-sources-004] return an empty list for an HTTP error with JSON rows"
+    },
+    {
+      "file": "openspec/changes/fix-ontario-511-key/evidence.md",
+      "line": 603,
+      "title": "[live-sources-007] use the Roadway text first and the view description after a blank Direction value"
+    }
+  ]
+}

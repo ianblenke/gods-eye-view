@@ -1,0 +1,66 @@
+[
+  {
+    "mutation": "drop-Kitchener",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-008] use each nearest anchor (49.076599ms)",
+      "\u2716 [live-sources-008] use each nearest anchor (49.076599ms)"
+    ]
+  },
+  {
+    "mutation": "drop-Toronto",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-008] use each nearest anchor (48.361308ms)",
+      "\u2716 [live-sources-008] use each nearest anchor (48.361308ms)"
+    ]
+  },
+  {
+    "mutation": "drop-Ottawa",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-008] use each nearest anchor (49.732749ms)",
+      "\u2716 [live-sources-008] use each nearest anchor (49.732749ms)"
+    ]
+  },
+  {
+    "mutation": "drop-Hamilton",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-008] use each nearest anchor (53.567864ms)",
+      "\u2716 [live-sources-008] use each nearest anchor (53.567864ms)"
+    ]
+  },
+  {
+    "mutation": "drop-London",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-008] use each nearest anchor (57.405407ms)",
+      "\u2716 [live-sources-008] use each nearest anchor (57.405407ms)"
+    ]
+  },
+  {
+    "mutation": "drop-Windsor",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-008] use each nearest anchor (49.18976ms)",
+      "\u2716 [live-sources-008] use each nearest anchor (49.18976ms)"
+    ]
+  },
+  {
+    "mutation": "console-error",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (32.170661ms)",
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (32.170661ms)"
+    ]
+  },
+  {
+    "mutation": "console-info",
+    "exit": 1,
+    "failed": [
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (32.860598ms)",
+      "\u2716 [live-sources-005] keep the key text of a fetch error out of the warning (32.860598ms)"
+    ]
+  }
+]
