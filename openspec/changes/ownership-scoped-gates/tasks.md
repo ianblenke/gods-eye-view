@@ -190,7 +190,7 @@ These Pass 5 tests came after code tasks 7.4 through 7.6:
 | 7.13 | ownership-031: hash with 41 digits | extend-hash-count (a0541) |
 | 7.13 | ownership-054: two base scripts and two new scripts | keep-first-QA-record (g4681) |
 
-Rows 7 and 8 are cases of the test of row 4. The table lists nine rows and seven tests.
+The rows for a prefix and for 41 digits are cases of the test in the row for a value outside the hash pattern. The table lists nine rows and seven tests.
 
 The Pass 5 evidence gives the failed test for each named fault.
 The evidence does not show when a task added the other-error loop mode.
@@ -273,12 +273,17 @@ These titles are the names in the red logs. Later corrections renamed some title
 
 ## 10. Pass 8
 
-- [x] 10.1 Correct the pre-review 5 clauses and titles.
-- [x] 10.2 Test the nine named faults.
-- [x] 10.3 Complete the host and document checks.
+- [x] 10.1 Correct the faults that pre-review 5 found in the clauses and the titles.
+- [x] 10.2 Run the nine named faults.
+- [x] 10.3 Run the host checks and the document checks.
 
 ## 11. Pass 9
 
-- [x] 11.1 Correct the pre-review 6 clauses and prose.
-- [x] 11.2 Test the five named fault processes.
-- [x] 11.3 Complete the host and document checks.
+- [x] 11.1 Correct the faults that pre-review 6 found in the clauses and the prose.
+- [x] 11.2 Run the five named faults.
+- [x] 11.3 Run the host checks and the document checks.
+
+## 12. Pass 10
+
+- [x] 12.1 Correct the faults that pre-review 7 found.
+- [x] 12.2 Run the host checks and the document checks.

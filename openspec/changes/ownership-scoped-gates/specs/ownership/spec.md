@@ -178,15 +178,15 @@ Origin: spec-first
 
 ### Requirement: Gap totals
 The gate MUST add the line gap counts and the test instance counts of ledger entries of the same class.
-The gate must add only positive whole-number waiver counts for the same file, the same file hash and the same metric.
+The gate must add only positive whole-number waiver counts with the file, the file hash and the metric of the gap.
 Origin: spec-first
 
 #### Scenario: Add gap and waiver counts `ownership-018`
-- **WHEN** two owned files have 2 and 3 line gaps
+- **WHEN** a ledger has two owned files with 2 and 3 line gaps
 - **AND** two valid line waivers for one file each waive one gap
-- **AND** the owned test files single.js and src/own/a.test.js have 3 and 4 test instances
-- **THEN** the report command prints 5 line gaps and the waivers waive a count of 2
-- **AND** for those test files without code gaps, it prints "Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests."
+- **AND** a second ledger has only the owned test files single.js and src/own/a.test.js, with 3 and 4 test instances
+- **THEN** the report command prints 5 line gaps for the first ledger and the waivers waive a count of 2
+- **AND** for the second ledger, the report command prints "Owned gaps: 0 code files, 0 lines, 2 test files, 7 tests."
 
 ### Requirement: Empty test names
 The report command MUST count zero test instances for an empty name map.
@@ -490,5 +490,5 @@ Origin: spec-first
 - **AND** an invalid current header or a deleted base QA header prints QA-HEADER
 - **AND** the adopt command writes one zero-count adopt record for a merged upstream base script with no current or base QA tag
 - **AND** any other error stops the adopt command without a new record
-- **AND** a coverage ignore comment in one of those new upstream QA scripts with no QA tag makes the gate print COVERAGE-IGNORE. The gate writes no adopt record.
+- **AND** a coverage ignore comment in one of the new upstream QA scripts with no QA tag makes the gate print COVERAGE-IGNORE. The adopt command writes no adopt record for that script.
 - **AND** the adopt command writes no QA record for an absent current file
